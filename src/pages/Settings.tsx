@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { UserProfile } from "../domain/types";
 import { getActiveProfile, deleteProfile, getAllProfiles, saveProfile, setActiveProfileId } from "../domain/user/repository";
 import { setSoundEnabled } from "../utils/audio";
+import { generateMathPDF } from "../utils/pdfGenerator";
+import { getAvailableSkills } from "../domain/math/curriculum";
+import { generateMathProblem } from "../domain/math";
+import { Problem } from "../domain/types";
 
 export const Settings: React.FC = () => {
     const navigate = useNavigate();
@@ -110,6 +114,27 @@ export const Settings: React.FC = () => {
             localStorage.clear();
             navigate("/onboarding");
         }
+    };
+
+    const handlePrintPDF = async () => {
+        if (!profile) return;
+        const level = profile.mathMainLevel || 1;
+        const skills = getAvailableSkills(level);
+
+        if (skills.length === 0) {
+            alert("まだ もんだいが ありません");
+            return;
+        }
+
+        const problems: Problem[] = [];
+        for (let i = 0; i < 20; i++) {
+            const skillId = skills[Math.floor(Math.random() * skills.length)];
+            const p = generateMathProblem(skillId);
+            // Assign dummy ID
+            problems.push({ ...p, id: `pdf-${i}`, subject: 'math', categoryId: skillId, isReview: false });
+        }
+
+        await generateMathPDF(problems, `${profile.name}_Lv${level}_テスト`, profile.name);
     };
 
     return (
@@ -226,6 +251,17 @@ export const Settings: React.FC = () => {
                         }}
                     >
                         だす
+                    </Button>
+                </Card>
+
+                {/* PDF Print */}
+                <Card className="p-4 flex justify-between items-center">
+                    <div>
+                        <div className="font-bold text-slate-700">かみの テスト</div>
+                        <div className="text-xs text-slate-400">いまの レベルで 20もん</div>
+                    </div>
+                    <Button size="sm" variant="secondary" onClick={handlePrintPDF}>
+                        いんさつ
                     </Button>
                 </Card>
 

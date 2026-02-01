@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Icons } from "../components/icons";
 import { getActiveProfile } from "../domain/user/repository";
-import { getTodayStats } from "../domain/stats/repository";
+import { getTodayStats, getTotalStats } from "../domain/stats/repository";
+import { checkEventCondition } from "../domain/sessionManager";
 
 export const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -20,9 +21,20 @@ export const Home: React.FC = () => {
             if (profile) {
                 setUserName(profile.name);
                 setStreak(profile.streak || 0);
+
                 // 今日の統計を取得
                 getTodayStats(profile.id).then(stats => {
                     setTodayCount(stats.count);
+                });
+
+                // イベント条件チェック
+                getTotalStats(profile.id).then(total => {
+                    const eventType = checkEventCondition(profile, total.count);
+                    if (eventType) {
+                        if (!localStorage.getItem("sansu_event_check_pending")) {
+                            localStorage.setItem("sansu_event_check_pending", "1");
+                        }
+                    }
                 });
             }
         });

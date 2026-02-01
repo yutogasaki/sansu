@@ -4,15 +4,17 @@ import { Footer } from "./Footer";
 
 export const Layout: React.FC = () => {
     const location = useLocation();
+    const isStudy = location.pathname === "/study";
+
     return (
         <div className="min-h-screen bg-[#FDFBF7] text-slate-700 font-sans selection:bg-yellow-200 selection:text-yellow-900">
-            <main className="mx-auto max-w-md w-full min-h-screen relative flex flex-col land:max-w-4xl">
+            <main className={`mx-auto w-full min-h-screen relative flex flex-col ${isStudy ? '' : 'max-w-md land:max-w-4xl'}`}>
                 {/* Content Area */}
-                <div className="flex-1 flex flex-col p-4 pb-24 land:px-8 land:pb-20">
+                <div className={`flex-1 flex flex-col ${isStudy ? '' : 'p-4 pb-24 land:px-8 land:pb-20'}`}>
                     <Outlet />
                 </div>
 
-                {location.pathname !== "/study" && <Footer />}
+                {!isStudy && <Footer />}
             </main>
         </div>
     );

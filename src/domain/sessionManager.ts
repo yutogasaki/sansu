@@ -59,3 +59,26 @@ const pickSubject = (): SubjectKey => {
     // If mix mode, toggle or random.
     return Math.random() > 0.5 ? 'math' : 'vocab';
 };
+
+export type EventType = "streak_3" | "level_up_near" | "total_100";
+
+// Check if a special event should be triggered
+export const checkEventCondition = (profile: UserProfile, totalCount: number): EventType | null => {
+    // 1. Streak (Example: 3 days)
+    // Trigger only if today hasn't been counted yet? Or just if streak exists.
+    // The caller should handle "already seen" logic (using localStorage or similar).
+    if (profile.streak >= 3) {
+        return "streak_3";
+    }
+
+    // 2. Total Count Milestones (100, 200, 300...)
+    // This is tricky because exact match might be missed if multiple questions answered at once.
+    // But for now, we check if close or just passed using caller logic?
+    // Let's just check ranges or specific values if we can.
+    // For MVP: Check if totalCount is a multiple of 100
+    if (totalCount > 0 && totalCount % 100 === 0) {
+        return "total_100";
+    }
+
+    return null;
+};
