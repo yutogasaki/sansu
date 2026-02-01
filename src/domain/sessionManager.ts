@@ -1,12 +1,12 @@
 import { Problem, UserProfile, SubjectKey } from "./types";
 import { generateMathProblem } from "./math";
 import { generateVocabProblem } from "./english/generator";
-import { isDue } from "./algorithms/srs";
+
 
 // This manager would be stateful in a React Hook or Store.
 // Here we define the pure logic to "get next batch".
 
-export const generateSessionQueue = (user: UserProfile, count = 5): Omit<Problem, 'id' | 'isReview'>[] => {
+export const generateSessionQueue = (_user: UserProfile, count = 5): Omit<Problem, 'id' | 'isReview'>[] => {
     const queue: Omit<Problem, 'id' | 'isReview'>[] = [];
 
     // 1. Identify Due Items (Review)
@@ -25,7 +25,7 @@ export const generateSessionQueue = (user: UserProfile, count = 5): Omit<Problem
     // Spec: "5 questions = 1 block", "Math or English decided per block".
 
     // Strategy: Randomly pick subject based on "Need".
-    const subject = pickSubject(user);
+    const subject = pickSubject();
 
     for (let i = 0; i < count; i++) {
         // Problem generation logic
@@ -55,7 +55,7 @@ export const generateSessionQueue = (user: UserProfile, count = 5): Omit<Problem
     return queue;
 };
 
-const pickSubject = (user: UserProfile): SubjectKey => {
+const pickSubject = (): SubjectKey => {
     // If mix mode, toggle or random.
     return Math.random() > 0.5 ? 'math' : 'vocab';
 };

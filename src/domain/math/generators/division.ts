@@ -50,7 +50,7 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 14: 2桁÷2桁（割切）
     "div_2d2d_exact": () => {
         const b = randomInt(10, 99);
-        const q = randomInt(1, 9);
+
         // Ensure a is 2 digits?
         // If b=10, q=9, a=90. OK.
         // If b=50, q=2, a=100. NG.

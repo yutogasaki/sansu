@@ -26,7 +26,7 @@ export const createInitialProfile = (
     subjectMode: "mix" | "math" | "vocab"
 ): UserProfile => {
     const profileId = uuidv4();
-    const now = new Date().toISOString();
+
 
 
     // Create initial objects

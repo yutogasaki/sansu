@@ -59,6 +59,79 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
     const generateBlock = async (pid: string, activeProfile: UserProfile) => {
         const blockSize = options.sessionKind === "check-event" ? 8 : BLOCK_SIZE;
+        const recentAttempts = await getRecentAttempts(pid, REVIEW_BLOCK_CHECK_WINDOW);
+
+        const buildVocabCooldownIds = (pendingIds: string[] = []) => {
+            const ids: string[] = [];
+            const seen = new Set<string>();
+
+            const push = (id: string) => {
+                if (!seen.has(id)) {
+                    seen.add(id);
+                    ids.push(id);
+                }
+            };
+
+            recentAttempts
+                .filter(r => r.subject === 'vocab' && r.result !== 'skipped')
+                .slice(0, 10)
+                .forEach(r => push(r.itemId));
+
+            sessionHistoryRef.current
+                .filter(h => h.subject === 'vocab')
+                .slice(-10)
+                .forEach(h => push(h.id));
+
+            pendingIds.forEach(id => push(id));
+
+            return ids;
+        };
+
+        const recentReviewRatio = () => {
+            if (recentAttempts.length === 0) return 0;
+            const reviewCount = recentAttempts.filter(r => r.isReview).length;
+            return reviewCount / recentAttempts.length;
+        };
+
+        const getMixSubject = (): SubjectKey => {
+            const recent = recentAttempts.slice(0, MIX_WINDOW);
+            const nonReview = recent.filter(r => !r.isReview);
+            if (nonReview.length < 5) {
+                return Math.random() > 0.5 ? 'math' : 'vocab';
+            }
+            const mathCount = nonReview.filter(r => r.subject === 'math').length;
+            const ratio = mathCount / nonReview.length;
+            if (ratio > 0.7) return 'vocab';
+            if (ratio < 0.3) return 'math';
+            return Math.random() > 0.5 ? 'math' : 'vocab';
+        };
+
+        const canAddSessionReview = (pending: { isReview: boolean }[]) => {
+            const history = sessionHistoryRef.current;
+            const total = history.length + pending.length;
+            if (total === 0) return true;
+            const reviewCount = history.filter(h => h.isReview).length + pending.filter(p => p.isReview).length;
+            return reviewCount / total < SESSION_REVIEW_CAP;
+        };
+
+        const vocabLevel = activeProfile.vocabMainLevel || 1;
+
+        const vocabLevelWeights: { level: number; weight: number }[] = [
+            { level: vocabLevel, weight: 0.5 },
+            { level: vocabLevel - 1, weight: 0.25 },
+            { level: vocabLevel - 2, weight: 0.15 },
+            { level: vocabLevel - 3, weight: 0.1 }
+        ].filter(w => w.level >= 1);
+
+        const pickWeightedLevel = () => {
+            const totalWeight = vocabLevelWeights.reduce((sum, w) => sum + w.weight, 0);
+            let r = Math.random() * totalWeight;
+            for (const w of vocabLevelWeights) {
+                r -= w.weight;
+                if (r <= 0) return w.level;
+            }
+            return vocabLevelWeights[0]?.level || vocabLevel;
+        };
 
         // 開発者モード: 指定されたスキルのみで問題を生成
         if (options.devSkill) {
@@ -153,6 +226,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             }
             // Fallback: no recent items, continue to normal generation
         }
+
         const blockCounts = new Map<string, number>();
         const recentIds = sessionHistoryRef.current.slice(-COOLDOWN_WINDOW).map(h => h.id);
 
@@ -166,61 +240,6 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
         const markPicked = (id: string) => {
             blockCounts.set(id, (blockCounts.get(id) || 0) + 1);
-        };
-
-        const recentAttempts = await getRecentAttempts(pid, REVIEW_BLOCK_CHECK_WINDOW);
-
-        const buildVocabCooldownIds = (pendingIds: string[] = []) => {
-            const ids: string[] = [];
-            const seen = new Set<string>();
-
-            const push = (id: string) => {
-                if (!seen.has(id)) {
-                    seen.add(id);
-                    ids.push(id);
-                }
-            };
-
-            recentAttempts
-                .filter(r => r.subject === 'vocab' && r.result !== 'skipped')
-                .slice(0, 10)
-                .forEach(r => push(r.itemId));
-
-            sessionHistoryRef.current
-                .filter(h => h.subject === 'vocab')
-                .slice(-10)
-                .forEach(h => push(h.id));
-
-            pendingIds.forEach(id => push(id));
-
-            return ids;
-        };
-
-        const recentReviewRatio = () => {
-            if (recentAttempts.length === 0) return 0;
-            const reviewCount = recentAttempts.filter(r => r.isReview).length;
-            return reviewCount / recentAttempts.length;
-        };
-
-        const getMixSubject = (): SubjectKey => {
-            const recent = recentAttempts.slice(0, MIX_WINDOW);
-            const nonReview = recent.filter(r => !r.isReview);
-            if (nonReview.length < 5) {
-                return Math.random() > 0.5 ? 'math' : 'vocab';
-            }
-            const mathCount = nonReview.filter(r => r.subject === 'math').length;
-            const ratio = mathCount / nonReview.length;
-            if (ratio > 0.7) return 'vocab';
-            if (ratio < 0.3) return 'math';
-            return Math.random() > 0.5 ? 'math' : 'vocab';
-        };
-
-        const canAddSessionReview = (pending: { isReview: boolean }[]) => {
-            const history = sessionHistoryRef.current;
-            const total = history.length + pending.length;
-            if (total === 0) return true;
-            const reviewCount = history.filter(h => h.isReview).length + pending.filter(p => p.isReview).length;
-            return reviewCount / total < SESSION_REVIEW_CAP;
         };
 
         const vocabDue = await getReviewItems(pid, 'vocab');
@@ -244,26 +263,8 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             subject = getMixSubject();
         }
 
-        const vocabLevel = activeProfile.vocabMainLevel || 1;
         const mathLevel = activeProfile.mathMainLevel || 1;
         const nextMathLevel = activeProfile.mathMaxUnlocked >= mathLevel + 1 ? mathLevel + 1 : mathLevel;
-
-        const vocabLevelWeights: { level: number; weight: number }[] = [
-            { level: vocabLevel, weight: 0.5 },
-            { level: vocabLevel - 1, weight: 0.25 },
-            { level: vocabLevel - 2, weight: 0.15 },
-            { level: vocabLevel - 3, weight: 0.1 }
-        ].filter(w => w.level >= 1);
-
-        const pickWeightedLevel = () => {
-            const totalWeight = vocabLevelWeights.reduce((sum, w) => sum + w.weight, 0);
-            let r = Math.random() * totalWeight;
-            for (const w of vocabLevelWeights) {
-                r -= w.weight;
-                if (r <= 0) return w.level;
-            }
-            return vocabLevelWeights[0]?.level || vocabLevel;
-        };
 
         const pendingMeta: { isReview: boolean }[] = [];
         const pendingVocabIds: string[] = [];
@@ -279,7 +280,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         const plusLimit = Math.max(1, Math.floor(BLOCK_SIZE * 0.3));
 
         for (let i = 0; i < blockSize; i++) {
-            let partialProblem: Omit<Problem, 'id' | 'subject' | 'isReview'>;
+            let partialProblem: Omit<Problem, 'id' | 'subject' | 'isReview'> | undefined;
             let isReviewItem = false;
 
             if (subject === 'vocab') {
@@ -400,8 +401,20 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 }
             }
 
+            // Ensure partialProblem is not undefined
+            if (!partialProblem) {
+                // Should not happen, but as a safe fallback
+                partialProblem = {
+                    categoryId: "error",
+                    questionText: "Error",
+                    inputType: "choice",
+                    inputConfig: { choices: [{ label: "Error", value: "error" }] },
+                    correctAnswer: "error"
+                } as any;
+            }
+
             q.push({
-                ...partialProblem,
+                ...partialProblem!,
                 id: `${blockCount}-${i}-${Date.now()}`,
                 subject,
                 isReview: isReviewItem

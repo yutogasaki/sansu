@@ -12,7 +12,7 @@ export const Settings: React.FC = () => {
     const [sound, setSound] = useState(true);
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [profiles, setProfiles] = useState<UserProfile[]>([]);
-    const [mathUnlockLevel, setMathUnlockLevel] = useState<number>(1);
+    const [_mathUnlockLevel, setMathUnlockLevel] = useState<number>(1);
 
     useEffect(() => {
         const load = async () => {
@@ -74,19 +74,7 @@ export const Settings: React.FC = () => {
         setProfile(updated);
     };
 
-    const handleMathUnlockChange = async (value: number) => {
-        if (!profile) return;
-        const ok = confirm(`${value} レベルまで ひらきますか？`);
-        if (!ok) return;
-        const updated = {
-            ...profile,
-            mathMaxUnlocked: value,
-            mathMainLevel: Math.min(profile.mathMainLevel, value)
-        };
-        await saveProfile(updated);
-        setProfile(updated);
-        setMathUnlockLevel(value);
-    };
+
 
     const handleMathEasyChange = async (value: number) => {
         if (!profile) return;

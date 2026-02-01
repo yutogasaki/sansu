@@ -1,8 +1,10 @@
-import { defineConfig } from 'vite'
+/// <reference types="vitest" />
+import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
 // https://vitejs.dev/config/
+
 export default defineConfig({
     plugins: [react()],
     test: {
@@ -14,4 +16,4 @@ export default defineConfig({
             "@": path.resolve(__dirname, "./src"),
         },
     },
-})
+} as any)
