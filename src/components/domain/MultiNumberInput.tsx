@@ -21,7 +21,7 @@ export const MultiNumberInput: React.FC<MultiNumberInputProps> = ({
     readOnly = false
 }) => {
     return (
-        <div className="flex items-center justify-center gap-4 py-8 land:py-4">
+        <div className="flex items-center justify-center gap-4 py-2 land:py-4">
             {fields.map((field, idx) => {
                 const val = values[idx] || "";
                 // Base width of 4rem (approx 64px) + 1rem per character (approx 16px)
