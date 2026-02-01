@@ -8,10 +8,19 @@ interface TenKeyProps {
     onEnter: () => void;
     onClear: () => void;
     showDecimal?: boolean;
+    onCursorMove?: (direction: "left" | "right") => void;
 }
 
-export const TenKey: React.FC<TenKeyProps> = ({ onInput, onDelete, onEnter, onClear, showDecimal = false }) => {
+export const TenKey: React.FC<TenKeyProps> = ({
+    onInput,
+    onDelete,
+    onEnter,
+    onClear,
+    showDecimal = false,
+    onCursorMove
+}) => {
     const numBtnClass = "h-16 text-2xl font-semibold bg-white border-b-4 border-slate-100 active:border-b-0 active:translate-y-1 transition-all land:h-12 land:text-xl";
+    const arrowBtnClass = "h-16 text-xl font-bold text-slate-500 bg-slate-50 border-b-4 border-slate-200 active:border-b-0 active:translate-y-1 transition-all land:h-12";
 
     if (showDecimal) {
         // 4列レイアウト（小数点付き）
@@ -47,14 +56,16 @@ export const TenKey: React.FC<TenKeyProps> = ({ onInput, onDelete, onEnter, onCl
                 <Button onClick={() => onInput(0)} className={numBtnClass} variant="secondary">
                     0
                 </Button>
-                <Button onClick={() => onInput(".")} className={`${numBtnClass} col-span-2`} variant="secondary">
+                <Button onClick={() => onInput(".")} className={numBtnClass} variant="secondary">
                     .
                 </Button>
+                {/* 4行目の空きスペースに矢印入れてもいいが、Decimal時は既に埋まってる感あるので一旦空き */}
+                <div />
             </div>
         );
     }
 
-    // 通常4列レイアウト（戻すを追加）
+    // 通常4列レイアウト（矢印キー追加）
     return (
         <div className="grid grid-cols-4 gap-3 p-2">
             {[7, 8, 9].map((n) => (
@@ -84,10 +95,27 @@ export const TenKey: React.FC<TenKeyProps> = ({ onInput, onDelete, onEnter, onCl
                 <Icons.Check className="w-8 h-8" />
             </Button>
 
-            <Button onClick={() => onInput(0)} className={`${numBtnClass} col-span-2`} variant="secondary">
+            <Button
+                onClick={() => onCursorMove?.("left")}
+                className={arrowBtnClass}
+                disabled={!onCursorMove}
+                variant="secondary"
+            >
+                <Icons.ArrowLeft className="w-6 h-6" />
+            </Button>
+
+            <Button onClick={() => onInput(0)} className={numBtnClass} variant="secondary">
                 0
             </Button>
-            <div />
+
+            <Button
+                onClick={() => onCursorMove?.("right")}
+                className={arrowBtnClass}
+                disabled={!onCursorMove}
+                variant="secondary"
+            >
+                <Icons.ArrowRight className="w-6 h-6" />
+            </Button>
         </div>
     );
 };

@@ -7,7 +7,9 @@ import {
     BarChart2,
     X,
     Volume2,
-    Play
+    Play,
+    ArrowLeft,
+    ArrowRight
 } from "lucide-react";
 
 export const Icons = {
@@ -19,5 +21,7 @@ export const Icons = {
     Stats: BarChart2,
     Close: X,
     Sound: Volume2,
-    Play: Play
+    Play: Play,
+    ArrowLeft: ArrowLeft,
+    ArrowRight: ArrowRight
 };

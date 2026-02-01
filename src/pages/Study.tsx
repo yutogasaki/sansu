@@ -150,6 +150,18 @@ export const Study: React.FC = () => {
         }
     }, [feedback, currentProblem, activeFieldIndex]);
 
+    const handleCursorMove = useCallback((direction: "left" | "right") => {
+        if (feedback !== "none") return;
+        if (currentProblem?.inputType === 'multi-number' && currentProblem.inputConfig?.fields) {
+            const maxIndex = currentProblem.inputConfig.fields.length - 1;
+            if (direction === "right") {
+                setActiveFieldIndex(prev => Math.min(prev + 1, maxIndex));
+            } else {
+                setActiveFieldIndex(prev => Math.max(prev - 1, 0));
+            }
+        }
+    }, [feedback, currentProblem]);
+
     const nextProblem = useCallback(() => {
         setFeedback("none");
         setShowCorrection(false);
@@ -341,7 +353,7 @@ export const Study: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-slate-50 relative overflow-hidden">
+        <div className="flex flex-col h-full bg-slate-50 relative overflow-hidden safe-area-inset-bottom">
 
             {/* Full Screen Feedback Overlays */}
             <AnimatePresence>
@@ -447,7 +459,10 @@ export const Study: React.FC = () => {
                             <h2 className="text-6xl font-black text-slate-800 tracking-wider text-center ipadland:text-5xl ipadland:whitespace-nowrap ipadland:overflow-hidden ipadland:text-ellipsis ipadland:text-left">
                                 {currentProblem.questionText}
                             </h2>
-                            <div className="min-w-[120px] h-20 border-b-4 border-slate-200 flex items-center justify-center text-5xl font-mono text-slate-700 bg-slate-50/50 rounded-xl px-8">
+                            <div
+                                className="min-w-[120px] h-20 border-b-4 border-slate-200 flex items-center justify-center text-5xl font-mono text-slate-700 bg-slate-50/50 rounded-xl px-4 transition-all"
+                                style={{ width: `${Math.max(3, userInput.length) * 2.5}rem` }}
+                            >
                                 {userInput}
                                 {!userInput && <span className="animate-pulse w-1 h-10 bg-slate-300 ml-1"></span>}
                             </div>
@@ -476,7 +491,7 @@ export const Study: React.FC = () => {
             </div>
 
             {/* Controls */}
-            <div className="bg-slate-100 p-2 pb-6 rounded-t-3xl shadow-inner min-h-[45vh] land:min-h-[32vh] land:pb-4">
+            <div className="bg-slate-100 p-2 pb-6 rounded-t-3xl shadow-inner flex-none land:min-h-[32vh] land:pb-4">
                 {/* TenKey is shared for number and multi-number */}
                 {(currentProblem.inputType === "number" || currentProblem.inputType === "multi-number") && (
                     <TenKey
@@ -485,6 +500,7 @@ export const Study: React.FC = () => {
                         onClear={handleClear}
                         onEnter={() => handleSubmit()}
                         showDecimal={currentProblem.categoryId.startsWith("dec_")}
+                        onCursorMove={handleCursorMove}
                     />
                 )}
 
