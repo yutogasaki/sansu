@@ -456,7 +456,7 @@ export const Study: React.FC = () => {
 
                     {currentProblem.inputType === "number" ? (
                         <div className="w-full flex flex-col items-center gap-6 ipadland:flex-row ipadland:justify-center ipadland:gap-8">
-                            <h2 className="text-6xl font-black text-slate-800 tracking-wider text-center ipadland:text-5xl ipadland:whitespace-nowrap ipadland:overflow-hidden ipadland:text-ellipsis ipadland:text-left">
+                            <h2 className="text-6xl font-black text-slate-800 tracking-wider text-center ipadland:text-5xl whitespace-nowrap overflow-hidden text-ellipsis ipadland:text-left">
                                 {currentProblem.questionText}
                             </h2>
                             <div
@@ -468,14 +468,14 @@ export const Study: React.FC = () => {
                             </div>
                         </div>
                     ) : (
-                        <div className="text-center w-full">
+                        <div className="text-center w-full flex flex-col items-center ipadland:flex-row ipadland:justify-center ipadland:gap-8">
                             {/* Question Text */}
-                            <h2 className="text-6xl font-black text-slate-800 mb-8 tracking-wider ipadland:text-5xl ipadland:whitespace-nowrap ipadland:overflow-hidden ipadland:text-ellipsis">
+                            <h2 className="text-6xl font-black text-slate-800 mb-8 tracking-wider whitespace-nowrap overflow-hidden text-ellipsis ipadland:text-5xl ipadland:mb-0 ipadland:mr-8">
                                 {currentProblem.questionText}
                             </h2>
 
                             {currentProblem.inputType === "multi-number" && currentProblem.inputConfig?.fields && (
-                                <div className="mt-4">
+                                <div className="mt-4 ipadland:mt-0">
                                     <MultiNumberInput
                                         fields={currentProblem.inputConfig.fields.map(f => ({ ...f, label: f.label || "" }))}
                                         values={userInputs}

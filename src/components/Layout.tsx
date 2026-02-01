@@ -1,8 +1,9 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Footer } from "./Footer";
 
 export const Layout: React.FC = () => {
+    const location = useLocation();
     return (
         <div className="min-h-screen bg-[#FDFBF7] text-slate-700 font-sans selection:bg-yellow-200 selection:text-yellow-900">
             <main className="mx-auto max-w-md w-full min-h-screen relative flex flex-col land:max-w-4xl">
@@ -11,7 +12,7 @@ export const Layout: React.FC = () => {
                     <Outlet />
                 </div>
 
-                <Footer />
+                {location.pathname !== "/study" && <Footer />}
             </main>
         </div>
     );
