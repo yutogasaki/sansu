@@ -44,6 +44,9 @@ export const Study: React.FC = () => {
     // UI State for Block Transition
     const [isFinished, setIsFinished] = useState(false);
 
+    // ちからチェック用：正答数トラッキング
+    const [correctCount, setCorrectCount] = useState(0);
+
     // Profile ID for skip logging
     const [profileId, setProfileId] = useState<string | null>(null);
 
@@ -182,6 +185,7 @@ export const Study: React.FC = () => {
             setFeedback("correct");
             playSound("correct");
             handleResult(currentProblem, 'correct');
+            setCorrectCount(prev => prev + 1);
 
             setTimeout(() => {
                 nextProblem();
@@ -290,6 +294,8 @@ export const Study: React.FC = () => {
             activeFieldIndex={activeFieldIndex}
             feedback={feedback}
             showCorrection={showCorrection}
+            sessionKind={sessionKindParam || "normal"}
+            correctCount={correctCount}
             onNavigate={(path) => navigate(path)}
             onContinue={handleContinue}
             onSkip={handleSkip}

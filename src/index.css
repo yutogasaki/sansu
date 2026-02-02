@@ -3,6 +3,8 @@
 @layer base {
     :root {
         --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+        /* TenKey動的高さ: 画面の8%、最小32px、最大48px */
+        --tenkey-h: clamp(32px, 8dvh, 48px);
     }
 
     body {

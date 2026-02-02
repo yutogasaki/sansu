@@ -12,6 +12,8 @@ import { Problem } from "../domain/types";
 import { LayoutDebugOverlay } from "../components/LayoutDebugOverlay";
 import { MathRenderer } from "../components/domain/MathRenderer";
 
+type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event";
+
 interface StudyLayoutProps {
     loading: boolean;
     isFinished: boolean;
@@ -23,6 +25,10 @@ interface StudyLayoutProps {
     activeFieldIndex: number;
     feedback: "none" | "correct" | "incorrect" | "skipped";
     showCorrection: boolean;
+
+    // Session info for result display
+    sessionKind?: SessionKind;
+    correctCount?: number;
 
     // Handlers
     onNavigate: (path: string) => void;
@@ -47,6 +53,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     loading,
     isFinished,
     currentProblem,
+    sessionKind = "normal",
+    correctCount = 0,
     currentIndex,
     blockSize,
     userInput,
@@ -105,6 +113,38 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     }
 
     if (isFinished) {
+        // ちからチェック結果表示
+        if (sessionKind === "check-normal" || sessionKind === "check-event") {
+            const isEvent = sessionKind === "check-event";
+            const ratio = blockSize > 0 ? correctCount / blockSize : 0;
+            const isGood = ratio >= 0.6; // 60%以上で「よくできた」
+
+            return (
+                <div className="flex flex-col items-center justify-center p-6 h-full space-y-8 animate-in zoom-in bg-gradient-to-b from-slate-50 to-white">
+                    <div className="text-6xl">{isEvent ? "🎉" : (isGood ? "👍" : "🔁")}</div>
+                    <h2 className="text-2xl font-bold text-center">
+                        {isEvent
+                            ? "ここまで よく がんばったね"
+                            : (isGood ? "よく できたね" : "もう いちど やってみよ")
+                        }
+                    </h2>
+                    <div className="text-center text-slate-500">
+                        <span className="text-4xl font-bold text-slate-700">{correctCount}</span>
+                        <span className="text-lg"> / {blockSize} もん</span>
+                    </div>
+                    <div className="w-full space-y-4 max-w-xs">
+                        <Button onClick={() => onNavigate("/stats")} size="xl" className="w-full shadow-lg shadow-yellow-200">
+                            きろく を みる
+                        </Button>
+                        <Button onClick={() => onNavigate("/")} variant="secondary" size="lg" className="w-full">
+                            ホーム へ もどる
+                        </Button>
+                    </div>
+                </div>
+            );
+        }
+
+        // 通常完了画面
         return (
             <div className="flex flex-col items-center justify-center p-6 h-full space-y-8 animate-in zoom-in">
                 <div className="text-6xl">🙌</div>
@@ -194,8 +234,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 )}
             </AnimatePresence>
 
-            {/* Header: Compressed on mobile via flex-none. Reduced margin. */}
-            <div id="debug-header" className="flex-none mobile:origin-top mobile:-mb-2 mobile:scale-90 origin-top">
+            {/* Header: モバイルでは非表示 */}
+            <div id="debug-header" className="flex-none mobile:hidden">
                 <Header
                     title={currentProblem.subject === 'math' ? 'さんすう' : 'えいご'}
                     subtitle={currentProblem.categoryId}
@@ -208,36 +248,59 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 />
             </div>
 
+            {/* モバイル専用: 統合トップバー */}
+            <div className="hidden mobile:flex items-center justify-between px-3 py-1 bg-white border-b border-slate-100">
+                <button
+                    onClick={onSkip}
+                    disabled={feedback !== "none"}
+                    className="text-slate-400 hover:text-slate-600 text-xs font-bold disabled:opacity-30"
+                >
+                    スキップ→
+                </button>
+                {currentProblem.isReview && (
+                    <span className="text-slate-400 text-xs">🔁</span>
+                )}
+                <span className="text-slate-300 font-bold text-xs">
+                    {currentIndex + 1}/{blockSize}
+                </span>
+                <button
+                    onClick={() => onNavigate("/")}
+                    className="text-slate-400 hover:text-slate-600"
+                >
+                    <Icons.Close className="w-5 h-5" />
+                </button>
+            </div>
+
             {/* Main Area: Mobile=Vertical, iPad=Horizontal */}
             <div className="flex-1 flex flex-col ipadland:flex-row ipadland:p-6 ipadland:gap-4 overflow-hidden min-h-0">
 
                 {/* Question / Card Area */}
                 {/* Mobile: flex-1 but with shrink allowed. ipadland:flex-[2] */}
-                <div id="debug-card-container" {...swipeHandlers} className="flex-1 px-4 py-2 flex flex-col relative z-0 land:px-6 ipadland:flex-[2] ipadland:p-0 mobile:px-0 mobile:py-0 min-h-0">
-                    <Card className="flex-1 flex flex-col items-center justify-center p-6 shadow-xl border-t-4 border-t-yellow-300 relative land:p-4 bg-white mobile:p-2 mobile:pt-8 mobile:border-t-2 mobile:shadow-none overflow-hidden min-h-0">
+                <div id="debug-card-container" {...swipeHandlers} className="flex-1 px-4 py-2 flex flex-col relative z-0 land:px-6 ipadland:flex-[2] ipadland:p-0 mobile:px-1 mobile:py-1 min-h-0">
+                    <Card className="flex-1 flex flex-col items-center justify-center p-6 shadow-xl border-t-4 border-t-yellow-300 relative land:p-4 bg-white mobile:p-2 mobile:border-t-2 mobile:shadow-none overflow-hidden min-h-0">
 
-                        {/* Progress Indicator */}
-                        <div className="absolute top-4 right-4 text-slate-300 font-bold text-sm mobile:top-2 mobile:right-2 mobile:text-xs">
+                        {/* Progress Indicator - モバイルでは上部バーに移動したので非表示 */}
+                        <div className="absolute top-4 right-4 text-slate-300 font-bold text-sm mobile:hidden">
                             {currentIndex + 1} / {blockSize}
                         </div>
 
-                        {/* Skip Button */}
+                        {/* Skip Button - モバイルでは上部バーに移動したので非表示 */}
                         <button
                             onClick={onSkip}
                             disabled={feedback !== "none"}
-                            className="absolute top-4 left-4 text-slate-300 hover:text-slate-500 text-sm font-bold flex items-center gap-1 disabled:opacity-30 mobile:top-2 mobile:left-2 mobile:text-xs"
+                            className="absolute top-4 left-4 text-slate-300 hover:text-slate-500 text-sm font-bold flex items-center gap-1 disabled:opacity-30 mobile:hidden"
                         >
                             スキップ →
                         </button>
 
-                        {/* 復習補助表示 */}
+                        {/* 復習補助表示 - モバイルでは上部バーに移動したので非表示 */}
                         {currentProblem.isReview && (
                             <motion.div
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.5 }}
-                                className="text-slate-400 text-sm font-bold mb-4 text-center w-full mobile:mb-1 mobile:text-xs"
+                                className="text-slate-400 text-sm font-bold mb-4 text-center w-full mobile:hidden"
                             >
                                 🔁 まえに やったところ
                             </motion.div>
@@ -245,44 +308,44 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
 
                         {/* Question Content */}
                         {currentProblem.inputType === "number" ? (
-                            <div className="w-full flex-1 flex flex-col items-center justify-center gap-6 ipadland:flex-col ipadland:items-center ipadland:gap-12 mobile:gap-2">
-                                <div className="text-slate-800 font-black tracking-wider text-center max-w-full overflow-hidden">
+                            <div className="w-full flex-1 flex flex-col items-center justify-center gap-6 ipadland:flex-col ipadland:items-center ipadland:gap-12 mobile:flex-row mobile:gap-3 mobile:justify-center">
+                                <div className="text-slate-800 font-black tracking-wider text-center max-w-full overflow-hidden mobile:flex-shrink-0">
                                     {/* Font Size Control: Normal vs Fraction */}
                                     {/* Fraction uses stricter clamp and renderer */}
                                     <MathRenderer
                                         text={currentProblem.questionText || ""}
                                         isFraction={currentProblem.categoryId.startsWith("frac_")}
                                         className={currentProblem.categoryId.startsWith("frac_")
-                                            ? "text-[clamp(32px,9vw,56px)] ipadland:text-7xl"
-                                            : "text-[clamp(36px,10vw,64px)] ipadland:text-8xl mobile:text-5xl"
+                                            ? "text-[clamp(28px,7vw,56px)] ipadland:text-7xl"
+                                            : "text-[clamp(28px,8vw,64px)] ipadland:text-8xl mobile:text-4xl"
                                         }
                                     />
                                 </div>
                                 {/* Input Preview */}
                                 <div
-                                    className="min-w-[120px] h-20 border-b-4 border-slate-200 flex items-center justify-center text-5xl font-mono text-slate-700 bg-slate-50/50 rounded-xl px-4 transition-all ipadland:h-32 ipadland:text-7xl ipadland:min-w-[200px] mobile:h-14 mobile:text-4xl mobile:min-w-[100px]"
+                                    className="min-w-[120px] h-20 border-b-4 border-slate-200 flex items-center justify-center text-5xl font-mono text-slate-700 bg-slate-50/50 rounded-xl px-4 transition-all ipadland:h-32 ipadland:text-7xl ipadland:min-w-[200px] mobile:h-12 mobile:text-3xl mobile:min-w-[80px] mobile:px-2 mobile:flex-shrink"
                                     style={{ width: `${Math.max(3, userInput.length) * 2.5}rem` }}
                                 >
                                     {userInput}
-                                    {!userInput && <span className="animate-pulse w-1 h-10 bg-slate-300 ml-1"></span>}
+                                    {!userInput && <span className="animate-pulse w-1 h-10 bg-slate-300 ml-1 mobile:h-6"></span>}
                                 </div>
                             </div>
                         ) : (
-                            <div className="text-center w-full flex-1 flex flex-col items-center justify-center gap-2 ipadland:flex-col ipadland:gap-8">
+                            <div className="text-center w-full flex-1 flex flex-col items-center justify-center gap-2 ipadland:flex-col ipadland:gap-8 mobile:flex-row mobile:gap-3 mobile:justify-center">
                                 {/* Question Text */}
-                                <div className="mb-2 ipadland:mb-0 max-w-full overflow-hidden">
+                                <div className="mb-2 ipadland:mb-0 max-w-full overflow-hidden mobile:mb-0 mobile:flex-shrink-0">
                                     <MathRenderer
                                         text={currentProblem.questionText || ""}
                                         isFraction={currentProblem.categoryId.startsWith("frac_")}
                                         className={currentProblem.categoryId.startsWith("frac_")
-                                            ? "text-[clamp(32px,9vw,56px)] ipadland:text-7xl text-slate-800 font-black tracking-wider"
-                                            : "text-[clamp(36px,10vw,64px)] ipadland:text-7xl mobile:text-5xl text-slate-800 font-black tracking-wider"
+                                            ? "text-[clamp(24px,6vw,56px)] ipadland:text-7xl text-slate-800 font-black tracking-wider"
+                                            : "text-[clamp(28px,8vw,64px)] ipadland:text-7xl mobile:text-4xl text-slate-800 font-black tracking-wider"
                                         }
                                     />
                                 </div>
 
                                 {currentProblem.inputType === "multi-number" && currentProblem.inputConfig?.fields && (
-                                    <div className="ipadland:mt-0">
+                                    <div className="ipadland:mt-0 mobile:flex-shrink">
                                         <MultiNumberInput
                                             fields={currentProblem.inputConfig.fields.map(f => ({ ...f, label: f.label || "" }))}
                                             values={userInputs}
@@ -307,7 +370,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             onDelete={onBackspace}
                             onClear={onClear}
                             onEnter={onEnter}
-                            showDecimal={currentProblem.categoryId.startsWith("dec_")}
+                            showDecimal={currentProblem.subject === 'math'}
                             onCursorMove={onCursorMove}
                         />
                     )}

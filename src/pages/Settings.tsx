@@ -11,12 +11,25 @@ import { getAvailableSkills } from "../domain/math/curriculum";
 import { generateMathProblem } from "../domain/math";
 import { Problem } from "../domain/types";
 
+// 保護者ガード用：簡単な計算問題
+const generateParentGuardQuestion = () => {
+    const a = Math.floor(Math.random() * 5) + 3; // 3-7
+    const b = Math.floor(Math.random() * 5) + 3; // 3-7
+    return { question: `${a} + ${b} = ?`, answer: String(a + b) };
+};
+
 export const Settings: React.FC = () => {
     const navigate = useNavigate();
     const [sound, setSound] = useState(true);
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [profiles, setProfiles] = useState<UserProfile[]>([]);
     const [_mathUnlockLevel, setMathUnlockLevel] = useState<number>(1);
+
+    // 保護者ガードの状態
+    const [showParentGuard, setShowParentGuard] = useState(false);
+    const [guardCallback, setGuardCallback] = useState<(() => void) | null>(null);
+    const [guardQuestion, setGuardQuestion] = useState({ question: "", answer: "" });
+    const [guardInput, setGuardInput] = useState("");
 
     useEffect(() => {
         const load = async () => {
@@ -78,34 +91,53 @@ export const Settings: React.FC = () => {
         setProfile(updated);
     };
 
-
-
-    const handleMathEasyChange = async (value: number) => {
-        if (!profile) return;
-        const ok = confirm("この くらい まで ひらきますか？");
-        if (!ok) return;
-        const main = Math.min(value + 1, 20);
-        const updated = {
-            ...profile,
-            mathMaxUnlocked: main,
-            mathMainLevel: main
-        };
-        await saveProfile(updated);
-        setProfile(updated);
-        setMathUnlockLevel(main);
+    // 保護者ガードを表示して、通過したらcallbackを実行
+    const withParentGuard = (callback: () => void) => {
+        const q = generateParentGuardQuestion();
+        setGuardQuestion(q);
+        setGuardInput("");
+        setGuardCallback(() => callback);
+        setShowParentGuard(true);
     };
 
-    const handleVocabEasyChange = async (value: number) => {
+    const handleGuardSubmit = () => {
+        if (guardInput === guardQuestion.answer) {
+            setShowParentGuard(false);
+            guardCallback?.();
+        } else {
+            setGuardInput("");
+            setGuardQuestion(generateParentGuardQuestion());
+        }
+    };
+
+
+
+    const handleMathEasyChange = (value: number) => {
         if (!profile) return;
-        const ok = confirm("この くらい まで ひらきますか？");
-        if (!ok) return;
-        const updated = {
-            ...profile,
-            vocabMaxUnlocked: value,
-            vocabMainLevel: value
-        };
-        await saveProfile(updated);
-        setProfile(updated);
+        withParentGuard(async () => {
+            const main = Math.min(value + 1, 20);
+            const updated = {
+                ...profile,
+                mathMaxUnlocked: main,
+                mathMainLevel: main
+            };
+            await saveProfile(updated);
+            setProfile(updated);
+            setMathUnlockLevel(main);
+        });
+    };
+
+    const handleVocabEasyChange = (value: number) => {
+        if (!profile) return;
+        withParentGuard(async () => {
+            const updated = {
+                ...profile,
+                vocabMaxUnlocked: value,
+                vocabMainLevel: value
+            };
+            await saveProfile(updated);
+            setProfile(updated);
+        });
     };
 
     const handleReset = async () => {
@@ -139,6 +171,40 @@ export const Settings: React.FC = () => {
 
     return (
         <div className="flex flex-col h-full bg-slate-50">
+            {/* 保護者ガードモーダル */}
+            {showParentGuard && (
+                <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-2xl p-6 w-full max-w-xs space-y-4 shadow-xl">
+                        <h3 className="text-lg font-bold text-center text-slate-700">ほごしゃ かくにん</h3>
+                        <p className="text-center text-slate-500 text-sm">けいさん もんだい に こたえて ください</p>
+                        <div className="text-center text-2xl font-bold text-slate-800">{guardQuestion.question}</div>
+                        <input
+                            type="number"
+                            value={guardInput}
+                            onChange={(e) => setGuardInput(e.target.value)}
+                            className="w-full border-2 border-slate-200 rounded-xl p-3 text-center text-2xl font-bold"
+                            autoFocus
+                            onKeyDown={(e) => e.key === "Enter" && handleGuardSubmit()}
+                        />
+                        <div className="flex gap-2">
+                            <Button
+                                variant="secondary"
+                                className="flex-1"
+                                onClick={() => setShowParentGuard(false)}
+                            >
+                                やめる
+                            </Button>
+                            <Button
+                                className="flex-1"
+                                onClick={handleGuardSubmit}
+                            >
+                                OK
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <Header title="せってい" />
 
             <div className="flex-1 overflow-y-auto p-4 space-y-6 land:grid land:grid-cols-2 land:gap-6 land:space-y-0">
@@ -241,14 +307,17 @@ export const Settings: React.FC = () => {
 
                 {/* Event Check */}
                 <Card className="p-4 flex justify-between items-center">
-                    <span className="font-bold text-slate-700">とくべつ ちからチェック</span>
+                    <div>
+                        <div className="font-bold text-slate-700">とくべつ ちからチェック</div>
+                        <div className="text-xs text-slate-400">きろくに あらわれます</div>
+                    </div>
                     <Button
                         size="sm"
                         variant="secondary"
-                        onClick={() => {
+                        onClick={() => withParentGuard(() => {
                             localStorage.setItem("sansu_event_check_pending", "1");
                             alert("きろくに でます");
-                        }}
+                        })}
                     >
                         だす
                     </Button>

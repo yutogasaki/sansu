@@ -59,17 +59,10 @@ export const updateSkillStatus = (
     if (!state.status) return undefined;
 
     if (state.status === 'active') {
-        // 仕様: 30問以上 & 直近90%以上でretired
-        if (state.totalAnswers >= 30) {
-            // 直近の正答率を計算（recentResultsがあれば使う、なければ全体で代用）
-            let accuracy: number;
-            if (recentResults && recentResults.length >= 10) {
-                const recent10 = recentResults.slice(0, 10);
-                accuracy = recent10.filter(r => r).length / recent10.length;
-            } else {
-                // 全体の正答率で代用
-                accuracy = state.correctAnswers / state.totalAnswers;
-            }
+        // 仕様 5.4: 30問以上 & 直近10問で90%以上でretired
+        if (state.totalAnswers >= 30 && recentResults && recentResults.length >= 10) {
+            const recent10 = recentResults.slice(0, 10);
+            const accuracy = recent10.filter(r => r).length / recent10.length;
 
             if (accuracy >= 0.9) {
                 return 'retired';
