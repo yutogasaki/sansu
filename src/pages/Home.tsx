@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { Icons } from "../components/icons";
 import { getActiveProfile } from "../domain/user/repository";
 import { getTodayStats, getTotalStats } from "../domain/stats/repository";
-import { checkEventCondition } from "../domain/sessionManager";
+import { checkEventCondition, EventCheckParams } from "../domain/sessionManager";
+import { getWeakPoints } from "../domain/stats/repository";
 
 export const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -27,14 +28,32 @@ export const Home: React.FC = () => {
                     setTodayCount(stats.count);
                 });
 
-                // イベント条件チェック
-                getTotalStats(profile.id).then(total => {
-                    const eventType = checkEventCondition(profile, total.count);
+                // イベント条件チェック（仕様 4.3.1）
+                Promise.all([
+                    getTotalStats(profile.id),
+                    getWeakPoints(profile.id)
+                ]).then(([total, weakPoints]) => {
+                    // 前回の苦手数を取得（localStorage）
+                    const prevWeakCountStr = localStorage.getItem("sansu_prev_weak_count");
+                    const prevWeakCount = prevWeakCountStr ? parseInt(prevWeakCountStr, 10) : undefined;
+                    const currentWeakCount = weakPoints.length;
+
+                    const params: EventCheckParams = {
+                        profile,
+                        totalCount: total.count,
+                        prevWeakCount,
+                        currentWeakCount
+                    };
+
+                    const eventType = checkEventCondition(params);
                     if (eventType) {
                         if (!localStorage.getItem("sansu_event_check_pending")) {
                             localStorage.setItem("sansu_event_check_pending", "1");
                         }
                     }
+
+                    // 苦手数を保存（次回比較用）
+                    localStorage.setItem("sansu_prev_weak_count", currentWeakCount.toString());
                 });
             }
         });

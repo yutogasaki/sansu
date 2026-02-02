@@ -221,6 +221,15 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             {currentIndex + 1} / {blockSize}
                         </div>
 
+                        {/* 科目バッジ（仕様4.3 推奨） */}
+                        <div className={`absolute top-4 left-1/2 -translate-x-1/2 text-xs font-bold px-3 py-1 rounded-full mobile:top-2 mobile:text-[10px] mobile:px-2 ${
+                            currentProblem.subject === 'math'
+                                ? 'bg-yellow-100 text-yellow-700'
+                                : 'bg-blue-100 text-blue-700'
+                        }`}>
+                            {currentProblem.subject === 'math' ? '算' : '英'}
+                        </div>
+
                         {/* Skip Button */}
                         <button
                             onClick={onSkip}

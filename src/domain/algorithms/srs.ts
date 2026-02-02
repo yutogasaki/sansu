@@ -49,9 +49,12 @@ export const isDue = (item: MemoryState): boolean => {
 
 // 仕様 5.4: 算数 status 遷移
 // active → retired: 30問以上 & 直近90%以上
+// retired → maintenance: 維持確認出題時
+// maintenance → active: 失敗が続く場合（直近5回で60%未満）
 export const updateSkillStatus = (
     state: MemoryState,
-    recentResults?: boolean[] // 直近の正答履歴（新しい順）
+    recentResults?: boolean[], // 直近の正答履歴（新しい順）
+    isMaintenanceCheck?: boolean // 維持確認として出題されたか
 ): SkillStatus | undefined => {
     if (!state.status) return undefined;
 
@@ -74,8 +77,20 @@ export const updateSkillStatus = (
         }
     }
 
-    // maintenance → active: 失敗が続く場合（将来拡張）
-    // 現時点では遷移なし
+    // retired → maintenance: 維持確認として出題された場合
+    if (state.status === 'retired' && isMaintenanceCheck) {
+        return 'maintenance';
+    }
+
+    // maintenance → active: 失敗が続く場合（直近5回で60%未満）
+    if (state.status === 'maintenance' && recentResults && recentResults.length >= 5) {
+        const recent5 = recentResults.slice(0, 5);
+        const correctCount = recent5.filter(r => r).length;
+        const accuracy = correctCount / 5;
+        if (accuracy < 0.6) {
+            return 'active';
+        }
+    }
 
     return state.status;
 };

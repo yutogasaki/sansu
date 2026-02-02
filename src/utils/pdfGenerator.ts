@@ -1,8 +1,8 @@
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import { PDFDocument, rgb } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import { Problem } from '../domain/types';
 
-export const generateMathPDF = async (problems: Problem[], title: string, userName: string = "") => {
+export const generateMathPDF = async (problems: Problem[], title: string, _userName: string = "") => {
     // 1. Create a new PDFDocument
     const pdfDoc = await PDFDocument.create();
 

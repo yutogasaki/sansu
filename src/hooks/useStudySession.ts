@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
-import { getMaintenanceMathSkillIds, getRecentAttempts, getReviewItems, getWeakMathSkillIds, logAttempt } from "../domain/learningRepository";
+import { getMaintenanceMathSkillIds, getRecentAttempts, getReviewItems, getWeakMathSkillIds, getSkippedItemsToday, getRetiredMathSkillIds, logAttempt } from "../domain/learningRepository";
 import { generateMathProblem } from "../domain/math";
 import { generateVocabProblem } from "../domain/english/generator";
 import { Problem, SubjectKey, UserProfile } from "../domain/types";
@@ -230,18 +230,6 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         const blockCounts = new Map<string, number>();
         const recentIds = sessionHistoryRef.current.slice(-COOLDOWN_WINDOW).map(h => h.id);
 
-        const pickId = (candidates: string[]) => {
-            const notOverused = candidates.filter(id => (blockCounts.get(id) || 0) < SAME_ID_LIMIT);
-            if (notOverused.length === 0) return undefined;
-            const cooled = notOverused.filter(id => !recentIds.includes(id));
-            const pool = cooled.length > 0 ? cooled : notOverused;
-            return pool[Math.floor(Math.random() * pool.length)];
-        };
-
-        const markPicked = (id: string) => {
-            blockCounts.set(id, (blockCounts.get(id) || 0) + 1);
-        };
-
         const vocabDue = await getReviewItems(pid, 'vocab');
         let forceVocabReviewBlock = false;
 
@@ -271,10 +259,29 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         const mathDue = subject === 'math' ? await getReviewItems(pid, 'math') : [];
         const weakMathIds = subject === 'math' ? await getWeakMathSkillIds(pid) : [];
         const maintenanceMathIds = subject === 'math' ? await getMaintenanceMathSkillIds(pid) : [];
+        // 仕様 5.4: retiredスキルも1%で出題（維持確認→maintenance遷移のため）
+        const retiredMathIds = subject === 'math' ? await getRetiredMathSkillIds(pid) : [];
         const availableMathSkills = subject === 'math' ? getAvailableSkills(activeProfile.mathMaxUnlocked || mathLevel) : [];
         const weakMathPool = subject === 'math'
             ? weakMathIds.filter(id => availableMathSkills.includes(id))
             : [];
+
+        // 仕様 4.7: スキップ3回ガード - 当日3回以上スキップされたアイテムを除外
+        const skippedToday = await getSkippedItemsToday(pid, subject);
+
+        const pickId = (candidates: string[]) => {
+            // スキップガード: 当日3回以上スキップされたアイテムを除外
+            const notSkipped = candidates.filter(id => !skippedToday.includes(id));
+            const notOverused = notSkipped.filter(id => (blockCounts.get(id) || 0) < SAME_ID_LIMIT);
+            if (notOverused.length === 0) return undefined;
+            const cooled = notOverused.filter(id => !recentIds.includes(id));
+            const pool = cooled.length > 0 ? cooled : notOverused;
+            return pool[Math.floor(Math.random() * pool.length)];
+        };
+
+        const markPicked = (id: string) => {
+            blockCounts.set(id, (blockCounts.get(id) || 0) + 1);
+        };
 
         let plusCount = 0;
         const plusLimit = Math.max(1, Math.floor(BLOCK_SIZE * 0.3));
@@ -282,6 +289,8 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         for (let i = 0; i < blockSize; i++) {
             let partialProblem: Omit<Problem, 'id' | 'subject' | 'isReview'> | undefined;
             let isReviewItem = false;
+            // 維持確認フラグ（仕様 5.4: retired→maintenance遷移用）
+            let isMaintenanceCheckItem = false;
 
             if (subject === 'vocab') {
                 if (forceVocabReviewBlock && vocabDue.length > 0 && canAddSessionReview(pendingMeta)) {
@@ -354,13 +363,17 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                     const weakCount = q.filter(item => item.subject === 'math' && !item.isReview && weakMathPool.includes(item.categoryId)).length;
                     const canUseWeak = weakMathPool.length > 0 && weakCount < weakLimit;
                     const useWeak = canUseWeak && Math.random() < WEAK_INJECTION_CAP;
-                    const useMaintenance = maintenanceMathIds.length > 0 && Math.random() < MAINTENANCE_RATE;
+                    // 仕様 5.4: maintenanceとretiredの両方を1%で出題（維持確認）
+                    const useMaintenanceOrRetired = (maintenanceMathIds.length > 0 || retiredMathIds.length > 0) && Math.random() < MAINTENANCE_RATE;
 
-                    if (useMaintenance) {
-                        const maintenanceId = pickId(maintenanceMathIds);
+                    if (useMaintenanceOrRetired) {
+                        // maintenanceとretiredを合わせて候補とする
+                        const maintenancePool = [...maintenanceMathIds, ...retiredMathIds];
+                        const maintenanceId = pickId(maintenancePool);
                         if (maintenanceId) {
                             try {
                                 partialProblem = generateMathProblem(maintenanceId);
+                                isMaintenanceCheckItem = true; // 維持確認フラグをセット
                             } catch (e) {
                                 console.error(e);
                                 partialProblem = generateMathProblem("count_10");
@@ -417,7 +430,8 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 ...partialProblem!,
                 id: `${blockCount}-${i}-${Date.now()}`,
                 subject,
-                isReview: isReviewItem
+                isReview: isReviewItem,
+                isMaintenanceCheck: isMaintenanceCheckItem // 仕様 5.4: 維持確認フラグ
             });
 
             markPicked(q[q.length - 1].categoryId);
@@ -464,8 +478,16 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     const handleResult = async (problem: Problem, result: 'correct' | 'incorrect') => {
         if (!profileId) return;
 
-        // Log to DB
-        await logAttempt(profileId, problem.subject, problem.categoryId, result, false, problem.isReview);
+        // Log to DB（仕様 5.4: 維持確認フラグを渡す）
+        await logAttempt(
+            profileId,
+            problem.subject,
+            problem.categoryId,
+            result,
+            false,
+            problem.isReview,
+            problem.isMaintenanceCheck || false
+        );
 
         // Check Level Up (only for Math Correct answers)
         if (problem.subject === 'math') {

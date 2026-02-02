@@ -10,7 +10,8 @@ export const logAttempt = async (
     itemId: string,
     result: 'correct' | 'incorrect',
     skipped: boolean = false,
-    isReview: boolean = false
+    isReview: boolean = false,
+    isMaintenanceCheck: boolean = false // 維持確認として出題されたか
 ) => {
     const timestamp = new Date().toISOString();
 
@@ -45,12 +46,13 @@ export const logAttempt = async (
     if (existing) {
         // スキップフラグを渡して正しくstrengthを更新
         newState = updateMemoryState(existing, result === 'correct', skipped);
-        // Math status update
+        // Math status update（仕様 5.4: status遷移）
         if (subject === 'math') {
             const currentCorrect = result === 'correct' && !skipped;
             const recentResults = [currentCorrect, ...recentMathLogs.map(l => l.result === 'correct')];
 
-            const status = updateSkillStatus(newState, recentResults);
+            // 維持確認フラグを渡してstatus遷移を判定
+            const status = updateSkillStatus(newState, recentResults, isMaintenanceCheck);
             if (status) newState.status = status;
         }
     } else {
@@ -189,6 +191,51 @@ export const getWeakMathSkillIds = async (profileId: string): Promise<string[]> 
 export const getMaintenanceMathSkillIds = async (profileId: string): Promise<string[]> => {
     const items = await db.memoryMath
         .filter((item: any) => item.profileId === profileId && item.status === 'maintenance')
+        .toArray();
+    return items.map(item => item.id);
+};
+
+// 仕様 4.7: スキップ3回ガード
+// 同一項目のスキップが連続3回起きた場合は、当日は出題停止
+export const getSkippedItemsToday = async (
+    profileId: string,
+    subject: SubjectKey
+): Promise<string[]> => {
+    const dayStart = getLearningDayStart();
+    const dayStartIso = dayStart.toISOString();
+
+    // 当日のスキップログを取得
+    const logs = await db.logs
+        .where('[profileId+subject]')
+        .equals([profileId, subject])
+        .filter(log =>
+            log.result === 'skipped' &&
+            log.timestamp >= dayStartIso
+        )
+        .toArray();
+
+    // アイテムごとのスキップ回数をカウント
+    const skipCounts = new Map<string, number>();
+    for (const log of logs) {
+        const count = skipCounts.get(log.itemId) || 0;
+        skipCounts.set(log.itemId, count + 1);
+    }
+
+    // 3回以上スキップされたアイテムを返す
+    const skippedItems: string[] = [];
+    for (const [itemId, count] of skipCounts) {
+        if (count >= 3) {
+            skippedItems.push(itemId);
+        }
+    }
+
+    return skippedItems;
+};
+
+// retiredスキルを取得
+export const getRetiredMathSkillIds = async (profileId: string): Promise<string[]> => {
+    const items = await db.memoryMath
+        .filter((item: any) => item.profileId === profileId && item.status === 'retired')
         .toArray();
     return items.map(item => item.id);
 };

@@ -57,6 +57,7 @@ export interface Problem {
 
     // Metadata
     isReview: boolean;
+    isMaintenanceCheck?: boolean; // 仕様 5.4: 維持確認として出題されたか
 }
 
 // ------------------------------------------------------------------
