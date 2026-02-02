@@ -38,8 +38,8 @@ export const MultiNumberInput: React.FC<MultiNumberInputProps> = ({
                             onClick={() => !readOnly && onFocus(idx)}
                             style={widthStyle}
                             className={`
-                                relative h-16 px-2 rounded-xl flex items-center justify-center
-                                text-4xl font-mono border-b-4 transition-all cursor-pointer box-content
+                                relative h-[var(--tenkey-key,44px)] min-h-[44px] px-2 rounded-xl flex items-center justify-center
+                                text-4xl font-mono border-b-4 transition-all cursor-pointer box-content ipadland:h-16
                                 ${activeIndex === idx
                                     ? "bg-white border-blue-500 shadow-md transform -translate-y-1"
                                     : "bg-slate-100 border-slate-300 text-slate-400"
@@ -49,7 +49,7 @@ export const MultiNumberInput: React.FC<MultiNumberInputProps> = ({
                             {val}
                             {/* Cursor Blinker */}
                             {activeIndex === idx && !readOnly && (
-                                <span className="absolute right-2 top-1/2 -translate-y-1/2 w-0.5 h-8 bg-blue-500 animate-pulse" />
+                                <span className="absolute right-2 top-1/2 -translate-y-1/2 w-0.5 h-[60%] bg-blue-500 animate-pulse" />
                             )}
                         </div>
                     </div>

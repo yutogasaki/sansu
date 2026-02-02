@@ -74,6 +74,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     onFocusField,
     swipeHandlers
 }) => {
+    const showDebugSubtitle = import.meta.env.DEV;
 
     // 正解表示用のヘルパー
     const renderCorrectAnswer = () => {
@@ -238,7 +239,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
             <div id="debug-header" className="flex-none mobile:hidden">
                 <Header
                     title={currentProblem.subject === 'math' ? 'さんすう' : 'えいご'}
-                    subtitle={currentProblem.categoryId}
+                    subtitle={showDebugSubtitle ? currentProblem.categoryId : undefined}
                     onBack={() => onNavigate("/")}
                     rightAction={
                         <Button variant="ghost" size="sm" onClick={() => onNavigate("/")}>
@@ -272,11 +273,11 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
             </div>
 
             {/* Main Area: Mobile=Vertical, iPad=Horizontal */}
-            <div className="flex-1 flex flex-col ipadland:flex-row ipadland:p-6 ipadland:gap-4 overflow-hidden min-h-0">
+            <div className="flex-1 flex flex-col ipadland:flex-row ipadland:p-6 ipadland:gap-4 overflow-hidden min-h-0 [--tenkey-key:clamp(44px,9vh,56px)]">
 
                 {/* Question / Card Area */}
                 {/* Mobile: flex-1 but with shrink allowed. ipadland:flex-[2] */}
-                <div id="debug-card-container" {...swipeHandlers} className="flex-1 px-4 py-2 flex flex-col relative z-0 land:px-6 ipadland:flex-[2] ipadland:p-0 mobile:px-1 mobile:py-1 min-h-0">
+                <div id="debug-card-container" {...swipeHandlers} className="flex-1 px-4 py-2 flex flex-col relative z-0 land:px-6 ipadland:flex-[2] ipadland:p-0 mobile:px-1 mobile:py-1 min-h-[200px] mobile:min-h-[35vh] ipadland:min-h-0">
                     <Card className="flex-1 flex flex-col items-center justify-center p-6 shadow-xl border-t-4 border-t-yellow-300 relative land:p-4 bg-white mobile:p-2 mobile:border-t-2 mobile:shadow-none overflow-hidden min-h-0">
 
                         {/* Progress Indicator - モバイルでは上部バーに移動したので非表示 */}
@@ -362,7 +363,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
 
                 {/* Controls Area */}
                 {/* Mobile: Removed padding/margin to prevent overflow. Fixed safe area is handled by safe-area-inset-bottom class on root. */}
-                <div id="debug-controls" className="bg-slate-100 p-2 pb-6 rounded-t-3xl shadow-inner flex-none land:min-h-[32vh] land:pb-4 ipadland:flex-1 ipadland:rounded-3xl ipadland:h-full ipadland:flex ipadland:flex-col ipadland:justify-center ipadland:p-6 ipadland:shadow-lg mobile:pb-[var(--safe-area-inset-bottom)] mobile:pt-0 mobile:p-0 mobile:rounded-none mobile:bg-slate-50">
+                <div id="debug-controls" className="bg-slate-100 p-2 pb-6 rounded-t-3xl shadow-inner flex-1 min-h-0 mobile:min-h-[240px] mobile:max-h-[340px] land:min-h-[32vh] land:pb-4 ipadland:flex-1 ipadland:rounded-3xl ipadland:h-full ipadland:flex ipadland:flex-col ipadland:justify-center ipadland:p-6 ipadland:shadow-lg ipadland:min-h-0 ipadland:max-h-none mobile:pb-[var(--safe-area-inset-bottom)] mobile:pt-0 mobile:p-0 mobile:rounded-none mobile:bg-slate-50">
                     {/* TenKey / Inputs */}
                     {(currentProblem.inputType === "number" || currentProblem.inputType === "multi-number") && (
                         <TenKey
