@@ -41,6 +41,10 @@ export const Study: React.FC = () => {
     const [feedback, setFeedback] = useState<"none" | "correct" | "incorrect" | "skipped">("none");
     const [showCorrection, setShowCorrection] = useState(false);
 
+
+    // Processing Lock (Ref) to Prevent Double Submission / Spamming
+    const isProcessingRef = React.useRef(false);
+
     // UI State for Block Transition
     const [isFinished, setIsFinished] = useState(false);
 
@@ -74,6 +78,7 @@ export const Study: React.FC = () => {
         }
         setFeedback("none");
         setShowCorrection(false);
+        isProcessingRef.current = false;
     }, [currentProblem]);
 
     // Check if we finished the current queue
@@ -88,7 +93,7 @@ export const Study: React.FC = () => {
     // Handlers - 全てのフックより前に定義
     const handleTenKeyInput = useCallback((val: string | number) => {
         const valStr = val.toString();
-        if (feedback !== "none") return;
+        if (feedback !== "none" || isProcessingRef.current) return;
         playSound("tap");
 
         if (currentProblem?.inputType === 'multi-number' && currentProblem.inputConfig?.fields) {
@@ -116,7 +121,7 @@ export const Study: React.FC = () => {
     }, [feedback, currentProblem, activeFieldIndex, userInput.length]);
 
     const handleBackspace = useCallback(() => {
-        if (feedback !== "none") return;
+        if (feedback !== "none" || isProcessingRef.current) return;
         playSound("tap");
 
         if (currentProblem?.inputType === 'multi-number') {
@@ -131,7 +136,7 @@ export const Study: React.FC = () => {
     }, [feedback, currentProblem, activeFieldIndex]);
 
     const handleClear = useCallback(() => {
-        if (feedback !== "none") return;
+        if (feedback !== "none" || isProcessingRef.current) return;
         if (currentProblem?.inputType === 'multi-number') {
             setUserInputs(prev => {
                 const newInputs = [...prev];
@@ -160,12 +165,15 @@ export const Study: React.FC = () => {
         setShowCorrection(false);
         setUserInput("");
         setCurrentIndex(prev => prev + 1);
+        // Note: isProcessingRef reset is handled in the effect when currentProblem changes
     }, []);
 
     // Submitting - useEffectより前に定義
     const handleSubmit = useCallback(async (choiceValue?: string) => {
         if (feedback !== "none" || !currentProblem) return;
 
+
+        isProcessingRef.current = true;
         let isCorrect = false;
 
         if (currentProblem.inputType === "choice") {
@@ -195,6 +203,15 @@ export const Study: React.FC = () => {
             playSound("incorrect");
             handleResult(currentProblem, 'incorrect');
 
+            // Allow retry immediately? No, show correction then next.
+            // If we wanted to allow retry, we would reset isProcessingRef here.
+            // But spec says "Show correction then next" for incorrect (mistake).
+            // Actually spec: "ミス(前) ... 不正解と言わない" -> "Answer input"
+            // Wait, current logic auto-advances on incorrect.
+            // If we want to allow retry, we should change logic.
+            // Current code: Next problem after 3000ms.
+            // So we keep lock.
+
             setShowCorrection(true);
             setTimeout(() => {
                 nextProblem();
@@ -204,7 +221,9 @@ export const Study: React.FC = () => {
 
     // スキップ処理（仕様 4.7）
     const handleSkip = useCallback(async () => {
-        if (feedback !== "none" || !currentProblem || !profileId) return;
+        if (feedback !== "none" || !currentProblem || !profileId || isProcessingRef.current) return;
+
+        isProcessingRef.current = true;
 
         setFeedback("skipped");
         setShowCorrection(true);
