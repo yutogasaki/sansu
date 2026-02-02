@@ -1,24 +1,37 @@
 import { useState, useEffect, useRef } from "react";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
-import { getMaintenanceMathSkillIds, getRecentAttempts, getReviewItems, getWeakMathSkillIds, getSkippedItemsToday, getRetiredMathSkillIds, logAttempt } from "../domain/learningRepository";
+import {
+    getMaintenanceMathSkillIds,
+    getRecentAttempts,
+    getReviewItems,
+    getWeakMathSkillIds,
+    getSkippedItemsToday,
+    getRetiredMathSkillIds,
+    logAttempt
+} from "../domain/learningRepository";
 import { generateMathProblem } from "../domain/math";
 import { generateVocabProblem } from "../domain/english/generator";
 import { Problem, SubjectKey, UserProfile } from "../domain/types";
-import { getAvailableSkills, getSkillsForLevel } from "../domain/math/curriculum";
+import { getAvailableSkills } from "../domain/math/curriculum";
 import { checkLevelProgression } from "../domain/math/service";
-import { getWordsByLevel } from "../domain/english/words";
-
-const BLOCK_SIZE = 5;
-const COOLDOWN_WINDOW = 5;
-const SAME_ID_LIMIT = 2;
-const REVIEW_BLOCK_CHECK_WINDOW = 40;
-const MIX_WINDOW = 20;
-const REVIEW_BLOCK_THRESHOLD = 0.5;
-const SESSION_REVIEW_CAP = 0.6;
-const WEAK_INJECTION_CAP = 0.3;
-const MAINTENANCE_RATE = 0.01;
-
-type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event";
+import {
+    SessionKind,
+    SessionHistoryItem,
+    BLOCK_SIZE,
+    COOLDOWN_WINDOW,
+    REVIEW_BLOCK_CHECK_WINDOW,
+    REVIEW_BLOCK_THRESHOLD,
+    markPicked,
+    canAddSessionReview,
+    calculateRecentReviewRatio,
+    getMixSubject,
+    buildVocabCooldownIds,
+    buildVocabLevelWeights,
+    generateSingleMathProblem,
+    generateSingleVocabProblem,
+    createFallbackProblem,
+    safeGenerateProblem
+} from "./blockGenerators";
 
 type StudySessionOptions = {
     devSkill?: string;
@@ -33,208 +46,176 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     const [blockCount, setBlockCount] = useState(0);
     const [loading, setLoading] = useState(true);
 
-    // We need the active profile
     const [profileId, setProfileId] = useState<string | null>(null);
     const [profile, setProfile] = useState<UserProfile | null>(null);
 
-    const sessionHistoryRef = useRef<{ id: string; subject: SubjectKey; isReview: boolean }[]>([]);
+    const sessionHistoryRef = useRef<SessionHistoryItem[]>([]);
 
+    // Profile fetching with error handling
     useEffect(() => {
         console.log("[useStudySession] fetching profile...");
-        getActiveProfile().then(p => {
-            console.log("[useStudySession] profile:", p);
-            if (p) {
-                setProfileId(p.id);
-                setProfile(p);
-            } else {
-                // プロファイルがない場合もloadingを解除
-                console.log("[useStudySession] no profile found");
+        getActiveProfile()
+            .then(p => {
+                console.log("[useStudySession] profile:", p);
+                if (p) {
+                    setProfileId(p.id);
+                    setProfile(p);
+                } else {
+                    console.log("[useStudySession] no profile found");
+                    setLoading(false);
+                }
+            })
+            .catch(err => {
+                console.error("[useStudySession] error fetching profile:", err);
                 setLoading(false);
-            }
-        }).catch(err => {
-            console.error("[useStudySession] error fetching profile:", err);
-            setLoading(false);
-        });
+            });
     }, []);
 
-    const generateBlock = async (pid: string, activeProfile: UserProfile) => {
-        const blockSize = options.sessionKind === "check-event" ? 8 : BLOCK_SIZE;
-        const recentAttempts = await getRecentAttempts(pid, REVIEW_BLOCK_CHECK_WINDOW);
+    // ============================================================
+    // Developer Mode Block Generation
+    // ============================================================
+    const generateDevBlock = (blockSize: number): Problem[] => {
+        const q: Problem[] = [];
+        const skillId = options.devSkill!;
 
-        const buildVocabCooldownIds = (pendingIds: string[] = []) => {
-            const ids: string[] = [];
-            const seen = new Set<string>();
+        for (let i = 0; i < blockSize; i++) {
+            const problem = safeGenerateProblem(
+                () => generateMathProblem(skillId),
+                () => createFallbackProblem('math', `dev mode: ${skillId}`),
+                `dev mode generation`
+            );
 
-            const push = (id: string) => {
-                if (!seen.has(id)) {
-                    seen.add(id);
-                    ids.push(id);
-                }
-            };
+            q.push({
+                ...problem,
+                id: `dev-${i}-${Date.now()}`,
+                subject: 'math',
+                isReview: false
+            });
+        }
 
-            recentAttempts
-                .filter(r => r.subject === 'vocab' && r.result !== 'skipped')
-                .slice(0, 10)
-                .forEach(r => push(r.itemId));
+        return q;
+    };
 
-            sessionHistoryRef.current
-                .filter(h => h.subject === 'vocab')
-                .slice(-10)
-                .forEach(h => push(h.id));
+    // ============================================================
+    // Focus Mode Block Generation
+    // ============================================================
+    const generateFocusBlock = async (
+        _pid: string,
+        blockSize: number,
+        recentAttempts: { subject: SubjectKey; itemId: string; result: string }[]
+    ): Promise<Problem[]> => {
+        const q: Problem[] = [];
+        const subject = options.focusSubject!;
+        const focusIds = options.focusIds!;
+        const sessionKind = options.sessionKind || "normal";
+        const isReviewSession = options.forceReview === true || sessionKind === "review";
 
-            pendingIds.forEach(id => push(id));
+        const buildCooldownIds = (pending: string[]) =>
+            buildVocabCooldownIds(recentAttempts, sessionHistoryRef.current, pending);
 
-            return ids;
-        };
+        for (let i = 0; i < blockSize; i++) {
+            const id = focusIds[Math.floor(Math.random() * focusIds.length)];
 
-        const recentReviewRatio = () => {
-            if (recentAttempts.length === 0) return 0;
-            const reviewCount = recentAttempts.filter(r => r.isReview).length;
-            return reviewCount / recentAttempts.length;
-        };
+            const problem = safeGenerateProblem(
+                () => subject === 'math'
+                    ? generateMathProblem(id)
+                    : generateVocabProblem(id, { cooldownIds: buildCooldownIds([]) }),
+                () => createFallbackProblem(subject, `focus mode: ${id}`),
+                `focus mode: ${id}`
+            );
 
-        const getMixSubject = (): SubjectKey => {
-            const recent = recentAttempts.slice(0, MIX_WINDOW);
-            const nonReview = recent.filter(r => !r.isReview);
-            if (nonReview.length < 5) {
-                return Math.random() > 0.5 ? 'math' : 'vocab';
-            }
-            const mathCount = nonReview.filter(r => r.subject === 'math').length;
-            const ratio = mathCount / nonReview.length;
-            if (ratio > 0.7) return 'vocab';
-            if (ratio < 0.3) return 'math';
-            return Math.random() > 0.5 ? 'math' : 'vocab';
-        };
+            q.push({
+                ...problem,
+                id: `${blockCount}-focus-${i}-${Date.now()}`,
+                subject,
+                isReview: isReviewSession
+            });
+        }
 
-        const canAddSessionReview = (pending: { isReview: boolean }[]) => {
-            const history = sessionHistoryRef.current;
-            const total = history.length + pending.length;
-            if (total === 0) return true;
-            const reviewCount = history.filter(h => h.isReview).length + pending.filter(p => p.isReview).length;
-            return reviewCount / total < SESSION_REVIEW_CAP;
-        };
+        sessionHistoryRef.current = [
+            ...sessionHistoryRef.current,
+            ...q.map(item => ({ id: item.categoryId, subject: item.subject, isReview: item.isReview }))
+        ];
 
-        const vocabLevel = activeProfile.vocabMainLevel || 1;
+        return q;
+    };
 
-        const vocabLevelWeights: { level: number; weight: number }[] = [
-            { level: vocabLevel, weight: 0.5 },
-            { level: vocabLevel - 1, weight: 0.25 },
-            { level: vocabLevel - 2, weight: 0.15 },
-            { level: vocabLevel - 3, weight: 0.1 }
-        ].filter(w => w.level >= 1);
+    // ============================================================
+    // Check Mode Block Generation
+    // ============================================================
+    const generateCheckBlock = async (
+        activeProfile: UserProfile,
+        blockSize: number,
+        recentAttempts: { subject: SubjectKey; itemId: string; result: string; isReview: boolean }[]
+    ): Promise<Problem[] | null> => {
+        let checkSubject: SubjectKey;
 
-        const pickWeightedLevel = () => {
-            const totalWeight = vocabLevelWeights.reduce((sum, w) => sum + w.weight, 0);
-            let r = Math.random() * totalWeight;
-            for (const w of vocabLevelWeights) {
-                r -= w.weight;
-                if (r <= 0) return w.level;
-            }
-            return vocabLevelWeights[0]?.level || vocabLevel;
-        };
+        if (activeProfile.subjectMode === "math") {
+            checkSubject = "math";
+        } else if (activeProfile.subjectMode === "vocab") {
+            checkSubject = "vocab";
+        } else {
+            checkSubject = getMixSubject(recentAttempts);
+        }
 
-        // 開発者モード: 指定されたスキルのみで問題を生成
-        if (options.devSkill) {
-            const q: Problem[] = [];
-            for (let i = 0; i < blockSize; i++) {
-                try {
-                    const partialProblem = generateMathProblem(options.devSkill);
-                    q.push({
-                        ...partialProblem,
-                        id: `dev-${i}-${Date.now()}`,
-                        subject: 'math',
-                        isReview: false
-                    });
-                } catch (e) {
-                    console.error("Dev mode generation error:", e);
-                }
-            }
-            return q;
+        const recentPool = recentAttempts
+            .filter(r => r.subject === checkSubject && r.result !== "skipped")
+            .map(r => r.itemId);
+        const uniquePool = Array.from(new Set(recentPool));
+
+        if (uniquePool.length === 0) {
+            return null; // Fallback to normal generation
         }
 
         const q: Problem[] = [];
-        const sessionKind = options.sessionKind || "normal";
+        const buildCooldownIds = (pending: string[]) =>
+            buildVocabCooldownIds(recentAttempts, sessionHistoryRef.current, pending);
 
-        if (options.focusSubject && options.focusIds && options.focusIds.length > 0) {
-            const subject = options.focusSubject;
-            const focusIds = options.focusIds;
-            for (let i = 0; i < blockSize; i++) {
-                const id = focusIds[Math.floor(Math.random() * focusIds.length)];
-                const isReviewItem = options.forceReview === true || sessionKind === "review";
-                try {
-                    const partialProblem =
-                        subject === 'math'
-                            ? generateMathProblem(id)
-                            : generateVocabProblem(id, {
-                                cooldownIds: buildVocabCooldownIds([])
-                            });
-                    q.push({
-                        ...partialProblem,
-                        id: `${blockCount}-focus-${i}-${Date.now()}`,
-                        subject,
-                        isReview: isReviewItem
-                    });
-                } catch (e) {
-                    console.error(e);
-                }
-            }
-            sessionHistoryRef.current = [
-                ...sessionHistoryRef.current,
-                ...q.map(item => ({ id: item.categoryId, subject: item.subject, isReview: item.isReview }))
-            ];
-            return q;
+        for (let i = 0; i < blockSize; i++) {
+            const id = uniquePool[Math.floor(Math.random() * uniquePool.length)];
+
+            const problem = safeGenerateProblem(
+                () => checkSubject === "math"
+                    ? generateMathProblem(id)
+                    : generateVocabProblem(id, { cooldownIds: buildCooldownIds([]) }),
+                () => createFallbackProblem(checkSubject, `check mode: ${id}`),
+                `check mode: ${id}`
+            );
+
+            q.push({
+                ...problem,
+                id: `${blockCount}-check-${i}-${Date.now()}`,
+                subject: checkSubject,
+                isReview: false
+            });
         }
 
-        if (sessionKind.startsWith("check")) {
-            let checkSubject: SubjectKey;
-            if (activeProfile.subjectMode === "math") {
-                checkSubject = "math";
-            } else if (activeProfile.subjectMode === "vocab") {
-                checkSubject = "vocab";
-            } else {
-                checkSubject = getMixSubject();
-            }
+        sessionHistoryRef.current = [
+            ...sessionHistoryRef.current,
+            ...q.map(item => ({ id: item.categoryId, subject: item.subject, isReview: item.isReview }))
+        ];
 
-            const recentPool = recentAttempts
-                .filter(r => r.subject === checkSubject && r.result !== "skipped")
-                .map(r => r.itemId);
-            const uniquePool = Array.from(new Set(recentPool));
+        return q;
+    };
 
-            if (uniquePool.length > 0) {
-                for (let i = 0; i < blockSize; i++) {
-                    const id = uniquePool[Math.floor(Math.random() * uniquePool.length)];
-                    try {
-                        const partialProblem =
-                            checkSubject === "math"
-                                ? generateMathProblem(id)
-                                : generateVocabProblem(id, { cooldownIds: buildVocabCooldownIds([]) });
-                        q.push({
-                            ...partialProblem,
-                            id: `${blockCount}-check-${i}-${Date.now()}`,
-                            subject: checkSubject,
-                            isReview: false
-                        });
-                    } catch (e) {
-                        console.error(e);
-                    }
-                }
-                sessionHistoryRef.current = [
-                    ...sessionHistoryRef.current,
-                    ...q.map(item => ({ id: item.categoryId, subject: item.subject, isReview: item.isReview }))
-                ];
-                return q;
-            }
-            // Fallback: no recent items, continue to normal generation
-        }
-
+    // ============================================================
+    // Normal Block Generation
+    // ============================================================
+    const generateNormalBlock = async (
+        pid: string,
+        activeProfile: UserProfile,
+        blockSize: number,
+        recentAttempts: { subject: SubjectKey; itemId: string; result: string; isReview: boolean }[]
+    ): Promise<Problem[]> => {
         const blockCounts = new Map<string, number>();
         const recentIds = sessionHistoryRef.current.slice(-COOLDOWN_WINDOW).map(h => h.id);
 
+        // Determine subject
         const vocabDue = await getReviewItems(pid, 'vocab');
         let forceVocabReviewBlock = false;
 
         if (activeProfile.subjectMode === 'mix' && vocabDue.length > 0) {
-            const ratio = recentReviewRatio();
+            const ratio = calculateRecentReviewRatio(recentAttempts);
             if (ratio < REVIEW_BLOCK_THRESHOLD) {
                 forceVocabReviewBlock = true;
             }
@@ -248,197 +229,106 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         } else if (forceVocabReviewBlock) {
             subject = 'vocab';
         } else {
-            subject = getMixSubject();
+            subject = getMixSubject(recentAttempts);
         }
 
-        const mathLevel = activeProfile.mathMainLevel || 1;
-        const nextMathLevel = activeProfile.mathMaxUnlocked >= mathLevel + 1 ? mathLevel + 1 : mathLevel;
-
-        const pendingMeta: { isReview: boolean }[] = [];
-        const pendingVocabIds: string[] = [];
-        const mathDue = subject === 'math' ? await getReviewItems(pid, 'math') : [];
-        const weakMathIds = subject === 'math' ? await getWeakMathSkillIds(pid) : [];
-        const maintenanceMathIds = subject === 'math' ? await getMaintenanceMathSkillIds(pid) : [];
-        // 仕様 5.4: retiredスキルも1%で出題（維持確認→maintenance遷移のため）
-        const retiredMathIds = subject === 'math' ? await getRetiredMathSkillIds(pid) : [];
-        const availableMathSkills = subject === 'math' ? getAvailableSkills(activeProfile.mathMaxUnlocked || mathLevel) : [];
-        const weakMathPool = subject === 'math'
-            ? weakMathIds.filter(id => availableMathSkills.includes(id))
-            : [];
-
-        // 仕様 4.7: スキップ3回ガード - 当日3回以上スキップされたアイテムを除外
+        // Fetch required data based on subject
         const skippedToday = await getSkippedItemsToday(pid, subject);
 
-        const pickId = (candidates: string[]) => {
-            // スキップガード: 当日3回以上スキップされたアイテムを除外
-            const notSkipped = candidates.filter(id => !skippedToday.includes(id));
-            const notOverused = notSkipped.filter(id => (blockCounts.get(id) || 0) < SAME_ID_LIMIT);
-            if (notOverused.length === 0) return undefined;
-            const cooled = notOverused.filter(id => !recentIds.includes(id));
-            const pool = cooled.length > 0 ? cooled : notOverused;
-            return pool[Math.floor(Math.random() * pool.length)];
-        };
+        const q: Problem[] = [];
+        const pendingMeta: { isReview: boolean }[] = [];
+        const pendingVocabIds: string[] = [];
 
-        const markPicked = (id: string) => {
-            blockCounts.set(id, (blockCounts.get(id) || 0) + 1);
-        };
+        if (subject === 'math') {
+            const mathDue = await getReviewItems(pid, 'math');
+            const weakMathIds = await getWeakMathSkillIds(pid);
+            const maintenanceMathIds = await getMaintenanceMathSkillIds(pid);
+            const retiredMathIds = await getRetiredMathSkillIds(pid);
+            const mathLevel = activeProfile.mathMainLevel || 1;
+            const availableMathSkills = getAvailableSkills(activeProfile.mathMaxUnlocked || mathLevel);
+            const weakMathPool = weakMathIds.filter(id => availableMathSkills.includes(id));
 
-        let plusCount = 0;
-        const plusLimit = Math.max(1, Math.floor(BLOCK_SIZE * 0.3));
+            const plusLimit = Math.max(1, Math.floor(BLOCK_SIZE * 0.3));
+            let plusCount = 0;
 
-        for (let i = 0; i < blockSize; i++) {
-            let partialProblem: Omit<Problem, 'id' | 'subject' | 'isReview'> | undefined;
-            let isReviewItem = false;
-            // 維持確認フラグ（仕様 5.4: retired→maintenance遷移用）
-            let isMaintenanceCheckItem = false;
+            for (let i = 0; i < blockSize; i++) {
+                const generatorOptions = {
+                    cooldownIds: [],
+                    skippedTodayIds: skippedToday,
+                    blockCounts,
+                    recentIds
+                };
 
-            if (subject === 'vocab') {
-                if (forceVocabReviewBlock && vocabDue.length > 0 && canAddSessionReview(pendingMeta)) {
-                    const dueId = pickId(vocabDue.map(v => v.id));
-                    if (dueId) {
-                        isReviewItem = true;
-                        try {
-                            partialProblem = generateVocabProblem(dueId, {
-                                cooldownIds: buildVocabCooldownIds(pendingVocabIds)
-                            });
-                        } catch (e) {
-                            console.error("Vocab Generation Error", e);
-                            partialProblem = generateVocabProblem(vocabDue[0].id, {
-                                cooldownIds: buildVocabCooldownIds(pendingVocabIds)
-                            });
-                        }
-                    } else {
-                        // Fallback to normal vocab generation
-                        const level = pickWeightedLevel();
-                        const words = getWordsByLevel(level);
-                        const wordId = pickId(words.map(w => w.id)) || words[0]?.id;
-                        if (!wordId) {
-                            partialProblem = {
-                                categoryId: "error",
-                                questionText: "Error",
-                                inputType: "choice",
-                                inputConfig: { choices: [{ label: "Error", value: "error" }] },
-                                correctAnswer: "error"
-                            } as any;
-                        } else {
-                            partialProblem = generateVocabProblem(wordId, {
-                                cooldownIds: buildVocabCooldownIds(pendingVocabIds)
-                            });
-                        }
-                    }
-                } else {
-                    const level = pickWeightedLevel();
-                    const words = getWordsByLevel(level);
-                    const wordId = pickId(words.map(w => w.id)) || words[0]?.id;
-                    if (!wordId) {
-                        partialProblem = {
-                            categoryId: "error",
-                            questionText: "Error",
-                            inputType: "choice",
-                            inputConfig: { choices: [{ label: "Error", value: "error" }] },
-                            correctAnswer: "error"
-                        } as any;
-                    } else {
-                        partialProblem = generateVocabProblem(wordId, {
-                            cooldownIds: buildVocabCooldownIds(pendingVocabIds)
-                        });
-                    }
-                }
-            } else {
-                if (mathDue.length > 0 && canAddSessionReview(pendingMeta)) {
-                    const dueId = pickId(mathDue.map(v => v.id));
-                    if (dueId) {
-                        isReviewItem = true;
-                        try {
-                            partialProblem = generateMathProblem(dueId);
-                        } catch (e) {
-                            console.error(e);
-                            partialProblem = generateMathProblem("count_10");
-                        }
-                    }
-                }
+                const currentWeakCount = q.filter(
+                    item => item.subject === 'math' && !item.isReview && weakMathPool.includes(item.categoryId)
+                ).length;
 
-                if (!isReviewItem) {
-                    const weakLimit = Math.max(1, Math.floor(BLOCK_SIZE * WEAK_INJECTION_CAP));
-                    const weakCount = q.filter(item => item.subject === 'math' && !item.isReview && weakMathPool.includes(item.categoryId)).length;
-                    const canUseWeak = weakMathPool.length > 0 && weakCount < weakLimit;
-                    const useWeak = canUseWeak && Math.random() < WEAK_INJECTION_CAP;
-                    // 仕様 5.4: maintenanceとretiredの両方を1%で出題（維持確認）
-                    const useMaintenanceOrRetired = (maintenanceMathIds.length > 0 || retiredMathIds.length > 0) && Math.random() < MAINTENANCE_RATE;
+                const result = generateSingleMathProblem({
+                    profile: activeProfile,
+                    mathDue,
+                    weakMathPool,
+                    maintenanceMathIds,
+                    retiredMathIds,
+                    options: generatorOptions,
+                    canAddReview: canAddSessionReview(sessionHistoryRef.current, pendingMeta),
+                    currentWeakCount,
+                    plusCount,
+                    plusLimit
+                });
 
-                    if (useMaintenanceOrRetired) {
-                        // maintenanceとretiredを合わせて候補とする
-                        const maintenancePool = [...maintenanceMathIds, ...retiredMathIds];
-                        const maintenanceId = pickId(maintenancePool);
-                        if (maintenanceId) {
-                            try {
-                                partialProblem = generateMathProblem(maintenanceId);
-                                isMaintenanceCheckItem = true; // 維持確認フラグをセット
-                            } catch (e) {
-                                console.error(e);
-                                partialProblem = generateMathProblem("count_10");
-                            }
-                        }
-                    }
+                plusCount = result.newPlusCount;
 
-                    if (!partialProblem && useWeak) {
-                        const weakId = pickId(weakMathPool);
-                        if (weakId) {
-                            try {
-                                partialProblem = generateMathProblem(weakId);
-                            } catch (e) {
-                                console.error(e);
-                                partialProblem = generateMathProblem("count_10");
-                            }
-                        }
-                    }
+                const problem: Problem = {
+                    ...result.problem,
+                    id: `${blockCount}-${i}-${Date.now()}`,
+                    subject: 'math',
+                    isReview: result.isReview,
+                    isMaintenanceCheck: result.isMaintenanceCheck
+                };
 
-                    if (!partialProblem) {
-                        const usePlus = nextMathLevel !== mathLevel && plusCount < plusLimit && Math.random() < 0.3;
-                        const targetLevel = usePlus ? nextMathLevel : mathLevel;
-                        const levelSkills = getSkillsForLevel(targetLevel);
-                        const skills = levelSkills.length > 0 ? levelSkills : getSkillsForLevel(1);
-                        const skillId = pickId(skills) || skills[0];
-                        if (skillId) {
-                            try {
-                                partialProblem = generateMathProblem(skillId);
-                            } catch (e) {
-                                console.error(e);
-                                partialProblem = generateMathProblem("count_10");
-                            }
-                            if (usePlus) plusCount += 1;
-                        } else {
-                            partialProblem = generateMathProblem("count_10");
-                        }
-                    }
-                }
+                q.push(problem);
+                markPicked(problem.categoryId, blockCounts);
+                pendingMeta.push({ isReview: result.isReview });
             }
+        } else {
+            // Vocab generation
+            const vocabLevel = activeProfile.vocabMainLevel || 1;
+            const vocabLevelWeights = buildVocabLevelWeights(vocabLevel);
 
-            // Ensure partialProblem is not undefined
-            if (!partialProblem) {
-                // Should not happen, but as a safe fallback
-                partialProblem = {
-                    categoryId: "error",
-                    questionText: "Error",
-                    inputType: "choice",
-                    inputConfig: { choices: [{ label: "Error", value: "error" }] },
-                    correctAnswer: "error"
-                } as any;
+            const buildCooldownIds = (pending: string[]) =>
+                buildVocabCooldownIds(recentAttempts, sessionHistoryRef.current, pending);
+
+            for (let i = 0; i < blockSize; i++) {
+                const generatorOptions = {
+                    cooldownIds: buildCooldownIds(pendingVocabIds),
+                    skippedTodayIds: skippedToday,
+                    blockCounts,
+                    recentIds
+                };
+
+                const result = generateSingleVocabProblem({
+                    profile: activeProfile,
+                    vocabDue,
+                    vocabLevelWeights,
+                    options: generatorOptions,
+                    canAddReview: canAddSessionReview(sessionHistoryRef.current, pendingMeta),
+                    forceReviewBlock: forceVocabReviewBlock,
+                    pendingVocabIds,
+                    buildCooldownIds
+                });
+
+                const problem: Problem = {
+                    ...result.problem,
+                    id: `${blockCount}-${i}-${Date.now()}`,
+                    subject: 'vocab',
+                    isReview: result.isReview
+                };
+
+                q.push(problem);
+                markPicked(problem.categoryId, blockCounts);
+                pendingVocabIds.push(problem.categoryId);
+                pendingMeta.push({ isReview: result.isReview });
             }
-
-            q.push({
-                ...partialProblem!,
-                id: `${blockCount}-${i}-${Date.now()}`,
-                subject,
-                isReview: isReviewItem,
-                isMaintenanceCheck: isMaintenanceCheckItem // 仕様 5.4: 維持確認フラグ
-            });
-
-            markPicked(q[q.length - 1].categoryId);
-            if (subject === 'vocab') {
-                pendingVocabIds.push(q[q.length - 1].categoryId);
-            }
-            pendingMeta.push({ isReview: isReviewItem });
         }
 
         sessionHistoryRef.current = [
@@ -449,11 +339,56 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         return q;
     };
 
+    // ============================================================
+    // Main Block Generation Entry Point
+    // ============================================================
+    const generateBlock = async (pid: string, activeProfile: UserProfile): Promise<Problem[]> => {
+        const sessionKind = options.sessionKind || "normal";
+        const blockSize = sessionKind === "check-event" ? 8 : BLOCK_SIZE;
+
+        // Developer mode: generate only specified skill
+        if (options.devSkill) {
+            return generateDevBlock(blockSize);
+        }
+
+        const recentAttempts = await getRecentAttempts(pid, REVIEW_BLOCK_CHECK_WINDOW);
+
+        // Focus mode: generate only specified IDs
+        if (options.focusSubject && options.focusIds && options.focusIds.length > 0) {
+            return generateFocusBlock(pid, blockSize, recentAttempts);
+        }
+
+        // Check mode: generate from recent history
+        if (sessionKind.startsWith("check")) {
+            const mappedAttempts = recentAttempts.map(a => ({
+                ...a,
+                isReview: a.isReview ?? false
+            }));
+            const checkResult = await generateCheckBlock(activeProfile, blockSize, mappedAttempts);
+            if (checkResult) {
+                return checkResult;
+            }
+            // Fallback to normal generation if no recent items
+        }
+
+        // Normal mode
+        const mappedAttempts = recentAttempts.map(a => ({
+            ...a,
+            isReview: a.isReview ?? false
+        }));
+        return generateNormalBlock(pid, activeProfile, blockSize, mappedAttempts);
+    };
+
+    // ============================================================
+    // Session Management
+    // ============================================================
     const initSession = async () => {
         console.log("[useStudySession] initSession called, profileId:", profileId);
         if (!profileId || !profile) return;
+
         setLoading(true);
         setBlockCount(1);
+
         try {
             console.log("[useStudySession] generating block...");
             const q = await generateBlock(profileId, profile);
@@ -461,57 +396,89 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             setQueue(q);
         } catch (err) {
             console.error("[useStudySession] error generating block:", err);
+            // Generate emergency fallback queue
+            const fallbackQueue: Problem[] = [];
+            for (let i = 0; i < BLOCK_SIZE; i++) {
+                fallbackQueue.push({
+                    ...createFallbackProblem('math', 'session init failure'),
+                    id: `fallback-${i}-${Date.now()}`,
+                    subject: 'math',
+                    isReview: false
+                });
+            }
+            setQueue(fallbackQueue);
         }
+
         setLoading(false);
     };
 
     const nextBlock = async () => {
         if (!profileId || !profile) return;
+
         setLoading(true);
         setBlockCount(prev => prev + 1);
-        const q = await generateBlock(profileId, profile);
-        setQueue(prev => [...prev, ...q]);
+
+        try {
+            const q = await generateBlock(profileId, profile);
+            setQueue(prev => [...prev, ...q]);
+        } catch (err) {
+            console.error("[useStudySession] error generating next block:", err);
+            // Generate emergency fallback queue
+            const fallbackQueue: Problem[] = [];
+            for (let i = 0; i < BLOCK_SIZE; i++) {
+                fallbackQueue.push({
+                    ...createFallbackProblem('math', 'next block failure'),
+                    id: `fallback-${blockCount}-${i}-${Date.now()}`,
+                    subject: 'math',
+                    isReview: false
+                });
+            }
+            setQueue(prev => [...prev, ...fallbackQueue]);
+        }
+
         setLoading(false);
     };
 
-    // Wrapper for logging
+    // ============================================================
+    // Result Handling
+    // ============================================================
     const handleResult = async (problem: Problem, result: 'correct' | 'incorrect') => {
         if (!profileId) return;
 
-        // Log to DB（仕様 5.4: 維持確認フラグを渡す）
-        await logAttempt(
-            profileId,
-            problem.subject,
-            problem.categoryId,
-            result,
-            false,
-            problem.isReview,
-            problem.isMaintenanceCheck || false
-        );
+        try {
+            await logAttempt(
+                profileId,
+                problem.subject,
+                problem.categoryId,
+                result,
+                false,
+                problem.isReview,
+                problem.isMaintenanceCheck || false
+            );
 
-        // Check Level Up (only for Math Correct answers)
-        if (problem.subject === 'math') {
-            const profile = await getActiveProfile();
-            if (profile && profile.mathMainLevel < 20) {
-                const canLevelUp = await checkLevelProgression(profile.id, profile.mathMainLevel);
-                if (canLevelUp) {
-                    console.log("LEVEL UP!", profile.mathMainLevel + 1);
-                    // Update Profile
-                    const newLevel = profile.mathMainLevel + 1;
-                    await saveProfile({
-                        ...profile,
-                        mathMainLevel: newLevel,
-                        mathMaxUnlocked: Math.max(profile.mathMaxUnlocked, newLevel)
-                    });
-                    setProfile({
-                        ...profile,
-                        mathMainLevel: newLevel,
-                        mathMaxUnlocked: Math.max(profile.mathMaxUnlocked, newLevel)
-                    });
-                    // Ideally notify user via specific UI state/toast
-                    // For now, next block will use new level logic
+            // Check Level Up (only for Math)
+            if (problem.subject === 'math') {
+                const currentProfile = await getActiveProfile();
+                if (currentProfile && currentProfile.mathMainLevel < 20) {
+                    const canLevelUp = await checkLevelProgression(currentProfile.id, currentProfile.mathMainLevel);
+                    if (canLevelUp) {
+                        console.log("LEVEL UP!", currentProfile.mathMainLevel + 1);
+                        const newLevel = currentProfile.mathMainLevel + 1;
+                        await saveProfile({
+                            ...currentProfile,
+                            mathMainLevel: newLevel,
+                            mathMaxUnlocked: Math.max(currentProfile.mathMaxUnlocked, newLevel)
+                        });
+                        setProfile({
+                            ...currentProfile,
+                            mathMainLevel: newLevel,
+                            mathMaxUnlocked: Math.max(currentProfile.mathMaxUnlocked, newLevel)
+                        });
+                    }
                 }
             }
+        } catch (err) {
+            console.error("[useStudySession] error handling result:", err);
         }
     };
 

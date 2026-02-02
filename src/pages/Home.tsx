@@ -4,8 +4,10 @@ import { motion } from "framer-motion";
 import { Icons } from "../components/icons";
 import { getActiveProfile } from "../domain/user/repository";
 import { getTodayStats, getTotalStats } from "../domain/stats/repository";
-import { checkEventCondition, EventCheckParams } from "../domain/sessionManager";
+import { checkEventCondition, EventCheckParams, EventType } from "../domain/sessionManager";
 import { getWeakPoints } from "../domain/stats/repository";
+import { EventModal } from "../components/domain/EventModal";
+import { eventStorage, weakPointsStorage } from "../utils/storage";
 
 export const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -13,9 +15,14 @@ export const Home: React.FC = () => {
     const [todayCount, setTodayCount] = useState(0);
     const [streak, setStreak] = useState(0);
 
+    // Event modal state
+    const [showEventModal, setShowEventModal] = useState(false);
+    const [currentEventType, setCurrentEventType] = useState<EventType | null>(null);
+
     // 今日の日付を取得
     const today = new Date();
     const dateStr = `${today.getMonth() + 1}月${today.getDate()}日`;
+    const todayKey = today.toISOString().split("T")[0];
 
     useEffect(() => {
         getActiveProfile().then(profile => {
@@ -33,9 +40,8 @@ export const Home: React.FC = () => {
                     getTotalStats(profile.id),
                     getWeakPoints(profile.id)
                 ]).then(([total, weakPoints]) => {
-                    // 前回の苦手数を取得（localStorage）
-                    const prevWeakCountStr = localStorage.getItem("sansu_prev_weak_count");
-                    const prevWeakCount = prevWeakCountStr ? parseInt(prevWeakCountStr, 10) : undefined;
+                    // 前回の苦手数を取得
+                    const prevWeakCount = weakPointsStorage.getPrevCount();
                     const currentWeakCount = weakPoints.length;
 
                     const params: EventCheckParams = {
@@ -46,47 +52,94 @@ export const Home: React.FC = () => {
                     };
 
                     const eventType = checkEventCondition(params);
+
                     if (eventType) {
-                        if (!localStorage.getItem("sansu_event_check_pending")) {
-                            localStorage.setItem("sansu_event_check_pending", "1");
+                        // Check if we already showed this event today
+                        const lastShownEvent = eventStorage.getLastShownEvent();
+                        const lastShownDate = eventStorage.getLastShownDate();
+
+                        // Only show if:
+                        // 1. Different event type, OR
+                        // 2. Different day, OR
+                        // 3. Never shown before
+                        const shouldShow =
+                            !lastShownEvent ||
+                            lastShownEvent !== eventType ||
+                            lastShownDate !== todayKey;
+
+                        if (shouldShow) {
+                            // Small delay for better UX (let the page load first)
+                            setTimeout(() => {
+                                setCurrentEventType(eventType);
+                                setShowEventModal(true);
+                            }, 800);
                         }
                     }
 
                     // 苦手数を保存（次回比較用）
-                    localStorage.setItem("sansu_prev_weak_count", currentWeakCount.toString());
+                    weakPointsStorage.setPrevCount(currentWeakCount);
                 });
             }
         });
-    }, []);
+    }, [todayKey]);
+
+    // Handle starting the power check
+    const handleStartCheck = () => {
+        // Mark this event as shown
+        if (currentEventType) {
+            eventStorage.setShown(currentEventType, todayKey);
+        }
+        setShowEventModal(false);
+
+        // Navigate to study with check-event session
+        navigate("/study?session=check-event");
+    };
+
+    // Handle dismissing the modal
+    const handleDismiss = () => {
+        // Mark this event as shown (so it doesn't appear again today for same event)
+        if (currentEventType) {
+            eventStorage.setShown(currentEventType, todayKey);
+        }
+        setShowEventModal(false);
+    };
 
     // 進捗のひとこと（仕様 06 §2.3）
     const getMessage = () => {
         // 未学習
         if (todayCount === 0) {
             const msgs = [
-                "🌱 きょうの いっぽんめ、やってみよ",
-                "🌱 1もんだけでも だいじょうぶ"
+                "きょうの いっぽんめ、やってみよ",
+                "1もんだけでも だいじょうぶ"
             ];
             return msgs[Math.floor(Math.random() * msgs.length)];
         }
         // 連続学習（3日以上）
         if (streak >= 3) {
-            return `🔥 ${streak}にち つづいてるよ。すごいね`;
+            return `${streak}にち つづいてるよ。すごいね`;
         }
         // 学習中
         if (todayCount > 0) {
             const msgs = [
-                `✨ きょうは ${todayCount}もん がんばったね`,
-                "✨ もう すこし すすめたよ"
+                `きょうは ${todayCount}もん がんばったね`,
+                "もう すこし すすめたよ"
             ];
             return msgs[Math.floor(Math.random() * msgs.length)];
         }
-        return "🌱 さあ、きょうも はじめよう";
+        return "さあ、きょうも はじめよう";
     };
     const message = getMessage();
 
     return (
         <div className="relative h-full overflow-hidden bg-slate-50">
+            {/* Event Modal */}
+            <EventModal
+                isOpen={showEventModal}
+                eventType={currentEventType}
+                onStartCheck={handleStartCheck}
+                onDismiss={handleDismiss}
+            />
+
             {/* Dynamic Background */}
             <div className="absolute inset-0 z-0 overflow-hidden">
                 <motion.div
