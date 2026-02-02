@@ -19,8 +19,8 @@ export const TenKey: React.FC<TenKeyProps> = ({
     showDecimal = false,
     onCursorMove
 }) => {
-    const numBtnClass = "h-16 text-2xl font-semibold bg-white border-b-4 border-slate-100 active:border-b-0 active:translate-y-1 transition-all land:h-12 land:text-xl mobile:h-12 mobile:text-xl";
-    const arrowBtnClass = "h-16 text-xl font-bold text-slate-500 bg-slate-50 border-b-4 border-slate-200 active:border-b-0 active:translate-y-1 transition-all land:h-12 mobile:h-12";
+    const numBtnClass = "h-16 text-2xl font-semibold bg-white border-b-4 border-slate-100 active:border-b-0 active:translate-y-1 transition-all land:h-12 land:text-xl mobile:h-10 mobile:text-lg";
+    const arrowBtnClass = "h-16 text-xl font-bold text-slate-500 bg-slate-50 border-b-4 border-slate-200 active:border-b-0 active:translate-y-1 transition-all land:h-12 mobile:h-10";
 
     if (showDecimal) {
         // 4列レイアウト（小数点付き）
@@ -31,7 +31,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
                         {n}
                     </Button>
                 ))}
-                <Button onClick={onClear} className="h-16 text-lg font-medium text-red-400 bg-red-50 border-red-100 land:h-12 land:text-base" variant="ghost">
+                <Button onClick={onClear} className="h-16 text-lg font-medium text-red-400 bg-red-50 border-red-100 land:h-12 land:text-base mobile:h-10 mobile:text-sm" variant="ghost">
                     C
                 </Button>
 
@@ -40,8 +40,8 @@ export const TenKey: React.FC<TenKeyProps> = ({
                         {n}
                     </Button>
                 ))}
-                <Button onClick={onDelete} className="h-16 text-lg font-medium text-slate-400 bg-slate-50 land:h-12 land:text-base" variant="ghost">
-                    <Icons.Backspace className="w-6 h-6" />
+                <Button onClick={onDelete} className="h-16 text-lg font-medium text-slate-400 bg-slate-50 land:h-12 land:text-base mobile:h-10" variant="ghost">
+                    <Icons.Backspace className="w-6 h-6 mobile:w-5 mobile:h-5" />
                 </Button>
 
                 {[1, 2, 3].map((n) => (
@@ -49,8 +49,8 @@ export const TenKey: React.FC<TenKeyProps> = ({
                         {n}
                     </Button>
                 ))}
-                <Button onClick={onEnter} className="h-16 row-span-2 text-white bg-yellow-400 hover:bg-yellow-500 border-b-4 border-yellow-500 active:border-b-0 active:translate-y-1 land:h-12" variant="ghost">
-                    <Icons.Check className="w-8 h-8" />
+                <Button onClick={onEnter} className="h-16 row-span-2 text-white bg-yellow-400 hover:bg-yellow-500 border-b-4 border-yellow-500 active:border-b-0 active:translate-y-1 land:h-12 mobile:h-10" variant="ghost">
+                    <Icons.Check className="w-8 h-8 mobile:w-6 mobile:h-6" />
                 </Button>
 
                 <Button onClick={() => onInput(0)} className={numBtnClass} variant="secondary">
@@ -73,7 +73,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
                     {n}
                 </Button>
             ))}
-            <Button onClick={onClear} className="h-16 text-lg font-medium text-red-400 bg-red-50 border-red-100 land:h-12 land:text-base" variant="ghost">
+            <Button onClick={onClear} className="h-16 text-lg font-medium text-red-400 bg-red-50 border-red-100 land:h-12 land:text-base mobile:h-10 mobile:text-sm" variant="ghost">
                 C
             </Button>
 
@@ -82,8 +82,8 @@ export const TenKey: React.FC<TenKeyProps> = ({
                     {n}
                 </Button>
             ))}
-            <Button onClick={onDelete} className="h-16 text-lg font-medium text-slate-400 bg-slate-50 land:h-12 land:text-base" variant="ghost">
-                <Icons.Backspace className="w-6 h-6" />
+            <Button onClick={onDelete} className="h-16 text-lg font-medium text-slate-400 bg-slate-50 land:h-12 land:text-base mobile:h-10" variant="ghost">
+                <Icons.Backspace className="w-6 h-6 mobile:w-5 mobile:h-5" />
             </Button>
 
             {[1, 2, 3].map((n) => (
@@ -91,8 +91,8 @@ export const TenKey: React.FC<TenKeyProps> = ({
                     {n}
                 </Button>
             ))}
-            <Button onClick={onEnter} className="h-16 row-span-2 text-white bg-yellow-400 hover:bg-yellow-500 border-b-4 border-yellow-500 active:border-b-0 active:translate-y-1 land:h-12" variant="ghost">
-                <Icons.Check className="w-8 h-8" />
+            <Button onClick={onEnter} className="h-16 row-span-2 text-white bg-yellow-400 hover:bg-yellow-500 border-b-4 border-yellow-500 active:border-b-0 active:translate-y-1 land:h-12 mobile:h-10" variant="ghost">
+                <Icons.Check className="w-8 h-8 mobile:w-6 mobile:h-6" />
             </Button>
 
             <Button
