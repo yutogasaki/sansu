@@ -169,7 +169,7 @@ export const Home: React.FC = () => {
             </div>
 
             {/* Content */}
-            <div className="relative z-10 flex flex-col h-full px-6 pt-12 pb-8 land:px-10 land:pt-8 land:pb-6">
+            <div className="relative z-10 flex flex-col h-full px-6 pt-12 pb-24 land:px-10 land:pt-8 land:pb-6">
 
                 {/* Header */}
                 <motion.div
@@ -191,10 +191,10 @@ export const Home: React.FC = () => {
                 </motion.div>
 
                 {/* Main Action - Center Stage */}
-                <div className="flex-1 flex flex-col justify-center items-center relative space-y-12 land:flex-row land:items-center land:justify-center land:space-y-0 land:gap-12">
+                <div className="flex-1 flex flex-col justify-center items-center relative space-y-8 land:flex-row land:items-center land:justify-center land:space-y-0 land:gap-12 min-h-0">
 
                     {/* Big pulsing start button */}
-                    <div className="relative group">
+                    <div className="relative group flex-shrink-0">
                         {/* Outer Glow */}
                         <motion.div
                             animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
@@ -206,10 +206,10 @@ export const Home: React.FC = () => {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={() => navigate("/study")}
-                            className="relative w-64 h-64 rounded-full bg-gradient-to-br from-yellow-300 via-yellow-400 to-orange-400 border-[6px] border-white shadow-[0_10px_40px_-10px_rgba(251,191,36,0.5)] flex flex-col items-center justify-center text-white land:w-52 land:h-52"
+                            className="relative w-48 h-48 rounded-full bg-gradient-to-br from-yellow-300 via-yellow-400 to-orange-400 border-[6px] border-white shadow-[0_10px_40px_-10px_rgba(251,191,36,0.5)] flex flex-col items-center justify-center text-white land:w-44 land:h-44"
                         >
-                            <Icons.Play className="w-16 h-16 fill-white drop-shadow-md ml-2 mb-2" />
-                            <span className="text-3xl font-bold tracking-widest drop-shadow-md">スタート</span>
+                            <Icons.Play className="w-12 h-12 fill-white drop-shadow-md ml-1 mb-1" />
+                            <span className="text-2xl font-bold tracking-widest drop-shadow-md">スタート</span>
                         </motion.button>
                     </div>
 
@@ -218,7 +218,7 @@ export const Home: React.FC = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="bg-white/70 backdrop-blur-lg border border-white/60 px-8 py-6 rounded-3xl shadow-lg shadow-slate-200/50 max-w-sm text-center land:max-w-md"
+                        className="bg-white/70 backdrop-blur-lg border border-white/60 px-6 py-4 rounded-3xl shadow-lg shadow-slate-200/50 max-w-sm text-center land:max-w-md w-full"
                     >
                         <p className="text-slate-700 font-bold text-lg leading-relaxed">
                             {message}
@@ -231,7 +231,7 @@ export const Home: React.FC = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.6 }}
-                    className="grid grid-cols-2 gap-4 land:gap-6"
+                    className="grid grid-cols-2 gap-4 land:gap-6 flex-shrink-0 mt-4"
                 >
                     <div className="bg-white/60 backdrop-blur p-4 rounded-2xl border border-white/50 text-center">
                         <p className="text-xs text-slate-400 font-bold mb-1">きょうのもんだい</p>

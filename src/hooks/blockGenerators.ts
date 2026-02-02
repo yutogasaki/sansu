@@ -46,7 +46,7 @@ export interface GeneratorOptions {
 // Constants
 // ============================================================
 
-export const BLOCK_SIZE = 5;
+export const BLOCK_SIZE = 10;
 export const COOLDOWN_WINDOW = 5;
 export const SAME_ID_LIMIT = 2;
 export const REVIEW_BLOCK_CHECK_WINDOW = 40;

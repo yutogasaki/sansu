@@ -6,6 +6,7 @@ import { Home } from "./pages/Home";
 import { Study } from "./pages/Study";
 import { Stats } from "./pages/Stats";
 import { Settings } from "./pages/Settings";
+import { CurriculumSettings } from "./pages/CurriculumSettings";
 import { DevMode } from "./pages/DevMode";
 import { loadSounds } from './utils/audio';
 
@@ -44,6 +45,11 @@ function App() {
                     <Route path="/settings" element={
                         <PrivateRoute>
                             <Settings />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/settings/curriculum" element={
+                        <PrivateRoute>
+                            <CurriculumSettings />
                         </PrivateRoute>
                     } />
                     <Route path="/dev" element={<DevMode />} />

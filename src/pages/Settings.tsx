@@ -112,33 +112,7 @@ export const Settings: React.FC = () => {
 
 
 
-    const handleMathEasyChange = (value: number) => {
-        if (!profile) return;
-        withParentGuard(async () => {
-            const main = Math.min(value + 1, 20);
-            const updated = {
-                ...profile,
-                mathMaxUnlocked: main,
-                mathMainLevel: main
-            };
-            await saveProfile(updated);
-            setProfile(updated);
-            setMathUnlockLevel(main);
-        });
-    };
 
-    const handleVocabEasyChange = (value: number) => {
-        if (!profile) return;
-        withParentGuard(async () => {
-            const updated = {
-                ...profile,
-                vocabMaxUnlocked: value,
-                vocabMainLevel: value
-            };
-            await saveProfile(updated);
-            setProfile(updated);
-        });
-    };
 
     const handleReset = async () => {
         if (confirm("ほんとうに 全部消しますか？")) {
@@ -281,28 +255,31 @@ export const Settings: React.FC = () => {
                     </div>
                 </Card>
 
-                {/* Math Unlock */}
-                <Card className="p-4 space-y-3">
-                    <h3 className="font-bold text-slate-700">さんすう どこまで？</h3>
-                    <div className="grid grid-cols-1 gap-2">
-                        <Button size="sm" variant="secondary" onClick={() => handleMathEasyChange(3)}>🔢 数をかぞえる</Button>
-                        <Button size="sm" variant="secondary" onClick={() => handleMathEasyChange(5)}>➕ 足し算まで</Button>
-                        <Button size="sm" variant="secondary" onClick={() => handleMathEasyChange(6)}>➖ 引き算まで</Button>
-                        <Button size="sm" variant="secondary" onClick={() => handleMathEasyChange(7)}>✏️ 筆算 (2桁)</Button>
-                        <Button size="sm" variant="secondary" onClick={() => handleMathEasyChange(10)}>✖️ 九九・かけ算</Button>
-                    </div>
-                    <div className="text-xs text-slate-400">こどもが さわらないように きいています</div>
-                </Card>
+                {/* Math & Vocab Settings Link */}
+                <Card className="p-4 space-y-4">
+                    <h3 className="font-bold text-slate-700">がくしゅう の なかみ</h3>
 
-                {/* Vocab Unlock */}
-                <Card className="p-4 space-y-3">
-                    <h3 className="font-bold text-slate-700">えいご どれくらい？</h3>
-                    <div className="grid grid-cols-1 gap-2">
-                        <Button size="sm" variant="secondary" onClick={() => handleVocabEasyChange(1)}>🌱 はじめて</Button>
-                        <Button size="sm" variant="secondary" onClick={() => handleVocabEasyChange(5)}>🙂 すこし なら みたことある</Button>
-                        <Button size="sm" variant="secondary" onClick={() => handleVocabEasyChange(10)}>✨ けいけん あり</Button>
+                    <div className="space-y-3">
+                        <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                            <div>
+                                <div className="font-bold text-slate-600">さんすう レベル</div>
+                                <div className="text-2xl font-black text-slate-800">Lv.{profile?.mathMainLevel || 1}</div>
+                            </div>
+                            <Button variant="secondary" onClick={() => navigate("/settings/curriculum")}>
+                                かえる
+                            </Button>
+                        </div>
+
+                        <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                            <div>
+                                <div className="font-bold text-slate-600">えいご レベル</div>
+                                <div className="text-2xl font-black text-slate-800">Lv.{profile?.vocabMainLevel || 1}</div>
+                            </div>
+                            <Button variant="secondary" onClick={() => navigate("/settings/curriculum")}>
+                                かえる
+                            </Button>
+                        </div>
                     </div>
-                    <div className="text-xs text-slate-400">きょうの おすすめが かわるよ</div>
                 </Card>
 
                 {/* Event Check */}
