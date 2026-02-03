@@ -16,7 +16,7 @@ export const MATH_CURRICULUM: Record<number, string[]> = {
     15: ["dec_add", "dec_sub"],
     16: ["dec_mul_int", "dec_div_int", "dec_mul_dec", "dec_div_dec"],
     17: ["frac_add_same", "frac_sub_same"],
-    18: ["frac_add_diff", "frac_sub_diff", "frac_mixed"],
+    18: ["frac_add_diff", "frac_sub_diff", "frac_mixed", "frac_mixed_sub"],
     19: ["frac_mul_int", "frac_mul_frac"],
     20: ["frac_div_int", "frac_div_frac", "scale_10x"]
 };

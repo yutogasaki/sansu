@@ -6,9 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { UserProfile } from "../domain/types";
 import { getActiveProfile, deleteProfile, getAllProfiles, saveProfile, setActiveProfileId } from "../domain/user/repository";
 import { setSoundEnabled } from "../utils/audio";
-import { generateMathPDF } from "../utils/pdfGenerator";
+import { generateMathPDF, generateVocabPDF } from "../utils/pdfGenerator";
 import { getAvailableSkills } from "../domain/math/curriculum";
 import { generateMathProblem } from "../domain/math";
+import { ENGLISH_WORDS } from "../domain/english/words";
 import { Problem } from "../domain/types";
 
 // 保護者ガード用：簡単な計算問題
@@ -141,6 +142,36 @@ export const Settings: React.FC = () => {
         }
 
         await generateMathPDF(problems, `${profile.name}_Lv${level}_テスト`, profile.name);
+    };
+
+    const handlePrintVocabPDF = async () => {
+        if (!profile) return;
+        const level = profile.vocabMainLevel || 1;
+
+
+
+        // If not enough words, maybe take from previous levels too? Or just all up to level?
+        // Spec says "Current Level". If level has few words (e.g. 10), fill with previous?
+        // Let's stick to "Current Level" for now, or "Up to Current Level" if we want more volume.
+        // Let's use "Up to Current Level" but prioritize Current Level? 
+        // Wait, specification usually implies practicing current content.
+        // Let's use "Current Level and below" to ensure we have 20 words.
+
+        let candidates = ENGLISH_WORDS.filter(w => w.level <= level);
+
+        // Prioritize current level (add them to list, then fill rest)
+        // Actually random pick from all known words is good for review.
+
+        if (candidates.length === 0) {
+            alert("まだ 単語が ありません");
+            return;
+        }
+
+        // Shuffle and pick 20
+        const shuffled = [...candidates].sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 20);
+
+        await generateVocabPDF(selected, `${profile.name}_English_Lv${level}`);
     };
 
     return (
@@ -336,9 +367,14 @@ export const Settings: React.FC = () => {
                         <div className="font-bold text-slate-700">かみの テスト</div>
                         <div className="text-xs text-slate-400">いまの レベルで 20もん</div>
                     </div>
-                    <Button size="sm" variant="secondary" onClick={handlePrintPDF}>
-                        いんさつ
-                    </Button>
+                    <div className="flex gap-2">
+                        <Button size="sm" variant="secondary" onClick={handlePrintPDF}>
+                            さんすう
+                        </Button>
+                        <Button size="sm" variant="secondary" onClick={handlePrintVocabPDF}>
+                            えいご
+                        </Button>
+                    </div>
                 </Card>
 
                 {/* Developer Mode */}

@@ -1,6 +1,7 @@
 import { PDFDocument, rgb, PDFPage, PDFFont } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import { Problem } from '../domain/types';
+import { EnglishWord } from '../domain/english/words';
 
 // ============================================================
 // Types
@@ -428,5 +429,126 @@ export const generateMathPDFWithAnswers = async (
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = `${title}_こたえ.pdf`;
+    link.click();
+};
+
+/**
+ * Generate a Vocab PDF (Writing Practice)
+ */
+export const generateVocabPDF = async (
+    words: EnglishWord[],
+    title: string
+) => {
+    const pdfDoc = await PDFDocument.create();
+    pdfDoc.registerFontkit(fontkit);
+
+    const fontUrl = 'https://fonts.gstatic.com/s/notosansjp/v52/-F6jfjtqLzI2JPCgQBnw7HFyzSD-AsregP8_1v47P06X.woff2';
+    const fontBytes = await fetch(fontUrl).then((res) => res.arrayBuffer());
+    const customFont = await pdfDoc.embedFont(fontBytes);
+
+    const itemsPerPage = 14; // Can fit a bit more than math
+    const totalPages = Math.ceil(words.length / itemsPerPage);
+
+    for (let pageNum = 0; pageNum < totalPages; pageNum++) {
+        const page = pdfDoc.addPage();
+        const { width, height } = page.getSize();
+
+        // Header
+        const fontSizeTitle = 24;
+        if (pageNum === 0) {
+            page.drawText(title, {
+                x: 50,
+                y: height - 60,
+                size: fontSizeTitle,
+                font: customFont,
+                color: rgb(0, 0, 0),
+            });
+
+            // Name Box
+            page.drawText('なまえ：', {
+                x: width - 250,
+                y: height - 60,
+                size: 14,
+                font: customFont,
+            });
+            page.drawLine({
+                start: { x: width - 200, y: height - 62 },
+                end: { x: width - 50, y: height - 62 },
+                thickness: 1,
+                color: rgb(0, 0, 0),
+            });
+        } else {
+            page.drawText(`${title} (${pageNum + 1}/${totalPages})`, {
+                x: 50,
+                y: height - 50,
+                size: 16,
+                font: customFont,
+                color: rgb(0.3, 0.3, 0.3),
+            });
+        }
+
+        // 2 Columns
+        const startY = pageNum === 0 ? height - 120 : height - 80;
+        const col1X = 50;
+        const col2X = width / 2 + 30;
+        const rowHeight = 60;
+
+        const startIdx = pageNum * itemsPerPage;
+        const endIdx = Math.min(startIdx + itemsPerPage, words.length);
+        const pageWords = words.slice(startIdx, endIdx);
+
+        pageWords.forEach((word, idx) => {
+            const isLeftCol = idx % 2 === 0;
+            const row = Math.floor(idx / 2);
+
+            const x = isLeftCol ? col1X : col2X;
+            const y = startY - (row * rowHeight);
+
+            // Number
+            const number = startIdx + idx + 1;
+            page.drawText(`(${number})`, {
+                x: x,
+                y: y,
+                size: 14,
+                font: customFont,
+                color: rgb(0.3, 0.3, 0.3),
+            });
+
+            // Japanese Prompt
+            const jpText = word.japanese;
+            page.drawText(jpText, {
+                x: x + 40,
+                y: y,
+                size: 18,
+                font: customFont,
+                color: rgb(0, 0, 0),
+            });
+
+            // Writing Line (Underline)
+            // Determine width of line. 
+            // In A4 (approx 595 width), column is ~250.
+            // Start line after Japanese text? Or fixed position?
+            // Fixed position ensures alignment.
+            const lineStartX = x + 40;
+            const lineY = y - 25;
+            const lineWidth = 200;
+
+            page.drawLine({
+                start: { x: lineStartX, y: lineY },
+                end: { x: lineStartX + lineWidth, y: lineY },
+                thickness: 1,
+                color: rgb(0.7, 0.7, 0.7), // Light gray line
+            });
+
+            // Second line (4-lines style) - Optional
+            // Let's stick to 1 baseline for now as per plan "Simple underline"
+        });
+    }
+
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes as BlobPart], { type: 'application/pdf' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${title}.pdf`;
     link.click();
 };
