@@ -75,14 +75,24 @@ export const updateSkillStatus = (
         return 'maintenance';
     }
 
-    // NEW: retired → active: 失敗したら即時復帰 (Re-learning)
-    // maintenance → active: 失敗が続く場合 also covered here logically if we check recent failure
+    // NEW: retired → active: 失敗が続いたら復帰 (Relaxed logic)
+    // maintenance → active: 失敗が続く場合
     if ((state.status === 'retired' || state.status === 'maintenance') && recentResults && recentResults.length > 0) {
-        // Check simply the latest result. If it's Fail, go Active.
-        // recentResults[0] is the latest?
-        // Note: calling side usually passes `[latest, prev, ...]`
-        if (recentResults[0] === false) {
-            return 'active';
+        // Strict was: recentResults[0] === false -> active
+        // Relaxed: active only if 2 failures in last 5, or if only 1 result and it's failure?
+        // No, let's say: need at least 2 consecutive failures OR specific low accuracy.
+        // Or simpler: If recent result is Fail, check previous. If also Fail, then Active.
+        // Single Fail should be warning (maybe maintenance?).
+
+        // Logic: active if recent 2 are BOTH false.
+        if (recentResults.length >= 2) {
+            if (recentResults[0] === false && recentResults[1] === false) {
+                return 'active';
+            }
+        } else {
+            // Less than 2 results available (very rare for retired item unless reset)
+            // If just 1 result and it is false, maybe keep retired/maintenance?
+            // Let's be safe: if only 1 data point and it failed, maybe it was a fluke. Keep status.
         }
     }
 

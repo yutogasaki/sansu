@@ -119,7 +119,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             const problem = safeGenerateProblem(
                 () => subject === 'math'
                     ? generateMathProblem(id)
-                    : generateVocabProblem(id, { cooldownIds: buildCooldownIds([]) }),
+                    : generateVocabProblem(id, { cooldownIds: buildCooldownIds([]), kanjiMode: profile?.kanjiMode }),
                 () => createFallbackProblem(subject, `focus mode: ${id}`),
                 `focus mode: ${id}`
             );
@@ -177,7 +177,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             const problem = safeGenerateProblem(
                 () => checkSubject === "math"
                     ? generateMathProblem(id)
-                    : generateVocabProblem(id, { cooldownIds: buildCooldownIds([]) }),
+                    : generateVocabProblem(id, { cooldownIds: buildCooldownIds([]), kanjiMode: activeProfile.kanjiMode }),
                 () => createFallbackProblem(checkSubject, `check mode: ${id}`),
                 `check mode: ${id}`
             );

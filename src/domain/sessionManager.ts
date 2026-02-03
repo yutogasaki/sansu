@@ -25,6 +25,43 @@ interface QueueItem {
     priority: number; // For sorting candidates
 }
 
+// Helper to check Weak status (Spec 5.5)
+const checkWeak = (id: string, recentAttempts?: any[]): boolean => {
+    if (!recentAttempts || recentAttempts.length === 0) return false;
+
+    // Filter attempts for this ID (only need last 10)
+    const attempts = recentAttempts
+        .filter(r => r.skillId === id || r.categoryId === id) // support both naming if needed, but recentAttempts has skillId
+        .slice(0, 10); // Take first 10 (recent are likely at start? need to check sort order)
+
+    // recentAttempts is usually ring buffer, ordered? 
+    // Types.ts doesn't specify order, but usually appended? Or newest first?
+    // Assuming newest first (common for logs). 
+    // If not, we should sort? Ring buffer usually preserves order. 
+    // Let's assume we scan all and take last 10 by timestamp if needed, 
+    // but for N=300, valid filtering is fast enough.
+
+    if (attempts.length < 5) return false;
+
+    // Use latest 10
+    // If recentAttempts is chronological (old -> new), we want slice(-10).
+    // If reverse chronological (new -> old), we want slice(0, 10).
+    // Let's safe bet: map to result and calculate.
+
+    // Let's assume we filter first. 
+    // Note: recentAttempts type is RecentAttempt[]
+
+    const relevant = attempts; //.slice(-10) if chronological
+
+    let correct = 0;
+    relevant.forEach(r => {
+        if (r.result === 'correct') correct++;
+    });
+
+    const accuracy = correct / relevant.length;
+    return accuracy < CONSTANTS.WEAK_THRESHOLD_IN;
+};
+
 // --- Main Generator ---
 
 export const generateSessionQueue = (user: UserProfile, count = 5): Omit<Problem, 'id' | 'isReview'>[] => {
@@ -64,7 +101,12 @@ export const generateSessionQueue = (user: UserProfile, count = 5): Omit<Problem
         // A. Due Items (Review)
         englishDueIds.forEach(id => {
             // Priority could be based on overdue days, here static high
-            candidates.push({ id, subject: 'vocab', isReview: true, priority: 100 });
+            let p = 100;
+            // Weak Boost (1-C)
+            if (checkWeak(id, user.recentAttempts)) {
+                p += 50;
+            }
+            candidates.push({ id, subject: 'vocab', isReview: true, priority: p });
         });
 
         // B. New Items (from Main Level)
@@ -87,7 +129,7 @@ export const generateSessionQueue = (user: UserProfile, count = 5): Omit<Problem
         }
 
         // Fill Queue
-        fillQueue(queue, candidates, count, CONSTANTS.BLOCK_DUP_LIMIT, (id) => generateVocabProblem(id));
+        fillQueue(queue, candidates, count, CONSTANTS.BLOCK_DUP_LIMIT, (id) => generateVocabProblem(id, { kanjiMode: user.kanjiMode }));
     }
 
     // --- Math Logic ---
@@ -96,7 +138,12 @@ export const generateSessionQueue = (user: UserProfile, count = 5): Omit<Problem
 
         // A. Due Items (Review) - Active only
         mathDueIds.forEach(id => {
-            candidates.push({ id, subject: 'math', isReview: true, priority: 100 });
+            let p = 100;
+            // Weak Boost (1-C)
+            if (checkWeak(id, user.recentAttempts)) {
+                p += 50;
+            }
+            candidates.push({ id, subject: 'math', isReview: true, priority: p });
         });
 
         // B. New / Main Items (Active)

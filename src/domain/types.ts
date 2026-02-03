@@ -201,6 +201,7 @@ export interface UserProfile {
     soundEnabled: boolean;
     dailyGoal?: number;
     kanjiMode?: boolean; // new: use Kanji for English answers if available
+    englishAutoRead?: boolean; // new: auto TTS for English
 
     // Progress
     mathMainLevel: number;

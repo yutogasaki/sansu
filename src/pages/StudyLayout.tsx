@@ -1,5 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { speakEnglish } from "../utils/tts";
+import { HiSpeakerWave } from "react-icons/hi2";
 import { SwipeableHandlers } from "react-swipeable";
 import { Header } from "../components/Header";
 import { Card } from "../components/ui/Card";
@@ -47,6 +49,8 @@ interface StudyLayoutProps {
     onFocusField: (index: number) => void;
 
     swipeHandlers: SwipeableHandlers;
+    englishAutoRead?: boolean;
+    onToggleTTS?: () => void;
 }
 
 export const StudyLayout: React.FC<StudyLayoutProps> = ({
@@ -72,9 +76,24 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     onCursorMove,
     onSubmitChoice,
     onFocusField,
-    swipeHandlers
+    swipeHandlers,
+    englishAutoRead = false,
+    onToggleTTS,
 }) => {
+    // Auto-TTS Effect
+    React.useEffect(() => {
+        if (englishAutoRead && currentProblem?.subject === 'vocab' && currentProblem.questionText) {
+            // Slight delay to allow transition? 
+            // Or immediate. Immediate is fine as long as user interaction logic is safe.
+            // Check if not already speaking? 
+            // speakEnglish cancels previous.
 
+            // Should play ONLY when problem first appears (feedback === 'none').
+            if (feedback === 'none') {
+                speakEnglish(currentProblem.questionText);
+            }
+        }
+    }, [currentProblem?.id, englishAutoRead, feedback]);
 
     // 正解表示用のヘルパー
     const renderCorrectAnswer = () => {
@@ -292,6 +311,16 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 >
                     <Icons.Close className="w-5 h-5" />
                 </button>
+                {/* TTS Toggle for Vocab */}
+                {currentProblem.subject === 'vocab' && onToggleTTS && (
+                    <button
+                        onClick={onToggleTTS}
+                        className={`ml-2 p-1 rounded-full transition-colors ${englishAutoRead ? 'bg-yellow-100 text-yellow-600' : 'text-slate-300'}`}
+                        title={englishAutoRead ? '自動読み上げ ON' : '自動読み上げ OFF'}
+                    >
+                        <HiSpeakerWave className="w-4 h-4" />
+                    </button>
+                )}
             </div>
 
             {/* Main Area: Mobile=Vertical, iPad=Horizontal */}
@@ -302,10 +331,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 <div id="debug-card-container" {...swipeHandlers} className="flex-1 min-h-0 px-4 py-2 flex flex-col justify-center relative z-0 land:px-6 ipadland:flex-[2] ipadland:p-0 mobile:px-1 mobile:py-1 ipadland:min-h-0">
                     <Card className="w-full flex flex-col items-center justify-center p-6 shadow-xl border-t-4 border-t-yellow-300 relative land:p-4 bg-white mobile:p-4 mobile:border-t-2 mobile:shadow-none overflow-hidden min-h-0">
 
-                        {/* Progress Indicator - モバイルでは上部バーに移動したので非表示 */}
-                        <div className="absolute top-4 right-4 text-slate-300 font-bold text-sm mobile:hidden">
-                            {currentIndex + 1} / {blockSize}
-                        </div>
+
 
                         {/* Skip Button - モバイルでは上部バーに移動したので非表示 */}
                         <button
@@ -317,17 +343,20 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         </button>
 
                         {/* 復習補助表示 - モバイルでは上部バーに移動したので非表示 */}
-                        {currentProblem.isReview && (
-                            <motion.div
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.5 }}
-                                className="text-slate-400 text-sm font-bold mb-4 text-center w-full mobile:hidden"
-                            >
-                                🔁 まえに やったところ
-                            </motion.div>
-                        )}
+                        {/* 復習補助表示 - モバイルでは上部バーに移動したので非表示 -> 復活 (Visual Feedback) */}
+                        <AnimatePresence>
+                            {currentProblem.isReview && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, scale: 0.9 }}
+                                    className="absolute -top-3 right-4 bg-amber-100 text-amber-600 px-3 py-1 rounded-full text-xs font-bold shadow-sm border border-amber-200 z-10 flex items-center gap-1"
+                                >
+                                    <span>🔁</span>
+                                    <span>復習</span>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
                         {/* Question Content */}
                         {currentProblem.inputType === "number" ? (
@@ -357,7 +386,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         ) : (
                             <div className="text-center w-full flex-1 flex flex-col items-center justify-center gap-2 ipadland:flex-col ipadland:gap-8 mobile:flex-row mobile:gap-3 mobile:justify-center">
                                 {/* Question Text */}
-                                <div className="mb-2 ipadland:mb-0 max-w-full overflow-hidden mobile:mb-0 mobile:flex-shrink-0">
+
+                                <div className="mb-2 ipadland:mb-0 max-w-full overflow-hidden mobile:mb-0 mobile:flex-shrink-0 flex items-center justify-center gap-2">
                                     <MathRenderer
                                         text={currentProblem.questionText || ""}
                                         isFraction={currentProblem.categoryId.startsWith("frac_")}
@@ -366,6 +396,19 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                             : "text-[clamp(28px,8vw,64px)] ipadland:text-7xl mobile:text-4xl text-slate-800 font-black tracking-wider"
                                         }
                                     />
+                                    {/* TTS Button for English */}
+                                    {currentProblem.subject === 'vocab' && (
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                speakEnglish(currentProblem.questionText || "");
+                                            }}
+                                            className="ml-2 p-2 bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-full transition-colors active:scale-95"
+                                            title="読み上げ"
+                                        >
+                                            <HiSpeakerWave className="w-6 h-6 mobile:w-5 mobile:h-5" />
+                                        </button>
+                                    )}
                                 </div>
 
                                 {currentProblem.inputType === "multi-number" && currentProblem.inputConfig?.fields && (

@@ -53,6 +53,7 @@ export const Study: React.FC = () => {
 
     // Profile ID for skip logging
     const [profileId, setProfileId] = useState<string | null>(null);
+    const [englishAutoRead, setEnglishAutoRead] = useState(false);
 
     const currentProblem = queue[currentIndex];
 
@@ -62,9 +63,21 @@ export const Study: React.FC = () => {
             if (profile) {
                 setSoundEnabled(profile.soundEnabled);
                 setProfileId(profile.id);
+                setEnglishAutoRead(profile.englishAutoRead || false);
             }
         });
     }, []);
+
+    // Toggle TTS and persist to profile
+    const handleToggleTTS = async () => {
+        const newValue = !englishAutoRead;
+        setEnglishAutoRead(newValue);
+        const profile = await getActiveProfile();
+        if (profile) {
+            const { saveProfile } = await import('../domain/user/repository');
+            await saveProfile({ ...profile, englishAutoRead: newValue });
+        }
+    };
 
     // Reset inputs when problem changes
     useEffect(() => {
@@ -369,6 +382,8 @@ export const Study: React.FC = () => {
             onSubmitChoice={(val) => handleSubmit(val)}
             onFocusField={setActiveFieldIndex}
             swipeHandlers={swipeHandlers}
+            englishAutoRead={englishAutoRead}
+            onToggleTTS={handleToggleTTS}
         />
     );
 };

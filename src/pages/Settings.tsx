@@ -258,6 +258,24 @@ export const Settings: React.FC = () => {
                     </Button>
                 </Card>
 
+                {/* English Auto-TTS */}
+                <Card className="p-4 flex justify-between items-center">
+                    <span className="font-bold text-slate-700">えいご よみあげ (自動)</span>
+                    <Button
+                        size="sm"
+                        variant={profile?.englishAutoRead ? "primary" : "secondary"}
+                        onClick={async () => {
+                            if (!profile) return;
+                            const updated = { ...profile, englishAutoRead: !profile.englishAutoRead };
+                            await saveProfile(updated);
+                            setProfile(updated);
+                        }}
+                        className="w-20"
+                    >
+                        {profile?.englishAutoRead ? "ON" : "OFF"}
+                    </Button>
+                </Card>
+
                 {/* Subject Mode */}
                 <Card className="p-4 space-y-3">
                     <h3 className="font-bold text-slate-700">べんきょう する もの</h3>
