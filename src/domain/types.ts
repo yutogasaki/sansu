@@ -148,6 +148,8 @@ export interface Problem {
     // Validation
     correctAnswer: string | string[]; // "2", ["1", "3"] (numerator, denominator)
 
+    displayAnswer?: string; // Display string for correct answer (e.g. Japanese translation)
+
     // Metadata
     isReview: boolean;
     isMaintenanceCheck?: boolean; // 仕様 5.4: 維持確認として出題されたか
@@ -198,6 +200,7 @@ export interface UserProfile {
     subjectMode: SubjectMode;
     soundEnabled: boolean;
     dailyGoal?: number;
+    kanjiMode?: boolean; // new: use Kanji for English answers if available
 
     // Progress
     mathMainLevel: number;

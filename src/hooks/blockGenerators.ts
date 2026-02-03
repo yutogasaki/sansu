@@ -333,11 +333,17 @@ export const generateSingleVocabProblem = (
         if (dueId) {
             isReview = true;
             problem = safeGenerateProblem(
-                () => generateVocabProblem(dueId, { cooldownIds: buildCooldownIds(pendingVocabIds) }),
+                () => generateVocabProblem(dueId, {
+                    cooldownIds: buildCooldownIds(pendingVocabIds),
+                    kanjiMode: ctx.profile.kanjiMode
+                }),
                 () => {
                     // Try first due item as fallback
                     if (vocabDue.length > 0) {
-                        return generateVocabProblem(vocabDue[0].id, { cooldownIds: buildCooldownIds(pendingVocabIds) });
+                        return generateVocabProblem(vocabDue[0].id, {
+                            cooldownIds: buildCooldownIds(pendingVocabIds),
+                            kanjiMode: ctx.profile.kanjiMode
+                        });
                     }
                     throw new Error('No vocab due items');
                 },
@@ -354,7 +360,10 @@ export const generateSingleVocabProblem = (
 
         if (wordId) {
             problem = safeGenerateProblem(
-                () => generateVocabProblem(wordId, { cooldownIds: buildCooldownIds(pendingVocabIds) }),
+                () => generateVocabProblem(wordId, {
+                    cooldownIds: buildCooldownIds(pendingVocabIds),
+                    kanjiMode: ctx.profile.kanjiMode
+                }),
                 () => createFallbackProblem('vocab', `vocab level ${level}`),
                 `vocab normal: ${wordId}`
             );

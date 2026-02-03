@@ -255,6 +255,36 @@ export const Settings: React.FC = () => {
                     </div>
                 </Card>
 
+                {/* Kanji Mode (Japanese Mode) */}
+                <Card className="p-4 space-y-3">
+                    <h3 className="font-bold text-slate-700">にほんご モード</h3>
+                    <div className="flex bg-slate-100 p-1 rounded-xl">
+                        <button
+                            className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${!profile?.kanjiMode ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
+                            onClick={async () => {
+                                if (!profile) return;
+                                const updated = { ...profile, kanjiMode: false };
+                                await saveProfile(updated);
+                                setProfile(updated);
+                            }}
+                        >
+                            ひらがな
+                        </button>
+                        <button
+                            className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${profile?.kanjiMode ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
+                            onClick={async () => {
+                                if (!profile) return;
+                                const updated = { ...profile, kanjiMode: true };
+                                await saveProfile(updated);
+                                setProfile(updated);
+                            }}
+                        >
+                            漢字
+                        </button>
+                    </div>
+                    <p className="text-xs text-slate-400 text-center">えいごの こたえが かわります</p>
+                </Card>
+
                 {/* Math & Vocab Settings Link */}
                 <Card className="p-4 space-y-4">
                     <h3 className="font-bold text-slate-700">がくしゅう の なかみ</h3>
@@ -326,7 +356,7 @@ export const Settings: React.FC = () => {
                     </Button>
                 </div>
 
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };

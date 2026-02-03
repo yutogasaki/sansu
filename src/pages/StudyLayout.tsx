@@ -80,6 +80,16 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     const renderCorrectAnswer = () => {
         if (!currentProblem) return null;
 
+        // 優先表示: displayAnswerがあればそれを使う（英語の日本語訳など）
+        // ただしマルチ入力などで特殊な表示が必要な場合は別途考慮（現状はシンプルに上書きでOK）
+        if (currentProblem.displayAnswer) {
+            return (
+                <p className="text-4xl font-bold text-slate-800">
+                    {currentProblem.displayAnswer}
+                </p>
+            );
+        }
+
         if (currentProblem.inputType === 'multi-number' && Array.isArray(currentProblem.correctAnswer) && currentProblem.inputConfig?.fields) {
             // マルチ入力の場合はフィールド名と一緒に表示
             return (
@@ -145,14 +155,27 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
             );
         }
 
-        // 通常完了画面
         return (
             <div className="flex flex-col items-center justify-center p-6 h-full space-y-8 animate-in zoom-in">
-                <div className="text-6xl">🙌</div>
-                <h2 className="text-2xl font-bold">ここまで おつかれさま</h2>
+                <div className="text-6xl">☕</div>
+                <h2 className="text-2xl font-bold">すこし やすもう</h2>
+                <div className="text-center text-slate-500">
+                    <span className="text-4xl font-bold text-slate-700">{currentIndex}</span>
+                    <span className="text-lg"> もん クリア！</span>
+                </div>
                 <div className="w-full space-y-4">
-                    <Button onClick={onContinue} size="xl" className="w-full shadow-lg shadow-yellow-200">
-                        つづける
+                    <Button onClick={() => {
+                        // For endless mode, "Continue" just hides this screen
+                        // But Study.tsx needs to know to un-set isFinished.
+                        // Currently Study.tsx effects might handle it, OR we pass a specific handler
+                        // Actually, Study.tsx passes `onContinue`.
+                        // In Study.tsx: handleContinue calls nextBlock(). 
+                        // But for "Pause", we just want to resume.
+                        // Since currentIndex won't change, the effect in Study.tsx might keep isFinished=true if we don't handle it.
+                        // We need Study.tsx to handle the "Resume from Break".
+                        onContinue();
+                    }} size="xl" className="w-full shadow-lg shadow-yellow-200">
+                        まだまだ やる！
                     </Button>
                     <Button onClick={() => onNavigate("/")} variant="secondary" size="lg" className="w-full">
                         おわる

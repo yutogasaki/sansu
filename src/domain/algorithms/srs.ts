@@ -75,7 +75,18 @@ export const updateSkillStatus = (
         return 'maintenance';
     }
 
-    // maintenance → active: 失敗が続く場合（直近5回で60%未満）
+    // NEW: retired → active: 失敗したら即時復帰 (Re-learning)
+    // maintenance → active: 失敗が続く場合 also covered here logically if we check recent failure
+    if ((state.status === 'retired' || state.status === 'maintenance') && recentResults && recentResults.length > 0) {
+        // Check simply the latest result. If it's Fail, go Active.
+        // recentResults[0] is the latest?
+        // Note: calling side usually passes `[latest, prev, ...]`
+        if (recentResults[0] === false) {
+            return 'active';
+        }
+    }
+
+    // maintenance → active: 失敗が続く場合（直近5回で60%未満）- KEEP as secondary check for weaker drift
     if (state.status === 'maintenance' && recentResults && recentResults.length >= 5) {
         const recent5 = recentResults.slice(0, 5);
         const correctCount = recent5.filter(r => r).length;

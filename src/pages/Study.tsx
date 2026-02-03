@@ -81,14 +81,34 @@ export const Study: React.FC = () => {
         isProcessingRef.current = false;
     }, [currentProblem]);
 
-    // Check if we finished the current queue
+    // Check for pause (every 100 questions) or pre-fetch
     useEffect(() => {
-        if (queue.length > 0 && currentIndex >= queue.length) {
-            setIsFinished(true);
-        } else {
-            setIsFinished(false);
+        if (!queue.length) return;
+
+        // 1. Pre-fetch when running low (less than 3 items remaining)
+        if (!loading && queue.length - currentIndex < 3) {
+            console.log("Pre-fetching next block...");
+            nextBlock();
         }
-    }, [currentIndex, queue.length]);
+
+        // 2. Pause every 100 questions (Endless Mode Break)
+        // Check if we just completed a multiple of 100
+        // Trigger condition: currentIndex > 0 and currentIndex % 100 === 0
+        // We use isFinished state to show the "Break" screen
+        // But we need to distinguish "Break" from "Done"
+        // Actually, let's use isFinished=true to show the interstitial, but customize message based on count?
+        // Or simply pause.
+
+        // For this implementation, we will ONLY pause at 100 questions.
+        // We do NOT stop at block end anymore.
+
+        if (currentIndex > 0 && currentIndex % 100 === 0 && !isFinished) {
+            setIsFinished(true); // Show break screen
+        } else if (isFinished && currentIndex % 100 !== 0) {
+            setIsFinished(false); // Resume if we moved past (e.g. user clicked continue)
+        }
+
+    }, [currentIndex, queue.length, loading, nextBlock, isFinished]);
 
     // Handlers - 全てのフックより前に定義
     const handleTenKeyInput = useCallback((val: string | number) => {
@@ -298,8 +318,31 @@ export const Study: React.FC = () => {
     }, [feedback, currentProblem, handleTenKeyInput, handleBackspace, handleClear, handleSkip, handleSubmit]);
 
     const handleContinue = useCallback(() => {
-        nextBlock();
-    }, [nextBlock]);
+        // If we are flagged as finished (Break time), just resume.
+        // We don't strictly need to generate more blocks here because pre-fetch handles it,
+        // but calling nextBlock is safe (just appends).
+        // However, to exit the "Break" screen (isFinished=true), we must flip the flag.
+        // The effect "currentIndex % 100 === 0" might re-trigger if we don't advance?
+        // Ah, the effect logic:
+        // if (currentIndex > 0 && currentIndex % 100 === 0 && !isFinished) { setIsFinished(true); }
+        // So once we set isFinished(true), it won't trigger again for THIS index.
+        // But if we set isFinished(false), it MIGHT trigger again if the effect runs?
+        // No, dependencies are [currentIndex, ...]. If currentIndex doesn't change, effect likely won't re-run 
+        // OR we need a state "hasTakenBreakAt" ?
+
+        // Simpler approach: To "Continue", we should just let the user see the next problem.
+        // But we are at currentIndex. And we pause AFTER completing it?
+        // Usually wait 800ms -> nextProblem() -> increments index.
+        // If we pause at 100, we are at index 100? No, 0-indexed.
+        // Let's say we answered 99th question (index 99) -> nextProblem() -> index 100.
+        // Then effect sees index 100 -> Pause.
+        // User clicks Continue. We just hide the screen. 
+        // But if we hide screen, we render <StudyLayout> which shows CurrentProblem [100].
+        // So we need to ensure isFinished stays false.
+
+        setIsFinished(false);
+        // We might want to ensure we have questions, but pre-fetch checks that.
+    }, []);
 
     return (
         <StudyLayout

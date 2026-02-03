@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../components/Header";
-
 import { useNavigate } from "react-router-dom";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
 import { UserProfile } from "../domain/types";
+import { syncLevelState } from "../domain/user/profile";
 import { ParentGuard } from "../components/domain/ParentGuard";
 import { Icons } from "../components/icons";
 import { cn } from "../utils/cn";
@@ -77,19 +77,10 @@ export const CurriculumSettings: React.FC = () => {
         if (!profile || pendingLevel === null) return;
 
         let updated: UserProfile;
-
         if (activeTab === "math") {
-            updated = {
-                ...profile,
-                mathMaxUnlocked: pendingLevel,
-                mathMainLevel: pendingLevel
-            };
+            updated = syncLevelState(profile, 'math', pendingLevel);
         } else {
-            updated = {
-                ...profile,
-                vocabMaxUnlocked: pendingLevel,
-                vocabMainLevel: pendingLevel
-            };
+            updated = syncLevelState(profile, 'vocab', pendingLevel);
         }
 
         await saveProfile(updated);

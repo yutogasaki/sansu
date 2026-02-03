@@ -3,6 +3,7 @@ import { ENGLISH_WORDS } from "./words";
 
 type VocabGeneratorOptions = {
     cooldownIds?: string[];
+    kanjiMode?: boolean;
 };
 
 export const generateVocabProblem = (
@@ -13,6 +14,7 @@ export const generateVocabProblem = (
     if (!target) throw new Error(`Word not found: ${targetWordId}`);
 
     const cooldownSet = new Set(options.cooldownIds || []);
+    const useKanji = options.kanjiMode === true;
 
     const filterCandidates = (words: typeof ENGLISH_WORDS) => {
         return words.filter(w =>
@@ -50,9 +52,17 @@ export const generateVocabProblem = (
     const shuffledPool = [...pool].sort(() => 0.5 - Math.random());
     const distractors = shuffledPool.slice(0, 3);
 
+    // Helper to get display label based on mode
+    const getLabel = (w: typeof ENGLISH_WORDS[0]) => {
+        if (useKanji && w.japaneseKanji) {
+            return w.japaneseKanji; // 漢字モードかつ漢字データがあれば漢字
+        }
+        return w.japanese; // それ以外はひらがな
+    };
+
     // Create 4 choices
     const choices = [target, ...distractors]
-        .map(w => ({ label: w.japanese, value: w.id }))
+        .map(w => ({ label: getLabel(w), value: w.id }))
         .sort(() => 0.5 - Math.random()); // Shuffle choices
 
     return {
@@ -62,6 +72,7 @@ export const generateVocabProblem = (
         inputConfig: {
             choices: choices
         },
-        correctAnswer: target.id
+        correctAnswer: target.id,
+        displayAnswer: getLabel(target) // 正解表示用（これがないとIDが表示されてしまう）
     };
 };

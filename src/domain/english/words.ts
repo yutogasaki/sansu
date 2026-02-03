@@ -2,6 +2,7 @@ export interface EnglishWord {
     id: string;
     level: number;
     japanese: string;
+    japaneseKanji?: string;
     category: string;
 }
 
@@ -190,72 +191,84 @@ export const ENGLISH_WORDS: EnglishWord[] = [
         "id": "one",
         "level": 1,
         "japanese": "いち",
+        "japaneseKanji": "一",
         "category": "数字"
     },
     {
         "id": "two",
         "level": 1,
         "japanese": "に",
+        "japaneseKanji": "二",
         "category": "数字"
     },
     {
         "id": "three",
         "level": 1,
         "japanese": "さん",
+        "japaneseKanji": "三",
         "category": "数字"
     },
     {
         "id": "four",
         "level": 1,
         "japanese": "よん",
+        "japaneseKanji": "四",
         "category": "数字"
     },
     {
         "id": "five",
         "level": 1,
         "japanese": "ご",
+        "japaneseKanji": "五",
         "category": "数字"
     },
     {
         "id": "six",
         "level": 1,
         "japanese": "ろく",
+        "japaneseKanji": "六",
         "category": "数字"
     },
     {
         "id": "seven",
         "level": 1,
         "japanese": "なな",
+        "japaneseKanji": "七",
         "category": "数字"
     },
     {
         "id": "eight",
         "level": 1,
         "japanese": "はち",
+        "japaneseKanji": "八",
         "category": "数字"
     },
     {
         "id": "nine",
         "level": 1,
         "japanese": "きゅう",
+        "japaneseKanji": "九",
         "category": "数字"
     },
     {
         "id": "ten",
         "level": 1,
         "japanese": "じゅう",
+        "japaneseKanji": "十",
         "category": "数字"
     },
     {
         "id": "hundred",
         "level": 1,
         "japanese": "ひゃく",
+        "japaneseKanji": "百",
         "category": "数字"
     },
     {
         "id": "thousand",
         "level": 1,
         "japanese": "せん",
+        "japaneseKanji": "千",
         "category": "数字"
     },
     {
@@ -274,6 +287,7 @@ export const ENGLISH_WORDS: EnglishWord[] = [
         "id": "hello",
         "level": 1,
         "japanese": "こんにちは",
+        "japaneseKanji": "今日は",
         "category": "その他"
     },
     {
@@ -526,36 +540,42 @@ export const ENGLISH_WORDS: EnglishWord[] = [
         "id": "red",
         "level": 2,
         "japanese": "あか",
+        "japaneseKanji": "赤",
         "category": "色"
     },
     {
         "id": "blue",
         "level": 2,
         "japanese": "あお",
+        "japaneseKanji": "青",
         "category": "色"
     },
     {
         "id": "green",
         "level": 2,
         "japanese": "みどり",
+        "japaneseKanji": "緑",
         "category": "色"
     },
     {
         "id": "yellow",
         "level": 2,
         "japanese": "きいろ",
+        "japaneseKanji": "黄色",
         "category": "色"
     },
     {
         "id": "white",
         "level": 2,
         "japanese": "しろ",
+        "japaneseKanji": "白",
         "category": "色"
     },
     {
         "id": "black",
         "level": 2,
         "japanese": "くろ",
+        "japaneseKanji": "黒",
         "category": "色"
     },
     {
@@ -568,18 +588,21 @@ export const ENGLISH_WORDS: EnglishWord[] = [
         "id": "brown",
         "level": 2,
         "japanese": "ちゃいろ",
+        "japaneseKanji": "茶色",
         "category": "色"
     },
     {
         "id": "purple",
         "level": 2,
         "japanese": "むらさき",
+        "japaneseKanji": "紫",
         "category": "色"
     },
     {
         "id": "gray",
         "level": 2,
         "japanese": "はいいろ",
+        "japaneseKanji": "灰色",
         "category": "色"
     },
     {

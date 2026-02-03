@@ -17,6 +17,50 @@ const createLevelStates = (maxLevel: number, unlockedUpTo: number, mainLevel: nu
     return states;
 };
 
+
+// Helper to sync level state on manual change
+export const syncLevelState = (
+    profile: UserProfile,
+    subject: 'math' | 'vocab',
+    newLevel: number
+): UserProfile => {
+    const updated = { ...profile };
+
+    if (subject === 'math') {
+        updated.mathMainLevel = newLevel;
+        if (newLevel > updated.mathMaxUnlocked) {
+            updated.mathMaxUnlocked = newLevel;
+        }
+
+        if (updated.mathLevels) {
+            updated.mathLevels = updated.mathLevels.map(l => {
+                if (l.level <= newLevel) {
+                    return { ...l, unlocked: true, enabled: true };
+                } else {
+                    return { ...l, enabled: false };
+                }
+            });
+        }
+    } else {
+        updated.vocabMainLevel = newLevel;
+        if (newLevel > updated.vocabMaxUnlocked) {
+            updated.vocabMaxUnlocked = newLevel;
+        }
+
+        if (updated.vocabLevels) {
+            updated.vocabLevels = updated.vocabLevels.map(l => {
+                if (l.level <= newLevel) {
+                    return { ...l, unlocked: true, enabled: true };
+                } else {
+                    return { ...l, enabled: false };
+                }
+            });
+        }
+    }
+
+    return updated;
+};
+
 // Default Profile Factory
 export const createInitialProfile = (
     name: string,
