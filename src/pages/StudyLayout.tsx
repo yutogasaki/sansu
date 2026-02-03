@@ -331,7 +331,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
 
                         {/* Question Content */}
                         {currentProblem.inputType === "number" ? (
-                            <div className="w-full flex-1 flex flex-col items-center justify-center gap-6 ipadland:flex-col ipadland:items-center ipadland:gap-12 mobile:flex-row mobile:gap-3 mobile:justify-center">
+                            <div className={`w-full flex-1 flex flex-col items-center justify-center gap-6 ipadland:flex-col ipadland:items-center ipadland:gap-12 mobile:gap-3 mobile:justify-center ${currentProblem.categoryId.startsWith("frac_") ? "mobile:flex-col" : "mobile:flex-row"
+                                }`}>
                                 <div className="text-slate-800 font-black tracking-wider text-center max-w-full overflow-hidden mobile:flex-shrink-0">
                                     {/* Font Size Control: Normal vs Fraction */}
                                     {/* Fraction uses stricter clamp and renderer */}
@@ -339,7 +340,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                         text={currentProblem.questionText || ""}
                                         isFraction={currentProblem.categoryId.startsWith("frac_")}
                                         className={currentProblem.categoryId.startsWith("frac_")
-                                            ? "text-[clamp(28px,7vw,56px)] ipadland:text-7xl"
+                                            ? "text-[clamp(40px,11vw,80px)] ipadland:text-7xl"
                                             : "text-[clamp(28px,8vw,64px)] ipadland:text-8xl mobile:text-4xl"
                                         }
                                     />
@@ -408,6 +409,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 </div>
 
             </div>
+
+
         </div>
     );
 };

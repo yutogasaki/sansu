@@ -239,6 +239,7 @@ export const Home: React.FC = () => {
                     </div>
                     <div className="bg-white/60 backdrop-blur p-4 rounded-2xl border border-white/50 text-center">
                         <p className="text-xs text-slate-400 font-bold mb-1">つづけたひ</p>
+
                         <p className="text-xl font-black text-slate-700">{streak}日</p>
                     </div>
                 </motion.div>
