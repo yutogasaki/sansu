@@ -42,7 +42,7 @@ export const ParentGuard: React.FC<ParentGuardProps> = ({ isOpen, onSuccess, onC
                     type="number"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    className="w-full border-2 border-slate-200 rounded-xl p-3 text-center text-2xl font-bold focus:border-yellow-400 outline-none"
+                    className="w-full border-2 border-slate-200 rounded-xl p-3 text-center text-2xl font-bold focus:border-primary outline-none"
                     autoFocus
                     placeholder="?"
                     onKeyDown={(e) => e.key === "Enter" && handleSubmit()}

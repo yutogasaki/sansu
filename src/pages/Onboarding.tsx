@@ -90,10 +90,10 @@ export const Onboarding: React.FC = () => {
         return (
             <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center space-y-8 animate-in fade-in duration-500 bg-slate-50">
                 <div className="space-y-4">
-                    <h1 className="text-5xl font-black text-yellow-500 tracking-tight drop-shadow-sm">Sansu</h1>
+                    <h1 className="text-5xl font-black text-primary tracking-tight drop-shadow-sm">Sansu</h1>
                     <p className="text-slate-500 text-lg font-medium">やさしく、しずかに<br />つづくまなび</p>
                 </div>
-                <Button onClick={() => setStep("name")} size="xl" className="w-full max-w-xs shadow-xl shadow-yellow-200">
+                <Button onClick={() => setStep("name")} size="xl" className="w-full max-w-xs shadow-xl shadow-primary/30">
                     はじめる
                 </Button>
             </div>
@@ -120,7 +120,7 @@ export const Onboarding: React.FC = () => {
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full text-4xl text-center p-6 rounded-3xl border-4 border-slate-100 focus:border-yellow-400 outline-none bg-white shadow-sm font-bold text-slate-700"
+                            className="w-full text-4xl text-center p-6 rounded-3xl border-4 border-slate-100 focus:border-primary outline-none bg-white shadow-sm font-bold text-slate-700"
                             placeholder="あだ名でOK"
                             autoFocus
                         />
@@ -146,15 +146,15 @@ export const Onboarding: React.FC = () => {
                                     key={g.v}
                                     onClick={() => !isSubmitting && handleGradeSelect(g.v)}
                                     disabled={isSubmitting}
-                                    className="group relative w-full p-4 bg-white rounded-2xl border-2 border-slate-100 shadow-sm hover:border-yellow-400 hover:bg-yellow-50 hover:shadow-md transition-all active:scale-95 flex items-center gap-4 text-left"
+                                    className="group relative w-full p-4 bg-white rounded-2xl border-2 border-slate-100 shadow-sm hover:border-primary hover:bg-primary/5 hover:shadow-md transition-all active:scale-95 flex items-center gap-4 text-left"
                                 >
                                     <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-2xl group-hover:bg-white">
-                                        {g.icon === "re" ? <span className="text-xl font-bold text-slate-400 group-hover:text-yellow-500">2</span> : g.icon}
+                                        {g.icon === "re" ? <span className="text-xl font-bold text-slate-400 group-hover:text-primary">2</span> : g.icon}
                                     </div>
                                     <div className="flex-1">
                                         <div className="font-bold text-lg text-slate-700 group-hover:text-slate-900">{g.l}</div>
                                     </div>
-                                    <div className="text-slate-300 group-hover:text-yellow-500">
+                                    <div className="text-slate-300 group-hover:text-primary">
                                         →
                                     </div>
                                 </button>

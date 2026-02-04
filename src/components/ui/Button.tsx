@@ -12,22 +12,22 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             <button
                 ref={ref}
                 className={cn(
-                    "inline-flex items-center justify-center rounded-2xl font-medium transition-colors focus:outline-none disabled:opacity-50 disabled:pointer-events-none touch-manipulation active:scale-95",
+                    "inline-flex items-center justify-center rounded-full font-bold transition-transform active:scale-95 focus:outline-none disabled:opacity-50 disabled:pointer-events-none touch-manipulation",
                     // Variants
                     variant === "primary" &&
-                    "bg-yellow-200 text-yellow-900 hover:bg-yellow-300 shadow-sm border border-yellow-300/50",
+                    "bg-primary text-white hover:opacity-90 shadow-[0_4px_0_0_rgba(179,162,255,0.4)] active:shadow-none translate-y-0 active:translate-y-[2px]",
                     variant === "secondary" &&
-                    "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 shadow-sm",
+                    "bg-white text-text-main border-2 border-slate-100 hover:bg-slate-50 shadow-sm",
                     variant === "ghost" &&
-                    "bg-transparent text-slate-500 hover:bg-slate-100",
+                    "bg-transparent text-text-sub hover:bg-slate-100",
                     variant === "icon" &&
-                    "p-2 rounded-full hover:bg-slate-100 text-slate-500",
+                    "p-2 rounded-full hover:bg-slate-100 text-text-sub",
 
                     // Sizes
                     size === "sm" && "h-10 px-4 text-sm",
                     size === "md" && "h-12 px-6 text-base",
                     size === "lg" && "h-14 px-8 text-lg",
-                    size === "xl" && "h-20 text-2xl w-full", // For big options
+                    size === "xl" && "h-16 text-xl w-full", // For big options
 
                     className
                 )}

@@ -7,7 +7,7 @@ export const Layout: React.FC = () => {
     const isStudy = location.pathname === "/study";
 
     return (
-        <div className="min-h-screen bg-[#FDFBF7] text-slate-700 font-sans selection:bg-yellow-200 selection:text-yellow-900">
+        <div className="min-h-screen bg-background text-text-main font-sans selection:bg-primary/20 selection:text-text-main">
             <main className={`mx-auto w-full min-h-screen relative flex flex-col ${isStudy ? '' : 'max-w-md land:max-w-4xl'}`}>
                 {/* Content Area */}
                 <div className={`flex-1 flex flex-col ${isStudy ? '' : 'p-4 pb-24 land:px-8 land:pb-20'}`}>

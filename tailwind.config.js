@@ -6,6 +6,20 @@ export default {
     ],
     theme: {
         extend: {
+            colors: {
+                primary: "#9D84FC", // Darker for better contrast with white text
+                background: "#F8F9FB",
+                surface: "#FFFFFF",
+                text: {
+                    main: "#2D3436",
+                    sub: "#636E72",
+                },
+            },
+            borderRadius: {
+                'xl': '1.5rem',
+                '2xl': '2.0rem',
+                '3xl': '3.0rem',
+            },
             screens: {
                 mobile: { max: "480px" },
                 land: { raw: "(orientation: landscape)" },

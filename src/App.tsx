@@ -8,6 +8,7 @@ import { Stats } from "./pages/Stats";
 import { Settings } from "./pages/Settings";
 import { CurriculumSettings } from "./pages/CurriculumSettings";
 import { DevMode } from "./pages/DevMode";
+import { ParentsPage } from "./pages/parents/ParentsPage";
 import { loadSounds } from './utils/audio';
 
 // Mock auth check
@@ -52,6 +53,7 @@ function App() {
                             <CurriculumSettings />
                         </PrivateRoute>
                     } />
+                    <Route path="/parents" element={<ParentsPage />} />
                     <Route path="/dev" element={<DevMode />} />
                 </Route>
             </Routes>
