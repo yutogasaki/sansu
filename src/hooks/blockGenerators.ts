@@ -7,7 +7,7 @@ import { Problem, SubjectKey, UserProfile } from "../domain/types";
 import { generateMathProblem } from "../domain/math";
 import { generateVocabProblem } from "../domain/english/generator";
 import { getSkillsForLevel } from "../domain/math/curriculum";
-import { getWordsByLevel } from "../domain/english/words";
+import { getWordsByLevel, ENGLISH_WORDS } from "../domain/english/words";
 
 // ============================================================
 // Types
@@ -27,7 +27,7 @@ export interface SessionHistoryItem {
     isReview: boolean;
 }
 
-export type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event";
+export type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test";
 
 export interface ProblemGenerationResult {
     problem: Omit<Problem, 'id' | 'subject' | 'isReview'>;
@@ -377,6 +377,228 @@ export const generateSingleVocabProblem = (
 
     return { problem, isReview, isMaintenanceCheck: false };
 };
+
+// ============================================================
+// Level Block Generation (For Special Check / Paper Test Alignment)
+// ============================================================
+
+export const generateLevelBlock = (
+    profile: UserProfile,
+    blockSize: number,
+    forcedSubject?: SubjectKey
+): Problem[] => {
+    const q: Problem[] = [];
+    const blockCounts = new Map<string, number>();
+
+    // Determine subject based on subjectMode
+    let subject: SubjectKey = forcedSubject || (profile.subjectMode === 'vocab' ? 'vocab' : 'math');
+
+    // If not forced and mode is mix, initial subject checks (though loop handles mix)
+    // If forcedSubject is set, we stick to it exclusively.
+
+    for (let i = 0; i < blockSize; i++) {
+        // For mix, alternate math/vocab (ONLY if not forced)
+        if (!forcedSubject && profile.subjectMode === 'mix') {
+            subject = i % 2 === 0 ? 'math' : 'vocab';
+        }
+
+        const genOptions: GeneratorOptions = {
+            cooldownIds: [],
+            skippedTodayIds: [],
+            blockCounts,
+            recentIds: [] // No history filtering for test mode
+        };
+
+        let problem: Omit<Problem, 'id' | 'subject' | 'isReview'> | undefined;
+
+        if (subject === 'math') {
+            // Strict Level Logic (Level Test)
+            const level = profile.mathMainLevel || 1;
+            const skills = getSkillsForLevel(level);
+            // Fallback (e.g. if level has no skills defined, use level-1 or level 1)
+            const validSkills = skills.length > 0 ? skills : getSkillsForLevel(1);
+
+            const skillId = pickId(validSkills, genOptions) || validSkills[0];
+
+            problem = safeGenerateProblem(
+                () => generateMathProblem(skillId),
+                () => createFallbackProblem('math', 'level block failed'),
+                `level block math: ${skillId}`
+            );
+        } else {
+            // Cumulative Logic for Vocab (Standard)
+            const level = profile.vocabMainLevel || 1;
+            const candidates = ENGLISH_WORDS.filter(w => w.level <= level);
+            const wordId = pickId(candidates.map(w => w.id), genOptions) || candidates[0]?.id;
+
+            problem = safeGenerateProblem(
+                () => generateVocabProblem(wordId, { cooldownIds: [], kanjiMode: profile.kanjiMode }),
+                () => createFallbackProblem('vocab', 'level block failed'),
+                `level block vocab: ${wordId}`
+            );
+        }
+
+        q.push({
+            ...problem,
+            id: `level-test-${i}-${Date.now()}`,
+            subject,
+            isReview: false
+        });
+
+        markPicked(problem.categoryId, blockCounts);
+    }
+
+    return q;
+};
+
+
+// ============================================================
+// New New Generators (Plan A)
+// ============================================================
+
+/**
+ * Weakness Review Block (10 questions)
+ * Prioritizes: Weak > Maintenance/LowStrength > Random in Main Level
+ */
+export const generateWeakReviewBlock = async (
+    profile: UserProfile,
+    ctx: {
+        weakMathIds: string[];
+        maintenanceMathIds: string[];
+        mathDue: { id: string }[];
+        vocabDue: { id: string }[];
+    }
+): Promise<Problem[]> => {
+    const q: Problem[] = [];
+    const blockSize = 10;
+    const blockCounts = new Map<string, number>();
+
+    // Determine subject (Same logic as normal block, or strictly mix?)
+    // Spec says: "Subject independently" but usually we run mixed session.
+    // For simplicity in V1, we respect subjectMode.
+
+    // Helper to decide subject for each question
+    const getSubject = (i: number): SubjectKey => {
+        if (profile.subjectMode === 'math') return 'math';
+        if (profile.subjectMode === 'vocab') return 'vocab';
+        return i % 2 === 0 ? 'math' : 'vocab';
+    };
+
+    const { weakMathIds, maintenanceMathIds, mathDue, vocabDue } = ctx;
+    const mathLevel = profile.mathMainLevel || 1;
+    const mathSkills = getSkillsForLevel(mathLevel);
+
+    const vocabLevel = profile.vocabMainLevel || 1;
+    const vocabWords = getWordsByLevel(vocabLevel);
+
+
+    for (let i = 0; i < blockSize; i++) {
+        const subject = getSubject(i);
+        const options: GeneratorOptions = {
+            cooldownIds: [],
+            skippedTodayIds: [], // We might want to allow skipped items in review? No, stick to standard.
+            blockCounts,
+            recentIds: [] // We explicitly want to REVIEW, so recent check might be loose.
+        };
+
+        let problem: Omit<Problem, 'id' | 'subject' | 'isReview'> | undefined;
+
+        if (subject === 'math') {
+            // Priority 1: Weak Math
+            const availableWeak = weakMathIds.filter(id => mathSkills.includes(id));
+            const weakId = pickId(availableWeak, options);
+            if (weakId) {
+                problem = safeGenerateProblem(
+                    () => generateMathProblem(weakId),
+                    () => generateMathProblem("count_10"),
+                    `weak-review math weak: ${weakId}`
+                );
+            }
+
+            // Priority 2: Due / Maintenance (Low Strength)
+            if (!problem) {
+                const pool = [...mathDue.map(d => d.id), ...maintenanceMathIds];
+                const id = pickId(pool, options);
+                if (id) {
+                    problem = safeGenerateProblem(
+                        () => generateMathProblem(id),
+                        () => generateMathProblem("count_10"),
+                        `weak-review math due/maint: ${id}`
+                    );
+                }
+            }
+
+            // Priority 3: Random in Level
+            if (!problem) {
+                const id = pickId(mathSkills, options) || mathSkills[0];
+                if (id) {
+                    problem = safeGenerateProblem(
+                        () => generateMathProblem(id),
+                        () => generateMathProblem("count_10"),
+                        `weak-review math random: ${id}`
+                    );
+                }
+            }
+        } else {
+            // Vocab Logic
+            // Priority 1: Due
+            const dueId = pickId(vocabDue.map(v => v.id), options);
+            if (dueId) {
+                problem = safeGenerateProblem(
+                    () => generateVocabProblem(dueId, { cooldownIds: [], kanjiMode: profile.kanjiMode }),
+                    () => createFallbackProblem('vocab', 'weak-review fallback'),
+                    `weak-review vocab due: ${dueId}`
+                );
+            }
+
+            // Priority 2: Random in Level
+            if (!problem) {
+                const id = pickId(vocabWords.map(w => w.id), options) || vocabWords[0]?.id;
+                if (id) {
+                    problem = safeGenerateProblem(
+                        () => generateVocabProblem(id, { cooldownIds: [], kanjiMode: profile.kanjiMode }),
+                        () => createFallbackProblem('vocab', 'weak-review level fallback'),
+                        `weak-review vocab random: ${id}`
+                    );
+                }
+            }
+        }
+
+        if (!problem) {
+            problem = createFallbackProblem(subject, 'weak-review total failure');
+        }
+
+        q.push({
+            ...problem,
+            id: `weak-${i}-${Date.now()}`,
+            subject,
+            isReview: true // Always treat as review for data purposes? Or depend on source?
+            // Spec says: "Weak update OK".
+        });
+        markPicked(problem.categoryId, blockCounts);
+    }
+
+    return q;
+};
+
+/**
+ * Periodic Test Block (20 questions)
+ * Strict Level Range, No Weighting.
+ */
+export const generatePeriodicTestBlock = async (
+    profile: UserProfile,
+    forcedSubject?: SubjectKey
+): Promise<Problem[]> => {
+    // Re-use strict level block logic but fixed to 20 size
+    const q = generateLevelBlock(profile, 20, forcedSubject);
+    // Overwrite IDs to identify as test
+    return q.map((p, i) => ({
+        ...p,
+        id: `test-${i}-${Date.now()}`,
+        isReview: false
+    }));
+};
+
 
 // ============================================================
 // Utility Functions

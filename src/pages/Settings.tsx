@@ -7,7 +7,7 @@ import { UserProfile } from "../domain/types";
 import { getActiveProfile, deleteProfile, getAllProfiles, saveProfile, setActiveProfileId } from "../domain/user/repository";
 import { setSoundEnabled } from "../utils/audio";
 import { generateMathPDF, generateVocabPDF } from "../utils/pdfGenerator";
-import { getAvailableSkills } from "../domain/math/curriculum";
+import { getSkillsForLevel } from "../domain/math/curriculum";
 import { generateMathProblem } from "../domain/math";
 import { ENGLISH_WORDS } from "../domain/english/words";
 import { Problem } from "../domain/types";
@@ -25,6 +25,7 @@ export const Settings: React.FC = () => {
     // 保護者ガードの状態
     const [showParentGuard, setShowParentGuard] = useState(false);
     const [guardCallback, setGuardCallback] = useState<(() => void) | null>(null);
+    const [isPrinting, setIsPrinting] = useState(false);
 
     useEffect(() => {
         const load = async () => {
@@ -111,11 +112,19 @@ export const Settings: React.FC = () => {
 
     const handlePrintPDF = async () => {
         if (!profile) return;
+        if (isPrinting) return;
+
+        setIsPrinting(true);
+        console.log("[PDF] Starting Math PDF generation...");
+
         const level = profile.mathMainLevel || 1;
-        const skills = getAvailableSkills(level);
+        // Use getSkillsForLevel to strictly test the current level
+        const skills = getSkillsForLevel(level);
+        console.log("[PDF] Level:", level, "Skills:", skills);
 
         if (skills.length === 0) {
-            alert("まだ もんだいが ありません");
+            alert("このレベルには まだ もんだいが ありません");
+            setIsPrinting(false);
             return;
         }
 
@@ -123,50 +132,50 @@ export const Settings: React.FC = () => {
         for (let i = 0; i < 20; i++) {
             const skillId = skills[Math.floor(Math.random() * skills.length)];
             const p = generateMathProblem(skillId);
-            // Assign dummy ID
             problems.push({ ...p, id: `pdf-${i}`, subject: 'math', categoryId: skillId, isReview: false });
         }
+        console.log("[PDF] Generated", problems.length, "problems");
 
         try {
-            await generateMathPDF(problems, `${profile.name}_Lv${level}_テスト`, profile.name);
+            await generateMathPDF(problems, `さんすう レベル Lv.${level}`, profile.name);
+            console.log("[PDF] Math PDF generation completed!");
         } catch (e) {
-            console.error(e);
-            alert("PDFの作成に失敗しました。もう一度お試しください。");
+            console.error("[PDF] Error:", e);
+            alert(`PDFの作成に失敗しました。\n\nエラー: ${e instanceof Error ? e.message : String(e)}`);
+        } finally {
+            setIsPrinting(false);
         }
     };
 
     const handlePrintVocabPDF = async () => {
         if (!profile) return;
+        if (isPrinting) return;
+
+        setIsPrinting(true);
+        console.log("[PDF] Starting Vocab PDF generation...");
+
         const level = profile.vocabMainLevel || 1;
-
-
-
-        // If not enough words, maybe take from previous levels too? Or just all up to level?
-        // Spec says "Current Level". If level has few words (e.g. 10), fill with previous?
-        // Let's stick to "Current Level" for now, or "Up to Current Level" if we want more volume.
-        // Let's use "Up to Current Level" but prioritize Current Level? 
-        // Wait, specification usually implies practicing current content.
-        // Let's use "Current Level and below" to ensure we have 20 words.
-
         let candidates = ENGLISH_WORDS.filter(w => w.level <= level);
-
-        // Prioritize current level (add them to list, then fill rest)
-        // Actually random pick from all known words is good for review.
+        console.log("[PDF] Level:", level, "Candidates:", candidates.length);
 
         if (candidates.length === 0) {
             alert("まだ 単語が ありません");
+            setIsPrinting(false);
             return;
         }
 
-        // Shuffle and pick 20
         const shuffled = [...candidates].sort(() => 0.5 - Math.random());
         const selected = shuffled.slice(0, 20);
+        console.log("[PDF] Selected", selected.length, "words");
 
         try {
-            await generateVocabPDF(selected, `${profile.name}_English_Lv${level}`);
+            await generateVocabPDF(selected, `えいご レベル Lv.${level}`);
+            console.log("[PDF] Vocab PDF generation completed!");
         } catch (e) {
-            console.error(e);
-            alert("PDFの作成に失敗しました。もう一度お試しください。");
+            console.error("[PDF] Error:", e);
+            alert(`PDFの作成に失敗しました。\n\nエラー: ${e instanceof Error ? e.message : String(e)}`);
+        } finally {
+            setIsPrinting(false);
         }
     };
 
@@ -193,24 +202,52 @@ export const Settings: React.FC = () => {
                         </Button>
                     </div>
                     {profiles.map(p => (
-                        <div key={p.id} className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
+                        <div key={p.id} className="flex items-center gap-3 p-2 rounded-xl bg-slate-50/50">
+                            <div className="w-10 h-10 rounded-full bg-[#483D8B]/20 flex items-center justify-center text-[#483D8B] font-bold shrink-0">
                                 {p.name?.[0] || "?"}
                             </div>
-                            <div className="flex-1">
-                                <div className="font-bold text-slate-700">{p.name || "ゲスト"}</div>
+                            <div
+                                className="flex-1 cursor-pointer hover:opacity-70 transition-opacity min-w-0"
+                                onClick={() => handleRename(p)}
+                            >
+                                <div className="font-bold text-slate-700 truncate">{p.name || "ゲスト"}</div>
                                 <div className="text-xs text-slate-500">{GRADES[p.grade] || "???"}</div>
                             </div>
-                            {profile?.id === p.id ? (
-                                <span className="text-xs text-primary font-bold">つかってる</span>
-                            ) : (
-                                <Button size="sm" variant="secondary" onClick={() => handleSwitchProfile(p.id)}>
-                                    きりかえ
+
+                            <div className="flex items-center gap-1 shrink-0">
+                                {profile?.id === p.id ? (
+                                    <span className="text-xs text-[#483D8B] font-bold mr-2">つかってる</span>
+                                ) : (
+                                    <Button size="sm" variant="secondary" className="px-3" onClick={() => handleSwitchProfile(p.id)}>
+                                        きりかえ
+                                    </Button>
+                                )}
+
+                                <Button size="sm" variant="ghost" className="w-10 h-10 p-0 text-slate-400 hover:text-[#483D8B]" onClick={() => handleRename(p)}>
+                                    ✏️
                                 </Button>
-                            )}
-                            <Button size="sm" variant="ghost" onClick={() => handleRename(p)}>
-                                なまえ
-                            </Button>
+
+                                <Button size="sm" variant="ghost" className="w-10 h-10 p-0 text-red-400 hover:text-red-600 hover:bg-red-50" onClick={async () => {
+                                    if (confirm(`「${p.name}」さんの データを けしますか？\n(もとには もどせません)`)) {
+                                        await deleteProfile(p.id);
+                                        // Refresh logic
+                                        const list = await getAllProfiles();
+                                        setProfiles(list);
+                                        if (profile?.id === p.id) {
+                                            if (list.length > 0) {
+                                                setActiveProfileId(list[0].id);
+                                                setProfile(list[0]);
+                                                navigate("/");
+                                            } else {
+                                                localStorage.clear();
+                                                navigate("/onboarding");
+                                            }
+                                        }
+                                    }
+                                }}>
+                                    🗑️
+                                </Button>
+                            </div>
                         </div>
                     ))}
                 </Card>
@@ -331,37 +368,61 @@ export const Settings: React.FC = () => {
                     </div>
                 </Card>
 
-                {/* Event Check */}
-                <Card className="p-4 flex justify-between items-center">
-                    <div>
-                        <div className="font-bold text-slate-700">とくべつ ちからチェック</div>
-                        <div className="text-xs text-slate-400">きろくに あらわれます</div>
+                {/* Periodic Test Settings (Direct Start & PDF) */}
+                <Card className="p-4 space-y-4">
+                    <h3 className="font-bold text-slate-700">定期テスト (20もん)</h3>
+                    <div className="text-xs text-slate-400 -mt-2 mb-2">
+                        今すぐ アプリで テストを します
                     </div>
-                    <Button
-                        size="sm"
-                        variant="secondary"
-                        onClick={() => withParentGuard(() => {
-                            localStorage.setItem("sansu_event_check_pending", "1");
-                            alert("きろくに でます");
-                        })}
-                    >
-                        だす
-                    </Button>
-                </Card>
 
-                {/* PDF Print */}
-                <Card className="p-4 flex justify-between items-center">
-                    <div>
-                        <div className="font-bold text-slate-700">かみの テスト</div>
-                        <div className="text-xs text-slate-400">いまの レベルで 20もん</div>
-                    </div>
-                    <div className="flex gap-2">
-                        <Button size="sm" variant="secondary" onClick={handlePrintPDF}>
-                            さんすう
-                        </Button>
-                        <Button size="sm" variant="secondary" onClick={handlePrintVocabPDF}>
-                            えいご
-                        </Button>
+                    <div className="grid grid-cols-2 gap-4">
+                        {/* Math */}
+                        <div className="space-y-2">
+                            <div className="font-bold text-slate-600 text-center">さんすう</div>
+                            <Button
+                                size="lg"
+                                variant="primary"
+                                className="w-full bg-[#483D8B] hover:bg-[#483D8B]/90"
+                                onClick={() => withParentGuard(() => {
+                                    // Direct Start
+                                    navigate(`/study?session=periodic-test&focus_subject=math`);
+                                })}
+                            >
+                                スタート
+                            </Button>
+                            <Button
+                                size="sm"
+                                variant="secondary"
+                                className="w-full text-xs"
+                                onClick={handlePrintPDF}
+                            >
+                                PDF (印刷)
+                            </Button>
+                        </div>
+
+                        {/* Vocab */}
+                        <div className="space-y-2">
+                            <div className="font-bold text-slate-600 text-center">えいご</div>
+                            <Button
+                                size="lg"
+                                variant="primary"
+                                className="w-full bg-[#483D8B] hover:bg-[#483D8B]/90"
+                                onClick={() => withParentGuard(() => {
+                                    // Direct Start
+                                    navigate(`/study?session=periodic-test&focus_subject=vocab`);
+                                })}
+                            >
+                                スタート
+                            </Button>
+                            <Button
+                                size="sm"
+                                variant="secondary"
+                                className="w-full text-xs"
+                                onClick={handlePrintVocabPDF}
+                            >
+                                PDF (印刷)
+                            </Button>
+                        </div>
                     </div>
                 </Card>
 

@@ -90,12 +90,20 @@ export const Onboarding: React.FC = () => {
         return (
             <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center space-y-8 animate-in fade-in duration-500 bg-slate-50">
                 <div className="space-y-4">
-                    <h1 className="text-5xl font-black text-primary tracking-tight drop-shadow-sm">Sansu</h1>
+                    <h1 className="text-5xl font-black text-[#483D8B] tracking-tight drop-shadow-sm">Sansu</h1>
                     <p className="text-slate-500 text-lg font-medium">やさしく、しずかに<br />つづくまなび</p>
                 </div>
-                <Button onClick={() => setStep("name")} size="xl" className="w-full max-w-xs shadow-xl shadow-primary/30">
+                <Button onClick={() => setStep("name")} size="xl" className="w-full max-w-xs shadow-xl shadow-[#483D8B]/30">
                     はじめる
                 </Button>
+
+                {/* Cancel/Back Button (Using standard anchor or button) */}
+                <button
+                    onClick={() => navigate(-1)}
+                    className="text-slate-400 text-sm font-bold hover:text-slate-600 transition-colors"
+                >
+                    もどる
+                </button>
             </div>
         );
     }

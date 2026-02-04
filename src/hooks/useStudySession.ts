@@ -30,8 +30,12 @@ import {
     generateSingleMathProblem,
     generateSingleVocabProblem,
     createFallbackProblem,
-    safeGenerateProblem
+    safeGenerateProblem,
+    generateLevelBlock,
+    generateWeakReviewBlock,
+    generatePeriodicTestBlock
 } from "./blockGenerators";
+import { checkPeriodTestTrigger } from "../domain/test/trigger";
 
 type StudySessionOptions = {
     devSkill?: string;
@@ -344,11 +348,38 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     // ============================================================
     const generateBlock = async (pid: string, activeProfile: UserProfile): Promise<Problem[]> => {
         const sessionKind = options.sessionKind || "normal";
-        const blockSize = sessionKind === "check-event" ? 8 : BLOCK_SIZE;
+        const blockSize = sessionKind === "check-event" ? 20 : BLOCK_SIZE;
 
         // Developer mode: generate only specified skill
         if (options.devSkill) {
             return generateDevBlock(blockSize);
+        }
+
+        // Special Check Mode (Event) -> Use Strict Level Logic (Same as Paper Test)
+        if (sessionKind === "check-event") {
+            return generateLevelBlock(activeProfile, blockSize);
+        }
+
+        // New Periodic Test (Plan A)
+        if (sessionKind === "periodic-test") {
+            const subject = options.focusSubject; // Pass this explicitly
+            return generatePeriodicTestBlock(activeProfile, subject);
+        }
+
+        // New Weakness Review (Plan A)
+        if (sessionKind === "weak-review") {
+            // Need to fetch context data
+            const weakMathIds = await getWeakMathSkillIds(pid);
+            const maintenanceMathIds = await getMaintenanceMathSkillIds(pid);
+            const mathDue = await getReviewItems(pid, 'math');
+            const vocabDue = await getReviewItems(pid, 'vocab');
+
+            return generateWeakReviewBlock(activeProfile, {
+                weakMathIds,
+                maintenanceMathIds,
+                mathDue,
+                vocabDue
+            });
         }
 
         const recentAttempts = await getRecentAttempts(pid, REVIEW_BLOCK_CHECK_WINDOW);
@@ -358,8 +389,8 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             return generateFocusBlock(pid, blockSize, recentAttempts);
         }
 
-        // Check mode: generate from recent history
-        if (sessionKind.startsWith("check")) {
+        // Check mode (Normal): generate from recent history
+        if (sessionKind === "check-normal") {
             const mappedAttempts = recentAttempts.map(a => ({
                 ...a,
                 isReview: a.isReview ?? false
@@ -489,7 +520,105 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         }
     }, [profileId]);
 
-    const blockSize = options.sessionKind === "check-event" ? 8 : BLOCK_SIZE;
 
-    return { queue, initSession, nextBlock, handleResult, loading, blockSize };
+    const blockSize = options.sessionKind === "check-event" ? 20 : BLOCK_SIZE;
+
+    const completeSession = async (
+        sessionStats: {
+            correct: number;
+            total: number;
+            durationSeconds: number;
+        }
+    ) => {
+        if (!profileId || !profile) return;
+        const currentProfile = await getActiveProfile();
+        if (!currentProfile) return;
+
+        const sessionKind = options.sessionKind || "normal";
+
+        // 1. Handle Periodic Test Completion (Recording)
+        if (sessionKind === "periodic-test") {
+            const subject = options.focusSubject || (currentProfile.subjectMode === 'mix' ? 'math' : currentProfile.subjectMode);
+            // const subject = 'math'; // Currently fixed to Math periodic test. Future: detect from options.
+            // In periodic test, usually mixed? No, periodic test determines subject internally or via options?
+            // "Periodic Test" logic in blockGenerators sends mixed or fixed?
+            // Actually periodic test is usually Math or Vocab per spec.
+            // Let's assume we detect subject from the block or options.
+            // If the user selected "Periodic Test" from UI, they probably selected Math or English.
+            // But wait, the UI "Challenge" button just says "Periodic Test".
+            // The spec says "Independent for Math/Vocab".
+            // Implementation of generatePeriodicTestBlock: "re-use strict level block logic".
+            // generateLevelBlock uses profile.subjectMode usually?
+            // Let's look at generatePeriodicTestBlock in blockGenerators.ts. 
+            // It relies on generateLevelBlock. generateLevelBlock uses profile.mathMainLevel.
+            // It seems it primarily targets Math currently.
+            // We should ensure we know the subject. 
+            // For now, let's assume 'math' if mostly math questions, or check profile mode.
+            // Given provided code, let's stick to 'math' if unsure, or check instructions.
+
+            // Saving Result
+            const result: any = { // Use PeriodicTestResult type
+                id: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2),
+                timestamp: Date.now(),
+                subject: 'math', // TODO: Support vocab periodic test explicit mode
+                level: currentProfile.mathMainLevel,
+                mode: 'auto', // defaulting to auto, but how do we know if manual?
+                // We can check if it was pending.
+                method: 'online',
+                correctCount: sessionStats.correct,
+                totalQuestions: sessionStats.total,
+                score: Math.round((sessionStats.correct / sessionStats.total) * 100),
+                durationSeconds: sessionStats.durationSeconds
+            };
+
+            // Check if it was pending to determine mode
+            const isPending = currentProfile.periodicTestState?.math?.isPending;
+            result.mode = isPending ? 'auto' : 'manual';
+
+            // Save to history
+            const newHistory = [...(currentProfile.testHistory || []), result];
+
+            // Update State (Clear Pending, Set Last Triggered)
+            const newState = { ...(currentProfile.periodicTestState || { math: { isPending: false, lastTriggeredAt: null, reason: null }, vocab: { isPending: false, lastTriggeredAt: null, reason: null } }) };
+            newState.math = {
+                isPending: false,
+                lastTriggeredAt: Date.now(),
+                reason: null
+            };
+
+            await saveProfile({
+                ...currentProfile,
+                testHistory: newHistory,
+                periodicTestState: newState
+            });
+        }
+
+        // 2. Handle Normal Session Completion (Trigger Check)
+        else if (sessionKind === "normal" || sessionKind === "review") {
+            // Run Trigger Check
+            const mathTrigger = checkPeriodTestTrigger(currentProfile, 'math');
+            // const vocabTrigger = checkPeriodTestTrigger(currentProfile, 'vocab'); // Future support
+
+            if (mathTrigger.isTriggered) {
+                console.log("[Trigger] Periodic Test Triggered!", mathTrigger.reason);
+                const newState = { ...(currentProfile.periodicTestState || { math: { isPending: false, lastTriggeredAt: null, reason: null }, vocab: { isPending: false, lastTriggeredAt: null, reason: null } }) };
+
+                // Only update if not already pending
+                if (!newState.math.isPending) {
+                    newState.math = {
+                        isPending: true,
+                        lastTriggeredAt: newState.math.lastTriggeredAt,
+                        reason: mathTrigger.reason
+                    };
+                    await saveProfile({
+                        ...currentProfile,
+                        periodicTestState: newState
+                    });
+                    // Could return a flag to UI to show celebration/notification
+                }
+            }
+        }
+    };
+
+    return { queue, initSession, nextBlock, handleResult, completeSession, loading, blockSize };
 };

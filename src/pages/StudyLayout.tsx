@@ -14,7 +14,7 @@ import { Problem } from "../domain/types";
 import { LayoutDebugOverlay } from "../components/LayoutDebugOverlay";
 import { MathRenderer } from "../components/domain/MathRenderer";
 
-type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event";
+type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test";
 
 interface StudyLayoutProps {
     loading: boolean;

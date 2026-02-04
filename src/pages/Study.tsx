@@ -20,11 +20,13 @@ export const Study: React.FC = () => {
         | "weak"
         | "check-normal"
         | "check-event"
+        | "weak-review"
+        | "periodic-test"
         | null;
 
     const focusIds = focusIdsParam ? focusIdsParam.split(",").filter(Boolean) : undefined;
 
-    const { queue, nextBlock, handleResult, loading, blockSize } = useStudySession({
+    const { queue, nextBlock, handleResult, completeSession, loading, blockSize } = useStudySession({
         devSkill,
         focusSubject: focusSubject || undefined,
         focusIds,
@@ -122,6 +124,32 @@ export const Study: React.FC = () => {
         }
 
     }, [currentIndex, queue.length, loading, nextBlock, isFinished]);
+
+    // Session Start Time Tracking
+    const startTimeRef = React.useRef(Date.now());
+
+    // Check for Fixed Session Completion (Periodic Test / Weak Review / Check Event)
+    useEffect(() => {
+        const isFixedSession = sessionKindParam === "periodic-test" || sessionKindParam === "weak-review" || sessionKindParam === "check-event";
+
+        if (isFixedSession && currentIndex >= blockSize && blockSize > 0 && !loading) {
+            console.log("Fixed Session Complete!", { correctCount, blockSize });
+            const durationSeconds = Math.round((Date.now() - startTimeRef.current) / 1000);
+
+            // Call completion handler
+            if (completeSession) {
+                completeSession({
+                    correct: correctCount,
+                    total: blockSize,
+                    durationSeconds
+                }).then(() => {
+                    navigate('/stats');
+                });
+            } else {
+                navigate('/stats');
+            }
+        }
+    }, [currentIndex, blockSize, sessionKindParam, loading, correctCount, completeSession, navigate]);
 
     // Handlers - 全てのフックより前に定義
     const handleTenKeyInput = useCallback((val: string | number) => {

@@ -171,6 +171,34 @@ export interface RecentAttempt {
 }
 
 // ============================================================
+// Periodic Test Types
+// ============================================================
+
+export interface PeriodicTestResult {
+    id: string; // uuid
+    timestamp: number; // unix timestamp
+    subject: SubjectKey;
+    level: number;
+    mode: 'auto' | 'manual';
+    method: 'online' | 'paper'; // paper tests are manually marked done? (Not implemented, default online)
+    correctCount: number;
+    totalQuestions: number; // 20
+    score: number; // 0-100
+    durationSeconds: number;
+}
+
+export interface TriggerState {
+    isPending: boolean;
+    lastTriggeredAt: number | null; // unix timestamp
+    reason: 'pre-levelup' | 'slow' | 'struggle' | null;
+}
+
+export interface PeriodicTestState {
+    math: TriggerState;
+    vocab: TriggerState;
+}
+
+// ============================================================
 // User Profile
 // ============================================================
 
@@ -216,6 +244,10 @@ export interface UserProfile {
     // Memory Items
     mathSkills: Record<string, MemoryState>;
     vocabWords: Record<string, MemoryState>;
+
+    // Periodic Test Data
+    testHistory?: PeriodicTestResult[];
+    periodicTestState?: PeriodicTestState;
 
     // Streak / Daily
     streak: number;
