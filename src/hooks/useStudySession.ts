@@ -538,7 +538,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
         // 1. Handle Periodic Test Completion (Recording)
         if (sessionKind === "periodic-test") {
-            const subject = options.focusSubject || (currentProfile.subjectMode === 'mix' ? 'math' : currentProfile.subjectMode);
+            // const subject = options.focusSubject || (currentProfile.subjectMode === 'mix' ? 'math' : currentProfile.subjectMode);
             // const subject = 'math'; // Currently fixed to Math periodic test. Future: detect from options.
             // In periodic test, usually mixed? No, periodic test determines subject internally or via options?
             // "Periodic Test" logic in blockGenerators sends mixed or fixed?
