@@ -264,19 +264,8 @@ export const Study: React.FC = () => {
             playSound("incorrect");
             handleResult(currentProblem, 'incorrect');
 
-            // Allow retry immediately? No, show correction then next.
-            // If we wanted to allow retry, we would reset isProcessingRef here.
-            // But spec says "Show correction then next" for incorrect (mistake).
-            // Actually spec: "ミス(前) ... 不正解と言わない" -> "Answer input"
-            // Wait, current logic auto-advances on incorrect.
-            // If we want to allow retry, we should change logic.
-            // Current code: Next problem after 3000ms.
-            // So we keep lock.
-
             setShowCorrection(true);
-            setTimeout(() => {
-                nextProblem();
-            }, 3000);
+            // Auto-advance removed. User must click Next.
         }
     }, [feedback, currentProblem, userInput, userInputs, handleResult, nextProblem]);
 
@@ -293,9 +282,7 @@ export const Study: React.FC = () => {
         // スキップをログ（strength=1にリセット、不正解扱い）
         await logAttempt(profileId, currentProblem.subject, currentProblem.categoryId, 'incorrect', true, currentProblem.isReview);
 
-        setTimeout(() => {
-            nextProblem();
-        }, 2500);
+        // Auto-advance removed. User must click Next.
     }, [feedback, currentProblem, profileId, nextProblem]);
 
     // 左スワイプでスキップ
@@ -400,6 +387,7 @@ export const Study: React.FC = () => {
             sessionKind={sessionKindParam || "normal"}
             correctCount={correctCount}
             onNavigate={(path) => navigate(path)}
+            onNext={nextProblem}
             onContinue={handleContinue}
             onSkip={handleSkip}
             onTenKeyInput={handleTenKeyInput}

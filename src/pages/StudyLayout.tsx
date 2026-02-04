@@ -35,6 +35,7 @@ interface StudyLayoutProps {
     // Handlers
     onNavigate: (path: string) => void;
     onContinue: () => void;
+    onNext: () => void;
     onSkip: () => void;
 
     // TenKey / Inputs
@@ -68,6 +69,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     showCorrection,
     onNavigate,
     onContinue,
+    onNext,
     onSkip,
     onTenKeyInput,
     onBackspace,
@@ -109,8 +111,44 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
             );
         }
 
+        if (currentProblem.categoryId.startsWith("frac_") || currentProblem.categoryId.startsWith("div_rem")) {
+            // 分数または割り算のあまりの場合
+            // 配列の形に応じて文字列を構築
+            let answerText = "";
+            const ansArr = currentProblem.correctAnswer as string[];
+
+            if (currentProblem.categoryId.startsWith("frac_")) {
+                // 分数
+                if (ansArr.length === 2) {
+                    // 分子/分母
+                    answerText = `${ansArr[0]}/${ansArr[1]}`;
+                } else if (ansArr.length === 3) {
+                    // 整数 分子/分母
+                    answerText = `${ansArr[0]} ${ansArr[1]}/${ansArr[2]}`;
+                }
+            } else if (currentProblem.categoryId.startsWith("div_rem")) {
+                // 割り算あまり
+                if (ansArr.length === 2) {
+                    // 商 あまり 余り
+                    answerText = `${ansArr[0]} あまり ${ansArr[1]}`;
+                }
+            }
+
+            if (answerText) {
+                return (
+                    <div className="flex justify-center">
+                        <MathRenderer
+                            text={answerText}
+                            isFraction={currentProblem.categoryId.startsWith("frac_")}
+                            className="text-4xl text-slate-800 font-bold"
+                        />
+                    </div>
+                );
+            }
+        }
+
         if (currentProblem.inputType === 'multi-number' && Array.isArray(currentProblem.correctAnswer) && currentProblem.inputConfig?.fields) {
-            // マルチ入力の場合はフィールド名と一緒に表示
+            // マルチ入力の場合はフィールド名と一緒に表示 (フォールバック)
             return (
                 <div className="flex justify-center gap-6">
                     {currentProblem.inputConfig.fields.map((field, idx) => (
@@ -244,16 +282,34 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-blue-500/90 backdrop-blur-md p-8"
+                        className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-blue-500/95 backdrop-blur-md p-6"
                     >
-                        <div className="bg-white/20 rounded-full p-4 mb-4">
-                            <span className="text-6xl">🌱</span>
+                        <div className="bg-white/20 rounded-full p-4 mb-2">
+                            <span className="text-5xl">🌱</span>
                         </div>
-                        <h2 className="text-3xl font-bold text-white mb-2">ちょっと ちがったね</h2>
-                        <div className="bg-white rounded-2xl p-6 w-full max-w-sm text-center shadow-xl">
+                        <h2 className="text-3xl font-bold text-white mb-6">ちょっと ちがったね</h2>
+
+                        {/* Question Display */}
+                        <div className="mb-6 bg-white/10 rounded-xl p-4 w-full max-w-sm flex justify-center">
+                            <MathRenderer
+                                text={currentProblem?.questionText || ""}
+                                isFraction={currentProblem?.categoryId.startsWith("frac_")}
+                                className="text-3xl text-white font-bold"
+                            />
+                        </div>
+
+                        <div className="bg-white rounded-2xl p-6 w-full max-w-sm text-center shadow-xl mb-8">
                             <p className="text-slate-400 font-bold text-sm mb-4">こたえ</p>
                             {renderCorrectAnswer()}
                         </div>
+
+                        <Button
+                            onClick={onNext}
+                            size="lg"
+                            className="bg-white text-blue-600 hover:bg-white/90 shadow-lg w-full max-w-xs text-xl font-bold h-16"
+                        >
+                            つぎへ
+                        </Button>
                     </motion.div>
                 )}
 
@@ -262,17 +318,35 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         initial={{ opacity: 0, x: -100 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 100 }}
-                        className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-slate-500/90 backdrop-blur-md p-8"
+                        className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-slate-500/95 backdrop-blur-md p-6"
                     >
-                        <div className="bg-white/20 rounded-full p-4 mb-4">
-                            <span className="text-6xl">🌱</span>
+                        <div className="bg-white/20 rounded-full p-4 mb-2">
+                            <span className="text-5xl">🌱</span>
                         </div>
                         <h2 className="text-3xl font-bold text-white mb-2">とばして だいじょうぶ</h2>
-                        <p className="text-white/80 text-sm mb-4">また でてくるよ</p>
-                        <div className="bg-white rounded-2xl p-6 w-full max-w-sm text-center shadow-xl">
+                        <p className="text-white/80 text-sm mb-6">また でてくるよ</p>
+
+                        {/* Question Display */}
+                        <div className="mb-6 bg-white/10 rounded-xl p-4 w-full max-w-sm flex justify-center">
+                            <MathRenderer
+                                text={currentProblem?.questionText || ""}
+                                isFraction={currentProblem?.categoryId.startsWith("frac_")}
+                                className="text-3xl text-white font-bold"
+                            />
+                        </div>
+
+                        <div className="bg-white rounded-2xl p-6 w-full max-w-sm text-center shadow-xl mb-8">
                             <p className="text-slate-400 font-bold text-sm mb-4">こたえ</p>
                             {renderCorrectAnswer()}
                         </div>
+
+                        <Button
+                            onClick={onNext}
+                            size="lg"
+                            className="bg-white text-slate-600 hover:bg-white/90 shadow-lg w-full max-w-xs text-xl font-bold h-16"
+                        >
+                            つぎへ
+                        </Button>
                     </motion.div>
                 )}
             </AnimatePresence>
