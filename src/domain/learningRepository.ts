@@ -188,6 +188,24 @@ export const getWeakMathSkillIds = async (profileId: string): Promise<string[]> 
     return weakIds;
 };
 
+export const getWeakVocabIds = async (profileId: string): Promise<string[]> => {
+    const weakIds: string[] = [];
+    // Vocab items don't strictly have 'status' field like math in current implementation,
+    // or if they do, it's optional. Let's just get all items for the profile.
+    const vocabItems = await db.memoryVocab
+        .filter((item: any) => item.profileId === profileId)
+        .toArray();
+
+    for (const item of vocabItems) {
+        const accuracy = await getRecentAccuracy(profileId, item.id, 'vocab');
+        if (accuracy !== null && accuracy < 0.6) {
+            weakIds.push(item.id);
+        }
+    }
+
+    return weakIds;
+};
+
 export const getMaintenanceMathSkillIds = async (profileId: string): Promise<string[]> => {
     const items = await db.memoryMath
         .filter((item: any) => item.profileId === profileId && item.status === 'maintenance')

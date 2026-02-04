@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../../components/Header';
-import { getWeakMathSkillIds } from '../../domain/learningRepository';
+import { getWeakMathSkillIds, getWeakVocabIds } from '../../domain/learningRepository';
+import { ENGLISH_WORDS } from '../../domain/english/words';
 import { getActiveProfileId } from '../../domain/user/repository';
 import { db } from '../../db';
 
@@ -10,6 +11,7 @@ export const ParentsPage: React.FC = () => {
     const [activeProfileId, setActiveProfileId] = useState<string | null>(null);
     const [profile, setProfile] = useState<any>(null);
     const [weakMathIds, setWeakMathIds] = useState<string[]>([]);
+    const [weakVocabIds, setWeakVocabIds] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -31,6 +33,10 @@ export const ParentsPage: React.FC = () => {
                     const weakMath = await getWeakMathSkillIds(currentProfileId);
                     console.log("ParentsPage: weakMath", weakMath);
                     setWeakMathIds(weakMath);
+
+                    const weakVocab = await getWeakVocabIds(currentProfileId);
+                    console.log("ParentsPage: weakVocab", weakVocab);
+                    setWeakVocabIds(weakVocab);
                 }
             } catch (e) {
                 console.error("ParentsPage: Error loading data", e);
@@ -97,7 +103,22 @@ export const ParentsPage: React.FC = () => {
 
                     <div>
                         <h3 className="text-sm font-bold text-text-sub mb-2">英語</h3>
-                        <div className="text-text-sub text-sm bg-slate-50 p-3 rounded-xl">準備中...</div>
+                        <h3 className="text-sm font-bold text-text-sub mb-2">英語 (正答率60%未満)</h3>
+                        {weakVocabIds.length > 0 ? (
+                            <div className="flex flex-wrap gap-2">
+                                {weakVocabIds.map(id => {
+                                    const word = ENGLISH_WORDS.find(w => w.id === id);
+                                    return (
+                                        <span key={id} className="px-3 py-1 bg-red-50 text-red-600 rounded-full text-sm font-bold border border-red-100 flex items-center gap-2">
+                                            <span>{id}</span>
+                                            <span className="text-xs text-red-400">({word?.japanese || '?'})</span>
+                                        </span>
+                                    );
+                                })}
+                            </div>
+                        ) : (
+                            <div className="text-text-sub text-sm bg-slate-50 p-3 rounded-xl">現在のところ苦手な単語はありません。</div>
+                        )}
                     </div>
                 </div>
 
