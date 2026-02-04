@@ -127,7 +127,12 @@ export const Settings: React.FC = () => {
             problems.push({ ...p, id: `pdf-${i}`, subject: 'math', categoryId: skillId, isReview: false });
         }
 
-        await generateMathPDF(problems, `${profile.name}_Lv${level}_テスト`, profile.name);
+        try {
+            await generateMathPDF(problems, `${profile.name}_Lv${level}_テスト`, profile.name);
+        } catch (e) {
+            console.error(e);
+            alert("PDFの作成に失敗しました。もう一度お試しください。");
+        }
     };
 
     const handlePrintVocabPDF = async () => {
@@ -157,7 +162,12 @@ export const Settings: React.FC = () => {
         const shuffled = [...candidates].sort(() => 0.5 - Math.random());
         const selected = shuffled.slice(0, 20);
 
-        await generateVocabPDF(selected, `${profile.name}_English_Lv${level}`);
+        try {
+            await generateVocabPDF(selected, `${profile.name}_English_Lv${level}`);
+        } catch (e) {
+            console.error(e);
+            alert("PDFの作成に失敗しました。もう一度お試しください。");
+        }
     };
 
     return (

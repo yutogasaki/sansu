@@ -7,7 +7,7 @@ export default {
     theme: {
         extend: {
             colors: {
-                primary: "#9D84FC", // Darker for better contrast with white text
+                primary: "#7C66D6", // Darker for better contrast with white text
                 background: "#F8F9FB",
                 surface: "#FFFFFF",
                 text: {
