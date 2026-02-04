@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Header } from "../components/Header";
 import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
+import { Modal } from "../components/ui/Modal";
 import { useNavigate } from "react-router-dom";
 import { UserProfile } from "../domain/types";
 import { getActiveProfile, deleteProfile, getAllProfiles, saveProfile, setActiveProfileId } from "../domain/user/repository";
@@ -26,6 +27,11 @@ export const Settings: React.FC = () => {
     const [showParentGuard, setShowParentGuard] = useState(false);
     const [guardCallback, setGuardCallback] = useState<(() => void) | null>(null);
     const [isPrinting, setIsPrinting] = useState(false);
+
+    // Modals State
+    const [renameTarget, setRenameTarget] = useState<UserProfile | null>(null);
+    const [newName, setNewName] = useState("");
+    const [deleteTarget, setDeleteTarget] = useState<UserProfile | null>(null);
 
     useEffect(() => {
         const load = async () => {
@@ -69,15 +75,48 @@ export const Settings: React.FC = () => {
         navigate("/onboarding");
     };
 
-    const handleRename = async (target: UserProfile) => {
-        const newName = prompt("あたらしい なまえ", target.name);
-        if (!newName) return;
-        const updated = { ...target, name: newName };
+    const openRenameModal = (target: UserProfile) => {
+        setRenameTarget(target);
+        setNewName(target.name);
+    };
+
+    const handleRenameSubmit = async () => {
+        if (!renameTarget || !newName.trim()) return;
+
+        const updated = { ...renameTarget, name: newName.trim() };
         await saveProfile(updated);
+
         if (profile?.id === updated.id) {
             setProfile(updated);
         }
         setProfiles(prev => prev.map(p => (p.id === updated.id ? updated : p)));
+        setRenameTarget(null);
+    };
+
+    const openDeleteModal = (target: UserProfile) => {
+        setDeleteTarget(target);
+    };
+
+    const handleDeleteSubmit = async () => {
+        if (!deleteTarget) return;
+
+        await deleteProfile(deleteTarget.id);
+
+        // Refresh logic
+        const list = await getAllProfiles();
+        setProfiles(list);
+        if (profile?.id === deleteTarget.id) {
+            // If deleted active profile, determine next action
+            if (list.length > 0) {
+                setActiveProfileId(list[0].id);
+                setProfile(list[0]);
+                navigate("/");
+            } else {
+                localStorage.clear();
+                navigate("/onboarding");
+            }
+        }
+        setDeleteTarget(null);
     };
 
     const handleSubjectModeChange = async (mode: "mix" | "math" | "vocab") => {
@@ -182,12 +221,74 @@ export const Settings: React.FC = () => {
     return (
         <div className="flex flex-col h-full bg-background">
             {/* 保護者ガードモーダル */}
-            {/* 保護者ガードモーダル */}
             <ParentGateModal
                 isOpen={showParentGuard}
                 onClose={() => setShowParentGuard(false)}
                 onSuccess={handleGuardSuccess}
             />
+
+            {/* Rename Modal */}
+            <Modal
+                isOpen={!!renameTarget}
+                onClose={() => setRenameTarget(null)}
+                title="なまえを かえる"
+                footer={(
+                    <div className="flex gap-2">
+                        <Button variant="secondary" className="flex-1" onClick={() => setRenameTarget(null)}>
+                            やめる
+                        </Button>
+                        <Button className="flex-1 bg-primary text-white" onClick={handleRenameSubmit} disabled={!newName.trim()}>
+                            OK
+                        </Button>
+                    </div>
+                )}
+            >
+                <div className="space-y-4">
+                    <p className="text-center text-slate-500 text-sm">新しい なまえを 入力してください</p>
+                    <input
+                        type="text"
+                        value={newName}
+                        onChange={(e) => setNewName(e.target.value)}
+                        className="w-full border-2 border-slate-200 rounded-xl p-3 text-center text-xl font-bold focus:outline-none focus:border-primary text-slate-800"
+                        autoFocus
+                    />
+                </div>
+            </Modal>
+
+            {/* Delete Confirmation Modal */}
+            <Modal
+                isOpen={!!deleteTarget}
+                onClose={() => setDeleteTarget(null)}
+                title="データを けす"
+                footer={(
+                    <div className="flex gap-2">
+                        <Button variant="secondary" className="flex-1" onClick={() => setDeleteTarget(null)}>
+                            やめる
+                        </Button>
+                        <Button
+                            className="flex-1 bg-red-500 hover:bg-red-600 shadow-red-200 text-white"
+                            onClick={handleDeleteSubmit}
+                        >
+                            けす
+                        </Button>
+                    </div>
+                )}
+            >
+                <div className="space-y-4 text-center">
+                    <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto text-3xl">
+                        🗑️
+                    </div>
+                    <div>
+                        <div className="font-bold text-lg text-slate-800">
+                            「{deleteTarget?.name}」さん
+                        </div>
+                        <p className="text-slate-500 mt-2">
+                            本当に データを 消しますか？<br />
+                            <span className="text-red-500 font-bold text-xs">※ 元には戻せません！</span>
+                        </p>
+                    </div>
+                </div>
+            </Modal>
 
             <Header title="せってい" />
 
@@ -208,7 +309,7 @@ export const Settings: React.FC = () => {
                             </div>
                             <div
                                 className="flex-1 cursor-pointer hover:opacity-70 transition-opacity min-w-0"
-                                onClick={() => handleRename(p)}
+                                onClick={() => openRenameModal(p)}
                             >
                                 <div className="font-bold text-slate-700 truncate">{p.name || "ゲスト"}</div>
                                 <div className="text-xs text-slate-500">{GRADES[p.grade] || "???"}</div>
@@ -223,28 +324,11 @@ export const Settings: React.FC = () => {
                                     </Button>
                                 )}
 
-                                <Button size="sm" variant="ghost" className="w-10 h-10 p-0 text-slate-400 hover:text-[#483D8B]" onClick={() => handleRename(p)}>
+                                <Button size="sm" variant="ghost" className="w-10 h-10 p-0 text-slate-400 hover:text-[#483D8B]" onClick={() => openRenameModal(p)}>
                                     ✏️
                                 </Button>
 
-                                <Button size="sm" variant="ghost" className="w-10 h-10 p-0 text-red-400 hover:text-red-600 hover:bg-red-50" onClick={async () => {
-                                    if (confirm(`「${p.name}」さんの データを けしますか？\n(もとには もどせません)`)) {
-                                        await deleteProfile(p.id);
-                                        // Refresh logic
-                                        const list = await getAllProfiles();
-                                        setProfiles(list);
-                                        if (profile?.id === p.id) {
-                                            if (list.length > 0) {
-                                                setActiveProfileId(list[0].id);
-                                                setProfile(list[0]);
-                                                navigate("/");
-                                            } else {
-                                                localStorage.clear();
-                                                navigate("/onboarding");
-                                            }
-                                        }
-                                    }
-                                }}>
+                                <Button size="sm" variant="ghost" className="w-10 h-10 p-0 text-red-400 hover:text-red-600 hover:bg-red-50" onClick={() => openDeleteModal(p)}>
                                     🗑️
                                 </Button>
                             </div>
