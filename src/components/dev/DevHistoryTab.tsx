@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { UserProfile, RecentAttempt, PeriodicTestResult } from "../../domain/types";
+import { UserProfile, PeriodicTestResult } from "../../domain/types";
 
 interface DevHistoryTabProps {
     profile: UserProfile;
@@ -79,7 +79,7 @@ export const DevHistoryTab: React.FC<DevHistoryTabProps> = ({ profile }) => {
                     <div className="p-4 text-slate-500 text-sm">履歴がありません</div>
                 ) : (
                     <div className="divide-y divide-slate-100">
-                        {[...testHistory].reverse().map((test, idx) => (
+                        {[...testHistory].reverse().map((test: PeriodicTestResult, idx: number) => (
                             <div key={idx} className="p-3 space-y-1">
                                 <div className="flex items-center justify-between">
                                     <span className="text-sm font-medium text-slate-700">

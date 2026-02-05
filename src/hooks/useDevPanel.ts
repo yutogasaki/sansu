@@ -25,7 +25,7 @@ export const useDevPanel = () => {
         setState(prev => ({ ...prev, loading: true, error: null }));
         try {
             const profile = await getActiveProfile();
-            setState({ profile, loading: false, error: null });
+            setState({ profile: profile || null, loading: false, error: null });
         } catch (err) {
             setState({ profile: null, loading: false, error: String(err) });
         }
@@ -99,7 +99,7 @@ export const useDevPanel = () => {
         const existing = await db.memoryMath.get([state.profile.id, skillId]);
         if (existing) {
             const updated = { ...existing, ...updates, updatedAt: new Date().toISOString() };
-            await db.memoryMath.put({ ...updated, profileId: state.profile.id });
+            await db.memoryMath.put({ ...updated, profileId: state.profile.id } as any);
         }
     }, [state.profile]);
 
@@ -113,7 +113,7 @@ export const useDevPanel = () => {
         const existing = await db.memoryVocab.get([state.profile.id, wordId]);
         if (existing) {
             const updated = { ...existing, ...updates, updatedAt: new Date().toISOString() };
-            await db.memoryVocab.put({ ...updated, profileId: state.profile.id });
+            await db.memoryVocab.put({ ...updated, profileId: state.profile.id } as any);
         }
     }, [state.profile]);
 

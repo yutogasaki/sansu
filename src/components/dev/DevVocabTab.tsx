@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MemoryState } from "../../domain/types";
-import { ENGLISH_WORDS, getWordsByLevel } from "../../domain/english/words";
+import { getWordsByLevel } from "../../domain/english/words";
 
 interface DevVocabTabProps {
     memoryStates: MemoryState[];
@@ -38,8 +38,7 @@ export const DevVocabTab: React.FC<DevVocabTabProps> = ({ memoryStates, onUpdate
     };
 
     const wordsForLevel = selectedLevel ? getWordsByLevel(selectedLevel) : [];
-    const selectedMemory = selectedWord ? memoryMap.get(selectedWord) : null;
-    const selectedWordData = selectedWord ? ENGLISH_WORDS.find(w => w.id === selectedWord) : null;
+
 
     return (
         <div className="p-4 space-y-4">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MemoryState } from "../../domain/types";
 import { MATH_CURRICULUM } from "../../domain/math/curriculum";
@@ -87,7 +87,7 @@ export const DevMathTab: React.FC<DevMathTabProps> = ({ memoryStates, onUpdateMe
         navigate(`/study?dev_skill=${skillId}`);
     };
 
-    const selectedMemory = selectedSkill ? memoryMap.get(selectedSkill) : null;
+
 
     return (
         <div className="p-4 space-y-4">
@@ -126,7 +126,7 @@ export const DevMathTab: React.FC<DevMathTabProps> = ({ memoryStates, onUpdateMe
                                 <div className="border-t border-slate-100 p-3 space-y-2">
                                     {skills.map(skillId => {
                                         const memory = memoryMap.get(skillId);
-                                        const isLearned = !!memory;
+
                                         const isSelected = selectedSkill === skillId;
 
                                         return (
@@ -137,7 +137,7 @@ export const DevMathTab: React.FC<DevMathTabProps> = ({ memoryStates, onUpdateMe
                                                         }`}
                                                 >
                                                     <span className="flex items-center">
-                                                        <span className={`w-2 h-2 rounded-full mr-2 ${isLearned ? "bg-green-500" : "bg-slate-300"
+                                                        <span className={`w-2 h-2 rounded-full mr-2 ${!!memory ? "bg-green-500" : "bg-slate-300"
                                                             }`} />
                                                         {SKILL_LABELS[skillId] || skillId}
                                                     </span>
