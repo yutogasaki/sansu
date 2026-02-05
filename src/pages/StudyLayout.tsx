@@ -257,7 +257,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
 
     return (
         <div className="flex flex-col h-[100dvh] bg-background relative overflow-hidden safe-area-inset-bottom">
-            <LayoutDebugOverlay />
+            {import.meta.env.DEV && <LayoutDebugOverlay />}
 
             {/* Full Screen Feedback Overlays */}
             <AnimatePresence>
@@ -506,8 +506,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 </div>
 
                 {/* Controls Area */}
-                {/* Mobile: Increase height to 45vh to ensure large, accessible keys. */}
-                <div id="debug-controls" className="bg-slate-100 p-2 pb-6 rounded-t-[2rem] shadow-inner flex-none h-[45vh] min-h-[300px] land:min-h-[32vh] land:pb-4 ipadland:flex-1 ipadland:rounded-[2rem] ipadland:h-full ipadland:flex ipadland:flex-col ipadland:justify-center ipadland:p-6 ipadland:shadow-lg ipadland:min-h-0 ipadland:max-h-none mobile:pb-[var(--safe-area-inset-bottom)] mobile:pt-0 mobile:p-0 mobile:rounded-none mobile:bg-slate-50">
+                {/* Rebalanced: Reduced from 45vh to 40vh for better problem/input hierarchy */}
+                <div id="debug-controls" className="bg-slate-100 p-2 pb-6 rounded-t-[2rem] shadow-inner flex-none h-[40vh] min-h-[260px] land:min-h-[32vh] land:pb-4 ipadland:flex-1 ipadland:rounded-[2rem] ipadland:h-full ipadland:flex ipadland:flex-col ipadland:justify-center ipadland:p-6 ipadland:shadow-lg ipadland:min-h-0 ipadland:max-h-none mobile:pb-[var(--safe-area-inset-bottom)] mobile:pt-0 mobile:p-0 mobile:rounded-none mobile:bg-slate-50">
                     {/* TenKey / Inputs */}
                     {(currentProblem.inputType === "number" || currentProblem.inputType === "multi-number") && (
                         <TenKey

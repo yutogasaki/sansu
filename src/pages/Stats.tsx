@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Header } from "../components/Header";
 import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
+import { Icons } from "../components/icons";
 import { getActiveProfile } from "../domain/user/repository";
 import { getTodayStats, getTotalStats, getWeakPoints, DailyStats, WeakPoint } from "../domain/stats/repository";
 import { getReviewItems } from "../domain/learningRepository";
@@ -62,8 +63,8 @@ export const Stats: React.FC = () => {
         <div className="flex flex-col h-full bg-slate-50">
             <Header title="きろく"
                 rightAction={
-                    <Button variant="ghost" size="sm" onClick={() => navigate("/")}>
-                        とじる
+                    <Button variant="icon" size="sm" onClick={() => navigate("/")}>
+                        <Icons.Close className="w-6 h-6" />
                     </Button>
                 }
             />

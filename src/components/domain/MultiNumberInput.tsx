@@ -41,15 +41,15 @@ export const MultiNumberInput: React.FC<MultiNumberInputProps> = ({
                                 relative h-[var(--tenkey-key,44px)] min-h-[44px] px-2 rounded-xl flex items-center justify-center
                                 text-4xl font-mono border-b-4 transition-all cursor-pointer box-content ipadland:h-16
                                 ${activeIndex === idx
-                                    ? "bg-white border-blue-500 shadow-md transform -translate-y-1"
-                                    : "bg-slate-100 border-slate-300 text-slate-400"
+                                    ? "bg-white border-primary ring-2 ring-primary/30 shadow-lg transform -translate-y-1 text-slate-800"
+                                    : "bg-slate-100 border-slate-200 text-slate-500 hover:bg-slate-50"
                                 }
                             `}
                         >
                             {val}
                             {/* Cursor Blinker */}
                             {activeIndex === idx && !readOnly && (
-                                <span className="absolute right-2 top-1/2 -translate-y-1/2 w-0.5 h-[60%] bg-blue-500 animate-pulse" />
+                                <span className="absolute right-2 top-1/2 -translate-y-1/2 w-0.5 h-[60%] bg-primary animate-pulse" />
                             )}
                         </div>
                     </div>
