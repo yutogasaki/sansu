@@ -17,6 +17,8 @@ export interface WeakPoint {
     subject: 'math' | 'vocab';
     strength: number;
     nextReview: string;
+    accuracy: number;
+    lastCorrectAt?: string;
 }
 
 export const getTodayStats = async (profileId: string): Promise<DailyStats> => {
@@ -67,7 +69,9 @@ export const getWeakPoints = async (profileId: string): Promise<WeakPoint[]> => 
                 id: item.id,
                 subject: 'math',
                 strength: item.strength,
-                nextReview: item.nextReview
+                nextReview: item.nextReview,
+                accuracy,
+                lastCorrectAt: item.lastCorrectAt
             });
         }
     }
@@ -84,7 +88,9 @@ export const getWeakPoints = async (profileId: string): Promise<WeakPoint[]> => 
                 id: item.id,
                 subject: 'vocab',
                 strength: item.strength,
-                nextReview: item.nextReview
+                nextReview: item.nextReview,
+                accuracy,
+                lastCorrectAt: item.lastCorrectAt
             });
         }
     }

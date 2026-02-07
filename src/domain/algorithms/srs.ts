@@ -29,10 +29,14 @@ export const updateMemoryState = (
 
     const now = new Date().toISOString();
 
+    const nextReview = isSkipped
+        ? getLearningDayStart().toISOString()
+        : getNextReviewDate(newStrength).toISOString();
+
     return {
         ...current,
         strength: newStrength,
-        nextReview: getNextReviewDate(newStrength).toISOString(),
+        nextReview,
         totalAnswers: current.totalAnswers + 1,
         correctAnswers: current.correctAnswers + (isCorrect && !isSkipped ? 1 : 0),
         incorrectAnswers: current.incorrectAnswers + (!isCorrect && !isSkipped ? 1 : 0),

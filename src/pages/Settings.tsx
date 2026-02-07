@@ -7,12 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { UserProfile } from "../domain/types";
 import { getActiveProfile, deleteProfile, getAllProfiles, saveProfile, setActiveProfileId } from "../domain/user/repository";
 import { setSoundEnabled } from "../utils/audio";
-import { generateMathPDF, generateVocabPDF } from "../utils/pdfGenerator";
-import { getSkillsForLevel } from "../domain/math/curriculum";
-import { generateMathProblem } from "../domain/math";
-import { ENGLISH_WORDS } from "../domain/english/words";
 import { Problem } from "../domain/types";
 import { ParentGateModal } from "../components/gate/ParentGateModal";
+import { ensurePeriodicTestSet } from "../domain/test/testSet";
+import { getWord } from "../domain/english/words";
 
 
 
@@ -61,7 +59,7 @@ export const Settings: React.FC = () => {
     const GRADES = ["年長以下", "小学1年生", "小学2年生", "小学3年生", "小学4年生", "小学5年生", "小学6年生"];
 
     const handleSwitchProfile = async (id: string) => {
-        setActiveProfileId(id);
+        await setActiveProfileId(id);
         const p = await getActiveProfile();
         if (p) {
             setProfile(p);
@@ -108,7 +106,7 @@ export const Settings: React.FC = () => {
         if (profile?.id === deleteTarget.id) {
             // If deleted active profile, determine next action
             if (list.length > 0) {
-                setActiveProfileId(list[0].id);
+                await setActiveProfileId(list[0].id);
                 setProfile(list[0]);
                 navigate("/");
             } else {
@@ -156,27 +154,23 @@ export const Settings: React.FC = () => {
         setIsPrinting(true);
         console.log("[PDF] Starting Math PDF generation...");
 
-        const level = profile.mathMainLevel || 1;
-        // Use getSkillsForLevel to strictly test the current level
-        const skills = getSkillsForLevel(level);
-        console.log("[PDF] Level:", level, "Skills:", skills);
-
-        if (skills.length === 0) {
+        const set = await ensurePeriodicTestSet(profile, "math");
+        const problems: Problem[] = set.problems.map((p, i) => ({
+            ...p,
+            id: `pdf-math-${i}`,
+            subject: "math",
+            isReview: false
+        }));
+        console.log("[PDF] Using test set", set.level, problems.length);
+        if (problems.length === 0) {
             alert("このレベルには まだ もんだいが ありません");
             setIsPrinting(false);
             return;
         }
 
-        const problems: Problem[] = [];
-        for (let i = 0; i < 20; i++) {
-            const skillId = skills[Math.floor(Math.random() * skills.length)];
-            const p = generateMathProblem(skillId);
-            problems.push({ ...p, id: `pdf-${i}`, subject: 'math', categoryId: skillId, isReview: false });
-        }
-        console.log("[PDF] Generated", problems.length, "problems");
-
         try {
-            await generateMathPDF(problems, `さんすう レベル Lv.${level}`, profile.name);
+            const { generateMathPDF } = await import("../utils/pdfGenerator");
+            await generateMathPDF(problems, `さんすう レベル Lv.${set.level}`, profile.name);
             console.log("[PDF] Math PDF generation completed!");
         } catch (e) {
             console.error("[PDF] Error:", e);
@@ -193,22 +187,20 @@ export const Settings: React.FC = () => {
         setIsPrinting(true);
         console.log("[PDF] Starting Vocab PDF generation...");
 
-        const level = profile.vocabMainLevel || 1;
-        let candidates = ENGLISH_WORDS.filter(w => w.level <= level);
-        console.log("[PDF] Level:", level, "Candidates:", candidates.length);
-
-        if (candidates.length === 0) {
+        const set = await ensurePeriodicTestSet(profile, "vocab");
+        const selected = set.problems
+            .map(p => getWord(p.categoryId))
+            .filter((w): w is NonNullable<typeof w> => !!w);
+        console.log("[PDF] Using test set", set.level, "words:", selected.length);
+        if (selected.length === 0) {
             alert("まだ 単語が ありません");
             setIsPrinting(false);
             return;
         }
 
-        const shuffled = [...candidates].sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, 20);
-        console.log("[PDF] Selected", selected.length, "words");
-
         try {
-            await generateVocabPDF(selected, `えいご レベル Lv.${level}`);
+            const { generateVocabPDF } = await import("../utils/pdfGenerator");
+            await generateVocabPDF(selected, `えいご レベル Lv.${set.level}`);
             console.log("[PDF] Vocab PDF generation completed!");
         } catch (e) {
             console.error("[PDF] Error:", e);

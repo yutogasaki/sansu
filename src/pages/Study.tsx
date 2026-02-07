@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { useStudySession } from "../hooks/useStudySession";
 import { playSound, setSoundEnabled } from "../utils/audio";
-import { getActiveProfile } from "../domain/user/repository";
+import { getActiveProfile, saveProfile } from "../domain/user/repository";
 import { logAttempt } from "../domain/learningRepository";
 import { StudyLayout } from "./StudyLayout";
 
@@ -52,6 +52,7 @@ export const Study: React.FC = () => {
 
     // ちからチェック用：正答数トラッキング
     const [correctCount, setCorrectCount] = useState(0);
+    const [sessionResult, setSessionResult] = useState<{ correct: number; total: number; durationSeconds: number } | null>(null);
 
     // Profile ID for skip logging
     const [profileId, setProfileId] = useState<string | null>(null);
@@ -76,7 +77,6 @@ export const Study: React.FC = () => {
         setEnglishAutoRead(newValue);
         const profile = await getActiveProfile();
         if (profile) {
-            const { saveProfile } = await import('../domain/user/repository');
             await saveProfile({ ...profile, englishAutoRead: newValue });
         }
     };
@@ -143,10 +143,20 @@ export const Study: React.FC = () => {
                     total: blockSize,
                     durationSeconds
                 }).then(() => {
-                    navigate('/stats');
+                    if (sessionKindParam === "periodic-test") {
+                        setSessionResult({ correct: correctCount, total: blockSize, durationSeconds });
+                        setIsFinished(true);
+                    } else {
+                        navigate('/stats');
+                    }
                 });
             } else {
-                navigate('/stats');
+                if (sessionKindParam === "periodic-test") {
+                    setSessionResult({ correct: correctCount, total: blockSize, durationSeconds });
+                    setIsFinished(true);
+                } else {
+                    navigate('/stats');
+                }
             }
         }
     }, [currentIndex, blockSize, sessionKindParam, loading, correctCount, completeSession, navigate]);
@@ -386,6 +396,7 @@ export const Study: React.FC = () => {
             showCorrection={showCorrection}
             sessionKind={sessionKindParam || "normal"}
             correctCount={correctCount}
+            sessionResult={sessionResult || undefined}
             onNavigate={(path) => navigate(path)}
             onNext={nextProblem}
             onContinue={handleContinue}

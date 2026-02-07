@@ -83,6 +83,7 @@ export interface VocabMemoryState extends BaseMemoryState {
  * Union type for backward compatibility
  */
 export interface MemoryState {
+    profileId?: string;
     id: string;
     strength: StrengthLevel | number; // Allow number for migration
     nextReview: string;
@@ -167,6 +168,7 @@ export interface RecentAttempt {
     subject: SubjectKey;
     skillId: string;
     result: AttemptResult;
+    skipped?: boolean;
     timeMs?: number;
 }
 
@@ -198,6 +200,13 @@ export interface PeriodicTestState {
     vocab: TriggerState;
 }
 
+export interface PeriodicTestSet {
+    subject: SubjectKey;
+    level: number;
+    createdAt: string;
+    problems: Omit<Problem, 'id' | 'subject' | 'isReview'>[];
+}
+
 // ============================================================
 // User Profile
 // ============================================================
@@ -215,6 +224,12 @@ export interface SyncMeta {
     lastPushedAt?: string;
     lastPulledAt?: string;
     dirty: boolean;
+}
+
+export interface AppData {
+    schemaVersion: number;
+    activeProfileId: string | null;
+    profiles: Record<string, UserProfile>;
 }
 
 export interface UserProfile {
@@ -248,6 +263,7 @@ export interface UserProfile {
     // Periodic Test Data
     testHistory?: PeriodicTestResult[];
     periodicTestState?: PeriodicTestState;
+    periodicTestSets?: Partial<Record<SubjectKey, PeriodicTestSet>>;
 
     // Streak / Daily
     streak: number;

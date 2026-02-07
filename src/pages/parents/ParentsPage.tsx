@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Header } from '../../components/Header';
 import { getWeakMathSkillIds, getWeakVocabIds } from '../../domain/learningRepository';
 import { ENGLISH_WORDS } from '../../domain/english/words';
-import { getActiveProfileId } from '../../domain/user/repository';
-import { db } from '../../db';
+import { getActiveProfile } from '../../domain/user/repository';
 
 export const ParentsPage: React.FC = () => {
     const navigate = useNavigate();
@@ -19,22 +18,18 @@ export const ParentsPage: React.FC = () => {
             console.log("ParentsPage: Start loading data");
             try {
                 setIsLoading(true);
-                const currentProfileId = getActiveProfileId();
-                console.log("ParentsPage: currentProfileId", currentProfileId);
-                setActiveProfileId(currentProfileId);
+                const active = await getActiveProfile();
+                console.log("ParentsPage: profile", active);
+                setActiveProfileId(active?.id || null);
+                setProfile(active);
 
-                if (currentProfileId) {
-                    // Load Profile
-                    const p = await db.profiles.get(currentProfileId);
-                    console.log("ParentsPage: profile", p);
-                    setProfile(p);
-
+                if (active?.id) {
                     // Load Weak Points
-                    const weakMath = await getWeakMathSkillIds(currentProfileId);
+                    const weakMath = await getWeakMathSkillIds(active.id);
                     console.log("ParentsPage: weakMath", weakMath);
                     setWeakMathIds(weakMath);
 
-                    const weakVocab = await getWeakVocabIds(currentProfileId);
+                    const weakVocab = await getWeakVocabIds(active.id);
                     console.log("ParentsPage: weakVocab", weakVocab);
                     setWeakVocabIds(weakVocab);
                 }

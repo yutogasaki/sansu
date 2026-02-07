@@ -52,6 +52,21 @@ export default defineConfig({
         environment: "node",
         globals: true
     },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    react: ["react", "react-dom", "react-router-dom"],
+                    motion: ["framer-motion"],
+                    charts: ["recharts", "d3-array", "d3-scale", "d3-shape", "d3-time", "d3-interpolate", "d3-color", "d3-ease"],
+                    data: ["dexie", "dexie-react-hooks"],
+                    pdf: ["pdf-lib", "@pdf-lib/fontkit", "fontkit"],
+                    icons: ["react-icons", "lucide-react"],
+                    audio: ["howler"]
+                }
+            }
+        }
+    },
     resolve: {
         alias: {
             "@": path.resolve(__dirname, "./src"),

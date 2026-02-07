@@ -34,3 +34,12 @@ export const getAvailableSkills = (maxLevel: number): string[] => {
     }
     return skills;
 };
+
+export const getLevelForSkill = (skillId: string): number | null => {
+    for (const [level, skills] of Object.entries(MATH_CURRICULUM)) {
+        if (skills.includes(skillId)) {
+            return Number(level);
+        }
+    }
+    return null;
+};

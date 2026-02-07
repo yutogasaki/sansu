@@ -3,6 +3,9 @@ import { MemoryState, SubjectKey } from "./types";
 import { updateMemoryState, updateSkillStatus, getNextReviewDate } from "./algorithms/srs";
 import { addDays, differenceInCalendarDays, parseISO } from "date-fns";
 import { getLearningDayStart } from "../utils/learningDay";
+import { getLevelForSkill } from "./math/curriculum";
+import { getWordLevel } from "./english/words";
+import { getProfile, saveProfile } from "./user/repository";
 
 export const logAttempt = async (
     profileId: string,
@@ -31,7 +34,8 @@ export const logAttempt = async (
         profileId,
         subject,
         itemId,
-        result: skipped ? 'skipped' : result,
+        result: skipped ? 'incorrect' : result,
+        skipped: skipped || undefined,
         isReview,
         timestamp
     };
@@ -92,8 +96,36 @@ export const logAttempt = async (
     const dbItem = { ...newState, profileId };
     await table.put(dbItem);
 
-    const profile = await db.profiles.get(profileId);
+    const profile = await getProfile(profileId);
     if (profile) {
+        const updateRecentAnswers = () => {
+            if (isReview) return;
+            const level = subject === 'math' ? getLevelForSkill(itemId) : getWordLevel(itemId);
+            if (!level) return;
+
+            if (subject === 'math') {
+                if (!profile.mathLevels) return;
+                if (level !== profile.mathMainLevel) return;
+                const updated = profile.mathLevels.map(l => {
+                    if (l.level !== level) return l;
+                    const ring = [...(l.recentAnswersNonReview || []), result === 'correct' && !skipped];
+                    const trimmed = ring.slice(-20);
+                    return { ...l, recentAnswersNonReview: trimmed, updatedAt: timestamp };
+                });
+                profile.mathLevels = updated;
+            } else {
+                if (!profile.vocabLevels) return;
+                if (level !== profile.vocabMainLevel) return;
+                const updated = profile.vocabLevels.map(l => {
+                    if (l.level !== level) return l;
+                    const ring = [...(l.recentAnswersNonReview || []), result === 'correct' && !skipped];
+                    const trimmed = ring.slice(-20);
+                    return { ...l, recentAnswersNonReview: trimmed, updatedAt: timestamp };
+                });
+                profile.vocabLevels = updated;
+            }
+        };
+
         const dayStart = getLearningDayStart();
         const todayKey = dayStart.toISOString().split("T")[0];
         const yesterdayKey = addDays(dayStart, -1).toISOString().split("T")[0];
@@ -109,11 +141,14 @@ export const logAttempt = async (
             timestamp,
             subject,
             skillId: itemId,
-            result: skipped ? "skipped" : result
+            result: skipped ? "incorrect" : result,
+            skipped: skipped || undefined
         });
         const trimmed = recentAttempts.slice(-300);
 
-        await db.profiles.put({
+        updateRecentAnswers();
+
+        await saveProfile({
             ...profile,
             streak: nextStreak,
             todayCount: nextTodayCount,
@@ -227,22 +262,24 @@ export const getSkippedItemsToday = async (
         .where('[profileId+subject]')
         .equals([profileId, subject])
         .filter(log =>
-            log.result === 'skipped' &&
+            (log.skipped === true || log.result === 'skipped') &&
             log.timestamp >= dayStartIso
         )
         .toArray();
 
-    // アイテムごとのスキップ回数をカウント
-    const skipCounts = new Map<string, number>();
+    const byItem = new Map<string, AttemptLog[]>();
     for (const log of logs) {
-        const count = skipCounts.get(log.itemId) || 0;
-        skipCounts.set(log.itemId, count + 1);
+        const list = byItem.get(log.itemId) || [];
+        list.push(log);
+        byItem.set(log.itemId, list);
     }
 
-    // 3回以上スキップされたアイテムを返す
+    // 直近3回がすべてスキップなら当日停止
     const skippedItems: string[] = [];
-    for (const [itemId, count] of skipCounts) {
-        if (count >= 3) {
+    for (const [itemId, list] of byItem) {
+        const sorted = [...list].sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+        const recent3 = sorted.slice(0, 3);
+        if (recent3.length >= 3 && recent3.every(l => l.skipped === true || l.result === 'skipped')) {
             skippedItems.push(itemId);
         }
     }

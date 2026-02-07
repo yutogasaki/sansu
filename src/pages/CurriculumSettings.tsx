@@ -3,7 +3,7 @@ import { Header } from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
 import { UserProfile } from "../domain/types";
-import { syncLevelState } from "../domain/user/profile";
+import { syncLevelState, syncUnlockLevel } from "../domain/user/profile";
 import { ParentGuard } from "../components/domain/ParentGuard";
 import { Icons } from "../components/icons";
 import { cn } from "../utils/cn";
@@ -61,6 +61,7 @@ export const CurriculumSettings: React.FC = () => {
     const [activeTab, setActiveTab] = useState<"math" | "vocab">("math");
     const [showGuard, setShowGuard] = useState(false);
     const [pendingLevel, setPendingLevel] = useState<number | null>(null);
+    const [pendingAction, setPendingAction] = useState<"main" | "unlock" | null>(null);
 
     useEffect(() => {
         getActiveProfile().then(p => {
@@ -70,28 +71,43 @@ export const CurriculumSettings: React.FC = () => {
 
     const handleLevelSelect = (level: number) => {
         setPendingLevel(level);
+        setPendingAction("main");
+        setShowGuard(true);
+    };
+
+    const handleUnlockSelect = (level: number) => {
+        setPendingLevel(level);
+        setPendingAction("unlock");
         setShowGuard(true);
     };
 
     const handleConfirmLevel = async () => {
-        if (!profile || pendingLevel === null) return;
+        if (!profile || pendingLevel === null || !pendingAction) return;
 
         let updated: UserProfile;
-        if (activeTab === "math") {
-            updated = syncLevelState(profile, 'math', pendingLevel);
+        if (pendingAction === "main") {
+            updated = activeTab === "math"
+                ? syncLevelState(profile, 'math', pendingLevel)
+                : syncLevelState(profile, 'vocab', pendingLevel);
         } else {
-            updated = syncLevelState(profile, 'vocab', pendingLevel);
+            updated = activeTab === "math"
+                ? syncUnlockLevel(profile, 'math', pendingLevel)
+                : syncUnlockLevel(profile, 'vocab', pendingLevel);
         }
 
         await saveProfile(updated);
         setProfile(updated);
         setShowGuard(false);
         setPendingLevel(null);
+        setPendingAction(null);
     };
 
     const currentLevel = activeTab === "math"
         ? (profile?.mathMainLevel || 1)
         : (profile?.vocabMainLevel || 1);
+    const currentMaxUnlocked = activeTab === "math"
+        ? (profile?.mathMaxUnlocked || currentLevel)
+        : (profile?.vocabMaxUnlocked || currentLevel);
 
     return (
         <div className="flex flex-col h-full bg-slate-50">
@@ -138,10 +154,24 @@ export const CurriculumSettings: React.FC = () => {
                 <div className="flex-1 overflow-y-auto p-4 space-y-3 pb-24">
                     <p className="text-center text-slate-500 text-sm mb-4">
                         いまの レベル: <span className="font-bold text-xl ml-2">{currentLevel}</span>
+                        {activeTab === "math" && (
+                            <span className="ml-4 text-xs text-slate-400">
+                                解放上限: <span className="font-bold text-slate-600">{currentMaxUnlocked}</span>
+                            </span>
+                        )}
                     </p>
 
                     {(activeTab === "math" ? MATH_LEVELS : VOCAB_LEVELS).map((item) => {
                         const isSelected = item.level === currentLevel;
+                        const isUnlocked = item.level <= currentMaxUnlocked;
+                        const statusLabel =
+                            item.level < currentLevel
+                                ? "完了"
+                                : item.level === currentLevel
+                                    ? "メイン"
+                                    : isUnlocked
+                                        ? "解放済"
+                                        : "未解放";
 
                         return (
                             <button
@@ -171,6 +201,11 @@ export const CurriculumSettings: React.FC = () => {
                                         <div className="text-xs text-slate-400">
                                             {item.desc}
                                         </div>
+                                        {activeTab === "math" && (
+                                            <div className="text-[10px] text-slate-400 mt-1">
+                                                状態: <span className="font-bold text-slate-600">{statusLabel}</span>
+                                            </div>
+                                        )}
                                     </div>
                                     {isSelected && (
                                         <div className="text-yellow-500">
@@ -178,6 +213,26 @@ export const CurriculumSettings: React.FC = () => {
                                         </div>
                                     )}
                                 </div>
+                                {activeTab === "math" && (
+                                    <div className="mt-3 flex items-center justify-between">
+                                        <span className="text-xs text-slate-400">解放上限にする</span>
+                                        <button
+                                            type="button"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleUnlockSelect(item.level);
+                                            }}
+                                            className={cn(
+                                                "px-3 py-1 rounded-full text-xs font-bold border",
+                                                item.level === currentMaxUnlocked
+                                                    ? "bg-blue-50 text-blue-600 border-blue-200"
+                                                    : "bg-white text-slate-500 border-slate-200 hover:border-slate-300"
+                                            )}
+                                        >
+                                            {item.level === currentMaxUnlocked ? "いまの上限" : "これにする"}
+                                        </button>
+                                    </div>
+                                )}
                             </button>
                         );
                     })}

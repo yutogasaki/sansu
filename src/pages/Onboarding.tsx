@@ -3,76 +3,85 @@ import { Button } from "../components/ui/Button";
 import { Header } from "../components/Header";
 import { createInitialProfile } from "../domain/user/profile";
 import { saveProfile, setActiveProfileId } from "../domain/user/repository";
+import { getAvailableSkills } from "../domain/math/curriculum";
+import { getNextReviewDate } from "../domain/algorithms/srs";
+import { db } from "../db";
 import { useNavigate } from "react-router-dom";
 
-type Step = "welcome" | "name" | "grade";
+type Step = "welcome" | "name" | "grade" | "subject" | "math-check" | "english-check" | "done";
+type SubjectMode = "mix" | "math" | "vocab";
+type EnglishExp = "beginner" | "some" | "confident";
+type MathCheck = "q_count" | "q_add" | "q_sub" | "q_col" | "q_mul";
 
 export const Onboarding: React.FC = () => {
     const navigate = useNavigate();
     const [step, setStep] = useState<Step>("welcome");
     const [name, setName] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [grade, setGrade] = useState<number | null>(null);
+    const [subjectMode, setSubjectMode] = useState<SubjectMode>("mix");
+    const [mathCheck, setMathCheck] = useState<MathCheck | null>(null);
+    const [englishExp, setEnglishExp] = useState<EnglishExp | null>(null);
 
     const goBack = () => {
         if (step === "name") setStep("welcome");
         if (step === "grade") setStep("name");
+        if (step === "subject") setStep("grade");
+        if (step === "math-check") setStep("subject");
+        if (step === "english-check") {
+            if (subjectMode === "math") {
+                setStep("subject");
+            } else if (subjectMode === "vocab") {
+                setStep("subject");
+            } else {
+                setStep("math-check");
+            }
+        }
     };
 
     const handleGradeSelect = async (selectedGrade: number) => {
-        setIsSubmitting(true);
-
-        // 少し遅延させて、選択した感触を残す
-        await new Promise(resolve => setTimeout(resolve, 500));
-
-        await handleFinish(selectedGrade);
+        setGrade(selectedGrade);
+        setStep("subject");
     };
 
-    const handleFinish = async (grade: number) => {
+    const handleFinish = async () => {
         // 推定レベルロジック
         // 少し手前から始めて、自信をつけさせる
-        let mathLevel = 1;
-        let vocabLevel = 1;
+        const safeGrade = grade ?? 0;
+        const baseMap: Record<number, number> = {
+            0: 4,
+            1: 6,
+            2: 7,
+            3: 9,
+            4: 10,
+            5: 11,
+            6: 12
+        };
+        const baseLevel = baseMap[safeGrade] ?? 4;
+        const adjMap: Record<MathCheck, number> = {
+            q_count: -5,
+            q_add: -3,
+            q_sub: -1,
+            q_col: 1,
+            q_mul: 4
+        };
+        const adjustment = mathCheck ? adjMap[mathCheck] : 0;
+        const mathStartLevel = Math.max(1, Math.min(20, baseLevel + adjustment));
 
-        switch (grade) {
-            case 0: // 年長以下
-                mathLevel = 1;  // 数と順番
-                vocabLevel = 1; // 超基本
-                break;
-            case 1: // 小1
-                mathLevel = 4;  // たし算（１桁）
-                vocabLevel = 1; // 超基本
-                break;
-            case 2: // 小2
-                mathLevel = 7;  // 2桁のたしひき
-                vocabLevel = 2; // 基本の単語
-                break;
-            case 3: // 小3
-                mathLevel = 9;  // 九九
-                vocabLevel = 3; // 日常の単語
-                break;
-            case 4: // 小4
-                mathLevel = 14; // 大きなかけわり
-                vocabLevel = 4; // 少し長い単語
-                break;
-            case 5: // 小5
-                mathLevel = 16; // 小数かけわり
-                vocabLevel = 5; // 文章単語
-                break;
-            case 6: // 小6
-                mathLevel = 18; // 分数
-                vocabLevel = 6; // 仕事・生活
-                break;
-            default:
-                mathLevel = 1;
-                vocabLevel = 1;
+        let vocabStartLevel = 1;
+        if (englishExp) {
+            if (englishExp === "beginner") vocabStartLevel = 1;
+            if (englishExp === "some") vocabStartLevel = 4;
+            if (englishExp === "confident") vocabStartLevel = 7;
         }
 
         // Create Profile (mix mode default)
-        const profile = createInitialProfile(name, grade, mathLevel, vocabLevel, "mix");
+        const profile = createInitialProfile(name, safeGrade, mathStartLevel, vocabStartLevel, subjectMode);
 
         // Save
         await saveProfile(profile);
-        setActiveProfileId(profile.id);
+        await seedRetiredMathSkills(profile.id, mathStartLevel);
+        await setActiveProfileId(profile.id);
 
         navigate("/", { replace: true });
 
@@ -82,6 +91,60 @@ export const Onboarding: React.FC = () => {
                 window.location.hash = "#/";
             }
         }, 100);
+    };
+
+    const seedRetiredMathSkills = async (profileId: string, mathStartLevel: number) => {
+        const skills = getAvailableSkills(mathStartLevel);
+        if (skills.length === 0) return;
+
+        const now = new Date().toISOString();
+        const nextReview = getNextReviewDate(5).toISOString();
+
+        await Promise.all(
+            skills.map((id) =>
+                db.memoryMath.put({
+                    profileId,
+                    id,
+                    strength: 5,
+                    nextReview,
+                    totalAnswers: 0,
+                    correctAnswers: 0,
+                    incorrectAnswers: 0,
+                    skippedAnswers: 0,
+                    updatedAt: now,
+                    status: "retired"
+                })
+            )
+        );
+    };
+
+    const handleSubjectSelect = (mode: SubjectMode) => {
+        setSubjectMode(mode);
+        if (mode === "vocab") {
+            setStep("english-check");
+        } else {
+            setStep("math-check");
+        }
+    };
+
+    const handleMathCheckSelect = async (value: MathCheck) => {
+        setMathCheck(value);
+        if (subjectMode === "math") {
+            setStep("done");
+            setIsSubmitting(true);
+            await new Promise(resolve => setTimeout(resolve, 500));
+            await handleFinish();
+        } else {
+            setStep("english-check");
+        }
+    };
+
+    const handleEnglishExpSelect = async (value: EnglishExp) => {
+        setEnglishExp(value);
+        setStep("done");
+        setIsSubmitting(true);
+        await new Promise(resolve => setTimeout(resolve, 500));
+        await handleFinish();
     };
 
     // --- Render Steps ---
@@ -111,7 +174,19 @@ export const Onboarding: React.FC = () => {
     return (
         <div className="min-h-screen bg-slate-50 flex flex-col">
             <Header
-                title={step === "name" ? "おなまえ" : "なんねんせい？"}
+                title={
+                    step === "name"
+                        ? "おなまえ"
+                        : step === "grade"
+                            ? "なんねんせい？"
+                            : step === "subject"
+                                ? "べんきょう する もの"
+                                : step === "math-check"
+                                    ? "さんすう どこまで？"
+                                    : step === "english-check"
+                                        ? "えいご どれくらい？"
+                                        : "かんりょう"
+                }
                 showBack={!isSubmitting}
                 onBack={goBack}
             />
@@ -167,6 +242,95 @@ export const Onboarding: React.FC = () => {
                                     </div>
                                 </button>
                             ))}
+                        </div>
+                    </div>
+                )}
+
+                {step === "subject" && (
+                    <div className="w-full space-y-4 animate-in slide-in-from-right duration-300 pb-12">
+                        {[
+                            { label: "さんすう と えいご", value: "mix" as SubjectMode, icon: "🌈" },
+                            { label: "さんすう だけ", value: "math" as SubjectMode, icon: "🧮" },
+                            { label: "えいご だけ", value: "vocab" as SubjectMode, icon: "🔤" }
+                        ].map(item => (
+                            <button
+                                key={item.value}
+                                onClick={() => !isSubmitting && handleSubjectSelect(item.value)}
+                                disabled={isSubmitting}
+                                className="group relative w-full p-4 bg-white rounded-2xl border-2 border-slate-100 shadow-sm hover:border-primary hover:bg-primary/5 hover:shadow-md transition-all active:scale-95 flex items-center gap-4 text-left"
+                            >
+                                <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-2xl group-hover:bg-white">
+                                    {item.icon}
+                                </div>
+                                <div className="flex-1">
+                                    <div className="font-bold text-lg text-slate-700 group-hover:text-slate-900">{item.label}</div>
+                                    <div className="text-xs text-slate-400">あとで かえられるよ</div>
+                                </div>
+                                <div className="text-slate-300 group-hover:text-primary">
+                                    →
+                                </div>
+                            </button>
+                        ))}
+                    </div>
+                )}
+
+                {step === "math-check" && (
+                    <div className="w-full space-y-4 animate-in slide-in-from-right duration-300 pb-12">
+                        {[
+                            { label: "🔢 数をかぞえる・くらべる", value: "q_count" as MathCheck },
+                            { label: "➕ 足し算まで", value: "q_add" as MathCheck },
+                            { label: "➖ 引き算まで", value: "q_sub" as MathCheck },
+                            { label: "✏️ 筆算（2けたのたし算・ひき算）", value: "q_col" as MathCheck },
+                            { label: "✖️ かけ算（九九）", value: "q_mul" as MathCheck }
+                        ].map(item => (
+                            <button
+                                key={item.value}
+                                onClick={() => !isSubmitting && handleMathCheckSelect(item.value)}
+                                disabled={isSubmitting}
+                                className="group relative w-full p-4 bg-white rounded-2xl border-2 border-slate-100 shadow-sm hover:border-primary hover:bg-primary/5 hover:shadow-md transition-all active:scale-95 flex items-center gap-4 text-left"
+                            >
+                                <div className="flex-1">
+                                    <div className="font-bold text-lg text-slate-700 group-hover:text-slate-900">{item.label}</div>
+                                </div>
+                                <div className="text-slate-300 group-hover:text-primary">
+                                    →
+                                </div>
+                            </button>
+                        ))}
+                    </div>
+                )}
+
+                {step === "english-check" && (
+                    <div className="w-full space-y-4 animate-in slide-in-from-right duration-300 pb-12">
+                        {[
+                            { label: "はじめて", value: "beginner" as EnglishExp, sub: "これからスタート" },
+                            { label: "すこし", value: "some" as EnglishExp, sub: "ちょっとだけやった" },
+                            { label: "よくやってる", value: "confident" as EnglishExp, sub: "あるていど できる" }
+                        ].map(item => (
+                            <button
+                                key={item.value}
+                                onClick={() => !isSubmitting && handleEnglishExpSelect(item.value)}
+                                disabled={isSubmitting}
+                                className="group relative w-full p-4 bg-white rounded-2xl border-2 border-slate-100 shadow-sm hover:border-primary hover:bg-primary/5 hover:shadow-md transition-all active:scale-95 flex items-center gap-4 text-left"
+                            >
+                                <div className="flex-1">
+                                    <div className="font-bold text-lg text-slate-700 group-hover:text-slate-900">{item.label}</div>
+                                    <div className="text-xs text-slate-400">{item.sub}</div>
+                                </div>
+                                <div className="text-slate-300 group-hover:text-primary">
+                                    →
+                                </div>
+                            </button>
+                        ))}
+                    </div>
+                )}
+
+                {step === "done" && (
+                    <div className="w-full flex flex-col items-center justify-center space-y-6 animate-in zoom-in duration-300">
+                        <div className="text-6xl">🎉</div>
+                        <div className="text-center">
+                            <div className="text-2xl font-bold text-slate-700">じゅんび できたよ</div>
+                            <div className="text-slate-400 text-sm mt-2">すこし まってね</div>
                         </div>
                     </div>
                 )}

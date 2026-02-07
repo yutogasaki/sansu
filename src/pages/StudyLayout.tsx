@@ -31,6 +31,7 @@ interface StudyLayoutProps {
     // Session info for result display
     sessionKind?: SessionKind;
     correctCount?: number;
+    sessionResult?: { correct: number; total: number; durationSeconds: number };
 
     // Handlers
     onNavigate: (path: string) => void;
@@ -60,6 +61,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     currentProblem,
     sessionKind = "normal",
     correctCount = 0,
+    sessionResult,
     currentIndex,
     blockSize,
     userInput,
@@ -181,6 +183,42 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     }
 
     if (isFinished) {
+        if (sessionKind === "periodic-test" && sessionResult) {
+            const score = sessionResult.total > 0
+                ? Math.round((sessionResult.correct / sessionResult.total) * 100)
+                : 0;
+
+            return (
+                <div className="flex flex-col items-center justify-center p-6 h-full space-y-8 animate-in zoom-in bg-gradient-to-b from-slate-50 to-white">
+                    <div className="text-6xl">✨</div>
+                    <h2 className="text-2xl font-bold text-center">定期テスト おつかれさま</h2>
+                    <div className="bg-white rounded-2xl p-6 w-full max-w-sm text-center shadow-xl space-y-4">
+                        <div>
+                            <div className="text-xs text-slate-400 font-bold">せいかい</div>
+                            <div className="text-4xl font-black text-slate-800">
+                                {sessionResult.correct} / {sessionResult.total}
+                            </div>
+                        </div>
+                        <div>
+                            <div className="text-xs text-slate-400 font-bold">てんすう</div>
+                            <div className="text-3xl font-black text-slate-800">{score}てん</div>
+                        </div>
+                        <div>
+                            <div className="text-xs text-slate-400 font-bold">じかん</div>
+                            <div className="text-2xl font-bold text-slate-700">{sessionResult.durationSeconds}びょう</div>
+                        </div>
+                    </div>
+                    <div className="w-full space-y-4 max-w-xs">
+                        <Button onClick={() => onNavigate("/stats")} size="xl" className="w-full shadow-lg shadow-yellow-200">
+                            きろく を みる
+                        </Button>
+                        <Button onClick={() => onNavigate("/")} variant="secondary" size="lg" className="w-full">
+                            ホーム へ もどる
+                        </Button>
+                    </div>
+                </div>
+            );
+        }
         // ちからチェック結果表示
         if (sessionKind === "check-normal" || sessionKind === "check-event") {
             const isEvent = sessionKind === "check-event";

@@ -8100,3 +8100,4 @@ export const ENGLISH_WORDS: EnglishWord[] = [
 ];
 export const getWordsByLevel = (level: number) => ENGLISH_WORDS.filter(w => w.level === level);
 export const getWord = (id: string) => ENGLISH_WORDS.find(w => w.id === id);
+export const getWordLevel = (id: string) => ENGLISH_WORDS.find(w => w.id === id)?.level ?? null;

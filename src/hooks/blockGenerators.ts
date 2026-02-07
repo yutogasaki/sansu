@@ -638,18 +638,18 @@ export const calculateRecentReviewRatio = (
 export const getMixSubject = (
     recentAttempts: { subject: SubjectKey; isReview: boolean }[]
 ): SubjectKey => {
-    const recent = recentAttempts.slice(0, MIX_WINDOW);
-    const nonReview = recent.filter(r => !r.isReview);
+    const nonReview = recentAttempts.filter(r => !r.isReview);
+    const recent = nonReview.slice(0, MIX_WINDOW);
 
-    if (nonReview.length < 5) {
+    if (recent.length < 5) {
         return Math.random() > 0.5 ? 'math' : 'vocab';
     }
 
-    const mathCount = nonReview.filter(r => r.subject === 'math').length;
-    const ratio = mathCount / nonReview.length;
+    const mathCount = recent.filter(r => r.subject === 'math').length;
+    const ratio = mathCount / recent.length;
 
-    if (ratio > 0.7) return 'vocab';
-    if (ratio < 0.3) return 'math';
+    if (ratio > 0.6) return 'vocab';
+    if (ratio < 0.4) return 'math';
     return Math.random() > 0.5 ? 'math' : 'vocab';
 };
 

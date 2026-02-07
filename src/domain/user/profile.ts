@@ -61,6 +61,42 @@ export const syncLevelState = (
     return updated;
 };
 
+export const syncUnlockLevel = (
+    profile: UserProfile,
+    subject: 'math' | 'vocab',
+    newMaxUnlocked: number
+): UserProfile => {
+    const updated = { ...profile };
+
+    if (subject === 'math') {
+        const nextMax = Math.max(updated.mathMainLevel, Math.min(20, newMaxUnlocked));
+        updated.mathMaxUnlocked = nextMax;
+
+        if (updated.mathLevels) {
+            updated.mathLevels = updated.mathLevels.map(l => {
+                if (l.level <= nextMax) {
+                    return { ...l, unlocked: true };
+                }
+                return { ...l, unlocked: false, enabled: l.level === updated.mathMainLevel };
+            });
+        }
+    } else {
+        const nextMax = Math.max(updated.vocabMainLevel, Math.min(20, newMaxUnlocked));
+        updated.vocabMaxUnlocked = nextMax;
+
+        if (updated.vocabLevels) {
+            updated.vocabLevels = updated.vocabLevels.map(l => {
+                if (l.level <= nextMax) {
+                    return { ...l, unlocked: true };
+                }
+                return { ...l, unlocked: false, enabled: l.level === updated.vocabMainLevel };
+            });
+        }
+    }
+
+    return updated;
+};
+
 // Default Profile Factory
 export const createInitialProfile = (
     name: string,
@@ -70,8 +106,8 @@ export const createInitialProfile = (
     subjectMode: "mix" | "math" | "vocab"
 ): UserProfile => {
     const profileId = uuidv4();
-
-
+    const mathMainLevel = Math.min(20, mathStartLevel + 1);
+    const mathMaxUnlocked = Math.min(20, mathStartLevel + 1);
 
     // Create initial objects
     const profile: UserProfile = {
@@ -89,13 +125,13 @@ export const createInitialProfile = (
         // Spec 5.6: "mathStartLevel の1つ上を mainLevel とする"
         // "mathStartLevel 以下のレベルはすべて unlocked=true かつ retired"
         // So if Start=5, Levels 1-5 are Cleared. Main is 6.
-        mathMainLevel: mathStartLevel + 1,
-        mathMaxUnlocked: mathStartLevel + 1,
+        mathMainLevel,
+        mathMaxUnlocked,
 
         vocabMainLevel: vocabStartLevel,
         vocabMaxUnlocked: vocabStartLevel,
 
-        mathLevels: createLevelStates(20, mathStartLevel + 1, mathStartLevel + 1),
+        mathLevels: createLevelStates(20, mathMaxUnlocked, mathMainLevel),
         vocabLevels: createLevelStates(20, vocabStartLevel, vocabStartLevel),
 
         mathSkills: {}, // Will be populated as we go? Or pre-fill? 

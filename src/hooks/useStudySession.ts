@@ -13,7 +13,8 @@ import { generateMathProblem } from "../domain/math";
 import { generateVocabProblem } from "../domain/english/generator";
 import { Problem, SubjectKey, UserProfile } from "../domain/types";
 import { getAvailableSkills } from "../domain/math/curriculum";
-import { checkLevelProgression } from "../domain/math/service";
+import { checkLevelProgression, checkMathMainPromotion } from "../domain/math/service";
+import { getWordsByLevel } from "../domain/english/words";
 import {
     SessionKind,
     SessionHistoryItem,
@@ -32,10 +33,10 @@ import {
     createFallbackProblem,
     safeGenerateProblem,
     generateLevelBlock,
-    generateWeakReviewBlock,
-    generatePeriodicTestBlock
+    generateWeakReviewBlock
 } from "./blockGenerators";
 import { checkPeriodTestTrigger } from "../domain/test/trigger";
+import { ensurePeriodicTestSet } from "../domain/test/testSet";
 
 type StudySessionOptions = {
     devSkill?: string;
@@ -362,8 +363,16 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
         // New Periodic Test (Plan A)
         if (sessionKind === "periodic-test") {
-            const subject = options.focusSubject; // Pass this explicitly
-            return generatePeriodicTestBlock(activeProfile, subject);
+            const subject: SubjectKey =
+                options.focusSubject ||
+                (activeProfile.subjectMode === "vocab" ? "vocab" : "math");
+            const set = await ensurePeriodicTestSet(activeProfile, subject);
+            return set.problems.map((p, i) => ({
+                ...p,
+                id: `test-${i}-${Date.now()}`,
+                subject,
+                isReview: false
+            }));
         }
 
         // New Weakness Review (Plan A)
@@ -487,26 +496,89 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 problem.isMaintenanceCheck || false
             );
 
-            // Check Level Up (only for Math)
-            if (problem.subject === 'math') {
-                const currentProfile = await getActiveProfile();
-                if (currentProfile && currentProfile.mathMainLevel < 20) {
-                    const canLevelUp = await checkLevelProgression(currentProfile.id, currentProfile.mathMainLevel);
-                    if (canLevelUp) {
-                        console.log("LEVEL UP!", currentProfile.mathMainLevel + 1);
-                        const newLevel = currentProfile.mathMainLevel + 1;
-                        await saveProfile({
-                            ...currentProfile,
-                            mathMainLevel: newLevel,
-                            mathMaxUnlocked: Math.max(currentProfile.mathMaxUnlocked, newLevel)
-                        });
-                        setProfile({
-                            ...currentProfile,
-                            mathMainLevel: newLevel,
-                            mathMaxUnlocked: Math.max(currentProfile.mathMaxUnlocked, newLevel)
-                        });
-                    }
+            const currentProfile = await getActiveProfile();
+            if (!currentProfile) return;
+
+            const ensureMainEnabled = (levels: typeof currentProfile.mathLevels, mainLevel: number) => {
+                if (!levels) return levels;
+                const hasEnabled = levels.some(l => l.enabled);
+                if (hasEnabled) return levels;
+                return levels.map(l => (l.level === mainLevel ? { ...l, enabled: true } : l));
+            };
+
+            const unlockNextLevelIfReady = async (subject: SubjectKey, p: UserProfile) => {
+                if (subject === 'math') {
+                    if (p.mathMainLevel >= 20) return p;
+                    if (p.mathMaxUnlocked !== p.mathMainLevel) return p;
+                    const canUnlock = await checkLevelProgression(p.id, p.mathMainLevel);
+                    if (!canUnlock) return p;
+                    const nextLevel = Math.min(20, p.mathMaxUnlocked + 1);
+                    const mathLevels = p.mathLevels
+                        ? p.mathLevels.map(l => (l.level <= nextLevel ? { ...l, unlocked: true } : l))
+                        : p.mathLevels;
+                    return { ...p, mathMaxUnlocked: nextLevel, mathLevels };
                 }
+
+                if (p.vocabMainLevel >= 20) return p;
+                if (p.vocabMaxUnlocked !== p.vocabMainLevel) return p;
+                const levelState = p.vocabLevels?.find(l => l.level === p.vocabMainLevel);
+                const recent = levelState?.recentAnswersNonReview || [];
+                if (recent.length < 20) return p;
+                const correctCount = recent.filter(Boolean).length;
+                const accuracy = correctCount / recent.length;
+                if (accuracy < 0.85) return p;
+                const nextLevel = Math.min(20, p.vocabMaxUnlocked + 1);
+                const vocabLevels = p.vocabLevels
+                    ? p.vocabLevels.map(l => (l.level <= nextLevel ? { ...l, unlocked: true } : l))
+                    : p.vocabLevels;
+                return { ...p, vocabMaxUnlocked: nextLevel, vocabLevels };
+            };
+
+            const promoteMainLevelIfReady = async (subject: SubjectKey, p: UserProfile) => {
+                if (subject === 'math') {
+                    if (p.mathMaxUnlocked <= p.mathMainLevel) return p;
+                    const canPromote = await checkMathMainPromotion(p, p.mathMaxUnlocked);
+                    if (!canPromote) return p;
+                    const nextMain = p.mathMaxUnlocked;
+                    const mathLevels = p.mathLevels
+                        ? ensureMainEnabled(
+                            p.mathLevels.map(l =>
+                                l.level === nextMain
+                                    ? { ...l, enabled: true, recentAnswersNonReview: [] }
+                                    : l
+                            ),
+                            nextMain
+                        )
+                        : p.mathLevels;
+                    return { ...p, mathMainLevel: nextMain, mathLevels };
+                }
+
+                if (p.vocabMaxUnlocked <= p.vocabMainLevel) return p;
+                const levelWords = getWordsByLevel(p.vocabMaxUnlocked);
+                if (levelWords.length === 0) return p;
+                const touched = levelWords.filter(w => p.vocabWords[w.id]?.totalAnswers > 0).length;
+                const ratio = touched / levelWords.length;
+                if (ratio < 0.7) return p;
+                const nextMain = p.vocabMaxUnlocked;
+                const vocabLevels = p.vocabLevels
+                    ? ensureMainEnabled(
+                        p.vocabLevels.map(l =>
+                            l.level === nextMain
+                                ? { ...l, enabled: true, recentAnswersNonReview: [] }
+                                : l
+                        ),
+                        nextMain
+                    )
+                    : p.vocabLevels;
+                return { ...p, vocabMainLevel: nextMain, vocabLevels };
+            };
+
+            let updatedProfile = await unlockNextLevelIfReady(problem.subject, currentProfile);
+            updatedProfile = await promoteMainLevelIfReady(problem.subject, updatedProfile);
+
+            if (updatedProfile !== currentProfile) {
+                await saveProfile(updatedProfile);
+                setProfile(updatedProfile);
             }
         } catch (err) {
             console.error("[useStudySession] error handling result:", err);
@@ -538,30 +610,18 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
         // 1. Handle Periodic Test Completion (Recording)
         if (sessionKind === "periodic-test") {
-            // const subject = options.focusSubject || (currentProfile.subjectMode === 'mix' ? 'math' : currentProfile.subjectMode);
-            // const subject = 'math'; // Currently fixed to Math periodic test. Future: detect from options.
-            // In periodic test, usually mixed? No, periodic test determines subject internally or via options?
-            // "Periodic Test" logic in blockGenerators sends mixed or fixed?
-            // Actually periodic test is usually Math or Vocab per spec.
-            // Let's assume we detect subject from the block or options.
-            // If the user selected "Periodic Test" from UI, they probably selected Math or English.
-            // But wait, the UI "Challenge" button just says "Periodic Test".
-            // The spec says "Independent for Math/Vocab".
-            // Implementation of generatePeriodicTestBlock: "re-use strict level block logic".
-            // generateLevelBlock uses profile.subjectMode usually?
-            // Let's look at generatePeriodicTestBlock in blockGenerators.ts. 
-            // It relies on generateLevelBlock. generateLevelBlock uses profile.mathMainLevel.
-            // It seems it primarily targets Math currently.
-            // We should ensure we know the subject. 
-            // For now, let's assume 'math' if mostly math questions, or check profile mode.
-            // Given provided code, let's stick to 'math' if unsure, or check instructions.
+            const subject: SubjectKey =
+                options.focusSubject ||
+                (currentProfile.subjectMode === "vocab" ? "vocab" : "math");
+            const testSet = currentProfile.periodicTestSets?.[subject];
+            const level = testSet?.level ?? (subject === "math" ? currentProfile.mathMainLevel : currentProfile.vocabMainLevel);
 
             // Saving Result
             const result: any = { // Use PeriodicTestResult type
                 id: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2),
                 timestamp: Date.now(),
-                subject: 'math', // TODO: Support vocab periodic test explicit mode
-                level: currentProfile.mathMainLevel,
+                subject,
+                level,
                 mode: 'auto', // defaulting to auto, but how do we know if manual?
                 // We can check if it was pending.
                 method: 'online',
@@ -572,7 +632,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             };
 
             // Check if it was pending to determine mode
-            const isPending = currentProfile.periodicTestState?.math?.isPending;
+            const isPending = currentProfile.periodicTestState?.[subject]?.isPending;
             result.mode = isPending ? 'auto' : 'manual';
 
             // Save to history
@@ -580,16 +640,20 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
             // Update State (Clear Pending, Set Last Triggered)
             const newState = { ...(currentProfile.periodicTestState || { math: { isPending: false, lastTriggeredAt: null, reason: null }, vocab: { isPending: false, lastTriggeredAt: null, reason: null } }) };
-            newState.math = {
+            newState[subject] = {
                 isPending: false,
                 lastTriggeredAt: Date.now(),
                 reason: null
             };
 
+            const nextSets = { ...(currentProfile.periodicTestSets || {}) };
+            delete nextSets[subject];
+
             await saveProfile({
                 ...currentProfile,
                 testHistory: newHistory,
-                periodicTestState: newState
+                periodicTestState: newState,
+                periodicTestSets: nextSets
             });
         }
 
