@@ -14,6 +14,8 @@ const EVENT_CONFIG: Record<EventType, {
     message: string;
     emoji: string;
     color: string;
+    actionLabel?: string; // カスタムボタンラベル
+    dismissLabel?: string; // カスタムキャンセルラベル
 }> = {
     streak_3: {
         title: "3にち れんぞく！",
@@ -44,6 +46,28 @@ const EVENT_CONFIG: Record<EventType, {
         message: "がんばりの せいかが でてるよ！\nいまの ちからを かくにんしよう！",
         emoji: "💪",
         color: "from-blue-400 to-cyan-500"
+    },
+    periodic_test: {
+        title: "定期テスト の じかん！",
+        message: "いまの ちからを しらべてみよう！\n20もん の テストだよ",
+        emoji: "📝",
+        color: "from-indigo-400 to-purple-500",
+        actionLabel: "ちょうせん する！"
+    },
+    level_up: {
+        title: "レベルアップ！",
+        message: "おめでとう！\nつぎの レベルに すすんだよ！",
+        emoji: "🎊",
+        color: "from-yellow-400 to-amber-500",
+        actionLabel: "やったね！",
+        dismissLabel: undefined // 閉じるボタンのみ
+    },
+    paper_test_remind: {
+        title: "テストの てんすう おしえて！",
+        message: "かみの テストは できたかな？\nてんすうを いれてね",
+        emoji: "📄",
+        color: "from-slate-400 to-slate-600",
+        actionLabel: "てんすうを いれる"
     }
 };
 
@@ -108,16 +132,18 @@ export const EventModal: React.FC<EventModalProps> = ({
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                     onClick={onStartCheck}
-                                    className={`w-full py-4 rounded-2xl bg-gradient-to-r ${config.color} text-white font-bold text-lg shadow-lg shadow-${config.color.split('-')[1]}-300/50`}
+                                    className={`w-full py-4 rounded-2xl bg-gradient-to-r ${config.color} text-white font-bold text-lg shadow-lg`}
                                 >
-                                    ちからチェック スタート！
+                                    {config.actionLabel || "ちからチェック スタート！"}
                                 </motion.button>
-                                <button
-                                    onClick={onDismiss}
-                                    className="w-full py-3 rounded-2xl bg-slate-100 text-slate-500 font-medium hover:bg-slate-200 transition-colors"
-                                >
-                                    あとで やる
-                                </button>
+                                {eventType !== "level_up" && (
+                                    <button
+                                        onClick={onDismiss}
+                                        className="w-full py-3 rounded-2xl bg-slate-100 text-slate-500 font-medium hover:bg-slate-200 transition-colors"
+                                    >
+                                        {config.dismissLabel !== undefined ? config.dismissLabel : "あとで やる"}
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </motion.div>

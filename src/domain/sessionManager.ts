@@ -248,11 +248,14 @@ const fillQueue = (
 
 // Helper for Events
 export type EventType =
-    | "streak_3"      // 連続学習3日
-    | "streak_7"      // 連続学習7日
-    | "total_100"     // 100問達成（100の倍数）
-    | "level_up_near" // レベルアップ直前
-    | "weak_decrease"; // 苦手スキル減少
+    | "streak_3"           // 連続学習3日
+    | "streak_7"           // 連続学習7日
+    | "total_100"          // 100問達成（100の倍数）
+    | "level_up_near"      // レベルアップ直前
+    | "weak_decrease"      // 苦手スキル減少
+    | "periodic_test"      // 定期テストの時間
+    | "level_up"           // レベルアップ達成
+    | "paper_test_remind"; // 紙テスト点数入力リマインド
 
 export interface EventCheckParams {
     profile: UserProfile;

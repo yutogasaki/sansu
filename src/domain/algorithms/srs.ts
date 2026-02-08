@@ -39,7 +39,7 @@ export const updateMemoryState = (
         nextReview,
         totalAnswers: current.totalAnswers + 1,
         correctAnswers: current.correctAnswers + (isCorrect && !isSkipped ? 1 : 0),
-        incorrectAnswers: current.incorrectAnswers + (!isCorrect && !isSkipped ? 1 : 0),
+        incorrectAnswers: current.incorrectAnswers + (isCorrect ? 0 : 1),
         skippedAnswers: (current.skippedAnswers || 0) + (isSkipped ? 1 : 0),
         lastCorrectAt: isCorrect && !isSkipped ? now : current.lastCorrectAt,
         updatedAt: now

@@ -24,6 +24,9 @@ const STORAGE_KEYS = {
 
     // Debug/Dev
     DEBUG_MODE: 'sansu_debug_mode',
+
+    // Ikimono
+    IKIMONO_STATE: 'sansu_ikimono_state',
 } as const;
 
 type StorageKey = typeof STORAGE_KEYS[keyof typeof STORAGE_KEYS];
@@ -159,6 +162,17 @@ export const soundStorage = {
 };
 
 /**
+ * Ikimono state
+ */
+export const ikimonoStorage = {
+    getState: (): { profileId: string; birthDate: string; generation: number } | null =>
+        get(STORAGE_KEYS.IKIMONO_STATE, null),
+    setState: (state: { profileId: string; birthDate: string; generation: number }): void =>
+        set(STORAGE_KEYS.IKIMONO_STATE, state),
+    clear: (): void => remove(STORAGE_KEYS.IKIMONO_STATE),
+};
+
+/**
  * Debug settings
  */
 export const debugStorage = {
@@ -184,6 +198,7 @@ export const storage = {
     event: eventStorage,
     weakPoints: weakPointsStorage,
     sound: soundStorage,
+    ikimono: ikimonoStorage,
     debug: debugStorage,
 };
 

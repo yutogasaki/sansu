@@ -270,6 +270,21 @@ export interface UserProfile {
     lastStudyDate?: string; // YYYY-MM-DD
     todayCount: number;
 
+    // Level Up Notification (pending until shown)
+    pendingLevelUpNotification?: {
+        subject: SubjectKey;
+        newLevel: number;
+        achievedAt: string; // ISO timestamp
+    };
+
+    // Paper Test Score Input Reminder
+    pendingPaperTests?: {
+        id: string;
+        subject: SubjectKey;
+        level: number;
+        createdAt: string; // PDF出力日時
+    }[];
+
     // Recent Attempts (ring buffer)
     recentAttempts?: RecentAttempt[];
 

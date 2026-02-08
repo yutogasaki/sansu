@@ -550,7 +550,17 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                             nextMain
                         )
                         : p.mathLevels;
-                    return { ...p, mathMainLevel: nextMain, mathLevels };
+                    // レベルアップ通知を設定（ホーム画面でモーダル表示）
+                    return {
+                        ...p,
+                        mathMainLevel: nextMain,
+                        mathLevels,
+                        pendingLevelUpNotification: {
+                            subject: 'math' as const,
+                            newLevel: nextMain,
+                            achievedAt: new Date().toISOString()
+                        }
+                    };
                 }
 
                 if (p.vocabMaxUnlocked <= p.vocabMainLevel) return p;
@@ -570,7 +580,17 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                         nextMain
                     )
                     : p.vocabLevels;
-                return { ...p, vocabMainLevel: nextMain, vocabLevels };
+                // レベルアップ通知を設定（ホーム画面でモーダル表示）
+                return {
+                    ...p,
+                    vocabMainLevel: nextMain,
+                    vocabLevels,
+                    pendingLevelUpNotification: {
+                        subject: 'vocab' as const,
+                        newLevel: nextMain,
+                        achievedAt: new Date().toISOString()
+                    }
+                };
             };
 
             let updatedProfile = await unlockNextLevelIfReady(problem.subject, currentProfile);

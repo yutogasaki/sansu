@@ -172,6 +172,20 @@ export const Settings: React.FC = () => {
             const { generateMathPDF } = await import("../utils/pdfGenerator");
             await generateMathPDF(problems, `さんすう レベル Lv.${set.level}`, profile.name);
             console.log("[PDF] Math PDF generation completed!");
+
+            // 紙テストリマインド用に pendingPaperTests に追加
+            const newPaperTest = {
+                id: crypto.randomUUID(),
+                subject: 'math' as const,
+                level: set.level,
+                createdAt: new Date().toISOString()
+            };
+            const updated = {
+                ...profile,
+                pendingPaperTests: [...(profile.pendingPaperTests || []), newPaperTest]
+            };
+            await saveProfile(updated);
+            setProfile(updated);
         } catch (e) {
             console.error("[PDF] Error:", e);
             alert(`PDFの作成に失敗しました。\n\nエラー: ${e instanceof Error ? e.message : String(e)}`);
@@ -202,6 +216,20 @@ export const Settings: React.FC = () => {
             const { generateVocabPDF } = await import("../utils/pdfGenerator");
             await generateVocabPDF(selected, `えいご レベル Lv.${set.level}`);
             console.log("[PDF] Vocab PDF generation completed!");
+
+            // 紙テストリマインド用に pendingPaperTests に追加
+            const newPaperTest = {
+                id: crypto.randomUUID(),
+                subject: 'vocab' as const,
+                level: set.level,
+                createdAt: new Date().toISOString()
+            };
+            const updated = {
+                ...profile,
+                pendingPaperTests: [...(profile.pendingPaperTests || []), newPaperTest]
+            };
+            await saveProfile(updated);
+            setProfile(updated);
         } catch (e) {
             console.error("[PDF] Error:", e);
             alert(`PDFの作成に失敗しました。\n\nエラー: ${e instanceof Error ? e.message : String(e)}`);
