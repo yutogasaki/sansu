@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, useAnimationControls } from 'framer-motion';
 import { IkimonoSvg } from './IkimonoSvg';
 import { calculateStage, createNewIkimonoState } from './lifecycle';
-import { getOpenHitokoto, shouldShowHitokotoOnOpen, getTapHitokoto } from './hitokoto';
+import { getOpenHitokoto, shouldShowHitokotoOnOpen, getTapHitokoto, getEggOpenHitokoto, getEggTapHitokoto } from './hitokoto';
 import { ikimonoStorage } from '../../utils/storage';
 import { IkimonoState, IkimonoStage } from './types';
 
@@ -26,8 +26,9 @@ type TapReaction = 'hitokoto' | 'bounce' | 'spin' | 'wiggle' | 'nod';
 function pickTapReaction(stage: IkimonoStage): TapReaction {
     const r = Math.random();
     if (stage === 'egg') {
-        // たまごは動きのみ（ことばがない）
-        if (r < 0.5) return 'wiggle';
+        // たまごは動き多め、たまにひとこと（気配）
+        if (r < 0.25) return 'hitokoto';
+        if (r < 0.6) return 'wiggle';
         return 'bounce';
     }
     // 生まれてからはひとことが多め
@@ -85,7 +86,15 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId }) => {
         if (openHitokotoShown.current) return;
         openHitokotoShown.current = true;
 
-        if (stage !== 'egg' && shouldShowHitokotoOnOpen()) {
+        if (stage === 'egg') {
+            // たまごは初回起動時に必ずひとこと（何なのか伝える）
+            const timer = setTimeout(() => {
+                showHitokoto(getEggOpenHitokoto(), 4000);
+            }, 1500);
+            return () => clearTimeout(timer);
+        }
+
+        if (shouldShowHitokotoOnOpen()) {
             const timer = setTimeout(() => {
                 showHitokoto(getOpenHitokoto());
             }, 1200);
@@ -117,7 +126,7 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId }) => {
 
         switch (reaction) {
             case 'hitokoto':
-                showHitokoto(getTapHitokoto());
+                showHitokoto(stage === 'egg' ? getEggTapHitokoto() : getTapHitokoto());
                 // ひとことと一緒に小さく動く
                 await controls.start({
                     scale: [1, 1.05, 1],

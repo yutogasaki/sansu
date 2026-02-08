@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 export const LayoutDebugOverlay: React.FC = () => {
-    // DEVモード以外では何も表示しない
-    if (!import.meta.env.DEV) return null;
+    const isDev = import.meta.env.DEV;
 
     const [metrics, setMetrics] = useState({
         width: 0,
@@ -20,6 +19,8 @@ export const LayoutDebugOverlay: React.FC = () => {
     });
 
     useEffect(() => {
+        if (!isDev) return;
+
         const updateMetrics = () => {
             const width = window.innerWidth;
             const height = window.innerHeight;
@@ -59,10 +60,12 @@ export const LayoutDebugOverlay: React.FC = () => {
             window.removeEventListener("resize", updateMetrics);
             clearInterval(interval);
         };
-    }, []);
+    }, [isDev]);
 
     const isScrollSafe = metrics.scrollDiff <= 1; // 1px許容
     const totalContentHeight = componentHeights.header + componentHeights.card + componentHeights.controls;
+
+    if (!isDev) return null;
 
     return (
         <div className="fixed top-0 right-0 z-[9999] bg-black/80 text-white text-[10px] p-2 font-mono pointer-events-none max-w-[200px] opacity-90">

@@ -104,6 +104,26 @@ export const Stats: React.FC = () => {
                     </div>
                 </Card>
 
+                {/* 1.5. Preparation (Nigate Review) */}
+                <Card className="p-4 flex justify-between items-center border border-sky-100 bg-sky-50 land:col-span-2 shadow-sm">
+                    <div>
+                        <div className="font-bold text-sky-800 flex items-center gap-2">
+                            <span className="text-xl">🏃</span>
+                            <span>テストの じゅんび (10もん)</span>
+                        </div>
+                        <div className="text-xs text-sky-600 mt-1 ml-1">
+                            にがてな ところを ふくしゅう しよう
+                        </div>
+                    </div>
+                    <Button
+                        size="sm"
+                        className="h-10 text-sm bg-white text-sky-600 border border-sky-200 hover:bg-sky-100 font-bold px-6 rounded-full shadow-sm"
+                        onClick={() => navigate('/study?session=weak-review')}
+                    >
+                        やる！
+                    </Button>
+                </Card>
+
                 {/* 2. Weak Points (Uses new weak-review) */}
                 {weakPoints.length > 0 && (
                     <div className="space-y-2">

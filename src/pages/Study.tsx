@@ -126,7 +126,10 @@ export const Study: React.FC = () => {
     }, [currentIndex, queue.length, loading, nextBlock, isFinished]);
 
     // Session Start Time Tracking
-    const startTimeRef = React.useRef(Date.now());
+    const startTimeRef = React.useRef(0);
+    useEffect(() => {
+        startTimeRef.current = Date.now();
+    }, []);
 
     // Check for Fixed Session Completion (Periodic Test / Weak Review / Check Event)
     useEffect(() => {
@@ -308,8 +311,19 @@ export const Study: React.FC = () => {
             if (feedback !== "none") return;
             if (!currentProblem) return;
 
+            // 4択の場合 1-4 を優先して処理
+            if (currentProblem.inputType === "choice" && e.key >= '1' && e.key <= '4') {
+                const choices = currentProblem.inputConfig?.choices;
+                if (choices) {
+                    const idx = parseInt(e.key) - 1;
+                    if (idx < choices.length) {
+                        handleSubmit(choices[idx].value);
+                    }
+                }
+                e.preventDefault();
+            }
             // 数字キー 0-9
-            if (e.key >= '0' && e.key <= '9') {
+            else if (e.key >= '0' && e.key <= '9') {
                 handleTenKeyInput(e.key);
                 e.preventDefault();
             }
@@ -336,17 +350,6 @@ export const Study: React.FC = () => {
             // 小数点
             else if (e.key === '.' && currentProblem.categoryId.startsWith("dec_")) {
                 handleTenKeyInput('.');
-                e.preventDefault();
-            }
-            // 4択の場合 1-4
-            else if (currentProblem.inputType === "choice" && e.key >= '1' && e.key <= '4') {
-                const choices = currentProblem.inputConfig?.choices;
-                if (choices) {
-                    const idx = parseInt(e.key) - 1;
-                    if (idx < choices.length) {
-                        handleSubmit(choices[idx].value);
-                    }
-                }
                 e.preventDefault();
             }
         };

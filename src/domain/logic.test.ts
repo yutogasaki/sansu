@@ -43,10 +43,17 @@ describe('SRS Algorithm', () => {
             expect(next).toBe('retired');
         });
 
-        it('should reactivate retired skill on failure', () => {
+        it('should keep retired skill on single failure', () => {
             const state = { ...mockState('1', 5, 'retired'), totalAnswers: 100 };
             // Recent failure
             const recent = [false];
+            const next = updateSkillStatus(state, recent);
+            expect(next).toBe('retired');
+        });
+
+        it('should reactivate retired skill on two consecutive failures', () => {
+            const state = { ...mockState('1', 5, 'retired'), totalAnswers: 100 };
+            const recent = [false, false];
             const next = updateSkillStatus(state, recent);
             expect(next).toBe('active');
         });

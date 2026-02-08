@@ -117,6 +117,34 @@ const STAGE_HITOKOTO: Partial<Record<IkimonoStage, string[]>> = {
     ],
 };
 
+// ────────────────────────────────────────────
+// たまご専用ひとこと
+// たまご自身は話せないが、気配や雰囲気を伝える
+// ────────────────────────────────────────────
+
+const EGG_OPEN_HITOKOTO = [
+    'なにか いる…？',
+    'たまご がある',
+    'あたたかい…',
+    'もうすぐ かな',
+];
+
+const EGG_TAP_HITOKOTO = [
+    'コンコン',
+    '…もぞ',
+    'カサッ',
+    '…',
+    'ぬくぬく',
+];
+
+export function getEggOpenHitokoto(): string {
+    return pickRandom(EGG_OPEN_HITOKOTO);
+}
+
+export function getEggTapHitokoto(): string {
+    return pickRandom(EGG_TAP_HITOKOTO);
+}
+
 /**
  * ステージ遷移時のひとこと（ない場合は null）
  */
