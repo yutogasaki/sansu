@@ -1,6 +1,6 @@
 import React from "react";
 
-export type DevTabId = "profile" | "progress" | "math" | "vocab" | "history" | "constants";
+export type DevTabId = "profile" | "progress" | "math" | "vocab" | "history" | "ikimono" | "constants";
 
 interface DevPanelTabsProps {
     activeTab: DevTabId;
@@ -13,6 +13,7 @@ const TABS: { id: DevTabId; label: string; icon: string }[] = [
     { id: "math", label: "算数", icon: "🔢" },
     { id: "vocab", label: "英語", icon: "🔤" },
     { id: "history", label: "履歴", icon: "📜" },
+    { id: "ikimono", label: "いきもの", icon: "🦔" },
     { id: "constants", label: "定数", icon: "⚙️" },
 ];
 

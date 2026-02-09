@@ -8,6 +8,7 @@ import { DevMathTab } from "../components/dev/DevMathTab";
 import { DevVocabTab } from "../components/dev/DevVocabTab";
 import { DevHistoryTab } from "../components/dev/DevHistoryTab";
 import { DevConstantsTab } from "../components/dev/DevConstantsTab";
+import { DevIkimonoTab } from "../components/dev/DevIkimonoTab";
 import { useDevPanel } from "../hooks/useDevPanel";
 import { MemoryState } from "../domain/types";
 
@@ -112,6 +113,9 @@ export const DevMode: React.FC = () => {
                 )}
                 {activeTab === "history" && (
                     <DevHistoryTab profile={profile} />
+                )}
+                {activeTab === "ikimono" && (
+                    <DevIkimonoTab profileId={profile.id} />
                 )}
                 {activeTab === "constants" && (
                     <DevConstantsTab />

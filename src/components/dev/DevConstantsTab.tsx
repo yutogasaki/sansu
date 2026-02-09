@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
+import { EventType } from "../../domain/sessionManager";
 import { storage } from "../../utils/storage";
 
 // SRS Constants
@@ -51,9 +52,100 @@ const ConstantRow: React.FC<ConstantRowProps> = ({ label, code, value }) => (
 );
 
 export const DevConstantsTab: React.FC = () => {
-    // Get localStorage values
-    const debugMode = storage.debug.isEnabled();
-    const soundEnabled = storage.sound.isEnabled();
+    const eventTypes = useMemo<EventType[]>(
+        () => [
+            "streak_3",
+            "streak_7",
+            "total_100",
+            "level_up_near",
+            "weak_decrease",
+            "periodic_test",
+            "level_up",
+            "paper_test_remind",
+        ],
+        []
+    );
+
+    const loadLocalValues = () => ({
+        debugMode: storage.debug.isEnabled(),
+        soundEnabled: storage.sound.isEnabled(),
+        eventLastShown: storage.event.getLastShownEvent() ?? "",
+        eventLastShownDate: storage.event.getLastShownDate() ?? "",
+        eventPending: storage.event.isPending(),
+        weakPrevCount: storage.weakPoints.getPrevCount(),
+    });
+
+    const [debugMode, setDebugMode] = useState(loadLocalValues().debugMode);
+    const [soundEnabled, setSoundEnabled] = useState(loadLocalValues().soundEnabled);
+    const [eventLastShown, setEventLastShown] = useState(loadLocalValues().eventLastShown);
+    const [eventLastShownDate, setEventLastShownDate] = useState(loadLocalValues().eventLastShownDate);
+    const [eventPending, setEventPending] = useState(loadLocalValues().eventPending);
+    const [weakPrevCount, setWeakPrevCount] = useState<number | undefined>(loadLocalValues().weakPrevCount);
+
+    const reloadLocalValues = () => {
+        const values = loadLocalValues();
+        setDebugMode(values.debugMode);
+        setSoundEnabled(values.soundEnabled);
+        setEventLastShown(values.eventLastShown);
+        setEventLastShownDate(values.eventLastShownDate);
+        setEventPending(values.eventPending);
+        setWeakPrevCount(values.weakPrevCount);
+    };
+
+    const [statusMessage, setStatusMessage] = useState<{ text: string; tone: "ok" | "warn" | "error" } | null>(null);
+
+    const setStatus = (text: string, tone: "ok" | "warn" | "error" = "ok") => {
+        setStatusMessage({ text, tone });
+        window.setTimeout(() => setStatusMessage(null), 2000);
+    };
+
+    const normalizeDateString = (value: string): string | null => {
+        const trimmed = value.trim();
+        if (!trimmed) return "";
+        const parsed = new Date(trimmed);
+        if (Number.isNaN(parsed.getTime())) return null;
+        return parsed.toISOString().split("T")[0];
+    };
+
+    const applyEventState = () => {
+        const normalizedDate = normalizeDateString(eventLastShownDate);
+        if (normalizedDate === null) {
+            setStatus("lastShownDate が不正です", "error");
+            return;
+        }
+        if (eventLastShown.trim() && !normalizedDate) {
+            setStatus("lastShownEvent の保存には日付が必要です", "warn");
+            return;
+        }
+        if (eventLastShown.trim() && normalizedDate) {
+            storage.event.setShown(eventLastShown.trim(), normalizedDate);
+        }
+        if (!eventLastShown.trim() && normalizedDate) {
+            storage.event.setShown("", normalizedDate);
+        }
+        storage.event.setPending(eventPending);
+        reloadLocalValues();
+        setEventLastShownDate(normalizedDate || "");
+        setStatus("イベント値を保存しました");
+    };
+
+    const clearEventState = () => {
+        storage.remove(storage.keys.EVENT_LAST_SHOWN);
+        storage.remove(storage.keys.EVENT_SHOWN_DATE);
+        storage.event.clearPending();
+        reloadLocalValues();
+        setStatus("イベント値をクリアしました");
+    };
+
+    const applyWeakPoints = () => {
+        if (weakPrevCount === undefined || Number.isNaN(weakPrevCount)) {
+            setStatus("prevWeakCount が不正です", "error");
+            return;
+        }
+        storage.weakPoints.setPrevCount(Math.max(0, Math.min(9999, Math.floor(weakPrevCount))));
+        reloadLocalValues();
+        setStatus("weakPoints を保存しました");
+    };
 
     return (
         <div className="p-4 space-y-4">
@@ -120,8 +212,123 @@ export const DevConstantsTab: React.FC = () => {
                 <code>utils/storage.ts</code>
             </p>
             <div className="bg-white rounded-lg p-3 shadow-sm">
-                <ConstantRow label="デバッグモード" code="sansu_debug_mode" value={debugMode ? 'true' : 'false'} />
+                <div className="flex items-center justify-between py-1.5 border-b border-slate-100">
+                    <div>
+                        <span className="text-sm text-slate-700">デバッグモード</span>
+                        <code className="ml-2 text-xs text-slate-400 bg-slate-100 px-1 rounded">sansu_debug_mode</code>
+                    </div>
+                    <button
+                        onClick={() => {
+                            const next = !debugMode;
+                            storage.debug.setEnabled(next);
+                            setDebugMode(next);
+                        }}
+                        className={`px-3 py-1 rounded text-xs font-medium ${debugMode ? "bg-green-100 text-green-700" : "bg-slate-100 text-slate-500"
+                            }`}
+                    >
+                        {debugMode ? "ON" : "OFF"}
+                    </button>
+                </div>
                 <ConstantRow label="効果音" code="sansu_sound_enabled" value={soundEnabled ? 'true' : 'false'} />
+
+                <div className="mt-3 border-t border-slate-100 pt-3 space-y-2">
+                    <div className="text-xs font-medium text-slate-600">イベント表示</div>
+                    <div className="flex items-center justify-between">
+                        <label className="text-sm text-slate-700">lastShownEvent</label>
+                        <select
+                            value={eventLastShown}
+                            onChange={e => setEventLastShown(e.target.value)}
+                            className="text-sm border border-slate-200 rounded px-2 py-1"
+                        >
+                            <option value="">(未設定)</option>
+                            {eventTypes.map(t => (
+                                <option key={t} value={t}>{t}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="flex items-center justify-between">
+                        <label className="text-sm text-slate-700">lastShownDate</label>
+                        <input
+                            type="text"
+                            value={eventLastShownDate}
+                            onChange={e => setEventLastShownDate(e.target.value)}
+                            onBlur={e => {
+                                const normalized = normalizeDateString(e.target.value);
+                                if (normalized === null) {
+                                    setStatus("日付フォーマットが不正です", "warn");
+                                } else {
+                                    setEventLastShownDate(normalized);
+                                }
+                            }}
+                            placeholder="YYYY-MM-DD"
+                            className="w-32 text-sm border border-slate-200 rounded px-2 py-1 text-right"
+                        />
+                    </div>
+                    <div className="flex items-center justify-between">
+                        <label className="text-sm text-slate-700">pending</label>
+                        <button
+                            onClick={() => setEventPending(prev => !prev)}
+                            className={`px-3 py-1 rounded text-xs font-medium ${eventPending ? "bg-green-100 text-green-700" : "bg-slate-100 text-slate-500"
+                                }`}
+                        >
+                            {eventPending ? "ON" : "OFF"}
+                        </button>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={applyEventState}
+                            className="px-3 py-1 rounded text-xs font-medium bg-violet-600 text-white hover:bg-violet-700"
+                        >
+                            保存
+                        </button>
+                        <button
+                            onClick={clearEventState}
+                            className="px-3 py-1 rounded text-xs font-medium bg-slate-100 text-slate-500 hover:bg-slate-200"
+                        >
+                            クリア
+                        </button>
+                    </div>
+                </div>
+
+                <div className="mt-3 border-t border-slate-100 pt-3 space-y-2">
+                    <div className="text-xs font-medium text-slate-600">苦手ポイント</div>
+                    <div className="flex items-center justify-between">
+                        <label className="text-sm text-slate-700">prevWeakCount</label>
+                        <input
+                            type="number"
+                            value={weakPrevCount ?? ""}
+                            onChange={e => setWeakPrevCount(e.target.value === "" ? undefined : Number(e.target.value))}
+                            className="w-24 text-sm border border-slate-200 rounded px-2 py-1 text-right"
+                        />
+                    </div>
+                    <button
+                        onClick={applyWeakPoints}
+                        className="px-3 py-1 rounded text-xs font-medium bg-violet-600 text-white hover:bg-violet-700"
+                    >
+                        保存
+                    </button>
+                </div>
+
+                <div className="mt-3 border-t border-slate-100 pt-3">
+                    <button
+                        onClick={reloadLocalValues}
+                        className="px-3 py-1 rounded text-xs font-medium bg-slate-100 text-slate-500 hover:bg-slate-200"
+                    >
+                        再読み込み
+                    </button>
+                </div>
+                {statusMessage && (
+                    <div
+                        className={`mt-3 text-xs rounded px-2 py-1 ${statusMessage.tone === "ok"
+                            ? "bg-emerald-50 text-emerald-700"
+                            : statusMessage.tone === "warn"
+                                ? "bg-amber-50 text-amber-700"
+                                : "bg-red-50 text-red-700"
+                            }`}
+                    >
+                        {statusMessage.text}
+                    </div>
+                )}
             </div>
         </div>
     );

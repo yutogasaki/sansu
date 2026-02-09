@@ -61,6 +61,32 @@ const FieldRow: React.FC<FieldRowProps> = ({
 export const DevProgressTab: React.FC<DevProgressTabProps> = ({ profile, onUpdate, onUpdatePeriodicTest }) => {
     const mathTestState = profile.periodicTestState?.math;
     const vocabTestState = profile.periodicTestState?.vocab;
+    const pendingPaperTests = profile.pendingPaperTests || [];
+    const [statusMessage, setStatusMessage] = React.useState<string | null>(null);
+
+    const toLocalInputValue = (iso?: string) => {
+        if (!iso) return "";
+        const date = new Date(iso);
+        if (Number.isNaN(date.getTime())) return "";
+        const pad = (n: number) => String(n).padStart(2, "0");
+        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    };
+
+    const fromLocalInputValue = (value: string) => {
+        if (!value) return "";
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "";
+        return date.toISOString();
+    };
+
+    const setStatus = (text: string) => {
+        setStatusMessage(text);
+        window.setTimeout(() => setStatusMessage(null), 2000);
+    };
+
+    const updatePendingPaperTests = (next: typeof pendingPaperTests) => {
+        onUpdate("pendingPaperTests", next.length > 0 ? next : undefined);
+    };
 
     return (
         <div className="p-4 space-y-4">
@@ -170,6 +196,109 @@ export const DevProgressTab: React.FC<DevProgressTabProps> = ({ profile, onUpdat
                     code="periodicTestState.vocab.reason"
                     value={vocabTestState?.reason}
                 />
+            </div>
+
+            <h3 className="font-bold text-slate-700">紙テスト保留</h3>
+            <div className="bg-white rounded-lg p-3 shadow-sm space-y-3">
+                {statusMessage && (
+                    <div className="text-xs bg-emerald-50 text-emerald-700 rounded px-2 py-1">
+                        {statusMessage}
+                    </div>
+                )}
+                {pendingPaperTests.length === 0 && (
+                    <div className="text-sm text-slate-400">保留はありません</div>
+                )}
+                {pendingPaperTests.map((item, index) => (
+                    <div key={item.id} className="border border-slate-100 rounded-lg p-2 space-y-2">
+                        <div className="flex items-center justify-between">
+                            <span className="text-xs text-slate-400 font-mono">{item.id}</span>
+                            <button
+                                onClick={() => {
+                                    updatePendingPaperTests(pendingPaperTests.filter((_, i) => i !== index));
+                                    setStatus("紙テストを削除しました");
+                                }}
+                                className="text-xs text-red-500 hover:text-red-600"
+                            >
+                                削除
+                            </button>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <label className="text-sm text-slate-700">科目</label>
+                            <select
+                                value={item.subject}
+                                onChange={e => {
+                                    const next = [...pendingPaperTests];
+                                    next[index] = { ...item, subject: e.target.value as "math" | "vocab" };
+                                    updatePendingPaperTests(next);
+                                }}
+                                className="text-sm border border-slate-200 rounded px-2 py-1"
+                            >
+                                <option value="math">math</option>
+                                <option value="vocab">vocab</option>
+                            </select>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <label className="text-sm text-slate-700">レベル</label>
+                            <input
+                                type="number"
+                                value={item.level}
+                                onChange={e => {
+                                    const next = [...pendingPaperTests];
+                                    next[index] = { ...item, level: Math.max(1, Math.min(20, Number(e.target.value))) };
+                                    updatePendingPaperTests(next);
+                                }}
+                                className="w-20 text-sm border border-slate-200 rounded px-2 py-1 text-right"
+                            />
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <label className="text-sm text-slate-700">作成日時</label>
+                            <input
+                                type="datetime-local"
+                                value={toLocalInputValue(item.createdAt)}
+                                onChange={e => {
+                                    const iso = fromLocalInputValue(e.target.value);
+                                    if (!iso) {
+                                        setStatus("日時が不正です");
+                                        return;
+                                    }
+                                    const next = [...pendingPaperTests];
+                                    next[index] = { ...item, createdAt: iso };
+                                    updatePendingPaperTests(next);
+                                }}
+                                className="text-sm border border-slate-200 rounded px-2 py-1"
+                            />
+                        </div>
+                    </div>
+                ))}
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={() => {
+                            const next = [
+                                ...pendingPaperTests,
+                                {
+                                    id: crypto.randomUUID(),
+                                    subject: "math" as const,
+                                    level: Math.max(1, Math.min(20, profile.mathMainLevel || 1)),
+                                    createdAt: new Date().toISOString(),
+                                },
+                            ];
+                            updatePendingPaperTests(next);
+                            setStatus("紙テストを追加しました");
+                        }}
+                        className="px-3 py-1 rounded text-xs font-medium bg-violet-600 text-white hover:bg-violet-700"
+                    >
+                        追加
+                    </button>
+                    <button
+                        onClick={() => {
+                            updatePendingPaperTests([]);
+                            setStatus("紙テストをすべてクリアしました");
+                        }}
+                        className="px-3 py-1 rounded text-xs font-medium bg-slate-100 text-slate-500 hover:bg-slate-200"
+                    >
+                        すべてクリア
+                    </button>
+                </div>
             </div>
         </div>
     );

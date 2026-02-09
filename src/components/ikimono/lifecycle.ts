@@ -1,10 +1,10 @@
 import { IkimonoStage, IkimonoState } from './types';
 
 // ライフサイクル全体の日数（将来的に変更可能）
-const LIFECYCLE_DAYS = 30;
+export const LIFECYCLE_DAYS = 30;
 
 // 各段階の終了日（この日を含まない）
-const STAGE_BOUNDARIES: { stage: IkimonoStage; endDay: number }[] = [
+export const STAGE_BOUNDARIES: { stage: IkimonoStage; endDay: number }[] = [
     { stage: 'egg', endDay: 3 },
     { stage: 'hatching', endDay: 7 },
     { stage: 'small', endDay: 14 },
