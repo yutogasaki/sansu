@@ -7,7 +7,7 @@ export default {
     theme: {
         extend: {
             colors: {
-                primary: "#483D8B", // Much Darker (DarkSlateBlue) for distinct visibility
+                primary: "#0f766e",
                 background: "#F8F9FB",
                 surface: "#FFFFFF",
                 text: {
