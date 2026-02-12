@@ -108,7 +108,7 @@ const drawMathExpression = (
     fontSize: number
 ): void => {
     if (!isFractionProblem(categoryId)) {
-        let displayText = sanitizeForPdf(text).replace(/\//g, '÷').replace(/\*/g, '×');
+        const displayText = sanitizeForPdf(text).replace(/\//g, '÷').replace(/\*/g, '×');
         page.drawText(displayText, { x: startX, y, size: fontSize, font, color: rgb(0, 0, 0) });
         return;
     }
@@ -134,17 +134,32 @@ const downloadPdf = async (pdfDoc: PDFDocument, filename: string) => {
     const pdfBytes = await pdfDoc.save();
     const blob = new Blob([pdfBytes as BlobPart], { type: 'application/pdf' });
     try {
+        type SaveFilePickerWindow = Window & {
+            showSaveFilePicker?: (options: {
+                suggestedName: string;
+                types: Array<{ description: string; accept: Record<string, string[]> }>;
+            }) => Promise<{
+                createWritable: () => Promise<{
+                    write: (data: Blob) => Promise<void>;
+                    close: () => Promise<void>;
+                }>;
+            }>;
+        };
+        const pickerWindow = window as SaveFilePickerWindow;
         if ('showSaveFilePicker' in window) {
-            const handle = await (window as any).showSaveFilePicker({
+            const handle = await pickerWindow.showSaveFilePicker?.({
                 suggestedName: filename,
                 types: [{ description: 'PDF Document', accept: { 'application/pdf': ['.pdf'] } }]
             });
+            if (!handle) return;
             const writable = await handle.createWritable();
             await writable.write(blob);
             await writable.close();
             return;
         }
-    } catch { }
+    } catch {
+        // Fallback to blob URL download when file picker is unavailable or denied.
+    }
     const blobUrl = URL.createObjectURL(blob);
     const newWindow = window.open(blobUrl, '_blank');
     if (!newWindow) window.location.href = blobUrl;
@@ -158,12 +173,15 @@ const downloadPdf = async (pdfDoc: PDFDocument, filename: string) => {
 export const generateMathPDF = async (
     problems: Problem[],
     title: string,
-    _userName: string = ""
+    userName: string = ""
 ) => {
     const pdfDoc = await PDFDocument.create();
     pdfDoc.setTitle(`${title}.pdf`);
     pdfDoc.setAuthor('Sansu App');
     pdfDoc.setCreator('Sansu App');
+    if (userName) {
+        pdfDoc.setSubject(`User: ${userName}`);
+    }
     pdfDoc.registerFontkit(fontkit);
 
     let customFont;
@@ -255,7 +273,7 @@ const drawMathPage = (
 
         // Answer (Red)
         if (isAnswerKey) {
-            let answerText = Array.isArray(prob.correctAnswer) ? `${prob.correctAnswer[0]}/${prob.correctAnswer[1]}` : prob.correctAnswer;
+            const answerText = Array.isArray(prob.correctAnswer) ? `${prob.correctAnswer[0]}/${prob.correctAnswer[1]}` : prob.correctAnswer;
             // Draw centered
             const textWidth = font.widthOfTextAtSize(answerText, 14);
             const offset = (answerWidth - textWidth) / 2;
