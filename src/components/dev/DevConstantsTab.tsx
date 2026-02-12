@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { EventType } from "../../domain/sessionManager";
 import { storage } from "../../utils/storage";
+import { toLocaleDateKey } from "../../utils/learningDay";
 
 // SRS Constants
 const SRS_INTERVALS = [0, 1, 3, 7, 14, 30];
@@ -104,7 +105,7 @@ export const DevConstantsTab: React.FC = () => {
         if (!trimmed) return "";
         const parsed = new Date(trimmed);
         if (Number.isNaN(parsed.getTime())) return null;
-        return parsed.toISOString().split("T")[0];
+        return toLocaleDateKey(parsed);
     };
 
     const applyEventState = () => {

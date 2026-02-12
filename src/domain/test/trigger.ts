@@ -1,6 +1,7 @@
-import { UserProfile, SubjectKey, TriggerState } from "../types";
+import { UserProfile, SubjectKey, TriggerState, MemoryState } from "../types";
 import { getSkillsForLevel } from "../math/curriculum";
 import { ENGLISH_WORDS } from "../english/words";
+import { db } from "../../db";
 
 // Constants
 const COOL_DOWN_DAYS = 7;
@@ -22,10 +23,36 @@ const VOCAB_STRUGGLE_ACCURACY = 0.65;
 
 const MILLIS_PER_DAY = 24 * 60 * 60 * 1000;
 
-export const checkPeriodTestTrigger = (
+/**
+ * DBテーブルから対象itemIdのMemoryStateをバッチ取得
+ */
+const getMemoryStatesFromDB = async (
+    profileId: string,
+    itemIds: string[],
+    subject: SubjectKey
+): Promise<Map<string, MemoryState>> => {
+    const table = subject === 'math' ? db.memoryMath : db.memoryVocab;
+    const result = new Map<string, MemoryState>();
+
+    // バッチ取得（1クエリ）
+    const items = await table
+        .filter((item: any) => item.profileId === profileId)
+        .toArray();
+
+    const idSet = new Set(itemIds);
+    for (const item of items) {
+        if (idSet.has(item.id)) {
+            result.set(item.id, item);
+        }
+    }
+
+    return result;
+};
+
+export const checkPeriodTestTrigger = async (
     profile: UserProfile,
     subject: SubjectKey
-): { isTriggered: boolean; reason: TriggerState['reason'] } => {
+): Promise<{ isTriggered: boolean; reason: TriggerState['reason'] }> => {
 
     // 1. Cool-down Check
     const state = profile.periodicTestState?.[subject];
@@ -49,17 +76,17 @@ export const checkPeriodTestTrigger = (
     }
 };
 
-const checkMathTrigger = (profile: UserProfile, level: number): { isTriggered: boolean; reason: TriggerState['reason'] } => {
+const checkMathTrigger = async (profile: UserProfile, level: number): Promise<{ isTriggered: boolean; reason: TriggerState['reason'] }> => {
     const skills = getSkillsForLevel(level);
     if (skills.length === 0) return { isTriggered: false, reason: null };
+
+    // DBから対象スキルのMemoryStateをバッチ取得
+    const memoryMap = await getMemoryStatesFromDB(profile.id, skills, 'math');
 
     // A. Pre-LevelUp (Completion)
     let masteredCount = 0;
     skills.forEach(skillId => {
-        const m = profile.mathSkills[skillId];
-        // Strength >= 4 is considered "mastered" roughly, or simply calculate based on correctness
-        // Strict definition of completion: usually all skills passed at least once or SRS level high
-        // Using SRS strength >= 4 as "Mastered" proxy for completion rate
+        const m = memoryMap.get(skillId);
         if (m && m.strength >= 4) masteredCount++;
     });
     const completionRate = masteredCount / skills.length;
@@ -73,15 +100,9 @@ const checkMathTrigger = (profile: UserProfile, level: number): { isTriggered: b
     const startDate = levelState?.updatedAt ? new Date(levelState.updatedAt).getTime() : Date.now();
     const daysInLevel = (Date.now() - startDate) / MILLIS_PER_DAY;
 
-    // Count strictly for this level is hard to track without level-specific log, 
-    // but we can estimate or use totalAnswers if we assume mostly working on main level.
-    // Spec says "Accumulated learning volume in this level range".
-    // We'll filter recent attempts or use a stored counter if available.
-    // Since we don't have a per-level counter in UserProfile history easily, 
-    // we will sum up attempts for skills in this level.
     let totalCountInLevel = 0;
     skills.forEach(skillId => {
-        const m = profile.mathSkills[skillId];
+        const m = memoryMap.get(skillId);
         if (m) totalCountInLevel += m.totalAnswers;
     });
 
@@ -90,7 +111,6 @@ const checkMathTrigger = (profile: UserProfile, level: number): { isTriggered: b
     }
 
     // C. Struggle (Recent High Volume but Low Accuracy)
-    // Check recent attempts (last 14 days)
     const recent = profile.recentAttempts || [];
     const twoWeeksAgo = Date.now() - (14 * MILLIS_PER_DAY);
     const recentInLevel = recent.filter(a =>
@@ -110,15 +130,18 @@ const checkMathTrigger = (profile: UserProfile, level: number): { isTriggered: b
     return { isTriggered: false, reason: null };
 };
 
-const checkVocabTrigger = (profile: UserProfile, level: number): { isTriggered: boolean; reason: TriggerState['reason'] } => {
+const checkVocabTrigger = async (profile: UserProfile, level: number): Promise<{ isTriggered: boolean; reason: TriggerState['reason'] }> => {
     const vocabCandidates = ENGLISH_WORDS.filter(w => w.level === level);
     if (vocabCandidates.length === 0) return { isTriggered: false, reason: null };
     const wordIds = vocabCandidates.map(w => w.id);
 
+    // DBから対象単語のMemoryStateをバッチ取得
+    const memoryMap = await getMemoryStatesFromDB(profile.id, wordIds, 'vocab');
+
     // A. Pre-LevelUp
     let masteredCount = 0;
     wordIds.forEach(id => {
-        const m = profile.vocabWords[id];
+        const m = memoryMap.get(id);
         if (m && m.strength >= 4) masteredCount++;
     });
     const completionRate = masteredCount / wordIds.length;
@@ -128,15 +151,13 @@ const checkVocabTrigger = (profile: UserProfile, level: number): { isTriggered: 
     }
 
     // B. Slow
-    // Vocab level start date tracking might be less explicit, assume similar to Math or use lastStudyDate approximate
-    // Use Math levels structure if VocabLevels exists (it does in type)
     const levelState = profile.vocabLevels?.find(l => l.level === level);
     const startDate = levelState?.updatedAt ? new Date(levelState.updatedAt).getTime() : Date.now();
     const daysInLevel = (Date.now() - startDate) / MILLIS_PER_DAY;
 
     let totalCountInLevel = 0;
     wordIds.forEach(id => {
-        const m = profile.vocabWords[id];
+        const m = memoryMap.get(id);
         if (m) totalCountInLevel += m.totalAnswers;
     });
 

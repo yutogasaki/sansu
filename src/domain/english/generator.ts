@@ -1,5 +1,6 @@
 import { Problem } from "../types";
 import { ENGLISH_WORDS } from "./words";
+import { shuffleArray } from "../../utils/shuffle";
 
 type VocabGeneratorOptions = {
     cooldownIds?: string[];
@@ -49,7 +50,7 @@ export const generateVocabProblem = (
     }
 
     // Shuffle pool and pick 3
-    const shuffledPool = [...pool].sort(() => 0.5 - Math.random());
+    const shuffledPool = shuffleArray(pool);
     const distractors = shuffledPool.slice(0, 3);
 
     // Helper to get display label based on mode
@@ -61,9 +62,9 @@ export const generateVocabProblem = (
     };
 
     // Create 4 choices
-    const choices = [target, ...distractors]
-        .map(w => ({ label: getLabel(w), value: w.id }))
-        .sort(() => 0.5 - Math.random()); // Shuffle choices
+    const choices = shuffleArray(
+        [target, ...distractors].map(w => ({ label: getLabel(w), value: w.id }))
+    );
 
     return {
         categoryId: target.id,

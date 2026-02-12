@@ -18,13 +18,14 @@ export const updateMemoryState = (
 ): MemoryState => {
     let newStrength = current.strength;
 
-    // 仕様 5.1: 正解→+1, 不正解/スキップ→1にリセット
+    // 正解→+1, 不正解→-2(最低1), スキップ→維持(nextReviewだけ当日)
     if (isSkipped) {
-        newStrength = 1;
+        // スキップ: strengthは維持、nextReviewだけ当日に設定
     } else if (isCorrect) {
         newStrength = Math.min(newStrength + 1, 5);
     } else {
-        newStrength = 1;
+        // 不正解: 段階的に低下（一律リセットではなく2段階ダウン）
+        newStrength = Math.max(1, newStrength - 2);
     }
 
     const now = new Date().toISOString();

@@ -1,6 +1,6 @@
 import { db } from "../../db";
 import { getLearningDayStart, getLearningDayEnd } from "../../utils/learningDay";
-import { getRecentAccuracy } from "../learningRepository";
+import { getBatchRecentAccuracy } from "../learningRepository";
 
 export interface DailyStats {
     count: number;
@@ -61,10 +61,12 @@ export const getWeakPoints = async (profileId: string): Promise<WeakPoint[]> => 
         .filter((item: any) => item.profileId === profileId && item.status === 'active')
         .toArray();
 
+    const mathIds = mathItems.map(item => item.id);
+    const mathAccuracyMap = await getBatchRecentAccuracy(profileId, mathIds, 'math');
+
     for (const item of mathItems) {
-        const accuracy = await getRecentAccuracy(profileId, item.id, 'math');
-        // 苦手判定: 5回以上かつ正答率60%未満
-        if (accuracy !== null && accuracy < 0.6) {
+        const accuracy = mathAccuracyMap.get(item.id);
+        if (accuracy !== null && accuracy !== undefined && accuracy < 0.6) {
             weakPoints.push({
                 id: item.id,
                 subject: 'math',
@@ -81,9 +83,12 @@ export const getWeakPoints = async (profileId: string): Promise<WeakPoint[]> => 
         .filter((item: any) => item.profileId === profileId)
         .toArray();
 
+    const vocabIds = vocabItems.map(item => item.id);
+    const vocabAccuracyMap = await getBatchRecentAccuracy(profileId, vocabIds, 'vocab');
+
     for (const item of vocabItems) {
-        const accuracy = await getRecentAccuracy(profileId, item.id, 'vocab');
-        if (accuracy !== null && accuracy < 0.6) {
+        const accuracy = vocabAccuracyMap.get(item.id);
+        if (accuracy !== null && accuracy !== undefined && accuracy < 0.6) {
             weakPoints.push({
                 id: item.id,
                 subject: 'vocab',

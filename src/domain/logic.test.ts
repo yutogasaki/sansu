@@ -27,10 +27,10 @@ describe('SRS Algorithm', () => {
             expect(next.strength).toBe(2);
         });
 
-        it('should reset strength to 1 on incorrect answer', () => {
+        it('should decrease strength by 2 on incorrect answer (min 1)', () => {
             const initial = mockState('1', 4);
             const next = updateMemoryState(initial, false);
-            expect(next.strength).toBe(1);
+            expect(next.strength).toBe(2); // 4 - 2 = 2
         });
     });
 
@@ -104,7 +104,7 @@ describe('Manual Level Consistency (syncLevelState)', () => {
 });
 
 describe('English Level Progression', () => {
-    it('should promote level if 70% of words attempted', () => {
+    it('should promote level if 70% of words attempted', async () => {
         // Mock profile with level 1 words attempted
         const profile = createInitialProfile("Test", 1, 1, 1, 'vocab');
         profile.vocabMaxUnlocked = 1;
@@ -113,22 +113,23 @@ describe('English Level Progression', () => {
         const level1Words = ENGLISH_WORDS.filter(w => w.level === 1);
         const targetCount = Math.ceil(level1Words.length * 0.75); // 75% > 70%
 
-        // Mark words as attempted
+        // Build memory override (テスト用: DBの代わりにMapを渡す)
+        const memoryOverride: Record<string, MemoryState> = {};
         for (let i = 0; i < targetCount; i++) {
             const word = level1Words[i];
-            profile.vocabWords[word.id] = { ...mockState(word.id, 1), totalAnswers: 1 };
+            memoryOverride[word.id] = { ...mockState(word.id, 1), totalAnswers: 1 };
         }
 
-        const shouldLevelUp = checkEnglishLevelProgression(profile);
+        const shouldLevelUp = await checkEnglishLevelProgression(profile, memoryOverride);
         expect(shouldLevelUp).toBe(true);
     });
 
-    it('should NOT promote level if < 70% of words attempted', () => {
+    it('should NOT promote level if < 70% of words attempted', async () => {
         const profile = createInitialProfile("Test", 1, 1, 1, 'vocab');
         profile.vocabMaxUnlocked = 1;
 
-        // 0 attempted
-        const shouldLevelUp = checkEnglishLevelProgression(profile);
+        // 0 attempted (empty override)
+        const shouldLevelUp = await checkEnglishLevelProgression(profile, {});
         expect(shouldLevelUp).toBe(false);
     });
 });

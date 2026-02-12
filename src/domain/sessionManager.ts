@@ -4,6 +4,7 @@ import { generateVocabProblem } from "./english/generator";
 import { getSkillsForLevel, getAvailableSkills } from "./math/curriculum";
 import { ENGLISH_WORDS } from "./english/words";
 import { isDue } from "./algorithms/srs";
+import { shuffleArray } from "../utils/shuffle";
 
 // Constants from Spec 01 (Supplement B)
 const CONSTANTS = {
@@ -213,13 +214,12 @@ const fillQueue = (
 
             if (available.length === 0) break; // No more candidates
 
-            // Sort: Priority DESC, then Random
-            available.sort((a, b) => {
-                if (a.priority !== b.priority) return b.priority - a.priority;
-                return Math.random() - 0.5;
-            });
+            // Shuffle first, then stable-sort by priority DESC
+            // (Fisher-Yates ensures uniform randomness within same priority)
+            const shuffled = shuffleArray(available);
+            shuffled.sort((a, b) => b.priority - a.priority);
 
-            const best = available[0];
+            const best = shuffled[0];
 
             try {
                 const problemData = generator(best.id);

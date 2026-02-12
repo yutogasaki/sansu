@@ -341,8 +341,13 @@ export type ISODateString = string; // YYYY-MM-DD
 export type ISOTimestamp = string; // Full ISO string
 
 /**
- * Format a date to ISO date string
+ * Format a date to local date string (YYYY-MM-DD).
+ * Note: toISOString() は UTC に変換されるため、
+ * ローカルタイムゾーンで正確な日付キーを得るにはこの関数を使う。
  */
 export const toISODateString = (date: Date): ISODateString => {
-    return date.toISOString().split('T')[0];
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
 };

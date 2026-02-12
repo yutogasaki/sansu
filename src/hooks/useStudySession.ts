@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
 import {
     getMaintenanceMathSkillIds,
@@ -12,6 +12,7 @@ import {
 import { generateMathProblem } from "../domain/math";
 import { generateVocabProblem } from "../domain/english/generator";
 import { Problem, SubjectKey, UserProfile } from "../domain/types";
+import { db } from "../db";
 import { getAvailableSkills } from "../domain/math/curriculum";
 import { checkLevelProgression, checkMathMainPromotion } from "../domain/math/service";
 import { getWordsByLevel } from "../domain/english/words";
@@ -53,8 +54,15 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
     const [profileId, setProfileId] = useState<string | null>(null);
     const [profile, setProfile] = useState<UserProfile | null>(null);
+    const profileRef = useRef<UserProfile | null>(null);
 
     const sessionHistoryRef = useRef<SessionHistoryItem[]>([]);
+
+    // profileRef と state を同時に更新するヘルパー
+    const updateProfile = useCallback((p: UserProfile | null) => {
+        profileRef.current = p;
+        setProfile(p);
+    }, []);
 
     // Profile fetching with error handling
     useEffect(() => {
@@ -64,7 +72,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 console.log("[useStudySession] profile:", p);
                 if (p) {
                     setProfileId(p.id);
-                    setProfile(p);
+                    updateProfile(p);
                 } else {
                     console.log("[useStudySession] no profile found");
                     setLoading(false);
@@ -124,7 +132,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             const problem = safeGenerateProblem(
                 () => subject === 'math'
                     ? generateMathProblem(id)
-                    : generateVocabProblem(id, { cooldownIds: buildCooldownIds([]), kanjiMode: profile?.kanjiMode }),
+                    : generateVocabProblem(id, { cooldownIds: buildCooldownIds([]), kanjiMode: profileRef.current?.kanjiMode }),
                 () => createFallbackProblem(subject, `focus mode: ${id}`),
                 `focus mode: ${id}`
             );
@@ -453,13 +461,19 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     };
 
     const nextBlock = async () => {
-        if (!profileId || !profile) return;
+        if (!profileId) return;
 
         setLoading(true);
         setBlockCount(prev => prev + 1);
 
         try {
-            const q = await generateBlock(profileId, profile);
+            // DBから最新プロファイルを取得（レベルアップ等の反映）
+            const latestProfile = await getActiveProfile();
+            const activeProfile = latestProfile || profileRef.current;
+            if (!activeProfile) { setLoading(false); return; }
+            updateProfile(activeProfile);
+
+            const q = await generateBlock(profileId, activeProfile);
             setQueue(prev => [...prev, ...q]);
         } catch (err) {
             console.error("[useStudySession] error generating next block:", err);
@@ -566,7 +580,12 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 if (p.vocabMaxUnlocked <= p.vocabMainLevel) return p;
                 const levelWords = getWordsByLevel(p.vocabMaxUnlocked);
                 if (levelWords.length === 0) return p;
-                const touched = levelWords.filter(w => p.vocabWords[w.id]?.totalAnswers > 0).length;
+                // DBから対象単語のMemoryStateを取得して判定
+                const wordIdSet = new Set(levelWords.map(w => w.id));
+                const vocabItems = await db.memoryVocab
+                    .filter((item: any) => item.profileId === p.id && wordIdSet.has(item.id))
+                    .toArray();
+                const touched = vocabItems.filter(item => item.totalAnswers > 0).length;
                 const ratio = touched / levelWords.length;
                 if (ratio < 0.7) return p;
                 const nextMain = p.vocabMaxUnlocked;
@@ -598,7 +617,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
             if (updatedProfile !== currentProfile) {
                 await saveProfile(updatedProfile);
-                setProfile(updatedProfile);
+                updateProfile(updatedProfile);
             }
         } catch (err) {
             console.error("[useStudySession] error handling result:", err);
@@ -680,8 +699,8 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         // 2. Handle Normal Session Completion (Trigger Check)
         else if (sessionKind === "normal" || sessionKind === "review") {
             // Run Trigger Check
-            const mathTrigger = checkPeriodTestTrigger(currentProfile, 'math');
-            // const vocabTrigger = checkPeriodTestTrigger(currentProfile, 'vocab'); // Future support
+            const mathTrigger = await checkPeriodTestTrigger(currentProfile, 'math');
+            // const vocabTrigger = await checkPeriodTestTrigger(currentProfile, 'vocab'); // Future support
 
             if (mathTrigger.isTriggered) {
                 console.log("[Trigger] Periodic Test Triggered!", mathTrigger.reason);

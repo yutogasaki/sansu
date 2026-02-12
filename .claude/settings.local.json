@@ -4,7 +4,9 @@
       "Bash(npm run dev:*)",
       "Bash(dir \"C:\\\\Users\\\\yutog\\\\claude\\\\sansu\\\\src\" /s /b)",
       "Bash(npm install:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx vitest run:*)"
     ]
   }
 }

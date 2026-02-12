@@ -80,22 +80,23 @@ export const DevIkimonoTab: React.FC<DevIkimonoTabProps> = ({ profileId }) => {
         loadState();
     };
 
-    const setStage = (stage: IkimonoStage) => {
+
+
+    const applyStageInstantly = (stage: IkimonoStage) => {
         if (!draftState) return;
+        let newBirthDate: string;
         if (stage === "gone") {
-            setDraftState({
-                ...draftState,
-                birthDate: setBirthDateDaysAgo(LIFECYCLE_DAYS + 1),
-            });
-            return;
+            newBirthDate = setBirthDateDaysAgo(LIFECYCLE_DAYS + 1);
+        } else {
+            const range = stageRanges.find(item => item.stage === stage);
+            if (!range) return;
+            const targetDay = range.startDay + (range.endDay - range.startDay) / 2;
+            newBirthDate = setBirthDateDaysAgo(targetDay);
         }
-        const range = stageRanges.find(item => item.stage === stage);
-        if (!range) return;
-        const targetDay = range.startDay + (range.endDay - range.startDay) / 2;
-        setDraftState({
-            ...draftState,
-            birthDate: setBirthDateDaysAgo(targetDay),
-        });
+        const updated = { ...draftState, birthDate: newBirthDate };
+        setDraftState(updated);
+        ikimonoStorage.setState(updated);
+        setStoredState(updated);
     };
 
     const storedMismatch = storedState && storedState.profileId !== profileId;
@@ -170,22 +171,34 @@ export const DevIkimonoTab: React.FC<DevIkimonoTabProps> = ({ profileId }) => {
                     </button>
                 </div>
 
-                <div className="flex flex-wrap gap-2 pt-1">
-                    {stageRanges.map(range => (
+                <div className="space-y-1 pt-1">
+                    <div className="text-xs text-slate-500">ステージ即時変更（クリックで即保存）</div>
+                    <div className="flex flex-wrap gap-2">
+                        {stageRanges.map(range => {
+                            const isCurrent = derived?.stage === range.stage;
+                            return (
+                                <button
+                                    key={range.stage}
+                                    className={`px-2.5 py-1 text-xs rounded font-medium transition-colors ${isCurrent
+                                        ? "bg-indigo-600 text-white ring-2 ring-indigo-300"
+                                        : "bg-indigo-50 text-indigo-600 hover:bg-indigo-100"
+                                        }`}
+                                    onClick={() => applyStageInstantly(range.stage)}
+                                >
+                                    {range.stage}
+                                </button>
+                            );
+                        })}
                         <button
-                            key={range.stage}
-                            className="px-2.5 py-1 text-xs rounded bg-indigo-50 text-indigo-600 hover:bg-indigo-100"
-                            onClick={() => setStage(range.stage)}
+                            className={`px-2.5 py-1 text-xs rounded font-medium transition-colors ${derived?.stage === "gone"
+                                ? "bg-indigo-600 text-white ring-2 ring-indigo-300"
+                                : "bg-indigo-50 text-indigo-600 hover:bg-indigo-100"
+                                }`}
+                            onClick={() => applyStageInstantly("gone")}
                         >
-                            {range.stage}
+                            gone
                         </button>
-                    ))}
-                    <button
-                        className="px-2.5 py-1 text-xs rounded bg-indigo-50 text-indigo-600 hover:bg-indigo-100"
-                        onClick={() => setStage("gone")}
-                    >
-                        gone
-                    </button>
+                    </div>
                 </div>
 
                 <div className="flex items-center justify-between pt-2">

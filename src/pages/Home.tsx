@@ -13,6 +13,7 @@ import { calculateStage } from "../components/ikimono/lifecycle";
 import { IkimonoStage } from "../components/ikimono/types";
 import { Button } from "../components/ui/Button";
 import { UserProfile, PeriodicTestResult } from "../domain/types";
+import { toLocaleDateKey } from "../utils/learningDay";
 
 const PAPER_TEST_REMIND_DAYS = 3;
 
@@ -221,7 +222,7 @@ export const Home: React.FC = () => {
     const [showPaperTestModal, setShowPaperTestModal] = useState(false);
     const [pendingPaperTest, setPendingPaperTest] = useState<{ id: string; subject: "math" | "vocab"; level: number } | null>(null);
 
-    const todayKey = new Date().toISOString().split("T")[0];
+    const todayKey = toLocaleDateKey();
 
     useEffect(() => {
         getActiveProfile().then(p => {

@@ -2,7 +2,7 @@ import { db, AttemptLog } from "../db";
 import { MemoryState, SubjectKey } from "./types";
 import { updateMemoryState, updateSkillStatus, getNextReviewDate } from "./algorithms/srs";
 import { addDays, differenceInCalendarDays, parseISO } from "date-fns";
-import { getLearningDayStart } from "../utils/learningDay";
+import { getLearningDayStart, toLocaleDateKey } from "../utils/learningDay";
 import { getLevelForSkill } from "./math/curriculum";
 import { getWordLevel } from "./english/words";
 import { getProfile, saveProfile } from "./user/repository";
@@ -127,8 +127,8 @@ export const logAttempt = async (
         };
 
         const dayStart = getLearningDayStart();
-        const todayKey = dayStart.toISOString().split("T")[0];
-        const yesterdayKey = addDays(dayStart, -1).toISOString().split("T")[0];
+        const todayKey = toLocaleDateKey(dayStart);
+        const yesterdayKey = toLocaleDateKey(addDays(dayStart, -1));
 
         const isSameDay = profile.lastStudyDate === todayKey;
         const isYesterday = profile.lastStudyDate === yesterdayKey;
@@ -207,38 +207,80 @@ export const getRecentAccuracy = async (
     return correct / logs.length;
 };
 
+/**
+ * 対象itemIdリストの直近正答率をバッチ計算（1回のDBクエリ）
+ * N+1クエリ問題を解消するためのバッチ版
+ */
+export const getBatchRecentAccuracy = async (
+    profileId: string,
+    itemIds: string[],
+    subject: SubjectKey,
+    windowSize: number = 10,
+    minAnswers: number = 5
+): Promise<Map<string, number | null>> => {
+    const result = new Map<string, number | null>();
+    if (itemIds.length === 0) return result;
+
+    // 1回のクエリで対象科目のログをまとめて取得
+    const itemIdSet = new Set(itemIds);
+    const logs = await db.logs
+        .where('[profileId+subject]')
+        .equals([profileId, subject])
+        .filter(log => itemIdSet.has(log.itemId))
+        .reverse()
+        .toArray();
+
+    // itemIdごとにグルーピング（新しい順を維持）
+    const byItem = new Map<string, AttemptLog[]>();
+    for (const log of logs) {
+        const list = byItem.get(log.itemId);
+        if (list) {
+            if (list.length < windowSize) list.push(log);
+        } else {
+            byItem.set(log.itemId, [log]);
+        }
+    }
+
+    // 各itemの正答率を計算
+    for (const id of itemIds) {
+        const itemLogs = byItem.get(id);
+        if (!itemLogs || itemLogs.length < minAnswers) {
+            result.set(id, null);
+        } else {
+            const correct = itemLogs.filter(l => l.result === 'correct').length;
+            result.set(id, correct / itemLogs.length);
+        }
+    }
+
+    return result;
+};
+
 export const getWeakMathSkillIds = async (profileId: string): Promise<string[]> => {
-    const weakIds: string[] = [];
     const mathItems = await db.memoryMath
         .filter((item: any) => item.profileId === profileId && item.status === 'active')
         .toArray();
 
-    for (const item of mathItems) {
-        const accuracy = await getRecentAccuracy(profileId, item.id, 'math');
-        if (accuracy !== null && accuracy < 0.6) {
-            weakIds.push(item.id);
-        }
-    }
+    const itemIds = mathItems.map(item => item.id);
+    const accuracyMap = await getBatchRecentAccuracy(profileId, itemIds, 'math');
 
-    return weakIds;
+    return itemIds.filter(id => {
+        const accuracy = accuracyMap.get(id);
+        return accuracy !== null && accuracy !== undefined && accuracy < 0.6;
+    });
 };
 
 export const getWeakVocabIds = async (profileId: string): Promise<string[]> => {
-    const weakIds: string[] = [];
-    // Vocab items don't strictly have 'status' field like math in current implementation,
-    // or if they do, it's optional. Let's just get all items for the profile.
     const vocabItems = await db.memoryVocab
         .filter((item: any) => item.profileId === profileId)
         .toArray();
 
-    for (const item of vocabItems) {
-        const accuracy = await getRecentAccuracy(profileId, item.id, 'vocab');
-        if (accuracy !== null && accuracy < 0.6) {
-            weakIds.push(item.id);
-        }
-    }
+    const itemIds = vocabItems.map(item => item.id);
+    const accuracyMap = await getBatchRecentAccuracy(profileId, itemIds, 'vocab');
 
-    return weakIds;
+    return itemIds.filter(id => {
+        const accuracy = accuracyMap.get(id);
+        return accuracy !== null && accuracy !== undefined && accuracy < 0.6;
+    });
 };
 
 export const getMaintenanceMathSkillIds = async (profileId: string): Promise<string[]> => {

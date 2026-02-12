@@ -10,7 +10,7 @@ describe("srs", () => {
         expect(differenceInCalendarDays(next, start)).toBe(1);
     });
 
-    it("updates strength correctly", () => {
+    it("correct answer increases strength by 1", () => {
         const base: MemoryState = {
             id: "test",
             strength: 3,
@@ -22,14 +22,90 @@ describe("srs", () => {
             updatedAt: new Date().toISOString()
         };
 
-        const correct = updateMemoryState(base, true, false);
-        expect(correct.strength).toBe(4);
+        const result = updateMemoryState(base, true, false);
+        expect(result.strength).toBe(4);
+    });
 
-        const incorrect = updateMemoryState(base, false, false);
-        expect(incorrect.strength).toBe(1);
+    it("correct answer caps strength at 5", () => {
+        const base: MemoryState = {
+            id: "test",
+            strength: 5,
+            nextReview: new Date().toISOString(),
+            totalAnswers: 50,
+            correctAnswers: 45,
+            incorrectAnswers: 5,
+            skippedAnswers: 0,
+            updatedAt: new Date().toISOString()
+        };
 
-        const skipped = updateMemoryState(base, false, true);
-        expect(skipped.strength).toBe(1);
-        expect(skipped.skippedAnswers).toBe(1);
+        const result = updateMemoryState(base, true, false);
+        expect(result.strength).toBe(5);
+    });
+
+    it("incorrect answer decreases strength by 2 (gradual decline)", () => {
+        const base: MemoryState = {
+            id: "test",
+            strength: 5,
+            nextReview: new Date().toISOString(),
+            totalAnswers: 50,
+            correctAnswers: 45,
+            incorrectAnswers: 5,
+            skippedAnswers: 0,
+            updatedAt: new Date().toISOString()
+        };
+
+        const result = updateMemoryState(base, false, false);
+        expect(result.strength).toBe(3); // 5 - 2 = 3
+    });
+
+    it("incorrect answer floors strength at 1", () => {
+        const base: MemoryState = {
+            id: "test",
+            strength: 2,
+            nextReview: new Date().toISOString(),
+            totalAnswers: 10,
+            correctAnswers: 7,
+            incorrectAnswers: 3,
+            skippedAnswers: 0,
+            updatedAt: new Date().toISOString()
+        };
+
+        const result = updateMemoryState(base, false, false);
+        expect(result.strength).toBe(1); // max(1, 2-2) = 1
+    });
+
+    it("incorrect from strength 1 stays at 1", () => {
+        const base: MemoryState = {
+            id: "test",
+            strength: 1,
+            nextReview: new Date().toISOString(),
+            totalAnswers: 5,
+            correctAnswers: 2,
+            incorrectAnswers: 3,
+            skippedAnswers: 0,
+            updatedAt: new Date().toISOString()
+        };
+
+        const result = updateMemoryState(base, false, false);
+        expect(result.strength).toBe(1);
+    });
+
+    it("skip preserves strength but sets nextReview to today", () => {
+        const base: MemoryState = {
+            id: "test",
+            strength: 4,
+            nextReview: new Date().toISOString(),
+            totalAnswers: 20,
+            correctAnswers: 16,
+            incorrectAnswers: 4,
+            skippedAnswers: 0,
+            updatedAt: new Date().toISOString()
+        };
+
+        const result = updateMemoryState(base, false, true);
+        expect(result.strength).toBe(4); // strength preserved
+        expect(result.skippedAnswers).toBe(1);
+        // nextReview should be today (learning day start)
+        expect(result.nextReview).toBe(getLearningDayStart().toISOString());
     });
 });
