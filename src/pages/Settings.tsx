@@ -11,6 +11,7 @@ import { Problem } from "../domain/types";
 import { ParentGateModal } from "../components/gate/ParentGateModal";
 import { ensurePeriodicTestSet } from "../domain/test/testSet";
 import { getWord } from "../domain/english/words";
+import storage from "../utils/storage";
 
 
 
@@ -109,7 +110,7 @@ export const Settings: React.FC = () => {
                 setProfile(list[0]);
                 navigate("/");
             } else {
-                localStorage.clear();
+                storage.clearAll();
                 navigate("/onboarding");
             }
         }
@@ -148,7 +149,7 @@ export const Settings: React.FC = () => {
     const handleReset = async () => {
         if (confirm("ほんとうに 全部消しますか？")) {
             if (profile) await deleteProfile(profile.id);
-            localStorage.clear();
+            storage.clearAll();
             navigate("/onboarding");
         }
     };
@@ -560,7 +561,7 @@ export const Settings: React.FC = () => {
                     <Button
                         size="sm"
                         variant="secondary"
-                        onClick={() => withParentGuard(() => navigate('/parents'))}
+                        onClick={() => withParentGuard(() => navigate('/parents', { state: { parentGatePassed: true } }))}
                     >
                         {t("ひらく", "開く")}
                     </Button>

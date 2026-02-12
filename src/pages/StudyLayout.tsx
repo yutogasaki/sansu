@@ -87,9 +87,10 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     onToggleTTS,
 }) => {
     const t = (easy: string, standard: string) => (isEasyText ? easy : standard);
+    const vocabQuestionText = currentProblem?.subject === 'vocab' ? currentProblem.questionText : undefined;
     // Auto-TTS Effect
     React.useEffect(() => {
-        if (englishAutoRead && currentProblem?.subject === 'vocab' && currentProblem.questionText) {
+        if (englishAutoRead && vocabQuestionText) {
             // Slight delay to allow transition? 
             // Or immediate. Immediate is fine as long as user interaction logic is safe.
             // Check if not already speaking? 
@@ -97,10 +98,10 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
 
             // Should play ONLY when problem first appears (feedback === 'none').
             if (feedback === 'none') {
-                speakEnglish(currentProblem.questionText);
+                speakEnglish(vocabQuestionText);
             }
         }
-    }, [currentProblem?.id, englishAutoRead, feedback]);
+    }, [currentProblem?.id, englishAutoRead, feedback, vocabQuestionText]);
 
     // 正解表示用のヘルパー
     const renderCorrectAnswer = () => {

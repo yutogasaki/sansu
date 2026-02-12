@@ -18,7 +18,7 @@ import { getReviewItems } from "../domain/learningRepository";
 import { MATH_SKILL_LABELS } from "../domain/math/labels";
 import { MATH_CURRICULUM } from "../domain/math/curriculum";
 import { getWord } from "../domain/english/words";
-import { getLearningDayStart } from "../utils/learningDay";
+import { getLearningDayEnd, getLearningDayStart } from "../utils/learningDay";
 import { db, AttemptLog } from "../db";
 import { UserProfile } from "../domain/types";
 
@@ -222,16 +222,20 @@ export const Stats: React.FC = () => {
                 return;
             }
             setProfile(active);
+            const todayStart = getLearningDayStart();
+            const twoWeeksAgoStartIso = addDays(todayStart, -13).toISOString();
+            const todayEndIso = getLearningDayEnd(todayStart).toISOString();
 
-            const [daily, total, weak, mathReviews, vocabReviews, logs, mathMemory, vocabMemory] = await Promise.all([
+            const [daily, total, weak, mathReviews, vocabReviews, logsForCalendar, recentLogs, mathMemory, vocabMemory] = await Promise.all([
                 getTodayStats(active.id),
                 getTotalStats(active.id),
                 getWeakPoints(active.id),
                 getReviewItems(active.id, "math"),
                 getReviewItems(active.id, "vocab"),
-                db.logs.where("profileId").equals(active.id).toArray(),
-                db.memoryMath.filter(item => (item as { profileId?: string }).profileId === active.id).toArray(),
-                db.memoryVocab.filter(item => (item as { profileId?: string }).profileId === active.id).toArray(),
+                db.logs.where("[profileId+timestamp]").between([active.id, twoWeeksAgoStartIso], [active.id, todayEndIso]).toArray(),
+                db.logs.where("profileId").equals(active.id).reverse().limit(100).toArray(),
+                db.memoryMath.where("profileId").equals(active.id).toArray(),
+                db.memoryVocab.where("profileId").equals(active.id).toArray(),
             ]);
 
             const allReviews = [
@@ -252,14 +256,13 @@ export const Stats: React.FC = () => {
                 .slice(0, 3);
 
             const logsByDay = new Map<string, AttemptLog[]>();
-            for (const log of logs) {
+            for (const log of logsForCalendar) {
                 const key = toLearningDateKey(new Date(log.timestamp));
                 const current = logsByDay.get(key) || [];
                 current.push(log);
                 logsByDay.set(key, current);
             }
 
-            const todayStart = getLearningDayStart();
             const currentWeek: WeeklyDay[] = [];
             for (let offset = 6; offset >= 0; offset--) {
                 const day = addDays(todayStart, -offset);
@@ -318,7 +321,7 @@ export const Stats: React.FC = () => {
             setWeeklyDays(currentWeek);
             setTodayMinutes(currentWeek[currentWeek.length - 1]?.minutes || 0);
             setGrowthMessage(buildGrowthMessage(thisWeekCount, previousWeekCount));
-            setWeakPatternMessage(buildWeakPatternMessage(logs));
+            setWeakPatternMessage(buildWeakPatternMessage(recentLogs));
             setStableSkills(stableCombined);
             setEventCheckPending(
                 (active.periodicTestState?.math?.isPending ?? false) ||

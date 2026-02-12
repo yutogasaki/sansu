@@ -46,6 +46,13 @@ type StudySessionOptions = {
     sessionKind?: SessionKind;
 };
 
+const IS_DEV = import.meta.env.DEV;
+const debugLog = (...args: unknown[]) => {
+    if (IS_DEV) {
+        console.log(...args);
+    }
+};
+
 export const useStudySession = (options: StudySessionOptions = {}) => {
     const [queue, setQueue] = useState<Problem[]>([]);
     const [blockCount, setBlockCount] = useState(0);
@@ -54,6 +61,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     const [profileId, setProfileId] = useState<string | null>(null);
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const profileRef = useRef<UserProfile | null>(null);
+    const hasInitializedRef = useRef(false);
 
     const sessionHistoryRef = useRef<SessionHistoryItem[]>([]);
 
@@ -65,15 +73,15 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
     // Profile fetching with error handling
     useEffect(() => {
-        console.log("[useStudySession] fetching profile...");
+        debugLog("[useStudySession] fetching profile...");
         getActiveProfile()
             .then(p => {
-                console.log("[useStudySession] profile:", p);
+                debugLog("[useStudySession] profile:", p);
                 if (p) {
                     setProfileId(p.id);
                     updateProfile(p);
                 } else {
-                    console.log("[useStudySession] no profile found");
+                    debugLog("[useStudySession] no profile found");
                     setLoading(false);
                 }
             })
@@ -81,7 +89,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 console.error("[useStudySession] error fetching profile:", err);
                 setLoading(false);
             });
-    }, []);
+    }, [updateProfile]);
 
     // ============================================================
     // Developer Mode Block Generation
@@ -430,16 +438,16 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     // Session Management
     // ============================================================
     const initSession = async () => {
-        console.log("[useStudySession] initSession called, profileId:", profileId);
+        debugLog("[useStudySession] initSession called, profileId:", profileId);
         if (!profileId || !profile) return;
 
         setLoading(true);
         setBlockCount(1);
 
         try {
-            console.log("[useStudySession] generating block...");
+            debugLog("[useStudySession] generating block...");
             const q = await generateBlock(profileId, profile);
-            console.log("[useStudySession] generated queue:", q);
+            debugLog("[useStudySession] generated queue:", q);
             setQueue(q);
         } catch (err) {
             console.error("[useStudySession] error generating block:", err);
@@ -613,9 +621,16 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
     // Auto init when profile loads
     useEffect(() => {
-        if (profileId && queue.length === 0) {
-            initSession();
+        hasInitializedRef.current = false;
+    }, [profileId]);
+
+    useEffect(() => {
+        if (profileId && !hasInitializedRef.current) {
+            hasInitializedRef.current = true;
+            void initSession();
         }
+        // profileId変化時のみ初期化する（initSession依存での再実行を防ぐ）
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [profileId]);
 
 
@@ -690,7 +705,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             // const vocabTrigger = await checkPeriodTestTrigger(currentProfile, 'vocab'); // Future support
 
             if (mathTrigger.isTriggered) {
-                console.log("[Trigger] Periodic Test Triggered!", mathTrigger.reason);
+                debugLog("[Trigger] Periodic Test Triggered!", mathTrigger.reason);
                 const newState = { ...(currentProfile.periodicTestState || { math: { isPending: false, lastTriggeredAt: null, reason: null }, vocab: { isPending: false, lastTriggeredAt: null, reason: null } }) };
 
                 // Only update if not already pending

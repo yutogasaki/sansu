@@ -8,6 +8,8 @@ import { logAttempt } from "../domain/learningRepository";
 import { StudyLayout } from "./StudyLayout";
 import { speakEnglish } from "../utils/tts";
 
+const IS_DEV = import.meta.env.DEV;
+
 export const Study: React.FC = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -108,7 +110,7 @@ export const Study: React.FC = () => {
 
         // 1. Pre-fetch when running low (less than 3 items remaining)
         if (!loading && queue.length - currentIndex < 3) {
-            console.log("Pre-fetching next block...");
+            if (IS_DEV) console.log("Pre-fetching next block...");
             nextBlock();
         }
 
@@ -142,7 +144,7 @@ export const Study: React.FC = () => {
         const isFixedSession = sessionKindParam === "periodic-test" || sessionKindParam === "weak-review" || sessionKindParam === "check-event";
 
         if (isFixedSession && currentIndex >= blockSize && blockSize > 0 && !loading) {
-            console.log("Fixed Session Complete!", { correctCount, blockSize });
+            if (IS_DEV) console.log("Fixed Session Complete!", { correctCount, blockSize });
             const durationSeconds = Math.round((Date.now() - startTimeRef.current) / 1000);
 
             // Call completion handler
@@ -302,7 +304,7 @@ export const Study: React.FC = () => {
         await logAttempt(profileId, currentProblem.subject, currentProblem.categoryId, 'incorrect', true, currentProblem.isReview);
 
         // Auto-advance removed. User must click Next.
-    }, [feedback, currentProblem, profileId, nextProblem]);
+    }, [feedback, currentProblem, profileId]);
 
     // 左スワイプでスキップ
     const swipeHandlers = useSwipeable({

@@ -61,16 +61,14 @@ const getMemoryStatesFromDB = async (
 ): Promise<Map<string, MemoryState>> => {
     const table = subject === 'math' ? db.memoryMath : db.memoryVocab;
     const result = new Map<string, MemoryState>();
+    if (itemIds.length === 0) return result;
 
-    // バッチ取得（1クエリ）
-    const items = await table
-        .where('profileId')
-        .equals(profileId)
-        .toArray();
+    // 複合主キー [profileId+id] を使って対象のみを一括取得
+    const keys: [string, string][] = itemIds.map(id => [profileId, id]);
+    const items = await table.bulkGet(keys);
 
-    const idSet = new Set(itemIds);
     for (const item of items) {
-        if (idSet.has(item.id)) {
+        if (item) {
             result.set(item.id, item);
         }
     }

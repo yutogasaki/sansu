@@ -165,9 +165,8 @@ export const getReviewItems = async (profileId: string, subject: SubjectKey) => 
     const nowIso = new Date().toISOString();
 
     const items = await table
-        .where('profileId')
-        .equals(profileId)
-        .filter(item => item.nextReview <= nowIso)
+        .where('[profileId+nextReview]')
+        .between([profileId, ''], [profileId, nowIso])
         .toArray();
 
     const capOverdue = (days: number) => Math.max(0, Math.min(days, 7));

@@ -39,7 +39,7 @@ export const DevMode: React.FC = () => {
         } else if (activeTab === "vocab" && profile) {
             getVocabMemoryStates().then(setVocabMemory);
         }
-    }, [activeTab, profile]);
+    }, [activeTab, profile, getMathMemoryStates, getVocabMemoryStates]);
 
     const refreshMathMemory = () => {
         getMathMemoryStates().then(setMathMemory);

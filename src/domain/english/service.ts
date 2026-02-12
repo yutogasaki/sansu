@@ -10,15 +10,16 @@ const getVocabMemoryFromDB = async (
     wordIds: Set<string>
 ): Promise<Map<string, MemoryState>> => {
     const result = new Map<string, MemoryState>();
+    const ids = Array.from(wordIds);
+    if (ids.length === 0) return result;
 
-    const items = await db.memoryVocab
-        .where('profileId')
-        .equals(profileId)
-        .filter(item => wordIds.has(item.id))
-        .toArray();
+    const keys: [string, string][] = ids.map(id => [profileId, id]);
+    const items = await db.memoryVocab.bulkGet(keys);
 
     for (const item of items) {
-        result.set(item.id, item);
+        if (item) {
+            result.set(item.id, item);
+        }
     }
 
     return result;

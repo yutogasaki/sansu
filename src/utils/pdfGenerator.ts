@@ -20,6 +20,7 @@ interface TextPart {
 }
 
 type ExpressionPart = FractionPart | TextPart;
+const LOCAL_JP_FONT_URL = '/fonts/NotoSansJP.woff2';
 
 // ============================================================
 // Fraction Parsing
@@ -166,6 +167,18 @@ const downloadPdf = async (pdfDoc: PDFDocument, filename: string) => {
     setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
 };
 
+const loadPdfFont = async (pdfDoc: PDFDocument): Promise<PDFFont> => {
+    try {
+        const fontResponse = await fetch(LOCAL_JP_FONT_URL);
+        if (!fontResponse.ok) throw new Error(`Font fetch failed: ${fontResponse.status}`);
+        const fontBytes = await fontResponse.arrayBuffer();
+        return await pdfDoc.embedFont(fontBytes);
+    } catch (e) {
+        console.error("Font load error:", e);
+        return await pdfDoc.embedFont(StandardFonts.Helvetica);
+    }
+};
+
 // ============================================================
 // Main Generators
 // ============================================================
@@ -184,18 +197,7 @@ export const generateMathPDF = async (
     }
     pdfDoc.registerFontkit(fontkit);
 
-    let customFont;
-    const fontUrl = 'https://fonts.gstatic.com/s/notosansjp/v52/-F6jfjtqLzI2JPCgQBnw7HFyzSD-AsregP8VFBEj75s.ttf';
-    try {
-        const fontResponse = await fetch(fontUrl);
-        if (!fontResponse.ok) throw new Error(`Font fetch failed`);
-        const fontBytes = await fontResponse.arrayBuffer();
-        customFont = await pdfDoc.embedFont(fontBytes);
-    } catch (e) {
-        console.error("Font load error:", e);
-        customFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-        alert("日本語フォントの読み込みに失敗しました。");
-    }
+    const customFont = await loadPdfFont(pdfDoc);
 
     // 20 problems per page (2 columns x 10 rows)
     const problemsPerPage = 20;
@@ -294,18 +296,7 @@ export const generateVocabPDF = async (
     pdfDoc.setCreator('Sansu App');
     pdfDoc.registerFontkit(fontkit);
 
-    let customFont;
-    const fontUrl = 'https://fonts.gstatic.com/s/notosansjp/v52/-F6jfjtqLzI2JPCgQBnw7HFyzSD-AsregP8VFBEj75s.ttf';
-    try {
-        const fontResponse = await fetch(fontUrl);
-        if (!fontResponse.ok) throw new Error(`Font fetch failed`);
-        const fontBytes = await fontResponse.arrayBuffer();
-        customFont = await pdfDoc.embedFont(fontBytes);
-    } catch (e) {
-        console.error("Font load error:", e);
-        customFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-        alert("日本語フォントの読み込みに失敗しました。");
-    }
+    const customFont = await loadPdfFont(pdfDoc);
 
     // 20 items per page (2 columns x 10 rows)
     const itemsPerPage = 20;

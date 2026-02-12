@@ -26,9 +26,8 @@ export const getTodayStats = async (profileId: string): Promise<DailyStats> => {
     const end = getLearningDayEnd().toISOString();
 
     const logs = await db.logs
-        .where('timestamp')
-        .between(start, end)
-        .filter(log => log.profileId === profileId)
+        .where('[profileId+timestamp]')
+        .between([profileId, start], [profileId, end])
         .toArray();
 
     return {

@@ -1,36 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Header } from '../../components/Header';
 import { getWeakMathSkillIds, getWeakVocabIds } from '../../domain/learningRepository';
 import { ENGLISH_WORDS } from '../../domain/english/words';
 import { getActiveProfile } from '../../domain/user/repository';
+import { ParentGateModal } from '../../components/gate/ParentGateModal';
+
+type ParentsRouteState = {
+    parentGatePassed?: boolean;
+};
 
 export const ParentsPage: React.FC = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const routeState = location.state as ParentsRouteState | null;
     const [activeProfileId, setActiveProfileId] = useState<string | null>(null);
     const [profile, setProfile] = useState<any>(null);
     const [weakMathIds, setWeakMathIds] = useState<string[]>([]);
     const [weakVocabIds, setWeakVocabIds] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isGatePassed, setIsGatePassed] = useState(Boolean(routeState?.parentGatePassed));
 
     useEffect(() => {
+        if (!isGatePassed) {
+            setIsLoading(false);
+            return;
+        }
+
         const loadData = async () => {
-            console.log("ParentsPage: Start loading data");
             try {
                 setIsLoading(true);
                 const active = await getActiveProfile();
-                console.log("ParentsPage: profile", active);
                 setActiveProfileId(active?.id || null);
                 setProfile(active);
 
                 if (active?.id) {
                     // Load Weak Points
                     const weakMath = await getWeakMathSkillIds(active.id);
-                    console.log("ParentsPage: weakMath", weakMath);
                     setWeakMathIds(weakMath);
 
                     const weakVocab = await getWeakVocabIds(active.id);
-                    console.log("ParentsPage: weakVocab", weakVocab);
                     setWeakVocabIds(weakVocab);
                 }
             } catch (e) {
@@ -40,7 +49,20 @@ export const ParentsPage: React.FC = () => {
             }
         };
         loadData();
-    }, []);
+    }, [isGatePassed]);
+
+    if (!isGatePassed) {
+        return (
+            <div className="flex flex-col h-full bg-background">
+                <ParentGateModal
+                    isOpen
+                    onClose={() => navigate('/settings')}
+                    onSuccess={() => setIsGatePassed(true)}
+                />
+                <Header title="保護者メニュー" />
+            </div>
+        );
+    }
 
     if (isLoading) {
         return (

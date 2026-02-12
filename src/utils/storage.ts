@@ -9,7 +9,7 @@
 
 const STORAGE_KEYS = {
     // Active profile
-    ACTIVE_PROFILE_ID: 'sansu_active_profile_id',
+    ACTIVE_PROFILE_ID: 'sansu_active_profile',
 
     // Event tracking
     EVENT_LAST_SHOWN: 'sansu_event_last_shown',

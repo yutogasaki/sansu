@@ -10,10 +10,11 @@ import { CurriculumSettings } from "./pages/CurriculumSettings";
 import { DevMode } from "./pages/DevMode";
 import { ParentsPage } from "./pages/parents/ParentsPage";
 import { loadSounds } from './utils/audio';
+import { getActiveProfileId } from "./domain/user/repository";
 
 // Mock auth check
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
-    const hasProfile = localStorage.getItem("sansu_active_profile");
+    const hasProfile = getActiveProfileId();
     return hasProfile ? <>{children}</> : <Navigate to="/onboarding" replace />;
 };
 
@@ -53,7 +54,11 @@ function App() {
                             <CurriculumSettings />
                         </PrivateRoute>
                     } />
-                    <Route path="/parents" element={<ParentsPage />} />
+                    <Route path="/parents" element={
+                        <PrivateRoute>
+                            <ParentsPage />
+                        </PrivateRoute>
+                    } />
                     <Route path="/dev" element={<DevMode />} />
                 </Route>
             </Routes>

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { ikimonoStorage } from "../../utils/storage";
 import { IkimonoState, IkimonoStage } from "../ikimono/types";
 import { calculateStage, createNewIkimonoState, LIFECYCLE_DAYS, STAGE_BOUNDARIES } from "../ikimono/lifecycle";
@@ -43,15 +43,15 @@ export const DevIkimonoTab: React.FC<DevIkimonoTabProps> = ({ profileId }) => {
 
     const stageRanges = useMemo(() => buildStageRanges(), []);
 
-    const loadState = () => {
+    const loadState = useCallback(() => {
         const current = ikimonoStorage.getState();
         setStoredState(current);
         setDraftState(current ?? createNewIkimonoState(profileId, 1));
-    };
+    }, [profileId]);
 
     useEffect(() => {
         loadState();
-    }, [profileId]);
+    }, [loadState]);
 
     const derived = useMemo(() => {
         if (!draftState?.birthDate) return null;

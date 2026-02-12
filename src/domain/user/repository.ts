@@ -1,5 +1,6 @@
 import { db } from "../../db";
 import { AppData, UserProfile } from "../types";
+import { profileStorage } from "../../utils/storage";
 
 const APP_DATA_ID = "app";
 
@@ -26,7 +27,7 @@ export const getAppData = async (): Promise<AppData> => {
     }
 
     const legacyProfiles = await db.profiles.toArray();
-    const localActive = localStorage.getItem("sansu_active_profile");
+    const localActive = profileStorage.getActiveId();
     const active = localActive && legacyProfiles.some(p => p.id === localActive)
         ? localActive
         : legacyProfiles[0]?.id || null;
@@ -34,7 +35,7 @@ export const getAppData = async (): Promise<AppData> => {
 
     await db.appData.put({ id: APP_DATA_ID, ...appData });
     if (active) {
-        localStorage.setItem("sansu_active_profile", active);
+        profileStorage.setActiveId(active);
     }
 
     return appData;
@@ -68,13 +69,13 @@ export const getAllProfiles = async () => {
 };
 
 export const setActiveProfileId = async (id: string) => {
-    localStorage.setItem("sansu_active_profile", id);
+    profileStorage.setActiveId(id);
     const appData = await getAppData();
     await saveAppData({ ...appData, activeProfileId: id });
 };
 
 export const getActiveProfileId = () => {
-    return localStorage.getItem("sansu_active_profile");
+    return profileStorage.getActiveId();
 };
 
 export const getActiveProfile = async () => {
@@ -83,7 +84,7 @@ export const getActiveProfile = async () => {
 
     const appData = await getAppData();
     if (!appData.activeProfileId) return null;
-    localStorage.setItem("sansu_active_profile", appData.activeProfileId);
+    profileStorage.setActiveId(appData.activeProfileId);
     return appData.profiles[appData.activeProfileId] || null;
 };
 
@@ -99,4 +100,10 @@ export const deleteProfile = async (id: string) => {
         profiles: nextProfiles
     });
     await db.profiles.delete(id);
+
+    if (nextActive) {
+        profileStorage.setActiveId(nextActive);
+    } else {
+        profileStorage.clearActiveId();
+    }
 };
