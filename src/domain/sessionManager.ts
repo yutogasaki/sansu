@@ -1,4 +1,4 @@
-import { Problem, UserProfile, SubjectKey } from "./types";
+import { Problem, UserProfile, SubjectKey, RecentAttempt } from "./types";
 import { generateMathProblem } from "./math";
 import { generateVocabProblem } from "./english/generator";
 import { getSkillsForLevel, getAvailableSkills } from "./math/curriculum";
@@ -27,13 +27,13 @@ interface QueueItem {
 }
 
 // Helper to check Weak status (Spec 5.5)
-const checkWeak = (id: string, recentAttempts?: any[]): boolean => {
+export const isWeakByRecentAttempts = (id: string, recentAttempts?: RecentAttempt[]): boolean => {
     if (!recentAttempts || recentAttempts.length === 0) return false;
 
     // Filter attempts for this ID (only need last 10)
     const attempts = recentAttempts
-        .filter(r => r.skillId === id || r.categoryId === id) // support both naming if needed, but recentAttempts has skillId
-        .slice(0, 10); // Take first 10 (recent are likely at start? need to check sort order)
+        .filter(r => r.skillId === id)
+        .slice(-10);
 
     // recentAttempts is usually ring buffer, ordered? 
     // Types.ts doesn't specify order, but usually appended? Or newest first?
@@ -104,7 +104,7 @@ export const generateSessionQueue = (user: UserProfile, count = 5): Omit<Problem
             // Priority could be based on overdue days, here static high
             let p = 100;
             // Weak Boost (1-C)
-            if (checkWeak(id, user.recentAttempts)) {
+            if (isWeakByRecentAttempts(id, user.recentAttempts)) {
                 p += 50;
             }
             candidates.push({ id, subject: 'vocab', isReview: true, priority: p });
@@ -141,7 +141,7 @@ export const generateSessionQueue = (user: UserProfile, count = 5): Omit<Problem
         mathDueIds.forEach(id => {
             let p = 100;
             // Weak Boost (1-C)
-            if (checkWeak(id, user.recentAttempts)) {
+            if (isWeakByRecentAttempts(id, user.recentAttempts)) {
                 p += 50;
             }
             candidates.push({ id, subject: 'math', isReview: true, priority: p });

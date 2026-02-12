@@ -657,7 +657,7 @@ export const getMixSubject = (
  * Build vocab cooldown IDs from recent attempts and session history
  */
 export const buildVocabCooldownIds = (
-    recentAttempts: { subject: SubjectKey; itemId: string; result: string }[],
+    recentAttempts: { subject: SubjectKey; itemId: string; result: string; skipped?: boolean }[],
     sessionHistory: SessionHistoryItem[],
     pendingIds: string[] = []
 ): string[] => {

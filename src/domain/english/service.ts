@@ -12,7 +12,9 @@ const getVocabMemoryFromDB = async (
     const result = new Map<string, MemoryState>();
 
     const items = await db.memoryVocab
-        .filter((item: any) => item.profileId === profileId && wordIds.has(item.id))
+        .where('profileId')
+        .equals(profileId)
+        .filter(item => wordIds.has(item.id))
         .toArray();
 
     for (const item of items) {
@@ -61,6 +63,22 @@ export const checkEnglishLevelProgression = async (
     // 4. Check Ratio (Threshold: 70%)
     const ratio = unlockedCount / targetWords.length;
     return ratio >= 0.7;
+};
+
+// 仕様 5.2: 英語レベル解放判定（非復習20問で85%以上）
+export const checkVocabUnlockReadiness = (profile: UserProfile): boolean => {
+    const levelState = profile.vocabLevels?.find(l => l.level === profile.vocabMainLevel);
+    const recent = levelState?.recentAnswersNonReview || [];
+    if (recent.length < 20) return false;
+    const correctCount = recent.filter(Boolean).length;
+    const accuracy = correctCount / recent.length;
+    return accuracy >= 0.85;
+};
+
+// 解放済みレベルへのメイン昇格判定
+export const checkVocabMainPromotion = async (profile: UserProfile): Promise<boolean> => {
+    if (profile.vocabMaxUnlocked <= profile.vocabMainLevel) return false;
+    return checkEnglishLevelProgression(profile);
 };
 
 // Start Level Inferece (Simple)

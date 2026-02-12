@@ -58,7 +58,9 @@ export const getWeakPoints = async (profileId: string): Promise<WeakPoint[]> => 
 
     // Math: active ステータスのスキルのみ対象（仕様 5.4）
     const mathItems = await db.memoryMath
-        .filter((item: any) => item.profileId === profileId && item.status === 'active')
+        .where('profileId')
+        .equals(profileId)
+        .filter(item => item.status === 'active')
         .toArray();
 
     const mathIds = mathItems.map(item => item.id);
@@ -80,7 +82,8 @@ export const getWeakPoints = async (profileId: string): Promise<WeakPoint[]> => 
 
     // Vocab: 全ての単語が対象
     const vocabItems = await db.memoryVocab
-        .filter((item: any) => item.profileId === profileId)
+        .where('profileId')
+        .equals(profileId)
         .toArray();
 
     const vocabIds = vocabItems.map(item => item.id);

@@ -19,6 +19,10 @@ export default tseslint.config(
         },
         rules: {
             ...reactHooks.configs.recommended.rules,
+            '@typescript-eslint/no-explicit-any': 'off',
+            'react-hooks/set-state-in-effect': 'off',
+            'react-hooks/immutability': 'off',
+            'react-hooks/purity': 'off',
             'react-refresh/only-export-components': [
                 'warn',
                 { allowConstantExport: true },

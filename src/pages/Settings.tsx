@@ -19,7 +19,6 @@ export const Settings: React.FC = () => {
     const [sound, setSound] = useState(true);
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [profiles, setProfiles] = useState<UserProfile[]>([]);
-    const [_mathUnlockLevel, setMathUnlockLevel] = useState<number>(1);
 
     // 保護者ガードの状態
     const [showParentGuard, setShowParentGuard] = useState(false);
@@ -39,7 +38,6 @@ export const Settings: React.FC = () => {
             if (p) {
                 setProfile(p);
                 setSound(p.soundEnabled);
-                setMathUnlockLevel(p.mathMaxUnlocked || 1);
             }
         };
         load();
@@ -64,7 +62,6 @@ export const Settings: React.FC = () => {
         if (p) {
             setProfile(p);
             setSound(p.soundEnabled);
-            setMathUnlockLevel(p.mathMaxUnlocked || 1);
         }
         navigate("/");
     };

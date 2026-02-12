@@ -125,7 +125,7 @@ export const generators: Record<string, GeneratorFn> = {
         // Usually, 3 2/4 should be 3 1/2.
         // If sumNum is 0 (e.g. 1 1/2 + 1 1/2 = 3), result is just integer.
 
-        let ansInt = sumInt.toString();
+        const ansInt = sumInt.toString();
         let ansN = "";
         let ansD = "";
         let fields = [{ label: "整数", length: 1 }];
@@ -196,7 +196,7 @@ export const generators: Record<string, GeneratorFn> = {
         // If valInt became 0 (e.g. 1 1/3 - 2/3), it becomes proper fraction.
         // If valNum is 0, it becomes integer.
 
-        let ansInt = valInt.toString();
+        const ansInt = valInt.toString();
 
         if (valNum === 0) {
             // Integer result, recreate to force mixed/fraction result for practice

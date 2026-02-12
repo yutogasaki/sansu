@@ -12,16 +12,16 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             <button
                 ref={ref}
                 className={cn(
-                    "inline-flex items-center justify-center rounded-full font-bold transition-transform active:scale-95 focus:outline-none disabled:opacity-50 disabled:pointer-events-none touch-manipulation",
+                    "inline-flex items-center justify-center rounded-full font-bold transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300/70 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none touch-manipulation",
                     // Variants
                     variant === "primary" &&
-                    "bg-[#483D8B] text-white hover:opacity-90 shadow-[0_4px_0_0_rgba(72,61,139,0.4)] active:shadow-none translate-y-0 active:translate-y-[2px]",
+                    "text-white bg-gradient-to-b from-teal-500 to-cyan-600 shadow-[0_10px_20px_-10px_rgba(8,145,178,0.55)] hover:from-teal-500 hover:to-cyan-500 active:shadow-[0_4px_10px_-8px_rgba(8,145,178,0.65)]",
                     variant === "secondary" &&
-                    "bg-white text-text-main border-2 border-slate-100 hover:bg-slate-50 shadow-sm",
+                    "bg-white/90 text-text-main border border-white/80 hover:bg-white shadow-[0_8px_16px_-12px_rgba(15,23,42,0.35)]",
                     variant === "ghost" &&
-                    "bg-transparent text-text-sub hover:bg-slate-100",
+                    "bg-transparent text-text-sub hover:bg-slate-100/70",
                     variant === "icon" &&
-                    "p-2 rounded-full hover:bg-slate-100 text-text-sub",
+                    "p-2 rounded-full hover:bg-white/75 text-text-sub",
 
                     // Sizes
                     size === "sm" && "h-10 px-4 text-sm",

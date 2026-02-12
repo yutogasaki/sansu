@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
     ];
 
     return (
-        <nav className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-200 safe-area-bottom z-50">
+        <nav className="fixed bottom-0 left-0 right-0 bg-white/82 backdrop-blur-xl border-t border-white/80 safe-area-bottom z-50 shadow-[0_-14px_24px_-20px_rgba(15,23,42,0.6)]">
             <div className="mx-auto max-w-md flex justify-around items-center h-16 land:max-w-4xl land:h-14">
                 {navItems.map((item) => (
                     <NavLink

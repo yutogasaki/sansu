@@ -12,10 +12,9 @@ import {
 import { generateMathProblem } from "../domain/math";
 import { generateVocabProblem } from "../domain/english/generator";
 import { Problem, SubjectKey, UserProfile } from "../domain/types";
-import { db } from "../db";
 import { getAvailableSkills } from "../domain/math/curriculum";
 import { checkLevelProgression, checkMathMainPromotion } from "../domain/math/service";
-import { getWordsByLevel } from "../domain/english/words";
+import { checkVocabMainPromotion, checkVocabUnlockReadiness } from "../domain/english/service";
 import {
     SessionKind,
     SessionHistoryItem,
@@ -115,7 +114,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     const generateFocusBlock = async (
         _pid: string,
         blockSize: number,
-        recentAttempts: { subject: SubjectKey; itemId: string; result: string }[]
+        recentAttempts: { subject: SubjectKey; itemId: string; result: string; skipped?: boolean }[]
     ): Promise<Problem[]> => {
         const q: Problem[] = [];
         const subject = options.focusSubject!;
@@ -159,7 +158,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     const generateCheckBlock = async (
         activeProfile: UserProfile,
         blockSize: number,
-        recentAttempts: { subject: SubjectKey; itemId: string; result: string; isReview: boolean }[]
+        recentAttempts: { subject: SubjectKey; itemId: string; result: string; isReview: boolean; skipped?: boolean }[]
     ): Promise<Problem[] | null> => {
         let checkSubject: SubjectKey;
 
@@ -218,7 +217,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         pid: string,
         activeProfile: UserProfile,
         blockSize: number,
-        recentAttempts: { subject: SubjectKey; itemId: string; result: string; isReview: boolean }[]
+        recentAttempts: { subject: SubjectKey; itemId: string; result: string; isReview: boolean; skipped?: boolean }[]
     ): Promise<Problem[]> => {
         const blockCounts = new Map<string, number>();
         const recentIds = sessionHistoryRef.current.slice(-COOLDOWN_WINDOW).map(h => h.id);
@@ -535,12 +534,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
                 if (p.vocabMainLevel >= 20) return p;
                 if (p.vocabMaxUnlocked !== p.vocabMainLevel) return p;
-                const levelState = p.vocabLevels?.find(l => l.level === p.vocabMainLevel);
-                const recent = levelState?.recentAnswersNonReview || [];
-                if (recent.length < 20) return p;
-                const correctCount = recent.filter(Boolean).length;
-                const accuracy = correctCount / recent.length;
-                if (accuracy < 0.85) return p;
+                if (!checkVocabUnlockReadiness(p)) return p;
                 const nextLevel = Math.min(20, p.vocabMaxUnlocked + 1);
                 const vocabLevels = p.vocabLevels
                     ? p.vocabLevels.map(l => (l.level <= nextLevel ? { ...l, unlocked: true } : l))
@@ -568,6 +562,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                     return {
                         ...p,
                         mathMainLevel: nextMain,
+                        mathMainLevelStartedAt: new Date().toISOString(),
                         mathLevels,
                         pendingLevelUpNotification: {
                             subject: 'math' as const,
@@ -577,17 +572,8 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                     };
                 }
 
-                if (p.vocabMaxUnlocked <= p.vocabMainLevel) return p;
-                const levelWords = getWordsByLevel(p.vocabMaxUnlocked);
-                if (levelWords.length === 0) return p;
-                // DBから対象単語のMemoryStateを取得して判定
-                const wordIdSet = new Set(levelWords.map(w => w.id));
-                const vocabItems = await db.memoryVocab
-                    .filter((item: any) => item.profileId === p.id && wordIdSet.has(item.id))
-                    .toArray();
-                const touched = vocabItems.filter(item => item.totalAnswers > 0).length;
-                const ratio = touched / levelWords.length;
-                if (ratio < 0.7) return p;
+                const canPromote = await checkVocabMainPromotion(p);
+                if (!canPromote) return p;
                 const nextMain = p.vocabMaxUnlocked;
                 const vocabLevels = p.vocabLevels
                     ? ensureMainEnabled(
@@ -603,6 +589,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 return {
                     ...p,
                     vocabMainLevel: nextMain,
+                    vocabMainLevelStartedAt: new Date().toISOString(),
                     vocabLevels,
                     pendingLevelUpNotification: {
                         subject: 'vocab' as const,

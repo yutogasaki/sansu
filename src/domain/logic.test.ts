@@ -1,10 +1,14 @@
 import { describe, it, expect } from 'vitest';
 import { updateMemoryState, updateSkillStatus } from './algorithms/srs';
-import { MemoryState, UserProfile } from './types';
+import { MemoryState, UserProfile, RecentAttempt } from './types';
 import { syncLevelState, createInitialProfile } from './user/profile';
 import { checkEnglishLevelProgression } from './english/service';
 import { ENGLISH_WORDS } from './english/words';
-import { generateSessionQueue } from './sessionManager';
+import { generateSessionQueue, isWeakByRecentAttempts } from './sessionManager';
+import { getInitialNextReviewIso } from './learningRepository';
+import { getLearningDayStart } from '../utils/learningDay';
+import { buildVocabCooldownIds } from '../hooks/blockGenerators';
+import { getLevelStartTimestamp } from './test/trigger';
 
 // Mock types
 const mockState = (id: string, strength: number, status: any = undefined): MemoryState => ({
@@ -170,5 +174,63 @@ describe('Session Queue Generation', () => {
         // subjectMode = vocab
         const queue = generateSessionQueue(profile, 5);
         expect(queue[0].subject).toBe('vocab');
+    });
+});
+
+describe('Regression Guards', () => {
+    it('uses latest attempts for weak judgement', () => {
+        const attempts: RecentAttempt[] = [];
+        for (let i = 0; i < 10; i++) {
+            attempts.push({
+                id: `old-${i}`,
+                timestamp: new Date(2025, 0, i + 1).toISOString(),
+                subject: 'math',
+                skillId: 'skill-a',
+                result: 'incorrect'
+            });
+        }
+        for (let i = 0; i < 10; i++) {
+            attempts.push({
+                id: `new-${i}`,
+                timestamp: new Date(2025, 1, i + 1).toISOString(),
+                subject: 'math',
+                skillId: 'skill-a',
+                result: 'correct'
+            });
+        }
+
+        expect(isWeakByRecentAttempts('skill-a', attempts)).toBe(false);
+    });
+
+    it('sets initial next review to today when skipped', () => {
+        expect(getInitialNextReviewIso(1, true)).toBe(getLearningDayStart().toISOString());
+    });
+
+    it('excludes skipped vocab attempts from cooldown source', () => {
+        const ids = buildVocabCooldownIds(
+            [
+                { subject: 'vocab', itemId: 'apple', result: 'skipped' },
+                { subject: 'vocab', itemId: 'cat', result: 'correct' },
+            ],
+            []
+        );
+        expect(ids).toEqual(['cat']);
+    });
+
+    it('uses explicit main level start timestamp when available', () => {
+        const profile = createInitialProfile('T', 1, 1, 1, 'mix');
+        profile.mathMainLevelStartedAt = '2025-01-15T00:00:00.000Z';
+        profile.recentAttempts = [
+            {
+                id: 'a1',
+                timestamp: '2025-01-20T00:00:00.000Z',
+                subject: 'math',
+                skillId: 'count_10',
+                result: 'correct'
+            }
+        ];
+
+        const ts = getLevelStartTimestamp(profile, 'math', ['count_10'], profile.mathMainLevelStartedAt, undefined);
+        expect(new Date(ts).toISOString()).toBe('2025-01-15T00:00:00.000Z');
     });
 });

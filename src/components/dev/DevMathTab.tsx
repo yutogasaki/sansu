@@ -76,7 +76,7 @@ export const DevMathTab: React.FC<DevMathTabProps> = ({ memoryStates, onUpdateMe
                                                         }`}
                                                 >
                                                     <span className="flex items-center">
-                                                        <span className={`w-2 h-2 rounded-full mr-2 ${!!memory ? "bg-green-500" : "bg-slate-300"
+                                                        <span className={`w-2 h-2 rounded-full mr-2 ${memory ? "bg-green-500" : "bg-slate-300"
                                                             }`} />
                                                         {MATH_SKILL_LABELS[skillId] || skillId}
                                                     </span>

@@ -47,6 +47,14 @@ export class SansuDatabase extends Dexie {
             memoryVocab: '[profileId+id], nextReview, strength',
             appData: '&id'
         });
+
+        this.version(3).stores({
+            profiles: '&id',
+            logs: '++id, profileId, subject, [profileId+subject], timestamp',
+            memoryMath: '[profileId+id], profileId, nextReview, strength, status',
+            memoryVocab: '[profileId+id], profileId, nextReview, strength',
+            appData: '&id'
+        });
     }
 }
 

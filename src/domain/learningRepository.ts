@@ -7,6 +7,11 @@ import { getLevelForSkill } from "./math/curriculum";
 import { getWordLevel } from "./english/words";
 import { getProfile, saveProfile } from "./user/repository";
 
+export const getInitialNextReviewIso = (strength: number, skipped: boolean): string => {
+    if (skipped) return getLearningDayStart().toISOString();
+    return getNextReviewDate(strength).toISOString();
+};
+
 export const logAttempt = async (
     profileId: string,
     subject: SubjectKey,
@@ -34,7 +39,7 @@ export const logAttempt = async (
         profileId,
         subject,
         itemId,
-        result: skipped ? 'incorrect' : result,
+        result: skipped ? 'skipped' : result,
         skipped: skipped || undefined,
         isReview,
         timestamp
@@ -85,10 +90,7 @@ export const logAttempt = async (
 
     // Fix: We need to set nextReview for new items if we didn't use updateMemoryState
     if (!existing) {
-        // We need getNextReviewDate export
-        // For now, let's just use a simple mock if import is hard, but I should add the import.
-        // I'll add getNextReviewDate to imports.
-        newState.nextReview = getNextReviewDate(newState.strength).toISOString();
+        newState.nextReview = getInitialNextReviewIso(newState.strength, skipped);
     }
 
     // 3. Save to DB (Extend with profileId)
@@ -141,7 +143,7 @@ export const logAttempt = async (
             timestamp,
             subject,
             skillId: itemId,
-            result: skipped ? "incorrect" : result,
+            result: skipped ? "skipped" : result,
             skipped: skipped || undefined
         });
         const trimmed = recentAttempts.slice(-300);
@@ -163,9 +165,9 @@ export const getReviewItems = async (profileId: string, subject: SubjectKey) => 
     const nowIso = new Date().toISOString();
 
     const items = await table
-        .where('nextReview')
-        .belowOrEqual(nowIso)
-        .filter((item: any) => item.profileId === profileId)
+        .where('profileId')
+        .equals(profileId)
+        .filter(item => item.nextReview <= nowIso)
         .toArray();
 
     const capOverdue = (days: number) => Math.max(0, Math.min(days, 7));
@@ -257,7 +259,9 @@ export const getBatchRecentAccuracy = async (
 
 export const getWeakMathSkillIds = async (profileId: string): Promise<string[]> => {
     const mathItems = await db.memoryMath
-        .filter((item: any) => item.profileId === profileId && item.status === 'active')
+        .where('profileId')
+        .equals(profileId)
+        .filter(item => item.status === 'active')
         .toArray();
 
     const itemIds = mathItems.map(item => item.id);
@@ -271,7 +275,8 @@ export const getWeakMathSkillIds = async (profileId: string): Promise<string[]> 
 
 export const getWeakVocabIds = async (profileId: string): Promise<string[]> => {
     const vocabItems = await db.memoryVocab
-        .filter((item: any) => item.profileId === profileId)
+        .where('profileId')
+        .equals(profileId)
         .toArray();
 
     const itemIds = vocabItems.map(item => item.id);
@@ -285,7 +290,9 @@ export const getWeakVocabIds = async (profileId: string): Promise<string[]> => {
 
 export const getMaintenanceMathSkillIds = async (profileId: string): Promise<string[]> => {
     const items = await db.memoryMath
-        .filter((item: any) => item.profileId === profileId && item.status === 'maintenance')
+        .where('profileId')
+        .equals(profileId)
+        .filter(item => item.status === 'maintenance')
         .toArray();
     return items.map(item => item.id);
 };
@@ -332,7 +339,9 @@ export const getSkippedItemsToday = async (
 // retiredスキルを取得
 export const getRetiredMathSkillIds = async (profileId: string): Promise<string[]> => {
     const items = await db.memoryMath
-        .filter((item: any) => item.profileId === profileId && item.status === 'retired')
+        .where('profileId')
+        .equals(profileId)
+        .filter(item => item.status === 'retired')
         .toArray();
     return items.map(item => item.id);
 };

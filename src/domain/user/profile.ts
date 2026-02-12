@@ -25,11 +25,16 @@ export const syncLevelState = (
     newLevel: number
 ): UserProfile => {
     const updated = { ...profile };
+    const now = new Date().toISOString();
 
     if (subject === 'math') {
+        const prevMain = updated.mathMainLevel;
         updated.mathMainLevel = newLevel;
         if (newLevel > updated.mathMaxUnlocked) {
             updated.mathMaxUnlocked = newLevel;
+        }
+        if (prevMain !== newLevel) {
+            updated.mathMainLevelStartedAt = now;
         }
 
         if (updated.mathLevels) {
@@ -42,9 +47,13 @@ export const syncLevelState = (
             });
         }
     } else {
+        const prevMain = updated.vocabMainLevel;
         updated.vocabMainLevel = newLevel;
         if (newLevel > updated.vocabMaxUnlocked) {
             updated.vocabMaxUnlocked = newLevel;
+        }
+        if (prevMain !== newLevel) {
+            updated.vocabMainLevelStartedAt = now;
         }
 
         if (updated.vocabLevels) {
@@ -106,6 +115,7 @@ export const createInitialProfile = (
     subjectMode: "mix" | "math" | "vocab"
 ): UserProfile => {
     const profileId = uuidv4();
+    const now = new Date().toISOString();
     const mathMainLevel = Math.min(20, mathStartLevel + 1);
     const mathMaxUnlocked = Math.min(20, mathStartLevel + 1);
 
@@ -127,9 +137,11 @@ export const createInitialProfile = (
         // So if Start=5, Levels 1-5 are Cleared. Main is 6.
         mathMainLevel,
         mathMaxUnlocked,
+        mathMainLevelStartedAt: now,
 
         vocabMainLevel: vocabStartLevel,
         vocabMaxUnlocked: vocabStartLevel,
+        vocabMainLevelStartedAt: now,
 
         mathLevels: createLevelStates(20, mathMaxUnlocked, mathMainLevel),
         vocabLevels: createLevelStates(20, vocabStartLevel, vocabStartLevel),

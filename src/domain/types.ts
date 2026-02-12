@@ -249,9 +249,11 @@ export interface UserProfile {
     // Progress
     mathMainLevel: number;
     mathMaxUnlocked: number;
+    mathMainLevelStartedAt?: string;
 
     vocabMainLevel: number;
     vocabMaxUnlocked: number;
+    vocabMainLevelStartedAt?: string;
 
     mathLevels?: LevelState[];
     vocabLevels?: LevelState[];

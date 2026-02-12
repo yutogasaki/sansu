@@ -23,6 +23,34 @@ const VOCAB_STRUGGLE_ACCURACY = 0.65;
 
 const MILLIS_PER_DAY = 24 * 60 * 60 * 1000;
 
+export const getLevelStartTimestamp = (
+    profile: UserProfile,
+    subject: SubjectKey,
+    levelItemIds: string[],
+    mainLevelStartedAt?: string,
+    levelStateUpdatedAt?: string
+): number => {
+    const fromMainLevel = mainLevelStartedAt ? new Date(mainLevelStartedAt).getTime() : Number.NaN;
+    const fromLevelState = levelStateUpdatedAt ? new Date(levelStateUpdatedAt).getTime() : Number.NaN;
+    const levelItemSet = new Set(levelItemIds);
+
+    // recentAttempts is append-only (old -> new). Find the oldest attempt in current level.
+    const firstAttemptInLevel = (profile.recentAttempts || []).find(
+        a => a.subject === subject && levelItemSet.has(a.skillId)
+    );
+    const fromAttempts = firstAttemptInLevel ? new Date(firstAttemptInLevel.timestamp).getTime() : Number.NaN;
+
+    if (Number.isFinite(fromMainLevel)) {
+        return fromMainLevel;
+    }
+    if (Number.isFinite(fromLevelState) && Number.isFinite(fromAttempts)) {
+        return Math.min(fromLevelState, fromAttempts);
+    }
+    if (Number.isFinite(fromAttempts)) return fromAttempts;
+    if (Number.isFinite(fromLevelState)) return fromLevelState;
+    return Date.now();
+};
+
 /**
  * DBテーブルから対象itemIdのMemoryStateをバッチ取得
  */
@@ -36,7 +64,8 @@ const getMemoryStatesFromDB = async (
 
     // バッチ取得（1クエリ）
     const items = await table
-        .filter((item: any) => item.profileId === profileId)
+        .where('profileId')
+        .equals(profileId)
         .toArray();
 
     const idSet = new Set(itemIds);
@@ -97,7 +126,7 @@ const checkMathTrigger = async (profile: UserProfile, level: number): Promise<{ 
 
     // B. Slow (Days in Level or Total Count in Level)
     const levelState = profile.mathLevels?.find(l => l.level === level);
-    const startDate = levelState?.updatedAt ? new Date(levelState.updatedAt).getTime() : Date.now();
+    const startDate = getLevelStartTimestamp(profile, 'math', skills, profile.mathMainLevelStartedAt, levelState?.updatedAt);
     const daysInLevel = (Date.now() - startDate) / MILLIS_PER_DAY;
 
     let totalCountInLevel = 0;
@@ -152,7 +181,7 @@ const checkVocabTrigger = async (profile: UserProfile, level: number): Promise<{
 
     // B. Slow
     const levelState = profile.vocabLevels?.find(l => l.level === level);
-    const startDate = levelState?.updatedAt ? new Date(levelState.updatedAt).getTime() : Date.now();
+    const startDate = getLevelStartTimestamp(profile, 'vocab', wordIds, profile.vocabMainLevelStartedAt, levelState?.updatedAt);
     const daysInLevel = (Date.now() - startDate) / MILLIS_PER_DAY;
 
     let totalCountInLevel = 0;
