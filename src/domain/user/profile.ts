@@ -128,6 +128,7 @@ export const createInitialProfile = (
         vocabStartLevel,
         subjectMode,
         soundEnabled: true,
+        uiTextMode: "standard",
         dailyGoal: 20,
 
         // Logic: mathStartLevel is the "max unlocked" initially. 

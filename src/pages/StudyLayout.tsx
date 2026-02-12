@@ -52,6 +52,7 @@ interface StudyLayoutProps {
 
     swipeHandlers: SwipeableHandlers;
     englishAutoRead?: boolean;
+    isEasyText?: boolean;
     onToggleTTS?: () => void;
 }
 
@@ -82,8 +83,10 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     onFocusField,
     swipeHandlers,
     englishAutoRead = false,
+    isEasyText = false,
     onToggleTTS,
 }) => {
+    const t = (easy: string, standard: string) => (isEasyText ? easy : standard);
     // Auto-TTS Effect
     React.useEffect(() => {
         if (englishAutoRead && currentProblem?.subject === 'vocab' && currentProblem.questionText) {
@@ -177,7 +180,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
         return (
             <div className="flex flex-col items-center justify-center h-full bg-slate-50 space-y-4">
                 <div className="animate-spin text-4xl">🌀</div>
-                <div className="text-slate-500 font-bold">じゅんびちゅう...</div>
+                <div className="text-slate-500 font-bold">{t("じゅんびちゅう...", "準備中...")}</div>
             </div>
         );
     }
@@ -210,10 +213,10 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                     </div>
                     <div className="w-full space-y-4 max-w-xs">
                         <Button onClick={() => onNavigate("/stats")} size="xl" className="w-full shadow-lg shadow-yellow-200">
-                            きろく を みる
+                            {t("きろく を みる", "記録を見る")}
                         </Button>
                         <Button onClick={() => onNavigate("/")} variant="secondary" size="lg" className="w-full">
-                            ホーム へ もどる
+                            {t("ホーム へ もどる", "ホームへ戻る")}
                         </Button>
                     </div>
                 </div>
@@ -240,10 +243,10 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                     </div>
                     <div className="w-full space-y-4 max-w-xs">
                         <Button onClick={() => onNavigate("/stats")} size="xl" className="w-full shadow-lg shadow-yellow-200">
-                            きろく を みる
+                            {t("きろく を みる", "記録を見る")}
                         </Button>
                         <Button onClick={() => onNavigate("/")} variant="secondary" size="lg" className="w-full">
-                            ホーム へ もどる
+                            {t("ホーム へ もどる", "ホームへ戻る")}
                         </Button>
                     </div>
                 </div>
@@ -284,9 +287,9 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
         return (
             <div className="flex flex-col items-center justify-center h-full bg-slate-50 space-y-4">
                 <div className="text-4xl">😵</div>
-                <div className="text-slate-500 font-bold">もんだいが つくれなかった</div>
+                <div className="text-slate-500 font-bold">{t("もんだいが つくれなかった", "問題を作成できませんでした")}</div>
                 <Button onClick={onContinue} size="lg">
-                    もういちど
+                    {t("もういちど", "再試行")}
                 </Button>
             </div>
         );
@@ -325,7 +328,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         <div className="bg-white/20 rounded-full p-4 mb-2">
                             <span className="text-5xl">🌱</span>
                         </div>
-                        <h2 className="text-3xl font-bold text-white mb-6">ちょっと ちがったね</h2>
+                        <h2 className="text-3xl font-bold text-white mb-6">{t("ちょっと ちがったね", "惜しい！")}</h2>
 
                         {/* Question Display */}
                         <div className="mb-6 bg-white/10 rounded-xl p-4 w-full max-w-sm flex justify-center">
@@ -337,7 +340,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         </div>
 
                         <div className="bg-white rounded-2xl p-6 w-full max-w-sm text-center shadow-xl mb-8">
-                            <p className="text-slate-400 font-bold text-sm mb-4">こたえ</p>
+                            <p className="text-slate-400 font-bold text-sm mb-4">{t("こたえ", "答え")}</p>
                             {renderCorrectAnswer()}
                         </div>
 
@@ -346,7 +349,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             size="lg"
                             className="bg-white text-blue-600 hover:bg-white/90 shadow-lg w-full max-w-xs text-xl font-bold h-16"
                         >
-                            つぎへ
+                            {t("つぎへ", "次へ")}
                         </Button>
                     </motion.div>
                 )}
@@ -361,8 +364,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         <div className="bg-white/20 rounded-full p-4 mb-2">
                             <span className="text-5xl">🌱</span>
                         </div>
-                        <h2 className="text-3xl font-bold text-white mb-2">とばして だいじょうぶ</h2>
-                        <p className="text-white/80 text-sm mb-6">また でてくるよ</p>
+                        <h2 className="text-3xl font-bold text-white mb-2">{t("とばして だいじょうぶ", "スキップOK")}</h2>
+                        <p className="text-white/80 text-sm mb-6">{t("また でてくるよ", "また出題されます")}</p>
 
                         {/* Question Display */}
                         <div className="mb-6 bg-white/10 rounded-xl p-4 w-full max-w-sm flex justify-center">
@@ -374,7 +377,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         </div>
 
                         <div className="bg-white rounded-2xl p-6 w-full max-w-sm text-center shadow-xl mb-8">
-                            <p className="text-slate-400 font-bold text-sm mb-4">こたえ</p>
+                            <p className="text-slate-400 font-bold text-sm mb-4">{t("こたえ", "答え")}</p>
                             {renderCorrectAnswer()}
                         </div>
 
@@ -383,7 +386,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             size="lg"
                             className="bg-white text-slate-600 hover:bg-white/90 shadow-lg w-full max-w-xs text-xl font-bold h-16"
                         >
-                            つぎへ
+                            {t("つぎへ", "次へ")}
                         </Button>
                     </motion.div>
                 )}
@@ -392,7 +395,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
             {/* Header: モバイルでは非表示 */}
             <div id="debug-header" className="flex-none mobile:hidden">
                 <Header
-                    title={currentProblem.subject === 'math' ? 'さんすう' : 'えいご'}
+                    title={currentProblem.subject === 'math' ? t('さんすう', '算数') : t('えいご', '英語')}
                     onBack={() => onNavigate("/")}
                     center={
                         <span className="text-slate-400 font-bold text-lg">
@@ -414,7 +417,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                     disabled={feedback !== "none"}
                     className="text-slate-400 hover:text-slate-600 text-xs font-bold disabled:opacity-30"
                 >
-                    スキップ→
+                    {t("スキップ→", "スキップ→")}
                 </button>
                 {currentProblem.isReview && (
                     <span className="text-slate-400 text-xs">🔁</span>
@@ -469,7 +472,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                     className="absolute -top-3 right-4 bg-amber-100 text-amber-600 px-3 py-1 rounded-full text-xs font-bold shadow-sm border border-amber-200 z-10 flex items-center gap-1"
                                 >
                                     <span>🔁</span>
-                                    <span>復習</span>
+                                    <span>{t("復習", "復習")}</span>
                                 </motion.div>
                             )}
                         </AnimatePresence>

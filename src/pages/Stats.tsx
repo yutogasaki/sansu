@@ -72,13 +72,13 @@ const DEFAULT_SECTIONS: SectionState = {
 };
 
 const SECTION_LABELS: Record<SectionKey, string> = {
-    summary: "きょう",
+    summary: "今日",
     calendar: "週間",
-    growth: "できた",
-    weak: "にがて",
-    review: "ふくしゅう",
+    growth: "成長",
+    weak: "苦手",
+    review: "復習",
     progress: "レベル",
-    parent: "ほごしゃ",
+    parent: "保護者",
 };
 
 const WEEKDAY_JA = ["日", "月", "火", "水", "木", "金", "土"];
@@ -170,7 +170,7 @@ const formatDate = (iso?: string) => {
 const getLabel = (id: string, subject: SubjectType): string => {
     if (subject === "math") return MATH_SKILL_LABELS[id] || id;
     const word = getWord(id);
-    return word?.japanese || id;
+    return word?.id || id;
 };
 
 const loadSectionState = (): SectionState => {
@@ -344,6 +344,8 @@ export const Stats: React.FC = () => {
 
     const maxMathLevel = Object.keys(MATH_CURRICULUM).length;
     const maxVocabLevel = 20;
+    const isEasy = profile?.uiTextMode === "easy";
+    const t = (easy: string, standard: string) => (isEasy ? easy : standard);
     const mathLevelState = profile?.mathLevels?.find(l => l.level === profile.mathMainLevel);
     const vocabLevelState = profile?.vocabLevels?.find(l => l.level === profile.vocabMainLevel);
     const mathRecent = mathLevelState?.recentAnswersNonReview || [];
@@ -359,7 +361,7 @@ export const Stats: React.FC = () => {
         return (
             <div className="flex flex-col h-full bg-slate-50">
                 <Header
-                    title="きろく"
+                    title={t("きろく", "記録")}
                     rightAction={
                         <Button variant="icon" size="sm" onClick={() => navigate("/")}>
                             <Icons.Close className="w-6 h-6" />
@@ -374,7 +376,7 @@ export const Stats: React.FC = () => {
     return (
         <div className="flex flex-col h-full bg-slate-50">
             <Header
-                title="きろく"
+                title={t("きろく", "記録")}
                 rightAction={
                     <Button variant="icon" size="sm" onClick={() => navigate("/")}>
                         <Icons.Close className="w-6 h-6" />
@@ -505,28 +507,30 @@ export const Stats: React.FC = () => {
                         <div className="flex justify-between items-start">
                             <div>
                                 <h3 className="font-bold text-slate-700">ふくしゅう キュー</h3>
-                                <div className="text-xs text-slate-500 mt-1">きょう やるべき ふくしゅう: {reviewCount}けん</div>
+                                <div className="text-xs text-slate-500 mt-1">
+                                    {t(`きょう やるべき ふくしゅう: ${reviewCount}けん`, `今日やるべき復習: ${reviewCount}件`)}
+                                </div>
                             </div>
                             <Button
                                 size="sm"
                                 className="h-10 text-sm"
                                 onClick={() => navigate("/study?session=review&force_review=1")}
                             >
-                                まとめて やる
+                                {t("まとめて やる", "まとめて学習")}
                             </Button>
                         </div>
 
                         <Card className="p-3 mt-3 flex justify-between items-center border border-sky-100 bg-sky-50 shadow-sm" variant="flat">
-                            <div>
-                                <div className="font-bold text-sky-800">テストの じゅんび (10もん)</div>
-                                <div className="text-xs text-sky-600 mt-1">にがてを さきに かためる</div>
+                                <div>
+                                <div className="font-bold text-sky-800">{t("テストの じゅんび (10もん)", "テスト準備 (10問)")}</div>
+                                <div className="text-xs text-sky-600 mt-1">{t("にがてを さきに かためる", "苦手を先に固める")}</div>
                             </div>
                             <Button
                                 size="sm"
                                 className="h-10 text-sm bg-white text-sky-700 border border-sky-200 hover:bg-sky-100"
                                 onClick={() => navigate("/study?session=weak-review")}
                             >
-                                やる
+                                {t("やる", "開始")}
                             </Button>
                         </Card>
 
@@ -536,7 +540,7 @@ export const Stats: React.FC = () => {
                                     <Card key={`${item.id}-review-${idx}`} className="p-3 flex justify-between items-center" variant="flat">
                                         <div>
                                             <div className="font-bold text-slate-700">{getLabel(item.id, item.subject)}</div>
-                                            <div className="text-xs text-slate-400">さいしゅう: {formatDate(item.lastCorrectAt)}</div>
+                                            <div className="text-xs text-slate-400">{t("さいしゅう", "最終")}: {formatDate(item.lastCorrectAt)}</div>
                                         </div>
                                         <Button
                                             size="sm"
@@ -544,7 +548,7 @@ export const Stats: React.FC = () => {
                                             className="h-10 text-sm"
                                             onClick={() => navigate(`/study?session=review&focus_subject=${item.subject}&focus_ids=${item.id}&force_review=1`)}
                                         >
-                                            やる
+                                            {t("やる", "開始")}
                                         </Button>
                                     </Card>
                                 ))}
@@ -554,8 +558,8 @@ export const Stats: React.FC = () => {
                         {eventCheckPending && (
                             <Card className="p-3 mt-3 flex justify-between items-center border border-indigo-200 bg-indigo-50/50" variant="flat">
                                 <div>
-                                    <div className="font-bold text-slate-700">✨ ていき テスト (20もん)</div>
-                                    <div className="text-xs text-slate-500">がっこう テスト まえ の かくにん</div>
+                                    <div className="font-bold text-slate-700">{t("✨ ていき テスト (20もん)", "✨ 定期テスト (20問)")}</div>
+                                    <div className="text-xs text-slate-500">{t("がっこう テスト まえ の かくにん", "学校テスト前の確認")}</div>
                                 </div>
                                 <Button
                                     size="sm"
@@ -567,7 +571,7 @@ export const Stats: React.FC = () => {
                                         navigate("/study?session=periodic-test");
                                     }}
                                 >
-                                    ちょうせん
+                                    {t("ちょうせん", "挑戦")}
                                 </Button>
                             </Card>
                         )}
@@ -576,7 +580,7 @@ export const Stats: React.FC = () => {
 
                 {sections.progress && (
                     <Card className="p-4">
-                        <h3 className="font-bold text-slate-700">レベル しんちょく</h3>
+                        <h3 className="font-bold text-slate-700">{t("レベル しんちょく", "レベル進捗")}</h3>
 
                         <div className="mt-3 p-3 rounded-2xl bg-slate-100">
                             <div className="text-sm font-bold text-slate-700">
@@ -592,7 +596,7 @@ export const Stats: React.FC = () => {
 
                         <div className="mt-3 p-3 rounded-2xl bg-slate-100">
                             <div className="text-sm font-bold text-slate-700">
-                                えいたんご Lv{profile.vocabMainLevel} / かいほう Lv{profile.vocabMaxUnlocked}
+                                {t("えいたんご", "英単語")} Lv{profile.vocabMainLevel} / {t("かいほう", "解放")} Lv{profile.vocabMaxUnlocked}
                             </div>
                             <div className="mt-2 h-2 rounded-full bg-slate-200 overflow-hidden">
                                 <div className="h-full bg-sky-500" style={{ width: `${Math.min((vocabRecent.length / 20) * 100, 100)}%` }} />
@@ -606,7 +610,7 @@ export const Stats: React.FC = () => {
 
                 {sections.parent && (
                     <Card className="p-4">
-                        <h3 className="font-bold text-slate-700">ほごしゃ むけ ミニレポート</h3>
+                        <h3 className="font-bold text-slate-700">{t("ほごしゃ むけ ミニレポート", "保護者向けミニレポート")}</h3>
                         <div className="mt-3 space-y-2 text-sm text-slate-700">
                             <div className="flex justify-between">
                                 <span className="text-slate-500">こんしゅう の がくしゅうじかん</span>

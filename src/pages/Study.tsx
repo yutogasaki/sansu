@@ -6,6 +6,7 @@ import { playSound, setSoundEnabled } from "../utils/audio";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
 import { logAttempt } from "../domain/learningRepository";
 import { StudyLayout } from "./StudyLayout";
+import { speakEnglish } from "../utils/tts";
 
 export const Study: React.FC = () => {
     const navigate = useNavigate();
@@ -57,6 +58,7 @@ export const Study: React.FC = () => {
     // Profile ID for skip logging
     const [profileId, setProfileId] = useState<string | null>(null);
     const [englishAutoRead, setEnglishAutoRead] = useState(false);
+    const [isEasyText, setIsEasyText] = useState(false);
 
     const currentProblem = queue[currentIndex];
 
@@ -67,6 +69,7 @@ export const Study: React.FC = () => {
                 setSoundEnabled(profile.soundEnabled);
                 setProfileId(profile.id);
                 setEnglishAutoRead(profile.englishAutoRead || false);
+                setIsEasyText(profile.uiTextMode === "easy");
             }
         });
     }, []);
@@ -75,6 +78,9 @@ export const Study: React.FC = () => {
     const handleToggleTTS = async () => {
         const newValue = !englishAutoRead;
         setEnglishAutoRead(newValue);
+        if (newValue && currentProblem?.subject === "vocab" && currentProblem.questionText) {
+            speakEnglish(currentProblem.questionText);
+        }
         const profile = await getActiveProfile();
         if (profile) {
             await saveProfile({ ...profile, englishAutoRead: newValue });
@@ -413,6 +419,7 @@ export const Study: React.FC = () => {
             onFocusField={setActiveFieldIndex}
             swipeHandlers={swipeHandlers}
             englishAutoRead={englishAutoRead}
+            isEasyText={isEasyText}
             onToggleTTS={handleToggleTTS}
         />
     );

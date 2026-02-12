@@ -221,6 +221,7 @@ export const Home: React.FC = () => {
     const [currentEventType, setCurrentEventType] = useState<EventType | null>(null);
     const [showPaperTestModal, setShowPaperTestModal] = useState(false);
     const [pendingPaperTest, setPendingPaperTest] = useState<{ id: string; subject: "math" | "vocab"; level: number } | null>(null);
+    const isEasy = profile?.uiTextMode === "easy";
 
     const todayKey = toLocaleDateKey();
 
@@ -356,7 +357,7 @@ export const Home: React.FC = () => {
                 <div className="w-full max-w-md">
                     <div className="inline-flex items-center gap-2 rounded-full bg-white/70 border border-white/80 px-3 py-1 text-[11px] font-bold text-slate-600 shadow-sm">
                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                        きょうの ようす
+                        {isEasy ? "きょうの ようす" : "今日のようす"}
                     </div>
                 </div>
                 <motion.div
@@ -365,7 +366,7 @@ export const Home: React.FC = () => {
                     transition={{ duration: 0.5 }}
                     className="mt-2 w-full max-w-md rounded-[2rem] bg-white/88 backdrop-blur-md border border-white/80 shadow-[0_18px_36px_-28px_rgba(15,23,42,0.65)] p-5"
                 >
-                    <div className="text-[11px] tracking-wide text-slate-500 font-bold">いま、このこは</div>
+                    <div className="text-[11px] tracking-wide text-slate-500 font-bold">{isEasy ? "いま、このこは" : "いま、この子は"}</div>
                     <div className="mt-1 text-[22px] leading-snug font-black text-slate-800">{scene.nowLine}</div>
                     <div className="mt-4 text-sm text-slate-600">{scene.transition}</div>
                     <div className="mt-1 text-sm text-slate-600">きょうは、{scene.moodLine}</div>
@@ -408,14 +409,14 @@ export const Home: React.FC = () => {
                         className="w-full"
                         onClick={() => navigate("/study")}
                     >
-                        このこ と すすむ
+                        {isEasy ? "このこ と すすむ" : "この子と進む"}
                     </Button>
                     <div className="grid grid-cols-2 gap-3">
                         <Button variant="secondary" className="h-11 text-sm" onClick={() => navigate("/study?session=review&force_review=1")}>
-                            けはい を たどる
+                            {isEasy ? "けはい を たどる" : "復習する"}
                         </Button>
                         <Button variant="secondary" className="h-11 text-sm" onClick={() => navigate("/stats")}>
-                            きろく を みる
+                            {isEasy ? "きろく を みる" : "記録を見る"}
                         </Button>
                     </div>
                 </div>

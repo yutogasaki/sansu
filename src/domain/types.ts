@@ -212,6 +212,7 @@ export interface PeriodicTestSet {
 // ============================================================
 
 export type SubjectMode = 'mix' | 'math' | 'vocab';
+export type UITextMode = 'easy' | 'standard';
 
 /**
  * Grade levels
@@ -242,6 +243,7 @@ export interface UserProfile {
     vocabStartLevel: number;
     subjectMode: SubjectMode;
     soundEnabled: boolean;
+    uiTextMode?: UITextMode;
     dailyGoal?: number;
     kanjiMode?: boolean; // new: use Kanji for English answers if available
     englishAutoRead?: boolean; // new: auto TTS for English

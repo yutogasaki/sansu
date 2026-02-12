@@ -29,6 +29,8 @@ export const Settings: React.FC = () => {
     const [renameTarget, setRenameTarget] = useState<UserProfile | null>(null);
     const [newName, setNewName] = useState("");
     const [deleteTarget, setDeleteTarget] = useState<UserProfile | null>(null);
+    const isEasy = profile?.uiTextMode === "easy";
+    const t = (easy: string, standard: string) => (isEasy ? easy : standard);
 
     useEffect(() => {
         const load = async () => {
@@ -117,6 +119,13 @@ export const Settings: React.FC = () => {
     const handleSubjectModeChange = async (mode: "mix" | "math" | "vocab") => {
         if (!profile) return;
         const updated = { ...profile, subjectMode: mode };
+        await saveProfile(updated);
+        setProfile(updated);
+    };
+
+    const handleTextModeChange = async (mode: "easy" | "standard") => {
+        if (!profile) return;
+        const updated = { ...profile, uiTextMode: mode };
         await saveProfile(updated);
         setProfile(updated);
     };
@@ -235,6 +244,14 @@ export const Settings: React.FC = () => {
         }
     };
 
+    const getTestStatus = (subject: "math" | "vocab") => {
+        const pendingOnline = profile?.periodicTestState?.[subject]?.isPending;
+        const pendingPaper = (profile?.pendingPaperTests || []).some(t => t.subject === subject);
+        if (pendingPaper) return { label: isEasy ? "さいてん まち" : "採点待ち", tone: "bg-amber-100 text-amber-700" };
+        if (pendingOnline) return { label: isEasy ? "じゅんび OK" : "受験可能", tone: "bg-emerald-100 text-emerald-700" };
+        return { label: isEasy ? "つうじょう" : "通常", tone: "bg-slate-100 text-slate-600" };
+    };
+
     return (
         <div className="flex flex-col h-full bg-background">
             {/* 保護者ガードモーダル */}
@@ -307,7 +324,7 @@ export const Settings: React.FC = () => {
                 </div>
             </Modal>
 
-            <Header title="せってい" />
+            <Header title={t("せってい", "設定")} />
 
             <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 land:grid land:grid-cols-2 land:gap-6 land:space-y-0">
 
@@ -316,7 +333,7 @@ export const Settings: React.FC = () => {
                     <div className="flex items-center justify-between">
                         <h3 className="font-bold text-slate-700">プロフィール</h3>
                         <Button size="sm" variant="secondary" onClick={handleCreateProfile}>
-                            ついか
+                            {t("ついか", "追加")}
                         </Button>
                     </div>
                     {profiles.map(p => (
@@ -334,10 +351,10 @@ export const Settings: React.FC = () => {
 
                             <div className="flex items-center gap-1 shrink-0">
                                 {profile?.id === p.id ? (
-                                    <span className="text-xs text-[#483D8B] font-bold mr-2">つかってる</span>
+                                    <span className="text-xs text-[#483D8B] font-bold mr-2">{t("つかってる", "使用中")}</span>
                                 ) : (
                                     <Button size="sm" variant="secondary" className="px-3" onClick={() => handleSwitchProfile(p.id)}>
-                                        きりかえ
+                                        {t("きりかえ", "切替")}
                                     </Button>
                                 )}
 
@@ -442,6 +459,26 @@ export const Settings: React.FC = () => {
                     <p className="text-xs text-slate-400 text-center">えいごの こたえが かわります</p>
                 </Card>
 
+                {/* UI Text Mode */}
+                <Card className="p-4 space-y-3">
+                    <h3 className="font-bold text-slate-700">表示テキスト</h3>
+                    <div className="flex bg-slate-100 p-1 rounded-xl">
+                        <button
+                            className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${profile?.uiTextMode !== "easy" ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
+                            onClick={() => handleTextModeChange("standard")}
+                        >
+                            標準
+                        </button>
+                        <button
+                            className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${profile?.uiTextMode === "easy" ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
+                            onClick={() => handleTextModeChange("easy")}
+                        >
+                            やさしい
+                        </button>
+                    </div>
+                    <p className="text-xs text-slate-400 text-center">「やさしい」は ひらがな中心で表示します</p>
+                </Card>
+
                 {/* Math & Vocab Settings Link */}
                 <Card className="p-4 space-y-4">
                     <h3 className="font-bold text-slate-700">がくしゅう の なかみ</h3>
@@ -453,7 +490,7 @@ export const Settings: React.FC = () => {
                                 <div className="text-2xl font-black text-slate-800">Lv.{profile?.mathMainLevel || 1}</div>
                             </div>
                             <Button variant="secondary" onClick={() => navigate("/settings/curriculum")}>
-                                かえる
+                                {t("かえる", "変更")}
                             </Button>
                         </div>
 
@@ -463,82 +500,69 @@ export const Settings: React.FC = () => {
                                 <div className="text-2xl font-black text-slate-800">Lv.{profile?.vocabMainLevel || 1}</div>
                             </div>
                             <Button variant="secondary" onClick={() => navigate("/settings/curriculum")}>
-                                かえる
+                                {t("かえる", "変更")}
                             </Button>
                         </div>
                     </div>
                 </Card>
 
                 {/* Periodic Test Settings (Direct Start & PDF) */}
-                <Card className="p-4 space-y-4">
-                    <h3 className="font-bold text-slate-700">定期テスト (20もん)</h3>
-                    <div className="text-xs text-slate-400 -mt-2 mb-2">
-                        今すぐ アプリで テストを します
-                    </div>
+                <Card className="p-4 space-y-4 land:col-span-2">
+                    <h3 className="font-bold text-slate-700">定期テスト（20問）</h3>
+                    <p className="text-xs text-slate-500 -mt-2">アプリ受験と紙テストをここから開始できます</p>
 
-                    <div className="grid grid-cols-2 gap-4">
-                        {/* Math */}
-                        <div className="space-y-2">
-                            <div className="font-bold text-slate-600 text-center">さんすう</div>
-                            <Button
-                                size="lg"
-                                variant="primary"
-                                className="w-full bg-[#483D8B] hover:bg-[#483D8B]/90"
-                                onClick={() => withParentGuard(() => {
-                                    // Direct Start
-                                    navigate(`/study?session=periodic-test&focus_subject=math`);
-                                })}
-                            >
-                                スタート
-                            </Button>
-                            <Button
-                                size="sm"
-                                variant="secondary"
-                                className="w-full text-xs"
-                                onClick={handlePrintPDF}
-                            >
-                                PDF (印刷)
-                            </Button>
-                        </div>
-
-                        {/* Vocab */}
-                        <div className="space-y-2">
-                            <div className="font-bold text-slate-600 text-center">えいご</div>
-                            <Button
-                                size="lg"
-                                variant="primary"
-                                className="w-full bg-[#483D8B] hover:bg-[#483D8B]/90"
-                                onClick={() => withParentGuard(() => {
-                                    // Direct Start
-                                    navigate(`/study?session=periodic-test&focus_subject=vocab`);
-                                })}
-                            >
-                                スタート
-                            </Button>
-                            <Button
-                                size="sm"
-                                variant="secondary"
-                                className="w-full text-xs"
-                                onClick={handlePrintVocabPDF}
-                            >
-                                PDF (印刷)
-                            </Button>
-                        </div>
+                    <div className="grid grid-cols-1 land:grid-cols-2 gap-3">
+                        {([
+                            { subject: "math" as const, title: "算数", level: profile?.mathMainLevel || 1, print: handlePrintPDF, startPath: "/study?session=periodic-test&focus_subject=math" },
+                            { subject: "vocab" as const, title: "英語", level: profile?.vocabMainLevel || 1, print: handlePrintVocabPDF, startPath: "/study?session=periodic-test&focus_subject=vocab" },
+                        ]).map(item => {
+                            const status = getTestStatus(item.subject);
+                            return (
+                                <div key={item.subject} className="rounded-2xl border border-slate-200 bg-white p-3 space-y-3">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <div className="font-bold text-slate-700">{item.title} Lv.{item.level}</div>
+                                            <div className="text-xs text-slate-500">20問 / 目安 8〜12分</div>
+                                        </div>
+                                        <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold ${status.tone}`}>
+                                            {status.label}
+                                        </span>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <Button
+                                            size="sm"
+                                            className="w-full h-10"
+                                            onClick={() => withParentGuard(() => navigate(item.startPath))}
+                                        >
+                                            {t("アプリで うける", "アプリ受験")}
+                                        </Button>
+                                        <Button
+                                            size="sm"
+                                            variant="secondary"
+                                            className="w-full h-10 text-xs"
+                                            onClick={item.print}
+                                        >
+                                            {t("かみで うける", "紙テストPDF")}
+                                        </Button>
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </Card>
 
                 {/* Parent Menu */}
                 <Card className="p-4 flex justify-between items-center">
                     <div>
-                        <div className="font-bold text-slate-700">ほごしゃ メニュー</div>
-                        <div className="text-xs text-slate-400">おとなの ひとが みる ページ</div>
+                        <div className="font-bold text-slate-700">{t("ほごしゃ メニュー", "保護者メニュー")}</div>
+                        <div className="text-xs text-slate-400">{t("おとなの ひとが みる ページ", "大人向けページ")}</div>
                     </div>
                     <Button
                         size="sm"
                         variant="secondary"
                         onClick={() => withParentGuard(() => navigate('/parents'))}
                     >
-                        ひらく
+                        {t("ひらく", "開く")}
                     </Button>
                 </Card>
 
@@ -546,14 +570,14 @@ export const Settings: React.FC = () => {
                 <Card className="p-4 flex justify-between items-center">
                     <span className="font-bold text-slate-700">開発者モード</span>
                     <Button size="sm" variant="secondary" onClick={() => navigate("/dev")}>
-                        ひらく
+                        {t("ひらく", "開く")}
                     </Button>
                 </Card>
 
                 {/* Advanced / Data */}
                 <div className="pt-8 land:col-span-2">
                     <Button variant="ghost" className="w-full text-red-500 text-sm" onClick={handleReset}>
-                        データをすべてリセット
+                        {t("データをすべてリセット", "全データをリセット")}
                     </Button>
                 </div>
 
