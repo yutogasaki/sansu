@@ -394,25 +394,21 @@ export const Home: React.FC = () => {
 
                 {/* Fixed CTA area at bottom */}
                 <div className="flex-none w-full max-w-md pb-24 land:pb-20 pt-2">
-                    <div className="space-y-2">
+                    <div className="flex gap-2">
                         <Button
                             size="xl"
-                            className="w-full"
+                            className="flex-1"
                             onClick={() => { warmUpTTS(); navigate("/study"); }}
                         >
                             {isEasy ? "このこ と すすむ" : "この子と進む"}
                         </Button>
-                        <div className="grid grid-cols-3 gap-2">
-                            <Button variant="secondary" className="h-10 text-xs" onClick={() => { warmUpTTS(); navigate("/study?session=review&force_review=1"); }}>
-                                {isEasy ? "ふくしゅう" : "復習"}
-                            </Button>
-                            <Button variant="secondary" className="h-10 text-xs" onClick={() => navigate("/stats")}>
-                                {isEasy ? "きろく" : "記録"}
-                            </Button>
-                            <Button variant="secondary" className="h-10 text-xs" onClick={() => navigate("/battle")}>
-                                {isEasy ? "たいせん" : "対戦"}
-                            </Button>
-                        </div>
+                        <Button
+                            variant="secondary"
+                            className="h-16 px-5 text-sm"
+                            onClick={() => { warmUpTTS(); navigate("/study?session=review&force_review=1"); }}
+                        >
+                            {isEasy ? "ふくしゅう" : "復習"}
+                        </Button>
                     </div>
                 </div>
             </div>
