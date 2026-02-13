@@ -1,5 +1,6 @@
 import React from "react";
 import { TugOfWarBar } from "./TugOfWarBar";
+import { BossCoopBar } from "./BossCoopBar";
 import { PlayerPanel } from "./PlayerPanel";
 import { BattleGameState, PlayerId } from "../../domain/battle/types";
 
@@ -19,20 +20,32 @@ export const BattleArena: React.FC<BattleArenaProps> = ({
     onCancel,
 }) => {
     const isOver = state.winner !== null;
+    const showBossCoop = state.gameMode === "boss_coop";
+    const totalDamage = state.p1.damageDealt + state.p2.damageDealt;
 
     return (
         <div className="h-full flex flex-col bg-slate-50">
-            {/* Tug of War Bar */}
+            {/* Top game bar */}
             <div className="flex-none">
-                <TugOfWarBar
-                    position={state.ropePosition}
-                    maxSteps={state.maxSteps}
-                    p1Emoji={state.p1.config.emoji}
-                    p2Emoji={state.p2.config.emoji}
-                    p1Name={state.p1.config.name}
-                    p2Name={state.p2.config.name}
-                    onCancel={onCancel}
-                />
+                {showBossCoop ? (
+                    <BossCoopBar
+                        bossHp={state.bossHp}
+                        bossMaxHp={state.bossMaxHp}
+                        remainingSec={state.remainingSec}
+                        totalDamage={totalDamage}
+                        onCancel={onCancel}
+                    />
+                ) : (
+                    <TugOfWarBar
+                        position={state.ropePosition}
+                        maxSteps={state.maxSteps}
+                        p1Emoji={state.p1.config.emoji}
+                        p2Emoji={state.p2.config.emoji}
+                        p1Name={state.p1.config.name}
+                        p2Name={state.p2.config.name}
+                        onCancel={onCancel}
+                    />
+                )}
             </div>
 
             {/* Player panels */}
@@ -44,6 +57,7 @@ export const BattleArena: React.FC<BattleArenaProps> = ({
                         onSubmitAnswer={(ans) => onSubmitAnswer("p1", ans)}
                         onInputChange={(inp) => onInputChange("p1", inp)}
                         onSkip={() => onSkip("p1")}
+                        showCombo={showBossCoop}
                         disabled={isOver}
                     />
                 </div>
@@ -55,6 +69,7 @@ export const BattleArena: React.FC<BattleArenaProps> = ({
                         onSubmitAnswer={(ans) => onSubmitAnswer("p2", ans)}
                         onInputChange={(inp) => onInputChange("p2", inp)}
                         onSkip={() => onSkip("p2")}
+                        showCombo={showBossCoop}
                         disabled={isOver}
                     />
                 </div>

@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer } from "react";
+import React, { useCallback, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { OrientationGate } from "../components/battle/OrientationGate";
 import { BattleSetup } from "../components/battle/BattleSetup";
@@ -10,15 +10,15 @@ import {
     createInitialBattleState,
     generateBattleProblem,
 } from "../domain/battle/engine";
-import { PlayerId, PlayerConfig } from "../domain/battle/types";
+import { PlayerId, PlayerConfig, BattleGameMode } from "../domain/battle/types";
 import { playSound } from "../utils/audio";
 
 export const Battle: React.FC = () => {
     const navigate = useNavigate();
     const [state, dispatch] = useReducer(battleReducer, undefined, createInitialBattleState);
 
-    const handleStart = useCallback((p1: PlayerConfig, p2: PlayerConfig) => {
-        dispatch({ type: "START_GAME", p1Config: p1, p2Config: p2 });
+    const handleStart = useCallback((p1: PlayerConfig, p2: PlayerConfig, mode: BattleGameMode) => {
+        dispatch({ type: "START_GAME", p1Config: p1, p2Config: p2, mode });
     }, []);
 
     const handleCountdownDone = useCallback(() => {
@@ -42,6 +42,7 @@ export const Battle: React.FC = () => {
             const playerState = player === "p1" ? state.p1 : state.p2;
             const problem = playerState.currentProblem;
             if (!problem) return;
+            if (state.gameMode === "boss_coop" && playerState.lockSeconds > 0) return;
 
             const isCorrect = answer === problem.correctAnswer;
 
@@ -58,7 +59,7 @@ export const Battle: React.FC = () => {
                 dispatch({ type: "INCORRECT_ANSWER", player });
             }
         },
-        [state.p1, state.p2]
+        [state.gameMode, state.p1, state.p2]
     );
 
     const handleInputChange = useCallback(
@@ -89,6 +90,14 @@ export const Battle: React.FC = () => {
     const handleBackToHome = useCallback(() => {
         navigate("/");
     }, [navigate]);
+
+    useEffect(() => {
+        if (state.phase !== "playing" || state.gameMode !== "boss_coop") return;
+        const id = window.setInterval(() => {
+            dispatch({ type: "TICK" });
+        }, 1000);
+        return () => window.clearInterval(id);
+    }, [state.phase, state.gameMode]);
 
     return (
         <OrientationGate>

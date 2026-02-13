@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "../../utils/cn";
-import { BattleGrade, BattleSubject, PlayerConfig } from "../../domain/battle/types";
+import { BattleGameMode, BattleGrade, BattleSubject, PlayerConfig } from "../../domain/battle/types";
 
 const AVATARS = ["🐱", "🐶", "🐰", "🐻", "🐼", "🦊", "🐸", "🐧"];
 const GRADE_LABELS: Record<BattleGrade, string> = {
@@ -19,7 +19,7 @@ const SUBJECT_OPTIONS: { value: BattleSubject; label: string; icon: string }[] =
 ];
 
 interface BattleSetupProps {
-    onStart: (p1: PlayerConfig, p2: PlayerConfig) => void;
+    onStart: (p1: PlayerConfig, p2: PlayerConfig, mode: BattleGameMode) => void;
     onBack: () => void;
 }
 
@@ -111,6 +111,7 @@ const PlayerSetupPanel: React.FC<{
 export const BattleSetup: React.FC<BattleSetupProps> = ({ onStart, onBack }) => {
     const [p1, setP1] = useState<PlayerSetup>({ name: "", grade: null, emoji: "🐱", subject: "math" });
     const [p2, setP2] = useState<PlayerSetup>({ name: "", grade: null, emoji: "🐶", subject: "math" });
+    const [mode, setMode] = useState<BattleGameMode>("tug_of_war");
 
     const canStart = p1.grade !== null && p2.grade !== null && p1.emoji && p2.emoji;
 
@@ -118,7 +119,8 @@ export const BattleSetup: React.FC<BattleSetupProps> = ({ onStart, onBack }) => 
         if (!canStart) return;
         onStart(
             { name: p1.name || "プレイヤー1", grade: p1.grade!, emoji: p1.emoji, subject: p1.subject },
-            { name: p2.name || "プレイヤー2", grade: p2.grade!, emoji: p2.emoji, subject: p2.subject }
+            { name: p2.name || "プレイヤー2", grade: p2.grade!, emoji: p2.emoji, subject: p2.subject },
+            mode
         );
     };
 
@@ -132,8 +134,35 @@ export const BattleSetup: React.FC<BattleSetupProps> = ({ onStart, onBack }) => 
                 >
                     ← もどる
                 </button>
-                <div className="text-xl font-black text-slate-800">つなひき たいせん</div>
+                <div className="text-xl font-black text-slate-800">たいせん ゲーム</div>
                 <div className="w-20" />
+            </div>
+
+            <div className="px-4 pb-2">
+                <div className="bg-white rounded-2xl border border-slate-200 p-2 flex gap-2">
+                    <button
+                        onClick={() => setMode("tug_of_war")}
+                        className={cn(
+                            "flex-1 rounded-xl px-3 py-2 text-sm font-bold transition-all",
+                            mode === "tug_of_war"
+                                ? "bg-slate-800 text-white shadow-sm"
+                                : "bg-slate-50 text-slate-500 hover:bg-slate-100"
+                        )}
+                    >
+                        🪢 つなひき たいせん
+                    </button>
+                    <button
+                        onClick={() => setMode("boss_coop")}
+                        className={cn(
+                            "flex-1 rounded-xl px-3 py-2 text-sm font-bold transition-all",
+                            mode === "boss_coop"
+                                ? "bg-slate-800 text-white shadow-sm"
+                                : "bg-slate-50 text-slate-500 hover:bg-slate-100"
+                        )}
+                    >
+                        🐲 ボス きょうりょく
+                    </button>
+                </div>
             </div>
 
             {/* Player setup panels */}

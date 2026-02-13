@@ -96,7 +96,8 @@ const drawFraction = (
 };
 
 const sanitizeForPdf = (text: string): string => {
-    return text.replace(/🍎/g, '●').replace(/□/g, '[   ]');
+    // PDFフォントでemojiが欠けるため、数える問題は印刷向けの記号へ置換する
+    return text.replace(/🍎/g, 'りんご ').replace(/□/g, '[   ]').trimEnd();
 };
 
 const drawMathExpression = (

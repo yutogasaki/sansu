@@ -10,6 +10,7 @@ interface PlayerPanelProps {
     onSubmitAnswer: (answer: string) => void;
     onInputChange: (input: string) => void;
     onSkip: () => void;
+    showCombo?: boolean;
     disabled?: boolean;
 }
 
@@ -21,12 +22,14 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
     onSubmitAnswer,
     onInputChange,
     onSkip,
+    showCombo = false,
     disabled = false,
 }) => {
     const [feedback, setFeedback] = useState<Feedback>("none");
     const isP1 = player === "p1";
     const problem = gameState.currentProblem;
     const isChoice = problem?.inputType === "choice";
+    const isLocked = gameState.lockSeconds > 0;
 
     const flashFeedback = useCallback((type: Feedback) => {
         setFeedback(type);
@@ -35,37 +38,37 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
 
     const handleInput = useCallback(
         (val: number | string) => {
-            if (disabled || !problem) return;
+            if (disabled || isLocked || !problem) return;
             const next = gameState.userInput + String(val);
             onInputChange(next);
         },
-        [disabled, problem, gameState.userInput, onInputChange]
+        [disabled, isLocked, problem, gameState.userInput, onInputChange]
     );
 
     const handleDelete = useCallback(() => {
-        if (disabled || !problem) return;
+        if (disabled || isLocked || !problem) return;
         const next = gameState.userInput.slice(0, -1);
         onInputChange(next);
-    }, [disabled, problem, gameState.userInput, onInputChange]);
+    }, [disabled, isLocked, problem, gameState.userInput, onInputChange]);
 
     const handleClear = useCallback(() => {
-        if (disabled || !problem) return;
+        if (disabled || isLocked || !problem) return;
         onInputChange("");
-    }, [disabled, problem, onInputChange]);
+    }, [disabled, isLocked, problem, onInputChange]);
 
     const handleEnter = useCallback(() => {
-        if (disabled || !problem || gameState.userInput === "") return;
+        if (disabled || isLocked || !problem || gameState.userInput === "") return;
         const isCorrect = gameState.userInput === problem.correctAnswer;
         flashFeedback(isCorrect ? "correct" : "incorrect");
         onSubmitAnswer(gameState.userInput);
-    }, [disabled, problem, gameState.userInput, onSubmitAnswer, flashFeedback]);
+    }, [disabled, isLocked, problem, gameState.userInput, onSubmitAnswer, flashFeedback]);
 
     const handleChoiceSelect = useCallback((value: string) => {
-        if (disabled || !problem) return;
+        if (disabled || isLocked || !problem) return;
         const isCorrect = value === problem.correctAnswer;
         flashFeedback(isCorrect ? "correct" : "incorrect");
         onSubmitAnswer(value);
-    }, [disabled, problem, onSubmitAnswer, flashFeedback]);
+    }, [disabled, isLocked, problem, onSubmitAnswer, flashFeedback]);
 
     const bgFlash = feedback === "correct"
         ? "bg-emerald-50"
@@ -90,7 +93,7 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
                     </div>
                     <button
                         onClick={onSkip}
-                        disabled={disabled || !problem}
+                        disabled={disabled || isLocked || !problem}
                         className="px-2 py-0.5 rounded-full text-[10px] font-bold text-slate-400 bg-slate-100 hover:bg-slate-200 hover:text-slate-600 transition-colors disabled:opacity-30"
                     >
                         スキップ ▶
@@ -119,6 +122,12 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
             <div className="flex-none flex justify-center gap-3 px-3 pb-1 text-xs font-bold text-slate-400">
                 <span className="text-emerald-500">○ {gameState.correctCount}</span>
                 <span className="text-red-400">× {gameState.incorrectCount}</span>
+                {showCombo && (
+                    <span className="text-violet-500">🔥 {gameState.combo} コンボ</span>
+                )}
+                {showCombo && isLocked && (
+                    <span className="text-rose-500">⏳ {gameState.lockSeconds}びょう まって</span>
+                )}
             </div>
 
             {/* Input area */}

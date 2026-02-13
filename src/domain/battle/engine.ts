@@ -24,6 +24,12 @@ const GRADE_TO_VOCAB_LEVELS: Record<BattleGrade, { min: number; max: number }> =
 };
 
 const MAX_STEPS = 5;
+const BOSS_MAX_HP = 100;
+const BOSS_TIME_LIMIT_SEC = 90;
+const BASE_DAMAGE = 10;
+const COMBO_DAMAGE = 15;
+const COMBO_THRESHOLD = 3;
+const INCORRECT_LOCK_SEC = 2;
 
 // ============================================================
 // Problem Generation
@@ -107,14 +113,23 @@ const defaultPlayerState: PlayerGameState = {
     userInput: "",
     correctCount: 0,
     incorrectCount: 0,
+    combo: 0,
+    damageDealt: 0,
+    lockSeconds: 0,
 };
 
 export function createInitialBattleState(): BattleGameState {
     return {
         phase: "setup",
+        gameMode: "tug_of_war",
         ropePosition: 0,
         maxSteps: MAX_STEPS,
         winner: null,
+        bossHp: BOSS_MAX_HP,
+        bossMaxHp: BOSS_MAX_HP,
+        bossCleared: false,
+        timeLimitSec: BOSS_TIME_LIMIT_SEC,
+        remainingSec: BOSS_TIME_LIMIT_SEC,
         p1: { ...defaultPlayerState },
         p2: { ...defaultPlayerState },
         startedAt: null,
@@ -133,6 +148,30 @@ export function battleReducer(
     switch (action.type) {
         case "CORRECT_ANSWER": {
             if (state.phase !== "playing" || state.winner) return state;
+            const pKey = action.player;
+
+            if (state.gameMode === "boss_coop") {
+                const prevCombo = state[pKey].combo;
+                const nextCombo = prevCombo + 1;
+                const damage = nextCombo >= COMBO_THRESHOLD ? COMBO_DAMAGE : BASE_DAMAGE;
+                const nextBossHp = Math.max(0, state.bossHp - damage);
+                const bossCleared = nextBossHp <= 0;
+
+                return {
+                    ...state,
+                    bossHp: nextBossHp,
+                    bossCleared,
+                    [pKey]: {
+                        ...state[pKey],
+                        correctCount: state[pKey].correctCount + 1,
+                        combo: nextCombo,
+                        damageDealt: state[pKey].damageDealt + damage,
+                        lockSeconds: 0,
+                    },
+                    phase: bossCleared ? "result" : "playing",
+                    finishedAt: bossCleared ? Date.now() : state.finishedAt,
+                };
+            }
 
             const delta = action.player === "p1" ? -1 : 1;
             const newPos = Math.max(
@@ -140,10 +179,10 @@ export function battleReducer(
                 Math.min(state.maxSteps, state.ropePosition + delta)
             );
 
-            const pKey = action.player;
             const newPlayer = {
                 ...state[pKey],
                 correctCount: state[pKey].correctCount + 1,
+                combo: state[pKey].combo + 1,
             };
 
             const winner =
@@ -159,7 +198,7 @@ export function battleReducer(
                 [pKey]: newPlayer,
                 winner,
                 phase: winner ? "result" : "playing",
-                finishedAt: winner ? Date.now() : null,
+                finishedAt: winner ? Date.now() : state.finishedAt,
             };
         }
 
@@ -171,6 +210,8 @@ export function battleReducer(
                 [pKey]: {
                     ...state[pKey],
                     incorrectCount: state[pKey].incorrectCount + 1,
+                    combo: 0,
+                    lockSeconds: state.gameMode === "boss_coop" ? INCORRECT_LOCK_SEC : 0,
                     userInput: "",
                 },
             };
@@ -203,8 +244,24 @@ export function battleReducer(
             return {
                 ...state,
                 phase: "countdown",
-                p1: { ...state.p1, config: action.p1Config },
-                p2: { ...state.p2, config: action.p2Config },
+                gameMode: action.mode,
+                winner: null,
+                ropePosition: 0,
+                bossHp: BOSS_MAX_HP,
+                bossMaxHp: BOSS_MAX_HP,
+                bossCleared: false,
+                timeLimitSec: BOSS_TIME_LIMIT_SEC,
+                remainingSec: BOSS_TIME_LIMIT_SEC,
+                startedAt: null,
+                finishedAt: null,
+                p1: {
+                    ...defaultPlayerState,
+                    config: action.p1Config,
+                },
+                p2: {
+                    ...defaultPlayerState,
+                    config: action.p2Config,
+                },
             };
 
         case "COUNTDOWN_DONE":
@@ -212,6 +269,31 @@ export function battleReducer(
                 ...state,
                 phase: "playing",
                 startedAt: Date.now(),
+            };
+
+        case "TICK":
+            if (state.phase !== "playing" || state.gameMode !== "boss_coop" || state.bossCleared) return state;
+            if (state.remainingSec <= 1) {
+                return {
+                    ...state,
+                    remainingSec: 0,
+                    phase: "result",
+                    finishedAt: Date.now(),
+                    p1: { ...state.p1, lockSeconds: 0 },
+                    p2: { ...state.p2, lockSeconds: 0 },
+                };
+            }
+            return {
+                ...state,
+                remainingSec: state.remainingSec - 1,
+                p1: {
+                    ...state.p1,
+                    lockSeconds: Math.max(0, state.p1.lockSeconds - 1),
+                },
+                p2: {
+                    ...state.p2,
+                    lockSeconds: Math.max(0, state.p2.lockSeconds - 1),
+                },
             };
 
         case "RESET":
