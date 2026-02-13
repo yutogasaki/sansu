@@ -306,22 +306,6 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
 
             {/* Full Screen Feedback Overlays */}
             <AnimatePresence>
-                {feedback === 'correct' && (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 1.2 }}
-                        className="absolute inset-0 z-50 flex items-center justify-center bg-green-400/90 backdrop-blur-sm"
-                    >
-                        <motion.div
-                            animate={{ rotate: [0, 10, -10, 0] }}
-                            className="bg-white rounded-full p-8 shadow-2xl"
-                        >
-                            <div className="text-8xl text-green-500">⭕</div>
-                        </motion.div>
-                    </motion.div>
-                )}
-
                 {feedback === 'incorrect' && showCorrection && (
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -448,6 +432,26 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 {/* Mobile: Use flex-1 with min-h-0 to allow shrinking if controls need space */}
                 <div id="debug-card-container" {...swipeHandlers} className="flex-1 min-h-0 px-4 py-2 flex flex-col justify-center relative z-0 land:px-6 ipadland:flex-[2] ipadland:p-0 mobile:px-1 mobile:py-1 ipadland:min-h-0">
                     <Card className="w-full flex flex-col items-center justify-center p-6 shadow-xl border-t-4 border-t-primary relative land:p-4 bg-white mobile:p-4 mobile:border-t-2 mobile:shadow-none overflow-hidden min-h-0">
+
+                        {/* Compact correct feedback overlay on card */}
+                        <AnimatePresence>
+                            {feedback === 'correct' && (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.6 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 1.1 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="absolute inset-0 z-20 flex items-center justify-center bg-green-400/85 rounded-[inherit]"
+                                >
+                                    <motion.div
+                                        animate={{ rotate: [0, 8, -8, 0] }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        <div className="text-7xl text-white drop-shadow-lg mobile:text-6xl">⭕</div>
+                                    </motion.div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
                         {/* Top row: review badge (left) + skip button (right) */}
                         <div className="absolute top-2 left-3 right-3 flex items-center justify-between z-10 mobile:top-1 mobile:left-2 mobile:right-2">

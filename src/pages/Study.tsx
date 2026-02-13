@@ -284,7 +284,7 @@ export const Study: React.FC = () => {
 
             setTimeout(() => {
                 nextProblem();
-            }, 800);
+            }, 500);
         } else {
             setFeedback("incorrect");
             playSound("incorrect");
