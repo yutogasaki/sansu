@@ -327,10 +327,10 @@ export const Settings: React.FC = () => {
 
             <Header title={t("せってい", "設定")} />
 
-            <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 land:grid land:grid-cols-2 land:gap-6 land:space-y-0">
+            <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6">
 
-                {/* Profile */}
-                <Card className="p-4 space-y-4 land:col-span-2">
+                {/* ===== Section: Profile ===== */}
+                <Card className="p-4 space-y-4">
                     <div className="flex items-center justify-between">
                         <h3 className="font-bold text-slate-700">プロフィール</h3>
                         <Button size="sm" variant="secondary" onClick={handleCreateProfile}>
@@ -371,218 +371,222 @@ export const Settings: React.FC = () => {
                     ))}
                 </Card>
 
-                {/* Sound */}
-                <Card className="p-4 flex justify-between items-center">
-                    <span className="font-bold text-slate-700">おと・BGM</span>
-                    <Button
-                        size="sm"
-                        variant={sound ? "primary" : "secondary"}
-                        onClick={handleSoundToggle}
-                        className="w-20"
-                    >
-                        {sound ? "ON" : "OFF"}
-                    </Button>
-                </Card>
+                {/* ===== Section: Learning Settings ===== */}
+                <div className="space-y-3">
+                    <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">
+                        {t("べんきょう の せってい", "学習の設定")}
+                    </h2>
 
-                {/* English Auto-TTS */}
-                <Card className="p-4 flex justify-between items-center">
-                    <span className="font-bold text-slate-700">えいご よみあげ (自動)</span>
-                    <Button
-                        size="sm"
-                        variant={profile?.englishAutoRead ? "primary" : "secondary"}
-                        onClick={async () => {
-                            if (!profile) return;
-                            const updated = { ...profile, englishAutoRead: !profile.englishAutoRead };
-                            await saveProfile(updated);
-                            setProfile(updated);
-                        }}
-                        className="w-20"
-                    >
-                        {profile?.englishAutoRead ? "ON" : "OFF"}
-                    </Button>
-                </Card>
-
-                {/* Subject Mode */}
-                <Card className="p-4 space-y-3">
-                    <h3 className="font-bold text-slate-700">べんきょう する もの</h3>
-                    <div className="grid grid-cols-3 gap-2">
-                        <Button
-                            size="sm"
-                            variant={profile?.subjectMode === "mix" ? "primary" : "secondary"}
-                            onClick={() => handleSubjectModeChange("mix")}
-                        >
-                            さんすう+えいご
-                        </Button>
-                        <Button
-                            size="sm"
-                            variant={profile?.subjectMode === "math" ? "primary" : "secondary"}
-                            onClick={() => handleSubjectModeChange("math")}
-                        >
-                            さんすう
-                        </Button>
-                        <Button
-                            size="sm"
-                            variant={profile?.subjectMode === "vocab" ? "primary" : "secondary"}
-                            onClick={() => handleSubjectModeChange("vocab")}
-                        >
-                            えいご
-                        </Button>
-                    </div>
-                </Card>
-
-                {/* Kanji Mode (Japanese Mode) */}
-                <Card className="p-4 space-y-3">
-                    <h3 className="font-bold text-slate-700">にほんご モード</h3>
-                    <div className="flex bg-slate-100 p-1 rounded-xl">
-                        <button
-                            className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${!profile?.kanjiMode ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
-                            onClick={async () => {
-                                if (!profile) return;
-                                const updated = { ...profile, kanjiMode: false };
-                                await saveProfile(updated);
-                                setProfile(updated);
-                            }}
-                        >
-                            ひらがな
-                        </button>
-                        <button
-                            className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${profile?.kanjiMode ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
-                            onClick={async () => {
-                                if (!profile) return;
-                                const updated = { ...profile, kanjiMode: true };
-                                await saveProfile(updated);
-                                setProfile(updated);
-                            }}
-                        >
-                            漢字
-                        </button>
-                    </div>
-                    <p className="text-xs text-slate-400 text-center">えいごの こたえが かわります</p>
-                </Card>
-
-                {/* UI Text Mode */}
-                <Card className="p-4 space-y-3">
-                    <h3 className="font-bold text-slate-700">表示テキスト</h3>
-                    <div className="flex bg-slate-100 p-1 rounded-xl">
-                        <button
-                            className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${profile?.uiTextMode !== "easy" ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
-                            onClick={() => handleTextModeChange("standard")}
-                        >
-                            標準
-                        </button>
-                        <button
-                            className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${profile?.uiTextMode === "easy" ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
-                            onClick={() => handleTextModeChange("easy")}
-                        >
-                            やさしい
-                        </button>
-                    </div>
-                    <p className="text-xs text-slate-400 text-center">「やさしい」は ひらがな中心で表示します</p>
-                </Card>
-
-                {/* Math & Vocab Settings Link */}
-                <Card className="p-4 space-y-4">
-                    <h3 className="font-bold text-slate-700">がくしゅう の なかみ</h3>
-
-                    <div className="space-y-3">
-                        <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
-                            <div>
-                                <div className="font-bold text-slate-600">さんすう レベル</div>
-                                <div className="text-2xl font-black text-slate-800">Lv.{profile?.mathMainLevel || 1}</div>
-                            </div>
-                            <Button variant="secondary" onClick={() => navigate("/settings/curriculum")}>
-                                {t("かえる", "変更")}
+                    {/* Subject Mode */}
+                    <Card className="p-4 space-y-3">
+                        <h3 className="font-bold text-slate-700">{t("べんきょう する もの", "学習する科目")}</h3>
+                        <div className="grid grid-cols-3 gap-2">
+                            <Button size="sm" variant={profile?.subjectMode === "mix" ? "primary" : "secondary"} onClick={() => handleSubjectModeChange("mix")}>
+                                {t("さんすう+えいご", "算数+英語")}
+                            </Button>
+                            <Button size="sm" variant={profile?.subjectMode === "math" ? "primary" : "secondary"} onClick={() => handleSubjectModeChange("math")}>
+                                {t("さんすう", "算数")}
+                            </Button>
+                            <Button size="sm" variant={profile?.subjectMode === "vocab" ? "primary" : "secondary"} onClick={() => handleSubjectModeChange("vocab")}>
+                                {t("えいご", "英語")}
                             </Button>
                         </div>
+                    </Card>
 
-                        <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
-                            <div>
-                                <div className="font-bold text-slate-600">えいご レベル</div>
-                                <div className="text-2xl font-black text-slate-800">Lv.{profile?.vocabMainLevel || 1}</div>
-                            </div>
-                            <Button variant="secondary" onClick={() => navigate("/settings/curriculum")}>
-                                {t("かえる", "変更")}
-                            </Button>
-                        </div>
-                    </div>
-                </Card>
-
-                {/* Periodic Test Settings (Direct Start & PDF) */}
-                <Card className="p-4 space-y-4 land:col-span-2">
-                    <h3 className="font-bold text-slate-700">定期テスト（20問）</h3>
-                    <p className="text-xs text-slate-500 -mt-2">アプリ受験と紙テストをここから開始できます</p>
-
-                    <div className="grid grid-cols-1 land:grid-cols-2 gap-3">
-                        {([
-                            { subject: "math" as const, title: "算数", level: profile?.mathMainLevel || 1, print: handlePrintPDF, startPath: "/study?session=periodic-test&focus_subject=math" },
-                            { subject: "vocab" as const, title: "英語", level: profile?.vocabMainLevel || 1, print: handlePrintVocabPDF, startPath: "/study?session=periodic-test&focus_subject=vocab" },
-                        ]).map(item => {
-                            const status = getTestStatus(item.subject);
-                            return (
-                                <div key={item.subject} className="rounded-2xl border border-slate-200 bg-white p-3 space-y-3">
-                                    <div className="flex items-center justify-between">
-                                        <div>
-                                            <div className="font-bold text-slate-700">{item.title} Lv.{item.level}</div>
-                                            <div className="text-xs text-slate-500">20問 / 目安 8〜12分</div>
-                                        </div>
-                                        <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold ${status.tone}`}>
-                                            {status.label}
-                                        </span>
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-2">
-                                        <Button
-                                            size="sm"
-                                            className="w-full h-10"
-                                            onClick={() => withParentGuard(() => navigate(item.startPath))}
-                                        >
-                                            {t("アプリで うける", "アプリ受験")}
-                                        </Button>
-                                        <Button
-                                            size="sm"
-                                            variant="secondary"
-                                            className="w-full h-10 text-xs"
-                                            onClick={item.print}
-                                        >
-                                            {t("かみで うける", "紙テストPDF")}
-                                        </Button>
-                                    </div>
+                    {/* Level Settings */}
+                    <Card className="p-4 space-y-3">
+                        <h3 className="font-bold text-slate-700">{t("レベル", "レベル")}</h3>
+                        <div className="space-y-2">
+                            <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                                <div>
+                                    <div className="font-bold text-slate-600">{t("さんすう", "算数")}</div>
+                                    <div className="text-2xl font-black text-slate-800">Lv.{profile?.mathMainLevel || 1}</div>
                                 </div>
-                            );
-                        })}
-                    </div>
-                </Card>
-
-                {/* Parent Menu */}
-                <Card className="p-4 flex justify-between items-center">
-                    <div>
-                        <div className="font-bold text-slate-700">{t("ほごしゃ メニュー", "保護者メニュー")}</div>
-                        <div className="text-xs text-slate-400">{t("おとなの ひとが みる ページ", "大人向けページ")}</div>
-                    </div>
-                    <Button
-                        size="sm"
-                        variant="secondary"
-                        onClick={() => withParentGuard(() => navigate('/parents', { state: { parentGatePassed: true } }))}
-                    >
-                        {t("ひらく", "開く")}
-                    </Button>
-                </Card>
-
-                {/* Developer Mode */}
-                <Card className="p-4 flex justify-between items-center">
-                    <span className="font-bold text-slate-700">開発者モード</span>
-                    <Button size="sm" variant="secondary" onClick={() => navigate("/dev")}>
-                        {t("ひらく", "開く")}
-                    </Button>
-                </Card>
-
-                {/* Advanced / Data */}
-                <div className="pt-8 land:col-span-2">
-                    <Button variant="ghost" className="w-full text-red-500 text-sm" onClick={handleReset}>
-                        {t("データをすべてリセット", "全データをリセット")}
-                    </Button>
+                                <Button variant="secondary" onClick={() => navigate("/settings/curriculum")}>
+                                    {t("かえる", "変更")}
+                                </Button>
+                            </div>
+                            <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                                <div>
+                                    <div className="font-bold text-slate-600">{t("えいご", "英語")}</div>
+                                    <div className="text-2xl font-black text-slate-800">Lv.{profile?.vocabMainLevel || 1}</div>
+                                </div>
+                                <Button variant="secondary" onClick={() => navigate("/settings/curriculum")}>
+                                    {t("かえる", "変更")}
+                                </Button>
+                            </div>
+                        </div>
+                    </Card>
                 </div>
 
-            </div >
+                {/* ===== Section: Display & Sound ===== */}
+                <div className="space-y-3">
+                    <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">
+                        {t("みため と おと", "表示とサウンド")}
+                    </h2>
+
+                    {/* Sound + TTS in one card */}
+                    <Card className="p-4 space-y-4">
+                        <div className="flex justify-between items-center">
+                            <span className="font-bold text-slate-700">{t("おと・BGM", "サウンド")}</span>
+                            <Button size="sm" variant={sound ? "primary" : "secondary"} onClick={handleSoundToggle} className="w-20">
+                                {sound ? "ON" : "OFF"}
+                            </Button>
+                        </div>
+                        <div className="border-t border-slate-100" />
+                        <div className="flex justify-between items-center">
+                            <span className="font-bold text-slate-700">{t("えいご よみあげ", "英語読み上げ")}</span>
+                            <Button
+                                size="sm"
+                                variant={profile?.englishAutoRead ? "primary" : "secondary"}
+                                onClick={async () => {
+                                    if (!profile) return;
+                                    const updated = { ...profile, englishAutoRead: !profile.englishAutoRead };
+                                    await saveProfile(updated);
+                                    setProfile(updated);
+                                }}
+                                className="w-20"
+                            >
+                                {profile?.englishAutoRead ? "ON" : "OFF"}
+                            </Button>
+                        </div>
+                    </Card>
+
+                    {/* Text display settings in one card */}
+                    <Card className="p-4 space-y-4">
+                        <div className="space-y-3">
+                            <h3 className="font-bold text-slate-700">{t("ひょうじ テキスト", "表示テキスト")}</h3>
+                            <div className="flex bg-slate-100 p-1 rounded-xl">
+                                <button
+                                    className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${profile?.uiTextMode !== "easy" ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
+                                    onClick={() => handleTextModeChange("standard")}
+                                >
+                                    {t("ふつう", "標準")}
+                                </button>
+                                <button
+                                    className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${profile?.uiTextMode === "easy" ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
+                                    onClick={() => handleTextModeChange("easy")}
+                                >
+                                    {t("やさしい", "やさしい")}
+                                </button>
+                            </div>
+                        </div>
+                        <div className="border-t border-slate-100" />
+                        <div className="space-y-3">
+                            <h3 className="font-bold text-slate-700">{t("にほんご モード", "日本語モード")}</h3>
+                            <div className="flex bg-slate-100 p-1 rounded-xl">
+                                <button
+                                    className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${!profile?.kanjiMode ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
+                                    onClick={async () => {
+                                        if (!profile) return;
+                                        const updated = { ...profile, kanjiMode: false };
+                                        await saveProfile(updated);
+                                        setProfile(updated);
+                                    }}
+                                >
+                                    ひらがな
+                                </button>
+                                <button
+                                    className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${profile?.kanjiMode ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
+                                    onClick={async () => {
+                                        if (!profile) return;
+                                        const updated = { ...profile, kanjiMode: true };
+                                        await saveProfile(updated);
+                                        setProfile(updated);
+                                    }}
+                                >
+                                    漢字
+                                </button>
+                            </div>
+                            <p className="text-xs text-slate-400 text-center">{t("えいごの こたえが かわります", "英語の答え表示が変わります")}</p>
+                        </div>
+                    </Card>
+                </div>
+
+                {/* ===== Section: For Parents ===== */}
+                <div className="space-y-3">
+                    <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">
+                        {t("おとなの ひと むけ", "保護者向け")}
+                    </h2>
+
+                    {/* Periodic Test */}
+                    <Card className="p-4 space-y-4">
+                        <div>
+                            <h3 className="font-bold text-slate-700">{t("ていき テスト", "定期テスト（20問）")}</h3>
+                            <p className="text-xs text-slate-500 mt-1">{t("アプリ と かみ で テスト できるよ", "アプリ受験と紙テストをここから開始できます")}</p>
+                        </div>
+                        <div className="grid grid-cols-1 land:grid-cols-2 gap-3">
+                            {([
+                                { subject: "math" as const, title: t("さんすう", "算数"), level: profile?.mathMainLevel || 1, print: handlePrintPDF, startPath: "/study?session=periodic-test&focus_subject=math" },
+                                { subject: "vocab" as const, title: t("えいご", "英語"), level: profile?.vocabMainLevel || 1, print: handlePrintVocabPDF, startPath: "/study?session=periodic-test&focus_subject=vocab" },
+                            ]).map(item => {
+                                const status = getTestStatus(item.subject);
+                                return (
+                                    <div key={item.subject} className="rounded-2xl border border-slate-200 bg-white p-3 space-y-3">
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <div className="font-bold text-slate-700">{item.title} Lv.{item.level}</div>
+                                                <div className="text-xs text-slate-500">20問 / 目安 8〜12分</div>
+                                            </div>
+                                            <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold ${status.tone}`}>
+                                                {status.label}
+                                            </span>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <Button
+                                                size="sm"
+                                                className="w-full h-10"
+                                                onClick={() => withParentGuard(() => navigate(item.startPath))}
+                                            >
+                                                {t("アプリで うける", "アプリ受験")}
+                                            </Button>
+                                            <Button
+                                                size="sm"
+                                                variant="secondary"
+                                                className="w-full h-10 text-xs"
+                                                onClick={item.print}
+                                            >
+                                                {t("かみで うける", "紙テストPDF")}
+                                            </Button>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </Card>
+
+                    {/* Parent Menu */}
+                    <Card className="p-4 flex justify-between items-center">
+                        <div>
+                            <div className="font-bold text-slate-700">{t("ほごしゃ メニュー", "保護者メニュー")}</div>
+                            <div className="text-xs text-slate-400">{t("おとなの ひとが みる ページ", "大人向けページ")}</div>
+                        </div>
+                        <Button
+                            size="sm"
+                            variant="secondary"
+                            onClick={() => withParentGuard(() => navigate('/parents', { state: { parentGatePassed: true } }))}
+                        >
+                            {t("ひらく", "開く")}
+                        </Button>
+                    </Card>
+
+                    {/* Developer Mode */}
+                    <Card className="p-4 flex justify-between items-center">
+                        <span className="font-bold text-slate-700">開発者モード</span>
+                        <Button size="sm" variant="secondary" onClick={() => navigate("/dev")}>
+                            {t("ひらく", "開く")}
+                        </Button>
+                    </Card>
+
+                    {/* Data Reset */}
+                    <div className="pt-4">
+                        <Button variant="ghost" className="w-full text-red-500 text-sm" onClick={handleReset}>
+                            {t("データをすべてリセット", "全データをリセット")}
+                        </Button>
+                    </div>
+                </div>
+
+            </div>
         </div >
     );
 };
