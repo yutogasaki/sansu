@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "../../utils/cn";
-import { BattleGrade, PlayerConfig } from "../../domain/battle/types";
+import { BattleGrade, BattleSubject, PlayerConfig } from "../../domain/battle/types";
 
 const AVATARS = ["🐱", "🐶", "🐰", "🐻", "🐼", "🦊", "🐸", "🐧"];
 const GRADE_LABELS: Record<BattleGrade, string> = {
@@ -13,6 +13,11 @@ const GRADE_LABELS: Record<BattleGrade, string> = {
     6: "6ねんせい",
 };
 
+const SUBJECT_OPTIONS: { value: BattleSubject; label: string; icon: string }[] = [
+    { value: "math", label: "さんすう", icon: "🔢" },
+    { value: "vocab", label: "えいたんご", icon: "🔤" },
+];
+
 interface BattleSetupProps {
     onStart: (p1: PlayerConfig, p2: PlayerConfig) => void;
     onBack: () => void;
@@ -22,6 +27,7 @@ interface PlayerSetup {
     name: string;
     grade: BattleGrade | null;
     emoji: string;
+    subject: BattleSubject;
 }
 
 const PlayerSetupPanel: React.FC<{
@@ -31,7 +37,7 @@ const PlayerSetupPanel: React.FC<{
     defaultName: string;
     color: string;
 }> = ({ label, setup, onChange, defaultName, color }) => (
-    <div className="flex flex-col items-center gap-3 p-4 flex-1">
+    <div className="flex flex-col items-center gap-2 p-4 flex-1 overflow-y-auto">
         <div className={cn("text-lg font-black", color)}>{label}</div>
 
         {/* Name */}
@@ -62,6 +68,25 @@ const PlayerSetupPanel: React.FC<{
             ))}
         </div>
 
+        {/* Subject */}
+        <div className="text-xs font-bold text-slate-400 mt-1">もんだい</div>
+        <div className="flex gap-2">
+            {SUBJECT_OPTIONS.map((opt) => (
+                <button
+                    key={opt.value}
+                    onClick={() => onChange({ ...setup, subject: opt.value })}
+                    className={cn(
+                        "px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1",
+                        setup.subject === opt.value
+                            ? "bg-slate-800 text-white shadow-md"
+                            : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
+                    )}
+                >
+                    {opt.icon} {opt.label}
+                </button>
+            ))}
+        </div>
+
         {/* Grade */}
         <div className="text-xs font-bold text-slate-400 mt-1">がくねん</div>
         <div className="grid grid-cols-3 gap-1.5">
@@ -84,16 +109,16 @@ const PlayerSetupPanel: React.FC<{
 );
 
 export const BattleSetup: React.FC<BattleSetupProps> = ({ onStart, onBack }) => {
-    const [p1, setP1] = useState<PlayerSetup>({ name: "", grade: null, emoji: "🐱" });
-    const [p2, setP2] = useState<PlayerSetup>({ name: "", grade: null, emoji: "🐶" });
+    const [p1, setP1] = useState<PlayerSetup>({ name: "", grade: null, emoji: "🐱", subject: "math" });
+    const [p2, setP2] = useState<PlayerSetup>({ name: "", grade: null, emoji: "🐶", subject: "math" });
 
     const canStart = p1.grade !== null && p2.grade !== null && p1.emoji && p2.emoji;
 
     const handleStart = () => {
         if (!canStart) return;
         onStart(
-            { name: p1.name || "プレイヤー1", grade: p1.grade!, emoji: p1.emoji },
-            { name: p2.name || "プレイヤー2", grade: p2.grade!, emoji: p2.emoji }
+            { name: p1.name || "プレイヤー1", grade: p1.grade!, emoji: p1.emoji, subject: p1.subject },
+            { name: p2.name || "プレイヤー2", grade: p2.grade!, emoji: p2.emoji, subject: p2.subject }
         );
     };
 

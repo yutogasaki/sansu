@@ -5,11 +5,13 @@
 export type PlayerId = "p1" | "p2";
 export type BattleGrade = 1 | 2 | 3 | 4 | 5 | 6;
 export type BattlePhase = "setup" | "countdown" | "playing" | "result";
+export type BattleSubject = "math" | "vocab";
 
 export interface PlayerConfig {
     name: string;
     grade: BattleGrade;
     emoji: string;
+    subject: BattleSubject;
 }
 
 export interface BattleProblem {
@@ -18,6 +20,8 @@ export interface BattleProblem {
     correctAnswer: string;
     skillId: string;
     showDecimal: boolean;
+    inputType: "number" | "choice";
+    choices?: { label: string; value: string }[];
 }
 
 export interface PlayerGameState {

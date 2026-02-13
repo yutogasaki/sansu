@@ -24,12 +24,18 @@ export const Battle: React.FC = () => {
     const handleCountdownDone = useCallback(() => {
         dispatch({ type: "COUNTDOWN_DONE" });
 
-        // Generate initial problems
-        const p1Problem = generateBattleProblem(state.p1.config.grade || 1);
-        const p2Problem = generateBattleProblem(state.p2.config.grade || 1);
+        // Generate initial problems based on each player's subject
+        const p1Problem = generateBattleProblem(
+            state.p1.config.grade || 1,
+            state.p1.config.subject
+        );
+        const p2Problem = generateBattleProblem(
+            state.p2.config.grade || 1,
+            state.p2.config.subject
+        );
         dispatch({ type: "SET_PROBLEM", player: "p1", problem: p1Problem });
         dispatch({ type: "SET_PROBLEM", player: "p2", problem: p2Problem });
-    }, [state.p1.config.grade, state.p2.config.grade]);
+    }, [state.p1.config.grade, state.p1.config.subject, state.p2.config.grade, state.p2.config.subject]);
 
     const handleSubmitAnswer = useCallback(
         (player: PlayerId, answer: string) => {
@@ -45,7 +51,7 @@ export const Battle: React.FC = () => {
 
                 // Generate next problem
                 const grade = playerState.config.grade || 1;
-                const newProblem = generateBattleProblem(grade);
+                const newProblem = generateBattleProblem(grade, playerState.config.subject);
                 dispatch({ type: "SET_PROBLEM", player, problem: newProblem });
             } else {
                 playSound("incorrect");
@@ -61,6 +67,20 @@ export const Battle: React.FC = () => {
         },
         []
     );
+
+    const handleSkip = useCallback(
+        (player: PlayerId) => {
+            const playerState = player === "p1" ? state.p1 : state.p2;
+            const grade = playerState.config.grade || 1;
+            const newProblem = generateBattleProblem(grade, playerState.config.subject);
+            dispatch({ type: "SET_PROBLEM", player, problem: newProblem });
+        },
+        [state.p1, state.p2]
+    );
+
+    const handleCancel = useCallback(() => {
+        dispatch({ type: "RESET" });
+    }, []);
 
     const handlePlayAgain = useCallback(() => {
         dispatch({ type: "RESET" });
@@ -86,6 +106,8 @@ export const Battle: React.FC = () => {
                             state={state}
                             onSubmitAnswer={handleSubmitAnswer}
                             onInputChange={handleInputChange}
+                            onSkip={handleSkip}
+                            onCancel={handleCancel}
                         />
                         <BattleCountdown onComplete={handleCountdownDone} />
                     </>
@@ -96,6 +118,8 @@ export const Battle: React.FC = () => {
                         state={state}
                         onSubmitAnswer={handleSubmitAnswer}
                         onInputChange={handleInputChange}
+                        onSkip={handleSkip}
+                        onCancel={handleCancel}
                     />
                 )}
 

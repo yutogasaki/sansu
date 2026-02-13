@@ -1,9 +1,12 @@
 import { getAvailableSkills } from "../math/curriculum";
 import { generateMathProblem } from "../math/index";
 import { randomChoice } from "../math/core";
+import { generateVocabProblem } from "../english/generator";
+import { ENGLISH_WORDS } from "../english/words";
 import {
     BattleGrade,
     BattleProblem,
+    BattleSubject,
     BattleGameState,
     BattleAction,
     PlayerConfig,
@@ -11,13 +14,22 @@ import {
 } from "./types";
 import { GRADE_TO_LEVELS, EXCLUDED_SKILLS } from "./gradeMapping";
 
+const GRADE_TO_VOCAB_LEVELS: Record<BattleGrade, { min: number; max: number }> = {
+    1: { min: 1, max: 2 },
+    2: { min: 1, max: 3 },
+    3: { min: 2, max: 4 },
+    4: { min: 3, max: 5 },
+    5: { min: 4, max: 6 },
+    6: { min: 5, max: 8 },
+};
+
 const MAX_STEPS = 5;
 
 // ============================================================
 // Problem Generation
 // ============================================================
 
-export function generateBattleProblem(grade: BattleGrade): BattleProblem {
+export function generateBattleMathProblem(grade: BattleGrade): BattleProblem {
     const { min, max } = GRADE_TO_LEVELS[grade];
 
     const allSkills = getAvailableSkills(max);
@@ -37,7 +49,7 @@ export function generateBattleProblem(grade: BattleGrade): BattleProblem {
 
     // Safety: retry if somehow non-number type
     if (raw.inputType !== "number") {
-        return generateBattleProblem(grade);
+        return generateBattleMathProblem(grade);
     }
 
     return {
@@ -46,7 +58,36 @@ export function generateBattleProblem(grade: BattleGrade): BattleProblem {
         correctAnswer: raw.correctAnswer as string,
         skillId: raw.categoryId,
         showDecimal: raw.categoryId.startsWith("dec_"),
+        inputType: "number",
     };
+}
+
+export function generateBattleVocabProblem(grade: BattleGrade): BattleProblem {
+    const { min, max } = GRADE_TO_VOCAB_LEVELS[grade];
+
+    const eligible = ENGLISH_WORDS.filter(
+        (w) => w.level >= min && w.level <= max
+    );
+    const pool = eligible.length > 0 ? eligible : ENGLISH_WORDS;
+    const word = randomChoice(pool);
+
+    const raw = generateVocabProblem(word.id);
+
+    return {
+        id: crypto.randomUUID(),
+        questionText: raw.questionText || "",
+        correctAnswer: raw.correctAnswer as string,
+        skillId: word.id,
+        showDecimal: false,
+        inputType: "choice",
+        choices: raw.inputConfig?.choices,
+    };
+}
+
+export function generateBattleProblem(grade: BattleGrade, subject: BattleSubject = "math"): BattleProblem {
+    return subject === "vocab"
+        ? generateBattleVocabProblem(grade)
+        : generateBattleMathProblem(grade);
 }
 
 // ============================================================
@@ -57,6 +98,7 @@ const defaultPlayerConfig: PlayerConfig = {
     name: "",
     grade: 1,
     emoji: "",
+    subject: "math",
 };
 
 const defaultPlayerState: PlayerGameState = {
