@@ -356,75 +356,64 @@ export const Home: React.FC = () => {
                 />
             )}
 
-            <div className="relative z-10 flex flex-col h-full items-center justify-start px-5 pt-6 pb-24 land:px-10 land:pt-6 land:pb-20 overflow-y-auto">
-                <div className="w-full max-w-md">
-                    <div className="inline-flex items-center gap-2 rounded-full bg-white/70 border border-white/80 px-3 py-1 text-[11px] font-bold text-slate-600 shadow-sm">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                        {isEasy ? "きょうの ようす" : "今日のようす"}
-                    </div>
-                </div>
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="mt-2 w-full max-w-md rounded-[2rem] bg-white/88 backdrop-blur-md border border-white/80 shadow-[0_18px_36px_-28px_rgba(15,23,42,0.65)] p-5"
-                >
-                    <div className="text-[11px] tracking-wide text-slate-500 font-bold">{isEasy ? "いま、このこは" : "いま、この子は"}</div>
-                    <div className="mt-1 text-[22px] leading-snug font-black text-slate-800">{scene.nowLine}</div>
-                    <div className="mt-4 text-sm text-slate-600">{scene.transition}</div>
-                    <div className="mt-1 text-sm text-slate-600">きょうは、{scene.moodLine}</div>
-                </motion.div>
-
-                <div className="mt-3 w-full max-w-md flex flex-wrap gap-2">
-                    {scene.aura.map(tag => (
-                        <span
-                            key={tag}
-                            className="px-3 py-1 rounded-full text-xs font-bold bg-white/75 border border-white/80 text-slate-600 shadow-[0_8px_16px_-14px_rgba(15,23,42,0.8)]"
-                        >
-                            {tag}
-                        </span>
-                    ))}
-                </div>
-
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2, duration: 0.6 }}
-                    className="mt-2 text-xs text-slate-500 px-3 py-1.5 rounded-full bg-white/55 border border-white/75"
-                >
-                    {scene.whisper}
-                </motion.div>
-
-                {profileId && (
+            <div className="relative z-10 flex flex-col h-full items-center justify-start px-5 pt-4 pb-0 land:px-10 land:pt-4 overflow-hidden">
+                {/* Status + Ikimono Area (scrollable) */}
+                <div className="flex-1 w-full max-w-md flex flex-col items-center min-h-0 overflow-y-auto pb-4">
+                    {/* Compact status bar */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.98 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.7 }}
-                        className="mt-3 flex-1 min-h-[240px] w-full max-w-md rounded-[2rem] border border-white/80 bg-white/55 backdrop-blur-sm shadow-[0_20px_32px_-28px_rgba(15,23,42,0.7)] flex items-center justify-center px-3"
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="w-full rounded-2xl bg-white/80 backdrop-blur-md border border-white/80 shadow-[0_12px_24px_-20px_rgba(15,23,42,0.5)] px-4 py-3 flex items-start gap-3"
                     >
-                        <Ikimono profileId={profileId} />
+                        <span className="mt-1.5 h-2 w-2 rounded-full bg-emerald-400 flex-shrink-0" />
+                        <div className="min-w-0">
+                            <div className="text-base leading-snug font-black text-slate-800 line-clamp-2">{scene.nowLine}</div>
+                            <div className="mt-1 text-xs text-slate-500">{scene.moodLine}</div>
+                        </div>
                     </motion.div>
-                )}
 
-                <div className="w-full max-w-md space-y-3 rounded-[1.75rem] bg-white/70 backdrop-blur-sm border border-white/80 p-3 shadow-[0_16px_28px_-24px_rgba(15,23,42,0.75)]">
-                    <Button
-                        size="xl"
-                        className="w-full"
-                        onClick={() => { warmUpTTS(); navigate("/study"); }}
-                    >
-                        {isEasy ? "このこ と すすむ" : "この子と進む"}
-                    </Button>
-                    <div className="grid grid-cols-2 gap-3">
-                        <Button variant="secondary" className="h-11 text-sm" onClick={() => { warmUpTTS(); navigate("/study?session=review&force_review=1"); }}>
-                            {isEasy ? "けはい を たどる" : "復習する"}
+                    {/* Ikimono display */}
+                    {profileId && (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.98 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.7 }}
+                            className="mt-3 flex-1 min-h-[200px] w-full rounded-[2rem] border border-white/80 bg-white/55 backdrop-blur-sm shadow-[0_20px_32px_-28px_rgba(15,23,42,0.7)] flex flex-col items-center justify-center px-3 relative"
+                        >
+                            <Ikimono profileId={profileId} />
+                            {/* Whisper overlay at bottom of ikimono card */}
+                            <div className="absolute bottom-3 left-0 right-0 flex justify-center">
+                                <span className="text-[11px] text-slate-400 bg-white/60 backdrop-blur-sm px-3 py-1 rounded-full border border-white/70">
+                                    {scene.whisper}
+                                </span>
+                            </div>
+                        </motion.div>
+                    )}
+                </div>
+
+                {/* Fixed CTA area at bottom */}
+                <div className="flex-none w-full max-w-md pb-24 land:pb-20 pt-2">
+                    <div className="space-y-2">
+                        <Button
+                            size="xl"
+                            className="w-full"
+                            onClick={() => { warmUpTTS(); navigate("/study"); }}
+                        >
+                            {isEasy ? "このこ と すすむ" : "この子と進む"}
                         </Button>
-                        <Button variant="secondary" className="h-11 text-sm" onClick={() => navigate("/stats")}>
-                            {isEasy ? "きろく を みる" : "記録を見る"}
-                        </Button>
+                        <div className="grid grid-cols-3 gap-2">
+                            <Button variant="secondary" className="h-10 text-xs" onClick={() => { warmUpTTS(); navigate("/study?session=review&force_review=1"); }}>
+                                {isEasy ? "ふくしゅう" : "復習"}
+                            </Button>
+                            <Button variant="secondary" className="h-10 text-xs" onClick={() => navigate("/stats")}>
+                                {isEasy ? "きろく" : "記録"}
+                            </Button>
+                            <Button variant="secondary" className="h-10 text-xs" onClick={() => navigate("/battle")}>
+                                {isEasy ? "たいせん" : "対戦"}
+                            </Button>
+                        </div>
                     </div>
-                    <Button variant="secondary" className="h-11 text-sm w-full" onClick={() => navigate("/battle")}>
-                        {isEasy ? "つなひき たいせん" : "綱引きたいせん"}
-                    </Button>
                 </div>
             </div>
         </div>
