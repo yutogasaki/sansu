@@ -62,23 +62,31 @@ export const TenKey: React.FC<TenKeyProps> = ({
             )}
 
             {/* Row 4 */}
-            <Button
-                onClick={() => onCursorMove?.("left")}
-                className={actionBtnClass}
-                disabled={!onCursorMove}
-                variant="ghost"
-            >
-                <Icons.ArrowLeft className="w-6 h-6" />
-            </Button>
-            <Button onClick={() => onInput(0)} className={baseBtnClass} variant="ghost">0</Button>
-            <Button
-                onClick={() => onCursorMove?.("right")}
-                className={actionBtnClass}
-                disabled={!onCursorMove}
-                variant="ghost"
-            >
-                <Icons.ArrowRight className="w-6 h-6" />
-            </Button>
+            {onCursorMove ? (
+                <>
+                    <Button
+                        onClick={() => onCursorMove("left")}
+                        className={actionBtnClass}
+                        variant="ghost"
+                    >
+                        <Icons.ArrowLeft className="w-6 h-6" />
+                    </Button>
+                    <Button onClick={() => onInput(0)} className={baseBtnClass} variant="ghost">0</Button>
+                    <Button
+                        onClick={() => onCursorMove("right")}
+                        className={actionBtnClass}
+                        variant="ghost"
+                    >
+                        <Icons.ArrowRight className="w-6 h-6" />
+                    </Button>
+                </>
+            ) : (
+                <>
+                    <div /> {/* Empty cell for alignment */}
+                    <Button onClick={() => onInput(0)} className={baseBtnClass} variant="ghost">0</Button>
+                    <div /> {/* Empty cell for alignment */}
+                </>
+            )}
 
             {/* Enter Key */}
             <Button

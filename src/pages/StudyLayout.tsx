@@ -446,23 +446,30 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 <div id="debug-card-container" {...swipeHandlers} className="flex-1 min-h-0 px-4 py-2 flex flex-col justify-center relative z-0 land:px-6 ipadland:flex-[2] ipadland:p-0 mobile:px-1 mobile:py-1 ipadland:min-h-0">
                     <Card className="w-full flex flex-col items-center justify-center p-6 shadow-xl border-t-4 border-t-primary relative land:p-4 bg-white mobile:p-4 mobile:border-t-2 mobile:shadow-none overflow-hidden min-h-0">
 
-
-
-                        {/* 復習補助表示 */}
-                        {/* 復習補助表示 - モバイルでは上部バーに移動したので非表示 -> 復活 (Visual Feedback) */}
-                        <AnimatePresence>
-                            {currentProblem.isReview && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, scale: 0.9 }}
-                                    className="absolute -top-3 right-4 bg-amber-100 text-amber-600 px-3 py-1 rounded-full text-xs font-bold shadow-sm border border-amber-200 z-10 flex items-center gap-1"
+                        {/* Top row: review badge (left) + skip button (right) */}
+                        <div className="absolute top-2 left-3 right-3 flex items-center justify-between z-10 mobile:top-1 mobile:left-2 mobile:right-2">
+                            <AnimatePresence>
+                                {currentProblem.isReview ? (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.9 }}
+                                        className="bg-amber-100 text-amber-600 px-3 py-1 rounded-full text-xs font-bold shadow-sm border border-amber-200 flex items-center gap-1"
+                                    >
+                                        <span>🔁</span>
+                                        <span>{t("復習", "復習")}</span>
+                                    </motion.div>
+                                ) : <div />}
+                            </AnimatePresence>
+                            {feedback === "none" && (
+                                <button
+                                    onClick={onSkip}
+                                    className="px-3 py-1 rounded-full text-xs font-bold text-slate-400 bg-slate-100 hover:bg-slate-200 active:scale-95 transition-all border border-slate-200"
                                 >
-                                    <span>🔁</span>
-                                    <span>{t("復習", "復習")}</span>
-                                </motion.div>
+                                    {t("スキップ", "スキップ")}
+                                </button>
                             )}
-                        </AnimatePresence>
+                        </div>
 
                         {/* Question Content */}
                         {currentProblem.inputType === "number" ? (
@@ -533,21 +540,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                     </Card>
                 </div>
 
-                {/* Skip Button — 問題とテンキーの間 */}
-                {feedback === "none" && (
-                    <div className="flex-none flex justify-end px-4 ipadland:px-0 mobile:px-2">
-                        <button
-                            onClick={onSkip}
-                            className="px-4 py-1.5 rounded-full text-sm font-bold text-slate-400 bg-slate-100 hover:bg-slate-200 active:scale-95 transition-all border border-slate-200 mobile:text-xs mobile:px-3 mobile:py-1"
-                        >
-                            {t("わからない → スキップ", "わからない → スキップ")}
-                        </button>
-                    </div>
-                )}
-
                 {/* Controls Area */}
-                {/* Rebalanced: Reduced from 45vh to 40vh for better problem/input hierarchy */}
-                <div id="debug-controls" className="bg-slate-100 p-2 pb-6 rounded-t-[2rem] shadow-inner flex-none h-[40vh] min-h-[260px] land:min-h-[32vh] land:pb-4 ipadland:flex-1 ipadland:rounded-[2rem] ipadland:h-full ipadland:flex ipadland:flex-col ipadland:justify-center ipadland:p-6 ipadland:shadow-lg ipadland:min-h-0 ipadland:max-h-none mobile:pb-[var(--safe-area-inset-bottom)] mobile:pt-0 mobile:p-0 mobile:rounded-none mobile:bg-slate-50">
+                <div id="debug-controls" className="bg-slate-100 p-2 pb-6 rounded-t-[2rem] shadow-inner flex-1 max-h-[44vh] min-h-[220px] land:min-h-[32vh] land:pb-4 ipadland:rounded-[2rem] ipadland:h-full ipadland:flex ipadland:flex-col ipadland:justify-center ipadland:p-6 ipadland:shadow-lg ipadland:min-h-0 ipadland:max-h-none mobile:pb-[var(--safe-area-inset-bottom)] mobile:pt-0 mobile:p-0 mobile:rounded-none mobile:bg-slate-50">
                     {/* TenKey / Inputs */}
                     {(currentProblem.inputType === "number" || currentProblem.inputType === "multi-number") && (
                         <TenKey
@@ -556,7 +550,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             onClear={onClear}
                             onEnter={onEnter}
                             showDecimal={currentProblem.subject === 'math'}
-                            onCursorMove={onCursorMove}
+                            onCursorMove={currentProblem.inputType === "multi-number" ? onCursorMove : undefined}
                         />
                     )}
 
