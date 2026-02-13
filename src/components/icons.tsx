@@ -9,7 +9,8 @@ import {
     Volume2,
     Play,
     ArrowLeft,
-    ArrowRight
+    ArrowRight,
+    Pencil
 } from "lucide-react";
 
 export const Icons = {
@@ -23,5 +24,6 @@ export const Icons = {
     Sound: Volume2,
     Play: Play,
     ArrowLeft: ArrowLeft,
-    ArrowRight: ArrowRight
+    ArrowRight: ArrowRight,
+    Study: Pencil
 };
