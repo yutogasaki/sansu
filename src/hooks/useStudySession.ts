@@ -503,7 +503,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     // ============================================================
     // Result Handling
     // ============================================================
-    const handleResult = async (problem: Problem, result: 'correct' | 'incorrect') => {
+    const handleResult = async (problem: Problem, result: 'correct' | 'incorrect', timeMs?: number) => {
         if (!profileId) return;
 
         try {
@@ -514,7 +514,8 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 result,
                 false,
                 problem.isReview,
-                problem.isMaintenanceCheck || false
+                problem.isMaintenanceCheck || false,
+                timeMs
             );
 
             const currentProfile = await getActiveProfile();

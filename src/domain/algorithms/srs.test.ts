@@ -1,6 +1,6 @@
 import { differenceInCalendarDays } from "date-fns";
 import { getLearningDayStart } from "../../utils/learningDay";
-import { getNextReviewDate, updateMemoryState } from "./srs";
+import { getNextReviewDate, updateMemoryState, wilsonLower } from "./srs";
 import { MemoryState } from "../types";
 
 describe("srs", () => {
@@ -42,7 +42,7 @@ describe("srs", () => {
         expect(result.strength).toBe(5);
     });
 
-    it("incorrect answer decreases strength by 2 (gradual decline)", () => {
+    it("incorrect answer decreases strength by 1 (gentle penalty)", () => {
         const base: MemoryState = {
             id: "test",
             strength: 5,
@@ -55,26 +55,10 @@ describe("srs", () => {
         };
 
         const result = updateMemoryState(base, false, false);
-        expect(result.strength).toBe(3); // 5 - 2 = 3
+        expect(result.strength).toBe(4); // 5 - 1 = 4
     });
 
     it("incorrect answer floors strength at 1", () => {
-        const base: MemoryState = {
-            id: "test",
-            strength: 2,
-            nextReview: new Date().toISOString(),
-            totalAnswers: 10,
-            correctAnswers: 7,
-            incorrectAnswers: 3,
-            skippedAnswers: 0,
-            updatedAt: new Date().toISOString()
-        };
-
-        const result = updateMemoryState(base, false, false);
-        expect(result.strength).toBe(1); // max(1, 2-2) = 1
-    });
-
-    it("incorrect from strength 1 stays at 1", () => {
         const base: MemoryState = {
             id: "test",
             strength: 1,
@@ -87,7 +71,39 @@ describe("srs", () => {
         };
 
         const result = updateMemoryState(base, false, false);
-        expect(result.strength).toBe(1);
+        expect(result.strength).toBe(1); // max(1, 1-1) = 1
+    });
+
+    it("incorrect from strength 2 decreases to 1", () => {
+        const base: MemoryState = {
+            id: "test",
+            strength: 2,
+            nextReview: new Date().toISOString(),
+            totalAnswers: 10,
+            correctAnswers: 7,
+            incorrectAnswers: 3,
+            skippedAnswers: 0,
+            updatedAt: new Date().toISOString()
+        };
+
+        const result = updateMemoryState(base, false, false);
+        expect(result.strength).toBe(1); // 2 - 1 = 1
+    });
+
+    it("incorrect from strength 3 decreases to 2", () => {
+        const base: MemoryState = {
+            id: "test",
+            strength: 3,
+            nextReview: new Date().toISOString(),
+            totalAnswers: 15,
+            correctAnswers: 10,
+            incorrectAnswers: 5,
+            skippedAnswers: 0,
+            updatedAt: new Date().toISOString()
+        };
+
+        const result = updateMemoryState(base, false, false);
+        expect(result.strength).toBe(2); // 3 - 1 = 2
     });
 
     it("skip preserves strength but sets nextReview to today", () => {
@@ -107,5 +123,42 @@ describe("srs", () => {
         expect(result.skippedAnswers).toBe(1);
         // nextReview should be today (learning day start)
         expect(result.nextReview).toBe(getLearningDayStart().toISOString());
+    });
+});
+
+describe("wilsonLower", () => {
+    it("returns 0 for 0 total", () => {
+        expect(wilsonLower(0, 0)).toBe(0);
+    });
+
+    it("returns lower bound for small sample (conservative)", () => {
+        // 3/5 = 60% raw, but Wilson lower should be well below 60%
+        const score = wilsonLower(3, 5);
+        expect(score).toBeLessThan(0.6);
+        expect(score).toBeGreaterThan(0.1);
+    });
+
+    it("returns higher lower bound for large sample", () => {
+        // 6/10 = 60% raw, larger sample → closer to raw rate
+        const small = wilsonLower(3, 5);
+        const large = wilsonLower(6, 10);
+        expect(large).toBeGreaterThan(small);
+    });
+
+    it("approaches raw rate with very large sample", () => {
+        // 600/1000 = 60%, Wilson lower should be close to 0.6
+        const score = wilsonLower(600, 1000);
+        expect(score).toBeGreaterThan(0.57);
+        expect(score).toBeLessThan(0.6);
+    });
+
+    it("perfect score gives high lower bound", () => {
+        const score = wilsonLower(10, 10);
+        expect(score).toBeGreaterThan(0.9);
+    });
+
+    it("zero correct gives low lower bound", () => {
+        const score = wilsonLower(0, 10);
+        expect(score).toBeLessThan(0.05);
     });
 });

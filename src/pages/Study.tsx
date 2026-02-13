@@ -50,6 +50,9 @@ export const Study: React.FC = () => {
     // Processing Lock (Ref) to Prevent Double Submission / Spamming
     const isProcessingRef = React.useRef(false);
 
+    // 問題表示時刻を記録（回答時間計測用）
+    const problemShownAtRef = React.useRef<number>(Date.now());
+
     // UI State for Block Transition
     const [isFinished, setIsFinished] = useState(false);
 
@@ -252,6 +255,7 @@ export const Study: React.FC = () => {
         setShowCorrection(false);
         setUserInput("");
         setCurrentIndex(prev => prev + 1);
+        problemShownAtRef.current = Date.now();
         // Note: isProcessingRef reset is handled in the effect when currentProblem changes
     }, []);
 
@@ -276,10 +280,12 @@ export const Study: React.FC = () => {
             isCorrect = userInput === currentProblem.correctAnswer;
         }
 
+        const timeMs = Date.now() - problemShownAtRef.current;
+
         if (isCorrect) {
             setFeedback("correct");
             playSound("correct");
-            handleResult(currentProblem, 'correct');
+            handleResult(currentProblem, 'correct', timeMs);
             setCorrectCount(prev => prev + 1);
 
             setTimeout(() => {
@@ -288,7 +294,7 @@ export const Study: React.FC = () => {
         } else {
             setFeedback("incorrect");
             playSound("incorrect");
-            handleResult(currentProblem, 'incorrect');
+            handleResult(currentProblem, 'incorrect', timeMs);
 
             setShowCorrection(true);
             // Auto-advance removed. User must click Next.

@@ -18,14 +18,14 @@ export const updateMemoryState = (
 ): MemoryState => {
     let newStrength = current.strength;
 
-    // 正解→+1, 不正解→-2(最低1), スキップ→維持(nextReviewだけ当日)
+    // 正解→+1, 不正解→-1(最低1), スキップ→維持(nextReviewだけ当日)
     if (isSkipped) {
         // スキップ: strengthは維持、nextReviewだけ当日に設定
     } else if (isCorrect) {
         newStrength = Math.min(newStrength + 1, 5);
     } else {
-        // 不正解: 段階的に低下（一律リセットではなく2段階ダウン）
-        newStrength = Math.max(1, newStrength - 2);
+        // 不正解: 1段階ダウン（子供のモチベーション維持のため緩やかに）
+        newStrength = Math.max(1, newStrength - 1);
     }
 
     const now = new Date().toISOString();
@@ -50,6 +50,22 @@ export const updateMemoryState = (
 export const isDue = (item: MemoryState): boolean => {
     const due = parseISO(item.nextReview);
     return due.getTime() <= new Date().getTime();
+};
+
+/**
+ * ウィルソンスコア区間の下限値を返す。
+ * サンプル数が少ないほど保守的（低め）に推定するため、
+ * 少数回答で偶然正答率が低いだけの場合に弱点と誤判定しにくい。
+ * z = 1.0 (≈84%信頼区間) — 学習アプリ用に穏やかな設定
+ */
+export const wilsonLower = (correct: number, total: number, z: number = 1.0): number => {
+    if (total === 0) return 0;
+    const p = correct / total;
+    const z2 = z * z;
+    const denominator = 1 + z2 / total;
+    const centre = p + z2 / (2 * total);
+    const margin = z * Math.sqrt((p * (1 - p) + z2 / (4 * total)) / total);
+    return (centre - margin) / denominator;
 };
 
 // 仕様 5.4: 算数 status 遷移

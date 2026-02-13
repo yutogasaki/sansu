@@ -31,10 +31,10 @@ describe('SRS Algorithm', () => {
             expect(next.strength).toBe(2);
         });
 
-        it('should decrease strength by 2 on incorrect answer (min 1)', () => {
+        it('should decrease strength by 1 on incorrect answer (min 1)', () => {
             const initial = mockState('1', 4);
             const next = updateMemoryState(initial, false);
-            expect(next.strength).toBe(2); // 4 - 2 = 2
+            expect(next.strength).toBe(3); // 4 - 1 = 3
         });
     });
 

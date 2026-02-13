@@ -13,6 +13,7 @@ export interface AttemptLog {
     skipped?: boolean;
     isReview?: boolean;
     timestamp: string; // ISO
+    timeMs?: number; // 回答にかかった時間（ミリ秒）
 }
 
 export class SansuDatabase extends Dexie {

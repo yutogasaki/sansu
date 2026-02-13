@@ -1,6 +1,6 @@
 import { db, AttemptLog } from "../db";
 import { MemoryState, SubjectKey } from "./types";
-import { updateMemoryState, updateSkillStatus, getNextReviewDate } from "./algorithms/srs";
+import { updateMemoryState, updateSkillStatus, getNextReviewDate, wilsonLower } from "./algorithms/srs";
 import { addDays, differenceInCalendarDays, parseISO } from "date-fns";
 import { getLearningDayStart, toLocaleDateKey } from "../utils/learningDay";
 import { getLevelForSkill } from "./math/curriculum";
@@ -19,7 +19,8 @@ export const logAttempt = async (
     result: 'correct' | 'incorrect',
     skipped: boolean = false,
     isReview: boolean = false,
-    isMaintenanceCheck: boolean = false // 維持確認として出題されたか
+    isMaintenanceCheck: boolean = false, // 維持確認として出題されたか
+    timeMs?: number // 回答にかかった時間（ミリ秒）
 ) => {
     const timestamp = new Date().toISOString();
 
@@ -42,7 +43,8 @@ export const logAttempt = async (
         result: skipped ? 'skipped' : result,
         skipped: skipped || undefined,
         isReview,
-        timestamp
+        timestamp,
+        timeMs
     };
     const logId = await db.logs.add(log);
 
@@ -144,7 +146,8 @@ export const logAttempt = async (
             subject,
             skillId: itemId,
             result: skipped ? "skipped" : result,
-            skipped: skipped || undefined
+            skipped: skipped || undefined,
+            timeMs
         });
         const trimmed = recentAttempts.slice(-300);
 
@@ -256,6 +259,51 @@ export const getBatchRecentAccuracy = async (
     return result;
 };
 
+/**
+ * 直近ログから正答数・総数のペアをバッチ取得する。
+ * ウィルソンスコアなど、正答率以外の統計量でも使えるように分離。
+ */
+export const getBatchRecentCounts = async (
+    profileId: string,
+    itemIds: string[],
+    subject: SubjectKey,
+    windowSize: number = 10,
+    minAnswers: number = 5
+): Promise<Map<string, { correct: number; total: number } | null>> => {
+    const result = new Map<string, { correct: number; total: number } | null>();
+    if (itemIds.length === 0) return result;
+
+    const itemIdSet = new Set(itemIds);
+    const logs = await db.logs
+        .where('[profileId+subject]')
+        .equals([profileId, subject])
+        .filter(log => itemIdSet.has(log.itemId))
+        .reverse()
+        .toArray();
+
+    const byItem = new Map<string, AttemptLog[]>();
+    for (const log of logs) {
+        const list = byItem.get(log.itemId);
+        if (list) {
+            if (list.length < windowSize) list.push(log);
+        } else {
+            byItem.set(log.itemId, [log]);
+        }
+    }
+
+    for (const id of itemIds) {
+        const itemLogs = byItem.get(id);
+        if (!itemLogs || itemLogs.length < minAnswers) {
+            result.set(id, null);
+        } else {
+            const correct = itemLogs.filter(l => l.result === 'correct').length;
+            result.set(id, { correct, total: itemLogs.length });
+        }
+    }
+
+    return result;
+};
+
 export const getWeakMathSkillIds = async (profileId: string): Promise<string[]> => {
     const mathItems = await db.memoryMath
         .where('profileId')
@@ -264,11 +312,12 @@ export const getWeakMathSkillIds = async (profileId: string): Promise<string[]> 
         .toArray();
 
     const itemIds = mathItems.map(item => item.id);
-    const accuracyMap = await getBatchRecentAccuracy(profileId, itemIds, 'math');
+    const countsMap = await getBatchRecentCounts(profileId, itemIds, 'math');
 
     return itemIds.filter(id => {
-        const accuracy = accuracyMap.get(id);
-        return accuracy !== null && accuracy !== undefined && accuracy < 0.6;
+        const counts = countsMap.get(id);
+        if (!counts) return false;
+        return wilsonLower(counts.correct, counts.total) < 0.6;
     });
 };
 
@@ -279,11 +328,12 @@ export const getWeakVocabIds = async (profileId: string): Promise<string[]> => {
         .toArray();
 
     const itemIds = vocabItems.map(item => item.id);
-    const accuracyMap = await getBatchRecentAccuracy(profileId, itemIds, 'vocab');
+    const countsMap = await getBatchRecentCounts(profileId, itemIds, 'vocab');
 
     return itemIds.filter(id => {
-        const accuracy = accuracyMap.get(id);
-        return accuracy !== null && accuracy !== undefined && accuracy < 0.6;
+        const counts = countsMap.get(id);
+        if (!counts) return false;
+        return wilsonLower(counts.correct, counts.total) < 0.6;
     });
 };
 
