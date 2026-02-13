@@ -11,4 +11,13 @@ export interface IkimonoState {
     profileId: string;
     birthDate: string;   // ISO timestamp
     generation: number;  // ライフサイクル回数（1, 2, 3...）
+    name?: string;       // 孵化時につけた名前
+}
+
+export interface IkimonoGalleryEntry {
+    profileId: string;
+    generation: number;
+    name: string;
+    birthDate: string;      // ISO timestamp
+    departedDate: string;   // ISO timestamp（gone になった日）
 }

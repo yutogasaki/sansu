@@ -20,7 +20,7 @@ interface TextPart {
 }
 
 type ExpressionPart = FractionPart | TextPart;
-const LOCAL_JP_FONT_URL = '/fonts/NotoSansJP.woff2';
+const LOCAL_JP_FONT_URL = '/fonts/NotoSansJP-Regular.otf';
 
 // ============================================================
 // Fraction Parsing

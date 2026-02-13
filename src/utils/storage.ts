@@ -27,6 +27,7 @@ const STORAGE_KEYS = {
 
     // Ikimono
     IKIMONO_STATE: 'sansu_ikimono_state',
+    IKIMONO_GALLERY: 'sansu_ikimono_gallery',
 } as const;
 
 type StorageKey = typeof STORAGE_KEYS[keyof typeof STORAGE_KEYS];
@@ -165,11 +166,26 @@ export const soundStorage = {
  * Ikimono state
  */
 export const ikimonoStorage = {
-    getState: (): { profileId: string; birthDate: string; generation: number } | null =>
+    getState: (): { profileId: string; birthDate: string; generation: number; name?: string } | null =>
         get(STORAGE_KEYS.IKIMONO_STATE, null),
-    setState: (state: { profileId: string; birthDate: string; generation: number }): void =>
+    setState: (state: { profileId: string; birthDate: string; generation: number; name?: string }): void =>
         set(STORAGE_KEYS.IKIMONO_STATE, state),
     clear: (): void => remove(STORAGE_KEYS.IKIMONO_STATE),
+};
+
+/**
+ * Ikimono gallery (past generations)
+ */
+export const ikimonoGalleryStorage = {
+    getAll: (profileId: string): { profileId: string; generation: number; name: string; birthDate: string; departedDate: string }[] => {
+        const all = get<{ profileId: string; generation: number; name: string; birthDate: string; departedDate: string }[]>(STORAGE_KEYS.IKIMONO_GALLERY, []);
+        return all.filter(e => e.profileId === profileId);
+    },
+    add: (entry: { profileId: string; generation: number; name: string; birthDate: string; departedDate: string }): void => {
+        const all = get<{ profileId: string; generation: number; name: string; birthDate: string; departedDate: string }[]>(STORAGE_KEYS.IKIMONO_GALLERY, []);
+        all.push(entry);
+        set(STORAGE_KEYS.IKIMONO_GALLERY, all);
+    },
 };
 
 /**
@@ -199,6 +215,7 @@ export const storage = {
     weakPoints: weakPointsStorage,
     sound: soundStorage,
     ikimono: ikimonoStorage,
+    ikimonoGallery: ikimonoGalleryStorage,
     debug: debugStorage,
 };
 

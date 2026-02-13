@@ -413,34 +413,29 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
 
             {/* モバイル専用: 統合トップバー */}
             <div className="hidden mobile:flex items-center justify-between px-3 py-1 bg-white border-b border-slate-100">
-                <button
-                    onClick={onSkip}
-                    disabled={feedback !== "none"}
-                    className="text-slate-400 hover:text-slate-600 text-xs font-bold disabled:opacity-30"
-                >
-                    {t("スキップ→", "スキップ→")}
-                </button>
                 {currentProblem.isReview && (
                     <span className="text-slate-400 text-xs">🔁</span>
                 )}
                 <span className="text-slate-300 font-bold text-xs">
                     {currentIndex + 1} 問目
                 </span>
-                <button
-                    onClick={() => onNavigate("/")}
-                    className="text-slate-400 hover:text-slate-600"
-                >
-                    <Icons.Close className="w-5 h-5" />
-                </button>
-                {currentProblem.subject === 'vocab' && onToggleTTS && (
+                <div className="flex items-center gap-1">
+                    {currentProblem.subject === 'vocab' && onToggleTTS && (
+                        <button
+                            onClick={onToggleTTS}
+                            className={`p-1 rounded-full transition-colors ${englishAutoRead ? 'bg-primary/20 text-primary' : 'text-slate-300'}`}
+                            title={englishAutoRead ? '自動読み上げ ON' : '自動読み上げ OFF'}
+                        >
+                            <HiSpeakerWave className="w-4 h-4" />
+                        </button>
+                    )}
                     <button
-                        onClick={onToggleTTS}
-                        className={`ml-2 p-1 rounded-full transition-colors ${englishAutoRead ? 'bg-primary/20 text-primary' : 'text-slate-300'}`}
-                        title={englishAutoRead ? '自動読み上げ ON' : '自動読み上げ OFF'}
+                        onClick={() => onNavigate("/")}
+                        className="text-slate-400 hover:text-slate-600"
                     >
-                        <HiSpeakerWave className="w-4 h-4" />
+                        <Icons.Close className="w-5 h-5" />
                     </button>
-                )}
+                </div>
             </div>
 
             {/* Main Area: Mobile=Vertical, iPad=Horizontal */}
@@ -453,16 +448,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
 
 
 
-                        {/* Skip Button - モバイルでは上部バーに移動したので非表示 */}
-                        <button
-                            onClick={onSkip}
-                            disabled={feedback !== "none"}
-                            className="absolute top-4 left-4 text-slate-300 hover:text-slate-500 text-sm font-bold flex items-center gap-1 disabled:opacity-30 mobile:hidden"
-                        >
-                            スキップ →
-                        </button>
-
-                        {/* 復習補助表示 - モバイルでは上部バーに移動したので非表示 */}
+                        {/* 復習補助表示 */}
                         {/* 復習補助表示 - モバイルでは上部バーに移動したので非表示 -> 復活 (Visual Feedback) */}
                         <AnimatePresence>
                             {currentProblem.isReview && (
@@ -546,6 +532,18 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         )}
                     </Card>
                 </div>
+
+                {/* Skip Button — 問題とテンキーの間 */}
+                {feedback === "none" && (
+                    <div className="flex-none flex justify-end px-4 ipadland:px-0 mobile:px-2">
+                        <button
+                            onClick={onSkip}
+                            className="px-4 py-1.5 rounded-full text-sm font-bold text-slate-400 bg-slate-100 hover:bg-slate-200 active:scale-95 transition-all border border-slate-200 mobile:text-xs mobile:px-3 mobile:py-1"
+                        >
+                            {t("わからない → スキップ", "わからない → スキップ")}
+                        </button>
+                    </div>
+                )}
 
                 {/* Controls Area */}
                 {/* Rebalanced: Reduced from 45vh to 40vh for better problem/input hierarchy */}

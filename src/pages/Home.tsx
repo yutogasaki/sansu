@@ -13,6 +13,7 @@ import { calculateStage } from "../components/ikimono/lifecycle";
 import { IkimonoStage } from "../components/ikimono/types";
 import { Button } from "../components/ui/Button";
 import { UserProfile, PeriodicTestResult } from "../domain/types";
+import { warmUpTTS } from "../utils/tts";
 import { toLocaleDateKey } from "../utils/learningDay";
 
 const PAPER_TEST_REMIND_DAYS = 3;
@@ -277,6 +278,7 @@ export const Home: React.FC = () => {
             return;
         }
         if (currentEventType === "periodic_test") {
+            warmUpTTS();
             navigate("/study?session=periodic-test");
             return;
         }
@@ -289,6 +291,7 @@ export const Home: React.FC = () => {
             return;
         }
 
+        warmUpTTS();
         navigate("/study?session=check-event");
     };
 
@@ -407,18 +410,21 @@ export const Home: React.FC = () => {
                     <Button
                         size="xl"
                         className="w-full"
-                        onClick={() => navigate("/study")}
+                        onClick={() => { warmUpTTS(); navigate("/study"); }}
                     >
                         {isEasy ? "このこ と すすむ" : "この子と進む"}
                     </Button>
                     <div className="grid grid-cols-2 gap-3">
-                        <Button variant="secondary" className="h-11 text-sm" onClick={() => navigate("/study?session=review&force_review=1")}>
+                        <Button variant="secondary" className="h-11 text-sm" onClick={() => { warmUpTTS(); navigate("/study?session=review&force_review=1"); }}>
                             {isEasy ? "けはい を たどる" : "復習する"}
                         </Button>
                         <Button variant="secondary" className="h-11 text-sm" onClick={() => navigate("/stats")}>
                             {isEasy ? "きろく を みる" : "記録を見る"}
                         </Button>
                     </div>
+                    <Button variant="secondary" className="h-11 text-sm w-full" onClick={() => navigate("/battle")}>
+                        {isEasy ? "つなひき たいせん" : "綱引きたいせん"}
+                    </Button>
                 </div>
             </div>
         </div>

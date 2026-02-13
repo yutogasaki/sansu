@@ -21,6 +21,11 @@ import { getWord } from "../domain/english/words";
 import { getLearningDayEnd, getLearningDayStart } from "../utils/learningDay";
 import { db, AttemptLog } from "../db";
 import { UserProfile } from "../domain/types";
+import { warmUpTTS } from "../utils/tts";
+import { buildWeeklyTrend, buildRadarData, type RadarCategoryPoint, type WeeklyTrendPoint } from "../domain/stats/aggregation";
+import { WeeklyTrendChart } from "../components/charts/WeeklyTrendChart";
+import { SkillRadarChart } from "../components/charts/SkillRadarChart";
+import { IkimonoGallery } from "../components/ikimono/IkimonoGallery";
 
 type SubjectType = "math" | "vocab";
 
@@ -207,6 +212,9 @@ export const Stats: React.FC = () => {
     const [growthMessage, setGrowthMessage] = useState("");
     const [weakPatternMessage, setWeakPatternMessage] = useState("");
     const [stableSkills, setStableSkills] = useState<StableSkill[]>([]);
+    const [radarData, setRadarData] = useState<RadarCategoryPoint[]>([]);
+    const [trendData, setTrendData] = useState<WeeklyTrendPoint[]>([]);
+    const [trendMode, setTrendMode] = useState<"count" | "accuracy">("count");
     const [sections, setSections] = useState<SectionState>(() => loadSectionState());
     const [loading, setLoading] = useState(true);
 
@@ -313,6 +321,10 @@ export const Stats: React.FC = () => {
                 .sort((a, b) => (b.lastCorrectAt || "").localeCompare(a.lastCorrectAt || ""))
                 .slice(0, 5);
 
+            // Chart data
+            const trendData = buildWeeklyTrend(logsForCalendar, todayStart, addDays);
+            const radar = buildRadarData(mathMemory, active.mathMaxUnlocked || active.mathMainLevel || 1);
+
             setTodayStats(daily);
             setTotalStats(total);
             setWeakPoints(weak);
@@ -323,6 +335,8 @@ export const Stats: React.FC = () => {
             setGrowthMessage(buildGrowthMessage(thisWeekCount, previousWeekCount));
             setWeakPatternMessage(buildWeakPatternMessage(recentLogs));
             setStableSkills(stableCombined);
+            setRadarData(radar);
+            setTrendData(trendData);
             setEventCheckPending(
                 (active.periodicTestState?.math?.isPending ?? false) ||
                 (active.periodicTestState?.vocab?.isPending ?? false) ||
@@ -456,21 +470,41 @@ export const Stats: React.FC = () => {
 
                 {sections.growth && (
                     <Card className="p-4">
-                        <h3 className="font-bold text-slate-700">できるように なったこと</h3>
+                        <h3 className="font-bold text-slate-700">{t("せいちょう グラフ", "成長グラフ")}</h3>
                         <p className="text-xs text-slate-500 mt-2">{growthMessage}</p>
-                        {stableSkills.length > 0 ? (
-                            <div className="mt-3 space-y-2">
-                                {stableSkills.slice(0, 3).map(skill => (
-                                    <div key={`${skill.subject}-${skill.id}`} className="rounded-2xl bg-emerald-50 border border-emerald-100 p-3">
-                                        <div className="font-bold text-emerald-800 text-sm">{skill.label}</div>
-                                        <div className="text-[11px] text-emerald-600 mt-1">
-                                            つよさ {skill.strength} / かいとう {skill.totalAnswers}かい
+
+                        <div className="mt-3">
+                            <WeeklyTrendChart data={trendData} mode={trendMode} />
+                        </div>
+                        <div className="flex gap-2 mt-1 justify-center">
+                            <button
+                                onClick={() => setTrendMode("count")}
+                                className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${trendMode === "count" ? "bg-slate-800 text-white border-slate-800" : "bg-white text-slate-500 border-slate-200"}`}
+                            >
+                                かいとう
+                            </button>
+                            <button
+                                onClick={() => setTrendMode("accuracy")}
+                                className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${trendMode === "accuracy" ? "bg-slate-800 text-white border-slate-800" : "bg-white text-slate-500 border-slate-200"}`}
+                            >
+                                せいかいりつ
+                            </button>
+                        </div>
+
+                        {stableSkills.length > 0 && (
+                            <>
+                                <h4 className="font-bold text-slate-600 text-xs mt-4 mb-2">{t("できるように なったこと", "できるようになったこと")}</h4>
+                                <div className="space-y-2">
+                                    {stableSkills.slice(0, 3).map(skill => (
+                                        <div key={`${skill.subject}-${skill.id}`} className="rounded-2xl bg-emerald-50 border border-emerald-100 p-3">
+                                            <div className="font-bold text-emerald-800 text-sm">{skill.label}</div>
+                                            <div className="text-[11px] text-emerald-600 mt-1">
+                                                つよさ {skill.strength} / かいとう {skill.totalAnswers}かい
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="mt-3 text-xs text-slate-500">まだ こうほ が ないよ。きょうの がくしゅうで ふやそう。</div>
+                                    ))}
+                                </div>
+                            </>
                         )}
                     </Card>
                 )}
@@ -493,7 +527,7 @@ export const Stats: React.FC = () => {
                                         size="sm"
                                         variant="secondary"
                                         className="h-10 text-sm"
-                                        onClick={() => navigate(`/study?session=weak&focus_subject=${item.subject}&focus_ids=${item.id}`)}
+                                        onClick={() => { warmUpTTS(); navigate(`/study?session=weak&focus_subject=${item.subject}&focus_ids=${item.id}`); }}
                                     >
                                         これだけ
                                     </Button>
@@ -517,7 +551,7 @@ export const Stats: React.FC = () => {
                             <Button
                                 size="sm"
                                 className="h-10 text-sm"
-                                onClick={() => navigate("/study?session=review&force_review=1")}
+                                onClick={() => { warmUpTTS(); navigate("/study?session=review&force_review=1"); }}
                             >
                                 {t("まとめて やる", "まとめて学習")}
                             </Button>
@@ -531,7 +565,7 @@ export const Stats: React.FC = () => {
                             <Button
                                 size="sm"
                                 className="h-10 text-sm bg-white text-sky-700 border border-sky-200 hover:bg-sky-100"
-                                onClick={() => navigate("/study?session=weak-review")}
+                                onClick={() => { warmUpTTS(); navigate("/study?session=weak-review"); }}
                             >
                                 {t("やる", "開始")}
                             </Button>
@@ -549,7 +583,7 @@ export const Stats: React.FC = () => {
                                             size="sm"
                                             variant="secondary"
                                             className="h-10 text-sm"
-                                            onClick={() => navigate(`/study?session=review&focus_subject=${item.subject}&focus_ids=${item.id}&force_review=1`)}
+                                            onClick={() => { warmUpTTS(); navigate(`/study?session=review&focus_subject=${item.subject}&focus_ids=${item.id}&force_review=1`); }}
                                         >
                                             {t("やる", "開始")}
                                         </Button>
@@ -571,6 +605,7 @@ export const Stats: React.FC = () => {
                                     onClick={() => {
                                         localStorage.removeItem("sansu_event_check_pending");
                                         setEventCheckPending(false);
+                                        warmUpTTS();
                                         navigate("/study?session=periodic-test");
                                     }}
                                 >
@@ -583,9 +618,20 @@ export const Stats: React.FC = () => {
 
                 {sections.progress && (
                     <Card className="p-4">
-                        <h3 className="font-bold text-slate-700">{t("レベル しんちょく", "レベル進捗")}</h3>
+                        <h3 className="font-bold text-slate-700">{t("スキル マップ", "スキルマップ")}</h3>
 
-                        <div className="mt-3 p-3 rounded-2xl bg-slate-100">
+                        {radarData.some(d => d.skillCount > 0) ? (
+                            <div className="mt-2">
+                                <SkillRadarChart data={radarData} />
+                            </div>
+                        ) : (
+                            <div className="mt-3 text-xs text-slate-500">
+                                {t("さんすう を やると マップが みれるよ。", "算数を学習するとマップが表示されます。")}
+                            </div>
+                        )}
+
+                        <h4 className="font-bold text-slate-600 text-xs mt-4 mb-2">{t("レベル しんちょく", "レベル進捗")}</h4>
+                        <div className="p-3 rounded-2xl bg-slate-100">
                             <div className="text-sm font-bold text-slate-700">
                                 さんすう Lv{profile.mathMainLevel} / かいほう Lv{profile.mathMaxUnlocked}
                             </div>
@@ -608,6 +654,13 @@ export const Stats: React.FC = () => {
                                 さいきん: {vocabRecentCorrect}/{vocabRecent.length || 0}せいかい ・ つぎ Lv{Math.min(profile.vocabMainLevel + 1, maxVocabLevel)}
                             </div>
                         </div>
+                    </Card>
+                )}
+
+                {/* おもいで ギャラリー */}
+                {profile && (
+                    <Card className="p-4">
+                        <IkimonoGallery profileId={profile.id} />
                     </Card>
                 )}
 

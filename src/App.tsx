@@ -9,6 +9,7 @@ import { Settings } from "./pages/Settings";
 import { CurriculumSettings } from "./pages/CurriculumSettings";
 import { DevMode } from "./pages/DevMode";
 import { ParentsPage } from "./pages/parents/ParentsPage";
+import { Battle } from "./pages/Battle";
 import { loadSounds } from './utils/audio';
 import { getActiveProfileId } from "./domain/user/repository";
 
@@ -27,6 +28,10 @@ function App() {
         <HashRouter>
             <Routes>
                 <Route path="/onboarding" element={<Onboarding />} />
+
+                <Route path="/battle" element={<Layout />}>
+                    <Route index element={<Battle />} />
+                </Route>
 
                 <Route element={<Layout />}>
                     <Route path="/" element={

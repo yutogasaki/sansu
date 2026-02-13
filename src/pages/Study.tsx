@@ -6,7 +6,7 @@ import { playSound, setSoundEnabled } from "../utils/audio";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
 import { logAttempt } from "../domain/learningRepository";
 import { StudyLayout } from "./StudyLayout";
-import { speakEnglish } from "../utils/tts";
+import { speakEnglish, warmUpTTS } from "../utils/tts";
 
 const IS_DEV = import.meta.env.DEV;
 
@@ -63,6 +63,11 @@ export const Study: React.FC = () => {
     const [isEasyText, setIsEasyText] = useState(false);
 
     const currentProblem = queue[currentIndex];
+
+    // Warm up TTS on mount (uses the user interaction context from navigation tap)
+    useEffect(() => {
+        warmUpTTS();
+    }, []);
 
     // Sync Audio Settings & Profile ID
     useEffect(() => {

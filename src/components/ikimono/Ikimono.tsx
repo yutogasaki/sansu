@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, useAnimationControls } from 'framer-motion';
 import { IkimonoSvg } from './IkimonoSvg';
+import { NameModal } from './NameModal';
 import { calculateStage, createNewIkimonoState } from './lifecycle';
 import { getOpenHitokoto, shouldShowHitokotoOnOpen, getTapHitokoto, getEggOpenHitokoto, getEggTapHitokoto } from './hitokoto';
-import { ikimonoStorage } from '../../utils/storage';
+import { ikimonoStorage, ikimonoGalleryStorage } from '../../utils/storage';
 import { IkimonoState, IkimonoStage } from './types';
 
 interface IkimonoProps {
@@ -41,6 +42,8 @@ function pickTapReaction(stage: IkimonoStage): TapReaction {
 
 export const Ikimono: React.FC<IkimonoProps> = ({ profileId }) => {
     const [hitokoto, setHitokoto] = useState<string | null>(null);
+    const [showNameModal, setShowNameModal] = useState(false);
+    const [currentState, setCurrentState] = useState<IkimonoState | null>(null);
     const controls = useAnimationControls();
     const openHitokotoShown = useRef(false);
     const hitokotoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -52,6 +55,14 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId }) => {
         if (stored && stored.profileId === profileId) {
             const { stage } = calculateStage(stored.birthDate);
             if (stage === 'gone') {
+                // ギャラリーに保存してから次世代へ
+                ikimonoGalleryStorage.add({
+                    profileId: stored.profileId,
+                    generation: stored.generation,
+                    name: stored.name || "なまえなし",
+                    birthDate: stored.birthDate,
+                    departedDate: new Date().toISOString(),
+                });
                 const newState = createNewIkimonoState(profileId, stored.generation + 1);
                 ikimonoStorage.setState(newState);
                 return newState;
@@ -63,9 +74,23 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId }) => {
         return newState;
     }, [profileId]);
 
-    const state = getOrCreateState();
+    const state = currentState || getOrCreateState();
     const { stage, fadeOpacity } = calculateStage(state.birthDate);
     const sway = STAGE_SWAY[stage] || STAGE_SWAY.egg;
+
+    // ──── 名前がまだない hatching 以降の子を検知 ────
+    useEffect(() => {
+        if (!state.name && stage !== 'egg' && stage !== 'gone') {
+            setShowNameModal(true);
+        }
+    }, [state.name, stage]);
+
+    const handleNameSubmit = (name: string) => {
+        const updated = { ...state, name };
+        ikimonoStorage.setState(updated);
+        setCurrentState(updated);
+        setShowNameModal(false);
+    };
 
     // ──── 常時アニメーション：呼吸するような浮遊 ────
     useEffect(() => {
@@ -188,6 +213,9 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId }) => {
 
     return (
         <div className="flex flex-col items-center select-none">
+            {/* 名前入力モーダル */}
+            {showNameModal && <NameModal onSubmit={handleNameSubmit} />}
+
             {/* ひとこと吹き出し */}
             <div className="h-14 flex items-end justify-center mb-1">
                 <AnimatePresence>
@@ -214,6 +242,13 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId }) => {
             >
                 <IkimonoSvg stage={stage} />
             </motion.div>
+
+            {/* 名前表示 */}
+            {state.name && (
+                <div className="mt-1 text-sm font-bold text-slate-500 tracking-wide">
+                    {state.name}
+                </div>
+            )}
         </div>
     );
 };
