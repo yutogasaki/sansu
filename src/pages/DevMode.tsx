@@ -10,6 +10,7 @@ import { DevHistoryTab } from "../components/dev/DevHistoryTab";
 import { DevConstantsTab } from "../components/dev/DevConstantsTab";
 import { DevIkimonoTab } from "../components/dev/DevIkimonoTab";
 import { useDevPanel } from "../hooks/useDevPanel";
+import { Spinner } from "../components/ui/Spinner";
 import { MemoryState } from "../domain/types";
 
 export const DevMode: React.FC = () => {
@@ -63,9 +64,7 @@ export const DevMode: React.FC = () => {
         return (
             <div className="flex flex-col h-full bg-slate-50">
                 <Header title="開発者パネル" onBack={() => navigate("/")} />
-                <div className="flex-1 flex items-center justify-center">
-                    <span className="text-slate-500">読み込み中...</span>
-                </div>
+                <Spinner fullScreen />
             </div>
         );
     }

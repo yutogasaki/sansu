@@ -5,6 +5,7 @@ import { getWeakMathSkillIds, getWeakVocabIds } from '../../domain/learningRepos
 import { ENGLISH_WORDS } from '../../domain/english/words';
 import { getActiveProfile } from '../../domain/user/repository';
 import { ParentGateModal } from '../../components/gate/ParentGateModal';
+import { Spinner } from '../../components/ui/Spinner';
 
 type ParentsRouteState = {
     parentGatePassed?: boolean;
@@ -68,7 +69,7 @@ export const ParentsPage: React.FC = () => {
         return (
             <div className="flex flex-col h-full bg-slate-50">
                 <Header title="保護者メニュー" />
-                <div className="p-4">読み込み中...</div>
+                <Spinner fullScreen />
             </div>
         );
     }

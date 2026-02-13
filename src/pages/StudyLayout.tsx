@@ -13,6 +13,8 @@ import { Button } from "../components/ui/Button";
 import { Problem } from "../domain/types";
 import { LayoutDebugOverlay } from "../components/LayoutDebugOverlay";
 import { MathRenderer } from "../components/domain/MathRenderer";
+import { Spinner } from "../components/ui/Spinner";
+import { EmptyState } from "../components/ui/EmptyState";
 
 type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test";
 
@@ -179,10 +181,11 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     // Loading state
     if (loading) {
         return (
-            <div className="flex flex-col items-center justify-center h-full bg-slate-50 space-y-4">
-                <div className="animate-spin text-4xl">🌀</div>
-                <div className="text-slate-500 font-bold">{t("じゅんびちゅう...", "準備中...")}</div>
-            </div>
+            <Spinner
+                message={t("じゅんびちゅう...", "準備中...")}
+                fullScreen
+                className="bg-slate-50"
+            />
         );
     }
 
@@ -286,13 +289,13 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
 
     if (!currentProblem) {
         return (
-            <div className="flex flex-col items-center justify-center h-full bg-slate-50 space-y-4">
-                <div className="text-4xl">😵</div>
-                <div className="text-slate-500 font-bold">{t("もんだいが つくれなかった", "問題を作成できませんでした")}</div>
-                <Button onClick={onContinue} size="lg">
-                    {t("もういちど", "再試行")}
-                </Button>
-            </div>
+            <EmptyState
+                message={t("もんだいが つくれなかった", "問題を作成できませんでした")}
+                actionLabel={t("もういちど", "再試行")}
+                onAction={onContinue}
+                fullScreen
+                className="bg-slate-50"
+            />
         );
     }
 

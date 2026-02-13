@@ -5,6 +5,7 @@ import { Header } from "../components/Header";
 import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
 import { Icons } from "../components/icons";
+import { Spinner } from "../components/ui/Spinner";
 import { getActiveProfile } from "../domain/user/repository";
 import {
     DailyStats,
@@ -371,7 +372,7 @@ export const Stats: React.FC = () => {
     const vocabRecentCorrect = vocabRecent.filter(Boolean).length;
 
     if (loading) {
-        return <div className="p-4">Loading...</div>;
+        return <Spinner fullScreen />;
     }
 
     if (!profile) {
