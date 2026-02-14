@@ -1,10 +1,13 @@
 import { BattleGrade } from "./types";
 
 /**
- * Maps school grade (1-6) to math curriculum level range.
+ * Maps grade to math curriculum level range.
  * Overlapping ranges allow variety while maintaining grade-appropriate difficulty.
  */
 export const GRADE_TO_LEVELS: Record<BattleGrade, { min: number; max: number }> = {
+    [-2]: { min: 0, max: 1 },
+    [-1]: { min: 0, max: 2 },
+    0: { min: 0, max: 3 },
     1: { min: 1, max: 6 },
     2: { min: 4, max: 8 },
     3: { min: 7, max: 11 },
@@ -19,6 +22,12 @@ export const GRADE_TO_LEVELS: Record<BattleGrade, { min: number; max: number }> 
  */
 export const EXCLUDED_SKILLS = new Set([
     // choice input
+    "count_which_more",
+    "count_read",
+    "count_oddone",
+    "count_shape",
+    "count_color",
+    "count_pair",
     "compare_1d",
     "compare_2d",
     // multi-number (quotient + remainder)

@@ -219,10 +219,12 @@ export type UITextMode = 'easy' | 'standard';
 
 /**
  * Grade levels
- * 0: Year 0 (Kindergarten)
+ * -2: 年少 (Junior kindergarten, age 3-4)
+ * -1: 年中 (Middle kindergarten, age 4-5)
+ * 0: 年長 (Senior kindergarten, age 5-6)
  * 1-6: Elementary grades
  */
-export type GradeLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export type GradeLevel = -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export interface SyncMeta {
     lastPushedAt?: string;

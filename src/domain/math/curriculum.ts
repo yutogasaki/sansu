@@ -1,6 +1,7 @@
 export const MATH_CURRICULUM: Record<number, string[]> = {
-    1: ["count_10"],
-    2: ["count_50"],
+    0: ["count_5", "count_dot", "count_which_more", "count_read", "count_order", "count_oddone", "count_shape", "count_color", "count_pair", "add_tiny"],
+    1: ["count_10", "count_next_10", "add_finger", "count_back"],
+    2: ["count_50", "count_next_20", "add_5", "sub_tiny"],
     3: ["count_100", "count_fill", "compare_1d", "compare_2d"],
     4: ["add_1d_1"],
     5: ["add_1d_2"],
@@ -27,7 +28,7 @@ export const getSkillsForLevel = (level: number): string[] => {
 
 export const getAvailableSkills = (maxLevel: number): string[] => {
     let skills: string[] = [];
-    for (let i = 1; i <= maxLevel; i++) {
+    for (let i = 0; i <= maxLevel; i++) {
         if (MATH_CURRICULUM[i]) {
             skills = skills.concat(MATH_CURRICULUM[i]);
         }

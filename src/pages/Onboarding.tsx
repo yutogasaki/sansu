@@ -49,6 +49,8 @@ export const Onboarding: React.FC = () => {
         // 少し手前から始めて、自信をつけさせる
         const safeGrade = grade ?? 0;
         const baseMap: Record<number, number> = {
+            [-2]: 0,
+            [-1]: 1,
             0: 4,
             1: 6,
             2: 7,
@@ -217,7 +219,9 @@ export const Onboarding: React.FC = () => {
                     <div className="w-full animate-in slide-in-from-right duration-300 pb-12">
                         <div className="grid grid-cols-1 gap-3 land:grid-cols-2">
                             {[
-                                { l: "年長さん 以下", v: 0, icon: "📛" },
+                                { l: "年少さん", v: -2, icon: "🌷" },
+                                { l: "年中さん", v: -1, icon: "🌻" },
+                                { l: "年長さん", v: 0, icon: "📛" },
                                 { l: "小学 1 年生", v: 1, icon: "🎒" },
                                 { l: "小学 2 年生", v: 2, icon: "re" },
                                 { l: "小学 3 年生", v: 3, icon: "🚲" },

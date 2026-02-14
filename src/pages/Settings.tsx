@@ -57,7 +57,17 @@ export const Settings: React.FC = () => {
         }
     };
 
-    const GRADES = ["年長以下", "小学1年生", "小学2年生", "小学3年生", "小学4年生", "小学5年生", "小学6年生"];
+    const GRADES: Record<number, string> = {
+        [-2]: "年少",
+        [-1]: "年中",
+        0: "年長",
+        1: "小学1年生",
+        2: "小学2年生",
+        3: "小学3年生",
+        4: "小学4年生",
+        5: "小学5年生",
+        6: "小学6年生",
+    };
 
     const handleSwitchProfile = async (id: string) => {
         await setActiveProfileId(id);

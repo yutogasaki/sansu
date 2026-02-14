@@ -15,6 +15,9 @@ import {
 import { GRADE_TO_LEVELS, EXCLUDED_SKILLS } from "./gradeMapping";
 
 const GRADE_TO_VOCAB_LEVELS: Record<BattleGrade, { min: number; max: number }> = {
+    [-2]: { min: 1, max: 1 },
+    [-1]: { min: 1, max: 1 },
+    0: { min: 1, max: 1 },
     1: { min: 1, max: 2 },
     2: { min: 1, max: 3 },
     3: { min: 2, max: 4 },

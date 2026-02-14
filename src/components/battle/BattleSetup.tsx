@@ -5,6 +5,9 @@ import { BattleGameMode, BattleGrade, BattleSubject, PlayerConfig } from "../../
 
 const AVATARS = ["🐱", "🐶", "🐰", "🐻", "🐼", "🦊", "🐸", "🐧"];
 const GRADE_LABELS: Record<BattleGrade, string> = {
+    [-2]: "ねんしょう",
+    [-1]: "ねんちゅう",
+    0: "ねんちょう",
     1: "1ねんせい",
     2: "2ねんせい",
     3: "3ねんせい",
@@ -90,7 +93,7 @@ const PlayerSetupPanel: React.FC<{
         {/* Grade */}
         <div className="text-xs font-bold text-slate-400 mt-1">がくねん</div>
         <div className="grid grid-cols-3 gap-1.5">
-            {([1, 2, 3, 4, 5, 6] as BattleGrade[]).map((g) => (
+            {([-2, -1, 0, 1, 2, 3, 4, 5, 6] as BattleGrade[]).map((g) => (
                 <button
                     key={g}
                     onClick={() => onChange({ ...setup, grade: g })}

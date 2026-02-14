@@ -3,7 +3,7 @@
 // ============================================================
 
 export type PlayerId = "p1" | "p2";
-export type BattleGrade = 1 | 2 | 3 | 4 | 5 | 6;
+export type BattleGrade = -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export type BattlePhase = "setup" | "countdown" | "playing" | "result";
 export type BattleSubject = "math" | "vocab";
 export type BattleGameMode = "tug_of_war" | "boss_coop";
