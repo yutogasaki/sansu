@@ -17,6 +17,7 @@ export const Study: React.FC = () => {
     const devSkill = searchParams.get("dev_skill") || undefined;
     const focusSubject = searchParams.get("focus_subject") as "math" | "vocab" | null;
     const focusIdsParam = searchParams.get("focus_ids");
+    const backTo = searchParams.get("back_to");
     const forceReview = searchParams.get("force_review") === "1";
     const sessionKindParam = searchParams.get("session") as
         | "normal"
@@ -26,7 +27,10 @@ export const Study: React.FC = () => {
         | "check-event"
         | "weak-review"
         | "periodic-test"
+        | "dev"
         | null;
+    const isDevSession = sessionKindParam === "dev";
+    const backPath = backTo || "/";
 
     const focusIds = focusIdsParam ? focusIdsParam.split(",").filter(Boolean) : undefined;
 
@@ -369,11 +373,13 @@ export const Study: React.FC = () => {
         setShowCorrection(true);
         playSound("incorrect");
 
-        // スキップをログ（strength=1にリセット、不正解扱い）
-        await logAttempt(profileId, currentProblem.subject, currentProblem.categoryId, 'incorrect', true, currentProblem.isReview);
+        if (!isDevSession) {
+            // スキップをログ（strength=1にリセット、不正解扱い）
+            await logAttempt(profileId, currentProblem.subject, currentProblem.categoryId, 'incorrect', true, currentProblem.isReview);
+        }
 
         // Auto-advance removed. User must click Next.
-    }, [feedback, currentProblem, profileId]);
+    }, [feedback, currentProblem, profileId, isDevSession]);
 
     // 左スワイプでスキップ
     const swipeHandlers = useSwipeable({
@@ -462,6 +468,14 @@ export const Study: React.FC = () => {
         // We might want to ensure we have questions, but pre-fetch checks that.
     }, []);
 
+    const handleNavigate = useCallback((path: string) => {
+        if (isDevSession && path === "/") {
+            navigate(backPath);
+            return;
+        }
+        navigate(path);
+    }, [isDevSession, backPath, navigate]);
+
     return (
         <StudyLayout
             loading={loading}
@@ -479,7 +493,7 @@ export const Study: React.FC = () => {
             sessionResult={sessionResult || undefined}
             testTimeLimitSeconds={testTimeLimitSeconds}
             testRemainingSeconds={testRemainingSeconds}
-            onNavigate={(path) => navigate(path)}
+            onNavigate={handleNavigate}
             onNext={nextProblem}
             onContinue={handleContinue}
             onSkip={handleSkip}

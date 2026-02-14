@@ -27,7 +27,7 @@ export interface SessionHistoryItem {
     isReview: boolean;
 }
 
-export type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test";
+export type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test" | "dev";
 
 export interface ProblemGenerationResult {
     problem: Omit<Problem, 'id' | 'subject' | 'isReview'>;

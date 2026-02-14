@@ -23,7 +23,7 @@ export const DevMathTab: React.FC<DevMathTabProps> = ({ memoryStates, onUpdateMe
     };
 
     const handleStudy = (skillId: string) => {
-        navigate(`/study?dev_skill=${skillId}`);
+        navigate(`/study?session=dev&focus_subject=math&focus_ids=${skillId}&back_to=${encodeURIComponent("/dev?tab=math")}`);
     };
 
 

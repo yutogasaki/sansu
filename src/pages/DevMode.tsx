@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Header } from "../components/Header";
 import { DevPanelTabs, DevTabId } from "../components/dev/DevPanelTabs";
 import { DevProfileTab } from "../components/dev/DevProfileTab";
@@ -15,7 +15,12 @@ import { MemoryState } from "../domain/types";
 
 export const DevMode: React.FC = () => {
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState<DevTabId>("profile");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const tabParam = searchParams.get("tab") as DevTabId | null;
+    const initialTab: DevTabId = tabParam && ["profile", "progress", "math", "vocab", "history", "ikimono", "constants"].includes(tabParam)
+        ? tabParam
+        : "profile";
+    const [activeTab, setActiveTab] = useState<DevTabId>(initialTab);
 
     const {
         profile,
@@ -41,6 +46,10 @@ export const DevMode: React.FC = () => {
             getVocabMemoryStates().then(setVocabMemory);
         }
     }, [activeTab, profile, getMathMemoryStates, getVocabMemoryStates]);
+
+    useEffect(() => {
+        setSearchParams({ tab: activeTab }, { replace: true });
+    }, [activeTab, setSearchParams]);
 
     const refreshMathMemory = () => {
         getMathMemoryStates().then(setMathMemory);

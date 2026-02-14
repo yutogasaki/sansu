@@ -34,7 +34,7 @@ export const DevVocabTab: React.FC<DevVocabTabProps> = ({ memoryStates, onUpdate
     };
 
     const handleStudy = (wordId: string) => {
-        navigate(`/study?focus_subject=vocab&focus_ids=${wordId}`);
+        navigate(`/study?session=dev&focus_subject=vocab&focus_ids=${wordId}&back_to=${encodeURIComponent("/dev?tab=vocab")}`);
     };
 
     const wordsForLevel = selectedLevel ? getWordsByLevel(selectedLevel) : [];

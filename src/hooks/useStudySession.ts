@@ -505,6 +505,8 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     // ============================================================
     const handleResult = async (problem: Problem, result: 'correct' | 'incorrect', timeMs?: number) => {
         if (!profileId) return;
+        const sessionKind = options.sessionKind || "normal";
+        if (sessionKind === "dev") return;
 
         try {
             await logAttempt(

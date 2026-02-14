@@ -18,7 +18,7 @@ import { EmptyState } from "../components/ui/EmptyState";
 import { HissanGrid } from "../components/domain/HissanGrid";
 import { HissanGridData } from "../domain/math/hissanTypes";
 
-type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test";
+type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test" | "dev";
 
 interface StudyLayoutProps {
     loading: boolean;
