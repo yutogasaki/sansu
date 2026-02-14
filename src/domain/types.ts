@@ -4,7 +4,7 @@
 
 export type SubjectKey = 'math' | 'vocab';
 export type SkillStatus = 'active' | 'maintenance' | 'retired';
-export type InputType = 'number' | 'multi-number' | 'choice';
+export type InputType = 'number' | 'multi-number' | 'choice' | 'hissan';
 
 /**
  * Strength level for SRS algorithm (1-5)
@@ -151,6 +151,9 @@ export interface Problem {
 
     displayAnswer?: string; // Display string for correct answer (e.g. Japanese translation)
 
+    // 筆算モード用: オペランド情報
+    hissanOperands?: { a: number; b: number };
+
     // Metadata
     isReview: boolean;
     isMaintenanceCheck?: boolean; // 仕様 5.4: 維持確認として出題されたか
@@ -247,6 +250,7 @@ export interface UserProfile {
     dailyGoal?: number;
     kanjiMode?: boolean; // new: use Kanji for English answers if available
     englishAutoRead?: boolean; // new: auto TTS for English
+    hissanModeEnabled?: boolean; // 筆算モード: 対象スキルで筆算UIを使用
 
     // Progress
     mathMainLevel: number;

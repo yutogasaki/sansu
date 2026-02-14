@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { useStudySession } from "../hooks/useStudySession";
+import { useHissanSession } from "../hooks/useHissanSession";
 import { playSound, setSoundEnabled } from "../utils/audio";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
 import { logAttempt } from "../domain/learningRepository";
@@ -64,8 +65,12 @@ export const Study: React.FC = () => {
     const [profileId, setProfileId] = useState<string | null>(null);
     const [englishAutoRead, setEnglishAutoRead] = useState(false);
     const [isEasyText, setIsEasyText] = useState(false);
+    const [hissanModeEnabled, setHissanModeEnabled] = useState(false);
 
     const currentProblem = queue[currentIndex];
+
+    // Hissan Session
+    const hissan = useHissanSession();
 
     // Warm up TTS on mount (uses the user interaction context from navigation tap)
     useEffect(() => {
@@ -80,6 +85,7 @@ export const Study: React.FC = () => {
                 setProfileId(profile.id);
                 setEnglishAutoRead(profile.englishAutoRead || false);
                 setIsEasyText(profile.uiTextMode === "easy");
+                setHissanModeEnabled(profile.hissanModeEnabled ?? true);
             }
         });
     }, []);
@@ -110,7 +116,10 @@ export const Study: React.FC = () => {
         setFeedback("none");
         setShowCorrection(false);
         isProcessingRef.current = false;
-    }, [currentProblem]);
+
+        // 筆算モードリセット
+        hissan.resetHissan(currentProblem, hissanModeEnabled);
+    }, [currentProblem, hissanModeEnabled]);
 
     // Check for pause (every 100 questions) or pre-fetch
     useEffect(() => {
@@ -263,6 +272,25 @@ export const Study: React.FC = () => {
     const handleSubmit = useCallback(async (choiceValue?: string) => {
         if (feedback !== "none" || !currentProblem) return;
 
+        // 筆算モードの場合はhissanEnterを使う
+        if (hissan.isHissanActive && hissan.gridData) {
+            const result = hissan.handleHissanEnter();
+            if (result === 'all-correct') {
+                // 全ステップ正解 → 通常の正解処理
+                isProcessingRef.current = true;
+                const timeMs = Date.now() - problemShownAtRef.current;
+                setFeedback("correct");
+                playSound("correct");
+                handleResult(currentProblem, 'correct', timeMs);
+                setCorrectCount(prev => prev + 1);
+                setTimeout(() => { nextProblem(); }, 500);
+            } else if (result === 'step-correct') {
+                playSound("correct");
+            } else {
+                playSound("incorrect");
+            }
+            return;
+        }
 
         isProcessingRef.current = true;
         let isCorrect = false;
@@ -299,7 +327,7 @@ export const Study: React.FC = () => {
             setShowCorrection(true);
             // Auto-advance removed. User must click Next.
         }
-    }, [feedback, currentProblem, userInput, userInputs, handleResult, nextProblem]);
+    }, [feedback, currentProblem, userInput, userInputs, handleResult, nextProblem, hissan]);
 
     // スキップ処理（仕様 4.7）
     const handleSkip = useCallback(async () => {
@@ -423,9 +451,9 @@ export const Study: React.FC = () => {
             onNext={nextProblem}
             onContinue={handleContinue}
             onSkip={handleSkip}
-            onTenKeyInput={handleTenKeyInput}
-            onBackspace={handleBackspace}
-            onClear={handleClear}
+            onTenKeyInput={hissan.isHissanActive ? (val) => hissan.handleHissanInput(typeof val === 'string' ? parseInt(val) || 0 : val) : handleTenKeyInput}
+            onBackspace={hissan.isHissanActive ? hissan.handleHissanBackspace : handleBackspace}
+            onClear={hissan.isHissanActive ? hissan.handleHissanClear : handleClear}
             onEnter={() => handleSubmit()}
             onCursorMove={handleCursorMove}
             onSubmitChoice={(val) => handleSubmit(val)}
@@ -434,6 +462,16 @@ export const Study: React.FC = () => {
             englishAutoRead={englishAutoRead}
             isEasyText={isEasyText}
             onToggleTTS={handleToggleTTS}
+            // 筆算モード props
+            hissanActive={hissan.isHissanActive}
+            hissanEligible={hissan.isHissanEligibleSkill}
+            hissanGridData={hissan.gridData}
+            hissanStepIndex={hissan.currentStepIndex}
+            hissanActiveCellPos={hissan.activeCellPos}
+            hissanUserValues={hissan.userValues}
+            hissanStepFeedback={hissan.stepFeedback}
+            onHissanCellClick={hissan.handleCellClick}
+            onHissanToggle={hissan.toggleHissanMode}
         />
     );
 };

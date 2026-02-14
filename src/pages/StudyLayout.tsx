@@ -15,6 +15,8 @@ import { LayoutDebugOverlay } from "../components/LayoutDebugOverlay";
 import { MathRenderer } from "../components/domain/MathRenderer";
 import { Spinner } from "../components/ui/Spinner";
 import { EmptyState } from "../components/ui/EmptyState";
+import { HissanGrid } from "../components/domain/HissanGrid";
+import { HissanGridData } from "../domain/math/hissanTypes";
 
 type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test";
 
@@ -56,6 +58,17 @@ interface StudyLayoutProps {
     englishAutoRead?: boolean;
     isEasyText?: boolean;
     onToggleTTS?: () => void;
+
+    // 筆算モード
+    hissanActive?: boolean;
+    hissanEligible?: boolean;
+    hissanGridData?: HissanGridData | null;
+    hissanStepIndex?: number;
+    hissanActiveCellPos?: [number, number] | null;
+    hissanUserValues?: Map<string, string>;
+    hissanStepFeedback?: 'none' | 'correct' | 'incorrect';
+    onHissanCellClick?: (rowIndex: number, colIndex: number) => void;
+    onHissanToggle?: () => void;
 }
 
 export const StudyLayout: React.FC<StudyLayoutProps> = ({
@@ -87,6 +100,16 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     englishAutoRead = false,
     isEasyText = false,
     onToggleTTS,
+    // 筆算モード
+    hissanActive = false,
+    hissanEligible = false,
+    hissanGridData,
+    hissanStepIndex = 0,
+    hissanActiveCellPos = null,
+    hissanUserValues = new Map(),
+    hissanStepFeedback = 'none',
+    onHissanCellClick,
+    onHissanToggle,
 }) => {
     const t = (easy: string, standard: string) => (isEasyText ? easy : standard);
     const vocabQuestionText = currentProblem?.subject === 'vocab' ? currentProblem.questionText : undefined;
@@ -407,6 +430,19 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                     {currentIndex + 1} 問目
                 </span>
                 <div className="flex items-center gap-1">
+                    {/* 筆算/暗算 切替トグル */}
+                    {hissanEligible && onHissanToggle && (
+                        <button
+                            onClick={onHissanToggle}
+                            className={`px-2 py-0.5 rounded-full text-xs font-bold transition-colors border ${hissanActive
+                                    ? 'bg-violet-100 text-violet-600 border-violet-200'
+                                    : 'bg-slate-100 text-slate-400 border-slate-200'
+                                }`}
+                            title={hissanActive ? '筆算モード ON' : '暗算モード'}
+                        >
+                            {hissanActive ? '···' : '···'}
+                        </button>
+                    )}
                     {currentProblem.subject === 'vocab' && onToggleTTS && (
                         <button
                             onClick={onToggleTTS}
@@ -479,7 +515,30 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         </div>
 
                         {/* Question Content */}
-                        {currentProblem.inputType === "number" ? (
+                        {hissanActive && hissanGridData ? (
+                            /* 筆算モード: グリッド表示 */
+                            <div className="w-full flex-1 flex flex-col items-center justify-center gap-2 overflow-auto min-h-0">
+                                {/* 筆算モードトグル（デスクトップ） */}
+                                {hissanEligible && onHissanToggle && (
+                                    <div className="mobile:hidden">
+                                        <button
+                                            onClick={onHissanToggle}
+                                            className="px-3 py-1 rounded-full text-xs font-bold bg-violet-100 text-violet-600 border border-violet-200 hover:bg-violet-200 transition-colors"
+                                        >
+                                            ··· → 暗算に切替
+                                        </button>
+                                    </div>
+                                )}
+                                <HissanGrid
+                                    gridData={hissanGridData}
+                                    currentStepIndex={hissanStepIndex}
+                                    activeCellPos={hissanActiveCellPos}
+                                    userValues={hissanUserValues}
+                                    onCellClick={onHissanCellClick || (() => { })}
+                                    stepFeedback={hissanStepFeedback}
+                                />
+                            </div>
+                        ) : currentProblem.inputType === "number" ? (
                             <div className={`w-full flex-1 flex flex-col items-center justify-center gap-6 ipadland:flex-col ipadland:items-center ipadland:gap-12 mobile:gap-3 mobile:justify-center ${currentProblem.categoryId.startsWith("frac_") ? "mobile:flex-col" : "mobile:flex-row"
                                 }`}>
                                 <div className="text-slate-800 font-black tracking-wider text-center max-w-full overflow-hidden mobile:flex-shrink-0">
@@ -550,14 +609,14 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 {/* Controls Area */}
                 <div id="debug-controls" className="bg-slate-100 p-2 pb-6 rounded-t-[2rem] shadow-inner flex-1 max-h-[44vh] min-h-[220px] land:min-h-[32vh] land:pb-4 ipadland:rounded-[2rem] ipadland:h-full ipadland:flex ipadland:flex-col ipadland:justify-center ipadland:p-6 ipadland:shadow-lg ipadland:min-h-0 ipadland:max-h-none mobile:pb-[var(--safe-area-inset-bottom)] mobile:pt-0 mobile:p-0 mobile:rounded-none mobile:bg-slate-50">
                     {/* TenKey / Inputs */}
-                    {(currentProblem.inputType === "number" || currentProblem.inputType === "multi-number") && (
+                    {(currentProblem.inputType === "number" || currentProblem.inputType === "multi-number" || hissanActive) && (
                         <TenKey
                             onInput={onTenKeyInput}
                             onDelete={onBackspace}
                             onClear={onClear}
                             onEnter={onEnter}
-                            showDecimal={currentProblem.subject === 'math'}
-                            onCursorMove={currentProblem.inputType === "multi-number" ? onCursorMove : undefined}
+                            showDecimal={currentProblem.subject === 'math' && !hissanActive}
+                            onCursorMove={currentProblem.inputType === "multi-number" && !hissanActive ? onCursorMove : undefined}
                         />
                     )}
 

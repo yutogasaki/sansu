@@ -393,6 +393,29 @@ export const Settings: React.FC = () => {
                         </div>
                     </Card>
 
+                    {/* Hissan Mode */}
+                    <Card className="p-4 space-y-3">
+                        <div className="flex justify-between items-center">
+                            <div>
+                                <h3 className="font-bold text-slate-700">{t("ひっさん モード", "筆算モード")}</h3>
+                                <p className="text-xs text-slate-400 mt-0.5">{t("おおきい すうじ の とき ひっさん で とける", "大きい数の計算で筆算UIを表示")}</p>
+                            </div>
+                            <Button
+                                size="sm"
+                                variant={profile?.hissanModeEnabled !== false ? "primary" : "secondary"}
+                                onClick={async () => {
+                                    if (!profile) return;
+                                    const updated = { ...profile, hissanModeEnabled: !profile.hissanModeEnabled };
+                                    await saveProfile(updated);
+                                    setProfile(updated);
+                                }}
+                                className="w-20"
+                            >
+                                {profile?.hissanModeEnabled !== false ? "ON" : "OFF"}
+                            </Button>
+                        </div>
+                    </Card>
+
                     {/* Level Settings */}
                     <Card className="p-4 space-y-3">
                         <h3 className="font-bold text-slate-700">{t("レベル", "レベル")}</h3>
