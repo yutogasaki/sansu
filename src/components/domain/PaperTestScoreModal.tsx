@@ -9,7 +9,7 @@ interface PaperTestScoreModalProps {
     onDismiss: () => void;
 }
 
-const SCORE_OPTIONS = [0, 5, 10, 15, 20];
+const SCORE_OPTIONS = Array.from({ length: 21 }, (_, i) => i);
 
 export const PaperTestScoreModal: React.FC<PaperTestScoreModalProps> = ({
     isOpen,
@@ -74,12 +74,12 @@ export const PaperTestScoreModal: React.FC<PaperTestScoreModalProps> = ({
                             </p>
 
                             {/* Score Selection */}
-                            <div className="flex flex-wrap justify-center gap-3 mb-6">
+                            <div className="grid grid-cols-7 gap-2 mb-6">
                                 {SCORE_OPTIONS.map((score) => (
                                     <button
                                         key={score}
                                         onClick={() => setSelectedScore(score)}
-                                        className={`w-14 h-14 rounded-xl text-xl font-bold transition-all ${selectedScore === score
+                                        className={`w-10 h-10 rounded-lg text-sm font-bold transition-all ${selectedScore === score
                                                 ? 'bg-indigo-500 text-white scale-110 shadow-lg'
                                                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                                             }`}

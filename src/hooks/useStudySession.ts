@@ -642,6 +642,8 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             correct: number;
             total: number;
             durationSeconds: number;
+            timeLimitSeconds?: number;
+            timedOut?: boolean;
         }
     ) => {
         if (!profileId || !profile) return;
@@ -670,7 +672,9 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 correctCount: sessionStats.correct,
                 totalQuestions: sessionStats.total,
                 score: Math.round((sessionStats.correct / sessionStats.total) * 100),
-                durationSeconds: sessionStats.durationSeconds
+                durationSeconds: sessionStats.durationSeconds,
+                timeLimitSeconds: sessionStats.timeLimitSeconds,
+                timedOut: sessionStats.timedOut
             };
 
             // Check if it was pending to determine mode

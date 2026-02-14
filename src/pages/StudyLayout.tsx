@@ -36,6 +36,8 @@ interface StudyLayoutProps {
     sessionKind?: SessionKind;
     correctCount?: number;
     sessionResult?: { correct: number; total: number; durationSeconds: number };
+    testTimeLimitSeconds?: number;
+    testRemainingSeconds?: number;
 
     // Handlers
     onNavigate: (path: string) => void;
@@ -78,6 +80,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     sessionKind = "normal",
     correctCount = 0,
     sessionResult,
+    testTimeLimitSeconds,
+    testRemainingSeconds,
     currentIndex,
     blockSize,
     userInput,
@@ -112,6 +116,13 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     onHissanToggle,
 }) => {
     const t = (easy: string, standard: string) => (isEasyText ? easy : standard);
+    const formatTimer = (seconds: number) => {
+        const safe = Math.max(0, seconds);
+        const m = Math.floor(safe / 60);
+        const s = safe % 60;
+        return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+    };
+    const showTestTimer = sessionKind === "periodic-test" && typeof testTimeLimitSeconds === "number" && typeof testRemainingSeconds === "number";
     const vocabQuestionText = currentProblem?.subject === 'vocab' ? currentProblem.questionText : undefined;
     // Auto-TTS Effect
     React.useEffect(() => {
@@ -409,9 +420,16 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                     title={currentProblem.subject === 'math' ? t('さんすう', '算数') : t('えいご', '英語')}
                     onBack={() => onNavigate("/")}
                     center={
-                        <span className="text-slate-400 font-bold text-lg">
-                            {currentIndex + 1} 問目
-                        </span>
+                        <div className="flex items-center gap-3">
+                            <span className="text-slate-400 font-bold text-lg">
+                                {currentIndex + 1} 問目
+                            </span>
+                            {showTestTimer && (
+                                <span className={`text-sm font-black px-2 py-1 rounded-full ${testRemainingSeconds <= 60 ? "bg-rose-100 text-rose-700" : "bg-slate-100 text-slate-600"}`}>
+                                    {formatTimer(testRemainingSeconds)}
+                                </span>
+                            )}
+                        </div>
                     }
                     rightAction={
                         <Button variant="ghost" size="sm" onClick={() => onNavigate("/")}>
@@ -426,9 +444,16 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 {currentProblem.isReview && (
                     <span className="text-slate-400 text-xs">🔁</span>
                 )}
-                <span className="text-slate-300 font-bold text-xs">
-                    {currentIndex + 1} 問目
-                </span>
+                <div className="flex items-center gap-2">
+                    <span className="text-slate-300 font-bold text-xs">
+                        {currentIndex + 1} 問目
+                    </span>
+                    {showTestTimer && (
+                        <span className={`text-[11px] font-black px-2 py-0.5 rounded-full ${testRemainingSeconds <= 60 ? "bg-rose-100 text-rose-700" : "bg-slate-100 text-slate-600"}`}>
+                            {formatTimer(testRemainingSeconds)}
+                        </span>
+                    )}
+                </div>
                 <div className="flex items-center gap-1">
                     {/* 筆算/暗算 切替トグル */}
                     {hissanEligible && onHissanToggle && (

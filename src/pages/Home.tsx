@@ -12,9 +12,10 @@ import { Ikimono } from "../components/ikimono/Ikimono";
 import { calculateStage } from "../components/ikimono/lifecycle";
 import { IkimonoStage } from "../components/ikimono/types";
 import { Button } from "../components/ui/Button";
-import { UserProfile, PeriodicTestResult } from "../domain/types";
+import { UserProfile } from "../domain/types";
 import { warmUpTTS } from "../utils/tts";
 import { toLocaleDateKey } from "../utils/learningDay";
+import { recordPaperTestScore } from "../domain/test/paperTest";
 
 const PAPER_TEST_REMIND_DAYS = 3;
 
@@ -306,26 +307,7 @@ export const Home: React.FC = () => {
 
     const handlePaperTestSubmit = async (correctCount: number) => {
         if (!profile || !pendingPaperTest) return;
-
-        const newResult: PeriodicTestResult = {
-            id: crypto.randomUUID(),
-            timestamp: Date.now(),
-            subject: pendingPaperTest.subject,
-            level: pendingPaperTest.level,
-            mode: "manual",
-            method: "paper",
-            correctCount,
-            totalQuestions: 20,
-            score: Math.round((correctCount / 20) * 100),
-            durationSeconds: 0,
-        };
-
-        const updatedPendingTests = (profile.pendingPaperTests || []).filter(pt => pt.id !== pendingPaperTest.id);
-        const updatedProfile = {
-            ...profile,
-            pendingPaperTests: updatedPendingTests.length > 0 ? updatedPendingTests : undefined,
-            testHistory: [...(profile.testHistory || []), newResult],
-        };
+        const updatedProfile = recordPaperTestScore(profile, pendingPaperTest, correctCount);
 
         await saveProfile(updatedProfile);
         setProfile(updatedProfile);

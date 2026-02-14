@@ -190,6 +190,8 @@ export interface PeriodicTestResult {
     totalQuestions: number; // 20
     score: number; // 0-100
     durationSeconds: number;
+    timeLimitSeconds?: number;
+    timedOut?: boolean;
 }
 
 export interface TriggerState {
@@ -274,6 +276,7 @@ export interface UserProfile {
     testHistory?: PeriodicTestResult[];
     periodicTestState?: PeriodicTestState;
     periodicTestSets?: Partial<Record<SubjectKey, PeriodicTestSet>>;
+    periodicTestTimeLimitSeconds?: number; // undefined means no limit
 
     // Streak / Daily
     streak: number;

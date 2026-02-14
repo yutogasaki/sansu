@@ -21,7 +21,7 @@ import { MATH_CURRICULUM } from "../domain/math/curriculum";
 import { getWord } from "../domain/english/words";
 import { getLearningDayEnd, getLearningDayStart } from "../utils/learningDay";
 import { db, AttemptLog } from "../db";
-import { UserProfile } from "../domain/types";
+import { UserProfile, PeriodicTestResult } from "../domain/types";
 import { warmUpTTS } from "../utils/tts";
 import { buildWeeklyTrend, buildRadarData, type RadarCategoryPoint, type WeeklyTrendPoint } from "../domain/stats/aggregation";
 import { WeeklyTrendChart } from "../components/charts/WeeklyTrendChart";
@@ -60,6 +60,7 @@ type SectionKey =
     | "growth"
     | "weak"
     | "review"
+    | "tests"
     | "progress"
     | "parent";
 
@@ -73,6 +74,7 @@ const DEFAULT_SECTIONS: SectionState = {
     growth: true,
     weak: true,
     review: true,
+    tests: true,
     progress: true,
     parent: true,
 };
@@ -83,6 +85,7 @@ const SECTION_LABELS: Record<SectionKey, string> = {
     growth: "成長",
     weak: "苦手",
     review: "復習",
+    tests: "テスト",
     progress: "レベル",
     parent: "保護者",
 };
@@ -191,6 +194,7 @@ const loadSectionState = (): SectionState => {
             weak: parsed.weak ?? DEFAULT_SECTIONS.weak,
             review: parsed.review ?? DEFAULT_SECTIONS.review,
             progress: parsed.progress ?? DEFAULT_SECTIONS.progress,
+            tests: parsed.tests ?? DEFAULT_SECTIONS.tests,
             parent: parsed.parent ?? DEFAULT_SECTIONS.parent,
         };
     } catch {
@@ -359,6 +363,11 @@ export const Stats: React.FC = () => {
         () => [...weakPoints].sort((a, b) => a.accuracy - b.accuracy).slice(0, 3),
         [weakPoints]
     );
+    const periodicTestHistory = useMemo<PeriodicTestResult[]>(() => {
+        return [...(profile?.testHistory || [])]
+            .sort((a, b) => b.timestamp - a.timestamp)
+            .slice(0, 10);
+    }, [profile?.testHistory]);
 
     const maxMathLevel = Object.keys(MATH_CURRICULUM).length;
     const maxVocabLevel = 20;
@@ -655,6 +664,41 @@ export const Stats: React.FC = () => {
                                 さいきん: {vocabRecentCorrect}/{vocabRecent.length || 0}せいかい ・ つぎ Lv{Math.min(profile.vocabMainLevel + 1, maxVocabLevel)}
                             </div>
                         </div>
+                    </Card>
+                )}
+
+                {sections.tests && (
+                    <Card className="p-4 land:col-span-2">
+                        <h3 className="font-bold text-slate-700">{t("ていき テスト りれき", "定期テスト履歴")}</h3>
+                        {periodicTestHistory.length === 0 ? (
+                            <div className="text-xs text-slate-500 mt-3">{t("まだ きろく が ないよ", "まだ記録がありません")}</div>
+                        ) : (
+                            <div className="mt-3 space-y-2">
+                                {periodicTestHistory.map((test) => (
+                                    <div key={test.id} className="rounded-2xl border border-slate-200 bg-white p-3 flex items-center justify-between gap-3">
+                                        <div className="min-w-0">
+                                            <div className="text-sm font-bold text-slate-700">
+                                                {test.subject === "math" ? t("さんすう", "算数") : t("えいご", "英語")} Lv.{test.level}
+                                            </div>
+                                            <div className="text-[11px] text-slate-500 mt-0.5">
+                                                {new Date(test.timestamp).toLocaleString("ja-JP")} / {test.method === "paper" ? t("かみ", "紙") : t("アプリ", "アプリ")}
+                                            </div>
+                                            <div className="text-[11px] text-slate-500 mt-0.5">
+                                                {t("じかん", "時間")}: {Math.floor(test.durationSeconds / 60)}:{String(test.durationSeconds % 60).padStart(2, "0")}
+                                                {typeof test.timeLimitSeconds === "number" && (
+                                                    <> / {t("せいげん", "制限")}: {Math.floor(test.timeLimitSeconds / 60)}:{String(test.timeLimitSeconds % 60).padStart(2, "0")}</>
+                                                )}
+                                                {test.timedOut ? ` / ${t("じかんぎれ", "時間切れ")}` : ""}
+                                            </div>
+                                        </div>
+                                        <div className="text-right shrink-0">
+                                            <div className="text-lg font-black text-indigo-600">{test.score}{t("てん", "点")}</div>
+                                            <div className="text-[11px] text-slate-500">{test.correctCount}/{test.totalQuestions}</div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </Card>
                 )}
 

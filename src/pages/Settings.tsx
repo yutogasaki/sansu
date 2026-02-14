@@ -3,6 +3,7 @@ import { Header } from "../components/Header";
 import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
 import { Modal } from "../components/ui/Modal";
+import { PaperTestScoreModal } from "../components/domain/PaperTestScoreModal";
 import { useNavigate } from "react-router-dom";
 import { UserProfile } from "../domain/types";
 import { getActiveProfile, deleteProfile, getAllProfiles, saveProfile, setActiveProfileId } from "../domain/user/repository";
@@ -11,6 +12,7 @@ import { Problem } from "../domain/types";
 import { ParentGateModal } from "../components/gate/ParentGateModal";
 import { ensurePeriodicTestSet } from "../domain/test/testSet";
 import { getWord } from "../domain/english/words";
+import { recordPaperTestScore, upsertPendingPaperTest } from "../domain/test/paperTest";
 import storage from "../utils/storage";
 
 
@@ -30,8 +32,11 @@ export const Settings: React.FC = () => {
     const [renameTarget, setRenameTarget] = useState<UserProfile | null>(null);
     const [newName, setNewName] = useState("");
     const [deleteTarget, setDeleteTarget] = useState<UserProfile | null>(null);
+    const [showPaperTestModal, setShowPaperTestModal] = useState(false);
+    const [pendingPaperTest, setPendingPaperTest] = useState<{ id: string; subject: "math" | "vocab"; level: number } | null>(null);
     const isEasy = profile?.uiTextMode === "easy";
     const t = (easy: string, standard: string) => (isEasy ? easy : standard);
+    const TEST_TIMER_OPTIONS = [0, 5, 10, 15, 20] as const;
 
     useEffect(() => {
         const load = async () => {
@@ -190,17 +195,7 @@ export const Settings: React.FC = () => {
             await generateMathPDF(problems, `さんすう レベル Lv.${set.level}`, profile.name);
             console.log("[PDF] Math PDF generation completed!");
 
-            // 紙テストリマインド用に pendingPaperTests に追加
-            const newPaperTest = {
-                id: crypto.randomUUID(),
-                subject: 'math' as const,
-                level: set.level,
-                createdAt: new Date().toISOString()
-            };
-            const updated = {
-                ...profile,
-                pendingPaperTests: [...(profile.pendingPaperTests || []), newPaperTest]
-            };
+            const updated = upsertPendingPaperTest(profile, "math", set.level);
             await saveProfile(updated);
             setProfile(updated);
         } catch (e) {
@@ -234,17 +229,7 @@ export const Settings: React.FC = () => {
             await generateVocabPDF(selected, `えいご レベル Lv.${set.level}`);
             console.log("[PDF] Vocab PDF generation completed!");
 
-            // 紙テストリマインド用に pendingPaperTests に追加
-            const newPaperTest = {
-                id: crypto.randomUUID(),
-                subject: 'vocab' as const,
-                level: set.level,
-                createdAt: new Date().toISOString()
-            };
-            const updated = {
-                ...profile,
-                pendingPaperTests: [...(profile.pendingPaperTests || []), newPaperTest]
-            };
+            const updated = upsertPendingPaperTest(profile, "vocab", set.level);
             await saveProfile(updated);
             setProfile(updated);
         } catch (e) {
@@ -263,6 +248,51 @@ export const Settings: React.FC = () => {
         return { label: isEasy ? "つうじょう" : "通常", tone: "bg-slate-100 text-slate-600" };
     };
 
+    const getPendingPaperTest = (subject: "math" | "vocab") => {
+        const pending = (profile?.pendingPaperTests || [])
+            .filter(t => t.subject === subject)
+            .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+        return pending[0] || null;
+    };
+
+    const handleOpenPaperScoreModal = (subject: "math" | "vocab") => {
+        const target = getPendingPaperTest(subject);
+        if (!target) return;
+        setPendingPaperTest({ id: target.id, subject: target.subject, level: target.level });
+        setShowPaperTestModal(true);
+    };
+
+    const handlePaperTestSubmit = async (correctCount: number) => {
+        if (!profile || !pendingPaperTest) return;
+        const updatedProfile = recordPaperTestScore(profile, pendingPaperTest, correctCount);
+        await saveProfile(updatedProfile);
+        setProfile(updatedProfile);
+        setShowPaperTestModal(false);
+        setPendingPaperTest(null);
+    };
+
+    const handlePaperTestDismiss = () => {
+        setShowPaperTestModal(false);
+        setPendingPaperTest(null);
+    };
+
+    const handleTestTimerChange = async (minutes: number) => {
+        if (!profile) return;
+        const updated = {
+            ...profile,
+            periodicTestTimeLimitSeconds: minutes > 0 ? minutes * 60 : undefined,
+        };
+        await saveProfile(updated);
+        setProfile(updated);
+    };
+
+    const formatPendingPaperMeta = (createdAt: string) => {
+        const createdMs = new Date(createdAt).getTime();
+        const elapsedDays = Math.max(0, Math.floor((Date.now() - createdMs) / (1000 * 60 * 60 * 24)));
+        const createdText = new Date(createdAt).toLocaleDateString("ja-JP");
+        return t(`${createdText} / ${elapsedDays}にち けいか`, `${createdText} / ${elapsedDays}日経過`);
+    };
+
     return (
         <div className="flex flex-col h-full bg-background">
             {/* 保護者ガードモーダル */}
@@ -271,6 +301,15 @@ export const Settings: React.FC = () => {
                 onClose={() => setShowParentGuard(false)}
                 onSuccess={handleGuardSuccess}
             />
+            {pendingPaperTest && (
+                <PaperTestScoreModal
+                    isOpen={showPaperTestModal}
+                    subject={pendingPaperTest.subject}
+                    level={pendingPaperTest.level}
+                    onSubmit={handlePaperTestSubmit}
+                    onDismiss={handlePaperTestDismiss}
+                />
+            )}
 
             {/* Rename Modal */}
             <Modal
@@ -548,18 +587,49 @@ export const Settings: React.FC = () => {
                             <h3 className="font-bold text-slate-700">{t("ていき テスト", "定期テスト（20問）")}</h3>
                             <p className="text-xs text-slate-500 mt-1">{t("アプリ と かみ で テスト できるよ", "アプリ受験と紙テストをここから開始できます")}</p>
                         </div>
+                        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3 space-y-2">
+                            <div className="text-xs font-bold text-slate-600">{t("せいげん じかん", "制限時間")}</div>
+                            <div className="flex flex-wrap gap-2">
+                                {TEST_TIMER_OPTIONS.map(minutes => {
+                                    const selectedMinutes = profile?.periodicTestTimeLimitSeconds
+                                        ? Math.floor(profile.periodicTestTimeLimitSeconds / 60)
+                                        : 0;
+                                    const isSelected = selectedMinutes === minutes;
+                                    return (
+                                        <button
+                                            key={minutes}
+                                            type="button"
+                                            onClick={() => handleTestTimerChange(minutes)}
+                                            className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${isSelected
+                                                    ? "bg-slate-800 text-white border-slate-800"
+                                                    : "bg-white text-slate-600 border-slate-200"
+                                                }`}
+                                        >
+                                            {minutes === 0 ? t("なし", "なし") : t(`${minutes}ふん`, `${minutes}分`)}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
                         <div className="grid grid-cols-1 land:grid-cols-2 gap-3">
                             {([
                                 { subject: "math" as const, title: t("さんすう", "算数"), level: profile?.mathMainLevel || 1, print: handlePrintPDF, startPath: "/study?session=periodic-test&focus_subject=math" },
                                 { subject: "vocab" as const, title: t("えいご", "英語"), level: profile?.vocabMainLevel || 1, print: handlePrintVocabPDF, startPath: "/study?session=periodic-test&focus_subject=vocab" },
                             ]).map(item => {
                                 const status = getTestStatus(item.subject);
+                                const pendingPaper = getPendingPaperTest(item.subject);
+                                const hasPendingPaper = !!pendingPaper;
                                 return (
                                     <div key={item.subject} className="rounded-2xl border border-slate-200 bg-white p-3 space-y-3">
                                         <div className="flex items-center justify-between">
                                             <div>
                                                 <div className="font-bold text-slate-700">{item.title} Lv.{item.level}</div>
                                                 <div className="text-xs text-slate-500">20問 / 目安 8〜12分</div>
+                                                {pendingPaper && (
+                                                    <div className="text-[11px] text-amber-700 mt-1">
+                                                        {formatPendingPaperMeta(pendingPaper.createdAt)}
+                                                    </div>
+                                                )}
                                             </div>
                                             <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold ${status.tone}`}>
                                                 {status.label}
@@ -577,9 +647,15 @@ export const Settings: React.FC = () => {
                                                 size="sm"
                                                 variant="secondary"
                                                 className="w-full h-10 text-xs"
-                                                onClick={item.print}
+                                                onClick={() => {
+                                                    if (hasPendingPaper) {
+                                                        handleOpenPaperScoreModal(item.subject);
+                                                        return;
+                                                    }
+                                                    item.print();
+                                                }}
                                             >
-                                                {t("かみで うける", "紙テストPDF")}
+                                                {hasPendingPaper ? t("てんすう いれる", "点数入力") : t("かみで うける", "紙テストPDF")}
                                             </Button>
                                         </div>
                                     </div>

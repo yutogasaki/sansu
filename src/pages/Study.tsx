@@ -60,6 +60,9 @@ export const Study: React.FC = () => {
     // ちからチェック用：正答数トラッキング
     const [correctCount, setCorrectCount] = useState(0);
     const [sessionResult, setSessionResult] = useState<{ correct: number; total: number; durationSeconds: number } | null>(null);
+    const [testTimeLimitSeconds, setTestTimeLimitSeconds] = useState<number | undefined>(undefined);
+    const [testRemainingSeconds, setTestRemainingSeconds] = useState<number | undefined>(undefined);
+    const hasCompletedFixedSessionRef = React.useRef(false);
 
     // Profile ID for skip logging
     const [profileId, setProfileId] = useState<string | null>(null);
@@ -86,6 +89,7 @@ export const Study: React.FC = () => {
                 setEnglishAutoRead(profile.englishAutoRead || false);
                 setIsEasyText(profile.uiTextMode === "easy");
                 setHissanModeEnabled(profile.hissanModeEnabled ?? true);
+                setTestTimeLimitSeconds(profile.periodicTestTimeLimitSeconds);
             }
         });
     }, []);
@@ -154,7 +158,56 @@ export const Study: React.FC = () => {
     const startTimeRef = React.useRef(0);
     useEffect(() => {
         startTimeRef.current = Date.now();
+        hasCompletedFixedSessionRef.current = false;
     }, []);
+
+    const finalizeFixedSession = useCallback(async (timedOut = false) => {
+        const isFixedSession = sessionKindParam === "periodic-test" || sessionKindParam === "weak-review" || sessionKindParam === "check-event";
+        if (!isFixedSession || loading || hasCompletedFixedSessionRef.current) return;
+        hasCompletedFixedSessionRef.current = true;
+
+        const durationSeconds = Math.round((Date.now() - startTimeRef.current) / 1000);
+        const stats = {
+            correct: correctCount,
+            total: blockSize,
+            durationSeconds,
+            timeLimitSeconds: sessionKindParam === "periodic-test" ? testTimeLimitSeconds : undefined,
+            timedOut: sessionKindParam === "periodic-test" ? timedOut : undefined,
+        };
+
+        if (sessionKindParam === "periodic-test") {
+            setSessionResult({ correct: correctCount, total: blockSize, durationSeconds });
+            setIsFinished(true);
+        }
+
+        if (completeSession) {
+            await completeSession(stats);
+        }
+
+        if (sessionKindParam !== "periodic-test") {
+            navigate('/stats');
+        }
+    }, [sessionKindParam, loading, correctCount, blockSize, testTimeLimitSeconds, completeSession, navigate]);
+
+    useEffect(() => {
+        if (sessionKindParam !== "periodic-test" || typeof testTimeLimitSeconds !== "number") {
+            setTestRemainingSeconds(undefined);
+            return;
+        }
+
+        const tick = () => {
+            const elapsed = Math.floor((Date.now() - startTimeRef.current) / 1000);
+            const remaining = Math.max(0, testTimeLimitSeconds - elapsed);
+            setTestRemainingSeconds(remaining);
+            if (remaining <= 0) {
+                void finalizeFixedSession(true);
+            }
+        };
+
+        tick();
+        const timerId = window.setInterval(tick, 1000);
+        return () => window.clearInterval(timerId);
+    }, [sessionKindParam, testTimeLimitSeconds, finalizeFixedSession]);
 
     // Check for Fixed Session Completion (Periodic Test / Weak Review / Check Event)
     useEffect(() => {
@@ -162,32 +215,9 @@ export const Study: React.FC = () => {
 
         if (isFixedSession && currentIndex >= blockSize && blockSize > 0 && !loading) {
             if (IS_DEV) console.log("Fixed Session Complete!", { correctCount, blockSize });
-            const durationSeconds = Math.round((Date.now() - startTimeRef.current) / 1000);
-
-            // Call completion handler
-            if (completeSession) {
-                completeSession({
-                    correct: correctCount,
-                    total: blockSize,
-                    durationSeconds
-                }).then(() => {
-                    if (sessionKindParam === "periodic-test") {
-                        setSessionResult({ correct: correctCount, total: blockSize, durationSeconds });
-                        setIsFinished(true);
-                    } else {
-                        navigate('/stats');
-                    }
-                });
-            } else {
-                if (sessionKindParam === "periodic-test") {
-                    setSessionResult({ correct: correctCount, total: blockSize, durationSeconds });
-                    setIsFinished(true);
-                } else {
-                    navigate('/stats');
-                }
-            }
+            void finalizeFixedSession(false);
         }
-    }, [currentIndex, blockSize, sessionKindParam, loading, correctCount, completeSession, navigate]);
+    }, [currentIndex, blockSize, sessionKindParam, loading, correctCount, finalizeFixedSession]);
 
     // Handlers - 全てのフックより前に定義
     const handleTenKeyInput = useCallback((val: string | number) => {
@@ -447,6 +477,8 @@ export const Study: React.FC = () => {
             sessionKind={sessionKindParam || "normal"}
             correctCount={correctCount}
             sessionResult={sessionResult || undefined}
+            testTimeLimitSeconds={testTimeLimitSeconds}
+            testRemainingSeconds={testRemainingSeconds}
             onNavigate={(path) => navigate(path)}
             onNext={nextProblem}
             onContinue={handleContinue}
