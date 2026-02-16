@@ -15,7 +15,6 @@ export type BgmType =
     | "study";
 
 // Asset Map
-// TODO: User needs to place actual mp3 files in /public/sounds/
 const SE_ASSETS: Record<SoundType, string> = {
     correct: "/sounds/correct.mp3",
     incorrect: "/sounds/incorrect.mp3",

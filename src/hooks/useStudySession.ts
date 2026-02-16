@@ -37,6 +37,7 @@ import {
 } from "./blockGenerators";
 import { checkPeriodTestTrigger } from "../domain/test/trigger";
 import { ensurePeriodicTestSet } from "../domain/test/testSet";
+import { applyNormalSessionMathTrigger, applyPeriodicTestCompletion } from "./useStudySession.logic";
 
 type StudySessionOptions = {
     devSkill?: string;
@@ -653,56 +654,12 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         if (!currentProfile) return;
 
         const sessionKind = options.sessionKind || "normal";
+        const now = Date.now();
 
         // 1. Handle Periodic Test Completion (Recording)
         if (sessionKind === "periodic-test") {
-            const subject: SubjectKey =
-                options.focusSubject ||
-                (currentProfile.subjectMode === "vocab" ? "vocab" : "math");
-            const testSet = currentProfile.periodicTestSets?.[subject];
-            const level = testSet?.level ?? (subject === "math" ? currentProfile.mathMainLevel : currentProfile.vocabMainLevel);
-
-            // Saving Result
-            const result: any = { // Use PeriodicTestResult type
-                id: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2),
-                timestamp: Date.now(),
-                subject,
-                level,
-                mode: 'auto', // defaulting to auto, but how do we know if manual?
-                // We can check if it was pending.
-                method: 'online',
-                correctCount: sessionStats.correct,
-                totalQuestions: sessionStats.total,
-                score: Math.round((sessionStats.correct / sessionStats.total) * 100),
-                durationSeconds: sessionStats.durationSeconds,
-                timeLimitSeconds: sessionStats.timeLimitSeconds,
-                timedOut: sessionStats.timedOut
-            };
-
-            // Check if it was pending to determine mode
-            const isPending = currentProfile.periodicTestState?.[subject]?.isPending;
-            result.mode = isPending ? 'auto' : 'manual';
-
-            // Save to history
-            const newHistory = [...(currentProfile.testHistory || []), result];
-
-            // Update State (Clear Pending, Set Last Triggered)
-            const newState = { ...(currentProfile.periodicTestState || { math: { isPending: false, lastTriggeredAt: null, reason: null }, vocab: { isPending: false, lastTriggeredAt: null, reason: null } }) };
-            newState[subject] = {
-                isPending: false,
-                lastTriggeredAt: Date.now(),
-                reason: null
-            };
-
-            const nextSets = { ...(currentProfile.periodicTestSets || {}) };
-            delete nextSets[subject];
-
-            await saveProfile({
-                ...currentProfile,
-                testHistory: newHistory,
-                periodicTestState: newState,
-                periodicTestSets: nextSets
-            });
+            const updated = applyPeriodicTestCompletion(currentProfile, sessionStats, now, options.focusSubject);
+            await saveProfile(updated);
         }
 
         // 2. Handle Normal Session Completion (Trigger Check)
@@ -713,21 +670,8 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
             if (mathTrigger.isTriggered) {
                 debugLog("[Trigger] Periodic Test Triggered!", mathTrigger.reason);
-                const newState = { ...(currentProfile.periodicTestState || { math: { isPending: false, lastTriggeredAt: null, reason: null }, vocab: { isPending: false, lastTriggeredAt: null, reason: null } }) };
-
-                // Only update if not already pending
-                if (!newState.math.isPending) {
-                    newState.math = {
-                        isPending: true,
-                        lastTriggeredAt: newState.math.lastTriggeredAt,
-                        reason: mathTrigger.reason
-                    };
-                    await saveProfile({
-                        ...currentProfile,
-                        periodicTestState: newState
-                    });
-                    // Could return a flag to UI to show celebration/notification
-                }
+                const updated = applyNormalSessionMathTrigger(currentProfile, mathTrigger);
+                if (updated) await saveProfile(updated);
             }
         }
     };

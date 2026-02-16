@@ -12,14 +12,14 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             <button
                 ref={ref}
                 className={cn(
-                    "inline-flex items-center justify-center rounded-full font-bold transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300/70 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none touch-manipulation",
+                    "inline-flex items-center justify-center rounded-full font-bold transition-all duration-300 active:translate-y-[1px] active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/65 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none touch-manipulation",
                     // Variants
                     variant === "primary" &&
-                    "text-white bg-gradient-to-b from-teal-500 to-cyan-600 shadow-[0_10px_20px_-10px_rgba(8,145,178,0.55)] hover:from-teal-500 hover:to-cyan-500 active:shadow-[0_4px_10px_-8px_rgba(8,145,178,0.65)]",
+                    "text-white bg-[linear-gradient(140deg,#0ea5a4_0%,#0891b2_52%,#0284c7_100%)] shadow-[0_14px_24px_-16px_rgba(8,145,178,0.85)] hover:brightness-[1.03] active:shadow-[0_8px_12px_-10px_rgba(8,145,178,0.9)]",
                     variant === "secondary" &&
-                    "bg-white/90 text-text-main border border-white/80 hover:bg-white shadow-[0_8px_16px_-12px_rgba(15,23,42,0.35)]",
+                    "bg-white/92 text-text-main border border-white/85 hover:bg-white shadow-[0_12px_22px_-18px_rgba(15,23,42,0.62)]",
                     variant === "ghost" &&
-                    "bg-transparent text-text-sub hover:bg-slate-100/70",
+                    "bg-transparent text-text-sub hover:bg-white/50",
                     variant === "icon" &&
                     "p-2 rounded-full hover:bg-white/75 text-text-sub",
 

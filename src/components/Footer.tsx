@@ -23,8 +23,8 @@ export const Footer: React.FC = () => {
             to={item.to}
             className={({ isActive }) =>
                 cn(
-                    "flex flex-col items-center justify-center flex-1 h-full gap-1 transition-colors",
-                    isActive ? "text-primary" : "text-text-sub hover:text-text-main"
+                    "relative flex flex-col items-center justify-center flex-1 h-full gap-1 transition-all duration-300 rounded-2xl",
+                    isActive ? "text-primary bg-white/70" : "text-text-sub hover:text-text-main hover:bg-white/40"
                 )
             }
         >
@@ -34,28 +34,30 @@ export const Footer: React.FC = () => {
     );
 
     return (
-        <nav className="fixed bottom-0 left-0 right-0 bg-white/82 backdrop-blur-xl border-t border-white/80 safe-area-bottom z-50 shadow-[0_-14px_24px_-20px_rgba(15,23,42,0.6)]">
-            <div className="mx-auto max-w-md flex items-center h-16 land:max-w-4xl land:h-14 relative">
+        <nav className="fixed bottom-0 left-0 right-0 safe-area-bottom z-50">
+            <div className="mx-auto max-w-md land:max-w-4xl px-3 pb-2">
+                <div className="app-glass-strong rounded-[1.75rem] border border-white/90 shadow-[0_-8px_32px_-22px_rgba(15,23,42,0.55)] flex items-center h-16 land:h-14 relative">
                 {/* Left nav items */}
-                <div className="flex flex-1">
-                    {leftItems.map(renderNavItem)}
+                    <div className="flex flex-1 px-1">
+                        {leftItems.map(renderNavItem)}
+                    </div>
+
+                    {/* Center FAB spacer */}
+                    <div className="w-16" />
+
+                    {/* Right nav items */}
+                    <div className="flex flex-1 px-1">
+                        {rightItems.map(renderNavItem)}
+                    </div>
+
+                    {/* Center FAB button */}
+                    <button
+                        onClick={() => { warmUpTTS(); navigate("/study"); }}
+                        className="absolute left-1/2 -translate-x-1/2 -top-5 w-14 h-14 rounded-full bg-[linear-gradient(145deg,#14b8a6_0%,#06b6d4_55%,#0ea5e9_100%)] text-white shadow-[0_14px_24px_-10px_rgba(8,145,178,0.75)] flex items-center justify-center active:scale-95 transition-all duration-300 hover:brightness-[1.03]"
+                    >
+                        <Icons.Study className="w-6 h-6" strokeWidth={2.5} />
+                    </button>
                 </div>
-
-                {/* Center FAB spacer */}
-                <div className="w-16" />
-
-                {/* Right nav items */}
-                <div className="flex flex-1">
-                    {rightItems.map(renderNavItem)}
-                </div>
-
-                {/* Center FAB button */}
-                <button
-                    onClick={() => { warmUpTTS(); navigate("/study"); }}
-                    className="absolute left-1/2 -translate-x-1/2 -top-5 w-14 h-14 rounded-full bg-gradient-to-b from-teal-500 to-cyan-600 text-white shadow-[0_8px_20px_-6px_rgba(8,145,178,0.6)] flex items-center justify-center active:scale-95 transition-transform"
-                >
-                    <Icons.Study className="w-6 h-6" strokeWidth={2.5} />
-                </button>
             </div>
         </nav>
     );

@@ -70,6 +70,17 @@ const runScenario = async (name, fn) => {
   }
 };
 
+const completeOnboarding = async (page) => {
+  await page.goto("/#/onboarding", { waitUntil: "domcontentloaded" });
+  await page.getByRole("button", { name: "はじめる" }).click();
+  await page.getByPlaceholder("あだ名でOK").fill("E2E");
+  await page.getByRole("button", { name: "次へ" }).click();
+  await page.getByRole("button", { name: /小学 1 年生/ }).click();
+  await page.getByRole("button", { name: /さんすう だけ/ }).click();
+  await page.getByRole("button", { name: /数をかぞえる・くらべる/ }).click();
+  await page.waitForURL(/#\/$/, { timeout: STEP_TIMEOUT_MS });
+};
+
 const scenarioOnboardingShown = async (browser) => {
   const context = await browser.newContext({ baseURL: BASE_URL });
   const page = await context.newPage();
@@ -87,17 +98,34 @@ const scenarioOnboardingToHome = async (browser) => {
   const page = await context.newPage();
   await clearClientStorage(page);
 
-  await page.goto("/#/onboarding", { waitUntil: "domcontentloaded" });
-  await page.getByRole("button", { name: "はじめる" }).click();
-  await page.getByPlaceholder("あだ名でOK").fill("E2E");
-  await page.getByRole("button", { name: "次へ" }).click();
-
-  await page.getByRole("button", { name: /小学 1 年生/ }).click();
-  await page.getByRole("button", { name: /さんすう だけ/ }).click();
-  await page.getByRole("button", { name: /数をかぞえる・くらべる/ }).click();
-
-  await page.waitForURL(/#\/$/, { timeout: STEP_TIMEOUT_MS });
+  await completeOnboarding(page);
   await page.getByRole("button", { name: /この子と進む|このこ と すすむ/ }).waitFor({ timeout: STEP_TIMEOUT_MS });
+
+  await context.close();
+};
+
+const scenarioHomeToStudy = async (browser) => {
+  const context = await browser.newContext({ baseURL: BASE_URL });
+  const page = await context.newPage();
+  await clearClientStorage(page);
+
+  await completeOnboarding(page);
+  await page.getByRole("button", { name: /この子と進む|このこ と すすむ/ }).click();
+  await page.waitForURL(/#\/study/, { timeout: STEP_TIMEOUT_MS });
+  await page.getByText(/問目/).first().waitFor({ timeout: STEP_TIMEOUT_MS });
+
+  await context.close();
+};
+
+const scenarioHomeToSettings = async (browser) => {
+  const context = await browser.newContext({ baseURL: BASE_URL });
+  const page = await context.newPage();
+  await clearClientStorage(page);
+
+  await completeOnboarding(page);
+  await page.getByRole("link", { name: /せってい/i }).click();
+  await page.waitForURL(/#\/settings/, { timeout: STEP_TIMEOUT_MS });
+  await page.getByText(/設定|せってい/).first().waitFor({ timeout: STEP_TIMEOUT_MS });
 
   await context.close();
 };
@@ -141,6 +169,8 @@ const main = async () => {
     const results = [];
     results.push(await runScenario("redirects to onboarding when no profile", () => scenarioOnboardingShown(browser)));
     results.push(await runScenario("completes onboarding and lands on home", () => scenarioOnboardingToHome(browser)));
+    results.push(await runScenario("starts study from home", () => scenarioHomeToStudy(browser)));
+    results.push(await runScenario("opens settings from footer", () => scenarioHomeToSettings(browser)));
     results.push(await runScenario("guards /parents route behind parent gate", () => scenarioParentsGateShown(browser)));
 
     const ok = results.every(Boolean);

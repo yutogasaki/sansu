@@ -224,6 +224,14 @@ export const Home: React.FC = () => {
     const [showPaperTestModal, setShowPaperTestModal] = useState(false);
     const [pendingPaperTest, setPendingPaperTest] = useState<{ id: string; subject: "math" | "vocab"; level: number } | null>(null);
     const isEasy = profile?.uiTextMode === "easy";
+    const stageText: Record<Exclude<IkimonoStage, "gone">, string> = {
+        egg: "たまご",
+        hatching: "ふか",
+        small: "こども",
+        medium: "せいちょう",
+        adult: "おとな",
+        fading: "よいん",
+    };
 
     const todayKey = toLocaleDateKey();
 
@@ -321,10 +329,10 @@ export const Home: React.FC = () => {
     };
 
     return (
-        <div className="relative h-full overflow-hidden bg-background">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(56,189,248,0.24),transparent_42%),radial-gradient(circle_at_84%_18%,rgba(20,184,166,0.17),transparent_45%),radial-gradient(circle_at_70%_82%,rgba(251,191,36,0.16),transparent_42%)]" />
-            <div className="absolute -top-20 -right-16 w-64 h-64 rounded-full bg-white/35 blur-3xl" />
-            <div className="absolute -bottom-20 -left-16 w-64 h-64 rounded-full bg-cyan-100/45 blur-3xl" />
+        <div className="relative h-full overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(56,189,248,0.3),transparent_44%),radial-gradient(circle_at_84%_18%,rgba(20,184,166,0.2),transparent_46%),radial-gradient(circle_at_70%_82%,rgba(251,191,36,0.2),transparent_44%)]" />
+            <div className="absolute -top-20 -right-16 w-64 h-64 rounded-full bg-white/42 blur-3xl" />
+            <div className="absolute -bottom-20 -left-16 w-64 h-64 rounded-full bg-cyan-100/55 blur-3xl" />
 
             <EventModal isOpen={showEventModal} eventType={currentEventType} onStartCheck={handleStartCheck} onDismiss={handleDismiss} />
 
@@ -346,13 +354,32 @@ export const Home: React.FC = () => {
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4 }}
-                        className="w-full rounded-2xl bg-white/80 backdrop-blur-md border border-white/80 shadow-[0_12px_24px_-20px_rgba(15,23,42,0.5)] px-4 py-3 flex items-start gap-3"
+                        className="w-full rounded-[1.65rem] app-glass px-4 py-3 flex items-start gap-3"
                     >
-                        <span className="mt-1.5 h-2 w-2 rounded-full bg-emerald-400 flex-shrink-0" />
+                        <span className="mt-1.5 h-2 w-2 rounded-full bg-emerald-400 flex-shrink-0 shadow-[0_0_0_4px_rgba(16,185,129,0.18)]" />
                         <div className="min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                                <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold text-cyan-700 bg-cyan-100/75 border border-cyan-100">
+                                    {stageText[scene.stage]}
+                                </span>
+                                <span className="text-[10px] font-semibold tracking-wide text-slate-400">TODAY NOTE</span>
+                            </div>
                             <div className="text-base leading-snug font-black text-slate-800 line-clamp-2">{scene.nowLine}</div>
                             <div className="mt-1 text-xs text-slate-500">{scene.moodLine}</div>
                         </div>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.45, delay: 0.08 }}
+                        className="mt-2 w-full flex flex-wrap gap-2"
+                    >
+                        {scene.aura.map((tag) => (
+                            <span key={tag} className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-bold text-slate-600 bg-white/62 border border-white/80 backdrop-blur-sm">
+                                {tag}
+                            </span>
+                        ))}
                     </motion.div>
 
                     {/* Ikimono display */}
@@ -361,12 +388,12 @@ export const Home: React.FC = () => {
                             initial={{ opacity: 0, scale: 0.98 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.7 }}
-                            className="mt-3 flex-1 min-h-[200px] w-full rounded-[2rem] border border-white/80 bg-white/55 backdrop-blur-sm shadow-[0_20px_32px_-28px_rgba(15,23,42,0.7)] flex flex-col items-center justify-center px-3 relative"
+                            className="mt-3 flex-1 min-h-[200px] w-full rounded-[2rem] app-glass flex flex-col items-center justify-center px-3 relative"
                         >
                             <Ikimono profileId={profileId} />
                             {/* Whisper overlay at bottom of ikimono card */}
                             <div className="absolute bottom-3 left-0 right-0 flex justify-center">
-                                <span className="text-[11px] text-slate-400 bg-white/60 backdrop-blur-sm px-3 py-1 rounded-full border border-white/70">
+                                <span className="text-[11px] text-slate-500 bg-white/68 backdrop-blur-sm px-3 py-1 rounded-full border border-white/80">
                                     {scene.whisper}
                                 </span>
                             </div>
@@ -376,7 +403,7 @@ export const Home: React.FC = () => {
 
                 {/* Fixed CTA area at bottom */}
                 <div className="flex-none w-full max-w-md pb-24 land:pb-20 pt-2">
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 rounded-[1.5rem] bg-white/45 border border-white/80 backdrop-blur-md p-2 shadow-[0_14px_30px_-24px_rgba(15,23,42,0.75)]">
                         <Button
                             size="xl"
                             className="flex-1"

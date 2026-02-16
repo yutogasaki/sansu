@@ -386,7 +386,7 @@ export const Stats: React.FC = () => {
 
     if (!profile) {
         return (
-            <div className="flex flex-col h-full bg-slate-50">
+            <div className="flex flex-col h-full bg-transparent">
                 <Header
                     title={t("きろく", "記録")}
                     rightAction={
@@ -401,7 +401,7 @@ export const Stats: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-col h-full bg-slate-50">
+        <div className="flex flex-col h-full bg-transparent">
             <Header
                 title={t("きろく", "記録")}
                 rightAction={
@@ -421,8 +421,8 @@ export const Stats: React.FC = () => {
                                 type="button"
                                 onClick={() => toggleSection(key)}
                                 className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${sections[key]
-                                        ? "bg-slate-800 text-white border-slate-800"
-                                        : "bg-white text-slate-500 border-slate-200"
+                                        ? "bg-cyan-600 text-white border-cyan-600"
+                                        : "bg-white/70 text-slate-500 border-white/80"
                                     }`}
                             >
                                 {SECTION_LABELS[key]}
@@ -435,19 +435,19 @@ export const Stats: React.FC = () => {
                     <Card className="p-4 land:col-span-2">
                         <h3 className="font-bold text-slate-700">きょう の まとめ</h3>
                         <div className="grid grid-cols-4 gap-2 mt-3">
-                            <div className="text-center bg-slate-100 rounded-2xl p-3">
+                            <div className="text-center bg-white/60 border border-white/80 rounded-2xl p-3">
                                 <div className="text-2xl font-black text-slate-800">{todayStats.count}</div>
                                 <div className="text-[11px] text-slate-500">かいとう</div>
                             </div>
-                            <div className="text-center bg-slate-100 rounded-2xl p-3">
+                            <div className="text-center bg-white/60 border border-white/80 rounded-2xl p-3">
                                 <div className="text-2xl font-black text-slate-800">{todayAccuracy}%</div>
                                 <div className="text-[11px] text-slate-500">せいかいりつ</div>
                             </div>
-                            <div className="text-center bg-slate-100 rounded-2xl p-3">
+                            <div className="text-center bg-white/60 border border-white/80 rounded-2xl p-3">
                                 <div className="text-2xl font-black text-slate-800">{todayMinutes}</div>
                                 <div className="text-[11px] text-slate-500">ふん</div>
                             </div>
-                            <div className="text-center bg-slate-100 rounded-2xl p-3">
+                            <div className="text-center bg-white/60 border border-white/80 rounded-2xl p-3">
                                 <div className="text-2xl font-black text-slate-800">{profile.streak || 0}</div>
                                 <div className="text-[11px] text-slate-500">れんぞくにち</div>
                             </div>
@@ -461,7 +461,7 @@ export const Stats: React.FC = () => {
                         <div className="grid grid-cols-7 gap-2 mt-3">
                             {weeklyDays.map(day => {
                                 const tone =
-                                    day.count === 0 ? "bg-slate-100 text-slate-400" :
+                                    day.count === 0 ? "bg-white/70 border border-white/80 text-slate-400" :
                                         day.count < 10 ? "bg-sky-100 text-sky-700" :
                                             day.count < 25 ? "bg-sky-300 text-sky-900" :
                                                 "bg-sky-500 text-white";
@@ -489,13 +489,13 @@ export const Stats: React.FC = () => {
                         <div className="flex gap-2 mt-1 justify-center">
                             <button
                                 onClick={() => setTrendMode("count")}
-                                className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${trendMode === "count" ? "bg-slate-800 text-white border-slate-800" : "bg-white text-slate-500 border-slate-200"}`}
+                                className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${trendMode === "count" ? "bg-cyan-600 text-white border-cyan-600" : "bg-white/70 text-slate-500 border-white/80"}`}
                             >
                                 かいとう
                             </button>
                             <button
                                 onClick={() => setTrendMode("accuracy")}
-                                className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${trendMode === "accuracy" ? "bg-slate-800 text-white border-slate-800" : "bg-white text-slate-500 border-slate-200"}`}
+                                className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${trendMode === "accuracy" ? "bg-cyan-600 text-white border-cyan-600" : "bg-white/70 text-slate-500 border-white/80"}`}
                             >
                                 せいかいりつ
                             </button>
@@ -641,11 +641,11 @@ export const Stats: React.FC = () => {
                         )}
 
                         <h4 className="font-bold text-slate-600 text-xs mt-4 mb-2">{t("レベル しんちょく", "レベル進捗")}</h4>
-                        <div className="p-3 rounded-2xl bg-slate-100">
+                        <div className="p-3 rounded-2xl bg-white/60 border border-white/80">
                             <div className="text-sm font-bold text-slate-700">
                                 さんすう Lv{profile.mathMainLevel} / かいほう Lv{profile.mathMaxUnlocked}
                             </div>
-                            <div className="mt-2 h-2 rounded-full bg-slate-200 overflow-hidden">
+                            <div className="mt-2 h-2 rounded-full bg-white/80 overflow-hidden">
                                 <div className="h-full bg-emerald-500" style={{ width: `${Math.min((mathRecent.length / 20) * 100, 100)}%` }} />
                             </div>
                             <div className="text-[11px] text-slate-500 mt-1">
@@ -653,11 +653,11 @@ export const Stats: React.FC = () => {
                             </div>
                         </div>
 
-                        <div className="mt-3 p-3 rounded-2xl bg-slate-100">
+                        <div className="mt-3 p-3 rounded-2xl bg-white/60 border border-white/80">
                             <div className="text-sm font-bold text-slate-700">
                                 {t("えいたんご", "英単語")} Lv{profile.vocabMainLevel} / {t("かいほう", "解放")} Lv{profile.vocabMaxUnlocked}
                             </div>
-                            <div className="mt-2 h-2 rounded-full bg-slate-200 overflow-hidden">
+                            <div className="mt-2 h-2 rounded-full bg-white/80 overflow-hidden">
                                 <div className="h-full bg-sky-500" style={{ width: `${Math.min((vocabRecent.length / 20) * 100, 100)}%` }} />
                             </div>
                             <div className="text-[11px] text-slate-500 mt-1">
@@ -675,7 +675,7 @@ export const Stats: React.FC = () => {
                         ) : (
                             <div className="mt-3 space-y-2">
                                 {periodicTestHistory.map((test) => (
-                                    <div key={test.id} className="rounded-2xl border border-slate-200 bg-white p-3 flex items-center justify-between gap-3">
+                                    <div key={test.id} className="rounded-2xl border border-white/80 bg-white/70 p-3 flex items-center justify-between gap-3">
                                         <div className="min-w-0">
                                             <div className="text-sm font-bold text-slate-700">
                                                 {test.subject === "math" ? t("さんすう", "算数") : t("えいご", "英語")} Lv.{test.level}
@@ -735,7 +735,7 @@ export const Stats: React.FC = () => {
                                     <div className="text-xs text-slate-500">とくに なし</div>
                                 )}
                             </div>
-                            <div className="rounded-2xl bg-slate-100 p-3 text-xs text-slate-600">
+                            <div className="rounded-2xl bg-white/60 border border-white/80 p-3 text-xs text-slate-600">
                                 こえかけ例: 「きょう は どこ が いちばん できるように なった？」
                             </div>
                         </div>

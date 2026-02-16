@@ -218,7 +218,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
             <Spinner
                 message={t("じゅんびちゅう...", "準備中...")}
                 fullScreen
-                className="bg-slate-50"
+                className="bg-transparent"
             />
         );
     }
@@ -230,10 +230,10 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 : 0;
 
             return (
-                <div className="flex flex-col items-center justify-center p-6 h-full space-y-8 animate-in zoom-in bg-gradient-to-b from-slate-50 to-white">
+                <div className="flex flex-col items-center justify-center p-6 h-full space-y-8 animate-in zoom-in">
                     <div className="text-6xl">✨</div>
                     <h2 className="text-2xl font-bold text-center">定期テスト おつかれさま</h2>
-                    <div className="bg-white rounded-2xl p-6 w-full max-w-sm text-center shadow-xl space-y-4">
+                    <div className="app-glass-strong rounded-2xl p-6 w-full max-w-sm text-center space-y-4">
                         <div>
                             <div className="text-xs text-slate-400 font-bold">せいかい</div>
                             <div className="text-4xl font-black text-slate-800">
@@ -267,7 +267,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
             const isGood = ratio >= 0.6; // 60%以上で「よくできた」
 
             return (
-                <div className="flex flex-col items-center justify-center p-6 h-full space-y-8 animate-in zoom-in bg-gradient-to-b from-slate-50 to-white">
+                <div className="flex flex-col items-center justify-center p-6 h-full space-y-8 animate-in zoom-in">
                     <div className="text-6xl">{isEvent ? "🎉" : (isGood ? "👍" : "🔁")}</div>
                     <h2 className="text-2xl font-bold text-center">
                         {isEvent
@@ -328,14 +328,14 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 actionLabel={t("もういちど", "再試行")}
                 onAction={onContinue}
                 fullScreen
-                className="bg-slate-50"
+                className="bg-transparent"
             />
         );
     }
 
 
     return (
-        <div className="flex flex-col h-[100dvh] bg-background relative overflow-hidden safe-area-inset-bottom">
+        <div className="flex flex-col h-[100dvh] relative overflow-hidden safe-area-inset-bottom">
             {import.meta.env.DEV && <LayoutDebugOverlay />}
 
             {/* Full Screen Feedback Overlays */}
@@ -381,7 +381,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         initial={{ opacity: 0, x: -100 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 100 }}
-                        className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-slate-500/95 backdrop-blur-md p-6"
+                        className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-slate-600/90 backdrop-blur-md p-6"
                     >
                         <div className="bg-white/20 rounded-full p-4 mb-2">
                             <span className="text-5xl">🌱</span>
@@ -425,7 +425,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                 {currentIndex + 1} 問目
                             </span>
                             {showTestTimer && (
-                                <span className={`text-sm font-black px-2 py-1 rounded-full ${testRemainingSeconds <= 60 ? "bg-rose-100 text-rose-700" : "bg-slate-100 text-slate-600"}`}>
+                                <span className={`text-sm font-black px-2 py-1 rounded-full ${testRemainingSeconds <= 60 ? "bg-rose-100 text-rose-700" : "bg-white/75 text-slate-600 border border-white/80"}`}>
                                     {formatTimer(testRemainingSeconds)}
                                 </span>
                             )}
@@ -440,7 +440,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
             </div>
 
             {/* モバイル専用: 統合トップバー */}
-            <div className="hidden mobile:flex items-center justify-between px-3 py-1 bg-white border-b border-slate-100">
+            <div className="hidden mobile:flex items-center justify-between px-3 py-1 app-glass-strong rounded-b-2xl border-b border-white/75">
                 {currentProblem.isReview && (
                     <span className="text-slate-400 text-xs">🔁</span>
                 )}
@@ -449,7 +449,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         {currentIndex + 1} 問目
                     </span>
                     {showTestTimer && (
-                        <span className={`text-[11px] font-black px-2 py-0.5 rounded-full ${testRemainingSeconds <= 60 ? "bg-rose-100 text-rose-700" : "bg-slate-100 text-slate-600"}`}>
+                        <span className={`text-[11px] font-black px-2 py-0.5 rounded-full ${testRemainingSeconds <= 60 ? "bg-rose-100 text-rose-700" : "bg-white/75 text-slate-600 border border-white/80"}`}>
                             {formatTimer(testRemainingSeconds)}
                         </span>
                     )}
@@ -461,7 +461,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             onClick={onHissanToggle}
                             className={`px-2 py-0.5 rounded-full text-xs font-bold transition-colors border ${hissanActive
                                     ? 'bg-violet-100 text-violet-600 border-violet-200'
-                                    : 'bg-slate-100 text-slate-400 border-slate-200'
+                                    : 'bg-white/70 text-slate-400 border-white/80'
                                 }`}
                             title={hissanActive ? '筆算モード ON' : '暗算モード'}
                         >
@@ -492,7 +492,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 {/* Question / Card Area */}
                 {/* Mobile: Use flex-1 with min-h-0 to allow shrinking if controls need space */}
                 <div id="debug-card-container" {...swipeHandlers} className="flex-1 min-h-0 px-4 py-2 flex flex-col justify-center relative z-0 land:px-6 ipadland:flex-[2] ipadland:p-0 mobile:px-1 mobile:py-1 ipadland:min-h-0">
-                    <Card className="w-full flex flex-col items-center justify-center p-6 shadow-xl border-t-4 border-t-primary relative land:p-4 bg-white mobile:p-4 mobile:border-t-2 mobile:shadow-none overflow-hidden min-h-0">
+                    <Card className="w-full flex flex-col items-center justify-center p-6 border-t-4 border-t-primary relative land:p-4 mobile:p-4 mobile:border-t-2 mobile:shadow-none overflow-hidden min-h-0">
 
                         {/* Compact correct feedback overlay on card */}
                         <AnimatePresence>
@@ -532,7 +532,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             {feedback === "none" && (
                                 <button
                                     onClick={onSkip}
-                                    className="px-3 py-1 rounded-full text-xs font-bold text-slate-400 bg-slate-100 hover:bg-slate-200 active:scale-95 transition-all border border-slate-200"
+                                    className="px-3 py-1 rounded-full text-xs font-bold text-slate-500 bg-white/70 hover:bg-white active:scale-95 transition-all border border-white/80"
                                 >
                                     {t("スキップ", "スキップ")}
                                 </button>
@@ -580,11 +580,11 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                 </div>
                                 {/* Input Preview */}
                                 <div
-                                    className="min-w-[120px] h-20 border-b-4 border-slate-200 flex items-center justify-center text-5xl font-mono text-slate-700 bg-slate-50/50 rounded-xl px-4 transition-all ipadland:h-32 ipadland:text-7xl ipadland:min-w-[200px] mobile:h-12 mobile:text-3xl mobile:min-w-[80px] mobile:px-2 mobile:flex-shrink"
+                                    className="min-w-[120px] h-20 border-b-4 border-white/80 flex items-center justify-center text-5xl font-mono text-slate-700 bg-white/60 rounded-xl px-4 transition-all ipadland:h-32 ipadland:text-7xl ipadland:min-w-[200px] mobile:h-12 mobile:text-3xl mobile:min-w-[80px] mobile:px-2 mobile:flex-shrink"
                                     style={{ width: `${Math.max(3, userInput.length) * 2.5}rem` }}
                                 >
                                     {userInput}
-                                    {!userInput && <span className="animate-pulse w-1 h-10 bg-slate-300 ml-1 mobile:h-6"></span>}
+                                    {!userInput && <span className="animate-pulse w-1 h-10 bg-slate-400/60 ml-1 mobile:h-6"></span>}
                                 </div>
                             </div>
                         ) : (
@@ -607,7 +607,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                                 e.stopPropagation();
                                                 speakEnglish(currentProblem.questionText || "");
                                             }}
-                                            className="ml-2 p-2 bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-full transition-colors active:scale-95"
+                                            className="ml-2 p-2 bg-white/75 hover:bg-white text-slate-500 rounded-full border border-white/80 transition-colors active:scale-95"
                                             title="読み上げ"
                                         >
                                             <HiSpeakerWave className="w-6 h-6 mobile:w-5 mobile:h-5" />
@@ -632,7 +632,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 </div>
 
                 {/* Controls Area */}
-                <div id="debug-controls" className="bg-slate-100 p-2 pb-6 rounded-t-[2rem] shadow-inner flex-1 max-h-[44vh] min-h-[220px] land:min-h-[32vh] land:pb-4 ipadland:rounded-[2rem] ipadland:h-full ipadland:flex ipadland:flex-col ipadland:justify-center ipadland:p-6 ipadland:shadow-lg ipadland:min-h-0 ipadland:max-h-none mobile:pb-[var(--safe-area-inset-bottom)] mobile:pt-0 mobile:p-0 mobile:rounded-none mobile:bg-slate-50">
+                <div id="debug-controls" className="app-glass p-2 pb-6 rounded-t-[2rem] flex-1 max-h-[44vh] min-h-[220px] land:min-h-[32vh] land:pb-4 ipadland:rounded-[2rem] ipadland:h-full ipadland:flex ipadland:flex-col ipadland:justify-center ipadland:p-6 ipadland:min-h-0 ipadland:max-h-none mobile:pb-[var(--safe-area-inset-bottom)] mobile:pt-0 mobile:p-0 mobile:rounded-none mobile:bg-white/35">
                     {/* TenKey / Inputs */}
                     {(currentProblem.inputType === "number" || currentProblem.inputType === "multi-number" || hissanActive) && (
                         <TenKey

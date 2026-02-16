@@ -185,7 +185,7 @@ export interface PeriodicTestResult {
     subject: SubjectKey;
     level: number;
     mode: 'auto' | 'manual';
-    method: 'online' | 'paper'; // paper tests are manually marked done? (Not implemented, default online)
+    method: 'online' | 'paper';
     correctCount: number;
     totalQuestions: number; // 20
     score: number; // 0-100

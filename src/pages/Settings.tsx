@@ -245,7 +245,7 @@ export const Settings: React.FC = () => {
         const pendingPaper = (profile?.pendingPaperTests || []).some(t => t.subject === subject);
         if (pendingPaper) return { label: isEasy ? "さいてん まち" : "採点待ち", tone: "bg-amber-100 text-amber-700" };
         if (pendingOnline) return { label: isEasy ? "じゅんび OK" : "受験可能", tone: "bg-emerald-100 text-emerald-700" };
-        return { label: isEasy ? "つうじょう" : "通常", tone: "bg-slate-100 text-slate-600" };
+        return { label: isEasy ? "つうじょう" : "通常", tone: "bg-white/70 border border-white/80 text-slate-600" };
     };
 
     const getPendingPaperTest = (subject: "math" | "vocab") => {
@@ -333,7 +333,7 @@ export const Settings: React.FC = () => {
                         type="text"
                         value={newName}
                         onChange={(e) => setNewName(e.target.value)}
-                        className="w-full border-2 border-slate-200 rounded-xl p-3 text-center text-xl font-bold focus:outline-none focus:border-primary text-slate-800"
+                        className="w-full border border-white/85 rounded-xl p-3 text-center text-xl font-bold focus:outline-none focus:border-cyan-500 bg-white/70 text-slate-800"
                         autoFocus
                     />
                 </div>
@@ -387,8 +387,8 @@ export const Settings: React.FC = () => {
                         </Button>
                     </div>
                     {profiles.map(p => (
-                        <div key={p.id} className="flex items-center gap-3 p-2 rounded-xl bg-slate-50/50">
-                            <div className="w-10 h-10 rounded-full bg-[#483D8B]/20 flex items-center justify-center text-[#483D8B] font-bold shrink-0">
+                        <div key={p.id} className="flex items-center gap-3 p-2 rounded-xl bg-white/55 border border-white/80">
+                            <div className="w-10 h-10 rounded-full bg-cyan-100/75 flex items-center justify-center text-cyan-700 font-bold shrink-0">
                                 {p.name?.[0] || "?"}
                             </div>
                             <div
@@ -401,14 +401,14 @@ export const Settings: React.FC = () => {
 
                             <div className="flex items-center gap-1 shrink-0">
                                 {profile?.id === p.id ? (
-                                    <span className="text-xs text-[#483D8B] font-bold mr-2">{t("つかってる", "使用中")}</span>
+                                    <span className="text-xs text-cyan-700 font-bold mr-2">{t("つかってる", "使用中")}</span>
                                 ) : (
                                     <Button size="sm" variant="secondary" className="px-3" onClick={() => handleSwitchProfile(p.id)}>
                                         {t("きりかえ", "切替")}
                                     </Button>
                                 )}
 
-                                <Button size="sm" variant="ghost" className="w-10 h-10 p-0 text-slate-400 hover:text-[#483D8B]" onClick={() => openRenameModal(p)}>
+                                <Button size="sm" variant="ghost" className="w-10 h-10 p-0 text-slate-400 hover:text-cyan-700" onClick={() => openRenameModal(p)}>
                                     ✏️
                                 </Button>
 
@@ -422,7 +422,7 @@ export const Settings: React.FC = () => {
 
                 {/* ===== Section: Learning Settings ===== */}
                 <div className="space-y-3">
-                    <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">
+                    <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wider px-1">
                         {t("べんきょう の せってい", "学習の設定")}
                     </h2>
 
@@ -469,7 +469,7 @@ export const Settings: React.FC = () => {
                     <Card className="p-4 space-y-3">
                         <h3 className="font-bold text-slate-700">{t("レベル", "レベル")}</h3>
                         <div className="space-y-2">
-                            <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                            <div className="flex items-center justify-between p-3 bg-white/60 border border-white/80 rounded-xl">
                                 <div>
                                     <div className="font-bold text-slate-600">{t("さんすう", "算数")}</div>
                                     <div className="text-2xl font-black text-slate-800">Lv.{profile?.mathMainLevel || 1}</div>
@@ -478,7 +478,7 @@ export const Settings: React.FC = () => {
                                     {t("かえる", "変更")}
                                 </Button>
                             </div>
-                            <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                            <div className="flex items-center justify-between p-3 bg-white/60 border border-white/80 rounded-xl">
                                 <div>
                                     <div className="font-bold text-slate-600">{t("えいご", "英語")}</div>
                                     <div className="text-2xl font-black text-slate-800">Lv.{profile?.vocabMainLevel || 1}</div>
@@ -493,7 +493,7 @@ export const Settings: React.FC = () => {
 
                 {/* ===== Section: Display & Sound ===== */}
                 <div className="space-y-3">
-                    <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">
+                    <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wider px-1">
                         {t("みため と おと", "表示とサウンド")}
                     </h2>
 
@@ -505,7 +505,7 @@ export const Settings: React.FC = () => {
                                 {sound ? "ON" : "OFF"}
                             </Button>
                         </div>
-                        <div className="border-t border-slate-100" />
+                        <div className="border-t border-white/70" />
                         <div className="flex justify-between items-center">
                             <span className="font-bold text-slate-700">{t("えいご よみあげ", "英語読み上げ")}</span>
                             <Button
@@ -528,7 +528,7 @@ export const Settings: React.FC = () => {
                     <Card className="p-4 space-y-4">
                         <div className="space-y-3">
                             <h3 className="font-bold text-slate-700">{t("ひょうじ テキスト", "表示テキスト")}</h3>
-                            <div className="flex bg-slate-100 p-1 rounded-xl">
+                            <div className="flex bg-white/60 border border-white/80 p-1 rounded-xl">
                                 <button
                                     className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${profile?.uiTextMode !== "easy" ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
                                     onClick={() => handleTextModeChange("standard")}
@@ -543,10 +543,10 @@ export const Settings: React.FC = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className="border-t border-slate-100" />
+                        <div className="border-t border-white/70" />
                         <div className="space-y-3">
                             <h3 className="font-bold text-slate-700">{t("にほんご モード", "日本語モード")}</h3>
-                            <div className="flex bg-slate-100 p-1 rounded-xl">
+                            <div className="flex bg-white/60 border border-white/80 p-1 rounded-xl">
                                 <button
                                     className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${!profile?.kanjiMode ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
                                     onClick={async () => {
@@ -577,7 +577,7 @@ export const Settings: React.FC = () => {
 
                 {/* ===== Section: For Parents ===== */}
                 <div className="space-y-3">
-                    <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">
+                    <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wider px-1">
                         {t("おとなの ひと むけ", "保護者向け")}
                     </h2>
 
@@ -587,7 +587,7 @@ export const Settings: React.FC = () => {
                             <h3 className="font-bold text-slate-700">{t("ていき テスト", "定期テスト（20問）")}</h3>
                             <p className="text-xs text-slate-500 mt-1">{t("アプリ と かみ で テスト できるよ", "アプリ受験と紙テストをここから開始できます")}</p>
                         </div>
-                        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3 space-y-2">
+                        <div className="rounded-2xl border border-white/80 bg-white/60 p-3 space-y-2">
                             <div className="text-xs font-bold text-slate-600">{t("せいげん じかん", "制限時間")}</div>
                             <div className="flex flex-wrap gap-2">
                                 {TEST_TIMER_OPTIONS.map(minutes => {
@@ -601,8 +601,8 @@ export const Settings: React.FC = () => {
                                             type="button"
                                             onClick={() => handleTestTimerChange(minutes)}
                                             className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${isSelected
-                                                    ? "bg-slate-800 text-white border-slate-800"
-                                                    : "bg-white text-slate-600 border-slate-200"
+                                                    ? "bg-cyan-600 text-white border-cyan-600"
+                                                    : "bg-white/70 text-slate-600 border-white/80"
                                                 }`}
                                         >
                                             {minutes === 0 ? t("なし", "なし") : t(`${minutes}ふん`, `${minutes}分`)}
@@ -620,7 +620,7 @@ export const Settings: React.FC = () => {
                                 const pendingPaper = getPendingPaperTest(item.subject);
                                 const hasPendingPaper = !!pendingPaper;
                                 return (
-                                    <div key={item.subject} className="rounded-2xl border border-slate-200 bg-white p-3 space-y-3">
+                                    <div key={item.subject} className="rounded-2xl border border-white/80 bg-white/70 p-3 space-y-3">
                                         <div className="flex items-center justify-between">
                                             <div>
                                                 <div className="font-bold text-slate-700">{item.title} Lv.{item.level}</div>

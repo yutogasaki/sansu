@@ -30,6 +30,8 @@ export const recordPaperTestScore = (
     pendingPaperTest: Pick<PendingPaperTest, "id" | "subject" | "level">,
     correctCount: number
 ): UserProfile => {
+    const normalizedCorrectCount = Math.max(0, Math.min(20, Math.round(correctCount)));
+
     const newResult: PeriodicTestResult = {
         id: crypto.randomUUID(),
         timestamp: Date.now(),
@@ -37,9 +39,9 @@ export const recordPaperTestScore = (
         level: pendingPaperTest.level,
         mode: "manual",
         method: "paper",
-        correctCount,
+        correctCount: normalizedCorrectCount,
         totalQuestions: 20,
-        score: Math.round((correctCount / 20) * 100),
+        score: Math.round((normalizedCorrectCount / 20) * 100),
         durationSeconds: 0,
     };
 
@@ -50,4 +52,3 @@ export const recordPaperTestScore = (
         testHistory: [...(profile.testHistory || []), newResult],
     };
 };
-

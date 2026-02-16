@@ -219,6 +219,155 @@ export const generateSubtractionGrid = (a: number, b: number): HissanGridData =>
 };
 
 // ============================================================
+// 掛け算の筆算（Phase 2: まずは結果入力型）
+// ============================================================
+
+export const generateMultiplicationGrid = (a: number, b: number): HissanGridData => {
+    const product = a * b;
+    const aDigits = toDigits(a);
+    const bDigits = toDigits(b);
+    const productDigits = toDigits(product);
+
+    const maxDigits = Math.max(productDigits.length, aDigits.length, bDigits.length);
+    const columnCount = maxDigits + 1;
+
+    const row1Cells: HissanCell[] = [];
+    for (let col = 0; col < columnCount; col++) {
+        const digitIdx = columnCount - 1 - col;
+        if (digitIdx < aDigits.length) {
+            row1Cells.push(fixedCell(aDigits[digitIdx]));
+        } else {
+            row1Cells.push(emptyCell());
+        }
+    }
+    const row1: HissanRow = { cells: row1Cells, type: 'operand' };
+
+    const row2Cells: HissanCell[] = [];
+    for (let col = 0; col < columnCount; col++) {
+        if (col === 0) {
+            row2Cells.push(fixedCell('×'));
+        } else {
+            const digitIdx = columnCount - 1 - col;
+            if (digitIdx < bDigits.length) {
+                row2Cells.push(fixedCell(bDigits[digitIdx]));
+            } else {
+                row2Cells.push(emptyCell());
+            }
+        }
+    }
+    const row2: HissanRow = { cells: row2Cells, type: 'operator' };
+
+    const separatorRow: HissanRow = {
+        cells: Array(columnCount).fill(null).map(() => fixedCell('─')),
+        type: 'separator'
+    };
+
+    const resultCells: HissanCell[] = [];
+    const inputIndices: number[] = [];
+    const correctValues: string[] = [];
+    for (let col = 0; col < columnCount; col++) {
+        const digitIdx = columnCount - 1 - col;
+        if (digitIdx < productDigits.length) {
+            resultCells.push(inputCell(productDigits[digitIdx]));
+            inputIndices.push(col);
+            correctValues.push(productDigits[digitIdx]);
+        } else {
+            resultCells.push(emptyCell());
+        }
+    }
+    const resultRow: HissanRow = { cells: resultCells, type: 'result', stepIndex: 0 };
+
+    return {
+        rows: [row1, row2, separatorRow, resultRow],
+        steps: [{
+            index: 0,
+            description: `${a} × ${b} の答えを入力`,
+            rowIndex: 3,
+            inputCellIndices: [...inputIndices].reverse(),
+            correctValues: [...correctValues].reverse()
+        }],
+        columnCount,
+        operation: 'multiplication',
+        finalAnswer: product.toString(),
+    };
+};
+
+// ============================================================
+// 割り算の筆算（Phase 3: まずは結果入力型）
+// ============================================================
+
+export const generateDivisionGrid = (a: number, b: number): HissanGridData => {
+    const quotient = a / b;
+    const quotientText = Number.isInteger(quotient) ? quotient.toString() : quotient.toString();
+    const aDigits = toDigits(a);
+    const bDigits = toDigits(b);
+    const quotientDigits = quotientText.split('').reverse();
+
+    const maxDigits = Math.max(quotientDigits.length, aDigits.length, bDigits.length);
+    const columnCount = maxDigits + 1;
+
+    const row1Cells: HissanCell[] = [];
+    for (let col = 0; col < columnCount; col++) {
+        const digitIdx = columnCount - 1 - col;
+        if (digitIdx < aDigits.length) {
+            row1Cells.push(fixedCell(aDigits[digitIdx]));
+        } else {
+            row1Cells.push(emptyCell());
+        }
+    }
+    const row1: HissanRow = { cells: row1Cells, type: 'operand' };
+
+    const row2Cells: HissanCell[] = [];
+    for (let col = 0; col < columnCount; col++) {
+        if (col === 0) {
+            row2Cells.push(fixedCell('÷'));
+        } else {
+            const digitIdx = columnCount - 1 - col;
+            if (digitIdx < bDigits.length) {
+                row2Cells.push(fixedCell(bDigits[digitIdx]));
+            } else {
+                row2Cells.push(emptyCell());
+            }
+        }
+    }
+    const row2: HissanRow = { cells: row2Cells, type: 'operator' };
+
+    const separatorRow: HissanRow = {
+        cells: Array(columnCount).fill(null).map(() => fixedCell('─')),
+        type: 'separator'
+    };
+
+    const resultCells: HissanCell[] = [];
+    const inputIndices: number[] = [];
+    const correctValues: string[] = [];
+    for (let col = 0; col < columnCount; col++) {
+        const digitIdx = columnCount - 1 - col;
+        if (digitIdx < quotientDigits.length) {
+            resultCells.push(inputCell(quotientDigits[digitIdx]));
+            inputIndices.push(col);
+            correctValues.push(quotientDigits[digitIdx]);
+        } else {
+            resultCells.push(emptyCell());
+        }
+    }
+    const resultRow: HissanRow = { cells: resultCells, type: 'result', stepIndex: 0 };
+
+    return {
+        rows: [row1, row2, separatorRow, resultRow],
+        steps: [{
+            index: 0,
+            description: `${a} ÷ ${b} の答えを入力`,
+            rowIndex: 3,
+            inputCellIndices: [...inputIndices].reverse(),
+            correctValues: [...correctValues].reverse()
+        }],
+        columnCount,
+        operation: 'division',
+        finalAnswer: quotientText,
+    };
+};
+
+// ============================================================
 // スキルIDからグリッドを生成するメインエントリ
 // ============================================================
 
@@ -257,10 +406,13 @@ export const generateHissanGrid = (
     if (op === '-' || op === '−') {
         return generateSubtractionGrid(a, b);
     }
-
-    // Phase 2/3: 未実装
-    // if (op === '×') return generateMultiplicationGrid(a, b);
-    // if (op === '÷') return generateDivisionGrid(a, b);
+    if (op === '×') {
+        return generateMultiplicationGrid(a, b);
+    }
+    if (op === '÷') {
+        if (b === 0) return null;
+        return generateDivisionGrid(a, b);
+    }
 
     return null;
 };
