@@ -7,10 +7,9 @@ import { checkEventCondition, EventCheckParams, EventType } from "../domain/sess
 import { getWeakPoints } from "../domain/stats/repository";
 import { EventModal } from "../components/domain/EventModal";
 import { PaperTestScoreModal } from "../components/domain/PaperTestScoreModal";
-import { eventStorage, ikimonoStorage, weakPointsStorage } from "../utils/storage";
+import { eventStorage, weakPointsStorage } from "../utils/storage";
 import { Ikimono } from "../components/ikimono/Ikimono";
-import { calculateStage } from "../components/ikimono/lifecycle";
-import { IkimonoStage } from "../components/ikimono/types";
+import { getSceneText, stageText } from "../components/ikimono/sceneText";
 import { Button } from "../components/ui/Button";
 import { UserProfile } from "../domain/types";
 import { warmUpTTS } from "../utils/tts";
@@ -18,168 +17,6 @@ import { toLocaleDateKey } from "../utils/learningDay";
 import { recordPaperTestScore } from "../domain/test/paperTest";
 
 const PAPER_TEST_REMIND_DAYS = 3;
-
-const STAGE_TONE: Record<Exclude<IkimonoStage, "gone">, { now: string[]; mood: string[]; aura: string[] }> = {
-    egg: {
-        now: [
-            "からのなかで、ちいさく あたためてる。",
-            "しずかに、まだ かたちを えらんでる。",
-            "ねむってるようで、ちゃんと きいてる。",
-        ],
-        mood: [
-            "おだやか。ふわっと きぶん。",
-            "すこし くすぐったそう。",
-            "やわらかい ひかりに なじんでる。",
-        ],
-        aura: ["しずけさ", "ぬくもり", "ちいさな予感"],
-    },
-    hatching: {
-        now: [
-            "からが かすかに ひびいてる。",
-            "なかから、ちいさな こどうが する。",
-            "もう すこしで、こえが きこえそう。",
-        ],
-        mood: [
-            "そわそわ しながら たのしそう。",
-            "わくわくが ふくらんでる。",
-            "いまにも ぴょこっと しそう。",
-        ],
-        aura: ["ざわめき", "はじまり", "ゆれる気配"],
-    },
-    small: {
-        now: [
-            "ちいさく うごいて、まわりを みてる。",
-            "はじめての ものに きょうみ しんしん。",
-            "まだ こどもっぽく、ぴょんと はずむ。",
-        ],
-        mood: [
-            "ごきげんで、ちょっと いたずら。",
-            "きらきら した まなざし。",
-            "ちいさく いきおいが ある。",
-        ],
-        aura: ["好奇心", "軽さ", "あたらしさ"],
-    },
-    medium: {
-        now: [
-            "じぶんの リズムで、ゆったり あるいてる。",
-            "おちついて、すこし たのもしそう。",
-            "まわりを みながら、じぶんの ばしょを つくってる。",
-        ],
-        mood: [
-            "おだやか だけど しっかり。",
-            "すこし 大人びた きぶん。",
-            "ひかえめに うれしそう。",
-        ],
-        aura: ["安定", "呼吸", "まるみ"],
-    },
-    adult: {
-        now: [
-            "ゆっくり たたずんで、ぜんぶを みわたしてる。",
-            "しずかに つよく、そこに いる。",
-            "ことばは すくなく、ふんいきで つたえる。",
-        ],
-        mood: [
-            "おちついた ぬくもり。",
-            "やさしい いばしょ みたい。",
-            "すこし ものおもい。",
-        ],
-        aura: ["深さ", "余白", "包みこみ"],
-    },
-    fading: {
-        now: [
-            "すこしずつ うすれて、かぜに まざっていく。",
-            "しずかに ひかりを のこしてる。",
-            "さよならに ちかい、でも やわらかい。",
-        ],
-        mood: [
-            "なつかしい きぶん。",
-            "やさしく てを ふってる みたい。",
-            "しんとして きれい。",
-        ],
-        aura: ["余韻", "ささやき", "次のいのち"],
-    },
-};
-
-const STAGE_NEXT_LABEL: Record<Exclude<IkimonoStage, "gone">, string> = {
-    egg: "からが うごきだす",
-    hatching: "ちいさな すがたが みえそう",
-    small: "すこし おとなっぽく なる",
-    medium: "どっしり してくる",
-    adult: "ひかりが やわらかく かわる",
-    fading: "つぎの いのちへ つながる",
-};
-
-const STAGE_END_DAY: Record<Exclude<IkimonoStage, "gone">, number> = {
-    egg: 3,
-    hatching: 7,
-    small: 14,
-    medium: 22,
-    adult: 28,
-    fading: 30,
-};
-
-const hashSeed = (text: string): number => {
-    let h = 0;
-    for (let i = 0; i < text.length; i++) {
-        h = (h * 31 + text.charCodeAt(i)) % 1000003;
-    }
-    return h;
-};
-
-const pickBySeed = (items: string[], seed: number, shift = 0): string => {
-    return items[(seed + shift) % items.length];
-};
-
-const getStageSnapshot = (profileId: string | null): { stage: Exclude<IkimonoStage, "gone">; birthDate: string | null } => {
-    if (!profileId) return { stage: "egg", birthDate: null };
-    const stored = ikimonoStorage.getState();
-    if (!stored || stored.profileId !== profileId) return { stage: "egg", birthDate: null };
-    const info = calculateStage(stored.birthDate);
-    if (info.stage === "gone") return { stage: "egg", birthDate: null };
-    return { stage: info.stage, birthDate: stored.birthDate };
-};
-
-const getTransitionNuance = (stage: Exclude<IkimonoStage, "gone">, birthDate: string | null): string => {
-    if (!birthDate) return `もうすこしで、${STAGE_NEXT_LABEL[stage]}。`;
-    const elapsedDays = (Date.now() - new Date(birthDate).getTime()) / (1000 * 60 * 60 * 24);
-    const remain = STAGE_END_DAY[stage] - elapsedDays;
-    const prefix = remain < 0.6 ? "いまにも、" : remain < 1.6 ? "そろそろ、" : "ゆっくり、";
-    return `${prefix}${STAGE_NEXT_LABEL[stage]}。`;
-};
-
-const getSceneText = (
-    profileId: string | null,
-    dayKey: string,
-    weakCount: number,
-    currentEventType: EventType | null
-) => {
-    const snapshot = getStageSnapshot(profileId);
-    const tone = STAGE_TONE[snapshot.stage];
-    const seed = hashSeed(`${profileId || "guest"}-${dayKey}-${snapshot.stage}`);
-    const nowLine = pickBySeed(tone.now, seed);
-    const moodLineBase = pickBySeed(tone.mood, seed, 1);
-    const aura = [tone.aura[seed % tone.aura.length], tone.aura[(seed + 1) % tone.aura.length], tone.aura[(seed + 2) % tone.aura.length]];
-    const transition = getTransitionNuance(snapshot.stage, snapshot.birthDate);
-
-    let moodLine = moodLineBase;
-    if (weakCount >= 6) moodLine = `${moodLineBase} ちょっと まよいも ある。`;
-    if (weakCount === 0) moodLine = `${moodLineBase} いまは すごく かるい。`;
-    if (currentEventType === "periodic_test") moodLine = `${moodLineBase} きょうは すこし きりっと。`;
-    if (currentEventType === "level_up") moodLine = `${moodLineBase} なんだか ほこらしげ。`;
-
-    return {
-        stage: snapshot.stage,
-        nowLine,
-        transition,
-        moodLine,
-        aura,
-        whisper: currentEventType
-            ? "なにか つたえたい ことが あるみたい。"
-            : weakCount > 0
-                ? "すこし きになる ことが あるみたい。"
-                : "きょうは ただ、そばに いたいみたい。",
-    };
-};
 
 const determineEventWithPriority = (
     profile: UserProfile,
@@ -224,14 +61,7 @@ export const Home: React.FC = () => {
     const [showPaperTestModal, setShowPaperTestModal] = useState(false);
     const [pendingPaperTest, setPendingPaperTest] = useState<{ id: string; subject: "math" | "vocab"; level: number } | null>(null);
     const isEasy = profile?.uiTextMode === "easy";
-    const stageText: Record<Exclude<IkimonoStage, "gone">, string> = {
-        egg: "たまご",
-        hatching: "ふか",
-        small: "こども",
-        medium: "せいちょう",
-        adult: "おとな",
-        fading: "よいん",
-    };
+    const useKanjiForIkimono = Boolean(profile?.kanjiMode);
 
     const todayKey = toLocaleDateKey();
 
@@ -275,7 +105,10 @@ export const Home: React.FC = () => {
         });
     }, [todayKey]);
 
-    const scene = useMemo(() => getSceneText(profileId, todayKey, weakCount, currentEventType), [profileId, todayKey, weakCount, currentEventType]);
+    const scene = useMemo(
+        () => getSceneText(profileId, todayKey, weakCount, currentEventType, useKanjiForIkimono),
+        [profileId, todayKey, weakCount, currentEventType, useKanjiForIkimono]
+    );
 
     const handleStartCheck = async () => {
         if (currentEventType) eventStorage.setShown(currentEventType, todayKey);
@@ -360,7 +193,7 @@ export const Home: React.FC = () => {
                         <div className="min-w-0">
                             <div className="flex items-center gap-2 mb-1">
                                 <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold text-cyan-700 bg-cyan-100/75 border border-cyan-100">
-                                    {stageText[scene.stage]}
+                                    {useKanjiForIkimono ? stageText[scene.stage].kanji : stageText[scene.stage].kana}
                                 </span>
                                 <span className="text-[10px] font-semibold tracking-wide text-slate-400">TODAY NOTE</span>
                             </div>
@@ -388,15 +221,9 @@ export const Home: React.FC = () => {
                             initial={{ opacity: 0, scale: 0.98 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.7 }}
-                            className="mt-3 flex-1 min-h-[200px] w-full rounded-[2rem] app-glass flex flex-col items-center justify-center px-3 relative"
+                            className="mt-3 flex-1 min-h-[200px] w-full rounded-[2rem] app-glass flex flex-col items-center justify-center px-3 pt-2 pb-4"
                         >
-                            <Ikimono profileId={profileId} />
-                            {/* Whisper overlay at bottom of ikimono card */}
-                            <div className="absolute bottom-3 left-0 right-0 flex justify-center">
-                                <span className="text-[11px] text-slate-500 bg-white/68 backdrop-blur-sm px-3 py-1 rounded-full border border-white/80">
-                                    {scene.whisper}
-                                </span>
-                            </div>
+                            <Ikimono profileId={profileId} kanjiMode={useKanjiForIkimono} statusText={scene.whisper} />
                         </motion.div>
                     )}
                 </div>

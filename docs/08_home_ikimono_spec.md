@@ -1,317 +1,166 @@
-# 08 ホーム画面・いきもの仕様
+# 08 ホーム画面・いきもの仕様（実装ベース）
 
-> **親仕様**: [01_app_spec.md](01_app_spec.md)（本書は01の子）
-> **関連仕様**: [06_screen_specs.md](06_screen_specs.md)（画面構成の詳細）、[07_ui_design_guideline.md](07_ui_design_guideline.md)
-
----
-
-## 0. 目的・思想
-
-本アプリのホーム画面は、ユーザーが「学習しよう」と判断する前に、**自然にアプリを開いてしまう入口**として設計する。
-
-評価・管理・数値・通知による動機づけは行わず、**気配として存在する「いきもの」**を常設する。
-
-> いきものは「見ている存在」ではなく、**「そこにいる存在」**として扱う。
+> 最終更新: 2026-02-19  
+> 本書は **現行実装を正** とする。旧版との差異がある場合は本書を優先する。  
+> 関連: [01_app_spec.md](01_app_spec.md), [06_screen_specs.md](06_screen_specs.md), [07_ui_design_guideline.md](07_ui_design_guideline.md)
 
 ---
 
-## 1. ホーム画面構成
+## 0. 方針
+- ホームは「学習開始前の入口」だが、情報量は最小固定ではなく、`いきもの` の状態把握に必要な要素を表示する。
+- `いきもの` は評価者ではなく伴走者として扱う。
+- 文言・動きは単調さを避けるためにランダム性を持つ。
 
-### 1.1 表示要素（2つのみ）
+---
 
-| 要素 | 役割 |
-|------|------|
-| いきもの | 常時表示、呼びかける存在 |
-| 「はじめる」ボタン | 学習開始（唯一の開始導線） |
+## 1. ホーム画面構成（現行）
 
-**レイアウト**
-```
-┌─────────────────┐
-│                 │
-│    いきもの     │  ← 常に表示
-│   （反応あり）  │
-│                 │
-│                 │
-│   [ はじめる ]  │
-│                 │
-└─────────────────┘
-```
+### 1.1 表示要素
+- `EventModal`（条件成立時）
+- 状態カード
+  - stageバッジ（`stageText`）
+  - `TODAY NOTE`
+  - `scene.nowLine`, `scene.moodLine`
+- auraタグ群（3つ）
+- いきものカード
+  - `Ikimono` 本体
+  - 名前チップ（ある場合）
+  - 状態チップ（`scene.whisper`）
+- 固定CTA
+  - 主ボタン: 「この子と進む」 (`/study`)
+  - 副ボタン: 「復習」 (`/study?session=review&force_review=1`)
 
-### 1.2 置かない要素（明示的に禁止）
+### 1.2 禁止しない要素（旧仕様から変更）
+- 復習導線
+- stage/雰囲気の軽量表示（タグ・短文）
 
-| 禁止要素 | 理由 |
-|----------|------|
-| メニュー | 判断を増やす |
-| 数値（問題数・連続日数・レベル等） | 義務感を生む |
-| 通知・バッジ | 圧を与える |
-| 説明文・チュートリアル | 摩擦を増やす |
-| 苦手・復習・テストへの導線 | きろく画面で扱う |
+---
 
-※ 詳細は 06_screen_specs.md 2.4「置かない機能」を参照
+## 2. イベント表示仕様
 
-### 1.3 モーダルイベント
-
-ホーム画面を開いた際、特定条件を満たすと自動的にモーダルが表示される。
-
-| イベント | トリガー条件 | モーダル内容 | ボタン |
-|---------|-------------|--------------|--------|
-| `periodic_test` | 定期テストが pending | テスト開始を促す | 「ちょうせん する！」/「あとで」 |
-| `level_up` | レベルアップ達成後初回 | 祝福メッセージ | 「やったね！」 |
-| `paper_test_remind` | PDF出力後3日経過 | 点数入力を促す | 「てんすうを いれる」/「あとで」 |
-
-**優先順位**（同時に複数条件を満たす場合）
-
+### 2.1 優先順位
 1. `periodic_test`
 2. `level_up`
 3. `paper_test_remind`
-4. その他イベント（streak, total, weak_decrease）
+4. `checkEventCondition` による通常イベント
 
-**表示ルール**
+### 2.2 表示ルール
+- `periodic_test`, `level_up`, `paper_test_remind` は pending 中は優先表示
+- その他イベントは日付キー (`toLocaleDateKey`) で 1日1回制御
 
-| イベント | 表示頻度 |
-|---------|---------|
-| `periodic_test`, `level_up`, `paper_test_remind` | 毎回（pending をクリアするまで） |
-| その他 | 1日1回制限 |
-
-**データ構造**
-
-```typescript
-// types.ts UserProfile に追加
-pendingLevelUpNotification?: {
-    subject: SubjectKey;
-    newLevel: number;
-    achievedAt: string;
-};
-pendingPaperTests?: {
-    id: string;
-    subject: SubjectKey;
-    level: number;
-    createdAt: string;
-}[];
-```
+### 2.3 遷移
+- `periodic_test` -> `/study?session=periodic-test`
+- `paper_test_remind` -> `PaperTestScoreModal`
+- それ以外 -> `/study?session=check-event`
 
 ---
 
-## 2. いきもの役割定義
+## 3. いきものライフサイクル
 
-* 学習を「促す」のではなく **呼びかける存在**
-* 管理・評価・指示は一切行わない
-* 学習の成果や状態を **参照しない**
+### 3.1 段階
+- `egg` (0-3日未満)
+- `hatching` (3-7日未満)
+- `small` (7-14日未満)
+- `medium` (14-22日未満)
+- `adult` (22-28日未満)
+- `fading` (28-30日未満, opacity 1.0 -> 0.0)
+- `gone` (30日以上)
 
-### 2.1 参照しない情報
-
-| 情報 | 理由 |
-|------|------|
-| 正答率 | 評価につながる |
-| 学習量 | プレッシャーになる |
-| 連続日数 | 義務感を生む |
-| 苦手判定 | ネガティブ評価 |
-
-> 学習してもしなくても、振る舞いは基本的に変わらない
-
----
-
-## 3. ライフサイクル仕様
-
-### 3.1 段階定義
-
-いきものは以下の段階を経て自然に去る。
-
-| 段階（TypeScript） | 日本語 | 経過日 | ビジュアル |
-|-------------------|--------|--------|------------|
-| `egg` | 生まれる前 | 0〜2日 | 輪郭が曖昧、顔は見えない |
-| `hatching` | 生まれそう | 3〜6日 | 形が定まり始め、目のみが見える |
-| `small` | 生体（小） | 7〜13日 | 成体画像（scale: 0.6） |
-| `medium` | 生体（中） | 14〜21日 | 成体画像（scale: 0.8） |
-| `adult` | 生体（成体） | 22〜27日 | 成体画像（scale: 1.0） |
-| `fading` | さよなら | 28〜29日 | フェードアウト中 |
-| `gone` | 完全に去った | 30日〜 | 次のライフサイクルへ |
-
-### 3.2 データ構造
-
-```typescript
-// src/components/ikimono/types.ts
-export type IkimonoStage =
-    | 'egg'       // 生まれる前
-    | 'hatching'  // 生まれそう
-    | 'small'     // 生体（小）
-    | 'medium'    // 生体（中）
-    | 'adult'     // 生体（成体）
-    | 'fading'    // さよなら（フェードアウト中）
-    | 'gone';     // 完全に去った → 次のライフサイクルへ
-
-export interface IkimonoState {
-    profileId: string;
-    birthDate: string;   // ISO timestamp
-    generation: number;  // ライフサイクル回数（1, 2, 3...）
+### 3.2 ストレージ
+- key: `sansu_ikimono_state`
+- 構造:
+```ts
+{
+  profileId: string;
+  birthDate: string;
+  generation: number;
+  name?: string;
 }
 ```
 
-### 3.3 定数定義
-
-| 定数 | 値 | 用途 |
-|------|-----|------|
-| `LIFECYCLE_DAYS` | 30 | ライフサイクル全体の日数 |
-| egg 終了日 | 3 | この日を含まない |
-| hatching 終了日 | 7 | |
-| small 終了日 | 14 | |
-| medium 終了日 | 22 | |
-| adult 終了日 | 28 | |
-| fading 終了日 | 30 | |
-
-### 3.4 表現ルール
-
-| ルール | 詳細 |
-|--------|------|
-| 種類・属性・能力の追加 | 禁止 |
-| 進化・変身・強化表現 | 禁止 |
-| 表情差分 | 作らない（目・口は固定） |
-
-> 成長は「変化」ではなく、**存在感の違い（サイズ）**として表現する。
+### 3.3 世代交代
+- `gone` 検出時:
+  - 既存個体を `sansu_ikimono_gallery` に保存
+  - `generation + 1` で新規個体を自動生成
 
 ---
 
-## 4. 滞在期間とさよなら
+## 4. 文言仕様
 
-### 4.1 基本方針
+### 4.1 生成モジュール
+- `src/components/ikimono/sceneText.ts`
+  - `getSceneText(profileId, dayKey, weakCount, currentEventType, useKanjiText)`
+  - `stageText`
+- `src/components/ikimono/hitokoto.ts`
+  - 起動時・タップ時・卵専用のひとこと
 
-* いきものは一定期間ホーム画面に存在した後、学習結果や利用状況とは無関係に自然に去る
-* この期間は **固定値とはせず**、将来的に変更・調整可能な設計とする
+### 4.2 文字モード
+- `kanjiMode = true` のとき、`いきもの` 文言は漢字系を使用
+- `kanjiMode = false` のとき、かな系を使用
+- 対象:
+  - stageバッジ
+  - `scene.nowLine` / `scene.moodLine` / `scene.whisper`
+  - ひとこと吹き出し
 
-### 4.2 現時点での運用
-
-| 項目 | 値 | 備考 |
-|------|-----|------|
-| 滞在期間目安 | 約30日（`LIFECYCLE_DAYS`） | 将来調整可能 |
-| UI上の期間表示 | なし | 一切表示しない |
-
-※ 本項は仕様ではなく運用メモとして扱う
-
-### 4.3 さよならの表現
-
-| 仕様 | 詳細 |
-|------|------|
-| 終了演出 | 行わない |
-| フェードアウト | fading 期間（28〜30日）で opacity 1.0→0.0 |
-| 通知・説明・確認操作 | 行わない |
-
-### 4.4 次のライフサイクル
-
-* `gone` 状態になると自動で新しいいきものが生まれる
-* `generation` がインクリメントされ、新しい `birthDate` が設定される
+### 4.3 文言ポリシー
+- 許可:
+  - 状態描写
+  - 雰囲気描写
+  - 軽い呼びかけ
+- 禁止:
+  - 点数/回数など評価の直接提示
+  - 強制的な命令口調
 
 ---
 
-## 5. 振る舞い仕様（ホーム画面）
+## 5. モーション仕様
 
-### 5.1 常時挙動
+### 5.1 実装モジュール
+- `src/components/ikimono/ikimonoMotion.ts`
 
-| 挙動 | 詳細 | 実装 |
-|------|------|------|
-| 基本姿勢 | 静止 | - |
-| 動き | ごく稀に小さな揺れ | `rotate: [0, 1.5, 0, -1.5, 0]` / 6秒周期 |
-| 音 | 出さない | - |
+### 5.2 待機モーション
+- stageごとの sway 値（`rotate`, `y`, `duration`）を定義
+- 4パターンをランダム切替
+- 約 4.5-7.0 秒間隔で再生（反応中は停止）
 
-### 5.2 ひとこと（ランダム）
-
-| 項目 | 仕様 |
-|------|------|
-| 表示タイミング | アプリ起動時、毎回は表示しない |
-| 表示確率 | 約25%（`shouldShowHitokotoOnOpen`） |
-| 表示時間 | 3秒後に自動消去 |
-| 表示遅延 | 起動後1秒 |
-
-**文言リスト（実装済み）**
-
-| 文言 |
-|------|
-| 「なんとなく きた？」 |
-| 「すこし だけでも」 |
-| 「きょうは ここまででも」 |
-| 「また きたね」 |
-| 「いい てんき かな」 |
-| 「なにしよっか」 |
-| 「ここに いるよ」 |
-| 「ぼーっと してた」 |
-| 「おなじ そら みてるね」 |
-| 「きょうも いちにち」 |
-
-**禁止文言**
-
-| 禁止内容 | 例 |
-|----------|-----|
-| 評価・数値・比較を含む表現 | ❌「5もん とけたね」 |
-| 行動を強制する文言 | ❌「べんきょう しよう」 |
-
-### 5.3 タップ時の反応
-
-| 条件 | 反応 | 実装 |
-|------|------|------|
-| ひとこと表示中 | ひとことを消す | - |
-| 40%の確率 | ひとこと表示 | `showHitokoto()` |
-| 60%の確率 | 軽いバウンス（跳ね） | `y: [0, -8, 0]` / 0.4秒 |
-
-> **重要**: 学習は開始しない。学習開始は常に「はじめる」ボタンのみ。
+### 5.3 タップ反応
+- 反応種:
+  - `hitokoto`, `bounce`, `spin`, `wiggle`, `nod`, `tilt`, `hop`, `shimmy`, `squash`, `floaty`, `pulse`
+- `egg` は `wiggle/shimmy/bounce/squash/hop` 比率高め
+- 反応中の再タップは無視
 
 ---
 
-## 6. ビジュアル設計方針
-
-### 6.1 基本方針
-
-| 方針 | 詳細 |
-|------|------|
-| 抽象性 | 種類・感情・属性を特定できない抽象的な存在 |
-| 色彩 | 装飾的なもの、意味を持たせない |
-| 許容される変化 | サイズ、揺らぎ、輪郭のぼかし のみ |
-
-### 6.2 画像設定
-
-| 段階 | 画像パス | スケール |
-|------|----------|----------|
-| egg | `/ikimono/egg.png` | 0.5 |
-| hatching | `/ikimono/hatching.png` | 0.6 |
-| small | `/ikimono/body.png` | 0.6 |
-| medium | `/ikimono/body.png` | 0.8 |
-| adult | `/ikimono/body.png` | 1.0 |
-| fading | `/ikimono/body.png` | 1.0 |
-
-### 6.3 サイズ設定
-
-| 画面 | サイズ |
-|------|--------|
-| ポートレート | 192x192px（`w-48 h-48`） |
-| ランドスケープ | 160x160px（`land:w-40 land:h-40`） |
+## 6. レイアウト耐性（回帰防止）
+- 名前入力:
+  - `NameModal` は最大8文字
+  - `trim + maxLength` で保存前正規化
+- 表示:
+  - 名前チップ: `max-w-[11rem] + truncate`
+  - 状態チップ: `max-w-[16rem] + truncate`
+- 目的:
+  - 名前と状態の重なり防止
+  - 狭幅端末での崩れ抑制
 
 ---
 
-## 7. 設計上の禁止事項
-
-| 禁止事項 | 理由 |
-|----------|------|
-| 育成要素 | ゲーム化は本質から外れる |
-| 世話・管理 | 義務感を生む |
-| 学習結果による成長速度変化 | 評価につながる |
-| 失敗による喪失表現 | ネガティブ体験 |
-| 図鑑・コレクション要素 | 収集義務を生む |
-
----
-
-## 8. ファイル構成
-
-| ファイル | 役割 |
-|----------|------|
-| `src/components/ikimono/types.ts` | 型定義（`IkimonoStage`, `IkimonoState`） |
-| `src/components/ikimono/lifecycle.ts` | ライフサイクル計算（`calculateStage`, `createNewIkimonoState`） |
-| `src/components/ikimono/hitokoto.ts` | ひとこと文言と表示判定 |
-| `src/components/ikimono/IkimonoSvg.tsx` | 段階別ビジュアル表示 |
-| `src/components/ikimono/Ikimono.tsx` | メインコンポーネント |
-| `src/pages/Home.tsx` | ホーム画面（いきもの配置） |
+## 7. ファイル構成（現行）
+- `src/pages/Home.tsx` ホーム統合
+- `src/components/ikimono/Ikimono.tsx` いきもの本体
+- `src/components/ikimono/lifecycle.ts` ライフサイクル
+- `src/components/ikimono/sceneText.ts` 状態文生成
+- `src/components/ikimono/hitokoto.ts` ひとこと生成
+- `src/components/ikimono/hitokotoData.ts` 文言データ
+- `src/components/ikimono/ikimonoMotion.ts` モーション定義
+- `src/components/ikimono/IkimonoSvg.tsx` 画像表示
+- `src/components/ikimono/NameModal.tsx` 命名モーダル
 
 ---
 
-## 9. まとめ（設計思想）
-
-> 本アプリのホーム画面はいきものによって
-> 学習への「入口の気配」を作るが、
-> 学習そのものは常にユーザーの意思に委ねられる。
+## 8. テスト要件（現行）
+- 追加済み:
+  - `src/components/ikimono/lifecycle.test.ts`
+  - `src/components/ikimono/hitokoto.test.ts`
+  - `src/components/ikimono/sceneText.test.ts`
+- 継続課題:
+  - UI表示回帰（長文/狭幅）のテスト強化

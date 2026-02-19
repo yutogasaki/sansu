@@ -1,47 +1,20 @@
 import { IkimonoStage } from './types';
-
-// ────────────────────────────────────────────
-// 起動時ひとこと（3〜4回に1回表示）
-// 時間帯によって変わる。評価・数値・強制は一切なし。
-// ────────────────────────────────────────────
-
-const HITOKOTO_MORNING = [
-    'おはよ',
-    'あさ だね',
-    'まだ ねむい？',
-    'きょうも いちにち',
-    'おひさま でてるかな',
-];
-
-const HITOKOTO_AFTERNOON = [
-    'こんにちは',
-    'いい てんき かな',
-    'おなか すいた？',
-    'ひるだね',
-    'なにしてた？',
-];
-
-const HITOKOTO_EVENING = [
-    'こんばんは',
-    'もう よる だね',
-    'おつかれ',
-    'おそいね',
-    'しずか だね',
-];
-
-const HITOKOTO_ANYTIME = [
-    'なんとなく きた？',
-    'また きたね',
-    'ここに いるよ',
-    'ぼーっと してた',
-    'おなじ そら みてるね',
-    'すこし だけでも',
-    'きょうは ここまででも',
-    'なにしよっか',
-    'きょうも いちにち',
-    '…',
-    'ふぅ',
-];
+import {
+    AFTERNOON_OPEN,
+    ANYTIME_OPEN,
+    EGG_OPEN_HITOKOTO,
+    EGG_TAP_HITOKOTO,
+    EVENING_OPEN,
+    MORNING_OPEN,
+    OPEN_PREFIX,
+    OPEN_SUFFIX,
+    ScriptMode,
+    STAGE_HITOKOTO,
+    TAP_PREFIX,
+    TAP_REACTION,
+    TAP_SUFFIX,
+    TextPair,
+} from './hitokotoData';
 
 function getTimeOfDay(): 'morning' | 'afternoon' | 'evening' {
     const h = new Date().getHours();
@@ -54,102 +27,57 @@ function pickRandom<T>(arr: T[]): T {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
-/**
- * 起動時のひとことを取得する
- * 50%で時間帯ひとこと、50%で汎用ひとこと
- */
-export function getOpenHitokoto(): string {
-    if (Math.random() < 0.5) {
+function render(text: TextPair, mode: ScriptMode): string {
+    return mode === 'kanji' ? text.kanji : text.kana;
+}
+
+function compose(prefix: TextPair[], suffix: TextPair[], mode: ScriptMode): string {
+    const p = pickRandom(prefix);
+    const s = pickRandom(suffix);
+    return `${render(p, mode)} ${render(s, mode)}`;
+}
+
+function pickFrom(list: TextPair[], mode: ScriptMode): string {
+    return render(pickRandom(list), mode);
+}
+
+export function getOpenHitokoto(mode: ScriptMode = 'kana'): string {
+    if (Math.random() < 0.28) {
+        return compose(OPEN_PREFIX, OPEN_SUFFIX, mode);
+    }
+
+    if (Math.random() < 0.55) {
         const time = getTimeOfDay();
         switch (time) {
-            case 'morning': return pickRandom(HITOKOTO_MORNING);
-            case 'afternoon': return pickRandom(HITOKOTO_AFTERNOON);
-            case 'evening': return pickRandom(HITOKOTO_EVENING);
+            case 'morning': return pickFrom(MORNING_OPEN, mode);
+            case 'afternoon': return pickFrom(AFTERNOON_OPEN, mode);
+            case 'evening': return pickFrom(EVENING_OPEN, mode);
         }
     }
-    return pickRandom(HITOKOTO_ANYTIME);
+    return pickFrom(ANYTIME_OPEN, mode);
 }
 
-/**
- * アプリ起動時にひとことを表示するかどうか（約3〜4回に1回）
- */
 export function shouldShowHitokotoOnOpen(): boolean {
-    return Math.random() < 0.3;
+    return Math.random() < 0.33;
 }
 
-// ────────────────────────────────────────────
-// タップ時ひとこと
-// 起動時とは異なる、タッチへの小さな応答。
-// ────────────────────────────────────────────
-
-const TAP_HITOKOTO = [
-    'ん？',
-    'なに？',
-    'うん',
-    'えへ',
-    '…？',
-    'くすぐったい',
-    'よんだ？',
-    'はーい',
-    'むにゃ',
-    'ぽ',
-];
-
-/**
- * タップ時のひとこと
- */
-export function getTapHitokoto(): string {
-    return pickRandom(TAP_HITOKOTO);
+export function getTapHitokoto(mode: ScriptMode = 'kana'): string {
+    if (Math.random() < 0.3) {
+        return compose(TAP_PREFIX, TAP_SUFFIX, mode);
+    }
+    return pickFrom(TAP_REACTION, mode);
 }
 
-// ────────────────────────────────────────────
-// ステージ別ひとこと（初回遷移時に1回だけ使う想定）
-// ────────────────────────────────────────────
-
-const STAGE_HITOKOTO: Partial<Record<IkimonoStage, string[]>> = {
-    hatching: [
-        '…みえる？',
-        'ここ どこ？',
-    ],
-    small: [
-        'うまれたよ',
-        'はじめまして',
-    ],
-};
-
-// ────────────────────────────────────────────
-// たまご専用ひとこと
-// たまご自身は話せないが、気配や雰囲気を伝える
-// ────────────────────────────────────────────
-
-const EGG_OPEN_HITOKOTO = [
-    'なにか いる…？',
-    'たまご がある',
-    'あたたかい…',
-    'もうすぐ かな',
-];
-
-const EGG_TAP_HITOKOTO = [
-    'コンコン',
-    '…もぞ',
-    'カサッ',
-    '…',
-    'ぬくぬく',
-];
-
-export function getEggOpenHitokoto(): string {
-    return pickRandom(EGG_OPEN_HITOKOTO);
+export function getEggOpenHitokoto(mode: ScriptMode = 'kana'): string {
+    return pickFrom(EGG_OPEN_HITOKOTO, mode);
 }
 
-export function getEggTapHitokoto(): string {
-    return pickRandom(EGG_TAP_HITOKOTO);
+export function getEggTapHitokoto(mode: ScriptMode = 'kana'): string {
+    return pickFrom(EGG_TAP_HITOKOTO, mode);
 }
 
-/**
- * ステージ遷移時のひとこと（ない場合は null）
- */
-export function getStageHitokoto(stage: IkimonoStage): string | null {
+export function getStageHitokoto(stage: IkimonoStage, mode: ScriptMode = 'kana'): string | null {
     const list = STAGE_HITOKOTO[stage];
     if (!list) return null;
-    return pickRandom(list);
+    return pickFrom(list, mode);
 }

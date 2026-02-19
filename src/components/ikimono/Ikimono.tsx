@@ -4,50 +4,26 @@ import { IkimonoSvg } from './IkimonoSvg';
 import { NameModal } from './NameModal';
 import { calculateStage, createNewIkimonoState } from './lifecycle';
 import { getOpenHitokoto, shouldShowHitokotoOnOpen, getTapHitokoto, getEggOpenHitokoto, getEggTapHitokoto } from './hitokoto';
+import { getStageSway, pickTapReaction, playIdleMotion, playTapReaction } from './ikimonoMotion';
 import { ikimonoStorage, ikimonoGalleryStorage } from '../../utils/storage';
-import { IkimonoState, IkimonoStage } from './types';
+import { IkimonoState } from './types';
 
 interface IkimonoProps {
     profileId: string;
+    kanjiMode?: boolean;
+    statusText?: string;
 }
 
-// ステージごとの揺れの強さ（存在感の違い）
-const STAGE_SWAY: Record<string, { rotate: number; y: number; duration: number }> = {
-    egg:      { rotate: 0,   y: 3,  duration: 5 },    // たまごは回転しない、ほんの少し浮沈
-    hatching: { rotate: 0.8, y: 4,  duration: 4.5 },  // ほんのり揺れ始め
-    small:    { rotate: 1.2, y: 5,  duration: 4 },    // 小さく元気に
-    medium:   { rotate: 1.5, y: 4,  duration: 5 },    // 少し落ち着き
-    adult:    { rotate: 1,   y: 3,  duration: 6 },    // ゆったり
-    fading:   { rotate: 0.5, y: 2,  duration: 8 },    // とても静かに
-};
-
-// タップ時のリアクションパターン
-type TapReaction = 'hitokoto' | 'bounce' | 'spin' | 'wiggle' | 'nod';
-
-function pickTapReaction(stage: IkimonoStage): TapReaction {
-    const r = Math.random();
-    if (stage === 'egg') {
-        // たまごは動き多め、たまにひとこと（気配）
-        if (r < 0.25) return 'hitokoto';
-        if (r < 0.6) return 'wiggle';
-        return 'bounce';
-    }
-    // 生まれてからはひとことが多め
-    if (r < 0.4) return 'hitokoto';
-    if (r < 0.6) return 'bounce';
-    if (r < 0.75) return 'wiggle';
-    if (r < 0.9) return 'nod';
-    return 'spin';
-}
-
-export const Ikimono: React.FC<IkimonoProps> = ({ profileId }) => {
+export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, statusText }) => {
     const [hitokoto, setHitokoto] = useState<string | null>(null);
     const [showNameModal, setShowNameModal] = useState(false);
     const [currentState, setCurrentState] = useState<IkimonoState | null>(null);
     const controls = useAnimationControls();
     const openHitokotoShown = useRef(false);
     const hitokotoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const idleTimer = useRef<ReturnType<typeof setInterval> | null>(null);
     const isReacting = useRef(false);
+    const scriptMode = kanjiMode ? 'kanji' : 'kana';
 
     // いきもの状態の読み込み・初期化
     const getOrCreateState = useCallback((): IkimonoState => {
@@ -76,7 +52,7 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId }) => {
 
     const state = currentState || getOrCreateState();
     const { stage, fadeOpacity } = calculateStage(state.birthDate);
-    const sway = STAGE_SWAY[stage] || STAGE_SWAY.egg;
+    const sway = getStageSway(stage);
 
     // ──── 名前がまだない hatching 以降の子を検知 ────
     useEffect(() => {
@@ -93,18 +69,18 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId }) => {
     };
 
     // ──── 常時アニメーション：呼吸するような浮遊 ────
+    const playIdle = useCallback(() => playIdleMotion(controls, sway), [controls, sway]);
     useEffect(() => {
         if (stage === 'gone') return;
-        controls.start({
-            y: [0, -sway.y, 0, -sway.y * 0.5, 0],
-            rotate: [0, sway.rotate, 0, -sway.rotate, 0],
-            transition: {
-                duration: sway.duration,
-                repeat: Infinity,
-                ease: 'easeInOut',
-            },
-        });
-    }, [stage, controls, sway.y, sway.rotate, sway.duration]);
+        playIdle();
+        if (idleTimer.current) clearInterval(idleTimer.current);
+        idleTimer.current = setInterval(() => {
+            if (!isReacting.current) playIdle();
+        }, 4500 + Math.floor(Math.random() * 2500));
+        return () => {
+            if (idleTimer.current) clearInterval(idleTimer.current);
+        };
+    }, [stage, playIdle]);
 
     // ──── 起動時ひとこと ────
     useEffect(() => {
@@ -114,18 +90,18 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId }) => {
         if (stage === 'egg') {
             // たまごは初回起動時に必ずひとこと（何なのか伝える）
             const timer = setTimeout(() => {
-                showHitokoto(getEggOpenHitokoto(), 4000);
+                showHitokoto(getEggOpenHitokoto(scriptMode), 4000);
             }, 1500);
             return () => clearTimeout(timer);
         }
 
         if (shouldShowHitokotoOnOpen()) {
             const timer = setTimeout(() => {
-                showHitokoto(getOpenHitokoto());
+                showHitokoto(getOpenHitokoto(scriptMode));
             }, 1200);
             return () => clearTimeout(timer);
         }
-    }, [stage]);
+    }, [stage, scriptMode]);
 
     // ──── ひとこと表示 ────
     const showHitokoto = (text: string, duration = 3000) => {
@@ -149,55 +125,16 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId }) => {
 
         const reaction = pickTapReaction(stage);
 
-        switch (reaction) {
-            case 'hitokoto':
-                showHitokoto(stage === 'egg' ? getEggTapHitokoto() : getTapHitokoto());
-                // ひとことと一緒に小さく動く
-                await controls.start({
-                    scale: [1, 1.05, 1],
-                    transition: { duration: 0.3 },
-                });
-                break;
+        if (reaction === 'hitokoto') {
+            showHitokoto(stage === 'egg' ? getEggTapHitokoto(scriptMode) : getTapHitokoto(scriptMode));
+        }
+        await playTapReaction(controls, reaction);
 
-            case 'bounce':
-                await controls.start({
-                    y: [0, -15, 0],
-                    transition: { duration: 0.4, ease: 'easeOut' },
-                });
-                break;
-
-            case 'spin':
-                await controls.start({
-                    rotate: [0, 10, -10, 5, 0],
-                    transition: { duration: 0.5 },
-                });
-                break;
-
-            case 'wiggle':
-                await controls.start({
-                    x: [0, -5, 5, -3, 3, 0],
-                    transition: { duration: 0.4 },
-                });
-                break;
-
-            case 'nod':
-                await controls.start({
-                    y: [0, 5, -2, 0],
-                    transition: { duration: 0.35, ease: 'easeOut' },
-                });
-                break;
+        if (Math.random() < 0.25 && reaction !== 'hitokoto') {
+            showHitokoto(stage === 'egg' ? getEggTapHitokoto(scriptMode) : getTapHitokoto(scriptMode), 2200);
         }
 
-        // 常時アニメーションを再開
-        controls.start({
-            y: [0, -sway.y, 0, -sway.y * 0.5, 0],
-            rotate: [0, sway.rotate, 0, -sway.rotate, 0],
-            transition: {
-                duration: sway.duration,
-                repeat: Infinity,
-                ease: 'easeInOut',
-            },
-        });
+        await playIdle();
 
         isReacting.current = false;
     };
@@ -206,6 +143,7 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId }) => {
     useEffect(() => {
         return () => {
             if (hitokotoTimer.current) clearTimeout(hitokotoTimer.current);
+            if (idleTimer.current) clearInterval(idleTimer.current);
         };
     }, []);
 
@@ -243,10 +181,21 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId }) => {
                 <IkimonoSvg stage={stage} />
             </motion.div>
 
-            {/* 名前表示 */}
-            {state.name && (
-                <div className="mt-1 text-sm font-bold text-slate-500 tracking-wide">
-                    {state.name}
+            {/* 名前 + 状態表示（改行/折返し許可で重なり回避） */}
+            {(state.name || statusText) && (
+                <div className="mt-2 w-full max-w-xs px-2">
+                    <div className="flex flex-wrap items-center justify-center gap-2">
+                        {state.name && (
+                            <span className="inline-flex max-w-[11rem] items-center rounded-full bg-white/80 border border-white/90 px-3 py-1 text-xs font-black text-slate-600 truncate">
+                                {state.name}
+                            </span>
+                        )}
+                        {statusText && (
+                            <span className="inline-flex max-w-[16rem] items-center rounded-full bg-cyan-50/90 border border-cyan-100 px-3 py-1 text-xs font-bold text-cyan-700 truncate text-center">
+                                {statusText}
+                            </span>
+                        )}
+                    </div>
                 </div>
             )}
         </div>

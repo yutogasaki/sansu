@@ -7,9 +7,11 @@ interface NameModalProps {
 
 export const NameModal: React.FC<NameModalProps> = ({ onSubmit }) => {
     const [name, setName] = useState("");
+    const maxNameLength = 8;
 
     const handleSubmit = () => {
-        onSubmit(name.trim() || "なまえなし");
+        const normalized = name.trim().slice(0, maxNameLength);
+        onSubmit(normalized || "なまえなし");
     };
 
     return (
@@ -37,10 +39,13 @@ export const NameModal: React.FC<NameModalProps> = ({ onSubmit }) => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="なまえ"
-                    maxLength={8}
+                    maxLength={maxNameLength}
                     autoFocus
                     className="w-full h-12 rounded-xl border-2 border-slate-200 px-4 text-center text-lg font-bold text-slate-800 bg-slate-50 focus:border-teal-400 focus:outline-none focus:bg-white transition-colors"
                 />
+                <div className="mt-2 text-[11px] text-slate-400 text-right">
+                    {name.length}/{maxNameLength}
+                </div>
 
                 <button
                     onClick={handleSubmit}
