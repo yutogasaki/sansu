@@ -333,6 +333,12 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
         );
     }
 
+    const shouldCompactTenKey =
+        hissanActive ||
+        currentProblem.inputType === "multi-number" ||
+        currentProblem.categoryId.startsWith("frac_") ||
+        (currentProblem.questionText?.length ?? 0) >= 14;
+    const showCursorButtons = currentProblem.inputType === "multi-number" || hissanActive;
 
     return (
         <div className="flex flex-col h-[100dvh] relative overflow-hidden safe-area-inset-bottom">
@@ -632,7 +638,13 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 </div>
 
                 {/* Controls Area */}
-                <div id="debug-controls" className="app-glass p-2 pb-6 rounded-t-[2rem] flex-1 max-h-[44vh] min-h-[220px] land:min-h-[32vh] land:pb-4 ipadland:rounded-[2rem] ipadland:h-full ipadland:flex ipadland:flex-col ipadland:justify-center ipadland:p-6 ipadland:min-h-0 ipadland:max-h-none mobile:pb-[var(--safe-area-inset-bottom)] mobile:pt-0 mobile:p-0 mobile:rounded-none mobile:bg-white/35">
+                <div
+                    id="debug-controls"
+                    className={`app-glass p-2 pb-6 rounded-t-[2rem] flex-1 land:min-h-[32vh] land:pb-4 ipadland:rounded-[2rem] ipadland:h-full ipadland:flex ipadland:flex-col ipadland:justify-center ipadland:p-6 ipadland:min-h-0 ipadland:max-h-none mobile:pb-[var(--safe-area-inset-bottom)] mobile:pt-0 mobile:p-0 mobile:rounded-none mobile:bg-white/35 ${shouldCompactTenKey
+                            ? "max-h-[36vh] min-h-[176px] mobile:min-h-[150px]"
+                            : "max-h-[44vh] min-h-[220px] mobile:min-h-[190px]"
+                        }`}
+                >
                     {/* TenKey / Inputs */}
                     {(currentProblem.inputType === "number" || currentProblem.inputType === "multi-number" || hissanActive) && (
                         <TenKey
@@ -641,7 +653,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             onClear={onClear}
                             onEnter={onEnter}
                             showDecimal={currentProblem.subject === 'math' && !hissanActive}
-                            onCursorMove={currentProblem.inputType === "multi-number" && !hissanActive ? onCursorMove : undefined}
+                            onCursorMove={showCursorButtons ? onCursorMove : undefined}
+                            compact={shouldCompactTenKey}
                         />
                     )}
 

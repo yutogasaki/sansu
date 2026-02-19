@@ -78,6 +78,7 @@ export const Study: React.FC = () => {
 
     // Hissan Session
     const hissan = useHissanSession();
+    const resetHissan = hissan.resetHissan;
 
     // Warm up TTS on mount (uses the user interaction context from navigation tap)
     useEffect(() => {
@@ -126,8 +127,8 @@ export const Study: React.FC = () => {
         isProcessingRef.current = false;
 
         // 筆算モードリセット
-        hissan.resetHissan(currentProblem, hissanModeEnabled);
-    }, [currentProblem, hissanModeEnabled]);
+        resetHissan(currentProblem, hissanModeEnabled);
+    }, [currentProblem, hissanModeEnabled, resetHissan]);
 
     // Check for pause (every 100 questions) or pre-fetch
     useEffect(() => {
@@ -283,6 +284,10 @@ export const Study: React.FC = () => {
 
     const handleCursorMove = useCallback((direction: "left" | "right") => {
         if (feedback !== "none") return;
+        if (hissan.isHissanActive) {
+            hissan.handleHissanCursorMove(direction);
+            return;
+        }
         if (currentProblem?.inputType === 'multi-number' && currentProblem.inputConfig?.fields) {
             const maxIndex = currentProblem.inputConfig.fields.length - 1;
             if (direction === "right") {
@@ -291,7 +296,7 @@ export const Study: React.FC = () => {
                 setActiveFieldIndex(prev => Math.max(prev - 1, 0));
             }
         }
-    }, [feedback, currentProblem]);
+    }, [feedback, currentProblem, hissan]);
 
     const nextProblem = useCallback(() => {
         setFeedback("none");

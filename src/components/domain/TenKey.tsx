@@ -10,6 +10,7 @@ interface TenKeyProps {
     onClear: () => void;
     showDecimal?: boolean;
     onCursorMove?: (direction: "left" | "right") => void;
+    compact?: boolean;
 }
 
 export const TenKey: React.FC<TenKeyProps> = ({
@@ -18,15 +19,25 @@ export const TenKey: React.FC<TenKeyProps> = ({
     onEnter,
     onClear,
     showDecimal = false,
-    onCursorMove
+    onCursorMove,
+    compact = false
 }) => {
-    // 共通ボタンスタイル
-    // 共通ボタンスタイル
-    const baseBtnClass = "h-full w-full text-2xl font-bold bg-white rounded-2xl shadow-sm border border-slate-100 active:scale-95 transition-all text-slate-700 land:text-xl mobile:text-base";
-    const actionBtnClass = "h-full w-full text-xl font-bold bg-slate-50 rounded-2xl shadow-sm border border-slate-100 active:scale-95 transition-all text-slate-400";
+    const baseBtnClass = cn(
+        "h-full w-full font-bold bg-white shadow-sm border border-slate-100 active:scale-95 transition-all text-slate-700",
+        compact ? "text-lg rounded-xl mobile:text-sm" : "text-2xl rounded-2xl land:text-xl mobile:text-base"
+    );
+    const actionBtnClass = cn(
+        "h-full w-full font-bold bg-slate-50 shadow-sm border border-slate-100 active:scale-95 transition-all text-slate-400",
+        compact ? "text-base rounded-xl" : "text-xl rounded-2xl"
+    );
+    const iconClass = compact ? "w-5 h-5 mobile:w-4 mobile:h-4" : "w-6 h-6 mobile:w-5 mobile:h-5";
+    const enterIconClass = compact ? "w-8 h-8 mobile:w-6 mobile:h-6 drop-shadow-md" : "w-10 h-10 mobile:w-8 mobile:h-8 drop-shadow-md";
 
     return (
-        <div className="h-full w-full min-h-0 grid grid-cols-4 gap-3 p-3 mobile:gap-2 mobile:p-2" style={{ gridTemplateRows: 'repeat(4, 1fr)' }}>
+        <div
+            className={cn("h-full w-full min-h-0 grid grid-cols-4 p-3 mobile:p-2", compact ? "gap-2 mobile:gap-1.5" : "gap-3 mobile:gap-2")}
+            style={{ gridTemplateRows: `repeat(4, minmax(${compact ? "38px" : "44px"}, 1fr))` }}
+        >
             {/* Row 1 */}
             <Button onClick={() => onInput(7)} className={baseBtnClass} variant="ghost">7</Button>
             <Button onClick={() => onInput(8)} className={baseBtnClass} variant="ghost">8</Button>
@@ -48,7 +59,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
                 className={cn(baseBtnClass, "text-lg font-medium text-slate-400 bg-slate-50")}
                 variant="ghost"
             >
-                <Icons.Backspace className="w-6 h-6 mobile:w-5 mobile:h-5" />
+                <Icons.Backspace className={iconClass} />
             </Button>
 
             {/* Row 3 */}
@@ -69,7 +80,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
                         className={actionBtnClass}
                         variant="ghost"
                     >
-                        <Icons.ArrowLeft className="w-6 h-6" />
+                        <Icons.ArrowLeft className={iconClass} />
                     </Button>
                     <Button onClick={() => onInput(0)} className={baseBtnClass} variant="ghost">0</Button>
                     <Button
@@ -77,7 +88,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
                         className={actionBtnClass}
                         variant="ghost"
                     >
-                        <Icons.ArrowRight className="w-6 h-6" />
+                        <Icons.ArrowRight className={iconClass} />
                     </Button>
                 </>
             ) : (
@@ -91,10 +102,13 @@ export const TenKey: React.FC<TenKeyProps> = ({
             {/* Enter Key */}
             <Button
                 onClick={onEnter}
-                className="h-full w-full rounded-2xl bg-violet-600 text-white shadow-md border-2 border-violet-500 active:scale-95 hover:bg-violet-700 transition-all flex flex-col items-center justify-center mobile:text-base"
+                className={cn(
+                    "h-full w-full bg-violet-600 text-white shadow-md border-2 border-violet-500 active:scale-95 hover:bg-violet-700 transition-all flex flex-col items-center justify-center mobile:text-base",
+                    compact ? "rounded-xl" : "rounded-2xl"
+                )}
                 variant="ghost"
             >
-                <Icons.Check className="w-10 h-10 mobile:w-8 mobile:h-8 drop-shadow-md" strokeWidth={3} />
+                <Icons.Check className={enterIconClass} strokeWidth={3} />
             </Button>
         </div>
     );

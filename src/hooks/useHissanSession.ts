@@ -24,6 +24,8 @@ interface UseHissanSessionReturn {
     handleHissanBackspace: () => void;
     /** クリアハンドラ */
     handleHissanClear: () => void;
+    /** カーソル移動ハンドラ */
+    handleHissanCursorMove: (direction: "left" | "right") => void;
     /** 確定ハンドラ（ステップ正誤判定） - returns true if final step correct, false otherwise */
     handleHissanEnter: () => 'step-correct' | 'all-correct' | 'incorrect';
     /** セルタップハンドラ */
@@ -176,6 +178,30 @@ export const useHissanSession = (): UseHissanSessionReturn => {
     }, [currentStep, stepFeedback]);
 
     /**
+     * カーソル移動（左右）
+     */
+    const handleHissanCursorMove = useCallback((direction: "left" | "right") => {
+        if (!currentStep || stepFeedback !== 'none') return;
+        const lastIndex = currentStep.inputCellIndices.length - 1;
+        if (lastIndex < 0) return;
+
+        if (direction === "right") {
+            setCursorIndex(prev => {
+                const nextIndex = Math.min(prev + 1, lastIndex);
+                setActiveCellPos([currentStep.rowIndex, currentStep.inputCellIndices[nextIndex]]);
+                return nextIndex;
+            });
+            return;
+        }
+
+        setCursorIndex(prev => {
+            const nextIndex = Math.max(prev - 1, 0);
+            setActiveCellPos([currentStep.rowIndex, currentStep.inputCellIndices[nextIndex]]);
+            return nextIndex;
+        });
+    }, [currentStep, stepFeedback]);
+
+    /**
      * 確定（ステップ正誤判定）
      */
     const handleHissanEnter = useCallback((): 'step-correct' | 'all-correct' | 'incorrect' => {
@@ -268,6 +294,7 @@ export const useHissanSession = (): UseHissanSessionReturn => {
         handleHissanInput,
         handleHissanBackspace,
         handleHissanClear,
+        handleHissanCursorMove,
         handleHissanEnter,
         handleCellClick,
         toggleHissanMode,

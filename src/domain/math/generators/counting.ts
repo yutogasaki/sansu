@@ -31,7 +31,7 @@ export const generators: Record<string, GeneratorFn> = {
         do { a = randomInt(1, 6); b = randomInt(1, 6); } while (a === b);
         const emojiA = "🍎";
         const emojiB = "🍊";
-        const q = `${emojiA.repeat(a)}　と　${emojiB.repeat(b)}\nおおい のは？`;
+        const q = `${emojiA.repeat(a)} と ${emojiB.repeat(b)}\nおおい のは？`;
         return createProblem("count_which_more", q, a > b ? "🍎" : "🍊", "choice", {
             choices: [
                 { label: `🍎 (${a}こ)`, value: "🍎" },
