@@ -19,7 +19,7 @@ import { getReviewItems } from "../domain/learningRepository";
 import { MATH_SKILL_LABELS } from "../domain/math/labels";
 import { MATH_CURRICULUM } from "../domain/math/curriculum";
 import { getWord } from "../domain/english/words";
-import { getLearningDayEnd, getLearningDayStart } from "../utils/learningDay";
+import { getLearningDayEnd, getLearningDayStart, toLocaleDateKey } from "../utils/learningDay";
 import { db, AttemptLog } from "../db";
 import { UserProfile, PeriodicTestResult } from "../domain/types";
 import { warmUpTTS } from "../utils/tts";
@@ -91,17 +91,6 @@ const SECTION_LABELS: Record<SectionKey, string> = {
 };
 
 const WEEKDAY_JA = ["日", "月", "火", "水", "木", "金", "土"];
-
-const toDateKeyLocal = (date: Date): string => {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, "0");
-    const d = String(date.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
-};
-
-const toLearningDateKey = (date: Date): string => {
-    return toDateKeyLocal(getLearningDayStart(date));
-};
 
 const estimateSessionMinutes = (startMs: number, endMs: number, count: number): number => {
     const activeMs = Math.max(0, endMs - startMs);
@@ -270,7 +259,7 @@ export const Stats: React.FC = () => {
 
             const logsByDay = new Map<string, AttemptLog[]>();
             for (const log of logsForCalendar) {
-                const key = toLearningDateKey(new Date(log.timestamp));
+                const key = toLocaleDateKey(getLearningDayStart(new Date(log.timestamp)));
                 const current = logsByDay.get(key) || [];
                 current.push(log);
                 logsByDay.set(key, current);
@@ -279,7 +268,7 @@ export const Stats: React.FC = () => {
             const currentWeek: WeeklyDay[] = [];
             for (let offset = 6; offset >= 0; offset--) {
                 const day = addDays(todayStart, -offset);
-                const key = toDateKeyLocal(day);
+                const key = toLocaleDateKey(day);
                 const dayLogs = logsByDay.get(key) || [];
                 currentWeek.push({
                     dateKey: key,
@@ -293,7 +282,7 @@ export const Stats: React.FC = () => {
             let previousWeekCount = 0;
             for (let idx = 0; idx < 7; idx++) {
                 const day = addDays(todayStart, -(idx + 7));
-                const key = toDateKeyLocal(day);
+                const key = toLocaleDateKey(day);
                 previousWeekCount += logsByDay.get(key)?.length || 0;
             }
             const thisWeekCount = currentWeek.reduce((acc, d) => acc + d.count, 0);

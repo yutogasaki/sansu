@@ -1,6 +1,7 @@
 import { AttemptLog } from "../../db";
 import { MemoryState } from "../types";
 import { MATH_CURRICULUM } from "../math/curriculum";
+import { getLearningDayStart, toLocaleDateKey } from "../../utils/learningDay";
 
 // ============================================================
 // Types
@@ -73,13 +74,6 @@ const RADAR_CATEGORIES: { label: string; skills: string[] }[] = [
 
 const WEEKDAY_JA = ["日", "月", "火", "水", "木", "金", "土"];
 
-const toLearningDateKey = (date: Date): string => {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, "0");
-    const d = String(date.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
-};
-
 export const buildWeeklyTrend = (
     logs: AttemptLog[],
     todayStart: Date,
@@ -87,7 +81,7 @@ export const buildWeeklyTrend = (
 ): WeeklyTrendPoint[] => {
     const logsByDay = new Map<string, AttemptLog[]>();
     for (const log of logs) {
-        const key = toLearningDateKey(new Date(log.timestamp));
+        const key = toLocaleDateKey(getLearningDayStart(new Date(log.timestamp)));
         const current = logsByDay.get(key) || [];
         current.push(log);
         logsByDay.set(key, current);
@@ -96,7 +90,7 @@ export const buildWeeklyTrend = (
     const week: WeeklyTrendPoint[] = [];
     for (let offset = 6; offset >= 0; offset--) {
         const day = addDaysFn(todayStart, -offset);
-        const key = toLearningDateKey(day);
+        const key = toLocaleDateKey(day);
         const dayLogs = logsByDay.get(key) || [];
         const count = dayLogs.length;
         const correct = dayLogs.filter(l => l.result === "correct").length;
