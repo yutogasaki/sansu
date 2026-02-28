@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { updateMemoryState, updateSkillStatus } from './algorithms/srs';
-import { MemoryState, UserProfile, RecentAttempt } from './types';
+import { MemoryState, UserProfile, RecentAttempt, SkillStatus } from './types';
 import { syncLevelState, createInitialProfile } from './user/profile';
 import { checkEnglishLevelProgression } from './english/service';
 import { ENGLISH_WORDS } from './english/words';
@@ -10,17 +10,16 @@ import { getLearningDayStart } from '../utils/learningDay';
 import { buildVocabCooldownIds } from '../hooks/blockGenerators';
 import { getLevelStartTimestamp } from './test/trigger';
 
-// Mock types
-const mockState = (id: string, strength: number, status: any = undefined): MemoryState => ({
+const mockState = (id: string, strength: number, status?: SkillStatus): MemoryState => ({
     id,
-    strength: strength as any,
+    strength,
     nextReview: new Date().toISOString(),
     totalAnswers: 10,
     correctAnswers: 10,
     incorrectAnswers: 0,
     skippedAnswers: 0,
     updatedAt: new Date().toISOString(),
-    status
+    status,
 });
 
 describe('SRS Algorithm', () => {

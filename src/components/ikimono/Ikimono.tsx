@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, useAnimationControls } from 'framer-motion';
 import { IkimonoSvg } from './IkimonoSvg';
 import { NameModal } from './NameModal';
-import { calculateStage, createNewIkimonoState } from './lifecycle';
+import { calculateStage, createNewIkimonoState, ensureSpecies } from './lifecycle';
 import { getOpenHitokoto, shouldShowHitokotoOnOpen, getTapHitokoto, getEggOpenHitokoto, getEggTapHitokoto } from './hitokoto';
 import { getStageSway, pickTapReaction, playIdleMotion, playTapReaction } from './ikimonoMotion';
 import { ikimonoStorage, ikimonoGalleryStorage } from '../../utils/storage';
@@ -29,21 +29,26 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
     const getOrCreateState = useCallback((): IkimonoState => {
         const stored = ikimonoStorage.getState();
         if (stored && stored.profileId === profileId) {
-            const { stage } = calculateStage(stored.birthDate);
+            const withSpecies = ensureSpecies(stored);
+            // species が補完された場合は保存
+            if (withSpecies !== stored) ikimonoStorage.setState(withSpecies);
+
+            const { stage } = calculateStage(withSpecies.birthDate);
             if (stage === 'gone') {
                 // ギャラリーに保存してから次世代へ
                 ikimonoGalleryStorage.add({
-                    profileId: stored.profileId,
-                    generation: stored.generation,
-                    name: stored.name || "なまえなし",
-                    birthDate: stored.birthDate,
+                    profileId: withSpecies.profileId,
+                    generation: withSpecies.generation,
+                    name: withSpecies.name || "なまえなし",
+                    birthDate: withSpecies.birthDate,
                     departedDate: new Date().toISOString(),
+                    species: withSpecies.species,
                 });
-                const newState = createNewIkimonoState(profileId, stored.generation + 1);
+                const newState = createNewIkimonoState(profileId, withSpecies.generation + 1, withSpecies.species);
                 ikimonoStorage.setState(newState);
                 return newState;
             }
-            return stored;
+            return withSpecies;
         }
         const newState = createNewIkimonoState(profileId);
         ikimonoStorage.setState(newState);
@@ -178,7 +183,7 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
                 animate={controls}
                 onClick={handleTap}
             >
-                <IkimonoSvg stage={stage} />
+                <IkimonoSvg stage={stage} species={state.species} />
             </motion.div>
 
             {/* 名前 + 状態表示（改行/折返し許可で重なり回避） */}

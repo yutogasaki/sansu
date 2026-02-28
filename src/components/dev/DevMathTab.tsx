@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MemoryState } from "../../domain/types";
+import { MemoryState, SkillStatus, StrengthLevel } from "../../domain/types";
 import { MATH_CURRICULUM } from "../../domain/math/curriculum";
 import { MATH_SKILL_LABELS } from "../../domain/math/labels";
-
 
 interface DevMathTabProps {
     memoryStates: MemoryState[];
@@ -25,8 +24,6 @@ export const DevMathTab: React.FC<DevMathTabProps> = ({ memoryStates, onUpdateMe
     const handleStudy = (skillId: string) => {
         navigate(`/study?session=dev&focus_subject=math&focus_ids=${skillId}&back_to=${encodeURIComponent("/dev?tab=math")}`);
     };
-
-
 
     return (
         <div className="p-4 space-y-4">
@@ -92,7 +89,7 @@ export const DevMathTab: React.FC<DevMathTabProps> = ({ memoryStates, onUpdateMe
                                                                         <span className="text-slate-500">強度:</span>
                                                                         <select
                                                                             value={memory.strength}
-                                                                            onChange={e => onUpdateMemory(skillId, { strength: Number(e.target.value) as any })}
+                                                                            onChange={e => onUpdateMemory(skillId, { strength: Number(e.target.value) as StrengthLevel })}
                                                                             className="ml-2 border rounded px-1"
                                                                         >
                                                                             {[1, 2, 3, 4, 5].map(s => (
@@ -104,7 +101,7 @@ export const DevMathTab: React.FC<DevMathTabProps> = ({ memoryStates, onUpdateMe
                                                                         <span className="text-slate-500">状態:</span>
                                                                         <select
                                                                             value={memory.status || 'active'}
-                                                                            onChange={e => onUpdateMemory(skillId, { status: e.target.value as any })}
+                                                                            onChange={e => onUpdateMemory(skillId, { status: e.target.value as SkillStatus })}
                                                                             className="ml-2 border rounded px-1"
                                                                         >
                                                                             <option value="active">active</option>

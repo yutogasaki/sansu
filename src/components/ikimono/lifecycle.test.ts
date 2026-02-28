@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
-import { calculateStage, createNewIkimonoState } from './lifecycle';
+import { calculateStage, createNewIkimonoState, ensureSpecies } from './lifecycle';
+import { SPECIES_COUNT } from './types';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const NOW = new Date('2026-02-19T12:00:00.000Z');
@@ -42,10 +43,32 @@ describe('ikimono lifecycle', () => {
         expect(nearEnd.fadeOpacity).toBeLessThan(0.1);
     });
 
-    it('creates a new state with current timestamp and generation', () => {
+    it('creates a new state with current timestamp, generation, and species', () => {
         const state = createNewIkimonoState('p1', 3);
         expect(state.profileId).toBe('p1');
         expect(state.generation).toBe(3);
         expect(state.birthDate).toBe(NOW.toISOString());
+        expect(state.species).toBeGreaterThanOrEqual(0);
+        expect(state.species).toBeLessThan(SPECIES_COUNT);
+    });
+
+    it('ensureSpecies fills missing species and preserves existing', () => {
+        const without = { profileId: 'p1', birthDate: NOW.toISOString(), generation: 1 };
+        const filled = ensureSpecies(without);
+        expect(filled.species).toBeGreaterThanOrEqual(0);
+        expect(filled.species).toBeLessThan(SPECIES_COUNT);
+
+        const with5 = { ...without, species: 5 };
+        expect(ensureSpecies(with5)).toBe(with5);
+    });
+
+    it('avoids same species as previous generation', () => {
+        const prev = 3;
+        for (let i = 0; i < 20; i++) {
+            const state = createNewIkimonoState('p1', 2, prev);
+            expect(state.species).not.toBe(prev);
+            expect(state.species).toBeGreaterThanOrEqual(0);
+            expect(state.species).toBeLessThan(SPECIES_COUNT);
+        }
     });
 });

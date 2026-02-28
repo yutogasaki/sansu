@@ -32,7 +32,12 @@ export const IkimonoGallery: React.FC<IkimonoGalleryProps> = ({ profileId }) => 
                             key={entry.generation}
                             className="flex items-center gap-3 px-4 py-3 bg-white/70 rounded-2xl border border-white/80 shadow-sm"
                         >
-                            <div className="text-2xl">🥚</div>
+                            <img
+                                src={`/ikimono/${entry.species ?? 0}-3.png`}
+                                alt=""
+                                className="w-10 h-10 rounded-full object-cover"
+                                draggable={false}
+                            />
                             <div className="flex-1 min-w-0">
                                 <div className="text-xs font-bold text-slate-400">
                                     だい{entry.generation}せだい

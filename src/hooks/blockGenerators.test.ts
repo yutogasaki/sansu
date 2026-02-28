@@ -70,4 +70,3 @@ describe("blockGenerators utilities", () => {
         spy.mockRestore();
     });
 });
-

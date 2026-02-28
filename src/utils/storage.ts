@@ -165,10 +165,13 @@ export const soundStorage = {
 /**
  * Ikimono state
  */
+type StoredIkimonoState = { profileId: string; birthDate: string; generation: number; name?: string; species?: number };
+type StoredGalleryEntry = { profileId: string; generation: number; name: string; birthDate: string; departedDate: string; species?: number };
+
 export const ikimonoStorage = {
-    getState: (): { profileId: string; birthDate: string; generation: number; name?: string } | null =>
+    getState: (): StoredIkimonoState | null =>
         get(STORAGE_KEYS.IKIMONO_STATE, null),
-    setState: (state: { profileId: string; birthDate: string; generation: number; name?: string }): void =>
+    setState: (state: StoredIkimonoState): void =>
         set(STORAGE_KEYS.IKIMONO_STATE, state),
     clear: (): void => remove(STORAGE_KEYS.IKIMONO_STATE),
 };
@@ -177,12 +180,12 @@ export const ikimonoStorage = {
  * Ikimono gallery (past generations)
  */
 export const ikimonoGalleryStorage = {
-    getAll: (profileId: string): { profileId: string; generation: number; name: string; birthDate: string; departedDate: string }[] => {
-        const all = get<{ profileId: string; generation: number; name: string; birthDate: string; departedDate: string }[]>(STORAGE_KEYS.IKIMONO_GALLERY, []);
+    getAll: (profileId: string): StoredGalleryEntry[] => {
+        const all = get<StoredGalleryEntry[]>(STORAGE_KEYS.IKIMONO_GALLERY, []);
         return all.filter(e => e.profileId === profileId);
     },
-    add: (entry: { profileId: string; generation: number; name: string; birthDate: string; departedDate: string }): void => {
-        const all = get<{ profileId: string; generation: number; name: string; birthDate: string; departedDate: string }[]>(STORAGE_KEYS.IKIMONO_GALLERY, []);
+    add: (entry: StoredGalleryEntry): void => {
+        const all = get<StoredGalleryEntry[]>(STORAGE_KEYS.IKIMONO_GALLERY, []);
         all.push(entry);
         set(STORAGE_KEYS.IKIMONO_GALLERY, all);
     },

@@ -74,19 +74,17 @@ export const useDevPanel = () => {
     // Get math memory states
     const getMathMemoryStates = useCallback(async (): Promise<MemoryState[]> => {
         if (!state.profile) return [];
-        const items = await db.memoryMath
-            .filter((item: any) => item.profileId === state.profile!.id)
+        return db.memoryMath
+            .where('profileId').equals(state.profile.id)
             .toArray();
-        return items;
     }, [state.profile]);
 
     // Get vocab memory states
     const getVocabMemoryStates = useCallback(async (): Promise<MemoryState[]> => {
         if (!state.profile) return [];
-        const items = await db.memoryVocab
-            .filter((item: any) => item.profileId === state.profile!.id)
+        return db.memoryVocab
+            .where('profileId').equals(state.profile.id)
             .toArray();
-        return items;
     }, [state.profile]);
 
     // Update math memory state
@@ -98,8 +96,11 @@ export const useDevPanel = () => {
 
         const existing = await db.memoryMath.get([state.profile.id, skillId]);
         if (existing) {
-            const updated = { ...existing, ...updates, updatedAt: new Date().toISOString() };
-            await db.memoryMath.put({ ...updated, profileId: state.profile.id } as any);
+            await db.memoryMath.put({
+                ...existing, ...updates,
+                profileId: state.profile.id,
+                updatedAt: new Date().toISOString(),
+            });
         }
     }, [state.profile]);
 
@@ -112,8 +113,11 @@ export const useDevPanel = () => {
 
         const existing = await db.memoryVocab.get([state.profile.id, wordId]);
         if (existing) {
-            const updated = { ...existing, ...updates, updatedAt: new Date().toISOString() };
-            await db.memoryVocab.put({ ...updated, profileId: state.profile.id } as any);
+            await db.memoryVocab.put({
+                ...existing, ...updates,
+                profileId: state.profile.id,
+                updatedAt: new Date().toISOString(),
+            });
         }
     }, [state.profile]);
 

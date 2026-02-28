@@ -1,4 +1,4 @@
-import { IkimonoStage, IkimonoState } from './types';
+import { IkimonoStage, IkimonoState, SPECIES_COUNT } from './types';
 
 // ライフサイクル全体の日数（将来的に変更可能）
 export const LIFECYCLE_DAYS = 30;
@@ -43,11 +43,27 @@ export function calculateStage(birthDate: string): StageInfo {
 
 /**
  * 新しいライフサイクルの IkimonoState を生成する
+ * previousSpecies を渡すと、前の世代と異なる種類が選ばれる
  */
-export function createNewIkimonoState(profileId: string, generation = 1): IkimonoState {
+export function createNewIkimonoState(profileId: string, generation = 1, previousSpecies?: number): IkimonoState {
+    let species = Math.floor(Math.random() * SPECIES_COUNT);
+    if (previousSpecies != null && SPECIES_COUNT > 1) {
+        while (species === previousSpecies) {
+            species = Math.floor(Math.random() * SPECIES_COUNT);
+        }
+    }
     return {
         profileId,
         birthDate: new Date().toISOString(),
         generation,
+        species,
     };
+}
+
+/**
+ * 既存データに species がない場合（後方互換）、ランダムに補完する
+ */
+export function ensureSpecies(state: Omit<IkimonoState, 'species'> & { species?: number }): IkimonoState {
+    if (state.species != null) return state as IkimonoState;
+    return { ...state, species: Math.floor(Math.random() * SPECIES_COUNT) };
 }

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { ikimonoStorage } from "../../utils/storage";
-import { IkimonoState, IkimonoStage } from "../ikimono/types";
-import { calculateStage, createNewIkimonoState, LIFECYCLE_DAYS, STAGE_BOUNDARIES } from "../ikimono/lifecycle";
+import { IkimonoState, IkimonoStage, SPECIES_COUNT } from "../ikimono/types";
+import { calculateStage, createNewIkimonoState, LIFECYCLE_DAYS, STAGE_BOUNDARIES, ensureSpecies } from "../ikimono/lifecycle";
 
 interface DevIkimonoTabProps {
     profileId: string;
@@ -44,7 +44,8 @@ export const DevIkimonoTab: React.FC<DevIkimonoTabProps> = ({ profileId }) => {
     const stageRanges = useMemo(() => buildStageRanges(), []);
 
     const loadState = useCallback(() => {
-        const current = ikimonoStorage.getState();
+        const raw = ikimonoStorage.getState();
+        const current = raw ? ensureSpecies(raw) : null;
         setStoredState(current);
         setDraftState(current ?? createNewIkimonoState(profileId, 1));
     }, [profileId]);
@@ -79,8 +80,6 @@ export const DevIkimonoTab: React.FC<DevIkimonoTabProps> = ({ profileId }) => {
         ikimonoStorage.clear();
         loadState();
     };
-
-
 
     const applyStageInstantly = (stage: IkimonoStage) => {
         if (!draftState) return;
@@ -132,6 +131,19 @@ export const DevIkimonoTab: React.FC<DevIkimonoTabProps> = ({ profileId }) => {
                         onChange={e => setDraftState(draftState ? { ...draftState, birthDate: fromLocalInputValue(e.target.value) } : null)}
                         className="text-sm border border-slate-200 rounded px-2 py-1"
                     />
+                </div>
+
+                <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                    <span className="text-sm text-slate-700">species</span>
+                    <select
+                        value={draftState?.species ?? 0}
+                        onChange={e => setDraftState(draftState ? { ...draftState, species: Number(e.target.value) } : null)}
+                        className="w-20 text-sm border border-slate-200 rounded px-2 py-1"
+                    >
+                        {Array.from({ length: SPECIES_COUNT }, (_, i) => (
+                            <option key={i} value={i}>{i}</option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className="flex items-center justify-between border-b border-slate-100 pb-2">

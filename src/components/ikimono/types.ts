@@ -12,6 +12,7 @@ export interface IkimonoState {
     birthDate: string;   // ISO timestamp
     generation: number;  // ライフサイクル回数（1, 2, 3...）
     name?: string;       // 孵化時につけた名前
+    species: number;     // 生き物の種類（0〜9）
 }
 
 export interface IkimonoGalleryEntry {
@@ -20,4 +21,8 @@ export interface IkimonoGalleryEntry {
     name: string;
     birthDate: string;      // ISO timestamp
     departedDate: string;   // ISO timestamp（gone になった日）
+    species: number;        // 生き物の種類（0〜9）
 }
+
+/** 生き物の種類の数 */
+export const SPECIES_COUNT = 10;
