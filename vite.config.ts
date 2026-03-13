@@ -1,7 +1,6 @@
 /// <reference types="vitest" />
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
-import type { Plugin } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import path from 'path'
 
@@ -12,9 +11,19 @@ const appVersion = process.env.VERCEL_GIT_COMMIT_SHA
     || process.env.CF_PAGES_COMMIT_SHA
     || new Date().toISOString()
 
-const appVersionManifestPlugin = (): Plugin => ({
+type AssetFile = {
+    type: 'asset';
+    fileName: string;
+    source: string;
+}
+
+type BundleContext = {
+    emitFile: (file: AssetFile) => void;
+}
+
+const appVersionManifestPlugin = () => ({
     name: 'app-version-manifest',
-    generateBundle() {
+    generateBundle(this: BundleContext) {
         this.emitFile({
             type: 'asset',
             fileName: 'version.json',
@@ -95,4 +104,3 @@ export default defineConfig({
         },
     },
 } as any)
- 

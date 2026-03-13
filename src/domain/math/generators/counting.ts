@@ -1,4 +1,5 @@
 import { GeneratorFn, createProblem, randomInt, randomChoice } from "../core";
+import { shuffleArray } from "../../../utils/shuffle";
 
 const COUNT_EMOJIS = ["🍎", "🍊", "🌸", "⭐", "🐟"];
 
@@ -53,7 +54,7 @@ export const generators: Record<string, GeneratorFn> = {
         const d1 = randomChoice(others);
         const remaining = others.filter(x => x.n !== d1.n);
         const d2 = randomChoice(remaining);
-        const choices = [target, d1, d2].sort(() => Math.random() - 0.5);
+        const choices = shuffleArray([target, d1, d2]);
         return createProblem("count_read", `${target.n} は？`, target.reading, "choice", {
             choices: choices.map(c => ({ label: c.reading, value: c.reading }))
         });
@@ -68,7 +69,7 @@ export const generators: Record<string, GeneratorFn> = {
         }
         const sorted = [...nums].sort((a, b) => a - b);
         // シャッフルして表示
-        const shuffled = [...nums].sort(() => Math.random() - 0.5);
+        const shuffled = shuffleArray(nums);
         const q = `ちいさい じゅんに ならべよう\n${shuffled.join("　")}`;
         // 一番小さい数を答えさせる
         return createProblem("count_order", q, sorted[0].toString(), "number");
@@ -87,7 +88,7 @@ export const generators: Record<string, GeneratorFn> = {
         ];
         const group = randomChoice(groups);
         // シャッフルして表示
-        const shuffled = [...group.items].sort(() => Math.random() - 0.5);
+        const shuffled = shuffleArray(group.items);
         const majority = group.items.find(i => i !== group.odd)!;
         const q = `なかまはずれ は？\n${shuffled.join(" ")}`;
         return createProblem("count_oddone", q, group.odd, "choice", {
@@ -106,7 +107,7 @@ export const generators: Record<string, GeneratorFn> = {
         ];
         const target = randomChoice(SHAPES);
         const others = SHAPES.filter(s => s.name !== target.name);
-        const choices = [target, ...others].sort(() => Math.random() - 0.5);
+        const choices = shuffleArray([target, ...others]);
         return createProblem("count_shape", `${target.emoji} は なに？`, target.name, "choice", {
             choices: choices.map(c => ({ label: `${c.emoji} ${c.name}`, value: c.name }))
         });
@@ -122,7 +123,7 @@ export const generators: Record<string, GeneratorFn> = {
         const others = COLORS.filter(c => c.name !== target.name);
         const d1 = randomChoice(others);
         const d2 = randomChoice(others.filter(c => c.name !== d1.name));
-        const choices = [target, d1, d2].sort(() => Math.random() - 0.5);
+        const choices = shuffleArray([target, d1, d2]);
         return createProblem("count_color", `${target.emoji} は なにいろ？`, target.name, "choice", {
             choices: choices.map(c => ({ label: c.name, value: c.name }))
         });
@@ -135,7 +136,7 @@ export const generators: Record<string, GeneratorFn> = {
         const d1 = randomChoice(others);
         const d2 = randomChoice(others.filter(i => i !== d1));
         // 表示: ターゲットを見せて、3択から同じものを選ぶ
-        const choices = [target, d1, d2].sort(() => Math.random() - 0.5);
+        const choices = shuffleArray([target, d1, d2]);
         return createProblem("count_pair", `${target} と おなじ ものは？`, target, "choice", {
             choices: choices.map(c => ({ label: c, value: c }))
         });

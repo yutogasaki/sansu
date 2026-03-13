@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Header } from '../../components/Header';
 import { getWeakMathSkillIds, getWeakVocabIds } from '../../domain/learningRepository';
 import { ENGLISH_WORDS } from '../../domain/english/words';
+import type { RecentAttempt, UserProfile } from '../../domain/types';
 import { getActiveProfile } from '../../domain/user/repository';
 import { ParentGateModal } from '../../components/gate/ParentGateModal';
 import { Spinner } from '../../components/ui/Spinner';
@@ -15,8 +16,7 @@ export const ParentsPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const routeState = location.state as ParentsRouteState | null;
-    const [activeProfileId, setActiveProfileId] = useState<string | null>(null);
-    const [profile, setProfile] = useState<any>(null);
+    const [profile, setProfile] = useState<UserProfile | null>(null);
     const [weakMathIds, setWeakMathIds] = useState<string[]>([]);
     const [weakVocabIds, setWeakVocabIds] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +32,6 @@ export const ParentsPage: React.FC = () => {
             try {
                 setIsLoading(true);
                 const active = await getActiveProfile();
-                setActiveProfileId(active?.id || null);
                 setProfile(active);
 
                 if (active?.id) {
@@ -74,7 +73,7 @@ export const ParentsPage: React.FC = () => {
         );
     }
 
-    if (!activeProfileId || !profile) {
+    if (!profile) {
         return (
             <div className="flex flex-col h-full bg-slate-50">
                 <Header title="保護者メニュー" />
@@ -82,6 +81,8 @@ export const ParentsPage: React.FC = () => {
             </div>
         );
     }
+
+    const recentAttempts = profile.recentAttempts?.slice(-5).reverse() ?? [];
 
     return (
         <div className="flex flex-col h-full bg-background">
@@ -120,7 +121,6 @@ export const ParentsPage: React.FC = () => {
                     </div>
 
                     <div>
-                        <h3 className="text-sm font-bold text-text-sub mb-2">英語</h3>
                         <h3 className="text-sm font-bold text-text-sub mb-2">英語 (正答率60%未満)</h3>
                         {weakVocabIds.length > 0 ? (
                             <div className="flex flex-wrap gap-2">
@@ -144,10 +144,10 @@ export const ParentsPage: React.FC = () => {
                 <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-50">
                     <h2 className="text-lg font-bold mb-4 text-text-main">学習履歴 (直近)</h2>
                     <div className="text-sm">
-                        {profile.recentAttempts && profile.recentAttempts.length > 0 ? (
+                        {recentAttempts.length > 0 ? (
                             <ul className="space-y-4">
-                                {[...profile.recentAttempts].reverse().slice(0, 5).map((log: any, idx: number) => (
-                                    <li key={idx} className="flex items-center justify-between border-b border-slate-50 pb-3 last:border-0 last:pb-0">
+                                {recentAttempts.map((log: RecentAttempt) => (
+                                    <li key={log.id} className="flex items-center justify-between border-b border-slate-50 pb-3 last:border-0 last:pb-0">
                                         <div className="flex flex-col">
                                             <span className="text-xs text-text-sub font-bold">{new Date(log.timestamp).toLocaleString('ja-JP')}</span>
                                             <span className="text-text-main font-medium mt-1">{log.subject} / {log.skillId}</span>

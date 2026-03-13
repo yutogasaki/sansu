@@ -18,7 +18,6 @@ export const checkLevelProgression = async (profileId: string, currentMainLevel:
     const correctCount = recent.filter(Boolean).length;
     const accuracy = correctCount / recent.length;
 
-    console.log(`Level ${currentMainLevel} Check: ${correctCount}/${recent.length} = ${accuracy * 100}%`);
     return accuracy >= 0.85;
 };
 
