@@ -1,5 +1,10 @@
 # 10 デザイン刷新 実施状況と今後対応（2026-02-16）
 
+役割:
+- この文書はデザイン刷新の進捗・状態台帳である
+- デザイン原則のSSOTは `07_ui_design_guideline.md`
+- Active task は `docs/tasks/active/` で管理する
+
 ## 0. 目的
 
 本ドキュメントは、今回のデザイン見直しで
@@ -174,4 +179,3 @@
 - `docs/07_ui_design_guideline.md` が実装実態と一致している
 - `npm run build` が成功する
 - 主要端末（iOS/Android）で視認性・操作性に問題がない
-
