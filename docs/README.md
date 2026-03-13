@@ -20,6 +20,7 @@ It exists to reduce file bloat, duplicate truths, and context pollution.
 |---|---|---|
 | [01_app_spec.md](01_app_spec.md) | Parent spec | Yes |
 | [07_ui_design_guideline.md](07_ui_design_guideline.md) | Design principles | Yes |
+| [glossary.md](glossary.md) | Workspace/process glossary | Yes |
 | [memory.md](memory.md) | Durable project memory | Yes |
 | [verification_matrix.md](verification_matrix.md) | Required checks by change type | Yes |
 | [tasks/active/README.md](tasks/active/README.md) | Active task flow | Yes |
@@ -31,7 +32,9 @@ It exists to reduce file bloat, duplicate truths, and context pollution.
 | [10_design_refresh_status.md](10_design_refresh_status.md) | Design progress/status | No |
 | [11_full_task_backlog.md](11_full_task_backlog.md) | Global backlog | No |
 | [12_ui_fix_tasklist.md](12_ui_fix_tasklist.md) | Domain backlog/tasklist | No |
+| [design_review_checklist.md](design_review_checklist.md) | UI review checklist | Yes |
 | [runbooks/pwa-release.md](runbooks/pwa-release.md) | Release/runbook for PWA updates | Yes |
+| [runbooks/release-checklist.md](runbooks/release-checklist.md) | General release checklist | Yes |
 
 ## Cold Docs
 

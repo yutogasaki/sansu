@@ -10,6 +10,7 @@ If a check cannot run, record the gap in the active task and the done log.
 | Command | Purpose |
 |---|---|
 | `npm run lint` | Static linting |
+| `npm run typecheck` | Fast TypeScript verification |
 | `npm run test:run` | Unit/integration tests |
 | `npm run build` | TypeScript build + production build |
 | `npm run e2e:smoke` | Smoke E2E for critical flows |
@@ -20,11 +21,11 @@ If a check cannot run, record the gap in the active task and the done log.
 |---|---|---|---|
 | Docs only | Read-through | Link/role sanity | No app commands required |
 | Copy or content only | `npm run lint`, `npm run build` | Affected screen wording | Check tone for child/parent UX |
-| Shared UI component | `npm run lint`, `npm run test:run`, `npm run build` | Desktop + mobile layout sanity | Prefer screenshot or visual notes |
-| Page-level UI/state | `npm run lint`, `npm run test:run`, `npm run build` | Main flow through affected screen | Include modal, loading, error, empty state |
-| Learning/domain logic | `npm run lint`, `npm run test:run`, `npm run build` | Targeted scenario walkthrough | Add/update tests when logic changes |
-| Storage/schema/profile data | `npm run lint`, `npm run test:run`, `npm run build` | Existing profile load/save | Write ADR or migration note if needed |
-| PWA/deploy/update flow | `npm run lint`, `npm run test:run`, `npm run build`, `npm run e2e:smoke` | Install/update/reload path | Review host cache behavior too |
+| Shared UI component | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build` | Desktop + mobile layout sanity | Prefer screenshot or visual notes |
+| Page-level UI/state | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build` | Main flow through affected screen | Include modal, loading, error, empty state |
+| Learning/domain logic | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build` | Targeted scenario walkthrough | Add/update tests when logic changes |
+| Storage/schema/profile data | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build` | Existing profile load/save | Write ADR or migration note if needed |
+| PWA/deploy/update flow | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build`, `npm run e2e:smoke` | Install/update/reload path | Review host cache behavior too |
 | Release candidate | All of the above | Critical path smoke on target devices | Include iOS/Android/PWA notes if relevant |
 
 ## Review Prompts

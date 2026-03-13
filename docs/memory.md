@@ -33,10 +33,12 @@ If the information would still matter after several unrelated tasks, it belongs 
 
 - Current baseline commands are:
   - `npm run lint`
+  - `npm run typecheck`
   - `npm run test:run`
   - `npm run build`
   - `npm run e2e:smoke` when release-sensitive flows change
-- `npm run build` currently includes TypeScript build via `tsc -b`.
+- `npm run typecheck` is the fastest standalone TypeScript gate.
+- `npm run build` still includes TypeScript build via `tsc -b`.
 
 ### 3. Risk Areas
 
