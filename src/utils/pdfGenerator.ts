@@ -3,6 +3,7 @@ import fontkit from '@pdf-lib/fontkit';
 
 import { Problem } from '../domain/types';
 import { EnglishWord } from '../domain/english/words';
+import { resolveAppAssetPath } from './assets';
 
 // ============================================================
 // Types
@@ -20,7 +21,7 @@ interface TextPart {
 }
 
 type ExpressionPart = FractionPart | TextPart;
-const LOCAL_JP_FONT_URL = '/fonts/NotoSansJP-Regular.otf';
+const LOCAL_JP_FONT_URL = resolveAppAssetPath('/fonts/NotoSansJP-Regular.otf');
 
 // ============================================================
 // Fraction Parsing

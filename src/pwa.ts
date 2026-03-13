@@ -1,9 +1,10 @@
 import { Workbox } from 'workbox-window'
+import { resolveAppAssetPath } from './utils/assets'
 
 const UPDATE_CHECK_INTERVAL_MS = 5 * 60 * 1000
-const APP_BASE_URL = import.meta.env.BASE_URL
-const VERSION_URL = `${APP_BASE_URL}version.json`
-const SERVICE_WORKER_URL = `${APP_BASE_URL}sw.js`
+const APP_BASE_URL = resolveAppAssetPath('/')
+const VERSION_URL = resolveAppAssetPath('/version.json')
+const SERVICE_WORKER_URL = resolveAppAssetPath('/sw.js')
 const SERVICE_WORKER_SCOPE = APP_BASE_URL
 
 let hasTriggeredReload = false

@@ -26,6 +26,9 @@ interface QueueItem {
     priority: number; // For sorting candidates
 }
 
+type SessionProblemGeneratorData = Omit<Problem, 'id' | 'subject' | 'isReview'>;
+type SessionQueueItem = Omit<Problem, 'id'>;
+
 // Helper to check Weak status (Spec 5.5)
 export const isWeakByRecentAttempts = (id: string, recentAttempts?: RecentAttempt[]): boolean => {
     if (!recentAttempts || recentAttempts.length === 0) return false;
@@ -65,8 +68,8 @@ export const isWeakByRecentAttempts = (id: string, recentAttempts?: RecentAttemp
 
 // --- Main Generator ---
 
-export const generateSessionQueue = (user: UserProfile, count = 5): Omit<Problem, 'id' | 'isReview'>[] => {
-    const queue: Omit<Problem, 'id' | 'isReview'>[] = [];
+export const generateSessionQueue = (user: UserProfile, count = 5): SessionQueueItem[] => {
+    const queue: SessionQueueItem[] = [];
 
     // 1. Decide Subject for this Block (Spec 5.3)
     const englishDueIds = Object.values(user.vocabWords || {})
@@ -194,11 +197,11 @@ export const generateSessionQueue = (user: UserProfile, count = 5): Omit<Problem
 // --- Helper Functions ---
 
 const fillQueue = (
-    queue: Omit<Problem, 'id' | 'isReview'>[],
+    queue: SessionQueueItem[],
     candidates: QueueItem[],
     targetCount: number,
     dupLimit: number,
-    generator: (id: string) => any
+    generator: (id: string) => SessionProblemGeneratorData
 ) => {
     // usedCounts tracks how many times each ID has been added to THIS queue
     const usedCounts: Record<string, number> = {};

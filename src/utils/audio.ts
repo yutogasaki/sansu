@@ -1,4 +1,5 @@
 import { Howl, Howler } from 'howler';
+import { resolveAppAssetPath } from './assets';
 
 // Sound Types
 export type SoundType =
@@ -14,21 +15,19 @@ export type BgmType =
     | "menu"
     | "study";
 
-const resolveAssetPath = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
-
 // Asset Map
 const SE_ASSETS: Record<SoundType, string> = {
-    correct: resolveAssetPath("/sounds/correct.mp3"),
-    incorrect: resolveAssetPath("/sounds/incorrect.mp3"),
-    tap: resolveAssetPath("/sounds/tap.mp3"),
-    level_up: resolveAssetPath("/sounds/level_up.mp3"),
-    start: resolveAssetPath("/sounds/start.mp3"),
-    clear: resolveAssetPath("/sounds/clear.mp3")
+    correct: resolveAppAssetPath("/sounds/correct.mp3"),
+    incorrect: resolveAppAssetPath("/sounds/incorrect.mp3"),
+    tap: resolveAppAssetPath("/sounds/tap.mp3"),
+    level_up: resolveAppAssetPath("/sounds/level_up.mp3"),
+    start: resolveAppAssetPath("/sounds/start.mp3"),
+    clear: resolveAppAssetPath("/sounds/clear.mp3")
 };
 
 const BGM_ASSETS: Record<BgmType, string> = {
-    menu: resolveAssetPath("/sounds/bgm_menu.mp3"),
-    study: resolveAssetPath("/sounds/bgm_study.mp3")
+    menu: resolveAppAssetPath("/sounds/bgm_menu.mp3"),
+    study: resolveAppAssetPath("/sounds/bgm_study.mp3")
 };
 
 // Cache for Howl instances

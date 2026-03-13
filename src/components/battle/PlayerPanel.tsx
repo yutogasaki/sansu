@@ -3,6 +3,7 @@ import { cn } from "../../utils/cn";
 import { TenKey } from "../domain/TenKey";
 import { ChoiceGroup } from "../domain/ChoiceGroup";
 import { PlayerGameState, PlayerId } from "../../domain/battle/types";
+import { useTimeoutScheduler } from "../../hooks/useTimeoutScheduler";
 
 interface PlayerPanelProps {
     player: PlayerId;
@@ -30,11 +31,13 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
     const problem = gameState.currentProblem;
     const isChoice = problem?.inputType === "choice";
     const isLocked = gameState.lockSeconds > 0;
+    const { scheduleTimeout, clearScheduledTimeouts } = useTimeoutScheduler();
 
     const flashFeedback = useCallback((type: Feedback) => {
+        clearScheduledTimeouts();
         setFeedback(type);
-        setTimeout(() => setFeedback("none"), 300);
-    }, []);
+        scheduleTimeout(() => setFeedback("none"), 300);
+    }, [clearScheduledTimeouts, scheduleTimeout]);
 
     const handleInput = useCallback(
         (val: number | string) => {

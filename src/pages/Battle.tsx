@@ -17,6 +17,10 @@ export const Battle: React.FC = () => {
     const navigate = useNavigate();
     const [state, dispatch] = useReducer(battleReducer, undefined, createInitialBattleState);
 
+    const createProblemForPlayer = useCallback((config: PlayerConfig) => (
+        generateBattleProblem(config.grade, config.subject)
+    ), []);
+
     const handleStart = useCallback((p1: PlayerConfig, p2: PlayerConfig, mode: BattleGameMode) => {
         dispatch({ type: "START_GAME", p1Config: p1, p2Config: p2, mode });
     }, []);
@@ -25,17 +29,11 @@ export const Battle: React.FC = () => {
         dispatch({ type: "COUNTDOWN_DONE" });
 
         // Generate initial problems based on each player's subject
-        const p1Problem = generateBattleProblem(
-            state.p1.config.grade || 1,
-            state.p1.config.subject
-        );
-        const p2Problem = generateBattleProblem(
-            state.p2.config.grade || 1,
-            state.p2.config.subject
-        );
+        const p1Problem = createProblemForPlayer(state.p1.config);
+        const p2Problem = createProblemForPlayer(state.p2.config);
         dispatch({ type: "SET_PROBLEM", player: "p1", problem: p1Problem });
         dispatch({ type: "SET_PROBLEM", player: "p2", problem: p2Problem });
-    }, [state.p1.config.grade, state.p1.config.subject, state.p2.config.grade, state.p2.config.subject]);
+    }, [state.p1.config, state.p2.config, createProblemForPlayer]);
 
     const handleSubmitAnswer = useCallback(
         (player: PlayerId, answer: string) => {
@@ -51,15 +49,14 @@ export const Battle: React.FC = () => {
                 dispatch({ type: "CORRECT_ANSWER", player });
 
                 // Generate next problem
-                const grade = playerState.config.grade || 1;
-                const newProblem = generateBattleProblem(grade, playerState.config.subject);
+                const newProblem = createProblemForPlayer(playerState.config);
                 dispatch({ type: "SET_PROBLEM", player, problem: newProblem });
             } else {
                 playSound("incorrect");
                 dispatch({ type: "INCORRECT_ANSWER", player });
             }
         },
-        [state.gameMode, state.p1, state.p2]
+        [state.gameMode, state.p1, state.p2, createProblemForPlayer]
     );
 
     const handleInputChange = useCallback(
@@ -72,11 +69,13 @@ export const Battle: React.FC = () => {
     const handleSkip = useCallback(
         (player: PlayerId) => {
             const playerState = player === "p1" ? state.p1 : state.p2;
-            const grade = playerState.config.grade || 1;
-            const newProblem = generateBattleProblem(grade, playerState.config.subject);
+            if (!playerState.currentProblem) return;
+            if (state.gameMode === "boss_coop" && playerState.lockSeconds > 0) return;
+
+            const newProblem = createProblemForPlayer(playerState.config);
             dispatch({ type: "SET_PROBLEM", player, problem: newProblem });
         },
-        [state.p1, state.p2]
+        [state.gameMode, state.p1, state.p2, createProblemForPlayer]
     );
 
     const handleCancel = useCallback(() => {

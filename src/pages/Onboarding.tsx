@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "../components/ui/Button";
 import { Header } from "../components/Header";
 import { createInitialProfile } from "../domain/user/profile";
@@ -12,6 +12,14 @@ type Step = "welcome" | "name" | "grade" | "subject" | "math-check" | "english-c
 type SubjectMode = "mix" | "math" | "vocab";
 type EnglishExp = "beginner" | "some" | "confident";
 type MathCheck = "q_count" | "q_add" | "q_sub" | "q_col" | "q_mul";
+type OnboardingSelections = {
+    mathCheck: MathCheck | null;
+    englishExp: EnglishExp | null;
+};
+
+const waitMs = (ms: number) => new Promise<void>(resolve => {
+    window.setTimeout(resolve, ms);
+});
 
 export const Onboarding: React.FC = () => {
     const navigate = useNavigate();
@@ -22,6 +30,8 @@ export const Onboarding: React.FC = () => {
     const [subjectMode, setSubjectMode] = useState<SubjectMode>("mix");
     const [mathCheck, setMathCheck] = useState<MathCheck | null>(null);
     const [englishExp, setEnglishExp] = useState<EnglishExp | null>(null);
+    const isSubmittingRef = useRef(false);
+    const trimmedName = name.trim();
 
     const goBack = () => {
         if (step === "name") setStep("welcome");
@@ -39,12 +49,12 @@ export const Onboarding: React.FC = () => {
         }
     };
 
-    const handleGradeSelect = async (selectedGrade: number) => {
+    const handleGradeSelect = (selectedGrade: number) => {
         setGrade(selectedGrade);
         setStep("subject");
     };
 
-    const handleFinish = async () => {
+    const handleFinish = async ({ mathCheck: selectedMathCheck, englishExp: selectedEnglishExp }: OnboardingSelections) => {
         // 推定レベルロジック
         // 少し手前から始めて、自信をつけさせる
         const safeGrade = grade ?? 0;
@@ -67,18 +77,22 @@ export const Onboarding: React.FC = () => {
             q_col: 1,
             q_mul: 4
         };
-        const adjustment = mathCheck ? adjMap[mathCheck] : 0;
+        const adjustment = selectedMathCheck ? adjMap[selectedMathCheck] : 0;
         const mathStartLevel = Math.max(1, Math.min(20, baseLevel + adjustment));
 
         let vocabStartLevel = 1;
-        if (englishExp) {
-            if (englishExp === "beginner") vocabStartLevel = 1;
-            if (englishExp === "some") vocabStartLevel = 4;
-            if (englishExp === "confident") vocabStartLevel = 7;
+        if (selectedEnglishExp) {
+            if (selectedEnglishExp === "beginner") vocabStartLevel = 1;
+            if (selectedEnglishExp === "some") vocabStartLevel = 4;
+            if (selectedEnglishExp === "confident") vocabStartLevel = 7;
         }
 
         // Create Profile (mix mode default)
-        const profile = createInitialProfile(name, safeGrade, mathStartLevel, vocabStartLevel, subjectMode);
+        if (!trimmedName) {
+            throw new Error("Profile name is required");
+        }
+
+        const profile = createInitialProfile(trimmedName, safeGrade, mathStartLevel, vocabStartLevel, subjectMode);
 
         // Save
         await saveProfile(profile);
@@ -88,7 +102,7 @@ export const Onboarding: React.FC = () => {
         navigate("/", { replace: true });
 
         // HashRouter fallback
-        setTimeout(() => {
+        window.setTimeout(() => {
             if (window.location.hash === "" || window.location.hash === "#/onboarding") {
                 window.location.hash = "#/";
             }
@@ -121,6 +135,7 @@ export const Onboarding: React.FC = () => {
     };
 
     const handleSubjectSelect = (mode: SubjectMode) => {
+        if (isSubmittingRef.current) return;
         setSubjectMode(mode);
         if (mode === "vocab") {
             setStep("english-check");
@@ -129,24 +144,44 @@ export const Onboarding: React.FC = () => {
         }
     };
 
-    const handleMathCheckSelect = async (value: MathCheck) => {
+    const completeOnboarding = async (fallbackStep: Step, selections: OnboardingSelections) => {
+        if (isSubmittingRef.current) return;
+
+        isSubmittingRef.current = true;
+        setStep("done");
+        setIsSubmitting(true);
+
+        try {
+            await waitMs(500);
+            await handleFinish(selections);
+        } catch (error) {
+            console.error("[Onboarding] failed to complete onboarding:", error);
+            isSubmittingRef.current = false;
+            setIsSubmitting(false);
+            setStep(fallbackStep);
+        }
+    };
+
+    const handleMathCheckSelect = (value: MathCheck) => {
+        if (isSubmittingRef.current) return;
         setMathCheck(value);
         if (subjectMode === "math") {
-            setStep("done");
-            setIsSubmitting(true);
-            await new Promise(resolve => setTimeout(resolve, 500));
-            await handleFinish();
+            void completeOnboarding("math-check", {
+                mathCheck: value,
+                englishExp,
+            });
         } else {
             setStep("english-check");
         }
     };
 
-    const handleEnglishExpSelect = async (value: EnglishExp) => {
+    const handleEnglishExpSelect = (value: EnglishExp) => {
+        if (isSubmittingRef.current) return;
         setEnglishExp(value);
-        setStep("done");
-        setIsSubmitting(true);
-        await new Promise(resolve => setTimeout(resolve, 500));
-        await handleFinish();
+        void completeOnboarding("english-check", {
+            mathCheck,
+            englishExp: value,
+        });
     };
 
     // --- Render Steps ---
@@ -209,7 +244,7 @@ export const Onboarding: React.FC = () => {
                             placeholder="あだ名でOK"
                             autoFocus
                         />
-                        <Button disabled={!name} onClick={() => setStep("grade")} size="xl" className="w-full shadow-lg">
+                        <Button disabled={!trimmedName} onClick={() => setStep("grade")} size="xl" className="w-full shadow-lg">
                             次へ
                         </Button>
                     </div>
