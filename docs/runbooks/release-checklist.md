@@ -22,6 +22,7 @@ Shortcuts:
 
 ### Code / Quality
 
+- GitHub Actions status is green for the relevant checks
 - Lint passes
 - Typecheck passes
 - Required tests pass

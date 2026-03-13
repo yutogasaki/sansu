@@ -14,7 +14,7 @@ It is not a bug tracker and not a release checklist.
 | Onboarding and navigation regressions | Children or parents can get stuck or skip expected steps, which directly harms trust | [01_app_spec.md](01_app_spec.md), screen specs, smoke/manual walkthroughs | Routing, onboarding, modal, or guard flows change |
 | Design/tone drift between child and parent surfaces | Calm, trustworthy UX can erode slowly through local-only styling or wording choices | [07_ui_design_guideline.md](07_ui_design_guideline.md), [design_review_checklist.md](design_review_checklist.md), design review skill | New screens, major refreshes, or broad visual changes land |
 | Bundle growth and heavy PDF path | Install/update/startup cost rises on mobile, and large chunks are easier to miss in gradual growth | `npm run build`, [runbooks/release-checklist.md](runbooks/release-checklist.md), future code-splitting work | New large dependencies, asset additions, or build warnings appear |
-| Documentation drift and context pollution | Wrong fixes happen faster when rules, status, tasks, and memory blur together | [ownership_map.md](ownership_map.md), [archive_policy.md](archive_policy.md), [memory.md](memory.md), `doc-sync` skill | Large refactors, repeated explanations, or growing status docs appear |
+| Documentation drift and context pollution | Wrong fixes happen faster when rules, status, tasks, and memory blur together | [ownership_map.md](ownership_map.md), [archive_policy.md](archive_policy.md), [memory.md](memory.md), `doc-sync` skill, CI docs check | Large refactors, repeated explanations, or growing status docs appear |
 
 ## Update Rules
 

@@ -4,6 +4,7 @@
 
 This file defines the minimum verification expected for each change type.
 If a check cannot run, record the gap in the active task and the done log.
+GitHub Actions should mirror the same baseline for `docs:check` and `verify:core`.
 
 ## Current Commands
 
