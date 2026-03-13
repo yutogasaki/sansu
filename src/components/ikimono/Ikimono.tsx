@@ -261,10 +261,12 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
     }, [transitionModal, profileId, state.generation, state.name, state.species, stage, daysAlive]);
 
     useEffect(() => {
+        const currentParticleTimers = particleTimers.current;
+
         return () => {
             if (hitokotoTimer.current) clearTimeout(hitokotoTimer.current);
             if (idleTimer.current) clearInterval(idleTimer.current);
-            particleTimers.current.forEach((timerId) => window.clearTimeout(timerId));
+            currentParticleTimers.forEach((timerId) => window.clearTimeout(timerId));
         };
     }, []);
 

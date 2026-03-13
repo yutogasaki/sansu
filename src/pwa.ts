@@ -1,9 +1,10 @@
 import { Workbox } from 'workbox-window'
 
 const UPDATE_CHECK_INTERVAL_MS = 5 * 60 * 1000
-const VERSION_URL = '/version.json'
-const SERVICE_WORKER_URL = `${import.meta.env.BASE_URL}sw.js`
-const SERVICE_WORKER_SCOPE = import.meta.env.BASE_URL
+const APP_BASE_URL = import.meta.env.BASE_URL
+const VERSION_URL = `${APP_BASE_URL}version.json`
+const SERVICE_WORKER_URL = `${APP_BASE_URL}sw.js`
+const SERVICE_WORKER_SCOPE = APP_BASE_URL
 
 let hasTriggeredReload = false
 
@@ -11,8 +12,14 @@ type AppVersionPayload = {
     version?: string
 }
 
+const shouldCheckForUpdates = () => (
+    document.visibilityState === 'visible'
+    && navigator.onLine
+    && !hasTriggeredReload
+)
+
 const checkForServiceWorkerUpdate = (workbox: Workbox) => {
-    if (document.visibilityState !== 'visible' || !navigator.onLine || hasTriggeredReload) {
+    if (!shouldCheckForUpdates()) {
         return
     }
 
@@ -20,7 +27,7 @@ const checkForServiceWorkerUpdate = (workbox: Workbox) => {
 }
 
 const checkForAppVersionUpdate = async () => {
-    if (document.visibilityState !== 'visible' || !navigator.onLine || hasTriggeredReload) {
+    if (!shouldCheckForUpdates()) {
         return
     }
 
