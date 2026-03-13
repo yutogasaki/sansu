@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
 import { UserProfile, MemoryState } from "../domain/types";
 import { db } from "../db";
@@ -15,10 +15,26 @@ export const useDevPanel = () => {
         loading: true,
         error: null
     });
+    const isMountedRef = useRef(true);
+
+    useEffect(() => {
+        isMountedRef.current = true;
+        return () => {
+            isMountedRef.current = false;
+        };
+    }, []);
+
+    const updateState = useCallback((updater: DevPanelState | ((prev: DevPanelState) => DevPanelState)) => {
+        if (!isMountedRef.current) {
+            return;
+        }
+
+        setState(updater);
+    }, []);
 
     const syncProfileState = useCallback((profile: UserProfile | null) => {
-        setState(prev => ({ ...prev, profile }));
-    }, []);
+        updateState(prev => ({ ...prev, profile }));
+    }, [updateState]);
 
     const persistProfile = useCallback(async (profile: UserProfile) => {
         await saveProfile(profile);
@@ -26,14 +42,14 @@ export const useDevPanel = () => {
     }, [syncProfileState]);
 
     const loadProfile = useCallback(async () => {
-        setState(prev => ({ ...prev, loading: true, error: null }));
+        updateState(prev => ({ ...prev, loading: true, error: null }));
         try {
             const profile = await getActiveProfile();
-            setState({ profile: profile || null, loading: false, error: null });
+            updateState({ profile: profile || null, loading: false, error: null });
         } catch (err) {
-            setState({ profile: null, loading: false, error: String(err) });
+            updateState({ profile: null, loading: false, error: String(err) });
         }
-    }, []);
+    }, [updateState]);
 
     // Load profile on mount
     useEffect(() => {

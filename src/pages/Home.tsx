@@ -18,6 +18,7 @@ import { warmUpTTS } from "../utils/tts";
 import { toLocaleDateKey } from "../utils/learningDay";
 import { recordPaperTestScore } from "../domain/test/paperTest";
 import { useTimeoutScheduler } from "../hooks/useTimeoutScheduler";
+import { logInDev } from "../utils/debug";
 
 const PAPER_TEST_REMIND_DAYS = 3;
 
@@ -129,7 +130,7 @@ export const Home: React.FC = () => {
 
                 weakPointsStorage.setPrevCount(currentWeakCount);
             } catch (error) {
-                console.error("[Home] failed to load home data:", error);
+                logInDev("[Home] failed to load home data:", error);
             }
         };
 

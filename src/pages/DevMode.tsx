@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Header } from "../components/Header";
 import { DevPanelTabs, DevTabId } from "../components/dev/DevPanelTabs";
@@ -37,36 +37,59 @@ export const DevMode: React.FC = () => {
     // Memory states for math/vocab tabs
     const [mathMemory, setMathMemory] = useState<MemoryState[]>([]);
     const [vocabMemory, setVocabMemory] = useState<MemoryState[]>([]);
+    const isMountedRef = useRef(true);
+    const mathRequestIdRef = useRef(0);
+    const vocabRequestIdRef = useRef(0);
+
+    useEffect(() => {
+        return () => {
+            isMountedRef.current = false;
+            mathRequestIdRef.current += 1;
+            vocabRequestIdRef.current += 1;
+        };
+    }, []);
+
+    const refreshMathMemory = useCallback(async () => {
+        const requestId = ++mathRequestIdRef.current;
+        const nextMemory = await getMathMemoryStates();
+        if (!isMountedRef.current || mathRequestIdRef.current !== requestId) {
+            return;
+        }
+
+        setMathMemory(nextMemory);
+    }, [getMathMemoryStates]);
+
+    const refreshVocabMemory = useCallback(async () => {
+        const requestId = ++vocabRequestIdRef.current;
+        const nextMemory = await getVocabMemoryStates();
+        if (!isMountedRef.current || vocabRequestIdRef.current !== requestId) {
+            return;
+        }
+
+        setVocabMemory(nextMemory);
+    }, [getVocabMemoryStates]);
 
     // Load memory states when tab changes
     useEffect(() => {
         if (activeTab === "math" && profile) {
-            getMathMemoryStates().then(setMathMemory);
+            void refreshMathMemory();
         } else if (activeTab === "vocab" && profile) {
-            getVocabMemoryStates().then(setVocabMemory);
+            void refreshVocabMemory();
         }
-    }, [activeTab, profile, getMathMemoryStates, getVocabMemoryStates]);
+    }, [activeTab, profile, refreshMathMemory, refreshVocabMemory]);
 
     useEffect(() => {
         setSearchParams({ tab: activeTab }, { replace: true });
     }, [activeTab, setSearchParams]);
 
-    const refreshMathMemory = () => {
-        getMathMemoryStates().then(setMathMemory);
-    };
-
-    const refreshVocabMemory = () => {
-        getVocabMemoryStates().then(setVocabMemory);
-    };
-
     const handleUpdateMathMemory = async (skillId: string, updates: Partial<MemoryState>) => {
         await updateMathMemoryState(skillId, updates);
-        refreshMathMemory();
+        await refreshMathMemory();
     };
 
     const handleUpdateVocabMemory = async (wordId: string, updates: Partial<MemoryState>) => {
         await updateVocabMemoryState(wordId, updates);
-        refreshVocabMemory();
+        await refreshVocabMemory();
     };
 
     if (loading) {

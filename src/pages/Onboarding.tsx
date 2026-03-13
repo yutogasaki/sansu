@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "../components/ui/Button";
 import { Header } from "../components/Header";
 import { createInitialProfile } from "../domain/user/profile";
@@ -7,6 +7,8 @@ import { getAvailableSkills } from "../domain/math/curriculum";
 import { getNextReviewDate } from "../domain/algorithms/srs";
 import { db } from "../db";
 import { useNavigate } from "react-router-dom";
+import { useTimeoutScheduler } from "../hooks/useTimeoutScheduler";
+import { logInDev } from "../utils/debug";
 
 type Step = "welcome" | "name" | "grade" | "subject" | "math-check" | "english-check" | "done";
 type SubjectMode = "mix" | "math" | "vocab";
@@ -16,10 +18,6 @@ type OnboardingSelections = {
     mathCheck: MathCheck | null;
     englishExp: EnglishExp | null;
 };
-
-const waitMs = (ms: number) => new Promise<void>(resolve => {
-    window.setTimeout(resolve, ms);
-});
 
 export const Onboarding: React.FC = () => {
     const navigate = useNavigate();
@@ -31,30 +29,51 @@ export const Onboarding: React.FC = () => {
     const [mathCheck, setMathCheck] = useState<MathCheck | null>(null);
     const [englishExp, setEnglishExp] = useState<EnglishExp | null>(null);
     const isSubmittingRef = useRef(false);
+    const isMountedRef = useRef(true);
     const trimmedName = name.trim();
+    const { scheduleTimeout, clearScheduledTimeouts } = useTimeoutScheduler();
 
-    const goBack = () => {
-        if (step === "name") setStep("welcome");
-        if (step === "grade") setStep("name");
-        if (step === "subject") setStep("grade");
-        if (step === "math-check") setStep("subject");
-        if (step === "english-check") {
-            if (subjectMode === "math") {
+    useEffect(() => {
+        isMountedRef.current = true;
+
+        return () => {
+            isMountedRef.current = false;
+            clearScheduledTimeouts();
+        };
+    }, [clearScheduledTimeouts]);
+
+    const waitMs = useCallback((ms: number) => new Promise<void>(resolve => {
+        scheduleTimeout(resolve, ms);
+    }), [scheduleTimeout]);
+
+    const goBack = useCallback(() => {
+        switch (step) {
+            case "name":
+                setStep("welcome");
+                break;
+            case "grade":
+                setStep("name");
+                break;
+            case "subject":
+                setStep("grade");
+                break;
+            case "math-check":
                 setStep("subject");
-            } else if (subjectMode === "vocab") {
-                setStep("subject");
-            } else {
-                setStep("math-check");
-            }
+                break;
+            case "english-check":
+                setStep(subjectMode === "mix" ? "math-check" : "subject");
+                break;
+            default:
+                break;
         }
-    };
+    }, [step, subjectMode]);
 
     const handleGradeSelect = (selectedGrade: number) => {
         setGrade(selectedGrade);
         setStep("subject");
     };
 
-    const handleFinish = async ({ mathCheck: selectedMathCheck, englishExp: selectedEnglishExp }: OnboardingSelections) => {
+    const handleFinish = useCallback(async ({ mathCheck: selectedMathCheck, englishExp: selectedEnglishExp }: OnboardingSelections) => {
         // 推定レベルロジック
         // 少し手前から始めて、自信をつけさせる
         const safeGrade = grade ?? 0;
@@ -102,12 +121,12 @@ export const Onboarding: React.FC = () => {
         navigate("/", { replace: true });
 
         // HashRouter fallback
-        window.setTimeout(() => {
+        scheduleTimeout(() => {
             if (window.location.hash === "" || window.location.hash === "#/onboarding") {
                 window.location.hash = "#/";
             }
         }, 100);
-    };
+    }, [grade, navigate, scheduleTimeout, subjectMode, trimmedName]);
 
     const seedRetiredMathSkills = async (profileId: string, mathStartLevel: number) => {
         const skills = getAvailableSkills(mathStartLevel);
@@ -144,7 +163,7 @@ export const Onboarding: React.FC = () => {
         }
     };
 
-    const completeOnboarding = async (fallbackStep: Step, selections: OnboardingSelections) => {
+    const completeOnboarding = useCallback(async (fallbackStep: Step, selections: OnboardingSelections) => {
         if (isSubmittingRef.current) return;
 
         isSubmittingRef.current = true;
@@ -153,14 +172,20 @@ export const Onboarding: React.FC = () => {
 
         try {
             await waitMs(500);
+            if (!isMountedRef.current) {
+                return;
+            }
             await handleFinish(selections);
         } catch (error) {
-            console.error("[Onboarding] failed to complete onboarding:", error);
+            logInDev("[Onboarding] failed to complete onboarding:", error);
+            if (!isMountedRef.current) {
+                return;
+            }
             isSubmittingRef.current = false;
             setIsSubmitting(false);
             setStep(fallbackStep);
         }
-    };
+    }, [handleFinish, waitMs]);
 
     const handleMathCheckSelect = (value: MathCheck) => {
         if (isSubmittingRef.current) return;

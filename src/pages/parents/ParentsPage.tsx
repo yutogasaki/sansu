@@ -7,6 +7,7 @@ import type { RecentAttempt, UserProfile } from '../../domain/types';
 import { getActiveProfile } from '../../domain/user/repository';
 import { ParentGateModal } from '../../components/gate/ParentGateModal';
 import { Spinner } from '../../components/ui/Spinner';
+import { logInDev } from '../../utils/debug';
 
 type ParentsRouteState = {
     parentGatePassed?: boolean;
@@ -54,9 +55,12 @@ export const ParentsPage: React.FC = () => {
 
                     setWeakMathIds(weakMath);
                     setWeakVocabIds(weakVocab);
+                } else {
+                    setWeakMathIds([]);
+                    setWeakVocabIds([]);
                 }
             } catch (e) {
-                console.error("ParentsPage: Error loading data", e);
+                logInDev("ParentsPage: Error loading data", e);
             } finally {
                 if (!cancelled) {
                     setIsLoading(false);

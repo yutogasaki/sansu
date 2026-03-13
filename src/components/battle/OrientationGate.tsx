@@ -7,9 +7,19 @@ export const OrientationGate: React.FC<{ children: React.ReactNode }> = ({ child
 
     useEffect(() => {
         const mq = window.matchMedia(QUERY);
-        const handler = (e: MediaQueryListEvent) => setOk(e.matches);
-        mq.addEventListener("change", handler);
-        return () => mq.removeEventListener("change", handler);
+        const updateMatch = (event?: MediaQueryListEvent) => {
+            setOk(event?.matches ?? mq.matches);
+        };
+
+        updateMatch();
+
+        if (typeof mq.addEventListener === "function") {
+            mq.addEventListener("change", updateMatch);
+            return () => mq.removeEventListener("change", updateMatch);
+        }
+
+        mq.addListener(updateMatch);
+        return () => mq.removeListener(updateMatch);
     }, []);
 
     if (ok) return <>{children}</>;

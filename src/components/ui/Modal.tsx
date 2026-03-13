@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { createPortal } from 'react-dom';
+import React, { useEffect } from "react";
+import { createPortal } from "react-dom";
 
 
 interface ModalProps {
@@ -20,15 +20,26 @@ export const Modal: React.FC<ModalProps> = ({
     width = "sm"
 }) => {
     useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
+        if (!isOpen) {
+            return;
         }
-        return () => {
-            document.body.style.overflow = '';
+
+        const previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                onClose();
+            }
         };
-    }, [isOpen]);
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.body.style.overflow = previousOverflow;
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [isOpen, onClose]);
 
     if (!isOpen) return null;
 
@@ -44,7 +55,7 @@ export const Modal: React.FC<ModalProps> = ({
             <div
                 className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
                 onClick={onClose}
-            ></div>
+            />
 
             {/* Content */}
             <div className={`relative bg-white rounded-2xl w-full ${sizeClasses[width]} shadow-2xl transform transition-all flex flex-col max-h-[90vh]`}>
