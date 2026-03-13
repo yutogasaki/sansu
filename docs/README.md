@@ -35,6 +35,7 @@ It exists to reduce file bloat, duplicate truths, and context pollution.
 | [design_review_checklist.md](design_review_checklist.md) | UI review checklist | Yes |
 | [runbooks/pwa-release.md](runbooks/pwa-release.md) | Release/runbook for PWA updates | Yes |
 | [runbooks/release-checklist.md](runbooks/release-checklist.md) | General release checklist | Yes |
+| [runbooks/schema-migration.md](runbooks/schema-migration.md) | Storage/schema migration runbook | Yes |
 
 ## Cold Docs
 

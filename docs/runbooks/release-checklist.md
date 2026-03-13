@@ -12,6 +12,11 @@ This checklist is for release-sensitive changes and pre-release sanity checks.
 - `npm run build`
 - `npm run e2e:smoke` when critical flows changed
 
+Shortcuts:
+
+- `npm run verify:core`
+- `npm run verify:release`
+
 ## Checklist
 
 ### Code / Quality

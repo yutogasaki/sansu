@@ -48,6 +48,8 @@ If the information would still matter after several unrelated tasks, it belongs 
 - PWA update and cache behavior
 - Navigation and onboarding flows
 
+Schema changes should use `docs/runbooks/schema-migration.md`.
+
 ### 4. Skill Boundary
 
 - `.agent/skills/` stores reusable workflows.
