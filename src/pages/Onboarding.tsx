@@ -120,13 +120,13 @@ export const Onboarding: React.FC = () => {
 
         navigate("/", { replace: true });
 
-        // HashRouter fallback
-        scheduleTimeout(() => {
+        // Let the hash fallback survive route unmount so HashRouter still recovers.
+        window.setTimeout(() => {
             if (window.location.hash === "" || window.location.hash === "#/onboarding") {
                 window.location.hash = "#/";
             }
         }, 100);
-    }, [grade, navigate, scheduleTimeout, subjectMode, trimmedName]);
+    }, [grade, navigate, subjectMode, trimmedName]);
 
     const seedRetiredMathSkills = async (profileId: string, mathStartLevel: number) => {
         const skills = getAvailableSkills(mathStartLevel);

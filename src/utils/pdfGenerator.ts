@@ -4,6 +4,7 @@ import fontkit from '@pdf-lib/fontkit';
 import { Problem } from '../domain/types';
 import { EnglishWord } from '../domain/english/words';
 import { resolveAppAssetPath } from './assets';
+import { errorInDev } from './debug';
 
 // ============================================================
 // Types
@@ -176,7 +177,7 @@ const loadPdfFont = async (pdfDoc: PDFDocument): Promise<PDFFont> => {
         const fontBytes = await fontResponse.arrayBuffer();
         return await pdfDoc.embedFont(fontBytes);
     } catch (e) {
-        console.error("Font load error:", e);
+        errorInDev("Font load error:", e);
         return await pdfDoc.embedFont(StandardFonts.Helvetica);
     }
 };

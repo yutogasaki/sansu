@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
-
+import { isTopModalLayer, popModalLayer, pushModalLayer } from "./modalLayerManager";
 
 interface ModalProps {
     isOpen: boolean;
@@ -24,11 +24,10 @@ export const Modal: React.FC<ModalProps> = ({
             return;
         }
 
-        const previousOverflow = document.body.style.overflow;
-        document.body.style.overflow = "hidden";
+        const layerToken = pushModalLayer(document.body.style);
 
         const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "Escape") {
+            if (event.key === "Escape" && isTopModalLayer(layerToken)) {
                 onClose();
             }
         };
@@ -36,7 +35,7 @@ export const Modal: React.FC<ModalProps> = ({
         window.addEventListener("keydown", handleKeyDown);
 
         return () => {
-            document.body.style.overflow = previousOverflow;
+            popModalLayer(layerToken, document.body.style);
             window.removeEventListener("keydown", handleKeyDown);
         };
     }, [isOpen, onClose]);

@@ -38,7 +38,7 @@ import {
 import { checkPeriodTestTrigger } from "../domain/test/trigger";
 import { ensurePeriodicTestSet } from "../domain/test/testSet";
 import { applyNormalSessionMathTrigger, applyPeriodicTestCompletion } from "./useStudySession.logic";
-import { logInDev } from "../utils/debug";
+import { errorInDev, logInDev } from "../utils/debug";
 
 type StudySessionOptions = {
     devSkill?: string;
@@ -81,7 +81,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 }
             })
             .catch(err => {
-                console.error("[useStudySession] error fetching profile:", err);
+                errorInDev("[useStudySession] error fetching profile:", err);
                 setLoading(false);
             });
     }, [updateProfile]);
@@ -448,7 +448,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             logInDev("[useStudySession] generated queue:", q);
             setQueue(q);
         } catch (err) {
-            console.error("[useStudySession] error generating block:", err);
+            errorInDev("[useStudySession] error generating block:", err);
             // Generate emergency fallback queue
             const fallbackQueue: Problem[] = [];
             for (let i = 0; i < BLOCK_SIZE; i++) {
@@ -482,7 +482,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             const q = await generateBlock(profileId, activeProfile, nextBlockIndex);
             setQueue(prev => [...prev, ...q]);
         } catch (err) {
-            console.error("[useStudySession] error generating next block:", err);
+            errorInDev("[useStudySession] error generating next block:", err);
             // Generate emergency fallback queue
             const fallbackQueue: Problem[] = [];
             for (let i = 0; i < BLOCK_SIZE; i++) {
@@ -617,7 +617,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 updateProfile(updatedProfile);
             }
         } catch (err) {
-            console.error("[useStudySession] error handling result:", err);
+            errorInDev("[useStudySession] error handling result:", err);
         }
     };
 

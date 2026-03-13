@@ -79,8 +79,14 @@ export const DevMode: React.FC = () => {
     }, [activeTab, profile, refreshMathMemory, refreshVocabMemory]);
 
     useEffect(() => {
-        setSearchParams({ tab: activeTab }, { replace: true });
-    }, [activeTab, setSearchParams]);
+        if (searchParams.get("tab") === activeTab) {
+            return;
+        }
+
+        const nextSearchParams = new URLSearchParams(searchParams);
+        nextSearchParams.set("tab", activeTab);
+        setSearchParams(nextSearchParams, { replace: true });
+    }, [activeTab, searchParams, setSearchParams]);
 
     const handleUpdateMathMemory = async (skillId: string, updates: Partial<MemoryState>) => {
         await updateMathMemoryState(skillId, updates);

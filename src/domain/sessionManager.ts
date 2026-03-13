@@ -5,6 +5,7 @@ import { getSkillsForLevel, getAvailableSkills } from "./math/curriculum";
 import { ENGLISH_WORDS } from "./english/words";
 import { isDue } from "./algorithms/srs";
 import { shuffleArray } from "../utils/shuffle";
+import { errorInDev } from "../utils/debug";
 
 // Constants from Spec 01 (Supplement B)
 const CONSTANTS = {
@@ -234,7 +235,7 @@ const fillQueue = (
                 });
                 usedCounts[best.id] = (usedCounts[best.id] || 0) + 1;
             } catch (e) {
-                console.error(`Failed to generate problem for ${best.id}`, e);
+                errorInDev(`Failed to generate problem for ${best.id}`, e);
                 usedCounts[best.id] = 999;
             }
         }

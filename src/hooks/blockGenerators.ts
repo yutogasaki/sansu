@@ -8,6 +8,7 @@ import { generateMathProblem } from "../domain/math";
 import { generateVocabProblem } from "../domain/english/generator";
 import { getSkillsForLevel } from "../domain/math/curriculum";
 import { getWordsByLevel, ENGLISH_WORDS } from "../domain/english/words";
+import { errorInDev, warnInDev } from "../utils/debug";
 
 // ============================================================
 // Types
@@ -64,7 +65,7 @@ export const MAINTENANCE_RATE = 0.01;
  * Create a safe fallback problem when generation fails
  */
 export const createFallbackProblem = (subject: SubjectKey, errorContext: string): Omit<Problem, 'id' | 'subject' | 'isReview'> => {
-    console.warn(`[BlockGenerator] Using fallback problem due to: ${errorContext}`);
+    warnInDev(`[BlockGenerator] Using fallback problem due to: ${errorContext}`);
 
     if (subject === 'math') {
         // Try count_10 as the safest fallback
@@ -109,11 +110,11 @@ export const safeGenerateProblem = <T>(
     try {
         return generator();
     } catch (error) {
-        console.error(`[BlockGenerator] Error in ${context}:`, error);
+        errorInDev(`[BlockGenerator] Error in ${context}:`, error);
         try {
             return fallback();
         } catch (fallbackError) {
-            console.error(`[BlockGenerator] Fallback also failed in ${context}:`, fallbackError);
+            errorInDev(`[BlockGenerator] Fallback also failed in ${context}:`, fallbackError);
             throw new Error(`Both primary and fallback generation failed: ${context}`);
         }
     }
