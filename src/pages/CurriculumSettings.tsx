@@ -129,7 +129,7 @@ export const CurriculumSettings: React.FC = () => {
         : (profile?.vocabMaxUnlocked || currentLevel);
 
     return (
-        <div className="flex flex-col h-full bg-slate-50">
+        <div className="flex h-full min-h-0 flex-col bg-transparent">
             <ParentGuard
                 isOpen={showGuard}
                 onSuccess={handleConfirmLevel}
@@ -144,33 +144,35 @@ export const CurriculumSettings: React.FC = () => {
 
             <div className="flex-1 overflow-hidden flex flex-col">
                 {/* Tabs */}
-                <div className="flex p-4 gap-4 bg-white shadow-sm z-10">
-                    <button
-                        onClick={() => setActiveTab("math")}
-                        className={cn(
-                            "flex-1 py-3 rounded-xl font-bold text-lg transition-all border-b-4",
-                            activeTab === "math"
-                                ? "bg-blue-50 text-blue-600 border-blue-200"
-                                : "bg-slate-50 text-slate-400 border-transparent hover:bg-slate-100"
-                        )}
-                    >
-                        さんすう
-                    </button>
-                    <button
-                        onClick={() => setActiveTab("vocab")}
-                        className={cn(
-                            "flex-1 py-3 rounded-xl font-bold text-lg transition-all border-b-4",
-                            activeTab === "vocab"
-                                ? "bg-green-50 text-green-600 border-green-200"
-                                : "bg-slate-50 text-slate-400 border-transparent hover:bg-slate-100"
-                        )}
-                    >
-                        えいご
-                    </button>
+                <div className="px-1 pt-4 md:px-2">
+                    <div className="app-glass-strong flex gap-2 rounded-[1.7rem] p-2">
+                        <button
+                            onClick={() => setActiveTab("math")}
+                            className={cn(
+                                "flex-1 rounded-[1.2rem] px-4 py-3 text-base font-black transition-all duration-200",
+                                activeTab === "math"
+                                    ? "bg-[linear-gradient(145deg,#dbeafe_0%,#e0f2fe_100%)] text-sky-700 shadow-[0_12px_20px_-18px_rgba(14,116,144,0.85)]"
+                                    : "text-slate-500 hover:bg-white/65 hover:text-slate-700"
+                            )}
+                        >
+                            さんすう
+                        </button>
+                        <button
+                            onClick={() => setActiveTab("vocab")}
+                            className={cn(
+                                "flex-1 rounded-[1.2rem] px-4 py-3 text-base font-black transition-all duration-200",
+                                activeTab === "vocab"
+                                    ? "bg-[linear-gradient(145deg,#dcfce7_0%,#ecfccb_100%)] text-emerald-700 shadow-[0_12px_20px_-18px_rgba(22,101,52,0.85)]"
+                                    : "text-slate-500 hover:bg-white/65 hover:text-slate-700"
+                            )}
+                        >
+                            えいご
+                        </button>
+                    </div>
                 </div>
 
                 {/* List */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-3 pb-24">
+                <div className="flex-1 overflow-y-auto px-1 py-4 space-y-3 md:px-2">
                     <p className="text-center text-slate-500 text-sm mb-4">
                         いまの レベル: <span className="font-bold text-xl ml-2">{currentLevel}</span>
                         {activeTab === "math" && (

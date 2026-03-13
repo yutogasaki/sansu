@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Footer } from "./Footer";
+import { cn } from "../utils/cn";
 
 export const Layout: React.FC = () => {
     const location = useLocation();
@@ -10,10 +11,22 @@ export const Layout: React.FC = () => {
 
     return (
         <div className="min-h-screen text-text-main font-sans selection:bg-primary/20 selection:text-text-main">
-            <main className={`mx-auto w-full min-h-screen relative flex flex-col overflow-hidden ${isFullScreen ? '' : 'max-w-md land:max-w-4xl'}`}>
+            <main
+                className={cn(
+                    "mx-auto flex min-h-screen w-full flex-col overflow-hidden",
+                    isFullScreen
+                        ? "relative"
+                        : "app-shell relative max-w-[30rem] md:my-4 md:max-w-[34rem] md:min-h-[calc(100vh-2rem)] md:rounded-[2.4rem] lg:max-w-5xl"
+                )}
+            >
                 {!isFullScreen && <div className="app-shell-glow" />}
-                {/* Content Area */}
-                <div className={`flex-1 flex flex-col relative z-10 ${isFullScreen ? '' : 'p-4 pb-24 land:px-8 land:pb-20'}`}>
+
+                <div
+                    className={cn(
+                        "relative z-10 flex min-h-0 flex-1 flex-col",
+                        isFullScreen ? "" : "px-3 pt-3 md:px-4 md:pt-4"
+                    )}
+                >
                     <Outlet />
                 </div>
 

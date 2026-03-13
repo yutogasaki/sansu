@@ -200,7 +200,7 @@ export const Home: React.FC = () => {
     };
 
     return (
-        <div className="relative h-full overflow-hidden">
+        <div className="relative flex h-full min-h-0 flex-col overflow-hidden">
             <HomeAnimatedBackground />
 
             <EventModal isOpen={showEventModal} eventType={currentEventType} onStartCheck={handleStartCheck} onDismiss={handleDismiss} />
@@ -215,9 +215,9 @@ export const Home: React.FC = () => {
                 />
             )}
 
-            <div className="relative z-10 flex flex-col h-full items-center justify-start px-5 pt-4 pb-0 land:px-10 land:pt-4 overflow-hidden">
+            <div className="relative z-10 flex min-h-0 flex-1 flex-col items-center justify-start overflow-hidden px-5 pt-4 pb-0 land:px-10 land:pt-4">
                 {/* Status + Ikimono Area (scrollable) */}
-                <div className="flex-1 w-full max-w-md flex flex-col items-center min-h-0 overflow-y-auto pb-4">
+                <div className="flex min-h-0 w-full max-w-md flex-1 flex-col items-center overflow-y-auto pb-4">
                     {/* Compact status bar */}
                     <motion.div
                         initial={{ opacity: 0, y: 8 }}
@@ -265,8 +265,8 @@ export const Home: React.FC = () => {
                 </div>
 
                 {/* Fixed CTA area at bottom */}
-                <div className="flex-none w-full max-w-md pb-24 land:pb-20 pt-2">
-                    <div className="flex gap-2 rounded-[1.5rem] bg-white/45 border border-white/80 backdrop-blur-md p-2 shadow-[0_14px_30px_-24px_rgba(15,23,42,0.75)]">
+                <div className="flex-none w-full max-w-md pb-2 pt-3 md:pb-3">
+                    <div className="app-glass-strong flex gap-2 rounded-[1.7rem] p-2 shadow-[0_18px_30px_-24px_rgba(15,23,42,0.7)]">
                         <Button
                             size="xl"
                             className="flex-1"

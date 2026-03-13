@@ -320,7 +320,7 @@ export const Settings: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-background">
+        <div className="flex h-full min-h-0 flex-col bg-transparent">
             {/* 保護者ガードモーダル */}
             <ParentGateModal
                 isOpen={showParentGuard}
@@ -402,7 +402,7 @@ export const Settings: React.FC = () => {
 
             <Header title={t("せってい", "設定")} />
 
-            <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6">
+            <div className="flex-1 overflow-y-auto px-1 py-4 space-y-6 md:px-2">
 
                 {/* ===== Section: Profile ===== */}
                 <Card className="p-4 space-y-4">

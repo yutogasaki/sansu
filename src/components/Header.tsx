@@ -24,7 +24,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, showBack, onBac
     };
 
     return (
-        <header className="flex items-center justify-between h-14 px-4 bg-white/42 backdrop-blur-md border border-white/60 rounded-2xl z-10 relative shadow-[0_10px_20px_-18px_rgba(15,23,42,0.7)]">
+        <header className="app-glass-strong relative z-10 flex min-h-14 items-center justify-between rounded-[1.6rem] px-4 py-3 shadow-[0_16px_28px_-22px_rgba(15,23,42,0.65)]">
             <div className="flex items-center gap-2">
                 {showBack && (
                     <Button variant="icon" onClick={handleBack} size="sm">
@@ -36,14 +36,6 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, showBack, onBac
                     {subtitle && <span className="text-xs text-text-sub font-bold">{subtitle}</span>}
                 </div>
             </div>
-
-            {title && center && (
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
-                    {/* If title exists on left, maybe we don't want center? 
-                         But user asked for center. 
-                         Let's just put it in center. */}
-                </div>
-            )}
 
             {center && (
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">

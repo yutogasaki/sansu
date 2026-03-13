@@ -393,7 +393,7 @@ export const Stats: React.FC = () => {
 
     if (!profile) {
         return (
-            <div className="flex flex-col h-full bg-transparent">
+            <div className="flex h-full min-h-0 flex-col bg-transparent">
                 <Header
                     title={t("きろく", "記録")}
                     rightAction={
@@ -408,7 +408,7 @@ export const Stats: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-col h-full bg-transparent">
+        <div className="flex h-full min-h-0 flex-col bg-transparent">
             <Header
                 title={t("きろく", "記録")}
                 rightAction={
@@ -418,7 +418,7 @@ export const Stats: React.FC = () => {
                 }
             />
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 land:grid land:grid-cols-2 land:gap-4 land:space-y-0">
+            <div className="flex-1 overflow-y-auto px-1 py-4 space-y-4 md:px-2 land:grid land:grid-cols-2 land:gap-4 land:space-y-0">
                 <Card className="p-4 land:col-span-2" variant="flat">
                     <div className="text-xs font-bold text-slate-500 mb-3">ひょうじ する ないよう</div>
                     <div className="flex flex-wrap gap-2">
