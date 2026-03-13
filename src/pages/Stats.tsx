@@ -27,6 +27,7 @@ import { buildWeeklyTrend, buildRadarData, type RadarCategoryPoint, type WeeklyT
 import { WeeklyTrendChart } from "../components/charts/WeeklyTrendChart";
 import { SkillRadarChart } from "../components/charts/SkillRadarChart";
 import { IkimonoGallery } from "../components/ikimono/IkimonoGallery";
+import { logInDev } from "../utils/debug";
 
 type SubjectType = "math" | "vocab";
 
@@ -217,129 +218,146 @@ export const Stats: React.FC = () => {
     }, [sections]);
 
     useEffect(() => {
+        let cancelled = false;
+
         const load = async () => {
-            const active = await getActiveProfile();
-            if (!active) {
-                setLoading(false);
-                return;
+            try {
+                const active = await getActiveProfile();
+                if (!active || cancelled) {
+                    return;
+                }
+
+                const todayStart = getLearningDayStart();
+                const twoWeeksAgoStartIso = addDays(todayStart, -13).toISOString();
+                const todayEndIso = getLearningDayEnd(todayStart).toISOString();
+
+                const [daily, total, weak, mathReviews, vocabReviews, logsForCalendar, recentLogs, mathMemory, vocabMemory] = await Promise.all([
+                    getTodayStats(active.id),
+                    getTotalStats(active.id),
+                    getWeakPoints(active.id),
+                    getReviewItems(active.id, "math"),
+                    getReviewItems(active.id, "vocab"),
+                    db.logs.where("[profileId+timestamp]").between([active.id, twoWeeksAgoStartIso], [active.id, todayEndIso]).toArray(),
+                    db.logs.where("profileId").equals(active.id).reverse().limit(100).toArray(),
+                    db.memoryMath.where("profileId").equals(active.id).toArray(),
+                    db.memoryVocab.where("profileId").equals(active.id).toArray(),
+                ]);
+
+                if (cancelled) {
+                    return;
+                }
+
+                const allReviews = [
+                    ...mathReviews.map(item => ({
+                        id: item.id,
+                        subject: "math" as const,
+                        nextReview: item.nextReview,
+                        lastCorrectAt: item.lastCorrectAt,
+                    })),
+                    ...vocabReviews.map(item => ({
+                        id: item.id,
+                        subject: "vocab" as const,
+                        nextReview: item.nextReview,
+                        lastCorrectAt: item.lastCorrectAt,
+                    })),
+                ]
+                    .sort((a, b) => a.nextReview.localeCompare(b.nextReview))
+                    .slice(0, 3);
+
+                const logsByDay = new Map<string, AttemptLog[]>();
+                for (const log of logsForCalendar) {
+                    const key = toLocaleDateKey(getLearningDayStart(new Date(log.timestamp)));
+                    const current = logsByDay.get(key) || [];
+                    current.push(log);
+                    logsByDay.set(key, current);
+                }
+
+                const currentWeek: WeeklyDay[] = [];
+                for (let offset = 6; offset >= 0; offset--) {
+                    const day = addDays(todayStart, -offset);
+                    const key = toLocaleDateKey(day);
+                    const dayLogs = logsByDay.get(key) || [];
+                    currentWeek.push({
+                        dateKey: key,
+                        label: WEEKDAY_JA[day.getDay()],
+                        count: dayLogs.length,
+                        correct: dayLogs.filter(l => l.result === "correct").length,
+                        minutes: estimateMinutesFromLogs(dayLogs),
+                    });
+                }
+
+                let previousWeekCount = 0;
+                for (let idx = 0; idx < 7; idx++) {
+                    const day = addDays(todayStart, -(idx + 7));
+                    const key = toLocaleDateKey(day);
+                    previousWeekCount += logsByDay.get(key)?.length || 0;
+                }
+                const thisWeekCount = currentWeek.reduce((acc, day) => acc + day.count, 0);
+
+                const fourteenDaysAgo = addDays(todayStart, -14).getTime();
+                const stableMath = mathMemory
+                    .filter(item => item.strength >= 4 && item.totalAnswers >= 10)
+                    .filter(item => (item.lastCorrectAt ? new Date(item.lastCorrectAt).getTime() >= fourteenDaysAgo : false))
+                    .map(item => ({
+                        id: item.id,
+                        subject: "math" as const,
+                        label: getLabel(item.id, "math"),
+                        strength: item.strength,
+                        totalAnswers: item.totalAnswers,
+                        lastCorrectAt: item.lastCorrectAt,
+                    }));
+                const stableVocab = vocabMemory
+                    .filter(item => item.strength >= 4 && item.totalAnswers >= 10)
+                    .filter(item => (item.lastCorrectAt ? new Date(item.lastCorrectAt).getTime() >= fourteenDaysAgo : false))
+                    .map(item => ({
+                        id: item.id,
+                        subject: "vocab" as const,
+                        label: getLabel(item.id, "vocab"),
+                        strength: item.strength,
+                        totalAnswers: item.totalAnswers,
+                        lastCorrectAt: item.lastCorrectAt,
+                    }));
+
+                const stableCombined = [...stableMath, ...stableVocab]
+                    .sort((a, b) => (b.lastCorrectAt || "").localeCompare(a.lastCorrectAt || ""))
+                    .slice(0, 5);
+
+                if (cancelled) {
+                    return;
+                }
+
+                setProfile(active);
+                setTodayStats(daily);
+                setTotalStats(total);
+                setWeakPoints(weak);
+                setReviewItems(allReviews);
+                setReviewCount(mathReviews.length + vocabReviews.length);
+                setWeeklyDays(currentWeek);
+                setTodayMinutes(currentWeek[currentWeek.length - 1]?.minutes || 0);
+                setGrowthMessage(buildGrowthMessage(thisWeekCount, previousWeekCount));
+                setWeakPatternMessage(buildWeakPatternMessage(recentLogs));
+                setStableSkills(stableCombined);
+                setRadarData(buildRadarData(mathMemory, active.mathMaxUnlocked || active.mathMainLevel || 1));
+                setTrendData(buildWeeklyTrend(logsForCalendar, todayStart, addDays));
+                setEventCheckPending(
+                    (active.periodicTestState?.math?.isPending ?? false) ||
+                    (active.periodicTestState?.vocab?.isPending ?? false) ||
+                    localStorage.getItem("sansu_event_check_pending") === "1"
+                );
+            } catch (error) {
+                logInDev("Stats: failed to load stats", error);
+            } finally {
+                if (!cancelled) {
+                    setLoading(false);
+                }
             }
-            setProfile(active);
-            const todayStart = getLearningDayStart();
-            const twoWeeksAgoStartIso = addDays(todayStart, -13).toISOString();
-            const todayEndIso = getLearningDayEnd(todayStart).toISOString();
-
-            const [daily, total, weak, mathReviews, vocabReviews, logsForCalendar, recentLogs, mathMemory, vocabMemory] = await Promise.all([
-                getTodayStats(active.id),
-                getTotalStats(active.id),
-                getWeakPoints(active.id),
-                getReviewItems(active.id, "math"),
-                getReviewItems(active.id, "vocab"),
-                db.logs.where("[profileId+timestamp]").between([active.id, twoWeeksAgoStartIso], [active.id, todayEndIso]).toArray(),
-                db.logs.where("profileId").equals(active.id).reverse().limit(100).toArray(),
-                db.memoryMath.where("profileId").equals(active.id).toArray(),
-                db.memoryVocab.where("profileId").equals(active.id).toArray(),
-            ]);
-
-            const allReviews = [
-                ...mathReviews.map(item => ({
-                    id: item.id,
-                    subject: "math" as const,
-                    nextReview: item.nextReview,
-                    lastCorrectAt: item.lastCorrectAt,
-                })),
-                ...vocabReviews.map(item => ({
-                    id: item.id,
-                    subject: "vocab" as const,
-                    nextReview: item.nextReview,
-                    lastCorrectAt: item.lastCorrectAt,
-                })),
-            ]
-                .sort((a, b) => a.nextReview.localeCompare(b.nextReview))
-                .slice(0, 3);
-
-            const logsByDay = new Map<string, AttemptLog[]>();
-            for (const log of logsForCalendar) {
-                const key = toLocaleDateKey(getLearningDayStart(new Date(log.timestamp)));
-                const current = logsByDay.get(key) || [];
-                current.push(log);
-                logsByDay.set(key, current);
-            }
-
-            const currentWeek: WeeklyDay[] = [];
-            for (let offset = 6; offset >= 0; offset--) {
-                const day = addDays(todayStart, -offset);
-                const key = toLocaleDateKey(day);
-                const dayLogs = logsByDay.get(key) || [];
-                currentWeek.push({
-                    dateKey: key,
-                    label: WEEKDAY_JA[day.getDay()],
-                    count: dayLogs.length,
-                    correct: dayLogs.filter(l => l.result === "correct").length,
-                    minutes: estimateMinutesFromLogs(dayLogs),
-                });
-            }
-
-            let previousWeekCount = 0;
-            for (let idx = 0; idx < 7; idx++) {
-                const day = addDays(todayStart, -(idx + 7));
-                const key = toLocaleDateKey(day);
-                previousWeekCount += logsByDay.get(key)?.length || 0;
-            }
-            const thisWeekCount = currentWeek.reduce((acc, d) => acc + d.count, 0);
-
-            const fourteenDaysAgo = addDays(todayStart, -14).getTime();
-            const stableMath = mathMemory
-                .filter(item => item.strength >= 4 && item.totalAnswers >= 10)
-                .filter(item => (item.lastCorrectAt ? new Date(item.lastCorrectAt).getTime() >= fourteenDaysAgo : false))
-                .map(item => ({
-                    id: item.id,
-                    subject: "math" as const,
-                    label: getLabel(item.id, "math"),
-                    strength: item.strength,
-                    totalAnswers: item.totalAnswers,
-                    lastCorrectAt: item.lastCorrectAt,
-                }));
-            const stableVocab = vocabMemory
-                .filter(item => item.strength >= 4 && item.totalAnswers >= 10)
-                .filter(item => (item.lastCorrectAt ? new Date(item.lastCorrectAt).getTime() >= fourteenDaysAgo : false))
-                .map(item => ({
-                    id: item.id,
-                    subject: "vocab" as const,
-                    label: getLabel(item.id, "vocab"),
-                    strength: item.strength,
-                    totalAnswers: item.totalAnswers,
-                    lastCorrectAt: item.lastCorrectAt,
-                }));
-
-            const stableCombined = [...stableMath, ...stableVocab]
-                .sort((a, b) => (b.lastCorrectAt || "").localeCompare(a.lastCorrectAt || ""))
-                .slice(0, 5);
-
-            // Chart data
-            const trendData = buildWeeklyTrend(logsForCalendar, todayStart, addDays);
-            const radar = buildRadarData(mathMemory, active.mathMaxUnlocked || active.mathMainLevel || 1);
-
-            setTodayStats(daily);
-            setTotalStats(total);
-            setWeakPoints(weak);
-            setReviewItems(allReviews);
-            setReviewCount(mathReviews.length + vocabReviews.length);
-            setWeeklyDays(currentWeek);
-            setTodayMinutes(currentWeek[currentWeek.length - 1]?.minutes || 0);
-            setGrowthMessage(buildGrowthMessage(thisWeekCount, previousWeekCount));
-            setWeakPatternMessage(buildWeakPatternMessage(recentLogs));
-            setStableSkills(stableCombined);
-            setRadarData(radar);
-            setTrendData(trendData);
-            setEventCheckPending(
-                (active.periodicTestState?.math?.isPending ?? false) ||
-                (active.periodicTestState?.vocab?.isPending ?? false) ||
-                localStorage.getItem("sansu_event_check_pending") === "1"
-            );
-            setLoading(false);
         };
 
-        load();
+        void load();
+
+        return () => {
+            cancelled = true;
+        };
     }, []);
 
     const toggleSection = (key: SectionKey) => {
