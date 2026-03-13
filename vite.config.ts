@@ -1,15 +1,37 @@
 /// <reference types="vitest" />
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
+import type { Plugin } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import path from 'path'
 
 // https://vitejs.dev/config/
 
+const appVersion = process.env.VERCEL_GIT_COMMIT_SHA
+    || process.env.GITHUB_SHA
+    || process.env.CF_PAGES_COMMIT_SHA
+    || new Date().toISOString()
+
+const appVersionManifestPlugin = (): Plugin => ({
+    name: 'app-version-manifest',
+    generateBundle() {
+        this.emitFile({
+            type: 'asset',
+            fileName: 'version.json',
+            source: JSON.stringify({ version: appVersion }),
+        })
+    }
+})
+
 export default defineConfig({
+    define: {
+        __APP_VERSION__: JSON.stringify(appVersion),
+    },
     plugins: [
+        appVersionManifestPlugin(),
         react(),
         VitePWA({
+            injectRegister: false,
             registerType: 'autoUpdate',
             includeAssets: ['icons/icon.svg', 'sounds/*.mp3'],
             manifest: false, // We use public/manifest.json
