@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MemoryState } from "../../domain/types";
+import { clampStrength, MemoryState } from "../../domain/types";
 import { getWordsByLevel } from "../../domain/english/words";
 
 interface DevVocabTabProps {
@@ -126,7 +126,7 @@ export const DevVocabTab: React.FC<DevVocabTabProps> = ({ memoryStates, onUpdate
                                                             <span className="text-slate-500">強度:</span>
                                                             <select
                                                                 value={memory.strength}
-                                                                onChange={e => onUpdateMemory(word.id, { strength: Number(e.target.value) as any })}
+                                                                onChange={e => onUpdateMemory(word.id, { strength: clampStrength(Number(e.target.value)) })}
                                                                 className="ml-2 border rounded px-1"
                                                             >
                                                                 {[1, 2, 3, 4, 5].map(s => (

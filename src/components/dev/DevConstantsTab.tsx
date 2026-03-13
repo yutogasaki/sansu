@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { EventType } from "../../domain/sessionManager";
+import { useTransientState } from "../../hooks/useTransientState";
 import { storage } from "../../utils/storage";
 import { toLocaleDateKey } from "../../utils/learningDay";
 
@@ -53,6 +54,8 @@ const ConstantRow: React.FC<ConstantRowProps> = ({ label, code, value }) => (
 );
 
 export const DevConstantsTab: React.FC = () => {
+    type StatusTone = "ok" | "warn" | "error";
+
     const eventTypes = useMemo<EventType[]>(
         () => [
             "streak_3",
@@ -93,12 +96,9 @@ export const DevConstantsTab: React.FC = () => {
         setWeakPrevCount(values.weakPrevCount);
     };
 
-    const [statusMessage, setStatusMessage] = useState<{ text: string; tone: "ok" | "warn" | "error" } | null>(null);
+    const [statusMessage, showStatusMessage] = useTransientState<{ text: string; tone: StatusTone }>(2000);
 
-    const setStatus = (text: string, tone: "ok" | "warn" | "error" = "ok") => {
-        setStatusMessage({ text, tone });
-        window.setTimeout(() => setStatusMessage(null), 2000);
-    };
+    const setStatus = (text: string, tone: StatusTone = "ok") => showStatusMessage({ text, tone });
 
     const normalizeDateString = (value: string): string | null => {
         const trimmed = value.trim();

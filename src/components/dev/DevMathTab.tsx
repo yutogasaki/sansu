@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MemoryState, SkillStatus, StrengthLevel } from "../../domain/types";
+import { clampStrength, MemoryState, SkillStatus } from "../../domain/types";
 import { MATH_CURRICULUM } from "../../domain/math/curriculum";
 import { MATH_SKILL_LABELS } from "../../domain/math/labels";
 
@@ -89,7 +89,7 @@ export const DevMathTab: React.FC<DevMathTabProps> = ({ memoryStates, onUpdateMe
                                                                         <span className="text-slate-500">強度:</span>
                                                                         <select
                                                                             value={memory.strength}
-                                                                            onChange={e => onUpdateMemory(skillId, { strength: Number(e.target.value) as StrengthLevel })}
+                                                                            onChange={e => onUpdateMemory(skillId, { strength: clampStrength(Number(e.target.value)) })}
                                                                             className="ml-2 border rounded px-1"
                                                                         >
                                                                             {[1, 2, 3, 4, 5].map(s => (
