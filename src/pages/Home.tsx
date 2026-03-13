@@ -56,18 +56,23 @@ const getOldestPendingPaperTest = (profile: UserProfile) => {
 
 export const Home: React.FC = () => {
     const navigate = useNavigate();
-    const [profileId, setProfileId] = useState<string | null>(null);
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [weakCount, setWeakCount] = useState(0);
     const [showEventModal, setShowEventModal] = useState(false);
     const [currentEventType, setCurrentEventType] = useState<EventType | null>(null);
     const [showPaperTestModal, setShowPaperTestModal] = useState(false);
     const [pendingPaperTest, setPendingPaperTest] = useState<{ id: string; subject: "math" | "vocab"; level: number } | null>(null);
+    const profileId = profile?.id ?? null;
     const isEasy = profile?.uiTextMode === "easy";
     const useKanjiForIkimono = Boolean(profile?.kanjiMode);
     const { scheduleTimeout, clearScheduledTimeouts } = useTimeoutScheduler();
 
     const todayKey = toLocaleDateKey();
+
+    const persistProfileUpdate = async (nextProfile: UserProfile) => {
+        await saveProfile(nextProfile);
+        setProfile(nextProfile);
+    };
 
     useEffect(() => {
         let cancelled = false;
@@ -86,7 +91,6 @@ export const Home: React.FC = () => {
                 const activeProfile = await getActiveProfile();
                 if (!activeProfile || cancelled) return;
 
-                setProfileId(activeProfile.id);
                 setProfile(activeProfile);
 
                 const [total, weakPoints] = await Promise.all([
@@ -151,8 +155,7 @@ export const Home: React.FC = () => {
         setShowEventModal(false);
 
         if (currentEventType === "level_up" && profile) {
-            await saveProfile({ ...profile, pendingLevelUpNotification: undefined });
-            setProfile({ ...profile, pendingLevelUpNotification: undefined });
+            await persistProfileUpdate({ ...profile, pendingLevelUpNotification: undefined });
             return;
         }
         if (currentEventType === "periodic_test") {
@@ -176,8 +179,7 @@ export const Home: React.FC = () => {
     const handleDismiss = async () => {
         if (currentEventType) eventStorage.setShown(currentEventType, todayKey);
         if (currentEventType === "level_up" && profile) {
-            await saveProfile({ ...profile, pendingLevelUpNotification: undefined });
-            setProfile({ ...profile, pendingLevelUpNotification: undefined });
+            await persistProfileUpdate({ ...profile, pendingLevelUpNotification: undefined });
         }
         setShowEventModal(false);
     };
@@ -186,8 +188,7 @@ export const Home: React.FC = () => {
         if (!profile || !pendingPaperTest) return;
         const updatedProfile = recordPaperTestScore(profile, pendingPaperTest, correctCount);
 
-        await saveProfile(updatedProfile);
-        setProfile(updatedProfile);
+        await persistProfileUpdate(updatedProfile);
         setShowPaperTestModal(false);
         setPendingPaperTest(null);
     };

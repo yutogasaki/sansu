@@ -16,12 +16,16 @@ export const useDevPanel = () => {
         error: null
     });
 
-    // Load profile on mount
-    useEffect(() => {
-        loadProfile();
+    const syncProfileState = useCallback((profile: UserProfile | null) => {
+        setState(prev => ({ ...prev, profile }));
     }, []);
 
-    const loadProfile = async () => {
+    const persistProfile = useCallback(async (profile: UserProfile) => {
+        await saveProfile(profile);
+        syncProfileState(profile);
+    }, [syncProfileState]);
+
+    const loadProfile = useCallback(async () => {
         setState(prev => ({ ...prev, loading: true, error: null }));
         try {
             const profile = await getActiveProfile();
@@ -29,7 +33,12 @@ export const useDevPanel = () => {
         } catch (err) {
             setState({ profile: null, loading: false, error: String(err) });
         }
-    };
+    }, []);
+
+    // Load profile on mount
+    useEffect(() => {
+        void loadProfile();
+    }, [loadProfile]);
 
     // Update profile field
     const updateProfile = useCallback(async <K extends keyof UserProfile>(
@@ -39,9 +48,8 @@ export const useDevPanel = () => {
         if (!state.profile) return;
 
         const updated = { ...state.profile, [key]: value };
-        await saveProfile(updated);
-        setState(prev => ({ ...prev, profile: updated }));
-    }, [state.profile]);
+        await persistProfile(updated);
+    }, [state.profile, persistProfile]);
 
     // Update nested periodicTestState
     const updatePeriodicTestState = useCallback(async (
@@ -67,9 +75,8 @@ export const useDevPanel = () => {
             }
         };
 
-        await saveProfile(updated);
-        setState(prev => ({ ...prev, profile: updated }));
-    }, [state.profile]);
+        await persistProfile(updated);
+    }, [state.profile, persistProfile]);
 
     // Get math memory states
     const getMathMemoryStates = useCallback(async (): Promise<MemoryState[]> => {

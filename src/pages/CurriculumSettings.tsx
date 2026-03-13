@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
@@ -63,10 +63,32 @@ export const CurriculumSettings: React.FC = () => {
     const [pendingLevel, setPendingLevel] = useState<number | null>(null);
     const [pendingAction, setPendingAction] = useState<"main" | "unlock" | null>(null);
 
+    const persistProfileUpdate = useCallback(async (nextProfile: UserProfile) => {
+        await saveProfile(nextProfile);
+        setProfile(nextProfile);
+    }, []);
+
+    const closeGuard = useCallback(() => {
+        setShowGuard(false);
+        setPendingLevel(null);
+        setPendingAction(null);
+    }, []);
+
     useEffect(() => {
-        getActiveProfile().then(p => {
-            if (p) setProfile(p);
-        });
+        let cancelled = false;
+
+        const loadProfile = async () => {
+            const activeProfile = await getActiveProfile();
+            if (!cancelled && activeProfile) {
+                setProfile(activeProfile);
+            }
+        };
+
+        void loadProfile();
+
+        return () => {
+            cancelled = true;
+        };
     }, []);
 
     const handleLevelSelect = (level: number) => {
@@ -95,11 +117,8 @@ export const CurriculumSettings: React.FC = () => {
                 : syncUnlockLevel(profile, 'vocab', pendingLevel);
         }
 
-        await saveProfile(updated);
-        setProfile(updated);
-        setShowGuard(false);
-        setPendingLevel(null);
-        setPendingAction(null);
+        await persistProfileUpdate(updated);
+        closeGuard();
     };
 
     const currentLevel = activeTab === "math"
@@ -114,7 +133,7 @@ export const CurriculumSettings: React.FC = () => {
             <ParentGuard
                 isOpen={showGuard}
                 onSuccess={handleConfirmLevel}
-                onCancel={() => setShowGuard(false)}
+                onCancel={closeGuard}
             />
 
             <Header
@@ -174,11 +193,19 @@ export const CurriculumSettings: React.FC = () => {
                                         : "未解放";
 
                         return (
-                            <button
+                            <div
                                 key={item.level}
+                                role="button"
+                                tabIndex={0}
                                 onClick={() => handleLevelSelect(item.level)}
+                                onKeyDown={(event) => {
+                                    if (event.key === "Enter" || event.key === " ") {
+                                        event.preventDefault();
+                                        handleLevelSelect(item.level);
+                                    }
+                                }}
                                 className={cn(
-                                    "w-full text-left p-4 rounded-xl border-2 transition-all relative overflow-hidden",
+                                    "w-full text-left p-4 rounded-xl border-2 transition-all relative overflow-hidden cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/65 focus-visible:ring-offset-2",
                                     isSelected
                                         ? "bg-white border-yellow-400 shadow-md ring-2 ring-yellow-200 ring-offset-2"
                                         : "bg-white border-slate-100 hover:border-slate-300 shadow-sm"
@@ -233,7 +260,7 @@ export const CurriculumSettings: React.FC = () => {
                                         </button>
                                     </div>
                                 )}
-                            </button>
+                            </div>
                         );
                     })}
 
