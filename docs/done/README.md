@@ -14,5 +14,6 @@ They are historical records, not current source of truth.
 
 - Summary
 - Key files or areas
+- Docs/ADR/runbooks touched
 - Verification performed
 - Remaining risks or follow-ups

@@ -10,7 +10,10 @@ If a task is done, move the outcome to `docs/done/` and remove the active file.
 - One file per active task
 - One primary purpose per file
 - Link the governing spec and verification plan
+- Include a `Review By` date so stale tasks get revisited
+- Record which docs/ADR/runbooks must change or are intentionally unchanged
 - Keep the file short
+- Close, trim, or archive stale tasks according to [../archive_policy.md](../archive_policy.md)
 
 ## Naming
 

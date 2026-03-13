@@ -8,6 +8,11 @@
 
 - Files/areas:
 
+### Docs / Decisions
+
+- Updated:
+- Intentionally unchanged:
+
 ### Verification
 
 - Commands:

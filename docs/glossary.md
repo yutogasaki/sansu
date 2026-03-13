@@ -19,6 +19,9 @@ Application-domain terms such as `due`, `weak`, `strength`, and `nextReview` rem
 | ADR | Architecture Decision Record | For non-obvious decisions |
 | Runbook | Operational procedure | Release, recovery, migration, etc. |
 | Verification | Required checks before work is considered complete | See [verification_matrix.md](verification_matrix.md) |
+| Ownership Map | Doc-to-topic map for deciding the right SSOT | See [ownership_map.md](ownership_map.md) |
+| Archive Policy | Rules for splitting, trimming, or archiving stale context | See [archive_policy.md](archive_policy.md) |
+| Risk Register | Durable list of cross-cutting risks and current mitigations | See [risk_register.md](risk_register.md) |
 
 ## Source Boundaries
 

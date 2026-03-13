@@ -33,9 +33,11 @@ If a check cannot run, record the gap in the active task and the done log.
 ## Review Prompts
 
 - Did the change touch a high-risk area from `memory.md`?
+- Does `ownership_map.md` imply a doc or ADR update?
 - Did the spec need updating?
 - Is there a missing regression test?
 - Is there a host/deploy side effect?
+- Does `risk_register.md` need a new note or updated mitigation?
 
 ## Escalation Rule
 
