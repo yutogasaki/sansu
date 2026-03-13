@@ -15,7 +15,7 @@ If a check cannot run, record the gap in the active task and the done log.
 | `npm run test:run` | Unit/integration tests |
 | `npm run build` | TypeScript build + production build |
 | `npm run e2e:smoke` | Smoke E2E for critical flows |
-| `npm run verify:core` | Full local quality gate |
+| `npm run verify:core` | Docs check + full local quality gate |
 | `npm run verify:release` | Full local quality gate + smoke E2E |
 
 ## Matrix
@@ -48,4 +48,5 @@ If a task spans more than one change type, use the stricter row.
 
 - Use `npm run docs:check` for docs/process-only changes.
 - Use `npm run verify:core` when a change touches code across multiple layers.
+  It already includes `npm run docs:check`.
 - Use `npm run verify:release` for release-sensitive changes.

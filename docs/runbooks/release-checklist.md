@@ -6,6 +6,7 @@ This checklist is for release-sensitive changes and pre-release sanity checks.
 
 ## Baseline Commands
 
+- `npm run docs:check`
 - `npm run lint`
 - `npm run typecheck`
 - `npm run test:run`

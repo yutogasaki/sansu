@@ -11,7 +11,7 @@
         "lint": "eslint .",
         "test": "vitest",
         "test:run": "vitest run",
-        "verify:core": "npm run lint && npm run typecheck && npm run test:run && npm run build",
+        "verify:core": "npm run docs:check && npm run lint && npm run typecheck && npm run test:run && npm run build",
         "verify:release": "npm run verify:core && npm run e2e:smoke",
         "preview": "vite preview",
         "e2e:smoke": "node tools/e2e-smoke.mjs"

@@ -9,6 +9,19 @@ const statusDocs = [
   "docs/11_full_task_backlog.md",
   "docs/12_ui_fix_tasklist.md",
 ];
+const adrRequiredPatterns = [
+  { label: "Date", pattern: /^- Date:\s*.+$/m },
+  { label: "Status", pattern: /^- Status:\s*.+$/m },
+  { label: "Related spec", pattern: /^- Related spec:\s*.*$/m },
+  { label: "Related task", pattern: /^- Related task:\s*.*$/m },
+  { label: "Context", pattern: /^## Context$/m },
+  { label: "Decision", pattern: /^## Decision$/m },
+  { label: "Alternatives Considered", pattern: /^## Alternatives Considered$/m },
+  { label: "Consequences", pattern: /^## Consequences$/m },
+  { label: "Verification", pattern: /^## Verification$/m },
+];
+const activeTaskFilenamePattern = /^\d{4}-\d{2}-\d{2}-[a-z0-9-]+\.md$/;
+const doneLogFilenamePattern = /^\d{4}-\d{2}\.md$/;
 
 const activeTaskRequiredPatterns = [
   { label: "Review By", pattern: /^- Review By:/m },
@@ -119,6 +132,10 @@ const checkActiveTaskFiles = async (errors, warnings) => {
     if (!entry.isFile() || !entry.name.endsWith(".md")) continue;
     if (entry.name === "README.md" || entry.name === "TEMPLATE.md") continue;
 
+    if (!activeTaskFilenamePattern.test(entry.name)) {
+      errors.push(`docs/tasks/active/${entry.name}: filename must match YYYY-MM-DD-short-task-name.md`);
+    }
+
     const relativeFilePath = path.join("docs/tasks/active", entry.name);
     const content = await fs.readFile(path.join(repoRoot, relativeFilePath), "utf8");
 
@@ -136,6 +153,38 @@ const checkActiveTaskFiles = async (errors, warnings) => {
 
     if (reviewByMatch[1] < today) {
       warnings.push(`${relativeFilePath}: Review By (${reviewByMatch[1]}) is in the past`);
+    }
+  }
+};
+
+const checkAdrFiles = async (errors) => {
+  const adrFiles = await collectMarkdownFiles("docs/adr");
+
+  for (const relativeFilePath of adrFiles) {
+    const basename = path.basename(relativeFilePath);
+    if (basename === "README.md" || basename === "0000-template.md") continue;
+
+    if (!activeTaskFilenamePattern.test(basename)) {
+      errors.push(`${relativeFilePath}: filename must match YYYY-MM-DD-short-title.md`);
+    }
+
+    const content = await fs.readFile(path.join(repoRoot, relativeFilePath), "utf8");
+    for (const requirement of adrRequiredPatterns) {
+      if (!requirement.pattern.test(content)) {
+        errors.push(`${relativeFilePath}: missing required section -> ${requirement.label}`);
+      }
+    }
+  }
+};
+
+const checkDoneLogs = async (errors) => {
+  const doneFiles = await collectMarkdownFiles("docs/done");
+
+  for (const relativeFilePath of doneFiles) {
+    const basename = path.basename(relativeFilePath);
+    if (basename === "README.md" || basename === "TEMPLATE.md") continue;
+    if (!doneLogFilenamePattern.test(basename)) {
+      errors.push(`${relativeFilePath}: filename must match YYYY-MM.md`);
     }
   }
 };
@@ -174,6 +223,8 @@ const main = async () => {
 
   await checkStatusDocs(errors, warnings);
   await checkActiveTaskFiles(errors, warnings);
+  await checkAdrFiles(errors);
+  await checkDoneLogs(errors);
   await checkRunbookIndex(errors);
 
   if (warnings.length > 0) {

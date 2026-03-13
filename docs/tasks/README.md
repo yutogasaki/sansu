@@ -18,3 +18,4 @@ Task docs capture active execution context only.
 1. Pull from backlog into `active/`
 2. Keep scope small
 3. Close by moving durable facts to `docs/done/` and, if needed, `memory.md`
+4. Run `npm run docs:check` after task-doc changes

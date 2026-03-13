@@ -29,3 +29,5 @@ Architecture Decision Records store non-obvious decisions that are expensive to 
 - State the decision plainly
 - Record alternatives and downsides
 - Link to the spec or runbook it affects
+- Include `Date`, `Status`, `Related spec`, and `Related task`
+- Run `npm run docs:check` after adding or editing an ADR
