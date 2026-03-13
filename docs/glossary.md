@@ -22,6 +22,8 @@ Application-domain terms such as `due`, `weak`, `strength`, and `nextReview` rem
 | Ownership Map | Doc-to-topic map for deciding the right SSOT | See [ownership_map.md](ownership_map.md) |
 | Archive Policy | Rules for splitting, trimming, or archiving stale context | See [archive_policy.md](archive_policy.md) |
 | Risk Register | Durable list of cross-cutting risks and current mitigations | See [risk_register.md](risk_register.md) |
+| Review By | Date for revisiting an active task before it goes stale | Used in active task files |
+| Backlog Triage | Periodic cleanup and reprioritization of backlog/status docs | See [runbooks/backlog-triage.md](runbooks/backlog-triage.md) |
 
 ## Source Boundaries
 

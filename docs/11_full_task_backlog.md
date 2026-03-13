@@ -5,7 +5,8 @@
 - 実行中の小タスクは `docs/tasks/active/` で管理する
 - 完了履歴は `docs/done/` へ寄せる
 
-更新日: 2026-02-16
+更新日: 2026-03-13
+次回棚卸し目安: 2026-04-01
 
 ## 0. 目的
 
@@ -25,7 +26,7 @@
 - 機能実装: `80%`（v1主要フローは実装済み、将来機能は未着手）
 - アルゴリズム: `70%`（主要ロジックは稼働、筆算は結果入力型からの深化が残）
 - テスト/品質: `70%`（ユニット増強済み、E2Eはスモーク中心）
-- 運用/仕様整備: `55%`（同期・マイグレーション・調整運用の文書化が不足）
+- 運用/仕様整備: `75%`（verification / runbook / memory / ownership の基盤は整備済み、release運用と機能側仕様詰めが残る）
 
 ---
 
@@ -70,6 +71,14 @@
   - `tools/e2e-smoke.mjs`
 - ビルド成功確認
   - `npm run build`
+- 検証/運用ドキュメントの基盤整備
+  - `CONSTITUTION.md`
+  - `docs/verification_matrix.md`
+  - `docs/runbooks/release-checklist.md`
+  - `docs/runbooks/schema-migration.md`
+  - `docs/runbooks/backlog-triage.md`
+  - `docs/ownership_map.md`
+  - `docs/risk_register.md`
 
 ---
 
@@ -79,7 +88,7 @@
 
 - `Study` / `Battle` のトーン一貫性を最終調整中
 - 状態系UI（`Modal` / `Badge` / `ProgressBar` / `Spinner`）の統一が未完
-- `docs/07_ui_design_guideline.md` への反映が未完
+- 実機A11y/表示確認（iOS Safari / Android Chrome）が未完
 
 ### 3.2 品質強化の最終段
 
@@ -110,7 +119,8 @@
 
 - 同期なし方針（v1）と `syncMeta` 保持理由（v2想定）を仕様に明文化
   - 対象: `docs/01_app_spec.md`, `src/domain/types.ts`
-- `schemaVersion` 更新時の移行手順（マイグレーション規約）を文書化
+- `schemaVersion` 更新時の移行手順（マイグレーション規約）を仕様やADRへ接続
+  - 進捗: `docs/runbooks/schema-migration.md` は作成済み
 
 ## 4.4 大物D: デザインシステム完成
 
@@ -122,21 +132,21 @@
 
 ## 5. 次の未着手の大物（優先提案）
 
-最優先は **「大物A: 仕様由来の将来機能の要件化」**。
+最優先は **「大物B: 学習アルゴリズム運用の実務化」**。
 
 理由:
-- 仕様書上の宿題が明確に残っている
-- 実装に入る前に、対象学年・難易度・UI導線の定義が必要
-- 要件が固まると、機能実装・テスト設計・画面設計を並列化しやすい
+- いま不足しているのは新機能数より、既存学習運用の観測・調整ルール
+- trigger/係数の扱いが明文化されると、将来機能より先に品質と説明可能性が上がる
+- 仕様・runbook・検証をつなげやすい
 
 ---
 
 ## 6. 直近の実行順（提案）
 
-1. `docs/07_ui_design_guideline.md` を現実装に合わせて更新
-2. 状態系UI（`Modal` / `Badge` / `ProgressBar` / `Spinner`）をトークン準拠で統一
-3. `useStudySession.ts` 統合回帰テストを追加
-4. E2Eを「オンボード→学習→テスト→設定」まで拡張
+1. 状態系UI（`Modal` / `Badge` / `ProgressBar` / `Spinner`）をトークン準拠で統一
+2. `useStudySession.ts` 統合回帰テストを追加
+3. E2Eを「オンボード→学習→テスト→設定」まで拡張
+4. 定期テストトリガー閾値と係数調整の運用ドキュメントを起票
 5. 将来機能（読み上げ/例文/単位換算/時間計算/同期）の要件定義ドキュメントを起票
 
 ---

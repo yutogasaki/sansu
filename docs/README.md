@@ -37,6 +37,7 @@ It exists to reduce file bloat, duplicate truths, and context pollution.
 | [risk_register.md](risk_register.md) | Durable cross-cutting risks | Yes |
 | [archive_policy.md](archive_policy.md) | Archive/split policy for docs | Yes |
 | [runbooks/pwa-release.md](runbooks/pwa-release.md) | Release/runbook for PWA updates | Yes |
+| [runbooks/backlog-triage.md](runbooks/backlog-triage.md) | Backlog/status cleanup workflow | Yes |
 | [runbooks/release-checklist.md](runbooks/release-checklist.md) | General release checklist | Yes |
 | [runbooks/schema-migration.md](runbooks/schema-migration.md) | Storage/schema migration runbook | Yes |
 
