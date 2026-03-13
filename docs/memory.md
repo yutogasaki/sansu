@@ -33,6 +33,7 @@ If the information would still matter after several unrelated tasks, it belongs 
 ### 2. Verification Baseline
 
 - Current baseline commands are:
+  - `npm run docs:check` for docs/process changes
   - `npm run lint`
   - `npm run typecheck`
   - `npm run test:run`

@@ -9,6 +9,7 @@ If a check cannot run, record the gap in the active task and the done log.
 
 | Command | Purpose |
 |---|---|
+| `npm run docs:check` | Docs/process link and structure checks |
 | `npm run lint` | Static linting |
 | `npm run typecheck` | Fast TypeScript verification |
 | `npm run test:run` | Unit/integration tests |
@@ -21,7 +22,7 @@ If a check cannot run, record the gap in the active task and the done log.
 
 | Change Type | Required Checks | Manual Checks | Notes |
 |---|---|---|---|
-| Docs only | Read-through | Link/role sanity | No app commands required |
+| Docs only | `npm run docs:check` | Read-through for role/tone sanity | No app build required unless behavior text changed |
 | Copy or content only | `npm run lint`, `npm run build` | Affected screen wording | Check tone for child/parent UX |
 | Shared UI component | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build` | Desktop + mobile layout sanity | Prefer screenshot or visual notes |
 | Page-level UI/state | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build` | Main flow through affected screen | Include modal, loading, error, empty state |
@@ -45,5 +46,6 @@ If a task spans more than one change type, use the stricter row.
 
 ## Shortcut Commands
 
+- Use `npm run docs:check` for docs/process-only changes.
 - Use `npm run verify:core` when a change touches code across multiple layers.
 - Use `npm run verify:release` for release-sensitive changes.

@@ -28,6 +28,7 @@ Use it to reduce file bloat, stale priorities, and context pollution.
 4. Split items that are true active work into `docs/tasks/active/`.
 5. Refresh `更新日` and `次回棚卸し目安`.
 6. Check whether any item is pretending to be spec, memory, or runbook content.
+7. Run `npm run docs:check` after editing the docs set.
 
 ## Decision Rules
 

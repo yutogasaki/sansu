@@ -72,5 +72,6 @@ They define repeatable workflows, not project truth.
 - Check `ownership_map.md` when unsure which doc should change.
 - Update `memory.md` when a decision should survive multiple tasks.
 - Write an ADR when the decision is expensive to rediscover.
+- Run `npm run docs:check` when changing docs/process files.
 - Move finished task context to `docs/done/` instead of leaving it in active files.
 - Archive stale or bloated context according to `archive_policy.md`.
