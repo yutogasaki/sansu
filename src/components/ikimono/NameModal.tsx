@@ -24,13 +24,13 @@ export const NameModal: React.FC<NameModalProps> = ({ onSubmit }) => {
                 initial={{ scale: 0.8, opacity: 0, y: 20 }}
                 animate={{ scale: 1, opacity: 1, y: 0 }}
                 transition={{ type: "spring", stiffness: 300, damping: 25, delay: 0.1 }}
-                className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-sm text-center"
+                className="w-full max-w-sm rounded-[2rem] border border-white/80 bg-white/95 p-8 text-center shadow-2xl"
             >
-                <div className="text-5xl mb-3">🎉</div>
-                <div className="text-2xl font-black text-slate-800 mb-2">
-                    うまれたよ！
+                <div className="mb-3 text-5xl">🫧</div>
+                <div className="mb-2 text-2xl font-black text-slate-800">
+                    ふわふわが きたよ
                 </div>
-                <div className="text-sm text-slate-500 mb-6">
+                <div className="mb-6 text-sm text-slate-500">
                     なまえ を つけてあげよう
                 </div>
 
@@ -43,7 +43,7 @@ export const NameModal: React.FC<NameModalProps> = ({ onSubmit }) => {
                     autoFocus
                     className="w-full h-12 rounded-xl border-2 border-slate-200 px-4 text-center text-lg font-bold text-slate-800 bg-slate-50 focus:border-teal-400 focus:outline-none focus:bg-white transition-colors"
                 />
-                <div className="mt-2 text-[11px] text-slate-400 text-right">
+                <div className="mt-2 text-right text-[11px] text-slate-400">
                     {name.length}/{maxNameLength}
                 </div>
 

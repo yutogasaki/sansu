@@ -12,6 +12,14 @@ const assert = (condition, message) => {
   if (!condition) throw new Error(message);
 };
 
+const waitForHash = async (page, pattern) => {
+  await page.waitForFunction(
+    ({ source, flags }) => new RegExp(source, flags).test(window.location.hash),
+    { source: pattern.source, flags: pattern.flags },
+    { timeout: STEP_TIMEOUT_MS }
+  );
+};
+
 const waitForServer = async (url, timeoutMs) => {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
@@ -78,7 +86,7 @@ const completeOnboarding = async (page) => {
   await page.getByRole("button", { name: /小学 1 年生/ }).click();
   await page.getByRole("button", { name: /さんすう だけ/ }).click();
   await page.getByRole("button", { name: /数をかぞえる・くらべる/ }).click();
-  await page.waitForURL(/#\/$/, { timeout: STEP_TIMEOUT_MS });
+  await waitForHash(page, /#\/$/);
 };
 
 const scenarioOnboardingShown = async (browser) => {
@@ -87,7 +95,7 @@ const scenarioOnboardingShown = async (browser) => {
   await clearClientStorage(page);
 
   await page.goto("/#/", { waitUntil: "domcontentloaded" });
-  await page.waitForURL(/#\/onboarding/, { timeout: STEP_TIMEOUT_MS });
+  await waitForHash(page, /#\/onboarding/);
   await page.getByRole("button", { name: "はじめる" }).waitFor({ timeout: STEP_TIMEOUT_MS });
 
   await context.close();
@@ -99,7 +107,7 @@ const scenarioOnboardingToHome = async (browser) => {
   await clearClientStorage(page);
 
   await completeOnboarding(page);
-  await page.getByRole("button", { name: /この子と進む|このこ と すすむ/ }).waitFor({ timeout: STEP_TIMEOUT_MS });
+  await page.getByRole("button", { name: /ふわふわと進む|ふわふわ と すすむ/ }).waitFor({ timeout: STEP_TIMEOUT_MS });
 
   await context.close();
 };
@@ -110,8 +118,10 @@ const scenarioHomeToStudy = async (browser) => {
   await clearClientStorage(page);
 
   await completeOnboarding(page);
-  await page.getByRole("button", { name: /この子と進む|このこ と すすむ/ }).click();
-  await page.waitForURL(/#\/study/, { timeout: STEP_TIMEOUT_MS });
+  await Promise.all([
+    waitForHash(page, /#\/study/),
+    page.getByRole("button", { name: /ふわふわと進む|ふわふわ と すすむ/ }).click(),
+  ]);
   await page.getByText(/問目/).first().waitFor({ timeout: STEP_TIMEOUT_MS });
 
   await context.close();
@@ -123,9 +133,45 @@ const scenarioHomeToSettings = async (browser) => {
   await clearClientStorage(page);
 
   await completeOnboarding(page);
-  await page.getByRole("link", { name: /せってい/i }).click();
-  await page.waitForURL(/#\/settings/, { timeout: STEP_TIMEOUT_MS });
+  await Promise.all([
+    waitForHash(page, /#\/settings/),
+    page.getByRole("link", { name: /せってい/i }).click(),
+  ]);
   await page.getByText(/設定|せってい/).first().waitFor({ timeout: STEP_TIMEOUT_MS });
+
+  await context.close();
+};
+
+const scenarioAlbumDetailModal = async (browser) => {
+  const context = await browser.newContext({ baseURL: BASE_URL });
+  const page = await context.newPage();
+  await clearClientStorage(page);
+
+  await completeOnboarding(page);
+  await page.evaluate(() => {
+    localStorage.setItem(
+      "sansu_ikimono_gallery",
+      JSON.stringify([
+        {
+          profileId: localStorage.getItem("sansu_active_profile"),
+          generation: 1,
+          name: "もこ",
+          birthDate: "2026-01-01T00:00:00.000Z",
+          departedDate: "2026-01-29T00:00:00.000Z",
+          species: 2,
+        },
+      ]),
+    );
+  });
+
+  await Promise.all([
+    waitForHash(page, /#\/stats/),
+    page.getByRole("link", { name: /きろく/i }).click(),
+  ]);
+
+  await page.getByRole("button", { name: /もこ の ふわふわを みる/ }).click();
+  await page.getByRole("heading", { name: "もこ" }).waitFor({ timeout: STEP_TIMEOUT_MS });
+  await page.getByRole("button", { name: "また みにくる" }).waitFor({ timeout: STEP_TIMEOUT_MS });
 
   await context.close();
 };
@@ -141,7 +187,7 @@ const scenarioParentsGateShown = async (browser) => {
   await page.goto("/#/parents", { waitUntil: "domcontentloaded" });
   await page.getByText("ほごしゃ かくにん").waitFor({ timeout: STEP_TIMEOUT_MS });
   await page.getByRole("button", { name: "やめる" }).click();
-  await page.waitForURL(/#\/(settings|onboarding)/, { timeout: STEP_TIMEOUT_MS });
+  await waitForHash(page, /#\/(settings|onboarding)/);
 
   await context.close();
 };
@@ -171,6 +217,7 @@ const main = async () => {
     results.push(await runScenario("completes onboarding and lands on home", () => scenarioOnboardingToHome(browser)));
     results.push(await runScenario("starts study from home", () => scenarioHomeToStudy(browser)));
     results.push(await runScenario("opens settings from footer", () => scenarioHomeToSettings(browser)));
+    results.push(await runScenario("opens fuwafuwa album detail from stats", () => scenarioAlbumDetailModal(browser)));
     results.push(await runScenario("guards /parents route behind parent gate", () => scenarioParentsGateShown(browser)));
 
     const ok = results.every(Boolean);

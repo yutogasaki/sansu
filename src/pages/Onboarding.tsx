@@ -89,7 +89,7 @@ export const Onboarding: React.FC = () => {
 
         // HashRouter fallback
         setTimeout(() => {
-            if (window.location.hash !== "#/") {
+            if (window.location.hash === "" || window.location.hash === "#/onboarding") {
                 window.location.hash = "#/";
             }
         }, 100);

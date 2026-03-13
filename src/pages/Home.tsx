@@ -10,6 +10,8 @@ import { PaperTestScoreModal } from "../components/domain/PaperTestScoreModal";
 import { eventStorage, weakPointsStorage } from "../utils/storage";
 import { Ikimono } from "../components/ikimono/Ikimono";
 import { getSceneText, stageText } from "../components/ikimono/sceneText";
+import { getHomeFuwafuwaSpeech } from "../components/ikimono/fuwafuwaSpeech";
+import { HomeAnimatedBackground } from "../components/home/HomeAnimatedBackground";
 import { Button } from "../components/ui/Button";
 import { UserProfile } from "../domain/types";
 import { warmUpTTS } from "../utils/tts";
@@ -109,6 +111,10 @@ export const Home: React.FC = () => {
         () => getSceneText(profileId, todayKey, weakCount, currentEventType, useKanjiForIkimono),
         [profileId, todayKey, weakCount, currentEventType, useKanjiForIkimono]
     );
+    const homeSpeech = useMemo(
+        () => getHomeFuwafuwaSpeech(scene, currentEventType, weakCount),
+        [scene, currentEventType, weakCount]
+    );
 
     const handleStartCheck = async () => {
         if (currentEventType) eventStorage.setShown(currentEventType, todayKey);
@@ -163,9 +169,7 @@ export const Home: React.FC = () => {
 
     return (
         <div className="relative h-full overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(56,189,248,0.3),transparent_44%),radial-gradient(circle_at_84%_18%,rgba(20,184,166,0.2),transparent_46%),radial-gradient(circle_at_70%_82%,rgba(251,191,36,0.2),transparent_44%)]" />
-            <div className="absolute -top-20 -right-16 w-64 h-64 rounded-full bg-white/42 blur-3xl" />
-            <div className="absolute -bottom-20 -left-16 w-64 h-64 rounded-full bg-cyan-100/55 blur-3xl" />
+            <HomeAnimatedBackground />
 
             <EventModal isOpen={showEventModal} eventType={currentEventType} onStartCheck={handleStartCheck} onDismiss={handleDismiss} />
 
@@ -195,10 +199,10 @@ export const Home: React.FC = () => {
                                 <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold text-cyan-700 bg-cyan-100/75 border border-cyan-100">
                                     {useKanjiForIkimono ? stageText[scene.stage].kanji : stageText[scene.stage].kana}
                                 </span>
-                                <span className="text-[10px] font-semibold tracking-wide text-slate-400">TODAY NOTE</span>
+                                <span className="text-[10px] font-semibold tracking-wide text-slate-400">FUWAFUWA NOTE</span>
                             </div>
-                            <div className="text-base leading-snug font-black text-slate-800 line-clamp-2">{scene.nowLine}</div>
-                            <div className="mt-1 text-xs text-slate-500">{scene.moodLine}</div>
+                            <div className="text-base leading-snug font-black text-slate-800 line-clamp-2">{scene.transition}</div>
+                            <div className="mt-1 text-xs text-slate-500">{scene.whisper}</div>
                         </div>
                     </motion.div>
 
@@ -223,7 +227,7 @@ export const Home: React.FC = () => {
                             transition={{ duration: 0.7 }}
                             className="mt-3 flex-1 min-h-[200px] w-full rounded-[2rem] app-glass flex flex-col items-center justify-center px-3 pt-2 pb-4"
                         >
-                            <Ikimono profileId={profileId} kanjiMode={useKanjiForIkimono} statusText={scene.whisper} />
+                            <Ikimono profileId={profileId} kanjiMode={useKanjiForIkimono} speech={homeSpeech} statusText={scene.whisper} />
                         </motion.div>
                     )}
                 </div>
@@ -236,7 +240,7 @@ export const Home: React.FC = () => {
                             className="flex-1"
                             onClick={() => { warmUpTTS(); navigate("/study"); }}
                         >
-                            {isEasy ? "このこ と すすむ" : "この子と進む"}
+                            {isEasy ? "ふわふわ と すすむ" : "ふわふわと進む"}
                         </Button>
                         <Button
                             variant="secondary"

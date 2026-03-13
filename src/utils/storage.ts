@@ -28,6 +28,7 @@ const STORAGE_KEYS = {
     // Ikimono
     IKIMONO_STATE: 'sansu_ikimono_state',
     IKIMONO_GALLERY: 'sansu_ikimono_gallery',
+    IKIMONO_TRANSITION: 'sansu_ikimono_transition',
 } as const;
 
 type StorageKey = typeof STORAGE_KEYS[keyof typeof STORAGE_KEYS];
@@ -167,6 +168,7 @@ export const soundStorage = {
  */
 type StoredIkimonoState = { profileId: string; birthDate: string; generation: number; name?: string; species?: number };
 type StoredGalleryEntry = { profileId: string; generation: number; name: string; birthDate: string; departedDate: string; species?: number };
+type StoredIkimonoTransition = { profileId: string; generation: number; lastSeenStage: "egg" | "hatching" | "small" | "medium" | "adult" | "fading" };
 
 export const ikimonoStorage = {
     getState: (): StoredIkimonoState | null =>
@@ -189,6 +191,14 @@ export const ikimonoGalleryStorage = {
         all.push(entry);
         set(STORAGE_KEYS.IKIMONO_GALLERY, all);
     },
+};
+
+export const ikimonoTransitionStorage = {
+    getState: (): StoredIkimonoTransition | null =>
+        get(STORAGE_KEYS.IKIMONO_TRANSITION, null),
+    setState: (state: StoredIkimonoTransition): void =>
+        set(STORAGE_KEYS.IKIMONO_TRANSITION, state),
+    clear: (): void => remove(STORAGE_KEYS.IKIMONO_TRANSITION),
 };
 
 /**
@@ -219,6 +229,7 @@ export const storage = {
     sound: soundStorage,
     ikimono: ikimonoStorage,
     ikimonoGallery: ikimonoGalleryStorage,
+    ikimonoTransition: ikimonoTransitionStorage,
     debug: debugStorage,
 };
 

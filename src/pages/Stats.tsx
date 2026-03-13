@@ -691,7 +691,7 @@ export const Stats: React.FC = () => {
                     </Card>
                 )}
 
-                {/* おもいで ギャラリー */}
+                {/* ふわふわ アルバム */}
                 {profile && (
                     <Card className="p-4">
                         <IkimonoGallery profileId={profile.id} />

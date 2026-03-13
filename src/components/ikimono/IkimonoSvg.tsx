@@ -25,17 +25,19 @@ interface StageVisual {
 type VisibleStage = Exclude<IkimonoStage, 'gone'>;
 
 const STAGE_CONFIG: Record<VisibleStage, StageVisual> = {
-    egg:      { scale: 0.75, blur: 2,   brightness: 1.1, saturate: 0.9 },
-    hatching: { scale: 0.8,  blur: 0.5, brightness: 1.05, saturate: 1 },
-    small:    { scale: 0.7,  blur: 0,   brightness: 1,   saturate: 1 },
-    medium:   { scale: 0.85, blur: 0,   brightness: 1,   saturate: 1 },
-    adult:    { scale: 1.0,  blur: 0,   brightness: 1,   saturate: 1 },
-    fading:   { scale: 1.0,  blur: 1,   brightness: 1.05, saturate: 0.8 },
+    egg: { scale: 0.8, blur: 1.5, brightness: 1.1, saturate: 0.92 },
+    hatching: { scale: 0.88, blur: 0.3, brightness: 1.06, saturate: 1 },
+    small: { scale: 0.94, blur: 0, brightness: 1, saturate: 1.02 },
+    medium: { scale: 0.98, blur: 0, brightness: 1, saturate: 1.04 },
+    adult: { scale: 1.03, blur: 0, brightness: 1, saturate: 1.06 },
+    fading: { scale: 1.01, blur: 0.8, brightness: 1.04, saturate: 0.88 },
 };
 
 export const IkimonoSvg: React.FC<IkimonoSvgProps> = ({ stage, species = 0 }) => {
     const config = STAGE_CONFIG[stage as VisibleStage] ?? STAGE_CONFIG.egg;
-    const imagePath = `/ikimono/${species}-${getImageSuffix(stage)}.png`;
+    const imageSuffix = getImageSuffix(stage);
+    const webpImagePath = `/ikimono/${species}-${imageSuffix}.webp`;
+    const pngImagePath = `/ikimono/${species}-${imageSuffix}.png`;
 
     const filterParts: string[] = [];
     if (config.blur > 0) filterParts.push(`blur(${config.blur}px)`);
@@ -52,12 +54,15 @@ export const IkimonoSvg: React.FC<IkimonoSvgProps> = ({ stage, species = 0 }) =>
                 filter: filterValue,
             }}
         >
-            <img
-                src={imagePath}
-                alt=""
-                className="w-[140%] h-[140%] object-cover pointer-events-none"
-                draggable={false}
-            />
+            <picture className="flex h-full w-full items-center justify-center">
+                <source srcSet={webpImagePath} type="image/webp" />
+                <img
+                    src={pngImagePath}
+                    alt=""
+                    className="pointer-events-none h-[136%] w-[136%] object-cover"
+                    draggable={false}
+                />
+            </picture>
         </div>
     );
 };
