@@ -14,19 +14,21 @@ export type BgmType =
     | "menu"
     | "study";
 
+const resolveAssetPath = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
+
 // Asset Map
 const SE_ASSETS: Record<SoundType, string> = {
-    correct: "/sounds/correct.mp3",
-    incorrect: "/sounds/incorrect.mp3",
-    tap: "/sounds/tap.mp3",
-    level_up: "/sounds/level_up.mp3",
-    start: "/sounds/start.mp3",
-    clear: "/sounds/clear.mp3"
+    correct: resolveAssetPath("/sounds/correct.mp3"),
+    incorrect: resolveAssetPath("/sounds/incorrect.mp3"),
+    tap: resolveAssetPath("/sounds/tap.mp3"),
+    level_up: resolveAssetPath("/sounds/level_up.mp3"),
+    start: resolveAssetPath("/sounds/start.mp3"),
+    clear: resolveAssetPath("/sounds/clear.mp3")
 };
 
 const BGM_ASSETS: Record<BgmType, string> = {
-    menu: "/sounds/bgm_menu.mp3",
-    study: "/sounds/bgm_study.mp3"
+    menu: resolveAssetPath("/sounds/bgm_menu.mp3"),
+    study: resolveAssetPath("/sounds/bgm_study.mp3")
 };
 
 // Cache for Howl instances
@@ -77,10 +79,12 @@ export const playBgm = (type: BgmType) => {
     if (currentBgmType === type && currentBgm?.playing()) return;
 
     // Stop current
-    if (currentBgm) {
-        currentBgm.fade(0.5, 0, 500);
-        setTimeout(() => {
-            currentBgm?.stop();
+    const previousBgm = currentBgm;
+    if (previousBgm) {
+        previousBgm.fade(0.5, 0, 500);
+        window.setTimeout(() => {
+            previousBgm.stop();
+            previousBgm.unload();
         }, 500);
     }
 
@@ -100,6 +104,7 @@ export const playBgm = (type: BgmType) => {
 export const stopBgm = () => {
     if (currentBgm) {
         currentBgm.stop();
+        currentBgm.unload();
         currentBgm = null;
         currentBgmType = null;
     }

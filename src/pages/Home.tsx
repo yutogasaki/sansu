@@ -17,6 +17,7 @@ import { UserProfile } from "../domain/types";
 import { warmUpTTS } from "../utils/tts";
 import { toLocaleDateKey } from "../utils/learningDay";
 import { recordPaperTestScore } from "../domain/test/paperTest";
+import { useTimeoutScheduler } from "../hooks/useTimeoutScheduler";
 
 const PAPER_TEST_REMIND_DAYS = 3;
 
@@ -64,48 +65,77 @@ export const Home: React.FC = () => {
     const [pendingPaperTest, setPendingPaperTest] = useState<{ id: string; subject: "math" | "vocab"; level: number } | null>(null);
     const isEasy = profile?.uiTextMode === "easy";
     const useKanjiForIkimono = Boolean(profile?.kanjiMode);
+    const { scheduleTimeout, clearScheduledTimeouts } = useTimeoutScheduler();
 
     const todayKey = toLocaleDateKey();
 
     useEffect(() => {
-        getActiveProfile().then(p => {
-            if (!p) return;
-            setProfileId(p.id);
-            setProfile(p);
+        let cancelled = false;
+        clearScheduledTimeouts();
 
-            Promise.all([getTotalStats(p.id), getWeakPoints(p.id)]).then(([total, weakPoints]) => {
+        const openEventModal = (eventType: EventType) => {
+            scheduleTimeout(() => {
+                if (cancelled) return;
+                setCurrentEventType(eventType);
+                setShowEventModal(true);
+            }, 800);
+        };
+
+        const loadHomeData = async () => {
+            try {
+                const activeProfile = await getActiveProfile();
+                if (!activeProfile || cancelled) return;
+
+                setProfileId(activeProfile.id);
+                setProfile(activeProfile);
+
+                const [total, weakPoints] = await Promise.all([
+                    getTotalStats(activeProfile.id),
+                    getWeakPoints(activeProfile.id)
+                ]);
+                if (cancelled) return;
+
                 const prevWeakCount = weakPointsStorage.getPrevCount();
                 const currentWeakCount = weakPoints.length;
                 setWeakCount(currentWeakCount);
 
-                const eventType = determineEventWithPriority(p, total.count, prevWeakCount, currentWeakCount);
+                const eventType = determineEventWithPriority(
+                    activeProfile,
+                    total.count,
+                    prevWeakCount,
+                    currentWeakCount
+                );
+
                 if (eventType) {
                     const shouldAlwaysShow =
                         eventType === "level_up" || eventType === "periodic_test" || eventType === "paper_test_remind";
 
                     if (shouldAlwaysShow) {
-                        setTimeout(() => {
-                            setCurrentEventType(eventType);
-                            setShowEventModal(true);
-                        }, 800);
+                        openEventModal(eventType);
                     } else {
                         const lastShownEvent = eventStorage.getLastShownEvent();
                         const lastShownDate = eventStorage.getLastShownDate();
                         const shouldShow = !lastShownEvent || lastShownEvent !== eventType || lastShownDate !== todayKey;
 
                         if (shouldShow) {
-                            setTimeout(() => {
-                                setCurrentEventType(eventType);
-                                setShowEventModal(true);
-                            }, 800);
+                            openEventModal(eventType);
                         }
                     }
                 }
 
                 weakPointsStorage.setPrevCount(currentWeakCount);
-            });
-        });
-    }, [todayKey]);
+            } catch (error) {
+                console.error("[Home] failed to load home data:", error);
+            }
+        };
+
+        void loadHomeData();
+
+        return () => {
+            cancelled = true;
+            clearScheduledTimeouts();
+        };
+    }, [todayKey, scheduleTimeout, clearScheduledTimeouts]);
 
     const scene = useMemo(
         () => getSceneText(profileId, todayKey, weakCount, currentEventType, useKanjiForIkimono),

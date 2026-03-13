@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useEffectEvent } from "react";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
 import {
     getMaintenanceMathSkillIds,
@@ -38,6 +38,7 @@ import {
 import { checkPeriodTestTrigger } from "../domain/test/trigger";
 import { ensurePeriodicTestSet } from "../domain/test/testSet";
 import { applyNormalSessionMathTrigger, applyPeriodicTestCompletion } from "./useStudySession.logic";
+import { logInDev } from "../utils/debug";
 
 type StudySessionOptions = {
     devSkill?: string;
@@ -47,22 +48,15 @@ type StudySessionOptions = {
     sessionKind?: SessionKind;
 };
 
-const IS_DEV = import.meta.env.DEV;
-const debugLog = (...args: unknown[]) => {
-    if (IS_DEV) {
-        console.log(...args);
-    }
-};
-
 export const useStudySession = (options: StudySessionOptions = {}) => {
     const [queue, setQueue] = useState<Problem[]>([]);
-    const [blockCount, setBlockCount] = useState(0);
     const [loading, setLoading] = useState(true);
 
     const [profileId, setProfileId] = useState<string | null>(null);
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const profileRef = useRef<UserProfile | null>(null);
     const hasInitializedRef = useRef(false);
+    const blockIndexRef = useRef(0);
 
     const sessionHistoryRef = useRef<SessionHistoryItem[]>([]);
 
@@ -74,15 +68,15 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
     // Profile fetching with error handling
     useEffect(() => {
-        debugLog("[useStudySession] fetching profile...");
+        logInDev("[useStudySession] fetching profile...");
         getActiveProfile()
             .then(p => {
-                debugLog("[useStudySession] profile:", p);
+                logInDev("[useStudySession] profile:", p);
                 if (p) {
                     setProfileId(p.id);
                     updateProfile(p);
                 } else {
-                    debugLog("[useStudySession] no profile found");
+                    logInDev("[useStudySession] no profile found");
                     setLoading(false);
                 }
             })
@@ -95,7 +89,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     // ============================================================
     // Developer Mode Block Generation
     // ============================================================
-    const generateDevBlock = (blockSize: number): Problem[] => {
+    const generateDevBlock = (blockSize: number, blockIndex: number): Problem[] => {
         const q: Problem[] = [];
         const skillId = options.devSkill!;
 
@@ -108,7 +102,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
             q.push({
                 ...problem,
-                id: `dev-${i}-${Date.now()}`,
+                id: `${blockIndex}-dev-${i}-${Date.now()}`,
                 subject: 'math',
                 isReview: false
             });
@@ -122,6 +116,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     // ============================================================
     const generateFocusBlock = async (
         _pid: string,
+        blockIndex: number,
         blockSize: number,
         recentAttempts: { subject: SubjectKey; itemId: string; result: string; skipped?: boolean }[]
     ): Promise<Problem[]> => {
@@ -147,7 +142,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
             q.push({
                 ...problem,
-                id: `${blockCount}-focus-${i}-${Date.now()}`,
+                id: `${blockIndex}-focus-${i}-${Date.now()}`,
                 subject,
                 isReview: isReviewSession
             });
@@ -166,6 +161,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     // ============================================================
     const generateCheckBlock = async (
         activeProfile: UserProfile,
+        blockIndex: number,
         blockSize: number,
         recentAttempts: { subject: SubjectKey; itemId: string; result: string; isReview: boolean; skipped?: boolean }[]
     ): Promise<Problem[] | null> => {
@@ -205,7 +201,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
             q.push({
                 ...problem,
-                id: `${blockCount}-check-${i}-${Date.now()}`,
+                id: `${blockIndex}-check-${i}-${Date.now()}`,
                 subject: checkSubject,
                 isReview: false
             });
@@ -225,6 +221,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     const generateNormalBlock = async (
         pid: string,
         activeProfile: UserProfile,
+        blockIndex: number,
         blockSize: number,
         recentAttempts: { subject: SubjectKey; itemId: string; result: string; isReview: boolean; skipped?: boolean }[]
     ): Promise<Problem[]> => {
@@ -301,7 +298,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
                 const problem: Problem = {
                     ...result.problem,
-                    id: `${blockCount}-${i}-${Date.now()}`,
+                    id: `${blockIndex}-${i}-${Date.now()}`,
                     subject: 'math',
                     isReview: result.isReview,
                     isMaintenanceCheck: result.isMaintenanceCheck
@@ -340,7 +337,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
                 const problem: Problem = {
                     ...result.problem,
-                    id: `${blockCount}-${i}-${Date.now()}`,
+                    id: `${blockIndex}-${i}-${Date.now()}`,
                     subject: 'vocab',
                     isReview: result.isReview
                 };
@@ -363,13 +360,13 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     // ============================================================
     // Main Block Generation Entry Point
     // ============================================================
-    const generateBlock = async (pid: string, activeProfile: UserProfile): Promise<Problem[]> => {
+    const generateBlock = async (pid: string, activeProfile: UserProfile, blockIndex: number): Promise<Problem[]> => {
         const sessionKind = options.sessionKind || "normal";
         const blockSize = sessionKind === "check-event" ? 20 : BLOCK_SIZE;
 
         // Developer mode: generate only specified skill
         if (options.devSkill) {
-            return generateDevBlock(blockSize);
+            return generateDevBlock(blockSize, blockIndex);
         }
 
         // Special Check Mode (Event) -> Use Strict Level Logic (Same as Paper Test)
@@ -411,7 +408,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
         // Focus mode: generate only specified IDs
         if (options.focusSubject && options.focusIds && options.focusIds.length > 0) {
-            return generateFocusBlock(pid, blockSize, recentAttempts);
+            return generateFocusBlock(pid, blockIndex, blockSize, recentAttempts);
         }
 
         // Check mode (Normal): generate from recent history
@@ -420,7 +417,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 ...a,
                 isReview: a.isReview ?? false
             }));
-            const checkResult = await generateCheckBlock(activeProfile, blockSize, mappedAttempts);
+            const checkResult = await generateCheckBlock(activeProfile, blockIndex, blockSize, mappedAttempts);
             if (checkResult) {
                 return checkResult;
             }
@@ -432,23 +429,23 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             ...a,
             isReview: a.isReview ?? false
         }));
-        return generateNormalBlock(pid, activeProfile, blockSize, mappedAttempts);
+        return generateNormalBlock(pid, activeProfile, blockIndex, blockSize, mappedAttempts);
     };
 
     // ============================================================
     // Session Management
     // ============================================================
     const initSession = async () => {
-        debugLog("[useStudySession] initSession called, profileId:", profileId);
+        logInDev("[useStudySession] initSession called, profileId:", profileId);
         if (!profileId || !profile) return;
 
         setLoading(true);
-        setBlockCount(1);
+        blockIndexRef.current = 1;
 
         try {
-            debugLog("[useStudySession] generating block...");
-            const q = await generateBlock(profileId, profile);
-            debugLog("[useStudySession] generated queue:", q);
+            logInDev("[useStudySession] generating block...");
+            const q = await generateBlock(profileId, profile, blockIndexRef.current);
+            logInDev("[useStudySession] generated queue:", q);
             setQueue(q);
         } catch (err) {
             console.error("[useStudySession] error generating block:", err);
@@ -457,7 +454,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             for (let i = 0; i < BLOCK_SIZE; i++) {
                 fallbackQueue.push({
                     ...createFallbackProblem('math', 'session init failure'),
-                    id: `fallback-${i}-${Date.now()}`,
+                    id: `${blockIndexRef.current}-fallback-${i}-${Date.now()}`,
                     subject: 'math',
                     isReview: false
                 });
@@ -472,7 +469,8 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         if (!profileId) return;
 
         setLoading(true);
-        setBlockCount(prev => prev + 1);
+        const nextBlockIndex = blockIndexRef.current + 1;
+        blockIndexRef.current = nextBlockIndex;
 
         try {
             // DBから最新プロファイルを取得（レベルアップ等の反映）
@@ -481,7 +479,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             if (!activeProfile) { setLoading(false); return; }
             updateProfile(activeProfile);
 
-            const q = await generateBlock(profileId, activeProfile);
+            const q = await generateBlock(profileId, activeProfile, nextBlockIndex);
             setQueue(prev => [...prev, ...q]);
         } catch (err) {
             console.error("[useStudySession] error generating next block:", err);
@@ -490,7 +488,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             for (let i = 0; i < BLOCK_SIZE; i++) {
                 fallbackQueue.push({
                     ...createFallbackProblem('math', 'next block failure'),
-                    id: `fallback-${blockCount}-${i}-${Date.now()}`,
+                    id: `${nextBlockIndex}-fallback-${i}-${Date.now()}`,
                     subject: 'math',
                     isReview: false
                 });
@@ -628,13 +626,15 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         hasInitializedRef.current = false;
     }, [profileId]);
 
+    const initSessionOnProfileReady = useEffectEvent(() => {
+        void initSession();
+    });
+
     useEffect(() => {
         if (profileId && !hasInitializedRef.current) {
             hasInitializedRef.current = true;
-            void initSession();
+            initSessionOnProfileReady();
         }
-        // profileId変化時のみ初期化する（initSession依存での再実行を防ぐ）
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [profileId]);
 
 
@@ -669,7 +669,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             // const vocabTrigger = await checkPeriodTestTrigger(currentProfile, 'vocab'); // Future support
 
             if (mathTrigger.isTriggered) {
-                debugLog("[Trigger] Periodic Test Triggered!", mathTrigger.reason);
+                logInDev("[Trigger] Periodic Test Triggered!", mathTrigger.reason);
                 const updated = applyNormalSessionMathTrigger(currentProfile, mathTrigger);
                 if (updated) await saveProfile(updated);
             }

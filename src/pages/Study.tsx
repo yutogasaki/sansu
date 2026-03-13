@@ -7,9 +7,9 @@ import { playSound, setSoundEnabled } from "../utils/audio";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
 import { logAttempt } from "../domain/learningRepository";
 import { StudyLayout } from "./StudyLayout";
+import { logInDev } from "../utils/debug";
 import { speakEnglish, warmUpTTS } from "../utils/tts";
-
-const IS_DEV = import.meta.env.DEV;
+import { useTimeoutScheduler } from "../hooks/useTimeoutScheduler";
 
 export const Study: React.FC = () => {
     const navigate = useNavigate();
@@ -57,7 +57,6 @@ export const Study: React.FC = () => {
 
     // 問題表示時刻を記録（回答時間計測用）
     const problemShownAtRef = React.useRef<number>(Date.now());
-
     // UI State for Block Transition
     const [isFinished, setIsFinished] = useState(false);
 
@@ -79,6 +78,7 @@ export const Study: React.FC = () => {
     // Hissan Session
     const hissan = useHissanSession();
     const resetHissan = hissan.resetHissan;
+    const { scheduleTimeout: scheduleUiTimeout, clearScheduledTimeouts: clearPendingUiTimeouts } = useTimeoutScheduler();
 
     // Warm up TTS on mount (uses the user interaction context from navigation tap)
     useEffect(() => {
@@ -115,6 +115,7 @@ export const Study: React.FC = () => {
     // Reset inputs when problem changes
     useEffect(() => {
         if (!currentProblem) return;
+        clearPendingUiTimeouts();
         setUserInput("");
         if (currentProblem.inputType === 'multi-number' && currentProblem.inputConfig?.fields) {
             setUserInputs(new Array(currentProblem.inputConfig.fields.length).fill(""));
@@ -128,7 +129,7 @@ export const Study: React.FC = () => {
 
         // 筆算モードリセット
         resetHissan(currentProblem, hissanModeEnabled);
-    }, [currentProblem, hissanModeEnabled, resetHissan]);
+    }, [currentProblem, hissanModeEnabled, resetHissan, clearPendingUiTimeouts]);
 
     // Check for pause (every 100 questions) or pre-fetch
     useEffect(() => {
@@ -136,7 +137,7 @@ export const Study: React.FC = () => {
 
         // 1. Pre-fetch when running low (less than 3 items remaining)
         if (!loading && queue.length - currentIndex < 3) {
-            if (IS_DEV) console.log("Pre-fetching next block...");
+            logInDev("Pre-fetching next block...");
             nextBlock();
         }
 
@@ -219,7 +220,7 @@ export const Study: React.FC = () => {
         const isFixedSession = sessionKindParam === "periodic-test" || sessionKindParam === "weak-review" || sessionKindParam === "check-event";
 
         if (isFixedSession && currentIndex >= blockSize && blockSize > 0 && !loading) {
-            if (IS_DEV) console.log("Fixed Session Complete!", { correctCount, blockSize });
+            logInDev("Fixed Session Complete!", { correctCount, blockSize });
             void finalizeFixedSession(false);
         }
     }, [currentIndex, blockSize, sessionKindParam, loading, correctCount, finalizeFixedSession]);
@@ -241,7 +242,12 @@ export const Study: React.FC = () => {
 
                     if (newInputs[activeFieldIndex].length >= currentFieldLength) {
                         if (activeFieldIndex < fields.length - 1) {
-                            setTimeout(() => setActiveFieldIndex(activeFieldIndex + 1), 50);
+                            const currentFieldIndex = activeFieldIndex;
+                            scheduleUiTimeout(() => {
+                                setActiveFieldIndex(prev => (
+                                    prev === currentFieldIndex ? currentFieldIndex + 1 : prev
+                                ));
+                            }, 50);
                         }
                     }
                 }
@@ -252,7 +258,7 @@ export const Study: React.FC = () => {
                 setUserInput(prev => prev + valStr);
             }
         }
-    }, [feedback, currentProblem, activeFieldIndex, userInput.length]);
+    }, [feedback, currentProblem, activeFieldIndex, userInput.length, scheduleUiTimeout]);
 
     const handleBackspace = useCallback(() => {
         if (feedback !== "none" || isProcessingRef.current) return;
@@ -322,7 +328,7 @@ export const Study: React.FC = () => {
                 playSound("correct");
                 handleResult(currentProblem, 'correct', timeMs);
                 setCorrectCount(prev => prev + 1);
-                setTimeout(() => { nextProblem(); }, 500);
+                scheduleUiTimeout(nextProblem, 500);
             } else if (result === 'step-correct') {
                 playSound("correct");
             } else {
@@ -355,9 +361,7 @@ export const Study: React.FC = () => {
             handleResult(currentProblem, 'correct', timeMs);
             setCorrectCount(prev => prev + 1);
 
-            setTimeout(() => {
-                nextProblem();
-            }, 500);
+            scheduleUiTimeout(nextProblem, 500);
         } else {
             setFeedback("incorrect");
             playSound("incorrect");
@@ -366,7 +370,7 @@ export const Study: React.FC = () => {
             setShowCorrection(true);
             // Auto-advance removed. User must click Next.
         }
-    }, [feedback, currentProblem, userInput, userInputs, handleResult, nextProblem, hissan]);
+    }, [feedback, currentProblem, userInput, userInputs, handleResult, nextProblem, hissan, scheduleUiTimeout]);
 
     // スキップ処理（仕様 4.7）
     const handleSkip = useCallback(async () => {

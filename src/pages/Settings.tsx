@@ -13,6 +13,7 @@ import { ParentGateModal } from "../components/gate/ParentGateModal";
 import { ensurePeriodicTestSet } from "../domain/test/testSet";
 import { getWord } from "../domain/english/words";
 import { recordPaperTestScore, upsertPendingPaperTest } from "../domain/test/paperTest";
+import { logInDev } from "../utils/debug";
 import storage from "../utils/storage";
 
 export const Settings: React.FC = () => {
@@ -35,12 +36,6 @@ export const Settings: React.FC = () => {
     const isEasy = profile?.uiTextMode === "easy";
     const t = (easy: string, standard: string) => (isEasy ? easy : standard);
     const TEST_TIMER_OPTIONS = [0, 5, 10, 15, 20] as const;
-    const logPdfDebug = (...args: unknown[]) => {
-        if (import.meta.env.DEV) {
-            console.log(...args);
-        }
-    };
-
     useEffect(() => {
         const load = async () => {
             const p = await getActiveProfile();
@@ -177,7 +172,7 @@ export const Settings: React.FC = () => {
         if (isPrinting) return;
 
         setIsPrinting(true);
-        logPdfDebug("[PDF] Starting Math PDF generation...");
+        logInDev("[PDF] Starting Math PDF generation...");
 
         const set = await ensurePeriodicTestSet(profile, "math");
         const problems: Problem[] = set.problems.map((p, i) => ({
@@ -186,7 +181,7 @@ export const Settings: React.FC = () => {
             subject: "math",
             isReview: false
         }));
-        logPdfDebug("[PDF] Using test set", set.level, problems.length);
+        logInDev("[PDF] Using test set", set.level, problems.length);
         if (problems.length === 0) {
             alert("このレベルには まだ もんだいが ありません");
             setIsPrinting(false);
@@ -196,7 +191,7 @@ export const Settings: React.FC = () => {
         try {
             const { generateMathPDF } = await import("../utils/pdfGenerator");
             await generateMathPDF(problems, `さんすう レベル Lv.${set.level}`, profile.name);
-            logPdfDebug("[PDF] Math PDF generation completed!");
+            logInDev("[PDF] Math PDF generation completed!");
 
             const updated = upsertPendingPaperTest(profile, "math", set.level);
             await saveProfile(updated);
@@ -214,13 +209,13 @@ export const Settings: React.FC = () => {
         if (isPrinting) return;
 
         setIsPrinting(true);
-        logPdfDebug("[PDF] Starting Vocab PDF generation...");
+        logInDev("[PDF] Starting Vocab PDF generation...");
 
         const set = await ensurePeriodicTestSet(profile, "vocab");
         const selected = set.problems
             .map(p => getWord(p.categoryId))
             .filter((w): w is NonNullable<typeof w> => !!w);
-        logPdfDebug("[PDF] Using test set", set.level, "words:", selected.length);
+        logInDev("[PDF] Using test set", set.level, "words:", selected.length);
         if (selected.length === 0) {
             alert("まだ 単語が ありません");
             setIsPrinting(false);
@@ -230,7 +225,7 @@ export const Settings: React.FC = () => {
         try {
             const { generateVocabPDF } = await import("../utils/pdfGenerator");
             await generateVocabPDF(selected, `えいご レベル Lv.${set.level}`);
-            logPdfDebug("[PDF] Vocab PDF generation completed!");
+            logInDev("[PDF] Vocab PDF generation completed!");
 
             const updated = upsertPendingPaperTest(profile, "vocab", set.level);
             await saveProfile(updated);

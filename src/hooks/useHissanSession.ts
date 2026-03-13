@@ -2,6 +2,7 @@ import { useState, useCallback, useMemo } from 'react';
 import { Problem } from '../domain/types';
 import { HissanGridData, HissanStep, isHissanEligible } from '../domain/math/hissanTypes';
 import { generateHissanGrid } from '../domain/math/hissanEngine';
+import { useTimeoutScheduler } from './useTimeoutScheduler';
 
 interface UseHissanSessionReturn {
     /** 筆算モードがアクティブか */
@@ -47,6 +48,7 @@ export const useHissanSession = (): UseHissanSessionReturn => {
     const [activeCellPos, setActiveCellPos] = useState<[number, number] | null>(null);
     const [userValues, setUserValues] = useState<Map<string, string>>(new Map());
     const [stepFeedback, setStepFeedback] = useState<'none' | 'correct' | 'incorrect'>('none');
+    const { scheduleTimeout, clearScheduledTimeouts } = useTimeoutScheduler();
 
     // 現在のステップの入力セル一覧（アクティブなセル内でのカーソル位置を管理）
     const [cursorIndex, setCursorIndex] = useState(0);
@@ -60,6 +62,13 @@ export const useHissanSession = (): UseHissanSessionReturn => {
      * 新問題に切り替わった時のリセット
      */
     const resetHissan = useCallback((problem: Problem | undefined, hissanEnabled: boolean) => {
+        clearScheduledTimeouts();
+        setCurrentStepIndex(0);
+        setActiveCellPos(null);
+        setUserValues(new Map());
+        setStepFeedback('none');
+        setCursorIndex(0);
+
         if (!problem) {
             setIsHissanActive(false);
             setIsHissanEligibleSkill(false);
@@ -92,7 +101,7 @@ export const useHissanSession = (): UseHissanSessionReturn => {
 
         setIsHissanActive(false);
         setGridData(null);
-    }, []);
+    }, [clearScheduledTimeouts]);
 
     /**
      * テンキー入力
@@ -252,13 +261,13 @@ export const useHissanSession = (): UseHissanSessionReturn => {
         } else {
             // 不正解 → クリアして最初から
             setStepFeedback('incorrect');
-            setTimeout(() => {
+            scheduleTimeout(() => {
                 setStepFeedback('none');
                 handleHissanClear();
             }, 800);
             return 'incorrect';
         }
-    }, [currentStep, gridData, currentStepIndex, userValues, handleHissanClear]);
+    }, [currentStep, gridData, currentStepIndex, userValues, handleHissanClear, scheduleTimeout]);
 
     /**
      * セルタップ
