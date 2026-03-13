@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Header } from '../../components/Header';
 import { getWeakMathSkillIds, getWeakVocabIds } from '../../domain/learningRepository';
@@ -21,6 +21,10 @@ export const ParentsPage: React.FC = () => {
     const [weakVocabIds, setWeakVocabIds] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isGatePassed, setIsGatePassed] = useState(Boolean(routeState?.parentGatePassed));
+    const vocabWordMap = useMemo(
+        () => new Map(ENGLISH_WORDS.map(word => [word.id, word])),
+        []
+    );
 
     useEffect(() => {
         if (!isGatePassed) {
@@ -28,27 +32,43 @@ export const ParentsPage: React.FC = () => {
             return;
         }
 
+        let cancelled = false;
+
         const loadData = async () => {
             try {
-                setIsLoading(true);
+                if (!cancelled) {
+                    setIsLoading(true);
+                }
                 const active = await getActiveProfile();
+                if (cancelled) return;
+
                 setProfile(active);
 
                 if (active?.id) {
                     // Load Weak Points
-                    const weakMath = await getWeakMathSkillIds(active.id);
-                    setWeakMathIds(weakMath);
+                    const [weakMath, weakVocab] = await Promise.all([
+                        getWeakMathSkillIds(active.id),
+                        getWeakVocabIds(active.id),
+                    ]);
+                    if (cancelled) return;
 
-                    const weakVocab = await getWeakVocabIds(active.id);
+                    setWeakMathIds(weakMath);
                     setWeakVocabIds(weakVocab);
                 }
             } catch (e) {
                 console.error("ParentsPage: Error loading data", e);
             } finally {
-                setIsLoading(false);
+                if (!cancelled) {
+                    setIsLoading(false);
+                }
             }
         };
-        loadData();
+
+        void loadData();
+
+        return () => {
+            cancelled = true;
+        };
     }, [isGatePassed]);
 
     if (!isGatePassed) {
@@ -125,7 +145,7 @@ export const ParentsPage: React.FC = () => {
                         {weakVocabIds.length > 0 ? (
                             <div className="flex flex-wrap gap-2">
                                 {weakVocabIds.map(id => {
-                                    const word = ENGLISH_WORDS.find(w => w.id === id);
+                                    const word = vocabWordMap.get(id);
                                     return (
                                         <span key={id} className="px-3 py-1 bg-red-50 text-red-600 rounded-full text-sm font-bold border border-red-100 flex items-center gap-2">
                                             <span>{id}</span>
@@ -152,8 +172,14 @@ export const ParentsPage: React.FC = () => {
                                             <span className="text-xs text-text-sub font-bold">{new Date(log.timestamp).toLocaleString('ja-JP')}</span>
                                             <span className="text-text-main font-medium mt-1">{log.subject} / {log.skillId}</span>
                                         </div>
-                                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${log.result === 'correct' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                                            {log.result === 'correct' ? '正解' : '不正解'}
+                                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${
+                                            log.result === 'correct'
+                                                ? 'bg-green-100 text-green-700'
+                                                : log.result === 'skipped'
+                                                    ? 'bg-amber-100 text-amber-700'
+                                                    : 'bg-red-100 text-red-700'
+                                        }`}>
+                                            {log.result === 'correct' ? '正解' : log.result === 'skipped' ? 'スキップ' : '不正解'}
                                         </span>
                                     </li>
                                 ))}

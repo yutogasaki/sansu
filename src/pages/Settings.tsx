@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
@@ -36,28 +36,56 @@ export const Settings: React.FC = () => {
     const isEasy = profile?.uiTextMode === "easy";
     const t = (easy: string, standard: string) => (isEasy ? easy : standard);
     const TEST_TIMER_OPTIONS = [0, 5, 10, 15, 20] as const;
+
+    const syncProfileState = useCallback((nextProfile: UserProfile | null) => {
+        setProfile(nextProfile);
+
+        if (!nextProfile) {
+            setSound(true);
+            setSoundEnabled(true);
+            return;
+        }
+
+        setSound(nextProfile.soundEnabled);
+        setSoundEnabled(nextProfile.soundEnabled);
+        setProfiles(previous => previous.map(item => (
+            item.id === nextProfile.id ? nextProfile : item
+        )));
+    }, []);
+
+    const persistProfileUpdate = useCallback(async (nextProfile: UserProfile) => {
+        await saveProfile(nextProfile);
+        syncProfileState(nextProfile);
+    }, [syncProfileState]);
+
     useEffect(() => {
+        let cancelled = false;
+
         const load = async () => {
             const p = await getActiveProfile();
             const list = await getAllProfiles();
+            if (cancelled) {
+                return;
+            }
+
             setProfiles(list);
             if (p) {
-                setProfile(p);
-                setSound(p.soundEnabled);
+                syncProfileState(p);
             }
         };
-        load();
-    }, []);
+
+        void load();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [syncProfileState]);
 
     const handleSoundToggle = async () => {
-        const newSound = !sound;
-        setSound(newSound);
-        setSoundEnabled(newSound);
-        if (profile) {
-            const updatedProfile = { ...profile, soundEnabled: newSound };
-            await saveProfile(updatedProfile);
-            setProfile(updatedProfile);
-        }
+        if (!profile) return;
+
+        const updatedProfile = { ...profile, soundEnabled: !sound };
+        await persistProfileUpdate(updatedProfile);
     };
 
     const GRADES: Record<number, string> = {
@@ -76,8 +104,7 @@ export const Settings: React.FC = () => {
         await setActiveProfileId(id);
         const p = await getActiveProfile();
         if (p) {
-            setProfile(p);
-            setSound(p.soundEnabled);
+            syncProfileState(p);
         }
         navigate("/");
     };
@@ -98,7 +125,7 @@ export const Settings: React.FC = () => {
         await saveProfile(updated);
 
         if (profile?.id === updated.id) {
-            setProfile(updated);
+            syncProfileState(updated);
         }
         setProfiles(prev => prev.map(p => (p.id === updated.id ? updated : p)));
         setRenameTarget(null);
@@ -120,9 +147,10 @@ export const Settings: React.FC = () => {
             // If deleted active profile, determine next action
             if (list.length > 0) {
                 await setActiveProfileId(list[0].id);
-                setProfile(list[0]);
+                syncProfileState(list[0]);
                 navigate("/");
             } else {
+                syncProfileState(null);
                 storage.clearAll();
                 navigate("/onboarding");
             }
@@ -133,15 +161,13 @@ export const Settings: React.FC = () => {
     const handleSubjectModeChange = async (mode: "mix" | "math" | "vocab") => {
         if (!profile) return;
         const updated = { ...profile, subjectMode: mode };
-        await saveProfile(updated);
-        setProfile(updated);
+        await persistProfileUpdate(updated);
     };
 
     const handleTextModeChange = async (mode: "easy" | "standard") => {
         if (!profile) return;
         const updated = { ...profile, uiTextMode: mode };
-        await saveProfile(updated);
-        setProfile(updated);
+        await persistProfileUpdate(updated);
     };
 
     // 保護者ガードを表示して、通過したらcallbackを実行
@@ -162,80 +188,84 @@ export const Settings: React.FC = () => {
     const handleReset = async () => {
         if (confirm("ほんとうに 全部消しますか？")) {
             if (profile) await deleteProfile(profile.id);
+            syncProfileState(null);
             storage.clearAll();
             navigate("/onboarding");
         }
     };
 
-    const handlePrintPDF = async () => {
-        if (!profile) return;
-        if (isPrinting) return;
+    const handlePrintError = (error: unknown) => {
+        console.error("[PDF] Error:", error);
+        alert(`PDFの作成に失敗しました。\n\nエラー: ${error instanceof Error ? error.message : String(error)}`);
+    };
+
+    const runPrintJob = async (job: () => Promise<void>) => {
+        if (!profile || isPrinting) return;
 
         setIsPrinting(true);
-        logInDev("[PDF] Starting Math PDF generation...");
-
-        const set = await ensurePeriodicTestSet(profile, "math");
-        const problems: Problem[] = set.problems.map((p, i) => ({
-            ...p,
-            id: `pdf-math-${i}`,
-            subject: "math",
-            isReview: false
-        }));
-        logInDev("[PDF] Using test set", set.level, problems.length);
-        if (problems.length === 0) {
-            alert("このレベルには まだ もんだいが ありません");
-            setIsPrinting(false);
-            return;
-        }
 
         try {
-            const { generateMathPDF } = await import("../utils/pdfGenerator");
-            await generateMathPDF(problems, `さんすう レベル Lv.${set.level}`, profile.name);
-            logInDev("[PDF] Math PDF generation completed!");
-
-            const updated = upsertPendingPaperTest(profile, "math", set.level);
-            await saveProfile(updated);
-            setProfile(updated);
-        } catch (e) {
-            console.error("[PDF] Error:", e);
-            alert(`PDFの作成に失敗しました。\n\nエラー: ${e instanceof Error ? e.message : String(e)}`);
+            await job();
+        } catch (error) {
+            handlePrintError(error);
         } finally {
             setIsPrinting(false);
         }
     };
 
+    const handlePrintPDF = async () => {
+        if (!profile) return;
+        const activeProfile = profile;
+
+        await runPrintJob(async () => {
+            logInDev("[PDF] Starting Math PDF generation...");
+
+            const set = await ensurePeriodicTestSet(activeProfile, "math");
+            const problems: Problem[] = set.problems.map((p, i) => ({
+                ...p,
+                id: `pdf-math-${i}`,
+                subject: "math",
+                isReview: false
+            }));
+            logInDev("[PDF] Using test set", set.level, problems.length);
+            if (problems.length === 0) {
+                alert("このレベルには まだ もんだいが ありません");
+                return;
+            }
+
+            const { generateMathPDF } = await import("../utils/pdfGenerator");
+            await generateMathPDF(problems, `さんすう レベル Lv.${set.level}`, activeProfile.name);
+            logInDev("[PDF] Math PDF generation completed!");
+
+            const updated = upsertPendingPaperTest(activeProfile, "math", set.level);
+            await persistProfileUpdate(updated);
+        });
+    };
+
     const handlePrintVocabPDF = async () => {
         if (!profile) return;
-        if (isPrinting) return;
+        const activeProfile = profile;
 
-        setIsPrinting(true);
-        logInDev("[PDF] Starting Vocab PDF generation...");
+        await runPrintJob(async () => {
+            logInDev("[PDF] Starting Vocab PDF generation...");
 
-        const set = await ensurePeriodicTestSet(profile, "vocab");
-        const selected = set.problems
-            .map(p => getWord(p.categoryId))
-            .filter((w): w is NonNullable<typeof w> => !!w);
-        logInDev("[PDF] Using test set", set.level, "words:", selected.length);
-        if (selected.length === 0) {
-            alert("まだ 単語が ありません");
-            setIsPrinting(false);
-            return;
-        }
+            const set = await ensurePeriodicTestSet(activeProfile, "vocab");
+            const selected = set.problems
+                .map(p => getWord(p.categoryId))
+                .filter((w): w is NonNullable<typeof w> => !!w);
+            logInDev("[PDF] Using test set", set.level, "words:", selected.length);
+            if (selected.length === 0) {
+                alert("まだ 単語が ありません");
+                return;
+            }
 
-        try {
             const { generateVocabPDF } = await import("../utils/pdfGenerator");
             await generateVocabPDF(selected, `えいご レベル Lv.${set.level}`);
             logInDev("[PDF] Vocab PDF generation completed!");
 
-            const updated = upsertPendingPaperTest(profile, "vocab", set.level);
-            await saveProfile(updated);
-            setProfile(updated);
-        } catch (e) {
-            console.error("[PDF] Error:", e);
-            alert(`PDFの作成に失敗しました。\n\nエラー: ${e instanceof Error ? e.message : String(e)}`);
-        } finally {
-            setIsPrinting(false);
-        }
+            const updated = upsertPendingPaperTest(activeProfile, "vocab", set.level);
+            await persistProfileUpdate(updated);
+        });
     };
 
     const getTestStatus = (subject: "math" | "vocab") => {
@@ -263,8 +293,7 @@ export const Settings: React.FC = () => {
     const handlePaperTestSubmit = async (correctCount: number) => {
         if (!profile || !pendingPaperTest) return;
         const updatedProfile = recordPaperTestScore(profile, pendingPaperTest, correctCount);
-        await saveProfile(updatedProfile);
-        setProfile(updatedProfile);
+        await persistProfileUpdate(updatedProfile);
         setShowPaperTestModal(false);
         setPendingPaperTest(null);
     };
@@ -280,8 +309,7 @@ export const Settings: React.FC = () => {
             ...profile,
             periodicTestTimeLimitSeconds: minutes > 0 ? minutes * 60 : undefined,
         };
-        await saveProfile(updated);
-        setProfile(updated);
+        await persistProfileUpdate(updated);
     };
 
     const formatPendingPaperMeta = (createdAt: string) => {
@@ -453,8 +481,7 @@ export const Settings: React.FC = () => {
                                 onClick={async () => {
                                     if (!profile) return;
                                     const updated = { ...profile, hissanModeEnabled: !profile.hissanModeEnabled };
-                                    await saveProfile(updated);
-                                    setProfile(updated);
+                                    await persistProfileUpdate(updated);
                                 }}
                                 className="w-20"
                             >
@@ -512,8 +539,7 @@ export const Settings: React.FC = () => {
                                 onClick={async () => {
                                     if (!profile) return;
                                     const updated = { ...profile, englishAutoRead: !profile.englishAutoRead };
-                                    await saveProfile(updated);
-                                    setProfile(updated);
+                                    await persistProfileUpdate(updated);
                                 }}
                                 className="w-20"
                             >
@@ -550,8 +576,7 @@ export const Settings: React.FC = () => {
                                     onClick={async () => {
                                         if (!profile) return;
                                         const updated = { ...profile, kanjiMode: false };
-                                        await saveProfile(updated);
-                                        setProfile(updated);
+                                        await persistProfileUpdate(updated);
                                     }}
                                 >
                                     ひらがな
@@ -561,8 +586,7 @@ export const Settings: React.FC = () => {
                                     onClick={async () => {
                                         if (!profile) return;
                                         const updated = { ...profile, kanjiMode: true };
-                                        await saveProfile(updated);
-                                        setProfile(updated);
+                                        await persistProfileUpdate(updated);
                                     }}
                                 >
                                     漢字

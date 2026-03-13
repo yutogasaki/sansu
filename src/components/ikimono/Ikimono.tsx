@@ -63,6 +63,31 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
     const pendingWelcomeSpeciesRef = useRef<number | null>(null);
     const scriptMode = kanjiMode ? "kanji" : "kana";
 
+    useEffect(() => {
+        if (hitokotoTimer.current) {
+            clearTimeout(hitokotoTimer.current);
+            hitokotoTimer.current = null;
+        }
+        if (idleTimer.current) {
+            clearInterval(idleTimer.current);
+            idleTimer.current = null;
+        }
+        particleTimers.current.forEach((timerId) => window.clearTimeout(timerId));
+        particleTimers.current = [];
+
+        setCurrentState(null);
+        setTransitionModal(null);
+        setShowNameModal(false);
+        setHitokoto(null);
+        setHitokotoReason(null);
+        setParticles([]);
+        setRipple(null);
+        openHitokotoShown.current = false;
+        pendingFarewellRef.current = null;
+        pendingWelcomeSpeciesRef.current = null;
+        isReacting.current = false;
+    }, [profileId]);
+
     const getOrCreateState = useCallback((): IkimonoState => {
         const stored = ikimonoStorage.getState();
         if (stored && stored.profileId === profileId) {
@@ -105,7 +130,8 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
         return newState;
     }, [profileId]);
 
-    const state = currentState || getOrCreateState();
+    const activeCurrentState = currentState?.profileId === profileId ? currentState : null;
+    const state = activeCurrentState || getOrCreateState();
     const { stage, fadeOpacity } = calculateStage(state.birthDate);
     const sway = getStageSway(stage);
     const daysAlive = Math.max(1, Math.floor((Date.now() - new Date(state.birthDate).getTime()) / DAY_IN_MS) + 1);
@@ -172,6 +198,7 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
         hitokotoTimer.current = setTimeout(() => {
             setHitokoto(null);
             setHitokotoReason(null);
+            hitokotoTimer.current = null;
         }, duration);
     };
 
@@ -180,7 +207,10 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
         if (hitokoto) {
             setHitokoto(null);
             setHitokotoReason(null);
-            if (hitokotoTimer.current) clearTimeout(hitokotoTimer.current);
+            if (hitokotoTimer.current) {
+                clearTimeout(hitokotoTimer.current);
+                hitokotoTimer.current = null;
+            }
             return;
         }
 
@@ -206,22 +236,26 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
 
         const timerId = window.setTimeout(() => {
             setParticles((previous) => previous.filter((particle) => !seededIds.has(particle.id)));
+            particleTimers.current = particleTimers.current.filter((id) => id !== timerId);
         }, 1400);
         particleTimers.current.push(timerId);
 
-        const reaction = pickTapReaction(stage);
-        if (reaction === "hitokoto") {
-            showHitokoto(stage === "egg" ? getEggTapHitokoto(scriptMode) : getTapHitokoto(scriptMode), 2600, "tap");
+        try {
+            const reaction = pickTapReaction(stage);
+            if (reaction === "hitokoto") {
+                showHitokoto(stage === "egg" ? getEggTapHitokoto(scriptMode) : getTapHitokoto(scriptMode), 2600, "tap");
+            }
+
+            await playTapReaction(controls, reaction);
+
+            if (reaction !== "hitokoto" && Math.random() < 0.28) {
+                showHitokoto(stage === "egg" ? getEggTapHitokoto(scriptMode) : getTapHitokoto(scriptMode), 2200, "tap");
+            }
+
+            await playIdle();
+        } finally {
+            isReacting.current = false;
         }
-
-        await playTapReaction(controls, reaction);
-
-        if (reaction !== "hitokoto" && Math.random() < 0.28) {
-            showHitokoto(stage === "egg" ? getEggTapHitokoto(scriptMode) : getTapHitokoto(scriptMode), 2200, "tap");
-        }
-
-        await playIdle();
-        isReacting.current = false;
     };
 
     useEffect(() => {
