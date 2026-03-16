@@ -1,10 +1,19 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addDays } from "date-fns";
-import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
-import { Icons } from "../components/icons";
+import { Badge } from "../components/ui/Badge";
 import { Spinner } from "../components/ui/Spinner";
+import {
+    InsetPanel,
+    PanelDivider,
+    SectionLabel,
+    SegmentedControl,
+    SettingRow,
+    SurfacePanel,
+    SurfacePanelHeader,
+} from "../components/ui/SurfacePanel";
+import { Icons } from "../components/icons";
 import { getActiveProfile } from "../domain/user/repository";
 import {
     DailyStats,
@@ -191,6 +200,46 @@ const loadSectionState = (): SectionState => {
         return DEFAULT_SECTIONS;
     }
 };
+
+interface MetricTileProps {
+    label: string;
+    value: React.ReactNode;
+    tone?: "default" | "sky" | "mint" | "rose";
+}
+
+const metricToneClassMap: Record<NonNullable<MetricTileProps["tone"]>, string> = {
+    default: "text-slate-800",
+    sky: "text-sky-700",
+    mint: "text-emerald-700",
+    rose: "text-rose-700",
+};
+
+const MetricTile: React.FC<MetricTileProps> = ({ label, value, tone = "default" }) => (
+    <InsetPanel className="space-y-1 py-3 text-center">
+        <div className={`text-2xl font-black tracking-[-0.03em] ${metricToneClassMap[tone]}`}>{value}</div>
+        <div className="text-[11px] font-bold tracking-[0.08em] text-slate-500">{label}</div>
+    </InsetPanel>
+);
+
+interface SectionToggleButtonProps {
+    active: boolean;
+    children: React.ReactNode;
+    onClick: () => void;
+}
+
+const SectionToggleButton: React.FC<SectionToggleButtonProps> = ({ active, children, onClick }) => (
+    <button
+        type="button"
+        onClick={onClick}
+        className={`rounded-full border px-3 py-1.5 text-xs font-bold transition-colors ${
+            active
+                ? "border-cyan-600 bg-cyan-600 text-white"
+                : "border-white/80 bg-white/70 text-slate-500"
+        }`}
+    >
+        {children}
+    </button>
+);
 
 export const Stats: React.FC = () => {
     const navigate = useNavigate();
@@ -413,154 +462,146 @@ export const Stats: React.FC = () => {
         <ScreenScaffold
             title={t("きろく", "記録")}
             rightAction={closeAction}
-            contentClassName="px-[var(--screen-padding-x)] pt-1 space-y-4"
+            contentClassName="px-[var(--screen-padding-x)] pt-1 space-y-5"
         >
-                <Card className="p-4" variant="flat">
-                    <div className="text-xs font-bold text-slate-500 mb-3">ひょうじ する ないよう</div>
-                    <div className="flex flex-wrap gap-2">
-                        {(Object.keys(sections) as SectionKey[]).map(key => (
-                            <button
-                                key={key}
-                                type="button"
-                                onClick={() => toggleSection(key)}
-                                className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${sections[key]
-                                        ? "bg-cyan-600 text-white border-cyan-600"
-                                        : "bg-white/70 text-slate-500 border-white/80"
-                                    }`}
-                            >
-                                {SECTION_LABELS[key]}
-                            </button>
-                        ))}
+            <SurfacePanel variant="flat" className="space-y-3">
+                <SurfacePanelHeader
+                    title={t("ひょうじ する ないよう", "表示する内容")}
+                    description={t("みたい ぶぶん だけ えらべる", "見たいカードだけに絞れます")}
+                />
+                <div className="flex flex-wrap gap-2">
+                    {(Object.keys(sections) as SectionKey[]).map(key => (
+                        <SectionToggleButton
+                            key={key}
+                            active={sections[key]}
+                            onClick={() => toggleSection(key)}
+                        >
+                            {SECTION_LABELS[key]}
+                        </SectionToggleButton>
+                    ))}
+                </div>
+            </SurfacePanel>
+
+            {sections.summary && (
+                <SurfacePanel>
+                    <SurfacePanelHeader
+                        title="きょう の まとめ"
+                        description={t("いちにち の まなび を 4つで ふりかえる", "今日の学習をざっくり振り返る")}
+                    />
+                    <div className="grid grid-cols-2 gap-3">
+                        <MetricTile label="かいとう" value={todayStats.count} tone="sky" />
+                        <MetricTile label="せいかいりつ" value={`${todayAccuracy}%`} tone="mint" />
+                        <MetricTile label="ふん" value={todayMinutes} />
+                        <MetricTile label="れんぞくにち" value={profile.streak || 0} tone="rose" />
                     </div>
-                </Card>
+                </SurfacePanel>
+            )}
 
-                {sections.summary && (
-                    <Card className="p-4">
-                        <h3 className="font-bold text-slate-700">きょう の まとめ</h3>
-                        <div className="grid grid-cols-4 gap-2 mt-3">
-                            <div className="text-center bg-white/60 border border-white/80 rounded-2xl p-3">
-                                <div className="text-2xl font-black text-slate-800">{todayStats.count}</div>
-                                <div className="text-[11px] text-slate-500">かいとう</div>
-                            </div>
-                            <div className="text-center bg-white/60 border border-white/80 rounded-2xl p-3">
-                                <div className="text-2xl font-black text-slate-800">{todayAccuracy}%</div>
-                                <div className="text-[11px] text-slate-500">せいかいりつ</div>
-                            </div>
-                            <div className="text-center bg-white/60 border border-white/80 rounded-2xl p-3">
-                                <div className="text-2xl font-black text-slate-800">{todayMinutes}</div>
-                                <div className="text-[11px] text-slate-500">ふん</div>
-                            </div>
-                            <div className="text-center bg-white/60 border border-white/80 rounded-2xl p-3">
-                                <div className="text-2xl font-black text-slate-800">{profile.streak || 0}</div>
-                                <div className="text-[11px] text-slate-500">れんぞくにち</div>
-                            </div>
-                        </div>
-                    </Card>
-                )}
+            {sections.calendar && (
+                <SurfacePanel>
+                    <SurfacePanelHeader
+                        title="1しゅうかん カレンダー"
+                        description={t("ひび の ペース が ひとめで わかる", "1週間の学習量を色で確認")}
+                    />
+                    <div className="grid grid-cols-7 gap-2">
+                        {weeklyDays.map(day => {
+                            const tone =
+                                day.count === 0 ? "border-white/80 bg-white/70 text-slate-400" :
+                                    day.count < 10 ? "border-sky-100 bg-sky-100 text-sky-700" :
+                                        day.count < 25 ? "border-sky-200 bg-sky-300 text-sky-900" :
+                                            "border-sky-500 bg-sky-500 text-white";
 
-                {sections.calendar && (
-                    <Card className="p-4">
-                        <h3 className="font-bold text-slate-700">1しゅうかん カレンダー</h3>
-                        <div className="grid grid-cols-7 gap-2 mt-3">
-                            {weeklyDays.map(day => {
-                                const tone =
-                                    day.count === 0 ? "bg-white/70 border border-white/80 text-slate-400" :
-                                        day.count < 10 ? "bg-sky-100 text-sky-700" :
-                                            day.count < 25 ? "bg-sky-300 text-sky-900" :
-                                                "bg-sky-500 text-white";
-                                return (
-                                    <div key={day.dateKey} className="text-center">
-                                        <div className="text-[10px] text-slate-500 mb-1">{day.label}</div>
-                                        <div className={`h-8 rounded-xl flex items-center justify-center text-xs font-bold ${tone}`}>
-                                            {day.count}
-                                        </div>
+                            return (
+                                <div key={day.dateKey} className="text-center">
+                                    <div className="mb-1 text-[10px] font-bold text-slate-500">{day.label}</div>
+                                    <div className={`flex h-10 items-center justify-center rounded-2xl border text-xs font-black ${tone}`}>
+                                        {day.count}
                                     </div>
-                                );
-                            })}
-                        </div>
-                    </Card>
-                )}
-
-                {sections.growth && (
-                    <Card className="p-4">
-                        <h3 className="font-bold text-slate-700">{t("せいちょう グラフ", "成長グラフ")}</h3>
-                        <p className="text-xs text-slate-500 mt-2">{growthMessage}</p>
-
-                        <div className="mt-3">
-                            <WeeklyTrendChart data={trendData} mode={trendMode} />
-                        </div>
-                        <div className="flex gap-2 mt-1 justify-center">
-                            <button
-                                onClick={() => setTrendMode("count")}
-                                className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${trendMode === "count" ? "bg-cyan-600 text-white border-cyan-600" : "bg-white/70 text-slate-500 border-white/80"}`}
-                            >
-                                かいとう
-                            </button>
-                            <button
-                                onClick={() => setTrendMode("accuracy")}
-                                className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${trendMode === "accuracy" ? "bg-cyan-600 text-white border-cyan-600" : "bg-white/70 text-slate-500 border-white/80"}`}
-                            >
-                                せいかいりつ
-                            </button>
-                        </div>
-
-                        {stableSkills.length > 0 && (
-                            <>
-                                <h4 className="font-bold text-slate-600 text-xs mt-4 mb-2">{t("できるように なったこと", "できるようになったこと")}</h4>
-                                <div className="space-y-2">
-                                    {stableSkills.slice(0, 3).map(skill => (
-                                        <div key={`${skill.subject}-${skill.id}`} className="rounded-2xl bg-emerald-50 border border-emerald-100 p-3">
-                                            <div className="font-bold text-emerald-800 text-sm">{skill.label}</div>
-                                            <div className="text-[11px] text-emerald-600 mt-1">
-                                                つよさ {skill.strength} / かいとう {skill.totalAnswers}かい
-                                            </div>
-                                        </div>
-                                    ))}
                                 </div>
-                            </>
+                            );
+                        })}
+                    </div>
+                </SurfacePanel>
+            )}
+
+            {sections.growth && (
+                <SurfacePanel>
+                    <SurfacePanelHeader
+                        title={t("せいちょう グラフ", "成長グラフ")}
+                        description={growthMessage}
+                    />
+                    <WeeklyTrendChart data={trendData} mode={trendMode} />
+                    <SegmentedControl
+                        className="mx-auto max-w-xs"
+                        value={trendMode}
+                        onChange={setTrendMode}
+                        options={[
+                            { value: "count", label: "かいとう" },
+                            { value: "accuracy", label: "せいかいりつ" },
+                        ]}
+                    />
+
+                    {stableSkills.length > 0 && (
+                        <>
+                            <PanelDivider />
+                            <SectionLabel className="px-0">{t("できるように なったこと", "できるようになったこと")}</SectionLabel>
+                            <div className="space-y-2">
+                                {stableSkills.slice(0, 3).map(skill => (
+                                    <InsetPanel key={`${skill.subject}-${skill.id}`} className="space-y-1">
+                                        <div className="flex items-center gap-2">
+                                            <Badge variant={skill.subject === "math" ? "primary" : "success"}>
+                                                {skill.subject === "math" ? t("さんすう", "算数") : t("えいご", "英語")}
+                                            </Badge>
+                                            <div className="font-bold text-slate-800">{skill.label}</div>
+                                        </div>
+                                        <div className="text-[11px] text-slate-500">
+                                            つよさ {skill.strength} / かいとう {skill.totalAnswers}かい
+                                        </div>
+                                    </InsetPanel>
+                                ))}
+                            </div>
+                        </>
+                    )}
+                </SurfacePanel>
+            )}
+
+            {sections.weak && (
+                <SurfacePanel>
+                    <SurfacePanelHeader
+                        title="まちがい ぶんせき"
+                        description={weakPatternMessage}
+                    />
+                    <div className="space-y-2">
+                        {weakTop3.length > 0 ? weakTop3.map((item, idx) => (
+                            <InsetPanel key={`${item.id}-weak-${idx}`} className="flex items-center justify-between gap-3">
+                                <div className="min-w-0">
+                                    <div className="font-bold text-slate-700">{getLabel(item.id, item.subject)}</div>
+                                    <div className="text-xs text-slate-500">
+                                        せいかいりつ: {Math.round(item.accuracy * 100)}% ・ さいしゅう: {formatDate(item.lastCorrectAt)}
+                                    </div>
+                                </div>
+                                <Button
+                                    size="sm"
+                                    variant="secondary"
+                                    className="h-10 shrink-0 text-sm"
+                                    onClick={() => { warmUpTTS(); navigate(`/study?session=weak&focus_subject=${item.subject}&focus_ids=${item.id}`); }}
+                                >
+                                    これだけ
+                                </Button>
+                            </InsetPanel>
+                        )) : (
+                            <InsetPanel className="text-xs text-slate-500">いまは とくに にがて なし。</InsetPanel>
                         )}
-                    </Card>
-                )}
+                    </div>
+                </SurfacePanel>
+            )}
 
-                {sections.weak && (
-                    <Card className="p-4 land:col-span-2">
-                        <h3 className="font-bold text-slate-700">まちがい ぶんせき</h3>
-                        <p className="text-xs text-slate-500 mt-2">{weakPatternMessage}</p>
-
-                        <div className="mt-3 space-y-2">
-                            {weakTop3.length > 0 ? weakTop3.map((item, idx) => (
-                                <div key={`${item.id}-weak-${idx}`} className="p-3 rounded-2xl bg-yellow-50 border border-yellow-100 flex justify-between items-center">
-                                    <div>
-                                        <div className="font-bold text-slate-700">{getLabel(item.id, item.subject)}</div>
-                                        <div className="text-xs text-slate-500">
-                                            せいかいりつ: {Math.round(item.accuracy * 100)}% ・ さいしゅう: {formatDate(item.lastCorrectAt)}
-                                        </div>
-                                    </div>
-                                    <Button
-                                        size="sm"
-                                        variant="secondary"
-                                        className="h-10 text-sm"
-                                        onClick={() => { warmUpTTS(); navigate(`/study?session=weak&focus_subject=${item.subject}&focus_ids=${item.id}`); }}
-                                    >
-                                        これだけ
-                                    </Button>
-                                </div>
-                            )) : (
-                                <div className="text-xs text-slate-500">いまは とくに にがて なし。</div>
-                            )}
-                        </div>
-                    </Card>
-                )}
-
-                {sections.review && (
-                    <Card className="p-4 land:col-span-2">
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <h3 className="font-bold text-slate-700">ふくしゅう キュー</h3>
-                                <div className="text-xs text-slate-500 mt-1">
-                                    {t(`きょう やるべき ふくしゅう: ${reviewCount}けん`, `今日やるべき復習: ${reviewCount}件`)}
-                                </div>
-                            </div>
+            {sections.review && (
+                <SurfacePanel>
+                    <SurfacePanelHeader
+                        title="ふくしゅう キュー"
+                        description={t(`きょう やるべき ふくしゅう: ${reviewCount}けん`, `今日やるべき復習: ${reviewCount}件`)}
+                        action={(
                             <Button
                                 size="sm"
                                 className="h-10 text-sm"
@@ -568,182 +609,194 @@ export const Stats: React.FC = () => {
                             >
                                 {t("まとめて やる", "まとめて学習")}
                             </Button>
-                        </div>
+                        )}
+                    />
 
-                        <Card className="p-3 mt-3 flex justify-between items-center border border-sky-100 bg-sky-50 shadow-sm" variant="flat">
-                                <div>
-                                <div className="font-bold text-sky-800">{t("テストの じゅんび (10もん)", "テスト準備 (10問)")}</div>
-                                <div className="text-xs text-sky-600 mt-1">{t("にがてを さきに かためる", "苦手を先に固める")}</div>
+                    <InsetPanel className="flex items-center justify-between gap-3 border-sky-100 bg-sky-50/70">
+                        <div>
+                            <div className="font-bold text-sky-800">{t("テストの じゅんび (10もん)", "テスト準備 (10問)")}</div>
+                            <div className="mt-1 text-xs text-sky-600">{t("にがてを さきに かためる", "苦手を先に固める")}</div>
+                        </div>
+                        <Button
+                            size="sm"
+                            className="h-10 text-sm bg-white text-sky-700 border border-sky-200 hover:bg-sky-100"
+                            onClick={() => { warmUpTTS(); navigate("/study?session=weak-review"); }}
+                        >
+                            {t("やる", "開始")}
+                        </Button>
+                    </InsetPanel>
+
+                    {reviewItems.length > 0 && (
+                        <div className="space-y-2">
+                            {reviewItems.map((item, idx) => (
+                                <InsetPanel key={`${item.id}-review-${idx}`} className="flex items-center justify-between gap-3">
+                                    <div className="min-w-0">
+                                        <div className="font-bold text-slate-700">{getLabel(item.id, item.subject)}</div>
+                                        <div className="text-xs text-slate-400">{t("さいしゅう", "最終")}: {formatDate(item.lastCorrectAt)}</div>
+                                    </div>
+                                    <Button
+                                        size="sm"
+                                        variant="secondary"
+                                        className="h-10 shrink-0 text-sm"
+                                        onClick={() => { warmUpTTS(); navigate(`/study?session=review&focus_subject=${item.subject}&focus_ids=${item.id}&force_review=1`); }}
+                                    >
+                                        {t("やる", "開始")}
+                                    </Button>
+                                </InsetPanel>
+                            ))}
+                        </div>
+                    )}
+
+                    {eventCheckPending && (
+                        <InsetPanel className="flex items-center justify-between gap-3 border-indigo-200 bg-indigo-50/60">
+                            <div>
+                                <div className="font-bold text-slate-700">{t("✨ ていき テスト (20もん)", "✨ 定期テスト (20問)")}</div>
+                                <div className="text-xs text-slate-500">{t("がっこう テスト まえ の かくにん", "学校テスト前の確認")}</div>
                             </div>
                             <Button
                                 size="sm"
-                                className="h-10 text-sm bg-white text-sky-700 border border-sky-200 hover:bg-sky-100"
-                                onClick={() => { warmUpTTS(); navigate("/study?session=weak-review"); }}
+                                variant="primary"
+                                className="h-10 shrink-0 text-sm"
+                                onClick={() => {
+                                    localStorage.removeItem("sansu_event_check_pending");
+                                    setEventCheckPending(false);
+                                    warmUpTTS();
+                                    navigate("/study?session=periodic-test");
+                                }}
                             >
-                                {t("やる", "開始")}
+                                {t("ちょうせん", "挑戦")}
                             </Button>
-                        </Card>
+                        </InsetPanel>
+                    )}
+                </SurfacePanel>
+            )}
 
-                        {reviewItems.length > 0 && (
-                            <div className="mt-3 space-y-2">
-                                {reviewItems.map((item, idx) => (
-                                    <Card key={`${item.id}-review-${idx}`} className="p-3 flex justify-between items-center" variant="flat">
-                                        <div>
-                                            <div className="font-bold text-slate-700">{getLabel(item.id, item.subject)}</div>
-                                            <div className="text-xs text-slate-400">{t("さいしゅう", "最終")}: {formatDate(item.lastCorrectAt)}</div>
-                                        </div>
-                                        <Button
-                                            size="sm"
-                                            variant="secondary"
-                                            className="h-10 text-sm"
-                                            onClick={() => { warmUpTTS(); navigate(`/study?session=review&focus_subject=${item.subject}&focus_ids=${item.id}&force_review=1`); }}
-                                        >
-                                            {t("やる", "開始")}
-                                        </Button>
-                                    </Card>
-                                ))}
-                            </div>
-                        )}
+            {sections.progress && (
+                <SurfacePanel>
+                    <SurfacePanelHeader
+                        title={t("スキル マップ", "スキルマップ")}
+                        description={t("できる はんい と つぎの レベル を みる", "現在地と次のレベルを確認")}
+                    />
 
-                        {eventCheckPending && (
-                            <Card className="p-3 mt-3 flex justify-between items-center border border-indigo-200 bg-indigo-50/50" variant="flat">
-                                <div>
-                                    <div className="font-bold text-slate-700">{t("✨ ていき テスト (20もん)", "✨ 定期テスト (20問)")}</div>
-                                    <div className="text-xs text-slate-500">{t("がっこう テスト まえ の かくにん", "学校テスト前の確認")}</div>
-                                </div>
-                                <Button
-                                    size="sm"
-                                    variant="primary"
-                                    className="h-10 text-sm"
-                                    onClick={() => {
-                                        localStorage.removeItem("sansu_event_check_pending");
-                                        setEventCheckPending(false);
-                                        warmUpTTS();
-                                        navigate("/study?session=periodic-test");
-                                    }}
-                                >
-                                    {t("ちょうせん", "挑戦")}
-                                </Button>
-                            </Card>
-                        )}
-                    </Card>
-                )}
+                    {radarData.some(d => d.skillCount > 0) ? (
+                        <SkillRadarChart data={radarData} />
+                    ) : (
+                        <InsetPanel className="text-xs text-slate-500">
+                            {t("さんすう を やると マップが みれるよ。", "算数を学習するとマップが表示されます。")}
+                        </InsetPanel>
+                    )}
 
-                {sections.progress && (
-                    <Card className="p-4">
-                        <h3 className="font-bold text-slate-700">{t("スキル マップ", "スキルマップ")}</h3>
-
-                        {radarData.some(d => d.skillCount > 0) ? (
-                            <div className="mt-2">
-                                <SkillRadarChart data={radarData} />
-                            </div>
-                        ) : (
-                            <div className="mt-3 text-xs text-slate-500">
-                                {t("さんすう を やると マップが みれるよ。", "算数を学習するとマップが表示されます。")}
-                            </div>
-                        )}
-
-                        <h4 className="font-bold text-slate-600 text-xs mt-4 mb-2">{t("レベル しんちょく", "レベル進捗")}</h4>
-                        <div className="p-3 rounded-2xl bg-white/60 border border-white/80">
+                    <PanelDivider />
+                    <SectionLabel className="px-0">{t("レベル しんちょく", "レベル進捗")}</SectionLabel>
+                    <div className="space-y-3">
+                        <InsetPanel>
                             <div className="text-sm font-bold text-slate-700">
                                 さんすう Lv{profile.mathMainLevel} / かいほう Lv{profile.mathMaxUnlocked}
                             </div>
-                            <div className="mt-2 h-2 rounded-full bg-white/80 overflow-hidden">
+                            <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/80">
                                 <div className="h-full bg-emerald-500" style={{ width: `${Math.min((mathRecent.length / 20) * 100, 100)}%` }} />
                             </div>
-                            <div className="text-[11px] text-slate-500 mt-1">
+                            <div className="mt-1 text-[11px] text-slate-500">
                                 さいきん: {mathRecentCorrect}/{mathRecent.length || 0}せいかい ・ つぎ Lv{Math.min(profile.mathMainLevel + 1, maxMathLevel)}
                             </div>
-                        </div>
+                        </InsetPanel>
 
-                        <div className="mt-3 p-3 rounded-2xl bg-white/60 border border-white/80">
+                        <InsetPanel>
                             <div className="text-sm font-bold text-slate-700">
                                 {t("えいたんご", "英単語")} Lv{profile.vocabMainLevel} / {t("かいほう", "解放")} Lv{profile.vocabMaxUnlocked}
                             </div>
-                            <div className="mt-2 h-2 rounded-full bg-white/80 overflow-hidden">
+                            <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/80">
                                 <div className="h-full bg-sky-500" style={{ width: `${Math.min((vocabRecent.length / 20) * 100, 100)}%` }} />
                             </div>
-                            <div className="text-[11px] text-slate-500 mt-1">
+                            <div className="mt-1 text-[11px] text-slate-500">
                                 さいきん: {vocabRecentCorrect}/{vocabRecent.length || 0}せいかい ・ つぎ Lv{Math.min(profile.vocabMainLevel + 1, maxVocabLevel)}
                             </div>
-                        </div>
-                    </Card>
-                )}
+                        </InsetPanel>
+                    </div>
+                </SurfacePanel>
+            )}
 
-                {sections.tests && (
-                    <Card className="p-4 land:col-span-2">
-                        <h3 className="font-bold text-slate-700">{t("ていき テスト りれき", "定期テスト履歴")}</h3>
-                        {periodicTestHistory.length === 0 ? (
-                            <div className="text-xs text-slate-500 mt-3">{t("まだ きろく が ないよ", "まだ記録がありません")}</div>
-                        ) : (
-                            <div className="mt-3 space-y-2">
-                                {periodicTestHistory.map((test) => (
-                                    <div key={test.id} className="rounded-2xl border border-white/80 bg-white/70 p-3 flex items-center justify-between gap-3">
-                                        <div className="min-w-0">
-                                            <div className="text-sm font-bold text-slate-700">
-                                                {test.subject === "math" ? t("さんすう", "算数") : t("えいご", "英語")} Lv.{test.level}
-                                            </div>
-                                            <div className="text-[11px] text-slate-500 mt-0.5">
-                                                {new Date(test.timestamp).toLocaleString("ja-JP")} / {test.method === "paper" ? t("かみ", "紙") : t("アプリ", "アプリ")}
-                                            </div>
-                                            <div className="text-[11px] text-slate-500 mt-0.5">
-                                                {t("じかん", "時間")}: {Math.floor(test.durationSeconds / 60)}:{String(test.durationSeconds % 60).padStart(2, "0")}
-                                                {typeof test.timeLimitSeconds === "number" && (
-                                                    <> / {t("せいげん", "制限")}: {Math.floor(test.timeLimitSeconds / 60)}:{String(test.timeLimitSeconds % 60).padStart(2, "0")}</>
-                                                )}
-                                                {test.timedOut ? ` / ${t("じかんぎれ", "時間切れ")}` : ""}
-                                            </div>
+            {sections.tests && (
+                <SurfacePanel>
+                    <SurfacePanelHeader
+                        title={t("ていき テスト りれき", "定期テスト履歴")}
+                        description={t("さいきん の テストけっか を のこしておく", "最近のテスト結果を確認")}
+                    />
+                    {periodicTestHistory.length === 0 ? (
+                        <InsetPanel className="text-xs text-slate-500">{t("まだ きろく が ないよ", "まだ記録がありません")}</InsetPanel>
+                    ) : (
+                        <div className="space-y-2">
+                            {periodicTestHistory.map((test) => (
+                                <InsetPanel key={test.id} className="flex items-center justify-between gap-3">
+                                    <div className="min-w-0">
+                                        <div className="text-sm font-bold text-slate-700">
+                                            {test.subject === "math" ? t("さんすう", "算数") : t("えいご", "英語")} Lv.{test.level}
                                         </div>
-                                        <div className="text-right shrink-0">
-                                            <div className="text-lg font-black text-indigo-600">{test.score}{t("てん", "点")}</div>
-                                            <div className="text-[11px] text-slate-500">{test.correctCount}/{test.totalQuestions}</div>
+                                        <div className="mt-0.5 text-[11px] text-slate-500">
+                                            {new Date(test.timestamp).toLocaleString("ja-JP")} / {test.method === "paper" ? t("かみ", "紙") : t("アプリ", "アプリ")}
+                                        </div>
+                                        <div className="mt-0.5 text-[11px] text-slate-500">
+                                            {t("じかん", "時間")}: {Math.floor(test.durationSeconds / 60)}:{String(test.durationSeconds % 60).padStart(2, "0")}
+                                            {typeof test.timeLimitSeconds === "number" && (
+                                                <> / {t("せいげん", "制限")}: {Math.floor(test.timeLimitSeconds / 60)}:{String(test.timeLimitSeconds % 60).padStart(2, "0")}</>
+                                            )}
+                                            {test.timedOut ? ` / ${t("じかんぎれ", "時間切れ")}` : ""}
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-                        )}
-                    </Card>
-                )}
-
-                {/* ふわふわ アルバム */}
-                {profile && (
-                    <Card className="p-4">
-                        <IkimonoGallery profileId={profile.id} />
-                    </Card>
-                )}
-
-                {sections.parent && (
-                    <Card className="p-4">
-                        <h3 className="font-bold text-slate-700">{t("ほごしゃ むけ ミニレポート", "保護者向けミニレポート")}</h3>
-                        <div className="mt-3 space-y-2 text-sm text-slate-700">
-                            <div className="flex justify-between">
-                                <span className="text-slate-500">こんしゅう の がくしゅうじかん</span>
-                                <span className="font-bold">{weekMinutes}ふん</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span className="text-slate-500">ぜんたい かいとうすう</span>
-                                <span className="font-bold">{totalStats.count}かい</span>
-                            </div>
-                            <div>
-                                <div className="text-slate-500 text-xs mb-1">にがて たんげん</div>
-                                {weakTop3.length > 0 ? (
-                                    <div className="flex flex-wrap gap-2">
-                                        {weakTop3.slice(0, 2).map(item => (
-                                            <span key={`parent-${item.subject}-${item.id}`} className="px-2 py-1 rounded-full text-xs bg-rose-100 text-rose-700">
-                                                {getLabel(item.id, item.subject)}
-                                            </span>
-                                        ))}
+                                    <div className="shrink-0 text-right">
+                                        <div className="text-lg font-black text-indigo-600">{test.score}{t("てん", "点")}</div>
+                                        <div className="text-[11px] text-slate-500">{test.correctCount}/{test.totalQuestions}</div>
                                     </div>
-                                ) : (
-                                    <div className="text-xs text-slate-500">とくに なし</div>
-                                )}
-                            </div>
-                            <div className="rounded-2xl bg-white/60 border border-white/80 p-3 text-xs text-slate-600">
-                                こえかけ例: 「きょう は どこ が いちばん できるように なった？」
-                            </div>
+                                </InsetPanel>
+                            ))}
                         </div>
-                    </Card>
-                )}
+                    )}
+                </SurfacePanel>
+            )}
+
+            <SurfacePanel>
+                <SurfacePanelHeader
+                    title="ふわふわ アルバム"
+                    description={t("いままで の ふわふわ を ふりかえる", "成長の記録を静かに見返せます")}
+                />
+                <IkimonoGallery profileId={profile.id} />
+            </SurfacePanel>
+
+            {sections.parent && (
+                <SurfacePanel>
+                    <SurfacePanelHeader
+                        title={t("ほごしゃ むけ ミニレポート", "保護者向けミニレポート")}
+                        description={t("おとな が みる とき の ざっくり まとめ", "大人向けの簡易な振り返り")}
+                    />
+                    <div className="space-y-3 text-sm text-slate-700">
+                        <SettingRow
+                            title="こんしゅう の がくしゅうじかん"
+                            action={<span className="font-bold">{weekMinutes}ふん</span>}
+                        />
+                        <SettingRow
+                            title="ぜんたい かいとうすう"
+                            action={<span className="font-bold">{totalStats.count}かい</span>}
+                        />
+                        <InsetPanel className="space-y-2">
+                            <div className="text-xs font-bold tracking-[0.12em] text-slate-500">にがて たんげん</div>
+                            {weakTop3.length > 0 ? (
+                                <div className="flex flex-wrap gap-2">
+                                    {weakTop3.slice(0, 2).map(item => (
+                                        <Badge key={`parent-${item.subject}-${item.id}`} variant="warning">
+                                            {getLabel(item.id, item.subject)}
+                                        </Badge>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-xs text-slate-500">とくに なし</div>
+                            )}
+                        </InsetPanel>
+                        <InsetPanel className="text-xs leading-6 text-slate-600">
+                            こえかけ例: 「きょう は どこ が いちばん できるように なった？」
+                        </InsetPanel>
+                    </div>
+                </SurfacePanel>
+            )}
         </ScreenScaffold>
     );
 };

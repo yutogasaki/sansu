@@ -1,7 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
 import { Modal } from "../components/ui/Modal";
+import { Badge } from "../components/ui/Badge";
+import {
+    InsetPanel,
+    PanelDivider,
+    SectionLabel,
+    SegmentedControl,
+    SettingRow,
+    SurfacePanel,
+    SurfacePanelHeader,
+} from "../components/ui/SurfacePanel";
 import { PaperTestScoreModal } from "../components/domain/PaperTestScoreModal";
 import { useNavigate } from "react-router-dom";
 import { UserProfile } from "../domain/types";
@@ -271,9 +280,9 @@ export const Settings: React.FC = () => {
     const getTestStatus = (subject: "math" | "vocab") => {
         const pendingOnline = profile?.periodicTestState?.[subject]?.isPending;
         const pendingPaper = (profile?.pendingPaperTests || []).some(t => t.subject === subject);
-        if (pendingPaper) return { label: isEasy ? "さいてん まち" : "採点待ち", tone: "bg-amber-100 text-amber-700" };
-        if (pendingOnline) return { label: isEasy ? "じゅんび OK" : "受験可能", tone: "bg-emerald-100 text-emerald-700" };
-        return { label: isEasy ? "つうじょう" : "通常", tone: "bg-white/70 border border-white/80 text-slate-600" };
+        if (pendingPaper) return { label: isEasy ? "さいてん まち" : "採点待ち", variant: "warning" as const };
+        if (pendingOnline) return { label: isEasy ? "じゅんび OK" : "受験可能", variant: "success" as const };
+        return { label: isEasy ? "つうじょう" : "通常", variant: "neutral" as const };
     };
 
     const getPendingPaperTest = (subject: "math" | "vocab") => {
@@ -322,7 +331,7 @@ export const Settings: React.FC = () => {
     return (
         <ScreenScaffold
             title={t("せってい", "設定")}
-            contentClassName="px-[var(--screen-padding-x)] pt-1 space-y-6"
+            contentClassName="px-[var(--screen-padding-x)] pt-1 space-y-7"
         >
             {/* 保護者ガードモーダル */}
             <ParentGateModal
@@ -403,77 +412,76 @@ export const Settings: React.FC = () => {
                 </div>
             </Modal>
 
-                {/* ===== Section: Profile ===== */}
-                <Card className="p-4 space-y-4">
-                    <div className="flex items-center justify-between">
-                        <h3 className="font-bold text-slate-700">プロフィール</h3>
+            <SurfacePanel className="space-y-3">
+                <SurfacePanelHeader
+                    title="プロフィール"
+                    description={t("つかう ひと と レベルを ここで みなおせる", "使うプロフィールと学年をここで見直せます")}
+                    action={(
                         <Button size="sm" variant="secondary" onClick={handleCreateProfile}>
                             {t("ついか", "追加")}
                         </Button>
-                    </div>
-                    {profiles.map(p => (
-                        <div key={p.id} className="flex items-center gap-3 p-2 rounded-xl bg-white/55 border border-white/80">
-                            <div className="w-10 h-10 rounded-full bg-cyan-100/75 flex items-center justify-center text-cyan-700 font-bold shrink-0">
-                                {p.name?.[0] || "?"}
-                            </div>
-                            <div
-                                className="flex-1 cursor-pointer hover:opacity-70 transition-opacity min-w-0"
-                                onClick={() => openRenameModal(p)}
-                            >
-                                <div className="font-bold text-slate-700 truncate">{p.name || "ゲスト"}</div>
-                                <div className="text-xs text-slate-500">{GRADES[p.grade] || "???"}</div>
-                            </div>
-
-                            <div className="flex items-center gap-1 shrink-0">
-                                {profile?.id === p.id ? (
-                                    <span className="text-xs text-cyan-700 font-bold mr-2">{t("つかってる", "使用中")}</span>
-                                ) : (
-                                    <Button size="sm" variant="secondary" className="px-3" onClick={() => handleSwitchProfile(p.id)}>
-                                        {t("きりかえ", "切替")}
-                                    </Button>
-                                )}
-
-                                <Button size="sm" variant="ghost" className="w-10 h-10 p-0 text-slate-400 hover:text-cyan-700" onClick={() => openRenameModal(p)}>
-                                    ✏️
-                                </Button>
-
-                                <Button size="sm" variant="ghost" className="w-10 h-10 p-0 text-red-400 hover:text-red-600 hover:bg-red-50" onClick={() => openDeleteModal(p)}>
-                                    🗑️
-                                </Button>
-                            </div>
+                    )}
+                />
+                {profiles.map(p => (
+                    <InsetPanel key={p.id} className="flex items-center gap-3">
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-cyan-100/80 text-cyan-700 font-black">
+                            {p.name?.[0] || "?"}
                         </div>
-                    ))}
-                </Card>
+                        <div
+                            className="min-w-0 flex-1 cursor-pointer transition-opacity hover:opacity-75"
+                            onClick={() => openRenameModal(p)}
+                        >
+                            <div className="truncate font-bold text-slate-700">{p.name || "ゲスト"}</div>
+                            <div className="text-xs text-slate-500">{GRADES[p.grade] || "???"}</div>
+                        </div>
 
-                {/* ===== Section: Learning Settings ===== */}
-                <div className="space-y-3">
-                    <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wider px-1">
-                        {t("べんきょう の せってい", "学習の設定")}
-                    </h2>
+                        <div className="flex shrink-0 items-center gap-1">
+                            {profile?.id === p.id ? (
+                                <Badge variant="primary" className="mr-1">
+                                    {t("つかってる", "使用中")}
+                                </Badge>
+                            ) : (
+                                <Button size="sm" variant="secondary" className="px-3" onClick={() => handleSwitchProfile(p.id)}>
+                                    {t("きりかえ", "切替")}
+                                </Button>
+                            )}
 
-                    {/* Subject Mode */}
-                    <Card className="p-4 space-y-3">
-                        <h3 className="font-bold text-slate-700">{t("べんきょう する もの", "学習する科目")}</h3>
-                        <div className="grid grid-cols-3 gap-2">
-                            <Button size="sm" variant={profile?.subjectMode === "mix" ? "primary" : "secondary"} onClick={() => handleSubjectModeChange("mix")}>
-                                {t("さんすう+えいご", "算数+英語")}
+                            <Button size="sm" variant="ghost" className="h-10 w-10 p-0 text-slate-400 hover:text-cyan-700" onClick={() => openRenameModal(p)}>
+                                ✏️
                             </Button>
-                            <Button size="sm" variant={profile?.subjectMode === "math" ? "primary" : "secondary"} onClick={() => handleSubjectModeChange("math")}>
-                                {t("さんすう", "算数")}
-                            </Button>
-                            <Button size="sm" variant={profile?.subjectMode === "vocab" ? "primary" : "secondary"} onClick={() => handleSubjectModeChange("vocab")}>
-                                {t("えいご", "英語")}
+
+                            <Button size="sm" variant="ghost" className="h-10 w-10 p-0 text-red-400 hover:bg-red-50 hover:text-red-600" onClick={() => openDeleteModal(p)}>
+                                🗑️
                             </Button>
                         </div>
-                    </Card>
+                    </InsetPanel>
+                ))}
+            </SurfacePanel>
 
-                    {/* Hissan Mode */}
-                    <Card className="p-4 space-y-3">
-                        <div className="flex justify-between items-center">
-                            <div>
-                                <h3 className="font-bold text-slate-700">{t("ひっさん モード", "筆算モード")}</h3>
-                                <p className="text-xs text-slate-400 mt-0.5">{t("おおきい すうじ の とき ひっさん で とける", "大きい数の計算で筆算UIを表示")}</p>
-                            </div>
+            <div className="space-y-3">
+                <SectionLabel>{t("べんきょう の せってい", "学習の設定")}</SectionLabel>
+
+                <SurfacePanel>
+                    <SurfacePanelHeader
+                        title={t("べんきょう する もの", "学習する科目")}
+                        description={t("つねに みる もんだい の くみあわせ", "日々の学習で出す科目の組み合わせ")}
+                    />
+                    <SegmentedControl
+                        value={profile?.subjectMode ?? "mix"}
+                        onChange={handleSubjectModeChange}
+                        options={[
+                            { value: "mix", label: t("さんすう+えいご", "算数+英語") },
+                            { value: "math", label: t("さんすう", "算数") },
+                            { value: "vocab", label: t("えいご", "英語") },
+                        ]}
+                    />
+                </SurfacePanel>
+
+                <SurfacePanel>
+                    <SettingRow
+                        title={t("ひっさん モード", "筆算モード")}
+                        description={t("おおきい すうじ の とき ひっさん で とける", "大きい数の計算で筆算UIを表示")}
+                        action={(
                             <Button
                                 size="sm"
                                 variant={profile?.hissanModeEnabled !== false ? "primary" : "secondary"}
@@ -486,52 +494,52 @@ export const Settings: React.FC = () => {
                             >
                                 {profile?.hissanModeEnabled !== false ? "ON" : "OFF"}
                             </Button>
-                        </div>
-                    </Card>
+                        )}
+                    />
+                </SurfacePanel>
 
-                    {/* Level Settings */}
-                    <Card className="p-4 space-y-3">
-                        <h3 className="font-bold text-slate-700">{t("レベル", "レベル")}</h3>
-                        <div className="space-y-2">
-                            <div className="flex items-center justify-between p-3 bg-white/60 border border-white/80 rounded-xl">
+                <SurfacePanel>
+                    <SurfacePanelHeader
+                        title={t("レベル", "レベル")}
+                        description={t("いまの すすみぐあい を かんたんに みる", "今の進み具合を一覧で確認")}
+                    />
+                    <div className="grid gap-3">
+                        {[
+                            { label: t("さんすう", "算数"), level: profile?.mathMainLevel || 1 },
+                            { label: t("えいご", "英語"), level: profile?.vocabMainLevel || 1 },
+                        ].map((item) => (
+                            <InsetPanel key={item.label} className="flex items-center justify-between gap-3">
                                 <div>
-                                    <div className="font-bold text-slate-600">{t("さんすう", "算数")}</div>
-                                    <div className="text-2xl font-black text-slate-800">Lv.{profile?.mathMainLevel || 1}</div>
+                                    <div className="font-bold text-slate-600">{item.label}</div>
+                                    <div className="mt-1 text-2xl font-black tracking-[-0.03em] text-slate-800">Lv.{item.level}</div>
                                 </div>
                                 <Button variant="secondary" onClick={() => navigate("/settings/curriculum")}>
                                     {t("かえる", "変更")}
                                 </Button>
-                            </div>
-                            <div className="flex items-center justify-between p-3 bg-white/60 border border-white/80 rounded-xl">
-                                <div>
-                                    <div className="font-bold text-slate-600">{t("えいご", "英語")}</div>
-                                    <div className="text-2xl font-black text-slate-800">Lv.{profile?.vocabMainLevel || 1}</div>
-                                </div>
-                                <Button variant="secondary" onClick={() => navigate("/settings/curriculum")}>
-                                    {t("かえる", "変更")}
-                                </Button>
-                            </div>
-                        </div>
-                    </Card>
-                </div>
+                            </InsetPanel>
+                        ))}
+                    </div>
+                </SurfacePanel>
+            </div>
 
-                {/* ===== Section: Display & Sound ===== */}
-                <div className="space-y-3">
-                    <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wider px-1">
-                        {t("みため と おと", "表示とサウンド")}
-                    </h2>
+            <div className="space-y-3">
+                <SectionLabel>{t("みため と おと", "表示とサウンド")}</SectionLabel>
 
-                    {/* Sound + TTS in one card */}
-                    <Card className="p-4 space-y-4">
-                        <div className="flex justify-between items-center">
-                            <span className="font-bold text-slate-700">{t("おと・BGM", "サウンド")}</span>
+                <SurfacePanel>
+                    <SettingRow
+                        title={t("おと・BGM", "サウンド")}
+                        description={t("おん と BGM の きりかえ", "効果音やBGMのオンオフ")}
+                        action={(
                             <Button size="sm" variant={sound ? "primary" : "secondary"} onClick={handleSoundToggle} className="w-20">
                                 {sound ? "ON" : "OFF"}
                             </Button>
-                        </div>
-                        <div className="border-t border-white/70" />
-                        <div className="flex justify-between items-center">
-                            <span className="font-bold text-slate-700">{t("えいご よみあげ", "英語読み上げ")}</span>
+                        )}
+                    />
+                    <PanelDivider />
+                    <SettingRow
+                        title={t("えいご よみあげ", "英語読み上げ")}
+                        description={t("えいご の こえを じどうで ならす", "英語問題で読み上げを自動再生")}
+                        action={(
                             <Button
                                 size="sm"
                                 variant={profile?.englishAutoRead ? "primary" : "secondary"}
@@ -544,177 +552,170 @@ export const Settings: React.FC = () => {
                             >
                                 {profile?.englishAutoRead ? "ON" : "OFF"}
                             </Button>
-                        </div>
-                    </Card>
+                        )}
+                    />
+                </SurfacePanel>
 
-                    {/* Text display settings in one card */}
-                    <Card className="p-4 space-y-4">
-                        <div className="space-y-3">
-                            <h3 className="font-bold text-slate-700">{t("ひょうじ テキスト", "表示テキスト")}</h3>
-                            <div className="flex bg-white/60 border border-white/80 p-1 rounded-xl">
-                                <button
-                                    className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${profile?.uiTextMode !== "easy" ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
-                                    onClick={() => handleTextModeChange("standard")}
-                                >
-                                    {t("ふつう", "標準")}
-                                </button>
-                                <button
-                                    className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${profile?.uiTextMode === "easy" ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
-                                    onClick={() => handleTextModeChange("easy")}
-                                >
-                                    {t("やさしい", "やさしい")}
-                                </button>
-                            </div>
-                        </div>
-                        <div className="border-t border-white/70" />
-                        <div className="space-y-3">
-                            <h3 className="font-bold text-slate-700">{t("にほんご モード", "日本語モード")}</h3>
-                            <div className="flex bg-white/60 border border-white/80 p-1 rounded-xl">
-                                <button
-                                    className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${!profile?.kanjiMode ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
-                                    onClick={async () => {
-                                        if (!profile) return;
-                                        const updated = { ...profile, kanjiMode: false };
-                                        await persistProfileUpdate(updated);
-                                    }}
-                                >
-                                    ひらがな
-                                </button>
-                                <button
-                                    className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${profile?.kanjiMode ? 'bg-white shadow text-slate-800' : 'text-slate-400'}`}
-                                    onClick={async () => {
-                                        if (!profile) return;
-                                        const updated = { ...profile, kanjiMode: true };
-                                        await persistProfileUpdate(updated);
-                                    }}
-                                >
-                                    漢字
-                                </button>
-                            </div>
-                            <p className="text-xs text-slate-400 text-center">{t("えいごの こたえが かわります", "英語の答え表示が変わります")}</p>
-                        </div>
-                    </Card>
-                </div>
+                <SurfacePanel>
+                    <SurfacePanelHeader
+                        title={t("ひょうじ テキスト", "表示テキスト")}
+                        description={t("よみやすさ を ここで きりかえる", "表示密度と言葉のやさしさを調整")}
+                    />
+                    <SegmentedControl
+                        value={profile?.uiTextMode ?? "standard"}
+                        onChange={handleTextModeChange}
+                        options={[
+                            { value: "standard", label: t("ふつう", "標準") },
+                            { value: "easy", label: t("やさしい", "やさしい") },
+                        ]}
+                    />
+                    <PanelDivider />
+                    <SurfacePanelHeader
+                        title={t("にほんご モード", "日本語モード")}
+                        description={t("かな と かんじ の ひょうじ を えらべる", "ふりがな寄りか漢字寄りかを選択")}
+                    />
+                    <SegmentedControl
+                        value={profile?.kanjiMode ? "kanji" : "hiragana"}
+                        onChange={async (value) => {
+                            if (!profile) return;
+                            const updated = { ...profile, kanjiMode: value === "kanji" };
+                            await persistProfileUpdate(updated);
+                        }}
+                        options={[
+                            { value: "hiragana", label: "ひらがな" },
+                            { value: "kanji", label: "漢字" },
+                        ]}
+                    />
+                    <p className="text-center text-xs leading-5 text-slate-400">
+                        {t("えいごの こたえが かわります", "英語の答え表示が変わります")}
+                    </p>
+                </SurfacePanel>
+            </div>
 
-                {/* ===== Section: For Parents ===== */}
-                <div className="space-y-3">
-                    <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wider px-1">
-                        {t("おとなの ひと むけ", "保護者向け")}
-                    </h2>
+            <div className="space-y-3">
+                <SectionLabel>{t("おとなの ひと むけ", "保護者向け")}</SectionLabel>
 
-                    {/* Periodic Test */}
-                    <Card className="p-4 space-y-4">
-                        <div>
-                            <h3 className="font-bold text-slate-700">{t("ていき テスト", "定期テスト（20問）")}</h3>
-                            <p className="text-xs text-slate-500 mt-1">{t("アプリ と かみ で テスト できるよ", "アプリ受験と紙テストをここから開始できます")}</p>
+                <SurfacePanel>
+                    <SurfacePanelHeader
+                        title={t("ていき テスト", "定期テスト（20問）")}
+                        description={t("アプリ と かみ で テスト できるよ", "アプリ受験と紙テストをここから開始できます")}
+                    />
+                    <InsetPanel className="space-y-3">
+                        <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">
+                            {t("せいげん じかん", "制限時間")}
                         </div>
-                        <div className="rounded-2xl border border-white/80 bg-white/60 p-3 space-y-2">
-                            <div className="text-xs font-bold text-slate-600">{t("せいげん じかん", "制限時間")}</div>
-                            <div className="flex flex-wrap gap-2">
-                                {TEST_TIMER_OPTIONS.map(minutes => {
-                                    const selectedMinutes = profile?.periodicTestTimeLimitSeconds
-                                        ? Math.floor(profile.periodicTestTimeLimitSeconds / 60)
-                                        : 0;
-                                    const isSelected = selectedMinutes === minutes;
-                                    return (
-                                        <button
-                                            key={minutes}
-                                            type="button"
-                                            onClick={() => handleTestTimerChange(minutes)}
-                                            className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${isSelected
-                                                    ? "bg-cyan-600 text-white border-cyan-600"
-                                                    : "bg-white/70 text-slate-600 border-white/80"
-                                                }`}
-                                        >
-                                            {minutes === 0 ? t("なし", "なし") : t(`${minutes}ふん`, `${minutes}分`)}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-1 land:grid-cols-2 gap-3">
-                            {([
-                                { subject: "math" as const, title: t("さんすう", "算数"), level: profile?.mathMainLevel || 1, print: handlePrintPDF, startPath: "/study?session=periodic-test&focus_subject=math" },
-                                { subject: "vocab" as const, title: t("えいご", "英語"), level: profile?.vocabMainLevel || 1, print: handlePrintVocabPDF, startPath: "/study?session=periodic-test&focus_subject=vocab" },
-                            ]).map(item => {
-                                const status = getTestStatus(item.subject);
-                                const pendingPaper = getPendingPaperTest(item.subject);
-                                const hasPendingPaper = !!pendingPaper;
+                        <div className="flex flex-wrap gap-2">
+                            {TEST_TIMER_OPTIONS.map(minutes => {
+                                const selectedMinutes = profile?.periodicTestTimeLimitSeconds
+                                    ? Math.floor(profile.periodicTestTimeLimitSeconds / 60)
+                                    : 0;
+                                const isSelected = selectedMinutes === minutes;
                                 return (
-                                    <div key={item.subject} className="rounded-2xl border border-white/80 bg-white/70 p-3 space-y-3">
-                                        <div className="flex items-center justify-between">
-                                            <div>
-                                                <div className="font-bold text-slate-700">{item.title} Lv.{item.level}</div>
-                                                <div className="text-xs text-slate-500">20問 / 目安 8〜12分</div>
-                                                {pendingPaper && (
-                                                    <div className="text-[11px] text-amber-700 mt-1">
-                                                        {formatPendingPaperMeta(pendingPaper.createdAt)}
-                                                    </div>
-                                                )}
-                                            </div>
-                                            <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold ${status.tone}`}>
-                                                {status.label}
-                                            </span>
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-2">
-                                            <Button
-                                                size="sm"
-                                                className="w-full h-10"
-                                                onClick={() => withParentGuard(() => navigate(item.startPath))}
-                                            >
-                                                {t("アプリで うける", "アプリ受験")}
-                                            </Button>
-                                            <Button
-                                                size="sm"
-                                                variant="secondary"
-                                                className="w-full h-10 text-xs"
-                                                onClick={() => {
-                                                    if (hasPendingPaper) {
-                                                        handleOpenPaperScoreModal(item.subject);
-                                                        return;
-                                                    }
-                                                    item.print();
-                                                }}
-                                            >
-                                                {hasPendingPaper ? t("てんすう いれる", "点数入力") : t("かみで うける", "紙テストPDF")}
-                                            </Button>
-                                        </div>
-                                    </div>
+                                    <button
+                                        key={minutes}
+                                        type="button"
+                                        onClick={() => handleTestTimerChange(minutes)}
+                                        className={`rounded-full border px-3 py-1 text-xs font-bold transition-colors ${
+                                            isSelected
+                                                ? "border-cyan-600 bg-cyan-600 text-white"
+                                                : "border-white/80 bg-white/70 text-slate-600"
+                                        }`}
+                                    >
+                                        {minutes === 0 ? t("なし", "なし") : t(`${minutes}ふん`, `${minutes}分`)}
+                                    </button>
                                 );
                             })}
                         </div>
-                    </Card>
-
-                    {/* Parent Menu */}
-                    <Card className="p-4 flex justify-between items-center">
-                        <div>
-                            <div className="font-bold text-slate-700">{t("ほごしゃ メニュー", "保護者メニュー")}</div>
-                            <div className="text-xs text-slate-400">{t("おとなの ひとが みる ページ", "大人向けページ")}</div>
-                        </div>
-                        <Button
-                            size="sm"
-                            variant="secondary"
-                            onClick={() => withParentGuard(() => navigate('/parents', { state: { parentGatePassed: true } }))}
-                        >
-                            {t("ひらく", "開く")}
-                        </Button>
-                    </Card>
-
-                    {/* Developer Mode */}
-                    <Card className="p-4 flex justify-between items-center">
-                        <span className="font-bold text-slate-700">開発者モード</span>
-                        <Button size="sm" variant="secondary" onClick={() => navigate("/dev")}>
-                            {t("ひらく", "開く")}
-                        </Button>
-                    </Card>
-
-                    {/* Data Reset */}
-                    <div className="pt-4">
-                        <Button variant="ghost" className="w-full text-red-500 text-sm" onClick={handleReset}>
-                            {t("データをすべてリセット", "全データをリセット")}
-                        </Button>
+                    </InsetPanel>
+                    <div className="grid grid-cols-1 gap-3 land:grid-cols-2">
+                        {([
+                            { subject: "math" as const, title: t("さんすう", "算数"), level: profile?.mathMainLevel || 1, print: handlePrintPDF, startPath: "/study?session=periodic-test&focus_subject=math" },
+                            { subject: "vocab" as const, title: t("えいご", "英語"), level: profile?.vocabMainLevel || 1, print: handlePrintVocabPDF, startPath: "/study?session=periodic-test&focus_subject=vocab" },
+                        ]).map(item => {
+                            const status = getTestStatus(item.subject);
+                            const pendingPaper = getPendingPaperTest(item.subject);
+                            const hasPendingPaper = !!pendingPaper;
+                            return (
+                                <InsetPanel key={item.subject} className="space-y-3">
+                                    <div className="flex items-start justify-between gap-3">
+                                        <div>
+                                            <div className="font-bold text-slate-700">{item.title} Lv.{item.level}</div>
+                                            <div className="mt-1 text-xs text-slate-500">20問 / 目安 8〜12分</div>
+                                            {pendingPaper ? (
+                                                <div className="mt-2 text-[11px] text-amber-700">
+                                                    {formatPendingPaperMeta(pendingPaper.createdAt)}
+                                                </div>
+                                            ) : null}
+                                        </div>
+                                        <Badge variant={status.variant}>{status.label}</Badge>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <Button
+                                            size="sm"
+                                            className="h-10 w-full"
+                                            onClick={() => withParentGuard(() => navigate(item.startPath))}
+                                        >
+                                            {t("アプリで うける", "アプリ受験")}
+                                        </Button>
+                                        <Button
+                                            size="sm"
+                                            variant="secondary"
+                                            className="h-10 w-full text-xs"
+                                            onClick={() => {
+                                                if (hasPendingPaper) {
+                                                    handleOpenPaperScoreModal(item.subject);
+                                                    return;
+                                                }
+                                                item.print();
+                                            }}
+                                        >
+                                            {hasPendingPaper ? t("てんすう いれる", "点数入力") : t("かみで うける", "紙テストPDF")}
+                                        </Button>
+                                    </div>
+                                </InsetPanel>
+                            );
+                        })}
                     </div>
-                </div>
+                </SurfacePanel>
+
+                <SurfacePanel>
+                    <SettingRow
+                        title={t("ほごしゃ メニュー", "保護者メニュー")}
+                        description={t("おとなの ひとが みる ページ", "大人向けページ")}
+                        action={(
+                            <Button
+                                size="sm"
+                                variant="secondary"
+                                onClick={() => withParentGuard(() => navigate('/parents', { state: { parentGatePassed: true } }))}
+                            >
+                                {t("ひらく", "開く")}
+                            </Button>
+                        )}
+                    />
+                </SurfacePanel>
+
+                <SurfacePanel>
+                    <SettingRow
+                        title="開発者モード"
+                        description="内部状態や検証用の画面を開く"
+                        action={(
+                            <Button size="sm" variant="secondary" onClick={() => navigate("/dev")}>
+                                {t("ひらく", "開く")}
+                            </Button>
+                        )}
+                    />
+                </SurfacePanel>
+
+                <SurfacePanel variant="flat" className="space-y-3">
+                    <SurfacePanelHeader
+                        title={t("リセット", "リセット")}
+                        description={t("どうしても ひつような ときだけ つかう", "すべてのデータを削除します")}
+                    />
+                    <Button variant="ghost" className="w-full text-red-500 text-sm" onClick={handleReset}>
+                        {t("データをすべてリセット", "全データをリセット")}
+                    </Button>
+                </SurfacePanel>
+            </div>
 
         </ScreenScaffold>
     );

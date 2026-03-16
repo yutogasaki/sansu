@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "../components/ui/Button";
+import { Badge } from "../components/ui/Badge";
+import {
+    SelectionCard,
+    SurfacePanel,
+    SurfacePanelHeader,
+} from "../components/ui/SurfacePanel";
 import { Header } from "../components/Header";
 import { createInitialProfile } from "../domain/user/profile";
 import { saveProfile, setActiveProfileId } from "../domain/user/repository";
@@ -209,30 +215,61 @@ export const Onboarding: React.FC = () => {
         });
     };
 
-    // --- Render Steps ---
+    const gradeOptions = [
+        { label: "年少さん", value: -2, leading: "🌷" },
+        { label: "年中さん", value: -1, leading: "🌻" },
+        { label: "年長さん", value: 0, leading: "📛" },
+        { label: "小学 1 年生", value: 1, leading: "🎒" },
+        { label: "小学 2 年生", value: 2, leading: <span className="text-xl font-bold text-slate-400">2</span> },
+        { label: "小学 3 年生", value: 3, leading: "🚲" },
+        { label: "小学 4 年生", value: 4, leading: "🎵" },
+        { label: "小学 5 年生", value: 5, leading: "⚽" },
+        { label: "小学 6 年生", value: 6, leading: "🏫" },
+    ];
+
+    const stepTitle =
+        step === "name"
+            ? "おなまえ"
+            : step === "grade"
+                ? "なんねんせい？"
+                : step === "subject"
+                    ? "べんきょう する もの"
+                    : step === "math-check"
+                        ? "さんすう どこまで？"
+                        : step === "english-check"
+                            ? "えいご どれくらい？"
+                            : "かんりょう";
 
     if (step === "welcome") {
         return (
-            <div className="flex h-full min-h-0 flex-col items-center justify-center px-[var(--screen-padding-x)] text-center animate-in fade-in duration-500">
-                <div className="space-y-4">
-                    <h1
-                        className="text-5xl font-black tracking-[-0.04em] text-slate-800"
-                        style={{ fontFamily: "var(--font-heading)" }}
+            <div className="flex h-full min-h-0 flex-col items-center justify-center px-[var(--screen-padding-x)] animate-in fade-in duration-500">
+                <SurfacePanel className="w-full max-w-md space-y-6 text-center">
+                    <Badge variant="primary" className="mx-auto">
+                        やさしく つづく
+                    </Badge>
+                    <div className="space-y-3">
+                        <h1
+                            className="text-5xl font-black tracking-[-0.04em] text-slate-800"
+                            style={{ fontFamily: "var(--font-heading)" }}
+                        >
+                            Sansu
+                        </h1>
+                        <p className="text-sm font-medium leading-7 text-slate-400">
+                            やさしく、しずかに
+                            <br />
+                            つづくまなび
+                        </p>
+                    </div>
+                    <Button onClick={() => setStep("name")} size="xl" className="mx-auto w-full max-w-[220px]">
+                        はじめる
+                    </Button>
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="text-sm font-bold text-slate-400 transition-colors hover:text-slate-600"
                     >
-                        Sansu
-                    </h1>
-                    <p className="text-sm font-medium leading-7 text-slate-400">やさしく、しずかに<br />つづくまなび</p>
-                </div>
-                <Button onClick={() => setStep("name")} size="xl" className="mt-8 w-full max-w-[144px]">
-                    はじめる
-                </Button>
-
-                <button
-                    onClick={() => navigate(-1)}
-                    className="mt-5 text-sm font-bold text-slate-400 transition-colors hover:text-slate-600"
-                >
-                    もどる
-                </button>
+                        もどる
+                    </button>
+                </SurfacePanel>
             </div>
         );
     }
@@ -240,167 +277,140 @@ export const Onboarding: React.FC = () => {
     return (
         <div className="flex h-full min-h-0 flex-col">
             <Header
-                title={
-                    step === "name"
-                        ? "おなまえ"
-                        : step === "grade"
-                            ? "なんねんせい？"
-                            : step === "subject"
-                                ? "べんきょう する もの"
-                                : step === "math-check"
-                                    ? "さんすう どこまで？"
-                                    : step === "english-check"
-                                        ? "えいご どれくらい？"
-                                        : "かんりょう"
-                }
+                title={stepTitle}
                 showBack={!isSubmitting}
                 onBack={goBack}
             />
 
-            <div className="flex-1 px-[var(--screen-padding-x)] pb-[var(--screen-bottom-padding)] flex flex-col items-center justify-center">
-
+            <div className="flex flex-1 items-center justify-center px-[var(--screen-padding-x)] pb-[var(--screen-bottom-padding)]">
                 {step === "name" && (
-                    <div className="w-full space-y-8 animate-in slide-in-from-right duration-300">
-                        <div className="text-center space-y-2">
-                            <p className="text-slate-600 font-bold text-lg">ニックネームをおしえてね</p>
-                            <p className="text-slate-400 text-sm">あとで かえられるよ</p>
-                        </div>
+                    <SurfacePanel className="w-full max-w-lg space-y-5 animate-in slide-in-from-right duration-300">
+                        <SurfacePanelHeader
+                            title="ニックネームをおしえてね"
+                            description="あとで かえられるよ"
+                        />
                         <input
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full text-4xl text-center p-6 rounded-3xl border-2 border-white/80 focus:border-cyan-500 outline-none bg-white/70 backdrop-blur-sm shadow-sm font-bold text-slate-700"
+                            className="w-full rounded-[22px] border border-white/85 bg-white/72 p-6 text-center text-4xl font-bold text-slate-700 outline-none backdrop-blur-sm transition focus:border-cyan-500"
                             placeholder="あだ名でOK"
                             autoFocus
                         />
                         <Button disabled={!trimmedName} onClick={() => setStep("grade")} size="xl" className="w-full shadow-lg">
                             次へ
                         </Button>
-                    </div>
+                    </SurfacePanel>
                 )}
 
                 {step === "grade" && (
-                    <div className="w-full animate-in slide-in-from-right duration-300 pb-12">
+                    <SurfacePanel className="w-full max-w-2xl space-y-4 animate-in slide-in-from-right duration-300">
+                        <SurfacePanelHeader
+                            title="いまの がくねんに ちかい ところ"
+                            description="ぴったりじゃなくて だいじょうぶ"
+                        />
                         <div className="grid grid-cols-1 gap-3 land:grid-cols-2">
-                            {[
-                                { l: "年少さん", v: -2, icon: "🌷" },
-                                { l: "年中さん", v: -1, icon: "🌻" },
-                                { l: "年長さん", v: 0, icon: "📛" },
-                                { l: "小学 1 年生", v: 1, icon: "🎒" },
-                                { l: "小学 2 年生", v: 2, icon: "re" },
-                                { l: "小学 3 年生", v: 3, icon: "🚲" },
-                                { l: "小学 4 年生", v: 4, icon: "🎵" },
-                                { l: "小学 5 年生", v: 5, icon: "⚽" },
-                                { l: "小学 6 年生", v: 6, icon: "🏫" }
-                            ].map(g => (
-                                <button
-                                    key={g.v}
-                                    onClick={() => !isSubmitting && handleGradeSelect(g.v)}
+                            {gradeOptions.map((option) => (
+                                <SelectionCard
+                                    key={option.value}
+                                    label={option.label}
+                                    leading={option.leading}
+                                    trailing="→"
                                     disabled={isSubmitting}
-                                    className="group relative w-full p-4 bg-white/70 backdrop-blur-sm rounded-2xl border border-white/85 shadow-sm hover:border-cyan-300 hover:bg-cyan-50/60 hover:shadow-md transition-all active:scale-95 flex items-center gap-4 text-left"
-                                >
-                                    <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-2xl group-hover:bg-white">
-                                        {g.icon === "re" ? <span className="text-xl font-bold text-slate-400 group-hover:text-primary">2</span> : g.icon}
-                                    </div>
-                                    <div className="flex-1">
-                                        <div className="font-bold text-lg text-slate-700 group-hover:text-slate-900">{g.l}</div>
-                                    </div>
-                                    <div className="text-slate-300 group-hover:text-primary">
-                                        →
-                                    </div>
-                                </button>
+                                    onClick={() => !isSubmitting && handleGradeSelect(option.value)}
+                                />
                             ))}
                         </div>
-                    </div>
+                    </SurfacePanel>
                 )}
 
                 {step === "subject" && (
-                    <div className="w-full space-y-4 animate-in slide-in-from-right duration-300 pb-12">
-                        {[
-                            { label: "さんすう と えいご", value: "mix" as SubjectMode, icon: "🌈" },
-                            { label: "さんすう だけ", value: "math" as SubjectMode, icon: "🧮" },
-                            { label: "えいご だけ", value: "vocab" as SubjectMode, icon: "🔤" }
-                        ].map(item => (
-                            <button
-                                key={item.value}
-                                onClick={() => !isSubmitting && handleSubjectSelect(item.value)}
-                                disabled={isSubmitting}
-                                className="group relative w-full p-4 bg-white/70 backdrop-blur-sm rounded-2xl border border-white/85 shadow-sm hover:border-cyan-300 hover:bg-cyan-50/60 hover:shadow-md transition-all active:scale-95 flex items-center gap-4 text-left"
-                            >
-                                <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-2xl group-hover:bg-white">
-                                    {item.icon}
-                                </div>
-                                <div className="flex-1">
-                                    <div className="font-bold text-lg text-slate-700 group-hover:text-slate-900">{item.label}</div>
-                                    <div className="text-xs text-slate-400">あとで かえられるよ</div>
-                                </div>
-                                <div className="text-slate-300 group-hover:text-primary">
-                                    →
-                                </div>
-                            </button>
-                        ))}
-                    </div>
+                    <SurfacePanel className="w-full max-w-lg space-y-4 animate-in slide-in-from-right duration-300">
+                        <SurfacePanelHeader
+                            title="どれを べんきょう する？"
+                            description="あとで せってい から かえられるよ"
+                        />
+                        <div className="space-y-3">
+                            {[
+                                { label: "さんすう と えいご", value: "mix" as SubjectMode, leading: "🌈", description: "まいにち すこしずつ バランスよく" },
+                                { label: "さんすう だけ", value: "math" as SubjectMode, leading: "🧮", description: "まずは すうじ に しぼって すすむ" },
+                                { label: "えいご だけ", value: "vocab" as SubjectMode, leading: "🔤", description: "ことば と おと から はじめる" },
+                            ].map((item) => (
+                                <SelectionCard
+                                    key={item.value}
+                                    label={item.label}
+                                    description={item.description}
+                                    leading={item.leading}
+                                    trailing="→"
+                                    disabled={isSubmitting}
+                                    onClick={() => !isSubmitting && handleSubjectSelect(item.value)}
+                                />
+                            ))}
+                        </div>
+                    </SurfacePanel>
                 )}
 
                 {step === "math-check" && (
-                    <div className="w-full space-y-4 animate-in slide-in-from-right duration-300 pb-12">
-                        {[
-                            { label: "🔢 数をかぞえる・くらべる", value: "q_count" as MathCheck },
-                            { label: "➕ 足し算まで", value: "q_add" as MathCheck },
-                            { label: "➖ 引き算まで", value: "q_sub" as MathCheck },
-                            { label: "✏️ 筆算（2けたのたし算・ひき算）", value: "q_col" as MathCheck },
-                            { label: "✖️ かけ算（九九）", value: "q_mul" as MathCheck }
-                        ].map(item => (
-                            <button
-                                key={item.value}
-                                onClick={() => !isSubmitting && handleMathCheckSelect(item.value)}
-                                disabled={isSubmitting}
-                                className="group relative w-full p-4 bg-white/70 backdrop-blur-sm rounded-2xl border border-white/85 shadow-sm hover:border-cyan-300 hover:bg-cyan-50/60 hover:shadow-md transition-all active:scale-95 flex items-center gap-4 text-left"
-                            >
-                                <div className="flex-1">
-                                    <div className="font-bold text-lg text-slate-700 group-hover:text-slate-900">{item.label}</div>
-                                </div>
-                                <div className="text-slate-300 group-hover:text-primary">
-                                    →
-                                </div>
-                            </button>
-                        ))}
-                    </div>
+                    <SurfacePanel className="w-full max-w-xl space-y-4 animate-in slide-in-from-right duration-300">
+                        <SurfacePanelHeader
+                            title="いちばん ちかい ところを えらんでね"
+                            description="やりやすい ところ から はじめるための しつもん"
+                        />
+                        <div className="space-y-3">
+                            {[
+                                { label: "数をかぞえる・くらべる", value: "q_count" as MathCheck, leading: "🔢" },
+                                { label: "足し算まで", value: "q_add" as MathCheck, leading: "➕" },
+                                { label: "引き算まで", value: "q_sub" as MathCheck, leading: "➖" },
+                                { label: "筆算（2けたのたし算・ひき算）", value: "q_col" as MathCheck, leading: "✏️" },
+                                { label: "かけ算（九九）", value: "q_mul" as MathCheck, leading: "✖️" },
+                            ].map((item) => (
+                                <SelectionCard
+                                    key={item.value}
+                                    label={item.label}
+                                    leading={item.leading}
+                                    trailing="→"
+                                    disabled={isSubmitting}
+                                    onClick={() => !isSubmitting && handleMathCheckSelect(item.value)}
+                                />
+                            ))}
+                        </div>
+                    </SurfacePanel>
                 )}
 
                 {step === "english-check" && (
-                    <div className="w-full space-y-4 animate-in slide-in-from-right duration-300 pb-12">
-                        {[
-                            { label: "はじめて", value: "beginner" as EnglishExp, sub: "これからスタート" },
-                            { label: "すこし", value: "some" as EnglishExp, sub: "ちょっとだけやった" },
-                            { label: "よくやってる", value: "confident" as EnglishExp, sub: "あるていど できる" }
-                        ].map(item => (
-                            <button
-                                key={item.value}
-                                onClick={() => !isSubmitting && handleEnglishExpSelect(item.value)}
-                                disabled={isSubmitting}
-                                className="group relative w-full p-4 bg-white/70 backdrop-blur-sm rounded-2xl border border-white/85 shadow-sm hover:border-cyan-300 hover:bg-cyan-50/60 hover:shadow-md transition-all active:scale-95 flex items-center gap-4 text-left"
-                            >
-                                <div className="flex-1">
-                                    <div className="font-bold text-lg text-slate-700 group-hover:text-slate-900">{item.label}</div>
-                                    <div className="text-xs text-slate-400">{item.sub}</div>
-                                </div>
-                                <div className="text-slate-300 group-hover:text-primary">
-                                    →
-                                </div>
-                            </button>
-                        ))}
-                    </div>
+                    <SurfacePanel className="w-full max-w-lg space-y-4 animate-in slide-in-from-right duration-300">
+                        <SurfacePanelHeader
+                            title="えいごは どれくらい？"
+                            description="いまの かんじ に ちかい ものを えらんでね"
+                        />
+                        <div className="space-y-3">
+                            {[
+                                { label: "はじめて", value: "beginner" as EnglishExp, description: "これから スタート", leading: "🌱" },
+                                { label: "すこし", value: "some" as EnglishExp, description: "ちょっとだけ やった", leading: "📘" },
+                                { label: "よくやってる", value: "confident" as EnglishExp, description: "あるていど できる", leading: "✨" },
+                            ].map((item) => (
+                                <SelectionCard
+                                    key={item.value}
+                                    label={item.label}
+                                    description={item.description}
+                                    leading={item.leading}
+                                    trailing="→"
+                                    disabled={isSubmitting}
+                                    onClick={() => !isSubmitting && handleEnglishExpSelect(item.value)}
+                                />
+                            ))}
+                        </div>
+                    </SurfacePanel>
                 )}
 
                 {step === "done" && (
-                    <div className="w-full flex flex-col items-center justify-center space-y-6 animate-in zoom-in duration-300">
+                    <SurfacePanel className="w-full max-w-md space-y-6 text-center animate-in zoom-in duration-300">
                         <div className="text-6xl">🎉</div>
-                        <div className="text-center">
+                        <div>
                             <div className="text-2xl font-bold text-slate-700">じゅんび できたよ</div>
-                            <div className="text-slate-400 text-sm mt-2">すこし まってね</div>
+                            <div className="mt-2 text-sm text-slate-400">すこし まってね</div>
                         </div>
-                    </div>
+                    </SurfacePanel>
                 )}
             </div>
         </div>
