@@ -81,10 +81,11 @@ export const Footer: React.FC = () => {
     return (
         <nav
             style={{
-                position: "absolute",
+                position: "fixed",
                 bottom: 0,
-                left: 0,
-                right: 0,
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: "min(100%, 430px)",
                 height: "calc(56px + env(safe-area-inset-bottom, 0px))",
                 paddingBottom: "env(safe-area-inset-bottom, 0px)",
                 background: "var(--toolbar-bg)",
