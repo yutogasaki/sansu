@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
 import { getTotalStats } from "../domain/stats/repository";
@@ -9,8 +9,6 @@ import { EventModal } from "../components/domain/EventModal";
 import { PaperTestScoreModal } from "../components/domain/PaperTestScoreModal";
 import { eventStorage, weakPointsStorage } from "../utils/storage";
 import { Ikimono } from "../components/ikimono/Ikimono";
-import { getSceneText, stageText } from "../components/ikimono/sceneText";
-import { getHomeFuwafuwaSpeech } from "../components/ikimono/fuwafuwaSpeech";
 import { HomeAnimatedBackground } from "../components/home/HomeAnimatedBackground";
 import { Button } from "../components/ui/Button";
 import { UserProfile } from "../domain/types";
@@ -58,7 +56,6 @@ const getOldestPendingPaperTest = (profile: UserProfile) => {
 export const Home: React.FC = () => {
     const navigate = useNavigate();
     const [profile, setProfile] = useState<UserProfile | null>(null);
-    const [weakCount, setWeakCount] = useState(0);
     const [showEventModal, setShowEventModal] = useState(false);
     const [currentEventType, setCurrentEventType] = useState<EventType | null>(null);
     const [showPaperTestModal, setShowPaperTestModal] = useState(false);
@@ -102,7 +99,6 @@ export const Home: React.FC = () => {
 
                 const prevWeakCount = weakPointsStorage.getPrevCount();
                 const currentWeakCount = weakPoints.length;
-                setWeakCount(currentWeakCount);
 
                 const eventType = determineEventWithPriority(
                     activeProfile,
@@ -141,15 +137,6 @@ export const Home: React.FC = () => {
             clearScheduledTimeouts();
         };
     }, [todayKey, scheduleTimeout, clearScheduledTimeouts]);
-
-    const scene = useMemo(
-        () => getSceneText(profileId, todayKey, weakCount, currentEventType, useKanjiForIkimono),
-        [profileId, todayKey, weakCount, currentEventType, useKanjiForIkimono]
-    );
-    const homeSpeech = useMemo(
-        () => getHomeFuwafuwaSpeech(scene, currentEventType, weakCount),
-        [scene, currentEventType, weakCount]
-    );
 
     const handleStartCheck = async () => {
         if (currentEventType) eventStorage.setShown(currentEventType, todayKey);
@@ -217,40 +204,7 @@ export const Home: React.FC = () => {
 
             <div className="relative z-10 flex h-full flex-col px-[var(--screen-padding-x)] pt-[var(--screen-header-top)] pb-[var(--screen-bottom-with-footer)]">
                 <div className="flex min-h-0 flex-1 flex-col overflow-y-auto pb-4">
-                    {/* Compact status bar */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4 }}
-                        className="card-surface flex w-full items-start gap-3 rounded-[20px] px-4 py-4"
-                    >
-                        <span className="mt-1.5 h-2 w-2 rounded-full bg-emerald-400 flex-shrink-0 shadow-[0_0_0_4px_rgba(16,185,129,0.18)]" />
-                        <div className="min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                                <span className="inline-flex items-center rounded-full bg-teal-50 px-2 py-0.5 text-[10px] font-bold text-teal-700">
-                                    {useKanjiForIkimono ? stageText[scene.stage].kanji : stageText[scene.stage].kana}
-                                </span>
-                                <span className="text-[10px] font-semibold tracking-wide text-slate-400">FUWAFUWA NOTE</span>
-                            </div>
-                            <div className="text-base leading-snug font-black text-slate-800 line-clamp-2">{scene.transition}</div>
-                            <div className="mt-1 text-xs text-slate-500">{scene.whisper}</div>
-                        </div>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.45, delay: 0.08 }}
-                        className="mt-3 flex w-full flex-wrap gap-2"
-                    >
-                        {scene.aura.map((tag) => (
-                            <span key={tag} className="glass-light inline-flex items-center rounded-full px-3 py-1 text-[11px] font-bold text-slate-600">
-                                {tag}
-                            </span>
-                        ))}
-                    </motion.div>
-
-                    <div className="mt-3 flex justify-end">
+                    <div className="flex justify-end">
                         <Button
                             variant="secondary"
                             size="md"
@@ -267,9 +221,9 @@ export const Home: React.FC = () => {
                             initial={{ opacity: 0, scale: 0.98 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.7 }}
-                            className="card-surface mt-3 flex min-h-[360px] w-full flex-1 flex-col items-center justify-center rounded-[20px] px-3 pt-4 pb-5"
+                            className="card-surface mt-3 flex min-h-[360px] w-full flex-1 flex-col items-center justify-center rounded-[20px] px-3 pt-6 pb-6"
                         >
-                            <Ikimono profileId={profileId} kanjiMode={useKanjiForIkimono} speech={homeSpeech} statusText={scene.whisper} />
+                            <Ikimono profileId={profileId} kanjiMode={useKanjiForIkimono} />
                         </motion.div>
                     )}
                 </div>

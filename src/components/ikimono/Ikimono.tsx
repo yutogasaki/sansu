@@ -8,7 +8,7 @@ import { FuwafuwaTransitionModal, type FuwafuwaTransitionModalState } from "./Fu
 import { calculateStage, createNewIkimonoState, ensureSpecies } from "./lifecycle";
 import { getOpenHitokoto, shouldShowHitokotoOnOpen, getTapHitokoto, getEggOpenHitokoto, getEggTapHitokoto } from "./hitokoto";
 import { getStageSway, pickTapReaction, playIdleMotion, playTapReaction } from "./ikimonoMotion";
-import { getAuraVisualState, getFuwafuwaDisplayStage, getReactionEmojis, type EmotionParticle, type RippleState } from "./fuwafuwaVisuals";
+import { getAuraVisualState, getReactionEmojis, type EmotionParticle, type RippleState } from "./fuwafuwaVisuals";
 import { FuwafuwaSpeech, getHitokotoSpeech } from "./fuwafuwaSpeech";
 import { getNextTransitionState } from "./fuwafuwaMilestones";
 import { stageText } from "./sceneText";
@@ -19,7 +19,6 @@ interface IkimonoProps {
     profileId: string;
     kanjiMode?: boolean;
     speech?: FuwafuwaSpeech | null;
-    statusText?: string;
 }
 
 const DAY_IN_MS = 1000 * 60 * 60 * 24;
@@ -42,7 +41,7 @@ function pickParticleBatch(stage: IkimonoStage, count: number): EmotionParticle[
     }));
 }
 
-export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, speech = null, statusText }) => {
+export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, speech = null }) => {
     const [hitokoto, setHitokoto] = useState<string | null>(null);
     const [hitokotoReason, setHitokotoReason] = useState<"open" | "tap" | null>(null);
     const [showNameModal, setShowNameModal] = useState(false);
@@ -306,7 +305,6 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
 
     if (stage === "gone") return null;
 
-    const displayStage = getFuwafuwaDisplayStage(stage);
     const stageLabel = kanjiMode ? stageText[stage].kanji : stageText[stage].kana;
     const auraVisual = getAuraVisualState(stage, daysAlive);
     const activeSpeech = hitokoto
@@ -455,9 +453,6 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
                 <span className="inline-flex items-center rounded-full border border-cyan-100/90 bg-cyan-50/92 px-3 py-1 text-xs font-black text-cyan-700">
                     {stageLabel}
                 </span>
-                <span className="inline-flex items-center rounded-full border border-white/85 bg-white/85 px-3 py-1 text-xs font-black text-slate-600">
-                    {daysAlive}日目
-                </span>
                 {stage !== "egg" && (
                     <button
                         type="button"
@@ -468,17 +463,6 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
                         <PencilLine size={12} className="text-slate-400" />
                     </button>
                 )}
-            </div>
-
-            {statusText && (
-                <div className="mt-2 max-w-[15rem] rounded-full border border-white/85 bg-white/78 px-4 py-2 text-center text-xs font-bold leading-relaxed text-slate-600 shadow-[0_10px_28px_-22px_rgba(15,23,42,0.55)] backdrop-blur-sm">
-                    {statusText}
-                </div>
-            )}
-
-            <div className="mt-2 text-[11px] font-bold tracking-[0.24em] text-slate-400">
-                FUWAFUWA
-                <span className="ml-2 tracking-normal text-slate-300">stage {displayStage}</span>
             </div>
         </div>
     );

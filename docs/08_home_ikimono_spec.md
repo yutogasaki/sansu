@@ -17,22 +17,17 @@
 
 ### 1.1 表示要素
 - `EventModal`（条件成立時）
-- 状態カード
-  - stageバッジ（`stageText`）
-  - `TODAY NOTE`
-  - `scene.nowLine`, `scene.moodLine`
-- auraタグ群（3つ）
 - いきものカード
   - `Ikimono` 本体
-  - 名前チップ（ある場合）
-  - 状態チップ（`scene.whisper`）
+  - 最小ラベル（段階、名前変更）
+  - 常時説明テキストは置かない
 - 固定CTA
   - 主ボタン: 「この子と進む」 (`/study`)
   - 副ボタン: 「復習」 (`/study?session=review&force_review=1`)
 
 ### 1.2 禁止しない要素（旧仕様から変更）
 - 復習導線
-- stage/雰囲気の軽量表示（タグ・短文）
+- イベント時だけの補足モーダルや一言表示
 
 ---
 
