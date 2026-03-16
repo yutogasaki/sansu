@@ -144,8 +144,8 @@ export const CurriculumSettings: React.FC = () => {
 
             <div className="flex-1 overflow-hidden flex flex-col">
                 {/* Tabs */}
-                <div className="px-1 pt-4 md:px-2">
-                    <div className="app-glass-strong flex gap-2 rounded-[1.7rem] p-2">
+                <div className="px-[var(--screen-padding-x)] pt-1">
+                    <div className="app-glass-strong flex gap-2 rounded-[18px] p-2">
                         <button
                             onClick={() => setActiveTab("math")}
                             className={cn(
@@ -172,7 +172,7 @@ export const CurriculumSettings: React.FC = () => {
                 </div>
 
                 {/* List */}
-                <div className="flex-1 overflow-y-auto px-1 py-4 space-y-3 md:px-2">
+                <div className="flex-1 overflow-y-auto px-[var(--screen-padding-x)] pb-[var(--screen-bottom-with-footer)] pt-4 space-y-3">
                     <p className="text-center text-slate-500 text-sm mb-4">
                         いまの レベル: <span className="font-bold text-xl ml-2">{currentLevel}</span>
                         {activeTab === "math" && (

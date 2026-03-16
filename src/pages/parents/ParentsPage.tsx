@@ -77,7 +77,7 @@ export const ParentsPage: React.FC = () => {
 
     if (!isGatePassed) {
         return (
-            <div className="flex flex-col h-full bg-background">
+            <div className="flex h-full min-h-0 flex-col bg-transparent">
                 <ParentGateModal
                     isOpen
                     onClose={() => navigate('/settings')}
@@ -90,7 +90,7 @@ export const ParentsPage: React.FC = () => {
 
     if (isLoading) {
         return (
-            <div className="flex flex-col h-full bg-slate-50">
+            <div className="flex h-full min-h-0 flex-col bg-transparent">
                 <Header title="保護者メニュー" />
                 <Spinner fullScreen />
             </div>
@@ -99,9 +99,9 @@ export const ParentsPage: React.FC = () => {
 
     if (!profile) {
         return (
-            <div className="flex flex-col h-full bg-slate-50">
+            <div className="flex h-full min-h-0 flex-col bg-transparent">
                 <Header title="保護者メニュー" />
-                <div className="p-4">学習データが見つかりません。</div>
+                <div className="px-[var(--screen-padding-x)] pb-[var(--screen-bottom-padding)]">学習データが見つかりません。</div>
             </div>
         );
     }
@@ -109,9 +109,9 @@ export const ParentsPage: React.FC = () => {
     const recentAttempts = profile.recentAttempts?.slice(-5).reverse() ?? [];
 
     return (
-        <div className="flex flex-col h-full bg-background">
+        <div className="flex h-full min-h-0 flex-col bg-transparent">
             <Header title="保護者メニュー" />
-            <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6">
+            <div className="flex-1 overflow-y-auto px-[var(--screen-padding-x)] pb-[var(--screen-bottom-with-footer)] pt-1 space-y-6">
 
                 {/* 1. Summary Section */}
                 <div className="grid grid-cols-2 gap-4">

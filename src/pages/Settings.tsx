@@ -402,7 +402,7 @@ export const Settings: React.FC = () => {
 
             <Header title={t("せってい", "設定")} />
 
-            <div className="flex-1 overflow-y-auto px-1 py-4 space-y-6 md:px-2">
+            <div className="flex-1 overflow-y-auto px-[var(--screen-padding-x)] pb-[var(--screen-bottom-with-footer)] pt-1 space-y-6">
 
                 {/* ===== Section: Profile ===== */}
                 <Card className="p-4 space-y-4">

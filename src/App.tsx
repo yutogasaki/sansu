@@ -22,52 +22,62 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 function App() {
     useEffect(() => {
         loadSounds();
+        const hour = new Date().getHours();
+        if (hour >= 18 || hour < 4) {
+            document.documentElement.setAttribute("data-theme", "evening");
+        } else if (hour >= 10 && hour < 18) {
+            document.documentElement.setAttribute("data-theme", "day");
+        } else {
+            document.documentElement.removeAttribute("data-theme");
+        }
     }, []);
 
     return (
-        <HashRouter>
-            <Routes>
-                <Route path="/onboarding" element={<Onboarding />} />
+        <div className="app-container">
+            <HashRouter>
+                <Routes>
+                    <Route path="/onboarding" element={<Onboarding />} />
 
-                <Route path="/battle" element={<Layout />}>
-                    <Route index element={<Battle />} />
-                </Route>
+                    <Route path="/battle" element={<Layout />}>
+                        <Route index element={<Battle />} />
+                    </Route>
 
-                <Route element={<Layout />}>
-                    <Route path="/" element={
-                        <PrivateRoute>
-                            <Home />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/study" element={
-                        <PrivateRoute>
-                            <Study />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/stats" element={
-                        <PrivateRoute>
-                            <Stats />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/settings" element={
-                        <PrivateRoute>
-                            <Settings />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/settings/curriculum" element={
-                        <PrivateRoute>
-                            <CurriculumSettings />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/parents" element={
-                        <PrivateRoute>
-                            <ParentsPage />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/dev" element={<DevMode />} />
-                </Route>
-            </Routes>
-        </HashRouter>
+                    <Route element={<Layout />}>
+                        <Route path="/" element={
+                            <PrivateRoute>
+                                <Home />
+                            </PrivateRoute>
+                        } />
+                        <Route path="/study" element={
+                            <PrivateRoute>
+                                <Study />
+                            </PrivateRoute>
+                        } />
+                        <Route path="/stats" element={
+                            <PrivateRoute>
+                                <Stats />
+                            </PrivateRoute>
+                        } />
+                        <Route path="/settings" element={
+                            <PrivateRoute>
+                                <Settings />
+                            </PrivateRoute>
+                        } />
+                        <Route path="/settings/curriculum" element={
+                            <PrivateRoute>
+                                <CurriculumSettings />
+                            </PrivateRoute>
+                        } />
+                        <Route path="/parents" element={
+                            <PrivateRoute>
+                                <ParentsPage />
+                            </PrivateRoute>
+                        } />
+                        <Route path="/dev" element={<DevMode />} />
+                    </Route>
+                </Routes>
+            </HashRouter>
+        </div>
     )
 }
 

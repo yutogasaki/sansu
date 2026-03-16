@@ -1,60 +1,120 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Icons } from "./icons";
-import { cn } from "../utils/cn";
 import { warmUpTTS } from "../utils/tts";
 
-type NavItem = {
+type TabItem = {
     to: string;
-    icon: React.FC<React.SVGProps<SVGSVGElement> & { strokeWidth?: number }>;
     label: string;
-    accent?: boolean;
-    onClick?: () => void;
+    icon: React.FC<React.SVGProps<SVGSVGElement> & { strokeWidth?: number }>;
 };
 
 export const Footer: React.FC = () => {
-    const items: NavItem[] = [
+    const location = useLocation();
+    const navigate = useNavigate();
+    const currentPath = location.pathname;
+
+    const leftTabs: TabItem[] = [
         { to: "/", icon: Icons.Home, label: "ホーム" },
         { to: "/stats", icon: Icons.Stats, label: "きろく" },
-        { to: "/study", icon: Icons.Study, label: "まなぶ", accent: true, onClick: warmUpTTS },
+    ];
+
+    const rightTabs: TabItem[] = [
         { to: "/battle", icon: Icons.Play, label: "たいせん" },
         { to: "/settings", icon: Icons.Settings, label: "せってい" },
     ];
 
+    const renderTab = (item: TabItem) => {
+        const isActive = item.to === "/"
+            ? currentPath === "/"
+            : currentPath === item.to || currentPath.startsWith(`${item.to}/`);
+
+        return (
+            <button
+                key={item.to}
+                type="button"
+                aria-label={item.label}
+                aria-current={isActive ? "page" : undefined}
+                onClick={() => {
+                    if (item.to === currentPath) return;
+                    navigate(item.to);
+                }}
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 2,
+                    border: "none",
+                    background: "none",
+                    cursor: "pointer",
+                    padding: "8px 16px",
+                    color: isActive ? "#2BBAA0" : "#B2BEC3",
+                    transition: "color 0.2s ease",
+                }}
+            >
+                <item.icon
+                    width={22}
+                    height={22}
+                    strokeWidth={isActive ? 2.5 : 2}
+                    style={{ pointerEvents: "none" }}
+                    aria-hidden="true"
+                />
+                <span
+                    style={{
+                        fontSize: 10,
+                        fontWeight: 500,
+                        fontFamily: "var(--font-body)",
+                        pointerEvents: "none",
+                    }}
+                >
+                    {item.label}
+                </span>
+            </button>
+        );
+    };
+
     return (
-        <footer className="relative z-20 px-3 pt-2 pb-[calc(0.8rem+var(--safe-area-inset-bottom))] md:px-4 md:pt-3 md:pb-4">
-            <nav className="app-dock rounded-[1.9rem] p-2">
-                <div className="grid grid-cols-5 gap-1.5">
-                    {items.map((item) => (
-                        <NavLink
-                            key={item.to}
-                            to={item.to}
-                            onClick={item.onClick}
-                            className={({ isActive }) =>
-                                cn(
-                                    "group flex h-14 flex-col items-center justify-center gap-1 rounded-[1.25rem] px-1 text-[10px] font-bold transition-all duration-200",
-                                    item.accent
-                                        ? "bg-[linear-gradient(140deg,#14b8a6_0%,#06b6d4_56%,#0ea5e9_100%)] text-white shadow-[0_16px_28px_-18px_rgba(8,145,178,0.8)]"
-                                        : isActive
-                                            ? "bg-cyan-50/90 text-cyan-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.75)]"
-                                            : "text-slate-500 hover:bg-white/65 hover:text-slate-700"
-                                )
-                            }
-                        >
-                            <item.icon
-                                className={cn(
-                                    "h-5 w-5 transition-transform duration-200",
-                                    item.accent ? "h-5 w-5" : "group-hover:-translate-y-0.5"
-                                )}
-                                strokeWidth={item.accent ? 2.5 : 2.2}
-                            />
-                            <span className={cn("leading-none", item.accent ? "text-[11px]" : "")}>
-                                {item.label}
-                            </span>
-                        </NavLink>
-                    ))}
-                </div>
-            </nav>
-        </footer>
+        <nav
+            style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: "calc(56px + env(safe-area-inset-bottom, 0px))",
+                paddingBottom: "env(safe-area-inset-bottom, 0px)",
+                background: "var(--toolbar-bg)",
+                backdropFilter: "blur(var(--blur-lg))",
+                WebkitBackdropFilter: "blur(var(--blur-lg))",
+                borderTop: "1px solid rgba(0,0,0,0.06)",
+                boxShadow: "var(--toolbar-shadow)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-around",
+                zIndex: 50,
+            }}
+        >
+            {leftTabs.map(renderTab)}
+
+            <button
+                className="fab"
+                type="button"
+                aria-label="まなぶ"
+                onClick={() => {
+                    warmUpTTS();
+                    navigate("/study");
+                }}
+            >
+                <Icons.Study
+                    width={26}
+                    height={26}
+                    strokeWidth={2.6}
+                    color="#FFFFFF"
+                    aria-hidden="true"
+                />
+            </button>
+
+            {rightTabs.map(renderTab)}
+        </nav>
     );
 };

@@ -12,22 +12,20 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             <button
                 ref={ref}
                 className={cn(
-                    "inline-flex items-center justify-center rounded-full font-bold transition-all duration-300 active:translate-y-[1px] active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/65 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none touch-manipulation",
-                    // Variants
+                    "inline-flex items-center justify-center rounded-[14px] font-bold transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2BBAA0]/30 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none touch-manipulation",
                     variant === "primary" &&
-                    "text-white bg-[linear-gradient(140deg,#0ea5a4_0%,#0891b2_52%,#0284c7_100%)] shadow-[0_14px_24px_-16px_rgba(8,145,178,0.85)] hover:brightness-[1.03] active:shadow-[0_8px_12px_-10px_rgba(8,145,178,0.9)]",
+                    "border-0 bg-[linear-gradient(135deg,#2BBAA0,#24A08A)] text-white shadow-[0_6px_20px_rgba(43,186,160,0.4),0_2px_8px_rgba(43,186,160,0.2)] hover:brightness-[1.02]",
                     variant === "secondary" &&
-                    "bg-white/92 text-text-main border border-white/85 hover:bg-white shadow-[0_12px_22px_-18px_rgba(15,23,42,0.62)]",
+                    "border border-white/40 bg-white/70 text-slate-600 shadow-[0_2px_8px_rgba(0,0,0,0.06)] hover:bg-white/80",
                     variant === "ghost" &&
-                    "bg-transparent text-text-sub hover:bg-white/50",
+                    "bg-transparent text-slate-500 hover:bg-white/45",
                     variant === "icon" &&
-                    "p-2 rounded-full hover:bg-white/75 text-text-sub",
+                    "aspect-square rounded-full border-0 bg-[#F0F3F5] p-0 text-slate-700 shadow-sm hover:bg-white",
 
-                    // Sizes
-                    size === "sm" && "h-10 px-4 text-sm",
-                    size === "md" && "h-12 px-6 text-base",
-                    size === "lg" && "h-14 px-8 text-lg",
-                    size === "xl" && "h-16 text-xl w-full", // For big options
+                    size === "sm" && (variant === "icon" ? "h-10 w-10 text-sm" : "h-10 px-4 text-sm"),
+                    size === "md" && (variant === "icon" ? "h-11 w-11 text-sm" : "h-11 px-5 text-sm"),
+                    size === "lg" && (variant === "icon" ? "h-12 w-12 text-base" : "h-12 px-6 text-base"),
+                    size === "xl" && (variant === "icon" ? "h-12 w-12 text-base" : "h-12 w-full text-base"),
 
                     className
                 )}

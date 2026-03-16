@@ -200,7 +200,7 @@ export const Home: React.FC = () => {
     };
 
     return (
-        <div className="relative flex h-full min-h-0 flex-col overflow-hidden">
+        <div className="relative h-full overflow-hidden">
             <HomeAnimatedBackground />
 
             <EventModal isOpen={showEventModal} eventType={currentEventType} onStartCheck={handleStartCheck} onDismiss={handleDismiss} />
@@ -215,20 +215,19 @@ export const Home: React.FC = () => {
                 />
             )}
 
-            <div className="relative z-10 flex min-h-0 flex-1 flex-col items-center justify-start overflow-hidden px-5 pt-4 pb-0 land:px-10 land:pt-4">
-                {/* Status + Ikimono Area (scrollable) */}
-                <div className="flex min-h-0 w-full max-w-md flex-1 flex-col items-center overflow-y-auto pb-4">
+            <div className="relative z-10 flex h-full flex-col px-[var(--screen-padding-x)] pt-[var(--screen-header-top)] pb-[var(--screen-bottom-with-footer)]">
+                <div className="flex min-h-0 flex-1 flex-col overflow-y-auto pb-4">
                     {/* Compact status bar */}
                     <motion.div
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4 }}
-                        className="w-full rounded-[1.65rem] app-glass px-4 py-3 flex items-start gap-3"
+                        className="card-surface flex w-full items-start gap-3 rounded-[20px] px-4 py-4"
                     >
                         <span className="mt-1.5 h-2 w-2 rounded-full bg-emerald-400 flex-shrink-0 shadow-[0_0_0_4px_rgba(16,185,129,0.18)]" />
                         <div className="min-w-0">
                             <div className="flex items-center gap-2 mb-1">
-                                <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold text-cyan-700 bg-cyan-100/75 border border-cyan-100">
+                                <span className="inline-flex items-center rounded-full bg-teal-50 px-2 py-0.5 text-[10px] font-bold text-teal-700">
                                     {useKanjiForIkimono ? stageText[scene.stage].kanji : stageText[scene.stage].kana}
                                 </span>
                                 <span className="text-[10px] font-semibold tracking-wide text-slate-400">FUWAFUWA NOTE</span>
@@ -242,14 +241,25 @@ export const Home: React.FC = () => {
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.45, delay: 0.08 }}
-                        className="mt-2 w-full flex flex-wrap gap-2"
+                        className="mt-3 flex w-full flex-wrap gap-2"
                     >
                         {scene.aura.map((tag) => (
-                            <span key={tag} className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-bold text-slate-600 bg-white/62 border border-white/80 backdrop-blur-sm">
+                            <span key={tag} className="glass-light inline-flex items-center rounded-full px-3 py-1 text-[11px] font-bold text-slate-600">
                                 {tag}
                             </span>
                         ))}
                     </motion.div>
+
+                    <div className="mt-3 flex justify-end">
+                        <Button
+                            variant="secondary"
+                            size="md"
+                            className="px-5"
+                            onClick={() => { warmUpTTS(); navigate("/study?session=review&force_review=1"); }}
+                        >
+                            {isEasy ? "ふくしゅう" : "復習"}
+                        </Button>
+                    </div>
 
                     {/* Ikimono display */}
                     {profileId && (
@@ -257,31 +267,11 @@ export const Home: React.FC = () => {
                             initial={{ opacity: 0, scale: 0.98 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.7 }}
-                            className="mt-3 flex-1 min-h-[200px] w-full rounded-[2rem] app-glass flex flex-col items-center justify-center px-3 pt-2 pb-4"
+                            className="card-surface mt-3 flex min-h-[360px] w-full flex-1 flex-col items-center justify-center rounded-[20px] px-3 pt-4 pb-5"
                         >
                             <Ikimono profileId={profileId} kanjiMode={useKanjiForIkimono} speech={homeSpeech} statusText={scene.whisper} />
                         </motion.div>
                     )}
-                </div>
-
-                {/* Fixed CTA area at bottom */}
-                <div className="flex-none w-full max-w-md pb-2 pt-3 md:pb-3">
-                    <div className="app-glass-strong flex gap-2 rounded-[1.7rem] p-2 shadow-[0_18px_30px_-24px_rgba(15,23,42,0.7)]">
-                        <Button
-                            size="xl"
-                            className="flex-1"
-                            onClick={() => { warmUpTTS(); navigate("/study"); }}
-                        >
-                            {isEasy ? "ふわふわ と すすむ" : "ふわふわと進む"}
-                        </Button>
-                        <Button
-                            variant="secondary"
-                            className="h-16 px-5 text-sm"
-                            onClick={() => { warmUpTTS(); navigate("/study?session=review&force_review=1"); }}
-                        >
-                            {isEasy ? "ふくしゅう" : "復習"}
-                        </Button>
-                    </div>
                 </div>
             </div>
         </div>

@@ -100,7 +100,7 @@ export const DevMode: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="flex flex-col h-full bg-slate-50">
+            <div className="flex h-full min-h-0 flex-col bg-transparent">
                 <Header title="開発者パネル" onBack={() => navigate("/")} />
                 <Spinner fullScreen />
             </div>
@@ -109,7 +109,7 @@ export const DevMode: React.FC = () => {
 
     if (error || !profile) {
         return (
-            <div className="flex flex-col h-full bg-slate-50">
+            <div className="flex h-full min-h-0 flex-col bg-transparent">
                 <Header title="開発者パネル" onBack={() => navigate("/")} />
                 <div className="flex-1 flex items-center justify-center">
                     <span className="text-red-500">エラー: {error || "プロファイルが見つかりません"}</span>
@@ -119,11 +119,11 @@ export const DevMode: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-col h-full bg-slate-50">
+        <div className="flex h-full min-h-0 flex-col bg-transparent">
             <Header title="開発者パネル" onBack={() => navigate("/")} />
             <DevPanelTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto pb-[var(--screen-bottom-with-footer)]">
                 {activeTab === "profile" && (
                     <DevProfileTab profile={profile} onUpdate={updateProfile} />
                 )}

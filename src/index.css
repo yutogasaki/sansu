@@ -6,98 +6,192 @@
     font-display: swap;
 }
 
-@layer base {
-    :root {
-        --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
-        /* TenKey動的高さ: 画面の8%、最小32px、最大48px */
-        --tenkey-h: clamp(32px, 8dvh, 48px);
-        --app-shell-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.42) 100%);
-        --app-surface: rgba(255, 255, 255, 0.68);
-        --app-surface-strong: rgba(255, 255, 255, 0.9);
-        --app-dock-surface: rgba(255, 255, 255, 0.88);
-        --app-border: rgba(255, 255, 255, 0.78);
-        --app-border-soft: rgba(148, 163, 184, 0.2);
-        --app-shadow: 0 20px 40px -30px rgba(15, 23, 42, 0.48);
-        --app-shell-shadow: 0 36px 80px -54px rgba(15, 23, 42, 0.56);
-        --app-dock-shadow: 0 22px 36px -28px rgba(15, 23, 42, 0.5);
-        --app-glow: rgba(56, 189, 248, 0.22);
+:root {
+    --font-heading: "Outfit", "Noto Sans JP", sans-serif;
+    --font-body: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    --color-peach-100: #fff5f0;
+    --color-peach-200: #ffe5d9;
+    --color-mint-100: #e8f8f0;
+    --color-mint-200: #d4f0e7;
+    --color-teal-500: #2bbaa0;
+    --color-teal-600: #24a08a;
+    --color-dark: #2d3436;
+    --color-gray-500: #8395a7;
+    --color-gray-300: #b2bec3;
+    --color-gray-100: #f0f3f5;
+
+    --theme-bg-1: var(--color-peach-200);
+    --theme-bg-2: var(--color-peach-100);
+    --theme-bg-3: var(--color-mint-100);
+    --theme-bg-4: var(--color-mint-200);
+
+    --safe-area-top: env(safe-area-inset-top, 0px);
+    --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-area-inset-bottom: var(--safe-area-bottom);
+
+    --screen-padding-x: 20px;
+    --screen-header-top: calc(var(--safe-area-top) + 16px);
+    --screen-bottom-padding: calc(var(--safe-area-bottom) + 24px);
+    --screen-bottom-with-footer: calc(var(--safe-area-bottom) + 56px + 24px);
+
+    /* TenKey dynamic height */
+    --tenkey-h: clamp(32px, 8dvh, 48px);
+
+    --blur-sm: 8px;
+    --blur-md: 12px;
+    --blur-lg: 16px;
+
+    --glass-bg: rgba(255, 255, 255, 0.72);
+    --glass-bg-heavy: rgba(255, 255, 255, 0.85);
+    --glass-bg-light: rgba(255, 255, 255, 0.5);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.45);
+    --glass-border-subtle: 1px solid rgba(255, 255, 255, 0.25);
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-accent-md: 0 6px 20px rgba(43, 186, 160, 0.4), 0 2px 8px rgba(43, 186, 160, 0.2);
+
+    --card-radius: 20px;
+    --card-radius-sm: 16px;
+    --card-bg: var(--glass-bg-heavy);
+    --card-shadow: var(--shadow-md);
+
+    --toolbar-bg: rgba(255, 255, 255, 0.65);
+    --toolbar-shadow: 0 -2px 16px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="day"] {
+    --theme-bg-1: #d4f0e7;
+    --theme-bg-2: #e8f8f0;
+    --theme-bg-3: #e1f2fb;
+    --theme-bg-4: #ddebe8;
+}
+
+[data-theme="evening"] {
+    --theme-bg-1: #f9e0ff;
+    --theme-bg-2: #f0e6ff;
+    --theme-bg-3: #fff0f5;
+    --theme-bg-4: #ffeae6;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes zen-breath {
+    0% {
+        background-position: 0% 50%;
     }
 
-    body {
-        overscroll-behavior: none;
-        background:
-            radial-gradient(circle at 8% 12%, rgba(125, 211, 252, 0.42) 0%, transparent 36%),
-            radial-gradient(circle at 84% 14%, rgba(134, 239, 172, 0.34) 0%, transparent 40%),
-            radial-gradient(circle at 60% 90%, rgba(253, 230, 138, 0.32) 0%, transparent 44%),
-            linear-gradient(170deg, #f3f9ff 0%, #f8fcf8 48%, #fff8ef 100%);
-        background-attachment: fixed;
-        color: #2D3436;
-        font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        min-height: 100vh;
-        letter-spacing: 0.01em;
+    50% {
+        background-position: 100% 50%;
     }
 
-    body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        z-index: -1;
-        pointer-events: none;
-        opacity: 0.16;
-        background-image: radial-gradient(rgba(15, 23, 42, 0.3) 0.6px, transparent 0.6px);
-        background-size: 3px 3px;
-        mix-blend-mode: soft-light;
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+html,
+body,
+#root {
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    overflow: hidden;
+    font-family: var(--font-body);
+    color: var(--color-dark);
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    background: linear-gradient(-45deg, var(--theme-bg-1), var(--theme-bg-2), var(--theme-bg-3), var(--theme-bg-4));
+    background-size: 400% 400%;
+    animation: zen-breath 20s ease infinite;
+}
+
+body {
+    overscroll-behavior: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+    width: 100%;
+    height: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+@media (min-width: 431px) {
+    .app-container {
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
     }
 }
 
 @layer utilities {
-    .app-shell-glow {
-        position: absolute;
-        inset: -12%;
-        pointer-events: none;
-        z-index: 0;
-        background:
-            radial-gradient(circle at 10% 18%, rgba(125, 211, 252, 0.28) 0%, transparent 30%),
-            radial-gradient(circle at 84% 10%, rgba(167, 139, 250, 0.16) 0%, transparent 32%),
-            radial-gradient(circle at 52% 92%, rgba(253, 224, 71, 0.18) 0%, transparent 36%);
-        filter: blur(28px);
-        animation: driftGlow 28s ease-in-out infinite alternate;
-    }
-
     .app-glass {
-        background: var(--app-surface);
-        border: 1px solid var(--app-border);
-        box-shadow: var(--app-shadow);
-        backdrop-filter: blur(18px);
+        background: var(--glass-bg);
+        backdrop-filter: blur(var(--blur-md));
+        -webkit-backdrop-filter: blur(var(--blur-md));
+        border: var(--glass-border);
+        box-shadow: var(--shadow-sm);
     }
 
     .app-glass-strong {
-        background: var(--app-surface-strong);
-        border: 1px solid var(--app-border);
-        box-shadow: var(--app-shadow);
-        backdrop-filter: blur(18px);
+        background: var(--glass-bg-heavy);
+        backdrop-filter: blur(var(--blur-lg));
+        -webkit-backdrop-filter: blur(var(--blur-lg));
+        border: var(--glass-border);
+        box-shadow: var(--shadow-md);
     }
 
-    .app-shell {
-        background: var(--app-shell-surface);
-        border: 1px solid rgba(255, 255, 255, 0.76);
-        box-shadow: var(--app-shell-shadow);
-        backdrop-filter: blur(24px);
+    .glass-light {
+        background: var(--glass-bg-light);
+        backdrop-filter: blur(var(--blur-sm));
+        -webkit-backdrop-filter: blur(var(--blur-sm));
+        border: var(--glass-border-subtle);
     }
 
-    .app-dock {
-        background: var(--app-dock-surface);
-        border: 1px solid rgba(255, 255, 255, 0.94);
-        box-shadow: var(--app-dock-shadow);
-        backdrop-filter: blur(22px);
+    .card-surface {
+        background: var(--card-bg);
+        backdrop-filter: blur(var(--blur-md));
+        -webkit-backdrop-filter: blur(var(--blur-md));
+        border: var(--glass-border);
+        box-shadow: var(--card-shadow);
+    }
+
+    .safe-area-inset-bottom {
+        padding-bottom: var(--safe-area-bottom);
     }
 }
 
-@keyframes driftGlow {
-    from {
-        transform: translate3d(-2%, -1%, 0) scale(1);
-    }
-    to {
-        transform: translate3d(2%, 1%, 0) scale(1.03);
-    }
+.fab {
+    width: 64px;
+    height: 64px;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, var(--color-teal-500), var(--color-teal-600));
+    box-shadow: var(--shadow-accent-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    position: relative;
+    top: -20px;
+}
+
+.fab:active {
+    transform: scale(0.92);
+    box-shadow: var(--shadow-sm);
 }

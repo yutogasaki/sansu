@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Icons } from "./icons";
-import { Button } from "./ui/Button";
 
 interface HeaderProps {
     title?: string;
@@ -24,16 +23,28 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, showBack, onBac
     };
 
     return (
-        <header className="app-glass-strong relative z-10 flex min-h-14 items-center justify-between rounded-[1.6rem] px-4 py-3 shadow-[0_16px_28px_-22px_rgba(15,23,42,0.65)]">
-            <div className="flex items-center gap-2">
+        <header className="relative z-10 flex items-center justify-between gap-3 px-[var(--screen-padding-x)] pt-[var(--screen-header-top)] pb-4">
+            <div className="flex min-w-0 flex-1 items-center gap-3">
                 {showBack && (
-                    <Button variant="icon" onClick={handleBack} size="sm">
-                        <Icons.Back className="w-6 h-6" />
-                    </Button>
+                    <button
+                        type="button"
+                        onClick={handleBack}
+                        aria-label="もどる"
+                        className="flex h-11 min-w-11 items-center justify-center rounded-full border-0 bg-[#F0F3F5] text-slate-700 shadow-sm transition-transform duration-150 active:scale-95"
+                    >
+                        <Icons.Back className="w-5 h-5" />
+                    </button>
                 )}
-                <div className="flex flex-col">
-                    {title && <h1 className="text-xl font-bold text-text-main leading-tight">{title}</h1>}
-                    {subtitle && <span className="text-xs text-text-sub font-bold">{subtitle}</span>}
+                <div className="min-w-0 flex flex-col">
+                    {title && (
+                        <h1
+                            className="truncate text-[28px] font-bold leading-none tracking-[-0.03em] text-text-main"
+                            style={{ fontFamily: "var(--font-heading)" }}
+                        >
+                            {title}
+                        </h1>
+                    )}
+                    {subtitle && <span className="mt-1 text-xs font-bold text-slate-400">{subtitle}</span>}
                 </div>
             </div>
 
@@ -43,7 +54,11 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, showBack, onBac
                 </div>
             )}
 
-            <div>{rightAction}</div>
+            {rightAction ? (
+                <div className="flex shrink-0 items-center gap-3">{rightAction}</div>
+            ) : (
+                <div className="w-11 shrink-0" />
+            )}
         </header>
     );
 };

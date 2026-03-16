@@ -402,10 +402,10 @@ export const Stats: React.FC = () => {
                         </Button>
                     }
                 />
-                <div className="p-4">プロフィールが見つかりません。</div>
-            </div>
-        );
-    }
+            <div className="px-[var(--screen-padding-x)] pb-[var(--screen-bottom-padding)]">プロフィールが見つかりません。</div>
+        </div>
+    );
+}
 
     return (
         <div className="flex h-full min-h-0 flex-col bg-transparent">
@@ -418,8 +418,8 @@ export const Stats: React.FC = () => {
                 }
             />
 
-            <div className="flex-1 overflow-y-auto px-1 py-4 space-y-4 md:px-2 land:grid land:grid-cols-2 land:gap-4 land:space-y-0">
-                <Card className="p-4 land:col-span-2" variant="flat">
+            <div className="flex-1 overflow-y-auto px-[var(--screen-padding-x)] pb-[var(--screen-bottom-with-footer)] pt-1 space-y-4">
+                <Card className="p-4" variant="flat">
                     <div className="text-xs font-bold text-slate-500 mb-3">ひょうじ する ないよう</div>
                     <div className="flex flex-wrap gap-2">
                         {(Object.keys(sections) as SectionKey[]).map(key => (
@@ -439,7 +439,7 @@ export const Stats: React.FC = () => {
                 </Card>
 
                 {sections.summary && (
-                    <Card className="p-4 land:col-span-2">
+                    <Card className="p-4">
                         <h3 className="font-bold text-slate-700">きょう の まとめ</h3>
                         <div className="grid grid-cols-4 gap-2 mt-3">
                             <div className="text-center bg-white/60 border border-white/80 rounded-2xl p-3">

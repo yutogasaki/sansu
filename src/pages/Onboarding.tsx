@@ -213,19 +213,23 @@ export const Onboarding: React.FC = () => {
 
     if (step === "welcome") {
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center space-y-8 animate-in fade-in duration-500">
+            <div className="flex h-full min-h-0 flex-col items-center justify-center px-[var(--screen-padding-x)] text-center animate-in fade-in duration-500">
                 <div className="space-y-4">
-                    <h1 className="text-5xl font-black text-cyan-700 tracking-tight drop-shadow-sm">Sansu</h1>
-                    <p className="text-slate-500 text-lg font-medium">やさしく、しずかに<br />つづくまなび</p>
+                    <h1
+                        className="text-5xl font-black tracking-[-0.04em] text-slate-800"
+                        style={{ fontFamily: "var(--font-heading)" }}
+                    >
+                        Sansu
+                    </h1>
+                    <p className="text-sm font-medium leading-7 text-slate-400">やさしく、しずかに<br />つづくまなび</p>
                 </div>
-                <Button onClick={() => setStep("name")} size="xl" className="w-full max-w-xs shadow-xl shadow-cyan-500/20">
+                <Button onClick={() => setStep("name")} size="xl" className="mt-8 w-full max-w-[144px]">
                     はじめる
                 </Button>
 
-                {/* Cancel/Back Button (Using standard anchor or button) */}
                 <button
                     onClick={() => navigate(-1)}
-                    className="text-slate-400 text-sm font-bold hover:text-slate-600 transition-colors"
+                    className="mt-5 text-sm font-bold text-slate-400 transition-colors hover:text-slate-600"
                 >
                     もどる
                 </button>
@@ -234,7 +238,7 @@ export const Onboarding: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen flex flex-col">
+        <div className="flex h-full min-h-0 flex-col">
             <Header
                 title={
                     step === "name"
@@ -253,7 +257,7 @@ export const Onboarding: React.FC = () => {
                 onBack={goBack}
             />
 
-            <div className="flex-1 p-6 flex flex-col items-center max-w-md mx-auto w-full land:max-w-4xl justify-center">
+            <div className="flex-1 px-[var(--screen-padding-x)] pb-[var(--screen-bottom-padding)] flex flex-col items-center justify-center">
 
                 {step === "name" && (
                     <div className="w-full space-y-8 animate-in slide-in-from-right duration-300">
