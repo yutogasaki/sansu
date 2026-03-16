@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addDays } from "date-fns";
-import { Header } from "../components/Header";
 import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
 import { Icons } from "../components/icons";
@@ -27,6 +26,7 @@ import { buildWeeklyTrend, buildRadarData, type RadarCategoryPoint, type WeeklyT
 import { WeeklyTrendChart } from "../components/charts/WeeklyTrendChart";
 import { SkillRadarChart } from "../components/charts/SkillRadarChart";
 import { IkimonoGallery } from "../components/ikimono/IkimonoGallery";
+import { ScreenScaffold } from "../components/ScreenScaffold";
 import { logInDev } from "../utils/debug";
 
 type SubjectType = "math" | "vocab";
@@ -386,6 +386,11 @@ export const Stats: React.FC = () => {
     const vocabRecent = vocabLevelState?.recentAnswersNonReview || [];
     const mathRecentCorrect = mathRecent.filter(Boolean).length;
     const vocabRecentCorrect = vocabRecent.filter(Boolean).length;
+    const closeAction = (
+        <Button variant="icon" size="sm" onClick={() => navigate("/")}>
+            <Icons.Close className="w-6 h-6" />
+        </Button>
+    );
 
     if (loading) {
         return <Spinner fullScreen />;
@@ -393,32 +398,23 @@ export const Stats: React.FC = () => {
 
     if (!profile) {
         return (
-            <div className="flex h-full min-h-0 flex-col bg-transparent">
-                <Header
-                    title={t("きろく", "記録")}
-                    rightAction={
-                        <Button variant="icon" size="sm" onClick={() => navigate("/")}>
-                            <Icons.Close className="w-6 h-6" />
-                        </Button>
-                    }
-                />
-            <div className="px-[var(--screen-padding-x)] pb-[var(--screen-bottom-padding)]">プロフィールが見つかりません。</div>
-        </div>
-    );
-}
+            <ScreenScaffold
+                title={t("きろく", "記録")}
+                rightAction={closeAction}
+                footerSpacing="base"
+                contentClassName="px-[var(--screen-padding-x)]"
+            >
+                プロフィールが見つかりません。
+            </ScreenScaffold>
+        );
+    }
 
     return (
-        <div className="flex h-full min-h-0 flex-col bg-transparent">
-            <Header
-                title={t("きろく", "記録")}
-                rightAction={
-                    <Button variant="icon" size="sm" onClick={() => navigate("/")}>
-                        <Icons.Close className="w-6 h-6" />
-                    </Button>
-                }
-            />
-
-            <div className="flex-1 overflow-y-auto px-[var(--screen-padding-x)] pb-[var(--screen-bottom-with-footer)] pt-1 space-y-4">
+        <ScreenScaffold
+            title={t("きろく", "記録")}
+            rightAction={closeAction}
+            contentClassName="px-[var(--screen-padding-x)] pt-1 space-y-4"
+        >
                 <Card className="p-4" variant="flat">
                     <div className="text-xs font-bold text-slate-500 mb-3">ひょうじ する ないよう</div>
                     <div className="flex flex-wrap gap-2">
@@ -748,7 +744,6 @@ export const Stats: React.FC = () => {
                         </div>
                     </Card>
                 )}
-            </div>
-        </div>
+        </ScreenScaffold>
     );
 };

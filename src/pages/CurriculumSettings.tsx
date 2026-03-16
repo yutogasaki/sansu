@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Header } from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
 import { UserProfile } from "../domain/types";
 import { syncLevelState, syncUnlockLevel } from "../domain/user/profile";
 import { ParentGuard } from "../components/domain/ParentGuard";
 import { Icons } from "../components/icons";
+import { ScreenScaffold } from "../components/ScreenScaffold";
 import { cn } from "../utils/cn";
 
 // レベル定義
@@ -128,149 +128,143 @@ export const CurriculumSettings: React.FC = () => {
         ? (profile?.mathMaxUnlocked || currentLevel)
         : (profile?.vocabMaxUnlocked || currentLevel);
 
+    const tabs = (
+        <div className="px-[var(--screen-padding-x)] pt-1">
+            <div className="app-glass-strong flex gap-2 rounded-[18px] p-2">
+                <button
+                    onClick={() => setActiveTab("math")}
+                    className={cn(
+                        "flex-1 rounded-[1.2rem] px-4 py-3 text-base font-black transition-all duration-200",
+                        activeTab === "math"
+                            ? "bg-[linear-gradient(145deg,#dbeafe_0%,#e0f2fe_100%)] text-sky-700 shadow-[0_12px_20px_-18px_rgba(14,116,144,0.85)]"
+                            : "text-slate-500 hover:bg-white/65 hover:text-slate-700"
+                    )}
+                >
+                    さんすう
+                </button>
+                <button
+                    onClick={() => setActiveTab("vocab")}
+                    className={cn(
+                        "flex-1 rounded-[1.2rem] px-4 py-3 text-base font-black transition-all duration-200",
+                        activeTab === "vocab"
+                            ? "bg-[linear-gradient(145deg,#dcfce7_0%,#ecfccb_100%)] text-emerald-700 shadow-[0_12px_20px_-18px_rgba(22,101,52,0.85)]"
+                            : "text-slate-500 hover:bg-white/65 hover:text-slate-700"
+                    )}
+                >
+                    えいご
+                </button>
+            </div>
+        </div>
+    );
+
     return (
-        <div className="flex h-full min-h-0 flex-col bg-transparent">
+        <ScreenScaffold
+            title="がくしゅう せってい"
+            showBack
+            onBack={() => navigate("/settings")}
+            topSlot={tabs}
+            contentClassName="px-[var(--screen-padding-x)] pt-4 space-y-3"
+        >
             <ParentGuard
                 isOpen={showGuard}
                 onSuccess={handleConfirmLevel}
                 onCancel={closeGuard}
             />
+            <p className="mb-4 text-center text-sm text-slate-500">
+                いまの レベル: <span className="ml-2 text-xl font-bold">{currentLevel}</span>
+                {activeTab === "math" && (
+                    <span className="ml-4 text-xs text-slate-400">
+                        解放上限: <span className="font-bold text-slate-600">{currentMaxUnlocked}</span>
+                    </span>
+                )}
+            </p>
 
-            <Header
-                title="がくしゅう せってい"
-                showBack={true}
-                onBack={() => navigate("/settings")}
-            />
+            {(activeTab === "math" ? MATH_LEVELS : VOCAB_LEVELS).map((item) => {
+                const isSelected = item.level === currentLevel;
+                const isUnlocked = item.level <= currentMaxUnlocked;
+                const statusLabel =
+                    item.level < currentLevel
+                        ? "完了"
+                        : item.level === currentLevel
+                            ? "メイン"
+                            : isUnlocked
+                                ? "解放済"
+                                : "未解放";
 
-            <div className="flex-1 overflow-hidden flex flex-col">
-                {/* Tabs */}
-                <div className="px-[var(--screen-padding-x)] pt-1">
-                    <div className="app-glass-strong flex gap-2 rounded-[18px] p-2">
-                        <button
-                            onClick={() => setActiveTab("math")}
-                            className={cn(
-                                "flex-1 rounded-[1.2rem] px-4 py-3 text-base font-black transition-all duration-200",
-                                activeTab === "math"
-                                    ? "bg-[linear-gradient(145deg,#dbeafe_0%,#e0f2fe_100%)] text-sky-700 shadow-[0_12px_20px_-18px_rgba(14,116,144,0.85)]"
-                                    : "text-slate-500 hover:bg-white/65 hover:text-slate-700"
-                            )}
-                        >
-                            さんすう
-                        </button>
-                        <button
-                            onClick={() => setActiveTab("vocab")}
-                            className={cn(
-                                "flex-1 rounded-[1.2rem] px-4 py-3 text-base font-black transition-all duration-200",
-                                activeTab === "vocab"
-                                    ? "bg-[linear-gradient(145deg,#dcfce7_0%,#ecfccb_100%)] text-emerald-700 shadow-[0_12px_20px_-18px_rgba(22,101,52,0.85)]"
-                                    : "text-slate-500 hover:bg-white/65 hover:text-slate-700"
-                            )}
-                        >
-                            えいご
-                        </button>
-                    </div>
-                </div>
-
-                {/* List */}
-                <div className="flex-1 overflow-y-auto px-[var(--screen-padding-x)] pb-[var(--screen-bottom-with-footer)] pt-4 space-y-3">
-                    <p className="text-center text-slate-500 text-sm mb-4">
-                        いまの レベル: <span className="font-bold text-xl ml-2">{currentLevel}</span>
-                        {activeTab === "math" && (
-                            <span className="ml-4 text-xs text-slate-400">
-                                解放上限: <span className="font-bold text-slate-600">{currentMaxUnlocked}</span>
-                            </span>
+                return (
+                    <div
+                        key={item.level}
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => handleLevelSelect(item.level)}
+                        onKeyDown={(event) => {
+                            if (event.key === "Enter" || event.key === " ") {
+                                event.preventDefault();
+                                handleLevelSelect(item.level);
+                            }
+                        }}
+                        className={cn(
+                            "relative w-full cursor-pointer overflow-hidden rounded-xl border-2 p-4 text-left transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/65 focus-visible:ring-offset-2",
+                            isSelected
+                                ? "border-yellow-400 bg-white shadow-md ring-2 ring-yellow-200 ring-offset-2"
+                                : "border-slate-100 bg-white shadow-sm hover:border-slate-300"
                         )}
-                    </p>
-
-                    {(activeTab === "math" ? MATH_LEVELS : VOCAB_LEVELS).map((item) => {
-                        const isSelected = item.level === currentLevel;
-                        const isUnlocked = item.level <= currentMaxUnlocked;
-                        const statusLabel =
-                            item.level < currentLevel
-                                ? "完了"
-                                : item.level === currentLevel
-                                    ? "メイン"
-                                    : isUnlocked
-                                        ? "解放済"
-                                        : "未解放";
-
-                        return (
+                    >
+                        <div className="flex items-center gap-4">
                             <div
-                                key={item.level}
-                                role="button"
-                                tabIndex={0}
-                                onClick={() => handleLevelSelect(item.level)}
-                                onKeyDown={(event) => {
-                                    if (event.key === "Enter" || event.key === " ") {
-                                        event.preventDefault();
-                                        handleLevelSelect(item.level);
-                                    }
-                                }}
                                 className={cn(
-                                    "w-full text-left p-4 rounded-xl border-2 transition-all relative overflow-hidden cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/65 focus-visible:ring-offset-2",
-                                    isSelected
-                                        ? "bg-white border-yellow-400 shadow-md ring-2 ring-yellow-200 ring-offset-2"
-                                        : "bg-white border-slate-100 hover:border-slate-300 shadow-sm"
+                                    "flex h-10 w-10 items-center justify-center rounded-full text-lg font-black",
+                                    isSelected ? "bg-yellow-400 text-white" : "bg-slate-100 text-slate-400"
                                 )}
                             >
-                                <div className="flex items-center gap-4">
-                                    <div className={cn(
-                                        "w-10 h-10 rounded-full flex items-center justify-center font-black text-lg",
-                                        isSelected ? "bg-yellow-400 text-white" : "bg-slate-100 text-slate-400"
-                                    )}>
-                                        {item.level}
-                                    </div>
-                                    <div className="flex-1">
-                                        <div className={cn(
-                                            "font-bold text-lg",
-                                            isSelected ? "text-slate-800" : "text-slate-600"
-                                        )}>
-                                            {item.title}
-                                        </div>
-                                        <div className="text-xs text-slate-400">
-                                            {item.desc}
-                                        </div>
-                                        {activeTab === "math" && (
-                                            <div className="text-[10px] text-slate-400 mt-1">
-                                                状態: <span className="font-bold text-slate-600">{statusLabel}</span>
-                                            </div>
-                                        )}
-                                    </div>
-                                    {isSelected && (
-                                        <div className="text-yellow-500">
-                                            <Icons.Check className="w-6 h-6" />
-                                        </div>
-                                    )}
+                                {item.level}
+                            </div>
+                            <div className="flex-1">
+                                <div className={cn("text-lg font-bold", isSelected ? "text-slate-800" : "text-slate-600")}>
+                                    {item.title}
+                                </div>
+                                <div className="text-xs text-slate-400">
+                                    {item.desc}
                                 </div>
                                 {activeTab === "math" && (
-                                    <div className="mt-3 flex items-center justify-between">
-                                        <span className="text-xs text-slate-400">解放上限にする</span>
-                                        <button
-                                            type="button"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleUnlockSelect(item.level);
-                                            }}
-                                            className={cn(
-                                                "px-3 py-1 rounded-full text-xs font-bold border",
-                                                item.level === currentMaxUnlocked
-                                                    ? "bg-blue-50 text-blue-600 border-blue-200"
-                                                    : "bg-white text-slate-500 border-slate-200 hover:border-slate-300"
-                                            )}
-                                        >
-                                            {item.level === currentMaxUnlocked ? "いまの上限" : "これにする"}
-                                        </button>
+                                    <div className="mt-1 text-[10px] text-slate-400">
+                                        状態: <span className="font-bold text-slate-600">{statusLabel}</span>
                                     </div>
                                 )}
                             </div>
-                        );
-                    })}
-
-                    <div className="text-center text-xs text-slate-300 pt-8">
-                        ここを かえると もんだいの レベルが かわります
+                            {isSelected && (
+                                <div className="text-yellow-500">
+                                    <Icons.Check className="h-6 w-6" />
+                                </div>
+                            )}
+                        </div>
+                        {activeTab === "math" && (
+                            <div className="mt-3 flex items-center justify-between">
+                                <span className="text-xs text-slate-400">解放上限にする</span>
+                                <button
+                                    type="button"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleUnlockSelect(item.level);
+                                    }}
+                                    className={cn(
+                                        "rounded-full border px-3 py-1 text-xs font-bold",
+                                        item.level === currentMaxUnlocked
+                                            ? "border-blue-200 bg-blue-50 text-blue-600"
+                                            : "border-slate-200 bg-white text-slate-500 hover:border-slate-300"
+                                    )}
+                                >
+                                    {item.level === currentMaxUnlocked ? "いまの上限" : "これにする"}
+                                </button>
+                            </div>
+                        )}
                     </div>
-                </div>
+                );
+            })}
+
+            <div className="pt-8 text-center text-xs text-slate-300">
+                ここを かえると もんだいの レベルが かわります
             </div>
-        </div>
+        </ScreenScaffold>
     );
 };

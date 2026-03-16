@@ -7,6 +7,7 @@ type TabItem = {
     to: string;
     label: string;
     icon: React.FC<React.SVGProps<SVGSVGElement> & { strokeWidth?: number }>;
+    activePaths?: string[];
 };
 
 export const Footer: React.FC = () => {
@@ -21,13 +22,16 @@ export const Footer: React.FC = () => {
 
     const rightTabs: TabItem[] = [
         { to: "/battle", icon: Icons.Play, label: "たいせん" },
-        { to: "/settings", icon: Icons.Settings, label: "せってい" },
+        { to: "/settings", icon: Icons.Settings, label: "せってい", activePaths: ["/settings", "/parents", "/dev"] },
     ];
 
     const renderTab = (item: TabItem) => {
-        const isActive = item.to === "/"
-            ? currentPath === "/"
-            : currentPath === item.to || currentPath.startsWith(`${item.to}/`);
+        const activePaths = item.activePaths ?? [item.to];
+        const isActive = activePaths.some((path) => (
+            path === "/"
+                ? currentPath === "/"
+                : currentPath === path || currentPath.startsWith(`${path}/`)
+        ));
 
         return (
             <button

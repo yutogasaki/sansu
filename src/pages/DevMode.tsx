@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Header } from "../components/Header";
 import { DevPanelTabs, DevTabId } from "../components/dev/DevPanelTabs";
 import { DevProfileTab } from "../components/dev/DevProfileTab";
 import { DevProgressTab } from "../components/dev/DevProgressTab";
@@ -12,6 +11,7 @@ import { DevIkimonoTab } from "../components/dev/DevIkimonoTab";
 import { useDevPanel } from "../hooks/useDevPanel";
 import { Spinner } from "../components/ui/Spinner";
 import { MemoryState } from "../domain/types";
+import { ScreenScaffold } from "../components/ScreenScaffold";
 
 export const DevMode: React.FC = () => {
     const navigate = useNavigate();
@@ -97,33 +97,33 @@ export const DevMode: React.FC = () => {
         await updateVocabMemoryState(wordId, updates);
         await refreshVocabMemory();
     };
+    const tabs = <DevPanelTabs activeTab={activeTab} onTabChange={setActiveTab} />;
 
     if (loading) {
         return (
-            <div className="flex h-full min-h-0 flex-col bg-transparent">
-                <Header title="開発者パネル" onBack={() => navigate("/")} />
+            <ScreenScaffold title="開発者パネル" footerSpacing="none" scroll={false}>
                 <Spinner fullScreen />
-            </div>
+            </ScreenScaffold>
         );
     }
 
     if (error || !profile) {
         return (
-            <div className="flex h-full min-h-0 flex-col bg-transparent">
-                <Header title="開発者パネル" onBack={() => navigate("/")} />
+            <ScreenScaffold title="開発者パネル" footerSpacing="none" scroll={false}>
                 <div className="flex-1 flex items-center justify-center">
                     <span className="text-red-500">エラー: {error || "プロファイルが見つかりません"}</span>
                 </div>
-            </div>
+            </ScreenScaffold>
         );
     }
 
     return (
-        <div className="flex h-full min-h-0 flex-col bg-transparent">
-            <Header title="開発者パネル" onBack={() => navigate("/")} />
-            <DevPanelTabs activeTab={activeTab} onTabChange={setActiveTab} />
-
-            <div className="flex-1 overflow-y-auto pb-[var(--screen-bottom-with-footer)]">
+        <ScreenScaffold
+            title="開発者パネル"
+            onBack={() => navigate("/")}
+            topSlot={tabs}
+            contentClassName="pb-[var(--screen-bottom-with-footer)]"
+        >
                 {activeTab === "profile" && (
                     <DevProfileTab profile={profile} onUpdate={updateProfile} />
                 )}
@@ -157,7 +157,6 @@ export const DevMode: React.FC = () => {
                 {activeTab === "constants" && (
                     <DevConstantsTab />
                 )}
-            </div>
-        </div>
+        </ScreenScaffold>
     );
 };

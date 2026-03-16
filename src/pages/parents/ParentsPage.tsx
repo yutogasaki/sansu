@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Header } from '../../components/Header';
 import { getWeakMathSkillIds, getWeakVocabIds } from '../../domain/learningRepository';
 import { ENGLISH_WORDS } from '../../domain/english/words';
 import type { RecentAttempt, UserProfile } from '../../domain/types';
 import { getActiveProfile } from '../../domain/user/repository';
 import { ParentGateModal } from '../../components/gate/ParentGateModal';
 import { Spinner } from '../../components/ui/Spinner';
+import { ScreenScaffold } from '../../components/ScreenScaffold';
 import { logInDev } from '../../utils/debug';
 
 type ParentsRouteState = {
@@ -77,41 +77,43 @@ export const ParentsPage: React.FC = () => {
 
     if (!isGatePassed) {
         return (
-            <div className="flex h-full min-h-0 flex-col bg-transparent">
+            <ScreenScaffold title="保護者メニュー" footerSpacing="none" scroll={false}>
                 <ParentGateModal
                     isOpen
                     onClose={() => navigate('/settings')}
                     onSuccess={() => setIsGatePassed(true)}
                 />
-                <Header title="保護者メニュー" />
-            </div>
+            </ScreenScaffold>
         );
     }
 
     if (isLoading) {
         return (
-            <div className="flex h-full min-h-0 flex-col bg-transparent">
-                <Header title="保護者メニュー" />
+            <ScreenScaffold title="保護者メニュー" footerSpacing="none" scroll={false}>
                 <Spinner fullScreen />
-            </div>
+            </ScreenScaffold>
         );
     }
 
     if (!profile) {
         return (
-            <div className="flex h-full min-h-0 flex-col bg-transparent">
-                <Header title="保護者メニュー" />
-                <div className="px-[var(--screen-padding-x)] pb-[var(--screen-bottom-padding)]">学習データが見つかりません。</div>
-            </div>
+            <ScreenScaffold
+                title="保護者メニュー"
+                footerSpacing="base"
+                contentClassName="px-[var(--screen-padding-x)]"
+            >
+                学習データが見つかりません。
+            </ScreenScaffold>
         );
     }
 
     const recentAttempts = profile.recentAttempts?.slice(-5).reverse() ?? [];
 
     return (
-        <div className="flex h-full min-h-0 flex-col bg-transparent">
-            <Header title="保護者メニュー" />
-            <div className="flex-1 overflow-y-auto px-[var(--screen-padding-x)] pb-[var(--screen-bottom-with-footer)] pt-1 space-y-6">
+        <ScreenScaffold
+            title="保護者メニュー"
+            contentClassName="px-[var(--screen-padding-x)] pt-1 space-y-6"
+        >
 
                 {/* 1. Summary Section */}
                 <div className="grid grid-cols-2 gap-4">
@@ -202,7 +204,6 @@ export const ParentsPage: React.FC = () => {
                         設定に戻る
                     </button>
                 </div>
-            </div>
-        </div>
+        </ScreenScaffold>
     );
 };

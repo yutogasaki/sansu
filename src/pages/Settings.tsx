@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Header } from "../components/Header";
 import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
 import { Modal } from "../components/ui/Modal";
@@ -13,6 +12,7 @@ import { ParentGateModal } from "../components/gate/ParentGateModal";
 import { ensurePeriodicTestSet } from "../domain/test/testSet";
 import { getWord } from "../domain/english/words";
 import { recordPaperTestScore, upsertPendingPaperTest } from "../domain/test/paperTest";
+import { ScreenScaffold } from "../components/ScreenScaffold";
 import { logInDev } from "../utils/debug";
 import storage from "../utils/storage";
 
@@ -320,7 +320,10 @@ export const Settings: React.FC = () => {
     };
 
     return (
-        <div className="flex h-full min-h-0 flex-col bg-transparent">
+        <ScreenScaffold
+            title={t("せってい", "設定")}
+            contentClassName="px-[var(--screen-padding-x)] pt-1 space-y-6"
+        >
             {/* 保護者ガードモーダル */}
             <ParentGateModal
                 isOpen={showParentGuard}
@@ -399,10 +402,6 @@ export const Settings: React.FC = () => {
                     </div>
                 </div>
             </Modal>
-
-            <Header title={t("せってい", "設定")} />
-
-            <div className="flex-1 overflow-y-auto px-[var(--screen-padding-x)] pb-[var(--screen-bottom-with-footer)] pt-1 space-y-6">
 
                 {/* ===== Section: Profile ===== */}
                 <Card className="p-4 space-y-4">
@@ -717,7 +716,6 @@ export const Settings: React.FC = () => {
                     </div>
                 </div>
 
-            </div>
-        </div >
+        </ScreenScaffold>
     );
 };

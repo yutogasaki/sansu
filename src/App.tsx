@@ -12,6 +12,7 @@ import { ParentsPage } from "./pages/parents/ParentsPage";
 import { Battle } from "./pages/Battle";
 import { loadSounds } from './utils/audio';
 import { getActiveProfileId } from "./domain/user/repository";
+import { applyThemeForCurrentTime, getMsUntilNextThemeCheck } from "./utils/theme";
 
 // Mock auth check
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -22,14 +23,31 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 function App() {
     useEffect(() => {
         loadSounds();
-        const hour = new Date().getHours();
-        if (hour >= 18 || hour < 4) {
-            document.documentElement.setAttribute("data-theme", "evening");
-        } else if (hour >= 10 && hour < 18) {
-            document.documentElement.setAttribute("data-theme", "day");
-        } else {
-            document.documentElement.removeAttribute("data-theme");
-        }
+
+        let timeoutId = 0;
+        const syncTheme = () => {
+            applyThemeForCurrentTime();
+        };
+        const scheduleThemeSync = () => {
+            timeoutId = window.setTimeout(() => {
+                syncTheme();
+                scheduleThemeSync();
+            }, getMsUntilNextThemeCheck());
+        };
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === "visible") {
+                syncTheme();
+            }
+        };
+
+        syncTheme();
+        scheduleThemeSync();
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
+        return () => {
+            window.clearTimeout(timeoutId);
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
+        };
     }, []);
 
     return (
