@@ -4,12 +4,14 @@ import { speakEnglish } from "../utils/tts";
 import { HiSpeakerWave } from "react-icons/hi2";
 import { SwipeableHandlers } from "react-swipeable";
 import { Header } from "../components/Header";
+import { Badge } from "../components/ui/Badge";
 import { Card } from "../components/ui/Card";
 import { ChoiceGroup } from "../components/domain/ChoiceGroup";
 import { TenKey } from "../components/domain/TenKey";
 import { MultiNumberInput } from "../components/domain/MultiNumberInput";
 import { Icons } from "../components/icons";
 import { Button } from "../components/ui/Button";
+import { InsetPanel, SurfacePanel, SurfacePanelHeader } from "../components/ui/SurfacePanel";
 import { Problem } from "../domain/types";
 import { LayoutDebugOverlay } from "../components/LayoutDebugOverlay";
 import { MathRenderer } from "../components/domain/MathRenderer";
@@ -72,6 +74,27 @@ interface StudyLayoutProps {
     onHissanCellClick?: (rowIndex: number, colIndex: number) => void;
     onHissanToggle?: () => void;
 }
+
+interface ResultMetricProps {
+    label: string;
+    value: React.ReactNode;
+    tone?: "default" | "sky" | "mint";
+}
+
+const resultMetricToneClassMap: Record<NonNullable<ResultMetricProps["tone"]>, string> = {
+    default: "text-slate-800",
+    sky: "text-sky-700",
+    mint: "text-emerald-700",
+};
+
+const ResultMetric: React.FC<ResultMetricProps> = ({ label, value, tone = "default" }) => (
+    <InsetPanel className="space-y-1 py-4 text-center">
+        <div className={`text-2xl font-black tracking-[-0.04em] ${resultMetricToneClassMap[tone]}`}>
+            {value}
+        </div>
+        <div className="text-[11px] font-bold tracking-[0.1em] text-slate-500">{label}</div>
+    </InsetPanel>
+);
 
 export const StudyLayout: React.FC<StudyLayoutProps> = ({
     loading,
@@ -230,33 +253,32 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 : 0;
 
             return (
-                <div className="flex flex-col items-center justify-center p-6 h-full space-y-8 animate-in zoom-in">
-                    <div className="text-6xl">✨</div>
-                    <h2 className="text-2xl font-bold text-center">定期テスト おつかれさま</h2>
-                    <div className="app-glass-strong rounded-2xl p-6 w-full max-w-sm text-center space-y-4">
-                        <div>
-                            <div className="text-xs text-slate-400 font-bold">せいかい</div>
-                            <div className="text-4xl font-black text-slate-800">
-                                {sessionResult.correct} / {sessionResult.total}
-                            </div>
+                <div className="flex h-full items-center justify-center p-6 animate-in zoom-in">
+                    <SurfacePanel className="w-full max-w-md space-y-5 text-center">
+                        <Badge variant="primary" className="mx-auto">ていき テスト</Badge>
+                        <SurfacePanelHeader
+                            className="justify-center text-center"
+                            title="ていきテスト おつかれさま"
+                            description="けっかを みて つぎのペースを きめよう"
+                        />
+                        <div className="grid grid-cols-3 gap-2">
+                            <ResultMetric
+                                label="せいかい"
+                                value={`${sessionResult.correct}/${sessionResult.total}`}
+                                tone="sky"
+                            />
+                            <ResultMetric label="てんすう" value={`${score}てん`} tone="mint" />
+                            <ResultMetric label="じかん" value={`${sessionResult.durationSeconds}びょう`} />
                         </div>
-                        <div>
-                            <div className="text-xs text-slate-400 font-bold">てんすう</div>
-                            <div className="text-3xl font-black text-slate-800">{score}てん</div>
+                        <div className="space-y-3">
+                            <Button onClick={() => onNavigate("/stats")} size="xl" className="w-full shadow-lg shadow-yellow-200">
+                                {t("きろく を みる", "記録を見る")}
+                            </Button>
+                            <Button onClick={() => onNavigate("/")} variant="secondary" size="lg" className="w-full">
+                                {t("ホーム へ もどる", "ホームへ戻る")}
+                            </Button>
                         </div>
-                        <div>
-                            <div className="text-xs text-slate-400 font-bold">じかん</div>
-                            <div className="text-2xl font-bold text-slate-700">{sessionResult.durationSeconds}びょう</div>
-                        </div>
-                    </div>
-                    <div className="w-full space-y-4 max-w-xs">
-                        <Button onClick={() => onNavigate("/stats")} size="xl" className="w-full shadow-lg shadow-yellow-200">
-                            {t("きろく を みる", "記録を見る")}
-                        </Button>
-                        <Button onClick={() => onNavigate("/")} variant="secondary" size="lg" className="w-full">
-                            {t("ホーム へ もどる", "ホームへ戻る")}
-                        </Button>
-                    </div>
+                    </SurfacePanel>
                 </div>
             );
         }
@@ -264,29 +286,41 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
         if (sessionKind === "check-normal" || sessionKind === "check-event") {
             const isEvent = sessionKind === "check-event";
             const ratio = blockSize > 0 ? correctCount / blockSize : 0;
+            const accuracy = Math.round(ratio * 100);
             const isGood = ratio >= 0.6; // 60%以上で「よくできた」
 
             return (
-                <div className="flex flex-col items-center justify-center p-6 h-full space-y-8 animate-in zoom-in">
-                    <div className="text-6xl">{isEvent ? "🎉" : (isGood ? "👍" : "🔁")}</div>
-                    <h2 className="text-2xl font-bold text-center">
-                        {isEvent
-                            ? "ここまで よく がんばったね"
-                            : (isGood ? "よく できたね" : "もう いちど やってみよ")
-                        }
-                    </h2>
-                    <div className="text-center text-slate-500">
-                        <span className="text-4xl font-bold text-slate-700">{correctCount}</span>
-                        <span className="text-lg"> / {blockSize} もん</span>
-                    </div>
-                    <div className="w-full space-y-4 max-w-xs">
-                        <Button onClick={() => onNavigate("/stats")} size="xl" className="w-full shadow-lg shadow-yellow-200">
-                            {t("きろく を みる", "記録を見る")}
-                        </Button>
-                        <Button onClick={() => onNavigate("/")} variant="secondary" size="lg" className="w-full">
-                            {t("ホーム へ もどる", "ホームへ戻る")}
-                        </Button>
-                    </div>
+                <div className="flex h-full items-center justify-center p-6 animate-in zoom-in">
+                    <SurfacePanel className="w-full max-w-md space-y-5 text-center">
+                        <Badge variant={isEvent || isGood ? "success" : "warning"} className="mx-auto">
+                            {isEvent ? "イベント チェック" : "ちから チェック"}
+                        </Badge>
+                        <SurfacePanelHeader
+                            className="justify-center text-center"
+                            title={
+                                isEvent
+                                    ? "ここまで よく がんばったね"
+                                    : (isGood ? "よく できたね" : "もう いちど やってみよ")
+                            }
+                            description={
+                                isEvent
+                                    ? "つぎのステップへ すすむ じゅんびが できたよ"
+                                    : (isGood ? "このペースで つぎへ すすめるよ" : "もうすこし かんたんなところから やっていこう")
+                            }
+                        />
+                        <div className="grid grid-cols-2 gap-3">
+                            <ResultMetric label="せいかい" value={`${correctCount}/${blockSize}`} tone="sky" />
+                            <ResultMetric label="せいかいりつ" value={`${accuracy}%`} tone="mint" />
+                        </div>
+                        <div className="space-y-3">
+                            <Button onClick={() => onNavigate("/stats")} size="xl" className="w-full shadow-lg shadow-yellow-200">
+                                {t("きろく を みる", "記録を見る")}
+                            </Button>
+                            <Button onClick={() => onNavigate("/")} variant="secondary" size="lg" className="w-full">
+                                {t("ホーム へ もどる", "ホームへ戻る")}
+                            </Button>
+                        </div>
+                    </SurfacePanel>
                 </div>
             );
         }
@@ -295,30 +329,30 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
         const isMilestone = currentIndex > 0 && currentIndex % 100 === 0;
 
         return (
-            <div className="flex flex-col items-center justify-center p-6 h-full space-y-8 animate-in zoom-in">
-                <div className="text-6xl">{isMilestone ? "🎉" : "☕"}</div>
-                <h2 className="text-2xl font-bold">
-                    {isMilestone ? `${currentIndex}もん クリア！` : "すこし やすもう"}
-                </h2>
-                <div className="text-center text-slate-500">
-                    <span className="text-4xl font-bold text-slate-700">{currentIndex}</span>
-                    <span className="text-lg"> もん クリア！</span>
-                </div>
-                {isMilestone && (
-                    <p className="text-slate-400 font-bold">すごい！ がんばったね！</p>
-                )}
-                <div className="w-full space-y-4">
-                    <Button onClick={() => {
-                        onContinue();
-                    }} size="xl" className="w-full shadow-lg shadow-primary/30">
-                        まだまだ やる！
-                    </Button>
-                    <Button onClick={() => onNavigate("/")} variant="secondary" size="lg" className="w-full">
-                        おわる
-                    </Button>
-                </div>
+            <div className="flex h-full items-center justify-center p-6 animate-in zoom-in">
+                <SurfacePanel className="w-full max-w-md space-y-5 text-center">
+                    <Badge variant={isMilestone ? "success" : "neutral"} className="mx-auto">
+                        {isMilestone ? "100もん ごとの けいか" : "ひとやすみ"}
+                    </Badge>
+                    <SurfacePanelHeader
+                        className="justify-center text-center"
+                        title={isMilestone ? `${currentIndex}もん クリア！` : "すこし やすもう"}
+                        description={isMilestone ? "ここまで つづけられてるの すごいよ" : "みずを のんで ひといき つこう"}
+                    />
+                    <ResultMetric label="クリア" value={`${currentIndex}もん`} tone="sky" />
+                    <div className="space-y-3">
+                        <Button onClick={() => {
+                            onContinue();
+                        }} size="xl" className="w-full shadow-lg shadow-primary/30">
+                            まだまだ やる！
+                        </Button>
+                        <Button onClick={() => onNavigate("/")} variant="secondary" size="lg" className="w-full">
+                            おわる
+                        </Button>
+                    </div>
+                </SurfacePanel>
             </div>
-        )
+        );
     }
 
     if (!currentProblem) {
