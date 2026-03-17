@@ -7,6 +7,7 @@ import { playSound, setSoundEnabled } from "../utils/audio";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
 import { logAttempt } from "../domain/learningRepository";
 import { StudyLayout } from "./StudyLayout";
+import { isFixedSessionKind, shouldPrefetchNextBlock } from "../hooks/useStudySession.logic";
 import { logInDev } from "../utils/debug";
 import { speakEnglish, warmUpTTS } from "../utils/tts";
 import { useTimeoutScheduler } from "../hooks/useTimeoutScheduler";
@@ -134,11 +135,17 @@ export const Study: React.FC = () => {
     // Check for pause (every 100 questions) or pre-fetch
     useEffect(() => {
         if (!queue.length) return;
+        const sessionKind = sessionKindParam || "normal";
+        const isFixedSession = isFixedSessionKind(sessionKind);
 
         // 1. Pre-fetch when running low (less than 3 items remaining)
-        if (!loading && queue.length - currentIndex < 3) {
+        if (shouldPrefetchNextBlock({ sessionKind, currentIndex, loading, queueLength: queue.length })) {
             logInDev("Pre-fetching next block...");
             nextBlock();
+        }
+
+        if (isFixedSession) {
+            return;
         }
 
         // 2. Pause every 100 questions (Endless Mode Break)
@@ -158,7 +165,7 @@ export const Study: React.FC = () => {
             setIsFinished(false); // Resume if we moved past (e.g. user clicked continue)
         }
 
-    }, [currentIndex, queue.length, loading, nextBlock, isFinished]);
+    }, [currentIndex, queue.length, loading, nextBlock, isFinished, sessionKindParam]);
 
     // Session Start Time Tracking
     const startTimeRef = React.useRef(0);
@@ -168,7 +175,7 @@ export const Study: React.FC = () => {
     }, []);
 
     const finalizeFixedSession = useCallback(async (timedOut = false) => {
-        const isFixedSession = sessionKindParam === "periodic-test" || sessionKindParam === "weak-review" || sessionKindParam === "check-event";
+        const isFixedSession = isFixedSessionKind(sessionKindParam);
         if (!isFixedSession || loading || hasCompletedFixedSessionRef.current) return;
         hasCompletedFixedSessionRef.current = true;
 
@@ -217,7 +224,7 @@ export const Study: React.FC = () => {
 
     // Check for Fixed Session Completion (Periodic Test / Weak Review / Check Event)
     useEffect(() => {
-        const isFixedSession = sessionKindParam === "periodic-test" || sessionKindParam === "weak-review" || sessionKindParam === "check-event";
+        const isFixedSession = isFixedSessionKind(sessionKindParam);
 
         if (isFixedSession && currentIndex >= blockSize && blockSize > 0 && !loading) {
             logInDev("Fixed Session Complete!", { correctCount, blockSize });

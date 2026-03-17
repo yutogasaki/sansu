@@ -159,6 +159,19 @@ const waitForStudyReady = async (page) => {
   await page.getByText(/問目/).first().waitFor({ timeout: STEP_TIMEOUT_MS });
 };
 
+const completeSessionBySkipping = async (page, totalQuestions) => {
+  for (let index = 0; index < totalQuestions; index += 1) {
+    await page.getByRole("button", { name: /スキップ/ }).waitFor({ timeout: STEP_TIMEOUT_MS });
+    await page.keyboard.press("Escape");
+    await page.getByRole("button", { name: /次へ/ }).waitFor({ timeout: STEP_TIMEOUT_MS });
+    await page.getByRole("button", { name: /次へ/ }).click();
+
+    if (index < totalQuestions - 1) {
+      await page.getByRole("button", { name: /スキップ/ }).waitFor({ timeout: STEP_TIMEOUT_MS });
+    }
+  }
+};
+
 const scenarioOnboardingShown = async (browser) => {
   const context = await browser.newContext({ baseURL: activeBaseUrl });
   const page = await context.newPage();
@@ -284,6 +297,12 @@ const scenarioStatsToPeriodicTest = async (browser) => {
     page.getByRole("button", { name: /挑戦|ちょうせん/ }).click(),
   ]);
   await waitForStudyReady(page);
+  await completeSessionBySkipping(page, 20);
+  await page.getByRole("button", { name: /記録を見る|きろく を みる/ }).waitFor({ timeout: STEP_TIMEOUT_MS });
+  await Promise.all([
+    waitForHash(page, /#\/stats/),
+    page.getByRole("button", { name: /記録を見る|きろく を みる/ }).click(),
+  ]);
 
   await context.close();
 };
@@ -324,7 +343,7 @@ const main = async () => {
     results.push(await runScenario("starts review from home", () => scenarioHomeToReview(browser)));
     results.push(await runScenario("opens settings from footer", () => scenarioHomeToSettings(browser)));
     results.push(await runScenario("opens fuwafuwa album detail from stats", () => scenarioAlbumDetailModal(browser)));
-    results.push(await runScenario("starts periodic test from stats pending card", () => scenarioStatsToPeriodicTest(browser)));
+    results.push(await runScenario("completes periodic test from stats and opens results", () => scenarioStatsToPeriodicTest(browser)));
     results.push(await runScenario("guards /parents route behind parent gate", () => scenarioParentsGateShown(browser)));
 
     const ok = results.every(Boolean);

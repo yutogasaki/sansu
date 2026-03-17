@@ -1,4 +1,5 @@
 import { SubjectKey, TriggerState, UserProfile, PeriodicTestResult, PeriodicTestState } from "../domain/types";
+import { BLOCK_SIZE } from "./blockGenerators";
 import type { SessionKind } from "./blockGenerators";
 
 type SessionStats = {
@@ -32,6 +33,34 @@ const createDefaultPeriodicTestState = (): PeriodicTestState => ({
     math: { isPending: false, lastTriggeredAt: null, reason: null },
     vocab: { isPending: false, lastTriggeredAt: null, reason: null },
 });
+
+export const isFixedSessionKind = (sessionKind?: SessionKind | null): boolean =>
+    sessionKind === "periodic-test" || sessionKind === "weak-review" || sessionKind === "check-event";
+
+export const resolveSessionBlockSize = (sessionKind?: SessionKind | null): number => {
+    if (sessionKind === "periodic-test" || sessionKind === "check-event") {
+        return 20;
+    }
+    return BLOCK_SIZE;
+};
+
+export const shouldPrefetchNextBlock = ({
+    currentIndex,
+    loading,
+    queueLength,
+    sessionKind,
+}: {
+    currentIndex: number;
+    loading: boolean;
+    queueLength: number;
+    sessionKind?: SessionKind | null;
+}): boolean => {
+    if (loading || isFixedSessionKind(sessionKind)) {
+        return false;
+    }
+
+    return queueLength - currentIndex < 3;
+};
 
 export const applyPeriodicTestCompletion = (
     currentProfile: UserProfile,

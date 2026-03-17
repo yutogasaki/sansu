@@ -3,11 +3,60 @@ import { createInitialProfile } from "../domain/user/profile";
 import {
     applyNormalSessionMathTrigger,
     applyPeriodicTestCompletion,
+    isFixedSessionKind,
     resolveProfileProgressionAfterAttempt,
+    resolveSessionBlockSize,
     resolveSessionCompletionProfileUpdate,
+    shouldPrefetchNextBlock,
 } from "./useStudySession.logic";
 
 describe("useStudySession.logic", () => {
+    it("treats periodic-test, weak-review, and check-event as fixed sessions", () => {
+        expect(isFixedSessionKind("periodic-test")).toBe(true);
+        expect(isFixedSessionKind("weak-review")).toBe(true);
+        expect(isFixedSessionKind("check-event")).toBe(true);
+        expect(isFixedSessionKind("normal")).toBe(false);
+    });
+
+    it("resolves 20-question block sizes for periodic tests and check events", () => {
+        expect(resolveSessionBlockSize("periodic-test")).toBe(20);
+        expect(resolveSessionBlockSize("check-event")).toBe(20);
+        expect(resolveSessionBlockSize("weak-review")).toBe(10);
+        expect(resolveSessionBlockSize("normal")).toBe(10);
+    });
+
+    it("does not prefetch additional blocks for fixed sessions", () => {
+        expect(shouldPrefetchNextBlock({
+            sessionKind: "periodic-test",
+            currentIndex: 18,
+            loading: false,
+            queueLength: 20,
+        })).toBe(false);
+
+        expect(shouldPrefetchNextBlock({
+            sessionKind: "weak-review",
+            currentIndex: 8,
+            loading: false,
+            queueLength: 10,
+        })).toBe(false);
+    });
+
+    it("prefetches only endless sessions when the queue runs low", () => {
+        expect(shouldPrefetchNextBlock({
+            sessionKind: "normal",
+            currentIndex: 8,
+            loading: false,
+            queueLength: 10,
+        })).toBe(true);
+
+        expect(shouldPrefetchNextBlock({
+            sessionKind: "normal",
+            currentIndex: 8,
+            loading: true,
+            queueLength: 10,
+        })).toBe(false);
+    });
+
     it("resolveSessionCompletionProfileUpdate completes periodic tests without trigger checks", async () => {
         const now = new Date("2026-02-16T12:00:00.000Z").getTime();
         const profile = createInitialProfile("T", 1, 3, 2, "math");

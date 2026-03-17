@@ -91,11 +91,12 @@
 - P1 progression side-effect regression coverage is complete and logged in `docs/done/2026-03.md`.
 - P1 block generation regression coverage is complete and logged in `docs/done/2026-03.md`.
 - P1 cross-screen smoke coverage expansion is complete and logged in `docs/done/2026-03.md`.
+- P1 fixed-session result-state regression coverage is complete and logged in `docs/done/2026-03.md`.
 
 ### Next
 
-- Continue P1 by expanding regression coverage beyond the restored smoke path and generator/unit guards.
-- Add or strengthen checks around in-session UI state transitions and result-state behavior within the main learning flow.
+- Continue P1 by expanding regression coverage beyond fixed-session completion and cross-screen entry paths.
+- Add or strengthen checks around incorrect/correct/skip overlay transitions, timeout-specific result states, and other in-session UI behavior within the main learning flow.
 - Follow regression work with device / A11y checks before moving into rule formalization.
 
 ### Decision Notes
@@ -108,4 +109,4 @@
 - UI work can drift from SSOT if docs do not move with implementation.
 - Mobile-only rendering and PWA update issues may escape desktop-only verification.
 - `npm run e2e:smoke` is restored, but its coverage is still intentionally narrow and should not be treated as the only regression gate.
-- `useStudySession` completion, progression, generator priority, and core cross-screen entry paths are now covered, but in-session UI state transitions still need broader automated protection.
+- `useStudySession` completion, progression, generator priority, core cross-screen entry paths, and fixed-session result states are now covered, but broader in-session UI state transitions still need automated protection.

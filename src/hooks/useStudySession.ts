@@ -40,6 +40,8 @@ import { ensurePeriodicTestSet } from "../domain/test/testSet";
 import {
     resolveProfileProgressionAfterAttempt,
     resolveSessionCompletionProfileUpdate,
+    resolveSessionBlockSize,
+    isFixedSessionKind,
 } from "./useStudySession.logic";
 import { errorInDev, logInDev } from "../utils/debug";
 
@@ -365,7 +367,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     // ============================================================
     const generateBlock = async (pid: string, activeProfile: UserProfile, blockIndex: number): Promise<Problem[]> => {
         const sessionKind = options.sessionKind || "normal";
-        const blockSize = sessionKind === "check-event" ? 20 : BLOCK_SIZE;
+        const blockSize = resolveSessionBlockSize(sessionKind);
 
         // Developer mode: generate only specified skill
         if (options.devSkill) {
@@ -469,7 +471,8 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     };
 
     const nextBlock = async () => {
-        if (!profileId) return;
+        const sessionKind = options.sessionKind || "normal";
+        if (!profileId || isFixedSessionKind(sessionKind)) return;
 
         setLoading(true);
         const nextBlockIndex = blockIndexRef.current + 1;
@@ -560,7 +563,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     }, [profileId]);
 
 
-    const blockSize = options.sessionKind === "check-event" ? 20 : BLOCK_SIZE;
+    const blockSize = resolveSessionBlockSize(options.sessionKind);
 
     const completeSession = async (
         sessionStats: {
