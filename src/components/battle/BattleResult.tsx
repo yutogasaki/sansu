@@ -93,7 +93,7 @@ export const BattleResult: React.FC<BattleResultProps> = ({
                     </div>
 
                     <div className="flex gap-3">
-                        <Button onClick={onPlayAgain} size="xl" className="flex-1 bg-[linear-gradient(135deg,#a855f7,#ec4899)]">
+                        <Button onClick={onPlayAgain} size="xl" className="flex-1 bg-[linear-gradient(135deg,#2BBAA0,#38bdf8)]">
                             もう いっかい！
                         </Button>
                         <Button onClick={onBackToHome} variant="secondary" size="xl" className="flex-1">
@@ -129,7 +129,7 @@ export const BattleResult: React.FC<BattleResultProps> = ({
                             ease: "easeIn",
                         }}
                     >
-                        {["🎉", "⭐", "🎊", "✨"][index % 4]}
+                        {["•", "✦", "·", "✧"][index % 4]}
                     </motion.div>
                 ))}
             </div>
@@ -177,7 +177,7 @@ export const BattleResult: React.FC<BattleResultProps> = ({
                 </div>
 
                 <div className="flex gap-3">
-                    <Button onClick={onPlayAgain} size="xl" className="flex-1 bg-[linear-gradient(135deg,#38bdf8,#f59e0b)]">
+                    <Button onClick={onPlayAgain} size="xl" className="flex-1 bg-[linear-gradient(135deg,#2BBAA0,#38bdf8)]">
                         もう いっかい！
                     </Button>
                     <Button onClick={onBackToHome} variant="secondary" size="xl" className="flex-1">

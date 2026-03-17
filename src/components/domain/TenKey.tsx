@@ -23,11 +23,11 @@ export const TenKey: React.FC<TenKeyProps> = ({
     compact = false
 }) => {
     const baseBtnClass = cn(
-        "h-full w-full font-bold bg-white shadow-sm border border-slate-100 active:scale-95 transition-all text-slate-700",
+        "h-full w-full border border-white/75 bg-white/72 font-bold text-slate-700 shadow-[0_14px_24px_-20px_rgba(15,23,42,0.32)] transition-all active:scale-95 hover:bg-white/84",
         compact ? "text-lg rounded-xl mobile:text-sm" : "text-2xl rounded-2xl land:text-xl mobile:text-base"
     );
     const actionBtnClass = cn(
-        "h-full w-full font-bold bg-slate-50 shadow-sm border border-slate-100 active:scale-95 transition-all text-slate-400",
+        "h-full w-full border border-white/75 bg-white/58 font-bold text-slate-500 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] transition-all active:scale-95 hover:bg-white/74",
         compact ? "text-base rounded-xl" : "text-xl rounded-2xl"
     );
     const iconClass = compact ? "w-5 h-5 mobile:w-4 mobile:h-4" : "w-6 h-6 mobile:w-5 mobile:h-5";
@@ -35,7 +35,10 @@ export const TenKey: React.FC<TenKeyProps> = ({
 
     return (
         <div
-            className={cn("h-full w-full min-h-0 grid grid-cols-4 p-3 mobile:p-2", compact ? "gap-2 mobile:gap-1.5" : "gap-3 mobile:gap-2")}
+            className={cn(
+                "h-full w-full min-h-0 grid grid-cols-4 rounded-[28px] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.4),rgba(255,255,255,0.18))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] mobile:p-2",
+                compact ? "gap-2 mobile:gap-1.5" : "gap-3 mobile:gap-2"
+            )}
             style={{ gridTemplateRows: `repeat(4, minmax(${compact ? "38px" : "44px"}, 1fr))` }}
         >
             {/* Row 1 */}
@@ -44,7 +47,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
             <Button onClick={() => onInput(9)} className={baseBtnClass} variant="ghost">9</Button>
             <Button
                 onClick={onClear}
-                className={cn(baseBtnClass, "text-lg font-medium text-red-500 bg-red-50/50 border-red-100 mobile:text-sm")}
+                className={cn(baseBtnClass, "border-rose-100/90 bg-rose-50/78 text-rose-500 hover:bg-rose-50 mobile:text-sm")}
                 variant="ghost"
             >
                 C
@@ -56,7 +59,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
             <Button onClick={() => onInput(6)} className={baseBtnClass} variant="ghost">6</Button>
             <Button
                 onClick={onDelete}
-                className={cn(baseBtnClass, "text-lg font-medium text-slate-400 bg-slate-50")}
+                className={cn(actionBtnClass, "text-lg font-medium mobile:text-sm")}
                 variant="ghost"
             >
                 <Icons.Backspace className={iconClass} />
@@ -103,7 +106,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
             <Button
                 onClick={onEnter}
                 className={cn(
-                    "h-full w-full bg-violet-600 text-white shadow-md border-2 border-violet-500 active:scale-95 hover:bg-violet-700 transition-all flex flex-col items-center justify-center mobile:text-base",
+                    "flex h-full w-full flex-col items-center justify-center border border-cyan-200/80 bg-[linear-gradient(135deg,#2BBAA0,#5DC4D2)] text-white shadow-[0_18px_34px_-22px_rgba(34,197,214,0.62)] transition-all active:scale-95 hover:brightness-[1.03] mobile:text-base",
                     compact ? "rounded-xl" : "rounded-2xl"
                 )}
                 variant="ghost"

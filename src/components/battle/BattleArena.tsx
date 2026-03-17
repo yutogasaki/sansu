@@ -24,7 +24,7 @@ export const BattleArena: React.FC<BattleArenaProps> = ({
     const totalDamage = state.p1.damageDealt + state.p2.damageDealt;
 
     return (
-        <div className="h-full flex flex-col bg-slate-50">
+        <div className="flex h-full flex-col bg-transparent px-4 py-4">
             {/* Top game bar */}
             <div className="flex-none">
                 {showBossCoop ? (
@@ -49,8 +49,8 @@ export const BattleArena: React.FC<BattleArenaProps> = ({
             </div>
 
             {/* Player panels */}
-            <div className="flex-1 flex min-h-0">
-                <div className="flex-1 min-w-0">
+            <div className="mt-3 flex min-h-0 flex-1 gap-3">
+                <div className="min-w-0 flex-1">
                     <PlayerPanel
                         player="p1"
                         gameState={state.p1}
@@ -61,8 +61,7 @@ export const BattleArena: React.FC<BattleArenaProps> = ({
                         disabled={isOver}
                     />
                 </div>
-                <div className="w-px bg-slate-300" />
-                <div className="flex-1 min-w-0">
+                <div className="min-w-0 flex-1">
                     <PlayerPanel
                         player="p2"
                         gameState={state.p2}

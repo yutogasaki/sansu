@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useId, useRef } from "react";
 import { createPortal } from "react-dom";
 import { isTopModalLayer, popModalLayer, pushModalLayer } from "./modalLayerManager";
+import { cn } from "../../utils/cn";
 
 interface ModalProps {
     isOpen: boolean;
@@ -19,12 +20,16 @@ export const Modal: React.FC<ModalProps> = ({
     footer,
     width = "sm"
 }) => {
+    const titleId = useId();
+    const layerTokenRef = useRef<symbol | null>(null);
+
     useEffect(() => {
         if (!isOpen) {
             return;
         }
 
         const layerToken = pushModalLayer(document.body.style);
+        layerTokenRef.current = layerToken;
 
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === "Escape" && isTopModalLayer(layerToken)) {
@@ -36,6 +41,9 @@ export const Modal: React.FC<ModalProps> = ({
 
         return () => {
             popModalLayer(layerToken, document.body.style);
+            if (layerTokenRef.current === layerToken) {
+                layerTokenRef.current = null;
+            }
             window.removeEventListener("keydown", handleKeyDown);
         };
     }, [isOpen, onClose]);
@@ -43,33 +51,56 @@ export const Modal: React.FC<ModalProps> = ({
     if (!isOpen) return null;
 
     const sizeClasses = {
-        sm: "max-w-xs",
-        md: "max-w-md",
-        lg: "max-w-lg"
+        sm: "max-w-sm",
+        md: "max-w-lg",
+        lg: "max-w-2xl"
+    };
+
+    const handleBackdropClose = () => {
+        const layerToken = layerTokenRef.current;
+        if (!layerToken || isTopModalLayer(layerToken)) {
+            onClose();
+        }
     };
 
     return createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            {/* Backdrop */}
             <div
-                className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
-                onClick={onClose}
+                className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.12),transparent_35%)]"
+                aria-hidden="true"
             />
-
-            {/* Content */}
-            <div className={`relative bg-white rounded-2xl w-full ${sizeClasses[width]} shadow-2xl transform transition-all flex flex-col max-h-[90vh]`}>
+            <div
+                className="absolute inset-0 bg-[color:var(--app-overlay)] backdrop-blur-md transition-opacity"
+                onClick={handleBackdropClose}
+                aria-hidden="true"
+            />
+            <div
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby={title ? titleId : undefined}
+                className={cn(
+                    "relative flex max-h-[calc(100dvh-2rem)] w-full flex-col overflow-hidden rounded-[28px] app-glass-strong app-shadow-strong",
+                    sizeClasses[width]
+                )}
+                onClick={(event) => event.stopPropagation()}
+            >
                 {title && (
-                    <div className="p-4 border-b border-slate-100 flex items-center justify-center">
-                        <h3 className="text-lg font-bold text-slate-700">{title}</h3>
+                    <div className="border-b border-white/75 bg-[linear-gradient(180deg,rgba(255,255,255,0.62),rgba(255,255,255,0.24))] px-5 py-4">
+                        <h3
+                            id={titleId}
+                            className="text-center text-lg font-black tracking-[-0.01em] text-slate-800"
+                        >
+                            {title}
+                        </h3>
                     </div>
                 )}
 
-                <div className="p-6 overflow-y-auto">
+                <div className="overflow-y-auto px-5 py-5">
                     {children}
                 </div>
 
                 {footer && (
-                    <div className="p-4 border-t border-slate-100 bg-slate-50 rounded-b-2xl">
+                    <div className="border-t border-white/75 bg-[linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0.36))] px-4 pb-[calc(var(--safe-area-bottom)+1rem)] pt-4">
                         {footer}
                     </div>
                 )}

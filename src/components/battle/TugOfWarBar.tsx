@@ -29,7 +29,7 @@ export const TugOfWarBar: React.FC<TugOfWarBarProps> = ({
     const p2Intensity = Math.max(0, position) / maxSteps;
 
     return (
-        <div className="w-full px-4 py-2 bg-gradient-to-b from-slate-100 to-slate-50 border-b border-slate-200">
+        <div className="w-full rounded-[28px] border border-white/75 px-4 py-3 app-glass-strong shadow-[0_22px_44px_-32px_rgba(15,23,42,0.34)]">
             {/* Names row with cancel button */}
             <div className="flex justify-between items-center mb-1.5 px-1">
                 <div className="flex items-center gap-2">
@@ -53,7 +53,7 @@ export const TugOfWarBar: React.FC<TugOfWarBarProps> = ({
                 {onCancel && (
                     <button
                         onClick={onCancel}
-                        className="px-2.5 py-1 rounded-full text-xs font-bold text-slate-400 bg-white/80 border border-slate-200 hover:bg-slate-100 hover:text-slate-600 transition-colors"
+                        className="app-pill px-2.5 py-1 text-xs font-black text-slate-500 transition-colors hover:bg-white/84 hover:text-slate-700"
                     >
                         ✕ やめる
                     </button>
@@ -79,7 +79,7 @@ export const TugOfWarBar: React.FC<TugOfWarBarProps> = ({
             </div>
 
             {/* Track - bigger and more visible */}
-            <div className="relative h-12 rounded-full overflow-hidden bg-slate-100 border-2 border-slate-300 shadow-inner">
+            <div className="app-track relative h-12 overflow-hidden rounded-full">
                 {/* P1 side gradient (blue) */}
                 <motion.div
                     className="absolute inset-y-0 left-0 bg-gradient-to-r from-sky-500 to-sky-300"
@@ -107,7 +107,7 @@ export const TugOfWarBar: React.FC<TugOfWarBarProps> = ({
                             key={i}
                             className={cn(
                                 "absolute top-1/2 -translate-y-1/2 rounded-full",
-                                isCenter ? "w-1.5 h-7 bg-slate-400" : "w-1 h-4 bg-slate-300/70"
+                                isCenter ? "w-1.5 h-7 bg-slate-400/80" : "w-1 h-4 bg-slate-300/60"
                             )}
                             style={{ left: `${stepPct}%` }}
                         />
@@ -116,7 +116,7 @@ export const TugOfWarBar: React.FC<TugOfWarBarProps> = ({
 
                 {/* Rope knot (marker) - bigger */}
                 <motion.div
-                    className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-white border-[3px] border-slate-700 shadow-xl flex items-center justify-center"
+                    className="absolute top-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/85 bg-white/84 shadow-[0_18px_32px_-24px_rgba(15,23,42,0.42)]"
                     animate={{ left: `${pct}%` }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
@@ -150,7 +150,7 @@ export const TugOfWarBar: React.FC<TugOfWarBarProps> = ({
                                 "w-3.5 h-3.5 rounded-full transition-colors border",
                                 i < Math.max(0, -position)
                                     ? "bg-sky-500 border-sky-600"
-                                    : "bg-slate-200 border-slate-300"
+                                    : "bg-white/70 border-white/80"
                             )}
                             animate={i === Math.max(0, -position) - 1 ? { scale: [1, 1.3, 1] } : {}}
                             transition={{ duration: 0.3 }}
@@ -165,7 +165,7 @@ export const TugOfWarBar: React.FC<TugOfWarBarProps> = ({
                                 "w-3.5 h-3.5 rounded-full transition-colors border",
                                 i < Math.max(0, position)
                                     ? "bg-amber-500 border-amber-600"
-                                    : "bg-slate-200 border-slate-300"
+                                    : "bg-white/70 border-white/80"
                             )}
                             animate={i === Math.max(0, position) - 1 ? { scale: [1, 1.3, 1] } : {}}
                             transition={{ duration: 0.3 }}

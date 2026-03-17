@@ -66,16 +66,16 @@ interface PlayerSetupPanelProps {
 const playerToneClassMap = {
     sky: {
         badge: "primary" as const,
-        emoji: "bg-sky-100 text-sky-700",
-        gradeSelected: "border-sky-200 bg-sky-600 text-white shadow-[0_12px_24px_-18px_rgba(2,132,199,0.7)]",
-        avatarSelected: "border-sky-200 bg-sky-600/90 text-white shadow-[0_14px_24px_-18px_rgba(2,132,199,0.7)]",
+        emoji: "border-cyan-100/90 bg-cyan-50/82 text-cyan-700",
+        gradeSelected: "border-cyan-100/90 bg-cyan-50/90 text-cyan-700 shadow-[0_12px_24px_-18px_rgba(6,182,212,0.38)]",
+        avatarSelected: "border-cyan-100/90 bg-cyan-50/90 text-cyan-700 shadow-[0_14px_24px_-18px_rgba(6,182,212,0.38)]",
         title: "text-sky-700",
     },
     amber: {
         badge: "warning" as const,
-        emoji: "bg-amber-100 text-amber-700",
-        gradeSelected: "border-amber-200 bg-amber-500 text-white shadow-[0_12px_24px_-18px_rgba(217,119,6,0.7)]",
-        avatarSelected: "border-amber-200 bg-amber-500/90 text-white shadow-[0_14px_24px_-18px_rgba(217,119,6,0.7)]",
+        emoji: "border-amber-100/90 bg-amber-50/84 text-amber-700",
+        gradeSelected: "border-amber-100/90 bg-amber-50/92 text-amber-700 shadow-[0_12px_24px_-18px_rgba(245,158,11,0.32)]",
+        avatarSelected: "border-amber-100/90 bg-amber-50/92 text-amber-700 shadow-[0_14px_24px_-18px_rgba(245,158,11,0.32)]",
         title: "text-amber-700",
     },
 };
@@ -93,7 +93,7 @@ const PlayerSetupPanel: React.FC<PlayerSetupPanelProps> = ({
         <SurfacePanel className="flex min-h-0 flex-col space-y-3 overflow-y-auto p-3">
             <div className="flex items-center justify-between gap-3">
                 <Badge variant={tone.badge}>{label}</Badge>
-                <div className={cn("flex h-10 w-10 items-center justify-center rounded-full text-xl shadow-sm", tone.emoji)}>
+                <div className={cn("flex h-10 w-10 items-center justify-center rounded-full border text-xl shadow-[0_12px_20px_-18px_rgba(15,23,42,0.3)]", tone.emoji)}>
                     {setup.emoji}
                 </div>
             </div>
@@ -109,7 +109,7 @@ const PlayerSetupPanel: React.FC<PlayerSetupPanelProps> = ({
                 onChange={(event) => onChange({ ...setup, name: event.target.value })}
                 placeholder={defaultName}
                 maxLength={8}
-                className="w-full rounded-[16px] border border-white/85 bg-white/74 px-3 py-2.5 text-center text-base font-bold text-slate-700 outline-none transition focus:border-cyan-500"
+                className="w-full rounded-[16px] border border-white/85 bg-white/74 px-3 py-2.5 text-center text-base font-bold text-slate-700 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200/70"
             />
 
             <InsetPanel className="space-y-2">
@@ -127,7 +127,7 @@ const PlayerSetupPanel: React.FC<PlayerSetupPanelProps> = ({
                                     "flex h-10 items-center justify-center rounded-[14px] border text-xl transition-all",
                                     active
                                         ? tone.avatarSelected
-                                        : "border-white/80 bg-white/72 text-slate-700 hover:bg-white"
+                                        : "border-white/80 bg-white/72 text-slate-700 hover:bg-white/86"
                                 )}
                             >
                                 {emoji}
@@ -169,7 +169,7 @@ const PlayerSetupPanel: React.FC<PlayerSetupPanelProps> = ({
                                     "rounded-[12px] border px-2 py-1.5 text-[11px] font-bold transition-all",
                                     active
                                         ? tone.gradeSelected
-                                        : "border-white/80 bg-white/72 text-slate-600 hover:bg-white"
+                                        : "border-white/80 bg-white/72 text-slate-600 hover:bg-white/86"
                                 )}
                             >
                                 {GRADE_LABELS[grade]}
@@ -266,7 +266,7 @@ export const BattleSetup: React.FC<BattleSetupProps> = ({ onStart, onBack }) => 
                     disabled={!canStart}
                     size="xl"
                     className={cn(
-                        "w-full text-lg shadow-[0_18px_34px_-22px_rgba(15,23,42,0.45)]",
+                        "w-full text-lg",
                         canStart && "bg-[linear-gradient(135deg,#38bdf8,#f59e0b)]"
                     )}
                 >

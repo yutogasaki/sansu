@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/Button";
+import { Modal } from "../ui/Modal";
 import { cn } from "../../utils/cn";
 import { ArithmeticGateChallenge, normalizeGateAnswer } from "./arithmeticGate";
 
@@ -70,16 +71,44 @@ export const ArithmeticGateModal: React.FC<ArithmeticGateModalProps> = ({
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 animate-in fade-in duration-200">
-            <div className="w-full max-w-xs space-y-4 rounded-2xl bg-white p-6 shadow-xl">
-                <h3 className="text-center text-lg font-bold text-slate-700">{title}</h3>
-                <div className="text-center text-sm text-slate-500">{description}</div>
+        <Modal
+            isOpen={isOpen}
+            onClose={onCancel}
+            title={title}
+            footer={(
+                <div className="flex gap-2">
+                    <Button
+                        type="button"
+                        variant="secondary"
+                        className="flex-1"
+                        onClick={onCancel}
+                    >
+                        やめる
+                    </Button>
+                    <Button
+                        type="submit"
+                        form="arithmetic-gate-form"
+                        className="flex-1"
+                        disabled={!answer}
+                    >
+                        OK
+                    </Button>
+                </div>
+            )}
+        >
+            <div className="space-y-4">
+                <div className="text-center text-sm leading-6 text-slate-500">{description}</div>
 
-                <div className={cn("text-center text-2xl font-bold text-slate-800", questionClassName)}>
+                <div
+                    className={cn(
+                        "rounded-[20px] border border-white/80 bg-white/58 px-4 py-4 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.3)]",
+                        questionClassName
+                    )}
+                >
                     {challenge.prompt}
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form id="arithmetic-gate-form" onSubmit={handleSubmit} className="space-y-3">
                     <div>
                         <input
                             type={inputType}
@@ -91,10 +120,10 @@ export const ArithmeticGateModal: React.FC<ArithmeticGateModalProps> = ({
                                 setError(false);
                             }}
                             className={cn(
-                                "w-full rounded-xl border-2 p-3 text-center text-2xl font-bold transition-colors focus:outline-none",
+                                "w-full rounded-[18px] border px-4 py-3 text-center text-2xl font-black text-slate-800 outline-none transition-all app-glass",
                                 showErrorState
-                                    ? "border-red-300 bg-red-50 text-red-600"
-                                    : "border-slate-200 text-slate-800 focus:border-primary"
+                                    ? "border-red-200 bg-red-50/80 text-red-600"
+                                    : "focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200/70"
                             )}
                             placeholder={placeholder}
                             autoFocus
@@ -103,26 +132,8 @@ export const ArithmeticGateModal: React.FC<ArithmeticGateModalProps> = ({
                             <p className="mt-2 text-center text-xs font-bold text-red-500">{errorText}</p>
                         )}
                     </div>
-
-                    <div className="flex gap-2">
-                        <Button
-                            type="button"
-                            variant="secondary"
-                            className="flex-1"
-                            onClick={onCancel}
-                        >
-                            やめる
-                        </Button>
-                        <Button
-                            type="submit"
-                            className="flex-1"
-                            disabled={!answer}
-                        >
-                            OK
-                        </Button>
-                    </div>
                 </form>
             </div>
-        </div>
+        </Modal>
     );
 };

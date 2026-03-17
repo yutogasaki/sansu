@@ -19,6 +19,7 @@ import { Spinner } from "../components/ui/Spinner";
 import { EmptyState } from "../components/ui/EmptyState";
 import { HissanGrid } from "../components/domain/HissanGrid";
 import { HissanGridData } from "../domain/math/hissanTypes";
+import { cn } from "../utils/cn";
 
 type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test" | "dev";
 
@@ -373,9 +374,21 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
         currentProblem.categoryId.startsWith("frac_") ||
         (currentProblem.questionText?.length ?? 0) >= 14;
     const showCursorButtons = currentProblem.inputType === "multi-number" || hissanActive;
+    const timerBadgeClass = cn(
+        "app-pill inline-flex items-center rounded-full px-3 py-1 text-sm font-black tracking-[0.08em]",
+        showTestTimer && testRemainingSeconds <= 60
+            ? "border-rose-100/90 bg-rose-50/88 text-rose-700"
+            : "border-white/85 bg-white/72 text-slate-600"
+    );
+    const mobileTimerBadgeClass = cn(
+        "app-pill inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-black tracking-[0.08em]",
+        showTestTimer && testRemainingSeconds <= 60
+            ? "border-rose-100/90 bg-rose-50/88 text-rose-700"
+            : "border-white/85 bg-white/72 text-slate-600"
+    );
 
     return (
-        <div className="flex flex-col h-[100dvh] relative overflow-hidden safe-area-inset-bottom">
+        <div className="relative flex h-[100dvh] flex-col overflow-hidden safe-area-inset-bottom bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.26),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.22),rgba(255,255,255,0.08))]">
             {import.meta.env.DEV && <LayoutDebugOverlay />}
 
             {/* Full Screen Feedback Overlays */}
@@ -385,31 +398,31 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-blue-500/95 backdrop-blur-md p-6"
+                        className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[linear-gradient(180deg,rgba(255,251,235,0.8),rgba(255,255,255,0.54))] p-6 backdrop-blur-xl"
                     >
-                        <div className="bg-white/20 rounded-full p-4 mb-2">
+                        <div className="mb-3 flex h-20 w-20 items-center justify-center rounded-full border border-white/85 bg-white/70 shadow-[0_22px_40px_-28px_rgba(15,23,42,0.38)]">
                             <span className="text-5xl">🌱</span>
                         </div>
-                        <h2 className="text-3xl font-bold text-white mb-6">{t("ちょっと ちがったね", "惜しい！")}</h2>
+                        <h2 className="mb-6 text-3xl font-black tracking-[-0.02em] text-slate-800">{t("ちょっと ちがったね", "惜しい！")}</h2>
 
                         {/* Question Display */}
-                        <div className="mb-6 bg-white/10 rounded-xl p-4 w-full max-w-sm flex justify-center">
+                        <div className="mb-5 flex w-full max-w-sm justify-center rounded-[24px] border border-white/80 bg-white/50 p-4 shadow-[0_20px_34px_-26px_rgba(15,23,42,0.34)] backdrop-blur-md">
                             <MathRenderer
                                 text={currentProblem?.questionText || ""}
                                 isFraction={currentProblem?.categoryId.startsWith("frac_")}
-                                className="text-3xl text-white font-bold"
+                                className="text-3xl font-bold text-slate-700"
                             />
                         </div>
 
-                        <div className="bg-white rounded-2xl p-6 w-full max-w-sm text-center shadow-xl mb-8">
-                            <p className="text-slate-400 font-bold text-sm mb-4">{t("こたえ", "答え")}</p>
+                        <div className="mb-8 w-full max-w-sm rounded-[26px] app-glass-strong p-6 text-center">
+                            <p className="mb-4 text-sm font-bold text-slate-400">{t("こたえ", "答え")}</p>
                             {renderCorrectAnswer()}
                         </div>
 
                         <Button
                             onClick={onNext}
                             size="lg"
-                            className="bg-white text-blue-600 hover:bg-white/90 shadow-lg w-full max-w-xs text-xl font-bold h-16"
+                            className="h-14 w-full max-w-xs text-lg"
                         >
                             {t("つぎへ", "次へ")}
                         </Button>
@@ -421,32 +434,32 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         initial={{ opacity: 0, x: -100 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 100 }}
-                        className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-slate-600/90 backdrop-blur-md p-6"
+                        className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[linear-gradient(180deg,rgba(240,249,255,0.84),rgba(255,255,255,0.58))] p-6 backdrop-blur-xl"
                     >
-                        <div className="bg-white/20 rounded-full p-4 mb-2">
+                        <div className="mb-3 flex h-20 w-20 items-center justify-center rounded-full border border-white/85 bg-white/72 shadow-[0_22px_40px_-28px_rgba(15,23,42,0.38)]">
                             <span className="text-5xl">🌱</span>
                         </div>
-                        <h2 className="text-3xl font-bold text-white mb-2">{t("とばして だいじょうぶ", "スキップOK")}</h2>
-                        <p className="text-white/80 text-sm mb-6">{t("また でてくるよ", "また出題されます")}</p>
+                        <h2 className="mb-2 text-3xl font-black tracking-[-0.02em] text-slate-800">{t("とばして だいじょうぶ", "スキップOK")}</h2>
+                        <p className="mb-6 text-sm font-medium text-slate-500">{t("また でてくるよ", "また出題されます")}</p>
 
                         {/* Question Display */}
-                        <div className="mb-6 bg-white/10 rounded-xl p-4 w-full max-w-sm flex justify-center">
+                        <div className="mb-5 flex w-full max-w-sm justify-center rounded-[24px] border border-white/80 bg-white/50 p-4 shadow-[0_20px_34px_-26px_rgba(15,23,42,0.34)] backdrop-blur-md">
                             <MathRenderer
                                 text={currentProblem?.questionText || ""}
                                 isFraction={currentProblem?.categoryId.startsWith("frac_")}
-                                className="text-3xl text-white font-bold"
+                                className="text-3xl font-bold text-slate-700"
                             />
                         </div>
 
-                        <div className="bg-white rounded-2xl p-6 w-full max-w-sm text-center shadow-xl mb-8">
-                            <p className="text-slate-400 font-bold text-sm mb-4">{t("こたえ", "答え")}</p>
+                        <div className="mb-8 w-full max-w-sm rounded-[26px] app-glass-strong p-6 text-center">
+                            <p className="mb-4 text-sm font-bold text-slate-400">{t("こたえ", "答え")}</p>
                             {renderCorrectAnswer()}
                         </div>
 
                         <Button
                             onClick={onNext}
                             size="lg"
-                            className="bg-white text-slate-600 hover:bg-white/90 shadow-lg w-full max-w-xs text-xl font-bold h-16"
+                            className="h-14 w-full max-w-xs text-lg"
                         >
                             {t("つぎへ", "次へ")}
                         </Button>
@@ -461,18 +474,18 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                     onBack={() => onNavigate("/")}
                     center={
                         <div className="flex items-center gap-3">
-                            <span className="text-slate-400 font-bold text-lg">
+                            <span className="app-pill px-3 py-1 text-sm font-black text-slate-500">
                                 {currentIndex + 1} 問目
                             </span>
                             {showTestTimer && (
-                                <span className={`text-sm font-black px-2 py-1 rounded-full ${testRemainingSeconds <= 60 ? "bg-rose-100 text-rose-700" : "bg-white/75 text-slate-600 border border-white/80"}`}>
+                                <span className={timerBadgeClass}>
                                     {formatTimer(testRemainingSeconds)}
                                 </span>
                             )}
                         </div>
                     }
                     rightAction={
-                        <Button variant="ghost" size="sm" onClick={() => onNavigate("/")}>
+                        <Button variant="secondary" size="sm" onClick={() => onNavigate("/")}>
                             <Icons.Close className="w-6 h-6" />
                         </Button>
                     }
@@ -480,16 +493,16 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
             </div>
 
             {/* モバイル専用: 統合トップバー */}
-            <div className="hidden mobile:flex items-center justify-between px-3 py-1 app-glass-strong rounded-b-2xl border-b border-white/75">
+            <div className="hidden mobile:flex items-center justify-between border-b border-white/75 px-4 py-2 app-glass-strong rounded-b-[24px] shadow-[0_16px_30px_-24px_rgba(15,23,42,0.34)]">
                 {currentProblem.isReview && (
-                    <span className="text-slate-400 text-xs">🔁</span>
+                    <Badge variant="warning" className="px-2.5 py-0.5 text-[10px]">🔁 復習</Badge>
                 )}
                 <div className="flex items-center gap-2">
-                    <span className="text-slate-300 font-bold text-xs">
+                    <span className="app-pill px-2.5 py-0.5 text-[11px] font-black text-slate-500">
                         {currentIndex + 1} 問目
                     </span>
                     {showTestTimer && (
-                        <span className={`text-[11px] font-black px-2 py-0.5 rounded-full ${testRemainingSeconds <= 60 ? "bg-rose-100 text-rose-700" : "bg-white/75 text-slate-600 border border-white/80"}`}>
+                        <span className={mobileTimerBadgeClass}>
                             {formatTimer(testRemainingSeconds)}
                         </span>
                     )}
@@ -499,19 +512,19 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                     {hissanEligible && onHissanToggle && (
                         <button
                             onClick={onHissanToggle}
-                            className={`px-2 py-0.5 rounded-full text-xs font-bold transition-colors border ${hissanActive
-                                    ? 'bg-violet-100 text-violet-600 border-violet-200'
-                                    : 'bg-white/70 text-slate-400 border-white/80'
+                            className={`app-pill px-2.5 py-1 text-[11px] font-black transition-colors ${hissanActive
+                                    ? 'border-cyan-100/90 bg-cyan-50/86 text-cyan-700'
+                                    : 'border-white/80 bg-white/68 text-slate-500'
                                 }`}
                             title={hissanActive ? '筆算モード ON' : '暗算モード'}
                         >
-                            {hissanActive ? '···' : '···'}
+                            {hissanActive ? '筆算' : '暗算'}
                         </button>
                     )}
                     {currentProblem.subject === 'vocab' && onToggleTTS && (
                         <button
                             onClick={onToggleTTS}
-                            className={`p-1 rounded-full transition-colors ${englishAutoRead ? 'bg-primary/20 text-primary' : 'text-slate-300'}`}
+                            className={`app-pill p-2 transition-colors ${englishAutoRead ? 'border-cyan-100/90 bg-cyan-50/86 text-cyan-700' : 'border-white/80 bg-white/68 text-slate-500'}`}
                             title={englishAutoRead ? '自動読み上げ ON' : '自動読み上げ OFF'}
                         >
                             <HiSpeakerWave className="w-4 h-4" />
@@ -519,7 +532,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                     )}
                     <button
                         onClick={() => onNavigate("/")}
-                        className="text-slate-400 hover:text-slate-600"
+                        className="app-pill p-2 text-slate-500 transition-colors hover:text-slate-700"
                     >
                         <Icons.Close className="w-5 h-5" />
                     </button>
@@ -532,7 +545,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                 {/* Question / Card Area */}
                 {/* Mobile: Use flex-1 with min-h-0 to allow shrinking if controls need space */}
                 <div id="debug-card-container" {...swipeHandlers} className="flex-1 min-h-0 px-4 py-2 flex flex-col justify-center relative z-0 land:px-6 ipadland:flex-[2] ipadland:p-0 mobile:px-1 mobile:py-1 ipadland:min-h-0">
-                    <Card className="w-full flex flex-col items-center justify-center p-6 border-t-4 border-t-primary relative land:p-4 mobile:p-4 mobile:border-t-2 mobile:shadow-none overflow-hidden min-h-0">
+                    <Card className="relative min-h-0 w-full overflow-hidden rounded-[30px] border-t-[3px] border-t-cyan-300/80 p-6 shadow-[0_26px_60px_-40px_rgba(15,23,42,0.42)] land:p-4 mobile:border-t-2 mobile:p-4 mobile:shadow-none">
+                        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.3),transparent_36%),linear-gradient(180deg,rgba(255,255,255,0.18),transparent_50%)]" />
 
                         {/* Compact correct feedback overlay on card */}
                         <AnimatePresence>
@@ -542,13 +556,13 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 1.1 }}
                                     transition={{ duration: 0.2 }}
-                                    className="absolute inset-0 z-20 flex items-center justify-center bg-green-400/85 rounded-[inherit]"
+                                    className="absolute inset-0 z-20 flex items-center justify-center rounded-[inherit] bg-[radial-gradient(circle,rgba(220,252,231,0.82),rgba(240,253,250,0.72),rgba(255,255,255,0.34))] backdrop-blur-sm"
                                 >
                                     <motion.div
                                         animate={{ rotate: [0, 8, -8, 0] }}
                                         transition={{ duration: 0.3 }}
                                     >
-                                        <div className="text-7xl text-white drop-shadow-lg mobile:text-6xl">⭕</div>
+                                        <div className="flex h-28 w-28 items-center justify-center rounded-full border border-white/85 bg-white/58 text-6xl text-emerald-500 shadow-[0_22px_40px_-30px_rgba(16,185,129,0.55)] mobile:h-24 mobile:w-24 mobile:text-5xl">⭕</div>
                                     </motion.div>
                                 </motion.div>
                             )}
@@ -562,17 +576,18 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                         initial={{ opacity: 0, y: -10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, scale: 0.9 }}
-                                        className="bg-amber-100 text-amber-600 px-3 py-1 rounded-full text-xs font-bold shadow-sm border border-amber-200 flex items-center gap-1"
                                     >
-                                        <span>🔁</span>
-                                        <span>{t("復習", "復習")}</span>
+                                        <Badge variant="warning" className="flex items-center gap-1 px-3 py-1 text-[11px]">
+                                            <span>🔁</span>
+                                            <span>{t("復習", "復習")}</span>
+                                        </Badge>
                                     </motion.div>
                                 ) : <div />}
                             </AnimatePresence>
                             {feedback === "none" && (
                                 <button
                                     onClick={onSkip}
-                                    className="px-3 py-1 rounded-full text-xs font-bold text-slate-500 bg-white/70 hover:bg-white active:scale-95 transition-all border border-white/80"
+                                    className="app-pill px-3 py-1 text-xs font-black text-slate-500 transition-all hover:bg-white/84 active:scale-95"
                                 >
                                     {t("スキップ", "スキップ")}
                                 </button>
@@ -580,6 +595,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         </div>
 
                         {/* Question Content */}
+                        <div className="relative z-10 flex min-h-0 flex-1 flex-col items-center justify-center">
                         {hissanActive && hissanGridData ? (
                             /* 筆算モード: グリッド表示 */
                             <div className="w-full flex-1 flex flex-col items-center justify-center gap-2 overflow-auto min-h-0">
@@ -588,9 +604,9 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                     <div className="mobile:hidden">
                                         <button
                                             onClick={onHissanToggle}
-                                            className="px-3 py-1 rounded-full text-xs font-bold bg-violet-100 text-violet-600 border border-violet-200 hover:bg-violet-200 transition-colors"
+                                            className="app-pill px-3 py-1 text-xs font-black text-cyan-700 transition-colors hover:bg-cyan-50/92"
                                         >
-                                            ··· → 暗算に切替
+                                            筆算 → 暗算に切替
                                         </button>
                                     </div>
                                 )}
@@ -620,7 +636,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                 </div>
                                 {/* Input Preview */}
                                 <div
-                                    className="min-w-[120px] h-20 border-b-4 border-white/80 flex items-center justify-center text-5xl font-mono text-slate-700 bg-white/60 rounded-xl px-4 transition-all ipadland:h-32 ipadland:text-7xl ipadland:min-w-[200px] mobile:h-12 mobile:text-3xl mobile:min-w-[80px] mobile:px-2 mobile:flex-shrink"
+                                    className="app-glass min-w-[120px] h-20 flex items-center justify-center rounded-[22px] px-4 text-5xl font-mono text-slate-700 transition-all ipadland:h-32 ipadland:min-w-[200px] ipadland:text-7xl mobile:h-12 mobile:min-w-[80px] mobile:flex-shrink mobile:px-2 mobile:text-3xl"
                                     style={{ width: `${Math.max(3, userInput.length) * 2.5}rem` }}
                                 >
                                     {userInput}
@@ -647,7 +663,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                                 e.stopPropagation();
                                                 speakEnglish(currentProblem.questionText || "");
                                             }}
-                                            className="ml-2 p-2 bg-white/75 hover:bg-white text-slate-500 rounded-full border border-white/80 transition-colors active:scale-95"
+                                            className="app-pill ml-2 p-2 text-slate-500 transition-colors hover:text-slate-700 active:scale-95"
                                             title="読み上げ"
                                         >
                                             <HiSpeakerWave className="w-6 h-6 mobile:w-5 mobile:h-5" />
@@ -668,13 +684,14 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                 )}
                             </div>
                         )}
+                        </div>
                     </Card>
                 </div>
 
                 {/* Controls Area */}
                 <div
                     id="debug-controls"
-                    className={`app-glass p-2 pb-6 rounded-t-[2rem] flex-1 land:min-h-[32vh] land:pb-4 ipadland:rounded-[2rem] ipadland:h-full ipadland:flex ipadland:flex-col ipadland:justify-center ipadland:p-6 ipadland:min-h-0 ipadland:max-h-none mobile:pb-[var(--safe-area-inset-bottom)] mobile:pt-0 mobile:p-0 mobile:rounded-none mobile:bg-white/35 ${shouldCompactTenKey
+                    className={`app-glass-strong p-2 pb-6 rounded-t-[2rem] flex-1 border-t border-white/75 land:min-h-[32vh] land:pb-4 ipadland:rounded-[2rem] ipadland:h-full ipadland:flex ipadland:flex-col ipadland:justify-center ipadland:p-6 ipadland:min-h-0 ipadland:max-h-none mobile:pb-[var(--safe-area-inset-bottom)] mobile:pt-0 mobile:p-0 mobile:rounded-none mobile:bg-white/46 ${shouldCompactTenKey
                             ? "max-h-[36vh] min-h-[176px] mobile:min-h-[150px]"
                             : "max-h-[44vh] min-h-[220px] mobile:min-h-[190px]"
                         }`}

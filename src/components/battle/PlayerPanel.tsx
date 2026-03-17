@@ -18,7 +18,6 @@ interface PlayerPanelProps {
 type Feedback = "none" | "correct" | "incorrect";
 
 export const PlayerPanel: React.FC<PlayerPanelProps> = ({
-    player,
     gameState,
     onSubmitAnswer,
     onInputChange,
@@ -27,7 +26,6 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
     disabled = false,
 }) => {
     const [feedback, setFeedback] = useState<Feedback>("none");
-    const isP1 = player === "p1";
     const problem = gameState.currentProblem;
     const isChoice = problem?.inputType === "choice";
     const isLocked = gameState.lockSeconds > 0;
@@ -74,21 +72,20 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
     }, [disabled, isLocked, problem, onSubmitAnswer, flashFeedback]);
 
     const bgFlash = feedback === "correct"
-        ? "bg-emerald-50"
+        ? "bg-[linear-gradient(180deg,rgba(220,252,231,0.82),rgba(240,253,250,0.76))]"
         : feedback === "incorrect"
-            ? "bg-red-50"
-            : "bg-white/60";
+            ? "bg-[linear-gradient(180deg,rgba(255,241,242,0.82),rgba(255,250,240,0.76))]"
+            : "bg-[linear-gradient(180deg,rgba(255,255,255,0.66),rgba(255,255,255,0.48))]";
 
     return (
         <div className={cn(
-            "flex flex-col h-full transition-colors duration-200",
-            bgFlash,
-            isP1 ? "border-r border-slate-200" : ""
+            "flex h-full flex-col overflow-hidden rounded-[28px] border border-white/75 shadow-[0_24px_50px_-34px_rgba(15,23,42,0.36)] transition-colors duration-200 app-glass-strong",
+            bgFlash
         )}>
             {/* Problem display + skip */}
-            <div className="flex-none px-3 pt-2 pb-1">
+            <div className="flex-none px-4 pt-4 pb-2">
                 <div className="flex items-center justify-between mb-1">
-                    <div className="text-xs font-bold text-slate-400">
+                    <div className="app-pill px-3 py-1 text-xs font-black text-slate-500">
                         {gameState.config.emoji} {gameState.config.name}
                         <span className="ml-1 text-slate-300">
                             {gameState.config.subject === "vocab" ? "🔤" : "🔢"}
@@ -97,24 +94,24 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
                     <button
                         onClick={onSkip}
                         disabled={disabled || isLocked || !problem}
-                        className="px-2 py-0.5 rounded-full text-[10px] font-bold text-slate-400 bg-slate-100 hover:bg-slate-200 hover:text-slate-600 transition-colors disabled:opacity-30"
+                        className="app-pill px-2.5 py-1 text-[10px] font-black text-slate-500 transition-colors hover:bg-white/84 hover:text-slate-700 disabled:opacity-30"
                     >
                         スキップ ▶
                     </button>
                 </div>
-                <div className="text-center text-2xl font-black text-slate-800 min-h-[2.5rem] flex items-center justify-center">
+                <div className="flex min-h-[4.25rem] items-center justify-center rounded-[22px] border border-white/75 bg-white/52 px-4 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)]">
                     {problem?.questionText || "..."}
                 </div>
             </div>
 
             {/* Number input preview (only for math) */}
             {!isChoice && (
-                <div className="flex-none px-3 pb-1">
+                <div className="flex-none px-4 pb-2">
                     <div className={cn(
-                        "h-10 rounded-xl border-2 flex items-center justify-center text-xl font-bold transition-colors",
-                        feedback === "correct" ? "border-emerald-400 text-emerald-600 bg-emerald-50" :
-                            feedback === "incorrect" ? "border-red-400 text-red-600 bg-red-50" :
-                                "border-slate-200 text-slate-800 bg-white"
+                        "flex h-11 items-center justify-center rounded-[18px] border text-xl font-black transition-colors app-glass",
+                        feedback === "correct" ? "border-emerald-200 text-emerald-600 bg-emerald-50/82" :
+                            feedback === "incorrect" ? "border-rose-200 text-rose-600 bg-rose-50/82" :
+                                "border-white/80 text-slate-800 bg-white/76"
                     )}>
                         {gameState.userInput || <span className="text-slate-300">?</span>}
                     </div>
@@ -122,19 +119,19 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
             )}
 
             {/* Stats */}
-            <div className="flex-none flex justify-center gap-3 px-3 pb-1 text-xs font-bold text-slate-400">
-                <span className="text-emerald-500">○ {gameState.correctCount}</span>
-                <span className="text-red-400">× {gameState.incorrectCount}</span>
+            <div className="flex flex-none justify-center gap-2 px-4 pb-3 text-xs font-black">
+                <span className="app-pill px-2.5 py-1 text-emerald-600">○ {gameState.correctCount}</span>
+                <span className="app-pill px-2.5 py-1 text-rose-500">× {gameState.incorrectCount}</span>
                 {showCombo && (
-                    <span className="text-violet-500">🔥 {gameState.combo} コンボ</span>
+                    <span className="app-pill px-2.5 py-1 text-cyan-700">🔥 {gameState.combo} コンボ</span>
                 )}
                 {showCombo && isLocked && (
-                    <span className="text-rose-500">⏳ {gameState.lockSeconds}びょう まって</span>
+                    <span className="app-pill px-2.5 py-1 text-rose-600">⏳ {gameState.lockSeconds}びょう まって</span>
                 )}
             </div>
 
             {/* Input area */}
-            <div className="flex-1 min-h-0">
+            <div className="flex-1 min-h-0 px-2 pb-2">
                 {isChoice && problem?.choices ? (
                     <ChoiceGroup
                         choices={problem.choices}

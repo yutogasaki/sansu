@@ -23,28 +23,28 @@ export const BossCoopBar: React.FC<BossCoopBarProps> = ({
     const danger = remainingSec <= 10;
 
     return (
-        <div className="w-full px-4 py-2 bg-gradient-to-b from-violet-100 via-fuchsia-50 to-white border-b border-violet-200">
+        <div className="w-full rounded-[28px] border border-white/75 px-4 py-3 app-glass-strong shadow-[0_22px_44px_-32px_rgba(15,23,42,0.34)]">
             <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                     <span className="text-2xl">🐲</span>
                     <div>
-                        <div className="text-sm font-black text-violet-700">ボス きょうりょくせん</div>
-                        <div className="text-[11px] text-violet-500 font-bold">2にんでHPを0にしよう</div>
+                        <div className="text-sm font-black text-slate-800">ボス きょうりょくせん</div>
+                        <div className="text-[11px] text-slate-500 font-bold">2にんでHPを0にしよう</div>
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
                     <div className={cn(
-                        "px-2.5 py-1 rounded-full text-xs font-black border",
+                        "app-pill px-2.5 py-1 text-xs font-black",
                         danger
-                            ? "bg-red-100 text-red-600 border-red-300"
-                            : "bg-white text-violet-600 border-violet-200"
+                            ? "border-rose-100/90 bg-rose-50/90 text-rose-700"
+                            : "border-cyan-100/90 bg-cyan-50/80 text-cyan-700"
                     )}>
                         ⏱ {mm}:{ss}
                     </div>
                     {onCancel && (
                         <button
                             onClick={onCancel}
-                            className="px-2.5 py-1 rounded-full text-xs font-bold text-slate-400 bg-white/90 border border-slate-200 hover:bg-slate-100 hover:text-slate-600 transition-colors"
+                            className="app-pill px-2.5 py-1 text-xs font-black text-slate-500 transition-colors hover:bg-white/84 hover:text-slate-700"
                         >
                             ✕ やめる
                         </button>
@@ -52,18 +52,18 @@ export const BossCoopBar: React.FC<BossCoopBarProps> = ({
                 </div>
             </div>
 
-            <div className="h-12 rounded-2xl bg-white border-2 border-violet-200 overflow-hidden relative shadow-inner">
+            <div className="app-track relative h-12 overflow-hidden rounded-2xl">
                 <motion.div
                     className="absolute inset-y-0 left-0 bg-gradient-to-r from-rose-500 via-orange-400 to-amber-300"
                     animate={{ width: `${hpPct}%` }}
                     transition={{ type: "spring", stiffness: 180, damping: 20 }}
                 />
-                <div className="absolute inset-0 flex items-center justify-center text-sm font-black text-violet-900 drop-shadow-sm">
+                <div className="absolute inset-0 flex items-center justify-center text-sm font-black text-slate-800 drop-shadow-sm">
                     BOSS HP {bossHp} / {bossMaxHp}
                 </div>
             </div>
 
-            <div className="mt-1 text-[11px] font-bold text-violet-500 text-center">
+            <div className="mt-1 text-center text-[11px] font-bold text-slate-500">
                 チームダメージ: {totalDamage}
             </div>
         </div>

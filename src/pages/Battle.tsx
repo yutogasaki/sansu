@@ -100,7 +100,7 @@ export const Battle: React.FC = () => {
 
     return (
         <OrientationGate>
-            <div className="h-screen w-screen overflow-hidden">
+            <div className="h-screen w-screen overflow-hidden bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.2),transparent_30%),linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0.06))]">
                 {state.phase === "setup" && (
                     <BattleSetup
                         onStart={handleStart}

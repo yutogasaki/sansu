@@ -22,7 +22,7 @@ export const ParentGateModal: React.FC<ParentGateModalProps> = ({ isOpen, onClos
             challengeFactory={createMultiplicationGateChallenge}
             placeholder="答え"
             errorText="答えが違います"
-            questionClassName="rounded-xl bg-slate-50 py-4 font-black text-primary"
+            questionClassName="border-cyan-100/90 bg-cyan-50/72 text-cyan-700"
             onCancel={onClose}
             onSuccess={onSuccess}
         />

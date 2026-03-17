@@ -21,7 +21,7 @@ export const BattleCountdown: React.FC<BattleCountdownProps> = ({ onComplete }) 
     }, [count, onComplete]);
 
     return (
-        <div className="fixed inset-0 bg-slate-900/80 flex items-center justify-center z-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[color:var(--app-overlay)] backdrop-blur-lg">
             <AnimatePresence mode="wait">
                 <motion.div
                     key={count}
@@ -29,7 +29,7 @@ export const BattleCountdown: React.FC<BattleCountdownProps> = ({ onComplete }) 
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 2, opacity: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="text-8xl font-black text-white drop-shadow-2xl"
+                    className="flex h-40 w-40 items-center justify-center rounded-full border border-white/80 bg-white/18 text-7xl font-black text-white shadow-[0_28px_60px_-34px_rgba(15,23,42,0.48)]"
                 >
                     {count > 0 ? count : "GO!"}
                 </motion.div>

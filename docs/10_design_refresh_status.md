@@ -1,4 +1,4 @@
-# 10 デザイン刷新 実施状況と今後対応（2026-03-13）
+# 10 デザイン刷新 実施状況と今後対応（2026-03-17）
 
 役割:
 - この文書はデザイン刷新の進捗・状態台帳である
@@ -15,7 +15,7 @@
 
 を網羅的に整理した作業台帳である。
 
-更新日: 2026-03-13
+更新日: 2026-03-17
 次回棚卸し目安: 2026-04-01
 
 ---
@@ -42,7 +42,7 @@
 
 ### 1.2 共通UIコンポーネントの刷新
 
-対象: `src/components/ui/Button.tsx`, `src/components/ui/Card.tsx`
+対象: `src/components/ui/Button.tsx`, `src/components/ui/Card.tsx`, `src/components/ui/Modal.tsx`, `src/components/ui/Badge.tsx`, `src/components/ui/ProgressBar.tsx`, `src/components/ui/Spinner.tsx`
 
 - Button
   - 押下時フィードバックを強化（沈み込み/スケール）
@@ -51,6 +51,18 @@
 - Card
   - defaultを共通ガラス調（`app-glass`）へ統一
   - flatを薄サーフェス+軽ブラーに変更
+- Modal
+  - 背景/コンテナ/フッターを共通トークンへ寄せた
+  - `aria-modal` / `aria-labelledby` と最上位レイヤー判定を追加
+- Badge
+  - 情報チップを `app-pill` ベースへ統一
+  - primary / success / warning を低彩度のまま見分けやすく調整
+- ProgressBar / Spinner
+  - 状態表示系UIを共通の面表現とアクセントトーンへ統一
+- 関連モーダル面
+  - `src/components/gate/ArithmeticGateModal.tsx`
+  - `src/components/domain/PaperTestScoreModal.tsx`
+  - 設定系で見える one-off modal も共通トーンへ寄せた
 
 ### 1.3 レイアウト骨格の刷新
 
@@ -84,13 +96,41 @@
 - `docs/design_review_checklist.md` を追加
 - `docs/ownership_map.md` と `docs/archive_policy.md` を追加し、状態文書と正本の境界を整理
 
+### 1.6 学習・バトル面のトーン統一
+
+対象:
+- `src/pages/StudyLayout.tsx`
+- `src/pages/Battle.tsx`
+- `src/components/domain/TenKey.tsx`
+- `src/components/domain/ChoiceGroup.tsx`
+- `src/components/domain/MultiNumberInput.tsx`
+- `src/components/domain/HissanCell.tsx`
+- `src/components/battle/*`
+
+- Study
+  - トップバー、タイマー、スキップ導線、問題カード、入力プレビュー、操作エリアを共通トーンへ寄せた
+  - 正解/不正解/スキップの overlay を強いベタ塗りからガラス調の静かな表現へ変更
+  - 入力系部品を `app-pill` / `app-glass` ベースに更新
+- Battle
+  - setup / arena / top bar / result / countdown / orientation gate を同じ質感へ統一
+  - 2人分の入力面をガラス調パネルに寄せ、スコアや待機状態をチップ表現へ整理
+  - つなひき / ボス協力の上部バーを共通サーフェス上で見やすく調整
+
 ---
 
 ## 2. 動作確認結果（完了）
 
-- 実行コマンド: `npm run build`
-- 結果: 成功（TypeScriptビルド + Viteビルド完了）
-- 備考: チャンクサイズ警告あり（既知、今回のデザイン差分起因ではない）
+- 実行コマンド:
+  - `npm run lint`
+  - `npm run typecheck`
+  - `npm run test:run`
+  - `npm run build`
+- 追加確認:
+  - `npm run e2e:smoke` を試行
+- 結果: 成功（Lint / TypeScript / Vitest / Vite build 完了）
+- 備考:
+  - チャンクサイズ警告あり（既知、今回のデザイン差分起因ではない）
+  - `e2e:smoke` はホーム起点の旧 selector で失敗。今回変更箇所ではなく、既存 smoke の追従不足が原因
 
 ---
 
@@ -109,21 +149,13 @@
 3. `src/pages/Onboarding.tsx`
    - 初期画面と遷移カードに旧カラーが残存
    - 初回体験を現行トーンへ寄せる必要
-4. `src/pages/Study.tsx`, `src/pages/StudyLayout.tsx`
-   - 日常利用の中心画面。ホームとのトーン差を解消する必要あり
-5. `src/pages/Battle.tsx` と配下コンポーネント
-   - バトル専用トーン方針（通常UIと分離するか統合するか）を明文化して反映
 
 ### 3.2 コンポーネント単位の統一（高優先）
 
-1. `src/components/ui/Modal.tsx`
-   - 背景/コンテナ/フッターの表現統一
-2. `src/components/ui/Badge.tsx`
-   - 色定義を新トークンに寄せる
-3. `src/components/ui/ProgressBar.tsx`, `src/components/ui/EmptyState.tsx`, `src/components/ui/Spinner.tsx`
-   - 状態表示系UIの質感統一
-4. 各ドメインカード（`src/components/domain/*`）
+1. 各ドメインカード（`src/components/domain/*`）
    - 共通カード基盤の利用徹底（重複スタイル縮小）
+2. one-off surface の残整理
+   - 共有トーンから外れている局所的なカード/補助面を棚卸しして削減
 
 ### 3.3 デザインシステム整備（中優先）
 
@@ -160,9 +192,9 @@
 
 ## 4. 推奨実施順（次スプリント）
 
-1. `Stats` / `Settings` / `Onboarding` のトーン統一
-2. `Modal` / `Badge` / 状態系UIの共通化
-3. Study系画面の統一（使用頻度が最も高いため）
+1. Study系画面の統一（使用頻度が最も高いため）
+2. `Stats` / `Settings` / `Onboarding` のトーン統一
+3. smoke / 実機確認の現行UI追従
 4. 実機・A11y・回帰テスト
 5. パフォーマンス調整（必要時）
 

@@ -32,31 +32,31 @@ export const HissanCellView: React.FC<HissanCellProps> = ({
                 sizeClasses[size],
                 "flex items-center justify-center"
             )}>
-                <div className="w-full h-[2px] bg-slate-800" />
+                <div className="h-[2px] w-full bg-slate-700/80" />
             </div>
         );
     }
 
     const stateClasses = (() => {
         if (isActive) {
-            return "bg-violet-50 border-2 border-violet-500 text-violet-700 ring-2 ring-violet-200";
+            return "border-2 border-cyan-400 bg-cyan-50/86 text-cyan-700 ring-2 ring-cyan-200/70";
         }
         switch (cell.state) {
             case 'fixed':
-                return "bg-white text-slate-800 border border-slate-200";
+                return "border border-white/80 bg-white/76 text-slate-800";
             case 'filled':
-                return "bg-violet-50/50 text-violet-700 border border-violet-200";
+                return "border border-cyan-100/90 bg-cyan-50/70 text-cyan-700";
             case 'locked':
-                return "bg-emerald-50/50 text-emerald-700 border border-emerald-200";
+                return "border border-emerald-100/90 bg-emerald-50/72 text-emerald-700";
             case 'empty':
                 if (cell.correctValue !== undefined) {
                     // 入力待ちセル
-                    return "bg-slate-50 border-2 border-dashed border-slate-200 text-transparent";
+                    return "border-2 border-dashed border-white/85 bg-white/38 text-transparent";
                 }
                 // 空セル（何もない）
                 return "bg-transparent border border-transparent text-transparent";
             default:
-                return "bg-white text-slate-800 border border-slate-200";
+                return "border border-white/80 bg-white/76 text-slate-800";
         }
     })();
 
@@ -67,7 +67,7 @@ export const HissanCellView: React.FC<HissanCellProps> = ({
         <div
             className={cn(
                 sizeClasses[size],
-                "flex items-center justify-center rounded-lg font-mono font-bold transition-all select-none",
+                "flex select-none items-center justify-center rounded-[14px] font-mono font-bold shadow-[0_12px_24px_-20px_rgba(15,23,42,0.28)] transition-all",
                 stateClasses,
                 isClickable && "cursor-pointer active:scale-95",
                 isOperator && "text-slate-500 font-normal",
@@ -75,7 +75,7 @@ export const HissanCellView: React.FC<HissanCellProps> = ({
             onClick={isClickable ? onClick : undefined}
         >
             {cell.value || (isActive && (
-                <span className="animate-pulse w-0.5 h-6 bg-violet-400 rounded-full" />
+                <span className="h-6 w-0.5 animate-pulse rounded-full bg-cyan-500" />
             ))}
         </div>
     );

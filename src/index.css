@@ -42,11 +42,24 @@
     --blur-md: 12px;
     --blur-lg: 16px;
 
-    --glass-bg: rgba(255, 255, 255, 0.72);
-    --glass-bg-heavy: rgba(255, 255, 255, 0.85);
-    --glass-bg-light: rgba(255, 255, 255, 0.5);
-    --glass-border: 1px solid rgba(255, 255, 255, 0.45);
-    --glass-border-subtle: 1px solid rgba(255, 255, 255, 0.25);
+    --app-surface: rgba(255, 255, 255, 0.72);
+    --app-surface-strong: rgba(255, 255, 255, 0.84);
+    --app-surface-soft: rgba(255, 255, 255, 0.56);
+    --app-border: rgba(255, 255, 255, 0.5);
+    --app-border-soft: rgba(255, 255, 255, 0.3);
+    --app-overlay: rgba(15, 23, 42, 0.34);
+    --app-overlay-soft: rgba(15, 23, 42, 0.18);
+    --app-shadow-soft: 0 8px 28px -20px rgba(15, 23, 42, 0.24);
+    --app-shadow: 0 16px 42px -28px rgba(15, 23, 42, 0.24), 0 4px 12px rgba(15, 23, 42, 0.08);
+    --app-shadow-strong: 0 28px 80px -42px rgba(15, 23, 42, 0.42), 0 10px 24px rgba(15, 23, 42, 0.08);
+    --app-accent: var(--color-teal-500);
+    --app-accent-strong: var(--color-teal-600);
+
+    --glass-bg: var(--app-surface);
+    --glass-bg-heavy: var(--app-surface-strong);
+    --glass-bg-light: var(--app-surface-soft);
+    --glass-border: 1px solid var(--app-border);
+    --glass-border-subtle: 1px solid var(--app-border-soft);
 
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
     --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
@@ -140,26 +153,26 @@ body {
 
 @layer utilities {
     .app-glass {
-        background: var(--glass-bg);
+        background: var(--app-surface);
         backdrop-filter: blur(var(--blur-md));
         -webkit-backdrop-filter: blur(var(--blur-md));
-        border: var(--glass-border);
-        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--app-border);
+        box-shadow: var(--app-shadow-soft);
     }
 
     .app-glass-strong {
-        background: var(--glass-bg-heavy);
+        background: var(--app-surface-strong);
         backdrop-filter: blur(var(--blur-lg));
         -webkit-backdrop-filter: blur(var(--blur-lg));
-        border: var(--glass-border);
-        box-shadow: var(--shadow-md);
+        border: 1px solid var(--app-border);
+        box-shadow: var(--app-shadow);
     }
 
     .glass-light {
-        background: var(--glass-bg-light);
+        background: var(--app-surface-soft);
         backdrop-filter: blur(var(--blur-sm));
         -webkit-backdrop-filter: blur(var(--blur-sm));
-        border: var(--glass-border-subtle);
+        border: 1px solid var(--app-border-soft);
     }
 
     .card-surface {
@@ -168,6 +181,24 @@ body {
         -webkit-backdrop-filter: blur(var(--blur-md));
         border: var(--glass-border);
         box-shadow: var(--card-shadow);
+    }
+
+    .app-pill {
+        background: var(--app-surface-soft);
+        backdrop-filter: blur(var(--blur-sm));
+        -webkit-backdrop-filter: blur(var(--blur-sm));
+        border: 1px solid var(--app-border);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38), 0 10px 22px -18px rgba(15, 23, 42, 0.26);
+    }
+
+    .app-track {
+        background: rgba(255, 255, 255, 0.48);
+        border: 1px solid var(--app-border-soft);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    }
+
+    .app-shadow-strong {
+        box-shadow: var(--app-shadow-strong);
     }
 
     .safe-area-inset-bottom {
