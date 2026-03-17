@@ -1,5 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { createPortal } from "react-dom";
+import { Badge } from "../ui/Badge";
+import { Button } from "../ui/Button";
+import { InsetPanel, SurfacePanel } from "../ui/SurfacePanel";
+import { cn } from "../../utils/cn";
 import { getFuwafuwaDisplayStage } from "./fuwafuwaVisuals";
 import { FuwafuwaMilestoneKind, VisibleIkimonoStage } from "./fuwafuwaMilestones";
 
@@ -37,10 +41,11 @@ interface TransitionCopy {
     emoji: string;
     title: string;
     body: string;
-    note: string;
+    meta?: string;
     button: string;
     accent: string;
     chip?: string;
+    chipVariant?: "primary" | "neutral" | "success" | "warning";
 }
 
 function getMilestoneCopy(modal: MilestoneModal): TransitionCopy {
@@ -49,41 +54,45 @@ function getMilestoneCopy(modal: MilestoneModal): TransitionCopy {
             return {
                 emoji: "🫧",
                 title: "ふわふわが うまれたよ",
-                body: "ちいさな ふわふわが\nここに やってきたよ。",
-                note: "なまえを つけてあげよう。",
-                button: "あいにいく",
-                accent: "from-teal-300 via-cyan-200 to-sky-100",
+                body: "ちいさな ふわふわが きたよ。",
+                meta: "なまえを つけよう。",
+                button: "みにいく",
+                accent: "from-teal-200/95 via-white/86 to-cyan-50/95",
                 chip: "はじめまして",
+                chipVariant: "primary",
             };
         case "growth":
             return {
                 emoji: "🌱",
                 title: "すこし そだったよ",
-                body: "ふわふわが すこしずつ\nじぶんの リズムを みつけてる。",
-                note: `${modal.daysAlive}にちめの へんか だよ。`,
-                button: "みてみる",
-                accent: "from-emerald-200 via-lime-100 to-cyan-50",
+                body: "じぶんの リズムが でてきたよ。",
+                meta: "また すこし かわったね。",
+                button: "みる",
+                accent: "from-emerald-100/95 via-white/86 to-cyan-50/95",
                 chip: "せいちょう",
+                chipVariant: "success",
             };
         case "adult":
             return {
                 emoji: "🌟",
                 title: "ふわふわが おとなになったよ",
-                body: "しずかに たよりになる\nふんいきが でてきたね。",
-                note: "ここまで いっしょに これたね。",
+                body: "おちついた ふんいきに なってきたね。",
+                meta: "ここまで いっしょに これたね。",
                 button: "すてき",
-                accent: "from-amber-200 via-yellow-100 to-orange-50",
+                accent: "from-amber-100/95 via-white/88 to-orange-50/95",
                 chip: "おとな",
+                chipVariant: "warning",
             };
         case "farewell_soon":
             return {
                 emoji: "🍃",
                 title: "もうすぐ たびだつみたい",
-                body: "ふわふわが すこしずつ\nつぎの たびじたくを してる。",
-                note: "いまの じかんも たいせつに しよう。",
-                button: "いっしょにいる",
-                accent: "from-rose-100 via-orange-50 to-amber-50",
+                body: "しずかに たびじたくを してるみたい。",
+                meta: "いまの じかんを たいせつに。",
+                button: "みにいく",
+                accent: "from-rose-50/95 via-white/88 to-amber-50/95",
                 chip: "よいん",
+                chipVariant: "warning",
             };
     }
 }
@@ -95,12 +104,12 @@ function getFarewellCopy(modal: FarewellModal): TransitionCopy {
     return {
         emoji: isAdultFarewell ? "🌈" : "💫",
         title: isAdultFarewell ? `${displayName}が たびだつよ` : `${displayName}が そっと かぜにのるよ`,
-        body: isAdultFarewell
-            ? `${modal.daysAlive}にちかん、\nいっしょに すごしてくれて ありがとう。`
-            : `${modal.daysAlive}にちかん、\nやさしく そだってくれたね。`,
-        note: "つぎの たまごも すぐに やってくるよ。",
+        body: `${modal.daysAlive}にちかん ありがとう。`,
+        meta: "つぎの たまごも すぐに くるよ。",
         button: "みおくる",
-        accent: isAdultFarewell ? "from-amber-100 via-orange-50 to-rose-50" : "from-rose-100 via-pink-50 to-purple-50",
+        accent: isAdultFarewell
+            ? "from-amber-50/95 via-white/88 to-rose-50/95"
+            : "from-rose-50/95 via-white/88 to-fuchsia-50/95",
     };
 }
 
@@ -108,10 +117,10 @@ function getWelcomeCopy(): TransitionCopy {
     return {
         emoji: "🥚",
         title: "あたらしい たまごが きたよ",
-        body: "つぎの ふわふわが\nしずかに ねむってる。",
-        note: "また ここから いっしょに そだてよう。",
+        body: "つぎの ふわふわが しずかに ねむってる。",
+        meta: "また ここから いっしょに。",
         button: "よろしくね",
-        accent: "from-cyan-200 via-teal-100 to-sky-50",
+        accent: "from-cyan-100/95 via-white/88 to-sky-50/95",
     };
 }
 
@@ -145,6 +154,13 @@ export const FuwafuwaTransitionModal: React.FC<FuwafuwaTransitionModalProps> = (
 
     const buttonAction = modal.kind === "farewell" && onFarewellContinue ? onFarewellContinue : onClose;
     const imageStage = modal.kind === "welcome" ? "egg" : modal.stage;
+    const dayBadge = modal.kind === "milestone"
+        ? modal.milestone === "birth"
+            ? null
+            : `${modal.daysAlive}にちめ`
+        : modal.kind === "farewell"
+            ? `${modal.daysAlive}にち`
+            : null;
 
     return createPortal(
         <AnimatePresence>
@@ -152,63 +168,76 @@ export const FuwafuwaTransitionModal: React.FC<FuwafuwaTransitionModalProps> = (
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[120] flex items-center justify-center bg-white/50 p-5 backdrop-blur-md"
+                className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-900/18 p-5 backdrop-blur-sm"
             >
                 <motion.div
                     initial={{ opacity: 0, y: 18, scale: 0.94 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.96 }}
                     transition={{ type: "spring", stiffness: 280, damping: 24 }}
-                    className="relative w-full max-w-sm overflow-hidden rounded-[2rem] border border-white/85 bg-white/95 shadow-[0_34px_80px_-42px_rgba(15,23,42,0.55)]"
+                    className="relative w-full max-w-sm"
                 >
-                    <div className={`bg-gradient-to-b ${content.accent} px-6 pt-7 pb-6 text-center`}>
-                        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_24%_22%,rgba(255,255,255,0.48),transparent_22%),radial-gradient(circle_at_78%_18%,rgba(255,255,255,0.34),transparent_20%)]" />
-                        <motion.div
-                            animate={{ y: [0, -5, 0], scale: [1, 1.04, 1] }}
-                            transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-                            className="relative z-10 mb-4 text-5xl"
-                        >
-                            {content.emoji}
-                        </motion.div>
+                    <SurfacePanel className="space-y-0 overflow-hidden p-0 shadow-[0_30px_70px_-38px_rgba(15,23,42,0.52)]">
+                        <div className={cn("relative px-6 pt-5 pb-5 text-center", `bg-gradient-to-b ${content.accent}`)}>
+                            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_24%_18%,rgba(255,255,255,0.48),transparent_24%),radial-gradient(circle_at_78%_18%,rgba(255,255,255,0.3),transparent_18%)]" />
 
-                        <motion.div
-                            initial={{ scale: 0.86, rotate: -4 }}
-                            animate={{ scale: 1, rotate: 0 }}
-                            transition={{ type: "spring", stiffness: 220, damping: 16, delay: 0.08 }}
-                            className="relative z-10 mx-auto mb-5 h-28 w-28 rounded-full border-[4px] border-white/90 bg-white p-1 shadow-[0_20px_48px_-28px_rgba(15,23,42,0.5)]"
-                        >
-                            <div className="h-full w-full rounded-full bg-white">
-                                {renderImage(modal.species, imageStage)}
+                            <div className="relative z-10 flex flex-wrap items-center justify-center gap-2">
+                                {content.chip ? (
+                                    <Badge variant={content.chipVariant ?? "neutral"}>
+                                        {content.chip}
+                                    </Badge>
+                                ) : null}
+                                {dayBadge ? (
+                                    <Badge variant="neutral" className="bg-white/84 text-slate-500">
+                                        {dayBadge}
+                                    </Badge>
+                                ) : null}
                             </div>
-                        </motion.div>
 
-                        {"chip" in content && content.chip ? (
-                            <div className="relative z-10 mb-3 inline-flex rounded-full border border-white/75 bg-white/70 px-3 py-1 text-[11px] font-black tracking-wide text-slate-600">
-                                {content.chip}
-                            </div>
-                        ) : null}
+                            <motion.div
+                                initial={{ scale: 0.88, rotate: -4 }}
+                                animate={{ scale: 1, rotate: 0, y: [0, -4, 0] }}
+                                transition={{
+                                    scale: { type: "spring", stiffness: 220, damping: 16, delay: 0.08 },
+                                    rotate: { type: "spring", stiffness: 220, damping: 16, delay: 0.08 },
+                                    y: { duration: 2.8, repeat: Infinity, ease: "easeInOut" },
+                                }}
+                                className="relative z-10 mx-auto mt-4 h-24 w-24 rounded-full border-[3px] border-white/90 bg-white/92 p-1 shadow-[0_18px_40px_-26px_rgba(15,23,42,0.38)]"
+                            >
+                                <div className="h-full w-full rounded-full bg-white">
+                                    {renderImage(modal.species, imageStage)}
+                                </div>
+                            </motion.div>
+                        </div>
 
-                        <h2 className="relative z-10 text-[1.35rem] font-black leading-tight text-slate-800">
-                            {content.title}
-                        </h2>
-                    </div>
+                        <div className="px-5 pt-4 pb-5">
+                            <InsetPanel className="space-y-2 px-4 py-4 text-center">
+                                <div className="flex items-center justify-center gap-2">
+                                    <span className="text-2xl" aria-hidden="true">{content.emoji}</span>
+                                    <h2 className="text-[1.2rem] font-black leading-tight tracking-[-0.02em] text-slate-800">
+                                        {content.title}
+                                    </h2>
+                                </div>
+                                <p className="text-sm font-bold leading-6 text-slate-700">
+                                    {content.body}
+                                </p>
+                                {content.meta ? (
+                                    <p className="text-xs font-medium leading-5 text-slate-400">
+                                        {content.meta}
+                                    </p>
+                                ) : null}
+                            </InsetPanel>
 
-                    <div className="px-6 pt-5 pb-6 text-center">
-                        <p className="whitespace-pre-line text-sm font-bold leading-7 text-slate-700">
-                            {content.body}
-                        </p>
-                        <p className="mt-3 text-xs font-bold leading-6 text-slate-500">
-                            {content.note}
-                        </p>
-
-                        <button
-                            type="button"
-                            onClick={buttonAction}
-                            className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[linear-gradient(140deg,#0ea5a4_0%,#14b8a6_52%,#38bdf8_100%)] px-5 py-4 text-base font-black text-white shadow-[0_18px_34px_-18px_rgba(8,145,178,0.8)] transition active:scale-[0.985]"
-                        >
-                            {content.button}
-                        </button>
-                    </div>
+                            <Button
+                                type="button"
+                                onClick={buttonAction}
+                                size="xl"
+                                className="mt-4 w-full shadow-lg shadow-cyan-200/70"
+                            >
+                                {content.button}
+                            </Button>
+                        </div>
+                    </SurfacePanel>
                 </motion.div>
             </motion.div>
         </AnimatePresence>,
