@@ -88,11 +88,13 @@
 - P0 is now implementation-complete for the core v1 surfaces.
 - P1 smoke gate realignment is complete and logged in `docs/done/2026-03.md`.
 - P1 session completion regression coverage is complete and logged in `docs/done/2026-03.md`.
+- P1 progression side-effect regression coverage is complete and logged in `docs/done/2026-03.md`.
+- P1 block generation regression coverage is complete and logged in `docs/done/2026-03.md`.
 
 ### Next
 
-- Continue P1 by expanding regression coverage beyond the restored smoke path.
-- Add or strengthen checks around block generation, profile progression, and the main learning flow state transitions.
+- Continue P1 by expanding regression coverage beyond the restored smoke path and generator/unit guards.
+- Add or strengthen checks around the main learning flow UI state transitions and cross-screen regression paths.
 - Follow regression work with device / A11y checks before moving into rule formalization.
 
 ### Decision Notes
@@ -105,4 +107,4 @@
 - UI work can drift from SSOT if docs do not move with implementation.
 - Mobile-only rendering and PWA update issues may escape desktop-only verification.
 - `npm run e2e:smoke` is restored, but its coverage is still intentionally narrow and should not be treated as the only regression gate.
-- `useStudySession` completion branching is now covered, but block generation and level progression side effects still need broader automated protection.
+- `useStudySession` completion, progression, and generator priority branches are now covered, but full learning-flow UI state transitions still need broader automated protection.

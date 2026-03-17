@@ -37,7 +37,10 @@ import {
 } from "./blockGenerators";
 import { checkPeriodTestTrigger } from "../domain/test/trigger";
 import { ensurePeriodicTestSet } from "../domain/test/testSet";
-import { resolveSessionCompletionProfileUpdate } from "./useStudySession.logic";
+import {
+    resolveProfileProgressionAfterAttempt,
+    resolveSessionCompletionProfileUpdate,
+} from "./useStudySession.logic";
 import { errorInDev, logInDev } from "../utils/debug";
 
 type StudySessionOptions = {
@@ -521,96 +524,15 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
             const currentProfile = await getActiveProfile();
             if (!currentProfile) return;
-
-            const ensureMainEnabled = (levels: typeof currentProfile.mathLevels, mainLevel: number) => {
-                if (!levels) return levels;
-                const hasEnabled = levels.some(l => l.enabled);
-                if (hasEnabled) return levels;
-                return levels.map(l => (l.level === mainLevel ? { ...l, enabled: true } : l));
-            };
-
-            const unlockNextLevelIfReady = async (subject: SubjectKey, p: UserProfile) => {
-                if (subject === 'math') {
-                    if (p.mathMainLevel >= 20) return p;
-                    if (p.mathMaxUnlocked !== p.mathMainLevel) return p;
-                    const canUnlock = await checkLevelProgression(p.id, p.mathMainLevel);
-                    if (!canUnlock) return p;
-                    const nextLevel = Math.min(20, p.mathMaxUnlocked + 1);
-                    const mathLevels = p.mathLevels
-                        ? p.mathLevels.map(l => (l.level <= nextLevel ? { ...l, unlocked: true } : l))
-                        : p.mathLevels;
-                    return { ...p, mathMaxUnlocked: nextLevel, mathLevels };
-                }
-
-                if (p.vocabMainLevel >= 20) return p;
-                if (p.vocabMaxUnlocked !== p.vocabMainLevel) return p;
-                if (!checkVocabUnlockReadiness(p)) return p;
-                const nextLevel = Math.min(20, p.vocabMaxUnlocked + 1);
-                const vocabLevels = p.vocabLevels
-                    ? p.vocabLevels.map(l => (l.level <= nextLevel ? { ...l, unlocked: true } : l))
-                    : p.vocabLevels;
-                return { ...p, vocabMaxUnlocked: nextLevel, vocabLevels };
-            };
-
-            const promoteMainLevelIfReady = async (subject: SubjectKey, p: UserProfile) => {
-                if (subject === 'math') {
-                    if (p.mathMaxUnlocked <= p.mathMainLevel) return p;
-                    const canPromote = await checkMathMainPromotion(p, p.mathMaxUnlocked);
-                    if (!canPromote) return p;
-                    const nextMain = p.mathMaxUnlocked;
-                    const mathLevels = p.mathLevels
-                        ? ensureMainEnabled(
-                            p.mathLevels.map(l =>
-                                l.level === nextMain
-                                    ? { ...l, enabled: true, recentAnswersNonReview: [] }
-                                    : l
-                            ),
-                            nextMain
-                        )
-                        : p.mathLevels;
-                    // レベルアップ通知を設定（ホーム画面でモーダル表示）
-                    return {
-                        ...p,
-                        mathMainLevel: nextMain,
-                        mathMainLevelStartedAt: new Date().toISOString(),
-                        mathLevels,
-                        pendingLevelUpNotification: {
-                            subject: 'math' as const,
-                            newLevel: nextMain,
-                            achievedAt: new Date().toISOString()
-                        }
-                    };
-                }
-
-                const canPromote = await checkVocabMainPromotion(p);
-                if (!canPromote) return p;
-                const nextMain = p.vocabMaxUnlocked;
-                const vocabLevels = p.vocabLevels
-                    ? ensureMainEnabled(
-                        p.vocabLevels.map(l =>
-                            l.level === nextMain
-                                ? { ...l, enabled: true, recentAnswersNonReview: [] }
-                                : l
-                        ),
-                        nextMain
-                    )
-                    : p.vocabLevels;
-                // レベルアップ通知を設定（ホーム画面でモーダル表示）
-                return {
-                    ...p,
-                    vocabMainLevel: nextMain,
-                    vocabMainLevelStartedAt: new Date().toISOString(),
-                    vocabLevels,
-                    pendingLevelUpNotification: {
-                        subject: 'vocab' as const,
-                        newLevel: nextMain,
-                        achievedAt: new Date().toISOString()
-                    }
-                };
-            };
-
-            let updatedProfile = await unlockNextLevelIfReady(problem.subject, currentProfile);
-            updatedProfile = await promoteMainLevelIfReady(problem.subject, updatedProfile);
+            const updatedProfile = await resolveProfileProgressionAfterAttempt({
+                currentProfile,
+                subject: problem.subject,
+                nowIso: new Date().toISOString(),
+                checkMathUnlock: async (profileToCheck) => checkLevelProgression(profileToCheck.id, profileToCheck.mathMainLevel),
+                checkMathPromotion: checkMathMainPromotion,
+                checkVocabUnlockReadiness,
+                checkVocabPromotion: checkVocabMainPromotion,
+            });
 
             if (updatedProfile !== currentProfile) {
                 await saveProfile(updatedProfile);

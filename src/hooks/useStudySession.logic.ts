@@ -18,6 +18,16 @@ type SessionCompletionOptions = {
     checkMathTrigger?: (profile: UserProfile) => Promise<{ isTriggered: boolean; reason: TriggerState["reason"] }>;
 };
 
+type AttemptProgressionOptions = {
+    currentProfile: UserProfile;
+    subject: SubjectKey;
+    nowIso: string;
+    checkMathUnlock: (profile: UserProfile) => Promise<boolean>;
+    checkMathPromotion: (profile: UserProfile, targetLevel: number) => Promise<boolean>;
+    checkVocabUnlockReadiness: (profile: UserProfile) => boolean;
+    checkVocabPromotion: (profile: UserProfile) => Promise<boolean>;
+};
+
 const createDefaultPeriodicTestState = (): PeriodicTestState => ({
     math: { isPending: false, lastTriggeredAt: null, reason: null },
     vocab: { isPending: false, lastTriggeredAt: null, reason: null },
@@ -112,4 +122,109 @@ export const resolveSessionCompletionProfileUpdate = async ({
     }
 
     return null;
+};
+
+const ensureMainEnabled = (
+    levels: UserProfile["mathLevels"] | UserProfile["vocabLevels"],
+    mainLevel: number
+) => {
+    if (!levels) return levels;
+    const hasEnabled = levels.some(level => level.enabled);
+    if (hasEnabled) return levels;
+    return levels.map(level => (level.level === mainLevel ? { ...level, enabled: true } : level));
+};
+
+export const resolveProfileProgressionAfterAttempt = async ({
+    currentProfile,
+    subject,
+    nowIso,
+    checkMathUnlock,
+    checkMathPromotion,
+    checkVocabUnlockReadiness,
+    checkVocabPromotion,
+}: AttemptProgressionOptions): Promise<UserProfile> => {
+    let updatedProfile = currentProfile;
+
+    if (subject === "math") {
+        if (updatedProfile.mathMainLevel < 20 && updatedProfile.mathMaxUnlocked === updatedProfile.mathMainLevel) {
+            const canUnlock = await checkMathUnlock(updatedProfile);
+            if (canUnlock) {
+                const nextLevel = Math.min(20, updatedProfile.mathMaxUnlocked + 1);
+                const mathLevels = updatedProfile.mathLevels
+                    ? updatedProfile.mathLevels.map(level => (level.level <= nextLevel ? { ...level, unlocked: true } : level))
+                    : updatedProfile.mathLevels;
+                updatedProfile = { ...updatedProfile, mathMaxUnlocked: nextLevel, mathLevels };
+            }
+        }
+
+        if (updatedProfile.mathMaxUnlocked > updatedProfile.mathMainLevel) {
+            const nextMain = updatedProfile.mathMaxUnlocked;
+            const canPromote = await checkMathPromotion(updatedProfile, nextMain);
+            if (canPromote) {
+                const mathLevels = updatedProfile.mathLevels
+                    ? ensureMainEnabled(
+                        updatedProfile.mathLevels.map(level =>
+                            level.level === nextMain
+                                ? { ...level, enabled: true, recentAnswersNonReview: [] }
+                                : level
+                        ),
+                        nextMain
+                    )
+                    : updatedProfile.mathLevels;
+                updatedProfile = {
+                    ...updatedProfile,
+                    mathMainLevel: nextMain,
+                    mathMainLevelStartedAt: nowIso,
+                    mathLevels,
+                    pendingLevelUpNotification: {
+                        subject: "math",
+                        newLevel: nextMain,
+                        achievedAt: nowIso,
+                    },
+                };
+            }
+        }
+
+        return updatedProfile;
+    }
+
+    if (updatedProfile.vocabMainLevel < 20 && updatedProfile.vocabMaxUnlocked === updatedProfile.vocabMainLevel) {
+        if (checkVocabUnlockReadiness(updatedProfile)) {
+            const nextLevel = Math.min(20, updatedProfile.vocabMaxUnlocked + 1);
+            const vocabLevels = updatedProfile.vocabLevels
+                ? updatedProfile.vocabLevels.map(level => (level.level <= nextLevel ? { ...level, unlocked: true } : level))
+                : updatedProfile.vocabLevels;
+            updatedProfile = { ...updatedProfile, vocabMaxUnlocked: nextLevel, vocabLevels };
+        }
+    }
+
+    if (updatedProfile.vocabMaxUnlocked > updatedProfile.vocabMainLevel) {
+        const nextMain = updatedProfile.vocabMaxUnlocked;
+        const canPromote = await checkVocabPromotion(updatedProfile);
+        if (canPromote) {
+            const vocabLevels = updatedProfile.vocabLevels
+                ? ensureMainEnabled(
+                    updatedProfile.vocabLevels.map(level =>
+                        level.level === nextMain
+                            ? { ...level, enabled: true, recentAnswersNonReview: [] }
+                            : level
+                    ),
+                    nextMain
+                )
+                : updatedProfile.vocabLevels;
+            updatedProfile = {
+                ...updatedProfile,
+                vocabMainLevel: nextMain,
+                vocabMainLevelStartedAt: nowIso,
+                vocabLevels,
+                pendingLevelUpNotification: {
+                    subject: "vocab",
+                    newLevel: nextMain,
+                    achievedAt: nowIso,
+                },
+            };
+        }
+    }
+
+    return updatedProfile;
 };
