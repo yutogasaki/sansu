@@ -15,6 +15,7 @@ import { db } from "../db";
 import { useNavigate } from "react-router-dom";
 import { useTimeoutScheduler } from "../hooks/useTimeoutScheduler";
 import { logInDev } from "../utils/debug";
+import { cn } from "../utils/cn";
 
 type Step = "welcome" | "name" | "grade" | "subject" | "math-check" | "english-check" | "done";
 type SubjectMode = "mix" | "math" | "vocab";
@@ -239,11 +240,18 @@ export const Onboarding: React.FC = () => {
                         : step === "english-check"
                             ? "えいご どれくらい？"
                             : "かんりょう";
+    const panelClass = "w-full border-t-[3px] shadow-[0_28px_54px_-38px_rgba(15,23,42,0.34)]";
 
     if (step === "welcome") {
         return (
-            <div className="flex h-full min-h-0 flex-col items-center justify-center px-[var(--screen-padding-x)] animate-in fade-in duration-500">
-                <SurfacePanel className="w-full max-w-md space-y-6 text-center">
+            <div className="relative flex h-full min-h-0 flex-col items-center justify-center overflow-hidden px-[var(--screen-padding-x)] animate-in fade-in duration-500">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(103,232,249,0.2),_transparent_42%),radial-gradient(circle_at_bottom,_rgba(110,231,183,0.16),_transparent_38%)]" />
+                <div className="pointer-events-none absolute -left-16 top-12 h-40 w-40 rounded-full bg-cyan-100/45 blur-3xl" />
+                <div className="pointer-events-none absolute -right-10 bottom-10 h-36 w-36 rounded-full bg-emerald-100/45 blur-3xl" />
+                <SurfacePanel className={cn(panelClass, "relative z-10 max-w-md space-y-6 border-t-cyan-300/80 text-center")}>
+                    <div className="mx-auto flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[24px] border border-cyan-100/90 bg-[linear-gradient(145deg,rgba(236,254,255,0.94),rgba(209,250,229,0.84))] text-4xl shadow-[0_20px_34px_-24px_rgba(34,197,94,0.3)]">
+                        <span aria-hidden="true">🌱</span>
+                    </div>
                     <Badge variant="primary" className="mx-auto">
                         やさしく つづく
                     </Badge>
@@ -265,7 +273,7 @@ export const Onboarding: React.FC = () => {
                     </Button>
                     <button
                         onClick={() => navigate(-1)}
-                        className="text-sm font-bold text-slate-400 transition-colors hover:text-slate-600"
+                        className="app-pill mx-auto inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-slate-500 transition-colors hover:text-slate-700"
                     >
                         もどる
                     </button>
@@ -275,16 +283,17 @@ export const Onboarding: React.FC = () => {
     }
 
     return (
-        <div className="flex h-full min-h-0 flex-col">
+        <div className="relative flex h-full min-h-0 flex-col overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(103,232,249,0.16),_transparent_42%),radial-gradient(circle_at_bottom,_rgba(251,191,36,0.12),_transparent_30%)]">
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0))]" />
             <Header
                 title={stepTitle}
                 showBack={!isSubmitting}
                 onBack={goBack}
             />
 
-            <div className="flex flex-1 items-center justify-center px-[var(--screen-padding-x)] pb-[var(--screen-bottom-padding)]">
+            <div className="relative z-10 flex flex-1 items-center justify-center px-[var(--screen-padding-x)] pb-[var(--screen-bottom-padding)]">
                 {step === "name" && (
-                    <SurfacePanel className="w-full max-w-lg space-y-5 animate-in slide-in-from-right duration-300">
+                    <SurfacePanel className={cn(panelClass, "max-w-lg space-y-5 border-t-cyan-300/80 animate-in slide-in-from-right duration-300")}>
                         <SurfacePanelHeader
                             title="ニックネームをおしえてね"
                             description="あとで かえられるよ"
@@ -293,7 +302,7 @@ export const Onboarding: React.FC = () => {
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full rounded-[22px] border border-white/85 bg-white/72 p-6 text-center text-4xl font-bold text-slate-700 outline-none backdrop-blur-sm transition focus:border-cyan-500"
+                            className="app-glass w-full rounded-[22px] border border-white/85 p-6 text-center text-4xl font-bold text-slate-700 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200/70"
                             placeholder="あだ名でOK"
                             autoFocus
                         />
@@ -304,7 +313,7 @@ export const Onboarding: React.FC = () => {
                 )}
 
                 {step === "grade" && (
-                    <SurfacePanel className="w-full max-w-2xl space-y-4 animate-in slide-in-from-right duration-300">
+                    <SurfacePanel className={cn(panelClass, "max-w-2xl space-y-4 border-t-sky-300/80 animate-in slide-in-from-right duration-300")}>
                         <SurfacePanelHeader
                             title="いまの がくねんに ちかい ところ"
                             description="ぴったりじゃなくて だいじょうぶ"
@@ -325,7 +334,7 @@ export const Onboarding: React.FC = () => {
                 )}
 
                 {step === "subject" && (
-                    <SurfacePanel className="w-full max-w-lg space-y-4 animate-in slide-in-from-right duration-300">
+                    <SurfacePanel className={cn(panelClass, "max-w-lg space-y-4 border-t-emerald-300/80 animate-in slide-in-from-right duration-300")}>
                         <SurfacePanelHeader
                             title="どれを べんきょう する？"
                             description="あとで せってい から かえられるよ"
@@ -351,7 +360,7 @@ export const Onboarding: React.FC = () => {
                 )}
 
                 {step === "math-check" && (
-                    <SurfacePanel className="w-full max-w-xl space-y-4 animate-in slide-in-from-right duration-300">
+                    <SurfacePanel className={cn(panelClass, "max-w-xl space-y-4 border-t-cyan-300/80 animate-in slide-in-from-right duration-300")}>
                         <SurfacePanelHeader
                             title="いちばん ちかい ところを えらんでね"
                             description="やりやすい ところ から はじめるための しつもん"
@@ -378,7 +387,7 @@ export const Onboarding: React.FC = () => {
                 )}
 
                 {step === "english-check" && (
-                    <SurfacePanel className="w-full max-w-lg space-y-4 animate-in slide-in-from-right duration-300">
+                    <SurfacePanel className={cn(panelClass, "max-w-lg space-y-4 border-t-amber-300/80 animate-in slide-in-from-right duration-300")}>
                         <SurfacePanelHeader
                             title="えいごは どれくらい？"
                             description="いまの かんじ に ちかい ものを えらんでね"
@@ -404,11 +413,16 @@ export const Onboarding: React.FC = () => {
                 )}
 
                 {step === "done" && (
-                    <SurfacePanel className="w-full max-w-md space-y-6 text-center animate-in zoom-in duration-300">
-                        <div className="text-6xl">🎉</div>
+                    <SurfacePanel className={cn(panelClass, "max-w-md space-y-6 border-t-emerald-300/80 text-center animate-in zoom-in duration-300")}>
+                        <Badge variant="success" className="mx-auto">
+                            じゅんび ちゅう
+                        </Badge>
+                        <div className="mx-auto flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[24px] border border-emerald-100/90 bg-[linear-gradient(145deg,rgba(236,253,245,0.95),rgba(220,252,231,0.85))] text-4xl shadow-[0_20px_34px_-24px_rgba(34,197,94,0.28)]">
+                            <span aria-hidden="true">🌿</span>
+                        </div>
                         <div>
                             <div className="text-2xl font-bold text-slate-700">じゅんび できたよ</div>
-                            <div className="mt-2 text-sm text-slate-400">すこし まってね</div>
+                            <div className="mt-2 text-sm font-medium text-slate-400">すこし まってね</div>
                         </div>
                     </SurfacePanel>
                 )}

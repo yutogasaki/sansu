@@ -84,13 +84,15 @@
 - The current recommended order is `P0 -> P1 -> P2 -> P3 -> P4`.
 - P0 shared state UI alignment is complete and logged in `docs/done/2026-03.md`.
 - P0 study / battle tone alignment is complete and logged in `docs/done/2026-03.md`.
-- Remaining active P0 slice:
-  - `docs/tasks/active/2026-03-17-secondary-screen-tone-alignment.md`
+- P0 secondary screen tone alignment is complete and logged in `docs/done/2026-03.md`.
+- P0 is now implementation-complete for the core v1 surfaces.
+- P1 smoke gate realignment is complete and logged in `docs/done/2026-03.md`.
 
 ### Next
 
-- Refresh `Stats` / `Settings` / `Onboarding` next.
-- Follow the P0 work with regression coverage before moving into rule formalization.
+- Continue P1 by expanding regression coverage beyond the restored smoke path.
+- Add or strengthen checks around the main learning flow and supporting state transitions.
+- Follow regression work with device / A11y checks before moving into rule formalization.
 
 ### Decision Notes
 
@@ -101,3 +103,4 @@
 
 - UI work can drift from SSOT if docs do not move with implementation.
 - Mobile-only rendering and PWA update issues may escape desktop-only verification.
+- `npm run e2e:smoke` is restored, but its coverage is still intentionally narrow and should not be treated as the only regression gate.

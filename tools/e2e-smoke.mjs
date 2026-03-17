@@ -1,16 +1,21 @@
 import { chromium } from "playwright";
 import { spawn, spawnSync } from "node:child_process";
 
-const BASE_URL = "http://127.0.0.1:4173";
+const HOST = "127.0.0.1";
+const PORT_CANDIDATES = [4173, 4174, 4175];
+const APP_TITLE_MARKER = "<title>Sansu App</title>";
 const DEV_START_TIMEOUT_MS = 45_000;
 const STEP_TIMEOUT_MS = 15_000;
 const SCENARIO_TIMEOUT_MS = 60_000;
+let activeBaseUrl = `http://${HOST}:${PORT_CANDIDATES[0]}`;
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
 };
+
+const buildBaseUrl = (port) => `http://${HOST}:${port}`;
 
 const waitForHash = async (page, pattern) => {
   await page.waitForFunction(
@@ -20,26 +25,37 @@ const waitForHash = async (page, pattern) => {
   );
 };
 
+const probeServer = async (url) => {
+  try {
+    const res = await fetch(url, { method: "GET" });
+    if (!res.ok) {
+      return { reachable: true, expected: false };
+    }
+    const html = await res.text();
+    return { reachable: true, expected: html.includes(APP_TITLE_MARKER) };
+  } catch {
+    return { reachable: false, expected: false };
+  }
+};
+
 const waitForServer = async (url, timeoutMs) => {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
-    try {
-      const res = await fetch(url, { method: "GET" });
-      if (res.ok) return;
-    } catch {
-      // retry
+    const { expected } = await probeServer(url);
+    if (expected) {
+      return;
     }
     await delay(500);
   }
-  throw new Error(`Dev server did not become ready within ${timeoutMs}ms: ${url}`);
+  throw new Error(`Sansu dev server did not become ready within ${timeoutMs}ms: ${url}`);
 };
 
-const startDevServer = () => {
+const startDevServer = (port) => {
   const child = spawn(
     process.platform === "win32" ? "cmd.exe" : "sh",
     process.platform === "win32"
-      ? ["/c", "npm run dev -- --host 127.0.0.1 --port 4173 --strictPort"]
-      : ["-c", "npm run dev -- --host 127.0.0.1 --port 4173 --strictPort"],
+      ? ["/c", `npm run dev -- --host ${HOST} --port ${port} --strictPort`]
+      : ["-c", `npm run dev -- --host ${HOST} --port ${port} --strictPort`],
     { stdio: "pipe", windowsHide: true }
   );
 
@@ -47,6 +63,46 @@ const startDevServer = () => {
   child.stderr.on("data", (chunk) => process.stderr.write(chunk));
 
   return child;
+};
+
+const stopDevServer = (child) => {
+  if (!child) return;
+  if (process.platform === "win32") {
+    spawnSync("taskkill", ["/pid", String(child.pid), "/t", "/f"], { stdio: "ignore" });
+  } else {
+    child.kill("SIGTERM");
+  }
+};
+
+const getServerSession = async () => {
+  for (const port of PORT_CANDIDATES) {
+    const url = buildBaseUrl(port);
+    const probe = await probeServer(url);
+
+    if (probe.expected) {
+      console.log(`Using existing Sansu dev server on ${url}.`);
+      return { baseUrl: url, devServer: null, startedByScript: false };
+    }
+
+    if (probe.reachable) {
+      console.log(`Port ${port} is serving a different app. Skipping.`);
+      continue;
+    }
+
+    console.log(`Starting dev server on ${url}...`);
+    const devServer = startDevServer(port);
+
+    try {
+      await waitForServer(url, DEV_START_TIMEOUT_MS);
+      console.log(`Dev server ready on ${url}.`);
+      return { baseUrl: url, devServer, startedByScript: true };
+    } catch (error) {
+      stopDevServer(devServer);
+      throw error;
+    }
+  }
+
+  throw new Error(`Unable to find a free port for Sansu dev server. Tried: ${PORT_CANDIDATES.join(", ")}`);
 };
 
 const clearClientStorage = async (page) => {
@@ -62,19 +118,25 @@ const clearClientStorage = async (page) => {
 
 const runScenario = async (name, fn) => {
   const started = Date.now();
+  let timeoutId;
   try {
     await Promise.race([
       fn(),
-      (async () => {
-        await delay(SCENARIO_TIMEOUT_MS);
-        throw new Error(`timeout after ${SCENARIO_TIMEOUT_MS}ms`);
-      })(),
+      new Promise((_, reject) => {
+        timeoutId = setTimeout(() => {
+          reject(new Error(`timeout after ${SCENARIO_TIMEOUT_MS}ms`));
+        }, SCENARIO_TIMEOUT_MS);
+      }),
     ]);
     console.log(`PASS ${name} (${Date.now() - started}ms)`);
     return true;
   } catch (err) {
     console.error(`FAIL ${name}:`, err instanceof Error ? err.message : err);
     return false;
+  } finally {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
   }
 };
 
@@ -89,8 +151,12 @@ const completeOnboarding = async (page) => {
   await waitForHash(page, /#\/$/);
 };
 
+const waitForHomeReady = async (page) => {
+  await page.getByRole("button", { name: "まなぶ" }).waitFor({ timeout: STEP_TIMEOUT_MS });
+};
+
 const scenarioOnboardingShown = async (browser) => {
-  const context = await browser.newContext({ baseURL: BASE_URL });
+  const context = await browser.newContext({ baseURL: activeBaseUrl });
   const page = await context.newPage();
   await clearClientStorage(page);
 
@@ -102,25 +168,26 @@ const scenarioOnboardingShown = async (browser) => {
 };
 
 const scenarioOnboardingToHome = async (browser) => {
-  const context = await browser.newContext({ baseURL: BASE_URL });
+  const context = await browser.newContext({ baseURL: activeBaseUrl });
   const page = await context.newPage();
   await clearClientStorage(page);
 
   await completeOnboarding(page);
-  await page.getByRole("button", { name: /ふわふわと進む|ふわふわ と すすむ/ }).waitFor({ timeout: STEP_TIMEOUT_MS });
+  await waitForHomeReady(page);
 
   await context.close();
 };
 
 const scenarioHomeToStudy = async (browser) => {
-  const context = await browser.newContext({ baseURL: BASE_URL });
+  const context = await browser.newContext({ baseURL: activeBaseUrl });
   const page = await context.newPage();
   await clearClientStorage(page);
 
   await completeOnboarding(page);
+  await waitForHomeReady(page);
   await Promise.all([
     waitForHash(page, /#\/study/),
-    page.getByRole("button", { name: /ふわふわと進む|ふわふわ と すすむ/ }).click(),
+    page.getByRole("button", { name: "まなぶ" }).click(),
   ]);
   await page.getByText(/問目/).first().waitFor({ timeout: STEP_TIMEOUT_MS });
 
@@ -128,14 +195,15 @@ const scenarioHomeToStudy = async (browser) => {
 };
 
 const scenarioHomeToSettings = async (browser) => {
-  const context = await browser.newContext({ baseURL: BASE_URL });
+  const context = await browser.newContext({ baseURL: activeBaseUrl });
   const page = await context.newPage();
   await clearClientStorage(page);
 
   await completeOnboarding(page);
+  await waitForHomeReady(page);
   await Promise.all([
     waitForHash(page, /#\/settings/),
-    page.getByRole("link", { name: /せってい/i }).click(),
+    page.getByRole("button", { name: /せってい/i }).click(),
   ]);
   await page.getByText(/設定|せってい/).first().waitFor({ timeout: STEP_TIMEOUT_MS });
 
@@ -143,7 +211,7 @@ const scenarioHomeToSettings = async (browser) => {
 };
 
 const scenarioAlbumDetailModal = async (browser) => {
-  const context = await browser.newContext({ baseURL: BASE_URL });
+  const context = await browser.newContext({ baseURL: activeBaseUrl });
   const page = await context.newPage();
   await clearClientStorage(page);
 
@@ -166,7 +234,7 @@ const scenarioAlbumDetailModal = async (browser) => {
 
   await Promise.all([
     waitForHash(page, /#\/stats/),
-    page.getByRole("link", { name: /きろく/i }).click(),
+    page.getByRole("button", { name: /きろく/i }).click(),
   ]);
 
   await page.getByRole("button", { name: /もこ の ふわふわを みる/ }).click();
@@ -177,7 +245,7 @@ const scenarioAlbumDetailModal = async (browser) => {
 };
 
 const scenarioParentsGateShown = async (browser) => {
-  const context = await browser.newContext({ baseURL: BASE_URL });
+  const context = await browser.newContext({ baseURL: activeBaseUrl });
   const page = await context.newPage();
 
   await page.addInitScript(() => {
@@ -198,17 +266,10 @@ const main = async () => {
   let browser;
 
   try {
-    try {
-      const res = await fetch(BASE_URL);
-      if (!res.ok) throw new Error("not-ready");
-      console.log("Using existing dev server.");
-    } catch {
-      console.log("Starting dev server...");
-      devServer = startDevServer();
-      startedByScript = true;
-      await waitForServer(BASE_URL, DEV_START_TIMEOUT_MS);
-      console.log("Dev server ready.");
-    }
+    const session = await getServerSession();
+    activeBaseUrl = session.baseUrl;
+    devServer = session.devServer;
+    startedByScript = session.startedByScript;
 
     browser = await chromium.launch({ headless: true });
 
@@ -224,13 +285,7 @@ const main = async () => {
     if (!ok) process.exitCode = 1;
   } finally {
     if (browser) await browser.close();
-    if (startedByScript && devServer) {
-      if (process.platform === "win32") {
-        spawnSync("taskkill", ["/pid", String(devServer.pid), "/t", "/f"], { stdio: "ignore" });
-      } else {
-        devServer.kill("SIGTERM");
-      }
-    }
+    if (startedByScript && devServer) stopDevServer(devServer);
   }
 };
 

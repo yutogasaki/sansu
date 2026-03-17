@@ -116,21 +116,40 @@
   - 2人分の入力面をガラス調パネルに寄せ、スコアや待機状態をチップ表現へ整理
   - つなひき / ボス協力の上部バーを共通サーフェス上で見やすく調整
 
+### 1.7 補助画面のトーン統一
+
+対象:
+- `src/pages/Stats.tsx`
+- `src/pages/Settings.tsx`
+- `src/pages/Onboarding.tsx`
+- `src/components/Header.tsx`
+
+- Stats
+  - セクションチップ、サマリー、カレンダー、分析カードを共通トーンへ寄せた
+  - 進捗表示を共有 `ProgressBar` に統一し、旧来の強いベタ色を整理した
+- Settings
+  - プロフィール面、設定カード、保護者向け領域、危険操作を共通サーフェスに再編
+  - リネーム / 削除導線を shared state UI と同じ質感へ合わせた
+- Onboarding
+  - welcome / 入力 / 選択 / 完了面を同じパネル言語に揃えた
+  - 初回体験用に軽い背景グローとアクセントを足しつつ、可読性優先を維持した
+- Header
+  - 戻るボタンを `app-pill` ベースへ揃え、補助画面の共通導線の浮きを減らした
+
 ---
 
 ## 2. 動作確認結果（完了）
 
 - 実行コマンド:
+  - `node tools/check-docs.mjs`
   - `npm run lint`
   - `npm run typecheck`
   - `npm run test:run`
   - `npm run build`
-- 追加確認:
-  - `npm run e2e:smoke` を試行
-- 結果: 成功（Lint / TypeScript / Vitest / Vite build 完了）
+  - `npm run e2e:smoke`
+- 結果: 成功（docs check / Lint / TypeScript / Vitest / Vite build / smoke 完了）
 - 備考:
   - チャンクサイズ警告あり（既知、今回のデザイン差分起因ではない）
-  - `e2e:smoke` はホーム起点の旧 selector で失敗。今回変更箇所ではなく、既存 smoke の追従不足が原因
 
 ---
 
@@ -138,24 +157,21 @@
 
 以下は今回未着手、または部分対応のため今後対応が必要な項目。
 
-### 3.1 画面トーンの全体統一（高優先）
+### 3.1 残る画面トーンの棚卸し（中優先）
 
-1. `src/pages/Stats.tsx`
-   - 旧トーン（`bg-slate-*`）が多く、新トーンと混在
-   - セクションチップ・サマリーカード・分析カードの色階層を再定義
-2. `src/pages/Settings.tsx`
-   - 設定カード群が旧UIパターン主体
-   - セグメントUI・トグル・保護者向け領域を新トーンへ統合
-3. `src/pages/Onboarding.tsx`
-   - 初期画面と遷移カードに旧カラーが残存
-   - 初回体験を現行トーンへ寄せる必要
+1. 補助画面の残整理
+   - `src/pages/CurriculumSettings.tsx`
+   - `src/pages/parents/ParentsPage.tsx`
+   - `src/pages/DevMode.tsx`
+   - 共通ヘッダーに乗ったことで大きなズレは減ったが、ページ単位の旧トーン棚卸しは残る
+2. one-off surface の残整理
+   - 共有トーンから外れている局所的なカード / 補助面を削減
+   - ページ内ベタ色面の再定義が必要
 
-### 3.2 コンポーネント単位の統一（高優先）
+### 3.2 コンポーネント単位の統一（中優先）
 
 1. 各ドメインカード（`src/components/domain/*`）
    - 共通カード基盤の利用徹底（重複スタイル縮小）
-2. one-off surface の残整理
-   - 共有トーンから外れている局所的なカード/補助面を棚卸しして削減
 
 ### 3.3 デザインシステム整備（中優先）
 
@@ -168,11 +184,11 @@
    - duration/easingを定数化
    - 過度な動きの抑制ルールを追記
 
-### 3.4 品質確認（中優先）
+### 3.4 品質確認（高優先）
 
 1. 実機確認（iOS Safari / Android Chrome）
-   - `backdrop-filter` の視認性
-   - 低スペック端末でのパフォーマンス
+  - `backdrop-filter` の視認性
+  - 低スペック端末でのパフォーマンス
 2. アクセシビリティ確認
    - 文字コントラスト
    - フォーカス視認性
@@ -181,6 +197,10 @@
    - モーダル重なり順
    - fixed footer と safe-area の干渉
    - landscape表示時の崩れ
+
+4. E2E / smoke の拡張
+   - 現行 Home 開始導線への追従は完了
+   - 最低限の smoke は復旧したので、今後は core flow 断面を増やす
 
 ### 3.5 パフォーマンス最適化（低〜中優先）
 
@@ -192,10 +212,10 @@
 
 ## 4. 推奨実施順（次スプリント）
 
-1. Study系画面の統一（使用頻度が最も高いため）
-2. `Stats` / `Settings` / `Onboarding` のトーン統一
-3. smoke / 実機確認の現行UI追従
-4. 実機・A11y・回帰テスト
+1. 実機・A11y・回帰テスト
+2. core flow の回帰カバレッジ拡張
+3. 学習ルール / 設定責務 / 永続化方針の文書化
+4. 残る補助画面のトーン棚卸し
 5. パフォーマンス調整（必要時）
 
 ---

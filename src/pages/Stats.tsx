@@ -4,6 +4,7 @@ import { addDays } from "date-fns";
 import { Button } from "../components/ui/Button";
 import { Badge } from "../components/ui/Badge";
 import { Spinner } from "../components/ui/Spinner";
+import { ProgressBar } from "../components/ui/ProgressBar";
 import {
     InsetPanel,
     PanelDivider,
@@ -231,10 +232,10 @@ const SectionToggleButton: React.FC<SectionToggleButtonProps> = ({ active, child
     <button
         type="button"
         onClick={onClick}
-        className={`rounded-full border px-3 py-1.5 text-xs font-bold transition-colors ${
+        className={`app-pill rounded-full px-3 py-1.5 text-xs font-black tracking-[0.08em] transition-colors ${
             active
-                ? "border-cyan-600 bg-cyan-600 text-white"
-                : "border-white/80 bg-white/70 text-slate-500"
+                ? "border-cyan-100/90 bg-cyan-50/88 text-cyan-700"
+                : "border-white/80 bg-white/68 text-slate-500"
         }`}
     >
         {children}
@@ -436,7 +437,7 @@ export const Stats: React.FC = () => {
     const mathRecentCorrect = mathRecent.filter(Boolean).length;
     const vocabRecentCorrect = vocabRecent.filter(Boolean).length;
     const closeAction = (
-        <Button variant="icon" size="sm" onClick={() => navigate("/")}>
+        <Button variant="secondary" size="sm" onClick={() => navigate("/")}>
             <Icons.Close className="w-6 h-6" />
         </Button>
     );
@@ -462,9 +463,9 @@ export const Stats: React.FC = () => {
         <ScreenScaffold
             title={t("きろく", "記録")}
             rightAction={closeAction}
-            contentClassName="px-[var(--screen-padding-x)] pt-1 space-y-5"
+            contentClassName="px-[var(--screen-padding-x)] pt-1 space-y-6"
         >
-            <SurfacePanel variant="flat" className="space-y-3">
+            <SurfacePanel variant="flat" className="space-y-4 border-t-[3px] border-t-cyan-300/80">
                 <SurfacePanelHeader
                     title={t("ひょうじ する ないよう", "表示する内容")}
                     description={t("みたい ぶぶん だけ えらべる", "見たいカードだけに絞れます")}
@@ -483,7 +484,7 @@ export const Stats: React.FC = () => {
             </SurfacePanel>
 
             {sections.summary && (
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-cyan-300/75">
                     <SurfacePanelHeader
                         title="きょう の まとめ"
                         description={t("いちにち の まなび を 4つで ふりかえる", "今日の学習をざっくり振り返る")}
@@ -498,7 +499,7 @@ export const Stats: React.FC = () => {
             )}
 
             {sections.calendar && (
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-sky-200/80">
                     <SurfacePanelHeader
                         title="1しゅうかん カレンダー"
                         description={t("ひび の ペース が ひとめで わかる", "1週間の学習量を色で確認")}
@@ -506,10 +507,10 @@ export const Stats: React.FC = () => {
                     <div className="grid grid-cols-7 gap-2">
                         {weeklyDays.map(day => {
                             const tone =
-                                day.count === 0 ? "border-white/80 bg-white/70 text-slate-400" :
-                                    day.count < 10 ? "border-sky-100 bg-sky-100 text-sky-700" :
-                                        day.count < 25 ? "border-sky-200 bg-sky-300 text-sky-900" :
-                                            "border-sky-500 bg-sky-500 text-white";
+                                day.count === 0 ? "border-white/80 bg-white/66 text-slate-400" :
+                                    day.count < 10 ? "border-cyan-100/90 bg-cyan-50/82 text-cyan-700" :
+                                        day.count < 25 ? "border-sky-100/90 bg-sky-100/84 text-sky-800" :
+                                            "border-sky-200/90 bg-[linear-gradient(180deg,rgba(125,211,252,0.9),rgba(224,242,254,0.92))] text-sky-900 shadow-[0_16px_26px_-20px_rgba(14,165,233,0.45)]";
 
                             return (
                                 <div key={day.dateKey} className="text-center">
@@ -525,7 +526,7 @@ export const Stats: React.FC = () => {
             )}
 
             {sections.growth && (
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-emerald-200/80">
                     <SurfacePanelHeader
                         title={t("せいちょう グラフ", "成長グラフ")}
                         description={growthMessage}
@@ -566,7 +567,7 @@ export const Stats: React.FC = () => {
             )}
 
             {sections.weak && (
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-amber-200/80">
                     <SurfacePanelHeader
                         title="まちがい ぶんせき"
                         description={weakPatternMessage}
@@ -597,7 +598,7 @@ export const Stats: React.FC = () => {
             )}
 
             {sections.review && (
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-cyan-200/80">
                     <SurfacePanelHeader
                         title="ふくしゅう キュー"
                         description={t(`きょう やるべき ふくしゅう: ${reviewCount}けん`, `今日やるべき復習: ${reviewCount}件`)}
@@ -612,14 +613,14 @@ export const Stats: React.FC = () => {
                         )}
                     />
 
-                    <InsetPanel className="flex items-center justify-between gap-3 border-sky-100 bg-sky-50/70">
+                    <InsetPanel className="flex items-center justify-between gap-3 border-cyan-100/90 bg-cyan-50/72">
                         <div>
-                            <div className="font-bold text-sky-800">{t("テストの じゅんび (10もん)", "テスト準備 (10問)")}</div>
-                            <div className="mt-1 text-xs text-sky-600">{t("にがてを さきに かためる", "苦手を先に固める")}</div>
+                            <div className="font-bold text-cyan-800">{t("テストの じゅんび (10もん)", "テスト準備 (10問)")}</div>
+                            <div className="mt-1 text-xs text-cyan-700">{t("にがてを さきに かためる", "苦手を先に固める")}</div>
                         </div>
                         <Button
                             size="sm"
-                            className="h-10 text-sm bg-white text-sky-700 border border-sky-200 hover:bg-sky-100"
+                            className="h-10 text-sm border-cyan-100/90 bg-white/84 text-cyan-700 hover:bg-white"
                             onClick={() => { warmUpTTS(); navigate("/study?session=weak-review"); }}
                         >
                             {t("やる", "開始")}
@@ -648,10 +649,10 @@ export const Stats: React.FC = () => {
                     )}
 
                     {eventCheckPending && (
-                        <InsetPanel className="flex items-center justify-between gap-3 border-indigo-200 bg-indigo-50/60">
+                        <InsetPanel className="flex items-center justify-between gap-3 border-amber-100/90 bg-amber-50/72">
                             <div>
                                 <div className="font-bold text-slate-700">{t("✨ ていき テスト (20もん)", "✨ 定期テスト (20問)")}</div>
-                                <div className="text-xs text-slate-500">{t("がっこう テスト まえ の かくにん", "学校テスト前の確認")}</div>
+                                <div className="text-xs text-amber-700">{t("がっこう テスト まえ の かくにん", "学校テスト前の確認")}</div>
                             </div>
                             <Button
                                 size="sm"
@@ -672,7 +673,7 @@ export const Stats: React.FC = () => {
             )}
 
             {sections.progress && (
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-emerald-200/80">
                     <SurfacePanelHeader
                         title={t("スキル マップ", "スキルマップ")}
                         description={t("できる はんい と つぎの レベル を みる", "現在地と次のレベルを確認")}
@@ -693,9 +694,12 @@ export const Stats: React.FC = () => {
                             <div className="text-sm font-bold text-slate-700">
                                 さんすう Lv{profile.mathMainLevel} / かいほう Lv{profile.mathMaxUnlocked}
                             </div>
-                            <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/80">
-                                <div className="h-full bg-emerald-500" style={{ width: `${Math.min((mathRecent.length / 20) * 100, 100)}%` }} />
-                            </div>
+                            <ProgressBar
+                                className="mt-2 h-2.5"
+                                value={mathRecent.length}
+                                max={20}
+                                tone="success"
+                            />
                             <div className="mt-1 text-[11px] text-slate-500">
                                 さいきん: {mathRecentCorrect}/{mathRecent.length || 0}せいかい ・ つぎ Lv{Math.min(profile.mathMainLevel + 1, maxMathLevel)}
                             </div>
@@ -705,9 +709,12 @@ export const Stats: React.FC = () => {
                             <div className="text-sm font-bold text-slate-700">
                                 {t("えいたんご", "英単語")} Lv{profile.vocabMainLevel} / {t("かいほう", "解放")} Lv{profile.vocabMaxUnlocked}
                             </div>
-                            <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/80">
-                                <div className="h-full bg-sky-500" style={{ width: `${Math.min((vocabRecent.length / 20) * 100, 100)}%` }} />
-                            </div>
+                            <ProgressBar
+                                className="mt-2 h-2.5"
+                                value={vocabRecent.length}
+                                max={20}
+                                tone="primary"
+                            />
                             <div className="mt-1 text-[11px] text-slate-500">
                                 さいきん: {vocabRecentCorrect}/{vocabRecent.length || 0}せいかい ・ つぎ Lv{Math.min(profile.vocabMainLevel + 1, maxVocabLevel)}
                             </div>
@@ -717,7 +724,7 @@ export const Stats: React.FC = () => {
             )}
 
             {sections.tests && (
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-amber-200/80">
                     <SurfacePanelHeader
                         title={t("ていき テスト りれき", "定期テスト履歴")}
                         description={t("さいきん の テストけっか を のこしておく", "最近のテスト結果を確認")}
@@ -763,7 +770,7 @@ export const Stats: React.FC = () => {
             </SurfacePanel>
 
             {sections.parent && (
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-slate-200/90">
                     <SurfacePanelHeader
                         title={t("ほごしゃ むけ ミニレポート", "保護者向けミニレポート")}
                         description={t("おとな が みる とき の ざっくり まとめ", "大人向けの簡易な振り返り")}

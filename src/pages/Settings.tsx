@@ -371,7 +371,7 @@ export const Settings: React.FC = () => {
                         type="text"
                         value={newName}
                         onChange={(e) => setNewName(e.target.value)}
-                        className="w-full border border-white/85 rounded-xl p-3 text-center text-xl font-bold focus:outline-none focus:border-cyan-500 bg-white/70 text-slate-800"
+                        className="w-full rounded-[18px] border border-white/85 bg-white/74 p-3 text-center text-xl font-bold text-slate-800 outline-none transition app-glass focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200/70"
                         autoFocus
                     />
                 </div>
@@ -388,7 +388,7 @@ export const Settings: React.FC = () => {
                             やめる
                         </Button>
                         <Button
-                            className="flex-1 bg-red-500 hover:bg-red-600 shadow-red-200 text-white"
+                            className="flex-1 bg-[linear-gradient(135deg,#fb7185,#f43f5e)] text-white shadow-[0_18px_30px_-22px_rgba(244,63,94,0.55)]"
                             onClick={handleDeleteSubmit}
                         >
                             けす
@@ -397,7 +397,7 @@ export const Settings: React.FC = () => {
                 )}
             >
                 <div className="space-y-4 text-center">
-                    <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto text-3xl">
+                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-rose-100/90 bg-rose-50/80 text-3xl shadow-[0_20px_32px_-26px_rgba(244,63,94,0.5)]">
                         🗑️
                     </div>
                     <div>
@@ -412,7 +412,7 @@ export const Settings: React.FC = () => {
                 </div>
             </Modal>
 
-            <SurfacePanel className="space-y-3">
+            <SurfacePanel className="space-y-3 border-t-[3px] border-t-cyan-300/80">
                 <SurfacePanelHeader
                     title="プロフィール"
                     description={t("つかう ひと と レベルを ここで みなおせる", "使うプロフィールと学年をここで見直せます")}
@@ -423,8 +423,8 @@ export const Settings: React.FC = () => {
                     )}
                 />
                 {profiles.map(p => (
-                    <InsetPanel key={p.id} className="flex items-center gap-3">
-                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-cyan-100/80 text-cyan-700 font-black">
+                    <InsetPanel key={p.id} className="flex items-center gap-3 border border-white/85 bg-white/64">
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-cyan-100/90 bg-cyan-50/82 text-cyan-700 font-black shadow-[0_12px_20px_-18px_rgba(6,182,212,0.36)]">
                             {p.name?.[0] || "?"}
                         </div>
                         <div
@@ -446,11 +446,11 @@ export const Settings: React.FC = () => {
                                 </Button>
                             )}
 
-                            <Button size="sm" variant="ghost" className="h-10 w-10 p-0 text-slate-400 hover:text-cyan-700" onClick={() => openRenameModal(p)}>
+                            <Button size="sm" variant="ghost" className="app-pill h-10 w-10 p-0 text-slate-500 hover:text-cyan-700" onClick={() => openRenameModal(p)}>
                                 ✏️
                             </Button>
 
-                            <Button size="sm" variant="ghost" className="h-10 w-10 p-0 text-red-400 hover:bg-red-50 hover:text-red-600" onClick={() => openDeleteModal(p)}>
+                            <Button size="sm" variant="ghost" className="h-10 w-10 rounded-full border border-rose-100/90 bg-rose-50/72 p-0 text-rose-500 hover:bg-rose-50 hover:text-rose-600" onClick={() => openDeleteModal(p)}>
                                 🗑️
                             </Button>
                         </div>
@@ -461,7 +461,7 @@ export const Settings: React.FC = () => {
             <div className="space-y-3">
                 <SectionLabel>{t("べんきょう の せってい", "学習の設定")}</SectionLabel>
 
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-cyan-300/75">
                     <SurfacePanelHeader
                         title={t("べんきょう する もの", "学習する科目")}
                         description={t("つねに みる もんだい の くみあわせ", "日々の学習で出す科目の組み合わせ")}
@@ -477,7 +477,7 @@ export const Settings: React.FC = () => {
                     />
                 </SurfacePanel>
 
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-cyan-200/75">
                     <SettingRow
                         title={t("ひっさん モード", "筆算モード")}
                         description={t("おおきい すうじ の とき ひっさん で とける", "大きい数の計算で筆算UIを表示")}
@@ -498,7 +498,7 @@ export const Settings: React.FC = () => {
                     />
                 </SurfacePanel>
 
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-emerald-200/80">
                     <SurfacePanelHeader
                         title={t("レベル", "レベル")}
                         description={t("いまの すすみぐあい を かんたんに みる", "今の進み具合を一覧で確認")}
@@ -525,7 +525,7 @@ export const Settings: React.FC = () => {
             <div className="space-y-3">
                 <SectionLabel>{t("みため と おと", "表示とサウンド")}</SectionLabel>
 
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-cyan-200/75">
                     <SettingRow
                         title={t("おと・BGM", "サウンド")}
                         description={t("おん と BGM の きりかえ", "効果音やBGMのオンオフ")}
@@ -556,7 +556,7 @@ export const Settings: React.FC = () => {
                     />
                 </SurfacePanel>
 
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-slate-200/80">
                     <SurfacePanelHeader
                         title={t("ひょうじ テキスト", "表示テキスト")}
                         description={t("よみやすさ を ここで きりかえる", "表示密度と言葉のやさしさを調整")}
@@ -595,7 +595,7 @@ export const Settings: React.FC = () => {
             <div className="space-y-3">
                 <SectionLabel>{t("おとなの ひと むけ", "保護者向け")}</SectionLabel>
 
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-amber-200/80">
                     <SurfacePanelHeader
                         title={t("ていき テスト", "定期テスト（20問）")}
                         description={t("アプリ と かみ で テスト できるよ", "アプリ受験と紙テストをここから開始できます")}
@@ -615,10 +615,10 @@ export const Settings: React.FC = () => {
                                         key={minutes}
                                         type="button"
                                         onClick={() => handleTestTimerChange(minutes)}
-                                        className={`rounded-full border px-3 py-1 text-xs font-bold transition-colors ${
+                                        className={`app-pill rounded-full px-3 py-1 text-xs font-black tracking-[0.08em] transition-colors ${
                                             isSelected
-                                                ? "border-cyan-600 bg-cyan-600 text-white"
-                                                : "border-white/80 bg-white/70 text-slate-600"
+                                                ? "border-cyan-100/90 bg-cyan-50/88 text-cyan-700"
+                                                : "border-white/80 bg-white/68 text-slate-600"
                                         }`}
                                     >
                                         {minutes === 0 ? t("なし", "なし") : t(`${minutes}ふん`, `${minutes}分`)}
@@ -636,7 +636,10 @@ export const Settings: React.FC = () => {
                             const pendingPaper = getPendingPaperTest(item.subject);
                             const hasPendingPaper = !!pendingPaper;
                             return (
-                                <InsetPanel key={item.subject} className="space-y-3">
+                                <InsetPanel
+                                    key={item.subject}
+                                    className={`space-y-3 ${item.subject === "math" ? "border-cyan-100/90 bg-cyan-50/52" : "border-amber-100/90 bg-amber-50/56"}`}
+                                >
                                     <div className="flex items-start justify-between gap-3">
                                         <div>
                                             <div className="font-bold text-slate-700">{item.title} Lv.{item.level}</div>
@@ -678,7 +681,7 @@ export const Settings: React.FC = () => {
                     </div>
                 </SurfacePanel>
 
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-slate-200/80">
                     <SettingRow
                         title={t("ほごしゃ メニュー", "保護者メニュー")}
                         description={t("おとなの ひとが みる ページ", "大人向けページ")}
@@ -694,7 +697,7 @@ export const Settings: React.FC = () => {
                     />
                 </SurfacePanel>
 
-                <SurfacePanel>
+                <SurfacePanel className="border-t-[3px] border-t-slate-200/80">
                     <SettingRow
                         title="開発者モード"
                         description="内部状態や検証用の画面を開く"
@@ -706,12 +709,12 @@ export const Settings: React.FC = () => {
                     />
                 </SurfacePanel>
 
-                <SurfacePanel variant="flat" className="space-y-3">
+                <SurfacePanel variant="flat" className="space-y-3 border border-rose-100/80 bg-rose-50/40">
                     <SurfacePanelHeader
                         title={t("リセット", "リセット")}
                         description={t("どうしても ひつような ときだけ つかう", "すべてのデータを削除します")}
                     />
-                    <Button variant="ghost" className="w-full text-red-500 text-sm" onClick={handleReset}>
+                    <Button variant="ghost" className="w-full text-rose-600 text-sm hover:bg-rose-50/70" onClick={handleReset}>
                         {t("データをすべてリセット", "全データをリセット")}
                     </Button>
                 </SurfacePanel>

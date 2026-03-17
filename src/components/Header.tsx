@@ -30,7 +30,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, showBack, onBac
                         type="button"
                         onClick={handleBack}
                         aria-label="もどる"
-                        className="flex h-11 min-w-11 items-center justify-center rounded-full border-0 bg-[#F0F3F5] text-slate-700 shadow-sm transition-transform duration-150 active:scale-95"
+                        className="app-pill flex h-11 min-w-11 items-center justify-center rounded-full border-white/80 bg-white/72 text-slate-700 shadow-[0_16px_28px_-24px_rgba(15,23,42,0.34)] transition-all duration-150 hover:bg-white/84 active:scale-95"
                     >
                         <Icons.Back className="w-5 h-5" />
                     </button>
