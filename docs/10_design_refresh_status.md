@@ -2,8 +2,8 @@
 
 役割:
 - この文書はデザイン刷新の進捗・状態台帳である
-- デザイン原則のSSOTは `07_ui_design_guideline.md`
-- Active task は `docs/tasks/active/` で管理する
+- デザイン原則の正本は `07_ui_design_guideline.md`
+- 進行中タスクは `docs/tasks/active/` で管理する
 
 ## 0. 目的
 
@@ -66,23 +66,23 @@
   - アクティブ状態を背景付きで明確化
   - 中央FABの質感と押下感を再調整
 
-### 1.4 Home画面の体験強化
+### 1.4 ホーム画面の体験強化
 
 対象: `src/pages/Home.tsx`
 
 - ステータスカードを再構成
   - 成長段階ラベル（`stageText`）を追加
-  - `TODAY NOTE` 表示で情報の文脈を明確化
+  - 今日のメモ表示（当時の表記: `TODAY NOTE`）で情報の文脈を明確化
 - `scene.aura` をタグ表示にして感情的なフックを追加
 - いきもの表示カードを共通ガラス調に統一
-- Whisper表示の可読性を調整
-- CTA領域にコンテナを持たせ、主要導線の一体感を向上
+- ひとこと表示（`whisper`）の可読性を調整
+- 開始導線の領域にコンテナを持たせ、主要導線の一体感を向上
 
 ### 1.5 デザイン文書・レビュー導線の整備
 
 - `docs/07_ui_design_guideline.md` を現実装に合わせて更新
 - `docs/design_review_checklist.md` を追加
-- `docs/ownership_map.md` と `docs/archive_policy.md` を追加し、status と SSOT の境界を整理
+- `docs/ownership_map.md` と `docs/archive_policy.md` を追加し、状態文書と正本の境界を整理
 
 ---
 
@@ -110,7 +110,7 @@
    - 初期画面と遷移カードに旧カラーが残存
    - 初回体験を現行トーンへ寄せる必要
 4. `src/pages/Study.tsx`, `src/pages/StudyLayout.tsx`
-   - 日常利用の中心画面。Homeとのトーン差を解消する必要あり
+   - 日常利用の中心画面。ホームとのトーン差を解消する必要あり
 5. `src/pages/Battle.tsx` と配下コンポーネント
    - バトル専用トーン方針（通常UIと分離するか統合するか）を明文化して反映
 
@@ -168,9 +168,9 @@
 
 ---
 
-## 5. 完了判定条件（Definition of Done）
+## 5. 完了判定条件
 
-- 主要画面（Home/Study/Stats/Settings/Onboarding）で色・質感ルールが統一されている
+- 主要画面（ホーム / 学習 / きろく / せってい / 初回設定）で色・質感ルールが統一されている
 - 共通UI（Button/Card/Modal/Badge/Progress系）がトークン駆動になっている
 - `npm run build` が成功する
 - 主要端末（iOS/Android）で視認性・操作性に問題がない

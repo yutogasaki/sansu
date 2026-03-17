@@ -1,77 +1,77 @@
-# Docs Map
+# ドキュメント案内
 
-## Purpose
+## 目的
 
-This file is the entry point for workspace documentation.
-It exists to reduce file bloat, duplicate truths, and context pollution.
+このファイルは、ワークスペース文書の入口です。
+文書の肥大化、正本の重複、作業メモの散乱を防ぐために置いています。
 
-## Read Order
+## 読む順番
 
 1. [../CONSTITUTION.md](../CONSTITUTION.md)
 2. [01_app_spec.md](01_app_spec.md)
-3. Domain or screen-specific child specs
-4. Verification, memory, ADR, and runbooks
-5. Active tasks
-6. Done logs
+3. ドメイン別・画面別の子仕様
+4. 検証ルール、`memory.md`、ADR、運用手順
+5. 進行中タスク
+6. 完了ログ
 
-## Hot Docs
+## よく使う文書
 
-| File | Role | SSOT |
+| File | 役割 | 正本 |
 |---|---|---|
-| [01_app_spec.md](01_app_spec.md) | Parent spec | Yes |
-| [07_ui_design_guideline.md](07_ui_design_guideline.md) | Design principles | Yes |
-| [glossary.md](glossary.md) | Workspace/process glossary | Yes |
-| [ownership_map.md](ownership_map.md) | Doc ownership and SSOT map | Yes |
-| [memory.md](memory.md) | Durable project memory | Yes |
-| [verification_matrix.md](verification_matrix.md) | Required checks by change type | Yes |
-| [tasks/active/README.md](tasks/active/README.md) | Active task flow | Yes |
+| [01_app_spec.md](01_app_spec.md) | 親仕様 | はい |
+| [07_ui_design_guideline.md](07_ui_design_guideline.md) | デザイン原則 | はい |
+| [glossary.md](glossary.md) | 用語集 | はい |
+| [ownership_map.md](ownership_map.md) | 文書オーナーシップと正本の対応表 | はい |
+| [memory.md](memory.md) | 継続して残すプロジェクト記憶 | はい |
+| [verification_matrix.md](verification_matrix.md) | 変更種別ごとの必須確認 | はい |
+| [tasks/active/README.md](tasks/active/README.md) | 進行中タスクの進め方 | はい |
 
-## Warm Docs
+## 定期参照の文書
 
-| File | Role | SSOT |
+| File | 役割 | 正本 |
 |---|---|---|
-| [10_design_refresh_status.md](10_design_refresh_status.md) | Design progress/status | No |
-| [11_full_task_backlog.md](11_full_task_backlog.md) | Global backlog | No |
-| [12_ui_fix_tasklist.md](12_ui_fix_tasklist.md) | Domain backlog/tasklist | No |
-| [design_review_checklist.md](design_review_checklist.md) | UI review checklist | Yes |
-| [risk_register.md](risk_register.md) | Durable cross-cutting risks | Yes |
-| [archive_policy.md](archive_policy.md) | Archive/split policy for docs | Yes |
-| [runbooks/pwa-release.md](runbooks/pwa-release.md) | Release/runbook for PWA updates | Yes |
-| [runbooks/backlog-triage.md](runbooks/backlog-triage.md) | Backlog/status cleanup workflow | Yes |
-| [runbooks/release-checklist.md](runbooks/release-checklist.md) | General release checklist | Yes |
-| [runbooks/schema-migration.md](runbooks/schema-migration.md) | Storage/schema migration runbook | Yes |
+| [10_design_refresh_status.md](10_design_refresh_status.md) | デザイン進捗と状態メモ | いいえ |
+| [11_full_task_backlog.md](11_full_task_backlog.md) | 全体バックログ | いいえ |
+| [12_ui_fix_tasklist.md](12_ui_fix_tasklist.md) | UI領域のタスクリスト | いいえ |
+| [design_review_checklist.md](design_review_checklist.md) | UIレビュー項目 | はい |
+| [risk_register.md](risk_register.md) | 横断リスクの記録 | はい |
+| [archive_policy.md](archive_policy.md) | 文書の整理・分割ルール | はい |
+| [runbooks/pwa-release.md](runbooks/pwa-release.md) | PWA更新の手順書 | はい |
+| [runbooks/backlog-triage.md](runbooks/backlog-triage.md) | バックログ棚卸し手順 | はい |
+| [runbooks/release-checklist.md](runbooks/release-checklist.md) | リリースチェックリスト | はい |
+| [runbooks/schema-migration.md](runbooks/schema-migration.md) | ストレージ移行手順 | はい |
 
-## Cold Docs
+## 保管済みの文書
 
-- Old implementation plans
-- Historical done logs
-- Archived task files
-- Archived status or note files under `docs/archive/`
+- 過去の実装計画
+- 完了済みの履歴ログ
+- アーカイブ済みタスク
+- `docs/archive/` 配下の古い状態メモや補助ノート
 
-## Workspace Structure
+## ワークスペース構成
 
 - `docs/adr/`
-  - Non-obvious architecture or product decisions
+  アーキテクチャやプロダクトの重要判断
 - `docs/tasks/active/`
-  - Work in progress only
+  進行中の作業メモだけを置く
 - `docs/done/`
-  - Completed work logs only
+  完了した作業ログだけを置く
 - `docs/runbooks/`
-  - Operational procedures
+  運用手順
 - `docs/archive/`
-  - Archived status, tasks, or notes that no longer belong in hot docs
+  よく使う文書から外した状態メモ・タスク・補助ノート
 
-## Skills
+## スキル
 
-Workspace skills live under [../.agent/skills](../.agent/skills).
-They define repeatable workflows, not project truth.
+ワークスペース用スキルは [../.agent/skills](../.agent/skills) にあります。
+ここに置くのは再利用する作業手順であり、プロジェクトの正本ではありません。
 
-## Update Rules
+## 更新ルール
 
-- Update spec docs when behavior changes.
-- Check `ownership_map.md` when unsure which doc should change.
-- Update `memory.md` when a decision should survive multiple tasks.
-- Write an ADR when the decision is expensive to rediscover.
-- Run `npm run docs:check` when changing docs/process files.
-- Move finished task context to `docs/done/` instead of leaving it in active files.
-- Archive stale or bloated context according to `archive_policy.md`.
+- 挙動が変わったら仕様書を更新する
+- どの文書を直すか迷ったら `ownership_map.md` を確認する
+- 複数タスクをまたいで残す判断は `memory.md` に書く
+- 再発見コストが高い判断は ADR に残す
+- 文書や運用ルールを変えたら `npm run docs:check` を実行する
+- 完了したタスク文脈は active に残さず `docs/done/` へ移す
+- 古く膨らんだ文脈は `archive_policy.md` に従って整理する

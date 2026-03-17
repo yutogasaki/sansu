@@ -22,7 +22,7 @@
   - `src/components/ikimono/sceneText.ts`
   - `src/components/ikimono/ikimonoMotion.ts`
   - `src/components/ikimono/hitokotoData.ts`
-- `ikimono` unit test は追加済み（`lifecycle/hitokoto/sceneText`）
+- `ikimono` のユニットテストは追加済み（`lifecycle/hitokoto/sceneText`）
 
 ## 優先順位ルール
 - `P0`: 直近でやるべき（回帰/仕様ズレ/保守コストのリスクが高い）
@@ -39,7 +39,7 @@
   - `docs/08_home_ikimono_spec.md` ではホーム要素がかなり絞られているが、現実装は状態チップ・タグ・複数導線を持っている
   - 「仕様が古い」のか「実装が逸脱」なのかが不明
 - 差分メモ（2026-02-19 抽出）:
-  - `08` では「表示要素2つ（いきもの + はじめる）」を定義しているが、現実装は `TODAY NOTE`、auraタグ、復習ボタンを表示
+  - `08` では「表示要素2つ（いきもの + はじめる）」を定義しているが、当時の現実装は上部メモ（`TODAY NOTE`）、`aura` タグ、復習ボタンを表示
   - `08` では「苦手・復習・テスト導線を置かない」とあるが、現実装には復習導線がある
   - `08` では「バウンド禁止寄り」のガイドがある一方、現実装の `ikimono` 反応には hop/bounce 系モーションを含む
 - 対応:
@@ -54,11 +54,11 @@
 - 背景:
   - `sceneText.ts` / `hitokoto.ts` / `lifecycle.ts` はロジックが増えたがテストがない
 - 対応:
-  - `sceneText`: stage選択、kanji/kana切替、event別分岐
+  - `sceneText`: stage選択、kanji/kana切替、イベント別分岐
   - `hitokoto`: 表記切替、時間帯分岐、返却文字列の妥当性
   - `lifecycle`: 境界日（3/7/14/22/28/30日）を固定日時で検証
 - 完了条件:
-  - 新規 test ファイル追加
+  - 新規テストファイル追加
   - 境界ケース込みでCI通過
 
 ### 3. `ikimonoMotion.ts` の型安全化（`any`排除）
@@ -85,7 +85,7 @@
   - 重なりは解消済みだが、長文/長名で崩れる余地がある
 - 対応:
   - 画面幅別の表示上限ルールを決める（例: 1〜2行clamp）
-  - Story的なスナップショットケースを作成
+  - スナップショット用の表示ケースを作成
   - `NameModal` 入力文字数上限の仕様を明確化
 - 完了条件:
   - 最小幅端末で崩れない
