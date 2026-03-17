@@ -155,6 +155,10 @@ const waitForHomeReady = async (page) => {
   await page.getByRole("button", { name: "まなぶ" }).waitFor({ timeout: STEP_TIMEOUT_MS });
 };
 
+const waitForStudyReady = async (page) => {
+  await page.getByText(/問目/).first().waitFor({ timeout: STEP_TIMEOUT_MS });
+};
+
 const scenarioOnboardingShown = async (browser) => {
   const context = await browser.newContext({ baseURL: activeBaseUrl });
   const page = await context.newPage();
@@ -189,7 +193,23 @@ const scenarioHomeToStudy = async (browser) => {
     waitForHash(page, /#\/study/),
     page.getByRole("button", { name: "まなぶ" }).click(),
   ]);
-  await page.getByText(/問目/).first().waitFor({ timeout: STEP_TIMEOUT_MS });
+  await waitForStudyReady(page);
+
+  await context.close();
+};
+
+const scenarioHomeToReview = async (browser) => {
+  const context = await browser.newContext({ baseURL: activeBaseUrl });
+  const page = await context.newPage();
+  await clearClientStorage(page);
+
+  await completeOnboarding(page);
+  await waitForHomeReady(page);
+  await Promise.all([
+    waitForHash(page, /#\/study\?session=review&force_review=1/),
+    page.getByRole("button", { name: /復習|ふくしゅう/ }).click(),
+  ]);
+  await waitForStudyReady(page);
 
   await context.close();
 };
@@ -244,6 +264,30 @@ const scenarioAlbumDetailModal = async (browser) => {
   await context.close();
 };
 
+const scenarioStatsToPeriodicTest = async (browser) => {
+  const context = await browser.newContext({ baseURL: activeBaseUrl });
+  const page = await context.newPage();
+  await clearClientStorage(page);
+
+  await completeOnboarding(page);
+  await page.evaluate(() => {
+    localStorage.setItem("sansu_event_check_pending", "1");
+  });
+
+  await Promise.all([
+    waitForHash(page, /#\/stats/),
+    page.getByRole("button", { name: /きろく/i }).click(),
+  ]);
+
+  await Promise.all([
+    waitForHash(page, /#\/study\?session=periodic-test/),
+    page.getByRole("button", { name: /挑戦|ちょうせん/ }).click(),
+  ]);
+  await waitForStudyReady(page);
+
+  await context.close();
+};
+
 const scenarioParentsGateShown = async (browser) => {
   const context = await browser.newContext({ baseURL: activeBaseUrl });
   const page = await context.newPage();
@@ -277,8 +321,10 @@ const main = async () => {
     results.push(await runScenario("redirects to onboarding when no profile", () => scenarioOnboardingShown(browser)));
     results.push(await runScenario("completes onboarding and lands on home", () => scenarioOnboardingToHome(browser)));
     results.push(await runScenario("starts study from home", () => scenarioHomeToStudy(browser)));
+    results.push(await runScenario("starts review from home", () => scenarioHomeToReview(browser)));
     results.push(await runScenario("opens settings from footer", () => scenarioHomeToSettings(browser)));
     results.push(await runScenario("opens fuwafuwa album detail from stats", () => scenarioAlbumDetailModal(browser)));
+    results.push(await runScenario("starts periodic test from stats pending card", () => scenarioStatsToPeriodicTest(browser)));
     results.push(await runScenario("guards /parents route behind parent gate", () => scenarioParentsGateShown(browser)));
 
     const ok = results.every(Boolean);
