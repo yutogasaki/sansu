@@ -37,7 +37,7 @@ import {
 } from "./blockGenerators";
 import { checkPeriodTestTrigger } from "../domain/test/trigger";
 import { ensurePeriodicTestSet } from "../domain/test/testSet";
-import { applyNormalSessionMathTrigger, applyPeriodicTestCompletion } from "./useStudySession.logic";
+import { resolveSessionCompletionProfileUpdate } from "./useStudySession.logic";
 import { errorInDev, logInDev } from "../utils/debug";
 
 type StudySessionOptions = {
@@ -656,23 +656,23 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         const sessionKind = options.sessionKind || "normal";
         const now = Date.now();
 
-        // 1. Handle Periodic Test Completion (Recording)
-        if (sessionKind === "periodic-test") {
-            const updated = applyPeriodicTestCompletion(currentProfile, sessionStats, now, options.focusSubject);
+        const updated = await resolveSessionCompletionProfileUpdate({
+            currentProfile,
+            sessionKind,
+            sessionStats,
+            now,
+            focusSubject: options.focusSubject,
+            checkMathTrigger: async (nextProfile) => {
+                const mathTrigger = await checkPeriodTestTrigger(nextProfile, 'math');
+                if (mathTrigger.isTriggered) {
+                    logInDev("[Trigger] Periodic Test Triggered!", mathTrigger.reason);
+                }
+                return mathTrigger;
+            },
+        });
+
+        if (updated) {
             await saveProfile(updated);
-        }
-
-        // 2. Handle Normal Session Completion (Trigger Check)
-        else if (sessionKind === "normal" || sessionKind === "review") {
-            // Run Trigger Check
-            const mathTrigger = await checkPeriodTestTrigger(currentProfile, 'math');
-            // const vocabTrigger = await checkPeriodTestTrigger(currentProfile, 'vocab'); // Future support
-
-            if (mathTrigger.isTriggered) {
-                logInDev("[Trigger] Periodic Test Triggered!", mathTrigger.reason);
-                const updated = applyNormalSessionMathTrigger(currentProfile, mathTrigger);
-                if (updated) await saveProfile(updated);
-            }
         }
     };
 

@@ -1,4 +1,5 @@
 import { SubjectKey, TriggerState, UserProfile, PeriodicTestResult, PeriodicTestState } from "../domain/types";
+import type { SessionKind } from "./blockGenerators";
 
 type SessionStats = {
     correct: number;
@@ -6,6 +7,15 @@ type SessionStats = {
     durationSeconds: number;
     timeLimitSeconds?: number;
     timedOut?: boolean;
+};
+
+type SessionCompletionOptions = {
+    currentProfile: UserProfile;
+    sessionKind: SessionKind;
+    sessionStats: SessionStats;
+    now: number;
+    focusSubject?: SubjectKey;
+    checkMathTrigger?: (profile: UserProfile) => Promise<{ isTriggered: boolean; reason: TriggerState["reason"] }>;
 };
 
 const createDefaultPeriodicTestState = (): PeriodicTestState => ({
@@ -80,3 +90,26 @@ export const applyNormalSessionMathTrigger = (
     };
 };
 
+export const resolveSessionCompletionProfileUpdate = async ({
+    currentProfile,
+    sessionKind,
+    sessionStats,
+    now,
+    focusSubject,
+    checkMathTrigger,
+}: SessionCompletionOptions): Promise<UserProfile | null> => {
+    if (sessionKind === "periodic-test") {
+        return applyPeriodicTestCompletion(currentProfile, sessionStats, now, focusSubject);
+    }
+
+    if (sessionKind === "normal" || sessionKind === "review") {
+        if (!checkMathTrigger) {
+            return null;
+        }
+
+        const mathTrigger = await checkMathTrigger(currentProfile);
+        return applyNormalSessionMathTrigger(currentProfile, mathTrigger);
+    }
+
+    return null;
+};
