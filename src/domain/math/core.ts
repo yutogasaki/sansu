@@ -1,6 +1,10 @@
-import { Problem } from "../types";
+import { Problem, UserProfile } from "../types";
 
-export type GeneratorFn = () => Omit<Problem, 'id' | 'subject' | 'isReview'>;
+export interface MathGeneratorContext {
+    profile?: UserProfile;
+}
+
+export type GeneratorFn = (context?: MathGeneratorContext) => Omit<Problem, 'id' | 'subject' | 'isReview'>;
 
 export const randomInt = (min: number, max: number): number => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -15,13 +19,15 @@ export const createProblem = (
     question: string,
     answer: string | string[],
     inputType: Problem["inputType"],
-    inputConfig?: Problem["inputConfig"]
+    inputConfig?: Problem["inputConfig"],
+    displayConfig?: Partial<Pick<Problem, "questionImage" | "questionVisual" | "displayAnswer" | "hissanOperands">>
 ): Omit<Problem, 'id' | 'subject' | 'isReview'> => {
     return {
         categoryId: skillId,
         questionText: question,
         correctAnswer: answer,
         inputType,
-        inputConfig
+        inputConfig,
+        ...displayConfig
     };
 };

@@ -202,8 +202,8 @@ export const generateSingleMathProblem = (
         if (dueId) {
             isReview = true;
             problem = safeGenerateProblem(
-                () => generateMathProblem(dueId),
-                () => generateMathProblem("count_10"),
+                () => generateMathProblem(dueId, { profile }),
+                () => generateMathProblem("count_10", { profile }),
                 `math review: ${dueId}`
             );
         }
@@ -219,8 +219,8 @@ export const generateSingleMathProblem = (
             if (maintenanceId) {
                 isMaintenanceCheck = true;
                 problem = safeGenerateProblem(
-                    () => generateMathProblem(maintenanceId),
-                    () => generateMathProblem("count_10"),
+                    () => generateMathProblem(maintenanceId, { profile }),
+                    () => generateMathProblem("count_10", { profile }),
                     `math maintenance: ${maintenanceId}`
                 );
             }
@@ -237,8 +237,8 @@ export const generateSingleMathProblem = (
             const weakId = pickId(weakMathPool, options);
             if (weakId) {
                 problem = safeGenerateProblem(
-                    () => generateMathProblem(weakId),
-                    () => generateMathProblem("count_10"),
+                    () => generateMathProblem(weakId, { profile }),
+                    () => generateMathProblem("count_10", { profile }),
                     `math weak: ${weakId}`
                 );
             }
@@ -259,8 +259,8 @@ export const generateSingleMathProblem = (
 
         if (skillId) {
             problem = safeGenerateProblem(
-                () => generateMathProblem(skillId),
-                () => generateMathProblem("count_10"),
+                () => generateMathProblem(skillId, { profile }),
+                () => generateMathProblem("count_10", { profile }),
                 `math normal: ${skillId}`
             );
             if (usePlus) newPlusCount += 1;
@@ -422,7 +422,7 @@ export const generateLevelBlock = (
             const skillId = pickId(validSkills, genOptions) || validSkills[0];
 
             problem = safeGenerateProblem(
-                () => generateMathProblem(skillId),
+                () => generateMathProblem(skillId, { profile }),
                 () => createFallbackProblem('math', 'level block failed'),
                 `level block math: ${skillId}`
             );
@@ -510,8 +510,8 @@ export const generateWeakReviewBlock = async (
             const weakId = pickId(availableWeak, options);
             if (weakId) {
                 problem = safeGenerateProblem(
-                    () => generateMathProblem(weakId),
-                    () => generateMathProblem("count_10"),
+                    () => generateMathProblem(weakId, { profile }),
+                    () => generateMathProblem("count_10", { profile }),
                     `weak-review math weak: ${weakId}`
                 );
             }
@@ -522,8 +522,8 @@ export const generateWeakReviewBlock = async (
                 const id = pickId(pool, options);
                 if (id) {
                     problem = safeGenerateProblem(
-                        () => generateMathProblem(id),
-                        () => generateMathProblem("count_10"),
+                        () => generateMathProblem(id, { profile }),
+                        () => generateMathProblem("count_10", { profile }),
                         `weak-review math due/maint: ${id}`
                     );
                 }
@@ -534,8 +534,8 @@ export const generateWeakReviewBlock = async (
                 const id = pickId(mathSkills, options) || mathSkills[0];
                 if (id) {
                     problem = safeGenerateProblem(
-                        () => generateMathProblem(id),
-                        () => generateMathProblem("count_10"),
+                        () => generateMathProblem(id, { profile }),
+                        () => generateMathProblem("count_10", { profile }),
                         `weak-review math random: ${id}`
                     );
                 }

@@ -7,7 +7,7 @@ import { generators as decimal } from "./generators/decimal";
 import { generators as fraction } from "./generators/fraction";
 import { generators as advanced } from "./generators/advanced";
 
-import { GeneratorFn } from "./core";
+import { GeneratorFn, MathGeneratorContext } from "./core";
 
 export const MATH_GENERATORS: Record<string, GeneratorFn> = {
     ...counting,
@@ -20,8 +20,8 @@ export const MATH_GENERATORS: Record<string, GeneratorFn> = {
     ...advanced,
 };
 
-export const generateMathProblem = (skillId: string) => {
+export const generateMathProblem = (skillId: string, context?: MathGeneratorContext) => {
     const gen = MATH_GENERATORS[skillId];
     if (!gen) throw new Error(`Generator not found for skill: ${skillId}`);
-    return gen();
+    return gen(context);
 };

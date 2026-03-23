@@ -12,7 +12,7 @@ export const MathRenderer: React.FC<MathRendererProps> = ({ text, className, isF
     const hasFraction = text.includes("/");
 
     if (!hasFraction && !isFraction) {
-        return <span className={className}>{text}</span>;
+        return <span className={cn("whitespace-pre-wrap break-words", className)}>{text}</span>;
     }
 
     // トークンに分割

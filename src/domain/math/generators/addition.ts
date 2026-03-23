@@ -1,21 +1,40 @@
 import { GeneratorFn, createProblem, randomInt } from "../core";
+import { selectAdditionPair } from "../additionProgress";
+import { buildAdditionVisual } from "../problemVisuals";
+
+const getAttemptCount = (totalAnswers?: number): number | undefined =>
+    (typeof totalAnswers === "number" ? totalAnswers : undefined);
 
 export const generators: Record<string, GeneratorFn> = {
-    // Level 4: +1〜+3（1桁）
-    "add_1d_1": () => {
-        const a = randomInt(1, 9);
-        const b = randomInt(1, 3);
-        // Ensure result is reasonable if needed, specs say a+b<=12
-        // Since max a=9, max b=3, max sum=12. OK.
-        return createProblem("add_1d_1", `${a} + ${b} =`, (a + b).toString(), "number");
+    // Level 4: 1+1 からはじめる段階式の1桁足し算
+    "add_1d_1": (context) => {
+        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.add_1d_1?.totalAnswers);
+        const [a, b] = selectAdditionPair("add_1d_1", totalAnswers);
+        const visual = buildAdditionVisual(a, b);
+
+        return createProblem(
+            "add_1d_1",
+            visual.questionText,
+            (a + b).toString(),
+            "number",
+            undefined,
+            { questionVisual: visual.questionVisual }
+        );
     },
-    // Level 5: +4〜+10（1桁）
-    "add_1d_2": () => {
-        const a = randomInt(1, 9);
-        const b = randomInt(4, 10);
-        // Specs: a+b<=18. Max 9+10=19. 
-        // Small correction to match spec strictest interpretation if needed, but 19 is fine.
-        return createProblem("add_1d_2", `${a} + ${b} =`, (a + b).toString(), "number");
+    // Level 5: 繰り上がりなし → 10づくり → 繰り上がりあり
+    "add_1d_2": (context) => {
+        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.add_1d_2?.totalAnswers);
+        const [a, b] = selectAdditionPair("add_1d_2", totalAnswers);
+        const visual = buildAdditionVisual(a, b);
+
+        return createProblem(
+            "add_1d_2",
+            visual.questionText,
+            (a + b).toString(),
+            "number",
+            undefined,
+            { questionVisual: visual.questionVisual }
+        );
     },
     // Level 7: 2桁+1桁（繰上なし）
     "add_2d1d_nc": () => {
@@ -39,12 +58,9 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 7: 2桁+2桁（繰上あり）
     "add_2d2d_c": () => {
         let a, b;
-        // Either place carries.
-        // Simplest check: sum >= 100 OR (ones digit sum >= 10)
-        // Spec says: "any carry".
         do { a = randomInt(10, 99); b = randomInt(10, 99); } while (
-            (a % 10) + (b % 10) < 10 && // No ones carry
-            (Math.floor(a / 10) + Math.floor(b / 10)) < 10 // No tens carry (if sum < 100)
+            (a % 10) + (b % 10) < 10 &&
+            (Math.floor(a / 10) + Math.floor(b / 10)) < 10
         );
         return createProblem("add_2d2d_c", `${a} + ${b} =`, (a + b).toString(), "number");
     },

@@ -15,6 +15,7 @@ import { InsetPanel, SurfacePanel, SurfacePanelHeader } from "../components/ui/S
 import { Problem } from "../domain/types";
 import { LayoutDebugOverlay } from "../components/LayoutDebugOverlay";
 import { MathRenderer } from "../components/domain/MathRenderer";
+import { MathProblemPrompt } from "../components/domain/MathProblemPrompt";
 import { Spinner } from "../components/ui/Spinner";
 import { EmptyState } from "../components/ui/EmptyState";
 import { HissanGrid } from "../components/domain/HissanGrid";
@@ -407,9 +408,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
 
                         {/* Question Display */}
                         <div className="mb-5 flex w-full max-w-sm justify-center rounded-[24px] border border-white/80 bg-white/50 p-4 shadow-[0_20px_34px_-26px_rgba(15,23,42,0.34)] backdrop-blur-md">
-                            <MathRenderer
-                                text={currentProblem?.questionText || ""}
-                                isFraction={currentProblem?.categoryId.startsWith("frac_")}
+                            <MathProblemPrompt
+                                problem={currentProblem}
                                 className="text-3xl font-bold text-slate-700"
                             />
                         </div>
@@ -444,9 +444,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
 
                         {/* Question Display */}
                         <div className="mb-5 flex w-full max-w-sm justify-center rounded-[24px] border border-white/80 bg-white/50 p-4 shadow-[0_20px_34px_-26px_rgba(15,23,42,0.34)] backdrop-blur-md">
-                            <MathRenderer
-                                text={currentProblem?.questionText || ""}
-                                isFraction={currentProblem?.categoryId.startsWith("frac_")}
+                            <MathProblemPrompt
+                                problem={currentProblem}
                                 className="text-3xl font-bold text-slate-700"
                             />
                         </div>
@@ -625,9 +624,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                 <div className="text-slate-800 font-black tracking-wider text-center max-w-full overflow-hidden mobile:flex-shrink-0">
                                     {/* Font Size Control: Normal vs Fraction */}
                                     {/* Fraction uses stricter clamp and renderer */}
-                                    <MathRenderer
-                                        text={currentProblem.questionText || ""}
-                                        isFraction={currentProblem.categoryId.startsWith("frac_")}
+                                    <MathProblemPrompt
+                                        problem={currentProblem}
                                         className={currentProblem.categoryId.startsWith("frac_")
                                             ? "text-[clamp(40px,11vw,80px)] ipadland:text-7xl"
                                             : "text-[clamp(28px,8vw,64px)] ipadland:text-8xl mobile:text-4xl"
@@ -648,9 +646,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                 {/* Question Text */}
 
                                 <div className="mb-2 ipadland:mb-0 max-w-full overflow-hidden mobile:mb-0 mobile:flex-shrink-0 flex items-center justify-center gap-2">
-                                    <MathRenderer
-                                        text={currentProblem.questionText || ""}
-                                        isFraction={currentProblem.categoryId.startsWith("frac_")}
+                                    <MathProblemPrompt
+                                        problem={currentProblem}
                                         className={currentProblem.categoryId.startsWith("frac_")
                                             ? "text-[clamp(24px,6vw,56px)] ipadland:text-7xl text-slate-800 font-black tracking-wider"
                                             : "text-[clamp(28px,8vw,64px)] ipadland:text-7xl mobile:text-4xl text-slate-800 font-black tracking-wider"

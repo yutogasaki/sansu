@@ -32,7 +32,7 @@ const buildPeriodicTestSet = (
         for (let i = 0; i < 20; i++) {
             const id = pickId(pool, genOptions.blockCounts) || pool[0];
             if (!id) break;
-            const problem = generateMathProblem(id);
+            const problem = generateMathProblem(id, { profile });
             problems.push(problem);
             genOptions.blockCounts.set(id, (genOptions.blockCounts.get(id) || 0) + 1);
         }

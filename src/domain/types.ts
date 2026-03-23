@@ -130,6 +130,49 @@ export interface InputConfig {
     choices?: ChoiceOption[];
 }
 
+export interface ProblemVisualGroup {
+    emoji: string;
+    label: string;
+    count: number;
+    crossedOutCount?: number;
+}
+
+export interface ProblemVisualValueGroup {
+    label: string;
+    value: number;
+}
+
+export interface ProblemVisualSequenceSlot {
+    value: number | null;
+}
+
+export type ProblemVisual =
+    | {
+        kind: "addition-items";
+        prompt?: string;
+        groups: ProblemVisualGroup[];
+    }
+    | {
+        kind: "subtraction-items";
+        prompt?: string;
+        group: ProblemVisualGroup;
+    }
+    | {
+        kind: "comparison-items";
+        prompt?: string;
+        groups: ProblemVisualGroup[];
+    }
+    | {
+        kind: "comparison-base10";
+        prompt?: string;
+        groups: ProblemVisualValueGroup[];
+    }
+    | {
+        kind: "number-sequence";
+        prompt?: string;
+        slots: ProblemVisualSequenceSlot[];
+    };
+
 /**
  * Problem type for study sessions
  */
@@ -141,6 +184,7 @@ export interface Problem {
     // Display content
     questionText?: string; // "1 + 1", "apple"
     questionImage?: string;
+    questionVisual?: ProblemVisual;
 
     // Input configuration
     inputType: InputType;

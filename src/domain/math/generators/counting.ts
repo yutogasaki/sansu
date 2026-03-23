@@ -1,5 +1,17 @@
 import { GeneratorFn, createProblem, randomInt, randomChoice } from "../core";
 import { shuffleArray } from "../../../utils/shuffle";
+import {
+    buildAdditionVisual,
+    buildComparisonBase10Visual,
+    buildComparisonItemsVisual,
+    buildNextNumberVisual,
+    buildPreviousNumberVisual,
+    buildSequenceFillVisual,
+    buildSubtractionVisual,
+} from "../problemVisuals";
+import { selectSubtractionPair } from "../subtractionProgress";
+import { selectComparisonPair } from "../comparisonProgress";
+import { selectCountFillPattern } from "../sequenceProgress";
 
 const COUNT_EMOJIS = ["🍎", "🍊", "🌸", "⭐", "🐟"];
 
@@ -145,7 +157,10 @@ export const generators: Record<string, GeneratorFn> = {
     "add_tiny": () => {
         const a = randomInt(1, 3);
         const b = randomInt(1, 3);
-        return createProblem("add_tiny", `${a} + ${b} = ？`, (a + b).toString(), "number");
+        const visual = buildAdditionVisual(a, b);
+        return createProblem("add_tiny", visual.questionText, (a + b).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
     },
     // Level 1: 数を数える（1-10）
     "count_10": () => {
@@ -160,71 +175,101 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 1: つぎのかず（1-9）
     "count_next_10": () => {
         const n = randomInt(1, 9);
-        return createProblem("count_next_10", `${n} のつぎは？`, (n + 1).toString(), "number");
+        const visual = buildNextNumberVisual(n);
+        return createProblem("count_next_10", visual.questionText, (n + 1).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
     },
     // Level 1: ゆびたしざん（絵つき、合計5まで）
     "add_finger": () => {
         const a = randomInt(1, 4);
         const b = randomInt(1, 5 - a);
-        const emoji = randomChoice(COUNT_EMOJIS);
-        const q = `${emoji.repeat(a)} と ${emoji.repeat(b)}\nあわせて いくつ？`;
-        return createProblem("add_finger", q, (a + b).toString(), "number");
+        const visual = buildAdditionVisual(a, b);
+        return createProblem("add_finger", visual.questionText, (a + b).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
     },
     // Level 1: まえのかず（逆に数える、2-10）
     "count_back": () => {
         const n = randomInt(2, 10);
-        return createProblem("count_back", `${n} のまえは？`, (n - 1).toString(), "number");
+        const visual = buildPreviousNumberVisual(n);
+        return createProblem("count_back", visual.questionText, (n - 1).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
     },
     // Level 2: 数を数える（1-50）
     "count_50": () => {
         const n = randomInt(1, 49);
-        return createProblem("count_50", `${n} のつぎは？`, (n + 1).toString(), "number");
+        const visual = buildNextNumberVisual(n);
+        return createProblem("count_50", visual.questionText, (n + 1).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
     },
     // Level 2: つぎのかず（1-20）
     "count_next_20": () => {
         const n = randomInt(1, 19);
-        return createProblem("count_next_20", `${n} のつぎは？`, (n + 1).toString(), "number");
+        const visual = buildNextNumberVisual(n);
+        return createProblem("count_next_20", visual.questionText, (n + 1).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
     },
     // Level 2: 5までのたし算
     "add_5": () => {
         const a = randomInt(1, 5);
         const b = randomInt(1, 5);
-        return createProblem("add_5", `${a} + ${b} = ？`, (a + b).toString(), "number");
+        const visual = buildAdditionVisual(a, b);
+        return createProblem("add_5", visual.questionText, (a + b).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
     },
     // Level 2: かんたんなひき算（答えが正になる、5以下）
-    "sub_tiny": () => {
-        const a = randomInt(2, 5);
-        const b = randomInt(1, a - 1);
-        return createProblem("sub_tiny", `${a} − ${b} = ？`, (a - b).toString(), "number");
+    "sub_tiny": (context) => {
+        const totalAnswers = context?.profile?.mathSkills?.sub_tiny?.totalAnswers;
+        const [a, b] = selectSubtractionPair("sub_tiny", totalAnswers);
+        const visual = buildSubtractionVisual(a, b);
+        return createProblem("sub_tiny", visual.questionText, (a - b).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
     },
     // Level 3: 数を数える（1-100）
     "count_100": () => {
         const n = randomInt(1, 99);
-        return createProblem("count_100", `${n} のつぎは？`, (n + 1).toString(), "number");
+        const visual = buildNextNumberVisual(n);
+        return createProblem("count_100", visual.questionText, (n + 1).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
     },
     // Level 3: 数の順番
-    "count_fill": () => {
-        const start = randomInt(1, 95);
-        const pos = randomInt(1, 3); // 1,2,[?],4,5
+    "count_fill": (context) => {
+        const totalAnswers = context?.profile?.mathSkills?.count_fill?.totalAnswers;
+        const { start, missingIndex } = selectCountFillPattern(totalAnswers);
         const seq = [0, 1, 2, 3, 4].map(i => start + i);
-        const ans = seq[pos];
-        const q = seq.map((v, i) => i === pos ? "□" : v).join(", ");
-        return createProblem("count_fill", q, ans.toString(), "number");
+        const ans = seq[missingIndex];
+        const visual = buildSequenceFillVisual(seq, missingIndex);
+        return createProblem("count_fill", visual.questionText, ans.toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
     },
     // Level 3: 大小比較（1桁）
-    "compare_1d": () => {
-        let a, b;
-        do { a = randomInt(1, 9); b = randomInt(1, 9); } while (a === b);
-        return createProblem("compare_1d", `${a} □ ${b}`, a > b ? ">" : "<", "choice", {
+    "compare_1d": (context) => {
+        const totalAnswers = context?.profile?.mathSkills?.compare_1d?.totalAnswers;
+        const [a, b] = selectComparisonPair("compare_1d", totalAnswers);
+        const visual = buildComparisonItemsVisual(a, b);
+        return createProblem("compare_1d", visual.questionText, a > b ? ">" : "<", "choice", {
             choices: [{ label: ">", value: ">" }, { label: "=", value: "=" }, { label: "<", value: "<" }]
+        }, {
+            questionVisual: visual.questionVisual
         });
     },
     // Level 3: 大小比較（2桁）
-    "compare_2d": () => {
-        let a, b;
-        do { a = randomInt(10, 99); b = randomInt(10, 99); } while (a === b);
-        return createProblem("compare_2d", `${a} □ ${b}`, a > b ? ">" : "<", "choice", {
+    "compare_2d": (context) => {
+        const totalAnswers = context?.profile?.mathSkills?.compare_2d?.totalAnswers;
+        const [a, b] = selectComparisonPair("compare_2d", totalAnswers);
+        const visual = buildComparisonBase10Visual(a, b);
+        return createProblem("compare_2d", visual.questionText, a > b ? ">" : "<", "choice", {
             choices: [{ label: ">", value: ">" }, { label: "=", value: "=" }, { label: "<", value: "<" }]
+        }, {
+            questionVisual: visual.questionVisual
         });
     }
 };

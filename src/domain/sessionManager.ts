@@ -189,7 +189,7 @@ export const generateSessionQueue = (user: UserProfile, count = 5): SessionQueue
         }
 
         // Fill Queue
-        fillQueue(queue, candidates, count, CONSTANTS.BLOCK_DUP_LIMIT, (id) => generateMathProblem(id));
+        fillQueue(queue, candidates, count, CONSTANTS.BLOCK_DUP_LIMIT, (id) => generateMathProblem(id, { profile: user }));
     }
 
     return queue;
