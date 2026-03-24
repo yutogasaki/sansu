@@ -64,6 +64,7 @@ export function generateBattleMathProblem(grade: BattleGrade): BattleProblem {
     return {
         id: crypto.randomUUID(),
         questionText: raw.questionText || "",
+        questionVisual: raw.questionVisual,
         correctAnswer: raw.correctAnswer as string,
         skillId: raw.categoryId,
         showDecimal: raw.categoryId.startsWith("dec_"),

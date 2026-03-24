@@ -230,7 +230,7 @@ export const generateSingleMathProblem = (
 
     // Priority 1: Review items
     if (mathDue.length > 0 && canAddReview) {
-        const dueId = pickId(mathDue.map(v => v.id), options);
+        const dueId = pickMathSkillId(mathDue.map(v => v.id), options);
         if (dueId) {
             isReview = true;
             problem = safeGenerateProblem(
@@ -247,7 +247,7 @@ export const generateSingleMathProblem = (
         const useMaintenanceOrRetired = maintenancePool.length > 0 && Math.random() < MAINTENANCE_RATE;
 
         if (useMaintenanceOrRetired) {
-            const maintenanceId = pickId(maintenancePool, options);
+            const maintenanceId = pickMathSkillId(maintenancePool, options);
             if (maintenanceId) {
                 isMaintenanceCheck = true;
                 problem = safeGenerateProblem(
@@ -266,7 +266,7 @@ export const generateSingleMathProblem = (
         const useWeak = canUseWeak && Math.random() < WEAK_INJECTION_CAP;
 
         if (useWeak) {
-            const weakId = pickId(weakMathPool, options);
+            const weakId = pickMathSkillId(weakMathPool, options);
             if (weakId) {
                 problem = safeGenerateProblem(
                     () => generateMathProblem(weakId, { profile }),
@@ -539,7 +539,7 @@ export const generateWeakReviewBlock = async (
         if (subject === 'math') {
             // Priority 1: Weak Math
             const availableWeak = weakMathIds.filter(id => mathSkills.includes(id));
-            const weakId = pickId(availableWeak, options);
+            const weakId = pickMathSkillId(availableWeak, options);
             if (weakId) {
                 problem = safeGenerateProblem(
                     () => generateMathProblem(weakId, { profile }),
@@ -551,7 +551,7 @@ export const generateWeakReviewBlock = async (
             // Priority 2: Due / Maintenance (Low Strength)
             if (!problem) {
                 const pool = [...mathDue.map(d => d.id), ...maintenanceMathIds];
-                const id = pickId(pool, options);
+                const id = pickMathSkillId(pool, options);
                 if (id) {
                     problem = safeGenerateProblem(
                         () => generateMathProblem(id, { profile }),

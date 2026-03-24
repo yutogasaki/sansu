@@ -1,3 +1,5 @@
+import type { Problem } from "../types";
+
 // ============================================================
 // Battle Mode Type Definitions
 // ============================================================
@@ -18,6 +20,7 @@ export interface PlayerConfig {
 export interface BattleProblem {
     id: string;
     questionText: string;
+    questionVisual?: Problem["questionVisual"];
     correctAnswer: string;
     skillId: string;
     showDecimal: boolean;

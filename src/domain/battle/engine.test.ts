@@ -1,11 +1,22 @@
 import { describe, expect, it, vi } from "vitest";
-import { battleReducer, createInitialBattleState } from "./engine";
+import { battleReducer, createInitialBattleState, generateBattleMathProblem } from "./engine";
 import { PlayerConfig } from "./types";
 
 const p1Config: PlayerConfig = { name: "P1", grade: 3, emoji: "A", subject: "math" };
 const p2Config: PlayerConfig = { name: "P2", grade: 3, emoji: "B", subject: "math" };
 
 describe("battleReducer", () => {
+    it("keeps math visuals on battle problems when the source skill has a visual prompt", () => {
+        const spy = vi.spyOn(Math, "random").mockReturnValue(0);
+
+        const problem = generateBattleMathProblem(-2);
+
+        expect(problem.skillId).toBe("count_5");
+        expect(problem.questionVisual?.kind).toBe("single-items");
+
+        spy.mockRestore();
+    });
+
     it("starts game in countdown with reset counters", () => {
         const state = createInitialBattleState();
         const next = battleReducer(state, { type: "START_GAME", p1Config, p2Config, mode: "tug_of_war" });

@@ -7,6 +7,7 @@ import {
     generateLevelBlock,
     generateSingleMathProblem,
     generateSingleVocabProblem,
+    generateWeakReviewBlock,
     getMixSubject,
     pickId,
     pickMathSkillId,
@@ -118,6 +119,32 @@ describe("blockGenerators utilities", () => {
         expect(result.problem.categoryId).toBe("count_10");
     });
 
+    it("generateSingleMathProblem review path softly avoids repeating the last math family", () => {
+        vi.spyOn(Math, "random").mockReturnValue(0);
+
+        const profile = createInitialProfile("T", 1, 1, 1, "math");
+        const result = generateSingleMathProblem({
+            profile,
+            mathDue: [{ id: "count_dot" }, { id: "count_read" }],
+            weakMathPool: [],
+            maintenanceMathIds: [],
+            retiredMathIds: [],
+            options: {
+                cooldownIds: [],
+                skippedTodayIds: [],
+                blockCounts: new Map(),
+                recentIds: ["count_5"],
+            },
+            canAddReview: true,
+            currentWeakCount: 0,
+            plusCount: 0,
+            plusLimit: 0,
+        });
+
+        expect(result.isReview).toBe(true);
+        expect(result.problem.categoryId).toBe("count_read");
+    });
+
     it("generateSingleMathProblem prioritizes maintenance checks when the rate fires", () => {
         vi.spyOn(Math, "random").mockReturnValue(0);
 
@@ -143,6 +170,58 @@ describe("blockGenerators utilities", () => {
         expect(result.isReview).toBe(false);
         expect(result.isMaintenanceCheck).toBe(true);
         expect(result.problem.categoryId).toBe("count_10");
+    });
+
+    it("generateSingleMathProblem maintenance path softly avoids repeating the last math family", () => {
+        vi.spyOn(Math, "random").mockReturnValue(0);
+
+        const profile = createInitialProfile("T", 1, 1, 1, "math");
+        const result = generateSingleMathProblem({
+            profile,
+            mathDue: [],
+            weakMathPool: [],
+            maintenanceMathIds: ["count_dot", "count_read"],
+            retiredMathIds: [],
+            options: {
+                cooldownIds: [],
+                skippedTodayIds: [],
+                blockCounts: new Map(),
+                recentIds: ["count_5"],
+            },
+            canAddReview: false,
+            currentWeakCount: 0,
+            plusCount: 0,
+            plusLimit: 0,
+        });
+
+        expect(result.isMaintenanceCheck).toBe(true);
+        expect(result.problem.categoryId).toBe("count_read");
+    });
+
+    it("generateSingleMathProblem weak path softly avoids repeating the last math family", () => {
+        vi.spyOn(Math, "random").mockReturnValue(0);
+
+        const profile = createInitialProfile("T", 1, 1, 1, "math");
+        const result = generateSingleMathProblem({
+            profile,
+            mathDue: [],
+            weakMathPool: ["count_dot", "count_read"],
+            maintenanceMathIds: [],
+            retiredMathIds: [],
+            options: {
+                cooldownIds: [],
+                skippedTodayIds: [],
+                blockCounts: new Map(),
+                recentIds: ["count_5"],
+            },
+            canAddReview: false,
+            currentWeakCount: 0,
+            plusCount: 0,
+            plusLimit: 0,
+        });
+
+        expect(result.isReview).toBe(false);
+        expect(result.problem.categoryId).toBe("count_read");
     });
 
     it("generateSingleVocabProblem prioritizes forced review blocks", () => {
@@ -193,5 +272,28 @@ describe("blockGenerators utilities", () => {
         expect(queue[0]?.categoryId).toBe("count_5");
         expect(queue[1]?.categoryId).toBe("count_read");
         expect(families[0]).not.toBe(families[1]);
+    });
+
+    it("generateWeakReviewBlock softly spreads math families in review mode", async () => {
+        vi.spyOn(Math, "random").mockReturnValue(0);
+
+        const profile = createInitialProfile("T", 1, 0, 1, "math");
+        profile.mathMainLevel = 0;
+        profile.mathMaxUnlocked = 0;
+
+        const queue = await generateWeakReviewBlock(profile, {
+            weakMathIds: [],
+            maintenanceMathIds: [],
+            mathDue: [{ id: "count_dot" }, { id: "count_read" }],
+            vocabDue: [],
+        });
+        const mathQueue = queue.filter(problem => problem.subject === "math");
+        const families = mathQueue.slice(0, 2).map(problem => getMathSkillFamily(problem.categoryId));
+
+        expect(mathQueue[0]?.categoryId).toBe("count_dot");
+        expect(mathQueue[1]?.categoryId).toBe("count_read");
+        expect(families[0]).not.toBe(families[1]);
+        expect(mathQueue[0]?.isReview).toBe(true);
+        expect(mathQueue[1]?.isReview).toBe(true);
     });
 });

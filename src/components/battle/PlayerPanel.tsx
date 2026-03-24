@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { cn } from "../../utils/cn";
 import { TenKey } from "../domain/TenKey";
 import { ChoiceGroup } from "../domain/ChoiceGroup";
+import { MathProblemPrompt } from "../domain/MathProblemPrompt";
 import { PlayerGameState, PlayerId } from "../../domain/battle/types";
 import { useTimeoutScheduler } from "../../hooks/useTimeoutScheduler";
 
@@ -28,6 +29,7 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
     const [feedback, setFeedback] = useState<Feedback>("none");
     const problem = gameState.currentProblem;
     const isChoice = problem?.inputType === "choice";
+    const isMathProblem = gameState.config.subject === "math";
     const isLocked = gameState.lockSeconds > 0;
     const { scheduleTimeout, clearScheduledTimeouts } = useTimeoutScheduler();
 
@@ -99,8 +101,28 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
                         スキップ ▶
                     </button>
                 </div>
-                <div className="flex min-h-[4.25rem] items-center justify-center rounded-[22px] border border-white/75 bg-white/52 px-4 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)]">
-                    {problem?.questionText || "..."}
+                <div
+                    className={cn(
+                        "rounded-[22px] border border-white/75 bg-white/52 px-4 py-3 text-center text-2xl font-black text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)]",
+                        isMathProblem
+                            ? "max-h-[15rem] overflow-auto"
+                            : "flex min-h-[4.25rem] items-center justify-center"
+                    )}
+                >
+                    {problem ? (
+                        isMathProblem ? (
+                            <MathProblemPrompt
+                                problem={{
+                                    questionText: problem.questionText,
+                                    questionVisual: problem.questionVisual,
+                                    categoryId: problem.skillId,
+                                }}
+                                className="gap-3"
+                            />
+                        ) : (
+                            problem.questionText
+                        )
+                    ) : "..."}
                 </div>
             </div>
 
@@ -145,6 +167,7 @@ export const PlayerPanel: React.FC<PlayerPanelProps> = ({
                         onClear={handleClear}
                         onEnter={handleEnter}
                         showDecimal={problem?.showDecimal}
+                        compact={isMathProblem && Boolean(problem?.questionVisual)}
                     />
                 )}
             </div>
