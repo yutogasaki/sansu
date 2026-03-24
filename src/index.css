@@ -43,7 +43,7 @@
     --blur-lg: 16px;
 
     --app-surface: rgba(255, 255, 255, 0.72);
-    --app-surface-strong: rgba(255, 255, 255, 0.84);
+    --app-surface-strong: rgba(255, 255, 255, 0.92);
     --app-surface-soft: rgba(255, 255, 255, 0.56);
     --app-border: rgba(255, 255, 255, 0.5);
     --app-border-soft: rgba(255, 255, 255, 0.3);
@@ -62,7 +62,7 @@
     --glass-border-subtle: 1px solid var(--app-border-soft);
 
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.05);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
     --shadow-accent-md: 0 6px 20px rgba(43, 186, 160, 0.4), 0 2px 8px rgba(43, 186, 160, 0.2);
 

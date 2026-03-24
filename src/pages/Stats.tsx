@@ -83,11 +83,11 @@ const DEFAULT_SECTIONS: SectionState = {
     summary: true,
     calendar: true,
     growth: true,
-    weak: true,
-    review: true,
-    tests: true,
+    weak: false,
+    review: false,
+    tests: false,
     progress: true,
-    parent: true,
+    parent: false,
 };
 
 const WEEKDAY_JA = ["日", "月", "火", "水", "木", "金", "土"];
@@ -223,6 +223,7 @@ export const Stats: React.FC = () => {
     const [trendData, setTrendData] = useState<WeeklyTrendPoint[]>([]);
     const [trendMode, setTrendMode] = useState<"count" | "accuracy">("count");
     const [sections] = useState<SectionState>(() => loadSectionState());
+    const [showMore, setShowMore] = useState(false);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -423,7 +424,7 @@ export const Stats: React.FC = () => {
             rightAction={closeAction}
             contentClassName="px-6 pt-2"
         >
-            <div className="mx-auto w-full max-w-[22rem] space-y-6 pb-2">
+            <div className="mx-auto w-full max-w-[22rem] space-y-8 pb-2">
                 {sections.summary && (
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
@@ -507,7 +508,20 @@ export const Stats: React.FC = () => {
                     </SurfacePanel>
                 )}
 
-                {sections.weak && (
+                {!showMore && (
+                    <div className="flex justify-center">
+                        <Button
+                            variant="secondary"
+                            size="sm"
+                            className="px-6"
+                            onClick={() => setShowMore(true)}
+                        >
+                            {t("もっと みる", "もっと見る")}
+                        </Button>
+                    </div>
+                )}
+
+                {showMore && sections.weak && (
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
                             title="まちがい ぶんせき"
@@ -538,7 +552,7 @@ export const Stats: React.FC = () => {
                     </SurfacePanel>
                 )}
 
-                {sections.review && (
+                {showMore && sections.review && (
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
                             title="ふくしゅう キュー"
@@ -664,7 +678,7 @@ export const Stats: React.FC = () => {
                     </SurfacePanel>
                 )}
 
-                {sections.tests && (
+                {showMore && sections.tests && (
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
                             title={t("ていき テスト りれき", "定期テスト履歴")}
@@ -702,15 +716,17 @@ export const Stats: React.FC = () => {
                     </SurfacePanel>
                 )}
 
-                <SurfacePanel className="space-y-4 rounded-[28px] p-5">
-                    <SurfacePanelHeader
-                        title="ふわふわ アルバム"
-                        description={t("いままで の ふわふわ を ふりかえる", "成長の記録を静かに見返せます")}
-                    />
-                    <IkimonoGallery profileId={profile.id} />
-                </SurfacePanel>
+                {showMore && (
+                    <SurfacePanel className="space-y-4 rounded-[28px] p-5">
+                        <SurfacePanelHeader
+                            title="ふわふわ アルバム"
+                            description={t("いままで の ふわふわ を ふりかえる", "成長の記録を静かに見返せます")}
+                        />
+                        <IkimonoGallery profileId={profile.id} />
+                    </SurfacePanel>
+                )}
 
-                {sections.parent && (
+                {showMore && sections.parent && (
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
                             title={t("ほごしゃ むけ ミニレポート", "保護者向けミニレポート")}
