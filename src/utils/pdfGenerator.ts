@@ -3,6 +3,7 @@ import fontkit from '@pdf-lib/fontkit';
 
 import { Problem } from '../domain/types';
 import { EnglishWord } from '../domain/english/words';
+import { buildPrintableMathAnswer, buildPrintableMathPrompt, toPrintablePaperText } from '../domain/test/printability';
 import { resolveAppAssetPath } from './assets';
 import { errorInDev } from './debug';
 
@@ -22,6 +23,12 @@ interface TextPart {
 }
 
 type ExpressionPart = FractionPart | TextPart;
+type TextMeasurer = Pick<PDFFont, "widthOfTextAtSize">;
+interface MathPageLayout {
+    startIndex: number;
+    problems: Problem[];
+    rowHeights: number[];
+}
 const LOCAL_JP_FONT_URL = resolveAppAssetPath('/fonts/NotoSansJP-Regular.otf');
 
 // ============================================================
@@ -98,8 +105,144 @@ const drawFraction = (
 };
 
 const sanitizeForPdf = (text: string): string => {
-    // PDFフォントでemojiが欠けるため、数える問題は印刷向けの記号へ置換する
-    return text.replace(/🍎/g, 'りんご ').replace(/□/g, '[   ]').trimEnd();
+    return toPrintablePaperText(text).trimEnd();
+};
+
+const getChoiceCount = (problem: Pick<Problem, "inputType" | "inputConfig">): number =>
+    problem.inputType === "choice" ? problem.inputConfig?.choices?.length ?? 0 : 0;
+
+export const getChoiceAnswerLayout = (choiceCount: number, answerWidth = 60) => {
+    const gap = choiceCount >= 4 ? 4 : 6;
+    const computedBoxSize = Math.floor((answerWidth - gap * Math.max(0, choiceCount - 1)) / Math.max(choiceCount, 1));
+    const boxSize = Math.max(10, Math.min(16, computedBoxSize));
+    const totalWidth = choiceCount * boxSize + Math.max(0, choiceCount - 1) * gap;
+    const startOffset = Math.max(0, (answerWidth - totalWidth) / 2);
+    const labelSize = Math.max(8, Math.min(11, boxSize - 2));
+
+    return {
+        boxSize,
+        gap,
+        totalWidth,
+        startOffset,
+        labelSize,
+    };
+};
+
+const getMathQuestionFontSize = (problem: Pick<Problem, "questionVisual">): number =>
+    problem.questionVisual ? 12 : 14;
+
+export const wrapPdfLines = (
+    text: string,
+    measurer: TextMeasurer,
+    fontSize: number,
+    maxWidth: number
+): string[] => {
+    const wrapped: string[] = [];
+    const paragraphs = sanitizeForPdf(text).split("\n");
+
+    paragraphs.forEach(paragraph => {
+        if (!paragraph) {
+            wrapped.push("");
+            return;
+        }
+
+        let currentLine = "";
+        for (const char of paragraph) {
+            const next = `${currentLine}${char}`;
+            const nextWidth = measurer.widthOfTextAtSize(next, fontSize);
+
+            if (currentLine && nextWidth > maxWidth) {
+                wrapped.push(currentLine);
+                currentLine = char;
+                continue;
+            }
+
+            currentLine = next;
+        }
+
+        if (currentLine) {
+            wrapped.push(currentLine);
+        }
+    });
+
+    return wrapped.length > 0 ? wrapped : [""];
+};
+
+const getWrappedMathQuestionLines = (
+    problem: Pick<Problem, "categoryId" | "questionText" | "questionVisual" | "inputType" | "inputConfig">,
+    measurer: TextMeasurer,
+    questionWidth: number
+): string[] => {
+    const qText = buildPrintableMathPrompt(problem);
+    const questionFontSize = getMathQuestionFontSize(problem);
+
+    if (isFractionProblem(problem.categoryId)) {
+        return [sanitizeForPdf(qText)];
+    }
+
+    return wrapPdfLines(qText, measurer, questionFontSize, questionWidth);
+};
+
+export const estimateMathProblemHeight = (
+    problem: Pick<Problem, "categoryId" | "questionText" | "questionVisual" | "inputType" | "inputConfig">,
+    measurer: TextMeasurer,
+    questionWidth: number
+): number => {
+    const questionFontSize = getMathQuestionFontSize(problem);
+    const lineCount = getWrappedMathQuestionLines(problem, measurer, questionWidth).length;
+    const questionHeight = lineCount * (questionFontSize + 2);
+    const choiceCount = getChoiceCount(problem);
+    const answerHeight = choiceCount >= 2 && choiceCount <= 4
+        ? getChoiceAnswerLayout(choiceCount).boxSize + 6
+        : 18;
+
+    return Math.max(questionHeight, answerHeight) + 16;
+};
+
+export const paginateMathProblems = (
+    problems: Problem[],
+    measurer: TextMeasurer,
+    pageHeight: number
+): MathPageLayout[] => {
+    const col1X = 50;
+    const answerX = col1X + 180;
+    const questionWidth = answerX - (col1X + 30) - 10;
+    const firstPageStartY = pageHeight - 120;
+    const laterPageStartY = pageHeight - 80;
+    const bottomMargin = 60;
+
+    const layouts: MathPageLayout[] = [];
+    let pageIndex = 0;
+    let problemIndex = 0;
+
+    while (problemIndex < problems.length) {
+        const startIndex = problemIndex;
+        const availableHeight = (pageIndex === 0 ? firstPageStartY : laterPageStartY) - bottomMargin;
+        const pageProblems: Problem[] = [];
+        const rowHeights: number[] = [];
+        let usedHeight = 0;
+
+        while (problemIndex < problems.length) {
+            const rowProblems = problems.slice(problemIndex, Math.min(problemIndex + 2, problems.length));
+            const rowHeight = Math.max(...rowProblems.map(problem =>
+                estimateMathProblemHeight(problem, measurer, questionWidth)
+            ));
+
+            if (rowHeights.length > 0 && usedHeight + rowHeight > availableHeight) {
+                break;
+            }
+
+            rowHeights.push(rowHeight);
+            pageProblems.push(...rowProblems);
+            usedHeight += rowHeight;
+            problemIndex += rowProblems.length;
+        }
+
+        layouts.push({ startIndex, problems: pageProblems, rowHeights });
+        pageIndex += 1;
+    }
+
+    return layouts;
 };
 
 const drawMathExpression = (
@@ -109,12 +252,21 @@ const drawMathExpression = (
     categoryId: string,
     startX: number,
     y: number,
-    fontSize: number
-): void => {
+    fontSize: number,
+    maxWidth?: number
+): number => {
     if (!isFractionProblem(categoryId)) {
-        const displayText = sanitizeForPdf(text).replace(/\//g, '÷').replace(/\*/g, '×');
-        page.drawText(displayText, { x: startX, y, size: fontSize, font, color: rgb(0, 0, 0) });
-        return;
+        const lines = wrapPdfLines(text, font, fontSize, maxWidth ?? 9999);
+        lines.forEach((line, index) => {
+            page.drawText(line, {
+                x: startX,
+                y: y - index * (fontSize + 2),
+                size: fontSize,
+                font,
+                color: rgb(0, 0, 0),
+            });
+        });
+        return lines.length;
     }
 
     const parts = parseExpression(text);
@@ -132,6 +284,45 @@ const drawMathExpression = (
             currentX += font.widthOfTextAtSize(displayText, fontSize);
         }
     }
+
+    return 1;
+};
+
+const drawChoiceAnswerArea = (
+    page: PDFPage,
+    font: PDFFont,
+    choiceCount: number,
+    x: number,
+    y: number,
+    isAnswerKey: boolean,
+    correctAnswer: string
+) => {
+    const { boxSize, gap, startOffset, labelSize } = getChoiceAnswerLayout(choiceCount);
+    const startX = x + startOffset;
+
+    Array.from({ length: choiceCount }, (_, index) => index + 1).forEach(choiceNumber => {
+        const boxX = startX + (choiceNumber - 1) * (boxSize + gap);
+        const isCorrect = isAnswerKey && String(choiceNumber) === correctAnswer;
+        page.drawRectangle({
+            x: boxX,
+            y: y - boxSize + 2,
+            width: boxSize,
+            height: boxSize,
+            borderWidth: 1,
+            borderColor: isCorrect ? rgb(1, 0, 0) : rgb(0.5, 0.5, 0.5),
+            color: rgb(1, 1, 1),
+        });
+
+        const label = String(choiceNumber);
+        const textWidth = font.widthOfTextAtSize(label, labelSize);
+        page.drawText(label, {
+            x: boxX + (boxSize - textWidth) / 2,
+            y: y - boxSize / 2 - 2,
+            size: labelSize,
+            font,
+            color: isCorrect ? rgb(1, 0, 0) : rgb(0.35, 0.35, 0.35),
+        });
+    });
 };
 
 const downloadPdf = async (pdfDoc: PDFDocument, filename: string) => {
@@ -202,18 +393,20 @@ export const generateMathPDF = async (
 
     const customFont = await loadPdfFont(pdfDoc);
 
-    // 20 problems per page (2 columns x 10 rows)
-    const problemsPerPage = 20;
-    const totalPages = Math.ceil(problems.length / problemsPerPage);
+    const probePage = pdfDoc.addPage();
+    const { height } = probePage.getSize();
+    pdfDoc.removePage(pdfDoc.getPageCount() - 1);
+    const pageLayouts = paginateMathProblems(problems, customFont, height);
+    const totalPages = pageLayouts.length;
 
     // Phase 1: Test Pages
-    for (let pageNum = 0; pageNum < totalPages; pageNum++) {
-        drawMathPage(pdfDoc, customFont, problems, pageNum, problemsPerPage, totalPages, title, false);
-    }
+    pageLayouts.forEach((layout, pageNum) => {
+        drawMathPage(pdfDoc, customFont, layout, pageNum, totalPages, title, false);
+    });
     // Phase 2: Answer Keys
-    for (let pageNum = 0; pageNum < totalPages; pageNum++) {
-        drawMathPage(pdfDoc, customFont, problems, pageNum, problemsPerPage, totalPages, title, true);
-    }
+    pageLayouts.forEach((layout, pageNum) => {
+        drawMathPage(pdfDoc, customFont, layout, pageNum, totalPages, title, true);
+    });
 
     await downloadPdf(pdfDoc, `${title}.pdf`);
 };
@@ -221,9 +414,8 @@ export const generateMathPDF = async (
 const drawMathPage = (
     pdfDoc: PDFDocument,
     font: PDFFont,
-    allProblems: Problem[],
+    layout: MathPageLayout,
     pageNum: number,
-    perPage: number,
     totalPages: number,
     title: string,
     isAnswerKey: boolean
@@ -245,47 +437,54 @@ const drawMathPage = (
     const startY = pageNum === 0 ? height - 120 : height - 80;
     const col1X = 50;
     const col2X = width / 2 + 30;
-    const rowHeight = 70;
+    let currentY = startY;
 
-    // Horizontal Layout
-    const startIdx = pageNum * perPage;
-    const endIdx = Math.min(startIdx + perPage, allProblems.length);
-    const pageProblems = allProblems.slice(startIdx, endIdx);
+    layout.rowHeights.forEach((rowHeight, rowIndex) => {
+        const rowProblems = layout.problems.slice(rowIndex * 2, rowIndex * 2 + 2);
 
-    pageProblems.forEach((prob, idx) => {
-        const isLeftCol = idx % 2 === 0;
-        const row = Math.floor(idx / 2);
-        const x = isLeftCol ? col1X : col2X;
-        const y = startY - (row * rowHeight);
+        rowProblems.forEach((prob, idx) => {
+            const isLeftCol = idx === 0;
+            const x = isLeftCol ? col1X : col2X;
+            const y = currentY;
 
-        // Problem Number
-        page.drawText(`(${startIdx + idx + 1})`, { x, y, size: 12, font, color: rgb(0.3, 0.3, 0.3) });
+            // Problem Number
+            page.drawText(`(${layout.startIndex + rowIndex * 2 + idx + 1})`, { x, y, size: 12, font, color: rgb(0.3, 0.3, 0.3) });
 
-        // Question (Left Area) - Reduced font size for Horizontal Mode
-        const qText = prob.questionText || "";
-        drawMathExpression(page, font, qText, prob.categoryId, x + 30, y, 18);
+            // Question (Left Area)
+            const qText = buildPrintableMathPrompt(prob);
+            const questionFontSize = getMathQuestionFontSize(prob);
+            const answerX = x + 180;
+            const answerWidth = 60;
+            const questionWidth = answerX - (x + 30) - 10;
+            drawMathExpression(page, font, qText, prob.categoryId, x + 30, y, questionFontSize, questionWidth);
 
-        // Answer Line (Right Area) - Fixed position to avoid overlap
-        // Question area is x+30 to x+180 (150px)
-        const answerX = x + 180;
-        const answerWidth = 60;
+            const choiceCount = getChoiceCount(prob);
+            const paperAnswerText = buildPrintableMathAnswer(prob);
 
-        page.drawLine({
-            start: { x: answerX, y: y - 2 },
-            end: { x: answerX + answerWidth, y: y - 2 },
-            thickness: 1, color: rgb(0.5, 0.5, 0.5),
+            if (choiceCount >= 2 && choiceCount <= 4) {
+                drawChoiceAnswerArea(page, font, choiceCount, answerX, y, isAnswerKey, paperAnswerText);
+            } else {
+                // Answer Line (Right Area) - Fixed position to avoid overlap
+                page.drawLine({
+                    start: { x: answerX, y: y - 2 },
+                    end: { x: answerX + answerWidth, y: y - 2 },
+                    thickness: 1, color: rgb(0.5, 0.5, 0.5),
+                });
+            }
+
+            // Answer (Red)
+            if (isAnswerKey && (choiceCount < 2 || choiceCount > 4)) {
+                const answerText = sanitizeForPdf(paperAnswerText);
+                // Draw centered
+                const textWidth = font.widthOfTextAtSize(answerText, 14);
+                const offset = (answerWidth - textWidth) / 2;
+                page.drawText(answerText, {
+                    x: answerX + offset, y: y, size: 14, font, color: rgb(1, 0, 0),
+                });
+            }
         });
 
-        // Answer (Red)
-        if (isAnswerKey) {
-            const answerText = Array.isArray(prob.correctAnswer) ? `${prob.correctAnswer[0]}/${prob.correctAnswer[1]}` : prob.correctAnswer;
-            // Draw centered
-            const textWidth = font.widthOfTextAtSize(answerText, 14);
-            const offset = (answerWidth - textWidth) / 2;
-            page.drawText(answerText, {
-                x: answerX + offset, y: y, size: 14, font, color: rgb(1, 0, 0),
-            });
-        }
+        currentY -= rowHeight;
     });
 };
 
