@@ -18,13 +18,67 @@ export interface FuwafuwaSpeech {
     actionLabel?: string;
 }
 
+export interface HomeMagicSpeechState {
+    percent: number;
+    isFull: boolean;
+    isSending?: boolean;
+    useKanjiText?: boolean;
+}
+
 type HitokotoReason = "open" | "tap";
+
+function getMagicLines(kind: "delivery" | "full" | "almost" | "growing" | "small" | "warm" | "mechanic" | "greeting", useKanjiText: boolean): string[] {
+    if (useKanjiText) {
+        switch (kind) {
+            case "greeting":
+                return ["会えて うれしいな", "ふわふわ ごきげんだよ"];
+            case "delivery":
+                return ["魔法エネルギーが", "いま ふわふわに 届いてるよ"];
+            case "full":
+                return ["魔法エネルギーが", "いっぱいだよ", "届けてくれたら うれしいな"];
+            case "almost":
+                return ["魔法エネルギーが", "もう少しで 満タン！"];
+            case "growing":
+                return ["魔法エネルギーが", "じわっと 増えてるよ"];
+            case "small":
+                return ["魔法エネルギーが", "少したまってきたよ"];
+            case "warm":
+                return ["なんだか ぽかぽか", "してきたよ"];
+            case "mechanic":
+            default:
+                return ["魔法エネルギーは", "ここに たまるんだよ"];
+        }
+    }
+
+    switch (kind) {
+        case "greeting":
+            return ["あえて うれしいな", "ふわふわ ごきげんだよ"];
+        case "delivery":
+            return ["まほうエネルギーが", "いま ふわふわに とどいてるよ"];
+        case "full":
+            return ["まほうエネルギーが", "いっぱいだよ", "とどけてくれたら うれしいな"];
+        case "almost":
+            return ["まほうエネルギーが", "もうすこしで まんたん！"];
+        case "growing":
+            return ["まほうエネルギーが", "じわっと ふえてるよ"];
+        case "small":
+            return ["まほうエネルギーが", "すこし たまってきたよ"];
+        case "warm":
+            return ["なんだか ぽかぽか", "してきたよ"];
+        case "mechanic":
+        default:
+            return ["まほうエネルギーは", "ここに たまるんだよ"];
+    }
+}
 
 export function getHomeFuwafuwaSpeech(
     scene: IkimonoSceneText,
     currentEventType: EventType | null,
     weakCount: number,
+    magicState?: HomeMagicSpeechState,
 ): FuwafuwaSpeech {
+    const useKanjiText = Boolean(magicState?.useKanjiText);
+
     if (currentEventType === "level_up") {
         return {
             lines: [scene.moodLine, scene.transition],
@@ -49,17 +103,57 @@ export function getHomeFuwafuwaSpeech(
         };
     }
 
+    if (magicState?.isSending) {
+        return {
+            lines: getMagicLines("delivery", useKanjiText),
+            accent: "magic",
+            reactionStyle: "celebrating",
+        };
+    }
+
+    if (magicState?.isFull) {
+        return {
+            lines: getMagicLines("full", useKanjiText),
+            accent: "magic",
+            reactionStyle: "guiding",
+        };
+    }
+
     if (scene.stage === "egg" || scene.stage === "hatching") {
         return {
-            lines: [scene.nowLine, scene.transition],
+            lines: getMagicLines("greeting", useKanjiText),
             accent: "ambient",
+            reactionStyle: "sharing",
+        };
+    }
+
+    if ((magicState?.percent ?? 0) >= 90) {
+        return {
+            lines: getMagicLines("almost", useKanjiText),
+            accent: "magic",
+            reactionStyle: "growing",
+        };
+    }
+
+    if ((magicState?.percent ?? 0) >= 31) {
+        return {
+            lines: getMagicLines("growing", useKanjiText),
+            accent: "magic",
+            reactionStyle: "growing",
+        };
+    }
+
+    if ((magicState?.percent ?? 0) > 0) {
+        return {
+            lines: getMagicLines("small", useKanjiText),
+            accent: "magic",
             reactionStyle: "sharing",
         };
     }
 
     if (weakCount === 0) {
         return {
-            lines: [scene.nowLine, scene.moodLine],
+            lines: getMagicLines("warm", useKanjiText),
             accent: "magic",
             reactionStyle: "growing",
         };
@@ -82,9 +176,9 @@ export function getHomeFuwafuwaSpeech(
     }
 
     return {
-        lines: [scene.nowLine, scene.moodLine],
-        accent: "everyday",
-        reactionStyle: scene.stage === "medium" ? "growing" : "sharing",
+        lines: getMagicLines("mechanic", useKanjiText),
+        accent: "magic",
+        reactionStyle: "guiding",
     };
 }
 

@@ -26,7 +26,7 @@ describe("fuwafuwa speech", () => {
 
         expect(speech.accent).toBe("ambient");
         expect(speech.reactionStyle).toBe("sharing");
-        expect(speech.lines[1]).toContain("なる");
+        expect(speech.lines[0]).toContain("うれしい");
     });
 
     it("prefers magic growing speech when weak count is zero", () => {
@@ -42,5 +42,28 @@ describe("fuwafuwa speech", () => {
         expect(speech.accent).toBe("ambient");
         expect(speech.reactionStyle).toBe("cozy");
         expect(speech.lines).toEqual(["コンコン"]);
+    });
+
+    it("switches to keep-going style action hint when the tank is full", () => {
+        const speech = getHomeFuwafuwaSpeech(makeScene({ stage: "adult" }), null, 2, {
+            percent: 100,
+            isFull: true,
+        });
+
+        expect(speech.accent).toBe("magic");
+        expect(speech.reactionStyle).toBe("guiding");
+        expect(speech.lines[0]).toContain("まほうエネルギー");
+    });
+
+    it("uses delivery speech while magic energy is being sent", () => {
+        const speech = getHomeFuwafuwaSpeech(makeScene({ stage: "adult" }), null, 2, {
+            percent: 100,
+            isFull: true,
+            isSending: true,
+        });
+
+        expect(speech.accent).toBe("magic");
+        expect(speech.reactionStyle).toBe("celebrating");
+        expect(speech.lines[1]).toContain("とどいてる");
     });
 });

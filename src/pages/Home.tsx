@@ -1,15 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
-import { getTotalStats } from "../domain/stats/repository";
+import { getTodayStats, getTotalStats, getWeakPoints } from "../domain/stats/repository";
 import { checkEventCondition, EventCheckParams, EventType } from "../domain/sessionManager";
-import { getWeakPoints } from "../domain/stats/repository";
 import { EventModal } from "../components/domain/EventModal";
 import { PaperTestScoreModal } from "../components/domain/PaperTestScoreModal";
 import { eventStorage, weakPointsStorage } from "../utils/storage";
 import { Ikimono } from "../components/ikimono/Ikimono";
 import { HomeAnimatedBackground } from "../components/home/HomeAnimatedBackground";
+import { MagicTank } from "../components/home/MagicTank";
+import { getHomeMagicEnergyHint, getHomeMagicEnergyLabel, getHomeMagicEnergyState } from "../components/home/homeMagicEnergy";
+import { getHomeFuwafuwaSpeech } from "../components/ikimono/fuwafuwaSpeech";
+import { getSceneText } from "../components/ikimono/sceneText";
 import { Button } from "../components/ui/Button";
 import { UserProfile } from "../domain/types";
 import { warmUpTTS } from "../utils/tts";
@@ -56,16 +59,25 @@ const getOldestPendingPaperTest = (profile: UserProfile) => {
 export const Home: React.FC = () => {
     const navigate = useNavigate();
     const [profile, setProfile] = useState<UserProfile | null>(null);
+    const [homeStats, setHomeStats] = useState({
+        todayCount: 0,
+        todayCorrect: 0,
+        totalCount: 0,
+        weakCount: 0,
+    });
     const [showEventModal, setShowEventModal] = useState(false);
     const [currentEventType, setCurrentEventType] = useState<EventType | null>(null);
     const [showPaperTestModal, setShowPaperTestModal] = useState(false);
     const [pendingPaperTest, setPendingPaperTest] = useState<{ id: string; subject: "math" | "vocab"; level: number } | null>(null);
+    const [isMagicDeliveryActive, setIsMagicDeliveryActive] = useState(false);
     const profileId = profile?.id ?? null;
     const isEasy = profile?.uiTextMode === "easy";
     const useKanjiForIkimono = Boolean(profile?.kanjiMode);
     const { scheduleTimeout, clearScheduledTimeouts } = useTimeoutScheduler();
+    const magicDeliveryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const todayKey = toLocaleDateKey();
+    const t = (kana: string, kanji: string) => (useKanjiForIkimono ? kanji : kana);
 
     const persistProfileUpdate = async (nextProfile: UserProfile) => {
         await saveProfile(nextProfile);
@@ -91,14 +103,21 @@ export const Home: React.FC = () => {
 
                 setProfile(activeProfile);
 
-                const [total, weakPoints] = await Promise.all([
+                const [total, today, weakPoints] = await Promise.all([
                     getTotalStats(activeProfile.id),
+                    getTodayStats(activeProfile.id),
                     getWeakPoints(activeProfile.id)
                 ]);
                 if (cancelled) return;
 
                 const prevWeakCount = weakPointsStorage.getPrevCount();
                 const currentWeakCount = weakPoints.length;
+                setHomeStats({
+                    todayCount: today.count,
+                    todayCorrect: today.correct,
+                    totalCount: total.count,
+                    weakCount: currentWeakCount,
+                });
 
                 const eventType = determineEventWithPriority(
                     activeProfile,
@@ -137,6 +156,15 @@ export const Home: React.FC = () => {
             clearScheduledTimeouts();
         };
     }, [todayKey, scheduleTimeout, clearScheduledTimeouts]);
+
+    useEffect(() => {
+        return () => {
+            if (magicDeliveryTimerRef.current) {
+                clearTimeout(magicDeliveryTimerRef.current);
+                magicDeliveryTimerRef.current = null;
+            }
+        };
+    }, []);
 
     const handleStartCheck = async () => {
         if (currentEventType) eventStorage.setShown(currentEventType, todayKey);
@@ -186,6 +214,32 @@ export const Home: React.FC = () => {
         setPendingPaperTest(null);
     };
 
+    const magicEnergy = getHomeMagicEnergyState({
+        todayCount: homeStats.todayCount,
+        todayCorrect: homeStats.todayCorrect,
+        streak: profile?.streak ?? 0,
+        weakCount: homeStats.weakCount,
+    });
+    const scene = getSceneText(profileId, todayKey, homeStats.weakCount, currentEventType, useKanjiForIkimono);
+    const homeSpeech = getHomeFuwafuwaSpeech(scene, currentEventType, homeStats.weakCount, {
+        percent: magicEnergy.percent,
+        isFull: magicEnergy.isFull,
+        isSending: isMagicDeliveryActive,
+        useKanjiText: useKanjiForIkimono,
+    });
+    const magicHint = getHomeMagicEnergyHint(magicEnergy.percent, useKanjiForIkimono, isMagicDeliveryActive);
+    const magicLabel = getHomeMagicEnergyLabel(magicEnergy.percent, useKanjiForIkimono);
+
+    const handleMagicRelease = () => {
+        if (!magicEnergy.isFull) return;
+        if (magicDeliveryTimerRef.current) clearTimeout(magicDeliveryTimerRef.current);
+        setIsMagicDeliveryActive(true);
+        magicDeliveryTimerRef.current = setTimeout(() => {
+            setIsMagicDeliveryActive(false);
+            magicDeliveryTimerRef.current = null;
+        }, 2600);
+    };
+
     return (
         <div className="relative h-full overflow-hidden">
             <HomeAnimatedBackground />
@@ -204,7 +258,13 @@ export const Home: React.FC = () => {
 
             <div className="relative z-10 flex h-full flex-col px-[var(--screen-padding-x)] pt-[var(--screen-header-top)] pb-[var(--screen-bottom-with-footer)]">
                 <div className="flex min-h-0 flex-1 flex-col overflow-y-auto pb-4">
-                    <div className="flex justify-end">
+                    <div className="flex items-center justify-between gap-3">
+                        <div className="min-w-0 pl-1">
+                            <p className="text-[11px] font-black uppercase tracking-[0.28em] text-teal-500/70">Fuwafuwa Home</p>
+                            <p className="mt-1 truncate text-sm font-black text-slate-700">
+                                {t("ふわふわ の おへや", "ふわふわの お部屋")}
+                            </p>
+                        </div>
                         <Button
                             variant="secondary"
                             size="md"
@@ -221,9 +281,67 @@ export const Home: React.FC = () => {
                             initial={{ opacity: 0, scale: 0.98 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.7 }}
-                            className="card-surface mt-3 flex min-h-[360px] w-full flex-1 flex-col items-center justify-center rounded-[20px] px-3 pt-6 pb-6"
+                            className="card-surface relative mt-3 flex min-h-[420px] w-full flex-1 overflow-hidden rounded-[28px] px-4 pt-4 pb-6"
                         >
-                            <Ikimono profileId={profileId} kanjiMode={useKanjiForIkimono} />
+                            <motion.div
+                                aria-hidden="true"
+                                animate={{ x: [0, 12, 0], y: [0, -10, 0], opacity: [0.32, 0.52, 0.32] }}
+                                transition={{ duration: 8.5, repeat: Infinity, ease: "easeInOut" }}
+                                className="pointer-events-none absolute -top-10 -left-8 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(255,234,167,0.55)_0%,rgba(255,234,167,0.06)_62%,transparent_76%)] blur-2xl"
+                            />
+                            <motion.div
+                                aria-hidden="true"
+                                animate={{ x: [0, -10, 0], y: [0, 12, 0], opacity: [0.18, 0.38, 0.18] }}
+                                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                                className="pointer-events-none absolute right-[-2rem] bottom-8 h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.34)_0%,rgba(56,189,248,0.05)_64%,transparent_78%)] blur-2xl"
+                            />
+                            <div className="relative z-10 flex h-full w-full flex-col">
+                                <div className="flex items-start justify-between gap-3">
+                                    <div className="min-w-0">
+                                        <span className="app-pill inline-flex items-center rounded-full px-3 py-1 text-[11px] font-black tracking-[0.18em] text-amber-700">
+                                            {t("まほうエネルギー", "魔法エネルギー")}
+                                        </span>
+                                        <p className="mt-3 text-sm font-black leading-relaxed text-slate-700">
+                                            {magicHint}
+                                        </p>
+                                        <p className="mt-1 text-xs font-bold text-slate-500">
+                                            {t(`ぜんぶ ${homeStats.totalCount}もん`, `ぜんぶ ${homeStats.totalCount}問`)}
+                                            {" · "}
+                                            {t(`きょう ${homeStats.todayCount}もん`, `今日 ${homeStats.todayCount}問`)}
+                                        </p>
+                                    </div>
+
+                                    <div className="flex shrink-0 flex-col gap-2">
+                                        <span className="app-pill inline-flex items-center justify-center rounded-full px-3 py-1 text-[11px] font-black text-slate-600">
+                                            {t(`れんぞく ${profile?.streak ?? 0}にち`, `連続 ${profile?.streak ?? 0}日`)}
+                                        </span>
+                                        <span className="app-pill inline-flex items-center justify-center rounded-full px-3 py-1 text-[11px] font-black text-slate-600">
+                                            {homeStats.weakCount === 0
+                                                ? t("きょうは かるい", "今日はかるい")
+                                                : t(`きになる ${homeStats.weakCount}こ`, `気になる ${homeStats.weakCount}こ`)}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="mt-4 flex flex-col items-center">
+                                    <MagicTank
+                                        currentValue={magicEnergy.currentValue}
+                                        maxValue={magicEnergy.maxValue}
+                                        isSending={isMagicDeliveryActive}
+                                        onRelease={magicEnergy.isFull ? handleMagicRelease : undefined}
+                                        ariaLabel={t("まほうタンク", "魔法タンク")}
+                                    />
+                                    <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-white/74 px-3 py-1 text-xs font-black text-amber-700 shadow-[0_12px_24px_-18px_rgba(217,119,6,0.7)]">
+                                        <span>{magicLabel}</span>
+                                        <span className="text-slate-300">•</span>
+                                        <span>{`${magicEnergy.currentValue}/${magicEnergy.maxValue}`}</span>
+                                    </div>
+                                </div>
+
+                                <div className="mt-2 flex min-h-0 flex-1 items-center justify-center">
+                                    <Ikimono profileId={profileId} kanjiMode={useKanjiForIkimono} speech={homeSpeech} />
+                                </div>
+                            </div>
                         </motion.div>
                     )}
                 </div>
