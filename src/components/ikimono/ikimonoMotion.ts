@@ -1,7 +1,9 @@
-import type { useAnimationControls } from 'framer-motion';
-import { IkimonoStage } from './types';
+import type { AnimationDefinition, useAnimationControls } from "framer-motion";
+import type { FuwafuwaReactionStyle } from "./fuwafuwaSpeech";
+import { IkimonoStage } from "./types";
 
 type MotionControls = ReturnType<typeof useAnimationControls>;
+type ReactionVariantMap = Record<FuwafuwaReactionStyle, AnimationDefinition[]>;
 
 export interface SwayConfig {
     rotate: number;
@@ -9,7 +11,7 @@ export interface SwayConfig {
     duration: number;
 }
 
-const STAGE_SWAY: Record<Exclude<IkimonoStage, 'gone'>, SwayConfig> = {
+const STAGE_SWAY: Record<Exclude<IkimonoStage, "gone">, SwayConfig> = {
     egg: { rotate: 0, y: 3, duration: 5 },
     hatching: { rotate: 0.8, y: 4, duration: 4.5 },
     small: { rotate: 1.2, y: 5, duration: 4 },
@@ -18,54 +20,83 @@ const STAGE_SWAY: Record<Exclude<IkimonoStage, 'gone'>, SwayConfig> = {
     fading: { rotate: 0.5, y: 2, duration: 8 },
 };
 
-export type TapReaction =
-    | 'hitokoto'
-    | 'bounce'
-    | 'spin'
-    | 'wiggle'
-    | 'nod'
-    | 'tilt'
-    | 'hop'
-    | 'shimmy'
-    | 'squash'
-    | 'floaty'
-    | 'pulse';
+const IDLE_WEIGHTS = [36, 28, 20, 16] as const;
+
+const REACTION_WEIGHTS: Record<FuwafuwaReactionStyle, readonly number[]> = {
+    cozy: [35, 30, 20, 15],
+    growing: [35, 30, 20, 15],
+    sharing: [35, 30, 20, 15],
+    celebrating: [30, 25, 25, 20],
+    guiding: [35, 30, 20, 15],
+};
 
 export function getStageSway(stage: IkimonoStage): SwayConfig {
-    if (stage === 'gone') return STAGE_SWAY.egg;
+    if (stage === "gone") return STAGE_SWAY.egg;
     return STAGE_SWAY[stage];
 }
 
-export function pickTapReaction(stage: IkimonoStage): TapReaction {
-    const r = Math.random();
-    if (stage === 'egg') {
-        if (r < 0.2) return 'hitokoto';
-        if (r < 0.35) return 'wiggle';
-        if (r < 0.5) return 'shimmy';
-        if (r < 0.68) return 'bounce';
-        if (r < 0.84) return 'squash';
-        return 'hop';
+export function pickWeightedIndex(weights: readonly number[], lastIndex: number | null): number {
+    const adjusted = weights.map((weight, index) => {
+        if (lastIndex === null || index !== lastIndex || weights.length === 1) {
+            return weight;
+        }
+
+        return Math.max(1, Math.floor(weight / 2));
+    });
+
+    const total = adjusted.reduce((sum, weight) => sum + weight, 0);
+    let roll = Math.random() * total;
+
+    for (let index = 0; index < adjusted.length; index += 1) {
+        roll -= adjusted[index];
+        if (roll < 0) {
+            return index;
+        }
     }
-    if (r < 0.24) return 'hitokoto';
-    if (r < 0.34) return 'bounce';
-    if (r < 0.44) return 'wiggle';
-    if (r < 0.53) return 'nod';
-    if (r < 0.62) return 'spin';
-    if (r < 0.71) return 'tilt';
-    if (r < 0.79) return 'hop';
-    if (r < 0.86) return 'shimmy';
-    if (r < 0.92) return 'squash';
-    if (r < 0.97) return 'floaty';
-    return 'pulse';
+
+    return adjusted.length - 1;
 }
 
-export async function playIdleMotion(controls: MotionControls, sway: SwayConfig): Promise<void> {
-    const mode = Math.floor(Math.random() * 4);
+export function pickIdleMotionVariant(lastIndex: number | null): number {
+    return pickWeightedIndex(IDLE_WEIGHTS, lastIndex);
+}
+
+export function getDefaultReactionStyleForStage(stage: IkimonoStage): FuwafuwaReactionStyle {
+    switch (stage) {
+        case "egg":
+            return "sharing";
+        case "hatching":
+        case "small":
+        case "medium":
+            return "growing";
+        case "adult":
+        case "fading":
+        case "gone":
+        default:
+            return "cozy";
+    }
+}
+
+export function shouldShowTapHitokoto(stage: IkimonoStage): boolean {
+    const chance = stage === "egg" ? 0.22 : stage === "hatching" ? 0.24 : 0.26;
+    return Math.random() < chance;
+}
+
+export function shouldShowBonusTapHitokoto(stage: IkimonoStage): boolean {
+    const chance = stage === "egg" ? 0.22 : stage === "hatching" ? 0.24 : 0.28;
+    return Math.random() < chance;
+}
+
+export async function playIdleMotion(
+    controls: MotionControls,
+    sway: SwayConfig,
+    mode = Math.floor(Math.random() * 4),
+): Promise<void> {
     if (mode === 0) {
         await controls.start({
             y: [0, -sway.y, 0, -sway.y * 0.5, 0],
             rotate: [0, sway.rotate, 0, -sway.rotate, 0],
-            transition: { duration: sway.duration, ease: 'easeInOut' },
+            transition: { duration: sway.duration, ease: "easeInOut" },
         });
         return;
     }
@@ -73,7 +104,7 @@ export async function playIdleMotion(controls: MotionControls, sway: SwayConfig)
         await controls.start({
             scale: [1, 1.03, 1],
             y: [0, -sway.y * 0.7, 0],
-            transition: { duration: sway.duration * 0.9, ease: 'easeInOut' },
+            transition: { duration: sway.duration * 0.9, ease: "easeInOut" },
         });
         return;
     }
@@ -81,89 +112,156 @@ export async function playIdleMotion(controls: MotionControls, sway: SwayConfig)
         await controls.start({
             rotate: [0, sway.rotate * 1.2, 0, -sway.rotate * 1.2, 0],
             y: [0, -sway.y * 0.8, 0],
-            transition: { duration: sway.duration * 1.1, ease: 'easeInOut' },
+            transition: { duration: sway.duration * 1.1, ease: "easeInOut" },
         });
         return;
     }
     await controls.start({
         x: [0, 2, -2, 0],
         y: [0, -sway.y * 0.55, 0],
-        transition: { duration: sway.duration, ease: 'easeInOut' },
+        transition: { duration: sway.duration, ease: "easeInOut" },
     });
 }
 
-export async function playTapReaction(controls: MotionControls, reaction: TapReaction): Promise<void> {
-    switch (reaction) {
-        case 'hitokoto':
-            await controls.start({
-                scale: [1, 1.05, 1],
-                transition: { duration: 0.3 },
-            });
-            break;
-        case 'bounce':
-            await controls.start({
-                y: [0, -15, 0],
-                transition: { duration: 0.4, ease: 'easeOut' },
-            });
-            break;
-        case 'spin':
-            await controls.start({
-                rotate: [0, 10, -10, 5, 0],
-                transition: { duration: 0.5 },
-            });
-            break;
-        case 'wiggle':
-            await controls.start({
-                x: [0, -5, 5, -3, 3, 0],
-                transition: { duration: 0.4 },
-            });
-            break;
-        case 'nod':
-            await controls.start({
-                y: [0, 5, -2, 0],
-                transition: { duration: 0.35, ease: 'easeOut' },
-            });
-            break;
-        case 'tilt':
-            await controls.start({
-                rotate: [0, 8, -6, 4, 0],
-                y: [0, -5, 0],
-                transition: { duration: 0.5, ease: 'easeInOut' },
-            });
-            break;
-        case 'hop':
-            await controls.start({
+function getReactionVariants(baseScale: number): ReactionVariantMap {
+    return {
+        cozy: [
+            {
+                y: [0, -12, 0],
+                scale: [baseScale, baseScale * 1.05, baseScale],
+                transition: { duration: 0.48, ease: "easeInOut" },
+            },
+            {
+                rotate: [0, -10, 10, -6, 0],
+                y: [0, -8, 0],
+                transition: { duration: 0.52, ease: "easeInOut" },
+            },
+            {
+                x: [0, -8, 8, -6, 0],
+                y: [0, -10, 0],
+                scale: [baseScale, baseScale * 1.03, baseScale],
+                transition: { duration: 0.56, ease: "easeInOut" },
+            },
+            {
+                y: [0, -16, 0],
+                rotate: [0, 360],
+                scale: [baseScale, baseScale * 1.04, baseScale],
+                transition: { duration: 0.72, ease: "easeInOut" },
+            },
+        ],
+        growing: [
+            {
+                y: [0, -18, 0, -8, 0],
+                scale: [baseScale, baseScale * 1.08, baseScale, baseScale * 1.03, baseScale],
+                transition: { duration: 0.56, ease: "easeInOut" },
+            },
+            {
+                rotate: [0, -12, 12, -6, 0],
+                y: [0, -12, 0],
+                scale: [baseScale, baseScale * 1.05, baseScale],
+                transition: { duration: 0.56, ease: "easeInOut" },
+            },
+            {
+                x: [0, -10, 10, -6, 0],
+                y: [0, -14, 0],
+                transition: { duration: 0.58, ease: "easeInOut" },
+            },
+            {
+                y: [0, -20, 0],
+                rotate: [0, 360],
+                scale: [baseScale, baseScale * 1.07, baseScale],
+                transition: { duration: 0.74, ease: "easeInOut" },
+            },
+        ],
+        sharing: [
+            {
+                x: [0, -10, 10, -10, 10, 0],
+                y: [0, -6, 0],
+                transition: { duration: 0.42, ease: "easeInOut" },
+            },
+            {
+                rotate: [0, -18, 18, -10, 10, 0],
+                y: [0, -12, 0],
+                scale: [baseScale, baseScale * 1.05, baseScale],
+                transition: { duration: 0.58, ease: "easeInOut" },
+            },
+            {
+                y: [0, -14, 0],
+                x: [0, 8, -8, 0],
+                scale: [baseScale, baseScale * 1.04, baseScale],
+                transition: { duration: 0.6, ease: "easeInOut" },
+            },
+            {
+                y: [0, -14, 0],
+                rotate: [0, 360],
+                scale: [baseScale, baseScale * 1.05, baseScale],
+                transition: { duration: 0.72, ease: "easeInOut" },
+            },
+        ],
+        celebrating: [
+            {
+                y: [0, -30, 0, -15, 0],
+                scale: [baseScale, baseScale * 1.1, baseScale, baseScale * 1.05, baseScale],
+                rotate: [0, -8, 8, 0],
+                transition: { duration: 0.6, type: "spring", bounce: 0.5 },
+            },
+            {
+                y: [0, -18, 0],
+                rotate: [0, 360],
+                scale: [baseScale, baseScale * 1.06, baseScale],
+                transition: { duration: 0.72, ease: "easeInOut" },
+            },
+            {
+                rotate: [0, -12, 12, -10, 10, 0],
+                scale: [baseScale, baseScale * 1.1, baseScale * 0.96, baseScale],
+                transition: { duration: 0.68, ease: "easeInOut" },
+            },
+            {
                 y: [0, -22, 0, -10, 0],
-                scale: [1, 1.04, 0.98, 1.02, 1],
-                transition: { duration: 0.55, ease: 'easeOut' },
-            });
-            break;
-        case 'shimmy':
-            await controls.start({
-                x: [0, -8, 8, -6, 6, -4, 4, 0],
-                rotate: [0, -4, 4, -3, 3, 0],
-                transition: { duration: 0.6, ease: 'easeInOut' },
-            });
-            break;
-        case 'squash':
-            await controls.start({
-                scaleX: [1, 1.08, 0.93, 1.02, 1],
-                scaleY: [1, 0.92, 1.06, 0.98, 1],
-                transition: { duration: 0.45, ease: 'easeOut' },
-            });
-            break;
-        case 'floaty':
-            await controls.start({
-                y: [0, -10, -14, -10, 0],
-                rotate: [0, 2, -2, 0],
-                transition: { duration: 0.8, ease: 'easeInOut' },
-            });
-            break;
-        case 'pulse':
-            await controls.start({
-                scale: [1, 1.06, 1, 1.04, 1],
-                transition: { duration: 0.6, ease: 'easeOut' },
-            });
-            break;
-    }
+                rotate: [0, 220, 360],
+                scale: [baseScale, baseScale * 1.12, baseScale, baseScale * 1.05, baseScale],
+                transition: { duration: 0.74, ease: "easeInOut" },
+            },
+        ],
+        guiding: [
+            {
+                rotate: [0, -5, 5, -2, 0],
+                scale: [baseScale, baseScale * 1.03, baseScale],
+                transition: { duration: 0.5, ease: "easeInOut" },
+            },
+            {
+                x: [0, -8, 8, -6, 0],
+                y: [0, -10, 0],
+                rotate: [0, 12, -12, 0],
+                transition: { duration: 0.54, ease: "easeInOut" },
+            },
+            {
+                y: [0, -12, 0],
+                x: [0, 10, -10, 0],
+                scale: [baseScale, baseScale * 1.04, baseScale],
+                transition: { duration: 0.58, ease: "easeInOut" },
+            },
+            {
+                y: [0, -12, 0],
+                rotate: [0, 360],
+                scale: [baseScale, baseScale * 1.04, baseScale],
+                transition: { duration: 0.68, ease: "easeInOut" },
+            },
+        ],
+    };
+}
+
+export async function playTapReaction(
+    controls: MotionControls,
+    reactionStyle: FuwafuwaReactionStyle,
+    lastVariantIndex: number | null = null,
+    baseScale = 1,
+): Promise<number> {
+    const nextVariantIndex = pickWeightedIndex(
+        REACTION_WEIGHTS[reactionStyle],
+        lastVariantIndex,
+    );
+
+    await controls.start(getReactionVariants(baseScale)[reactionStyle][nextVariantIndex]);
+    return nextVariantIndex;
 }

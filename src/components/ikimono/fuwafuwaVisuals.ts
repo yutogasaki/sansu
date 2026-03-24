@@ -1,3 +1,4 @@
+import type { FuwafuwaReactionStyle } from "./fuwafuwaSpeech";
 import { IkimonoStage } from "./types";
 
 export interface EmotionParticle {
@@ -54,20 +55,29 @@ export function getAuraVisualState(stage: IkimonoStage, daysAlive: number): Aura
     };
 }
 
-export function getReactionEmojis(stage: IkimonoStage): readonly string[] {
-    switch (stage) {
-        case "egg":
-            return ["🥚", "✨", "🫧", "💫", "🤍"];
-        case "hatching":
-            return ["✨", "🫧", "🌱", "💖", "💫"];
-        case "small":
-        case "medium":
-            return ["💖", "🎵", "✨", "🫧", "🌈", "💫"];
-        case "adult":
-        case "fading":
-            return ["💖", "🎵", "✨", "🫧", "🌟", "💫", "🎶"];
-        case "gone":
+export function getReactionEmojis(
+    reactionStyle: FuwafuwaReactionStyle,
+    stage?: IkimonoStage,
+): readonly string[] {
+    if (stage === "egg") {
+        return ["🥚", "✨", "🫧", "💫", "🤍"];
+    }
+
+    if (stage === "hatching" && reactionStyle !== "celebrating") {
+        return ["✨", "🫧", "🌱", "💖", "💫"];
+    }
+
+    switch (reactionStyle) {
+        case "celebrating":
+            return ["💖", "🎵", "🎉", "🌟", "✨", "🫧", "💫"];
+        case "sharing":
+            return ["💖", "🎵", "✨", "🫧", "🌈", "🌟", "🎶"];
+        case "growing":
+            return ["💖", "🎵", "🌱", "✨", "🫧", "💚", "🍀"];
+        case "guiding":
+            return ["💖", "🎵", "🫧", "✨", "🔆", "💡", "🌟"];
+        case "cozy":
         default:
-            return ["✨", "🫧", "💫"];
+            return ["💖", "🎵", "✨", "🫧", "🌙", "🤍", "💫"];
     }
 }

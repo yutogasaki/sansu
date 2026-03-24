@@ -7,9 +7,17 @@ import { FuwafuwaSpeechBubble } from "./FuwafuwaSpeechBubble";
 import { FuwafuwaTransitionModal, type FuwafuwaTransitionModalState } from "./FuwafuwaTransitionModal";
 import { calculateStage, createNewIkimonoState, ensureSpecies } from "./lifecycle";
 import { getOpenHitokoto, shouldShowHitokotoOnOpen, getTapHitokoto, getEggOpenHitokoto, getEggTapHitokoto } from "./hitokoto";
-import { getStageSway, pickTapReaction, playIdleMotion, playTapReaction } from "./ikimonoMotion";
+import {
+    getDefaultReactionStyleForStage,
+    getStageSway,
+    pickIdleMotionVariant,
+    playIdleMotion,
+    playTapReaction,
+    shouldShowBonusTapHitokoto,
+    shouldShowTapHitokoto,
+} from "./ikimonoMotion";
 import { getAuraVisualState, getReactionEmojis, type EmotionParticle, type RippleState } from "./fuwafuwaVisuals";
-import { FuwafuwaSpeech, getHitokotoSpeech } from "./fuwafuwaSpeech";
+import { FuwafuwaSpeech, getHitokotoSpeech, type FuwafuwaReactionStyle } from "./fuwafuwaSpeech";
 import { getNextTransitionState } from "./fuwafuwaMilestones";
 import { stageText } from "./sceneText";
 import { ikimonoStorage, ikimonoGalleryStorage, ikimonoTransitionStorage } from "../../utils/storage";
@@ -19,6 +27,7 @@ interface IkimonoProps {
     profileId: string;
     kanjiMode?: boolean;
     speech?: FuwafuwaSpeech | null;
+    onSpeechAdvance?: () => void;
 }
 
 const DAY_IN_MS = 1000 * 60 * 60 * 24;
@@ -30,18 +39,39 @@ const FIREFLY_POSITIONS = [
     { left: "36%", top: "70%", duration: 3.6, delay: 1.6 },
 ];
 
-function pickParticleBatch(stage: IkimonoStage, count: number): EmotionParticle[] {
-    const palette = getReactionEmojis(stage);
+function pickParticleBatch(
+    reactionStyle: FuwafuwaReactionStyle,
+    stage: IkimonoStage,
+    count: number,
+    lastEmoji: string | null,
+): { particles: Omit<EmotionParticle, "id">[]; lastEmoji: string | null } {
+    const palette = getReactionEmojis(reactionStyle, stage);
+    const particles: Omit<EmotionParticle, "id">[] = [];
+    let previousEmoji = lastEmoji;
 
-    return Array.from({ length: count }, (_, index) => ({
-        id: index,
-        x: (Math.random() - 0.5) * 92,
-        y: (Math.random() - 0.5) * 70,
-        emoji: palette[Math.floor(Math.random() * palette.length)],
-    }));
+    for (let index = 0; index < count; index += 1) {
+        const pool = palette.filter((emoji) => emoji !== previousEmoji);
+        const nextEmoji = (pool.length > 0 ? pool : palette)[Math.floor(Math.random() * (pool.length > 0 ? pool.length : palette.length))];
+        particles.push({
+            x: (Math.random() - 0.5) * 92,
+            y: (Math.random() - 0.5) * 70,
+            emoji: nextEmoji,
+        });
+        previousEmoji = nextEmoji;
+    }
+
+    return {
+        particles,
+        lastEmoji: previousEmoji,
+    };
 }
 
-export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, speech = null }) => {
+export const Ikimono: React.FC<IkimonoProps> = ({
+    profileId,
+    kanjiMode = false,
+    speech = null,
+    onSpeechAdvance,
+}) => {
     const [hitokoto, setHitokoto] = useState<string | null>(null);
     const [hitokotoReason, setHitokotoReason] = useState<"open" | "tap" | null>(null);
     const [showNameModal, setShowNameModal] = useState(false);
@@ -58,6 +88,15 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
     const particleSeedRef = useRef(0);
     const rippleIdRef = useRef(0);
     const isReacting = useRef(false);
+    const lastIdleVariantRef = useRef<number | null>(null);
+    const lastTapVariantRef = useRef<Record<FuwafuwaReactionStyle, number | null>>({
+        cozy: null,
+        growing: null,
+        sharing: null,
+        celebrating: null,
+        guiding: null,
+    });
+    const lastParticleEmojiRef = useRef<string | null>(null);
     const pendingFarewellRef = useRef<Extract<FuwafuwaTransitionModalState, { kind: "farewell" }> | null>(null);
     const pendingWelcomeSpeciesRef = useRef<number | null>(null);
     const scriptMode = kanjiMode ? "kanji" : "kana";
@@ -85,6 +124,15 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
         pendingFarewellRef.current = null;
         pendingWelcomeSpeciesRef.current = null;
         isReacting.current = false;
+        lastIdleVariantRef.current = null;
+        lastTapVariantRef.current = {
+            cozy: null,
+            growing: null,
+            sharing: null,
+            celebrating: null,
+            guiding: null,
+        };
+        lastParticleEmojiRef.current = null;
     }, [profileId]);
 
     const getOrCreateState = useCallback((): IkimonoState => {
@@ -154,7 +202,11 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
         setShowNameModal(false);
     };
 
-    const playIdle = useCallback(() => playIdleMotion(controls, sway), [controls, sway]);
+    const playIdle = useCallback(() => {
+        const nextVariant = pickIdleMotionVariant(lastIdleVariantRef.current);
+        lastIdleVariantRef.current = nextVariant;
+        return playIdleMotion(controls, sway, nextVariant);
+    }, [controls, sway]);
 
     useEffect(() => {
         if (stage === "gone") return;
@@ -201,20 +253,25 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
         }, duration);
     };
 
+    const clearHitokoto = useCallback(() => {
+        setHitokoto(null);
+        setHitokotoReason(null);
+        if (hitokotoTimer.current) {
+            clearTimeout(hitokotoTimer.current);
+            hitokotoTimer.current = null;
+        }
+    }, []);
+
     const handleTap = async (event: React.MouseEvent<HTMLDivElement>) => {
         if (transitionModal) return;
         if (hitokoto) {
-            setHitokoto(null);
-            setHitokotoReason(null);
-            if (hitokotoTimer.current) {
-                clearTimeout(hitokotoTimer.current);
-                hitokotoTimer.current = null;
-            }
+            clearHitokoto();
             return;
         }
 
         if (isReacting.current) return;
         isReacting.current = true;
+        const reactionStyle = speech?.reactionStyle ?? getDefaultReactionStyleForStage(stage);
 
         if (orbRef.current) {
             const rect = orbRef.current.getBoundingClientRect();
@@ -225,8 +282,15 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
             });
         }
 
-        const particleCount = stage === "adult" || stage === "fading" ? 7 : 5;
-        const seededParticles = pickParticleBatch(stage, particleCount).map((particle) => ({
+        const particleCount = reactionStyle === "celebrating" ? 7 : 5;
+        const particleBatch = pickParticleBatch(
+            reactionStyle,
+            stage,
+            particleCount,
+            lastParticleEmojiRef.current,
+        );
+        lastParticleEmojiRef.current = particleBatch.lastEmoji;
+        const seededParticles = particleBatch.particles.map((particle) => ({
             ...particle,
             id: particleSeedRef.current++,
         }));
@@ -240,14 +304,19 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
         particleTimers.current.push(timerId);
 
         try {
-            const reaction = pickTapReaction(stage);
-            if (reaction === "hitokoto") {
+            const shouldShowPrimaryHitokoto = shouldShowTapHitokoto(stage);
+            if (shouldShowPrimaryHitokoto) {
                 showHitokoto(stage === "egg" ? getEggTapHitokoto(scriptMode) : getTapHitokoto(scriptMode), 2600, "tap");
             }
 
-            await playTapReaction(controls, reaction);
+            const nextVariantIndex = await playTapReaction(
+                controls,
+                reactionStyle,
+                lastTapVariantRef.current[reactionStyle],
+            );
+            lastTapVariantRef.current[reactionStyle] = nextVariantIndex;
 
-            if (reaction !== "hitokoto" && Math.random() < 0.28) {
+            if (!shouldShowPrimaryHitokoto && shouldShowBonusTapHitokoto(stage)) {
                 showHitokoto(stage === "egg" ? getEggTapHitokoto(scriptMode) : getTapHitokoto(scriptMode), 2200, "tap");
             }
 
@@ -310,6 +379,7 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
     const activeSpeech = hitokoto
         ? getHitokotoSpeech(hitokoto, stage, hitokotoReason ?? "tap")
         : speech;
+    const handleSpeechBubbleTap = hitokoto ? clearHitokoto : onSpeechAdvance;
 
     return (
         <div className="flex flex-col items-center select-none">
@@ -339,6 +409,7 @@ export const Ikimono: React.FC<IkimonoProps> = ({ profileId, kanjiMode = false, 
                             lines={activeSpeech.lines}
                             accent={activeSpeech.accent}
                             reactionStyle={activeSpeech.reactionStyle}
+                            onTap={handleSpeechBubbleTap}
                         />
                     )}
                 </AnimatePresence>

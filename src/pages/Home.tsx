@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
 import { getTodayStats, getTotalStats, getWeakPoints } from "../domain/stats/repository";
@@ -11,7 +11,18 @@ import { Ikimono } from "../components/ikimono/Ikimono";
 import { HomeAnimatedBackground } from "../components/home/HomeAnimatedBackground";
 import { MagicTank } from "../components/home/MagicTank";
 import { getHomeMagicEnergyHint, getHomeMagicEnergyState } from "../components/home/homeMagicEnergy";
-import { getHomeFuwafuwaSpeech } from "../components/ikimono/fuwafuwaSpeech";
+import {
+    buildHomeSpeechConversationContext,
+    findHomeSpeechCandidate,
+    getHomeEventSpeech,
+    getHomeFuwafuwaSpeech,
+    type HomeSpeechSelection,
+} from "../components/ikimono/fuwafuwaSpeech";
+import {
+    chooseNextDailyConversation,
+    EMPTY_DAILY_CONVERSATION_STATE,
+    type DailyConversationState,
+} from "../components/ikimono/fuwafuwaDailyConversation";
 import { getSceneText } from "../components/ikimono/sceneText";
 import { Button } from "../components/ui/Button";
 import { UserProfile } from "../domain/types";
@@ -70,11 +81,14 @@ export const Home: React.FC = () => {
     const [showPaperTestModal, setShowPaperTestModal] = useState(false);
     const [pendingPaperTest, setPendingPaperTest] = useState<{ id: string; subject: "math" | "vocab"; level: number } | null>(null);
     const [isMagicDeliveryActive, setIsMagicDeliveryActive] = useState(false);
+    const [dailyConversationState, setDailyConversationState] = useState<DailyConversationState>(EMPTY_DAILY_CONVERSATION_STATE);
+    const [dailySelection, setDailySelection] = useState<HomeSpeechSelection | null>(null);
     const profileId = profile?.id ?? null;
     const isEasy = profile?.uiTextMode === "easy";
     const useKanjiForIkimono = Boolean(profile?.kanjiMode);
     const { scheduleTimeout, clearScheduledTimeouts } = useTimeoutScheduler();
     const magicDeliveryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const dailyConversationTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const todayKey = toLocaleDateKey();
     const t = (kana: string, kanji: string) => (useKanjiForIkimono ? kanji : kana);
@@ -163,6 +177,10 @@ export const Home: React.FC = () => {
                 clearTimeout(magicDeliveryTimerRef.current);
                 magicDeliveryTimerRef.current = null;
             }
+            if (dailyConversationTimerRef.current) {
+                clearTimeout(dailyConversationTimerRef.current);
+                dailyConversationTimerRef.current = null;
+            }
         };
     }, []);
 
@@ -214,20 +232,134 @@ export const Home: React.FC = () => {
         setPendingPaperTest(null);
     };
 
-    const magicEnergy = getHomeMagicEnergyState({
+    const magicEnergy = useMemo(() => getHomeMagicEnergyState({
         todayCount: homeStats.todayCount,
         todayCorrect: homeStats.todayCorrect,
         streak: profile?.streak ?? 0,
         weakCount: homeStats.weakCount,
-    });
-    const scene = getSceneText(profileId, todayKey, homeStats.weakCount, currentEventType, useKanjiForIkimono);
-    const homeSpeech = getHomeFuwafuwaSpeech(scene, currentEventType, homeStats.weakCount, {
+    }), [homeStats.todayCorrect, homeStats.todayCount, homeStats.weakCount, profile?.streak]);
+    const scene = useMemo(
+        () => getSceneText(profileId, todayKey, homeStats.weakCount, currentEventType, useKanjiForIkimono),
+        [profileId, todayKey, homeStats.weakCount, currentEventType, useKanjiForIkimono],
+    );
+    const homeSpeechState = useMemo(() => ({
         percent: magicEnergy.percent,
         isFull: magicEnergy.isFull,
         isSending: isMagicDeliveryActive,
         useKanjiText: useKanjiForIkimono,
-    });
+    }), [isMagicDeliveryActive, magicEnergy.isFull, magicEnergy.percent, useKanjiForIkimono]);
+    const eventSpeech = useMemo(
+        () => getHomeEventSpeech(scene, currentEventType, homeStats.weakCount, homeSpeechState),
+        [scene, currentEventType, homeStats.weakCount, homeSpeechState],
+    );
+    const dailyConversationContext = useMemo(
+        () => buildHomeSpeechConversationContext(scene, homeStats.weakCount, homeSpeechState),
+        [scene, homeStats.weakCount, homeSpeechState],
+    );
+    const dailyCandidateSignature = useMemo(
+        () => dailyConversationContext.candidates
+            .map((candidate) => `${candidate.selection.group}:${candidate.selection.topic}:${candidate.replyId}`)
+            .join("|"),
+        [dailyConversationContext.candidates],
+    );
+    const dailyContextKey = useMemo(
+        () => [
+            profileId ?? "guest",
+            dailyConversationContext.ambientAvailable ? "ambient" : "no-ambient",
+            dailyConversationContext.percent,
+            dailyConversationContext.hasGrowthLite ? "growth" : "no-growth",
+            dailyConversationContext.hasNamingHint ? "naming" : "no-naming",
+            dailyCandidateSignature,
+        ].join("::"),
+        [
+            profileId,
+            dailyConversationContext.ambientAvailable,
+            dailyConversationContext.percent,
+            dailyConversationContext.hasGrowthLite,
+            dailyConversationContext.hasNamingHint,
+            dailyCandidateSignature,
+        ],
+    );
+    const initialDailyConversation = useMemo(
+        () => chooseNextDailyConversation(EMPTY_DAILY_CONVERSATION_STATE, dailyConversationContext, "initial"),
+        [dailyConversationContext],
+    );
+    const resolvedDailySelection = dailySelection ?? initialDailyConversation.candidate?.selection ?? null;
+    const resolvedDailyState = dailySelection ? dailyConversationState : initialDailyConversation.nextState;
+    const dailySpeech = useMemo(() => {
+        if (resolvedDailySelection) {
+            return findHomeSpeechCandidate(dailyConversationContext.candidates, resolvedDailySelection)?.speech ?? null;
+        }
+
+        return initialDailyConversation.candidate?.speech ?? null;
+    }, [dailyConversationContext.candidates, initialDailyConversation.candidate, resolvedDailySelection]);
+    const homeSpeech = eventSpeech
+        ?? dailySpeech
+        ?? getHomeFuwafuwaSpeech(scene, currentEventType, homeStats.weakCount, homeSpeechState);
     const magicHint = getHomeMagicEnergyHint(magicEnergy.percent, useKanjiForIkimono, isMagicDeliveryActive);
+
+    useEffect(() => {
+        const { candidate, nextState } = chooseNextDailyConversation(
+            EMPTY_DAILY_CONVERSATION_STATE,
+            dailyConversationContext,
+            "initial",
+        );
+
+        setDailyConversationState(nextState);
+        setDailySelection(candidate?.selection ?? null);
+    }, [dailyContextKey, dailyConversationContext]);
+
+    useEffect(() => {
+        if (dailyConversationTimerRef.current) {
+            clearTimeout(dailyConversationTimerRef.current);
+            dailyConversationTimerRef.current = null;
+        }
+
+        if (eventSpeech || !resolvedDailySelection) {
+            return;
+        }
+
+        dailyConversationTimerRef.current = setTimeout(() => {
+            const { candidate, nextState } = chooseNextDailyConversation(
+                resolvedDailyState,
+                dailyConversationContext,
+                "tick",
+            );
+
+            if (candidate) {
+                setDailyConversationState(nextState);
+                setDailySelection(candidate.selection);
+            }
+
+            dailyConversationTimerRef.current = null;
+        }, 12000);
+
+        return () => {
+            if (dailyConversationTimerRef.current) {
+                clearTimeout(dailyConversationTimerRef.current);
+                dailyConversationTimerRef.current = null;
+            }
+        };
+    }, [dailyConversationContext, eventSpeech, resolvedDailySelection, resolvedDailyState]);
+
+    const handleAdvanceHomeSpeech = useCallback(() => {
+        if (eventSpeech) {
+            return;
+        }
+
+        const { candidate, nextState } = chooseNextDailyConversation(
+            resolvedDailyState,
+            dailyConversationContext,
+            "tap",
+        );
+
+        if (!candidate) {
+            return;
+        }
+
+        setDailyConversationState(nextState);
+        setDailySelection(candidate.selection);
+    }, [dailyConversationContext, eventSpeech, resolvedDailyState]);
 
     const handleMagicRelease = () => {
         if (!magicEnergy.isFull) return;
@@ -306,7 +438,12 @@ export const Home: React.FC = () => {
                                 </div>
 
                                 <div className="mt-2 flex min-h-0 flex-1 items-center justify-center">
-                                    <Ikimono profileId={profileId} kanjiMode={useKanjiForIkimono} speech={homeSpeech} />
+                                    <Ikimono
+                                        profileId={profileId}
+                                        kanjiMode={useKanjiForIkimono}
+                                        speech={homeSpeech}
+                                        onSpeechAdvance={eventSpeech ? undefined : handleAdvanceHomeSpeech}
+                                    />
                                 </div>
                             </div>
                         </motion.div>
