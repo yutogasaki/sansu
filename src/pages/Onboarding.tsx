@@ -268,15 +268,17 @@ export const Onboarding: React.FC = () => {
                             つづくまなび
                         </p>
                     </div>
-                    <Button onClick={() => setStep("name")} size="xl" className="mx-auto w-full max-w-[220px]">
-                        はじめる
-                    </Button>
-                    <button
-                        onClick={() => navigate(-1)}
-                        className="app-pill mx-auto inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-slate-500 transition-colors hover:text-slate-700"
-                    >
-                        もどる
-                    </button>
+                    <div className="flex flex-col items-center gap-3">
+                        <Button onClick={() => setStep("name")} size="xl" className="w-full max-w-[220px] justify-center">
+                            はじめる
+                        </Button>
+                        <button
+                            onClick={() => navigate(-1)}
+                            className="app-pill inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-slate-500 transition-colors hover:text-slate-700"
+                        >
+                            もどる
+                        </button>
+                    </div>
                 </SurfacePanel>
             </div>
         );

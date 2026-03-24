@@ -45,6 +45,8 @@ export default defineConfig({
             includeAssets: ['icons/icon.svg', 'sounds/*.mp3'],
             manifest: false, // We use public/manifest.json
             workbox: {
+                skipWaiting: true,
+                clientsClaim: true,
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,mp3,woff,woff2}'],
                 runtimeCaching: [
                     {

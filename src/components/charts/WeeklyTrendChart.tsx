@@ -37,20 +37,22 @@ export const WeeklyTrendChart: React.FC<Props> = ({ data, mode }) => {
 
     return (
         <ResponsiveContainer width="100%" height={160}>
-            <LineChart data={data} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
+            <LineChart data={data} margin={{ top: 8, right: 4, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                 <XAxis
                     dataKey="label"
                     tick={{ fontSize: 11, fill: "#94a3b8" }}
                     axisLine={false}
                     tickLine={false}
+                    tickMargin={6}
                 />
                 <YAxis
                     domain={[0, maxVal]}
                     tick={{ fontSize: 10, fill: "#cbd5e1" }}
                     axisLine={false}
                     tickLine={false}
-                    width={30}
+                    tickMargin={6}
+                    width={20}
                 />
                 <Tooltip content={<CustomTooltip mode={mode} />} />
                 <Line

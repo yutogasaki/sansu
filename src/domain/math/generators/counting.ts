@@ -4,10 +4,14 @@ import {
     buildAdditionVisual,
     buildComparisonBase10Visual,
     buildComparisonItemsVisual,
+    buildDotCountVisual,
+    buildItemOrderVisual,
     buildNextNumberVisual,
     buildPreviousNumberVisual,
     buildSequenceFillVisual,
+    buildSingleCountVisual,
     buildSubtractionVisual,
+    buildWhichMoreVisual,
 } from "../problemVisuals";
 import { selectSubtractionPair } from "../subtractionProgress";
 import { selectComparisonPair } from "../comparisonProgress";
@@ -19,37 +23,40 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 0: 5まで数える
     "count_5": () => {
         const n = randomInt(1, 5);
-        const emoji = randomChoice(COUNT_EMOJIS);
-        return createProblem(
-            "count_5",
-            emoji.repeat(n),
-            n.toString(),
-            "number"
-        );
+        const visual = buildSingleCountVisual(n, {
+            prompt: "いくつ ある？",
+            questionText: "いくつ ある？",
+            frameSize: 5,
+            columns: 5,
+            style: "frame",
+            item: { emoji: randomChoice(COUNT_EMOJIS), label: "かず" },
+        });
+        return createProblem("count_5", visual.questionText, n.toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
     },
     // Level 0: ドットを数える（1-10）
     "count_dot": () => {
         const n = randomInt(1, 10);
-        const emoji = randomChoice(COUNT_EMOJIS);
-        return createProblem(
-            "count_dot",
-            emoji.repeat(n),
-            n.toString(),
-            "number"
-        );
+        const visual = buildDotCountVisual(n);
+        return createProblem("count_dot", visual.questionText, n.toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
     },
     // Level 0: どっちが多い？
     "count_which_more": () => {
         let a, b;
         do { a = randomInt(1, 6); b = randomInt(1, 6); } while (a === b);
-        const emojiA = "🍎";
-        const emojiB = "🍊";
-        const q = `${emojiA.repeat(a)} と ${emojiB.repeat(b)}\nおおい のは？`;
-        return createProblem("count_which_more", q, a > b ? "🍎" : "🍊", "choice", {
+        const visual = buildWhichMoreVisual(a, b);
+        const left = visual.questionVisual.kind === "comparison-items" ? visual.questionVisual.groups[0] : undefined;
+        const right = visual.questionVisual.kind === "comparison-items" ? visual.questionVisual.groups[1] : undefined;
+        return createProblem("count_which_more", visual.questionText, a > b ? (left?.emoji || "🍎") : (right?.emoji || "🍊"), "choice", {
             choices: [
-                { label: `🍎 (${a}こ)`, value: "🍎" },
-                { label: `🍊 (${b}こ)`, value: "🍊" },
+                { label: `${left?.emoji || "🍎"} ${left?.label || ""}`.trim(), value: left?.emoji || "🍎" },
+                { label: `${right?.emoji || "🍊"} ${right?.label || ""}`.trim(), value: right?.emoji || "🍊" },
             ]
+        }, {
+            questionVisual: visual.questionVisual
         });
     },
     // Level 0: すうじをよむ（数字→読み方の選択）
@@ -80,11 +87,11 @@ export const generators: Record<string, GeneratorFn> = {
             if (!nums.includes(n)) nums.push(n);
         }
         const sorted = [...nums].sort((a, b) => a - b);
-        // シャッフルして表示
         const shuffled = shuffleArray(nums);
-        const q = `ちいさい じゅんに ならべよう\n${shuffled.join("　")}`;
-        // 一番小さい数を答えさせる
-        return createProblem("count_order", q, sorted[0].toString(), "number");
+        const visual = buildItemOrderVisual(shuffled);
+        return createProblem("count_order", visual.questionText, sorted[0].toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
     },
     // Level 0: なかまはずれ（形・色）
     "count_oddone": () => {
@@ -165,12 +172,17 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 1: 数を数える（1-10）
     "count_10": () => {
         const n = randomInt(1, 10);
-        return createProblem(
-            "count_10",
-            `🍎`.repeat(n), // Placeholder graphic
-            n.toString(),
-            "number"
-        );
+        const visual = buildSingleCountVisual(n, {
+            prompt: "いくつ ある？",
+            questionText: "いくつ ある？",
+            frameSize: 10,
+            columns: 5,
+            style: "frame",
+            item: { emoji: randomChoice(COUNT_EMOJIS), label: "かず" },
+        });
+        return createProblem("count_10", visual.questionText, n.toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
     },
     // Level 1: つぎのかず（1-9）
     "count_next_10": () => {

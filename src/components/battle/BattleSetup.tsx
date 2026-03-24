@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Badge } from "../ui/Badge";
 import { Button } from "../ui/Button";
@@ -44,6 +44,7 @@ const MODE_COPY: Record<BattleGameMode, { title: string; description: string; ba
 };
 
 interface BattleSetupProps {
+    initialMode?: BattleGameMode;
     onStart: (p1: PlayerConfig, p2: PlayerConfig, mode: BattleGameMode) => void;
     onBack: () => void;
 }
@@ -182,10 +183,18 @@ const PlayerSetupPanel: React.FC<PlayerSetupPanelProps> = ({
     );
 };
 
-export const BattleSetup: React.FC<BattleSetupProps> = ({ onStart, onBack }) => {
+export const BattleSetup: React.FC<BattleSetupProps> = ({
+    initialMode = "tug_of_war",
+    onStart,
+    onBack,
+}) => {
     const [p1, setP1] = useState<PlayerSetup>({ name: "", grade: null, emoji: "🐱", subject: "math" });
     const [p2, setP2] = useState<PlayerSetup>({ name: "", grade: null, emoji: "🐶", subject: "math" });
-    const [mode, setMode] = useState<BattleGameMode>("tug_of_war");
+    const [mode, setMode] = useState<BattleGameMode>(initialMode);
+
+    useEffect(() => {
+        setMode(initialMode);
+    }, [initialMode]);
 
     const canStart = p1.grade !== null && p2.grade !== null && p1.emoji && p2.emoji;
     const currentMode = MODE_COPY[mode];

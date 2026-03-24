@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useReducer } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { OrientationGate } from "../components/battle/OrientationGate";
 import { BattleSetup } from "../components/battle/BattleSetup";
 import { BattleCountdown } from "../components/battle/BattleCountdown";
@@ -15,7 +15,10 @@ import { playSound } from "../utils/audio";
 
 export const Battle: React.FC = () => {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const [state, dispatch] = useReducer(battleReducer, undefined, createInitialBattleState);
+    const requestedMode = searchParams.get("mode");
+    const initialMode: BattleGameMode = requestedMode === "boss_coop" ? "boss_coop" : "tug_of_war";
 
     const createProblemForPlayer = useCallback((config: PlayerConfig) => (
         generateBattleProblem(config.grade, config.subject)
@@ -86,8 +89,8 @@ export const Battle: React.FC = () => {
         dispatch({ type: "RESET" });
     }, []);
 
-    const handleBackToHome = useCallback(() => {
-        navigate("/");
+    const handleBackToHub = useCallback(() => {
+        navigate("/battle");
     }, [navigate]);
 
     useEffect(() => {
@@ -103,8 +106,9 @@ export const Battle: React.FC = () => {
             <div className="h-screen w-screen overflow-hidden bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.2),transparent_30%),linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0.06))]">
                 {state.phase === "setup" && (
                     <BattleSetup
+                        initialMode={initialMode}
                         onStart={handleStart}
-                        onBack={() => navigate("/")}
+                        onBack={() => navigate("/battle")}
                     />
                 )}
 
@@ -135,7 +139,7 @@ export const Battle: React.FC = () => {
                     <BattleResult
                         state={state}
                         onPlayAgain={handlePlayAgain}
-                        onBackToHome={handleBackToHome}
+                        onBackToHome={handleBackToHub}
                     />
                 )}
             </div>

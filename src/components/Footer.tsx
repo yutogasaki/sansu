@@ -21,7 +21,7 @@ export const Footer: React.FC = () => {
     ];
 
     const rightTabs: TabItem[] = [
-        { to: "/battle", icon: Icons.Play, label: "たいせん" },
+        { to: "/battle", icon: Icons.Play, label: "Game" },
         { to: "/settings", icon: Icons.Settings, label: "せってい", activePaths: ["/settings", "/parents", "/dev"] },
     ];
 

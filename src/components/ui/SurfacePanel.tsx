@@ -50,14 +50,14 @@ export const SurfacePanelHeader: React.FC<SurfacePanelHeaderProps> = ({
     action,
     ...props
 }) => (
-    <div className={cn("flex items-start justify-between gap-4", className)} {...props}>
-        <div className="min-w-0">
+    <div className={cn("flex flex-wrap items-start justify-between gap-3", className)} {...props}>
+        <div className="min-w-0 flex-1 basis-[12rem]">
             <h3 className="text-[15px] font-black tracking-[-0.01em] text-slate-800">{title}</h3>
             {description ? (
                 <p className="mt-1 text-xs font-medium leading-5 text-slate-500">{description}</p>
             ) : null}
         </div>
-        {action ? <div className="shrink-0">{action}</div> : null}
+        {action ? <div className="shrink-0 mobile:flex mobile:w-full mobile:justify-end">{action}</div> : null}
     </div>
 );
 
@@ -100,16 +100,16 @@ export const SettingRow: React.FC<SettingRowProps> = ({
     ...props
 }) => (
     <div
-        className={cn("flex items-start justify-between gap-4", className)}
+        className={cn("flex flex-wrap items-start justify-between gap-3", className)}
         {...props}
     >
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1 basis-[12rem]">
             <div className="font-bold text-slate-700">{title}</div>
             {description ? (
                 <p className="mt-1 text-xs leading-5 text-slate-500">{description}</p>
             ) : null}
         </div>
-        {action ? <div className="shrink-0">{action}</div> : null}
+        {action ? <div className="shrink-0 mobile:flex mobile:w-full mobile:justify-end">{action}</div> : null}
     </div>
 );
 
@@ -131,16 +131,25 @@ export function SegmentedControl<T extends string>({
     onChange,
     ...props
 }: SegmentedControlProps<T>) {
+    const gridClassName =
+        options.length <= 2
+            ? "grid-cols-2"
+            : options.length === 3
+                ? "grid-cols-2 land:grid-cols-3 sm:grid-cols-3"
+                : "grid-cols-2 sm:grid-cols-4";
+
     return (
         <div
             className={cn(
-                "flex rounded-[16px] border border-white/80 bg-white/55 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.38)]",
+                "grid gap-1.5 rounded-[16px] border border-white/80 bg-white/55 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.38)]",
+                gridClassName,
                 className
             )}
             {...props}
         >
-            {options.map((option) => {
+            {options.map((option, index) => {
                 const isActive = option.value === value;
+                const isLastMobileWideOption = options.length === 3 && index === options.length - 1;
 
                 return (
                     <button
@@ -148,7 +157,8 @@ export function SegmentedControl<T extends string>({
                         type="button"
                         onClick={() => onChange(option.value)}
                         className={cn(
-                            "flex-1 rounded-[12px] px-3 py-2 text-sm font-bold transition-all",
+                            "min-w-0 rounded-[12px] px-3 py-2.5 text-center text-sm font-bold leading-4 transition-all",
+                            isLastMobileWideOption && "col-span-2 land:col-span-1 sm:col-span-1",
                             isActive
                                 ? "bg-white text-slate-800 shadow-[0_10px_22px_-16px_rgba(15,23,42,0.32)]"
                                 : "text-slate-400 hover:text-slate-600"

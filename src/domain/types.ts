@@ -148,6 +148,14 @@ export interface ProblemVisualSequenceSlot {
 
 export type ProblemVisual =
     | {
+        kind: "single-items";
+        prompt?: string;
+        group: ProblemVisualGroup;
+        columns?: number;
+        frameSize?: number;
+        style?: "grid" | "frame";
+    }
+    | {
         kind: "addition-items";
         prompt?: string;
         groups: ProblemVisualGroup[];
@@ -171,6 +179,11 @@ export type ProblemVisual =
         kind: "number-sequence";
         prompt?: string;
         slots: ProblemVisualSequenceSlot[];
+    }
+    | {
+        kind: "item-order";
+        prompt?: string;
+        groups: ProblemVisualGroup[];
     };
 
 /**

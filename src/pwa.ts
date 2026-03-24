@@ -13,6 +13,15 @@ type AppVersionPayload = {
     version?: string
 }
 
+const reloadForUpdate = () => {
+    if (hasTriggeredReload) {
+        return
+    }
+
+    hasTriggeredReload = true
+    window.location.reload()
+}
+
 const shouldCheckForUpdates = () => (
     document.visibilityState === 'visible'
     && navigator.onLine
@@ -46,8 +55,7 @@ const checkForAppVersionUpdate = async () => {
             return
         }
 
-        hasTriggeredReload = true
-        window.location.reload()
+        reloadForUpdate()
     } catch {
         // Ignore transient network errors and retry on the next trigger.
     }
@@ -78,17 +86,24 @@ export const registerPWA = () => {
         updateViaCache: 'none',
     })
 
+    workbox.addEventListener('waiting', () => {
+        workbox.messageSkipWaiting()
+    })
+
+    workbox.addEventListener('controlling', (event) => {
+        if (!event.isUpdate && !event.isExternal) {
+            return
+        }
+
+        reloadForUpdate()
+    })
+
     workbox.addEventListener('activated', (event) => {
         if (!event.isUpdate && !event.isExternal) {
             return
         }
 
-        if (hasTriggeredReload) {
-            return
-        }
-
-        hasTriggeredReload = true
-        window.location.reload()
+        reloadForUpdate()
     })
 
     void workbox.register({ immediate: true }).then((registration) => {

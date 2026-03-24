@@ -8,7 +8,39 @@ const COUNTABLE_ITEMS = [
     { emoji: "🍐", label: "なし" },
 ];
 
+const DOT_ITEM = { emoji: "●", label: "てん" };
+
 const pickCountableItem = () => randomChoice(COUNTABLE_ITEMS);
+
+export const buildSingleCountVisual = (
+    count: number,
+    options?: {
+        prompt?: string;
+        frameSize?: number;
+        columns?: number;
+        style?: "grid" | "frame";
+        item?: { emoji: string; label: string };
+        questionText?: string;
+    }
+): { questionText: string; questionVisual: ProblemVisual } => {
+    const item = options?.item || pickCountableItem();
+
+    return {
+        questionText: options?.questionText || "いくつ ある？",
+        questionVisual: {
+            kind: "single-items",
+            prompt: options?.prompt || "いくつ ある？",
+            columns: options?.columns,
+            frameSize: options?.frameSize,
+            style: options?.style || "grid",
+            group: {
+                emoji: item.emoji,
+                label: item.label,
+                count,
+            },
+        },
+    };
+};
 
 export const buildAdditionVisual = (a: number, b: number): { questionText: string; questionVisual: ProblemVisual } => {
     const item = pickCountableItem();
@@ -55,6 +87,23 @@ export const buildComparisonItemsVisual = (a: number, b: number): { questionText
             groups: [
                 { emoji: item.emoji, label: item.label, count: a },
                 { emoji: item.emoji, label: item.label, count: b },
+            ],
+        },
+    };
+};
+
+export const buildWhichMoreVisual = (a: number, b: number): { questionText: string; questionVisual: ProblemVisual } => {
+    const leftItem = pickCountableItem();
+    const rightItem = randomChoice(COUNTABLE_ITEMS.filter(item => item.emoji !== leftItem.emoji));
+
+    return {
+        questionText: "どちらが おおい？",
+        questionVisual: {
+            kind: "comparison-items",
+            prompt: "おおい のは どっち？",
+            groups: [
+                { emoji: leftItem.emoji, label: leftItem.label, count: a },
+                { emoji: rightItem.emoji, label: rightItem.label, count: b },
             ],
         },
     };
@@ -107,3 +156,29 @@ export const buildSequenceFillVisual = (
         })),
     },
 });
+
+export const buildItemOrderVisual = (counts: number[]): { questionText: string; questionVisual: ProblemVisual } => {
+    const item = pickCountableItem();
+
+    return {
+        questionText: "いちばん ちいさい かずは？",
+        questionVisual: {
+            kind: "item-order",
+            prompt: "いちばん ちいさい かずは？",
+            groups: counts.map(count => ({
+                emoji: item.emoji,
+                label: item.label,
+                count,
+            })),
+        },
+    };
+};
+
+export const buildDotCountVisual = (count: number): { questionText: string; questionVisual: ProblemVisual } =>
+    buildSingleCountVisual(count, {
+        item: DOT_ITEM,
+        prompt: "てんは いくつ？",
+        questionText: "てんは いくつ？",
+        style: "grid",
+        columns: 5,
+    });

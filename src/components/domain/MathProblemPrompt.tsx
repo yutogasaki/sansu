@@ -40,6 +40,42 @@ const ItemVisualCard: React.FC<{
     );
 };
 
+const SingleItemsCard: React.FC<{
+    group: ProblemVisualGroup;
+    columns?: number;
+    frameSize?: number;
+    style?: "grid" | "frame";
+}> = ({ group, columns = 5, frameSize, style = "grid" }) => {
+    const slotCount = style === "frame" ? Math.max(frameSize || group.count, group.count) : group.count;
+
+    return (
+        <div className="rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+            <div
+                className="grid justify-items-center gap-2"
+                style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
+            >
+                {Array.from({ length: slotCount }, (_, index) => {
+                    const isFilled = index < group.count;
+
+                    return (
+                        <span
+                            key={`${group.emoji}-${index}`}
+                            className={cn(
+                                "flex h-10 w-10 items-center justify-center rounded-xl text-[clamp(20px,3.6vw,28px)] leading-none",
+                                isFilled
+                                    ? "border border-white/80 bg-white/90 text-slate-700"
+                                    : "border border-dashed border-slate-200 bg-white/40 text-transparent"
+                            )}
+                        >
+                            {group.emoji}
+                        </span>
+                    );
+                })}
+            </div>
+        </div>
+    );
+};
+
 const BaseTenValueCard: React.FC<{
     group: ProblemVisualValueGroup;
 }> = ({ group }) => {
@@ -100,6 +136,20 @@ const NumberSequenceCard: React.FC<{
 
 export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, className }) => {
     const visual = problem?.questionVisual;
+
+    if (visual?.kind === "single-items") {
+        return (
+            <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
+                <SingleItemsCard
+                    group={visual.group}
+                    columns={visual.columns}
+                    frameSize={visual.frameSize}
+                    style={visual.style}
+                />
+                <PromptCaption text={visual.prompt || "いくつ ある？"} />
+            </div>
+        );
+    }
 
     if (visual?.kind === "addition-items") {
         const [left, right] = visual.groups;
@@ -166,6 +216,19 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
             <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
                 <NumberSequenceCard slots={visual.slots} />
                 <PromptCaption text={visual.prompt || "つぎの かずは？"} />
+            </div>
+        );
+    }
+
+    if (visual?.kind === "item-order") {
+        return (
+            <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
+                <div className="flex w-full flex-wrap items-center justify-center gap-3">
+                    {visual.groups.map((group, index) => (
+                        <ItemVisualCard key={`${group.emoji}-${group.count}-${index}`} group={group} />
+                    ))}
+                </div>
+                <PromptCaption text={visual.prompt || "いちばん ちいさい かずは？"} />
             </div>
         );
     }

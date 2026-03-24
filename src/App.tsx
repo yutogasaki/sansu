@@ -10,6 +10,7 @@ import { CurriculumSettings } from "./pages/CurriculumSettings";
 import { DevMode } from "./pages/DevMode";
 import { ParentsPage } from "./pages/parents/ParentsPage";
 import { Battle } from "./pages/Battle";
+import { GameHub } from "./pages/GameHub";
 import { loadSounds } from './utils/audio';
 import { getActiveProfileId } from "./domain/user/repository";
 import { applyThemeForCurrentTime, getMsUntilNextThemeCheck } from "./utils/theme";
@@ -57,7 +58,16 @@ function App() {
                     <Route path="/onboarding" element={<Onboarding />} />
 
                     <Route path="/battle" element={<Layout />}>
-                        <Route index element={<Battle />} />
+                        <Route path="play" element={
+                            <PrivateRoute>
+                                <Battle />
+                            </PrivateRoute>
+                        } />
+                        <Route index element={
+                            <PrivateRoute>
+                                <GameHub />
+                            </PrivateRoute>
+                        } />
                     </Route>
 
                     <Route element={<Layout />}>

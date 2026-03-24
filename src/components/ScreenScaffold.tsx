@@ -19,7 +19,7 @@ interface ScreenScaffoldProps {
 }
 
 const footerSpacingClassMap: Record<FooterSpacing, string> = {
-    nav: "pb-[var(--screen-bottom-with-footer)]",
+    nav: "pb-[var(--screen-bottom-padding)]",
     base: "pb-[var(--screen-bottom-padding)]",
     none: "",
 };
