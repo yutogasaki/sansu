@@ -9,13 +9,15 @@ describe("subtractionProgress", () => {
     it("starts sub_tiny with easy take-away problems", () => {
         expect(selectSubtractionPair("sub_tiny", 0)).toEqual([2, 1]);
         expect(selectSubtractionPair("sub_tiny", 1)).toEqual([3, 1]);
-        expect(selectSubtractionPair("sub_tiny", 2)).toEqual([3, 2]);
+        expect(selectSubtractionPair("sub_tiny", 2)).toEqual([4, 1]);
+        expect(selectSubtractionPair("sub_tiny", 4)).toEqual([3, 2]);
     });
 
     it("starts sub_1d1d_nc by subtracting 1 and 2 first", () => {
         expect(selectSubtractionPair("sub_1d1d_nc", 0)).toEqual([2, 1]);
         expect(selectSubtractionPair("sub_1d1d_nc", 3)).toEqual([5, 1]);
-        expect(selectSubtractionPair("sub_1d1d_nc", 4)).toEqual([3, 2]);
+        expect(selectSubtractionPair("sub_1d1d_nc", 7)).toEqual([9, 1]);
+        expect(selectSubtractionPair("sub_1d1d_nc", 8)).toEqual([3, 2]);
     });
 
     it("introduces sub_1d1d_c with the smallest cross-ten step first", () => {
@@ -29,5 +31,16 @@ describe("subtractionProgress", () => {
         const [a, b] = selectSubtractionPair("sub_1d1d_c", 99);
         expect(a).toBeGreaterThanOrEqual(11);
         expect(b).toBeGreaterThan(a % 10);
+    });
+
+    it("keeps mid-progress no-carry problems in the subtract-1 and subtract-2/3 bands first", () => {
+        vi.spyOn(Math, "random").mockReturnValue(0);
+        const [, phase1B] = selectSubtractionPair("sub_1d1d_nc", 25);
+        const [phase2A, phase2B] = selectSubtractionPair("sub_1d1d_nc", 35);
+
+        expect(phase1B).toBe(1);
+        expect(phase2B).toBeGreaterThanOrEqual(2);
+        expect(phase2B).toBeLessThanOrEqual(3);
+        expect(phase2A).toBeGreaterThan(phase2B);
     });
 });

@@ -3,10 +3,10 @@ export type SubtractionPair = readonly [number, number];
 const SUB_TINY_SEQUENCE: SubtractionPair[] = [
     [2, 1],
     [3, 1],
-    [3, 2],
     [4, 1],
-    [4, 2],
     [5, 1],
+    [3, 2],
+    [4, 2],
     [4, 3],
     [5, 2],
     [5, 3],
@@ -18,14 +18,23 @@ const SUB_1D_NO_CARRY_SEQUENCE: SubtractionPair[] = [
     [3, 1],
     [4, 1],
     [5, 1],
+    [6, 1],
+    [7, 1],
+    [8, 1],
+    [9, 1],
     [3, 2],
     [4, 2],
     [5, 2],
     [6, 2],
+    [7, 2],
+    [8, 2],
+    [9, 2],
     [4, 3],
     [5, 3],
     [6, 3],
     [7, 3],
+    [8, 3],
+    [9, 3],
 ];
 
 const buildPairs = (predicate: (a: number, b: number) => boolean): SubtractionPair[] => {
@@ -47,8 +56,12 @@ const pickRandom = (pairs: SubtractionPair[]): SubtractionPair => {
     return pairs[index] || pairs[0];
 };
 
-const SUB_TINY_POOL = buildPairs((a, b) => a >= 2 && a <= 5 && b < a);
-const SUB_1D_NO_CARRY_POOL = buildPairs((a, b) => a >= 1 && a <= 9 && b <= a);
+const SUB_TINY_PHASE_1_POOL = buildPairs((a, b) => a >= 2 && a <= 5 && b === 1);
+const SUB_TINY_PHASE_2_POOL = buildPairs((a, b) => a >= 3 && a <= 5 && b >= 2 && b < a);
+const SUB_TINY_POOL = [...SUB_TINY_PHASE_1_POOL, ...SUB_TINY_PHASE_2_POOL];
+const SUB_1D_NO_CARRY_PHASE_1_POOL = buildPairs((a, b) => a >= 2 && a <= 9 && b === 1);
+const SUB_1D_NO_CARRY_PHASE_2_POOL = buildPairs((a, b) => a >= 3 && a <= 9 && b >= 2 && b <= 3);
+const SUB_1D_NO_CARRY_POOL = buildPairs((a, b) => a >= 2 && a <= 9 && b < a);
 const SUB_1D_CARRY_PHASE_1 = buildPairs((a, b) => a >= 11 && a <= 18 && b > (a % 10) && b - (a % 10) === 1);
 const SUB_1D_CARRY_PHASE_2 = buildPairs((a, b) => a >= 11 && a <= 18 && b > (a % 10) && b - (a % 10) === 2);
 const SUB_1D_CARRY_PHASE_3 = buildPairs((a, b) => a >= 11 && a <= 18 && b > (a % 10) && b - (a % 10) >= 3);
@@ -60,12 +73,24 @@ export const selectSubtractionPair = (skillId: string, totalAnswers?: number): S
             return SUB_TINY_SEQUENCE[totalAnswers];
         }
 
+        if (typeof totalAnswers === "number" && totalAnswers < SUB_TINY_SEQUENCE.length + 6) {
+            return pickRandom(SUB_TINY_PHASE_1_POOL);
+        }
+
         return pickRandom(SUB_TINY_POOL);
     }
 
     if (skillId === "sub_1d1d_nc") {
         if (typeof totalAnswers === "number" && totalAnswers < SUB_1D_NO_CARRY_SEQUENCE.length) {
             return SUB_1D_NO_CARRY_SEQUENCE[totalAnswers];
+        }
+
+        if (typeof totalAnswers === "number" && totalAnswers < SUB_1D_NO_CARRY_SEQUENCE.length + 10) {
+            return pickRandom(SUB_1D_NO_CARRY_PHASE_1_POOL);
+        }
+
+        if (typeof totalAnswers === "number" && totalAnswers < SUB_1D_NO_CARRY_SEQUENCE.length + 20) {
+            return pickRandom(SUB_1D_NO_CARRY_PHASE_2_POOL);
         }
 
         return pickRandom(SUB_1D_NO_CARRY_POOL);

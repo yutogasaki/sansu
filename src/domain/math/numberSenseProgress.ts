@@ -3,6 +3,25 @@ export interface SameCountMatchPattern {
     options: number[];
 }
 
+export interface CountReadPattern {
+    target: number;
+    options: number[];
+}
+
+export interface WhichMorePattern {
+    left: number;
+    right: number;
+}
+
+export interface RecognitionPattern {
+    target: string;
+    options: string[];
+}
+
+export interface CountOrderPattern {
+    values: number[];
+}
+
 export interface ShareEqualPattern {
     total: number;
     groups: number;
@@ -60,6 +79,9 @@ export interface WeightComparePattern {
 }
 
 const ONE_MORE_SEQUENCE = [1, 2, 3, 4, 5];
+const COUNT_5_SEQUENCE = [1, 2, 3, 4, 5];
+const COUNT_DOT_SEQUENCE = [1, 2, 3, 4, 5, 6];
+const COUNT_10_SEQUENCE = [6, 7, 8, 9, 10];
 const TWO_MORE_SEQUENCE = [1, 2, 3, 4, 5];
 const ONE_LESS_SEQUENCE = [2, 3, 4, 5, 6];
 const TWO_LESS_SEQUENCE = [3, 4, 5, 6, 7];
@@ -73,6 +95,64 @@ const SAME_COUNT_MATCH_SEQUENCE: SameCountMatchPattern[] = [
     { target: 3, options: [1, 5, 3] },
     { target: 4, options: [2, 4, 1] },
     { target: 5, options: [5, 2, 3] },
+];
+
+const COUNT_READ_SEQUENCE: CountReadPattern[] = [
+    { target: 1, options: [1, 2, 3] },
+    { target: 2, options: [1, 2, 3] },
+    { target: 3, options: [1, 2, 3] },
+    { target: 4, options: [4, 5, 6] },
+    { target: 5, options: [4, 5, 6] },
+    { target: 6, options: [4, 5, 6] },
+    { target: 7, options: [7, 8, 9] },
+    { target: 8, options: [7, 8, 9] },
+    { target: 9, options: [8, 9, 10] },
+    { target: 10, options: [8, 9, 10] },
+];
+
+const WHICH_MORE_SEQUENCE: WhichMorePattern[] = [
+    { left: 4, right: 1 },
+    { left: 1, right: 4 },
+    { left: 5, right: 2 },
+    { left: 2, right: 5 },
+    { left: 3, right: 1 },
+    { left: 1, right: 3 },
+];
+
+const SHAPE_RECOGNITION_SEQUENCE: RecognitionPattern[] = [
+    { target: "まる", options: ["まる", "しかく"] },
+    { target: "しかく", options: ["まる", "しかく"] },
+    { target: "さんかく", options: ["さんかく", "まる"] },
+    { target: "まる", options: ["まる", "さんかく", "しかく"] },
+    { target: "しかく", options: ["まる", "しかく", "さんかく"] },
+    { target: "さんかく", options: ["まる", "さんかく", "しかく"] },
+];
+
+const COLOR_RECOGNITION_SEQUENCE: RecognitionPattern[] = [
+    { target: "あか", options: ["あか", "あお"] },
+    { target: "あお", options: ["あか", "あお"] },
+    { target: "きいろ", options: ["あか", "きいろ", "あお"] },
+    { target: "みどり", options: ["あお", "みどり", "きいろ"] },
+    { target: "オレンジ", options: ["オレンジ", "あか", "きいろ"] },
+    { target: "むらさき", options: ["むらさき", "あお", "あか"] },
+];
+
+const PAIR_RECOGNITION_SEQUENCE: RecognitionPattern[] = [
+    { target: "🍎", options: ["🍎", "🐶"] },
+    { target: "🐶", options: ["🍎", "🐶"] },
+    { target: "⭐", options: ["⭐", "🌙", "🍎"] },
+    { target: "🌙", options: ["⭐", "🌙", "🐟"] },
+    { target: "🍊", options: ["🍊", "🍇", "🍌"] },
+    { target: "🐟", options: ["🐟", "🐦", "🌸"] },
+];
+
+const COUNT_ORDER_SEQUENCE: CountOrderPattern[] = [
+    { values: [1, 4, 7] },
+    { values: [2, 5, 8] },
+    { values: [1, 3, 6] },
+    { values: [2, 4, 7] },
+    { values: [3, 6, 9] },
+    { values: [1, 5, 8] },
 ];
 
 const SHARE_EQUAL_SEQUENCE: ShareEqualPattern[] = [
@@ -191,6 +271,20 @@ const shuffle = <T,>(items: T[]): T[] => {
 const buildCountRange = (max: number): number[] =>
     Array.from({ length: max }, (_, index) => index + 1);
 
+const buildDistinctTriplePool = (min: number, max: number, minimumGap: number): CountOrderPattern[] => {
+    const triples: CountOrderPattern[] = [];
+
+    for (let a = min; a <= max; a += 1) {
+        for (let b = a + minimumGap; b <= max; b += 1) {
+            for (let c = b + minimumGap; c <= max; c += 1) {
+                triples.push({ values: [a, b, c] });
+            }
+        }
+    }
+
+    return triples;
+};
+
 const buildDistinctPairPool = (minimumGap: number, min = 2, max = 8): { left: number; right: number }[] => {
     const pairs: { left: number; right: number }[] = [];
 
@@ -231,6 +325,96 @@ export const selectSameCountMatchPattern = (totalAnswers?: number): SameCountMat
         target,
         options: shuffle([target, ...distractors]),
     };
+};
+
+export const selectCount5Target = (totalAnswers?: number): number => {
+    if (typeof totalAnswers === "number" && totalAnswers < COUNT_5_SEQUENCE.length) {
+        return COUNT_5_SEQUENCE[totalAnswers] || 1;
+    }
+
+    return pickRandom(buildCountRange(5));
+};
+
+export const selectDotCountTarget = (totalAnswers?: number): number => {
+    if (typeof totalAnswers === "number" && totalAnswers < COUNT_DOT_SEQUENCE.length) {
+        return COUNT_DOT_SEQUENCE[totalAnswers] || 1;
+    }
+
+    const max = typeof totalAnswers === "number" && totalAnswers < 16 ? 6 : 10;
+    return pickRandom(buildCountRange(max));
+};
+
+export const selectCount10Target = (totalAnswers?: number): number => {
+    if (typeof totalAnswers === "number" && totalAnswers < COUNT_10_SEQUENCE.length) {
+        return COUNT_10_SEQUENCE[totalAnswers] || 6;
+    }
+
+    const min = typeof totalAnswers === "number" && totalAnswers < 16 ? 4 : 1;
+    return pickRandom(Array.from({ length: 10 - min + 1 }, (_, index) => min + index));
+};
+
+export const selectCountReadPattern = (totalAnswers?: number): CountReadPattern => {
+    if (typeof totalAnswers === "number" && totalAnswers < COUNT_READ_SEQUENCE.length) {
+        return COUNT_READ_SEQUENCE[totalAnswers];
+    }
+
+    const max = typeof totalAnswers === "number" && totalAnswers < 16 ? 6 : 10;
+    const target = pickRandom(buildCountRange(max));
+    const distractors = pickDistractors(target, max, 1);
+
+    return {
+        target,
+        options: shuffle([target, ...distractors]),
+    };
+};
+
+export const selectWhichMorePattern = (totalAnswers?: number): WhichMorePattern => {
+    if (typeof totalAnswers === "number" && totalAnswers < WHICH_MORE_SEQUENCE.length) {
+        return WHICH_MORE_SEQUENCE[totalAnswers];
+    }
+
+    const pool = typeof totalAnswers === "number" && totalAnswers < 16
+        ? buildDistinctPairPool(2, 1, 5)
+        : buildDistinctPairPool(1, 1, 6);
+
+    return pickRandom(pool);
+};
+
+export const selectShapeRecognitionPattern = (totalAnswers?: number): RecognitionPattern => {
+    if (typeof totalAnswers === "number" && totalAnswers < SHAPE_RECOGNITION_SEQUENCE.length) {
+        return SHAPE_RECOGNITION_SEQUENCE[totalAnswers];
+    }
+
+    const easyPool = SHAPE_RECOGNITION_SEQUENCE.slice(0, 4);
+    return pickRandom(typeof totalAnswers === "number" && totalAnswers < 16 ? easyPool : SHAPE_RECOGNITION_SEQUENCE);
+};
+
+export const selectColorRecognitionPattern = (totalAnswers?: number): RecognitionPattern => {
+    if (typeof totalAnswers === "number" && totalAnswers < COLOR_RECOGNITION_SEQUENCE.length) {
+        return COLOR_RECOGNITION_SEQUENCE[totalAnswers];
+    }
+
+    const easyPool = COLOR_RECOGNITION_SEQUENCE.slice(0, 4);
+    return pickRandom(typeof totalAnswers === "number" && totalAnswers < 16 ? easyPool : COLOR_RECOGNITION_SEQUENCE);
+};
+
+export const selectPairRecognitionPattern = (totalAnswers?: number): RecognitionPattern => {
+    if (typeof totalAnswers === "number" && totalAnswers < PAIR_RECOGNITION_SEQUENCE.length) {
+        return PAIR_RECOGNITION_SEQUENCE[totalAnswers];
+    }
+
+    const easyPool = PAIR_RECOGNITION_SEQUENCE.slice(0, 4);
+    return pickRandom(typeof totalAnswers === "number" && totalAnswers < 16 ? easyPool : PAIR_RECOGNITION_SEQUENCE);
+};
+
+export const selectCountOrderPattern = (totalAnswers?: number): CountOrderPattern => {
+    if (typeof totalAnswers === "number" && totalAnswers < COUNT_ORDER_SEQUENCE.length) {
+        return COUNT_ORDER_SEQUENCE[totalAnswers] || COUNT_ORDER_SEQUENCE[0];
+    }
+
+    const easyPool = buildDistinctTriplePool(1, 9, 2);
+    const fullPool = buildDistinctTriplePool(1, 9, 1);
+    return pickRandom(typeof totalAnswers === "number" && totalAnswers < 16 ? easyPool : fullPool);
 };
 
 export const selectShareEqualPattern = (totalAnswers?: number): ShareEqualPattern => {

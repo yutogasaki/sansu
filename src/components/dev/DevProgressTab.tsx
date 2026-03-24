@@ -246,7 +246,7 @@ export const DevProgressTab: React.FC<DevProgressTabProps> = ({ profile, onUpdat
                                 {
                                     id: crypto.randomUUID(),
                                     subject: "math" as const,
-                                    level: Math.max(1, Math.min(20, profile.mathMainLevel || 1)),
+                                    level: Math.max(0, Math.min(20, profile.mathMainLevel ?? 1)),
                                     createdAt: new Date().toISOString(),
                                 },
                             ];

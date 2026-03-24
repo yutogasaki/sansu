@@ -451,7 +451,7 @@ export const Settings: React.FC = () => {
 
                 {/* ── 学習 ── */}
                 <SurfacePanel className="overflow-hidden rounded-[28px] p-0">
-                    {accordionHeader("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel} · Lv.${profile?.mathMainLevel || 1}/${profile?.vocabMainLevel || 1}`)}
+                    {accordionHeader("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel} · Lv.${profile?.mathMainLevel ?? 1}/${profile?.vocabMainLevel ?? 1}`)}
                     <AnimatePresence>
                         {openSection === "learning" && (
                             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
@@ -476,8 +476,8 @@ export const Settings: React.FC = () => {
                                     <SurfacePanelHeader title={t("レベル", "レベル")} />
                                     <div className="grid gap-3">
                                         {[
-                                            { label: t("さんすう", "算数"), level: profile?.mathMainLevel || 1 },
-                                            { label: t("えいご", "英語"), level: profile?.vocabMainLevel || 1 },
+                                            { label: t("さんすう", "算数"), level: profile?.mathMainLevel ?? 1 },
+                                            { label: t("えいご", "英語"), level: profile?.vocabMainLevel ?? 1 },
                                         ].map((item) => (
                                             <InsetPanel key={item.label} className="flex items-center justify-between px-4 py-3">
                                                 <div className="font-bold text-slate-600">{item.label} <span className="text-lg font-black text-slate-800">Lv.{item.level}</span></div>
@@ -537,8 +537,8 @@ export const Settings: React.FC = () => {
                                     </InsetPanel>
                                     <div className="grid grid-cols-1 gap-3 land:grid-cols-2">
                                         {([
-                                            { subject: "math" as const, title: t("さんすう", "算数"), level: profile?.mathMainLevel || 1, print: handlePrintPDF, startPath: "/study?session=periodic-test&focus_subject=math" },
-                                            { subject: "vocab" as const, title: t("えいご", "英語"), level: profile?.vocabMainLevel || 1, print: handlePrintVocabPDF, startPath: "/study?session=periodic-test&focus_subject=vocab" },
+                                            { subject: "math" as const, title: t("さんすう", "算数"), level: profile?.mathMainLevel ?? 1, print: handlePrintPDF, startPath: "/study?session=periodic-test&focus_subject=math" },
+                                            { subject: "vocab" as const, title: t("えいご", "英語"), level: profile?.vocabMainLevel ?? 1, print: handlePrintVocabPDF, startPath: "/study?session=periodic-test&focus_subject=vocab" },
                                         ]).map(item => {
                                             const status = getTestStatus(item.subject);
                                             const pendingPaper = getPendingPaperTest(item.subject);

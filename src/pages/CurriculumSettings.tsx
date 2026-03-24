@@ -129,11 +129,11 @@ export const CurriculumSettings: React.FC = () => {
     };
 
     const currentLevel = activeTab === "math"
-        ? (profile?.mathMainLevel || 1)
-        : (profile?.vocabMainLevel || 1);
+        ? (profile?.mathMainLevel ?? 1)
+        : (profile?.vocabMainLevel ?? 1);
     const currentMaxUnlocked = activeTab === "math"
-        ? (profile?.mathMaxUnlocked || currentLevel)
-        : (profile?.vocabMaxUnlocked || currentLevel);
+        ? (profile?.mathMaxUnlocked ?? currentLevel)
+        : (profile?.vocabMaxUnlocked ?? currentLevel);
     const currentSubjectLabel = activeTab === "math" ? "さんすう" : "えいご";
     const levels = activeTab === "math" ? MATH_LEVELS : VOCAB_LEVELS;
 

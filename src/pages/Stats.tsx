@@ -350,7 +350,7 @@ export const Stats: React.FC = () => {
                 setGrowthMessage(buildGrowthMessage(thisWeekCount, previousWeekCount));
                 setWeakPatternMessage(buildWeakPatternMessage(recentLogs));
                 setStableSkills(stableCombined);
-                setRadarData(buildRadarData(mathMemory, active.mathMaxUnlocked || active.mathMainLevel || 1));
+                setRadarData(buildRadarData(mathMemory, active.mathMaxUnlocked ?? active.mathMainLevel ?? 1));
                 setTrendData(buildWeeklyTrend(logsForCalendar, todayStart, addDays));
                 setEventCheckPending(
                     (active.periodicTestState?.math?.isPending ?? false) ||

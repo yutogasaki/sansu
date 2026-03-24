@@ -1,7 +1,7 @@
 import { Problem, UserProfile, SubjectKey, RecentAttempt } from "./types";
 import { generateMathProblem } from "./math";
 import { generateVocabProblem } from "./english/generator";
-import { getSkillsForLevel, getAvailableSkills } from "./math/curriculum";
+import { getMathSkillFamily, getSkillsForLevel, getAvailableSkills } from "./math/curriculum";
 import { ENGLISH_WORDS } from "./english/words";
 import { isDue } from "./algorithms/srs";
 import { shuffleArray } from "../utils/shuffle";
@@ -223,7 +223,20 @@ const fillQueue = (
             const shuffled = shuffleArray(available);
             shuffled.sort((a, b) => b.priority - a.priority);
 
-            const best = shuffled[0];
+            const bestPriority = shuffled[0]?.priority ?? 0;
+            const topPriorityCandidates = shuffled.filter(candidate => candidate.priority === bestPriority);
+            const lastQueued = queue[queue.length - 1];
+            const lastMathFamily = lastQueued?.subject === "math"
+                ? getMathSkillFamily(lastQueued.categoryId)
+                : null;
+
+            const familyPreferred = lastMathFamily
+                ? topPriorityCandidates.find(candidate =>
+                    candidate.subject !== "math" || getMathSkillFamily(candidate.id) !== lastMathFamily
+                )
+                : undefined;
+
+            const best = familyPreferred || shuffled[0];
 
             try {
                 const problemData = generator(best.id);

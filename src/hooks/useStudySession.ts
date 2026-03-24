@@ -267,19 +267,24 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             const weakMathIds = await getWeakMathSkillIds(pid);
             const maintenanceMathIds = await getMaintenanceMathSkillIds(pid);
             const retiredMathIds = await getRetiredMathSkillIds(pid);
-            const mathLevel = activeProfile.mathMainLevel || 1;
-            const availableMathSkills = getAvailableSkills(activeProfile.mathMaxUnlocked || mathLevel);
+            const mathLevel = activeProfile.mathMainLevel ?? 1;
+            const availableMathSkills = getAvailableSkills(activeProfile.mathMaxUnlocked ?? mathLevel);
             const weakMathPool = weakMathIds.filter(id => availableMathSkills.includes(id));
 
             const plusLimit = Math.max(1, Math.floor(BLOCK_SIZE * 0.3));
             let plusCount = 0;
 
             for (let i = 0; i < blockSize; i++) {
+                const dynamicRecentIds = [
+                    ...recentIds,
+                    ...q.filter(item => item.subject === "math").map(item => item.categoryId),
+                ].slice(-COOLDOWN_WINDOW);
+
                 const generatorOptions = {
                     cooldownIds: [],
                     skippedTodayIds: skippedToday,
                     blockCounts,
-                    recentIds
+                    recentIds: dynamicRecentIds
                 };
 
                 const currentWeakCount = q.filter(
@@ -315,18 +320,23 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             }
         } else {
             // Vocab generation
-            const vocabLevel = activeProfile.vocabMainLevel || 1;
+            const vocabLevel = activeProfile.vocabMainLevel ?? 1;
             const vocabLevelWeights = buildVocabLevelWeights(vocabLevel);
 
             const buildCooldownIds = (pending: string[]) =>
                 buildVocabCooldownIds(recentAttempts, sessionHistoryRef.current, pending);
 
             for (let i = 0; i < blockSize; i++) {
+                const dynamicRecentIds = [
+                    ...recentIds,
+                    ...q.filter(item => item.subject === "vocab").map(item => item.categoryId),
+                ].slice(-COOLDOWN_WINDOW);
+
                 const generatorOptions = {
                     cooldownIds: buildCooldownIds(pendingVocabIds),
                     skippedTodayIds: skippedToday,
                     blockCounts,
-                    recentIds
+                    recentIds: dynamicRecentIds
                 };
 
                 const result = generateSingleVocabProblem({

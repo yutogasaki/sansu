@@ -194,7 +194,30 @@ export interface ProblemVisualPairItem {
     scale?: number;
 }
 
+export interface ProblemVisualReferenceChoice {
+    reference: ProblemVisualItem;
+    choices: ProblemVisualItem[];
+    columns?: number;
+}
+
+export interface ProblemVisualNumberCard {
+    value: number;
+    supportGroup: ProblemVisualGroup;
+    frameSize?: number;
+    columns?: number;
+}
+
 export type ProblemVisual =
+    | {
+        kind: "number-card";
+        prompt?: string;
+        card: ProblemVisualNumberCard;
+    }
+    | {
+        kind: "reference-choice-grid";
+        prompt?: string;
+        grid: ProblemVisualReferenceChoice;
+    }
     | {
         kind: "single-items";
         prompt?: string;

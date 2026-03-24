@@ -9,6 +9,7 @@ import { getInitialNextReviewIso } from './learningRepository';
 import { getLearningDayStart } from '../utils/learningDay';
 import { buildVocabCooldownIds } from '../hooks/blockGenerators';
 import { getLevelStartTimestamp } from './test/trigger';
+import { getMathSkillFamily, getSkillsForLevel } from './math/curriculum';
 
 const mockState = (id: string, strength: number, status?: SkillStatus): MemoryState => ({
     id,
@@ -139,32 +140,20 @@ describe('English Level Progression', () => {
 
 describe('Session Queue Generation', () => {
     it('should generate full queue even with few skills (Duplication Logic)', () => {
-        // Create profile at Level 1 Math
+        // Use a level with a single skill so the queue has to duplicate.
         const profile = createInitialProfile("Test", 1, 0, 1, 'math');
-        // mathStartLevel=0 -> mathMainLevel=1. Level 1 has only 'count_10' skill.
+        profile.mathMainLevel = 4;
+        profile.mathMaxUnlocked = 4;
 
         const queue = generateSessionQueue(profile, 5); // Request 5
 
         expect(queue.length).toBe(5);
-        // All should be 'count_10' probably? Or other level 1 skills?
-        // Let's check IDs
-        // Assuming Level 1 has only 1 skill.
-        // It should contain duplicates.
         const ids = queue.map(q => q.categoryId);
-        // If unique count < queue length, we have duplicates.
         const unique = new Set(ids);
         if (unique.size < queue.length) {
-            // Good: Duplicates allowed to fill queue
             expect(true).toBe(true);
         } else {
-            // Maybe enough skills?
-            // Level 1: 'count_10'? 
-            // If 'count_10', 'count_50' in Level 2?
-            // If MainLevel=1, only 'count_10' is available.
-            // So unique.size SHOULD constitute duplication.
-            // Unless generateSessionQueue falls back to random?
-            // But 'count_10' is only candidate.
-            expect(unique.size).toBe(1); // Should match number of available skills
+            expect(unique.size).toBe(1);
         }
     });
 
@@ -173,6 +162,19 @@ describe('Session Queue Generation', () => {
         // subjectMode = vocab
         const queue = generateSessionQueue(profile, 5);
         expect(queue[0].subject).toBe('vocab');
+    });
+
+    it('keeps level 0 math queues inside level 0 skills and soft-spreads families', () => {
+        const profile = createInitialProfile("Test", 1, 0, 1, 'math');
+        profile.mathMainLevel = 0;
+        profile.mathMaxUnlocked = 0;
+
+        const queue = generateSessionQueue(profile, 2);
+        const level0Skills = new Set(getSkillsForLevel(0));
+
+        expect(queue).toHaveLength(2);
+        expect(queue.every(item => level0Skills.has(item.categoryId))).toBe(true);
+        expect(getMathSkillFamily(queue[0].categoryId)).not.toBe(getMathSkillFamily(queue[1].categoryId));
     });
 });
 

@@ -6,7 +6,7 @@
 import { Problem, SubjectKey, UserProfile } from "../domain/types";
 import { generateMathProblem } from "../domain/math";
 import { generateVocabProblem } from "../domain/english/generator";
-import { getSkillsForLevel } from "../domain/math/curriculum";
+import { getMathSkillFamily, getSkillsForLevel } from "../domain/math/curriculum";
 import { getWordsByLevel, ENGLISH_WORDS } from "../domain/english/words";
 import { errorInDev, warnInDev } from "../utils/debug";
 
@@ -149,6 +149,38 @@ export const pickId = (
 };
 
 /**
+ * Pick a math skill ID while softly avoiding consecutive items from the same family.
+ */
+export const pickMathSkillId = (
+    candidates: string[],
+    options: GeneratorOptions
+): string | undefined => {
+    const { skippedTodayIds, blockCounts, recentIds } = options;
+
+    const notSkipped = candidates.filter(id => !skippedTodayIds.includes(id));
+    const notOverused = notSkipped.filter(id => (blockCounts.get(id) || 0) < SAME_ID_LIMIT);
+
+    if (notOverused.length === 0) return undefined;
+
+    const cooled = notOverused.filter(id => !recentIds.includes(id));
+    const pool = cooled.length > 0 ? cooled : notOverused;
+
+    const recentFamilies = recentIds.map(getMathSkillFamily);
+    const recentFamilyWindow = new Set(recentFamilies.slice(-2));
+    const lastFamily = recentFamilies[recentFamilies.length - 1];
+
+    const familyCooled = pool.filter(id => !recentFamilyWindow.has(getMathSkillFamily(id)));
+    if (familyCooled.length > 0) {
+        return familyCooled[Math.floor(Math.random() * familyCooled.length)];
+    }
+
+    const notLastFamily = pool.filter(id => getMathSkillFamily(id) !== lastFamily);
+    const familyPool = notLastFamily.length > 0 ? notLastFamily : pool;
+
+    return familyPool[Math.floor(Math.random() * familyPool.length)];
+};
+
+/**
  * Mark an ID as picked for block-level deduplication
  */
 export const markPicked = (id: string, blockCounts: Map<string, number>): void => {
@@ -247,7 +279,7 @@ export const generateSingleMathProblem = (
 
     // Priority 4: Normal level-based generation
     if (!problem) {
-        const mathLevel = profile.mathMainLevel || 1;
+        const mathLevel = profile.mathMainLevel ?? 1;
         const nextMathLevel = profile.mathMaxUnlocked >= mathLevel + 1 ? mathLevel + 1 : mathLevel;
 
         const usePlus = nextMathLevel !== mathLevel && newPlusCount < plusLimit && Math.random() < 0.3;
@@ -255,7 +287,7 @@ export const generateSingleMathProblem = (
 
         const levelSkills = getSkillsForLevel(targetLevel);
         const skills = levelSkills.length > 0 ? levelSkills : getSkillsForLevel(1);
-        const skillId = pickId(skills, options) || skills[0];
+        const skillId = pickMathSkillId(skills, options) || skills[0];
 
         if (skillId) {
             problem = safeGenerateProblem(
@@ -407,19 +439,19 @@ export const generateLevelBlock = (
             cooldownIds: [],
             skippedTodayIds: [],
             blockCounts,
-            recentIds: [] // No history filtering for test mode
+            recentIds: q.filter(item => item.subject === "math").map(item => item.categoryId).slice(-COOLDOWN_WINDOW)
         };
 
         let problem: Omit<Problem, 'id' | 'subject' | 'isReview'> | undefined;
 
         if (subject === 'math') {
             // Strict Level Logic (Level Test)
-            const level = profile.mathMainLevel || 1;
+            const level = profile.mathMainLevel ?? 1;
             const skills = getSkillsForLevel(level);
             // Fallback (e.g. if level has no skills defined, use level-1 or level 1)
             const validSkills = skills.length > 0 ? skills : getSkillsForLevel(1);
 
-            const skillId = pickId(validSkills, genOptions) || validSkills[0];
+            const skillId = pickMathSkillId(validSkills, genOptions) || validSkills[0];
 
             problem = safeGenerateProblem(
                 () => generateMathProblem(skillId, { profile }),
@@ -428,7 +460,7 @@ export const generateLevelBlock = (
             );
         } else {
             // Cumulative Logic for Vocab (Standard)
-            const level = profile.vocabMainLevel || 1;
+            const level = profile.vocabMainLevel ?? 1;
             const candidates = ENGLISH_WORDS.filter(w => w.level <= level);
             const wordId = pickId(candidates.map(w => w.id), genOptions) || candidates[0]?.id;
 
@@ -486,10 +518,10 @@ export const generateWeakReviewBlock = async (
     };
 
     const { weakMathIds, maintenanceMathIds, mathDue, vocabDue } = ctx;
-    const mathLevel = profile.mathMainLevel || 1;
+    const mathLevel = profile.mathMainLevel ?? 1;
     const mathSkills = getSkillsForLevel(mathLevel);
 
-    const vocabLevel = profile.vocabMainLevel || 1;
+    const vocabLevel = profile.vocabMainLevel ?? 1;
     const vocabWords = getWordsByLevel(vocabLevel);
 
 
@@ -499,7 +531,7 @@ export const generateWeakReviewBlock = async (
             cooldownIds: [],
             skippedTodayIds: [], // We might want to allow skipped items in review? No, stick to standard.
             blockCounts,
-            recentIds: [] // We explicitly want to REVIEW, so recent check might be loose.
+            recentIds: q.filter(item => item.subject === "math").map(item => item.categoryId).slice(-COOLDOWN_WINDOW)
         };
 
         let problem: Omit<Problem, 'id' | 'subject' | 'isReview'> | undefined;
@@ -531,7 +563,7 @@ export const generateWeakReviewBlock = async (
 
             // Priority 3: Random in Level
             if (!problem) {
-                const id = pickId(mathSkills, options) || mathSkills[0];
+                const id = pickMathSkillId(mathSkills, options) || mathSkills[0];
                 if (id) {
                     problem = safeGenerateProblem(
                         () => generateMathProblem(id, { profile }),

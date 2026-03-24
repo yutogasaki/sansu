@@ -72,6 +72,10 @@ export const selectComparisonPair = (skillId: string, totalAnswers?: number): Co
             if (totalAnswers < 16) {
                 return pickRandom(COMPARE_2D_PHASE_2);
             }
+
+            if (totalAnswers < 24) {
+                return pickRandom(COMPARE_2D_PHASE_3);
+            }
         }
 
         return pickRandom(COMPARE_2D_POOL);

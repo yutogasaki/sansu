@@ -1,5 +1,5 @@
 import React from "react";
-import { Problem, ProblemVisualBalanceItem, ProblemVisualCategoryBucket, ProblemVisualGroup, ProblemVisualItem, ProblemVisualLengthBar, ProblemVisualNumberLine, ProblemVisualPairItem, ProblemVisualPositionScene, ProblemVisualSequenceSlot, ProblemVisualValueGroup } from "../../domain/types";
+import { Problem, ProblemVisualBalanceItem, ProblemVisualCategoryBucket, ProblemVisualGroup, ProblemVisualItem, ProblemVisualLengthBar, ProblemVisualNumberCard, ProblemVisualNumberLine, ProblemVisualPairItem, ProblemVisualPositionScene, ProblemVisualReferenceChoice, ProblemVisualSequenceSlot, ProblemVisualValueGroup } from "../../domain/types";
 import { cn } from "../../utils/cn";
 import { MathRenderer } from "./MathRenderer";
 
@@ -75,6 +75,48 @@ const SingleItemsCard: React.FC<{
         </div>
     );
 };
+
+const NumberCardVisual: React.FC<{
+    card: ProblemVisualNumberCard;
+}> = ({ card }) => (
+    <div className="flex w-full max-w-[340px] flex-col items-center gap-4 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+        <div className="flex h-24 w-24 items-center justify-center rounded-[28px] border border-cyan-100 bg-cyan-50/90 text-[clamp(42px,7vw,60px)] font-black text-cyan-700 shadow-[0_16px_28px_-22px_rgba(8,145,178,0.4)]">
+            {card.value}
+        </div>
+        <SingleItemsCard
+            group={card.supportGroup}
+            columns={card.columns}
+            frameSize={card.frameSize}
+            style="frame"
+        />
+    </div>
+);
+
+const ReferenceChoiceGridCard: React.FC<{
+    grid: ProblemVisualReferenceChoice;
+}> = ({ grid }) => (
+    <div className="flex w-full max-w-[360px] flex-col items-center gap-4 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+        <div className="flex flex-col items-center gap-1">
+            <div className="flex h-16 w-16 items-center justify-center rounded-[20px] border border-cyan-100 bg-cyan-50/90 text-[clamp(28px,4vw,38px)] shadow-[0_12px_22px_-18px_rgba(8,145,178,0.36)]">
+                {grid.reference.emoji}
+            </div>
+            <span className="text-xs font-black tracking-[0.08em] text-slate-500">おてほん</span>
+        </div>
+        <div
+            className="grid w-full justify-items-center gap-3"
+            style={{ gridTemplateColumns: `repeat(${grid.columns || grid.choices.length}, minmax(0, 1fr))` }}
+        >
+            {grid.choices.map((item, index) => (
+                <div
+                    key={`${item.emoji}-${index}`}
+                    className="flex h-16 w-16 items-center justify-center rounded-[20px] border border-white/80 bg-white/90 text-[clamp(26px,4vw,38px)] shadow-[0_10px_18px_-16px_rgba(15,23,42,0.24)]"
+                >
+                    {item.emoji}
+                </div>
+            ))}
+        </div>
+    </div>
+);
 
 const BaseTenValueCard: React.FC<{
     group: ProblemVisualValueGroup;
@@ -481,6 +523,24 @@ const ItemPairCard: React.FC<{
 
 export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, className }) => {
     const visual = problem?.questionVisual;
+
+    if (visual?.kind === "number-card") {
+        return (
+            <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
+                <NumberCardVisual card={visual.card} />
+                <PromptCaption text={visual.prompt || "よみかたは どれ？"} />
+            </div>
+        );
+    }
+
+    if (visual?.kind === "reference-choice-grid") {
+        return (
+            <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
+                <ReferenceChoiceGridCard grid={visual.grid} />
+                <PromptCaption text={visual.prompt || "おなじ ものは？"} />
+            </div>
+        );
+    }
 
     if (visual?.kind === "single-items") {
         return (

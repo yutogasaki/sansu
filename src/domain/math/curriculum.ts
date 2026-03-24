@@ -1,6 +1,6 @@
 export const MATH_CURRICULUM: Record<number, string[]> = {
-    0: ["count_5", "count_dot", "count_read", "count_shape", "count_color", "count_pair", "count_which_more", "one_more", "ordinal_small", "spatial_words", "same_or_different", "same_count_match", "length_compare", "height_compare", "big_small_compare", "pattern_copy", "one_to_one_match", "compose_5", "add_tiny"],
-    1: ["count_10", "count_next_10", "count_back", "one_less", "two_more", "count_order", "weight_compare", "sort_by_attribute", "count_oddone", "add_finger", "which_is_empty", "zero_concept", "share_equal"],
+    0: ["count_5", "count_dot", "count_read", "count_shape", "count_color", "count_pair", "one_more", "ordinal_small", "spatial_words", "same_or_different", "same_count_match", "pattern_copy", "one_to_one_match", "compose_5", "add_tiny"],
+    1: ["count_10", "count_next_10", "count_back", "count_which_more", "one_less", "two_more", "count_order", "length_compare", "height_compare", "big_small_compare", "weight_compare", "sort_by_attribute", "count_oddone", "add_finger", "which_is_empty", "zero_concept", "share_equal"],
     2: ["count_50", "count_next_20", "add_5", "compose_10", "two_less", "sub_tiny"],
     3: ["count_100", "count_fill", "compare_1d", "compare_2d"],
     4: ["add_1d_1"],
@@ -21,6 +21,41 @@ export const MATH_CURRICULUM: Record<number, string[]> = {
     19: ["frac_mul_int", "frac_mul_frac"],
     20: ["frac_div_int", "frac_div_frac", "scale_10x"]
 };
+
+const FAMILY_GROUPS: { family: string; skills: string[] }[] = [
+    {
+        family: "count-basic",
+        skills: ["count_5", "count_dot", "count_10"],
+    },
+    {
+        family: "count-sequence",
+        skills: ["count_next_10", "count_back", "count_50", "count_next_20", "count_100", "count_fill", "count_order", "compare_1d", "compare_2d", "one_more", "one_less", "two_more", "two_less"],
+    },
+    {
+        family: "recognition",
+        skills: ["count_read", "count_shape", "count_color", "count_pair"],
+    },
+    {
+        family: "visual-compare",
+        skills: ["count_which_more", "length_compare", "height_compare", "weight_compare", "big_small_compare"],
+    },
+    {
+        family: "concept-play",
+        skills: ["ordinal_small", "pattern_copy", "same_or_different", "spatial_words", "sort_by_attribute", "count_oddone"],
+    },
+    {
+        family: "quantity-structure",
+        skills: ["same_count_match", "one_to_one_match", "compose_5", "compose_10", "which_is_empty", "zero_concept", "share_equal"],
+    },
+    {
+        family: "addition-basic",
+        skills: ["add_tiny", "add_finger", "add_5", "add_1d_1", "add_1d_2"],
+    },
+    {
+        family: "subtraction-basic",
+        skills: ["sub_tiny", "sub_1d1d_nc", "sub_1d1d_c"],
+    },
+];
 
 export const getSkillsForLevel = (level: number): string[] => {
     return MATH_CURRICULUM[level] || [];
@@ -43,4 +78,20 @@ export const getLevelForSkill = (skillId: string): number | null => {
         }
     }
     return null;
+};
+
+export const getMathSkillFamily = (skillId: string): string => {
+    const explicit = FAMILY_GROUPS.find(group => group.skills.includes(skillId));
+    if (explicit) return explicit.family;
+
+    if (skillId.startsWith("add_")) return "addition";
+    if (skillId.startsWith("sub_")) return "subtraction";
+    if (skillId.startsWith("mul_")) return "multiplication";
+    if (skillId.startsWith("div_")) return "division";
+    if (skillId.startsWith("dec_")) return "decimal";
+    if (skillId.startsWith("frac_")) return "fraction";
+    if (skillId.startsWith("count_")) return "counting";
+    if (skillId.startsWith("compare_")) return "comparison";
+
+    return skillId;
 };

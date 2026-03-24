@@ -29,4 +29,10 @@ describe("comparisonProgress", () => {
         expect(Math.abs(a - b)).toBeGreaterThanOrEqual(10);
         expect(Math.abs(a - b)).toBeLessThanOrEqual(29);
     });
+
+    it("introduces same-tens compare_2d pairs before full randomization", () => {
+        vi.spyOn(Math, "random").mockReturnValue(0);
+        const [a, b] = selectComparisonPair("compare_2d", 20);
+        expect(Math.floor(a / 10)).toBe(Math.floor(b / 10));
+    });
 });

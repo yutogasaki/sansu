@@ -9,8 +9,10 @@ import {
     generateSingleVocabProblem,
     getMixSubject,
     pickId,
+    pickMathSkillId,
     type GeneratorOptions,
 } from "./blockGenerators";
+import { getMathSkillFamily } from "../domain/math/curriculum";
 
 describe("blockGenerators utilities", () => {
     afterEach(() => {
@@ -58,6 +60,19 @@ describe("blockGenerators utilities", () => {
         };
         const selected = pickId(["s1", "a1", "ok"], options);
         expect(selected).toBe("ok");
+    });
+
+    it("pickMathSkillId prefers a different family when available", () => {
+        vi.spyOn(Math, "random").mockReturnValue(0);
+        const options: GeneratorOptions = {
+            cooldownIds: [],
+            skippedTodayIds: [],
+            blockCounts: new Map(),
+            recentIds: ["count_5"],
+        };
+
+        const selected = pickMathSkillId(["count_dot", "count_read"], options);
+        expect(selected).toBe("count_read");
     });
 
     it("getMixSubject balances toward underrepresented subject", () => {
@@ -163,5 +178,20 @@ describe("blockGenerators utilities", () => {
             "vocab",
         ]);
         expect(queue.every(problem => problem.isReview === false)).toBe(true);
+    });
+
+    it("generateLevelBlock spreads early math families within a block", () => {
+        vi.spyOn(Math, "random").mockReturnValue(0);
+
+        const profile = createInitialProfile("T", 1, 0, 1, "math");
+        profile.mathMainLevel = 0;
+        profile.mathMaxUnlocked = 0;
+
+        const queue = generateLevelBlock(profile, 2, "math");
+        const families = queue.map(problem => getMathSkillFamily(problem.categoryId));
+
+        expect(queue[0]?.categoryId).toBe("count_5");
+        expect(queue[1]?.categoryId).toBe("count_read");
+        expect(families[0]).not.toBe(families[1]);
     });
 });

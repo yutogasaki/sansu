@@ -2,27 +2,85 @@ import { describe, expect, it } from "vitest";
 import { generators } from "./counting";
 
 describe("counting generators visuals", () => {
-    it("count_10 uses a single-items ten-frame visual", () => {
-        const problem = generators.count_10();
+    it("count_5 starts from one item and uses a 5-frame visual", () => {
+        const problem = generators.count_5({
+            profile: { mathSkills: { count_5: { totalAnswers: 0 } } },
+        } as any);
+
         expect(problem.questionVisual?.kind).toBe("single-items");
+        expect(problem.correctAnswer).toBe("1");
         if (problem.questionVisual?.kind === "single-items") {
-            expect(problem.questionVisual.style).toBe("frame");
-            expect(problem.questionVisual.frameSize).toBe(10);
+            expect(problem.questionVisual.frameSize).toBe(5);
+            expect(problem.questionVisual.group.count).toBe(1);
         }
     });
 
-    it("count_dot uses a single-items dot visual", () => {
-        const problem = generators.count_dot();
+    it("count_dot starts from small dot counts", () => {
+        const problem = generators.count_dot({
+            profile: { mathSkills: { count_dot: { totalAnswers: 0 } } },
+        } as any);
+
         expect(problem.questionVisual?.kind).toBe("single-items");
+        expect(problem.correctAnswer).toBe("1");
         if (problem.questionVisual?.kind === "single-items") {
+            expect(problem.questionVisual.group.count).toBe(1);
             expect(problem.questionVisual.group.emoji).toBe("●");
         }
     });
 
-    it("count_which_more uses comparison visuals and choice labels without numeric hints", () => {
-        const problem = generators.count_which_more();
+    it("count_read uses a number-card visual and starts from small numerals", () => {
+        const problem = generators.count_read({
+            profile: { mathSkills: { count_read: { totalAnswers: 0 } } },
+        } as any);
+
+        expect(problem.questionVisual?.kind).toBe("number-card");
+        expect(problem.inputType).toBe("choice");
+        expect(problem.correctAnswer).toBe("いち");
+
+        if (problem.questionVisual?.kind === "number-card") {
+            expect(problem.questionVisual.card.value).toBe(1);
+            expect(problem.questionVisual.card.frameSize).toBe(5);
+            expect(problem.questionVisual.card.supportGroup.count).toBe(1);
+        }
+    });
+
+    it("count_read later expands to 10-frame support", () => {
+        const problem = generators.count_read({
+            profile: { mathSkills: { count_read: { totalAnswers: 8 } } },
+        } as any);
+
+        expect(problem.questionVisual?.kind).toBe("number-card");
+
+        if (problem.questionVisual?.kind === "number-card") {
+            expect(problem.questionVisual.card.value).toBe(9);
+            expect(problem.questionVisual.card.frameSize).toBe(10);
+            expect(problem.questionVisual.card.supportGroup.count).toBe(9);
+        }
+    });
+
+    it("count_10 starts from 6 and uses a single-items ten-frame visual", () => {
+        const problem = generators.count_10({
+            profile: { mathSkills: { count_10: { totalAnswers: 0 } } },
+        } as any);
+        expect(problem.questionVisual?.kind).toBe("single-items");
+        expect(problem.correctAnswer).toBe("6");
+        if (problem.questionVisual?.kind === "single-items") {
+            expect(problem.questionVisual.style).toBe("frame");
+            expect(problem.questionVisual.frameSize).toBe(10);
+            expect(problem.questionVisual.group.count).toBe(6);
+        }
+    });
+
+    it("count_which_more starts with large visual gaps and no numeric hints", () => {
+        const problem = generators.count_which_more({
+            profile: { mathSkills: { count_which_more: { totalAnswers: 0 } } },
+        } as any);
         expect(problem.questionVisual?.kind).toBe("comparison-items");
         expect(problem.inputConfig?.choices?.every(choice => !/\d/.test(choice.label))).toBe(true);
+        if (problem.questionVisual?.kind === "comparison-items") {
+            const [left, right] = problem.questionVisual.groups;
+            expect(Math.abs((left?.count || 0) - (right?.count || 0))).toBeGreaterThanOrEqual(3);
+        }
     });
 
     it("one_more uses an addition visual", () => {
@@ -43,11 +101,16 @@ describe("counting generators visuals", () => {
         }
     });
 
-    it("count_order uses a number-line visual with three highlighted values", () => {
-        const problem = generators.count_order();
+    it("count_order starts with wide gaps on a number-line visual", () => {
+        const problem = generators.count_order({
+            profile: { mathSkills: { count_order: { totalAnswers: 0 } } },
+        } as any);
         expect(problem.questionVisual?.kind).toBe("number-line");
         if (problem.questionVisual?.kind === "number-line") {
             expect(problem.questionVisual.line.highlightValues).toHaveLength(3);
+            const values = [...(problem.questionVisual.line.highlightValues || [])].sort((a, b) => a - b);
+            expect(values[1] - values[0]).toBeGreaterThanOrEqual(2);
+            expect(values[2] - values[1]).toBeGreaterThanOrEqual(2);
         }
     });
 
@@ -180,6 +243,19 @@ describe("counting generators visuals", () => {
         }
     });
 
+    it("add_tiny starts from 1+1 with an addition visual", () => {
+        const problem = generators.add_tiny({
+            profile: { mathSkills: { add_tiny: { totalAnswers: 0 } } },
+        } as any);
+
+        expect(problem.questionVisual?.kind).toBe("addition-items");
+        expect(problem.correctAnswer).toBe("2");
+        if (problem.questionVisual?.kind === "addition-items") {
+            expect(problem.questionVisual.groups[0]?.count).toBe(1);
+            expect(problem.questionVisual.groups[1]?.count).toBe(1);
+        }
+    });
+
     it("compose_10 uses a 10-frame visual", () => {
         const problem = generators.compose_10();
         expect(problem.questionVisual?.kind).toBe("single-items");
@@ -189,11 +265,50 @@ describe("counting generators visuals", () => {
         }
     });
 
+    it("add_finger starts with make-5 combinations", () => {
+        const problem = generators.add_finger({
+            profile: { mathSkills: { add_finger: { totalAnswers: 0 } } },
+        } as any);
+
+        expect(problem.questionVisual?.kind).toBe("addition-items");
+        expect(problem.correctAnswer).toBe("5");
+        if (problem.questionVisual?.kind === "addition-items") {
+            expect(problem.questionVisual.groups[0]?.count).toBe(1);
+            expect(problem.questionVisual.groups[1]?.count).toBe(4);
+        }
+    });
+
     it("share_equal uses a sharing visual", () => {
         const problem = generators.share_equal();
         expect(problem.questionVisual?.kind).toBe("sharing-items");
         if (problem.questionVisual?.kind === "sharing-items") {
             expect(problem.questionVisual.source.count % problem.questionVisual.recipients.count).toBe(0);
+        }
+    });
+
+    it("add_5 starts from easier 5-pairs before larger totals", () => {
+        const problem = generators.add_5({
+            profile: { mathSkills: { add_5: { totalAnswers: 0 } } },
+        } as any);
+
+        expect(problem.questionVisual?.kind).toBe("addition-items");
+        expect(problem.correctAnswer).toBe("6");
+        if (problem.questionVisual?.kind === "addition-items") {
+            expect(problem.questionVisual.groups[0]?.count).toBe(1);
+            expect(problem.questionVisual.groups[1]?.count).toBe(5);
+        }
+    });
+
+    it("sub_tiny starts from taking away 1 with a subtraction visual", () => {
+        const problem = generators.sub_tiny({
+            profile: { mathSkills: { sub_tiny: { totalAnswers: 0 } } },
+        } as any);
+
+        expect(problem.questionVisual?.kind).toBe("subtraction-items");
+        expect(problem.correctAnswer).toBe("1");
+        if (problem.questionVisual?.kind === "subtraction-items") {
+            expect(problem.questionVisual.group.count).toBe(2);
+            expect(problem.questionVisual.group.crossedOutCount).toBe(1);
         }
     });
 
@@ -216,36 +331,73 @@ describe("counting generators visuals", () => {
         }
     });
 
-    it("count_next_10 and count_back use number-line visuals", () => {
-        const next = generators.count_next_10();
-        const back = generators.count_back();
+    it("count_next_10 and count_back start from easy fixed targets on number lines", () => {
+        const next = generators.count_next_10({
+            profile: { mathSkills: { count_next_10: { totalAnswers: 0 } } },
+        } as any);
+        const back = generators.count_back({
+            profile: { mathSkills: { count_back: { totalAnswers: 0 } } },
+        } as any);
 
         expect(next.questionVisual?.kind).toBe("number-line");
         expect(back.questionVisual?.kind).toBe("number-line");
+        expect(next.correctAnswer).toBe("2");
+        expect(back.correctAnswer).toBe("1");
 
         if (next.questionVisual?.kind === "number-line") {
             expect(next.questionVisual.line.step).toBe(1);
+            expect(next.questionVisual.line.start).toBe(1);
         }
 
         if (back.questionVisual?.kind === "number-line") {
             expect(back.questionVisual.line.step).toBe(-1);
+            expect(back.questionVisual.line.start).toBe(2);
         }
     });
 
-    it("count_50, count_next_20, and count_100 use number-line visuals", () => {
-        const count50 = generators.count_50();
-        const next20 = generators.count_next_20();
-        const count100 = generators.count_100();
+    it("count_50, count_next_20, and count_100 start from bridged ranges on number-line visuals", () => {
+        const count50 = generators.count_50({
+            profile: { mathSkills: { count_50: { totalAnswers: 0 } } },
+        } as any);
+        const next20 = generators.count_next_20({
+            profile: { mathSkills: { count_next_20: { totalAnswers: 0 } } },
+        } as any);
+        const count100 = generators.count_100({
+            profile: { mathSkills: { count_100: { totalAnswers: 0 } } },
+        } as any);
 
         expect(count50.questionVisual?.kind).toBe("number-line");
         expect(next20.questionVisual?.kind).toBe("number-line");
         expect(count100.questionVisual?.kind).toBe("number-line");
+        expect(count50.correctAnswer).toBe("21");
+        expect(next20.correctAnswer).toBe("11");
+        expect(count100.correctAnswer).toBe("51");
     });
 
     it("compare_1d uses a number-line visual with two highlighted values", () => {
         const problem = generators.compare_1d();
         expect(problem.questionVisual?.kind).toBe("number-line");
         expect(problem.inputType).toBe("choice");
+        if (problem.questionVisual?.kind === "number-line") {
+            expect(problem.questionVisual.line.highlightValues).toHaveLength(2);
+        }
+    });
+
+    it("compare_2d starts with a base-10 visual for distant tens", () => {
+        const problem = generators.compare_2d({
+            profile: { mathSkills: { compare_2d: { totalAnswers: 0 } } },
+        } as any);
+
+        expect(problem.questionVisual?.kind).toBe("comparison-base10");
+        expect(problem.inputType).toBe("choice");
+    });
+
+    it("compare_2d later uses a number-line visual for same-tens comparisons", () => {
+        const problem = generators.compare_2d({
+            profile: { mathSkills: { compare_2d: { totalAnswers: 20 } } },
+        } as any);
+
+        expect(problem.questionVisual?.kind).toBe("number-line");
         if (problem.questionVisual?.kind === "number-line") {
             expect(problem.questionVisual.line.highlightValues).toHaveLength(2);
         }
@@ -286,27 +438,43 @@ describe("counting generators visuals", () => {
         }
     });
 
-    it("count_shape and count_color use single-item grid visuals", () => {
-        const shape = generators.count_shape();
-        const color = generators.count_color();
+    it("count_shape and count_color use reference choice grids", () => {
+        const shape = generators.count_shape({
+            profile: { mathSkills: { count_shape: { totalAnswers: 0 } } },
+        } as any);
+        const color = generators.count_color({
+            profile: { mathSkills: { count_color: { totalAnswers: 0 } } },
+        } as any);
 
-        expect(shape.questionVisual?.kind).toBe("item-grid");
-        expect(color.questionVisual?.kind).toBe("item-grid");
+        expect(shape.questionVisual?.kind).toBe("reference-choice-grid");
+        expect(color.questionVisual?.kind).toBe("reference-choice-grid");
 
-        if (shape.questionVisual?.kind === "item-grid") {
-            expect(shape.questionVisual.items).toHaveLength(1);
+        if (shape.questionVisual?.kind === "reference-choice-grid") {
+            expect(shape.questionVisual.grid.choices).toHaveLength(2);
         }
 
-        if (color.questionVisual?.kind === "item-grid") {
-            expect(color.questionVisual.items).toHaveLength(1);
+        if (color.questionVisual?.kind === "reference-choice-grid") {
+            expect(color.questionVisual.grid.choices).toHaveLength(2);
         }
     });
 
-    it("count_pair uses a single-item grid visual", () => {
-        const problem = generators.count_pair();
-        expect(problem.questionVisual?.kind).toBe("item-grid");
-        if (problem.questionVisual?.kind === "item-grid") {
-            expect(problem.questionVisual.items).toHaveLength(1);
+    it("count_pair uses a reference choice grid and expands to three choices later", () => {
+        const early = generators.count_pair({
+            profile: { mathSkills: { count_pair: { totalAnswers: 0 } } },
+        } as any);
+        const later = generators.count_pair({
+            profile: { mathSkills: { count_pair: { totalAnswers: 4 } } },
+        } as any);
+
+        expect(early.questionVisual?.kind).toBe("reference-choice-grid");
+        expect(later.questionVisual?.kind).toBe("reference-choice-grid");
+
+        if (early.questionVisual?.kind === "reference-choice-grid") {
+            expect(early.questionVisual.grid.choices).toHaveLength(2);
+        }
+
+        if (later.questionVisual?.kind === "reference-choice-grid") {
+            expect(later.questionVisual.grid.choices).toHaveLength(3);
         }
     });
 });

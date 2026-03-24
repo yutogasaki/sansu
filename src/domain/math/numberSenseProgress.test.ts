@@ -1,10 +1,30 @@
 import { describe, expect, it } from "vitest";
-import { selectBigSmallPattern, selectComposeFilledCount, selectHeightComparePattern, selectLengthComparePattern, selectOneLessCount, selectOneMoreCount, selectOneToOneCount, selectOrdinalPattern, selectPatternCopyPattern, selectSameOrDifferentPattern, selectSameCountMatchPattern, selectShareEqualPattern, selectSortByAttributePattern, selectSpatialWordsPattern, selectTwoLessCount, selectTwoMoreCount, selectWeightComparePattern, selectWhichIsEmptyCount, selectZeroConceptCount } from "./numberSenseProgress";
+import { selectBigSmallPattern, selectColorRecognitionPattern, selectComposeFilledCount, selectCount10Target, selectCount5Target, selectCountOrderPattern, selectCountReadPattern, selectDotCountTarget, selectHeightComparePattern, selectLengthComparePattern, selectOneLessCount, selectOneMoreCount, selectOneToOneCount, selectOrdinalPattern, selectPairRecognitionPattern, selectPatternCopyPattern, selectSameOrDifferentPattern, selectSameCountMatchPattern, selectShapeRecognitionPattern, selectShareEqualPattern, selectSortByAttributePattern, selectSpatialWordsPattern, selectTwoLessCount, selectTwoMoreCount, selectWeightComparePattern, selectWhichIsEmptyCount, selectWhichMorePattern, selectZeroConceptCount } from "./numberSenseProgress";
 
 describe("numberSenseProgress", () => {
     it("starts same_count_match with easy fixed patterns", () => {
         expect(selectSameCountMatchPattern(0)).toEqual({ target: 1, options: [1, 3, 5] });
         expect(selectSameCountMatchPattern(1)).toEqual({ target: 2, options: [4, 2, 5] });
+    });
+
+    it("starts count_read with small numbers before expanding", () => {
+        expect(selectCountReadPattern(0)).toEqual({ target: 1, options: [1, 2, 3] });
+        expect(selectCountReadPattern(3)).toEqual({ target: 4, options: [4, 5, 6] });
+        expect(selectCountReadPattern(8)).toEqual({ target: 9, options: [8, 9, 10] });
+    });
+
+    it("starts count_5, count_dot, count_10, and count_order from easy fixed values", () => {
+        expect(selectCount5Target(0)).toBe(1);
+        expect(selectDotCountTarget(0)).toBe(1);
+        expect(selectCount10Target(0)).toBe(6);
+        expect(selectCountOrderPattern(0)).toEqual({ values: [1, 4, 7] });
+    });
+
+    it("starts which_more and recognition items with easy fixed patterns", () => {
+        expect(selectWhichMorePattern(0)).toEqual({ left: 4, right: 1 });
+        expect(selectShapeRecognitionPattern(0)).toEqual({ target: "まる", options: ["まる", "しかく"] });
+        expect(selectColorRecognitionPattern(0)).toEqual({ target: "あか", options: ["あか", "あお"] });
+        expect(selectPairRecognitionPattern(0)).toEqual({ target: "🍎", options: ["🍎", "🐶"] });
     });
 
     it("starts compose_5 and compose_10 from nearly-complete frames", () => {
@@ -105,6 +125,50 @@ describe("numberSenseProgress", () => {
     it("keeps random share_equal patterns divisible", () => {
         const pattern = selectShareEqualPattern(99);
         expect(pattern.total % pattern.groups).toBe(0);
+    });
+
+    it("keeps random count_read options inside range and including the target", () => {
+        const pattern = selectCountReadPattern(99);
+        expect(pattern.target).toBeGreaterThanOrEqual(1);
+        expect(pattern.target).toBeLessThanOrEqual(10);
+        expect(pattern.options).toHaveLength(3);
+        expect(pattern.options).toContain(pattern.target);
+    });
+
+    it("keeps random which_more and recognition patterns inside supported ranges", () => {
+        const whichMore = selectWhichMorePattern(99);
+        const shape = selectShapeRecognitionPattern(99);
+        const color = selectColorRecognitionPattern(99);
+        const pair = selectPairRecognitionPattern(99);
+
+        expect(whichMore.left).not.toBe(whichMore.right);
+        expect(whichMore.left).toBeGreaterThanOrEqual(1);
+        expect(whichMore.right).toBeLessThanOrEqual(6);
+        expect(shape.options).toContain(shape.target);
+        expect(shape.options.length).toBeGreaterThanOrEqual(2);
+        expect(color.options).toContain(color.target);
+        expect(color.options.length).toBeGreaterThanOrEqual(2);
+        expect(pair.options).toContain(pair.target);
+        expect(pair.options.length).toBeGreaterThanOrEqual(2);
+    });
+
+    it("keeps random count targets and count_order patterns inside supported ranges", () => {
+        const count5 = selectCount5Target(99);
+        const dots = selectDotCountTarget(99);
+        const count10 = selectCount10Target(99);
+        const order = selectCountOrderPattern(99);
+        const sorted = [...order.values].sort((a, b) => a - b);
+
+        expect(count5).toBeGreaterThanOrEqual(1);
+        expect(count5).toBeLessThanOrEqual(5);
+        expect(dots).toBeGreaterThanOrEqual(1);
+        expect(dots).toBeLessThanOrEqual(10);
+        expect(count10).toBeGreaterThanOrEqual(1);
+        expect(count10).toBeLessThanOrEqual(10);
+        expect(order.values).toHaveLength(3);
+        expect(new Set(order.values).size).toBe(3);
+        expect(sorted[0]).toBeGreaterThanOrEqual(1);
+        expect(sorted[2]).toBeLessThanOrEqual(9);
     });
 
     it("keeps random ordinal patterns within supported lengths", () => {

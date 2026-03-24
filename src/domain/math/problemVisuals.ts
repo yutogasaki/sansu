@@ -42,6 +42,54 @@ export const buildSingleCountVisual = (
     };
 };
 
+export const buildNumberReadVisual = (
+    value: number,
+    options?: {
+        prompt?: string;
+        item?: { emoji: string; label: string };
+        questionText?: string;
+    }
+): { questionText: string; questionVisual: ProblemVisual } => {
+    const item = options?.item || pickCountableItem();
+
+    return {
+        questionText: options?.questionText || `${value} は？`,
+        questionVisual: {
+            kind: "number-card",
+            prompt: options?.prompt || "よみかたは どれ？",
+            card: {
+                value,
+                frameSize: value <= 5 ? 5 : 10,
+                columns: 5,
+                supportGroup: {
+                    emoji: item.emoji,
+                    label: item.label,
+                    count: value,
+                },
+            },
+        },
+    };
+};
+
+export const buildReferenceChoiceGridVisual = (
+    reference: { emoji: string; label: string },
+    choices: { emoji: string; label: string }[],
+    prompt: string,
+    questionText = prompt,
+    columns = choices.length
+): { questionText: string; questionVisual: ProblemVisual } => ({
+    questionText,
+    questionVisual: {
+        kind: "reference-choice-grid",
+        prompt,
+        grid: {
+            reference,
+            choices,
+            columns,
+        },
+    },
+});
+
 export const buildAdditionVisual = (a: number, b: number): { questionText: string; questionVisual: ProblemVisual } => {
     const item = pickCountableItem();
 
