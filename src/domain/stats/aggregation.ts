@@ -28,7 +28,7 @@ export interface RadarCategoryPoint {
 const RADAR_CATEGORIES: { label: string; skills: string[] }[] = [
     {
         label: "かぞえ",
-        skills: ["count_10", "count_50", "count_100", "count_fill", "compare_1d", "compare_2d"],
+        skills: ["count_5", "count_dot", "count_which_more", "count_read", "count_order", "count_oddone", "count_shape", "count_color", "count_pair", "count_10", "count_50", "count_100", "count_fill", "compare_1d", "compare_2d", "ordinal_small", "pattern_copy", "length_compare", "height_compare", "weight_compare", "big_small_compare", "same_or_different", "spatial_words", "one_to_one_match", "sort_by_attribute", "same_count_match", "compose_5", "compose_10", "which_is_empty", "zero_concept", "share_equal"],
     },
     {
         label: "＋−",
@@ -110,7 +110,7 @@ export const buildWeeklyTrend = (
 
 const getUnlockedSkills = (maxLevel: number): Set<string> => {
     const skills = new Set<string>();
-    for (let lv = 1; lv <= maxLevel; lv++) {
+    for (let lv = 0; lv <= maxLevel; lv++) {
         const lvSkills = MATH_CURRICULUM[lv];
         if (lvSkills) lvSkills.forEach(s => skills.add(s));
     }

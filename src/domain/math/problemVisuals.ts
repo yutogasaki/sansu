@@ -76,6 +76,85 @@ export const buildSubtractionVisual = (a: number, b: number): { questionText: st
     };
 };
 
+export const buildSharingVisual = (total: number, recipients: number): { questionText: string; questionVisual: ProblemVisual } => {
+    const item = pickCountableItem();
+
+    return {
+        questionText: `${item.label} ${total}こを ${recipients}にんで おなじに わけると\n1にんぶんは いくつ？`,
+        questionVisual: {
+            kind: "sharing-items",
+            prompt: "1にんぶんは いくつ？",
+            actionLabel: "おなじに わける",
+            source: {
+                emoji: item.emoji,
+                label: item.label,
+                count: total,
+            },
+            recipients: {
+                emoji: "🙂",
+                label: "ともだち",
+                count: recipients,
+            },
+        },
+    };
+};
+
+const PAIRING_SCENARIOS = [
+    {
+        source: { emoji: "🐰", label: "うさぎ", counter: "ひき" },
+        target: { emoji: "🥕", label: "にんじん", counter: "こ" },
+    },
+    {
+        source: { emoji: "🐻", label: "くま", counter: "ひき" },
+        target: { emoji: "🍯", label: "はちみつ", counter: "こ" },
+    },
+    {
+        source: { emoji: "🐦", label: "ことり", counter: "わ" },
+        target: { emoji: "🪱", label: "えさ", counter: "こ" },
+    },
+];
+
+export const buildOneToOneMatchVisual = (count: number): { questionText: string; questionVisual: ProblemVisual } => {
+    const scenario = randomChoice(PAIRING_SCENARIOS);
+
+    return {
+        questionText: `${scenario.source.label} ${count}${scenario.source.counter}に 1こずつ ${scenario.target.label}を あげると\n${scenario.target.label}は なん${scenario.target.counter} いる？`,
+        questionVisual: {
+            kind: "sharing-items",
+            prompt: `${scenario.target.label}は なん${scenario.target.counter} いる？`,
+            actionLabel: "1こずつ",
+            source: {
+                emoji: scenario.source.emoji,
+                label: scenario.source.label,
+                count,
+            },
+            recipients: {
+                emoji: scenario.target.emoji,
+                label: scenario.target.label,
+                count,
+            },
+        },
+    };
+};
+
+export const buildZeroConceptVisual = (count: number): { questionText: string; questionVisual: ProblemVisual } => {
+    const item = pickCountableItem();
+
+    return {
+        questionText: `${item.label} ${count}こ あります\nぜんぶ なくなると いくつ？`,
+        questionVisual: {
+            kind: "subtraction-items",
+            prompt: "ぜんぶ なくなると？",
+            group: {
+                emoji: item.emoji,
+                label: item.label,
+                count,
+                crossedOutCount: count,
+            },
+        },
+    };
+};
+
 export const buildComparisonItemsVisual = (a: number, b: number): { questionText: string; questionVisual: ProblemVisual } => {
     const item = pickCountableItem();
 
@@ -173,6 +252,109 @@ export const buildItemOrderVisual = (counts: number[]): { questionText: string; 
         },
     };
 };
+
+export const buildOrdinalVisual = (
+    items: { emoji: string; label: string }[],
+    prompt: string
+): { questionText: string; questionVisual: ProblemVisual } => ({
+    questionText: prompt,
+    questionVisual: {
+        kind: "ordinal-row",
+        prompt,
+        items,
+    },
+});
+
+export const buildPatternVisual = (
+    items: { emoji: string; label: string }[],
+    prompt = "つぎは どれ？"
+): { questionText: string; questionVisual: ProblemVisual } => ({
+    questionText: prompt,
+    questionVisual: {
+        kind: "ordinal-row",
+        prompt,
+        items,
+        showPlaceholder: true,
+    },
+});
+
+export const buildLengthCompareVisual = (
+    bars: { emoji: string; label: string; length: number; tone: "rose" | "sky" | "amber" | "emerald" }[],
+    prompt = "ながい のは どっち？",
+    direction: "horizontal" | "vertical" = "horizontal"
+): { questionText: string; questionVisual: ProblemVisual } => ({
+    questionText: prompt,
+    questionVisual: {
+        kind: "length-compare",
+        prompt,
+        bars,
+        direction,
+    },
+});
+
+export const buildHeightCompareVisual = (
+    bars: { emoji: string; label: string; length: number; tone: "rose" | "sky" | "amber" | "emerald" }[],
+    prompt = "たかい のは どっち？"
+): { questionText: string; questionVisual: ProblemVisual } =>
+    buildLengthCompareVisual(bars, prompt, "vertical");
+
+export const buildCategorySortVisual = (
+    target: { emoji: string; label: string },
+    buckets: {
+        label: string;
+        tone: "rose" | "sky" | "amber" | "emerald";
+        items: { emoji: string; label: string }[];
+    }[],
+    prompt = "どちらの なかま？"
+): { questionText: string; questionVisual: ProblemVisual } => ({
+    questionText: `${target.emoji} は どちらの なかま？`,
+    questionVisual: {
+        kind: "category-sort",
+        prompt,
+        target,
+        buckets,
+    },
+});
+
+export const buildItemGridVisual = (
+    items: { emoji: string; label: string }[],
+    prompt: string,
+    columns = Math.min(Math.max(items.length, 1), 4)
+): { questionText: string; questionVisual: ProblemVisual } => ({
+    questionText: prompt,
+    questionVisual: {
+        kind: "item-grid",
+        prompt,
+        items,
+        columns,
+    },
+});
+
+export const buildWeightCompareVisual = (
+    items: { emoji: string; label: string; weight: number }[],
+    prompt = "おもい のは どっち？"
+): { questionText: string; questionVisual: ProblemVisual } => ({
+    questionText: prompt,
+    questionVisual: {
+        kind: "balance-compare",
+        prompt,
+        items,
+    },
+});
+
+export const buildItemPairVisual = (
+    items: { emoji: string; label: string; scale?: number }[],
+    prompt: string,
+    orientation: "row" | "column" = "row"
+): { questionText: string; questionVisual: ProblemVisual } => ({
+    questionText: prompt,
+    questionVisual: {
+        kind: "item-pair",
+        prompt,
+        items,
+        orientation,
+    },
+});
 
 export const buildDotCountVisual = (count: number): { questionText: string; questionVisual: ProblemVisual } =>
     buildSingleCountVisual(count, {

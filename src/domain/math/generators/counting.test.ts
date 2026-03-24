@@ -32,4 +32,179 @@ describe("counting generators visuals", () => {
             expect(problem.questionVisual.groups).toHaveLength(3);
         }
     });
+
+    it("ordinal_small uses an ordinal-row visual", () => {
+        const problem = generators.ordinal_small();
+        expect(problem.questionVisual?.kind).toBe("ordinal-row");
+        expect(problem.inputType).toBe("choice");
+        if (problem.questionVisual?.kind === "ordinal-row") {
+            expect(problem.questionVisual.items.length).toBeGreaterThanOrEqual(3);
+        }
+    });
+
+    it("pattern_copy uses an ordinal-row visual with a trailing placeholder", () => {
+        const problem = generators.pattern_copy();
+        expect(problem.questionVisual?.kind).toBe("ordinal-row");
+        expect(problem.inputType).toBe("choice");
+        if (problem.questionVisual?.kind === "ordinal-row") {
+            expect(problem.questionVisual.showPlaceholder).toBe(true);
+        }
+    });
+
+    it("length_compare uses a length-compare visual", () => {
+        const problem = generators.length_compare();
+        expect(problem.questionVisual?.kind).toBe("length-compare");
+        expect(problem.inputType).toBe("choice");
+        if (problem.questionVisual?.kind === "length-compare") {
+            expect(problem.questionVisual.bars).toHaveLength(2);
+            expect(problem.questionVisual.bars[0]?.length).not.toBe(problem.questionVisual.bars[1]?.length);
+        }
+    });
+
+    it("height_compare uses a vertical length-compare visual", () => {
+        const problem = generators.height_compare();
+        expect(problem.questionVisual?.kind).toBe("length-compare");
+        expect(problem.inputType).toBe("choice");
+        if (problem.questionVisual?.kind === "length-compare") {
+            expect(problem.questionVisual.direction).toBe("vertical");
+            expect(problem.questionVisual.bars).toHaveLength(2);
+        }
+    });
+
+    it("weight_compare uses a balance visual", () => {
+        const problem = generators.weight_compare();
+        expect(problem.questionVisual?.kind).toBe("balance-compare");
+        expect(problem.inputType).toBe("choice");
+        if (problem.questionVisual?.kind === "balance-compare") {
+            expect(problem.questionVisual.items).toHaveLength(2);
+            expect(problem.questionVisual.items[0]?.weight).not.toBe(problem.questionVisual.items[1]?.weight);
+        }
+    });
+
+    it("big_small_compare uses an item-pair visual", () => {
+        const problem = generators.big_small_compare();
+        expect(problem.questionVisual?.kind).toBe("item-pair");
+        expect(problem.inputType).toBe("choice");
+        if (problem.questionVisual?.kind === "item-pair") {
+            expect(problem.questionVisual.items).toHaveLength(2);
+            expect(problem.questionVisual.items[0]?.scale).not.toBe(problem.questionVisual.items[1]?.scale);
+        }
+    });
+
+    it("same_or_different uses an item-pair visual", () => {
+        const problem = generators.same_or_different();
+        expect(problem.questionVisual?.kind).toBe("item-pair");
+        expect(problem.inputType).toBe("choice");
+    });
+
+    it("spatial_words uses an oriented item-pair visual", () => {
+        const problem = generators.spatial_words();
+        expect(problem.questionVisual?.kind).toBe("item-pair");
+        expect(problem.inputType).toBe("choice");
+        if (problem.questionVisual?.kind === "item-pair") {
+            expect(["row", "column"]).toContain(problem.questionVisual.orientation);
+        }
+    });
+
+    it("one_to_one_match uses a sharing visual with matching counts", () => {
+        const problem = generators.one_to_one_match();
+        expect(problem.questionVisual?.kind).toBe("sharing-items");
+        if (problem.questionVisual?.kind === "sharing-items") {
+            expect(problem.questionVisual.source.count).toBe(problem.questionVisual.recipients.count);
+            expect(problem.questionVisual.actionLabel).toBe("1こずつ");
+        }
+    });
+
+    it("sort_by_attribute uses a category-sort visual", () => {
+        const problem = generators.sort_by_attribute();
+        expect(problem.questionVisual?.kind).toBe("category-sort");
+        expect(problem.inputType).toBe("choice");
+        if (problem.questionVisual?.kind === "category-sort") {
+            expect(problem.questionVisual.buckets).toHaveLength(2);
+        }
+    });
+
+    it("same_count_match uses a visual target and emoji-only choice labels", () => {
+        const problem = generators.same_count_match();
+        expect(problem.questionVisual?.kind).toBe("single-items");
+        expect(problem.inputType).toBe("choice");
+        expect(problem.inputConfig?.choices?.every(choice => !/\d/.test(choice.label))).toBe(true);
+    });
+
+    it("compose_5 uses a 5-frame visual", () => {
+        const problem = generators.compose_5();
+        expect(problem.questionVisual?.kind).toBe("single-items");
+        if (problem.questionVisual?.kind === "single-items") {
+            expect(problem.questionVisual.style).toBe("frame");
+            expect(problem.questionVisual.frameSize).toBe(5);
+        }
+    });
+
+    it("compose_10 uses a 10-frame visual", () => {
+        const problem = generators.compose_10();
+        expect(problem.questionVisual?.kind).toBe("single-items");
+        if (problem.questionVisual?.kind === "single-items") {
+            expect(problem.questionVisual.style).toBe("frame");
+            expect(problem.questionVisual.frameSize).toBe(10);
+        }
+    });
+
+    it("share_equal uses a sharing visual", () => {
+        const problem = generators.share_equal();
+        expect(problem.questionVisual?.kind).toBe("sharing-items");
+        if (problem.questionVisual?.kind === "sharing-items") {
+            expect(problem.questionVisual.source.count % problem.questionVisual.recipients.count).toBe(0);
+        }
+    });
+
+    it("zero_concept uses a subtraction visual that removes everything", () => {
+        const problem = generators.zero_concept();
+        expect(problem.questionVisual?.kind).toBe("subtraction-items");
+        expect(problem.correctAnswer).toBe("0");
+        if (problem.questionVisual?.kind === "subtraction-items") {
+            expect(problem.questionVisual.group.crossedOutCount).toBe(problem.questionVisual.group.count);
+        }
+    });
+
+    it("which_is_empty uses a single-items frame visual", () => {
+        const problem = generators.which_is_empty();
+        expect(problem.questionVisual?.kind).toBe("single-items");
+        expect(problem.inputType).toBe("choice");
+        if (problem.questionVisual?.kind === "single-items") {
+            expect(problem.questionVisual.style).toBe("frame");
+            expect(problem.questionVisual.frameSize).toBe(5);
+        }
+    });
+
+    it("count_oddone uses an item-grid visual", () => {
+        const problem = generators.count_oddone();
+        expect(problem.questionVisual?.kind).toBe("item-grid");
+        if (problem.questionVisual?.kind === "item-grid") {
+            expect(problem.questionVisual.items).toHaveLength(4);
+        }
+    });
+
+    it("count_shape and count_color use single-item grid visuals", () => {
+        const shape = generators.count_shape();
+        const color = generators.count_color();
+
+        expect(shape.questionVisual?.kind).toBe("item-grid");
+        expect(color.questionVisual?.kind).toBe("item-grid");
+
+        if (shape.questionVisual?.kind === "item-grid") {
+            expect(shape.questionVisual.items).toHaveLength(1);
+        }
+
+        if (color.questionVisual?.kind === "item-grid") {
+            expect(color.questionVisual.items).toHaveLength(1);
+        }
+    });
+
+    it("count_pair uses a single-item grid visual", () => {
+        const problem = generators.count_pair();
+        expect(problem.questionVisual?.kind).toBe("item-grid");
+        if (problem.questionVisual?.kind === "item-grid") {
+            expect(problem.questionVisual.items).toHaveLength(1);
+        }
+    });
 });

@@ -17,8 +17,8 @@ export const GRADE_TO_LEVELS: Record<BattleGrade, { min: number; max: number }> 
 };
 
 /**
- * Skills that use 'choice' or 'multi-number' input types,
- * incompatible with battle mode's single-number TenKey.
+ * Skills unsuitable for battle mode because they require non-number input
+ * or rely heavily on visual/conceptual scaffolding.
  */
 export const EXCLUDED_SKILLS = new Set([
     // choice input
@@ -28,6 +28,19 @@ export const EXCLUDED_SKILLS = new Set([
     "count_shape",
     "count_color",
     "count_pair",
+    "ordinal_small",
+    "pattern_copy",
+    "length_compare",
+    "height_compare",
+    "weight_compare",
+    "big_small_compare",
+    "same_or_different",
+    "spatial_words",
+    "one_to_one_match",
+    "sort_by_attribute",
+    "same_count_match",
+    "which_is_empty",
+    "share_equal",
     "compare_1d",
     "compare_2d",
     // multi-number (quotient + remainder)

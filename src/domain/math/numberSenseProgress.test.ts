@@ -1,0 +1,156 @@
+import { describe, expect, it } from "vitest";
+import { selectBigSmallPattern, selectComposeFilledCount, selectHeightComparePattern, selectLengthComparePattern, selectOneToOneCount, selectOrdinalPattern, selectPatternCopyPattern, selectSameOrDifferentPattern, selectSameCountMatchPattern, selectShareEqualPattern, selectSortByAttributePattern, selectSpatialWordsPattern, selectWeightComparePattern, selectWhichIsEmptyCount, selectZeroConceptCount } from "./numberSenseProgress";
+
+describe("numberSenseProgress", () => {
+    it("starts same_count_match with easy fixed patterns", () => {
+        expect(selectSameCountMatchPattern(0)).toEqual({ target: 1, options: [1, 3, 5] });
+        expect(selectSameCountMatchPattern(1)).toEqual({ target: 2, options: [4, 2, 5] });
+    });
+
+    it("starts compose_5 and compose_10 from nearly-complete frames", () => {
+        expect(selectComposeFilledCount("compose_5", 0)).toBe(4);
+        expect(selectComposeFilledCount("compose_10", 0)).toBe(9);
+    });
+
+    it("starts share_equal with easy exact splits", () => {
+        expect(selectShareEqualPattern(0)).toEqual({ total: 2, groups: 2 });
+        expect(selectShareEqualPattern(1)).toEqual({ total: 4, groups: 2 });
+    });
+
+    it("starts ordinal_small with easy first/last prompts", () => {
+        expect(selectOrdinalPattern(0)).toEqual({ length: 3, targetIndex: 0, prompt: "ひだりから 1ばんめは どれ？" });
+        expect(selectOrdinalPattern(1)).toEqual({ length: 3, targetIndex: 2, prompt: "ひだりから さいごは どれ？" });
+    });
+
+    it("starts pattern_copy with easy alternating patterns", () => {
+        expect(selectPatternCopyPattern(0)).toEqual({ visible: [0, 1, 0, 1], answerIndex: 0 });
+        expect(selectPatternCopyPattern(1)).toEqual({ visible: [1, 0, 1, 0], answerIndex: 1 });
+    });
+
+    it("starts length_compare with large gaps", () => {
+        expect(selectLengthComparePattern(0)).toEqual({ left: 7, right: 3 });
+        expect(selectLengthComparePattern(1)).toEqual({ left: 3, right: 7 });
+    });
+
+    it("starts height_compare and weight_compare with large gaps", () => {
+        expect(selectHeightComparePattern(0)).toEqual({ left: 7, right: 3 });
+        expect(selectWeightComparePattern(0)).toEqual({ left: 8, right: 3 });
+    });
+
+    it("starts one_to_one_match and zero_concept from small counts", () => {
+        expect(selectOneToOneCount(0)).toBe(1);
+        expect(selectZeroConceptCount(0)).toBe(1);
+    });
+
+    it("starts sort_by_attribute and which_is_empty with easy patterns", () => {
+        expect(selectSortByAttributePattern(0)).toEqual({ setIndex: 0, targetBucket: 0 });
+        expect(selectWhichIsEmptyCount(0)).toBe(0);
+    });
+
+    it("starts big_small_compare and same_or_different with easy patterns", () => {
+        expect(selectBigSmallPattern(0)).toEqual({ leftScale: 1.8, rightScale: 1.0, largerIndex: 0 });
+        expect(selectSameOrDifferentPattern(0)).toEqual({ isSame: true });
+    });
+
+    it("starts spatial_words with simple up/down prompts", () => {
+        expect(selectSpatialWordsPattern(0)).toEqual({
+            orientation: "column",
+            targetIndex: 0,
+            answer: "うえ",
+            choices: ["うえ", "した"],
+        });
+        expect(selectSpatialWordsPattern(1)).toEqual({
+            orientation: "column",
+            targetIndex: 1,
+            answer: "した",
+            choices: ["うえ", "した"],
+        });
+    });
+
+    it("keeps random compose values inside valid ranges", () => {
+        const compose5 = selectComposeFilledCount("compose_5", 99);
+        const compose10 = selectComposeFilledCount("compose_10", 99);
+
+        expect(compose5).toBeGreaterThanOrEqual(1);
+        expect(compose5).toBeLessThanOrEqual(4);
+        expect(compose10).toBeGreaterThanOrEqual(1);
+        expect(compose10).toBeLessThanOrEqual(9);
+    });
+
+    it("keeps random share_equal patterns divisible", () => {
+        const pattern = selectShareEqualPattern(99);
+        expect(pattern.total % pattern.groups).toBe(0);
+    });
+
+    it("keeps random ordinal patterns within supported lengths", () => {
+        const pattern = selectOrdinalPattern(99);
+        expect(pattern.length).toBeGreaterThanOrEqual(3);
+        expect(pattern.length).toBeLessThanOrEqual(4);
+        expect(pattern.targetIndex).toBeGreaterThanOrEqual(0);
+        expect(pattern.targetIndex).toBeLessThan(pattern.length);
+    });
+
+    it("keeps random pattern_copy answers within the shown palette", () => {
+        const pattern = selectPatternCopyPattern(99);
+        const uniqueCount = Math.max(...pattern.visible, pattern.answerIndex) + 1;
+        expect(uniqueCount).toBeGreaterThanOrEqual(2);
+        expect(uniqueCount).toBeLessThanOrEqual(3);
+    });
+
+    it("keeps random length_compare pairs distinct", () => {
+        const pattern = selectLengthComparePattern(99);
+        expect(pattern.left).not.toBe(pattern.right);
+        expect(pattern.left).toBeGreaterThanOrEqual(2);
+        expect(pattern.left).toBeLessThanOrEqual(8);
+        expect(pattern.right).toBeGreaterThanOrEqual(2);
+        expect(pattern.right).toBeLessThanOrEqual(8);
+    });
+
+    it("keeps random height_compare and weight_compare pairs distinct", () => {
+        const height = selectHeightComparePattern(99);
+        const weight = selectWeightComparePattern(99);
+        expect(height.left).not.toBe(height.right);
+        expect(weight.left).not.toBe(weight.right);
+        expect(height.left).toBeGreaterThanOrEqual(2);
+        expect(height.right).toBeLessThanOrEqual(8);
+        expect(weight.left).toBeGreaterThanOrEqual(2);
+        expect(weight.right).toBeLessThanOrEqual(8);
+    });
+
+    it("keeps random one_to_one_match and zero_concept counts in range", () => {
+        const oneToOne = selectOneToOneCount(99);
+        const zero = selectZeroConceptCount(99);
+        expect(oneToOne).toBeGreaterThanOrEqual(1);
+        expect(oneToOne).toBeLessThanOrEqual(5);
+        expect(zero).toBeGreaterThanOrEqual(1);
+        expect(zero).toBeLessThanOrEqual(5);
+    });
+
+    it("keeps random sort_by_attribute and which_is_empty values in range", () => {
+        const sort = selectSortByAttributePattern(99);
+        const empty = selectWhichIsEmptyCount(99);
+        expect(sort.setIndex).toBeGreaterThanOrEqual(0);
+        expect(sort.setIndex).toBeLessThanOrEqual(3);
+        expect(sort.targetBucket).toBeGreaterThanOrEqual(0);
+        expect(sort.targetBucket).toBeLessThanOrEqual(1);
+        expect(empty).toBeGreaterThanOrEqual(0);
+        expect(empty).toBeLessThanOrEqual(5);
+    });
+
+    it("keeps random big_small_compare and same_or_different values in range", () => {
+        const bigSmall = selectBigSmallPattern(99);
+        const sameDiff = selectSameOrDifferentPattern(99);
+        expect(bigSmall.leftScale).not.toBe(bigSmall.rightScale);
+        expect(bigSmall.largerIndex).toBeGreaterThanOrEqual(0);
+        expect(bigSmall.largerIndex).toBeLessThanOrEqual(1);
+        expect(typeof sameDiff.isSame).toBe("boolean");
+    });
+
+    it("keeps random spatial_words values in range", () => {
+        const spatial = selectSpatialWordsPattern(99);
+        expect(["row", "column"]).toContain(spatial.orientation);
+        expect(spatial.targetIndex).toBeGreaterThanOrEqual(0);
+        expect(spatial.targetIndex).toBeLessThanOrEqual(1);
+        expect(["うえ", "した", "ひだり", "みぎ"]).toContain(spatial.answer);
+    });
+});

@@ -146,6 +146,36 @@ export interface ProblemVisualSequenceSlot {
     value: number | null;
 }
 
+export interface ProblemVisualItem {
+    emoji: string;
+    label: string;
+}
+
+export interface ProblemVisualLengthBar {
+    emoji: string;
+    label: string;
+    length: number;
+    tone: "rose" | "sky" | "amber" | "emerald";
+}
+
+export interface ProblemVisualBalanceItem {
+    emoji: string;
+    label: string;
+    weight: number;
+}
+
+export interface ProblemVisualCategoryBucket {
+    label: string;
+    tone: "rose" | "sky" | "amber" | "emerald";
+    items: ProblemVisualItem[];
+}
+
+export interface ProblemVisualPairItem {
+    emoji: string;
+    label: string;
+    scale?: number;
+}
+
 export type ProblemVisual =
     | {
         kind: "single-items";
@@ -166,6 +196,13 @@ export type ProblemVisual =
         group: ProblemVisualGroup;
     }
     | {
+        kind: "sharing-items";
+        prompt?: string;
+        actionLabel?: string;
+        source: ProblemVisualGroup;
+        recipients: ProblemVisualGroup;
+    }
+    | {
         kind: "comparison-items";
         prompt?: string;
         groups: ProblemVisualGroup[];
@@ -184,6 +221,41 @@ export type ProblemVisual =
         kind: "item-order";
         prompt?: string;
         groups: ProblemVisualGroup[];
+    }
+    | {
+        kind: "ordinal-row";
+        prompt?: string;
+        items: ProblemVisualItem[];
+        showPlaceholder?: boolean;
+    }
+    | {
+        kind: "length-compare";
+        prompt?: string;
+        bars: ProblemVisualLengthBar[];
+        direction?: "horizontal" | "vertical";
+    }
+    | {
+        kind: "category-sort";
+        prompt?: string;
+        target: ProblemVisualItem;
+        buckets: ProblemVisualCategoryBucket[];
+    }
+    | {
+        kind: "balance-compare";
+        prompt?: string;
+        items: ProblemVisualBalanceItem[];
+    }
+    | {
+        kind: "item-grid";
+        prompt?: string;
+        items: ProblemVisualItem[];
+        columns?: number;
+    }
+    | {
+        kind: "item-pair";
+        prompt?: string;
+        items: ProblemVisualPairItem[];
+        orientation?: "row" | "column";
     };
 
 /**
