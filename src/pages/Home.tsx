@@ -10,7 +10,7 @@ import { eventStorage, weakPointsStorage } from "../utils/storage";
 import { Ikimono } from "../components/ikimono/Ikimono";
 import { HomeAnimatedBackground } from "../components/home/HomeAnimatedBackground";
 import { MagicTank } from "../components/home/MagicTank";
-import { getHomeMagicEnergyHint, getHomeMagicEnergyLabel, getHomeMagicEnergyState } from "../components/home/homeMagicEnergy";
+import { getHomeMagicEnergyHint, getHomeMagicEnergyState } from "../components/home/homeMagicEnergy";
 import { getHomeFuwafuwaSpeech } from "../components/ikimono/fuwafuwaSpeech";
 import { getSceneText } from "../components/ikimono/sceneText";
 import { Button } from "../components/ui/Button";
@@ -228,7 +228,6 @@ export const Home: React.FC = () => {
         useKanjiText: useKanjiForIkimono,
     });
     const magicHint = getHomeMagicEnergyHint(magicEnergy.percent, useKanjiForIkimono, isMagicDeliveryActive);
-    const magicLabel = getHomeMagicEnergyLabel(magicEnergy.percent, useKanjiForIkimono);
 
     const handleMagicRelease = () => {
         if (!magicEnergy.isFull) return;
@@ -258,30 +257,23 @@ export const Home: React.FC = () => {
 
             <div className="relative z-10 flex h-full flex-col px-[var(--screen-padding-x)] pt-[var(--screen-header-top)] pb-[var(--screen-bottom-with-footer)]">
                 <div className="flex min-h-0 flex-1 flex-col overflow-y-auto pb-4">
-                    <div className="flex items-center justify-between gap-3">
-                        <div className="min-w-0 pl-1">
-                            <p className="text-[11px] font-black uppercase tracking-[0.28em] text-teal-500/70">Fuwafuwa Home</p>
-                            <p className="mt-1 truncate text-sm font-black text-slate-700">
-                                {t("ふわふわ の おへや", "ふわふわの お部屋")}
-                            </p>
-                        </div>
+                    <div className="flex items-center justify-end">
                         <Button
                             variant="secondary"
-                            size="md"
-                            className="px-5"
+                            size="sm"
+                            className="px-4"
                             onClick={() => { warmUpTTS(); navigate("/study?session=review&force_review=1"); }}
                         >
                             {isEasy ? "ふくしゅう" : "復習"}
                         </Button>
                     </div>
 
-                    {/* Ikimono display */}
                     {profileId && (
                         <motion.div
                             initial={{ opacity: 0, scale: 0.98 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.7 }}
-                            className="card-surface relative mt-3 flex min-h-[420px] w-full flex-1 overflow-hidden rounded-[28px] px-4 pt-4 pb-6"
+                            className="card-surface relative mt-3 flex min-h-[420px] w-full flex-1 overflow-hidden rounded-[28px] px-5 pt-5 pb-6"
                         >
                             <motion.div
                                 aria-hidden="true"
@@ -296,32 +288,9 @@ export const Home: React.FC = () => {
                                 className="pointer-events-none absolute right-[-2rem] bottom-8 h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.34)_0%,rgba(56,189,248,0.05)_64%,transparent_78%)] blur-2xl"
                             />
                             <div className="relative z-10 flex h-full w-full flex-col">
-                                <div className="flex items-start justify-between gap-3">
-                                    <div className="min-w-0">
-                                        <span className="app-pill inline-flex items-center rounded-full px-3 py-1 text-[11px] font-black tracking-[0.18em] text-amber-700">
-                                            {t("まほうエネルギー", "魔法エネルギー")}
-                                        </span>
-                                        <p className="mt-3 text-sm font-black leading-relaxed text-slate-700">
-                                            {magicHint}
-                                        </p>
-                                        <p className="mt-1 text-xs font-bold text-slate-500">
-                                            {t(`ぜんぶ ${homeStats.totalCount}もん`, `ぜんぶ ${homeStats.totalCount}問`)}
-                                            {" · "}
-                                            {t(`きょう ${homeStats.todayCount}もん`, `今日 ${homeStats.todayCount}問`)}
-                                        </p>
-                                    </div>
-
-                                    <div className="flex shrink-0 flex-col gap-2">
-                                        <span className="app-pill inline-flex items-center justify-center rounded-full px-3 py-1 text-[11px] font-black text-slate-600">
-                                            {t(`れんぞく ${profile?.streak ?? 0}にち`, `連続 ${profile?.streak ?? 0}日`)}
-                                        </span>
-                                        <span className="app-pill inline-flex items-center justify-center rounded-full px-3 py-1 text-[11px] font-black text-slate-600">
-                                            {homeStats.weakCount === 0
-                                                ? t("きょうは かるい", "今日はかるい")
-                                                : t(`きになる ${homeStats.weakCount}こ`, `気になる ${homeStats.weakCount}こ`)}
-                                        </span>
-                                    </div>
-                                </div>
+                                <p className="text-center text-sm font-bold leading-relaxed text-slate-600">
+                                    {magicHint}
+                                </p>
 
                                 <div className="mt-4 flex flex-col items-center">
                                     <MagicTank
@@ -331,11 +300,9 @@ export const Home: React.FC = () => {
                                         onRelease={magicEnergy.isFull ? handleMagicRelease : undefined}
                                         ariaLabel={t("まほうタンク", "魔法タンク")}
                                     />
-                                    <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-white/74 px-3 py-1 text-xs font-black text-amber-700 shadow-[0_12px_24px_-18px_rgba(217,119,6,0.7)]">
-                                        <span>{magicLabel}</span>
-                                        <span className="text-slate-300">•</span>
-                                        <span>{`${magicEnergy.currentValue}/${magicEnergy.maxValue}`}</span>
-                                    </div>
+                                    <span className="mt-2 text-xs font-bold text-slate-400">
+                                        {`${magicEnergy.currentValue} / ${magicEnergy.maxValue}`}
+                                    </span>
                                 </div>
 
                                 <div className="mt-2 flex min-h-0 flex-1 items-center justify-center">

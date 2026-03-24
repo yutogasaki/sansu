@@ -43,35 +43,16 @@ export const Footer: React.FC = () => {
                     if (item.to === currentPath) return;
                     navigate(item.to);
                 }}
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 2,
-                    border: "none",
-                    background: "none",
-                    cursor: "pointer",
-                    padding: "8px 16px",
-                    color: isActive ? "#2BBAA0" : "#B2BEC3",
-                    transition: "color 0.2s ease",
-                }}
+                className={`flex cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent px-4 py-2 transition-colors duration-200 ${isActive ? "text-teal-500" : "text-slate-400"}`}
             >
                 <item.icon
                     width={22}
                     height={22}
                     strokeWidth={isActive ? 2.5 : 2}
-                    style={{ pointerEvents: "none" }}
+                    className="pointer-events-none"
                     aria-hidden="true"
                 />
-                <span
-                    style={{
-                        fontSize: 10,
-                        fontWeight: 500,
-                        fontFamily: "var(--font-body)",
-                        pointerEvents: "none",
-                    }}
-                >
+                <span className="pointer-events-none text-[10px] font-medium font-[var(--font-body)]">
                     {item.label}
                 </span>
             </button>
@@ -79,26 +60,8 @@ export const Footer: React.FC = () => {
     };
 
     return (
-        <nav
-            style={{
-                position: "fixed",
-                bottom: 0,
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: "min(100%, 430px)",
-                height: "calc(56px + env(safe-area-inset-bottom, 0px))",
-                paddingBottom: "env(safe-area-inset-bottom, 0px)",
-                background: "var(--toolbar-bg)",
-                backdropFilter: "blur(var(--blur-lg))",
-                WebkitBackdropFilter: "blur(var(--blur-lg))",
-                borderTop: "1px solid rgba(0,0,0,0.06)",
-                boxShadow: "var(--toolbar-shadow)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-around",
-                zIndex: 50,
-            }}
-        >
+        <nav className="fixed bottom-0 left-1/2 z-50 flex w-[min(100%,430px)] -translate-x-1/2 items-center justify-around border-t border-black/6 bg-[var(--toolbar-bg)] shadow-[var(--toolbar-shadow)] backdrop-blur-[var(--blur-lg)] h-[calc(56px+env(safe-area-inset-bottom,0px))] pb-[env(safe-area-inset-bottom,0px)]">
+
             {leftTabs.map(renderTab)}
 
             <button
