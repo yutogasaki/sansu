@@ -1,7 +1,7 @@
 export const MATH_CURRICULUM: Record<number, string[]> = {
-    0: ["count_5", "count_dot", "count_which_more", "count_read", "count_order", "ordinal_small", "pattern_copy", "length_compare", "height_compare", "weight_compare", "big_small_compare", "same_or_different", "spatial_words", "one_to_one_match", "sort_by_attribute", "count_oddone", "count_shape", "count_color", "count_pair", "same_count_match", "compose_5", "add_tiny"],
-    1: ["count_10", "count_next_10", "add_finger", "count_back", "which_is_empty", "zero_concept", "share_equal"],
-    2: ["count_50", "count_next_20", "add_5", "compose_10", "sub_tiny"],
+    0: ["count_5", "count_dot", "count_read", "count_shape", "count_color", "count_pair", "count_which_more", "one_more", "ordinal_small", "spatial_words", "same_or_different", "same_count_match", "length_compare", "height_compare", "big_small_compare", "pattern_copy", "one_to_one_match", "compose_5", "add_tiny"],
+    1: ["count_10", "count_next_10", "count_back", "one_less", "two_more", "count_order", "weight_compare", "sort_by_attribute", "count_oddone", "add_finger", "which_is_empty", "zero_concept", "share_equal"],
+    2: ["count_50", "count_next_20", "add_5", "compose_10", "two_less", "sub_tiny"],
     3: ["count_100", "count_fill", "compare_1d", "compare_2d"],
     4: ["add_1d_1"],
     5: ["add_1d_2"],

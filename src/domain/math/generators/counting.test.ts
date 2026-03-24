@@ -25,6 +25,24 @@ describe("counting generators visuals", () => {
         expect(problem.inputConfig?.choices?.every(choice => !/\d/.test(choice.label))).toBe(true);
     });
 
+    it("one_more uses an addition visual", () => {
+        const problem = generators.one_more();
+        expect(problem.questionVisual?.kind).toBe("addition-items");
+        expect(problem.inputType).toBe("number");
+        if (problem.questionVisual?.kind === "addition-items") {
+            expect(problem.questionVisual.groups[1]?.count).toBe(1);
+        }
+    });
+
+    it("two_more uses an addition visual with two added items", () => {
+        const problem = generators.two_more();
+        expect(problem.questionVisual?.kind).toBe("addition-items");
+        expect(problem.inputType).toBe("number");
+        if (problem.questionVisual?.kind === "addition-items") {
+            expect(problem.questionVisual.groups[1]?.count).toBe(2);
+        }
+    });
+
     it("count_order uses item-order visuals", () => {
         const problem = generators.count_order();
         expect(problem.questionVisual?.kind).toBe("item-order");
@@ -97,12 +115,34 @@ describe("counting generators visuals", () => {
         expect(problem.inputType).toBe("choice");
     });
 
-    it("spatial_words uses an oriented item-pair visual", () => {
-        const problem = generators.spatial_words();
+    it("spatial_words starts with an oriented item-pair visual", () => {
+        const problem = generators.spatial_words({
+            profile: { mathSkills: { spatial_words: { totalAnswers: 0 } } },
+        } as any);
         expect(problem.questionVisual?.kind).toBe("item-pair");
         expect(problem.inputType).toBe("choice");
         if (problem.questionVisual?.kind === "item-pair") {
             expect(["row", "column"]).toContain(problem.questionVisual.orientation);
+        }
+    });
+
+    it("spatial_words later uses front/back and inside/outside scenes", () => {
+        const frontBack = generators.spatial_words({
+            profile: { mathSkills: { spatial_words: { totalAnswers: 4 } } },
+        } as any);
+        const insideOutside = generators.spatial_words({
+            profile: { mathSkills: { spatial_words: { totalAnswers: 6 } } },
+        } as any);
+
+        expect(frontBack.questionVisual?.kind).toBe("position-scene");
+        expect(insideOutside.questionVisual?.kind).toBe("position-scene");
+
+        if (frontBack.questionVisual?.kind === "position-scene") {
+            expect(frontBack.questionVisual.scene).toBe("front-back");
+        }
+
+        if (insideOutside.questionVisual?.kind === "position-scene") {
+            expect(insideOutside.questionVisual.scene).toBe("inside-outside");
         }
     });
 
@@ -173,6 +213,24 @@ describe("counting generators visuals", () => {
         if (problem.questionVisual?.kind === "single-items") {
             expect(problem.questionVisual.style).toBe("frame");
             expect(problem.questionVisual.frameSize).toBe(5);
+        }
+    });
+
+    it("one_less uses a subtraction visual that removes one item", () => {
+        const problem = generators.one_less();
+        expect(problem.questionVisual?.kind).toBe("subtraction-items");
+        expect(problem.inputType).toBe("number");
+        if (problem.questionVisual?.kind === "subtraction-items") {
+            expect(problem.questionVisual.group.crossedOutCount).toBe(1);
+        }
+    });
+
+    it("two_less uses a subtraction visual that removes two items", () => {
+        const problem = generators.two_less();
+        expect(problem.questionVisual?.kind).toBe("subtraction-items");
+        expect(problem.inputType).toBe("number");
+        if (problem.questionVisual?.kind === "subtraction-items") {
+            expect(problem.questionVisual.group.crossedOutCount).toBe(2);
         }
     });
 

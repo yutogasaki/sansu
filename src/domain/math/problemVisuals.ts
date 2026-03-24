@@ -58,6 +58,32 @@ export const buildAdditionVisual = (a: number, b: number): { questionText: strin
     };
 };
 
+const buildMoreVisual = (
+    count: number,
+    increase: number,
+    prompt: string
+): { questionText: string; questionVisual: ProblemVisual } => {
+    const item = pickCountableItem();
+
+    return {
+        questionText: `${item.label} ${count}こ に ${increase}こ ふえると\nいくつ？`,
+        questionVisual: {
+            kind: "addition-items",
+            prompt,
+            groups: [
+                { emoji: item.emoji, label: item.label, count },
+                { emoji: item.emoji, label: item.label, count: increase },
+            ],
+        },
+    };
+};
+
+export const buildOneMoreVisual = (count: number): { questionText: string; questionVisual: ProblemVisual } =>
+    buildMoreVisual(count, 1, "1つ おおいと いくつ？");
+
+export const buildTwoMoreVisual = (count: number): { questionText: string; questionVisual: ProblemVisual } =>
+    buildMoreVisual(count, 2, "2つ おおいと いくつ？");
+
 export const buildSubtractionVisual = (a: number, b: number): { questionText: string; questionVisual: ProblemVisual } => {
     const item = pickCountableItem();
 
@@ -75,6 +101,34 @@ export const buildSubtractionVisual = (a: number, b: number): { questionText: st
         },
     };
 };
+
+const buildLessVisual = (
+    count: number,
+    decrease: number,
+    prompt: string
+): { questionText: string; questionVisual: ProblemVisual } => {
+    const item = pickCountableItem();
+
+    return {
+        questionText: `${item.label} ${count}こ から ${decrease}こ へると\nいくつ？`,
+        questionVisual: {
+            kind: "subtraction-items",
+            prompt,
+            group: {
+                emoji: item.emoji,
+                label: item.label,
+                count,
+                crossedOutCount: decrease,
+            },
+        },
+    };
+};
+
+export const buildOneLessVisual = (count: number): { questionText: string; questionVisual: ProblemVisual } =>
+    buildLessVisual(count, 1, "1つ すくないと いくつ？");
+
+export const buildTwoLessVisual = (count: number): { questionText: string; questionVisual: ProblemVisual } =>
+    buildLessVisual(count, 2, "2つ すくないと いくつ？");
 
 export const buildSharingVisual = (total: number, recipients: number): { questionText: string; questionVisual: ProblemVisual } => {
     const item = pickCountableItem();
@@ -339,6 +393,24 @@ export const buildWeightCompareVisual = (
         kind: "balance-compare",
         prompt,
         items,
+    },
+});
+
+export const buildPositionSceneVisual = (
+    scene: "front-back" | "inside-outside",
+    target: { emoji: string; label: string },
+    reference: { emoji: string; label: string },
+    relation: "まえ" | "うしろ" | "なか" | "そと",
+    prompt: string
+): { questionText: string; questionVisual: ProblemVisual } => ({
+    questionText: prompt,
+    questionVisual: {
+        kind: "position-scene",
+        prompt,
+        scene,
+        target,
+        reference,
+        relation,
     },
 });
 

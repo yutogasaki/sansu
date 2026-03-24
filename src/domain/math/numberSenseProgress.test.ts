@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { selectBigSmallPattern, selectComposeFilledCount, selectHeightComparePattern, selectLengthComparePattern, selectOneToOneCount, selectOrdinalPattern, selectPatternCopyPattern, selectSameOrDifferentPattern, selectSameCountMatchPattern, selectShareEqualPattern, selectSortByAttributePattern, selectSpatialWordsPattern, selectWeightComparePattern, selectWhichIsEmptyCount, selectZeroConceptCount } from "./numberSenseProgress";
+import { selectBigSmallPattern, selectComposeFilledCount, selectHeightComparePattern, selectLengthComparePattern, selectOneLessCount, selectOneMoreCount, selectOneToOneCount, selectOrdinalPattern, selectPatternCopyPattern, selectSameOrDifferentPattern, selectSameCountMatchPattern, selectShareEqualPattern, selectSortByAttributePattern, selectSpatialWordsPattern, selectTwoLessCount, selectTwoMoreCount, selectWeightComparePattern, selectWhichIsEmptyCount, selectZeroConceptCount } from "./numberSenseProgress";
 
 describe("numberSenseProgress", () => {
     it("starts same_count_match with easy fixed patterns", () => {
@@ -42,6 +42,16 @@ describe("numberSenseProgress", () => {
         expect(selectZeroConceptCount(0)).toBe(1);
     });
 
+    it("starts one_more and one_less from simple counts", () => {
+        expect(selectOneMoreCount(0)).toBe(1);
+        expect(selectOneLessCount(0)).toBe(2);
+    });
+
+    it("starts two_more and two_less from simple counts", () => {
+        expect(selectTwoMoreCount(0)).toBe(1);
+        expect(selectTwoLessCount(0)).toBe(3);
+    });
+
     it("starts sort_by_attribute and which_is_empty with easy patterns", () => {
         expect(selectSortByAttributePattern(0)).toEqual({ setIndex: 0, targetBucket: 0 });
         expect(selectWhichIsEmptyCount(0)).toBe(0);
@@ -54,16 +64,31 @@ describe("numberSenseProgress", () => {
 
     it("starts spatial_words with simple up/down prompts", () => {
         expect(selectSpatialWordsPattern(0)).toEqual({
+            mode: "pair",
             orientation: "column",
             targetIndex: 0,
             answer: "うえ",
             choices: ["うえ", "した"],
         });
         expect(selectSpatialWordsPattern(1)).toEqual({
+            mode: "pair",
             orientation: "column",
             targetIndex: 1,
             answer: "した",
             choices: ["うえ", "した"],
+        });
+    });
+
+    it("expands spatial_words to front/back and inside/outside", () => {
+        expect(selectSpatialWordsPattern(4)).toEqual({
+            mode: "front-back",
+            answer: "まえ",
+            choices: ["まえ", "うしろ"],
+        });
+        expect(selectSpatialWordsPattern(6)).toEqual({
+            mode: "inside-outside",
+            answer: "なか",
+            choices: ["なか", "そと"],
         });
     });
 
@@ -126,6 +151,24 @@ describe("numberSenseProgress", () => {
         expect(zero).toBeLessThanOrEqual(5);
     });
 
+    it("keeps random one_more and one_less counts in range", () => {
+        const oneMore = selectOneMoreCount(99);
+        const oneLess = selectOneLessCount(99);
+        expect(oneMore).toBeGreaterThanOrEqual(1);
+        expect(oneMore).toBeLessThanOrEqual(8);
+        expect(oneLess).toBeGreaterThanOrEqual(2);
+        expect(oneLess).toBeLessThanOrEqual(9);
+    });
+
+    it("keeps random two_more and two_less counts in range", () => {
+        const twoMore = selectTwoMoreCount(99);
+        const twoLess = selectTwoLessCount(99);
+        expect(twoMore).toBeGreaterThanOrEqual(1);
+        expect(twoMore).toBeLessThanOrEqual(7);
+        expect(twoLess).toBeGreaterThanOrEqual(3);
+        expect(twoLess).toBeLessThanOrEqual(9);
+    });
+
     it("keeps random sort_by_attribute and which_is_empty values in range", () => {
         const sort = selectSortByAttributePattern(99);
         const empty = selectWhichIsEmptyCount(99);
@@ -148,9 +191,16 @@ describe("numberSenseProgress", () => {
 
     it("keeps random spatial_words values in range", () => {
         const spatial = selectSpatialWordsPattern(99);
-        expect(["row", "column"]).toContain(spatial.orientation);
-        expect(spatial.targetIndex).toBeGreaterThanOrEqual(0);
-        expect(spatial.targetIndex).toBeLessThanOrEqual(1);
-        expect(["うえ", "した", "ひだり", "みぎ"]).toContain(spatial.answer);
+        expect(["pair", "front-back", "inside-outside"]).toContain(spatial.mode);
+        if (spatial.mode === "pair") {
+            expect(["row", "column"]).toContain(spatial.orientation);
+            expect(spatial.targetIndex).toBeGreaterThanOrEqual(0);
+            expect(spatial.targetIndex).toBeLessThanOrEqual(1);
+        }
+        if (spatial.mode !== "pair") {
+            expect(spatial.orientation).toBeUndefined();
+            expect(spatial.targetIndex).toBeUndefined();
+        }
+        expect(["うえ", "した", "ひだり", "みぎ", "まえ", "うしろ", "なか", "そと"]).toContain(spatial.answer);
     });
 });

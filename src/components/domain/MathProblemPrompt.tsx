@@ -1,5 +1,5 @@
 import React from "react";
-import { Problem, ProblemVisualBalanceItem, ProblemVisualCategoryBucket, ProblemVisualGroup, ProblemVisualItem, ProblemVisualLengthBar, ProblemVisualPairItem, ProblemVisualSequenceSlot, ProblemVisualValueGroup } from "../../domain/types";
+import { Problem, ProblemVisualBalanceItem, ProblemVisualCategoryBucket, ProblemVisualGroup, ProblemVisualItem, ProblemVisualLengthBar, ProblemVisualPairItem, ProblemVisualPositionScene, ProblemVisualSequenceSlot, ProblemVisualValueGroup } from "../../domain/types";
 import { cn } from "../../utils/cn";
 import { MathRenderer } from "./MathRenderer";
 
@@ -281,6 +281,62 @@ const BalanceCompareCard: React.FC<{
     );
 };
 
+const PositionSceneCard: React.FC<{
+    scene: ProblemVisualPositionScene["scene"];
+    target: ProblemVisualItem;
+    reference: ProblemVisualItem;
+    relation: ProblemVisualPositionScene["relation"];
+}> = ({ scene, target, reference, relation }) => {
+    if (scene === "front-back") {
+        const targetFront = relation === "まえ";
+
+        return (
+            <div className="flex w-full max-w-[320px] justify-center rounded-[24px] border border-white/80 bg-white/72 px-4 py-5 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+                <div className="relative h-40 w-48">
+                    <div
+                        className={cn(
+                            "absolute left-1/2 flex h-20 w-20 -translate-x-1/2 items-center justify-center rounded-full border border-white/70 bg-white/85 text-[48px] shadow-[0_10px_18px_-16px_rgba(15,23,42,0.24)]",
+                            targetFront ? "top-5 opacity-55" : "top-10 z-20"
+                        )}
+                    >
+                        {reference.emoji}
+                    </div>
+                    <div
+                        className={cn(
+                            "absolute left-1/2 flex h-20 w-20 -translate-x-1/2 items-center justify-center rounded-full border border-white/70 bg-cyan-50/85 text-[46px] shadow-[0_12px_22px_-18px_rgba(8,145,178,0.36)]",
+                            targetFront ? "top-14 z-20" : "top-4 opacity-60"
+                        )}
+                    >
+                        {target.emoji}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    const targetInside = relation === "なか";
+
+    return (
+        <div className="flex w-full max-w-[320px] justify-center rounded-[24px] border border-white/80 bg-white/72 px-4 py-5 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+            <div className="relative h-40 w-48">
+                <div className="absolute left-1/2 top-6 flex h-24 w-24 -translate-x-1/2 items-center justify-center rounded-[28px] border-2 border-dashed border-amber-300 bg-amber-50/90 text-[50px] shadow-[0_12px_22px_-18px_rgba(217,119,6,0.22)]">
+                    {reference.emoji}
+                </div>
+                <div
+                    className={cn(
+                        "absolute flex h-16 w-16 items-center justify-center rounded-full border border-white/80 bg-white/90 text-[38px] shadow-[0_10px_18px_-16px_rgba(15,23,42,0.24)]",
+                        targetInside
+                            ? "left-1/2 top-10 -translate-x-1/2"
+                            : "right-2 top-20"
+                    )}
+                >
+                    {target.emoji}
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const CategorySortCard: React.FC<{
     target: ProblemVisualItem;
     buckets: ProblemVisualCategoryBucket[];
@@ -524,6 +580,20 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
             <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
                 <BalanceCompareCard items={visual.items} />
                 <PromptCaption text={visual.prompt || "おもい のは どっち？"} />
+            </div>
+        );
+    }
+
+    if (visual?.kind === "position-scene") {
+        return (
+            <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
+                <PositionSceneCard
+                    scene={visual.scene}
+                    target={visual.target}
+                    reference={visual.reference}
+                    relation={visual.relation}
+                />
+                <PromptCaption text={visual.prompt || "どこ？"} />
             </div>
         );
     }

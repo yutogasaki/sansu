@@ -164,6 +164,13 @@ export interface ProblemVisualBalanceItem {
     weight: number;
 }
 
+export interface ProblemVisualPositionScene {
+    scene: "front-back" | "inside-outside";
+    target: ProblemVisualItem;
+    reference: ProblemVisualItem;
+    relation: "まえ" | "うしろ" | "なか" | "そと";
+}
+
 export interface ProblemVisualCategoryBucket {
     label: string;
     tone: "rose" | "sky" | "amber" | "emerald";
@@ -244,6 +251,14 @@ export type ProblemVisual =
         kind: "balance-compare";
         prompt?: string;
         items: ProblemVisualBalanceItem[];
+    }
+    | {
+        kind: "position-scene";
+        prompt?: string;
+        scene: ProblemVisualPositionScene["scene"];
+        target: ProblemVisualItem;
+        reference: ProblemVisualItem;
+        relation: ProblemVisualPositionScene["relation"];
     }
     | {
         kind: "item-grid";

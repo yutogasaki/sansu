@@ -44,11 +44,14 @@ export interface SameOrDifferentPattern {
     isSame: boolean;
 }
 
+export type SpatialWordsAnswer = "うえ" | "した" | "ひだり" | "みぎ" | "まえ" | "うしろ" | "なか" | "そと";
+
 export interface SpatialWordsPattern {
-    orientation: "row" | "column";
-    targetIndex: 0 | 1;
-    answer: "うえ" | "した" | "ひだり" | "みぎ";
-    choices: ["うえ", "した"] | ["ひだり", "みぎ"];
+    mode: "pair" | "front-back" | "inside-outside";
+    orientation?: "row" | "column";
+    targetIndex?: 0 | 1;
+    answer: SpatialWordsAnswer;
+    choices: SpatialWordsAnswer[];
 }
 
 export interface WeightComparePattern {
@@ -56,6 +59,10 @@ export interface WeightComparePattern {
     right: number;
 }
 
+const ONE_MORE_SEQUENCE = [1, 2, 3, 4, 5];
+const TWO_MORE_SEQUENCE = [1, 2, 3, 4, 5];
+const ONE_LESS_SEQUENCE = [2, 3, 4, 5, 6];
+const TWO_LESS_SEQUENCE = [3, 4, 5, 6, 7];
 const ZERO_CONCEPT_SEQUENCE = [1, 2, 3, 4, 5];
 const ONE_TO_ONE_SEQUENCE = [1, 2, 3, 4, 5];
 const WHICH_IS_EMPTY_SEQUENCE = [0, 1, 0, 2, 0, 3];
@@ -143,12 +150,14 @@ const SAME_OR_DIFFERENT_SEQUENCE: SameOrDifferentPattern[] = [
 ];
 
 const SPATIAL_WORDS_SEQUENCE: SpatialWordsPattern[] = [
-    { orientation: "column", targetIndex: 0, answer: "うえ", choices: ["うえ", "した"] },
-    { orientation: "column", targetIndex: 1, answer: "した", choices: ["うえ", "した"] },
-    { orientation: "row", targetIndex: 0, answer: "ひだり", choices: ["ひだり", "みぎ"] },
-    { orientation: "row", targetIndex: 1, answer: "みぎ", choices: ["ひだり", "みぎ"] },
-    { orientation: "column", targetIndex: 0, answer: "うえ", choices: ["うえ", "した"] },
-    { orientation: "row", targetIndex: 1, answer: "みぎ", choices: ["ひだり", "みぎ"] },
+    { mode: "pair", orientation: "column", targetIndex: 0, answer: "うえ", choices: ["うえ", "した"] },
+    { mode: "pair", orientation: "column", targetIndex: 1, answer: "した", choices: ["うえ", "した"] },
+    { mode: "pair", orientation: "row", targetIndex: 0, answer: "ひだり", choices: ["ひだり", "みぎ"] },
+    { mode: "pair", orientation: "row", targetIndex: 1, answer: "みぎ", choices: ["ひだり", "みぎ"] },
+    { mode: "front-back", answer: "まえ", choices: ["まえ", "うしろ"] },
+    { mode: "front-back", answer: "うしろ", choices: ["まえ", "うしろ"] },
+    { mode: "inside-outside", answer: "なか", choices: ["なか", "そと"] },
+    { mode: "inside-outside", answer: "そと", choices: ["なか", "そと"] },
 ];
 
 const WEIGHT_COMPARE_SEQUENCE: WeightComparePattern[] = [
@@ -383,7 +392,7 @@ export const selectSpatialWordsPattern = (totalAnswers?: number): SpatialWordsPa
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return pickRandom(SPATIAL_WORDS_SEQUENCE.slice(0, 4));
+        return pickRandom(SPATIAL_WORDS_SEQUENCE.slice(0, 6));
     }
 
     return pickRandom(SPATIAL_WORDS_SEQUENCE);
@@ -399,6 +408,54 @@ export const selectWeightComparePattern = (totalAnswers?: number): WeightCompare
     }
 
     return pickRandom(buildDistinctPairPool(1));
+};
+
+export const selectOneMoreCount = (totalAnswers?: number): number => {
+    if (typeof totalAnswers === "number" && totalAnswers < ONE_MORE_SEQUENCE.length) {
+        return ONE_MORE_SEQUENCE[totalAnswers] || 1;
+    }
+
+    if (typeof totalAnswers === "number" && totalAnswers < 16) {
+        return Math.floor(Math.random() * 5) + 1;
+    }
+
+    return Math.floor(Math.random() * 8) + 1;
+};
+
+export const selectTwoMoreCount = (totalAnswers?: number): number => {
+    if (typeof totalAnswers === "number" && totalAnswers < TWO_MORE_SEQUENCE.length) {
+        return TWO_MORE_SEQUENCE[totalAnswers] || 1;
+    }
+
+    if (typeof totalAnswers === "number" && totalAnswers < 16) {
+        return Math.floor(Math.random() * 5) + 1;
+    }
+
+    return Math.floor(Math.random() * 7) + 1;
+};
+
+export const selectOneLessCount = (totalAnswers?: number): number => {
+    if (typeof totalAnswers === "number" && totalAnswers < ONE_LESS_SEQUENCE.length) {
+        return ONE_LESS_SEQUENCE[totalAnswers] || 2;
+    }
+
+    if (typeof totalAnswers === "number" && totalAnswers < 16) {
+        return Math.floor(Math.random() * 5) + 2;
+    }
+
+    return Math.floor(Math.random() * 8) + 2;
+};
+
+export const selectTwoLessCount = (totalAnswers?: number): number => {
+    if (typeof totalAnswers === "number" && totalAnswers < TWO_LESS_SEQUENCE.length) {
+        return TWO_LESS_SEQUENCE[totalAnswers] || 3;
+    }
+
+    if (typeof totalAnswers === "number" && totalAnswers < 16) {
+        return Math.floor(Math.random() * 5) + 3;
+    }
+
+    return Math.floor(Math.random() * 7) + 3;
 };
 
 export const selectZeroConceptCount = (totalAnswers?: number): number => {

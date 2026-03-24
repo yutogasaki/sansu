@@ -12,9 +12,14 @@ import {
     buildHeightCompareVisual,
     buildLengthCompareVisual,
     buildNextNumberVisual,
+    buildOneLessVisual,
+    buildOneMoreVisual,
+    buildTwoLessVisual,
+    buildTwoMoreVisual,
     buildOrdinalVisual,
     buildOneToOneMatchVisual,
     buildPatternVisual,
+    buildPositionSceneVisual,
     buildPreviousNumberVisual,
     buildSequenceFillVisual,
     buildSharingVisual,
@@ -27,7 +32,7 @@ import {
 import { selectSubtractionPair } from "../subtractionProgress";
 import { selectComparisonPair } from "../comparisonProgress";
 import { selectCountFillPattern } from "../sequenceProgress";
-import { selectBigSmallPattern, selectComposeFilledCount, selectHeightComparePattern, selectLengthComparePattern, selectOneToOneCount, selectOrdinalPattern, selectPatternCopyPattern, selectSameOrDifferentPattern, selectSameCountMatchPattern, selectShareEqualPattern, selectSortByAttributePattern, selectSpatialWordsPattern, selectWeightComparePattern, selectWhichIsEmptyCount, selectZeroConceptCount } from "../numberSenseProgress";
+import { selectBigSmallPattern, selectComposeFilledCount, selectHeightComparePattern, selectLengthComparePattern, selectOneLessCount, selectOneMoreCount, selectOneToOneCount, selectOrdinalPattern, selectPatternCopyPattern, selectSameOrDifferentPattern, selectSameCountMatchPattern, selectShareEqualPattern, selectSortByAttributePattern, selectSpatialWordsPattern, selectTwoLessCount, selectTwoMoreCount, selectWeightComparePattern, selectWhichIsEmptyCount, selectZeroConceptCount } from "../numberSenseProgress";
 
 const COUNT_EMOJIS = ["🍎", "🍊", "🌸", "⭐", "🐟"];
 const MATCH_EMOJIS = ["🍎", "🍊", "🍓", "🌸", "⭐", "🐟"];
@@ -62,6 +67,34 @@ const VISUAL_COMPARE_ITEMS = [
     { emoji: "🔵", label: "あお" },
     { emoji: "🟡", label: "きいろ" },
     { emoji: "🟢", label: "みどり" },
+];
+const FRONT_BACK_SCENES = [
+    {
+        target: { emoji: "🐶", label: "いぬ" },
+        reference: { emoji: "🌳", label: "き" },
+    },
+    {
+        target: { emoji: "🐱", label: "ねこ" },
+        reference: { emoji: "🏠", label: "おうち" },
+    },
+    {
+        target: { emoji: "🐰", label: "うさぎ" },
+        reference: { emoji: "🎈", label: "ふうせん" },
+    },
+];
+const INSIDE_OUTSIDE_SCENES = [
+    {
+        target: { emoji: "🍎", label: "りんご" },
+        reference: { emoji: "🧺", label: "かご" },
+    },
+    {
+        target: { emoji: "⚽", label: "ボール" },
+        reference: { emoji: "📦", label: "はこ" },
+    },
+    {
+        target: { emoji: "🧸", label: "くま" },
+        reference: { emoji: "🎁", label: "はこ" },
+    },
 ];
 const WEIGHT_COMPARE_ITEMS = [
     { emoji: "🪨", label: "いし" },
@@ -203,6 +236,16 @@ export const generators: Record<string, GeneratorFn> = {
                 { label: `${right?.emoji || "🍊"} ${right?.label || ""}`.trim(), value: right?.emoji || "🍊" },
             ]
         }, {
+            questionVisual: visual.questionVisual
+        });
+    },
+    // Level 0: 1つおおい
+    "one_more": (context) => {
+        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.one_more?.totalAnswers);
+        const count = selectOneMoreCount(totalAnswers);
+        const visual = buildOneMoreVisual(count);
+
+        return createProblem("one_more", visual.questionText, (count + 1).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
         });
     },
@@ -406,10 +449,46 @@ export const generators: Record<string, GeneratorFn> = {
     "spatial_words": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.spatial_words?.totalAnswers);
         const pattern = selectSpatialWordsPattern(totalAnswers);
-        const items = shuffleArray(ORDINAL_EMOJIS).slice(0, 2);
-        const target = items[pattern.targetIndex] || items[0] || ORDINAL_EMOJIS[0];
-        const prompt = `${target.label} は ${pattern.choices[0]}？ ${pattern.choices[1]}？`;
-        const visual = buildItemPairVisual(items, prompt, pattern.orientation);
+        if (pattern.mode === "pair") {
+            const items = shuffleArray(ORDINAL_EMOJIS).slice(0, 2);
+            const target = items[pattern.targetIndex || 0] || items[0] || ORDINAL_EMOJIS[0];
+            const prompt = `${target.label} は ${pattern.choices[0]}？ ${pattern.choices[1]}？`;
+            const visual = buildItemPairVisual(items, prompt, pattern.orientation || "row");
+
+            return createProblem("spatial_words", visual.questionText, pattern.answer, "choice", {
+                choices: pattern.choices.map(choice => ({ label: choice, value: choice })),
+            }, {
+                questionVisual: visual.questionVisual
+            });
+        }
+
+        if (pattern.mode === "front-back") {
+            const scene = randomChoice(FRONT_BACK_SCENES);
+            const prompt = `${scene.target.label} は まえ？ うしろ？`;
+            const visual = buildPositionSceneVisual(
+                "front-back",
+                scene.target,
+                scene.reference,
+                pattern.answer as "まえ" | "うしろ",
+                prompt
+            );
+
+            return createProblem("spatial_words", visual.questionText, pattern.answer, "choice", {
+                choices: pattern.choices.map(choice => ({ label: choice, value: choice })),
+            }, {
+                questionVisual: visual.questionVisual
+            });
+        }
+
+        const scene = randomChoice(INSIDE_OUTSIDE_SCENES);
+        const prompt = `${scene.target.label} は なか？ そと？`;
+        const visual = buildPositionSceneVisual(
+            "inside-outside",
+            scene.target,
+            scene.reference,
+            pattern.answer as "なか" | "そと",
+            prompt
+        );
 
         return createProblem("spatial_words", visual.questionText, pattern.answer, "choice", {
             choices: pattern.choices.map(choice => ({ label: choice, value: choice })),
@@ -589,6 +668,26 @@ export const generators: Record<string, GeneratorFn> = {
             questionVisual: visual.questionVisual
         });
     },
+    // Level 1: 2つおおい
+    "two_more": (context) => {
+        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.two_more?.totalAnswers);
+        const count = selectTwoMoreCount(totalAnswers);
+        const visual = buildTwoMoreVisual(count);
+
+        return createProblem("two_more", visual.questionText, (count + 2).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
+    },
+    // Level 1: 1つすくない
+    "one_less": (context) => {
+        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.one_less?.totalAnswers);
+        const count = selectOneLessCount(totalAnswers);
+        const visual = buildOneLessVisual(count);
+
+        return createProblem("one_less", visual.questionText, (count - 1).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
+    },
     // Level 1: 0のかんかく
     "zero_concept": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.zero_concept?.totalAnswers);
@@ -669,6 +768,16 @@ export const generators: Record<string, GeneratorFn> = {
         });
 
         return createProblem("compose_10", visual.questionText, (10 - filled).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual
+        });
+    },
+    // Level 2: 2つすくない
+    "two_less": (context) => {
+        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.two_less?.totalAnswers);
+        const count = selectTwoLessCount(totalAnswers);
+        const visual = buildTwoLessVisual(count);
+
+        return createProblem("two_less", visual.questionText, (count - 2).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
         });
     },
