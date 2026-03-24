@@ -89,14 +89,9 @@
     --theme-bg-4: #ffeae6;
 }
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
-}
+/* box-sizing and tap-highlight moved to @layer base via Tailwind preflight.
+   margin/padding reset removed — Tailwind's preflight handles this.
+   Unlayered padding/margin: 0 was overriding @layer utilities' logical properties. */
 
 @keyframes zen-breath {
     0% {

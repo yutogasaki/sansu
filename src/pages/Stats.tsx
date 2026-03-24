@@ -82,11 +82,11 @@ const SECTION_STORAGE_KEY = "sansu_stats_sections_v1";
 const DEFAULT_SECTIONS: SectionState = {
     summary: true,
     calendar: true,
-    growth: true,
+    growth: false,
     weak: false,
     review: false,
     tests: false,
-    progress: true,
+    progress: false,
     parent: false,
 };
 
