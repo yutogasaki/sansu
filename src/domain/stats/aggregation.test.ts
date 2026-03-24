@@ -33,7 +33,7 @@ describe("buildWeeklyTrend", () => {
 });
 
 describe("buildRadarData", () => {
-    it("includes level 0 skills in radar aggregation", () => {
+    it("uses preschool radar buckets for early levels", () => {
         const mathMemory: MemoryState[] = [
             {
                 id: "count_5",
@@ -49,10 +49,46 @@ describe("buildRadarData", () => {
         ];
 
         const radar = buildRadarData(mathMemory, 0);
+        const quantity = radar.find(point => point.category === "かず");
+
+        expect(quantity?.skillCount).toBe(1);
+        expect(quantity?.value).toBe(75);
+        expect(quantity?.totalSkills).toBeGreaterThan(0);
+        expect(radar.map(point => point.category)).toEqual(["かず", "ならび", "くらべる", "みつける", "たす", "ひく"]);
+    });
+
+    it("switches back to standard radar buckets after preschool math", () => {
+        const mathMemory: MemoryState[] = [
+            {
+                id: "count_5",
+                strength: 1,
+                nextReview: "2026-03-25",
+                totalAnswers: 4,
+                correctAnswers: 3,
+                incorrectAnswers: 1,
+                skippedAnswers: 0,
+                updatedAt: "2026-03-24T00:00:00.000Z",
+                status: "active",
+            },
+            {
+                id: "mul_99_2",
+                strength: 1,
+                nextReview: "2026-03-25",
+                totalAnswers: 5,
+                correctAnswers: 4,
+                incorrectAnswers: 1,
+                skippedAnswers: 0,
+                updatedAt: "2026-03-24T00:00:00.000Z",
+                status: "active",
+            },
+        ];
+
+        const radar = buildRadarData(mathMemory, 9);
         const counting = radar.find(point => point.category === "かぞえ");
+        const multiplication = radar.find(point => point.category === "×");
 
         expect(counting?.skillCount).toBe(1);
-        expect(counting?.value).toBe(75);
-        expect(counting?.totalSkills).toBeGreaterThan(0);
+        expect(multiplication?.skillCount).toBe(1);
+        expect(radar.map(point => point.category)).toEqual(["かぞえ", "＋−", "×", "÷", "小すう", "分すう"]);
     });
 });

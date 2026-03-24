@@ -25,7 +25,50 @@ export interface RadarCategoryPoint {
 // Math Skill Category Mapping
 // ============================================================
 
-const RADAR_CATEGORIES: { label: string; skills: string[] }[] = [
+const EARLY_RADAR_MAX_LEVEL = 8;
+
+const EARLY_RADAR_CATEGORIES: { label: string; skills: string[] }[] = [
+    {
+        label: "かず",
+        skills: [
+            "count_5", "count_dot", "count_10", "count_read",
+            "same_count_match", "one_to_one_match", "compose_5", "compose_10",
+            "which_is_empty", "zero_concept", "share_equal",
+        ],
+    },
+    {
+        label: "ならび",
+        skills: [
+            "count_next_10", "count_back", "count_50", "count_next_20", "count_100",
+            "count_fill", "count_order", "ordinal_small", "pattern_copy",
+            "spatial_words", "one_more", "one_less", "two_more", "two_less",
+        ],
+    },
+    {
+        label: "くらべる",
+        skills: [
+            "count_which_more", "compare_1d", "compare_2d",
+            "length_compare", "height_compare", "weight_compare", "big_small_compare",
+            "same_or_different",
+        ],
+    },
+    {
+        label: "みつける",
+        skills: [
+            "count_shape", "count_color", "count_pair", "count_oddone", "sort_by_attribute",
+        ],
+    },
+    {
+        label: "たす",
+        skills: ["add_tiny", "add_finger", "add_5", "add_1d_1", "add_1d_2"],
+    },
+    {
+        label: "ひく",
+        skills: ["sub_tiny", "sub_1d1d_nc", "sub_1d1d_c"],
+    },
+];
+
+const STANDARD_RADAR_CATEGORIES: { label: string; skills: string[] }[] = [
     {
         label: "かぞえ",
         skills: ["count_5", "count_dot", "count_which_more", "count_read", "count_order", "count_oddone", "count_shape", "count_color", "count_pair", "count_10", "count_50", "count_100", "count_fill", "compare_1d", "compare_2d", "one_more", "two_more", "one_less", "two_less", "ordinal_small", "pattern_copy", "length_compare", "height_compare", "weight_compare", "big_small_compare", "same_or_different", "spatial_words", "one_to_one_match", "sort_by_attribute", "same_count_match", "compose_5", "compose_10", "which_is_empty", "zero_concept", "share_equal"],
@@ -127,8 +170,11 @@ export const buildRadarData = (
     }
 
     const unlocked = getUnlockedSkills(maxUnlockedLevel);
+    const radarCategories = maxUnlockedLevel <= EARLY_RADAR_MAX_LEVEL
+        ? EARLY_RADAR_CATEGORIES
+        : STANDARD_RADAR_CATEGORIES;
 
-    return RADAR_CATEGORIES.map(cat => {
+    return radarCategories.map(cat => {
         const relevantSkills = cat.skills.filter(s => unlocked.has(s));
         let totalAcc = 0;
         let answeredCount = 0;
