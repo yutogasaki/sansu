@@ -1,5 +1,5 @@
 import React from "react";
-import { Problem, ProblemVisualBalanceItem, ProblemVisualCategoryBucket, ProblemVisualGroup, ProblemVisualItem, ProblemVisualLengthBar, ProblemVisualPairItem, ProblemVisualPositionScene, ProblemVisualSequenceSlot, ProblemVisualValueGroup } from "../../domain/types";
+import { Problem, ProblemVisualBalanceItem, ProblemVisualCategoryBucket, ProblemVisualGroup, ProblemVisualItem, ProblemVisualLengthBar, ProblemVisualNumberLine, ProblemVisualPairItem, ProblemVisualPositionScene, ProblemVisualSequenceSlot, ProblemVisualValueGroup } from "../../domain/types";
 import { cn } from "../../utils/cn";
 import { MathRenderer } from "./MathRenderer";
 
@@ -133,6 +133,61 @@ const NumberSequenceCard: React.FC<{
         ))}
     </div>
 );
+
+const NumberLineCard: React.FC<{
+    line: ProblemVisualNumberLine;
+}> = ({ line }) => {
+    const values = Array.from({ length: line.max - line.min + 1 }, (_, index) => line.min + index);
+    const hasStep = typeof line.step === "number" && line.step !== 0;
+    const direction = hasStep && line.step! > 0 ? "right" : "left";
+
+    return (
+        <div className="flex w-full max-w-[520px] flex-col items-center gap-3 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+            <div className="relative flex w-full items-center justify-between gap-2 px-2">
+                <div className="absolute left-6 right-6 top-1/2 h-1 -translate-y-1/2 rounded-full bg-slate-200" />
+                {values.map((value) => {
+                    const isHidden = line.hiddenValues?.includes(value) || (value === line.end && line.hiddenTarget);
+                    const isStart = hasStep && value === line.start;
+                    const isEnd = hasStep && value === line.end;
+                    const isHighlighted = line.highlightValues?.includes(value);
+
+                    return (
+                        <div key={value} className="relative z-10 flex flex-col items-center gap-2">
+                            <div className={cn(
+                                "h-3 w-3 rounded-full",
+                                isStart
+                                    ? "bg-cyan-500"
+                                    : isHidden || isEnd
+                                        ? "bg-amber-400"
+                                        : isHighlighted
+                                            ? "bg-violet-400"
+                                            : "bg-slate-300"
+                            )} />
+                            <div className={cn(
+                                "flex h-10 min-w-10 items-center justify-center rounded-full px-2 text-sm font-black",
+                                isStart
+                                    ? "border border-cyan-200 bg-cyan-50 text-cyan-700"
+                                    : isHidden || isEnd
+                                        ? "border-2 border-dashed border-amber-300 bg-amber-50 text-amber-700"
+                                        : isHighlighted
+                                            ? "border border-violet-200 bg-violet-50 text-violet-700"
+                                        : "border border-white/80 bg-white/90 text-slate-600"
+                            )}>
+                                {isHidden ? "?" : value}
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+            {hasStep && (
+                <div className="flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-sm font-black text-slate-500">
+                    <span>{direction === "right" ? "→" : "←"}</span>
+                    <span>{Math.abs(line.step || 0)}</span>
+                </div>
+            )}
+        </div>
+    );
+};
 
 const LENGTH_TONE_STYLES: Record<ProblemVisualLengthBar["tone"], { rail: string; fill: string }> = {
     rose: {
@@ -522,6 +577,15 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
             <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
                 <NumberSequenceCard slots={visual.slots} />
                 <PromptCaption text={visual.prompt || "つぎの かずは？"} />
+            </div>
+        );
+    }
+
+    if (visual?.kind === "number-line") {
+        return (
+            <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
+                <NumberLineCard line={visual.line} />
+                <PromptCaption text={visual.prompt || "どこまで すすむ？"} />
             </div>
         );
     }

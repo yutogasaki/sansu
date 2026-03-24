@@ -146,6 +146,17 @@ export interface ProblemVisualSequenceSlot {
     value: number | null;
 }
 
+export interface ProblemVisualNumberLine {
+    min: number;
+    max: number;
+    start: number;
+    end: number;
+    step?: number;
+    hiddenTarget?: boolean;
+    hiddenValues?: number[];
+    highlightValues?: number[];
+}
+
 export interface ProblemVisualItem {
     emoji: string;
     label: string;
@@ -223,6 +234,11 @@ export type ProblemVisual =
         kind: "number-sequence";
         prompt?: string;
         slots: ProblemVisualSequenceSlot[];
+    }
+    | {
+        kind: "number-line";
+        prompt?: string;
+        line: ProblemVisualNumberLine;
     }
     | {
         kind: "item-order";

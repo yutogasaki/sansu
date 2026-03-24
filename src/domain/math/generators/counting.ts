@@ -4,18 +4,13 @@ import {
     buildAdditionVisual,
     buildCategorySortVisual,
     buildComparisonBase10Visual,
-    buildComparisonItemsVisual,
     buildDotCountVisual,
     buildItemGridVisual,
-    buildItemOrderVisual,
     buildItemPairVisual,
     buildHeightCompareVisual,
     buildLengthCompareVisual,
+    buildNumberLineVisual,
     buildNextNumberVisual,
-    buildOneLessVisual,
-    buildOneMoreVisual,
-    buildTwoLessVisual,
-    buildTwoMoreVisual,
     buildOrdinalVisual,
     buildOneToOneMatchVisual,
     buildPatternVisual,
@@ -24,6 +19,7 @@ import {
     buildSequenceFillVisual,
     buildSharingVisual,
     buildSingleCountVisual,
+    buildStaticNumberLineVisual,
     buildSubtractionVisual,
     buildWeightCompareVisual,
     buildZeroConceptVisual,
@@ -243,7 +239,12 @@ export const generators: Record<string, GeneratorFn> = {
     "one_more": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.one_more?.totalAnswers);
         const count = selectOneMoreCount(totalAnswers);
-        const visual = buildOneMoreVisual(count);
+        const visual = buildNumberLineVisual(
+            count,
+            1,
+            "1つ おおいと いくつ？",
+            `${count} の 1つ おおい かずは？`
+        );
 
         return createProblem("one_more", visual.questionText, (count + 1).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -278,7 +279,7 @@ export const generators: Record<string, GeneratorFn> = {
         }
         const sorted = [...nums].sort((a, b) => a - b);
         const shuffled = shuffleArray(nums);
-        const visual = buildItemOrderVisual(shuffled);
+        const visual = buildStaticNumberLineVisual(shuffled, "いちばん ちいさい かずは？", "いちばん ちいさい かずは？");
         return createProblem("count_order", visual.questionText, sorted[0].toString(), "number", undefined, {
             questionVisual: visual.questionVisual
         });
@@ -672,7 +673,12 @@ export const generators: Record<string, GeneratorFn> = {
     "two_more": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.two_more?.totalAnswers);
         const count = selectTwoMoreCount(totalAnswers);
-        const visual = buildTwoMoreVisual(count);
+        const visual = buildNumberLineVisual(
+            count,
+            2,
+            "2つ おおいと いくつ？",
+            `${count} の 2つ おおい かずは？`
+        );
 
         return createProblem("two_more", visual.questionText, (count + 2).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -682,7 +688,12 @@ export const generators: Record<string, GeneratorFn> = {
     "one_less": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.one_less?.totalAnswers);
         const count = selectOneLessCount(totalAnswers);
-        const visual = buildOneLessVisual(count);
+        const visual = buildNumberLineVisual(
+            count,
+            -1,
+            "1つ すくないと いくつ？",
+            `${count} の 1つ すくない かずは？`
+        );
 
         return createProblem("one_less", visual.questionText, (count - 1).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -775,7 +786,12 @@ export const generators: Record<string, GeneratorFn> = {
     "two_less": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.two_less?.totalAnswers);
         const count = selectTwoLessCount(totalAnswers);
-        const visual = buildTwoLessVisual(count);
+        const visual = buildNumberLineVisual(
+            count,
+            -2,
+            "2つ すくないと いくつ？",
+            `${count} の 2つ すくない かずは？`
+        );
 
         return createProblem("two_less", visual.questionText, (count - 2).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -813,7 +829,7 @@ export const generators: Record<string, GeneratorFn> = {
     "compare_1d": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.compare_1d?.totalAnswers);
         const [a, b] = selectComparisonPair("compare_1d", totalAnswers);
-        const visual = buildComparisonItemsVisual(a, b);
+        const visual = buildStaticNumberLineVisual([a, b], "どちらが おおきい？", `${a} □ ${b}`);
         return createProblem("compare_1d", visual.questionText, a > b ? ">" : "<", "choice", {
             choices: [{ label: ">", value: ">" }, { label: "=", value: "=" }, { label: "<", value: "<" }]
         }, {

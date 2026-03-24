@@ -254,27 +254,63 @@ export const buildComparisonBase10Visual = (a: number, b: number): { questionTex
     },
 });
 
-export const buildNextNumberVisual = (n: number): { questionText: string; questionVisual: ProblemVisual } => ({
-    questionText: `${n} のつぎは？`,
+export const buildNumberLineVisual = (
+    start: number,
+    step: number,
+    prompt: string,
+    questionText: string,
+    options?: { min?: number; max?: number; hiddenTarget?: boolean; hiddenValues?: number[]; highlightValues?: number[] }
+): { questionText: string; questionVisual: ProblemVisual } => ({
+    questionText,
     questionVisual: {
-        kind: "number-sequence",
-        prompt: "つぎの かずは？",
-        slots: n === 1
-            ? [{ value: 1 }, { value: null }]
-            : [{ value: n - 1 }, { value: n }, { value: null }],
+        kind: "number-line",
+        prompt,
+        line: {
+            min: options?.min ?? Math.max(1, start - Math.max(2, Math.abs(step) + 1)),
+            max: options?.max ?? (start + step + Math.max(2, step + 1)),
+            start,
+            end: start + step,
+            step,
+            hiddenTarget: options?.hiddenTarget ?? true,
+            hiddenValues: options?.hiddenValues,
+            highlightValues: options?.highlightValues,
+        },
     },
 });
 
-export const buildPreviousNumberVisual = (n: number): { questionText: string; questionVisual: ProblemVisual } => ({
-    questionText: `${n} のまえは？`,
-    questionVisual: {
-        kind: "number-sequence",
-        prompt: "まえの かずは？",
-        slots: n === 2
-            ? [{ value: null }, { value: 2 }]
-            : [{ value: n - 2 }, { value: null }, { value: n }],
-    },
-});
+export const buildStaticNumberLineVisual = (
+    values: number[],
+    prompt: string,
+    questionText: string,
+    options?: { hiddenValues?: number[] }
+): { questionText: string; questionVisual: ProblemVisual } => {
+    const sorted = [...values].sort((left, right) => left - right);
+    const min = sorted[0] || 1;
+    const max = sorted[sorted.length - 1] || min;
+
+    return {
+        questionText,
+        questionVisual: {
+            kind: "number-line",
+            prompt,
+            line: {
+                min,
+                max,
+                start: min,
+                end: max,
+                hiddenTarget: false,
+                hiddenValues: options?.hiddenValues,
+                highlightValues: values,
+            },
+        },
+    };
+};
+
+export const buildNextNumberVisual = (n: number): { questionText: string; questionVisual: ProblemVisual } =>
+    buildNumberLineVisual(n, 1, "つぎの かずは？", `${n} のつぎは？`);
+
+export const buildPreviousNumberVisual = (n: number): { questionText: string; questionVisual: ProblemVisual } =>
+    buildNumberLineVisual(n, -1, "まえの かずは？", `${n} のまえは？`);
 
 export const buildSequenceFillVisual = (
     values: number[],
@@ -282,11 +318,17 @@ export const buildSequenceFillVisual = (
 ): { questionText: string; questionVisual: ProblemVisual } => ({
     questionText: values.map((value, index) => index === missingIndex ? "□" : value).join(", "),
     questionVisual: {
-        kind: "number-sequence",
+        kind: "number-line",
         prompt: "□に はいる かずは？",
-        slots: values.map((value, index) => ({
-            value: index === missingIndex ? null : value,
-        })),
+        line: {
+            min: values[0] || 1,
+            max: values[values.length - 1] || 1,
+            start: values[0] || 1,
+            end: values[values.length - 1] || 1,
+            step: 1,
+            hiddenTarget: false,
+            hiddenValues: [values[missingIndex] || values[0] || 1],
+        },
     },
 });
 

@@ -27,27 +27,27 @@ describe("counting generators visuals", () => {
 
     it("one_more uses an addition visual", () => {
         const problem = generators.one_more();
-        expect(problem.questionVisual?.kind).toBe("addition-items");
+        expect(problem.questionVisual?.kind).toBe("number-line");
         expect(problem.inputType).toBe("number");
-        if (problem.questionVisual?.kind === "addition-items") {
-            expect(problem.questionVisual.groups[1]?.count).toBe(1);
+        if (problem.questionVisual?.kind === "number-line") {
+            expect(problem.questionVisual.line.step).toBe(1);
         }
     });
 
-    it("two_more uses an addition visual with two added items", () => {
+    it("two_more uses a number-line visual with a two-step jump", () => {
         const problem = generators.two_more();
-        expect(problem.questionVisual?.kind).toBe("addition-items");
+        expect(problem.questionVisual?.kind).toBe("number-line");
         expect(problem.inputType).toBe("number");
-        if (problem.questionVisual?.kind === "addition-items") {
-            expect(problem.questionVisual.groups[1]?.count).toBe(2);
+        if (problem.questionVisual?.kind === "number-line") {
+            expect(problem.questionVisual.line.step).toBe(2);
         }
     });
 
-    it("count_order uses item-order visuals", () => {
+    it("count_order uses a number-line visual with three highlighted values", () => {
         const problem = generators.count_order();
-        expect(problem.questionVisual?.kind).toBe("item-order");
-        if (problem.questionVisual?.kind === "item-order") {
-            expect(problem.questionVisual.groups).toHaveLength(3);
+        expect(problem.questionVisual?.kind).toBe("number-line");
+        if (problem.questionVisual?.kind === "number-line") {
+            expect(problem.questionVisual.line.highlightValues).toHaveLength(3);
         }
     });
 
@@ -216,21 +216,65 @@ describe("counting generators visuals", () => {
         }
     });
 
-    it("one_less uses a subtraction visual that removes one item", () => {
-        const problem = generators.one_less();
-        expect(problem.questionVisual?.kind).toBe("subtraction-items");
-        expect(problem.inputType).toBe("number");
-        if (problem.questionVisual?.kind === "subtraction-items") {
-            expect(problem.questionVisual.group.crossedOutCount).toBe(1);
+    it("count_next_10 and count_back use number-line visuals", () => {
+        const next = generators.count_next_10();
+        const back = generators.count_back();
+
+        expect(next.questionVisual?.kind).toBe("number-line");
+        expect(back.questionVisual?.kind).toBe("number-line");
+
+        if (next.questionVisual?.kind === "number-line") {
+            expect(next.questionVisual.line.step).toBe(1);
+        }
+
+        if (back.questionVisual?.kind === "number-line") {
+            expect(back.questionVisual.line.step).toBe(-1);
         }
     });
 
-    it("two_less uses a subtraction visual that removes two items", () => {
-        const problem = generators.two_less();
-        expect(problem.questionVisual?.kind).toBe("subtraction-items");
+    it("count_50, count_next_20, and count_100 use number-line visuals", () => {
+        const count50 = generators.count_50();
+        const next20 = generators.count_next_20();
+        const count100 = generators.count_100();
+
+        expect(count50.questionVisual?.kind).toBe("number-line");
+        expect(next20.questionVisual?.kind).toBe("number-line");
+        expect(count100.questionVisual?.kind).toBe("number-line");
+    });
+
+    it("compare_1d uses a number-line visual with two highlighted values", () => {
+        const problem = generators.compare_1d();
+        expect(problem.questionVisual?.kind).toBe("number-line");
+        expect(problem.inputType).toBe("choice");
+        if (problem.questionVisual?.kind === "number-line") {
+            expect(problem.questionVisual.line.highlightValues).toHaveLength(2);
+        }
+    });
+
+    it("one_less uses a number-line visual that moves back by one", () => {
+        const problem = generators.one_less();
+        expect(problem.questionVisual?.kind).toBe("number-line");
         expect(problem.inputType).toBe("number");
-        if (problem.questionVisual?.kind === "subtraction-items") {
-            expect(problem.questionVisual.group.crossedOutCount).toBe(2);
+        if (problem.questionVisual?.kind === "number-line") {
+            expect(problem.questionVisual.line.step).toBe(-1);
+        }
+    });
+
+    it("two_less uses a number-line visual that moves back by two", () => {
+        const problem = generators.two_less();
+        expect(problem.questionVisual?.kind).toBe("number-line");
+        expect(problem.inputType).toBe("number");
+        if (problem.questionVisual?.kind === "number-line") {
+            expect(problem.questionVisual.line.step).toBe(-2);
+        }
+    });
+
+    it("count_fill uses a number-line visual with one hidden value", () => {
+        const problem = generators.count_fill();
+        expect(problem.questionVisual?.kind).toBe("number-line");
+        if (problem.questionVisual?.kind === "number-line") {
+            expect(problem.questionVisual.line.hiddenValues).toHaveLength(1);
+            expect(problem.questionVisual.line.step).toBe(1);
         }
     });
 
