@@ -3,11 +3,15 @@ import { createInitialProfile } from "../domain/user/profile";
 import {
     applyNormalSessionMathTrigger,
     applyPeriodicTestCompletion,
+    checkAnswer,
+    isFixedSessionComplete,
     isFixedSessionKind,
+    isInputLocked,
     resolveProfileProgressionAfterAttempt,
     resolveSessionBlockSize,
     resolveSessionCompletionProfileUpdate,
     shouldPrefetchNextBlock,
+    shouldShowEndlessBreak,
 } from "./useStudySession.logic";
 
 describe("useStudySession.logic", () => {
@@ -325,5 +329,99 @@ describe("useStudySession.logic", () => {
 
         expect(applyNormalSessionMathTrigger(profile, { isTriggered: false, reason: null })).toBeNull();
         expect(applyNormalSessionMathTrigger(profile, { isTriggered: true, reason: "slow" })).toBeNull();
+    });
+});
+
+describe("in-session state transitions", () => {
+    describe("checkAnswer", () => {
+        it("judges single number input correctly", () => {
+            expect(checkAnswer("number", "42", "42", [], undefined)).toBe(true);
+            expect(checkAnswer("number", "42", "43", [], undefined)).toBe(false);
+            expect(checkAnswer("number", "42", "", [], undefined)).toBe(false);
+        });
+
+        it("judges choice input by matching choiceValue to correctAnswer", () => {
+            expect(checkAnswer("choice", "B", "", [], "B")).toBe(true);
+            expect(checkAnswer("choice", "B", "", [], "A")).toBe(false);
+            expect(checkAnswer("choice", "B", "", [], undefined)).toBe(false);
+        });
+
+        it("judges multi-number input by comparing each field", () => {
+            expect(checkAnswer("multi-number", ["3", "7"], "", ["3", "7"], undefined)).toBe(true);
+            expect(checkAnswer("multi-number", ["3", "7"], "", ["3", "8"], undefined)).toBe(false);
+            expect(checkAnswer("multi-number", ["3", "7"], "", ["3"], undefined)).toBe(false);
+            expect(checkAnswer("multi-number", ["3", "7"], "", [], undefined)).toBe(false);
+        });
+    });
+
+    describe("shouldShowEndlessBreak", () => {
+        it("triggers at 100-question boundaries for endless sessions", () => {
+            expect(shouldShowEndlessBreak(100, false, "normal")).toBe(true);
+            expect(shouldShowEndlessBreak(200, false, "normal")).toBe(true);
+            expect(shouldShowEndlessBreak(300, false, "review")).toBe(true);
+        });
+
+        it("does not trigger at non-100 boundaries", () => {
+            expect(shouldShowEndlessBreak(99, false, "normal")).toBe(false);
+            expect(shouldShowEndlessBreak(101, false, "normal")).toBe(false);
+            expect(shouldShowEndlessBreak(50, false, "normal")).toBe(false);
+        });
+
+        it("does not trigger at index 0", () => {
+            expect(shouldShowEndlessBreak(0, false, "normal")).toBe(false);
+        });
+
+        it("does not trigger when already finished", () => {
+            expect(shouldShowEndlessBreak(100, true, "normal")).toBe(false);
+        });
+
+        it("never triggers for fixed sessions", () => {
+            expect(shouldShowEndlessBreak(100, false, "periodic-test")).toBe(false);
+            expect(shouldShowEndlessBreak(100, false, "weak-review")).toBe(false);
+            expect(shouldShowEndlessBreak(100, false, "check-event")).toBe(false);
+        });
+    });
+
+    describe("isFixedSessionComplete", () => {
+        it("returns true when currentIndex reaches blockSize for fixed sessions", () => {
+            expect(isFixedSessionComplete(20, 20, "periodic-test", false)).toBe(true);
+            expect(isFixedSessionComplete(25, 20, "periodic-test", false)).toBe(true);
+            expect(isFixedSessionComplete(10, 10, "weak-review", false)).toBe(true);
+            expect(isFixedSessionComplete(20, 20, "check-event", false)).toBe(true);
+        });
+
+        it("returns false when currentIndex has not reached blockSize", () => {
+            expect(isFixedSessionComplete(19, 20, "periodic-test", false)).toBe(false);
+            expect(isFixedSessionComplete(0, 20, "periodic-test", false)).toBe(false);
+        });
+
+        it("returns false for non-fixed sessions regardless of index", () => {
+            expect(isFixedSessionComplete(100, 10, "normal", false)).toBe(false);
+            expect(isFixedSessionComplete(100, 10, "review", false)).toBe(false);
+        });
+
+        it("returns false while loading", () => {
+            expect(isFixedSessionComplete(20, 20, "periodic-test", true)).toBe(false);
+        });
+
+        it("returns false when blockSize is 0", () => {
+            expect(isFixedSessionComplete(0, 0, "periodic-test", false)).toBe(false);
+        });
+    });
+
+    describe("isInputLocked", () => {
+        it("locks input during any feedback state", () => {
+            expect(isInputLocked("correct", false)).toBe(true);
+            expect(isInputLocked("incorrect", false)).toBe(true);
+            expect(isInputLocked("skipped", false)).toBe(true);
+        });
+
+        it("locks input when processing", () => {
+            expect(isInputLocked("none", true)).toBe(true);
+        });
+
+        it("allows input only when feedback is none and not processing", () => {
+            expect(isInputLocked("none", false)).toBe(false);
+        });
     });
 });

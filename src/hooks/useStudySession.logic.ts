@@ -164,6 +164,70 @@ const ensureMainEnabled = (
     return levels.map(level => (level.level === mainLevel ? { ...level, enabled: true } : level));
 };
 
+// ---------------------------------------------------------------------------
+// In-Session State Transition Logic
+// ---------------------------------------------------------------------------
+
+export type FeedbackState = "none" | "correct" | "incorrect" | "skipped";
+
+/**
+ * 回答の正誤を判定する。
+ * Study.tsx の handleSubmit 内のロジックを純粋関数として抽出。
+ */
+export const checkAnswer = (
+    inputType: "number" | "choice" | "multi-number",
+    correctAnswer: string | string[],
+    userInput: string,
+    userInputs: string[],
+    choiceValue?: string,
+): boolean => {
+    if (inputType === "choice") {
+        return choiceValue === correctAnswer;
+    }
+    if (inputType === "multi-number") {
+        const correctArr = correctAnswer as string[];
+        if (correctArr.length !== userInputs.length) return false;
+        return userInputs.every((val, idx) => val === correctArr[idx]);
+    }
+    return userInput === correctAnswer;
+};
+
+/**
+ * 100問ごとの休憩画面を表示すべきか判定する（エンドレスセッション用）。
+ */
+export const shouldShowEndlessBreak = (
+    currentIndex: number,
+    isFinished: boolean,
+    sessionKind?: SessionKind | null,
+): boolean => {
+    if (isFixedSessionKind(sessionKind)) return false;
+    return currentIndex > 0 && currentIndex % 100 === 0 && !isFinished;
+};
+
+/**
+ * 固定セッション（periodic-test / weak-review / check-event）が完了したか判定する。
+ */
+export const isFixedSessionComplete = (
+    currentIndex: number,
+    blockSize: number,
+    sessionKind?: SessionKind | null,
+    loading?: boolean,
+): boolean => {
+    if (!isFixedSessionKind(sessionKind)) return false;
+    if (loading) return false;
+    return currentIndex >= blockSize && blockSize > 0;
+};
+
+/**
+ * フィードバック表示中の入力ロック判定。
+ */
+export const isInputLocked = (
+    feedback: FeedbackState,
+    isProcessing: boolean,
+): boolean => {
+    return feedback !== "none" || isProcessing;
+};
+
 export const resolveProfileProgressionAfterAttempt = async ({
     currentProfile,
     subject,

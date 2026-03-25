@@ -7,7 +7,7 @@ import { playSound, setSoundEnabled } from "../utils/audio";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
 import { logAttempt } from "../domain/learningRepository";
 import { StudyLayout } from "./StudyLayout";
-import { isFixedSessionKind, shouldPrefetchNextBlock } from "../hooks/useStudySession.logic";
+import { isFixedSessionKind, shouldPrefetchNextBlock, checkAnswer, shouldShowEndlessBreak, isFixedSessionComplete, isInputLocked } from "../hooks/useStudySession.logic";
 import { logInDev } from "../utils/debug";
 import { speakEnglish, warmUpTTS } from "../utils/tts";
 import { useTimeoutScheduler } from "../hooks/useTimeoutScheduler";
@@ -148,21 +148,10 @@ export const Study: React.FC = () => {
             return;
         }
 
-        // 2. Pause every 100 questions (Endless Mode Break)
-        // Check if we just completed a multiple of 100
-        // Trigger condition: currentIndex > 0 and currentIndex % 100 === 0
-        // We use isFinished state to show the "Break" screen
-        // But we need to distinguish "Break" from "Done"
-        // Actually, let's use isFinished=true to show the interstitial, but customize message based on count?
-        // Or simply pause.
-
-        // For this implementation, we will ONLY pause at 100 questions.
-        // We do NOT stop at block end anymore.
-
-        if (currentIndex > 0 && currentIndex % 100 === 0 && !isFinished) {
-            setIsFinished(true); // Show break screen
+        if (shouldShowEndlessBreak(currentIndex, isFinished, sessionKind)) {
+            setIsFinished(true);
         } else if (isFinished && currentIndex % 100 !== 0) {
-            setIsFinished(false); // Resume if we moved past (e.g. user clicked continue)
+            setIsFinished(false);
         }
 
     }, [currentIndex, queue.length, loading, nextBlock, isFinished, sessionKindParam]);
@@ -224,9 +213,7 @@ export const Study: React.FC = () => {
 
     // Check for Fixed Session Completion (Periodic Test / Weak Review / Check Event)
     useEffect(() => {
-        const isFixedSession = isFixedSessionKind(sessionKindParam);
-
-        if (isFixedSession && currentIndex >= blockSize && blockSize > 0 && !loading) {
+        if (isFixedSessionComplete(currentIndex, blockSize, sessionKindParam, loading)) {
             logInDev("Fixed Session Complete!", { correctCount, blockSize });
             void finalizeFixedSession(false);
         }
@@ -235,7 +222,7 @@ export const Study: React.FC = () => {
     // Handlers - 全てのフックより前に定義
     const handleTenKeyInput = useCallback((val: string | number) => {
         const valStr = val.toString();
-        if (feedback !== "none" || isProcessingRef.current) return;
+        if (isInputLocked(feedback, isProcessingRef.current)) return;
         playSound("tap");
 
         if (currentProblem?.inputType === 'multi-number' && currentProblem.inputConfig?.fields) {
@@ -268,7 +255,7 @@ export const Study: React.FC = () => {
     }, [feedback, currentProblem, activeFieldIndex, userInput.length, scheduleUiTimeout]);
 
     const handleBackspace = useCallback(() => {
-        if (feedback !== "none" || isProcessingRef.current) return;
+        if (isInputLocked(feedback, isProcessingRef.current)) return;
         playSound("tap");
 
         if (currentProblem?.inputType === 'multi-number') {
@@ -283,7 +270,7 @@ export const Study: React.FC = () => {
     }, [feedback, currentProblem, activeFieldIndex]);
 
     const handleClear = useCallback(() => {
-        if (feedback !== "none" || isProcessingRef.current) return;
+        if (isInputLocked(feedback, isProcessingRef.current)) return;
         if (currentProblem?.inputType === 'multi-number') {
             setUserInputs(prev => {
                 const newInputs = [...prev];
@@ -345,20 +332,13 @@ export const Study: React.FC = () => {
         }
 
         isProcessingRef.current = true;
-        let isCorrect = false;
-
-        if (currentProblem.inputType === "choice") {
-            isCorrect = choiceValue === currentProblem.correctAnswer;
-        } else if (currentProblem.inputType === "multi-number") {
-            const correctArr = currentProblem.correctAnswer as string[];
-            if (correctArr.length !== userInputs.length) {
-                isCorrect = false;
-            } else {
-                isCorrect = userInputs.every((val, idx) => val === correctArr[idx]);
-            }
-        } else {
-            isCorrect = userInput === currentProblem.correctAnswer;
-        }
+        const isCorrect = checkAnswer(
+            currentProblem.inputType as "number" | "choice" | "multi-number",
+            currentProblem.correctAnswer,
+            userInput,
+            userInputs,
+            choiceValue,
+        );
 
         const timeMs = Date.now() - problemShownAtRef.current;
 
@@ -381,7 +361,7 @@ export const Study: React.FC = () => {
 
     // スキップ処理（仕様 4.7）
     const handleSkip = useCallback(async () => {
-        if (feedback !== "none" || !currentProblem || !profileId || isProcessingRef.current) return;
+        if (isInputLocked(feedback, isProcessingRef.current) || !currentProblem || !profileId) return;
 
         isProcessingRef.current = true;
 
