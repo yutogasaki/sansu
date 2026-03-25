@@ -26,7 +26,12 @@
       "Bash(du -sh /Users/yutogasaki/Projects/sansu/.claude/*)",
       "Bash(find /Users/yutogasaki/Projects/sansu/.github/workflows -type f -name *.yml -o -name *.yaml)",
       "Bash(wc -l /Users/yutogasaki/Projects/sansu/.claude/*.json)",
-      "Bash(stat /Users/yutogasaki/Projects/sansu/.claude/.* /Users/yutogasaki/Projects/sansu/.claude/*)"
+      "Bash(stat /Users/yutogasaki/Projects/sansu/.claude/.* /Users/yutogasaki/Projects/sansu/.claude/*)",
+      "Bash(find /Users/yutogasaki/Projects/sansu/src -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" \\\\\\) -exec wc -l {} +)",
+      "Bash(while read:*)",
+      "Bash(do wc:*)",
+      "Bash(done)",
+      "Bash(find /Users/yutogasaki/Projects/sansu/src/components -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" \\\\\\) ! -name \"*.test.*\" ! -name \"*.spec.*\" -exec wc -l {} +)"
     ]
   }
 }
