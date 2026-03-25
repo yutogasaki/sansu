@@ -15,7 +15,18 @@
       "Bash(npx playwright:*)",
       "Bash(node:*)",
       "Bash(lsof:*)",
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "Bash(npm run:*)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(grep -n 'padding-inline\\\\|padding:' /Users/yutogasaki/Projects/sansu/dist/assets/index-*.css)",
+      "Bash(grep -o 'padding[^;]*' /Users/yutogasaki/Projects/sansu/dist/assets/index-*.css)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(npm ls:*)",
+      "Bash(du -sh /Users/yutogasaki/Projects/sansu/.claude/*)",
+      "Bash(find /Users/yutogasaki/Projects/sansu/.github/workflows -type f -name *.yml -o -name *.yaml)",
+      "Bash(wc -l /Users/yutogasaki/Projects/sansu/.claude/*.json)",
+      "Bash(stat /Users/yutogasaki/Projects/sansu/.claude/.* /Users/yutogasaki/Projects/sansu/.claude/*)"
     ]
   }
 }

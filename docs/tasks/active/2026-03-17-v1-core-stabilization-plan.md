@@ -3,7 +3,7 @@
 - Date: 2026-03-17
 - Owner: yutogasaki / codex
 - Status: Active
-- Review By: 2026-03-24
+- Review By: 2026-04-07
 - Related ADR / Runbooks:
   - `docs/runbooks/backlog-triage.md`
   - `docs/verification_matrix.md`
