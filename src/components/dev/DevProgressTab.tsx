@@ -2,6 +2,7 @@ import React from "react";
 import { UserProfile } from "../../domain/types";
 import { DevFieldRow, DevFieldChangeValue } from "./DevFieldRow";
 import { useTransientState } from "../../hooks/useTransientState";
+import { MAX_MATH_LEVEL, MAX_VOCAB_LEVEL } from "../../domain/math/curriculum";
 
 interface DevProgressTabProps {
     profile: UserProfile;
@@ -9,12 +10,20 @@ interface DevProgressTabProps {
     onUpdatePeriodicTest: (subject: 'math' | 'vocab', field: 'isPending', value: boolean) => void;
 }
 
-const clampLevel = (value: DevFieldChangeValue, fallback: number) => {
+const clampMathLevel = (value: DevFieldChangeValue, fallback: number) => {
     if (typeof value !== "number") {
         return fallback;
     }
 
-    return Math.max(1, Math.min(20, value));
+    return Math.max(0, Math.min(MAX_MATH_LEVEL, value));
+};
+
+const clampVocabLevel = (value: DevFieldChangeValue, fallback: number) => {
+    if (typeof value !== "number") {
+        return fallback;
+    }
+
+    return Math.max(1, Math.min(MAX_VOCAB_LEVEL, value));
 };
 
 const clampNonNegative = (value: DevFieldChangeValue, fallback: number) => {
@@ -62,7 +71,7 @@ export const DevProgressTab: React.FC<DevProgressTabProps> = ({ profile, onUpdat
                     value={profile.mathMainLevel}
                     editable
                     type="number"
-                    onChange={value => onUpdate("mathMainLevel", clampLevel(value, profile.mathMainLevel))}
+                    onChange={value => onUpdate("mathMainLevel", clampMathLevel(value, profile.mathMainLevel))}
                 />
                 <DevFieldRow
                     label="最大解放"
@@ -70,7 +79,7 @@ export const DevProgressTab: React.FC<DevProgressTabProps> = ({ profile, onUpdat
                     value={profile.mathMaxUnlocked}
                     editable
                     type="number"
-                    onChange={value => onUpdate("mathMaxUnlocked", clampLevel(value, profile.mathMaxUnlocked))}
+                    onChange={value => onUpdate("mathMaxUnlocked", clampMathLevel(value, profile.mathMaxUnlocked))}
                 />
             </div>
 
@@ -82,7 +91,7 @@ export const DevProgressTab: React.FC<DevProgressTabProps> = ({ profile, onUpdat
                     value={profile.vocabMainLevel}
                     editable
                     type="number"
-                    onChange={value => onUpdate("vocabMainLevel", clampLevel(value, profile.vocabMainLevel))}
+                    onChange={value => onUpdate("vocabMainLevel", clampVocabLevel(value, profile.vocabMainLevel))}
                 />
                 <DevFieldRow
                     label="最大解放"
@@ -90,7 +99,7 @@ export const DevProgressTab: React.FC<DevProgressTabProps> = ({ profile, onUpdat
                     value={profile.vocabMaxUnlocked}
                     editable
                     type="number"
-                    onChange={value => onUpdate("vocabMaxUnlocked", clampLevel(value, profile.vocabMaxUnlocked))}
+                    onChange={value => onUpdate("vocabMaxUnlocked", clampVocabLevel(value, profile.vocabMaxUnlocked))}
                 />
             </div>
 
@@ -212,7 +221,7 @@ export const DevProgressTab: React.FC<DevProgressTabProps> = ({ profile, onUpdat
                                 value={item.level}
                                 onChange={e => {
                                     const next = [...pendingPaperTests];
-                                    next[index] = { ...item, level: Math.max(1, Math.min(20, Number(e.target.value))) };
+                                    next[index] = { ...item, level: Math.max(0, Math.min(MAX_MATH_LEVEL, Number(e.target.value))) };
                                     updatePendingPaperTests(next);
                                 }}
                                 className="w-20 text-sm border border-slate-200 rounded px-2 py-1 text-right"
@@ -246,7 +255,7 @@ export const DevProgressTab: React.FC<DevProgressTabProps> = ({ profile, onUpdat
                                 {
                                     id: crypto.randomUUID(),
                                     subject: "math" as const,
-                                    level: Math.max(0, Math.min(20, profile.mathMainLevel ?? 1)),
+                                    level: Math.max(0, Math.min(MAX_MATH_LEVEL, profile.mathMainLevel ?? 1)),
                                     createdAt: new Date().toISOString(),
                                 },
                             ];

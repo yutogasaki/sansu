@@ -1,6 +1,7 @@
 import { SubjectKey, TriggerState, UserProfile, PeriodicTestResult, PeriodicTestState } from "../domain/types";
 import { BLOCK_SIZE } from "./blockGenerators";
 import type { SessionKind } from "./blockGenerators";
+import { MAX_MATH_LEVEL, MAX_VOCAB_LEVEL } from "../domain/math/curriculum";
 
 type SessionStats = {
     correct: number;
@@ -175,10 +176,10 @@ export const resolveProfileProgressionAfterAttempt = async ({
     let updatedProfile = currentProfile;
 
     if (subject === "math") {
-        if (updatedProfile.mathMainLevel < 20 && updatedProfile.mathMaxUnlocked === updatedProfile.mathMainLevel) {
+        if (updatedProfile.mathMainLevel < MAX_MATH_LEVEL && updatedProfile.mathMaxUnlocked === updatedProfile.mathMainLevel) {
             const canUnlock = await checkMathUnlock(updatedProfile);
             if (canUnlock) {
-                const nextLevel = Math.min(20, updatedProfile.mathMaxUnlocked + 1);
+                const nextLevel = Math.min(MAX_MATH_LEVEL, updatedProfile.mathMaxUnlocked + 1);
                 const mathLevels = updatedProfile.mathLevels
                     ? updatedProfile.mathLevels.map(level => (level.level <= nextLevel ? { ...level, unlocked: true } : level))
                     : updatedProfile.mathLevels;
@@ -217,9 +218,9 @@ export const resolveProfileProgressionAfterAttempt = async ({
         return updatedProfile;
     }
 
-    if (updatedProfile.vocabMainLevel < 20 && updatedProfile.vocabMaxUnlocked === updatedProfile.vocabMainLevel) {
+    if (updatedProfile.vocabMainLevel < MAX_VOCAB_LEVEL && updatedProfile.vocabMaxUnlocked === updatedProfile.vocabMainLevel) {
         if (checkVocabUnlockReadiness(updatedProfile)) {
-            const nextLevel = Math.min(20, updatedProfile.vocabMaxUnlocked + 1);
+            const nextLevel = Math.min(MAX_VOCAB_LEVEL, updatedProfile.vocabMaxUnlocked + 1);
             const vocabLevels = updatedProfile.vocabLevels
                 ? updatedProfile.vocabLevels.map(level => (level.level <= nextLevel ? { ...level, unlocked: true } : level))
                 : updatedProfile.vocabLevels;

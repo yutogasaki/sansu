@@ -83,7 +83,7 @@ describe("buildRadarData", () => {
             },
         ];
 
-        const radar = buildRadarData(mathMemory, 9);
+        const radar = buildRadarData(mathMemory, 13);
         const counting = radar.find(point => point.category === "かぞえ");
         const multiplication = radar.find(point => point.category === "×");
 

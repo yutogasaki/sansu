@@ -1,6 +1,7 @@
 import { MemoryState, UserProfile } from "../types";
 import { ENGLISH_WORDS } from "./words";
 import { db } from "../../db";
+import { MAX_VOCAB_LEVEL } from "../math/curriculum";
 
 /**
  * DBから対象profileId + wordIdsのvocab MemoryStateをバッチ取得
@@ -95,5 +96,5 @@ export const estimateVocabStartLevel = (grade: number, experienceLevel: number):
     if (experienceLevel >= 5) additional += 2;
     if (experienceLevel >= 10) additional += 3;
 
-    return Math.min(20, base + additional);
+    return Math.min(MAX_VOCAB_LEVEL, base + additional);
 };

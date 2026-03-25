@@ -1,5 +1,6 @@
 import { LevelState, UserProfile } from "../types";
 import { v4 as uuidv4 } from "uuid";
+import { MAX_MATH_LEVEL, MAX_VOCAB_LEVEL } from "../math/curriculum";
 
 const createLevelStates = (maxLevel: number, unlockedUpTo: number, mainLevel: number): LevelState[] => {
     const now = new Date().toISOString();
@@ -78,7 +79,7 @@ export const syncUnlockLevel = (
     const updated = { ...profile };
 
     if (subject === 'math') {
-        const nextMax = Math.max(updated.mathMainLevel, Math.min(20, newMaxUnlocked));
+        const nextMax = Math.max(updated.mathMainLevel, Math.min(MAX_MATH_LEVEL, newMaxUnlocked));
         updated.mathMaxUnlocked = nextMax;
 
         if (updated.mathLevels) {
@@ -90,7 +91,7 @@ export const syncUnlockLevel = (
             });
         }
     } else {
-        const nextMax = Math.max(updated.vocabMainLevel, Math.min(20, newMaxUnlocked));
+        const nextMax = Math.max(updated.vocabMainLevel, Math.min(MAX_VOCAB_LEVEL, newMaxUnlocked));
         updated.vocabMaxUnlocked = nextMax;
 
         if (updated.vocabLevels) {
@@ -116,8 +117,8 @@ export const createInitialProfile = (
 ): UserProfile => {
     const profileId = uuidv4();
     const now = new Date().toISOString();
-    const mathMainLevel = Math.min(20, mathStartLevel + 1);
-    const mathMaxUnlocked = Math.min(20, mathStartLevel + 1);
+    const mathMainLevel = Math.min(MAX_MATH_LEVEL, mathStartLevel + 1);
+    const mathMaxUnlocked = Math.min(MAX_MATH_LEVEL, mathStartLevel + 1);
 
     // Create initial objects
     const profile: UserProfile = {
@@ -144,8 +145,8 @@ export const createInitialProfile = (
         vocabMaxUnlocked: vocabStartLevel,
         vocabMainLevelStartedAt: now,
 
-        mathLevels: createLevelStates(20, mathMaxUnlocked, mathMainLevel),
-        vocabLevels: createLevelStates(20, vocabStartLevel, vocabStartLevel),
+        mathLevels: createLevelStates(MAX_MATH_LEVEL, mathMaxUnlocked, mathMainLevel),
+        vocabLevels: createLevelStates(MAX_VOCAB_LEVEL, vocabStartLevel, vocabStartLevel),
 
         mathSkills: {}, // Will be populated as we go? Or pre-fill? 
         // Usually we only store state for touched items.

@@ -25,7 +25,7 @@ export interface RadarCategoryPoint {
 // Math Skill Category Mapping
 // ============================================================
 
-const EARLY_RADAR_MAX_LEVEL = 8;
+const EARLY_RADAR_MAX_LEVEL = 12;
 
 const EARLY_RADAR_CATEGORIES: { label: string; skills: string[] }[] = [
     {

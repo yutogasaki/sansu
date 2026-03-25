@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { clampStrength, MemoryState } from "../../domain/types";
 import { getWordsByLevel } from "../../domain/english/words";
+import { MAX_VOCAB_LEVEL } from "../../domain/math/curriculum";
 
 interface DevVocabTabProps {
     memoryStates: MemoryState[];
@@ -12,7 +13,7 @@ interface DevVocabTabProps {
 // レベルごとの統計を計算
 const getLevelStats = () => {
     const stats: { level: number; count: number }[] = [];
-    for (let level = 1; level <= 20; level++) {
+    for (let level = 1; level <= MAX_VOCAB_LEVEL; level++) {
         const words = getWordsByLevel(level);
         if (words.length > 0) {
             stats.push({ level, count: words.length });

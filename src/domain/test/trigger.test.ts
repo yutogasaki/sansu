@@ -7,12 +7,16 @@ const { mockMemoryMathBulkGet, mockMemoryVocabBulkGet } = vi.hoisted(() => ({
     mockMemoryVocabBulkGet: vi.fn(),
 }));
 
-vi.mock("../math/curriculum", () => ({
-    getSkillsForLevel: vi.fn(() => [
-        "m1", "m2", "m3", "m4", "m5",
-        "m6", "m7", "m8", "m9", "m10",
-    ]),
-}));
+vi.mock("../math/curriculum", async (importOriginal) => {
+    const actual = await importOriginal<typeof import("../math/curriculum")>();
+    return {
+        ...actual,
+        getSkillsForLevel: vi.fn(() => [
+            "m1", "m2", "m3", "m4", "m5",
+            "m6", "m7", "m8", "m9", "m10",
+        ]),
+    };
+});
 
 vi.mock("../english/words", () => ({
     ENGLISH_WORDS: [

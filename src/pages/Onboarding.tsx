@@ -9,7 +9,7 @@ import {
 import { Header } from "../components/Header";
 import { createInitialProfile } from "../domain/user/profile";
 import { saveProfile, setActiveProfileId } from "../domain/user/repository";
-import { getAvailableSkills } from "../domain/math/curriculum";
+import { getAvailableSkills, MAX_MATH_LEVEL } from "../domain/math/curriculum";
 import { getNextReviewDate } from "../domain/algorithms/srs";
 import { db } from "../db";
 import { useNavigate } from "react-router-dom";
@@ -86,25 +86,25 @@ export const Onboarding: React.FC = () => {
         const safeGrade = grade ?? 0;
         const baseMap: Record<number, number> = {
             [-2]: 0,
-            [-1]: 1,
-            0: 4,
-            1: 6,
-            2: 7,
-            3: 9,
-            4: 10,
-            5: 11,
-            6: 12
+            [-1]: 2,
+            0: 8,
+            1: 10,
+            2: 11,
+            3: 13,
+            4: 14,
+            5: 15,
+            6: 16
         };
-        const baseLevel = baseMap[safeGrade] ?? 4;
+        const baseLevel = baseMap[safeGrade] ?? 8;
         const adjMap: Record<MathCheck, number> = {
-            q_count: -5,
+            q_count: -6,
             q_add: -3,
             q_sub: -1,
             q_col: 1,
             q_mul: 4
         };
         const adjustment = selectedMathCheck ? adjMap[selectedMathCheck] : 0;
-        const mathStartLevel = Math.max(1, Math.min(20, baseLevel + adjustment));
+        const mathStartLevel = Math.max(1, Math.min(MAX_MATH_LEVEL, baseLevel + adjustment));
 
         let vocabStartLevel = 1;
         if (selectedEnglishExp) {
