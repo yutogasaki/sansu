@@ -51,6 +51,7 @@ type StudySessionOptions = {
     focusIds?: string[];
     forceReview?: boolean;
     sessionKind?: SessionKind;
+    sessionKey?: string;
 };
 
 export const useStudySession = (options: StudySessionOptions = {}) => {
@@ -60,10 +61,18 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     const [profileId, setProfileId] = useState<string | null>(null);
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const profileRef = useRef<UserProfile | null>(null);
-    const hasInitializedRef = useRef(false);
     const blockIndexRef = useRef(0);
+    const sessionRequestIdRef = useRef(0);
 
     const sessionHistoryRef = useRef<SessionHistoryItem[]>([]);
+    const sessionKey = options.sessionKey
+        ?? [
+            options.sessionKind || "normal",
+            options.devSkill || "",
+            options.focusSubject || "",
+            options.focusIds?.join(",") || "",
+            options.forceReview ? "1" : "0"
+        ].join("|");
 
     // profileRef と state を同時に更新するヘルパー
     const updateProfile = useCallback((p: UserProfile | null) => {
@@ -451,18 +460,27 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     // Session Management
     // ============================================================
     const initSession = async () => {
-        logInDev("[useStudySession] initSession called, profileId:", profileId);
-        if (!profileId || !profile) return;
+        logInDev("[useStudySession] initSession called, profileId:", profileId, "sessionKey:", sessionKey);
+        if (!profileId || !profileRef.current) return;
 
+        const requestId = ++sessionRequestIdRef.current;
         setLoading(true);
+        setQueue([]);
         blockIndexRef.current = 1;
+        sessionHistoryRef.current = [];
 
         try {
             logInDev("[useStudySession] generating block...");
-            const q = await generateBlock(profileId, profile, blockIndexRef.current);
+            const q = await generateBlock(profileId, profileRef.current, blockIndexRef.current);
+            if (sessionRequestIdRef.current !== requestId) {
+                return;
+            }
             logInDev("[useStudySession] generated queue:", q);
             setQueue(q);
         } catch (err) {
+            if (sessionRequestIdRef.current !== requestId) {
+                return;
+            }
             errorInDev("[useStudySession] error generating block:", err);
             // Generate emergency fallback queue
             const fallbackQueue: Problem[] = [];
@@ -477,13 +495,16 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             setQueue(fallbackQueue);
         }
 
-        setLoading(false);
+        if (sessionRequestIdRef.current === requestId) {
+            setLoading(false);
+        }
     };
 
     const nextBlock = async () => {
         const sessionKind = options.sessionKind || "normal";
         if (!profileId || isFixedSessionKind(sessionKind)) return;
 
+        const sessionRequestId = sessionRequestIdRef.current;
         setLoading(true);
         const nextBlockIndex = blockIndexRef.current + 1;
         blockIndexRef.current = nextBlockIndex;
@@ -496,8 +517,14 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             updateProfile(activeProfile);
 
             const q = await generateBlock(profileId, activeProfile, nextBlockIndex);
+            if (sessionRequestIdRef.current !== sessionRequestId) {
+                return;
+            }
             setQueue(prev => [...prev, ...q]);
         } catch (err) {
+            if (sessionRequestIdRef.current !== sessionRequestId) {
+                return;
+            }
             errorInDev("[useStudySession] error generating next block:", err);
             // Generate emergency fallback queue
             const fallbackQueue: Problem[] = [];
@@ -512,7 +539,9 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             setQueue(prev => [...prev, ...fallbackQueue]);
         }
 
-        setLoading(false);
+        if (sessionRequestIdRef.current === sessionRequestId) {
+            setLoading(false);
+        }
     };
 
     // ============================================================
@@ -556,21 +585,15 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         }
     };
 
-    // Auto init when profile loads
-    useEffect(() => {
-        hasInitializedRef.current = false;
-    }, [profileId]);
-
     const initSessionOnProfileReady = useEffectEvent(() => {
         void initSession();
     });
 
     useEffect(() => {
-        if (profileId && !hasInitializedRef.current) {
-            hasInitializedRef.current = true;
+        if (profileId) {
             initSessionOnProfileReady();
         }
-    }, [profileId]);
+    }, [profileId, sessionKey]);
 
 
     const blockSize = resolveSessionBlockSize(options.sessionKind);

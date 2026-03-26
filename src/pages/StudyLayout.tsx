@@ -64,6 +64,12 @@ interface StudyLayoutProps {
     englishAutoRead?: boolean;
     isEasyText?: boolean;
     onToggleTTS?: () => void;
+    devSessionSummary?: {
+        subjectLabel: string;
+        levelLabel: string;
+        itemLabel: string;
+    } | null;
+    onOpenDevSwitcher?: () => void;
 
     // 筆算モード
     hissanActive?: boolean;
@@ -129,6 +135,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     englishAutoRead = false,
     isEasyText = false,
     onToggleTTS,
+    devSessionSummary,
+    onOpenDevSwitcher,
     // 筆算モード
     hissanActive = false,
     hissanEligible = false,
@@ -537,6 +545,31 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                     </button>
                 </div>
             </div>
+
+            {devSessionSummary && onOpenDevSwitcher && (
+                <div className="flex-none px-4 pt-2 mobile:px-3">
+                    <button
+                        type="button"
+                        onClick={onOpenDevSwitcher}
+                        className="w-full rounded-[22px] border border-white/85 bg-white/72 px-4 py-3 text-left shadow-[0_18px_30px_-26px_rgba(15,23,42,0.34)] transition-all hover:bg-white/82 active:scale-[0.99]"
+                    >
+                        <div className="flex items-center justify-between gap-3">
+                            <div className="min-w-0">
+                                <div className="text-[10px] font-black tracking-[0.18em] text-slate-400">DEV QUICK SWITCH</div>
+                                <div className="truncate text-sm font-black text-slate-700">
+                                    {devSessionSummary.subjectLabel} {devSessionSummary.levelLabel}
+                                </div>
+                                <div className="truncate text-xs text-slate-500">
+                                    {devSessionSummary.itemLabel}
+                                </div>
+                            </div>
+                            <span className="app-pill shrink-0 px-3 py-1 text-xs font-black text-slate-600">
+                                切替
+                            </span>
+                        </div>
+                    </button>
+                </div>
+            )}
 
             {/* Main Area: Mobile=Vertical, iPad=Horizontal */}
             <div className="flex-1 flex flex-col ipadland:flex-row ipadland:p-6 ipadland:gap-4 overflow-hidden min-h-0 [--tenkey-key:clamp(44px,9vh,56px)]">

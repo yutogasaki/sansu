@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { useStudySession } from "../hooks/useStudySession";
@@ -11,6 +11,8 @@ import { isFixedSessionKind, shouldPrefetchNextBlock, checkAnswer, shouldShowEnd
 import { logInDev } from "../utils/debug";
 import { speakEnglish, warmUpTTS } from "../utils/tts";
 import { useTimeoutScheduler } from "../hooks/useTimeoutScheduler";
+import { DevStudySwitcher } from "../components/dev/DevStudySwitcher";
+import { getDevStudySelectionSummary } from "../components/dev/devStudySelection";
 
 export const Study: React.FC = () => {
     const navigate = useNavigate();
@@ -32,15 +34,26 @@ export const Study: React.FC = () => {
         | null;
     const isDevSession = sessionKindParam === "dev";
     const backPath = backTo || "/";
-
     const focusIds = focusIdsParam ? focusIdsParam.split(",").filter(Boolean) : undefined;
+    const selectedFocusId = focusIds?.[0] || undefined;
+    const sessionResetKey = useMemo(
+        () => [
+            sessionKindParam || "normal",
+            devSkill || "",
+            focusSubject || "",
+            focusIdsParam || "",
+            forceReview ? "1" : "0"
+        ].join("|"),
+        [devSkill, focusIdsParam, focusSubject, forceReview, sessionKindParam]
+    );
 
     const { queue, nextBlock, handleResult, completeSession, loading, blockSize } = useStudySession({
         devSkill,
         focusSubject: focusSubject || undefined,
         focusIds,
         forceReview,
-        sessionKind: sessionKindParam || "normal"
+        sessionKind: sessionKindParam || "normal",
+        sessionKey: sessionResetKey,
     });
 
     // State
@@ -73,6 +86,7 @@ export const Study: React.FC = () => {
     const [englishAutoRead, setEnglishAutoRead] = useState(false);
     const [isEasyText, setIsEasyText] = useState(false);
     const [hissanModeEnabled, setHissanModeEnabled] = useState(false);
+    const [isDevSwitcherOpen, setIsDevSwitcherOpen] = useState(false);
 
     const currentProblem = queue[currentIndex];
 
@@ -80,6 +94,9 @@ export const Study: React.FC = () => {
     const hissan = useHissanSession();
     const resetHissan = hissan.resetHissan;
     const { scheduleTimeout: scheduleUiTimeout, clearScheduledTimeouts: clearPendingUiTimeouts } = useTimeoutScheduler();
+    const devSelectionSummary = isDevSession && focusSubject
+        ? getDevStudySelectionSummary(focusSubject, selectedFocusId)
+        : null;
 
     // Warm up TTS on mount (uses the user interaction context from navigation tap)
     useEffect(() => {
@@ -131,6 +148,25 @@ export const Study: React.FC = () => {
         // 筆算モードリセット
         resetHissan(currentProblem, hissanModeEnabled);
     }, [currentProblem, hissanModeEnabled, resetHissan, clearPendingUiTimeouts]);
+
+    useEffect(() => {
+        clearPendingUiTimeouts();
+        setCurrentIndex(0);
+        setUserInput("");
+        setUserInputs([]);
+        setActiveFieldIndex(0);
+        setFeedback("none");
+        setShowCorrection(false);
+        isProcessingRef.current = false;
+        problemShownAtRef.current = Date.now();
+        setIsFinished(false);
+        setCorrectCount(0);
+        setSessionResult(null);
+        setTestRemainingSeconds(undefined);
+        hasCompletedFixedSessionRef.current = false;
+        startTimeRef.current = Date.now();
+        setIsDevSwitcherOpen(false);
+    }, [sessionResetKey, clearPendingUiTimeouts]);
 
     // Check for pause (every 100 questions) or pre-fetch
     useEffect(() => {
@@ -464,6 +500,26 @@ export const Study: React.FC = () => {
         // We might want to ensure we have questions, but pre-fetch checks that.
     }, []);
 
+    const buildDevStudyPath = useCallback((subject: "math" | "vocab", id: string) => {
+        const nextParams = new URLSearchParams({
+            session: "dev",
+            focus_subject: subject,
+            focus_ids: id,
+        });
+
+        if (backTo) {
+            nextParams.set("back_to", backTo);
+        }
+
+        return `/study?${nextParams.toString()}`;
+    }, [backTo]);
+
+    const handleApplyDevSelection = useCallback((next: { subject: "math" | "vocab"; id: string }) => {
+        clearPendingUiTimeouts();
+        setIsDevSwitcherOpen(false);
+        navigate(buildDevStudyPath(next.subject, next.id), { replace: true });
+    }, [buildDevStudyPath, clearPendingUiTimeouts, navigate]);
+
     const handleNavigate = useCallback((path: string) => {
         if (isDevSession && path === "/") {
             navigate(backPath);
@@ -473,47 +529,60 @@ export const Study: React.FC = () => {
     }, [isDevSession, backPath, navigate]);
 
     return (
-        <StudyLayout
-            loading={loading}
-            isFinished={isFinished}
-            currentProblem={currentProblem}
-            currentIndex={currentIndex}
-            blockSize={blockSize}
-            userInput={userInput}
-            userInputs={userInputs}
-            activeFieldIndex={activeFieldIndex}
-            feedback={feedback}
-            showCorrection={showCorrection}
-            sessionKind={sessionKindParam || "normal"}
-            correctCount={correctCount}
-            sessionResult={sessionResult || undefined}
-            testTimeLimitSeconds={testTimeLimitSeconds}
-            testRemainingSeconds={testRemainingSeconds}
-            onNavigate={handleNavigate}
-            onNext={nextProblem}
-            onContinue={handleContinue}
-            onSkip={handleSkip}
-            onTenKeyInput={hissan.isHissanActive ? (val) => hissan.handleHissanInput(typeof val === 'string' ? parseInt(val) || 0 : val) : handleTenKeyInput}
-            onBackspace={hissan.isHissanActive ? hissan.handleHissanBackspace : handleBackspace}
-            onClear={hissan.isHissanActive ? hissan.handleHissanClear : handleClear}
-            onEnter={() => handleSubmit()}
-            onCursorMove={handleCursorMove}
-            onSubmitChoice={(val) => handleSubmit(val)}
-            onFocusField={setActiveFieldIndex}
-            swipeHandlers={swipeHandlers}
-            englishAutoRead={englishAutoRead}
-            isEasyText={isEasyText}
-            onToggleTTS={handleToggleTTS}
-            // 筆算モード props
-            hissanActive={hissan.isHissanActive}
-            hissanEligible={hissan.isHissanEligibleSkill}
-            hissanGridData={hissan.gridData}
-            hissanStepIndex={hissan.currentStepIndex}
-            hissanActiveCellPos={hissan.activeCellPos}
-            hissanUserValues={hissan.userValues}
-            hissanStepFeedback={hissan.stepFeedback}
-            onHissanCellClick={hissan.handleCellClick}
-            onHissanToggle={hissan.toggleHissanMode}
-        />
+        <>
+            <StudyLayout
+                loading={loading}
+                isFinished={isFinished}
+                currentProblem={currentProblem}
+                currentIndex={currentIndex}
+                blockSize={blockSize}
+                userInput={userInput}
+                userInputs={userInputs}
+                activeFieldIndex={activeFieldIndex}
+                feedback={feedback}
+                showCorrection={showCorrection}
+                sessionKind={sessionKindParam || "normal"}
+                correctCount={correctCount}
+                sessionResult={sessionResult || undefined}
+                testTimeLimitSeconds={testTimeLimitSeconds}
+                testRemainingSeconds={testRemainingSeconds}
+                onNavigate={handleNavigate}
+                onNext={nextProblem}
+                onContinue={handleContinue}
+                onSkip={handleSkip}
+                onTenKeyInput={hissan.isHissanActive ? (val) => hissan.handleHissanInput(typeof val === 'string' ? parseInt(val) || 0 : val) : handleTenKeyInput}
+                onBackspace={hissan.isHissanActive ? hissan.handleHissanBackspace : handleBackspace}
+                onClear={hissan.isHissanActive ? hissan.handleHissanClear : handleClear}
+                onEnter={() => handleSubmit()}
+                onCursorMove={handleCursorMove}
+                onSubmitChoice={(val) => handleSubmit(val)}
+                onFocusField={setActiveFieldIndex}
+                swipeHandlers={swipeHandlers}
+                englishAutoRead={englishAutoRead}
+                isEasyText={isEasyText}
+                onToggleTTS={handleToggleTTS}
+                devSessionSummary={devSelectionSummary}
+                onOpenDevSwitcher={devSelectionSummary ? () => setIsDevSwitcherOpen(true) : undefined}
+                // 筆算モード props
+                hissanActive={hissan.isHissanActive}
+                hissanEligible={hissan.isHissanEligibleSkill}
+                hissanGridData={hissan.gridData}
+                hissanStepIndex={hissan.currentStepIndex}
+                hissanActiveCellPos={hissan.activeCellPos}
+                hissanUserValues={hissan.userValues}
+                hissanStepFeedback={hissan.stepFeedback}
+                onHissanCellClick={hissan.handleCellClick}
+                onHissanToggle={hissan.toggleHissanMode}
+            />
+            {isDevSession && focusSubject && (
+                <DevStudySwitcher
+                    isOpen={isDevSwitcherOpen}
+                    onClose={() => setIsDevSwitcherOpen(false)}
+                    subject={focusSubject}
+                    selectedId={selectedFocusId}
+                    onApply={handleApplyDevSelection}
+                />
+            )}
+        </>
     );
 };
