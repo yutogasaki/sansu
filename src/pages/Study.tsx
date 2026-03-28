@@ -97,16 +97,10 @@ export const Study: React.FC = () => {
     const devSelectionSummary = isDevSession && focusSubject
         ? getDevStudySelectionSummary(focusSubject, selectedFocusId)
         : null;
-    const devPrevLevelTarget = focusSubject && selectedFocusId
-        ? getDevStudyAdjacentSelection(focusSubject, selectedFocusId, "prev-level")
-        : null;
-    const devNextLevelTarget = focusSubject && selectedFocusId
-        ? getDevStudyAdjacentSelection(focusSubject, selectedFocusId, "next-level")
-        : null;
-    const devPrevItemTarget = focusSubject && selectedFocusId
+    const devSkillDownTarget = focusSubject && selectedFocusId
         ? getDevStudyAdjacentSelection(focusSubject, selectedFocusId, "prev-item")
         : null;
-    const devNextItemTarget = focusSubject && selectedFocusId
+    const devSkillUpTarget = focusSubject && selectedFocusId
         ? getDevStudyAdjacentSelection(focusSubject, selectedFocusId, "next-item")
         : null;
 
@@ -583,14 +577,10 @@ export const Study: React.FC = () => {
                 onToggleTTS={handleToggleTTS}
                 devSessionSummary={devSelectionSummary}
                 onOpenDevSwitcher={devSelectionSummary ? () => setIsDevSwitcherOpen(true) : undefined}
-                onDevPrevLevel={devPrevLevelTarget ? () => handleQuickDevSelection(devPrevLevelTarget) : undefined}
-                onDevNextLevel={devNextLevelTarget ? () => handleQuickDevSelection(devNextLevelTarget) : undefined}
-                onDevPrevItem={devPrevItemTarget ? () => handleQuickDevSelection(devPrevItemTarget) : undefined}
-                onDevNextItem={devNextItemTarget ? () => handleQuickDevSelection(devNextItemTarget) : undefined}
-                canDevPrevLevel={!!devPrevLevelTarget}
-                canDevNextLevel={!!devNextLevelTarget}
-                canDevPrevItem={!!devPrevItemTarget}
-                canDevNextItem={!!devNextItemTarget}
+                onDevSkillDown={devSkillDownTarget ? () => handleQuickDevSelection(devSkillDownTarget) : undefined}
+                onDevSkillUp={devSkillUpTarget ? () => handleQuickDevSelection(devSkillUpTarget) : undefined}
+                canDevSkillDown={!!devSkillDownTarget}
+                canDevSkillUp={!!devSkillUpTarget}
                 // 筆算モード props
                 hissanActive={hissan.isHissanActive}
                 hissanEligible={hissan.isHissanEligibleSkill}

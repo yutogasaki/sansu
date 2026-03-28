@@ -68,16 +68,13 @@ interface StudyLayoutProps {
         subjectLabel: string;
         levelLabel: string;
         itemLabel: string;
+        positionLabel: string;
     } | null;
     onOpenDevSwitcher?: () => void;
-    onDevPrevLevel?: () => void;
-    onDevNextLevel?: () => void;
-    onDevPrevItem?: () => void;
-    onDevNextItem?: () => void;
-    canDevPrevLevel?: boolean;
-    canDevNextLevel?: boolean;
-    canDevPrevItem?: boolean;
-    canDevNextItem?: boolean;
+    onDevSkillDown?: () => void;
+    onDevSkillUp?: () => void;
+    canDevSkillDown?: boolean;
+    canDevSkillUp?: boolean;
 
     // 筆算モード
     hissanActive?: boolean;
@@ -145,14 +142,10 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     onToggleTTS,
     devSessionSummary,
     onOpenDevSwitcher,
-    onDevPrevLevel,
-    onDevNextLevel,
-    onDevPrevItem,
-    onDevNextItem,
-    canDevPrevLevel = false,
-    canDevNextLevel = false,
-    canDevPrevItem = false,
-    canDevNextItem = false,
+    onDevSkillDown,
+    onDevSkillUp,
+    canDevSkillDown = false,
+    canDevSkillUp = false,
     // 筆算モード
     hissanActive = false,
     hissanEligible = false,
@@ -578,6 +571,9 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                 <div className="truncate text-xs text-slate-500">
                                     {devSessionSummary.itemLabel}
                                 </div>
+                                <div className="mt-1 text-[11px] font-black tracking-[0.12em] text-slate-400">
+                                    {devSessionSummary.positionLabel}
+                                </div>
                             </div>
                             <span className="app-pill shrink-0 px-3 py-1 text-xs font-black text-slate-600">
                                 一覧
@@ -585,12 +581,10 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         </div>
                     </button>
 
-                    <div className="grid grid-cols-4 gap-2">
+                    <div className="grid grid-cols-2 gap-2">
                         {([
-                            { label: "Lv-1", onClick: onDevPrevLevel, enabled: canDevPrevLevel },
-                            { label: "前", onClick: onDevPrevItem, enabled: canDevPrevItem },
-                            { label: "次", onClick: onDevNextItem, enabled: canDevNextItem },
-                            { label: "Lv+1", onClick: onDevNextLevel, enabled: canDevNextLevel },
+                            { label: "スキル-1", onClick: onDevSkillDown, enabled: canDevSkillDown },
+                            { label: "スキル+1", onClick: onDevSkillUp, enabled: canDevSkillUp },
                         ]).map(action => (
                             <button
                                 key={action.label}
@@ -605,6 +599,9 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                 {action.label}
                             </button>
                         ))}
+                    </div>
+                    <div className="px-1 text-[11px] font-medium text-slate-400">
+                        端のスキルまで行くと、つぎのレベルへそのまま進みます
                     </div>
                 </div>
             )}

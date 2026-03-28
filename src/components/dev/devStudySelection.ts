@@ -14,6 +14,7 @@ export interface DevStudySelectionSummary {
     subjectLabel: string;
     levelLabel: string;
     itemLabel: string;
+    positionLabel: string;
 }
 
 export interface DevStudySelectionTarget {
@@ -21,7 +22,7 @@ export interface DevStudySelectionTarget {
     id: string;
 }
 
-type DevStudyDirection = "prev-item" | "next-item" | "prev-level" | "next-level";
+type DevStudyDirection = "prev-item" | "next-item";
 
 const getMathSkillLabel = (skillId: string) => MATH_SKILL_LABELS[skillId] || skillId;
 
@@ -84,10 +85,13 @@ export const getDevStudySelectionSummary = (
 
     if (subject === "math") {
         const level = getLevelForSkill(selectedId);
+        const items = level == null ? [] : getDevStudyLevelItems(subject, level);
+        const skillIndex = items.findIndex(item => item.id === selectedId);
         return {
             subjectLabel: "算数",
             levelLabel: level == null ? "Lv.?" : `Lv.${level}`,
             itemLabel: getMathSkillLabel(selectedId),
+            positionLabel: skillIndex >= 0 ? `スキル ${skillIndex + 1}/${items.length}` : "スキル ?/?",
         };
     }
 
@@ -96,10 +100,14 @@ export const getDevStudySelectionSummary = (
         return null;
     }
 
+    const items = getDevStudyLevelItems(subject, word.level);
+    const skillIndex = items.findIndex(item => item.id === selectedId);
+
     return {
         subjectLabel: "英語",
         levelLabel: `Lv.${word.level}`,
         itemLabel: `${word.id} / ${word.japaneseKanji || word.japanese}`,
+        positionLabel: skillIndex >= 0 ? `スキル ${skillIndex + 1}/${items.length}` : "スキル ?/?",
     };
 };
 
@@ -126,33 +134,9 @@ export const getDevStudyAdjacentSelection = (
         return null;
     }
 
-    if (direction === "prev-item" || direction === "next-item") {
-        const offset = direction === "prev-item" ? -1 : 1;
-        const nextSelection = orderedSelections[currentIndex + offset];
-        return nextSelection
-            ? { subject, id: nextSelection.id }
-            : null;
-    }
-
-    const currentLevel = orderedSelections[currentIndex].level;
-    const levels = subject === "math" ? devStudyMathLevels : devStudyVocabLevels;
-    const currentLevelIndex = levels.indexOf(currentLevel);
-
-    if (currentLevelIndex < 0) {
-        return null;
-    }
-
-    const targetLevelIndex = direction === "prev-level"
-        ? currentLevelIndex - 1
-        : currentLevelIndex + 1;
-    const targetLevel = levels[targetLevelIndex];
-
-    if (targetLevel == null) {
-        return null;
-    }
-
-    const targetId = getDevStudyDefaultId(subject, targetLevel);
-    return targetId
-        ? { subject, id: targetId }
+    const offset = direction === "prev-item" ? -1 : 1;
+    const nextSelection = orderedSelections[currentIndex + offset];
+    return nextSelection
+        ? { subject, id: nextSelection.id }
         : null;
 };
