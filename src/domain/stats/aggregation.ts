@@ -60,25 +60,25 @@ const EARLY_RADAR_CATEGORIES: { label: string; skills: string[] }[] = [
     },
     {
         label: "たす",
-        skills: ["add_tiny", "add_finger", "add_5", "add_1d_1", "add_1d_2"],
+        skills: ["add_tiny", "add_finger", "add_5", "add_1d_1_bridge", "add_1d_1", "add_1d_2_bridge", "add_1d_2"],
     },
     {
         label: "ひく",
-        skills: ["sub_tiny", "sub_1d1d_nc", "sub_1d1d_c"],
+        skills: ["sub_tiny", "sub_1d1d_nc_bridge", "sub_1d1d_nc", "sub_1d1d_c_bridge", "sub_1d1d_c"],
     },
 ];
 
 const STANDARD_RADAR_CATEGORIES: { label: string; skills: string[] }[] = [
     {
         label: "かぞえ",
-        skills: ["count_5", "count_dot", "count_which_more", "count_read", "count_order", "count_oddone", "count_shape", "count_color", "count_pair", "count_10", "count_50", "count_100", "count_fill", "compare_1d", "compare_2d", "one_more", "two_more", "one_less", "two_less", "ordinal_small", "pattern_copy", "length_compare", "height_compare", "weight_compare", "big_small_compare", "same_or_different", "spatial_words", "one_to_one_match", "sort_by_attribute", "same_count_match", "compose_5", "compose_10", "which_is_empty", "zero_concept", "share_equal"],
+        skills: ["count_5", "count_dot", "count_which_more", "count_read", "count_order", "count_oddone", "count_shape", "count_color", "count_pair", "count_10", "count_50", "count_100", "count_fill", "compare_1d", "compare_2d", "one_more", "two_more", "one_less", "two_less", "ordinal_small", "pattern_copy", "length_compare", "height_compare", "weight_compare", "big_small_compare", "same_or_different", "spatial_words", "one_to_one_match", "sort_by_attribute", "same_count_match", "compose_5", "compose_10", "which_is_empty", "zero_concept", "share_equal", "large_number_unit"],
     },
     {
         label: "＋−",
         skills: [
-            "add_1d_1", "add_1d_2", "add_2d1d_nc", "add_2d1d_c",
+            "add_1d_1_bridge", "add_1d_1", "add_1d_2_bridge", "add_1d_2", "add_2d1d_nc", "add_2d1d_c",
             "add_2d2d_nc", "add_2d2d_c", "add_3d3d", "add_4d",
-            "sub_1d1d_nc", "sub_1d1d_c", "sub_2d1d_nc", "sub_2d1d_c",
+            "sub_1d1d_nc_bridge", "sub_1d1d_nc", "sub_1d1d_c_bridge", "sub_1d1d_c", "sub_2d1d_nc", "sub_2d1d_c",
             "sub_2d2d", "sub_3d3d", "sub_4d",
         ],
     },
@@ -95,16 +95,17 @@ const STANDARD_RADAR_CATEGORIES: { label: string; skills: string[] }[] = [
         skills: [
             "div_99_rev", "div_2d1d_exact", "div_rem_q1", "div_rem_q2",
             "div_2d2d_exact", "div_3d1d_exact", "div_3d2d_exact",
+            "percent_basic", "average_basic", "ratio_basic", "speed_basic",
         ],
     },
     {
         label: "小すう",
-        skills: ["dec_add", "dec_sub", "dec_mul_int", "dec_div_int", "dec_mul_dec", "dec_div_dec"],
+        skills: ["dec_compare", "dec_add", "dec_sub", "dec_mul_int", "dec_div_int", "dec_mul_dec", "dec_div_dec"],
     },
     {
         label: "分すう",
         skills: [
-            "frac_add_same", "frac_sub_same", "frac_add_diff", "frac_sub_diff",
+            "frac_compare", "frac_add_same", "frac_sub_same", "frac_add_diff", "frac_sub_diff",
             "frac_mixed", "frac_mixed_sub", "frac_mul_int", "frac_mul_frac",
             "frac_div_int", "frac_div_frac", "scale_10x",
         ],

@@ -41,7 +41,9 @@ export const MATH_SKILL_LABELS: Record<string, string> = {
     count_fill: "□を埋める",
     compare_1d: "1桁の比較",
     compare_2d: "2桁の比較",
+    add_1d_1_bridge: "1桁+1桁(えとしき)",
     add_1d_1: "1桁+1桁(はじめ)",
+    add_1d_2_bridge: "1桁+1桁(えとしき・10)",
     add_1d_2: "1桁+1桁(10のかべ)",
     add_2d1d_nc: "2桁+1桁(繰り上がりなし)",
     add_2d1d_c: "2桁+1桁(繰り上がり)",
@@ -49,7 +51,9 @@ export const MATH_SKILL_LABELS: Record<string, string> = {
     add_2d2d_c: "2桁+2桁(繰り上がり)",
     add_3d3d: "3桁+3桁",
     add_4d: "4桁の足し算",
+    sub_1d1d_nc_bridge: "1桁-1桁(えとしき)",
     sub_1d1d_nc: "1桁-1桁(繰り下がりなし)",
+    sub_1d1d_c_bridge: "1桁-1桁(えとしき・くり下がり)",
     sub_1d1d_c: "1桁-1桁(繰り下がり)",
     sub_2d1d_nc: "2桁-1桁(繰り下がりなし)",
     sub_2d1d_c: "2桁-1桁(繰り下がり)",
@@ -93,5 +97,12 @@ export const MATH_SKILL_LABELS: Record<string, string> = {
     frac_mul_frac: "分数×分数",
     frac_div_int: "分数÷整数",
     frac_div_frac: "分数÷分数",
-    scale_10x: "10倍・100倍"
+    scale_10x: "10倍・100倍",
+    large_number_unit: "大きな数(万・億)",
+    dec_compare: "小数のくらべ方",
+    frac_compare: "分数のくらべ方",
+    percent_basic: "割合(%)",
+    average_basic: "平均",
+    ratio_basic: "比",
+    speed_basic: "速さ"
 };
