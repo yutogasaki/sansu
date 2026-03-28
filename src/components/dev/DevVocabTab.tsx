@@ -24,22 +24,29 @@ const getLevelStats = () => {
 
 export const DevVocabTab: React.FC<DevVocabTabProps> = ({ memoryStates, onUpdateMemory, onRefreshMemory }) => {
     const navigate = useNavigate();
-    const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
+    const [selectedLevel, setSelectedLevel] = useState<number>(1);
     const [selectedWord, setSelectedWord] = useState<string | null>(null);
 
     const memoryMap = new Map(memoryStates.map(m => [m.id, m]));
     const levelStats = getLevelStats();
+    const safeSelectedLevel = levelStats.some(item => item.level === selectedLevel)
+        ? selectedLevel
+        : (levelStats[0]?.level ?? 1);
+    const wordsForLevel = getWordsByLevel(safeSelectedLevel);
+    const learnedCountForLevel = wordsForLevel.filter(word => memoryMap.has(word.id)).length;
 
     const handleWordClick = (wordId: string) => {
         setSelectedWord(selectedWord === wordId ? null : wordId);
     };
 
+    const handleLevelSelect = (level: number) => {
+        setSelectedLevel(level);
+        setSelectedWord(null);
+    };
+
     const handleStudy = (wordId: string) => {
         navigate(`/study?session=dev&focus_subject=vocab&focus_ids=${wordId}&back_to=${encodeURIComponent("/dev?tab=vocab")}`);
     };
-
-    const wordsForLevel = selectedLevel ? getWordsByLevel(selectedLevel) : [];
-
 
     return (
         <div className="p-4 space-y-4">
@@ -53,41 +60,43 @@ export const DevVocabTab: React.FC<DevVocabTabProps> = ({ memoryStates, onUpdate
                 </button>
             </div>
 
-            {/* レベル選択 */}
-            {!selectedLevel && (
-                <div className="grid grid-cols-4 gap-2">
-                    {levelStats.map(({ level, count }) => {
-                        const learnedCount = getWordsByLevel(level).filter(w => memoryMap.has(w.id)).length;
-                        return (
-                            <button
-                                key={level}
-                                onClick={() => setSelectedLevel(level)}
-                                className="p-3 bg-white rounded-lg shadow-sm text-center hover:bg-slate-50"
-                            >
-                                <div className="font-bold text-slate-700">Lv.{level}</div>
-                                <div className="text-xs text-slate-500">{learnedCount}/{count}</div>
-                            </button>
-                        );
-                    })}
-                </div>
-            )}
-
-            {/* 単語一覧 */}
-            {selectedLevel && (
-                <>
-                    <div className="flex items-center justify-between">
-                        <button
-                            onClick={() => { setSelectedLevel(null); setSelectedWord(null); }}
-                            className="text-sm text-violet-600 hover:underline"
-                        >
-                            ← レベル選択に戻る
-                        </button>
-                        <span className="text-sm text-slate-500">
-                            レベル {selectedLevel} ({wordsForLevel.length}語)
+            <div className="space-y-3">
+                <div className="rounded-xl bg-white p-3 shadow-sm">
+                    <div className="mb-2 flex items-center justify-between">
+                        <span className="text-xs font-bold tracking-[0.12em] text-slate-400">レベル切替</span>
+                        <span className="text-sm font-medium text-slate-500">
+                            Lv.{safeSelectedLevel} / {learnedCountForLevel} / {wordsForLevel.length} 学習済
                         </span>
                     </div>
+                    <div className="flex gap-2 overflow-x-auto pb-1">
+                        {levelStats.map(({ level, count }) => {
+                            const learnedCount = getWordsByLevel(level).filter(word => memoryMap.has(word.id)).length;
+                            const isActive = safeSelectedLevel === level;
 
-                    <div className="space-y-2 max-h-96 overflow-y-auto">
+                            return (
+                                <button
+                                    key={level}
+                                    onClick={() => handleLevelSelect(level)}
+                                    className={`min-w-[82px] rounded-lg border px-3 py-2 text-center transition-colors ${isActive
+                                        ? "border-violet-200 bg-violet-50 text-violet-700"
+                                        : "border-slate-200 bg-slate-50 text-slate-600 hover:bg-white"
+                                        }`}
+                                >
+                                    <div className="font-bold text-sm">Lv.{level}</div>
+                                    <div className="text-[11px] text-slate-400">{learnedCount}/{count}</div>
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div className="border-b border-slate-100 px-4 py-3">
+                        <div className="font-medium text-slate-700">レベル {safeSelectedLevel}</div>
+                        <div className="text-xs text-slate-500">{wordsForLevel.length} 語</div>
+                    </div>
+
+                    <div className="space-y-2 max-h-96 overflow-y-auto p-3">
                         {wordsForLevel.map(word => {
                             const memory = memoryMap.get(word.id);
                             const isLearned = !!memory;
@@ -97,12 +106,10 @@ export const DevVocabTab: React.FC<DevVocabTabProps> = ({ memoryStates, onUpdate
                                 <div key={word.id} className="bg-white rounded-lg shadow-sm overflow-hidden">
                                     <button
                                         onClick={() => handleWordClick(word.id)}
-                                        className={`w-full text-left p-3 flex items-center justify-between ${isSelected ? "bg-violet-50" : "hover:bg-slate-50"
-                                            }`}
+                                        className={`w-full text-left p-3 flex items-center justify-between ${isSelected ? "bg-violet-50" : "hover:bg-slate-50"}`}
                                     >
                                         <span className="flex items-center">
-                                            <span className={`w-2 h-2 rounded-full mr-2 ${isLearned ? "bg-green-500" : "bg-slate-300"
-                                                }`} />
+                                            <span className={`w-2 h-2 rounded-full mr-2 ${isLearned ? "bg-green-500" : "bg-slate-300"}`} />
                                             <span className="font-medium">{word.id}</span>
                                             <span className="ml-2 text-slate-500">
                                                 {word.japaneseKanji || word.japanese}
@@ -157,8 +164,8 @@ export const DevVocabTab: React.FC<DevVocabTabProps> = ({ memoryStates, onUpdate
                             );
                         })}
                     </div>
-                </>
-            )}
+                </div>
+            </div>
         </div>
     );
 };

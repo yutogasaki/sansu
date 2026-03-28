@@ -12,13 +12,21 @@ interface DevMathTabProps {
 
 export const DevMathTab: React.FC<DevMathTabProps> = ({ memoryStates, onUpdateMemory, onRefreshMemory }) => {
     const navigate = useNavigate();
-    const [expandedLevel, setExpandedLevel] = useState<number | null>(null);
     const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
+    const levels = Object.keys(MATH_CURRICULUM).map(Number).sort((a, b) => a - b);
+    const [selectedLevel, setSelectedLevel] = useState<number>(levels[0] ?? 0);
 
     const memoryMap = new Map(memoryStates.map(m => [m.id, m]));
+    const skillsForLevel = MATH_CURRICULUM[selectedLevel] || [];
+    const learnedCountForLevel = skillsForLevel.filter(skillId => memoryMap.has(skillId)).length;
 
     const handleSkillClick = (skillId: string) => {
         setSelectedSkill(selectedSkill === skillId ? null : skillId);
+    };
+
+    const handleLevelSelect = (level: number) => {
+        setSelectedLevel(level);
+        setSelectedSkill(null);
     };
 
     const handleStudy = (skillId: string) => {
@@ -37,103 +45,112 @@ export const DevMathTab: React.FC<DevMathTabProps> = ({ memoryStates, onUpdateMe
                 </button>
             </div>
 
-            {/* レベル一覧 */}
-            <div className="space-y-2">
-                {Object.entries(MATH_CURRICULUM).map(([level, skills]) => {
-                    const levelNum = Number(level);
-                    const learnedCount = skills.filter(s => memoryMap.has(s)).length;
+            <div className="space-y-3">
+                <div className="rounded-xl bg-white p-3 shadow-sm">
+                    <div className="mb-2 flex items-center justify-between">
+                        <span className="text-xs font-bold tracking-[0.12em] text-slate-400">レベル切替</span>
+                        <span className="text-sm font-medium text-slate-500">
+                            Lv.{selectedLevel} / {learnedCountForLevel} / {skillsForLevel.length} 学習済
+                        </span>
+                    </div>
+                    <div className="flex gap-2 overflow-x-auto pb-1">
+                        {levels.map(level => {
+                            const skills = MATH_CURRICULUM[level] || [];
+                            const learnedCount = skills.filter(skillId => memoryMap.has(skillId)).length;
+                            const isActive = selectedLevel === level;
 
-                    return (
-                        <div key={level} className="bg-white rounded-lg shadow-sm overflow-hidden">
-                            <button
-                                onClick={() => setExpandedLevel(expandedLevel === levelNum ? null : levelNum)}
-                                className="w-full flex items-center justify-between p-3 hover:bg-slate-50"
-                            >
-                                <span className="font-medium text-slate-700">
-                                    レベル {level}
-                                </span>
-                                <span className="text-sm text-slate-500">
-                                    {learnedCount}/{skills.length} 学習済
-                                    <span className="ml-2">{expandedLevel === levelNum ? "▲" : "▼"}</span>
-                                </span>
-                            </button>
+                            return (
+                                <button
+                                    key={level}
+                                    onClick={() => handleLevelSelect(level)}
+                                    className={`min-w-[82px] rounded-lg border px-3 py-2 text-center transition-colors ${isActive
+                                        ? "border-violet-200 bg-violet-50 text-violet-700"
+                                        : "border-slate-200 bg-slate-50 text-slate-600 hover:bg-white"
+                                        }`}
+                                >
+                                    <div className="text-sm font-bold">Lv.{level}</div>
+                                    <div className="text-[11px] text-slate-400">{learnedCount}/{skills.length}</div>
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
 
-                            {expandedLevel === levelNum && (
-                                <div className="border-t border-slate-100 p-3 space-y-2">
-                                    {skills.map(skillId => {
-                                        const memory = memoryMap.get(skillId);
+                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div className="border-b border-slate-100 px-4 py-3">
+                        <div className="font-medium text-slate-700">レベル {selectedLevel}</div>
+                        <div className="text-xs text-slate-500">{skillsForLevel.length} スキル</div>
+                    </div>
 
-                                        const isSelected = selectedSkill === skillId;
+                    <div className="p-3 space-y-2">
+                        {skillsForLevel.map(skillId => {
+                            const memory = memoryMap.get(skillId);
+                            const isSelected = selectedSkill === skillId;
 
-                                        return (
-                                            <div key={skillId}>
-                                                <button
-                                                    onClick={() => handleSkillClick(skillId)}
-                                                    className={`w-full text-left p-2 rounded text-sm flex items-center justify-between ${isSelected ? "bg-violet-100" : "hover:bg-slate-50"
-                                                        }`}
-                                                >
-                                                    <span className="flex items-center">
-                                                        <span className={`w-2 h-2 rounded-full mr-2 ${memory ? "bg-green-500" : "bg-slate-300"
-                                                            }`} />
-                                                        {MATH_SKILL_LABELS[skillId] || skillId}
-                                                    </span>
-                                                    <code className="text-xs text-slate-400">{skillId}</code>
-                                                </button>
+                            return (
+                                <div key={skillId}>
+                                    <button
+                                        onClick={() => handleSkillClick(skillId)}
+                                        className={`w-full text-left p-2 rounded text-sm flex items-center justify-between ${isSelected ? "bg-violet-100" : "hover:bg-slate-50"}`}
+                                    >
+                                        <span className="flex items-center">
+                                            <span className={`w-2 h-2 rounded-full mr-2 ${memory ? "bg-green-500" : "bg-slate-300"}`} />
+                                            {MATH_SKILL_LABELS[skillId] || skillId}
+                                        </span>
+                                        <code className="text-xs text-slate-400">{skillId}</code>
+                                    </button>
 
-                                                {isSelected && (
-                                                    <div className="ml-4 mt-2 p-3 bg-slate-50 rounded text-sm space-y-2">
-                                                        {memory ? (
-                                                            <>
-                                                                <div className="grid grid-cols-2 gap-2">
-                                                                    <div>
-                                                                        <span className="text-slate-500">強度:</span>
-                                                                        <select
-                                                                            value={memory.strength}
-                                                                            onChange={e => onUpdateMemory(skillId, { strength: clampStrength(Number(e.target.value)) })}
-                                                                            className="ml-2 border rounded px-1"
-                                                                        >
-                                                                            {[1, 2, 3, 4, 5].map(s => (
-                                                                                <option key={s} value={s}>{s}</option>
-                                                                            ))}
-                                                                        </select>
-                                                                    </div>
-                                                                    <div>
-                                                                        <span className="text-slate-500">状態:</span>
-                                                                        <select
-                                                                            value={memory.status || 'active'}
-                                                                            onChange={e => onUpdateMemory(skillId, { status: e.target.value as SkillStatus })}
-                                                                            className="ml-2 border rounded px-1"
-                                                                        >
-                                                                            <option value="active">active</option>
-                                                                            <option value="maintenance">maintenance</option>
-                                                                            <option value="retired">retired</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="text-xs text-slate-500 space-y-1">
-                                                                    <div>次回復習: {memory.nextReview?.split('T')[0] || '未設定'}</div>
-                                                                    <div>総回答: {memory.totalAnswers} (正解: {memory.correctAnswers})</div>
-                                                                </div>
-                                                            </>
-                                                        ) : (
-                                                            <div className="text-slate-500">未学習</div>
-                                                        )}
-                                                        <button
-                                                            onClick={() => handleStudy(skillId)}
-                                                            className="w-full mt-2 px-3 py-2 bg-violet-600 text-white rounded text-sm font-medium"
-                                                        >
-                                                            このスキルで学習
-                                                        </button>
+                                    {isSelected && (
+                                        <div className="ml-4 mt-2 p-3 bg-slate-50 rounded text-sm space-y-2">
+                                            {memory ? (
+                                                <>
+                                                    <div className="grid grid-cols-2 gap-2">
+                                                        <div>
+                                                            <span className="text-slate-500">強度:</span>
+                                                            <select
+                                                                value={memory.strength}
+                                                                onChange={e => onUpdateMemory(skillId, { strength: clampStrength(Number(e.target.value)) })}
+                                                                className="ml-2 border rounded px-1"
+                                                            >
+                                                                {[1, 2, 3, 4, 5].map(s => (
+                                                                    <option key={s} value={s}>{s}</option>
+                                                                ))}
+                                                            </select>
+                                                        </div>
+                                                        <div>
+                                                            <span className="text-slate-500">状態:</span>
+                                                            <select
+                                                                value={memory.status || 'active'}
+                                                                onChange={e => onUpdateMemory(skillId, { status: e.target.value as SkillStatus })}
+                                                                className="ml-2 border rounded px-1"
+                                                            >
+                                                                <option value="active">active</option>
+                                                                <option value="maintenance">maintenance</option>
+                                                                <option value="retired">retired</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                )}
-                                            </div>
-                                        );
-                                    })}
+                                                    <div className="text-xs text-slate-500 space-y-1">
+                                                        <div>次回復習: {memory.nextReview?.split('T')[0] || '未設定'}</div>
+                                                        <div>総回答: {memory.totalAnswers} (正解: {memory.correctAnswers})</div>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <div className="text-slate-500">未学習</div>
+                                            )}
+                                            <button
+                                                onClick={() => handleStudy(skillId)}
+                                                className="w-full mt-2 px-3 py-2 bg-violet-600 text-white rounded text-sm font-medium"
+                                            >
+                                                このスキルで学習
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
-                            )}
-                        </div>
-                    );
-                })}
+                            );
+                        })}
+                    </div>
+                </div>
             </div>
         </div>
     );
