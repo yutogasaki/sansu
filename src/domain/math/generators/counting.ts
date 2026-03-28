@@ -868,7 +868,7 @@ export const generators: Record<string, GeneratorFn> = {
     "compare_1d": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.compare_1d?.totalAnswers);
         const [a, b] = selectComparisonPair("compare_1d", totalAnswers);
-        const visual = buildStaticNumberLineVisual([a, b], "どちらが おおきい？", `${a} □ ${b}`);
+        const visual = buildStaticNumberLineVisual([a, b], "□ に はいる きごうは？", `${a} □ ${b}`);
         return createProblem("compare_1d", visual.questionText, a > b ? ">" : "<", "choice", {
             choices: [{ label: ">", value: ">" }, { label: "=", value: "=" }, { label: "<", value: "<" }]
         }, {
@@ -881,7 +881,7 @@ export const generators: Record<string, GeneratorFn> = {
         const [a, b] = selectComparisonPair("compare_2d", totalAnswers);
         const usesNumberLine = Math.floor(a / 10) === Math.floor(b / 10);
         const visual = usesNumberLine
-            ? buildStaticNumberLineVisual([a, b], "どちらが おおきい？", `${a} □ ${b}`)
+            ? buildStaticNumberLineVisual([a, b], "□ に はいる きごうは？", `${a} □ ${b}`)
             : buildComparisonBase10Visual(a, b);
         return createProblem("compare_2d", visual.questionText, a > b ? ">" : "<", "choice", {
             choices: [{ label: ">", value: ">" }, { label: "=", value: "=" }, { label: "<", value: "<" }]

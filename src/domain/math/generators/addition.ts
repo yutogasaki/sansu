@@ -1,6 +1,5 @@
 import { GeneratorFn, createProblem, randomInt } from "../core";
 import { selectAdditionPair } from "../additionProgress";
-import { buildAdditionVisual } from "../problemVisuals";
 
 const getAttemptCount = (totalAnswers?: number): number | undefined =>
     (typeof totalAnswers === "number" ? totalAnswers : undefined);
@@ -10,30 +9,24 @@ export const generators: Record<string, GeneratorFn> = {
     "add_1d_1": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.add_1d_1?.totalAnswers);
         const [a, b] = selectAdditionPair("add_1d_1", totalAnswers);
-        const visual = buildAdditionVisual(a, b);
 
         return createProblem(
             "add_1d_1",
-            visual.questionText,
+            `${a} + ${b} =`,
             (a + b).toString(),
-            "number",
-            undefined,
-            { questionVisual: visual.questionVisual }
+            "number"
         );
     },
     // Level 5: 繰り上がりなし → 10づくり → 繰り上がりあり
     "add_1d_2": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.add_1d_2?.totalAnswers);
         const [a, b] = selectAdditionPair("add_1d_2", totalAnswers);
-        const visual = buildAdditionVisual(a, b);
 
         return createProblem(
             "add_1d_2",
-            visual.questionText,
+            `${a} + ${b} =`,
             (a + b).toString(),
-            "number",
-            undefined,
-            { questionVisual: visual.questionVisual }
+            "number"
         );
     },
     // Level 7: 2桁+1桁（繰上なし）

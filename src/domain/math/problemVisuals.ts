@@ -140,6 +140,8 @@ export const buildSubtractionVisual = (a: number, b: number): { questionText: st
         questionVisual: {
             kind: "subtraction-items",
             prompt: "のこりは いくつ？",
+            actionLabel: "なくなる",
+            takenAwayCount: b,
             group: {
                 emoji: item.emoji,
                 label: item.label,
@@ -162,6 +164,8 @@ const buildLessVisual = (
         questionVisual: {
             kind: "subtraction-items",
             prompt,
+            actionLabel: `${decrease}こ へる`,
+            takenAwayCount: decrease,
             group: {
                 emoji: item.emoji,
                 label: item.label,
@@ -247,6 +251,8 @@ export const buildZeroConceptVisual = (count: number): { questionText: string; q
         questionVisual: {
             kind: "subtraction-items",
             prompt: "ぜんぶ なくなると？",
+            actionLabel: "ぜんぶ なくなる",
+            takenAwayCount: count,
             group: {
                 emoji: item.emoji,
                 label: item.label,

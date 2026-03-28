@@ -550,6 +550,8 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
     const visual = problem?.questionVisual;
     const showSpatialQuestionCard = problem?.categoryId === "spatial_words"
         && (visual?.kind === "item-pair" || visual?.kind === "position-scene");
+    const showComparisonQuestionCard = (problem?.categoryId === "compare_1d" || problem?.categoryId === "compare_2d")
+        && (visual?.kind === "number-line" || visual?.kind === "comparison-base10");
 
     if (visual?.kind === "number-card") {
         return (
@@ -601,9 +603,33 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
     }
 
     if (visual?.kind === "subtraction-items") {
+        const originalGroup = {
+            ...visual.group,
+            crossedOutCount: undefined,
+        };
+        const takenAwayCount = visual.takenAwayCount ?? visual.group.crossedOutCount ?? 0;
+        const takenAwayGroup = takenAwayCount > 0
+            ? {
+                emoji: visual.group.emoji,
+                label: visual.group.label,
+                count: takenAwayCount,
+            }
+            : null;
+
         return (
             <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
-                <ItemVisualCard group={visual.group} />
+                <div className="flex w-full flex-wrap items-center justify-center gap-3">
+                    <ItemVisualCard group={originalGroup} />
+                    {takenAwayGroup ? (
+                        <>
+                            <div className="flex flex-col items-center gap-1 rounded-[24px] border border-white/70 bg-white/52 px-4 py-3 text-rose-500 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.2)]">
+                                <span className="text-[clamp(28px,5vw,40px)] font-black">−</span>
+                                <span className="text-xs font-black tracking-[0.08em] text-slate-500">{visual.actionLabel || "なくなる"}</span>
+                            </div>
+                            <ItemVisualCard group={takenAwayGroup} />
+                        </>
+                    ) : null}
+                </div>
                 <PromptCaption text={visual.prompt || "のこりは いくつ？"} />
             </div>
         );
@@ -649,6 +675,9 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
         if (left && right) {
             return (
                 <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
+                    {showComparisonQuestionCard && problem?.questionText ? (
+                        <PromptQuestionCard text={problem.questionText} />
+                    ) : null}
                     {showBaseTenGuide && <BaseTenGuideCard />}
                     <div className="flex w-full flex-wrap items-center justify-center gap-3">
                         <BaseTenValueCard group={left} />
@@ -673,6 +702,9 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
     if (visual?.kind === "number-line") {
         return (
             <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
+                {showComparisonQuestionCard && problem?.questionText ? (
+                    <PromptQuestionCard text={problem.questionText} />
+                ) : null}
                 <NumberLineCard line={visual.line} />
                 <PromptCaption text={visual.prompt || "どこまで すすむ？"} />
             </div>

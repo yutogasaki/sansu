@@ -235,6 +235,8 @@ export type ProblemVisual =
         kind: "subtraction-items";
         prompt?: string;
         group: ProblemVisualGroup;
+        takenAwayCount?: number;
+        actionLabel?: string;
     }
     | {
         kind: "sharing-items";

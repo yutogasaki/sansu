@@ -1,5 +1,4 @@
 import { GeneratorFn, createProblem, randomInt } from "../core";
-import { buildSubtractionVisual } from "../problemVisuals";
 import { selectSubtractionPair } from "../subtractionProgress";
 
 export const generators: Record<string, GeneratorFn> = {
@@ -7,19 +6,13 @@ export const generators: Record<string, GeneratorFn> = {
     "sub_1d1d_nc": (context) => {
         const totalAnswers = context?.profile?.mathSkills?.sub_1d1d_nc?.totalAnswers;
         const [a, b] = selectSubtractionPair("sub_1d1d_nc", totalAnswers);
-        const visual = buildSubtractionVisual(a, b);
-        return createProblem("sub_1d1d_nc", visual.questionText, (a - b).toString(), "number", undefined, {
-            questionVisual: visual.questionVisual
-        });
+        return createProblem("sub_1d1d_nc", `${a} - ${b} =`, (a - b).toString(), "number");
     },
     // Level 6: 1桁-1桁（繰下あり）
     "sub_1d1d_c": (context) => {
         const totalAnswers = context?.profile?.mathSkills?.sub_1d1d_c?.totalAnswers;
         const [a, b] = selectSubtractionPair("sub_1d1d_c", totalAnswers);
-        const visual = buildSubtractionVisual(a, b);
-        return createProblem("sub_1d1d_c", visual.questionText, (a - b).toString(), "number", undefined, {
-            questionVisual: visual.questionVisual
-        });
+        return createProblem("sub_1d1d_c", `${a} - ${b} =`, (a - b).toString(), "number");
     },
     // Level 7: 2桁-1桁（繰下なし）
     "sub_2d1d_nc": () => {

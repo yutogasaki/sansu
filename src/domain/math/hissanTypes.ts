@@ -64,7 +64,9 @@ export interface HissanGridData {
  */
 export const HISSAN_ELIGIBLE_SKILLS: ReadonlySet<string> = new Set([
     // Phase 1: 足し算・引き算
+    'add_2d1d_nc', 'add_2d1d_c', 'add_2d2d_nc', 'add_2d2d_c',
     'add_3d3d', 'add_4d',
+    'sub_2d1d_nc', 'sub_2d1d_c', 'sub_2d2d',
     'sub_3d3d', 'sub_4d',
     // Phase 2: 掛け算
     'mul_2d1d', 'mul_3d1d', 'mul_2d2d', 'mul_3d2d',

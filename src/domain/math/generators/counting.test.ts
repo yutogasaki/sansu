@@ -312,6 +312,7 @@ describe("counting generators visuals", () => {
         if (problem.questionVisual?.kind === "subtraction-items") {
             expect(problem.questionVisual.group.count).toBe(2);
             expect(problem.questionVisual.group.crossedOutCount).toBe(1);
+            expect(problem.questionVisual.takenAwayCount).toBe(1);
         }
     });
 
@@ -321,6 +322,7 @@ describe("counting generators visuals", () => {
         expect(problem.correctAnswer).toBe("0");
         if (problem.questionVisual?.kind === "subtraction-items") {
             expect(problem.questionVisual.group.crossedOutCount).toBe(problem.questionVisual.group.count);
+            expect(problem.questionVisual.takenAwayCount).toBe(problem.questionVisual.group.count);
         }
     });
 
@@ -381,8 +383,10 @@ describe("counting generators visuals", () => {
         const problem = generators.compare_1d();
         expect(problem.questionVisual?.kind).toBe("number-line");
         expect(problem.inputType).toBe("choice");
+        expect(problem.questionText).toContain("□");
         if (problem.questionVisual?.kind === "number-line") {
             expect(problem.questionVisual.line.highlightValues).toHaveLength(2);
+            expect(problem.questionVisual.prompt).toBe("□ に はいる きごうは？");
         }
     });
 
@@ -406,6 +410,7 @@ describe("counting generators visuals", () => {
         expect(problem.questionVisual?.kind).toBe("number-line");
         if (problem.questionVisual?.kind === "number-line") {
             expect(problem.questionVisual.line.highlightValues).toHaveLength(2);
+            expect(problem.questionVisual.prompt).toBe("□ に はいる きごうは？");
         }
     });
 
