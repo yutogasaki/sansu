@@ -382,7 +382,7 @@ export const Ikimono: React.FC<IkimonoProps> = ({
     const handleSpeechBubbleTap = hitokoto ? clearHitokoto : onSpeechAdvance;
 
     return (
-        <div className="flex flex-col items-center select-none">
+        <div className="flex h-full w-full max-w-[20rem] flex-col items-center justify-center select-none">
             {showNameModal && !transitionModal && <NameModal onSubmit={handleNameSubmit} />}
             <FuwafuwaTransitionModal
                 modal={transitionModal}
@@ -401,7 +401,7 @@ export const Ikimono: React.FC<IkimonoProps> = ({
                 }}
             />
 
-            <div className="relative z-20 flex min-h-[6.75rem] items-end justify-center px-4">
+            <div className="relative z-20 flex min-h-[clamp(4.75rem,18vw,6.75rem)] w-full items-end justify-center px-2 sm:px-4">
                 <AnimatePresence>
                     {activeSpeech && (
                         <FuwafuwaSpeechBubble
@@ -418,18 +418,18 @@ export const Ikimono: React.FC<IkimonoProps> = ({
             <div
                 ref={orbRef}
                 onClick={handleTap}
-                className="relative mt-1 flex h-[17rem] w-[17rem] cursor-pointer items-center justify-center [WebkitTapHighlightColor:transparent]"
+                className="relative mt-1 flex h-[clamp(13rem,48vw,17rem)] w-[clamp(13rem,48vw,17rem)] cursor-pointer items-center justify-center [WebkitTapHighlightColor:transparent]"
             >
                 <motion.div
                     animate={{ scale: [1, 1.1, 1], opacity: [0.52, 0.92, 0.52] }}
                     transition={{ duration: auraVisual.pulseDuration, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute inset-3 rounded-full"
+                    className="absolute inset-[0.7rem] rounded-full sm:inset-3"
                     style={{
                         background: `radial-gradient(circle, ${auraVisual.auraColor} 0%, rgba(255,255,255,0) 72%)`,
                     }}
                 />
 
-                <div className="absolute inset-5 rounded-full border border-white/80 bg-white/74 shadow-[0_24px_46px_-30px_rgba(13,148,136,0.46)] backdrop-blur-xl" />
+                <div className="absolute inset-[1rem] rounded-full border border-white/80 bg-white/74 shadow-[0_24px_46px_-30px_rgba(13,148,136,0.46)] backdrop-blur-xl sm:inset-5" />
 
                 {auraVisual.showFireflies && (
                     <div className="absolute inset-0 pointer-events-none">
@@ -453,14 +453,14 @@ export const Ikimono: React.FC<IkimonoProps> = ({
                 <motion.div
                     animate={{ scaleX: [1, 0.88, 1], opacity: [0.24, 0.12, 0.24] }}
                     transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute bottom-8 h-4 w-24 rounded-full bg-slate-900/10 blur-md"
+                    className="absolute bottom-6 h-3.5 w-20 rounded-full bg-slate-900/10 blur-md sm:bottom-8 sm:h-4 sm:w-24"
                 />
 
                 <motion.div
                     initial={{ opacity: 0, scale: 0.86 }}
                     animate={{ opacity: fadeOpacity, scale: 1 }}
                     transition={{ duration: 0.42, ease: "easeOut" }}
-                    className="relative z-10 h-[13rem] w-[13rem]"
+                    className="relative z-10 h-[clamp(10rem,36vw,13rem)] w-[clamp(10rem,36vw,13rem)]"
                 >
                     <motion.div
                         animate={controls}
@@ -520,7 +520,7 @@ export const Ikimono: React.FC<IkimonoProps> = ({
                 <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.35),transparent_22%),radial-gradient(circle_at_72%_68%,rgba(255,255,255,0.12),transparent_18%)]" />
             </div>
 
-            <div className="mt-3 flex max-w-xs flex-wrap items-center justify-center gap-2 px-2">
+            <div className="mt-2 flex max-w-xs flex-wrap items-center justify-center gap-2 px-2 sm:mt-3">
                 <span className="inline-flex items-center rounded-full border border-cyan-100/90 bg-cyan-50/92 px-3 py-1 text-xs font-black text-cyan-700">
                     {stageLabel}
                 </span>
