@@ -91,7 +91,7 @@ export const getDevStudySelectionSummary = (
             subjectLabel: "算数",
             levelLabel: level == null ? "Lv.?" : `Lv.${level}`,
             itemLabel: getMathSkillLabel(selectedId),
-            positionLabel: skillIndex >= 0 ? `スキル ${skillIndex + 1}/${items.length}` : "スキル ?/?",
+            positionLabel: skillIndex >= 0 ? `${skillIndex + 1}/${items.length}` : "?/?",
         };
     }
 
@@ -107,7 +107,7 @@ export const getDevStudySelectionSummary = (
         subjectLabel: "英語",
         levelLabel: `Lv.${word.level}`,
         itemLabel: `${word.id} / ${word.japaneseKanji || word.japanese}`,
-        positionLabel: skillIndex >= 0 ? `スキル ${skillIndex + 1}/${items.length}` : "スキル ?/?",
+        positionLabel: skillIndex >= 0 ? `${skillIndex + 1}/${items.length}` : "?/?",
     };
 };
 

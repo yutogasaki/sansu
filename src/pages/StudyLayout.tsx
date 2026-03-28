@@ -556,52 +556,39 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
             </div>
 
             {devSessionSummary && onOpenDevSwitcher && (
-                <div className="flex-none space-y-2 px-4 pt-2 mobile:px-3">
-                    <button
-                        type="button"
-                        onClick={onOpenDevSwitcher}
-                        className="w-full rounded-[22px] border border-white/85 bg-white/72 px-4 py-3 text-left shadow-[0_18px_30px_-26px_rgba(15,23,42,0.34)] transition-all hover:bg-white/82 active:scale-[0.99]"
-                    >
-                        <div className="flex items-center justify-between gap-3">
-                            <div className="min-w-0">
-                                <div className="text-[10px] font-black tracking-[0.18em] text-slate-400">DEV QUICK SWITCH</div>
-                                <div className="truncate text-sm font-black text-slate-700">
-                                    {devSessionSummary.subjectLabel} {devSessionSummary.levelLabel}
-                                </div>
-                                <div className="truncate text-xs text-slate-500">
-                                    {devSessionSummary.itemLabel}
-                                </div>
-                                <div className="mt-1 text-[11px] font-black tracking-[0.12em] text-slate-400">
-                                    {devSessionSummary.positionLabel}
-                                </div>
+                <div className="flex-none px-4 pt-2 mobile:px-3">
+                    <div className="flex items-center gap-2 rounded-[18px] border border-white/85 bg-white/72 px-3 py-2 shadow-[0_18px_30px_-26px_rgba(15,23,42,0.34)]">
+                        <button
+                            type="button"
+                            onClick={onOpenDevSwitcher}
+                            className="min-w-0 flex-1 text-left transition-opacity hover:opacity-85 active:scale-[0.99]"
+                        >
+                            <div className="truncate text-sm font-black text-slate-700">
+                                {devSessionSummary.itemLabel}
                             </div>
-                            <span className="app-pill shrink-0 px-3 py-1 text-xs font-black text-slate-600">
-                                一覧
-                            </span>
-                        </div>
-                    </button>
+                            <div className="truncate text-[11px] font-medium text-slate-400">
+                                {devSessionSummary.levelLabel} ・ {devSessionSummary.positionLabel}
+                            </div>
+                        </button>
 
-                    <div className="grid grid-cols-2 gap-2">
                         {([
-                            { label: "スキル-1", onClick: onDevSkillDown, enabled: canDevSkillDown },
-                            { label: "スキル+1", onClick: onDevSkillUp, enabled: canDevSkillUp },
+                            { label: "<", onClick: onDevSkillDown, enabled: canDevSkillDown },
+                            { label: ">", onClick: onDevSkillUp, enabled: canDevSkillUp },
+                            { label: "...", onClick: onOpenDevSwitcher, enabled: true },
                         ]).map(action => (
                             <button
                                 key={action.label}
                                 type="button"
                                 onClick={action.onClick}
                                 disabled={!action.enabled}
-                                className={`rounded-[16px] border px-3 py-2 text-sm font-black transition-colors ${action.enabled
-                                    ? "border-white/85 bg-white/74 text-slate-700 shadow-[0_14px_24px_-22px_rgba(15,23,42,0.45)] hover:bg-white/84 active:scale-[0.99]"
+                                className={`h-9 min-w-9 shrink-0 rounded-[14px] border px-2 py-2 text-xs font-black transition-colors ${action.enabled
+                                    ? "border-white/85 bg-white/78 text-slate-700 hover:bg-white/88 active:scale-[0.99]"
                                     : "border-white/60 bg-white/42 text-slate-300"
                                     }`}
                             >
                                 {action.label}
                             </button>
                         ))}
-                    </div>
-                    <div className="px-1 text-[11px] font-medium text-slate-400">
-                        端のスキルまで行くと、つぎのレベルへそのまま進みます
                     </div>
                 </div>
             )}
