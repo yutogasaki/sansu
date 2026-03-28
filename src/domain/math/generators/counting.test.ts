@@ -184,6 +184,7 @@ describe("counting generators visuals", () => {
         } as any);
         expect(problem.questionVisual?.kind).toBe("item-pair");
         expect(problem.inputType).toBe("choice");
+        expect(problem.questionText).toContain("どこ？");
         if (problem.questionVisual?.kind === "item-pair") {
             expect(["row", "column"]).toContain(problem.questionVisual.orientation);
         }
@@ -199,6 +200,8 @@ describe("counting generators visuals", () => {
 
         expect(frontBack.questionVisual?.kind).toBe("position-scene");
         expect(insideOutside.questionVisual?.kind).toBe("position-scene");
+        expect(frontBack.questionText).toContain("の");
+        expect(insideOutside.questionText).toContain("の");
 
         if (frontBack.questionVisual?.kind === "position-scene") {
             expect(frontBack.questionVisual.scene).toBe("front-back");
@@ -390,6 +393,9 @@ describe("counting generators visuals", () => {
 
         expect(problem.questionVisual?.kind).toBe("comparison-base10");
         expect(problem.inputType).toBe("choice");
+        if (problem.questionVisual?.kind === "comparison-base10") {
+            expect(problem.questionVisual.prompt).toBe("□ に はいる きごうは？");
+        }
     });
 
     it("compare_2d later uses a number-line visual for same-tens comparisons", () => {

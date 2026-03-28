@@ -61,4 +61,11 @@ describe("hissanEngine", () => {
         const divByZero = generateHissanGrid("div_2d1d_exact", "12 ÷ 0 =");
         expect(divByZero).toBeNull();
     });
+
+    it("uses the provided answer text for decimal hissan grids", () => {
+        const grid = generateHissanGrid("dec_add", "0.1 + 0.2 =", "0.3");
+
+        expect(grid?.finalAnswer).toBe("0.3");
+        expect(grid?.steps[0]?.correctValues).toEqual(["3", ".", "0"]);
+    });
 });

@@ -19,6 +19,8 @@ interface UseHissanSessionReturn {
     userValues: Map<string, string>;
     /** ステップフィードバック */
     stepFeedback: 'none' | 'correct' | 'incorrect';
+    /** 現在のステップで小数点入力が必要か */
+    canInputDecimal: boolean;
     /** テンキー入力ハンドラ */
     handleHissanInput: (val: number | string) => void;
     /** バックスペースハンドラ */
@@ -57,6 +59,10 @@ export const useHissanSession = (): UseHissanSessionReturn => {
         () => gridData?.steps[currentStepIndex],
         [gridData, currentStepIndex]
     );
+    const canInputDecimal = useMemo(
+        () => currentStep?.correctValues.includes('.') ?? false,
+        [currentStep]
+    );
 
     /**
      * 新問題に切り替わった時のリセット
@@ -80,7 +86,10 @@ export const useHissanSession = (): UseHissanSessionReturn => {
         setIsHissanEligibleSkill(eligible);
 
         if (eligible && hissanEnabled && problem.questionText) {
-            const grid = generateHissanGrid(problem.categoryId, problem.questionText);
+            const explicitAnswer = Array.isArray(problem.correctAnswer)
+                ? problem.correctAnswer.join("")
+                : problem.correctAnswer;
+            const grid = generateHissanGrid(problem.categoryId, problem.questionText, explicitAnswer);
             if (grid) {
                 setGridData(grid);
                 setCurrentStepIndex(0);
@@ -109,17 +118,21 @@ export const useHissanSession = (): UseHissanSessionReturn => {
     const handleHissanInput = useCallback((val: number | string) => {
         if (!currentStep || !gridData || stepFeedback !== 'none') return;
 
-        const digit = String(val);
-        if (!/^[0-9]$/.test(digit)) return;
-
         const cellCol = currentStep.inputCellIndices[cursorIndex];
         if (cellCol === undefined) return;
+        const expectedValue = currentStep.correctValues[cursorIndex];
+        const nextValue = String(val);
+
+        if (!expectedValue) return;
+        if (!/^[0-9.]$/.test(nextValue)) return;
+        if (expectedValue === '.' && nextValue !== '.') return;
+        if (expectedValue !== '.' && !/^[0-9]$/.test(nextValue)) return;
 
         const cellKey = `${currentStep.rowIndex}-${cellCol}`;
 
         setUserValues(prev => {
             const next = new Map(prev);
-            next.set(cellKey, digit);
+            next.set(cellKey, nextValue);
             return next;
         });
 
@@ -300,6 +313,7 @@ export const useHissanSession = (): UseHissanSessionReturn => {
         activeCellPos,
         userValues,
         stepFeedback,
+        canInputDecimal,
         handleHissanInput,
         handleHissanBackspace,
         handleHissanClear,

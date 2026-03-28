@@ -84,6 +84,7 @@ interface StudyLayoutProps {
     hissanActiveCellPos?: [number, number] | null;
     hissanUserValues?: Map<string, string>;
     hissanStepFeedback?: 'none' | 'correct' | 'incorrect';
+    hissanCanInputDecimal?: boolean;
     onHissanCellClick?: (rowIndex: number, colIndex: number) => void;
     onHissanToggle?: () => void;
 }
@@ -154,6 +155,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     hissanActiveCellPos = null,
     hissanUserValues = new Map(),
     hissanStepFeedback = 'none',
+    hissanCanInputDecimal = false,
     onHissanCellClick,
     onHissanToggle,
 }) => {
@@ -771,7 +773,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             onDelete={onBackspace}
                             onClear={onClear}
                             onEnter={onEnter}
-                            showDecimal={currentProblem.subject === 'math' && !hissanActive}
+                            showDecimal={currentProblem.subject === 'math' && (!hissanActive || hissanCanInputDecimal)}
                             onCursorMove={showCursorButtons ? onCursorMove : undefined}
                             compact={shouldCompactTenKey}
                         />

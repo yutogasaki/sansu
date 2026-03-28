@@ -220,10 +220,10 @@ export const buildOneToOneMatchVisual = (count: number): { questionText: string;
     const scenario = randomChoice(PAIRING_SCENARIOS);
 
     return {
-        questionText: `${scenario.source.label} ${count}${scenario.source.counter}に 1こずつ ${scenario.target.label}を あげると\n${scenario.target.label}は なん${scenario.target.counter} いる？`,
+        questionText: `${scenario.source.label} ${count}${scenario.source.counter}に 1こずつ ${scenario.target.label}を あげるよ\nぜんぶで ${scenario.target.label}は なん${scenario.target.counter}？`,
         questionVisual: {
             kind: "sharing-items",
-            prompt: `${scenario.target.label}は なん${scenario.target.counter} いる？`,
+            prompt: `ぜんぶで なん${scenario.target.counter}？`,
             actionLabel: "1こずつ",
             source: {
                 emoji: scenario.source.emoji,
@@ -294,7 +294,7 @@ export const buildComparisonBase10Visual = (a: number, b: number): { questionTex
     questionText: `${a} □ ${b}`,
     questionVisual: {
         kind: "comparison-base10",
-        prompt: "どちらが おおい？",
+        prompt: "□ に はいる きごうは？",
         groups: [
             { label: "ひだり", value: a },
             { label: "みぎ", value: b },

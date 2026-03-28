@@ -40,11 +40,12 @@ const inputCell = (correctValue: string): HissanCell => ({
  *     ───────────────
  *     [1][2][4][5]     ← 入力行（結果）
  */
-export const generateAdditionGrid = (a: number, b: number): HissanGridData => {
+export const generateAdditionGrid = (a: number, b: number, answerText?: string): HissanGridData => {
     const sum = a + b;
     const aDigits = toDigits(a);
     const bDigits = toDigits(b);
-    const sumDigits = toDigits(sum);
+    const finalAnswer = answerText ?? sum.toString();
+    const sumDigits = finalAnswer.split('').reverse();
 
     // 列数は答えの桁数 + 1（演算子列）
     const maxDigits = sumDigits.length;
@@ -118,7 +119,7 @@ export const generateAdditionGrid = (a: number, b: number): HissanGridData => {
         steps: [step],
         columnCount,
         operation: 'addition',
-        finalAnswer: sum.toString(),
+        finalAnswer,
     };
 };
 
@@ -136,11 +137,12 @@ export const generateAdditionGrid = (a: number, b: number): HissanGridData => {
  *     ─────────
  *     [2][6][7]     ← 入力行（結果）
  */
-export const generateSubtractionGrid = (a: number, b: number): HissanGridData => {
+export const generateSubtractionGrid = (a: number, b: number, answerText?: string): HissanGridData => {
     const diff = a - b;
     const aDigits = toDigits(a);
     const bDigits = toDigits(b);
-    const diffDigits = toDigits(diff);
+    const finalAnswer = answerText ?? diff.toString();
+    const diffDigits = finalAnswer.split('').reverse();
 
     // 列数は大きい方の桁数 + 1（演算子列）
     const maxDigits = Math.max(aDigits.length, bDigits.length);
@@ -214,7 +216,7 @@ export const generateSubtractionGrid = (a: number, b: number): HissanGridData =>
         steps: [step],
         columnCount,
         operation: 'subtraction',
-        finalAnswer: diff.toString(),
+        finalAnswer,
     };
 };
 
@@ -222,11 +224,12 @@ export const generateSubtractionGrid = (a: number, b: number): HissanGridData =>
 // 掛け算の筆算（Phase 2: まずは結果入力型）
 // ============================================================
 
-export const generateMultiplicationGrid = (a: number, b: number): HissanGridData => {
+export const generateMultiplicationGrid = (a: number, b: number, answerText?: string): HissanGridData => {
     const product = a * b;
     const aDigits = toDigits(a);
     const bDigits = toDigits(b);
-    const productDigits = toDigits(product);
+    const finalAnswer = answerText ?? product.toString();
+    const productDigits = finalAnswer.split('').reverse();
 
     const maxDigits = Math.max(productDigits.length, aDigits.length, bDigits.length);
     const columnCount = maxDigits + 1;
@@ -288,7 +291,7 @@ export const generateMultiplicationGrid = (a: number, b: number): HissanGridData
         }],
         columnCount,
         operation: 'multiplication',
-        finalAnswer: product.toString(),
+        finalAnswer,
     };
 };
 
@@ -296,9 +299,9 @@ export const generateMultiplicationGrid = (a: number, b: number): HissanGridData
 // 割り算の筆算（Phase 3: まずは結果入力型）
 // ============================================================
 
-export const generateDivisionGrid = (a: number, b: number): HissanGridData => {
+export const generateDivisionGrid = (a: number, b: number, answerText?: string): HissanGridData => {
     const quotient = a / b;
-    const quotientText = Number.isInteger(quotient) ? quotient.toString() : quotient.toString();
+    const quotientText = answerText ?? (Number.isInteger(quotient) ? quotient.toString() : quotient.toString());
     const aDigits = toDigits(a);
     const bDigits = toDigits(b);
     const quotientDigits = quotientText.split('').reverse();
@@ -393,6 +396,7 @@ export const parseQuestionText = (questionText: string): { a: number; b: number;
 export const generateHissanGrid = (
     _skillId: string,
     questionText: string,
+    answerText?: string,
 ): HissanGridData | null => {
     const parsed = parseQuestionText(questionText);
     if (!parsed) return null;
@@ -401,17 +405,17 @@ export const generateHissanGrid = (
 
     // Phase 1: 足し算・引き算
     if (op === '+') {
-        return generateAdditionGrid(a, b);
+        return generateAdditionGrid(a, b, answerText);
     }
     if (op === '-' || op === '−') {
-        return generateSubtractionGrid(a, b);
+        return generateSubtractionGrid(a, b, answerText);
     }
     if (op === '×') {
-        return generateMultiplicationGrid(a, b);
+        return generateMultiplicationGrid(a, b, answerText);
     }
     if (op === '÷') {
         if (b === 0) return null;
-        return generateDivisionGrid(a, b);
+        return generateDivisionGrid(a, b, answerText);
     }
 
     return null;

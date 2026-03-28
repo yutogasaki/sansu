@@ -267,6 +267,11 @@ export const Study: React.FC = () => {
         if (isInputLocked(feedback, isProcessingRef.current)) return;
         playSound("tap");
 
+        if (hissan.isHissanActive) {
+            hissan.handleHissanInput(valStr);
+            return;
+        }
+
         if (currentProblem?.inputType === 'multi-number' && currentProblem.inputConfig?.fields) {
             const fields = currentProblem.inputConfig.fields;
             const currentFieldLength = fields[activeFieldIndex]?.length || 3;
@@ -294,11 +299,16 @@ export const Study: React.FC = () => {
                 setUserInput(prev => prev + valStr);
             }
         }
-    }, [feedback, currentProblem, activeFieldIndex, userInput.length, scheduleUiTimeout]);
+    }, [feedback, currentProblem, activeFieldIndex, userInput.length, scheduleUiTimeout, hissan]);
 
     const handleBackspace = useCallback(() => {
         if (isInputLocked(feedback, isProcessingRef.current)) return;
         playSound("tap");
+
+        if (hissan.isHissanActive) {
+            hissan.handleHissanBackspace();
+            return;
+        }
 
         if (currentProblem?.inputType === 'multi-number') {
             setUserInputs(prev => {
@@ -309,10 +319,14 @@ export const Study: React.FC = () => {
         } else {
             setUserInput(prev => prev.slice(0, -1));
         }
-    }, [feedback, currentProblem, activeFieldIndex]);
+    }, [feedback, currentProblem, activeFieldIndex, hissan]);
 
     const handleClear = useCallback(() => {
         if (isInputLocked(feedback, isProcessingRef.current)) return;
+        if (hissan.isHissanActive) {
+            hissan.handleHissanClear();
+            return;
+        }
         if (currentProblem?.inputType === 'multi-number') {
             setUserInputs(prev => {
                 const newInputs = [...prev];
@@ -322,7 +336,7 @@ export const Study: React.FC = () => {
         } else {
             setUserInput("");
         }
-    }, [feedback, currentProblem, activeFieldIndex]);
+    }, [feedback, currentProblem, activeFieldIndex, hissan]);
 
     const handleCursorMove = useCallback((direction: "left" | "right") => {
         if (feedback !== "none") return;
@@ -564,9 +578,9 @@ export const Study: React.FC = () => {
                 onNext={nextProblem}
                 onContinue={handleContinue}
                 onSkip={handleSkip}
-                onTenKeyInput={hissan.isHissanActive ? (val) => hissan.handleHissanInput(typeof val === 'string' ? parseInt(val) || 0 : val) : handleTenKeyInput}
-                onBackspace={hissan.isHissanActive ? hissan.handleHissanBackspace : handleBackspace}
-                onClear={hissan.isHissanActive ? hissan.handleHissanClear : handleClear}
+                onTenKeyInput={handleTenKeyInput}
+                onBackspace={handleBackspace}
+                onClear={handleClear}
                 onEnter={() => handleSubmit()}
                 onCursorMove={handleCursorMove}
                 onSubmitChoice={(val) => handleSubmit(val)}
@@ -589,6 +603,7 @@ export const Study: React.FC = () => {
                 hissanActiveCellPos={hissan.activeCellPos}
                 hissanUserValues={hissan.userValues}
                 hissanStepFeedback={hissan.stepFeedback}
+                hissanCanInputDecimal={hissan.canInputDecimal}
                 onHissanCellClick={hissan.handleCellClick}
                 onHissanToggle={hissan.toggleHissanMode}
             />

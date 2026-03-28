@@ -10,6 +10,14 @@ export interface DevStudyLevelItem {
     helper: string;
 }
 
+export interface DevStudyFlatItem extends DevStudyLevelItem {
+    subject: DevStudySubject;
+    level: number;
+    position: number;
+    levelPositionLabel: string;
+    optionLabel: string;
+}
+
 export interface DevStudySelectionSummary {
     subjectLabel: string;
     levelLabel: string;
@@ -111,14 +119,24 @@ export const getDevStudySelectionSummary = (
     };
 };
 
-const getOrderedSelections = (subject: DevStudySubject) => {
+export const getDevStudyFlatItems = (subject: DevStudySubject): DevStudyFlatItem[] => {
     const levels = subject === "math" ? devStudyMathLevels : devStudyVocabLevels;
 
     return levels.flatMap(level =>
-        getDevStudyLevelItems(subject, level).map(item => ({
-            level,
-            id: item.id,
-        }))
+        getDevStudyLevelItems(subject, level).map((item, index) => {
+            const levelPositionLabel = `Lv.${level}-${index + 1}`;
+
+            return {
+                ...item,
+                subject,
+                level,
+                position: index + 1,
+                levelPositionLabel,
+                optionLabel: item.helper && subject === "vocab"
+                    ? `${levelPositionLabel} ${item.label} / ${item.helper}`
+                    : `${levelPositionLabel} ${item.label}`,
+            };
+        })
     );
 };
 
@@ -127,7 +145,7 @@ export const getDevStudyAdjacentSelection = (
     selectedId: string,
     direction: DevStudyDirection
 ): DevStudySelectionTarget | null => {
-    const orderedSelections = getOrderedSelections(subject);
+    const orderedSelections = getDevStudyFlatItems(subject);
     const currentIndex = orderedSelections.findIndex(item => item.id === selectedId);
 
     if (currentIndex < 0) {

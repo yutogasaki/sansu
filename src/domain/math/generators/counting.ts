@@ -445,7 +445,7 @@ export const generators: Record<string, GeneratorFn> = {
         const items = shuffleArray(VISUAL_COMPARE_ITEMS).slice(0, 2);
         const left = items[0] || VISUAL_COMPARE_ITEMS[0];
         const right = pattern.isSame ? left : (items[1] || VISUAL_COMPARE_ITEMS[1]);
-        const visual = buildItemPairVisual([left, right], "おなじ？ ちがう？");
+        const visual = buildItemPairVisual([left, right], "2つは おなじ？ ちがう？");
 
         return createProblem("same_or_different", visual.questionText, pattern.isSame ? "おなじ" : "ちがう", "choice", {
             choices: [
@@ -463,7 +463,7 @@ export const generators: Record<string, GeneratorFn> = {
         if (pattern.mode === "pair") {
             const items = shuffleArray(ORDINAL_EMOJIS).slice(0, 2);
             const target = items[pattern.targetIndex || 0] || items[0] || ORDINAL_EMOJIS[0];
-            const prompt = `${target.label} は ${pattern.choices[0]}？ ${pattern.choices[1]}？`;
+            const prompt = `2つの うち、${target.label} は どこ？ ${pattern.choices[0]}？ ${pattern.choices[1]}？`;
             const visual = buildItemPairVisual(items, prompt, pattern.orientation || "row");
 
             return createProblem("spatial_words", visual.questionText, pattern.answer, "choice", {
@@ -475,7 +475,7 @@ export const generators: Record<string, GeneratorFn> = {
 
         if (pattern.mode === "front-back") {
             const scene = randomChoice(FRONT_BACK_SCENES);
-            const prompt = `${scene.target.label} は まえ？ うしろ？`;
+            const prompt = `${scene.target.label} は ${scene.reference.label} の まえ？ うしろ？`;
             const visual = buildPositionSceneVisual(
                 "front-back",
                 scene.target,
@@ -492,7 +492,7 @@ export const generators: Record<string, GeneratorFn> = {
         }
 
         const scene = randomChoice(INSIDE_OUTSIDE_SCENES);
-        const prompt = `${scene.target.label} は なか？ そと？`;
+        const prompt = `${scene.target.label} は ${scene.reference.label} の なか？ そと？`;
         const visual = buildPositionSceneVisual(
             "inside-outside",
             scene.target,
@@ -555,8 +555,8 @@ export const generators: Record<string, GeneratorFn> = {
         const visual = buildReferenceChoiceGridVisual(
             { emoji: target.emoji, label: target.name },
             choices.map(choice => ({ emoji: choice.emoji, label: choice.name })),
-            "これは なに？",
-            "これは なに？",
+            "この かたちは なに？",
+            "この かたちは なに？",
             choices.length
         );
         return createProblem("count_shape", visual.questionText, target.name, "choice", {
@@ -602,8 +602,8 @@ export const generators: Record<string, GeneratorFn> = {
         const visual = buildReferenceChoiceGridVisual(
             { emoji: target, label: "おてほん" },
             choices.map(choice => ({ emoji: choice, label: choice })),
-            "おなじ ものは？",
-            "おなじ ものは？",
+            "おてほん と おなじのは？",
+            "おてほん と おなじのは？",
             choices.length
         );
         return createProblem("count_pair", visual.questionText, target, "choice", {

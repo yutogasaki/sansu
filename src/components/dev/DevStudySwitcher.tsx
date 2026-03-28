@@ -3,11 +3,7 @@ import { Button } from "../ui/Button";
 import { Modal } from "../ui/Modal";
 import {
     DevStudySubject,
-    devStudyMathLevels,
-    devStudyVocabLevels,
-    getDevStudyDefaultId,
-    getDevStudyDefaultLevel,
-    getDevStudyLevelItems,
+    getDevStudyFlatItems,
     getDevStudySelectionSummary,
 } from "./devStudySelection";
 
@@ -27,9 +23,10 @@ export const DevStudySwitcher: React.FC<DevStudySwitcherProps> = ({
     onApply,
 }) => {
     const [draftSubject, setDraftSubject] = useState<DevStudySubject>(subject);
-    const [draftLevel, setDraftLevel] = useState<number>(getDevStudyDefaultLevel(subject, selectedId));
-    const [draftId, setDraftId] = useState<string | null>(
-        getDevStudyDefaultId(subject, getDevStudyDefaultLevel(subject, selectedId), selectedId)
+    const [draftId, setDraftId] = useState<string | null>(selectedId || null);
+    const draftItems = useMemo(
+        () => getDevStudyFlatItems(draftSubject),
+        [draftSubject]
     );
 
     useEffect(() => {
@@ -37,34 +34,24 @@ export const DevStudySwitcher: React.FC<DevStudySwitcherProps> = ({
             return;
         }
 
-        const nextLevel = getDevStudyDefaultLevel(subject, selectedId);
         setDraftSubject(subject);
-        setDraftLevel(nextLevel);
-        setDraftId(getDevStudyDefaultId(subject, nextLevel, selectedId));
+        const nextItems = getDevStudyFlatItems(subject);
+        const nextId = selectedId && nextItems.some(item => item.id === selectedId)
+            ? selectedId
+            : (nextItems[0]?.id ?? null);
+        setDraftId(nextId);
     }, [isOpen, subject, selectedId]);
 
-    const activeLevels = draftSubject === "math" ? devStudyMathLevels : devStudyVocabLevels;
-    const levelItems = useMemo(
-        () => getDevStudyLevelItems(draftSubject, draftLevel),
-        [draftSubject, draftLevel]
-    );
-
     useEffect(() => {
-        if (!activeLevels.includes(draftLevel)) {
-            setDraftLevel(activeLevels[0] ?? 1);
-            return;
+        if (!draftId || !draftItems.some(item => item.id === draftId)) {
+            setDraftId(draftItems[0]?.id ?? null);
         }
-
-        if (!draftId || !levelItems.some(item => item.id === draftId)) {
-            setDraftId(levelItems[0]?.id ?? null);
-        }
-    }, [activeLevels, draftId, draftLevel, levelItems]);
+    }, [draftId, draftItems]);
 
     const handleSubjectChange = (nextSubject: DevStudySubject) => {
-        const nextLevel = getDevStudyDefaultLevel(nextSubject);
         setDraftSubject(nextSubject);
-        setDraftLevel(nextLevel);
-        setDraftId(getDevStudyDefaultId(nextSubject, nextLevel));
+        const nextItems = getDevStudyFlatItems(nextSubject);
+        setDraftId(nextItems[0]?.id ?? null);
     };
 
     const handleApply = () => {
@@ -115,37 +102,45 @@ export const DevStudySwitcher: React.FC<DevStudySwitcherProps> = ({
                     </div>
                 </div>
 
-                <label className="block space-y-2">
-                    <span className="text-xs font-black tracking-[0.16em] text-slate-400">レベル</span>
-                    <select
-                        value={draftLevel}
-                        onChange={(event) => setDraftLevel(Number(event.target.value))}
-                        className="w-full rounded-[18px] border border-white/80 bg-white/80 px-4 py-3 text-sm font-medium text-slate-700 shadow-[0_10px_26px_-24px_rgba(15,23,42,0.55)] outline-none"
-                    >
-                        {activeLevels.map(level => (
-                            <option key={level} value={level}>
-                                {`Lv.${level}`}
-                            </option>
-                        ))}
-                    </select>
-                </label>
+                <div className="space-y-2">
+                    <div className="text-xs font-black tracking-[0.16em] text-slate-400">
+                        {draftSubject === "math" ? "問題一覧" : "単語一覧"}
+                    </div>
+                    <div className="max-h-[320px] space-y-2 overflow-y-auto rounded-[22px] border border-white/80 bg-white/50 p-2">
+                        {draftItems.map(item => {
+                            const isSelected = draftId === item.id;
 
-                <label className="block space-y-2">
-                    <span className="text-xs font-black tracking-[0.16em] text-slate-400">
-                        {draftSubject === "math" ? "スキル" : "単語"}
-                    </span>
-                    <select
-                        value={draftId || ""}
-                        onChange={(event) => setDraftId(event.target.value || null)}
-                        className="w-full rounded-[18px] border border-white/80 bg-white/80 px-4 py-3 text-sm font-medium text-slate-700 shadow-[0_10px_26px_-24px_rgba(15,23,42,0.55)] outline-none"
-                    >
-                        {levelItems.map(item => (
-                            <option key={item.id} value={item.id}>
-                                {item.helper ? `${item.label} / ${item.helper}` : item.label}
-                            </option>
-                        ))}
-                    </select>
-                </label>
+                            return (
+                                <button
+                                    key={item.id}
+                                    type="button"
+                                    onClick={() => setDraftId(item.id)}
+                                    className={`flex w-full items-start gap-3 rounded-[18px] border px-4 py-3 text-left transition-colors ${isSelected
+                                        ? "border-cyan-100/90 bg-cyan-50/92"
+                                        : "border-white/80 bg-white/72 text-slate-600 hover:bg-white/86"
+                                        }`}
+                                >
+                                    <span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-black tracking-[0.06em] ${isSelected
+                                        ? "bg-cyan-100 text-cyan-700"
+                                        : "bg-slate-100 text-slate-500"
+                                        }`}>
+                                        {item.levelPositionLabel}
+                                    </span>
+                                    <span className="min-w-0">
+                                        <span className={`block text-sm font-black ${isSelected ? "text-cyan-800" : "text-slate-800"}`}>
+                                            {item.label}
+                                        </span>
+                                        {item.helper ? (
+                                            <span className="mt-1 block text-xs text-slate-500">
+                                                {item.helper}
+                                            </span>
+                                        ) : null}
+                                    </span>
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
 
                 {draftId && (
                     <div className="rounded-[22px] border border-white/80 bg-white/62 px-4 py-4">

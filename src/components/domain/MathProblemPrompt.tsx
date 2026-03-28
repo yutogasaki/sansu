@@ -125,7 +125,10 @@ const BaseTenValueCard: React.FC<{
     const ones = group.value % 10;
 
     return (
-        <div className="min-w-[132px] rounded-[24px] border border-white/80 bg-white/72 px-4 py-3 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+        <div className="min-w-[152px] rounded-[24px] border border-white/80 bg-white/72 px-4 py-3 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+            <div className="mb-3 text-center text-sm font-black tracking-[0.08em] text-slate-500">
+                {group.label}
+            </div>
             <div className="mb-3 flex min-h-12 flex-wrap justify-center gap-2">
                 {Array.from({ length: tens }, (_, index) => (
                     <span
@@ -142,9 +145,21 @@ const BaseTenValueCard: React.FC<{
                     />
                 ))}
             </div>
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-[11px] font-black text-slate-500">
+                <span className="rounded-full bg-cyan-50 px-2 py-1 text-cyan-700">10が {tens}ほん</span>
+                <span className="rounded-full bg-amber-50 px-2 py-1 text-amber-700">1が {ones}こ</span>
+            </div>
         </div>
     );
 };
+
+const BaseTenGuideCard: React.FC = () => (
+    <div className="w-full max-w-[460px] rounded-[20px] border border-cyan-100/90 bg-cyan-50/88 px-4 py-3 text-center shadow-[0_16px_28px_-22px_rgba(8,145,178,0.38)]">
+        <p className="text-sm font-black leading-6 tracking-[0.04em] text-cyan-800">
+            ながい ぼう 1ほん は 10、まる 1こ は 1
+        </p>
+    </div>
+);
 
 const PromptCaption: React.FC<{
     text: string;
@@ -152,6 +167,16 @@ const PromptCaption: React.FC<{
     <p className="text-sm font-black tracking-[0.08em] text-slate-500">
         {text}
     </p>
+);
+
+const PromptQuestionCard: React.FC<{
+    text: string;
+}> = ({ text }) => (
+    <div className="w-full max-w-[420px] rounded-[20px] border border-cyan-100/90 bg-cyan-50/88 px-4 py-3 text-center shadow-[0_16px_28px_-22px_rgba(8,145,178,0.38)]">
+        <p className="text-sm font-black leading-6 tracking-[0.04em] text-cyan-800">
+            {text}
+        </p>
+    </div>
 );
 
 const NumberSequenceCard: React.FC<{
@@ -523,6 +548,8 @@ const ItemPairCard: React.FC<{
 
 export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, className }) => {
     const visual = problem?.questionVisual;
+    const showSpatialQuestionCard = problem?.categoryId === "spatial_words"
+        && (visual?.kind === "item-pair" || visual?.kind === "position-scene");
 
     if (visual?.kind === "number-card") {
         return (
@@ -617,10 +644,12 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
 
     if (visual?.kind === "comparison-base10") {
         const [left, right] = visual.groups;
+        const showBaseTenGuide = problem?.categoryId === "compare_2d";
 
         if (left && right) {
             return (
                 <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
+                    {showBaseTenGuide && <BaseTenGuideCard />}
                     <div className="flex w-full flex-wrap items-center justify-center gap-3">
                         <BaseTenValueCard group={left} />
                         <span className="text-[clamp(34px,6vw,50px)] font-black text-slate-400">□</span>
@@ -711,13 +740,18 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
     if (visual?.kind === "position-scene") {
         return (
             <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
+                {showSpatialQuestionCard && problem?.questionText ? (
+                    <PromptQuestionCard text={problem.questionText} />
+                ) : null}
                 <PositionSceneCard
                     scene={visual.scene}
                     target={visual.target}
                     reference={visual.reference}
                     relation={visual.relation}
                 />
-                <PromptCaption text={visual.prompt || "どこ？"} />
+                {!showSpatialQuestionCard && (
+                    <PromptCaption text={visual.prompt || "どこ？"} />
+                )}
             </div>
         );
     }
@@ -725,8 +759,13 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
     if (visual?.kind === "item-pair") {
         return (
             <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
+                {showSpatialQuestionCard && problem?.questionText ? (
+                    <PromptQuestionCard text={problem.questionText} />
+                ) : null}
                 <ItemPairCard items={visual.items} orientation={visual.orientation} />
-                <PromptCaption text={visual.prompt || "おなじ？"} />
+                {!showSpatialQuestionCard && (
+                    <PromptCaption text={visual.prompt || "おなじ？"} />
+                )}
             </div>
         );
     }
