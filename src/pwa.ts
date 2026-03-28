@@ -113,6 +113,24 @@ const scheduleRecoveryReload = (version: string) => {
     }, UPDATE_RECOVERY_DELAY_MS)
 }
 
+const runVersionDriftRecoveryCheck = () => {
+    if (updateCheckInFlight || !shouldCheckForUpdates()) {
+        return
+    }
+
+    updateCheckInFlight = (async () => {
+        const nextVersion = await checkForAppVersionUpdate()
+
+        if (!nextVersion || hasTriggeredReload) {
+            return
+        }
+
+        scheduleRecoveryReload(nextVersion)
+    })().finally(() => {
+        updateCheckInFlight = null
+    })
+}
+
 const runUpdateCheck = (workbox: Workbox) => {
     if (updateCheckInFlight || !shouldCheckForUpdates()) {
         return
@@ -137,16 +155,13 @@ const runUpdateCheck = (workbox: Workbox) => {
     })
 }
 
-const attachServiceWorkerUpdateChecks = (workbox: Workbox) => {
-    const triggerUpdateCheck = () => {
-        runUpdateCheck(workbox)
-    }
-
-    // Poll for updates so long-lived standalone sessions also pick up new deployments.
+const attachUpdateCheckTriggers = (triggerUpdateCheck: () => void) => {
+    // Home-screen web apps can resume from a cached page snapshot, so we also re-check on pageshow.
     window.setInterval(triggerUpdateCheck, UPDATE_CHECK_INTERVAL_MS)
     window.addEventListener('focus', triggerUpdateCheck)
     window.addEventListener('online', triggerUpdateCheck)
     document.addEventListener('visibilitychange', triggerUpdateCheck)
+    window.addEventListener('pageshow', triggerUpdateCheck)
 
     triggerUpdateCheck()
 }
@@ -154,7 +169,16 @@ const attachServiceWorkerUpdateChecks = (workbox: Workbox) => {
 export const registerPWA = () => {
     clearReloadMarkerFromUrl()
 
-    if (!import.meta.env.PROD || !('serviceWorker' in navigator)) {
+    if (!import.meta.env.PROD) {
+        return
+    }
+
+    let triggerUpdateCheck = runVersionDriftRecoveryCheck
+    attachUpdateCheckTriggers(() => {
+        triggerUpdateCheck()
+    })
+
+    if (!('serviceWorker' in navigator)) {
         return
     }
 
@@ -188,7 +212,11 @@ export const registerPWA = () => {
             return
         }
 
-        attachServiceWorkerUpdateChecks(workbox)
+        triggerUpdateCheck = () => {
+            runUpdateCheck(workbox)
+        }
+
+        triggerUpdateCheck()
     }).catch((error) => {
         console.error('Failed to register service worker', error)
     })
