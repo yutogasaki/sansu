@@ -1,25 +1,39 @@
 import { Workbox } from 'workbox-window'
 import { resolveAppAssetPath } from './utils/assets'
+import { buildReloadUrl, shouldResetAppCache, stripReloadMarker } from './pwaUpdateUtils'
 
 const UPDATE_CHECK_INTERVAL_MS = 5 * 60 * 1000
+const UPDATE_RECOVERY_DELAY_MS = 4000
 const APP_BASE_URL = resolveAppAssetPath('/')
 const VERSION_URL = resolveAppAssetPath('/version.json')
 const SERVICE_WORKER_URL = resolveAppAssetPath('/sw.js')
 const SERVICE_WORKER_SCOPE = APP_BASE_URL
 
 let hasTriggeredReload = false
+let hasScheduledRecoveryReload = false
+let updateCheckInFlight: Promise<void> | null = null
 
 type AppVersionPayload = {
     version?: string
 }
 
-const reloadForUpdate = () => {
+const clearReloadMarkerFromUrl = () => {
+    const cleanedUrl = stripReloadMarker(window.location.href)
+
+    if (cleanedUrl === window.location.href) {
+        return
+    }
+
+    window.history.replaceState(window.history.state, '', cleanedUrl)
+}
+
+const reloadForUpdate = (version = Date.now().toString()) => {
     if (hasTriggeredReload) {
         return
     }
 
     hasTriggeredReload = true
-    window.location.reload()
+    window.location.replace(buildReloadUrl(window.location.href, version))
 }
 
 const shouldCheckForUpdates = () => (
@@ -28,12 +42,12 @@ const shouldCheckForUpdates = () => (
     && !hasTriggeredReload
 )
 
-const checkForServiceWorkerUpdate = (workbox: Workbox) => {
+const checkForServiceWorkerUpdate = async (workbox: Workbox) => {
     if (!shouldCheckForUpdates()) {
         return
     }
 
-    void workbox.update().catch(() => undefined)
+    await workbox.update().catch(() => undefined)
 }
 
 const checkForAppVersionUpdate = async () => {
@@ -47,24 +61,85 @@ const checkForAppVersionUpdate = async () => {
         })
 
         if (!response.ok) {
-            return
+            return null
         }
 
         const data = await response.json() as AppVersionPayload
         if (!data.version || data.version === __APP_VERSION__) {
+            return null
+        }
+
+        return data.version
+    } catch {
+        // Ignore transient network errors and retry on the next trigger.
+        return null
+    }
+}
+
+const resetStaleServiceWorkerState = async () => {
+    const registration = await navigator.serviceWorker
+        .getRegistration(SERVICE_WORKER_SCOPE)
+        .catch(() => undefined)
+
+    const cacheNames = 'caches' in window
+        ? await caches.keys().catch(() => [] as string[])
+        : []
+
+    await Promise.all([
+        registration?.unregister().catch(() => false),
+        ...cacheNames
+            .filter(shouldResetAppCache)
+            .map((cacheName) => caches.delete(cacheName).catch(() => false)),
+    ])
+}
+
+const scheduleRecoveryReload = (version: string) => {
+    if (hasScheduledRecoveryReload || hasTriggeredReload) {
+        return
+    }
+
+    hasScheduledRecoveryReload = true
+
+    window.setTimeout(() => {
+        if (hasTriggeredReload) {
             return
         }
 
-        reloadForUpdate()
-    } catch {
-        // Ignore transient network errors and retry on the next trigger.
+        void resetStaleServiceWorkerState()
+            .catch(() => undefined)
+            .finally(() => {
+                reloadForUpdate(version)
+            })
+    }, UPDATE_RECOVERY_DELAY_MS)
+}
+
+const runUpdateCheck = (workbox: Workbox) => {
+    if (updateCheckInFlight || !shouldCheckForUpdates()) {
+        return
     }
+
+    updateCheckInFlight = (async () => {
+        await checkForServiceWorkerUpdate(workbox)
+
+        if (hasTriggeredReload) {
+            return
+        }
+
+        const nextVersion = await checkForAppVersionUpdate()
+
+        if (!nextVersion || hasTriggeredReload) {
+            return
+        }
+
+        scheduleRecoveryReload(nextVersion)
+    })().finally(() => {
+        updateCheckInFlight = null
+    })
 }
 
 const attachServiceWorkerUpdateChecks = (workbox: Workbox) => {
     const triggerUpdateCheck = () => {
-        checkForServiceWorkerUpdate(workbox)
-        void checkForAppVersionUpdate()
+        runUpdateCheck(workbox)
     }
 
     // Poll for updates so long-lived standalone sessions also pick up new deployments.
@@ -77,6 +152,8 @@ const attachServiceWorkerUpdateChecks = (workbox: Workbox) => {
 }
 
 export const registerPWA = () => {
+    clearReloadMarkerFromUrl()
+
     if (!import.meta.env.PROD || !('serviceWorker' in navigator)) {
         return
     }
