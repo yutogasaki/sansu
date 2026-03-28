@@ -271,6 +271,12 @@ export type ProblemVisual =
         groups: ProblemVisualValueGroup[];
     }
     | {
+        kind: "operation-base10";
+        prompt?: string;
+        operator: "+" | "−";
+        groups: ProblemVisualValueGroup[];
+    }
+    | {
         kind: "number-sequence";
         prompt?: string;
         slots: ProblemVisualSequenceSlot[];

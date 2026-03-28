@@ -238,6 +238,8 @@ const buildVisualPrompt = (visual: ProblemVisual): string => {
             return describeLabeledGroups(visual.groups);
         case "comparison-base10":
             return describeValueGroups(visual.groups);
+        case "operation-base10":
+            return `${describeValueGroups([visual.groups[0]])} ${visual.operator} ${describeValueGroups([visual.groups[1]])}`;
         case "number-sequence":
             return `ならび: ${visual.slots.map(slot => slot.value ?? "[   ]").join(" ")}`;
         case "number-line":

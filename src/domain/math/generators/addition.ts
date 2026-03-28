@@ -1,9 +1,26 @@
 import { GeneratorFn, createProblem, randomInt } from "../core";
 import { selectAdditionPair } from "../additionProgress";
-import { buildAdditionVisual } from "../problemVisuals";
+import {
+    buildAdditionBase10Visual,
+    buildAdditionMakeTenVisual,
+    buildAdditionMentalNumberLineVisual,
+    buildAdditionVisual
+} from "../problemVisuals";
 
 const getAttemptCount = (totalAnswers?: number): number | undefined =>
     (typeof totalAnswers === "number" ? totalAnswers : undefined);
+
+const pickTwoDigitPlusOneWithoutCarry = (): [number, number] => {
+    let a, b;
+    do { a = randomInt(10, 99); b = randomInt(1, 9); } while ((a % 10) + b >= 10);
+    return [a, b];
+};
+
+const pickTwoDigitPlusOneWithCarry = (): [number, number] => {
+    let a, b;
+    do { a = randomInt(10, 99); b = randomInt(1, 9); } while ((a % 10) + b < 10);
+    return [a, b];
+};
 
 export const generators: Record<string, GeneratorFn> = {
     // Level 4: 絵と式を行き来しながら 1+1 からはじめる
@@ -61,15 +78,49 @@ export const generators: Record<string, GeneratorFn> = {
         );
     },
     // Level 7: 2桁+1桁（繰上なし）
+    "add_2d1d_nc_bridge": () => {
+        const [a, b] = pickTwoDigitPlusOneWithoutCarry();
+        const visual = buildAdditionBase10Visual(a, b);
+        return createProblem("add_2d1d_nc_bridge", `${a} + ${b} =`, (a + b).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual,
+        });
+    },
+    "add_2d1d_mental_nc": () => {
+        const [a, b] = pickTwoDigitPlusOneWithoutCarry();
+        const visual = buildAdditionMentalNumberLineVisual(a, b);
+        return createProblem("add_2d1d_mental_nc", `${a} + ${b} =`, (a + b).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual,
+        });
+    },
+    "add_2d1d_hissan_nc": () => {
+        const [a, b] = pickTwoDigitPlusOneWithoutCarry();
+        return createProblem("add_2d1d_hissan_nc", `${a} + ${b} =`, (a + b).toString(), "number");
+    },
     "add_2d1d_nc": () => {
-        let a, b;
-        do { a = randomInt(10, 99); b = randomInt(1, 9); } while ((a % 10) + b >= 10);
+        const [a, b] = pickTwoDigitPlusOneWithoutCarry();
         return createProblem("add_2d1d_nc", `${a} + ${b} =`, (a + b).toString(), "number");
     },
     // Level 7: 2桁+1桁（繰上あり）
+    "add_2d1d_c_bridge": () => {
+        const [a, b] = pickTwoDigitPlusOneWithCarry();
+        const visual = buildAdditionBase10Visual(a, b);
+        return createProblem("add_2d1d_c_bridge", `${a} + ${b} =`, (a + b).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual,
+        });
+    },
+    "add_2d1d_make10": () => {
+        const [a, b] = pickTwoDigitPlusOneWithCarry();
+        const visual = buildAdditionMakeTenVisual(a, b);
+        return createProblem("add_2d1d_make10", `${a} + ${b} =`, (a + b).toString(), "number", undefined, {
+            questionVisual: visual.questionVisual,
+        });
+    },
+    "add_2d1d_hissan_c": () => {
+        const [a, b] = pickTwoDigitPlusOneWithCarry();
+        return createProblem("add_2d1d_hissan_c", `${a} + ${b} =`, (a + b).toString(), "number");
+    },
     "add_2d1d_c": () => {
-        let a, b;
-        do { a = randomInt(10, 99); b = randomInt(1, 9); } while ((a % 10) + b < 10);
+        const [a, b] = pickTwoDigitPlusOneWithCarry();
         return createProblem("add_2d1d_c", `${a} + ${b} =`, (a + b).toString(), "number");
     },
     // Level 7: 2桁+2桁（繰上なし）

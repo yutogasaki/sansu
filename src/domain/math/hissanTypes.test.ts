@@ -3,8 +3,10 @@ import { isHissanEligible } from "./hissanTypes";
 
 describe("isHissanEligible", () => {
     it("treats 2-digit addition and subtraction as hissan-eligible", () => {
+        expect(isHissanEligible("add_2d1d_hissan_nc")).toBe(true);
         expect(isHissanEligible("add_2d1d_nc")).toBe(true);
         expect(isHissanEligible("add_2d2d_c")).toBe(true);
+        expect(isHissanEligible("sub_2d1d_hissan_c")).toBe(true);
         expect(isHissanEligible("sub_2d1d_c")).toBe(true);
         expect(isHissanEligible("sub_2d2d")).toBe(true);
     });

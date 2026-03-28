@@ -552,6 +552,12 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
         && (visual?.kind === "item-pair" || visual?.kind === "position-scene");
     const showComparisonQuestionCard = (problem?.categoryId === "compare_1d" || problem?.categoryId === "compare_2d")
         && (visual?.kind === "number-line" || visual?.kind === "comparison-base10");
+    const showBaseTenOperationQuestionCard = !!problem?.categoryId
+        && ["add_2d1d_nc_bridge", "add_2d1d_c_bridge", "sub_2d1d_nc_bridge", "sub_2d1d_c_bridge"].includes(problem.categoryId)
+        && visual?.kind === "operation-base10";
+    const showOperationNumberLineQuestionCard = !!problem?.categoryId
+        && ["add_2d1d_mental_nc", "add_2d1d_make10", "sub_2d1d_diff", "sub_2d1d_back_add"].includes(problem.categoryId)
+        && visual?.kind === "number-line";
 
     if (visual?.kind === "number-card") {
         return (
@@ -690,6 +696,27 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
         }
     }
 
+    if (visual?.kind === "operation-base10") {
+        const [left, right] = visual.groups;
+
+        if (left && right) {
+            return (
+                <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
+                    {showBaseTenOperationQuestionCard && problem?.questionText ? (
+                        <PromptQuestionCard text={problem.questionText} />
+                    ) : null}
+                    <BaseTenGuideCard />
+                    <div className="flex w-full flex-wrap items-center justify-center gap-3">
+                        <BaseTenValueCard group={left} />
+                        <span className="text-[clamp(34px,6vw,50px)] font-black text-cyan-700">{visual.operator}</span>
+                        <BaseTenValueCard group={right} />
+                    </div>
+                    <PromptCaption text={visual.prompt || "10の まとまりで かんがえよう"} />
+                </div>
+            );
+        }
+    }
+
     if (visual?.kind === "number-sequence") {
         return (
             <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
@@ -702,7 +729,7 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
     if (visual?.kind === "number-line") {
         return (
             <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
-                {showComparisonQuestionCard && problem?.questionText ? (
+                {(showComparisonQuestionCard || showOperationNumberLineQuestionCard) && problem?.questionText ? (
                     <PromptQuestionCard text={problem.questionText} />
                 ) : null}
                 <NumberLineCard line={visual.line} />

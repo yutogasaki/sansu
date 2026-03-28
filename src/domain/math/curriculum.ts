@@ -17,7 +17,13 @@ export const MATH_CURRICULUM: Record<number, string[]> = {
     8: ["add_1d_1_bridge", "add_1d_1"],
     9: ["add_1d_2_bridge", "add_1d_2"],
     10: ["sub_1d1d_nc_bridge", "sub_1d1d_nc", "sub_1d1d_c_bridge", "sub_1d1d_c"],
-    11: ["add_2d1d_nc", "add_2d1d_c", "sub_2d1d_nc", "sub_2d1d_c", "add_2d2d_nc", "add_2d2d_c", "sub_2d2d"],
+    11: [
+        "add_2d1d_nc_bridge", "add_2d1d_mental_nc", "add_2d1d_hissan_nc", "add_2d1d_nc",
+        "add_2d1d_c_bridge", "add_2d1d_make10", "add_2d1d_hissan_c", "add_2d1d_c",
+        "sub_2d1d_nc_bridge", "sub_2d1d_diff", "sub_2d1d_hissan_nc", "sub_2d1d_nc",
+        "sub_2d1d_c_bridge", "sub_2d1d_back_add", "sub_2d1d_hissan_c", "sub_2d1d_c",
+        "add_2d2d_nc", "add_2d2d_c", "sub_2d2d"
+    ],
     12: ["add_3d3d", "sub_3d3d", "add_4d", "sub_4d"],
     13: ["mul_99_2", "mul_99_3", "mul_99_4", "mul_99_5", "mul_99_1"],
     14: ["mul_99_6", "mul_99_7", "mul_99_8", "mul_99_9", "mul_99_rand"],
@@ -64,11 +70,11 @@ const FAMILY_GROUPS: { family: string; skills: string[] }[] = [
     },
     {
         family: "addition-basic",
-        skills: ["add_tiny", "add_finger", "add_5", "add_1d_1_bridge", "add_1d_1", "add_1d_2_bridge", "add_1d_2"],
+        skills: ["add_tiny", "add_finger", "add_5", "add_1d_1_bridge", "add_1d_1", "add_1d_2_bridge", "add_1d_2", "add_2d1d_nc_bridge", "add_2d1d_mental_nc", "add_2d1d_hissan_nc", "add_2d1d_nc", "add_2d1d_c_bridge", "add_2d1d_make10", "add_2d1d_hissan_c", "add_2d1d_c"],
     },
     {
         family: "subtraction-basic",
-        skills: ["sub_tiny", "sub_1d1d_nc_bridge", "sub_1d1d_nc", "sub_1d1d_c_bridge", "sub_1d1d_c"],
+        skills: ["sub_tiny", "sub_1d1d_nc_bridge", "sub_1d1d_nc", "sub_1d1d_c_bridge", "sub_1d1d_c", "sub_2d1d_nc_bridge", "sub_2d1d_diff", "sub_2d1d_hissan_nc", "sub_2d1d_nc", "sub_2d1d_c_bridge", "sub_2d1d_back_add", "sub_2d1d_hissan_c", "sub_2d1d_c"],
     },
     {
         family: "number-advanced",
@@ -117,6 +123,44 @@ const EXPLICIT_MATH_SKILL_METADATA: Record<string, Partial<MathSkillMetadata>> =
         reviewFallbackSkillIds: ["add_1d_2_bridge"],
         sameConceptSkillIds: ["add_1d_2_bridge"],
     },
+    add_2d1d_nc_bridge: {
+        representation: "bridge",
+        reviewFallbackSkillIds: ["add_1d_2_bridge"],
+        sameConceptSkillIds: ["add_2d1d_mental_nc"],
+    },
+    add_2d1d_mental_nc: {
+        representation: "mental",
+        reviewFallbackSkillIds: ["add_2d1d_nc_bridge"],
+        sameConceptSkillIds: ["add_2d1d_hissan_nc", "add_2d1d_nc"],
+    },
+    add_2d1d_hissan_nc: {
+        representation: "algorithm",
+        reviewFallbackSkillIds: ["add_2d1d_mental_nc"],
+        sameConceptSkillIds: ["add_2d1d_nc"],
+    },
+    add_2d1d_nc: {
+        representation: "symbol",
+        reviewFallbackSkillIds: ["add_2d1d_nc_bridge"],
+    },
+    add_2d1d_c_bridge: {
+        representation: "bridge",
+        reviewFallbackSkillIds: ["add_2d1d_nc_bridge"],
+        sameConceptSkillIds: ["add_2d1d_make10"],
+    },
+    add_2d1d_make10: {
+        representation: "strategy",
+        reviewFallbackSkillIds: ["add_2d1d_c_bridge"],
+        sameConceptSkillIds: ["add_2d1d_hissan_c", "add_2d1d_c"],
+    },
+    add_2d1d_hissan_c: {
+        representation: "algorithm",
+        reviewFallbackSkillIds: ["add_2d1d_make10"],
+        sameConceptSkillIds: ["add_2d1d_c"],
+    },
+    add_2d1d_c: {
+        representation: "symbol",
+        reviewFallbackSkillIds: ["add_2d1d_c_bridge"],
+    },
     sub_tiny: {
         representation: "concrete",
         sameConceptSkillIds: ["sub_1d1d_nc_bridge", "sub_1d1d_nc"],
@@ -140,6 +184,44 @@ const EXPLICIT_MATH_SKILL_METADATA: Record<string, Partial<MathSkillMetadata>> =
         representation: "symbol",
         reviewFallbackSkillIds: ["sub_1d1d_c_bridge"],
         sameConceptSkillIds: ["sub_1d1d_c_bridge"],
+    },
+    sub_2d1d_nc_bridge: {
+        representation: "bridge",
+        reviewFallbackSkillIds: ["sub_1d1d_nc_bridge"],
+        sameConceptSkillIds: ["sub_2d1d_diff"],
+    },
+    sub_2d1d_diff: {
+        representation: "strategy",
+        reviewFallbackSkillIds: ["sub_2d1d_nc_bridge"],
+        sameConceptSkillIds: ["sub_2d1d_hissan_nc", "sub_2d1d_nc"],
+    },
+    sub_2d1d_hissan_nc: {
+        representation: "algorithm",
+        reviewFallbackSkillIds: ["sub_2d1d_diff"],
+        sameConceptSkillIds: ["sub_2d1d_nc"],
+    },
+    sub_2d1d_nc: {
+        representation: "symbol",
+        reviewFallbackSkillIds: ["sub_2d1d_nc_bridge"],
+    },
+    sub_2d1d_c_bridge: {
+        representation: "bridge",
+        reviewFallbackSkillIds: ["sub_2d1d_nc_bridge"],
+        sameConceptSkillIds: ["sub_2d1d_back_add"],
+    },
+    sub_2d1d_back_add: {
+        representation: "reverse",
+        reviewFallbackSkillIds: ["sub_2d1d_c_bridge"],
+        sameConceptSkillIds: ["sub_2d1d_hissan_c", "sub_2d1d_c"],
+    },
+    sub_2d1d_hissan_c: {
+        representation: "algorithm",
+        reviewFallbackSkillIds: ["sub_2d1d_back_add"],
+        sameConceptSkillIds: ["sub_2d1d_c"],
+    },
+    sub_2d1d_c: {
+        representation: "symbol",
+        reviewFallbackSkillIds: ["sub_2d1d_c_bridge"],
     },
 };
 

@@ -296,6 +296,78 @@ describe("blockGenerators utilities", () => {
         expect(result.problem.categoryId).toBe("add_1d_1_bridge");
     });
 
+    it("generateSingleMathProblem uses mental follow-up after a base-ten bridge success", () => {
+        const profile = createInitialProfile("T", 1, 0, 1, "math");
+        profile.mathMainLevel = 11;
+        profile.mathMaxUnlocked = 11;
+        profile.recentAttempts = [
+            {
+                id: "attempt-bridge-success-2d",
+                timestamp: new Date(2026, 2, 28, 10, 8, 0).toISOString(),
+                subject: "math",
+                skillId: "add_2d1d_nc_bridge",
+                result: "correct",
+            },
+        ];
+
+        const result = generateSingleMathProblem({
+            profile,
+            mathDue: [],
+            weakMathPool: [],
+            maintenanceMathIds: [],
+            retiredMathIds: [],
+            options: {
+                cooldownIds: [],
+                skippedTodayIds: [],
+                blockCounts: new Map(),
+                recentIds: [],
+            },
+            canAddReview: false,
+            currentWeakCount: 0,
+            plusCount: 0,
+            plusLimit: 0,
+        });
+
+        expect(result.isReview).toBe(false);
+        expect(result.problem.categoryId).toBe("add_2d1d_mental_nc");
+    });
+
+    it("generateSingleMathProblem uses hissan follow-up after a mental success", () => {
+        const profile = createInitialProfile("T", 1, 0, 1, "math");
+        profile.mathMainLevel = 11;
+        profile.mathMaxUnlocked = 11;
+        profile.recentAttempts = [
+            {
+                id: "attempt-mental-success-2d",
+                timestamp: new Date(2026, 2, 28, 10, 9, 0).toISOString(),
+                subject: "math",
+                skillId: "add_2d1d_mental_nc",
+                result: "correct",
+            },
+        ];
+
+        const result = generateSingleMathProblem({
+            profile,
+            mathDue: [],
+            weakMathPool: [],
+            maintenanceMathIds: [],
+            retiredMathIds: [],
+            options: {
+                cooldownIds: [],
+                skippedTodayIds: [],
+                blockCounts: new Map(),
+                recentIds: [],
+            },
+            canAddReview: false,
+            currentWeakCount: 0,
+            plusCount: 0,
+            plusLimit: 0,
+        });
+
+        expect(result.isReview).toBe(false);
+        expect(result.problem.categoryId).toBe("add_2d1d_hissan_nc");
+    });
+
     it("generateSingleVocabProblem prioritizes forced review blocks", () => {
         const profile = createInitialProfile("T", 1, 1, 1, "vocab");
         const result = generateSingleVocabProblem({

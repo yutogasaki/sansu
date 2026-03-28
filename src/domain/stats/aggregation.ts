@@ -60,11 +60,11 @@ const EARLY_RADAR_CATEGORIES: { label: string; skills: string[] }[] = [
     },
     {
         label: "たす",
-        skills: ["add_tiny", "add_finger", "add_5", "add_1d_1_bridge", "add_1d_1", "add_1d_2_bridge", "add_1d_2"],
+        skills: ["add_tiny", "add_finger", "add_5", "add_1d_1_bridge", "add_1d_1", "add_1d_2_bridge", "add_1d_2", "add_2d1d_nc_bridge", "add_2d1d_mental_nc", "add_2d1d_hissan_nc", "add_2d1d_nc", "add_2d1d_c_bridge", "add_2d1d_make10", "add_2d1d_hissan_c", "add_2d1d_c"],
     },
     {
         label: "ひく",
-        skills: ["sub_tiny", "sub_1d1d_nc_bridge", "sub_1d1d_nc", "sub_1d1d_c_bridge", "sub_1d1d_c"],
+        skills: ["sub_tiny", "sub_1d1d_nc_bridge", "sub_1d1d_nc", "sub_1d1d_c_bridge", "sub_1d1d_c", "sub_2d1d_nc_bridge", "sub_2d1d_diff", "sub_2d1d_hissan_nc", "sub_2d1d_nc", "sub_2d1d_c_bridge", "sub_2d1d_back_add", "sub_2d1d_hissan_c", "sub_2d1d_c"],
     },
 ];
 
@@ -76,9 +76,9 @@ const STANDARD_RADAR_CATEGORIES: { label: string; skills: string[] }[] = [
     {
         label: "＋−",
         skills: [
-            "add_1d_1_bridge", "add_1d_1", "add_1d_2_bridge", "add_1d_2", "add_2d1d_nc", "add_2d1d_c",
+            "add_1d_1_bridge", "add_1d_1", "add_1d_2_bridge", "add_1d_2", "add_2d1d_nc_bridge", "add_2d1d_mental_nc", "add_2d1d_hissan_nc", "add_2d1d_nc", "add_2d1d_c_bridge", "add_2d1d_make10", "add_2d1d_hissan_c", "add_2d1d_c",
             "add_2d2d_nc", "add_2d2d_c", "add_3d3d", "add_4d",
-            "sub_1d1d_nc_bridge", "sub_1d1d_nc", "sub_1d1d_c_bridge", "sub_1d1d_c", "sub_2d1d_nc", "sub_2d1d_c",
+            "sub_1d1d_nc_bridge", "sub_1d1d_nc", "sub_1d1d_c_bridge", "sub_1d1d_c", "sub_2d1d_nc_bridge", "sub_2d1d_diff", "sub_2d1d_hissan_nc", "sub_2d1d_nc", "sub_2d1d_c_bridge", "sub_2d1d_back_add", "sub_2d1d_hissan_c", "sub_2d1d_c",
             "sub_2d2d", "sub_3d3d", "sub_4d",
         ],
     },

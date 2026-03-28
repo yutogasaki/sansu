@@ -288,6 +288,90 @@ describe('Session Queue Generation', () => {
         expect(queue).toHaveLength(1);
         expect(queue[0]?.categoryId).toBe('add_1d_2');
     });
+
+    it('boosts mental follow-up after a recent base-ten bridge success', () => {
+        const profile = createInitialProfile("Test", 1, 0, 1, 'math');
+        profile.mathMainLevel = 11;
+        profile.mathMaxUnlocked = 11;
+        profile.mathSkills['add_2d1d_nc_bridge'] = {
+            ...mockState('add_2d1d_nc_bridge', 2, 'active'),
+            nextReview: new Date(2099, 0, 1).toISOString(),
+        };
+        profile.mathSkills['add_2d1d_mental_nc'] = {
+            ...mockState('add_2d1d_mental_nc', 2, 'active'),
+            nextReview: new Date(2099, 0, 1).toISOString(),
+        };
+        profile.recentAttempts = [
+            {
+                id: 'attempt-bridge-2d',
+                timestamp: new Date(2026, 2, 28, 9, 7, 0).toISOString(),
+                subject: 'math',
+                skillId: 'add_2d1d_nc_bridge',
+                result: 'correct',
+            },
+        ];
+
+        const queue = generateSessionQueue(profile, 1);
+
+        expect(queue).toHaveLength(1);
+        expect(queue[0]?.categoryId).toBe('add_2d1d_mental_nc');
+    });
+
+    it('boosts symbolic follow-up after a recent mental success', () => {
+        const profile = createInitialProfile("Test", 1, 0, 1, 'math');
+        profile.mathMainLevel = 11;
+        profile.mathMaxUnlocked = 11;
+        profile.mathSkills['add_2d1d_mental_nc'] = {
+            ...mockState('add_2d1d_mental_nc', 2, 'active'),
+            nextReview: new Date(2099, 0, 1).toISOString(),
+        };
+        profile.mathSkills['add_2d1d_nc'] = {
+            ...mockState('add_2d1d_nc', 2, 'active'),
+            nextReview: new Date(2099, 0, 1).toISOString(),
+        };
+        profile.recentAttempts = [
+            {
+                id: 'attempt-mental-2d',
+                timestamp: new Date(2026, 2, 28, 9, 8, 0).toISOString(),
+                subject: 'math',
+                skillId: 'add_2d1d_mental_nc',
+                result: 'correct',
+            },
+        ];
+
+        const queue = generateSessionQueue(profile, 1);
+
+        expect(queue).toHaveLength(1);
+        expect(queue[0]?.categoryId).toBe('add_2d1d_hissan_nc');
+    });
+
+    it('boosts symbolic follow-up after a recent hissan success', () => {
+        const profile = createInitialProfile("Test", 1, 0, 1, 'math');
+        profile.mathMainLevel = 11;
+        profile.mathMaxUnlocked = 11;
+        profile.mathSkills['add_2d1d_hissan_nc'] = {
+            ...mockState('add_2d1d_hissan_nc', 2, 'active'),
+            nextReview: new Date(2099, 0, 1).toISOString(),
+        };
+        profile.mathSkills['add_2d1d_nc'] = {
+            ...mockState('add_2d1d_nc', 2, 'active'),
+            nextReview: new Date(2099, 0, 1).toISOString(),
+        };
+        profile.recentAttempts = [
+            {
+                id: 'attempt-hissan-2d',
+                timestamp: new Date(2026, 2, 28, 9, 9, 0).toISOString(),
+                subject: 'math',
+                skillId: 'add_2d1d_hissan_nc',
+                result: 'correct',
+            },
+        ];
+
+        const queue = generateSessionQueue(profile, 1);
+
+        expect(queue).toHaveLength(1);
+        expect(queue[0]?.categoryId).toBe('add_2d1d_nc');
+    });
 });
 
 describe('Math Skill Metadata', () => {
@@ -304,6 +388,21 @@ describe('Math Skill Metadata', () => {
         });
         expect(getMathSkillMetadata('add_1d_1_bridge')).toMatchObject({
             reviewFallbackSkillIds: ['add_tiny', 'add_finger'],
+        });
+        expect(getMathSkillMetadata('add_2d1d_mental_nc')).toMatchObject({
+            family: 'addition-basic',
+            representation: 'mental',
+            reviewFallbackSkillIds: ['add_2d1d_nc_bridge'],
+        });
+        expect(getMathSkillMetadata('add_2d1d_hissan_nc')).toMatchObject({
+            family: 'addition-basic',
+            representation: 'algorithm',
+            reviewFallbackSkillIds: ['add_2d1d_mental_nc'],
+        });
+        expect(getMathSkillMetadata('sub_2d1d_back_add')).toMatchObject({
+            family: 'subtraction-basic',
+            representation: 'reverse',
+            reviewFallbackSkillIds: ['sub_2d1d_c_bridge'],
         });
     });
 });

@@ -9,6 +9,10 @@ interface UseHissanSessionReturn {
     isHissanActive: boolean;
     /** このスキルが筆算対象か */
     isHissanEligibleSkill: boolean;
+    /** このスキルでは筆算を強制するか */
+    isForcedHissanSkill: boolean;
+    /** 筆算/暗算トグルを見せてよいか */
+    canToggleHissanMode: boolean;
     /** 筆算グリッドデータ */
     gridData: HissanGridData | null;
     /** 現在のステップインデックス */
@@ -45,6 +49,7 @@ interface UseHissanSessionReturn {
 export const useHissanSession = (): UseHissanSessionReturn => {
     const [isHissanActive, setIsHissanActive] = useState(false);
     const [isHissanEligibleSkill, setIsHissanEligibleSkill] = useState(false);
+    const [isForcedHissanSkill, setIsForcedHissanSkill] = useState(false);
     const [gridData, setGridData] = useState<HissanGridData | null>(null);
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
     const [activeCellPos, setActiveCellPos] = useState<[number, number] | null>(null);
@@ -78,14 +83,17 @@ export const useHissanSession = (): UseHissanSessionReturn => {
         if (!problem) {
             setIsHissanActive(false);
             setIsHissanEligibleSkill(false);
+            setIsForcedHissanSkill(false);
             setGridData(null);
             return;
         }
 
         const eligible = problem.subject === 'math' && isHissanEligible(problem.categoryId);
+        const forced = eligible && (problem.categoryId.includes('_hissan') || problem.categoryId.includes('_algorithm'));
         setIsHissanEligibleSkill(eligible);
+        setIsForcedHissanSkill(forced);
 
-        if (eligible && hissanEnabled && problem.questionText) {
+        if (eligible && (forced || hissanEnabled) && problem.questionText) {
             const explicitAnswer = Array.isArray(problem.correctAnswer)
                 ? problem.correctAnswer.join("")
                 : problem.correctAnswer;
@@ -302,12 +310,17 @@ export const useHissanSession = (): UseHissanSessionReturn => {
      * 筆算/暗算トグル
      */
     const toggleHissanMode = useCallback(() => {
+        if (isForcedHissanSkill) return;
         setIsHissanActive(prev => !prev);
-    }, []);
+    }, [isForcedHissanSkill]);
+
+    const canToggleHissanMode = isHissanEligibleSkill && !isForcedHissanSkill;
 
     return {
         isHissanActive,
         isHissanEligibleSkill,
+        isForcedHissanSkill,
+        canToggleHissanMode,
         gridData,
         currentStepIndex,
         activeCellPos,

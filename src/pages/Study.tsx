@@ -605,7 +605,7 @@ export const Study: React.FC = () => {
                 hissanStepFeedback={hissan.stepFeedback}
                 hissanCanInputDecimal={hissan.canInputDecimal}
                 onHissanCellClick={hissan.handleCellClick}
-                onHissanToggle={hissan.toggleHissanMode}
+                onHissanToggle={hissan.canToggleHissanMode ? hissan.toggleHissanMode : undefined}
             />
             {isDevSession && focusSubject && (
                 <DevStudySwitcher

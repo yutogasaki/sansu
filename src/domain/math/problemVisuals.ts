@@ -308,6 +308,99 @@ export const buildComparisonBase10Visual = (a: number, b: number): { questionTex
     },
 });
 
+export const buildAdditionBase10Visual = (a: number, b: number): { questionText: string; questionVisual: ProblemVisual } => ({
+    questionText: `${a} + ${b} =`,
+    questionVisual: {
+        kind: "operation-base10",
+        prompt: "10の まとまりで かんがえよう",
+        operator: "+",
+        groups: [
+            { label: "もとの かず", value: a },
+            { label: "たす かず", value: b },
+        ],
+    },
+});
+
+export const buildAdditionMentalNumberLineVisual = (
+    a: number,
+    b: number
+): { questionText: string; questionVisual: ProblemVisual } => (
+    buildNumberLineVisual(
+        a,
+        b,
+        `${b}こ みぎへ すすもう`,
+        `${a} から ${b} すすむと いくつ？`,
+        {
+            min: Math.max(1, a - 2),
+            max: a + b + 2,
+        }
+    )
+);
+
+export const buildAdditionMakeTenVisual = (
+    a: number,
+    b: number
+): { questionText: string; questionVisual: ProblemVisual } => {
+    const toTen = 10 - (a % 10);
+    const result = a + b;
+
+    return buildStaticNumberLineVisual(
+        [a, a + toTen, result],
+        `まず ${toTen} で 10を つくろう`,
+        `${a} + ${b} =`,
+        { hiddenValues: [result] }
+    );
+};
+
+export const buildSubtractionBase10Visual = (a: number, b: number): { questionText: string; questionVisual: ProblemVisual } => ({
+    questionText: `${a} - ${b} =`,
+    questionVisual: {
+        kind: "operation-base10",
+        prompt: "10の まとまりで かんがえよう",
+        operator: "−",
+        groups: [
+            { label: "もとの かず", value: a },
+            { label: "ひく かず", value: b },
+        ],
+    },
+});
+
+export const buildSubtractionMentalNumberLineVisual = (
+    a: number,
+    b: number
+): { questionText: string; questionVisual: ProblemVisual } => (
+    buildNumberLineVisual(
+        a,
+        -b,
+        `${b}こ ひだりへ もどろう`,
+        `${a} から ${b} へると いくつ？`,
+        {
+            min: Math.max(1, a - b - 2),
+            max: a + 2,
+        }
+    )
+);
+
+export const buildSubtractionBackAddVisual = (
+    a: number,
+    b: number
+): { questionText: string; questionVisual: ProblemVisual } => {
+    const start = a - b;
+
+    return buildNumberLineVisual(
+        start,
+        b,
+        "たしざんに もどして かんがえよう",
+        `□ + ${b} = ${a}`,
+        {
+            min: Math.max(1, start - 2),
+            max: a + 2,
+            hiddenTarget: false,
+            hiddenValues: [start],
+        }
+    );
+};
+
 export const buildNumberLineVisual = (
     start: number,
     step: number,

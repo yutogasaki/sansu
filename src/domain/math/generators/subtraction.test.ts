@@ -51,4 +51,63 @@ describe("subtraction generators", () => {
         expect(problem.correctAnswer).toBe("9");
         expect(problem.questionVisual).toBeUndefined();
     });
+
+    it("sub_2d1d_nc_bridge shows a base-10 visual without borrow", () => {
+        const problem = generators.sub_2d1d_nc_bridge({} as any);
+
+        expect(problem.questionVisual?.kind).toBe("operation-base10");
+        if (problem.questionVisual?.kind === "operation-base10") {
+            expect(problem.questionVisual.operator).toBe("−");
+            const left = problem.questionVisual.groups[0]?.value ?? 0;
+            const right = problem.questionVisual.groups[1]?.value ?? 0;
+            expect(left % 10).toBeGreaterThanOrEqual(right);
+        }
+    });
+
+    it("sub_2d1d_diff shows a left-moving number line", () => {
+        const problem = generators.sub_2d1d_diff({} as any);
+
+        expect(problem.questionVisual?.kind).toBe("number-line");
+        if (problem.questionVisual?.kind === "number-line") {
+            expect(problem.questionVisual.line.step).toBeLessThan(0);
+            expect(problem.questionVisual.line.hiddenTarget).toBe(true);
+        }
+    });
+
+    it("sub_2d1d_hissan_nc keeps the no-borrow case as a plain expression", () => {
+        const problem = generators.sub_2d1d_hissan_nc({} as any);
+
+        expect(problem.questionText).toMatch(/^\d+ - \d+ =$/);
+        expect(problem.questionVisual).toBeUndefined();
+    });
+
+    it("sub_2d1d_c_bridge shows a base-10 visual with borrow", () => {
+        const problem = generators.sub_2d1d_c_bridge({} as any);
+
+        expect(problem.questionVisual?.kind).toBe("operation-base10");
+        if (problem.questionVisual?.kind === "operation-base10") {
+            expect(problem.questionVisual.operator).toBe("−");
+            const left = problem.questionVisual.groups[0]?.value ?? 0;
+            const right = problem.questionVisual.groups[1]?.value ?? 0;
+            expect(left % 10).toBeLessThan(right);
+        }
+    });
+
+    it("sub_2d1d_back_add hides the missing start on a reverse number line", () => {
+        const problem = generators.sub_2d1d_back_add({} as any);
+
+        expect(problem.questionVisual?.kind).toBe("number-line");
+        if (problem.questionVisual?.kind === "number-line") {
+            expect(problem.questionVisual.line.step).toBeGreaterThan(0);
+            expect(problem.questionVisual.line.hiddenTarget).toBe(false);
+            expect(problem.questionVisual.line.hiddenValues).toContain(problem.questionVisual.line.start);
+        }
+    });
+
+    it("sub_2d1d_hissan_c keeps the borrow case as a plain expression", () => {
+        const problem = generators.sub_2d1d_hissan_c({} as any);
+
+        expect(problem.questionText).toMatch(/^\d+ - \d+ =$/);
+        expect(problem.questionVisual).toBeUndefined();
+    });
 });
