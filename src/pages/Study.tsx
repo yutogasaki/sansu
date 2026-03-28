@@ -12,7 +12,7 @@ import { logInDev } from "../utils/debug";
 import { speakEnglish, warmUpTTS } from "../utils/tts";
 import { useTimeoutScheduler } from "../hooks/useTimeoutScheduler";
 import { DevStudySwitcher } from "../components/dev/DevStudySwitcher";
-import { getDevStudySelectionSummary } from "../components/dev/devStudySelection";
+import { getDevStudyAdjacentSelection, getDevStudySelectionSummary } from "../components/dev/devStudySelection";
 
 export const Study: React.FC = () => {
     const navigate = useNavigate();
@@ -96,6 +96,18 @@ export const Study: React.FC = () => {
     const { scheduleTimeout: scheduleUiTimeout, clearScheduledTimeouts: clearPendingUiTimeouts } = useTimeoutScheduler();
     const devSelectionSummary = isDevSession && focusSubject
         ? getDevStudySelectionSummary(focusSubject, selectedFocusId)
+        : null;
+    const devPrevLevelTarget = focusSubject && selectedFocusId
+        ? getDevStudyAdjacentSelection(focusSubject, selectedFocusId, "prev-level")
+        : null;
+    const devNextLevelTarget = focusSubject && selectedFocusId
+        ? getDevStudyAdjacentSelection(focusSubject, selectedFocusId, "next-level")
+        : null;
+    const devPrevItemTarget = focusSubject && selectedFocusId
+        ? getDevStudyAdjacentSelection(focusSubject, selectedFocusId, "prev-item")
+        : null;
+    const devNextItemTarget = focusSubject && selectedFocusId
+        ? getDevStudyAdjacentSelection(focusSubject, selectedFocusId, "next-item")
         : null;
 
     // Warm up TTS on mount (uses the user interaction context from navigation tap)
@@ -520,6 +532,14 @@ export const Study: React.FC = () => {
         navigate(buildDevStudyPath(next.subject, next.id), { replace: true });
     }, [buildDevStudyPath, clearPendingUiTimeouts, navigate]);
 
+    const handleQuickDevSelection = useCallback((next: { subject: "math" | "vocab"; id: string } | null) => {
+        if (!next) {
+            return;
+        }
+
+        handleApplyDevSelection(next);
+    }, [handleApplyDevSelection]);
+
     const handleNavigate = useCallback((path: string) => {
         if (isDevSession && path === "/") {
             navigate(backPath);
@@ -563,6 +583,14 @@ export const Study: React.FC = () => {
                 onToggleTTS={handleToggleTTS}
                 devSessionSummary={devSelectionSummary}
                 onOpenDevSwitcher={devSelectionSummary ? () => setIsDevSwitcherOpen(true) : undefined}
+                onDevPrevLevel={devPrevLevelTarget ? () => handleQuickDevSelection(devPrevLevelTarget) : undefined}
+                onDevNextLevel={devNextLevelTarget ? () => handleQuickDevSelection(devNextLevelTarget) : undefined}
+                onDevPrevItem={devPrevItemTarget ? () => handleQuickDevSelection(devPrevItemTarget) : undefined}
+                onDevNextItem={devNextItemTarget ? () => handleQuickDevSelection(devNextItemTarget) : undefined}
+                canDevPrevLevel={!!devPrevLevelTarget}
+                canDevNextLevel={!!devNextLevelTarget}
+                canDevPrevItem={!!devPrevItemTarget}
+                canDevNextItem={!!devNextItemTarget}
                 // 筆算モード props
                 hissanActive={hissan.isHissanActive}
                 hissanEligible={hissan.isHissanEligibleSkill}

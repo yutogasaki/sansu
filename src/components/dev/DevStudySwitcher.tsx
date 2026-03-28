@@ -1,11 +1,15 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { MATH_CURRICULUM, getLevelForSkill } from "../../domain/math/curriculum";
-import { MATH_SKILL_LABELS } from "../../domain/math/labels";
-import { MAX_VOCAB_LEVEL } from "../../domain/math/curriculum";
-import { getWordLevel, getWordsByLevel } from "../../domain/english/words";
 import { Button } from "../ui/Button";
 import { Modal } from "../ui/Modal";
-import { DevStudySubject, getDevStudySelectionSummary } from "./devStudySelection";
+import {
+    DevStudySubject,
+    devStudyMathLevels,
+    devStudyVocabLevels,
+    getDevStudyDefaultId,
+    getDevStudyDefaultLevel,
+    getDevStudyLevelItems,
+    getDevStudySelectionSummary,
+} from "./devStudySelection";
 
 interface DevStudySwitcherProps {
     isOpen: boolean;
@@ -15,47 +19,6 @@ interface DevStudySwitcherProps {
     onApply: (next: { subject: DevStudySubject; id: string }) => void;
 }
 
-const mathLevels = Object.keys(MATH_CURRICULUM)
-    .map(Number)
-    .sort((a, b) => a - b);
-
-const vocabLevels = Array.from({ length: MAX_VOCAB_LEVEL }, (_, index) => index + 1)
-    .filter(level => getWordsByLevel(level).length > 0);
-
-const getMathSkillLabel = (skillId: string) => MATH_SKILL_LABELS[skillId] || skillId;
-
-const getDefaultLevel = (subject: DevStudySubject, selectedId?: string | null): number => {
-    if (subject === "math") {
-        return getLevelForSkill(selectedId || "") ?? mathLevels[0] ?? 0;
-    }
-
-    return getWordLevel(selectedId || "") ?? vocabLevels[0] ?? 1;
-};
-
-const getLevelItems = (subject: DevStudySubject, level: number) => {
-    if (subject === "math") {
-        return (MATH_CURRICULUM[level] || []).map(skillId => ({
-            id: skillId,
-            label: getMathSkillLabel(skillId),
-            helper: skillId,
-        }));
-    }
-
-    return getWordsByLevel(level).map(word => ({
-        id: word.id,
-        label: word.id,
-        helper: word.japaneseKanji || word.japanese,
-    }));
-};
-
-const getDefaultId = (subject: DevStudySubject, level: number, selectedId?: string | null) => {
-    const items = getLevelItems(subject, level);
-    if (selectedId && items.some(item => item.id === selectedId)) {
-        return selectedId;
-    }
-    return items[0]?.id ?? null;
-};
-
 export const DevStudySwitcher: React.FC<DevStudySwitcherProps> = ({
     isOpen,
     onClose,
@@ -64,23 +27,25 @@ export const DevStudySwitcher: React.FC<DevStudySwitcherProps> = ({
     onApply,
 }) => {
     const [draftSubject, setDraftSubject] = useState<DevStudySubject>(subject);
-    const [draftLevel, setDraftLevel] = useState<number>(getDefaultLevel(subject, selectedId));
-    const [draftId, setDraftId] = useState<string | null>(getDefaultId(subject, getDefaultLevel(subject, selectedId), selectedId));
+    const [draftLevel, setDraftLevel] = useState<number>(getDevStudyDefaultLevel(subject, selectedId));
+    const [draftId, setDraftId] = useState<string | null>(
+        getDevStudyDefaultId(subject, getDevStudyDefaultLevel(subject, selectedId), selectedId)
+    );
 
     useEffect(() => {
         if (!isOpen) {
             return;
         }
 
-        const nextLevel = getDefaultLevel(subject, selectedId);
+        const nextLevel = getDevStudyDefaultLevel(subject, selectedId);
         setDraftSubject(subject);
         setDraftLevel(nextLevel);
-        setDraftId(getDefaultId(subject, nextLevel, selectedId));
+        setDraftId(getDevStudyDefaultId(subject, nextLevel, selectedId));
     }, [isOpen, subject, selectedId]);
 
-    const activeLevels = draftSubject === "math" ? mathLevels : vocabLevels;
+    const activeLevels = draftSubject === "math" ? devStudyMathLevels : devStudyVocabLevels;
     const levelItems = useMemo(
-        () => getLevelItems(draftSubject, draftLevel),
+        () => getDevStudyLevelItems(draftSubject, draftLevel),
         [draftSubject, draftLevel]
     );
 
@@ -96,10 +61,10 @@ export const DevStudySwitcher: React.FC<DevStudySwitcherProps> = ({
     }, [activeLevels, draftId, draftLevel, levelItems]);
 
     const handleSubjectChange = (nextSubject: DevStudySubject) => {
-        const nextLevel = getDefaultLevel(nextSubject);
+        const nextLevel = getDevStudyDefaultLevel(nextSubject);
         setDraftSubject(nextSubject);
         setDraftLevel(nextLevel);
-        setDraftId(getDefaultId(nextSubject, nextLevel));
+        setDraftId(getDevStudyDefaultId(nextSubject, nextLevel));
     };
 
     const handleApply = () => {

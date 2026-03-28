@@ -1,8 +1,14 @@
-import { getWord } from "../../domain/english/words";
-import { getLevelForSkill } from "../../domain/math/curriculum";
+import { getWord, getWordLevel, getWordsByLevel } from "../../domain/english/words";
+import { MATH_CURRICULUM, MAX_VOCAB_LEVEL, getLevelForSkill } from "../../domain/math/curriculum";
 import { MATH_SKILL_LABELS } from "../../domain/math/labels";
 
 export type DevStudySubject = "math" | "vocab";
+
+export interface DevStudyLevelItem {
+    id: string;
+    label: string;
+    helper: string;
+}
 
 export interface DevStudySelectionSummary {
     subjectLabel: string;
@@ -10,7 +16,63 @@ export interface DevStudySelectionSummary {
     itemLabel: string;
 }
 
+export interface DevStudySelectionTarget {
+    subject: DevStudySubject;
+    id: string;
+}
+
+type DevStudyDirection = "prev-item" | "next-item" | "prev-level" | "next-level";
+
 const getMathSkillLabel = (skillId: string) => MATH_SKILL_LABELS[skillId] || skillId;
+
+export const devStudyMathLevels = Object.keys(MATH_CURRICULUM)
+    .map(Number)
+    .sort((a, b) => a - b);
+
+export const devStudyVocabLevels = Array.from({ length: MAX_VOCAB_LEVEL }, (_, index) => index + 1)
+    .filter(level => getWordsByLevel(level).length > 0);
+
+export const getDevStudyDefaultLevel = (
+    subject: DevStudySubject,
+    selectedId?: string | null
+): number => {
+    if (subject === "math") {
+        return getLevelForSkill(selectedId || "") ?? devStudyMathLevels[0] ?? 0;
+    }
+
+    return getWordLevel(selectedId || "") ?? devStudyVocabLevels[0] ?? 1;
+};
+
+export const getDevStudyLevelItems = (
+    subject: DevStudySubject,
+    level: number
+): DevStudyLevelItem[] => {
+    if (subject === "math") {
+        return (MATH_CURRICULUM[level] || []).map(skillId => ({
+            id: skillId,
+            label: getMathSkillLabel(skillId),
+            helper: skillId,
+        }));
+    }
+
+    return getWordsByLevel(level).map(word => ({
+        id: word.id,
+        label: word.id,
+        helper: word.japaneseKanji || word.japanese,
+    }));
+};
+
+export const getDevStudyDefaultId = (
+    subject: DevStudySubject,
+    level: number,
+    selectedId?: string | null
+): string | null => {
+    const items = getDevStudyLevelItems(subject, level);
+    if (selectedId && items.some(item => item.id === selectedId)) {
+        return selectedId;
+    }
+    return items[0]?.id ?? null;
+};
 
 export const getDevStudySelectionSummary = (
     subject: DevStudySubject,
@@ -39,4 +101,58 @@ export const getDevStudySelectionSummary = (
         levelLabel: `Lv.${word.level}`,
         itemLabel: `${word.id} / ${word.japaneseKanji || word.japanese}`,
     };
+};
+
+const getOrderedSelections = (subject: DevStudySubject) => {
+    const levels = subject === "math" ? devStudyMathLevels : devStudyVocabLevels;
+
+    return levels.flatMap(level =>
+        getDevStudyLevelItems(subject, level).map(item => ({
+            level,
+            id: item.id,
+        }))
+    );
+};
+
+export const getDevStudyAdjacentSelection = (
+    subject: DevStudySubject,
+    selectedId: string,
+    direction: DevStudyDirection
+): DevStudySelectionTarget | null => {
+    const orderedSelections = getOrderedSelections(subject);
+    const currentIndex = orderedSelections.findIndex(item => item.id === selectedId);
+
+    if (currentIndex < 0) {
+        return null;
+    }
+
+    if (direction === "prev-item" || direction === "next-item") {
+        const offset = direction === "prev-item" ? -1 : 1;
+        const nextSelection = orderedSelections[currentIndex + offset];
+        return nextSelection
+            ? { subject, id: nextSelection.id }
+            : null;
+    }
+
+    const currentLevel = orderedSelections[currentIndex].level;
+    const levels = subject === "math" ? devStudyMathLevels : devStudyVocabLevels;
+    const currentLevelIndex = levels.indexOf(currentLevel);
+
+    if (currentLevelIndex < 0) {
+        return null;
+    }
+
+    const targetLevelIndex = direction === "prev-level"
+        ? currentLevelIndex - 1
+        : currentLevelIndex + 1;
+    const targetLevel = levels[targetLevelIndex];
+
+    if (targetLevel == null) {
+        return null;
+    }
+
+    const targetId = getDevStudyDefaultId(subject, targetLevel);
+    return targetId
+        ? { subject, id: targetId }
+        : null;
 };

@@ -70,6 +70,14 @@ interface StudyLayoutProps {
         itemLabel: string;
     } | null;
     onOpenDevSwitcher?: () => void;
+    onDevPrevLevel?: () => void;
+    onDevNextLevel?: () => void;
+    onDevPrevItem?: () => void;
+    onDevNextItem?: () => void;
+    canDevPrevLevel?: boolean;
+    canDevNextLevel?: boolean;
+    canDevPrevItem?: boolean;
+    canDevNextItem?: boolean;
 
     // 筆算モード
     hissanActive?: boolean;
@@ -137,6 +145,14 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     onToggleTTS,
     devSessionSummary,
     onOpenDevSwitcher,
+    onDevPrevLevel,
+    onDevNextLevel,
+    onDevPrevItem,
+    onDevNextItem,
+    canDevPrevLevel = false,
+    canDevNextLevel = false,
+    canDevPrevItem = false,
+    canDevNextItem = false,
     // 筆算モード
     hissanActive = false,
     hissanEligible = false,
@@ -547,7 +563,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
             </div>
 
             {devSessionSummary && onOpenDevSwitcher && (
-                <div className="flex-none px-4 pt-2 mobile:px-3">
+                <div className="flex-none space-y-2 px-4 pt-2 mobile:px-3">
                     <button
                         type="button"
                         onClick={onOpenDevSwitcher}
@@ -564,10 +580,32 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                 </div>
                             </div>
                             <span className="app-pill shrink-0 px-3 py-1 text-xs font-black text-slate-600">
-                                切替
+                                一覧
                             </span>
                         </div>
                     </button>
+
+                    <div className="grid grid-cols-4 gap-2">
+                        {([
+                            { label: "Lv-1", onClick: onDevPrevLevel, enabled: canDevPrevLevel },
+                            { label: "前", onClick: onDevPrevItem, enabled: canDevPrevItem },
+                            { label: "次", onClick: onDevNextItem, enabled: canDevNextItem },
+                            { label: "Lv+1", onClick: onDevNextLevel, enabled: canDevNextLevel },
+                        ]).map(action => (
+                            <button
+                                key={action.label}
+                                type="button"
+                                onClick={action.onClick}
+                                disabled={!action.enabled}
+                                className={`rounded-[16px] border px-3 py-2 text-sm font-black transition-colors ${action.enabled
+                                    ? "border-white/85 bg-white/74 text-slate-700 shadow-[0_14px_24px_-22px_rgba(15,23,42,0.45)] hover:bg-white/84 active:scale-[0.99]"
+                                    : "border-white/60 bg-white/42 text-slate-300"
+                                    }`}
+                            >
+                                {action.label}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             )}
 
