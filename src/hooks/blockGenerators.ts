@@ -7,6 +7,7 @@ import { Problem, SubjectKey, UserProfile } from "../domain/types";
 import { generateMathProblem } from "../domain/math";
 import { generateVocabProblem } from "../domain/english/generator";
 import { getMathSkillFamily, getSkillsForLevel } from "../domain/math/curriculum";
+import { getMathFollowupPlan } from "../domain/math/followups";
 import { getWordsByLevel, ENGLISH_WORDS } from "../domain/english/words";
 import { errorInDev, warnInDev } from "../utils/debug";
 
@@ -180,6 +181,26 @@ export const pickMathSkillId = (
     return familyPool[Math.floor(Math.random() * familyPool.length)];
 };
 
+const pickOrderedMathSkillId = (
+    candidates: string[],
+    options: GeneratorOptions
+): string | undefined => {
+    const { skippedTodayIds, blockCounts, recentIds } = options;
+
+    const notSkipped = candidates.filter(id => !skippedTodayIds.includes(id));
+    const notOverused = notSkipped.filter(id => (blockCounts.get(id) || 0) < SAME_ID_LIMIT);
+    if (notOverused.length === 0) return undefined;
+
+    const cooled = notOverused.filter(id => !recentIds.includes(id));
+    const pool = cooled.length > 0 ? cooled : notOverused;
+
+    const recentFamilies = recentIds.map(getMathSkillFamily);
+    const recentFamilyWindow = new Set(recentFamilies.slice(-2));
+    const familyCooled = pool.filter(id => !recentFamilyWindow.has(getMathSkillFamily(id)));
+
+    return familyCooled[0] || pool[0];
+};
+
 /**
  * Mark an ID as picked for block-level deduplication
  */
@@ -277,7 +298,27 @@ export const generateSingleMathProblem = (
         }
     }
 
-    // Priority 4: Normal level-based generation
+    // Priority 4: Representation-aware follow-up
+    if (!problem) {
+        const mathLevel = profile.mathMainLevel ?? 1;
+        const currentLevelSkills = getSkillsForLevel(mathLevel);
+        const followupCandidates = getMathFollowupPlan(
+            profile.recentAttempts,
+            currentLevelSkills,
+            profile.mathMaxUnlocked ?? mathLevel
+        ).map(candidate => candidate.skillId);
+        const followupId = pickOrderedMathSkillId(followupCandidates, options);
+
+        if (followupId) {
+            problem = safeGenerateProblem(
+                () => generateMathProblem(followupId, { profile }),
+                () => generateMathProblem("count_10", { profile }),
+                `math followup: ${followupId}`
+            );
+        }
+    }
+
+    // Priority 5: Normal level-based generation
     if (!problem) {
         const mathLevel = profile.mathMainLevel ?? 1;
         const nextMathLevel = profile.mathMaxUnlocked >= mathLevel + 1 ? mathLevel + 1 : mathLevel;
@@ -562,6 +603,22 @@ export const generateWeakReviewBlock = async (
             }
 
             // Priority 3: Random in Level
+            if (!problem) {
+                const followupCandidates = getMathFollowupPlan(
+                    profile.recentAttempts,
+                    mathSkills,
+                    profile.mathMaxUnlocked ?? mathLevel
+                ).map(candidate => candidate.skillId);
+                const followupId = pickOrderedMathSkillId(followupCandidates, options);
+                if (followupId) {
+                    problem = safeGenerateProblem(
+                        () => generateMathProblem(followupId, { profile }),
+                        () => generateMathProblem("count_10", { profile }),
+                        `weak-review math followup: ${followupId}`
+                    );
+                }
+            }
+
             if (!problem) {
                 const id = pickMathSkillId(mathSkills, options) || mathSkills[0];
                 if (id) {

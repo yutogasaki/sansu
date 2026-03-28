@@ -12,6 +12,8 @@
 - [1.5 次に増やすスキルの指針](#15-次に増やすスキルの指針)
 - [1.6 Lv13-18 教材改善プラン](#16-lv13-18-教材改善プラン)
 - [1.7 共通で足したい出題タイプ](#17-共通で足したい出題タイプ)
+- [1.8 Lv19-28 教材改善プラン](#18-lv19-28-教材改善プラン)
+- [1.9 筆算と復習の改善プラン](#19-筆算と復習の改善プラン)
 - [2. スキル採用判定](#2-スキル採用判定)
 - [3. 採用スキル一覧（レベル順）](#3-採用スキル一覧レベル順)
 - [4. レベル定義](#4-レベル定義)
@@ -185,6 +187,90 @@
 3. 3問目は `Mental` または `Algorithm`
 
 これにより、`答えを出せた` だけで終わらず、`別の見え方でも同じ内容だと分かる` ところまで育てる。
+
+注:
+
+- これらの束を **いつ差し込むか** の親ロジックは [01_app_spec.md](./01_app_spec.md) の 5.4 を正とする。
+
+### 1.8 Lv19-28 教材改善プラン
+
+Lv19 以降は、計算範囲そのものよりも、**位・大きさ・関係を見失わない土台** が重要になる。
+現状は `小数の計算` `分数の計算` `割合・比・速さの式処理` に寄りやすいので、先に `数直線` `位取り` `表` を増やしたい。
+
+| 入れる位置 | 追加したいスキル | 段階 | ねらい | 対応する現行スキル |
+|---|---|---|---|---|
+| Lv19 の前 | `dec_place_value` | Concrete / Bridge | 0.1, 0.01 の位の意味を見える化する | `dec_add`, `dec_sub`, `dec_compare` |
+| Lv19 の前 | `dec_number_line` | Concrete / Bridge | 小数を数直線上の位置で比べる | `dec_compare`, `dec_add`, `dec_sub` |
+| Lv19-20 の間 | `dec_point_align_add`, `dec_point_align_sub` | Algorithm | 小数点をそろえる意味を手順として学ぶ | `dec_add`, `dec_sub` |
+| Lv20 の前 | `dec_scale_10_visual` | Bridge / Strategy | 10倍・100倍と小数点移動の関係を理解する | `scale_10x`, `dec_mul_int`, `dec_div_int` |
+| Lv20 の前 | `dec_mul_place_reason`, `dec_div_place_reason` | Strategy | 小数の掛け割りで桁がどう動くかを予想する | `dec_mul_dec`, `dec_div_dec` |
+| Lv21 の前 | `frac_part_whole` | Concrete | 1つの全体に対する部分として分数を見る | `frac_add_same`, `frac_sub_same` |
+| Lv21 の前 | `frac_number_line` | Concrete / Bridge | 分数を量として並べる | `frac_compare`, `frac_add_same`, `frac_sub_same` |
+| Lv21-22 の間 | `frac_equiv_visual` | Bridge | 等しい分数を図で理解する | `frac_add_diff`, `frac_sub_diff`, `frac_compare` |
+| Lv21-22 の間 | `frac_compare_line` | Strategy | 通分の前に、数直線や面積図で大小を比べる | `frac_compare` |
+| Lv22 の前 | `frac_common_denominator_bridge` | Bridge / Algorithm | 通分の意味を「同じ大きさの切り方」に変換する | `frac_add_diff`, `frac_sub_diff` |
+| Lv23-24 の前 | `frac_of_int_visual` | Concrete / Bridge | `3/4 の 8` を図で理解する | `frac_mul_int`, `frac_mul_frac` |
+| Lv23-24 の前 | `frac_div_inverse` | Reverse | 分数の割り算を逆数ルールだけでなく意味でつなぐ | `frac_div_int`, `frac_div_frac` |
+| Lv25-26 の前 | `percent_table_basic` | Bridge | もとの量・くらべる量・割合を表でそろえる | `percent_basic` |
+| Lv27 の前 | `ratio_table_basic` | Bridge | 比を対応表でそろえて考える | `ratio_basic` |
+| Lv28 の前 | `speed_table_basic` | Bridge | 速さ・時間・道のりを表で往復する | `speed_basic` |
+
+推奨の並び:
+
+1. 小数は `dec_place_value -> dec_number_line -> dec_point_align_* -> dec_scale_10_visual`
+2. 分数は `frac_part_whole -> frac_number_line -> frac_equiv_visual -> frac_common_denominator_bridge`
+3. 応用は `percent_table_basic -> ratio_table_basic -> speed_table_basic`
+
+各スキルの最低要件:
+
+- `dec_place_value`: 1.2 と 1.02 を並べ、位の違いが見える表示を含む。
+- `dec_number_line`: 0 と 1 の間だけでなく、1 をまたぐ数直線も扱う。
+- `dec_point_align_add` / `dec_point_align_sub`: 小数点をそろえる前後の見え方を出す。
+- `dec_scale_10_visual`: `0.4 × 10`, `4 ÷ 10`, `40 ÷ 100` を同じ系列で扱う。
+- `dec_mul_place_reason` / `dec_div_place_reason`: 答えの桁感を先に予想させる問題を混ぜる。
+- `frac_part_whole`: 同じ形でも全体が違えば分数が変わる例を含める。
+- `frac_number_line`: `1/2`, `3/2`, `5/4` のように 1 をまたぐ分数も含む。
+- `frac_equiv_visual`: `1/2 = 2/4 = 4/8` を図で往復する。
+- `frac_common_denominator_bridge`: 通分後の「同じ単位で比べている」ことが見える表示を持つ。
+- `frac_of_int_visual`: 面積図またはテープ図で「何分のいくつ」を表す。
+- `frac_div_inverse`: `1/2 ÷ 1/4` を「1/4 が何こ入るか」で出す。
+- `percent_table_basic`, `ratio_table_basic`, `speed_table_basic`: 必ず 2量をそろえる表を先に見せる。
+
+### 1.9 筆算と復習の改善プラン
+
+いまの筆算は「答えが合うか」を見る比率が高い。
+教材としては、**途中手順を理解する問題** と **まちがい方に応じた復習** を別に持ったほうが強い。
+
+| 種類 | 追加したいスキル / 仕組み | ねらい | 対応する現行スキル |
+|---|---|---|---|
+| 筆算手順 | `add_carry_step` | くり上がりを書く位置を理解する | `add_2d2d_c`, `add_3d3d` |
+| 筆算手順 | `sub_borrow_step` | くり下がりで 10 をくずす意味を理解する | `sub_2d1d_c`, `sub_2d2d`, `sub_3d3d` |
+| 筆算手順 | `mul_partial_product_step` | 部分積と位のずれを理解する | `mul_2d1d`, `mul_2d2d`, `mul_3d2d` |
+| 筆算手順 | `div_quotient_position_step` | 商を立てる位置と引く順序を理解する | `div_2d1d_exact`, `div_2d2d_exact`, `div_3d2d_exact` |
+| 解法選択 | `calc_method_choice` | 暗算向きか筆算向きかを選ぶ | 2桁以上の加減乗除 |
+| 誤答診断 | `calc_error_check` | 典型的な誤りを見抜く | くり上がり、くり下がり、筆算全般 |
+| 復習導線 | `representation_retry` | 間違えた内容を別表現で復習する | 全領域 |
+| 復習導線 | `mini_lesson_review` | 同じ概念を 3問束で復習する | 全領域 |
+
+復習ルール:
+
+- 同じ skillId の再出題だけでなく、対応する `Bridge` `Reverse` `Algorithm` スキルへ横に広げてよい。
+- `暗算で失敗した -> 位取りを見せる`
+- `筆算で失敗した -> 途中手順を問う`
+- `比較で失敗した -> 数直線や表へ戻す`
+- `割合で失敗した -> 表スキルへ戻す`
+
+ミニレッスン復習の例:
+
+1. `frac_compare` で失敗したら `frac_number_line`
+2. 次に `frac_equiv_visual`
+3. 最後に `frac_compare` へ戻す
+
+この構成にすると、単なる再挑戦ではなく「理解が足りなかった場所」まで戻せる。
+
+注:
+
+- `representation_retry` や `mini_lesson_review` の発火条件・混入比率は [01_app_spec.md](./01_app_spec.md) の 5.4-5.5 を参照する。
 
 ---
 
@@ -423,6 +509,10 @@ interface MathSkill {
   level: number;           // 4
   category: MathCategory;  // "addition"
   inputType: InputType;    // "numpad"
+  family?: string;         // "addition-basic"
+  representation?: MathRepresentation;
+  reviewFallbackSkillIds?: string[];
+  sameConceptSkillIds?: string[];
   // generate関数は実装時に 04_math_problems.md の仕様に基づいて実装する
 }
 
@@ -442,7 +532,23 @@ type InputType =
   | "mixed"         // 帯分数パッド
   | "remainder"     // 商・余りパッド
   | "comparison";   // 大小比較（3択）
+
+type MathRepresentation =
+  | "concrete"
+  | "bridge"
+  | "symbol"
+  | "strategy"
+  | "mental"
+  | "algorithm"
+  | "reverse";
 ```
+
+補足:
+
+- `reviewFallbackSkillIds` は、記号問題でつまずいたときに戻す候補を持つ。
+- `reviewFallbackSkillIds` は、`Symbol -> Bridge` だけでなく `Bridge -> Concrete` にも使える。
+- `sameConceptSkillIds` は、同じ概念の別表現スキルを束ね、`Bridge -> Symbol` の進行にも使う。
+- 現在の実装では、初期の `絵と式` 橋渡しスキルに対してこの metadata を持ち始めている。
 
 ---
 

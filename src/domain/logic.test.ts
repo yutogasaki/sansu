@@ -9,7 +9,7 @@ import { getInitialNextReviewIso } from './learningRepository';
 import { getLearningDayStart } from '../utils/learningDay';
 import { buildVocabCooldownIds } from '../hooks/blockGenerators';
 import { getLevelStartTimestamp } from './test/trigger';
-import { getMathSkillFamily, getSkillsForLevel } from './math/curriculum';
+import { getMathSkillFamily, getMathSkillMetadata, getSkillsForLevel } from './math/curriculum';
 
 const mockState = (id: string, strength: number, status?: SkillStatus): MemoryState => ({
     id,
@@ -142,8 +142,8 @@ describe('Session Queue Generation', () => {
     it('should generate full queue even with few skills (Duplication Logic)', () => {
         // Use a level with a single skill so the queue has to duplicate.
         const profile = createInitialProfile("Test", 1, 0, 1, 'math');
-        profile.mathMainLevel = 4;
-        profile.mathMaxUnlocked = 4;
+        profile.mathMainLevel = 28;
+        profile.mathMaxUnlocked = 28;
 
         const queue = generateSessionQueue(profile, 5); // Request 5
 
@@ -175,6 +175,136 @@ describe('Session Queue Generation', () => {
         expect(queue).toHaveLength(2);
         expect(queue.every(item => level0Skills.has(item.categoryId))).toBe(true);
         expect(getMathSkillFamily(queue[0].categoryId)).not.toBe(getMathSkillFamily(queue[1].categoryId));
+    });
+
+    it('boosts bridge skills after a recent symbolic miss', () => {
+        const profile = createInitialProfile("Test", 1, 0, 1, 'math');
+        profile.mathMainLevel = 9;
+        profile.mathMaxUnlocked = 9;
+        profile.mathSkills['add_1d_2'] = {
+            ...mockState('add_1d_2', 2, 'active'),
+            nextReview: new Date(2099, 0, 1).toISOString(),
+        };
+        profile.mathSkills['add_1d_2_bridge'] = {
+            ...mockState('add_1d_2_bridge', 2, 'active'),
+            nextReview: new Date(2099, 0, 1).toISOString(),
+        };
+        profile.recentAttempts = [
+            {
+                id: 'attempt-1',
+                timestamp: new Date(2026, 2, 28, 9, 0, 0).toISOString(),
+                subject: 'math',
+                skillId: 'add_1d_2',
+                result: 'incorrect',
+            },
+        ];
+
+        const queue = generateSessionQueue(profile, 1);
+
+        expect(queue).toHaveLength(1);
+        expect(queue[0]?.categoryId).toBe('add_1d_2_bridge');
+    });
+
+    it('boosts bridge follow-up after a recent concrete success', () => {
+        const profile = createInitialProfile("Test", 1, 0, 1, 'math');
+        profile.mathMainLevel = 8;
+        profile.mathMaxUnlocked = 8;
+        profile.mathSkills['add_1d_1'] = {
+            ...mockState('add_1d_1', 2, 'active'),
+            nextReview: new Date(2099, 0, 1).toISOString(),
+        };
+        profile.mathSkills['add_1d_1_bridge'] = {
+            ...mockState('add_1d_1_bridge', 2, 'active'),
+            nextReview: new Date(2099, 0, 1).toISOString(),
+        };
+        profile.recentAttempts = [
+            {
+                id: 'attempt-concrete-1',
+                timestamp: new Date(2026, 2, 28, 8, 55, 0).toISOString(),
+                subject: 'math',
+                skillId: 'add_tiny',
+                result: 'correct',
+            },
+        ];
+
+        const queue = generateSessionQueue(profile, 1);
+
+        expect(queue).toHaveLength(1);
+        expect(queue[0]?.categoryId).toBe('add_1d_1_bridge');
+    });
+
+    it('falls back to concrete after a recent bridge miss', () => {
+        const profile = createInitialProfile("Test", 1, 0, 1, 'math');
+        profile.mathMainLevel = 8;
+        profile.mathMaxUnlocked = 8;
+        profile.mathSkills['add_1d_1'] = {
+            ...mockState('add_1d_1', 2, 'active'),
+            nextReview: new Date(2099, 0, 1).toISOString(),
+        };
+        profile.mathSkills['add_1d_1_bridge'] = {
+            ...mockState('add_1d_1_bridge', 2, 'active'),
+            nextReview: new Date(2099, 0, 1).toISOString(),
+        };
+        profile.recentAttempts = [
+            {
+                id: 'attempt-bridge-1',
+                timestamp: new Date(2026, 2, 28, 9, 2, 0).toISOString(),
+                subject: 'math',
+                skillId: 'add_1d_1_bridge',
+                result: 'incorrect',
+            },
+        ];
+
+        const queue = generateSessionQueue(profile, 1);
+
+        expect(queue).toHaveLength(1);
+        expect(queue[0]?.categoryId).toBe('add_tiny');
+    });
+
+    it('boosts symbolic follow-up after a recent bridge success', () => {
+        const profile = createInitialProfile("Test", 1, 0, 1, 'math');
+        profile.mathMainLevel = 9;
+        profile.mathMaxUnlocked = 9;
+        profile.mathSkills['add_1d_2'] = {
+            ...mockState('add_1d_2', 2, 'active'),
+            nextReview: new Date(2099, 0, 1).toISOString(),
+        };
+        profile.mathSkills['add_1d_2_bridge'] = {
+            ...mockState('add_1d_2_bridge', 2, 'active'),
+            nextReview: new Date(2099, 0, 1).toISOString(),
+        };
+        profile.recentAttempts = [
+            {
+                id: 'attempt-2',
+                timestamp: new Date(2026, 2, 28, 9, 5, 0).toISOString(),
+                subject: 'math',
+                skillId: 'add_1d_2_bridge',
+                result: 'correct',
+            },
+        ];
+
+        const queue = generateSessionQueue(profile, 1);
+
+        expect(queue).toHaveLength(1);
+        expect(queue[0]?.categoryId).toBe('add_1d_2');
+    });
+});
+
+describe('Math Skill Metadata', () => {
+    it('defines bridge fallback metadata for early symbolic skills', () => {
+        expect(getMathSkillMetadata('add_1d_2')).toMatchObject({
+            family: 'addition-basic',
+            representation: 'symbol',
+            reviewFallbackSkillIds: ['add_1d_2_bridge'],
+        });
+        expect(getMathSkillMetadata('add_1d_2_bridge')).toMatchObject({
+            family: 'addition-basic',
+            representation: 'bridge',
+            sameConceptSkillIds: ['add_finger', 'add_1d_1_bridge', 'add_1d_2'],
+        });
+        expect(getMathSkillMetadata('add_1d_1_bridge')).toMatchObject({
+            reviewFallbackSkillIds: ['add_tiny', 'add_finger'],
+        });
     });
 });
 

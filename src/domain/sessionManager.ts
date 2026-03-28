@@ -1,7 +1,8 @@
 import { Problem, UserProfile, SubjectKey, RecentAttempt } from "./types";
 import { generateMathProblem } from "./math";
 import { generateVocabProblem } from "./english/generator";
-import { getMathSkillFamily, getSkillsForLevel, getAvailableSkills } from "./math/curriculum";
+import { getMathSkillFamily, getSkillsForLevel, getAvailableSkills, getLevelForSkill } from "./math/curriculum";
+import { getMathFollowupPlan } from "./math/followups";
 import { ENGLISH_WORDS } from "./english/words";
 import { isDue } from "./algorithms/srs";
 import { shuffleArray } from "../utils/shuffle";
@@ -67,6 +68,38 @@ export const isWeakByRecentAttempts = (id: string, recentAttempts?: RecentAttemp
     return accuracy < CONSTANTS.WEAK_THRESHOLD_IN;
 };
 
+const upsertCandidate = (candidates: QueueItem[], next: QueueItem) => {
+    const existing = candidates.find(candidate => candidate.id === next.id && candidate.subject === next.subject);
+    if (!existing) {
+        candidates.push(next);
+        return;
+    }
+
+    existing.priority = Math.max(existing.priority, next.priority);
+    existing.isReview = existing.isReview || next.isReview;
+    existing.isMaintenance = existing.isMaintenance || next.isMaintenance;
+};
+
+const addMathCandidateIfEligible = (
+    candidates: QueueItem[],
+    user: UserProfile,
+    skillId: string,
+    priority: number
+) => {
+    const level = getLevelForSkill(skillId);
+    if (level === null || level > user.mathMaxUnlocked) return;
+
+    const memory = user.mathSkills[skillId];
+    if (memory?.status === "retired") return;
+
+    upsertCandidate(candidates, {
+        id: skillId,
+        subject: "math",
+        isReview: false,
+        priority,
+    });
+};
+
 // --- Main Generator ---
 
 export const generateSessionQueue = (user: UserProfile, count = 5): SessionQueueItem[] => {
@@ -111,7 +144,7 @@ export const generateSessionQueue = (user: UserProfile, count = 5): SessionQueue
             if (isWeakByRecentAttempts(id, user.recentAttempts)) {
                 p += 50;
             }
-            candidates.push({ id, subject: 'vocab', isReview: true, priority: p });
+            upsertCandidate(candidates, { id, subject: 'vocab', isReview: true, priority: p });
         });
 
         // B. New Items (from Main Level)
@@ -121,14 +154,14 @@ export const generateSessionQueue = (user: UserProfile, count = 5): SessionQueue
         const newWords = levelWords.filter(w => !touchedIds.has(w.id));
 
         newWords.forEach(w => {
-            candidates.push({ id: w.id, subject: 'vocab', isReview: false, priority: 50 });
+            upsertCandidate(candidates, { id: w.id, subject: 'vocab', isReview: false, priority: 50 });
         });
 
         // If no new words, pick random from current level (non-due)
         if (newWords.length === 0 && levelWords.length > 0) {
             levelWords.forEach(w => {
                 if (!user.vocabWords[w.id] || !isDue(user.vocabWords[w.id])) {
-                    candidates.push({ id: w.id, subject: 'vocab', isReview: false, priority: 10 });
+                    upsertCandidate(candidates, { id: w.id, subject: 'vocab', isReview: false, priority: 10 });
                 }
             });
         }
@@ -148,7 +181,7 @@ export const generateSessionQueue = (user: UserProfile, count = 5): SessionQueue
             if (isWeakByRecentAttempts(id, user.recentAttempts)) {
                 p += 50;
             }
-            candidates.push({ id, subject: 'math', isReview: true, priority: p });
+            upsertCandidate(candidates, { id, subject: 'math', isReview: true, priority: p });
         });
 
         // B. New / Main Items (Active)
@@ -157,13 +190,18 @@ export const generateSessionQueue = (user: UserProfile, count = 5): SessionQueue
             const mem = user.mathSkills[skillId];
             if (!mem) {
                 // New
-                candidates.push({ id: skillId, subject: 'math', isReview: false, priority: 50 });
+                upsertCandidate(candidates, { id: skillId, subject: 'math', isReview: false, priority: 50 });
             } else if (mem.status === 'active') {
                 // Active but not Due
                 if (!isDue(mem)) {
-                    candidates.push({ id: skillId, subject: 'math', isReview: false, priority: 40 });
+                    upsertCandidate(candidates, { id: skillId, subject: 'math', isReview: false, priority: 40 });
                 }
             }
+
+        });
+
+        getMathFollowupPlan(user.recentAttempts, skills, user.mathMaxUnlocked).forEach(candidate => {
+            addMathCandidateIfEligible(candidates, user, candidate.skillId, candidate.priority);
         });
 
         // C. Maintenance (Retired) - 1% chance
@@ -184,7 +222,7 @@ export const generateSessionQueue = (user: UserProfile, count = 5): SessionQueue
 
             if (allRetired.length > 0) {
                 const rndId = allRetired[Math.floor(Math.random() * allRetired.length)];
-                candidates.push({ id: rndId, subject: 'math', isReview: true, isMaintenance: true, priority: 200 });
+                upsertCandidate(candidates, { id: rndId, subject: 'math', isReview: true, isMaintenance: true, priority: 200 });
             }
         }
 

@@ -5,6 +5,21 @@
 export type SubjectKey = 'math' | 'vocab';
 export type SkillStatus = 'active' | 'maintenance' | 'retired';
 export type InputType = 'number' | 'multi-number' | 'choice' | 'hissan';
+export type MathRepresentationMode =
+    | 'concrete'
+    | 'bridge'
+    | 'symbol'
+    | 'strategy'
+    | 'mental'
+    | 'algorithm'
+    | 'reverse';
+
+export interface MathSkillMetadata {
+    family: string;
+    representation: MathRepresentationMode;
+    reviewFallbackSkillIds?: string[];
+    sameConceptSkillIds?: string[];
+}
 
 /**
  * Strength level for SRS algorithm (1-5)

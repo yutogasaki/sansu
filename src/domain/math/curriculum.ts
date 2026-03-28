@@ -1,3 +1,5 @@
+import type { MathRepresentationMode, MathSkillMetadata } from "../types";
+
 export const MAX_MATH_LEVEL = 28;
 export const MAX_VOCAB_LEVEL = 20;
 
@@ -86,6 +88,73 @@ const FAMILY_GROUPS: { family: string; skills: string[] }[] = [
     },
 ];
 
+const EXPLICIT_MATH_SKILL_METADATA: Record<string, Partial<MathSkillMetadata>> = {
+    add_tiny: {
+        representation: "concrete",
+        sameConceptSkillIds: ["add_finger", "add_1d_1_bridge", "add_1d_1"],
+    },
+    add_finger: {
+        representation: "concrete",
+        sameConceptSkillIds: ["add_tiny", "add_1d_1_bridge", "add_1d_1"],
+    },
+    add_1d_1_bridge: {
+        representation: "bridge",
+        reviewFallbackSkillIds: ["add_tiny", "add_finger"],
+        sameConceptSkillIds: ["add_tiny", "add_finger", "add_1d_1"],
+    },
+    add_1d_1: {
+        representation: "symbol",
+        reviewFallbackSkillIds: ["add_1d_1_bridge"],
+        sameConceptSkillIds: ["add_1d_1_bridge"],
+    },
+    add_1d_2_bridge: {
+        representation: "bridge",
+        reviewFallbackSkillIds: ["add_1d_1_bridge", "add_finger"],
+        sameConceptSkillIds: ["add_finger", "add_1d_1_bridge", "add_1d_2"],
+    },
+    add_1d_2: {
+        representation: "symbol",
+        reviewFallbackSkillIds: ["add_1d_2_bridge"],
+        sameConceptSkillIds: ["add_1d_2_bridge"],
+    },
+    sub_tiny: {
+        representation: "concrete",
+        sameConceptSkillIds: ["sub_1d1d_nc_bridge", "sub_1d1d_nc"],
+    },
+    sub_1d1d_nc_bridge: {
+        representation: "bridge",
+        reviewFallbackSkillIds: ["sub_tiny"],
+        sameConceptSkillIds: ["sub_tiny", "sub_1d1d_nc"],
+    },
+    sub_1d1d_nc: {
+        representation: "symbol",
+        reviewFallbackSkillIds: ["sub_1d1d_nc_bridge"],
+        sameConceptSkillIds: ["sub_1d1d_nc_bridge"],
+    },
+    sub_1d1d_c_bridge: {
+        representation: "bridge",
+        reviewFallbackSkillIds: ["sub_1d1d_nc_bridge"],
+        sameConceptSkillIds: ["sub_1d1d_nc_bridge", "sub_1d1d_c"],
+    },
+    sub_1d1d_c: {
+        representation: "symbol",
+        reviewFallbackSkillIds: ["sub_1d1d_c_bridge"],
+        sameConceptSkillIds: ["sub_1d1d_c_bridge"],
+    },
+};
+
+const inferMathSkillRepresentation = (skillId: string): MathRepresentationMode => {
+    if (skillId.endsWith("_bridge")) return "bridge";
+    if (skillId.includes("_hissan") || skillId.includes("_algorithm")) return "algorithm";
+    if (skillId.includes("_mental")) return "mental";
+    if (skillId.includes("_reverse") || skillId.includes("_inverse")) return "reverse";
+    if (skillId.includes("_strategy") || skillId.includes("_make10") || skillId.includes("_diff")) return "strategy";
+    if (skillId.startsWith("count_") || skillId === "compose_5" || skillId === "compose_10" || skillId === "share_equal") {
+        return "concrete";
+    }
+    return "symbol";
+};
+
 export const getSkillsForLevel = (level: number): string[] => {
     return MATH_CURRICULUM[level] || [];
 };
@@ -123,4 +192,14 @@ export const getMathSkillFamily = (skillId: string): string => {
     if (skillId.startsWith("compare_")) return "comparison";
 
     return skillId;
+};
+
+export const getMathSkillMetadata = (skillId: string): MathSkillMetadata => {
+    const explicit = EXPLICIT_MATH_SKILL_METADATA[skillId];
+    return {
+        family: explicit?.family ?? getMathSkillFamily(skillId),
+        representation: explicit?.representation ?? inferMathSkillRepresentation(skillId),
+        reviewFallbackSkillIds: explicit?.reviewFallbackSkillIds ?? [],
+        sameConceptSkillIds: explicit?.sameConceptSkillIds ?? [],
+    };
 };

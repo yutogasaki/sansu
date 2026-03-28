@@ -224,6 +224,78 @@ describe("blockGenerators utilities", () => {
         expect(result.problem.categoryId).toBe("count_read");
     });
 
+    it("generateSingleMathProblem uses bridge follow-up after a symbolic miss", () => {
+        const profile = createInitialProfile("T", 1, 0, 1, "math");
+        profile.mathMainLevel = 9;
+        profile.mathMaxUnlocked = 9;
+        profile.recentAttempts = [
+            {
+                id: "attempt-symbol-miss",
+                timestamp: new Date(2026, 2, 28, 10, 0, 0).toISOString(),
+                subject: "math",
+                skillId: "add_1d_2",
+                result: "incorrect",
+            },
+        ];
+
+        const result = generateSingleMathProblem({
+            profile,
+            mathDue: [],
+            weakMathPool: [],
+            maintenanceMathIds: [],
+            retiredMathIds: [],
+            options: {
+                cooldownIds: [],
+                skippedTodayIds: [],
+                blockCounts: new Map(),
+                recentIds: [],
+            },
+            canAddReview: false,
+            currentWeakCount: 0,
+            plusCount: 0,
+            plusLimit: 0,
+        });
+
+        expect(result.isReview).toBe(false);
+        expect(result.problem.categoryId).toBe("add_1d_2_bridge");
+    });
+
+    it("generateSingleMathProblem uses bridge follow-up after a concrete success", () => {
+        const profile = createInitialProfile("T", 1, 0, 1, "math");
+        profile.mathMainLevel = 8;
+        profile.mathMaxUnlocked = 8;
+        profile.recentAttempts = [
+            {
+                id: "attempt-concrete-success",
+                timestamp: new Date(2026, 2, 28, 10, 5, 0).toISOString(),
+                subject: "math",
+                skillId: "add_tiny",
+                result: "correct",
+            },
+        ];
+
+        const result = generateSingleMathProblem({
+            profile,
+            mathDue: [],
+            weakMathPool: [],
+            maintenanceMathIds: [],
+            retiredMathIds: [],
+            options: {
+                cooldownIds: [],
+                skippedTodayIds: [],
+                blockCounts: new Map(),
+                recentIds: [],
+            },
+            canAddReview: false,
+            currentWeakCount: 0,
+            plusCount: 0,
+            plusLimit: 0,
+        });
+
+        expect(result.isReview).toBe(false);
+        expect(result.problem.categoryId).toBe("add_1d_1_bridge");
+    });
+
     it("generateSingleVocabProblem prioritizes forced review blocks", () => {
         const profile = createInitialProfile("T", 1, 1, 1, "vocab");
         const result = generateSingleVocabProblem({
