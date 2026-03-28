@@ -3,7 +3,7 @@ import { spawn, spawnSync } from "node:child_process";
 
 const HOST = "127.0.0.1";
 const PORT_CANDIDATES = [4173, 4174, 4175];
-const APP_TITLE_MARKER = "<title>Sansu App</title>";
+const APP_TITLE_MARKER = "<title>ふわまな</title>";
 const DEV_START_TIMEOUT_MS = 45_000;
 const STEP_TIMEOUT_MS = 15_000;
 const SCENARIO_TIMEOUT_MS = 60_000;
@@ -47,7 +47,7 @@ const waitForServer = async (url, timeoutMs) => {
     }
     await delay(500);
   }
-  throw new Error(`Sansu dev server did not become ready within ${timeoutMs}ms: ${url}`);
+  throw new Error(`Fuwamana dev server did not become ready within ${timeoutMs}ms: ${url}`);
 };
 
 const startDevServer = (port) => {
@@ -80,7 +80,7 @@ const getServerSession = async () => {
     const probe = await probeServer(url);
 
     if (probe.expected) {
-      console.log(`Using existing Sansu dev server on ${url}.`);
+      console.log(`Using existing Fuwamana dev server on ${url}.`);
       return { baseUrl: url, devServer: null, startedByScript: false };
     }
 
@@ -102,7 +102,7 @@ const getServerSession = async () => {
     }
   }
 
-  throw new Error(`Unable to find a free port for Sansu dev server. Tried: ${PORT_CANDIDATES.join(", ")}`);
+  throw new Error(`Unable to find a free port for Fuwamana dev server. Tried: ${PORT_CANDIDATES.join(", ")}`);
 };
 
 const clearClientStorage = async (page) => {

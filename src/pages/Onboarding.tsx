@@ -260,7 +260,7 @@ export const Onboarding: React.FC = () => {
                             className="text-5xl font-black tracking-[-0.04em] text-slate-800"
                             style={{ fontFamily: "var(--font-heading)" }}
                         >
-                            Sansu
+                            ふわまな
                         </h1>
                         <p className="text-sm font-medium leading-7 text-slate-400">
                             やさしく、しずかに

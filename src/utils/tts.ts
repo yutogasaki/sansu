@@ -1,5 +1,5 @@
 /**
- * Text-to-Speech Utility for Sansu App (English)
+ * Text-to-Speech Utility for Fuwamana (English)
  */
 
 let ttsWarmedUp = false;

@@ -42,7 +42,7 @@ export default defineConfig({
         VitePWA({
             injectRegister: false,
             registerType: 'autoUpdate',
-            includeAssets: ['icons/icon.svg', 'sounds/*.mp3'],
+            includeAssets: ['icons/*', 'sounds/*.mp3'],
             manifest: false, // We use public/manifest.json
             workbox: {
                 skipWaiting: true,
