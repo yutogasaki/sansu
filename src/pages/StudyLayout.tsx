@@ -404,6 +404,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
             ? "border-rose-100/90 bg-rose-50/88 text-rose-700"
             : "border-white/85 bg-white/72 text-slate-600"
     );
+    const isFractionPrompt = currentProblem.categoryId.startsWith("frac_");
+    const promptScrollerClass = "w-full min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain px-1";
 
     return (
         <div className="relative flex h-[100dvh] flex-col overflow-hidden safe-area-inset-bottom bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.26),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.22),rgba(255,255,255,0.08))]">
@@ -674,22 +676,30 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                 />
                             </div>
                         ) : currentProblem.inputType === "number" ? (
-                            <div className={`w-full flex-1 flex flex-col items-center justify-center gap-6 ipadland:flex-col ipadland:items-center ipadland:gap-12 mobile:gap-3 mobile:justify-center ${currentProblem.categoryId.startsWith("frac_") ? "mobile:flex-col" : "mobile:flex-row"
-                                }`}>
-                                <div className="text-slate-800 font-black tracking-wider text-center max-w-full overflow-hidden mobile:flex-shrink-0">
-                                    {/* Font Size Control: Normal vs Fraction */}
-                                    {/* Fraction uses stricter clamp and renderer */}
-                                    <MathProblemPrompt
-                                        problem={currentProblem}
-                                        className={currentProblem.categoryId.startsWith("frac_")
-                                            ? "text-[clamp(40px,11vw,80px)] ipadland:text-7xl"
-                                            : "text-[clamp(28px,8vw,64px)] ipadland:text-8xl mobile:text-4xl"
-                                        }
-                                    />
+                            <div className={cn(
+                                "w-full min-h-0 flex flex-1 items-center justify-center gap-6 mobile:gap-3",
+                                isFractionPrompt
+                                    ? "flex-col"
+                                    : "flex-col md:flex-row md:gap-10 mobile:flex-row"
+                            )}>
+                                <div className={cn("w-full min-h-0", isFractionPrompt ? "flex-1" : "flex-1 md:min-w-0")}>
+                                    <div className={promptScrollerClass}>
+                                        <div className="md:flex md:min-h-full md:items-center md:justify-center">
+                                            <div className="text-center font-black tracking-wider text-slate-800">
+                                                <MathProblemPrompt
+                                                    problem={currentProblem}
+                                                    className={isFractionPrompt
+                                                        ? "text-[clamp(40px,11vw,80px)] ipadland:text-7xl"
+                                                        : "text-[clamp(28px,8vw,64px)] ipadland:text-8xl mobile:text-4xl"
+                                                    }
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 {/* Input Preview */}
                                 <div
-                                    className="app-glass min-w-[120px] h-20 flex items-center justify-center rounded-[22px] px-4 text-5xl font-mono text-slate-700 transition-all ipadland:h-32 ipadland:min-w-[200px] ipadland:text-7xl mobile:h-12 mobile:min-w-[80px] mobile:flex-shrink mobile:px-2 mobile:text-3xl"
+                                    className="app-glass flex h-20 shrink-0 items-center justify-center rounded-[22px] px-4 text-5xl font-mono text-slate-700 transition-all ipadland:h-32 ipadland:min-w-[200px] ipadland:text-7xl mobile:h-12 mobile:min-w-[80px] mobile:px-2 mobile:text-3xl"
                                     style={{ width: `${Math.max(3, userInput.length) * 2.5}rem` }}
                                 >
                                     {userInput}
@@ -697,34 +707,40 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                 </div>
                             </div>
                         ) : (
-                            <div className="text-center w-full flex-1 flex flex-col items-center justify-center gap-2 ipadland:flex-col ipadland:gap-8 mobile:flex-row mobile:gap-3 mobile:justify-center">
+                            <div className="w-full min-h-0 flex-1 text-center flex flex-col items-center justify-center gap-2 ipadland:flex-col ipadland:gap-8 mobile:flex-row mobile:gap-3 mobile:justify-center">
                                 {/* Question Text */}
 
-                                <div className="mb-2 ipadland:mb-0 max-w-full overflow-hidden mobile:mb-0 mobile:flex-shrink-0 flex items-center justify-center gap-2">
-                                    <MathProblemPrompt
-                                        problem={currentProblem}
-                                        className={currentProblem.categoryId.startsWith("frac_")
-                                            ? "text-[clamp(24px,6vw,56px)] ipadland:text-7xl text-slate-800 font-black tracking-wider"
-                                            : "text-[clamp(28px,8vw,64px)] ipadland:text-7xl mobile:text-4xl text-slate-800 font-black tracking-wider"
-                                        }
-                                    />
-                                    {/* TTS Button for English */}
-                                    {currentProblem.subject === 'vocab' && (
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                speakEnglish(currentProblem.questionText || "");
-                                            }}
-                                            className="app-pill ml-2 p-2 text-slate-500 transition-colors hover:text-slate-700 active:scale-95"
-                                            title="読み上げ"
-                                        >
-                                            <HiSpeakerWave className="w-6 h-6 mobile:w-5 mobile:h-5" />
-                                        </button>
-                                    )}
+                                <div className="mb-2 flex w-full min-h-0 items-center justify-center gap-2 ipadland:mb-0 mobile:mb-0 mobile:min-w-0 mobile:flex-1">
+                                    <div className={promptScrollerClass}>
+                                        <div className="md:flex md:min-h-full md:items-center md:justify-center">
+                                            <div className="flex items-center justify-center gap-2 text-center">
+                                                <MathProblemPrompt
+                                                    problem={currentProblem}
+                                                    className={isFractionPrompt
+                                                        ? "text-[clamp(24px,6vw,56px)] ipadland:text-7xl text-slate-800 font-black tracking-wider"
+                                                        : "text-[clamp(28px,8vw,64px)] ipadland:text-7xl mobile:text-4xl text-slate-800 font-black tracking-wider"
+                                                    }
+                                                />
+                                                {/* TTS Button for English */}
+                                                {currentProblem.subject === 'vocab' && (
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            speakEnglish(currentProblem.questionText || "");
+                                                        }}
+                                                        className="app-pill ml-2 shrink-0 p-2 text-slate-500 transition-colors hover:text-slate-700 active:scale-95"
+                                                        title="読み上げ"
+                                                    >
+                                                        <HiSpeakerWave className="w-6 h-6 mobile:w-5 mobile:h-5" />
+                                                    </button>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 {currentProblem.inputType === "multi-number" && currentProblem.inputConfig?.fields && (
-                                    <div className="ipadland:mt-0 mobile:flex-shrink">
+                                    <div className="shrink-0 ipadland:mt-0">
                                         <MultiNumberInput
                                             fields={currentProblem.inputConfig.fields.map(f => ({ ...f, label: f.label || "" }))}
                                             values={userInputs}

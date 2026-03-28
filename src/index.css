@@ -140,6 +140,10 @@ body {
     overflow: hidden;
 }
 
+body.app-mode-fullscreen .app-container {
+    max-width: 1180px;
+}
+
 @media (min-width: 431px) {
     .app-container {
         box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);

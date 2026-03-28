@@ -10,6 +10,14 @@ export const Layout: React.FC = () => {
     const isFullScreen = isStudy || isBattlePlay;
     const showFooter = !isFullScreen;
 
+    React.useEffect(() => {
+        document.body.classList.toggle("app-mode-fullscreen", isFullScreen);
+
+        return () => {
+            document.body.classList.remove("app-mode-fullscreen");
+        };
+    }, [isFullScreen]);
+
     return (
         <div className="relative flex h-full min-h-0 flex-col overflow-hidden text-text-main">
             <main
