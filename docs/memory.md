@@ -56,8 +56,12 @@ Cross-cutting durable risks are tracked in `docs/risk_register.md`.
 
 ### 4. Skill Boundary
 
-- `.agent/skills/` stores reusable workflows.
+- `.agents/skills/` stores current Codex repo-local workflows.
+- `.claude/commands/` stores Claude-specific reusable prompt flows.
+- `.agent/skills/` remains as legacy workspace reference material.
 - Durable truth still belongs in docs, not only in Skills.
+- `design-system/MASTER.md` is an AI-facing design brief, but `docs/07_ui_design_guideline.md` remains the design SSOT.
+- Agent-specific memory tools may help continuity, but they must not replace repo truth.
 - `doc-sync` should be used when a code change may require spec/doc updates.
 
 ## When To Update Memory
