@@ -61,6 +61,13 @@ src/
 9. `docs/tasks/active/` — 進行中タスク
 10. `docs/done/` — 完了ログ（履歴のみ、現行挙動の正本ではない）
 
+## Agent Entry Points
+
+- `CLAUDE.md` — Claude Code向けの入口
+- `AGENTS.md` — Codex向けの入口
+- `design-system/MASTER.md` — AI実装向けのデザイン要約。SSOTではなく `docs/07_ui_design_guideline.md` の補助
+- `docs/runbooks/ai-agent-collaboration.md` — Claude/Codex共通の運用ルール
+
 ## Slash Commands（`.claude/commands/`）
 
 ### Tier 1: アプリ固有（このアプリの核心を守る）
@@ -107,6 +114,11 @@ UI/コピー変更時は追加で:
 旧エージェント向けの10スキルが `.agent/skills/` に残存。主要7つは上記slash commandsに移植済み。
 残り（`project-rule`, `commit-pr`, `spec-writer`, `backlog-triage`）は参照用として残置。
 
+### Codex Repo Skills（`.agents/skills/`）
+
+Codex向けのrepo-local skillは `.agents/skills/` に配置する。
+Claude用のslash commandsと役割を揃えつつ、共有の durable truth は `docs/` と `design-system/MASTER.md` に残す。
+
 ## Design References
 
 UI変更時に参照すべきドキュメント:
@@ -138,6 +150,7 @@ UI変更時に参照すべきドキュメント:
 |------|------|------|
 | `docs/memory.md` | プロジェクトの永続知識 | チーム全体（SSOT関係、検証基準、リスク領域） |
 | `.claude/projects/` メモリ | Claude Codeとの対話最適化 | AI向け（ユーザー情報、フィードバック、対話スタイル） |
+| `design-system/MASTER.md` | AI実装向けのデザイン運用要約 | Claude/Codex共通（設計の実装補助。正本ではない） |
 
 二重管理を避ける: プロジェクト知識は `docs/memory.md` に、Claude Code固有の学習は `.claude/projects/` メモリに。
 

@@ -25,6 +25,7 @@
 | [memory.md](memory.md) | 継続して残すプロジェクト記憶 | はい |
 | [verification_matrix.md](verification_matrix.md) | 変更種別ごとの必須確認 | はい |
 | [tasks/active/README.md](tasks/active/README.md) | 進行中タスクの進め方 | はい |
+| [runbooks/ai-agent-collaboration.md](runbooks/ai-agent-collaboration.md) | Claude/Codex併用時の運用ルール | はい |
 
 ## 定期参照の文書
 
@@ -63,7 +64,8 @@
 
 ## スキル
 
-ワークスペース用スキルは [../.agent/skills](../.agent/skills) にあります。
+現在のCodex向けrepo-local skillは [../.agents/skills](../.agents/skills) にあります。
+旧ワークスペーススキルは [../.agent/skills](../.agent/skills) に残っています。
 ここに置くのは再利用する作業手順であり、プロジェクトの正本ではありません。
 
 ## 更新ルール

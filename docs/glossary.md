@@ -12,7 +12,7 @@ Application-domain terms such as `due`, `weak`, `strength`, and `nextReview` rem
 | Constitution | The highest-priority principles for this repo | See [../CONSTITUTION.md](../CONSTITUTION.md) |
 | SSOT | Single source of truth for a topic | Only one doc should hold final truth |
 | Rule | Operational rule derived from the constitution | Lower priority than spec/constitution |
-| Skill | Reusable workflow for repeated tasks | Lives under `/.agent/skills` |
+| Skill | Reusable workflow for repeated tasks | Current repo-local skills live under `/.agents/skills`; legacy workspace skills remain under `/.agent/skills` |
 | Task | Active execution context | Short-lived, current work only |
 | Done | Historical completion record | Not current truth |
 | Memory | Durable project memory | Long-lived facts and decisions only |
