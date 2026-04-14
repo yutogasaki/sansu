@@ -64,6 +64,14 @@ Cross-cutting durable risks are tracked in `docs/risk_register.md`.
 - Agent-specific memory tools may help continuity, but they must not replace repo truth.
 - `doc-sync` should be used when a code change may require spec/doc updates.
 
+### 5. Shared AI Operating Layer
+
+- `docs/` remains the SSOT for product behavior, verification rules, runbooks, and durable project memory.
+- `.agents/agent-guide.md` is the shared operations entry for both Codex and Claude Code.
+- `.agents/tasks/*.md` is the shared queue layer, while detailed execution files remain in `docs/tasks/active/*.md`.
+- `.agents/memory/durable.md` stores shared agent-operational reminders only and must stay subordinate to `docs/memory.md`.
+- `AGENTS.md` and `CLAUDE.md` should stay concise and point to `.agents/` and `docs/` rather than duplicating long instructions.
+
 ## When To Update Memory
 
 - A repeated explanation appears in multiple PRs/tasks.

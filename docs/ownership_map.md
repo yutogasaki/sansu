@@ -19,9 +19,11 @@
 | 画面・ドメイン固有の詳細挙動 | `docs/` 配下の画面仕様またはドメイン仕様 | [01_app_spec.md](01_app_spec.md) | 画面フローやドメインルールの詳細が変わるとき |
 | デザイン原則・トーン・トークン | [07_ui_design_guideline.md](07_ui_design_guideline.md) | [design_review_checklist.md](design_review_checklist.md), [10_design_refresh_status.md](10_design_refresh_status.md) | 共通の見た目ルールやトーン指針が変わるとき |
 | デザイン適用の進捗 | [10_design_refresh_status.md](10_design_refresh_status.md) | [07_ui_design_guideline.md](07_ui_design_guideline.md) | 進捗、残作業、状態メモが変わるとき |
+| 共有タスクキュー | `.agents/tasks/TASKS.md`, `.agents/tasks/BLOCKED.md`, `.agents/tasks/DONE.md` | `docs/tasks/active/*.md`, `docs/done/YYYY-MM.md` | agent 間で共有する task queue / blocked / done index が変わるとき |
 | 進行中タスクの文脈 | [tasks/active/README.md](tasks/active/README.md) と `docs/tasks/active/*.md` | [verification_matrix.md](verification_matrix.md) | 作業が現在進行中のとき |
 | 完了済み作業の履歴 | `docs/done/YYYY-MM.md` | 進行中タスク文書、関連仕様 | 作業が終わり、履歴として残すとき |
 | 複数タスクをまたぐ記憶 | [memory.md](memory.md) | [risk_register.md](risk_register.md), [glossary.md](glossary.md) | 判断や事実を長く残したいとき |
+| AI 共同作業の境界と運用 | [runbooks/ai-agent-collaboration.md](runbooks/ai-agent-collaboration.md) | `AGENTS.md`, `CLAUDE.md`, `.agents/agent-guide.md`, `.agents/memory/durable.md` | shared AI workflow、境界、adapter ルールが変わるとき |
 | 検証方針 | [verification_matrix.md](verification_matrix.md) | 運用手順、タスク文書 | 必須確認やレビュー基準が変わるとき |
 | リリース・保守手順 | `docs/runbooks/` 配下の各ファイル | [verification_matrix.md](verification_matrix.md) | 運用手順やリリース上の注意点が変わるとき |
 | 再発見コストの高い設計判断 | `docs/adr/` 配下の各ファイル | 仕様、運用手順、`memory.md` | 重要な設計判断を残すとき |

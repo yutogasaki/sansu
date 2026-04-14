@@ -4,6 +4,7 @@
 
 This folder holds active task files only.
 If a task is done, move the outcome to `docs/done/` and remove the active file.
+Track the shared queue entry separately in `.agents/tasks/TASKS.md`.
 
 ## Rules
 

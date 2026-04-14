@@ -11,6 +11,8 @@ This runbook explains how Sansu should be operated with both Claude Code and Cod
 3. Durable project truth stays inside the repository
 4. Agent-specific memory is optional and subordinate
 5. Verification remains mandatory no matter which agent made the change
+6. Entry files stay short and point to shared canonical docs
+7. Do not duplicate the same durable rule across `docs/`, `.agents/`, `.claude/`, and `.codex/`
 
 ## Shared Source Boundaries
 
@@ -20,16 +22,32 @@ This runbook explains how Sansu should be operated with both Claude Code and Cod
 | Design truth | `docs/07_ui_design_guideline.md` |
 | AI-facing design brief | `design-system/MASTER.md` |
 | Durable project memory | `docs/memory.md` |
+| Shared agent operations | `.agents/agent-guide.md` |
+| Shared task queue | `.agents/tasks/TASKS.md`, `.agents/tasks/BLOCKED.md`, `.agents/tasks/DONE.md` |
+| Detailed active task context | `docs/tasks/active/*.md` |
 | Process and release rules | `docs/runbooks/` |
-| Codex repo skills | `.agents/skills/` |
+| Shared repo-local skills | `.agents/skills/` |
 | Claude repo prompts | `.claude/commands/` |
+| Codex-specific committed adapter files | `.codex/` when needed |
+
+## Repo Entry Files
+
+- `AGENTS.md`
+  Codex entry point only. Keep it small and route shared operations into `.agents/`.
+- `CLAUDE.md`
+  Claude entry point only. Keep it small and focus on Claude-specific notes plus links to shared files.
+- `docs/index.md`
+  Main documentation index for both humans and agents.
+- `.agents/agent-guide.md`
+  Shared operating entry after `AGENTS.md` or `CLAUDE.md`.
 
 ## Codex Setup For This Repo
 
 - `AGENTS.md` is the repo entry point
-- Repo-local Codex skills live under `.agents/skills/`
+- Shared repo-local skills live under `.agents/skills/`
 - Keep skills focused and repo-specific
 - Prefer repo-local skills over committing generated `.codex/skills/` trees
+- Add `.codex/` only when the repo actually needs committed Codex-specific config or hook registration
 
 ### Why repo-local `.agents/skills/`
 
@@ -40,6 +58,7 @@ This keeps the setup portable for everyone who clones the repo and avoids hiding
 
 - `CLAUDE.md` remains the main Claude entry point
 - Reusable review/verification flows live under `.claude/commands/`
+- Shared task and memory entry points live under `.agents/`
 - Claude-only conversational memory belongs outside the project truth boundary
 
 ## Optional Claude-Mem
@@ -108,5 +127,6 @@ This avoids conflicts with the repo's current documentation system and keeps Cod
 
 - If a workflow is repeated often in Codex, promote it into `.agents/skills/`
 - If a workflow is repeated often in Claude, promote it into `.claude/commands/`
-- If both agents need the same durable fact, write it in `docs/` or `design-system/MASTER.md`
+- If both agents need the same durable operational reminder, write it in `.agents/`
+- If both agents need the same durable project fact, write it in `docs/` or `design-system/MASTER.md`
 - If instructions drift, update the shared repo files first and agent-specific files second

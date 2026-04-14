@@ -4,6 +4,7 @@
 
 Done logs store completed work and verification facts.
 They are historical records, not current source of truth.
+If you want a lightweight shared index for agents, update `.agents/tasks/DONE.md` separately.
 
 ## Format
 
