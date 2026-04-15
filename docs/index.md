@@ -44,6 +44,7 @@ Use it to find the right source of truth before editing docs, tasks, runbooks, o
 |---|---|---|
 | [product/01_app_spec.md](/docs/product/01_app_spec.md) | Parent product spec | Yes |
 | [product/07_ui_design_guideline.md](/docs/product/07_ui_design_guideline.md) | Design principles | Yes |
+| [wiki/index.md](/docs/wiki/index.md) | Reusable knowledge map | Yes |
 | [wiki/glossary.md](/docs/wiki/glossary.md) | Workspace glossary | Yes |
 | [ai/ownership_map.md](/docs/ai/ownership_map.md) | Doc ownership and tie-breaks | Yes |
 | [wiki/memory.md](/docs/wiki/memory.md) | Durable project memory | Yes |
@@ -76,6 +77,8 @@ Use it to find the right source of truth before editing docs, tasks, runbooks, o
   Shared completion index
 - `docs/tasks/active/`
   Detailed active task files
+- `docs/tasks/archive/`
+  Archived task or status material that no longer belongs in hot docs
 - `docs/done/`
   Durable historical log
 

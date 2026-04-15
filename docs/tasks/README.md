@@ -18,6 +18,8 @@ Task docs capture active execution context only.
   Domain backlog/tasklist
 - `docs/tasks/active/`
   Detailed execution files for the small set of tasks currently being executed
+- `docs/tasks/archive/`
+  Retired task or status detail kept only for reference
 
 ## Lifecycle
 
@@ -25,4 +27,5 @@ Task docs capture active execution context only.
 2. Create or update the detailed file under `docs/tasks/active/`
 3. Keep scope small
 4. Close by removing the active queue entry and moving durable facts to `docs/done/` and, if needed, `docs/wiki/memory.md`
-5. Run `npm run docs:check` after task-doc changes
+5. Move stale task detail or retired status notes into `docs/tasks/archive/` when they no longer belong in hot docs
+6. Run `npm run docs:check` after task-doc changes
