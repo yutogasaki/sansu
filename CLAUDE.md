@@ -16,12 +16,12 @@ Shared canonical guide:
 3. `docs/index.md`
 4. `.agents/tasks/TASKS.md`
 5. `.agents/memory/durable.md`
-6. `docs/verification_matrix.md`
+6. `docs/ai/verification_matrix.md`
 
 For UI work, also read:
 
-1. `docs/07_ui_design_guideline.md`
-2. `docs/design_review_checklist.md`
+1. `docs/product/07_ui_design_guideline.md`
+2. `docs/product/design_review_checklist.md`
 3. `design-system/MASTER.md`
 
 ## Claude-Specific Layer
@@ -43,7 +43,7 @@ For UI work, also read:
 
 ## Repo Rules
 
-- `docs/01_app_spec.md` is the parent spec
+- `docs/product/01_app_spec.md` is the parent spec
 - Verification is mandatory before closing work
 - Routing, storage, tests, and PWA/update flows are high-risk areas
 - Durable project truth belongs in `docs/`, not in Claude-only memory

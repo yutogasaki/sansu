@@ -5,10 +5,10 @@
 ## 参照順
 
 1. `CONSTITUTION.md`
-2. `docs/ownership_map.md`
-3. `docs/01_app_spec.md`
-4. `docs/verification_matrix.md`
-5. `docs/memory.md`
+2. `docs/ai/ownership_map.md`
+3. `docs/product/01_app_spec.md`
+4. `docs/ai/verification_matrix.md`
+5. `docs/wiki/memory.md`
 6. 対象差分（`git diff --stat` / `git diff`）
 
 ## 判定フロー
@@ -19,12 +19,12 @@
 ### B. 更新先を決定
 - SSOTが変わる → まずその正本docを更新
 - statusだけ変わる → status docだけ更新
-- 高コストで再発しそうな判断 → `docs/memory.md` か ADR を検討
+- 高コストで再発しそうな判断 → `docs/wiki/memory.md` か ADR を検討
 - 手順変更 → `docs/runbooks/` を更新
 
 ### C. 追加確認
-- `docs/risk_register.md` の緩和策に影響するか
-- `docs/verification_matrix.md` の要求に影響するか
+- `docs/wiki/risk_register.md` の緩和策に影響するか
+- `docs/ai/verification_matrix.md` の要求に影響するか
 - `docs/done/` に残すべき完了事実があるか
 
 ## 出力フォーマット
@@ -47,5 +47,5 @@
 
 ## 禁止
 - status docだけ更新してSSOTを放置しない
-- docs/memory.md に一時メモを入れない
+- docs/wiki/memory.md に一時メモを入れない
 - done logを現行仕様の根拠にしない

@@ -1,13 +1,13 @@
-# AI Agent Collaboration
+# AI Contributor Guide
 
 ## Purpose
 
-This runbook explains how Sansu should be operated with both Claude Code and Codex without letting agent-specific memory replace project truth.
+This guide explains how Sansu should be operated with both Claude Code and Codex without letting agent-specific memory replace project truth.
 
 ## Shared Principles
 
 1. `CONSTITUTION.md` wins
-2. `docs/01_app_spec.md` is the parent spec
+2. `docs/product/01_app_spec.md` is the parent spec
 3. Durable project truth stays inside the repository
 4. Agent-specific memory is optional and subordinate
 5. Verification remains mandatory no matter which agent made the change
@@ -18,10 +18,10 @@ This runbook explains how Sansu should be operated with both Claude Code and Cod
 
 | Topic | Shared source |
 |---|---|
-| Product behavior | `docs/01_app_spec.md` and child specs |
-| Design truth | `docs/07_ui_design_guideline.md` |
+| Product behavior | `docs/product/01_app_spec.md` and child specs |
+| Design truth | `docs/product/07_ui_design_guideline.md` |
 | AI-facing design brief | `design-system/MASTER.md` |
-| Durable project memory | `docs/memory.md` |
+| Durable project memory | `docs/wiki/memory.md` |
 | Shared agent operations | `.agents/agent-guide.md` |
 | Shared task queue | `.agents/tasks/TASKS.md`, `.agents/tasks/BLOCKED.md`, `.agents/tasks/DONE.md` |
 | Detailed active task context | `docs/tasks/active/*.md` |
@@ -92,7 +92,7 @@ Those must still land in `docs/` or `design-system/MASTER.md`.
 `ui-ux-pro-max` is a strong design accelerator, especially for early concepting and design-system framing.
 For this repo, the best fit is:
 
-1. keep repo truth in `docs/07_ui_design_guideline.md`
+1. keep repo truth in `docs/product/07_ui_design_guideline.md`
 2. keep the AI-facing implementation brief in `design-system/MASTER.md`
 3. adapt useful ideas into repo-local skills instead of committing a large generated Codex tree
 
@@ -110,7 +110,7 @@ This avoids conflicts with the repo's current documentation system and keeps Cod
 
 ### UI Change
 
-1. Read `docs/07_ui_design_guideline.md`
+1. Read `docs/product/07_ui_design_guideline.md`
 2. Read `design-system/MASTER.md`
 3. Implement with shared tokens and surfaces
 4. Review tone, hierarchy, and mobile density

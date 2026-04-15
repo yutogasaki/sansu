@@ -31,13 +31,13 @@ Shortcuts:
 ### Spec / Docs
 
 - Behavior changes are reflected in the correct spec or doc
-- New durable decisions moved to `memory.md` or an ADR when needed
+- New durable decisions moved to `docs/wiki/memory.md` or an ADR when needed
 - Active-task context is not left in backlog/status docs
 
 ### UX / Design
 
 - Child/parent wording was reviewed
-- Shared UI changes were checked against [design_review_checklist.md](../design_review_checklist.md)
+- Shared UI changes were checked against [design_review_checklist.md](/docs/product/design_review_checklist.md)
 - Mobile/tablet layout impact was considered
 
 ### Operations

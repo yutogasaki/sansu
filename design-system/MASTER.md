@@ -5,8 +5,8 @@
 This file is an AI-facing design brief for implementation work.
 It is derived from the real SSOT docs:
 
-1. `docs/07_ui_design_guideline.md`
-2. `docs/design_review_checklist.md`
+1. `docs/product/07_ui_design_guideline.md`
+2. `docs/product/design_review_checklist.md`
 3. `src/index.css`
 
 If a design rule changes, update the SSOT docs first and then refresh this file.

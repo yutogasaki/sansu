@@ -3,10 +3,10 @@
 - Date: 2026-03-17
 - Owner: yutogasaki / codex
 - Status: Active
-- Review By: 2026-04-07
+- Review By: 2026-05-15
 - Related ADR / Runbooks:
   - `docs/runbooks/backlog-triage.md`
-  - `docs/verification_matrix.md`
+  - `docs/ai/verification_matrix.md`
   - `docs/runbooks/release-checklist.md`
   - `docs/runbooks/schema-migration.md`
 
@@ -30,12 +30,12 @@
 
 ## SSOT References
 
-- `docs/01_app_spec.md`
-- `docs/07_ui_design_guideline.md`
-- `docs/10_design_refresh_status.md`
-- `docs/11_full_task_backlog.md`
-- `docs/12_ui_fix_tasklist.md`
-- `docs/risk_register.md`
+- `docs/product/01_app_spec.md`
+- `docs/product/07_ui_design_guideline.md`
+- `docs/tasks/design-refresh-status.md`
+- `docs/tasks/backlog.md`
+- `docs/tasks/ui-fix-tasklist.md`
+- `docs/wiki/risk_register.md`
 
 ## Docs To Touch
 

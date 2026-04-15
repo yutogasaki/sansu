@@ -40,4 +40,4 @@ Archive or split context before it starts competing with the real source of trut
 
 ## Archive Location
 
-Use [archive/README.md](archive/README.md) as the starting point for archived task, status, or note files.
+Use [archive/README.md](/docs/archive/README.md) as the starting point for archived task, status, or note files.

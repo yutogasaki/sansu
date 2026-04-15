@@ -10,9 +10,9 @@ Use this skill when the task changes how Sansu looks, feels, or is navigated.
 ## Read First
 
 1. `CONSTITUTION.md`
-2. `docs/01_app_spec.md`
-3. `docs/07_ui_design_guideline.md`
-4. `docs/design_review_checklist.md`
+2. `docs/product/01_app_spec.md`
+3. `docs/product/07_ui_design_guideline.md`
+4. `docs/product/design_review_checklist.md`
 5. `design-system/MASTER.md`
 6. The target screen or component
 

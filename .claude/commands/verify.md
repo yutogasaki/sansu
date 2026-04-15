@@ -5,7 +5,7 @@
 ## 手順
 
 1. `git status` と `git diff --stat` で変更範囲を把握
-2. `docs/verification_matrix.md` を参照し、変更種別に応じた必須チェックを特定
+2. `docs/ai/verification_matrix.md` を参照し、変更種別に応じた必須チェックを特定
 3. 以下を優先順に実行:
    - `npm run lint`
    - `npm run typecheck`

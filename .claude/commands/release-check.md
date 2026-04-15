@@ -4,7 +4,7 @@
 
 ## 参照順
 1. `CONSTITUTION.md`
-2. `docs/verification_matrix.md`
+2. `docs/ai/verification_matrix.md`
 3. `docs/runbooks/release-checklist.md`
 4. `docs/runbooks/pwa-release.md`（PWA関連なら必須）
 5. 変更差分

@@ -4,10 +4,10 @@ UI変更をSansuのデザイン方針・トーン・情報設計・A11y観点で
 
 ## 参照順
 1. `CONSTITUTION.md`
-2. `docs/01_app_spec.md`
-3. `docs/07_ui_design_guideline.md`
-4. `docs/design_review_checklist.md`
-5. `docs/10_design_refresh_status.md`（進捗参考、正本ではない）
+2. `docs/product/01_app_spec.md`
+3. `docs/product/07_ui_design_guideline.md`
+4. `docs/product/design_review_checklist.md`
+5. `docs/tasks/design-refresh-status.md`（進捗参考、正本ではない）
 6. 変更差分または対象画面
 
 ## レビュー観点

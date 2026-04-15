@@ -7,13 +7,13 @@ description: Run and interpret Sansu's required verification flow after substant
 
 ## Read First
 
-1. `docs/verification_matrix.md`
-2. `docs/memory.md`
+1. `docs/ai/verification_matrix.md`
+2. `docs/wiki/memory.md`
 3. `git diff --stat`
 
 ## Flow
 
-1. Classify the change type using `docs/verification_matrix.md`
+1. Classify the change type using `docs/ai/verification_matrix.md`
 2. Run the required checks for that change type
 3. Report failures from the first meaningful error, not downstream noise
 4. If a required check cannot run, record the gap clearly

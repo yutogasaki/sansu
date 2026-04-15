@@ -16,17 +16,17 @@ Shared canonical guide:
 3. `docs/index.md`
 4. `.agents/tasks/TASKS.md`
 5. `.agents/memory/durable.md`
-6. `docs/verification_matrix.md`
+6. `docs/ai/verification_matrix.md`
 
 For UI work, also read:
 
-1. `docs/07_ui_design_guideline.md`
-2. `docs/design_review_checklist.md`
+1. `docs/product/07_ui_design_guideline.md`
+2. `docs/product/design_review_checklist.md`
 3. `design-system/MASTER.md`
 
 ## Repository Expectations
 
-- Spec first. `docs/01_app_spec.md` is the parent spec.
+- Spec first. `docs/product/01_app_spec.md` is the parent spec.
 - One change should have one primary purpose.
 - Verification is mandatory before closing work.
 - UX must stay gentle for children and clear for parents.

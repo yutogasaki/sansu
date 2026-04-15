@@ -7,9 +7,9 @@ description: Validate Sansu learning logic, progression, SRS behavior, session a
 
 ## Read First
 
-1. `docs/01_app_spec.md`
-2. `docs/02_math_skills.md`
-3. `docs/04_math_problems.md`
+1. `docs/product/01_app_spec.md`
+2. `docs/product/02_math_skills.md`
+3. `docs/product/04_math_problems.md`
 4. Relevant diff
 
 ## Focus Areas

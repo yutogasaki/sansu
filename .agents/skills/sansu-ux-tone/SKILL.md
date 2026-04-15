@@ -8,8 +8,8 @@ description: Audit or improve Sansu copy so it stays gentle, child-safe, and non
 ## Read First
 
 1. `CONSTITUTION.md`
-2. `docs/07_ui_design_guideline.md`
-3. `docs/design_review_checklist.md`
+2. `docs/product/07_ui_design_guideline.md`
+3. `docs/product/design_review_checklist.md`
 4. The relevant diff or target file
 
 ## Tone Rules

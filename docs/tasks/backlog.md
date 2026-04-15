@@ -1,4 +1,4 @@
-# 11 全体タスク台帳（進捗・未着手・次アクション）
+# 全体タスク台帳（進捗・未着手・次アクション）
 
 役割:
 - この文書は全体バックログと優先度整理のための台帳である
@@ -6,7 +6,7 @@
 - 完了履歴は `docs/done/` へ寄せる
 
 更新日: 2026-03-13
-次回棚卸し目安: 2026-04-01
+次回棚卸し目安: 2026-05-15
 
 ## 0. 目的
 
@@ -43,7 +43,7 @@
   - `src/pages/Settings.tsx`
   - `src/pages/Onboarding.tsx`
 
-詳細: `docs/10_design_refresh_status.md`
+詳細: `docs/tasks/design-refresh-status.md`
 
 ### 2.2 機能・アルゴリズム
 
@@ -73,12 +73,12 @@
   - `npm run build`
 - 検証/運用ドキュメントの基盤整備
   - `CONSTITUTION.md`
-  - `docs/verification_matrix.md`
+  - `docs/ai/verification_matrix.md`
   - `docs/runbooks/release-checklist.md`
   - `docs/runbooks/schema-migration.md`
   - `docs/runbooks/backlog-triage.md`
-  - `docs/ownership_map.md`
-  - `docs/risk_register.md`
+  - `docs/ai/ownership_map.md`
+  - `docs/wiki/risk_register.md`
 
 ---
 
@@ -101,7 +101,7 @@
 
 ## 4.1 大物A: 仕様由来の将来機能（機能拡張）
 
-対象: `docs/01_app_spec.md`「9. 今後の検討事項」
+対象: `docs/product/01_app_spec.md`「9. 今後の検討事項」
 
 - 音声読み上げ（英単語発音確認）
 - 例文表示
@@ -118,7 +118,7 @@
 ## 4.3 大物C: データ運用・移行ポリシー整備
 
 - 同期なし方針（v1）と `syncMeta` 保持理由（v2想定）を仕様に明文化
-  - 対象: `docs/01_app_spec.md`, `src/domain/types.ts`
+  - 対象: `docs/product/01_app_spec.md`, `src/domain/types.ts`
 - `schemaVersion` 更新時の移行手順（マイグレーション規約）を仕様やADRへ接続
   - 進捗: `docs/runbooks/schema-migration.md` は作成済み
 
@@ -153,7 +153,7 @@
 
 ## 7. ソース
 
-- 仕様書: `docs/01_app_spec.md`, `docs/06_screen_specs.md`, `docs/07_ui_design_guideline.md`, `docs/08_home_ikimono_spec.md`, `docs/09_battle_spec.md`
+- 仕様書: `docs/product/01_app_spec.md`, `docs/product/06_screen_specs.md`, `docs/product/07_ui_design_guideline.md`, `docs/product/08_home_ikimono_spec.md`, `docs/product/09_battle_spec.md`
 - 実装: `src/` 全域（UI/Hook/Domain）
 - 検証: `tools/e2e-smoke.mjs`, `npm run build`, 追加テスト群
-- 計画: `implementation_plan.md`, `implementation_plan_v2.md`
+- 計画: `docs/archive/notes/implementation_plan.md`, `docs/archive/notes/implementation_plan_v2.md`

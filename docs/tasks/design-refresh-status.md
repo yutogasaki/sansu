@@ -1,8 +1,8 @@
-# 10 デザイン刷新 実施状況と今後対応（2026-03-17）
+# デザイン刷新 実施状況と今後対応（2026-03-17）
 
 役割:
 - この文書はデザイン刷新の進捗・状態台帳である
-- デザイン原則の正本は `07_ui_design_guideline.md`
+- デザイン原則の正本は `docs/product/07_ui_design_guideline.md`
 - 進行中タスクは `docs/tasks/active/` で管理する
 
 ## 0. 目的
@@ -16,7 +16,7 @@
 を網羅的に整理した作業台帳である。
 
 更新日: 2026-03-17
-次回棚卸し目安: 2026-04-01
+次回棚卸し目安: 2026-05-15
 
 ---
 
@@ -92,9 +92,9 @@
 
 ### 1.5 デザイン文書・レビュー導線の整備
 
-- `docs/07_ui_design_guideline.md` を現実装に合わせて更新
-- `docs/design_review_checklist.md` を追加
-- `docs/ownership_map.md` と `docs/archive_policy.md` を追加し、状態文書と正本の境界を整理
+- `docs/product/07_ui_design_guideline.md` を現実装に合わせて更新
+- `docs/product/design_review_checklist.md` を追加
+- `docs/ai/ownership_map.md` と `docs/ai/archive_policy.md` を追加し、状態文書と正本の境界を整理
 
 ### 1.6 学習・バトル面のトーン統一
 

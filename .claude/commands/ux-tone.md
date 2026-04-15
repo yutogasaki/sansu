@@ -4,8 +4,8 @@
 
 ## 参照順
 1. `CONSTITUTION.md` — 第1優先: 子ども/保護者の明確さと信頼
-2. `docs/07_ui_design_guideline.md` — トーン・トークン定義
-3. `docs/design_review_checklist.md` — レビュー観点
+2. `docs/product/07_ui_design_guideline.md` — トーン・トークン定義
+3. `docs/product/design_review_checklist.md` — レビュー観点
 4. 変更差分（`git diff`）または指定ファイル
 
 ## トーンルール

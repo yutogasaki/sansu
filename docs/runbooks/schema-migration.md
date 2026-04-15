@@ -13,8 +13,8 @@ Use this runbook when local data shape, Dexie schema, or profile structure chang
 
 ## Preflight
 
-- Review [docs/01_app_spec.md](../01_app_spec.md)
-- Review [docs/memory.md](../memory.md)
+- Review [docs/product/01_app_spec.md](/docs/product/01_app_spec.md)
+- Review [docs/wiki/memory.md](/docs/wiki/memory.md)
 - Write an ADR if the migration is non-obvious
 
 ## Required Checks

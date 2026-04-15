@@ -7,10 +7,10 @@ This is a review aid, not the primary design spec.
 
 ## Source Docs
 
-- [../CONSTITUTION.md](../CONSTITUTION.md)
+- [/CONSTITUTION.md](/CONSTITUTION.md)
 - [01_app_spec.md](01_app_spec.md)
 - [07_ui_design_guideline.md](07_ui_design_guideline.md)
-- [10_design_refresh_status.md](10_design_refresh_status.md)
+- [tasks/design-refresh-status.md](/docs/tasks/design-refresh-status.md)
 
 ## Checklist
 

@@ -16,7 +16,7 @@ If documents or decisions conflict, this file wins.
 
 ## 2. Non-Negotiables
 
-- Spec first. `docs/01_app_spec.md` is the parent spec.
+- Spec first. `docs/product/01_app_spec.md` is the parent spec.
 - One change should have one primary purpose.
 - Verification is mandatory before closing work.
 - UX must stay gentle for children and clear for parents.
@@ -25,7 +25,7 @@ If documents or decisions conflict, this file wins.
 ## 3. Source-of-Truth Order
 
 1. `CONSTITUTION.md`
-2. `docs/01_app_spec.md`
+2. `docs/product/01_app_spec.md`
 3. Child specs under `docs/`
 4. Runbooks and verification docs for process
 5. Active task docs for local execution intent

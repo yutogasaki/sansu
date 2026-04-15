@@ -13,16 +13,16 @@ Shared canonical guide:
 
 1. `CONSTITUTION.md`
 2. `docs/index.md`
-3. `docs/ownership_map.md`
-4. `docs/verification_matrix.md`
-5. `docs/memory.md`
+3. `docs/ai/ownership_map.md`
+4. `docs/ai/verification_matrix.md`
+5. `docs/wiki/memory.md`
 6. `.agents/tasks/TASKS.md`
 7. `.agents/memory/durable.md`
 
 For UI work, also read:
 
-1. `docs/07_ui_design_guideline.md`
-2. `docs/design_review_checklist.md`
+1. `docs/product/07_ui_design_guideline.md`
+2. `docs/product/design_review_checklist.md`
 3. `design-system/MASTER.md`
 
 ## Repo Snapshot
@@ -44,7 +44,7 @@ Do not duplicate the same durable rule across `docs/`, `.agents/`, `.claude/`, a
 
 ## Repo Rules
 
-- Spec first. `docs/01_app_spec.md` is the parent spec.
+- Spec first. `docs/product/01_app_spec.md` is the parent spec.
 - One change should have one primary purpose.
 - Verification is mandatory before closing work.
 - UX must stay gentle for children and clear for parents.
@@ -83,7 +83,7 @@ Core checks:
   Durable done history
 - `.agents/memory/durable.md`
   Shared agent-operational memory only
-- `docs/memory.md`
+- `docs/wiki/memory.md`
   Durable project memory and SSOT relationships
 
 ## Shared Skills

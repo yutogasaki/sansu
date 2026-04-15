@@ -13,12 +13,12 @@ Use it to reduce file bloat, stale priorities, and context pollution.
 
 ## Inputs
 
-- `docs/11_full_task_backlog.md`
-- `docs/12_ui_fix_tasklist.md`
+- `docs/tasks/backlog.md`
+- `docs/tasks/ui-fix-tasklist.md`
 - `docs/tasks/active/`
 - `docs/done/`
-- `docs/archive_policy.md`
-- `docs/ownership_map.md`
+- `docs/ai/archive_policy.md`
+- `docs/ai/ownership_map.md`
 
 ## Triage Steps
 

@@ -23,12 +23,12 @@ If the information would still matter after several unrelated tasks, it belongs 
 
 ### 1. Source of Truth
 
-- [01_app_spec.md](01_app_spec.md) is the parent spec.
-- Child specs under `docs/` must follow it.
-- [07_ui_design_guideline.md](07_ui_design_guideline.md) is the design-principles doc.
-- [10_design_refresh_status.md](10_design_refresh_status.md) is status only, not design truth.
-- [11_full_task_backlog.md](11_full_task_backlog.md) is backlog only, not active execution truth.
-- [ownership_map.md](ownership_map.md) is the tie-breaker when doc ownership is unclear.
+- [product/01_app_spec.md](/docs/product/01_app_spec.md) is the parent spec.
+- Child specs under `docs/product/` must follow it.
+- [product/07_ui_design_guideline.md](/docs/product/07_ui_design_guideline.md) is the design-principles doc.
+- [tasks/design-refresh-status.md](/docs/tasks/design-refresh-status.md) is status only, not design truth.
+- [tasks/backlog.md](/docs/tasks/backlog.md) is backlog only, not active execution truth.
+- [ai/ownership_map.md](/docs/ai/ownership_map.md) is the tie-breaker when doc ownership is unclear.
 
 ### 2. Verification Baseline
 
@@ -52,15 +52,14 @@ If the information would still matter after several unrelated tasks, it belongs 
 - Documentation drift and context pollution
 
 Schema changes should use `docs/runbooks/schema-migration.md`.
-Cross-cutting durable risks are tracked in `docs/risk_register.md`.
+Cross-cutting durable risks are tracked in `docs/wiki/risk_register.md`.
 
 ### 4. Skill Boundary
 
 - `.agents/skills/` stores current Codex repo-local workflows.
 - `.claude/commands/` stores Claude-specific reusable prompt flows.
-- `.agent/skills/` remains as legacy workspace reference material.
 - Durable truth still belongs in docs, not only in Skills.
-- `design-system/MASTER.md` is an AI-facing design brief, but `docs/07_ui_design_guideline.md` remains the design SSOT.
+- `design-system/MASTER.md` is an AI-facing design brief, but `docs/product/07_ui_design_guideline.md` remains the design SSOT.
 - Agent-specific memory tools may help continuity, but they must not replace repo truth.
 - `doc-sync` should be used when a code change may require spec/doc updates.
 
@@ -69,7 +68,7 @@ Cross-cutting durable risks are tracked in `docs/risk_register.md`.
 - `docs/` remains the SSOT for product behavior, verification rules, runbooks, and durable project memory.
 - `.agents/agent-guide.md` is the shared operations entry for both Codex and Claude Code.
 - `.agents/tasks/*.md` is the shared queue layer, while detailed execution files remain in `docs/tasks/active/*.md`.
-- `.agents/memory/durable.md` stores shared agent-operational reminders only and must stay subordinate to `docs/memory.md`.
+- `.agents/memory/durable.md` stores shared agent-operational reminders only and must stay subordinate to `docs/wiki/memory.md`.
 - `AGENTS.md` and `CLAUDE.md` should stay concise and point to `.agents/` and `docs/` rather than duplicating long instructions.
 
 ## When To Update Memory
@@ -83,4 +82,4 @@ Cross-cutting durable risks are tracked in `docs/risk_register.md`.
 
 - The source doc changed and this file became stale.
 - The fact is no longer durable and should move back into task history.
-- The content belongs in `archive_policy.md`, `ownership_map.md`, or `risk_register.md` instead.
+- The content belongs in `docs/ai/archive_policy.md`, `docs/ai/ownership_map.md`, or `docs/wiki/risk_register.md` instead.

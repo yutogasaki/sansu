@@ -3,9 +3,9 @@
 学習アルゴリズムの正当性を検証する。SRS、進級関数、問題生成、セッション構成、テストトリガーが仕様通りに動作しているか確認する。
 
 ## 参照順
-1. `docs/01_app_spec.md` — 学習ロジックの親仕様
-2. `docs/02_math_skills.md` — 算数スキル定義と進級基準
-3. `docs/04_math_problems.md` — 問題タイプと視覚足場
+1. `docs/product/01_app_spec.md` — 学習ロジックの親仕様
+2. `docs/product/02_math_skills.md` — 算数スキル定義と進級基準
+3. `docs/product/04_math_problems.md` — 問題タイプと視覚足場
 4. 変更差分（`git diff`）または指定ファイル
 
 ## 検証対象と主要ファイル
