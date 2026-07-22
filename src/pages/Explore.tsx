@@ -49,6 +49,7 @@ import {
     getRequestedExploreEncounterId,
     getAvailableExploreNodes,
     getExploreReplayTeaser,
+    getExploreBenchmarkE2EOptions,
     getExploreRunE2EOptions,
     getRemainingRapidLoopBudgetMs,
     isExploreOpeningCompletionDiscovery,
@@ -315,6 +316,7 @@ export const Explore: React.FC = () => {
     // Presentation is captured once and never persisted. Environment or URL
     // changes therefore cannot swap the visual rule in the middle of a run.
     const [openingExperience] = useState(resolveOpeningExperienceForUiSession);
+    const benchmark = getExploreBenchmarkE2EOptions();
     const [state, dispatch] = useReducer(exploreReducer, undefined, createFreshRun);
     const [phase, setPhase] = useState<ExploreScreenPhase>(INITIAL_EXPLORE_PHASE);
     const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -1277,6 +1279,9 @@ export const Explore: React.FC = () => {
             data-confirmed-find-count={state.confirmedFinds.length}
             data-opening-experience={openingExperience.id}
             data-opening-presentation={openingExperience.presentationKey}
+            data-benchmark-id={benchmark.fixtureId}
+            data-run-attempt-count={state.attempts.length}
+            data-run-committed-attempt-count={state.committedAttemptKeys.length}
         >
             <ExploreWorldBackdrop />
 
@@ -1349,6 +1354,10 @@ export const Explore: React.FC = () => {
                                     ? createAttemptIdentityKey(activeAttemptTarget.identity)
                                     : undefined}
                                 data-problem-id={pendingGate?.problem?.id}
+                                data-benchmark-index={pendingGate?.problem
+                                    && benchmark.startIndex !== undefined
+                                    ? benchmark.startIndex + state.steps
+                                    : undefined}
                                 data-save-state={pendingGate?.problem ? attemptSaveStatus : undefined}
                             >
                                 {!profileResolved ? (

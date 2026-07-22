@@ -1,12 +1,14 @@
 # docs/product/10_exploration_game_spec.md — 探索ゲーム仕様
 
-> 状態: gameplayの **MVP-0/1**、run保存の **MVP-2a**、Study共通planner / SRS接続の **MVP-2b** を実装済み。1ラン8行動・15ノードを3問単位の連問区間として遊ぶ。production defaultは `classic-v1` とする。旧編み根版は50 / 100のREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。既存delivery / feature-flag ID `snap-root-v1` のlocal validationにはvisual candidate `dig-pop-painted-v2` を配線済みで、runtime視覚ゲートはGOである。ただし無文字5人テストと旧高速学習との同一10問throughput比較は未実施のためproduction判定はHOLDとする。本格グリッド、道具、鉱脈連鎖、未確定素材の損失は将来案として区別する。
+> 状態: gameplayの **MVP-0/1**、run保存の **MVP-2a**、Study共通planner / SRS接続の **MVP-2b** を実装済み。1ラン8行動・15ノードを3問単位の連問区間として遊ぶ。production defaultは `classic-v1` とする。旧編み根版は50 / 100のREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。既存delivery / feature-flag ID `snap-root-v1` のlocal validationにはvisual candidate `dig-pop-painted-v2` を配線済みで、runtime視覚ゲートはGOである。ただし無文字5人テストと旧高速学習とのclean revision・10反復適格throughput比較は未実施のためproduction判定はHOLDとする。本格グリッド、道具、鉱脈連鎖、未確定素材の損失は将来案として区別する。
 
 ## 1. コンセプト
 
 > 算数で掘り、未知を探し、欲張るか帰るかを決める。
 
 舞台は暗い洞窟ではなく、明るい地底のふしぎ世界。水晶、光る植物、地底湖、花畑、化石、宝石、根っこのトンネル、秘密基地がある。敵を倒すことではなく、**道をひらく・発見する・持ち帰る**ことが目的。
+
+Gate Cの固定10問比較だけは、8回答の実runを帰還・再出発した後に別runで2回答するDEV限定fixtureとする。これはproductionの1ラン8行動を10行動へ変更する仕様ではない。
 
 ## 2. ゲームの勝ち筋
 

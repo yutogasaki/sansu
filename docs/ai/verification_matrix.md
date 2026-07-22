@@ -18,6 +18,7 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 | `npm run build` | TypeScript build + production build + `assets:check` |
 | `npm run e2e:smoke` | Smoke E2E for critical flows |
 | `npm run e2e:pwa-update` | Production-preview regression for protected-route and same-route update checkpoints |
+| `npm run benchmark:fixed-ten` | Study / Exploreの固定10問throughput、回復、中断、game-only receipt整合を比較 |
 | `npm run verify:core` | Docs check + full local quality gate |
 | `npm run verify:release` | Full local quality gate + smoke E2E + production PWA checkpoint E2E |
 
@@ -32,7 +33,7 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 | Learning/domain logic | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build` | Targeted scenario walkthrough | Add/update tests when logic changes |
 | Exploration pure domain | `npm run docs:check`, `npm run lint`, `npm run typecheck`, targeted reducer/generator tests, `npm run test:run`, `npm run build` | Fixed-seed run, incorrect-answer penalty, voluntary return, energy depletion | Ensure energy never goes below zero and every run can end |
 | Exploration page/routing | `npm run verify:core`, `npm run e2e:smoke` | Complete and replay one run on phone-width and tablet-width layouts; check reduced motion | Existing `/study`, `/battle`, onboarding, and private-route behavior must remain reachable |
-| Image-led UI / encounter | `npm run verify:core`, `npm run e2e:smoke`, `npm run assets:check` | On the actual app target, compare 390×844 and 768×1024 runtime screenshots beside the approved benchmark; capture launch through the next destination; verify full TenKey, fixed-question throughput, sound off, reduced motion, and cold-cache/PWA update | Record build revision, delivery flag, rendered candidate ID, and cache state. Report visual magnetism, silent comprehension/safety, and runtime integrity separately; mixed legacy/HOLD visual lineage is a HOLD |
+| Image-led UI / encounter | `npm run verify:core`, `npm run e2e:smoke`, `npm run assets:check`, `npm run benchmark:fixed-ten` | On the actual app target, compare 390×844 and 768×1024 runtime screenshots beside the approved benchmark; capture launch through the next destination; verify full TenKey, fixed-question throughput, sound off, reduced motion, and cold-cache/PWA update | Fixed-tenはreportの `evidence.eligible = true` かつ `pass = true` とversioned監査への集計転記を必須とし、10反復未満をdiagnostic、通常planner真正性を別検証とする。Record build revision, delivery flag, rendered candidate ID, and cache state. Report visual magnetism, silent comprehension/safety, and runtime integrity separately; mixed legacy/HOLD visual lineage is a HOLD |
 | Storage/schema/profile data | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build` | Existing profile load/save | Write ADR or migration note if needed |
 | PWA/deploy/update flow | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build`, `npm run assets:check`, `npm run e2e:smoke`, `npm run e2e:pwa-update` | Real two-build install/update/reload path; iOS relaunch | Review host cache behavior, precache size, persistence-before-checkpoint, and production-asset boundaries too |
 | Release candidate | All of the above | Critical path smoke on target devices | Include iOS/Android/PWA notes if relevant |

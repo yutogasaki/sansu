@@ -29,6 +29,7 @@ interface StudyLayoutProps {
     isFinished: boolean;
     completionPresentation?: "none" | "saving" | "error";
     currentProblem?: Problem;
+    benchmarkId?: string;
     currentIndex: number;
     blockSize: number;
     userInput: string;
@@ -118,6 +119,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     isFinished,
     completionPresentation = "none",
     currentProblem,
+    benchmarkId,
     sessionKind = "normal",
     correctCount = 0,
     sessionResult,
@@ -438,7 +440,17 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     const promptScrollerClass = "w-full min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain px-1";
 
     return (
-        <div className="brand-study-screen relative flex h-[100dvh] flex-col overflow-hidden safe-area-inset-bottom">
+        <div
+            className="brand-study-screen relative flex h-[100dvh] flex-col overflow-hidden safe-area-inset-bottom"
+            data-benchmark-id={benchmarkId}
+            data-study-question-id={currentProblem.id}
+            data-question-text={currentProblem.questionText}
+            data-study-index={currentIndex}
+            data-feedback={feedback}
+            data-benchmark-complete={benchmarkId
+                ? currentIndex === blockSize - 1 && feedback === "correct"
+                : undefined}
+        >
             {import.meta.env.VITE_SHOW_LAYOUT_DEBUG === "1" && <LayoutDebugOverlay />}
 
             {saveError && (

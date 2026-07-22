@@ -108,6 +108,7 @@ export interface AttemptIdentity {
 - Explore は問題表示前にこの assignment を `runId / gateId / problemId` に結び付けて run 行へ予約する。同じ予約keyの再送は同じ assignment を返し、異なる category や source は競合として拒否する
 - 問題生成は予約済み category をそのまま使う。専用遭遇は問題へ適合する場合だけ表示し、遭遇を成立させるために planner の category を差し替えない
 - 生成不能・入力未対応時は明示的な game-only assignment を予約して `affectsSrs = false` とする
+- `cold-open-fixed-ten-v1` はDEV限定の表示throughput比較fixtureであり、production plannerのassignmentではない。同一 `add_1d_1` を10回固定するため、Exploreでは `game-only-fallback / affectsSrs = false` を予約し、Studyでは非記録DEV sessionを使う。両laneとも実行前後で `logs`、MemoryState、プロフィール学習進捗を変えず、この結果をDue / weak / maintenance / followup / main / plus-oneの選択品質の証拠にしない
 - 最初の誤答後に同じ問題を再試行する場合は同じ problem assignment を使う。支援問題へ切り替えた場合だけ `representation-retry` の新しい assignment を予約する。submit起点550msの操作可能予算内に予約できない、または予約に失敗した場合は処理をabortし、同じProblemとassignmentを再び操作可能にする。期限後に完了した結果で入力面を差し替えない
 
 repositoryは、その回答に必要な永続更新がcommitした後だけ保存済みreceiptを返す。`result` はUIが再計算した値ではなく、保存済み `problem_answered` eventから復元した正誤を表す。

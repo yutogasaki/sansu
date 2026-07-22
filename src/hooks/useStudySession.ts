@@ -49,6 +49,10 @@ import {
 } from "./useStudySession.logic";
 import { holdPwaUpdateForCriticalPersistence } from "../pwa";
 import { errorInDev, logInDev } from "../utils/debug";
+import {
+    COLD_OPEN_FIXED_TEN_ID,
+    createColdOpenFixedTenBlock,
+} from "../domain/benchmark/coldOpenFixedTen";
 
 type StudySessionOptions = {
     devSkill?: string;
@@ -57,6 +61,7 @@ type StudySessionOptions = {
     forceReview?: boolean;
     sessionKind?: SessionKind;
     sessionKey?: string;
+    benchmarkId?: string;
 };
 
 export const useStudySession = (options: StudySessionOptions = {}) => {
@@ -417,6 +422,17 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         const sessionKind = options.sessionKind || "normal";
         const blockSize = resolveSessionBlockSize(sessionKind);
 
+        // Presentation throughput fixtures are intentionally DEV-only and run
+        // inside the existing non-recording developer session. This is not a
+        // planner result and must never be used as evidence of SRS selection.
+        if (
+            import.meta.env.DEV
+            && sessionKind === "dev"
+            && options.benchmarkId === COLD_OPEN_FIXED_TEN_ID
+        ) {
+            return createColdOpenFixedTenBlock(`${COLD_OPEN_FIXED_TEN_ID}:${blockIndex}`);
+        }
+
         // Developer mode: generate only specified skill
         if (options.devSkill) {
             return generateDevBlock(blockSize, blockIndex);
@@ -531,7 +547,11 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
     const nextBlock = async () => {
         const sessionKind = options.sessionKind || "normal";
-        if (!profileId || isFixedSessionKind(sessionKind)) return;
+        if (
+            !profileId
+            || isFixedSessionKind(sessionKind)
+            || options.benchmarkId === COLD_OPEN_FIXED_TEN_ID
+        ) return;
 
         const sessionRequestId = sessionRequestIdRef.current;
         setLoading(true);

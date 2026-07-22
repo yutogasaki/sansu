@@ -21,6 +21,7 @@ import { useTimeoutScheduler } from "../hooks/useTimeoutScheduler";
 import { DevStudySwitcher } from "../components/dev/DevStudySwitcher";
 import { getDevStudyAdjacentSelection, getDevStudySelectionSummary } from "../components/dev/devStudySelection";
 import { reachPwaUpdateCheckpoint } from "../pwa";
+import { COLD_OPEN_FIXED_TEN_ID } from "../domain/benchmark/coldOpenFixedTen";
 
 type FixedSessionStats = {
     correct: number;
@@ -53,6 +54,11 @@ export const Study: React.FC = () => {
         | "dev"
         | null;
     const isDevSession = sessionKindParam === "dev";
+    const benchmarkId = import.meta.env.DEV
+        && isDevSession
+        && searchParams.get("benchmark") === COLD_OPEN_FIXED_TEN_ID
+        ? COLD_OPEN_FIXED_TEN_ID
+        : undefined;
     const backPath = backTo || "/";
     const focusIds = focusIdsParam ? focusIdsParam.split(",").filter(Boolean) : undefined;
     const selectedFocusId = focusIds?.[0] || undefined;
@@ -62,9 +68,10 @@ export const Study: React.FC = () => {
             devSkill || "",
             focusSubject || "",
             focusIdsParam || "",
-            forceReview ? "1" : "0"
+            forceReview ? "1" : "0",
+            benchmarkId || "",
         ].join("|"),
-        [devSkill, focusIdsParam, focusSubject, forceReview, sessionKindParam]
+        [benchmarkId, devSkill, focusIdsParam, focusSubject, forceReview, sessionKindParam]
     );
 
     const { queue, nextBlock, handleResult, completeSession, loading, blockSize } = useStudySession({
@@ -74,6 +81,7 @@ export const Study: React.FC = () => {
         forceReview,
         sessionKind: sessionKindParam || "normal",
         sessionKey: sessionResetKey,
+        benchmarkId,
     });
 
     // State
@@ -220,7 +228,10 @@ export const Study: React.FC = () => {
         const isFixedSession = isFixedSessionKind(sessionKind);
 
         // 1. Pre-fetch when running low (less than 3 items remaining)
-        if (shouldPrefetchNextBlock({ sessionKind, currentIndex, loading, queueLength: queue.length })) {
+        if (
+            !benchmarkId
+            && shouldPrefetchNextBlock({ sessionKind, currentIndex, loading, queueLength: queue.length })
+        ) {
             logInDev("Pre-fetching next block...");
             nextBlock();
         }
@@ -235,7 +246,7 @@ export const Study: React.FC = () => {
             setIsFinished(false);
         }
 
-    }, [currentIndex, queue.length, loading, nextBlock, isFinished, sessionKindParam]);
+    }, [benchmarkId, currentIndex, queue.length, loading, nextBlock, isFinished, sessionKindParam]);
 
     // Session Start Time Tracking
     const startTimeRef = React.useRef(0);
@@ -578,7 +589,9 @@ export const Study: React.FC = () => {
                 isProcessingRef.current = false;
             }
 
-            if (saved) scheduleUiTimeout(nextProblem, 500);
+            if (saved && !(benchmarkId && currentIndex === queue.length - 1)) {
+                scheduleUiTimeout(nextProblem, 500);
+            }
         } else {
             setFeedback("incorrect");
             playSound("incorrect");
@@ -605,6 +618,9 @@ export const Study: React.FC = () => {
         nextProblem,
         hissan,
         scheduleUiTimeout,
+        benchmarkId,
+        currentIndex,
+        queue.length,
     ]);
 
     // スキップ処理（仕様 4.7）
@@ -787,6 +803,7 @@ export const Study: React.FC = () => {
                 isFinished={isFinished}
                 completionPresentation={completionPresentation}
                 currentProblem={currentProblem}
+                benchmarkId={benchmarkId}
                 currentIndex={currentIndex}
                 blockSize={blockSize}
                 userInput={userInput}

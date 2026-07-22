@@ -18,7 +18,10 @@ import {
 } from "../math/curriculum";
 import type { UserProfile } from "../types";
 import { getProfile } from "../user/repository";
-import { waitForExploreProblemPlanE2E } from "./persistenceClient";
+import {
+    getExploreBenchmarkE2EOptions,
+    waitForExploreProblemPlanE2E,
+} from "./persistenceClient";
 import { getExploreAssistCandidates } from "./problemAdapter";
 import {
     createExploreProblemPlan,
@@ -31,6 +34,11 @@ import type {
     ExploreLearningSource,
 } from "./persistenceTypes";
 import type { ExploreProblemGate, ExploreRunState } from "./types";
+import {
+    COLD_OPEN_FIXED_TEN_ID,
+    createColdOpenFixedTenProblem,
+} from "../benchmark/coldOpenFixedTen";
+import { resolveExploreEncounterId } from "./encounters";
 
 const EXPLORE_PLAN_WINDOW = 10;
 const EXPLORE_COOLDOWN_WINDOW = 5;
@@ -152,6 +160,24 @@ const restoreReservedPlan = (
     return { ...plan, assignment };
 };
 
+export const createFixedTenExploreBenchmarkPlan = (
+    state: ExploreRunState,
+    gate: ExploreProblemGate,
+    startIndex: number,
+): ExploreProblemPlan | undefined => {
+    const fixtureIndex = startIndex + state.steps;
+    const problem = createColdOpenFixedTenProblem(
+        fixtureIndex,
+        `${gate.gateId}:benchmark-${fixtureIndex}:attempt-${gate.attemptCount}`,
+    );
+    if (!problem) return undefined;
+
+    return {
+        problem,
+        encounterId: resolveExploreEncounterId(state, gate, problem),
+    };
+};
+
 /**
  * Selects with the shared Study planner, reserves the immutable learning
  * assignment, and only then returns a problem that the Explore UI may display.
@@ -176,6 +202,24 @@ export const createAndReserveExploreProblemPlan = async (
         throw new Error(`Profile ${state.profileId} was not found`);
     }
     assertPlannerActive(options.signal);
+
+    // This lane compares presentation throughput only. It deliberately does
+    // not claim planner authenticity: the same fixed category appears ten
+    // times, so every reservation is game-only and excluded from SRS.
+    const benchmark = getExploreBenchmarkE2EOptions();
+    const benchmarkPlan = benchmark.fixtureId === COLD_OPEN_FIXED_TEN_ID
+        && benchmark.startIndex !== undefined
+        ? createFixedTenExploreBenchmarkPlan(state, gate, benchmark.startIndex)
+        : undefined;
+    if (benchmarkPlan) {
+        return reservePlan(state, gate, benchmarkPlan, {
+            source: "game-only-fallback",
+            isReview: false,
+            isMaintenanceCheck: false,
+            countsTowardReviewCap: false,
+            affectsSrs: false,
+        }, options.signal);
+    }
 
     const problemId = `${gate.gateId}:attempt-${gate.attemptCount}`;
     const existingAssignment = run.learningAssignments?.[problemId];

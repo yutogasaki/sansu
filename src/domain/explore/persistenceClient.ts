@@ -36,6 +36,11 @@ interface ExploreRunE2EControl {
     now?: number;
 }
 
+interface ExploreBenchmarkE2EControl {
+    fixtureId?: string;
+    startIndex?: number;
+}
+
 declare global {
     interface Window {
         __SANSU_E2E__?: {
@@ -44,6 +49,7 @@ declare global {
             exploreProblemPlan?: ExploreProblemPlanE2EControl;
             exploreFinish?: ExploreFinishE2EControl;
             exploreRun?: ExploreRunE2EControl;
+            exploreBenchmark?: ExploreBenchmarkE2EControl;
         };
     }
 }
@@ -146,4 +152,17 @@ export const getExploreRunE2EOptions = () => {
         seed,
         now,
     };
+};
+
+export const getExploreBenchmarkE2EOptions = () => {
+    if (!import.meta.env.DEV || typeof window === "undefined") return {};
+    const control = window.__SANSU_E2E__?.exploreBenchmark;
+    const fixtureId = typeof control?.fixtureId === "string" && control.fixtureId.trim()
+        ? control.fixtureId.trim()
+        : undefined;
+    const startIndex = Number.isSafeInteger(control?.startIndex)
+        && (control?.startIndex ?? -1) >= 0
+        ? control?.startIndex
+        : undefined;
+    return { fixtureId, startIndex };
 };

@@ -1,6 +1,6 @@
 # docs/product/15_mvp_rollout_verification_spec.md — MVP・段階導入・検証仕様
 
-> 状態: gameplayは **MVP-0/1**、run・回答receipt・終了status保存は **MVP-2a**、Study共通plannerからSRSへつなぐ最小縦切りは **MVP-2b**。`/` は `/explore` へ転送し、連問探索を通常起動面にする。`/battle` の探検基地化と発見図鑑のメモリ内縦切りは実装済み。cold-openのproduction defaultは `classic-v1` とする。旧編み根版はREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。`snap-root-v1` slotのlocal validationには `dig-pop-painted-v2` を配線済みでruntime視覚ゲートを通過したが、無文字5人テストと旧高速学習との同一10問throughput比較は未実施のためproduction判定はHOLDである。発見図鑑の永続化とrun再開はまだ行わない。
+> 状態: gameplayは **MVP-0/1**、run・回答receipt・終了status保存は **MVP-2a**、Study共通plannerからSRSへつなぐ最小縦切りは **MVP-2b**。`/` は `/explore` へ転送し、連問探索を通常起動面にする。`/battle` の探検基地化と発見図鑑のメモリ内縦切りは実装済み。cold-openのproduction defaultは `classic-v1` とする。旧編み根版はREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。`snap-root-v1` slotのlocal validationには `dig-pop-painted-v2` を配線済みでruntime視覚ゲートを通過したが、無文字5人テストと旧高速学習とのclean revision・10反復適格throughput比較は未実施のためproduction判定はHOLDである。発見図鑑の永続化とrun再開はまだ行わない。
 
 ## 1. MVPの目的
 
@@ -186,9 +186,15 @@ cold-openは、productionの通常起動面、探検基地、図鑑、production
 - 実際にユーザーが開くapp targetについて、build revision、delivery / feature flag、DOM上のvisual candidate ID、cold-cacheまたはPWA update後のassetを同じ証跡へ記録する。source、prompt、local mock、別buildのcaptureでは代用しない
 - 起動からcold-open、次の意味ある遷移先までを同一端末・同一buildでcontact sheet化し、REJECT / HOLD / legacy candidateや無関係な画風の混在を0件にする。意図した世界 / 観察 / 保存mode差はcandidate IDと素材契約で説明できること
 
+固定10問比較は `npm run benchmark:fixed-ten` で実施する。fixture `cold-open-fixed-ten-v1` の順序は `1+1, 2+3, 4+2, 5+3, 7+1, 8+2, 9+3, 6+2, 3+3, 9+1` とし、390×844、reduced motion、sound off、physical keyboard、asset warm済みでlane順を反復ごとに交互化する。Studyは現行高速回答面の非記録proxy、Exploreは8回答の実run、実帰還、実summary / replay、別runの2回答で構成し、productionの1ランを10行動へ延長しない。
+
+主比較はall-correctを各lane 10反復し、回答数/分の未丸め中央値比 `Explore / Study >= 1.000` とする。Q4 / Q8誤答scenarioも10反復するが、Studyの「訂正表示 → Next → 次問」とExploreの「同じ問題へ再入力 → 正解」は意味が異なるため、Studyの訂正表示・次問到達とExploreの同問再入力を別指標として記録し、両者のmiss-flow throughputを採否へ使わない。全非回答clickを中断として数え、Exploreはreceipt数とattempt数の一致、attempt key重複0、全件 `affectsSrs = false`、学習状態不変を必須とする。
+
+各4セル10run、ExploreのQ1 / Q2正解20sample、Explore同問再入力20sample、Study訂正表示20sample、clean revision、harness専用server、delivery `snap-root-v1`、candidate `dig-pop-painted-v2` が揃わない計測はdiagnosticでありGate C証拠にしない。固定fixtureはTenKey、画面遷移、game-only reservation / receipt、throughputの証拠であり、通常planner / writer / SRS真正性は既存3問grayboxで別に検証する。ignoredの `output/fixed-ten-throughput/latest.json` だけを恒久証拠にせず、適格runのrevisionと集計値をversioned監査へ転記する。
+
 判定は `ready / beat-1 / beat-2 / payoff` のsource、実runtime、通常motion、reduced motion、sound offを証拠種別ごとに分ける。2回の視覚改善でもGate Aを満たさない場合は、色や装飾を足すのではなく主動詞、silhouette、構図、またはrendering方式を変更する。三ゲートすべてを通るまでproduction defaultは `classic-v1` のままとする。
 
-delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行visual candidateは `dig-pop-painted-v2` とする。`ready → dig-one → dig-two → popped` で、相棒が根生物の身体や葉ではなく周囲の同じ土を掘り、土が飛ぶ、対象の足が見える、全身でぽんと抜ける、相棒が尻もちをついて柔らかい土塊が葉帽子へ載る、という一つの因果を作る。locked background、承認済みcharacter / prop reference、state overlayで制作し、runtime Gate Aは390×844で **52 / 53 / 52 / 53**、768×1024で **52 / 53 / 53 / 53**、各6軸8以上のGOとした。実TenKey、追加0タップ、answer leak 0、正解20件P95 **124ms**、誤答20件P95 **440ms**、asset / PWA / required regressionはruntime技術サブゲートを通過した。ただしGate Bと同一10問throughput比較が未実施のためGate C全体およびproduction判定はHOLDとする。証跡は [Dig Pop Painted v2 runtime監査](/docs/design/audits/2026-07-21-dig-pop-painted-v2/README.md) を参照する。
+delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行visual candidateは `dig-pop-painted-v2` とする。`ready → dig-one → dig-two → popped` で、相棒が根生物の身体や葉ではなく周囲の同じ土を掘り、土が飛ぶ、対象の足が見える、全身でぽんと抜ける、相棒が尻もちをついて柔らかい土塊が葉帽子へ載る、という一つの因果を作る。locked background、承認済みcharacter / prop reference、state overlayで制作し、runtime Gate Aは390×844で **52 / 53 / 52 / 53**、768×1024で **52 / 53 / 53 / 53**、各6軸8以上のGOとした。実TenKey、追加0タップ、answer leak 0、正解20件P95 **124ms**、誤答20件P95 **440ms**、asset / PWA / required regressionはruntime技術サブゲートを通過した。ただしGate Bとclean revision・10反復の同一10問throughput比較が未実施のためGate C全体およびproduction判定はHOLDとする。証跡は [Dig Pop Painted v2 runtime監査](/docs/design/audits/2026-07-21-dig-pop-painted-v2/README.md) を参照する。
 
 旧source candidate `dig-pop-painted-v1` はGate A **50 / 60** のHOLDである。背景、相棒、根生物、スコップがstate間でdriftし、`dig-one → dig-two` の差が弱かったため、v2とは別candidate IDとして扱い、承認を継承しない。
 

@@ -94,6 +94,7 @@ If runtime loses depth, texture, scale contrast, or character acting twice in a 
 - Re-score visual magnetism using runtime screenshots only.
 - Confirm the rendered candidate ID, delivery flag, build revision, and cold-cache/PWA-update result on the same target used for the screenshots.
 - Run correct, incorrect, reduced-motion, sound-off, keyboard, touch, responsive, PWA, and asset-budget checks.
+- Run `npm run benchmark:fixed-ten` for runtime throughput parity. Fewer than 10 repetitions or fewer than 20 incorrect samples per lane is diagnostic only. Use all-correct for the parity decision, report the semantically different Study and Explore miss flows separately, and never present the fixed fixture as planner-authenticity evidence.
 
 ### 7. Run a blind silent test
 

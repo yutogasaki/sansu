@@ -94,7 +94,7 @@
 - 水やり版は身体安全と因果を改善したが、承認済み絵本調referenceより材質、奥行き、キャラクター性、出来事性が弱いためHOLDかつ非採用とする。旧混合採点84〜86や全自動テストPASSをvisual承認へ流用しない。
 - delivery / feature-flag ID `snap-root-v1` と現行visual candidate ID `dig-pop-painted-v2` を分ける。旧 `dig-pop-painted-v1` は視覚的磁力50 / 60のHOLD履歴で、背景・相棒・根生物・スコップのstate driftと弱い `dig-one → dig-two` を理由に現行runtimeから外した。v2はlocked background / overlayで別candidateとして0から採点した。
 - `dig-pop-painted-v2` はmobile / tabletのflattened 4 frameを実problem panelへ配線済み。runtime Gate Aは390×844が **52 / 53 / 52 / 53**、768×1024が **52 / 53 / 53 / 53** で全軸8以上。最初のtablet `dig-two` 50 / 60 HOLDをanswer-shelf safe-zone違反として止め、背景を変えず作用overlayを上へ移動して53 / 60へ直した。
-- 正解20件P95 **124ms**、誤答20件P95 **440ms**、追加0タップ、answer leak 0、完全TenKey、asset / PWA / required regressionはruntime技術サブゲートを通過した。旧高速学習との同一10問throughput比較は未実施のためGate C全体はHOLDとする。
+- 正解20件P95 **124ms**、誤答20件P95 **440ms**、追加0タップ、answer leak 0、完全TenKey、asset / PWA / required regressionはruntime技術サブゲートを通過した。旧高速学習とのclean revision・10反復適格throughput比較は未実施のためGate C全体はHOLDとする。
 - 証跡は `docs/design/audits/2026-07-21-dig-pop-painted-v2/README.md` と `docs/design/breakout-loop-2026-07-21/runtime-painted-v2-audit/` に保存する。production defaultは `classic-v1` のままである。
 - 旧編み根版 `snap-root-v1` の87〜88点は、新しいユーザー実機画像を最優先にした再監査で失効した。相棒が編み輪に締め付けられた身体、根生物が浮遊する切断頭部、一本葉が舌・腸・蛇へ見えるため、子どもの安全2 / 10、first-six 31 / 60、総合 **50 / 100** のREJECTとする。productionとlocal developmentのどちらでも安全候補とは呼ばない。
 - 一本葉を引く `ready → tug → tumble → bloomed` は安全性を改善したが、「赤い子の髪を引く」「独立した花が理由なく開く」と読めるため、独立監査75 / 100、first-six 44〜45 / 60のHOLDとして撤回した。同じ `snap-root-v1` plumbing内へ `ready → pour → splash → bloomed` を実装し、誰の身体も引かず、大きな青いじょうろから同じ花へ届く水で因果を一本化した。最終独立監査は84〜86 / 100、first-six 52〜53 / 60。安全と身体ギャグはPASS、Replay 5〜7とsilent 5人テスト未実施のためreleaseはHOLDとする。
@@ -108,6 +108,7 @@
 - 390×844の実問題・実TenKeyでv2を3問通した。数字 `1 / 2 / 3` を含むTenKey維持、1問目の葉先visor、葉っぱ帽子payoff、payoff後のdialog 0 / 説明CTA 0、次の道選択まで確認した。誤答復帰のブラウザ外形観測は単発474msで550ms内だが、P95ではない。
 - `verify:core` はdocs / lint / typecheck / 656 tests / buildを通過した。v2 runtime JPGを視覚差が出ない品質60で再圧縮し、PWA precacheは10.89 / 12.00 MiB、Explore画像は6.63 / 8.00 MiB。E2Eで即時誤答feedbackより先にenergy更新を読む旧期待を検出し、receipt後のenergyを待つよう契約を修正した。さらにv2専用の390×844 / reduced motion / TenKey / 3 beat / inline payoff scenarioと、合成問題の見えているfilled / empty枠を数えるsolver契約を追加し、ランダム出題を含む全19 scenarioを通過した。既存planner / writer / SRS / receipt / pure reducer / root-tangle domain / legacy保存IDは変更していない。
 - 同じ10軸でv2を **77 / 100（±3）** と再採点した。身体ギャグ8、次beat8へ上がった一方、テンポ7、ポップ7、リプレイ7、拡張性6でHOLD。payoff anti-repeat、誤答中の支援assignment先読み、v2専用E2E、count-slot solverまで反映した独立再採点でも77、最初の6軸46 / 60のままとした。証跡は `docs/design/audits/2026-07-21-root-pull-v2-loop/README.md` に保存した。
+- V1のDEV限定fixture `cold-open-fixed-ten-v1` と `npm run benchmark:fixed-ten` を実装した。Studyは非記録10問で止まり、Exploreは実run 8問 → 帰還 / summary / replay → 別run 2問を `game-only-fallback / affectsSrs = false` で通す。1反復diagnosticでは全TenKey、固定順、学習状態不変、receipt / attempt一致、重複0、Q1 / Q2追加0タップ、正解P95 119.2ms、同問誤答復帰P95 448.4msを確認し、all-correct中央値はStudy 123.1問/分、Explore 254.8問/分、比率2.071だった。これはdirty revisionかつ1反復のためGate C証拠ではなく、clean revisionの10反復適格runを次に行う
 
 ### Next
 
