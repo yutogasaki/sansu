@@ -109,14 +109,15 @@
 - `verify:core` はdocs / lint / typecheck / 656 tests / buildを通過した。v2 runtime JPGを視覚差が出ない品質60で再圧縮し、PWA precacheは10.89 / 12.00 MiB、Explore画像は6.63 / 8.00 MiB。E2Eで即時誤答feedbackより先にenergy更新を読む旧期待を検出し、receipt後のenergyを待つよう契約を修正した。さらにv2専用の390×844 / reduced motion / TenKey / 3 beat / inline payoff scenarioと、合成問題の見えているfilled / empty枠を数えるsolver契約を追加し、ランダム出題を含む全19 scenarioを通過した。既存planner / writer / SRS / receipt / pure reducer / root-tangle domain / legacy保存IDは変更していない。
 - 同じ10軸でv2を **77 / 100（±3）** と再採点した。身体ギャグ8、次beat8へ上がった一方、テンポ7、ポップ7、リプレイ7、拡張性6でHOLD。payoff anti-repeat、誤答中の支援assignment先読み、v2専用E2E、count-slot solverまで反映した独立再採点でも77、最初の6軸46 / 60のままとした。証跡は `docs/design/audits/2026-07-21-root-pull-v2-loop/README.md` に保存した。
 - V1のDEV限定fixture `cold-open-fixed-ten-v1` と `npm run benchmark:fixed-ten` を実装した。Studyは非記録10問で止まり、Exploreは実run 8問 → 帰還 / summary / replay → 別run 2問を `game-only-fallback / affectsSrs = false` で通す。clean revision `184f5334f95a39a04f83eed406348fee22435635`、Chromium 145、390×844、reduced motion、sound off、physical keyboardで4セル各10runを完走し、`evidence.eligible = true / pass = true`。all-correct中央値はStudy **123.2問/分**、Explore **252.9問/分**、未丸め比率 **2.053**。Q1 / Q2正解20sample P95 **122.5ms**、Explore同問誤答20sample P95 **453.0ms**、Study訂正表示20sample P95 **22.9ms**。Exploreは全220回答eventでreceipt / assignment一致、重複0、`game-only-fallback / affectsSrs = false`、learning logなし、run集計・`returned / rescued` 終端一致、学習状態不変を確認した。all-correctの操作中断はStudy 0、Explore 5で、Q3道選択、Q7 / Q8発見close、帰還、再出発の内訳。throughputはGOだが、Q8の2回目blocking発見はG2報酬ループで削減する
+- G2報酬グラフをclean revision `85b1bf19548db523b535d10549bd622294f149bf` で再計測した。4セル各10run、Chromium 145、390×844、reduced motion、sound off、physical keyboardで `evidence.eligible = true / pass = true`。all-correct中央値はStudy **123.6問/分**、Explore **270.0問/分**、未丸め比率 **2.184**。Q1 / Q2正解20sample P95 **121.7ms**、Explore同問誤答20sample P95 **451.7ms**。中断は全runで `Q3 route / Q7 semantic discovery / Q8 return / replay` の4件に一致し、Q8のランダムrare停止0、初期390×844 viewport外CTA 0、2run目stale overlay / reaction / page進捗0、全receipt / assignment / run集計 / 学習状態不変を通過した
 
 ### Next
 
 - runtime候補を意図未共有の5人へ無文字で見せ、主動詞・payoff一致4/5、続行希望4/5、危険解釈0件を回答原文で確認する。
-- G2-1: cold-openと調査報酬を分離し、新規runのQ1〜3はlegacy / 主調査page featureを付与せず、既存legacy snapshotの再読だけを維持する。
-- G2-2: 報酬表示を意味で裁定し、Q4〜6の手掛かりと調査ページ外のレア標本をnon-blocking、receipt確定済みQ7 finaleの大発見だけをblockingにする。対応引き算だけroot固有の観察provenanceを付け、他skillは中立のページpayoffにする。
-- G2-3: Q8で進めるnodeがなくなったら「基地へ もちかえる」を唯一の主CTAにし、帰還要約では今回最後に進めた主調査1冊と実在する再出発操作を見せる。
-- G2-4: 全問足し算のfixed-tenを `Q3 route / Q7 big-discovery / Q8 return / replay` の4中断へ固定し、Q1〜2・Q4〜6・Q8〜10のblocking 0件、2run目のstale state 0件を自動検証する。root固有の観察provenanceは対応引き算を割り当てる実planner / root-tangle E2Eで別に検証する。
+- G3-1: active run再開をdomain化し、予約済みcurrent problem / answer境界 / route / energy / findsに加えて、表示済みdiscovery cursorを復元する。Q7を閉じた後のreloadで大発見を再表示せず、未確認なら1回だけ再表示する。
+- G3-2: 見た目だけでなく学習問題も3問区間として先にplan / reserveし、区間途中のprofile unlockや+1抽選でQ7→Q8の桁数が急変しないようにする。保存済みassignmentと実出題categoryは変えない。
+- G3-3: `number input可能` と `rapid-loop適合` を分離し、4桁筆算などはDueを消化せずStudyまたは将来のじっくり遭遇へ残す。全planner sourceを `mathMaxUnlocked` 内へ制限し、除外Dueを回答済みにしない。
+- G4-1: cold-open絵本actor、通常探索、Q7、持ち帰り、基地のcritical-path contact sheetを実配信targetの同一buildで作り、帰還だけ白い別キャラになるlineage driftを非補償HOLDとして解消する。
 - production昇格前に200% text、sound off、offline、critical-path contact sheetとcold-cache / PWA updateを最終確認する。
 - 三ゲートをすべて通るまで `classic-v1` production default、固有名、永続図鑑、量産encounterを変更しない。
 

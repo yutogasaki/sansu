@@ -109,7 +109,7 @@ The local validation implementation preserves the existing problem generator, pl
 ### Fixed-ten throughput evidence
 
 - Measured: 2026-07-23 JST
-- Clean build revision: `184f5334f95a39a04f83eed406348fee22435635`
+- Clean build revision: `85b1bf19548db523b535d10549bd622294f149bf`
 - Target: harness-owned `http://127.0.0.1:4173`, Chromium `145.0.7632.6`
 - Delivery / candidate: `snap-root-v1` / `dig-pop-painted-v2`; production default remained `classic-v1`
 - Fixture: `cold-open-fixed-ten-v1`, SHA-256 `64b051d0cfc1ff67807fd02c56448262c6b3e45b1da20e1854c04bedff5353d5`
@@ -118,12 +118,12 @@ The local validation implementation preserves the existing problem generator, pl
 
 | Scenario / lane | Problems/min median | First-pass / eventual | Relevant P95 | Non-answer interruptions/run |
 |---|---:|---:|---:|---:|
-| all-correct Study | **123.2** | 100% / 100% | next operable 538.2ms | **0** |
-| all-correct Explore | **252.9** | 100% / 100% | Q1 / Q2 next operable **122.5ms** | **5** |
-| Q4 / Q8 miss Study | 154.4 | 80% / 80% | correction 22.9ms; explicit-next advance 61.6ms | 2 |
-| Q4 / Q8 miss Explore | 182.4 | 80% / 100% | same-question operable **453.0ms** | 5 |
+| all-correct Study | **123.6** | 100% / 100% | next operable 535.5ms | **0** |
+| all-correct Explore | **270.0** | 100% / 100% | Q1 / Q2 next operable **121.7ms** | **4** |
+| Q4 / Q8 miss Study | 155.5 | 80% / 80% | correction 24.0ms; explicit-next advance 60.1ms | 2 |
+| Q4 / Q8 miss Explore | 189.2 | 80% / 100% | same-question operable **451.7ms** | 4 |
 
-The primary all-correct throughput ratio is **2.053**, above the required `Explore / Study >= 1.000`. Miss-flow throughput is diagnostic only because Study advances after an explicit correction screen while Explore retries the same question. Explore's five interruptions were stable in every run: one route choice, two discovery closes, one return, and one replay. The extra Q8 blocking discovery is tracked as the next reward-loop improvement; it did not erase throughput parity.
+The primary all-correct throughput ratio is **2.184**, above the required `Explore / Study >= 1.000`. Miss-flow throughput is diagnostic only because Study advances after an explicit correction screen while Explore retries the same question. Explore's four interruptions were stable in every run: one route choice, the single semantic Q7 discovery close, one return, and one replay. Q8 random rarity no longer creates a second blocking stop, and the terminal primary action is asserted inside the initial 390×844 viewport before automation clicks it.
 
 Across the 20 Explore lane runs, all **220** answer events had unique attempt identities, matching game-only assignments, `learningSource = game-only-fallback`, `affectsSrs = false`, and no learning log. Every first run ended `returned`, every second run ended `rescued`, run aggregates matched the 8+2 question shape and Q4 / Q8 retries, and Study / Explore learning snapshots remained unchanged. Full `789 / 456 / 123 / 0`, clear, backspace, confirm, runtime delivery ID, and candidate ID were asserted in every lane.
 
