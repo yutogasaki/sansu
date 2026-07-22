@@ -113,7 +113,10 @@
 ### Next
 
 - runtime候補を意図未共有の5人へ無文字で見せ、主動詞・payoff一致4/5、続行希望4/5、危険解釈0件を回答原文で確認する。
-- cold-openと調査報酬を分離し、Q1〜3停止なし、Q4〜6非blocking、Q7大発見1回、Q8持ち帰りへ整理して、all-correctのExplore中断を5件から4件へ減らす。
+- G2-1: cold-openと調査報酬を分離し、新規runのQ1〜3はlegacy / 主調査page featureを付与せず、既存legacy snapshotの再読だけを維持する。
+- G2-2: 報酬表示を意味で裁定し、Q4〜6の手掛かりと調査ページ外のレア標本をnon-blocking、Q7の登録済み大発見だけをblockingにする。
+- G2-3: Q8で進めるnodeがなくなったら「基地へ もちかえる」を唯一の主CTAにし、帰還要約では今回最後に進めた主調査1冊と実在する再出発操作を見せる。
+- G2-4: fixed-tenを `Q3 route / Q7 discovery / Q8 return / replay` の4中断へ固定し、Q1〜2・Q4〜6・Q9〜10のblocking 0件、2run目のstale state 0件を自動検証する。
 - production昇格前に200% text、sound off、offline、critical-path contact sheetとcold-cache / PWA updateを最終確認する。
 - 三ゲートをすべて通るまで `classic-v1` production default、固有名、永続図鑑、量産encounterを変更しない。
 

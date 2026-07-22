@@ -190,6 +190,8 @@ cold-openは、productionの通常起動面、探検基地、図鑑、production
 
 主比較はall-correctを各lane 10反復し、回答数/分の未丸め中央値比 `Explore / Study >= 1.000` とする。Q4 / Q8誤答scenarioも10反復するが、Studyの「訂正表示 → Next → 次問」とExploreの「同じ問題へ再入力 → 正解」は意味が異なるため、Studyの訂正表示・次問到達とExploreの同問再入力を別指標として記録し、両者のmiss-flow throughputを採否へ使わない。全非回答clickを中断として数え、Exploreはreceipt数とattempt数の一致、attempt key重複0、全件 `affectsSrs = false`、学習状態不変を必須とする。
 
+Exploreの許容中断は各laneでちょうど4件、順序も `Q3 route-choice → Q7 discovery-close → Q8 return → Q8 replay` とする。Q1〜2、Q4〜6、Q9〜10はblocking 0件、Q8は標本toastを閉じる操作なしでprimaryの持ち帰りへ到達し、再出発後は前runのoverlay / reaction / page進捗を表示しないことをfixtureでassertする。
+
 各4セル10run、ExploreのQ1 / Q2正解20sample、Explore同問再入力20sample、Study訂正表示20sample、clean revision、harness専用server、delivery `snap-root-v1`、candidate `dig-pop-painted-v2` が揃わない計測はdiagnosticでありGate C証拠にしない。固定fixtureはTenKey、画面遷移、game-only reservation / receipt、throughputの証拠であり、通常planner / writer / SRS真正性は既存3問grayboxで別に検証する。ignoredの `output/fixed-ten-throughput/latest.json` だけを恒久証拠にせず、適格runのrevisionと集計値をversioned監査へ転記する。
 
 判定は `ready / beat-1 / beat-2 / payoff` のsource、実runtime、通常motion、reduced motion、sound offを証拠種別ごとに分ける。2回の視覚改善でもGate Aを満たさない場合は、色や装飾を足すのではなく主動詞、silhouette、構図、またはrendering方式を変更する。三ゲートすべてを通るまでproduction defaultは `classic-v1` のままとする。
@@ -249,6 +251,7 @@ delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行v
 - 3問完了後にはじめて2件以上の実際に反映できる道選択が現れ、390×844では通過済み・未到達ノード、番号、同一コストの重複表示で主操作を埋めないこと
 - 同一区間の正解後に続行ボタンや道選択を挟まず次問が出て、ローカル目標650ms・CI上限1500msを満たすこと
 - 通常発見と通常調査手掛かりのtoast表示中も問題入力または次の区間選択が有効で、大発見だけがmodalになること
+- 調査ページ外のレア標本も希少度だけではmodalにならず、Q8の最後の標本が大発見に続く2回目のblocking表示を作らないこと
 - 不正解から550ms以内を目標に同じ問題へ再入力できること
 - 回答保存失敗後も同じProblem、入力answer、1-based AttemptIdentity、attemptCount、energyを維持し、責めない再試行操作から成功後に1回だけ進むこと
 - forged / mismatch / duplicate receiptがreducerを不正進行させないこと
