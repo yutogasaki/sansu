@@ -919,7 +919,9 @@ const aggregateLane = (runs, lane, scenario) => {
       selected.flatMap((run) => run.coldOpenCorrectOperableMs || []),
     ),
     terminalResultMs: summarizeValues(
-      selected.flatMap((run) => run.terminalResultMs === null ? [] : [run.terminalResultMs]),
+      selected.flatMap((run) => typeof run.terminalResultMs === "number"
+        ? [run.terminalResultMs]
+        : []),
     ),
     correctionFeedbackReadyMs: summarizeValues(
       selected.flatMap((run) => run.correctionFeedbackReadyMs || []),

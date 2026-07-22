@@ -15,8 +15,9 @@
 | A — visual magnetism | **GO** | Eight real runtime screenshots score 52–53 / 60 and every visual axis is at least 8 / 10 |
 | B — silent causality / safety | **HOLD** | Author screening is positive, but the required explanation-free five-observer test has not been run |
 | C — runtime technical sub-gate | **GO** | Timings, zero-tap progression, complete TenKey, answer-leak, crop, regression, asset, and PWA checks pass |
-| C — full runtime integrity | **HOLD** | The required old-fast-Study versus Explore fixed-ten-question throughput comparison is not recorded |
-| Production | **HOLD** | A GO and the technical sub-gate do not compensate for missing B and throughput evidence; keep `classic-v1` |
+| C — fixed-ten throughput sub-gate | **GO** | Clean-revision evidence passes throughput, latency, full TenKey, receipt / assignment, and learning-state gates |
+| C — release runtime integrity | **HOLD** | Visual and throughput evidence use different builds; actual deployed-target same-build contact sheet is still missing |
+| Production | **HOLD** | Gate B and actual deployed-target verification remain incomplete; keep `classic-v1` |
 
 The local validation app is intentionally different from production. A source edit, generated image, or passing local build is not evidence that the app users open has changed.
 
@@ -104,7 +105,28 @@ The local validation implementation preserves the existing problem generator, pl
 | PWA precache | **7.94 MiB / 12 MiB** |
 | Explore artwork | **3.68 MiB / 8 MiB** |
 
-This proves the timing and input sub-gate. It does not prove fixed-question throughput parity with the earlier fast Study flow. That same-ten-question comparison remains required, so Gate C as a whole is HOLD.
+### Fixed-ten throughput evidence
+
+- Measured: 2026-07-23 JST
+- Clean build revision: `184f5334f95a39a04f83eed406348fee22435635`
+- Target: harness-owned `http://127.0.0.1:4173`, Chromium `145.0.7632.6`
+- Delivery / candidate: `snap-root-v1` / `dig-pop-painted-v2`; production default remained `classic-v1`
+- Fixture: `cold-open-fixed-ten-v1`, SHA-256 `64b051d0cfc1ff67807fd02c56448262c6b3e45b1da20e1854c04bedff5353d5`
+- Conditions: 390×844, reduced motion, sound off, warmed assets, physical keyboard, alternating lane order
+- Evidence eligibility: four cells × 10 runs, candidate Q1 / Q2 correct 20 samples, Explore same-question incorrect 20 samples, Study correction 20 samples, clean revision and runtime identity all PASS
+
+| Scenario / lane | Problems/min median | First-pass / eventual | Relevant P95 | Non-answer interruptions/run |
+|---|---:|---:|---:|---:|
+| all-correct Study | **123.2** | 100% / 100% | next operable 538.2ms | **0** |
+| all-correct Explore | **252.9** | 100% / 100% | Q1 / Q2 next operable **122.5ms** | **5** |
+| Q4 / Q8 miss Study | 154.4 | 80% / 80% | correction 22.9ms; explicit-next advance 61.6ms | 2 |
+| Q4 / Q8 miss Explore | 182.4 | 80% / 100% | same-question operable **453.0ms** | 5 |
+
+The primary all-correct throughput ratio is **2.053**, above the required `Explore / Study >= 1.000`. Miss-flow throughput is diagnostic only because Study advances after an explicit correction screen while Explore retries the same question. Explore's five interruptions were stable in every run: one route choice, two discovery closes, one return, and one replay. The extra Q8 blocking discovery is tracked as the next reward-loop improvement; it did not erase throughput parity.
+
+Across the 20 Explore lane runs, all **220** answer events had unique attempt identities, matching game-only assignments, `learningSource = game-only-fallback`, `affectsSrs = false`, and no learning log. Every first run ended `returned`, every second run ended `rescued`, run aggregates matched the 8+2 question shape and Q4 / Q8 retries, and Study / Explore learning snapshots remained unchanged. Full `789 / 456 / 123 / 0`, clear, backspace, confirm, runtime delivery ID, and candidate ID were asserted in every lane.
+
+This closes the fixed-ten throughput portion of Gate C for the local validation candidate. It does not prove planner selection quality—the fixed fixture deliberately repeats one skill—and release Gate C remains HOLD until the visual, throughput, cold-cache / PWA, and contact-sheet evidence are captured from one actual deployed-target build. Gate B remains separate and HOLD.
 
 ## Retrospective rules proven in this loop
 
@@ -120,5 +142,5 @@ This proves the timing and input sub-gate. It does not prove fixed-question thro
 ## Remaining production blockers
 
 1. Run and preserve the five-person blind silent test.
-2. Compare the same fixed ten questions in old fast Study and current Explore; record answers per minute, correctness, post-correct wait, post-incorrect retry, and interruption count.
-3. Capture the production candidate on the actual deploy target after a cold-cache or PWA update and verify the launch-to-next-destination contact sheet before changing the default.
+2. Capture the production candidate on the actual deploy target after a cold-cache or PWA update and verify the launch-to-next-destination contact sheet before changing the default.
+3. Reduce the stable extra Q8 blocking discovery before calling the full eight-question reward loop polished; keep this separate from the already-passing throughput gate.

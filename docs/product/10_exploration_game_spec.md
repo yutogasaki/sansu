@@ -1,6 +1,6 @@
 # docs/product/10_exploration_game_spec.md — 探索ゲーム仕様
 
-> 状態: gameplayの **MVP-0/1**、run保存の **MVP-2a**、Study共通planner / SRS接続の **MVP-2b** を実装済み。1ラン8行動・15ノードを3問単位の連問区間として遊ぶ。production defaultは `classic-v1` とする。旧編み根版は50 / 100のREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。既存delivery / feature-flag ID `snap-root-v1` のlocal validationにはvisual candidate `dig-pop-painted-v2` を配線済みで、runtime視覚ゲートはGOである。ただし無文字5人テストと旧高速学習とのclean revision・10反復適格throughput比較は未実施のためproduction判定はHOLDとする。本格グリッド、道具、鉱脈連鎖、未確定素材の損失は将来案として区別する。
+> 状態: gameplayの **MVP-0/1**、run保存の **MVP-2a**、Study共通planner / SRS接続の **MVP-2b** を実装済み。1ラン8行動・15ノードを3問単位の連問区間として遊ぶ。production defaultは `classic-v1` とする。旧編み根版は50 / 100のREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。既存delivery / feature-flag ID `snap-root-v1` のlocal validationにはvisual candidate `dig-pop-painted-v2` を配線済みで、runtime視覚と旧高速Studyとのclean revision・10反復適格throughputは個別サブゲートGOである。ただし実配信targetの同一build証拠と無文字5人テストは未実施のためrelease Gate Cとproduction判定はHOLDとする。本格グリッド、道具、鉱脈連鎖、未確定素材の損失は将来案として区別する。
 
 ## 1. コンセプト
 
