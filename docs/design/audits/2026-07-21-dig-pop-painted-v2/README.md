@@ -1,11 +1,12 @@
 # Dig Pop Painted v2 Runtime Audit
 
-- Date: 2026-07-21
-- Actual validation target: `http://127.0.0.1:5175/explore`
-- Build revision: `2704ff3aa0e7+dirty`
+- Date: 2026-07-23 (G2 runtime recapture)
+- Actual validation target: harness-owned `http://127.0.0.1:4173/#/explore`
+- Build revision: `a69c2246ac7ae2d22b4cb9a19030ceff3fc5e13a`
 - Delivery / feature-flag ID: `snap-root-v1`
 - Rendered visual candidate ID: `dig-pop-painted-v2`
 - Production default: `classic-v1`
+- Capture cleanliness: app source and configuration matched the committed revision; the eight screenshot paths became dirty only as the intended capture output
 - Cache / update evidence: fresh local dev process plus successful production build and PWA precache generation; this is not a production deployment
 
 ## Decision
@@ -98,11 +99,11 @@ The local validation implementation preserves the existing problem generator, pl
 | Visible touch input | `789 / 456 / 123 / 0`, C, backspace, confirm |
 | Physical input | `0-9`, Backspace, Delete, Enter |
 | Viewport asset loading | exactly the four selected mobile or tablet frames, never all eight |
-| Unit / integration | 76 files, **672 tests PASS** |
+| Unit / integration | 82 files, **718 tests PASS** |
 | Browser smoke | **22 scenarios PASS**, including 390px and tablet Snap Root, keyboard / TenKey, persistence failures, Explore routes, other encounters, and parent guard |
 | Fresh full-smoke Snap Root sample | first incorrect **439ms**, delayed incorrect **532ms**, correct **115 / 129ms** |
 | Lint / typecheck / build | PASS |
-| PWA precache | **7.94 MiB / 12 MiB** |
+| PWA precache | **8.25 MiB / 12 MiB** |
 | Explore artwork | **3.68 MiB / 8 MiB** |
 
 ### Fixed-ten throughput evidence
