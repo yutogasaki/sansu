@@ -12,6 +12,7 @@ import {
 } from "../domain/battle/engine";
 import { PlayerId, PlayerConfig, BattleGameMode } from "../domain/battle/types";
 import { playSound } from "../utils/audio";
+import { reachPwaUpdateCheckpoint } from "../pwa";
 
 export const Battle: React.FC = () => {
     const navigate = useNavigate();
@@ -82,10 +83,12 @@ export const Battle: React.FC = () => {
     );
 
     const handleCancel = useCallback(() => {
+        if (reachPwaUpdateCheckpoint("battle-cancel")) return;
         dispatch({ type: "RESET" });
     }, []);
 
     const handlePlayAgain = useCallback(() => {
+        if (reachPwaUpdateCheckpoint("battle-replay", { protectNextSession: true })) return;
         dispatch({ type: "RESET" });
     }, []);
 

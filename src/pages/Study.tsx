@@ -4,14 +4,35 @@ import { useSwipeable } from "react-swipeable";
 import { useStudySession } from "../hooks/useStudySession";
 import { useHissanSession } from "../hooks/useHissanSession";
 import { playSound, setSoundEnabled } from "../utils/audio";
-import { getActiveProfile, saveProfile } from "../domain/user/repository";
+import { getActiveProfile, updateProfileAtomically } from "../domain/user/repository";
 import { StudyLayout } from "./StudyLayout";
-import { isFixedSessionKind, shouldPrefetchNextBlock, checkAnswer, shouldShowEndlessBreak, isFixedSessionComplete, isInputLocked } from "../hooks/useStudySession.logic";
+import {
+    isFixedSessionKind,
+    shouldPrefetchNextBlock,
+    checkAnswer,
+    shouldShowEndlessBreak,
+    isFixedSessionComplete,
+    isInputLocked,
+    resolveFixedSessionCompletionPresentation,
+} from "../hooks/useStudySession.logic";
 import { logInDev } from "../utils/debug";
 import { speakEnglish, warmUpTTS } from "../utils/tts";
 import { useTimeoutScheduler } from "../hooks/useTimeoutScheduler";
 import { DevStudySwitcher } from "../components/dev/DevStudySwitcher";
 import { getDevStudyAdjacentSelection, getDevStudySelectionSummary } from "../components/dev/devStudySelection";
+import { reachPwaUpdateCheckpoint } from "../pwa";
+
+type FixedSessionStats = {
+    correct: number;
+    total: number;
+    durationSeconds: number;
+    timeLimitSeconds?: number;
+    timedOut?: boolean;
+};
+
+type FixedSessionCompletionState =
+    | { status: "idle" }
+    | { status: "saving" | "error" | "saved"; stats: FixedSessionStats };
 
 export const Study: React.FC = () => {
     const navigate = useNavigate();
@@ -79,7 +100,14 @@ export const Study: React.FC = () => {
     const [sessionResult, setSessionResult] = useState<{ correct: number; total: number; durationSeconds: number } | null>(null);
     const [testTimeLimitSeconds, setTestTimeLimitSeconds] = useState<number | undefined>(undefined);
     const [testRemainingSeconds, setTestRemainingSeconds] = useState<number | undefined>(undefined);
-    const hasCompletedFixedSessionRef = React.useRef(false);
+    const [fixedSessionCompletion, setFixedSessionCompletion] = useState<FixedSessionCompletionState>({
+        status: "idle",
+    });
+    const fixedSessionCompletionInFlightRef = React.useRef(false);
+    const fixedSessionCompletionAttemptRef = React.useRef(0);
+    const activeSessionKeyRef = React.useRef(sessionResetKey);
+    const isStudyMountedRef = React.useRef(false);
+    activeSessionKeyRef.current = sessionResetKey;
 
     const [englishAutoRead, setEnglishAutoRead] = useState(false);
     const [isEasyText, setIsEasyText] = useState(false);
@@ -107,6 +135,13 @@ export const Study: React.FC = () => {
         warmUpTTS();
     }, []);
 
+    useEffect(() => {
+        isStudyMountedRef.current = true;
+        return () => {
+            isStudyMountedRef.current = false;
+        };
+    }, []);
+
     // Sync Audio Settings & Profile ID
     useEffect(() => {
         getActiveProfile().then(profile => {
@@ -129,7 +164,10 @@ export const Study: React.FC = () => {
         }
         const profile = await getActiveProfile();
         if (profile) {
-            await saveProfile({ ...profile, englishAutoRead: newValue });
+            await updateProfileAtomically(profile.id, currentProfile => ({
+                ...currentProfile,
+                englishAutoRead: newValue,
+            }));
         }
     };
 
@@ -168,7 +206,9 @@ export const Study: React.FC = () => {
         setCorrectCount(0);
         setSessionResult(null);
         setTestRemainingSeconds(undefined);
-        hasCompletedFixedSessionRef.current = false;
+        setFixedSessionCompletion({ status: "idle" });
+        fixedSessionCompletionAttemptRef.current += 1;
+        fixedSessionCompletionInFlightRef.current = false;
         startTimeRef.current = Date.now();
         setIsDevSwitcherOpen(false);
     }, [sessionResetKey, clearPendingUiTimeouts]);
@@ -201,39 +241,101 @@ export const Study: React.FC = () => {
     const startTimeRef = React.useRef(0);
     useEffect(() => {
         startTimeRef.current = Date.now();
-        hasCompletedFixedSessionRef.current = false;
     }, []);
 
     const finalizeFixedSession = useCallback(async (timedOut = false) => {
         const isFixedSession = isFixedSessionKind(sessionKindParam);
-        if (!isFixedSession || loading || hasCompletedFixedSessionRef.current) return;
-        hasCompletedFixedSessionRef.current = true;
+        if (
+            !isFixedSession
+            || loading
+            || fixedSessionCompletion.status === "saving"
+            || fixedSessionCompletion.status === "saved"
+            || fixedSessionCompletionInFlightRef.current
+        ) return;
 
-        const durationSeconds = Math.round((Date.now() - startTimeRef.current) / 1000);
-        const stats = {
-            correct: correctCount,
-            total: blockSize,
-            durationSeconds,
-            timeLimitSeconds: sessionKindParam === "periodic-test" ? testTimeLimitSeconds : undefined,
-            timedOut: sessionKindParam === "periodic-test" ? timedOut : undefined,
-        };
+        const stats = fixedSessionCompletion.status === "error"
+            ? fixedSessionCompletion.stats
+            : {
+                correct: correctCount,
+                total: blockSize,
+                durationSeconds: Math.round((Date.now() - startTimeRef.current) / 1000),
+                timeLimitSeconds: sessionKindParam === "periodic-test" ? testTimeLimitSeconds : undefined,
+                timedOut: sessionKindParam === "periodic-test" ? timedOut : undefined,
+            };
+        const completionSessionKey = sessionResetKey;
+        const completionAttempt = fixedSessionCompletionAttemptRef.current + 1;
+        fixedSessionCompletionAttemptRef.current = completionAttempt;
+        fixedSessionCompletionInFlightRef.current = true;
+        setFixedSessionCompletion({ status: "saving", stats });
 
-        if (sessionKindParam === "periodic-test") {
-            setSessionResult({ correct: correctCount, total: blockSize, durationSeconds });
-            setIsFinished(true);
+        try {
+            const persisted = await completeSession(stats);
+            if (!persisted) {
+                throw new Error("Fixed session completion could not be persisted");
+            }
+            if (
+                !isStudyMountedRef.current
+                || activeSessionKeyRef.current !== completionSessionKey
+                || fixedSessionCompletionAttemptRef.current !== completionAttempt
+            ) {
+                return;
+            }
+
+            setFixedSessionCompletion({ status: "saved", stats });
+            if (sessionKindParam === "periodic-test") {
+                setSessionResult({
+                    correct: stats.correct,
+                    total: stats.total,
+                    durationSeconds: stats.durationSeconds,
+                });
+                // Only a persisted result can become a PWA update checkpoint.
+                setIsFinished(true);
+            } else {
+                navigate('/stats');
+            }
+        } catch {
+            if (
+                isStudyMountedRef.current
+                && activeSessionKeyRef.current === completionSessionKey
+                && fixedSessionCompletionAttemptRef.current === completionAttempt
+            ) {
+                setFixedSessionCompletion({ status: "error", stats });
+            }
+        } finally {
+            if (fixedSessionCompletionAttemptRef.current === completionAttempt) {
+                fixedSessionCompletionInFlightRef.current = false;
+            }
         }
+    }, [
+        sessionKindParam,
+        loading,
+        fixedSessionCompletion,
+        correctCount,
+        blockSize,
+        testTimeLimitSeconds,
+        completeSession,
+        navigate,
+        sessionResetKey,
+    ]);
 
-        if (completeSession) {
-            await completeSession(stats);
-        }
-
-        if (sessionKindParam !== "periodic-test") {
-            navigate('/stats');
-        }
-    }, [sessionKindParam, loading, correctCount, blockSize, testTimeLimitSeconds, completeSession, navigate]);
+    const fixedSessionCompletionDue = isFixedSessionComplete(
+        currentIndex,
+        blockSize,
+        sessionKindParam,
+        loading,
+    );
+    const completionPresentation = resolveFixedSessionCompletionPresentation(
+        fixedSessionCompletion.status,
+        fixedSessionCompletionDue,
+        isFinished,
+    );
 
     useEffect(() => {
-        if (sessionKindParam !== "periodic-test" || typeof testTimeLimitSeconds !== "number") {
+        if (
+            sessionKindParam !== "periodic-test"
+            || typeof testTimeLimitSeconds !== "number"
+            || fixedSessionCompletion.status !== "idle"
+        ) {
             setTestRemainingSeconds(undefined);
             return;
         }
@@ -242,7 +344,10 @@ export const Study: React.FC = () => {
             const elapsed = Math.floor((Date.now() - startTimeRef.current) / 1000);
             const remaining = Math.max(0, testTimeLimitSeconds - elapsed);
             setTestRemainingSeconds(remaining);
-            if (remaining <= 0) {
+            // Let an answer already being persisted finish before freezing the
+            // result. completeSession also waits for the result queue, but the
+            // score state must be allowed to commit before stats are captured.
+            if (remaining <= 0 && !isProcessingRef.current) {
                 void finalizeFixedSession(true);
             }
         };
@@ -250,20 +355,35 @@ export const Study: React.FC = () => {
         tick();
         const timerId = window.setInterval(tick, 1000);
         return () => window.clearInterval(timerId);
-    }, [sessionKindParam, testTimeLimitSeconds, finalizeFixedSession]);
+    }, [
+        sessionKindParam,
+        testTimeLimitSeconds,
+        fixedSessionCompletion.status,
+        finalizeFixedSession,
+    ]);
 
     // Check for Fixed Session Completion (Periodic Test / Weak Review / Check Event)
     useEffect(() => {
-        if (isFixedSessionComplete(currentIndex, blockSize, sessionKindParam, loading)) {
+        if (fixedSessionCompletion.status === "idle" && fixedSessionCompletionDue) {
             logInDev("Fixed Session Complete!", { correctCount, blockSize });
             void finalizeFixedSession(false);
         }
-    }, [currentIndex, blockSize, sessionKindParam, loading, correctCount, finalizeFixedSession]);
+    }, [
+        blockSize,
+        correctCount,
+        finalizeFixedSession,
+        fixedSessionCompletion.status,
+        fixedSessionCompletionDue,
+    ]);
 
     // Handlers - 全てのフックより前に定義
     const handleTenKeyInput = useCallback((val: string | number) => {
         const valStr = val.toString();
-        if (isInputLocked(feedback, isProcessingRef.current)) return;
+        if (
+            completionPresentation !== "none"
+            || fixedSessionCompletionInFlightRef.current
+            || isInputLocked(feedback, isProcessingRef.current)
+        ) return;
         playSound("tap");
 
         if (hissan.isHissanActive) {
@@ -298,10 +418,22 @@ export const Study: React.FC = () => {
                 setUserInput(prev => prev + valStr);
             }
         }
-    }, [feedback, currentProblem, activeFieldIndex, userInput.length, scheduleUiTimeout, hissan]);
+    }, [
+        completionPresentation,
+        feedback,
+        currentProblem,
+        activeFieldIndex,
+        userInput.length,
+        scheduleUiTimeout,
+        hissan,
+    ]);
 
     const handleBackspace = useCallback(() => {
-        if (isInputLocked(feedback, isProcessingRef.current)) return;
+        if (
+            completionPresentation !== "none"
+            || fixedSessionCompletionInFlightRef.current
+            || isInputLocked(feedback, isProcessingRef.current)
+        ) return;
         playSound("tap");
 
         if (hissan.isHissanActive) {
@@ -318,10 +450,14 @@ export const Study: React.FC = () => {
         } else {
             setUserInput(prev => prev.slice(0, -1));
         }
-    }, [feedback, currentProblem, activeFieldIndex, hissan]);
+    }, [completionPresentation, feedback, currentProblem, activeFieldIndex, hissan]);
 
     const handleClear = useCallback(() => {
-        if (isInputLocked(feedback, isProcessingRef.current)) return;
+        if (
+            completionPresentation !== "none"
+            || fixedSessionCompletionInFlightRef.current
+            || isInputLocked(feedback, isProcessingRef.current)
+        ) return;
         if (hissan.isHissanActive) {
             hissan.handleHissanClear();
             return;
@@ -335,10 +471,14 @@ export const Study: React.FC = () => {
         } else {
             setUserInput("");
         }
-    }, [feedback, currentProblem, activeFieldIndex, hissan]);
+    }, [completionPresentation, feedback, currentProblem, activeFieldIndex, hissan]);
 
     const handleCursorMove = useCallback((direction: "left" | "right") => {
-        if (feedback !== "none") return;
+        if (
+            completionPresentation !== "none"
+            || fixedSessionCompletionInFlightRef.current
+            || isInputLocked(feedback, isProcessingRef.current)
+        ) return;
         if (hissan.isHissanActive) {
             hissan.handleHissanCursorMove(direction);
             return;
@@ -351,10 +491,17 @@ export const Study: React.FC = () => {
                 setActiveFieldIndex(prev => Math.max(prev - 1, 0));
             }
         }
-    }, [feedback, currentProblem, hissan]);
+    }, [completionPresentation, feedback, currentProblem, hissan]);
 
     const nextProblem = useCallback(() => {
-        if (isProcessingRef.current) return;
+        if (
+            completionPresentation !== "none"
+            || fixedSessionCompletionInFlightRef.current
+            || isProcessingRef.current
+        ) return;
+        // Latch synchronously so a double tap cannot skip a question before
+        // React commits the next render. The problem-change effect unlocks it.
+        isProcessingRef.current = true;
         setFeedback("none");
         setShowCorrection(false);
         setSaveError(false);
@@ -362,11 +509,16 @@ export const Study: React.FC = () => {
         setCurrentIndex(prev => prev + 1);
         problemShownAtRef.current = Date.now();
         // Note: isProcessingRef reset is handled in the effect when currentProblem changes
-    }, []);
+    }, [completionPresentation]);
 
     // Submitting - useEffectより前に定義
     const handleSubmit = useCallback(async (choiceValue?: string) => {
-        if (isInputLocked(feedback, isProcessingRef.current) || !currentProblem) return;
+        if (
+            completionPresentation !== "none"
+            || fixedSessionCompletionInFlightRef.current
+            || isInputLocked(feedback, isProcessingRef.current)
+            || !currentProblem
+        ) return;
         setSaveError(false);
 
         // 筆算モードの場合はhissanEnterを使う
@@ -443,11 +595,26 @@ export const Study: React.FC = () => {
             }
             // Auto-advance removed. User must click Next.
         }
-    }, [feedback, currentProblem, userInput, userInputs, handleResult, nextProblem, hissan, scheduleUiTimeout]);
+    }, [
+        completionPresentation,
+        feedback,
+        currentProblem,
+        userInput,
+        userInputs,
+        handleResult,
+        nextProblem,
+        hissan,
+        scheduleUiTimeout,
+    ]);
 
     // スキップ処理（仕様 4.7）
     const handleSkip = useCallback(async () => {
-        if (isInputLocked(feedback, isProcessingRef.current) || !currentProblem) return;
+        if (
+            completionPresentation !== "none"
+            || fixedSessionCompletionInFlightRef.current
+            || isInputLocked(feedback, isProcessingRef.current)
+            || !currentProblem
+        ) return;
 
         isProcessingRef.current = true;
 
@@ -468,7 +635,7 @@ export const Study: React.FC = () => {
         }
 
         // Auto-advance removed. User must click Next.
-    }, [feedback, currentProblem, handleResult]);
+    }, [completionPresentation, feedback, currentProblem, handleResult]);
 
     // 左スワイプでスキップ
     const swipeHandlers = useSwipeable({
@@ -480,6 +647,7 @@ export const Study: React.FC = () => {
     // PCキーボード操作（仕様 4.2）
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            if (completionPresentation !== "none") return;
             if (feedback !== "none") return;
             if (!currentProblem) return;
 
@@ -528,9 +696,28 @@ export const Study: React.FC = () => {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [feedback, currentProblem, handleTenKeyInput, handleBackspace, handleClear, handleSkip, handleSubmit]);
+    }, [
+        completionPresentation,
+        feedback,
+        currentProblem,
+        handleTenKeyInput,
+        handleBackspace,
+        handleClear,
+        handleSkip,
+        handleSubmit,
+    ]);
+
+    const handleRetryFixedSessionCompletion = useCallback(() => {
+        void finalizeFixedSession();
+    }, [finalizeFixedSession]);
 
     const handleContinue = useCallback(() => {
+        // Do not erase the break/result screen as soon as it appears. Apply a
+        // deferred update only after the child asks to continue.
+        if (reachPwaUpdateCheckpoint(
+            `study-continue:${sessionResetKey}:${currentIndex}`,
+            { protectNextSession: true },
+        )) return;
         // If we are flagged as finished (Break time), just resume.
         // We don't strictly need to generate more blocks here because pre-fetch handles it,
         // but calling nextBlock is safe (just appends).
@@ -555,7 +742,7 @@ export const Study: React.FC = () => {
 
         setIsFinished(false);
         // We might want to ensure we have questions, but pre-fetch checks that.
-    }, []);
+    }, [currentIndex, sessionResetKey]);
 
     const buildDevStudyPath = useCallback((subject: "math" | "vocab", id: string) => {
         const nextParams = new URLSearchParams({
@@ -598,6 +785,7 @@ export const Study: React.FC = () => {
             <StudyLayout
                 loading={loading}
                 isFinished={isFinished}
+                completionPresentation={completionPresentation}
                 currentProblem={currentProblem}
                 currentIndex={currentIndex}
                 blockSize={blockSize}
@@ -615,6 +803,7 @@ export const Study: React.FC = () => {
                 onNavigate={handleNavigate}
                 onNext={nextProblem}
                 onContinue={handleContinue}
+                onRetryCompletion={handleRetryFixedSessionCompletion}
                 onSkip={handleSkip}
                 onTenKeyInput={handleTenKeyInput}
                 onBackspace={handleBackspace}

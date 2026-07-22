@@ -76,6 +76,7 @@ import {
 import type { Problem, UserProfile } from "../domain/types";
 import { getActiveProfile } from "../domain/user/repository";
 import { playSound, setSoundEnabled } from "../utils/audio";
+import { holdPwaUpdateForCriticalPersistence, reachPwaUpdateCheckpoint } from "../pwa";
 
 type ExploreScreenPhase = "intro" | "run";
 type ExploreAttemptSaveStatus = "idle" | "saving" | "error";
@@ -338,6 +339,9 @@ export const Explore: React.FC = () => {
     const runFinishInFlightRef = useRef(false);
     const frozenRunFinishRef = useRef<FrozenExploreRunFinish | null>(null);
     const rapidLoopTransitionRef = useRef<RapidLoopTransition | null>(null);
+    const isExploreMountedRef = useRef(false);
+    const activeExploreRunIdRef = useRef(state.runId);
+    activeExploreRunIdRef.current = state.runId;
     const previousRootPullPayoffVariantRef = useRef<RootPullPayoffVariant | undefined>(undefined);
     const rootPullPayoffVariant = useMemo(
         () => selectRootPullPayoffVariant(
@@ -388,16 +392,20 @@ export const Explore: React.FC = () => {
         };
     }, [startRetryNonce]);
 
-    useEffect(() => () => {
-        if (feedbackTimerRef.current !== null) window.clearTimeout(feedbackTimerRef.current);
-        if (revealTimerRef.current !== null) window.clearTimeout(revealTimerRef.current);
-        if (attemptSavingNoticeTimerRef.current !== null) {
-            window.clearTimeout(attemptSavingNoticeTimerRef.current);
-        }
-        attemptSaveInFlightRef.current = false;
-        runFinishInFlightRef.current = false;
-        rapidLoopTransitionRef.current?.controller.abort();
-        rapidLoopTransitionRef.current = null;
+    useEffect(() => {
+        isExploreMountedRef.current = true;
+        return () => {
+            isExploreMountedRef.current = false;
+            if (feedbackTimerRef.current !== null) window.clearTimeout(feedbackTimerRef.current);
+            if (revealTimerRef.current !== null) window.clearTimeout(revealTimerRef.current);
+            if (attemptSavingNoticeTimerRef.current !== null) {
+                window.clearTimeout(attemptSavingNoticeTimerRef.current);
+            }
+            attemptSaveInFlightRef.current = false;
+            runFinishInFlightRef.current = false;
+            rapidLoopTransitionRef.current?.controller.abort();
+            rapidLoopTransitionRef.current = null;
+        };
     }, []);
 
     useEffect(() => {
@@ -415,6 +423,7 @@ export const Explore: React.FC = () => {
 
         let cancelled = false;
         setRunPersistence({ status: "starting" });
+        const releasePwaUpdateHold = holdPwaUpdateForCriticalPersistence();
         void startExploreRunFromUi({
             runId: state.runId,
             profileId: profile.id,
@@ -429,6 +438,8 @@ export const Explore: React.FC = () => {
             setRunPersistence({ status: "ready" });
         }).catch(() => {
             if (!cancelled) setRunPersistence({ status: "error", operation: "start" });
+        }).finally(() => {
+            releasePwaUpdateHold();
         });
 
         return () => {
@@ -732,6 +743,7 @@ export const Explore: React.FC = () => {
 
         frozenAttemptRef.current = frozen;
         attemptSaveInFlightRef.current = true;
+        const releasePwaUpdateHold = holdPwaUpdateForCriticalPersistence();
         setAttemptSaveStatus("saving");
         beginAttemptSavingNotice();
         if (frozen.expectedResult === "incorrect") {
@@ -741,6 +753,10 @@ export const Explore: React.FC = () => {
 
         try {
             const receipt = await commitExploreAttemptFromUi(frozen.input);
+            if (
+                !isExploreMountedRef.current
+                || activeExploreRunIdRef.current !== frozen.input.identity.runId
+            ) return;
             if (!receiptMatchesFrozenAttempt(receipt, frozen)) {
                 throw new Error("Exploration commit receipt did not match its submission");
             }
@@ -906,10 +922,15 @@ export const Explore: React.FC = () => {
                 void finishIncorrectFeedback();
             }, retryDelayMs);
         } catch {
+            if (
+                !isExploreMountedRef.current
+                || activeExploreRunIdRef.current !== frozen.input.identity.runId
+            ) return;
             hideAttemptSavingNotice();
             if (frozen.expectedResult === "incorrect") setFeedback("idle");
             setAttemptSaveStatus("error");
         } finally {
+            releasePwaUpdateHold();
             attemptSaveInFlightRef.current = false;
         }
     }, [
@@ -1017,10 +1038,15 @@ export const Explore: React.FC = () => {
 
         frozenRunFinishRef.current = frozen;
         runFinishInFlightRef.current = true;
+        const releasePwaUpdateHold = holdPwaUpdateForCriticalPersistence();
         setRunPersistence({ status: "finishing", intent });
 
         try {
             const receipt = await finishExploreRunFromUi(frozen.input);
+            if (
+                !isExploreMountedRef.current
+                || activeExploreRunIdRef.current !== frozen.input.runId
+            ) return;
             if (
                 receipt.runId !== frozen.input.runId
                 || receipt.profileId !== frozen.input.profileId
@@ -1036,8 +1062,13 @@ export const Explore: React.FC = () => {
             dispatch({ type: "APPLY_FINISHED_RUN", receipt });
             if (intent === "returned") playSound("clear");
         } catch {
+            if (
+                !isExploreMountedRef.current
+                || activeExploreRunIdRef.current !== frozen.input.runId
+            ) return;
             setRunPersistence({ status: "error", operation: intent });
         } finally {
+            releasePwaUpdateHold();
             runFinishInFlightRef.current = false;
         }
     }, [
@@ -1063,6 +1094,12 @@ export const Explore: React.FC = () => {
     }, [finishActiveRun, navigate, phase, state.profileId, state.status]);
 
     const restart = () => {
+        // Keep the completed summary visible. A deferred update may take over
+        // only after the child explicitly chooses to start the next run.
+        if (reachPwaUpdateCheckpoint(
+            `explore-replay:${state.runId}:${state.status}`,
+            { protectNextSession: true },
+        )) return;
         if (feedbackTimerRef.current !== null) window.clearTimeout(feedbackTimerRef.current);
         if (revealTimerRef.current !== null) window.clearTimeout(revealTimerRef.current);
         rapidLoopTransitionRef.current?.controller.abort();

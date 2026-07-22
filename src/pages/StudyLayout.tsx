@@ -27,6 +27,7 @@ type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event"
 interface StudyLayoutProps {
     loading: boolean;
     isFinished: boolean;
+    completionPresentation?: "none" | "saving" | "error";
     currentProblem?: Problem;
     currentIndex: number;
     blockSize: number;
@@ -47,6 +48,7 @@ interface StudyLayoutProps {
     // Handlers
     onNavigate: (path: string) => void;
     onContinue: () => void;
+    onRetryCompletion: () => void;
     onNext: () => void;
     onSkip: () => void;
 
@@ -114,6 +116,7 @@ const ResultMetric: React.FC<ResultMetricProps> = ({ label, value, tone = "defau
 export const StudyLayout: React.FC<StudyLayoutProps> = ({
     loading,
     isFinished,
+    completionPresentation = "none",
     currentProblem,
     sessionKind = "normal",
     correctCount = 0,
@@ -130,6 +133,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     saveError = false,
     onNavigate,
     onContinue,
+    onRetryCompletion,
     onNext,
     onSkip,
     onTenKeyInput,
@@ -263,6 +267,28 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
         return (
             <Spinner
                 message={t("じゅんびちゅう...", "準備中...")}
+                fullScreen
+                className="bg-transparent"
+            />
+        );
+    }
+
+    if (completionPresentation === "saving") {
+        return (
+            <Spinner
+                message={t("けっかを きろくしているよ...", "結果を保存しています...")}
+                fullScreen
+                className="bg-transparent"
+            />
+        );
+    }
+
+    if (completionPresentation === "error") {
+        return (
+            <EmptyState
+                message={t("きろくを ほぞんできなかったよ", "結果を保存できませんでした")}
+                actionLabel={t("もういちど ほぞん", "保存を再試行")}
+                onAction={onRetryCompletion}
                 fullScreen
                 className="bg-transparent"
             />

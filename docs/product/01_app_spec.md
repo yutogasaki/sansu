@@ -895,6 +895,15 @@ interface MemoryState {
 | 探索MVP-0/1状態 | 純粋reducer、メモリ内 |
 | 探索正式保存 | Dexie専用テーブル（MVP-2以降） |
 
+### 8.1 PWA更新契約
+
+- 起動中のPWAは、起動時、復帰時、再接続時、フォーカス時、および定期確認で新しいbuildとService Workerを確認し、手動キャッシュ削除なしで新しいbuildへ移る。
+- `/onboarding`、`/study`、`/explore`、`/battle/play` はpointer/key操作後の同一進行中セッションだけ更新reloadから保護する。各画面の初回表示から最初の操作までは更新を適用できる。
+- 更新を進行中セッションで検出した場合は即時reloadせず、保護対象外の画面へ移る、別の保護対象セッションを開く、または同一画面の結果・休憩を確認して「もう一回」「続ける」「cancel」を選んだ安全なcheckpointで一度だけreloadする。結果・報酬画面が表示されただけではreloadしない。React RouterのSPA遷移はnative `hashchange` に依存せず観測する。
+- 安全なcheckpointは、そのrun・テスト・プロフィール更新など中断できない保存が完了した後にだけ公開する。reload後はcheckpointの行き先または同一画面を保ち、子どもに終えた操作を繰り返させない。
+- 回答、テスト結果、探索runなどのcritical persistenceが1件でも進行中なら、保護対象外または別routeへ移っても更新reloadを解禁しない。必要な保存がすべてsettleした後に更新判定を再開する。
+- PWA更新処理はIndexedDB、localStorage、ユーザーデータ用cacheを削除しない。回復処理で削除できるのはアプリが管理するService Worker cacheだけとする。
+
 
 
 ## 9. 今後の検討事項

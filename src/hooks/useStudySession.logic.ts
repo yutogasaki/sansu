@@ -219,6 +219,23 @@ export const isFixedSessionComplete = (
     return currentIndex >= blockSize && blockSize > 0;
 };
 
+export type FixedSessionCompletionPhase = "idle" | "saving" | "error" | "saved";
+export type FixedSessionCompletionPresentation = "none" | "saving" | "error";
+
+export const resolveFixedSessionCompletionPresentation = (
+    phase: FixedSessionCompletionPhase,
+    completionDue: boolean,
+    isFinished: boolean,
+): FixedSessionCompletionPresentation => {
+    if (phase === "error") return "error";
+    if (
+        phase === "saving"
+        || (phase === "idle" && completionDue)
+        || (phase === "saved" && !isFinished)
+    ) return "saving";
+    return "none";
+};
+
 /**
  * フィードバック表示中の入力ロック判定。
  */
@@ -322,4 +339,102 @@ export const resolveProfileProgressionAfterAttempt = async ({
     }
 
     return updatedProfile;
+};
+
+export const applyResolvedProgressionToLatestProfile = ({
+    baseProfile,
+    resolvedProfile,
+    latestProfile,
+    subject,
+}: {
+    baseProfile: UserProfile;
+    resolvedProfile: UserProfile;
+    latestProfile: UserProfile;
+    subject: SubjectKey;
+}): UserProfile => {
+    let nextProfile = latestProfile;
+
+    if (subject === "math") {
+        const unlockTarget = resolvedProfile.mathMaxUnlocked > baseProfile.mathMaxUnlocked
+            ? resolvedProfile.mathMaxUnlocked
+            : null;
+        if (unlockTarget !== null && unlockTarget > nextProfile.mathMaxUnlocked) {
+            nextProfile = {
+                ...nextProfile,
+                mathMaxUnlocked: unlockTarget,
+                mathLevels: nextProfile.mathLevels?.map(level => (
+                    level.level <= unlockTarget ? { ...level, unlocked: true } : level
+                )),
+            };
+        }
+
+        const promotionTarget = resolvedProfile.mathMainLevel > baseProfile.mathMainLevel
+            ? resolvedProfile.mathMainLevel
+            : null;
+        if (
+            promotionTarget !== null
+            && promotionTarget > nextProfile.mathMainLevel
+            && promotionTarget <= nextProfile.mathMaxUnlocked
+        ) {
+            nextProfile = {
+                ...nextProfile,
+                mathMainLevel: promotionTarget,
+                mathMainLevelStartedAt: resolvedProfile.mathMainLevelStartedAt,
+                mathLevels: nextProfile.mathLevels
+                    ? ensureMainEnabled(
+                        nextProfile.mathLevels.map(level => (
+                            level.level === promotionTarget
+                                ? { ...level, enabled: true, recentAnswersNonReview: [] }
+                                : level
+                        )),
+                        promotionTarget,
+                    )
+                    : nextProfile.mathLevels,
+                pendingLevelUpNotification: resolvedProfile.pendingLevelUpNotification,
+            };
+        }
+
+        return nextProfile;
+    }
+
+    const unlockTarget = resolvedProfile.vocabMaxUnlocked > baseProfile.vocabMaxUnlocked
+        ? resolvedProfile.vocabMaxUnlocked
+        : null;
+    if (unlockTarget !== null && unlockTarget > nextProfile.vocabMaxUnlocked) {
+        nextProfile = {
+            ...nextProfile,
+            vocabMaxUnlocked: unlockTarget,
+            vocabLevels: nextProfile.vocabLevels?.map(level => (
+                level.level <= unlockTarget ? { ...level, unlocked: true } : level
+            )),
+        };
+    }
+
+    const promotionTarget = resolvedProfile.vocabMainLevel > baseProfile.vocabMainLevel
+        ? resolvedProfile.vocabMainLevel
+        : null;
+    if (
+        promotionTarget !== null
+        && promotionTarget > nextProfile.vocabMainLevel
+        && promotionTarget <= nextProfile.vocabMaxUnlocked
+    ) {
+        nextProfile = {
+            ...nextProfile,
+            vocabMainLevel: promotionTarget,
+            vocabMainLevelStartedAt: resolvedProfile.vocabMainLevelStartedAt,
+            vocabLevels: nextProfile.vocabLevels
+                ? ensureMainEnabled(
+                    nextProfile.vocabLevels.map(level => (
+                        level.level === promotionTarget
+                            ? { ...level, enabled: true, recentAnswersNonReview: [] }
+                            : level
+                    )),
+                    promotionTarget,
+                )
+                : nextProfile.vocabLevels,
+            pendingLevelUpNotification: resolvedProfile.pendingLevelUpNotification,
+        };
+    }
+
+    return nextProfile;
 };

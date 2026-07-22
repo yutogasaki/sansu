@@ -1,6 +1,6 @@
-import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Onboarding } from "./pages/Onboarding";
 import { Study } from "./pages/Study";
 import { Stats } from "./pages/Stats";
@@ -15,8 +15,42 @@ import { Spinner } from "./components/ui/Spinner";
 import { loadSounds, setSoundEnabled } from "./utils/audio";
 import { getActiveProfile } from "./domain/user/repository";
 import { applyThemeForCurrentTime, getMsUntilNextThemeCheck } from "./utils/theme";
+import { notifyPwaRouteNavigation } from "./pwa";
 
 type ProfileResolution = "loading" | "ready" | "missing";
+
+const PwaRouteObserver = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    useLayoutEffect(() => {
+        notifyPwaRouteNavigation(
+            `${location.pathname}${location.search}`,
+            location.key,
+        );
+    }, [location.key, location.pathname, location.search]);
+
+    useEffect(() => {
+        const e2eWindow = window as Window & { __SANSU_PWA_E2E__?: boolean };
+        if (!e2eWindow.__SANSU_PWA_E2E__) return;
+
+        const handleE2ENavigation = (event: Event) => {
+            const destination = (event as CustomEvent<{ to?: string }>).detail?.to;
+            if (!destination || ![
+                "/onboarding",
+                "/study",
+                "/explore",
+                "/battle/play",
+            ].includes(destination)) return;
+            navigate(destination);
+        };
+
+        window.addEventListener("sansu:pwa-e2e-navigate", handleE2ENavigation);
+        return () => window.removeEventListener("sansu:pwa-e2e-navigate", handleE2ENavigation);
+    }, [navigate]);
+
+    return null;
+};
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
     const [resolution, setResolution] = useState<ProfileResolution>("loading");
@@ -89,6 +123,7 @@ function App() {
     return (
         <div className="app-container">
             <HashRouter>
+                <PwaRouteObserver />
                 <Routes>
                     <Route path="/onboarding" element={<Onboarding />} />
 

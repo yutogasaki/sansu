@@ -3,10 +3,12 @@ import { createInitialProfile } from "../domain/user/profile";
 import {
     applyPendingPeriodicTestTrigger,
     applyPeriodicTestCompletion,
+    applyResolvedProgressionToLatestProfile,
     checkAnswer,
     isFixedSessionComplete,
     isFixedSessionKind,
     isInputLocked,
+    resolveFixedSessionCompletionPresentation,
     resolveProfileProgressionAfterAttempt,
     resolveSessionBlockSize,
     resolveSessionCompletionProfileUpdate,
@@ -245,6 +247,65 @@ describe("useStudySession.logic", () => {
         expect(updated).toBe(profile);
     });
 
+    it("applies resolved progression onto the latest profile without overwriting concurrent fields", () => {
+        const base = createInitialProfile("T", 1, 1, 1, "math");
+        const resolved = {
+            ...base,
+            mathMaxUnlocked: 2,
+            mathMainLevel: 2,
+            mathMainLevelStartedAt: "2026-07-23T00:00:00.000Z",
+            mathLevels: base.mathLevels?.map(level => (
+                level.level === 2
+                    ? { ...level, unlocked: true, enabled: true, recentAnswersNonReview: [] }
+                    : level
+            )),
+            pendingLevelUpNotification: {
+                subject: "math" as const,
+                newLevel: 2,
+                achievedAt: "2026-07-23T00:00:00.000Z",
+            },
+        };
+        const latest = {
+            ...base,
+            soundEnabled: !base.soundEnabled,
+            todayCount: 9,
+            mathLevels: base.mathLevels?.map(level => (
+                level.level === 1
+                    ? { ...level, recentAnswersNonReview: [true, false, true] }
+                    : level
+            )),
+        };
+
+        const updated = applyResolvedProgressionToLatestProfile({
+            baseProfile: base,
+            resolvedProfile: resolved,
+            latestProfile: latest,
+            subject: "math",
+        });
+
+        expect(updated.soundEnabled).toBe(latest.soundEnabled);
+        expect(updated.todayCount).toBe(9);
+        expect(updated.mathMainLevel).toBe(2);
+        expect(updated.mathMaxUnlocked).toBe(2);
+        expect(updated.mathLevels?.find(level => level.level === 1)?.recentAnswersNonReview)
+            .toEqual([true, false, true]);
+        expect(updated.mathLevels?.find(level => level.level === 2)?.recentAnswersNonReview)
+            .toEqual([]);
+    });
+
+    it("does not regress progression already advanced by another writer", () => {
+        const base = createInitialProfile("T", 1, 1, 1, "math");
+        const resolved = { ...base, mathMaxUnlocked: 2, mathMainLevel: 2 };
+        const latest = { ...base, mathMaxUnlocked: 3, mathMainLevel: 3, todayCount: 11 };
+
+        expect(applyResolvedProgressionToLatestProfile({
+            baseProfile: base,
+            resolvedProfile: resolved,
+            latestProfile: latest,
+            subject: "math",
+        })).toBe(latest);
+    });
+
     it("applyPeriodicTestCompletion appends result and clears pending/set", () => {
         vi.useFakeTimers();
         const now = new Date("2026-02-16T12:00:00.000Z").getTime();
@@ -400,6 +461,26 @@ describe("in-session state transitions", () => {
 
         it("returns false when blockSize is 0", () => {
             expect(isFixedSessionComplete(0, 0, "periodic-test", false)).toBe(false);
+        });
+    });
+
+    describe("resolveFixedSessionCompletionPresentation", () => {
+        it("locks the final question immediately while completion starts", () => {
+            expect(resolveFixedSessionCompletionPresentation("idle", true, false)).toBe("saving");
+            expect(resolveFixedSessionCompletionPresentation("saving", true, false)).toBe("saving");
+        });
+
+        it("keeps a saved fixed session covered until its destination is visible", () => {
+            expect(resolveFixedSessionCompletionPresentation("saved", true, false)).toBe("saving");
+            expect(resolveFixedSessionCompletionPresentation("saved", true, true)).toBe("none");
+        });
+
+        it("shows a retryable error instead of treating failed persistence as finished", () => {
+            expect(resolveFixedSessionCompletionPresentation("error", true, false)).toBe("error");
+        });
+
+        it("does not cover an ordinary active session", () => {
+            expect(resolveFixedSessionCompletionPresentation("idle", false, false)).toBe("none");
         });
     });
 

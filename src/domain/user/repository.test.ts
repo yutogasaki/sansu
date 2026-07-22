@@ -79,7 +79,13 @@ vi.mock("../../utils/storage", () => ({
 }));
 
 import { generateMathProblem } from "../math";
-import { deleteProfile, getActiveProfile, getProfile } from "./repository";
+import {
+    deleteProfile,
+    getActiveProfile,
+    getProfile,
+    saveProfile,
+    updateProfileAtomically,
+} from "./repository";
 
 const profile = (id: string): UserProfile => ({
     id,
@@ -255,6 +261,53 @@ describe("getActiveProfile", () => {
 
         const problem = generateMathProblem("count_5", { profile: hydrated! });
         expect(problem.correctAnswer).toBe("4");
+    });
+
+    it("saves the profile mirrors in one read-write transaction", async () => {
+        const expected = profile("saved");
+        mocks.storedAppData = appData([expected], expected.id);
+
+        await saveProfile({ ...expected, name: "updated" });
+
+        expect(mocks.transaction).toHaveBeenCalledWith(
+            "rw",
+            [expect.anything(), expect.anything()],
+            expect.any(Function),
+        );
+        expect(mocks.appDataPut).toHaveBeenCalledWith(expect.objectContaining({
+            profiles: expect.objectContaining({
+                [expected.id]: expect.objectContaining({ name: "updated" }),
+            }),
+        }));
+        expect(mocks.profilesPut).toHaveBeenCalledWith(expect.objectContaining({
+            id: expected.id,
+            name: "updated",
+        }));
+    });
+
+    it("updates from the latest profile snapshot inside the mirror transaction", async () => {
+        const expected = { ...profile("atomic"), soundEnabled: true, todayCount: 4 };
+        mocks.storedAppData = appData([expected], expected.id);
+
+        const updated = await updateProfileAtomically(expected.id, current => ({
+            ...current,
+            todayCount: (current.todayCount || 0) + 1,
+        }));
+
+        expect(updated).toEqual(expect.objectContaining({
+            id: expected.id,
+            soundEnabled: true,
+            todayCount: 5,
+        }));
+        expect(mocks.appDataPut).toHaveBeenCalledWith(expect.objectContaining({
+            profiles: expect.objectContaining({
+                [expected.id]: expect.objectContaining({
+                    soundEnabled: true,
+                    todayCount: 5,
+                }),
+            }),
+        }));
+        expect(mocks.profilesPut).toHaveBeenCalledWith(updated);
     });
 
     it("deletes all IndexedDB rows owned by a profile and selects the next profile", async () => {

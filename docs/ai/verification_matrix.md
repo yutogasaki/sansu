@@ -17,8 +17,9 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 | `npm run assets:check` | PWA precache・探索画像の容量と制作物混入を検査 |
 | `npm run build` | TypeScript build + production build + `assets:check` |
 | `npm run e2e:smoke` | Smoke E2E for critical flows |
+| `npm run e2e:pwa-update` | Production-preview regression for protected-route and same-route update checkpoints |
 | `npm run verify:core` | Docs check + full local quality gate |
-| `npm run verify:release` | Full local quality gate + smoke E2E |
+| `npm run verify:release` | Full local quality gate + smoke E2E + production PWA checkpoint E2E |
 
 ## Matrix
 
@@ -33,7 +34,7 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 | Exploration page/routing | `npm run verify:core`, `npm run e2e:smoke` | Complete and replay one run on phone-width and tablet-width layouts; check reduced motion | Existing `/study`, `/battle`, onboarding, and private-route behavior must remain reachable |
 | Image-led UI / encounter | `npm run verify:core`, `npm run e2e:smoke`, `npm run assets:check` | On the actual app target, compare 390×844 and 768×1024 runtime screenshots beside the approved benchmark; capture launch through the next destination; verify full TenKey, fixed-question throughput, sound off, reduced motion, and cold-cache/PWA update | Record build revision, delivery flag, rendered candidate ID, and cache state. Report visual magnetism, silent comprehension/safety, and runtime integrity separately; mixed legacy/HOLD visual lineage is a HOLD |
 | Storage/schema/profile data | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build` | Existing profile load/save | Write ADR or migration note if needed |
-| PWA/deploy/update flow | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build`, `npm run assets:check`, `npm run e2e:smoke` | Install/update/reload path | Review host cache behavior, precache size, and production-asset boundaries too |
+| PWA/deploy/update flow | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build`, `npm run assets:check`, `npm run e2e:smoke`, `npm run e2e:pwa-update` | Real two-build install/update/reload path; iOS relaunch | Review host cache behavior, precache size, persistence-before-checkpoint, and production-asset boundaries too |
 | Release candidate | All of the above | Critical path smoke on target devices | Include iOS/Android/PWA notes if relevant |
 
 ## Review Prompts

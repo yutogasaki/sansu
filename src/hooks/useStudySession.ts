@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useEffectEvent } from "react";
-import { getActiveProfile, saveProfile } from "../domain/user/repository";
+import { getActiveProfile, updateProfileAtomically } from "../domain/user/repository";
 import {
     getMaintenanceMathSkillIds,
     getRecentAttempts,
@@ -40,12 +40,14 @@ import { checkPeriodTestTrigger } from "../domain/test/trigger";
 import { buildPeriodicTestSet, ensurePeriodicTestSet } from "../domain/test/testSet";
 import {
     applyPendingPeriodicTestTrigger,
+    applyResolvedProgressionToLatestProfile,
     resolveProfileProgressionAfterAttempt,
     resolveSessionCompletionProfileUpdate,
     resolveSessionBlockSize,
     isFixedSessionKind,
     shouldRecordLearningAttempt,
 } from "./useStudySession.logic";
+import { holdPwaUpdateForCriticalPersistence } from "../pwa";
 import { errorInDev, logInDev } from "../utils/debug";
 
 type StudySessionOptions = {
@@ -608,7 +610,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
             try {
                 const currentProfile = await getActiveProfile();
-                if (!currentProfile) return true;
+                if (!currentProfile || currentProfile.id !== profileId) return true;
                 let triggerCheck: {
                     trigger: Awaited<ReturnType<typeof checkPeriodTestTrigger>>;
                     testSet?: ReturnType<typeof buildPeriodicTestSet>;
@@ -637,24 +639,41 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 });
 
                 if (updatedProfile !== currentProfile) {
-                    await saveProfile(updatedProfile);
-                    updateProfile(updatedProfile);
+                    const persistedProgression = await updateProfileAtomically(
+                        profileId,
+                        profileToUpdate => applyResolvedProgressionToLatestProfile({
+                            baseProfile: currentProfile,
+                            resolvedProfile: updatedProfile,
+                            latestProfile: profileToUpdate,
+                            subject: problem.subject,
+                        }),
+                    );
+                    if (!persistedProgression) return true;
+                    updateProfile(persistedProgression);
                 }
 
                 if (triggerCheck) {
-                    const profileWithPendingTest = applyPendingPeriodicTestTrigger(
-                        updatedProfile,
-                        problem.subject,
-                        triggerCheck.trigger,
-                        triggerCheck.testSet,
+                    let didApplyPendingTest = false;
+                    const profileWithPendingTest = await updateProfileAtomically(
+                        profileId,
+                        profileToUpdate => {
+                            const nextProfile = applyPendingPeriodicTestTrigger(
+                                profileToUpdate,
+                                problem.subject,
+                                triggerCheck.trigger,
+                                triggerCheck.testSet,
+                            );
+                            if (!nextProfile) return profileToUpdate;
+                            didApplyPendingTest = true;
+                            return nextProfile;
+                        },
                     );
 
-                    if (profileWithPendingTest) {
+                    if (profileWithPendingTest && didApplyPendingTest) {
                         logInDev(
                             `[Trigger] ${problem.subject} periodic test triggered!`,
                             triggerCheck.trigger.reason,
                         );
-                        await saveProfile(profileWithPendingTest);
                         updateProfile(profileWithPendingTest);
                     }
                 }
@@ -666,9 +685,10 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             return true;
         };
 
+        const releasePwaUpdateHold = holdPwaUpdateForCriticalPersistence();
         const queuedResult = resultQueueRef.current.then(processResult, processResult);
         resultQueueRef.current = queuedResult.then(() => undefined, () => undefined);
-        return queuedResult;
+        return queuedResult.finally(releasePwaUpdateHold);
     };
 
     const initSessionOnProfileReady = useEffectEvent(() => {
@@ -692,25 +712,32 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             timeLimitSeconds?: number;
             timedOut?: boolean;
         }
-    ) => {
-        if (!profileId || !profile) return;
-        await resultQueueRef.current;
-        const currentProfile = await getActiveProfile();
-        if (!currentProfile) return;
+    ): Promise<boolean> => {
+        const releasePwaUpdateHold = holdPwaUpdateForCriticalPersistence();
+        try {
+            if (!profileId || !profile) return false;
+            await resultQueueRef.current;
+            const currentProfile = await getActiveProfile();
+            if (!currentProfile || currentProfile.id !== profileId) return false;
 
-        const sessionKind = options.sessionKind || "normal";
-        const now = Date.now();
-
-        const updated = await resolveSessionCompletionProfileUpdate({
-            currentProfile,
-            sessionKind,
-            sessionStats,
-            now,
-            focusSubject: options.focusSubject,
-        });
-
-        if (updated) {
-            await saveProfile(updated);
+            const sessionKind = options.sessionKind || "normal";
+            const persistedProfile = await updateProfileAtomically(
+                profileId,
+                async latestProfile => (
+                    await resolveSessionCompletionProfileUpdate({
+                        currentProfile: latestProfile,
+                        sessionKind,
+                        sessionStats,
+                        now: Date.now(),
+                        focusSubject: options.focusSubject,
+                    }) ?? latestProfile
+                ),
+            );
+            if (!persistedProfile) return false;
+            updateProfile(persistedProfile);
+            return true;
+        } finally {
+            releasePwaUpdateHold();
         }
     };
 

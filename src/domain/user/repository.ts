@@ -73,17 +73,48 @@ export const saveAppData = async (data: AppData) => {
 };
 
 export const saveProfile = async (profile: UserProfile) => {
-    const appData = await getAppData();
-    const updated: AppData = {
-        ...appData,
-        profiles: {
-            ...appData.profiles,
-            [profile.id]: profile
-        }
-    };
-    await saveAppData(updated);
-    await db.profiles.put(profile);
+    await db.transaction("rw", [db.appData, db.profiles], async () => {
+        const appData = await getAppData();
+        const updated: AppData = {
+            ...appData,
+            profiles: {
+                ...appData.profiles,
+                [profile.id]: profile
+            }
+        };
+        await saveAppData(updated);
+        await db.profiles.put(profile);
+    });
 };
+
+export const updateProfileAtomically = async (
+    profileId: string,
+    updater: (currentProfile: UserProfile) => UserProfile | Promise<UserProfile>,
+): Promise<UserProfile | null> => db.transaction(
+    "rw",
+    [db.appData, db.profiles],
+    async () => {
+        const appData = await getAppData();
+        const currentProfile = appData.profiles[profileId];
+        if (!currentProfile) return null;
+
+        const updatedProfile = await updater(currentProfile);
+        if (updatedProfile.id !== profileId) {
+            throw new Error("Atomic profile updater cannot change profile ownership");
+        }
+        if (updatedProfile === currentProfile) return currentProfile;
+
+        await saveAppData({
+            ...appData,
+            profiles: {
+                ...appData.profiles,
+                [profileId]: updatedProfile,
+            },
+        });
+        await db.profiles.put(updatedProfile);
+        return updatedProfile;
+    },
+);
 
 export const getProfile = async (id: string) => {
     const appData = await getAppData();
