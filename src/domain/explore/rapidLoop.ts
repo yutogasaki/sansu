@@ -1,4 +1,8 @@
 import { getAvailableExploreNodes, exploreReducer } from "./reducer";
+import {
+    EXPLORE_OPENING_ANSWER_COUNT,
+    EXPLORE_RUN_ANSWER_COUNT,
+} from "./runStructure";
 import type {
     ExploreAction,
     ExploreBridgePlan,
@@ -7,19 +11,22 @@ import type {
     ExploreRunState,
 } from "./types";
 
-export const RAPID_LOOP_SEGMENT_LENGTH = 3;
+export const RAPID_LOOP_SEGMENT_LENGTH = EXPLORE_OPENING_ANSWER_COUNT;
 export const RAPID_LOOP_AUTO_BRIDGE_PLAN: ExploreBridgePlan = "stones";
 
 export const shouldAutoRouteExplorePath = (
     steps: number,
     availableNodeCount: number,
 ): boolean => (
-    availableNodeCount === 1
-    || (
-        availableNodeCount > 0
-        && (
-            steps === 0
-            || steps % RAPID_LOOP_SEGMENT_LENGTH !== 0
+    steps < EXPLORE_RUN_ANSWER_COUNT
+    && (
+        availableNodeCount === 1
+        || (
+            availableNodeCount > 0
+            && (
+                steps === 0
+                || steps % RAPID_LOOP_SEGMENT_LENGTH !== 0
+            )
         )
     )
 );

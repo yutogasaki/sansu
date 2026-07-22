@@ -1,7 +1,6 @@
 import { hashExploreSeed } from "./generator";
 import {
     FIREFLY_FLOWER_DISCOVERY_PAGE,
-    MAKIMODON_DISCOVERY_PAGE,
     getDiscoveryPageDefinition,
 } from "./discoveryPageCatalog";
 import { getDiscoveryPageClueFeatureIds } from "./discoveryPage";
@@ -13,6 +12,7 @@ import type {
     ExploreEncounterId,
     ExploreNode,
 } from "./types";
+import type { ExploreRewardPhase } from "./runStructure";
 
 const DISCOVERIES: Record<DiscoveryKind, Array<{ name: string }>> = {
     crystal: [
@@ -56,31 +56,22 @@ export interface DiscoveryPageAward {
 export interface SelectDiscoveryPageAwardInput {
     readonly encounterId?: ExploreEncounterId;
     readonly discoveredFeatureIds: readonly DiscoveryInstance["discoveryFeatureId"][];
-    readonly preferMakimodon?: boolean;
+    readonly rewardPhase?: Extract<ExploreRewardPhase, "clue" | "finale">;
 }
 
 /**
- * The first three clues remain the MVP's temporary run scaffold. The final
- * feature is semantic: only its registered encounter can award it once every
- * prerequisite clue is present.
+ * The three clue-role rewards fill the rail in order. Once all clues are
+ * present, only the receipt-gated finale role completes the page so every run
+ * reaches one authored payoff. A compatible encounter may add observation
+ * provenance, but an incompatible learning problem must never erase the
+ * payoff or pretend that encounter-specific action happened.
  */
 export const selectDiscoveryPageAward = ({
     encounterId,
     discoveredFeatureIds,
-    preferMakimodon = false,
+    rewardPhase = "clue",
 }: SelectDiscoveryPageAwardInput): DiscoveryPageAward | undefined => {
     const discovered = new Set(discoveredFeatureIds.filter((featureId) => featureId !== undefined));
-    if (preferMakimodon) {
-        const nextMakimodonFeatureId = MAKIMODON_DISCOVERY_PAGE.chain.featureIds
-            .find((featureId) => !discovered.has(featureId));
-        if (nextMakimodonFeatureId) {
-            return {
-                pageId: MAKIMODON_DISCOVERY_PAGE.id,
-                featureId: nextMakimodonFeatureId,
-            };
-        }
-    }
-
     const nextClueFeatureId = getDiscoveryPageClueFeatureIds(FIREFLY_FLOWER_DISCOVERY_PAGE)
         .find((featureId) => !discovered.has(featureId));
     if (nextClueFeatureId) {
@@ -90,17 +81,27 @@ export const selectDiscoveryPageAward = ({
         };
     }
 
+    const bigDiscoveryFeatureId = FIREFLY_FLOWER_DISCOVERY_PAGE.chain.bigDiscoveryFeatureId;
+    if (discovered.has(bigDiscoveryFeatureId)) return undefined;
+    if (rewardPhase !== "finale") return undefined;
+
     const observation = getExploreObservationForEncounter(encounterId);
-    if (!observation || observation.pageId !== FIREFLY_FLOWER_DISCOVERY_PAGE.id) return undefined;
-    if (discovered.has(observation.featureId)) return undefined;
-    if (!observation.prerequisiteFeatureIds.every((featureId) => discovered.has(featureId))) {
-        return undefined;
+    if (
+        observation
+        && observation.pageId === FIREFLY_FLOWER_DISCOVERY_PAGE.id
+        && observation.featureId === bigDiscoveryFeatureId
+        && observation.prerequisiteFeatureIds.every((featureId) => discovered.has(featureId))
+    ) {
+        return {
+            pageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
+            featureId: observation.featureId,
+            observationId: observation.id,
+        };
     }
 
     return {
         pageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
-        featureId: observation.featureId,
-        observationId: observation.id,
+        featureId: bigDiscoveryFeatureId,
     };
 };
 
@@ -111,7 +112,7 @@ export interface CreateDiscoveryForNodeInput {
     readonly priorDiscoveries: readonly DiscoveryInstance[];
     readonly encounterId?: ExploreEncounterId;
     readonly kindOverride?: DiscoveryKind;
-    readonly preferMakimodon?: boolean;
+    readonly rewardPhase?: ExploreRewardPhase;
 }
 
 export const createDiscoveryForNode = ({
@@ -121,13 +122,15 @@ export const createDiscoveryForNode = ({
     priorDiscoveries,
     encounterId,
     kindOverride,
-    preferMakimodon = false,
+    rewardPhase = "clue",
 }: CreateDiscoveryForNodeInput): DiscoveryInstance => {
-    const award = selectDiscoveryPageAward({
-        encounterId,
-        preferMakimodon,
-        discoveredFeatureIds: priorDiscoveries.map((find) => find.discoveryFeatureId),
-    });
+    const award = rewardPhase === "clue" || rewardPhase === "finale"
+        ? selectDiscoveryPageAward({
+            encounterId,
+            discoveredFeatureIds: priorDiscoveries.map((find) => find.discoveryFeatureId),
+            rewardPhase,
+        })
+        : undefined;
     const kind = kindOverride ?? resolveDiscoveryKind(node, seed);
     const choices = DISCOVERIES[kind];
     const choiceIndex = hashExploreSeed(`${seed}:${node.id}:${ordinal}`) % choices.length;
@@ -138,7 +141,9 @@ export const createDiscoveryForNode = ({
         id: `find-${node.id}-${ordinal}`,
         kind,
         name: choice.name,
-        rarity: award?.featureId === awardedPage?.chain.bigDiscoveryFeatureId
+        rarity: rewardPhase === "opening"
+            ? "common"
+            : award?.featureId === awardedPage?.chain.bigDiscoveryFeatureId
             ? "rare"
             : choiceIndex === choices.length - 1 && !award
                 ? "rare"

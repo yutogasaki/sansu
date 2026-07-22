@@ -1,14 +1,18 @@
 import type { ExploreEdge, ExploreNode, ExploreNodeKind } from "./types";
+import {
+    EXPLORE_BIG_DISCOVERY_ANSWER_COUNT,
+    EXPLORE_RUN_ANSWER_COUNT,
+} from "./runStructure";
 
-const MAP_DEPTH = 8;
+const MAP_DEPTH = EXPLORE_RUN_ANSWER_COUNT;
 // Keep the opening three-answer ecology beat on ordinary dig nodes. The bridge
-// remains an honest, visible encounter in the following Firefly Flower section
-// instead of charging a hidden bridge cost behind Makimodon presentation art.
+// remains an honest, visible encounter in the following research section
+// instead of charging a hidden bridge cost behind opening presentation art.
 const BRIDGE_DEPTH = 5;
-// The opening three-answer Makimodon ecology beat is followed by the three
-// Firefly Flower clues. The semantic root observation therefore belongs at
+// The opening three-answer ecology beat is followed by the three Firefly Flower
+// clues. The semantic root observation therefore belongs at
 // depth seven, after both chains have had room to read in order.
-const ROOT_TANGLE_DEPTHS = [7] as const;
+const ROOT_TANGLE_DEPTHS = [EXPLORE_BIG_DISCOVERY_ANSWER_COUNT] as const;
 const THREE_CHOICE_DEPTHS = [4, 6] as const;
 const NODE_KINDS: ExploreNodeKind[] = ["soil", "crystal", "fossil", "root", "mystery"];
 

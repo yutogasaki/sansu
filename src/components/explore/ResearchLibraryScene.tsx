@@ -56,7 +56,7 @@ export const ResearchLibraryScene: React.FC<ResearchLibrarySceneProps> = ({
             <header className="research-library-heading">
                 <p>きょうの ぼうけんきろく</p>
                 <h1 id="return-summary-title" ref={headingRef} tabIndex={-1}>
-                    {status === "rescued" ? "気球と いっしょに ぶじ帰還" : "じぶんで 帰ると きめた"}
+                    {status === "rescued" ? "気球と ぶじに かえった！" : "はっけんを もちかえった！"}
                 </h1>
             </header>
 

@@ -40,7 +40,7 @@ MVPは学習効果を証明する前に、次を検証する。
 - 3問束は未統合でよい
 - MVP-1段階ではMVP-0のループと問題接続を同じ `/explore` で提供した
 - SRS・永続回答ログへの書き込みは行わない
-- Golden Discovery Page 縦切りとして、安定IDのcatalog、1ラン内の通常発見で開く3手掛かり特徴、前提がそろった `root-tangle` の保存済み解決でだけ開く大発見1件をメモリ内で検証してよい
+- Golden Discovery Page 縦切りとして、安定IDのcatalog、1ラン内の通常発見で開く3手掛かり特徴、receipt確定済みQ7 finaleで開く大発見1件、対応引き算時だけ付く `root-tangle` 観察provenanceをメモリ内で検証してよい
 
 ## 4. MVP-2
 
@@ -190,7 +190,7 @@ cold-openは、productionの通常起動面、探検基地、図鑑、production
 
 主比較はall-correctを各lane 10反復し、回答数/分の未丸め中央値比 `Explore / Study >= 1.000` とする。Q4 / Q8誤答scenarioも10反復するが、Studyの「訂正表示 → Next → 次問」とExploreの「同じ問題へ再入力 → 正解」は意味が異なるため、Studyの訂正表示・次問到達とExploreの同問再入力を別指標として記録し、両者のmiss-flow throughputを採否へ使わない。全非回答clickを中断として数え、Exploreはreceipt数とattempt数の一致、attempt key重複0、全件 `affectsSrs = false`、学習状態不変を必須とする。
 
-Exploreの許容中断は各laneでちょうど4件、順序も `Q3 route-choice → Q7 discovery-close → Q8 return → Q8 replay` とする。Q1〜2、Q4〜6、Q9〜10はblocking 0件、Q8は標本toastを閉じる操作なしでprimaryの持ち帰りへ到達し、再出発後は前runのoverlay / reaction / page進捗を表示しないことをfixtureでassertする。
+全問足し算の固定10問ではroot-tangleの引き算遭遇を偽装せず、Q7は中立の調査ページpayoffとする。Exploreの許容中断は各laneでちょうど4件、順序も `Q3 route-choice → Q7 discovery-close → Q8 return → Q8 replay` とする。Q1〜2、Q4〜6、Q8〜10はblocking 0件、Q8は標本toastを閉じる操作なしでprimaryの持ち帰りへ到達し、再出発後は前runのoverlay / reaction / page進捗を表示しないことをfixtureでassertする。root固有のworld reactionと観察provenanceは、実plannerが対応引き算を割り当てるroot-tangle E2Eで別に必須とする。
 
 各4セル10run、ExploreのQ1 / Q2正解20sample、Explore同問再入力20sample、Study訂正表示20sample、clean revision、harness専用server、delivery `snap-root-v1`、candidate `dig-pop-painted-v2` が揃わない計測はdiagnosticでありGate C証拠にしない。固定fixtureはTenKey、画面遷移、game-only reservation / receipt、throughputの証拠であり、通常planner / writer / SRS真正性は既存3問grayboxで別に検証する。ignoredの `output/fixed-ten-throughput/latest.json` だけを恒久証拠にせず、適格runのrevisionと集計値をversioned監査へ転記する。
 
@@ -236,9 +236,10 @@ delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行v
 - 遭遇追加で探索ページ本体へ遭遇名ごとの状態分岐を増やさないこと
 - ひかりの橋と根っこのからまりの全操作ボタンが44px以上で、画面外へはみ出さないこと
 - `public/assets/explore/` のJPG/JPEG/WebP/AVIFがPWAの事前キャッシュへ入り、リモートとオフラインで同じURLから読めること
-- 帰還要約が未訪問の専用遭遇を優先して予告し、「ちがう道を たんけん」から新しいランを開始できること
+- 帰還要約が未訪問の専用遭遇を優先して予告し、「ちがう道へ しゅっぱつ」から新しいランを開始できること
+- 8回答後は余剰edgeがあっても成功終端を優先し、8回答前の欠損edgeは「てがかりがつながった」と偽らず回復帰還になること
 - 調査ページの特徴が重複せず、次の手掛かりが同時に2件以上出ないこと
-- 3つの手掛かり特徴を順に見つけた後も4件目の通常発見では大発見にならず、保存済み `root-tangle` 解決だけが最終特徴と観察を1回開くこと
+- 3つの手掛かり特徴を順に見つけた後も4件目という順番だけでは大発見にならず、receipt確定済みQ7 finaleだけが最終特徴を1回開くこと。保存済み対応引き算の `root-tangle` 解決だけが固有の観察provenanceを追加すること
 - 将来、価値ゲートを通ったcold-openページとほたる花の両方が進む場合も、帰還画面が最初の完了ページではなく最後に進めた主調査を選び、そのページの最終 `finding` を物語文に使うこと。検証中candidateはページ選択へ入れない
 - legacy保存ID `discovery-page:jabarapon` / `discovery-feature:jabarapon-*` を持つ既存snapshotをデータ損失なく再読でき、保存IDが現行candidateの選択、マキモドンの再承認、子ども向け名称へ使われないこと
 - root観察はcommit済みattempt key、node、encounter、直近discoveryが一致するまで開かず、保存中・保存失敗・mismatch・duplicate・前提不足・別遭遇では開かないこと

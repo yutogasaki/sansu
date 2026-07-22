@@ -26,5 +26,56 @@ describe("ReturnSummary", () => {
 
         expect(markup).toContain(finalFeature?.finding);
         expect(markup).toContain("マキモドン");
+        expect(markup).toContain("はっけんを もちかえった！");
+    });
+
+    it("offers one honest replay action toward a different route", () => {
+        const markup = renderToStaticMarkup(
+            <ReturnSummary
+                status="rescued"
+                finds={[]}
+                steps={8}
+                energy={0}
+                replayTeaser={{
+                    nodeId: "node-4-1",
+                    kind: "root",
+                    title: "根っこの道",
+                    hint: "ひかる花の かおり",
+                    reason: "alternate-route",
+                }}
+                onRestart={() => undefined}
+                onExit={() => undefined}
+            />,
+        );
+
+        expect(markup).toContain("気球と ぶじに かえった！");
+        expect(markup).toContain("根っこの道に 出会えるかも");
+        expect(markup.match(/ちがう道へ しゅっぱつ/g)).toHaveLength(1);
+        expect(markup).not.toContain("もういちど たんけん");
+    });
+
+    it("does not claim the final light path for an incomplete page", () => {
+        const markup = renderToStaticMarkup(
+            <ReturnSummary
+                status="returned"
+                finds={[{
+                    id: "rare-1",
+                    name: "にじの水晶",
+                    kind: "crystal",
+                    rarity: "rare",
+                }]}
+                steps={5}
+                energy={7}
+                researchPage={{
+                    definition: MAKIMODON_DISCOVERY_PAGE,
+                    discoveredFeatureIds: MAKIMODON_DISCOVERY_PAGE.chain.featureIds.slice(0, 2),
+                }}
+                onRestart={() => undefined}
+                onExit={() => undefined}
+            />,
+        );
+
+        expect(markup).toContain("にじの水晶を みつけて、ぶじに もちかえった。");
+        expect(markup).not.toContain("にじの水晶の ひかりまで");
     });
 });

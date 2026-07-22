@@ -10,6 +10,7 @@ interface ExploreHudProps {
     researchClueCount: number;
     researchClueTarget: number;
     researchComplete: boolean;
+    showResearch?: boolean;
     steps: number;
     disabled?: boolean;
     variant?: "default" | "encounter";
@@ -22,6 +23,7 @@ export const ExploreHud: React.FC<ExploreHudProps> = ({
     researchClueCount,
     researchClueTarget,
     researchComplete,
+    showResearch = true,
     steps,
     disabled = false,
     variant = "default",
@@ -92,7 +94,7 @@ export const ExploreHud: React.FC<ExploreHudProps> = ({
                 <span className="sr-only">{energyPercent}%</span>
             </div>
 
-            <div
+            {showResearch ? <div
                 className={cn(
                     "explore-field-sheet flex h-11 shrink-0 items-center gap-1.5 rounded-full px-2.5 text-sm font-black text-violet-800 sm:px-3",
                     variant === "encounter" && "h-10 bg-[#fff9da]/88 px-2 backdrop-blur-md sm:px-2.5",
@@ -107,7 +109,7 @@ export const ExploreHud: React.FC<ExploreHudProps> = ({
                 <BookOpen className="h-4 w-4 text-violet-600" aria-hidden="true" />
                 <span>{researchComplete ? "★" : `${displayedClueCount}/${researchClueTarget}`}</span>
                 <span className="hidden text-[9px] font-extrabold text-[var(--explore-muted)] sm:inline">・{steps}歩</span>
-            </div>
+            </div> : null}
         </header>
     );
 };

@@ -41,26 +41,25 @@ import {
     createInitialExploreState,
     exploreReducer,
     finishExploreRunFromUi,
-    MAKIMODON_DISCOVERY_PAGE,
+    FIREFLY_FLOWER_DISCOVERY_PAGE,
     getDiscoveryPageDefinition,
     getDiscoveryPageProgress,
     getExploreEncounterDefinition,
     getExploreOpeningExperience,
-    getRequestedExploreEncounterId,
     getAvailableExploreNodes,
     getExploreReplayTeaser,
     getExploreBenchmarkE2EOptions,
     getExploreRunE2EOptions,
     getRemainingRapidLoopBudgetMs,
-    isExploreOpeningCompletionDiscovery,
+    isExploreOpeningCompletion,
     isExploreOpeningStep,
     isExploreAnswerCorrect,
-    isDiscoveryPageComplete,
     resolveExploreOpeningExperience,
     projectRapidLoopAfterCorrectCommit,
     RAPID_LOOP_AUTO_BRIDGE_PLAN,
     settleRapidLoopPrefetchWithin,
     selectExploreEncounterPhase,
+    selectExploreDiscoveryPresentation,
     selectDeterministicRapidLoopNodeId,
     shouldAutoRouteExplorePath,
     startExploreRunFromUi,
@@ -133,9 +132,7 @@ export const selectConfirmedResearchPage = (
         } satisfies ResearchPageSummaryState];
     });
 
-    return pageSummaries.find(({ definition, discoveredFeatureIds }) => (
-        isDiscoveryPageComplete(definition, discoveredFeatureIds)
-    )) ?? pageSummaries[0];
+    return pageSummaries[0];
 };
 
 type ExploreRunPersistenceState =
@@ -612,25 +609,13 @@ export const Explore: React.FC = () => {
     useEffect(() => {
         const discovery = state.temporaryFinds[state.temporaryFinds.length - 1];
         if (!discovery || lastRevealIdRef.current === discovery.id) return;
-        const isOpeningCompletion = isExploreOpeningCompletionDiscovery(
-            openingExperience,
+        const presentation = selectExploreDiscoveryPresentation({
             discovery,
-        );
-        const isOpeningProgressDiscovery = !isOpeningCompletion
-            && discovery.discoveryPageId === openingExperience.legacyProgress.pageId
-            && state.steps > 0
-            && state.steps < openingExperience.answerCount;
-        if (isOpeningProgressDiscovery) {
-            lastRevealIdRef.current = discovery.id;
-            setWorldReaction((current) => current?.nodeId === discovery.nodeId
-                ? null
-                : current);
-            return;
-        }
-        if (
-            isOpeningCompletion
-            && openingExperience.completionRevealMode === "inline"
-        ) {
+            completedSteps: state.steps,
+            hasAvailableNodes: availableNodes.length > 0,
+            rescuePending: state.rescuePending,
+        });
+        if (presentation === "absorbed-opening" || presentation === "deferred-return") {
             lastRevealIdRef.current = discovery.id;
             setWorldReaction((current) => current?.nodeId === discovery.nodeId
                 ? null
@@ -640,13 +625,9 @@ export const Explore: React.FC = () => {
         const revealDelay = worldReaction?.encounterId
             ? getExploreEncounterDefinition(worldReaction.encounterId)?.revealDelayMs
                 ?? RAPID_LOOP_REVEAL_DELAY_MS
-            : isOpeningCompletion
-                ? reduceMotion
-                    ? openingExperience.timing.reducedMotionRevealDelayMs
-                    : openingExperience.timing.revealDelayMs
-                : reduceMotion
-                    ? 70
-                    : RAPID_LOOP_REVEAL_DELAY_MS;
+            : reduceMotion
+                ? 70
+                : RAPID_LOOP_REVEAL_DELAY_MS;
         revealTimerRef.current = window.setTimeout(() => {
             lastRevealIdRef.current = discovery.id;
             setRevealedDiscovery(discovery);
@@ -655,7 +636,7 @@ export const Explore: React.FC = () => {
                     ? null
                     : current);
             }
-            playSound(discovery.rarity === "rare" ? "level_up" : "clear");
+            playSound(presentation === "blocking" ? "level_up" : "clear");
             revealTimerRef.current = null;
         }, revealDelay);
 
@@ -666,8 +647,9 @@ export const Explore: React.FC = () => {
             }
         };
     }, [
-        openingExperience,
+        availableNodes.length,
         reduceMotion,
+        state.rescuePending,
         state.steps,
         state.temporaryFinds,
         worldReaction?.encounterId,
@@ -783,11 +765,8 @@ export const Explore: React.FC = () => {
             );
 
             if (frozen.expectedResult === "correct") {
-                const isOpeningStep = isExploreOpeningStep(openingExperience, state.steps);
-                const completesOpening = willCompleteExploreOpeningStep(
-                    openingExperience,
-                    state.steps,
-                );
+                const isOpeningStep = isExploreOpeningStep(state.steps);
+                const completesOpening = willCompleteExploreOpeningStep(state.steps);
                 const correctProjectionCandidate = !(isOpeningStep && completesOpening)
                     ? projectRapidLoopAfterCorrectCommit(state, committedAction)
                     : undefined;
@@ -1188,8 +1167,8 @@ export const Explore: React.FC = () => {
             .find((find) => find.discoveryPageId)
             ?.discoveryPageId;
         return pageId
-            ? getDiscoveryPageDefinition(pageId) ?? MAKIMODON_DISCOVERY_PAGE
-            : MAKIMODON_DISCOVERY_PAGE;
+            ? getDiscoveryPageDefinition(pageId) ?? FIREFLY_FLOWER_DISCOVERY_PAGE
+            : FIREFLY_FLOWER_DISCOVERY_PAGE;
     }, [state.temporaryFinds]);
     const activeResearchFeatureIds = useMemo(() => state.temporaryFinds.flatMap((find) => (
         find.discoveryPageId === activeResearchDefinition.id && find.discoveryFeatureId
@@ -1217,19 +1196,12 @@ export const Explore: React.FC = () => {
             discoveredFeatureIds,
         };
     }, [revealedDiscovery, state.temporaryFinds]);
-    const openingDiscoveryPresentation = revealedDiscovery
-        && isExploreOpeningCompletionDiscovery(openingExperience, revealedDiscovery)
-        ? openingExperience.presentationKey
-        : undefined;
     const confirmedResearchPage = useMemo(
         () => selectConfirmedResearchPage(state.confirmedFinds),
         [state.confirmedFinds],
     );
-    const requestedEncounterId = pendingGate
-        ? getRequestedExploreEncounterId(state, pendingGate)
-        : undefined;
     const activeEncounterId = worldReaction?.encounterId
-        ?? (pendingGate?.problem ? pendingGate.encounterId : requestedEncounterId);
+        ?? pendingGate?.encounterId;
     const encounterPhase = selectExploreEncounterPhase({
         encounterId: activeEncounterId,
         hasProblem: Boolean(pendingGate?.problem),
@@ -1243,13 +1215,13 @@ export const Explore: React.FC = () => {
         : undefined;
     const isOpeningProblem = Boolean(
         pendingGate?.problem
-        && isExploreOpeningStep(openingExperience, state.steps)
+        && isExploreOpeningStep(state.steps)
     );
     const isOpeningResolution = Boolean(
         worldReaction
         && !pendingGate
         && state.lastEvent.type === "discovery"
-        && isExploreOpeningCompletionDiscovery(openingExperience, state.lastEvent.discovery)
+        && isExploreOpeningCompletion(state.steps)
     );
     const openingProblemPresentation = selectOpeningProblemPresentation(
         openingExperience.presentationKey,
@@ -1310,6 +1282,7 @@ export const Explore: React.FC = () => {
                             researchClueCount={activeResearchProgress.discoveredClueCount}
                             researchClueTarget={activeResearchProgress.clueTarget}
                             researchComplete={activeResearchProgress.isComplete}
+                            showResearch={state.steps >= 3}
                             steps={state.steps}
                             variant={isRapidProblemView && !isWideLayout ? "encounter" : "default"}
                             disabled={Boolean(
@@ -1433,15 +1406,7 @@ export const Explore: React.FC = () => {
                                         }}
                                     />
                                 ) : pendingGate && !pendingGate.problem ? (
-                                    requestedEncounterId && encounterPhase === "loading" ? (
-                                        <ExploreEncounterStage
-                                            encounterId={requestedEncounterId}
-                                            phase={encounterPhase}
-                                            combo={state.combo}
-                                        />
-                                    ) : (
-                                        <ExploreLoadingState />
-                                    )
+                                    <ExploreLoadingState />
                                 ) : pendingGate?.problem ? (
                                     <div className="flex h-full min-h-0 flex-col gap-2">
                                         {attemptSaveStatus === "error"
@@ -1525,6 +1490,10 @@ export const Explore: React.FC = () => {
                                         <ExplorePathChoice
                                             nodes={availableNodes}
                                             steps={state.steps}
+                                            researchPage={{
+                                                definition: activeResearchDefinition,
+                                                discoveredFeatureIds: activeResearchFeatureIds,
+                                            }}
                                             onSelect={selectNode}
                                             onReturn={returnToBase}
                                         />
@@ -1540,7 +1509,6 @@ export const Explore: React.FC = () => {
                                 key={revealedDiscovery.id}
                                 discovery={revealedDiscovery}
                                 researchPage={researchReveal}
-                                openingPresentation={openingDiscoveryPresentation}
                                 onContinue={finishDiscoveryReveal}
                             />
                         ) : null}

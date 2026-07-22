@@ -110,7 +110,7 @@
 - production defaultは `classic-v1` とする。旧 `ready → tug → tumble → landed`、編み根、`nest-squash | nest-tip` は実機画像で身体の切断・拘束・浮遊頭部へ読める危険が見つかったため、安全候補から撤去する。旧87〜88点は失効し50 / 100のREJECTとする。一本葉を引くBloom版と水やり版は同じ `snap-root-v1` slotを使った旧visual candidateであり、HOLDかつ非採用とする。`dig-pop-painted-v1` はstate driftと弱い中間差分によりsource art 50 / 60のHOLDとなった履歴であり、後継 `dig-pop-painted-v2` は別candidateとして0から採点する。v2、`root-pull-v1` / `root-pull-v2` と旧マキモドン表示はproduction価値ゲート通過前は現行defaultの承認根拠、子ども向け固有名、永続図鑑catalogとして扱わない。delivery IDの再利用をvisual承認の継承とみなさない
 - 絵主導のcold-openは、`視覚的磁力`、`無文字の因果理解と安全`、`runtime整合` を別々の非補償ゲートとして判定し、総合点へ平均しない。視覚的磁力は承認済み絵本調benchmark **52 / 60以上かつ6軸すべて8 / 10以上**、無文字テストは未説明の5人中4人以上が同じ主動詞とpayoffを説明し4人以上が続きを望み、危険解釈0件を必須とする。runtimeは1・2問目の正解から次問入力までP95 650ms以内、誤答から再入力までP95 550ms以内、追加0タップ、answer leak 0件、旧高速学習と同一固定問題で同等以上のthroughput、およびmobile / tablet・入力・reduced motion・asset・PWA検証の通過を必須とする。三ゲートすべてを実runtimeで通るまでproduction defaultを変えない
 - Gate Cの同一問題比較にはDEV限定fixture `cold-open-fixed-ten-v1` を使う。Studyは非記録session、Exploreは8問の実runを帰還・summary・再出発した後に別runで2問を解き、Exploreの全回答を `game-only-fallback / affectsSrs = false` とする。10反復all-correctの未丸め中央値で `Explore回答数/分 ÷ Study回答数/分 >= 1.000` を必須とする。Q4 / Q8誤答はStudyが訂正表示から明示Nextで次問へ進み、Exploreが同じ問題へ戻るため、相互のthroughput合否へ混ぜず回復時間・正答率・操作中断の別証拠にする。このfixtureは通常plannerの同一skill上限を意図的に外す表示throughput検証であり、planner / SRS真正性は既存の実planner 3問grayboxで別に確認する
-- 固定10問のExplore中断は、最初のrunで `Q3後の道選択 / Q7大発見を閉じる / Q8後に持ち帰る / 帰還要約から再出発` の4件だけを許可する。Q1〜2、Q4〜6、Q9〜10はblocking表示0件とし、Q8の標本希少度が2回目の発見dialogを作らないことを回帰条件にする
+- 全問足し算の固定10問はroot-tangleの引き算遭遇を偽装せず、Q7では3手掛かりをつなぐ中立の調査ページpayoffだけを開く。Explore中断は `Q3後の道選択 / Q7大発見 / Q8後に持ち帰る / 帰還要約から再出発` の4件へ固定し、Q1〜2、Q4〜6、Q8〜10はblocking表示0件とする。root固有の動作・観察provenanceは、実plannerが対応引き算を割り当てるroot-tangle E2Eで別に検証する
 
 ### 1.3 入力（回答方式）
 
@@ -132,7 +132,7 @@
 - 複数の性質がつながったときだけ短い「大発見」のピークを作り、通常発見との山と谷を明確にする
 - 「谷」は低彩度で無表情な待機画面を意味しない。通常遭遇にも、対象固有の極端な輪郭、相棒との視線・重心の関係、一つの読める因果を置き、静止時点だけでも触りたくなる状態を保つ
 - 「山」は全要素を同時に派手にすることではない。色、縮尺、表情、素材、密度、動勢のうち、その発見に必要な2〜3軸だけを強める
-- Golden Discovery Page の最初の縦切りでは、通常発見で3つの手掛かりを集めた後、意味づけされた `root-tangle` の保存済み解決だけが最終特徴「ほたる花の ひかり道」を開く。4件目という順番だけでは大発見にしない
+- Golden Discovery Page の最初の縦切りでは、通常発見で3つの手掛かりを集めた後、receipt確定済みのQ7 finaleだけが最終特徴「ほたる花の ひかり道」を開く。対応引き算なら `root-tangle` 固有の動作と観察provenanceを付け、非対応skillなら問題の意味を変えず中立のページpayoffにする。4件目という順番、正答数、希少度だけでは大発見にしない
 - 現行MVPの調査特徴はrun内の一時進捗であり、rootを選ばず帰還した未完成ページが次runへ持ち越されるとは表現しない。run横断の特徴永続化はMVP-2bで扱う
 - ランごとに予測可能だが読み切れない変化を入れる
 - 学習上は子どもを責めず、ゲーム上は短期的で回復可能な失敗を許可する

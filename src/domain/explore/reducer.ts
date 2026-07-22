@@ -3,7 +3,7 @@ import { resolveExploreEncounterId } from "./encounters";
 import { createAttemptIdentityKey } from "./attemptIdentity";
 import { isExploreProblemCompatible } from "./problemAdapter";
 import { createDiscoveryForNode } from "./rewards";
-import { MAKIMODON_DISCOVERY_PAGE } from "./discoveryPageCatalog";
+import { getExploreRewardPhase } from "./runStructure";
 import type {
     CreateExploreRunOptions,
     ExploreAction,
@@ -252,7 +252,7 @@ export const exploreReducer = (
                 priorDiscoveries: state.temporaryFinds,
                 encounterId: gate.encounterId,
                 kindOverride: bridgeDiscoveryKind,
-                preferMakimodon: state.steps < MAKIMODON_DISCOVERY_PAGE.chain.featureIds.length,
+                rewardPhase: getExploreRewardPhase(state.steps),
                 }),
                 source: {
                     attemptKey: action.receipt.attemptKey,

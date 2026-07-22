@@ -28,12 +28,12 @@ describe("discovery reveal interaction contract", () => {
         })).toBe(false);
     });
 
-    it("blocks only rare finds and the final big discovery", () => {
+    it("blocks only the final semantic big discovery", () => {
         expect(isBlockingDiscoveryReveal({
             name: "めずらしい ひょうほん",
             kind: "fossil",
             rarity: "rare",
-        })).toBe(true);
+        })).toBe(false);
         expect(isBlockingDiscoveryReveal({
             name: "ほたる花の ひかり道",
             kind: "flower",
@@ -43,7 +43,25 @@ describe("discovery reveal interaction contract", () => {
         })).toBe(true);
     });
 
-    it("replaces only the Root Pull opening payoff display while keeping legacy IDs", () => {
+    it("keeps a standalone rare specimen ambient and focus-neutral", () => {
+        const markup = renderToStaticMarkup(
+            React.createElement(DiscoveryReveal, {
+                discovery: {
+                    name: "星もようの化石",
+                    kind: "fossil",
+                    rarity: "rare",
+                },
+                onContinue: () => undefined,
+            }),
+        );
+
+        expect(markup).toContain('role="status"');
+        expect(markup).toContain("めずらしい ひょうほん");
+        expect(markup).not.toContain('role="dialog"');
+        expect(markup).not.toContain("ひょうほんを バッグへ");
+    });
+
+    it("keeps legacy stored opening pages readable without using them for new rewards", () => {
         const currentFeatureId = MAKIMODON_DISCOVERY_PAGE.chain.bigDiscoveryFeatureId;
         const sharedProps = {
             discovery: {
@@ -61,19 +79,12 @@ describe("discovery reveal interaction contract", () => {
             onContinue: () => undefined,
         };
 
-        const rootPullMarkup = renderToStaticMarkup(React.createElement(DiscoveryReveal, {
-            ...sharedProps,
-            openingPresentation: "root-pull",
-        }));
-        const classicMarkup = renderToStaticMarkup(React.createElement(
+        const markup = renderToStaticMarkup(React.createElement(
             DiscoveryReveal,
             sharedProps,
         ));
 
-        expect(rootPullMarkup).toContain("土から スポンと ぬけた 根っこの子");
-        expect(rootPullMarkup).toContain("/assets/explore/opening-root-pull-v1/payoff.jpg");
-        expect(rootPullMarkup).not.toContain("ぜんぶ まきもどった");
-        expect(classicMarkup).toContain("ぜんぶ まきもどった");
-        expect(classicMarkup).toContain("マキモドン");
+        expect(markup).toContain("ぜんぶ まきもどった");
+        expect(markup).toContain("マキモドン");
     });
 });

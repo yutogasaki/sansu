@@ -8,6 +8,12 @@ const HOST = "127.0.0.1";
 const PORT_CANDIDATES = [4173, 4174, 4175, 4176];
 const APP_TITLE_MARKER = "<title>ポッコのふしぎずかん</title>";
 const FIXTURE_ID = "cold-open-fixed-ten-v1";
+const EXPECTED_EXPLORE_INTERRUPTION_SEQUENCE = [
+  { afterQuestion: 3, kind: "route-choice" },
+  { afterQuestion: 7, kind: "discovery-close" },
+  { afterQuestion: 8, kind: "return" },
+  { afterQuestion: 8, kind: "replay" },
+];
 const OPENING_EXPERIENCE = "snap-root-v1";
 const VIEWPORT = { width: 390, height: 844 };
 const STEP_TIMEOUT_MS = 15_000;
@@ -623,12 +629,37 @@ const settleExploreCorrect = async ({
 
       assert(questionIndex === 7, `empty route appeared after Q${questionIndex + 1}`);
       interruptions.push({ afterQuestion: 8, kind: "return" });
-      await section.getByRole("button", { name: "ここまでを ノートに のこす" }).click();
+      const primaryReturn = section.getByTestId("explore-run-primary-return");
+      await primaryReturn.waitFor({ timeout: STEP_TIMEOUT_MS });
+      const primaryReturnBox = await primaryReturn.boundingBox();
+      assert(
+        primaryReturnBox
+          && primaryReturnBox.y >= 0
+          && primaryReturnBox.y + primaryReturnBox.height <= VIEWPORT.height,
+        `terminal primary return is outside the initial viewport: ${JSON.stringify(primaryReturnBox)}`,
+      );
+      assert(
+        await section.getByRole("button", { name: "ここまでを ノートに のこす" }).count() === 0,
+        "terminal route should not expose the voluntary notebook action",
+      );
+      await primaryReturn.click();
       await page.locator("#return-summary-title").waitFor({ timeout: STEP_TIMEOUT_MS });
       await configureExploreReplay(page, repetition, scenario);
       interruptions.push({ afterQuestion: 8, kind: "replay" });
-      await page.getByRole("button", { name: "もういちど たんけん" }).click();
+      await page.getByTestId("research-library-primary-action").click();
       await waitForExploreAttempt(page, 8);
+      const freshWorld = page.locator(".explore-world");
+      assert(await freshWorld.getAttribute("data-run-status") === "active", "replay should start active");
+      assert(await freshWorld.getAttribute("data-run-steps") === "0", "replay should reset steps");
+      assert(
+        await freshWorld.getAttribute("data-confirmed-find-count") === "0",
+        "replay should clear confirmed finds",
+      );
+      assert(await page.locator("#return-summary-title").count() === 0, "replay left a stale summary");
+      assert(
+        await page.locator('.explore-research-overlay[role="dialog"], [role="dialog"][aria-labelledby="discovery-title"]').count() === 0,
+        "replay left a stale discovery dialog",
+      );
       return { firstState, terminal: false };
     }
     if (state === "summary") {
@@ -986,6 +1017,11 @@ const buildReport = (runs, environment) => {
     .filter((run) => run.lane === "explore")
     .flatMap((run) => run.interruptions)
     .filter((interruption) => interruption.afterQuestion <= 2);
+  const exactExploreInterruptionSequence = runs
+    .filter((run) => run.lane === "explore")
+    .every((run) => (
+      JSON.stringify(run.interruptions) === JSON.stringify(EXPECTED_EXPLORE_INTERRUPTION_SEQUENCE)
+    ));
   const runtimeIdentityMatches = runs
     .filter((run) => run.lane === "explore")
     .every((run) => (
@@ -1017,6 +1053,7 @@ const buildReport = (runs, environment) => {
     persistenceIntegrity,
     noUnexpectedInterruptions: unexpectedInterruptions.length === 0,
     firstTwoExploreAnswersNeedNoExtraTap: earlyExploreInterruptions.length === 0,
+    exactExploreInterruptionSequence,
     runtimeIdentityMatches,
   };
   const eligibility = {

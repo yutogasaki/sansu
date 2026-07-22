@@ -5,7 +5,6 @@ import {
     getDiscoveryPageDefinition,
     isDiscoveryPageBigDiscovery,
     type DiscoveryKind,
-    type ExploreOpeningPresentationKey,
     type DiscoveryPageFeatureId,
     type DiscoveryPageId,
 } from "../../domain/explore";
@@ -14,7 +13,6 @@ import {
     type DiscoveryResearchRevealItem,
 } from "./DiscoveryResearchReveal";
 import { ExploreGlyph } from "./ExploreGlyph";
-import { RootPullDiscoveryReveal } from "./RootPullDiscoveryReveal";
 
 export interface DiscoveryRevealItem {
     name: string;
@@ -36,20 +34,18 @@ export const isBlockingDiscoveryReveal = (discovery: DiscoveryRevealItem): boole
         );
     }
 
-    return discovery.rarity === "rare";
+    return false;
 };
 
 interface DiscoveryRevealProps {
     discovery: DiscoveryRevealItem;
     researchPage?: DiscoveryResearchRevealItem;
-    openingPresentation?: ExploreOpeningPresentationKey;
     onContinue: () => void;
 }
 
 export const DiscoveryReveal: React.FC<DiscoveryRevealProps> = ({
     discovery,
     researchPage,
-    openingPresentation,
     onContinue,
 }) => {
     const reduceMotion = useReducedMotion();
@@ -63,7 +59,7 @@ export const DiscoveryReveal: React.FC<DiscoveryRevealProps> = ({
     }, [isBlockingReveal, onContinue]);
 
     useEffect(() => {
-        if (researchPage || discovery.rarity !== "rare") return;
+        if (researchPage || !isBlockingReveal) return;
         const previouslyFocused = document.activeElement instanceof HTMLElement
             ? document.activeElement
             : null;
@@ -72,7 +68,7 @@ export const DiscoveryReveal: React.FC<DiscoveryRevealProps> = ({
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === "Escape" || event.key === "Enter") {
                 event.preventDefault();
-                onContinue();
+                if (!event.repeat) onContinue();
                 return;
             }
             if (event.key === "Tab") {
@@ -86,11 +82,7 @@ export const DiscoveryReveal: React.FC<DiscoveryRevealProps> = ({
             window.removeEventListener("keydown", handleKeyDown);
             if (previouslyFocused?.isConnected) previouslyFocused.focus();
         };
-    }, [discovery.rarity, onContinue, researchPage]);
-
-    if (researchPage && openingPresentation === "root-pull") {
-        return <RootPullDiscoveryReveal onContinue={onContinue} />;
-    }
+    }, [isBlockingReveal, onContinue, researchPage]);
 
     if (researchPage) {
         return (
@@ -101,7 +93,7 @@ export const DiscoveryReveal: React.FC<DiscoveryRevealProps> = ({
         );
     }
 
-    if (discovery.rarity === "common") {
+    if (!isBlockingReveal) {
         return (
             <div className="pointer-events-none absolute inset-x-3 top-[calc(var(--safe-area-top)+66px)] z-50 mx-auto max-w-sm" role="status" aria-live="polite">
                 <motion.div
@@ -117,7 +109,9 @@ export const DiscoveryReveal: React.FC<DiscoveryRevealProps> = ({
                         <Sparkles className="absolute -right-2 -top-2 h-5 w-5 text-amber-400" />
                     </span>
                     <span className="min-w-0 flex-1">
-                        <span className="block text-[10px] font-extrabold tracking-[0.14em] text-cyan-700">ちていの ひょうほん</span>
+                        <span className="block text-[10px] font-extrabold tracking-[0.14em] text-cyan-700">
+                            {discovery.rarity === "rare" ? "めずらしい ひょうほん" : "ちていの ひょうほん"}
+                        </span>
                         <span className="mt-0.5 block text-base font-black leading-5 tracking-[-0.02em] text-slate-800">
                             {discovery.name}
                         </span>

@@ -76,6 +76,7 @@ describe("explore rapid-loop policy", () => {
         expect(shouldAutoRouteExplorePath(3, 2)).toBe(false);
         expect(shouldAutoRouteExplorePath(3, 1)).toBe(true);
         expect(shouldAutoRouteExplorePath(4, 0)).toBe(false);
+        expect(shouldAutoRouteExplorePath(8, 1)).toBe(false);
     });
 
     it("selects the nearest route deterministically without mutating candidates", () => {
@@ -117,7 +118,7 @@ describe("confirmed research page selection", () => {
         );
     });
 
-    it("keeps a completed page ahead of a newer page that is still in progress", () => {
+    it("shows the latest progressed main page even when an older page is complete", () => {
         const finds = [
             ...MAKIMODON_DISCOVERY_PAGE.chain.featureIds.map((featureId, index) => (
                 researchDiscovery(`makimodon-${index}`, MAKIMODON_DISCOVERY_PAGE.id, featureId)
@@ -129,6 +130,6 @@ describe("confirmed research page selection", () => {
             ),
         ];
 
-        expect(selectConfirmedResearchPage(finds)?.definition).toBe(MAKIMODON_DISCOVERY_PAGE);
+        expect(selectConfirmedResearchPage(finds)?.definition).toBe(FIREFLY_FLOWER_DISCOVERY_PAGE);
     });
 });

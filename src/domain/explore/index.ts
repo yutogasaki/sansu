@@ -11,6 +11,8 @@ export * from "./generator";
 export * from "./learningPlanner";
 export * from "./problemAdapter";
 export * from "./rapidLoop";
+export * from "./runStructure";
+export * from "./rewardPresentation";
 export * from "./persistenceRepository";
 export * from "./persistenceClient";
 export * from "./persistenceTypes";

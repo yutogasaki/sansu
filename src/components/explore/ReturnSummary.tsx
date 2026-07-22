@@ -53,10 +53,10 @@ export const ReturnSummary: React.FC<ReturnSummaryProps> = ({
     const storyLine = completedResearchFinding
         ? completedResearchFinding
         : rareFind
-            ? `${rareFind.name}の ひかりまで たどりついた、きらきらの たんけん。`
+            ? `${rareFind.name}を みつけて、ぶじに もちかえった。`
             : status === "rescued"
-                ? "さいごの ひかりまで道をひらいて、気球と いっしょに帰ってきた。"
-                : `ひかりを ${energy}こ のこして、見つけたものを ぶじに持ち帰った。`;
+                ? "気球と ぶじに かえった。見つけたものも いっしょだよ。"
+                : "見つけたものを ぶじに もちかえった。";
 
     return (
         <div className="relative h-full overflow-y-auto px-3 pb-[calc(var(--safe-area-bottom)+18px)] pt-[calc(var(--safe-area-top)+12px)] sm:px-5">

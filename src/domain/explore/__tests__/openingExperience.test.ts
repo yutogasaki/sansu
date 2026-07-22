@@ -4,11 +4,8 @@ import {
     EXPLORE_OPENING_EXPERIENCES,
     EXPLORE_OPENING_EXPERIENCE_QUERY_PARAM,
     getExploreOpeningExperience,
-    isExploreOpeningCompletionDiscovery,
     isExploreOpeningExperienceId,
-    isExploreOpeningStep,
     resolveExploreOpeningExperience,
-    willCompleteExploreOpeningStep,
 } from "../openingExperience";
 
 describe("explore opening experience", () => {
@@ -54,45 +51,17 @@ describe("explore opening experience", () => {
         }).id).toBe("root-pull-v1");
     });
 
-    it("uses presentation-neutral three-answer progress helpers", () => {
-        const experience = getExploreOpeningExperience("root-pull-v1");
-
-        expect(isExploreOpeningStep(experience, 0)).toBe(true);
-        expect(isExploreOpeningStep(experience, 2)).toBe(true);
-        expect(isExploreOpeningStep(experience, 3)).toBe(false);
-        expect(willCompleteExploreOpeningStep(experience, 1)).toBe(false);
-        expect(willCompleteExploreOpeningStep(experience, 2)).toBe(true);
-    });
-
-    it("shares legacy progress matching without changing persisted IDs", () => {
-        const classic = EXPLORE_OPENING_EXPERIENCES["classic-v1"];
-        const rootPull = EXPLORE_OPENING_EXPERIENCES["root-pull-v1"];
-        const rootPullV2 = EXPLORE_OPENING_EXPERIENCES["root-pull-v2"];
-        const snapRoot = EXPLORE_OPENING_EXPERIENCES["snap-root-v1"];
-
-        expect(rootPull.legacyProgress).toEqual(classic.legacyProgress);
-        expect(rootPullV2.legacyProgress).toEqual(classic.legacyProgress);
-        expect(snapRoot.legacyProgress).toEqual(classic.legacyProgress);
-        expect(isExploreOpeningCompletionDiscovery(rootPull, {
-            discoveryPageId: rootPull.legacyProgress.pageId,
-            discoveryFeatureId: rootPull.legacyProgress.completionFeatureId,
-        })).toBe(true);
-        expect(isExploreOpeningCompletionDiscovery(rootPull, {
-            discoveryPageId: rootPull.legacyProgress.pageId,
-            discoveryFeatureId: undefined,
-        })).toBe(false);
-    });
-
-    it("keeps v1 blocking while v2 owns only validation art and inline payoff", () => {
+    it("keeps presentation candidates out of run structure and persisted progress", () => {
         const rootPullV1 = EXPLORE_OPENING_EXPERIENCES["root-pull-v1"];
         const rootPullV2 = EXPLORE_OPENING_EXPERIENCES["root-pull-v2"];
 
         expect(rootPullV1.rootPullAssetSet).toBe("v1");
-        expect(rootPullV1.completionRevealMode).toBe("blocking");
         expect(rootPullV2.rootPullAssetSet).toBe("v2");
-        expect(rootPullV2.completionRevealMode).toBe("inline");
-        expect(rootPullV2.answerCount).toBe(rootPullV1.answerCount);
         expect(rootPullV2.timing).toEqual(rootPullV1.timing);
-        expect(EXPLORE_OPENING_EXPERIENCES["snap-root-v1"].completionRevealMode).toBe("inline");
+        Object.values(EXPLORE_OPENING_EXPERIENCES).forEach((experience) => {
+            expect(experience).not.toHaveProperty("answerCount");
+            expect(experience).not.toHaveProperty("legacyProgress");
+            expect(experience).not.toHaveProperty("completionRevealMode");
+        });
     });
 });

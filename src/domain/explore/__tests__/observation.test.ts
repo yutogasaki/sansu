@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
     FIREFLY_FLOWER_DISCOVERY_PAGE,
-    MAKIMODON_DISCOVERY_PAGE,
 } from "../discoveryPageCatalog";
 import {
     getExploreObservationDefinition,
@@ -38,28 +37,7 @@ describe("exploration observation catalog", () => {
 });
 
 describe("semantic discovery page award", () => {
-    it("awards the three Makimodon body-rule beats to generic rapid successes", () => {
-        const [TRIP, PATH, PAYOFF] = MAKIMODON_DISCOVERY_PAGE.chain.featureIds;
-
-        expect(selectDiscoveryPageAward({
-            preferMakimodon: true,
-            discoveredFeatureIds: [],
-        })).toEqual({ pageId: MAKIMODON_DISCOVERY_PAGE.id, featureId: TRIP });
-        expect(selectDiscoveryPageAward({
-            preferMakimodon: true,
-            discoveredFeatureIds: [TRIP],
-        })).toEqual({ pageId: MAKIMODON_DISCOVERY_PAGE.id, featureId: PATH });
-        expect(selectDiscoveryPageAward({
-            preferMakimodon: true,
-            discoveredFeatureIds: [TRIP, PATH],
-        })).toEqual({ pageId: MAKIMODON_DISCOVERY_PAGE.id, featureId: PAYOFF });
-        expect(selectDiscoveryPageAward({
-            preferMakimodon: true,
-            discoveredFeatureIds: [TRIP, PATH, PAYOFF],
-        })?.featureId).toBe(DEW);
-    });
-
-    it("awards the three ordinary clues but not an ordinal fourth discovery", () => {
+    it("awards three ordinary clues, then a generic semantic payoff", () => {
         expect(selectDiscoveryPageAward({
             discoveredFeatureIds: [],
         })?.featureId).toBe(DEW);
@@ -72,20 +50,36 @@ describe("semantic discovery page award", () => {
         expect(selectDiscoveryPageAward({
             discoveredFeatureIds: [DEW, WARM, PETALS],
         })).toBeUndefined();
+        expect(selectDiscoveryPageAward({
+            discoveredFeatureIds: [DEW, WARM, PETALS],
+            rewardPhase: "finale",
+        })).toEqual({
+            pageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
+            featureId: LIGHT_PATH,
+        });
+        expect(selectDiscoveryPageAward({
+            discoveredFeatureIds: [DEW, WARM, PETALS, LIGHT_PATH],
+        })).toBeUndefined();
     });
 
-    it("awards the final feature only to root after every prerequisite", () => {
+    it("adds root observation provenance only to a compatible final encounter", () => {
         expect(selectDiscoveryPageAward({
             encounterId: "light-bridge",
             discoveredFeatureIds: [DEW, WARM, PETALS],
-        })).toBeUndefined();
+            rewardPhase: "finale",
+        })).toEqual({
+            pageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
+            featureId: LIGHT_PATH,
+        });
         expect(selectDiscoveryPageAward({
             encounterId: "root-tangle",
             discoveredFeatureIds: [DEW, WARM],
+            rewardPhase: "finale",
         })?.featureId).toBe(PETALS);
         expect(selectDiscoveryPageAward({
             encounterId: "root-tangle",
             discoveredFeatureIds: [DEW, WARM, PETALS],
+            rewardPhase: "finale",
         })).toEqual({
             pageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
             featureId: LIGHT_PATH,
@@ -94,6 +88,7 @@ describe("semantic discovery page award", () => {
         expect(selectDiscoveryPageAward({
             encounterId: "root-tangle",
             discoveredFeatureIds: [DEW, WARM, PETALS, LIGHT_PATH],
+            rewardPhase: "finale",
         })).toBeUndefined();
     });
 });

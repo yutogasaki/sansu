@@ -186,8 +186,10 @@ describe("exploreReducer", () => {
         expect(completed.temporaryFinds).toHaveLength(1);
         expect(completed.temporaryFinds[0]).toEqual(expect.objectContaining({
             nodeId: "node-1-0",
-            discoveryPageId: "discovery-page:jabarapon",
+            rarity: "common",
         }));
+        expect(completed.temporaryFinds[0].discoveryPageId).toBeUndefined();
+        expect(completed.temporaryFinds[0].discoveryFeatureId).toBeUndefined();
         expect(completed.attempts).toEqual([
             expect.objectContaining({ skillId: "add_1d_1", result: "correct", attemptNumber: 1 }),
         ]);
@@ -304,9 +306,9 @@ describe("exploreReducer", () => {
         }
 
         expect(state.temporaryFinds.slice(0, 7).map((find) => find.discoveryFeatureId)).toEqual([
-            "discovery-feature:jabarapon-two-legs",
-            "discovery-feature:jabarapon-four-legs",
-            "discovery-feature:jabarapon-six-legs",
+            undefined,
+            undefined,
+            undefined,
             "discovery-feature:firefly-flower-dew-trail",
             "discovery-feature:firefly-flower-warm-bud",
             "discovery-feature:firefly-flower-ringing-petals",
@@ -318,6 +320,34 @@ describe("exploreReducer", () => {
             discoveryFeatureId: "discovery-feature:firefly-flower-light-path",
             observationId: "explore-observation:root-tangle-light-path",
         }));
+    });
+
+    it("keeps a neutral Q7 payoff when the reserved skill cannot use root semantics", () => {
+        let state = createStartedState({ seed: "neutral-finale", now: 100 });
+        const finaleNode = state.nodes.find((node) => node.encounterId === "root-tangle");
+        if (!finaleNode) throw new Error("Expected a generated finale node");
+
+        while (state.steps < finaleNode.depth) {
+            const available = getAvailableExploreNodes(state);
+            const target = state.steps + 1 === finaleNode.depth
+                ? available.find((node) => node.id === finaleNode.id)
+                : available[0];
+            if (!target) throw new Error("Expected a route to the finale");
+            state = exploreReducer(state, { type: "SELECT_NODE", nodeId: target.id });
+            if (state.pendingProblem?.actionType === "bridge") {
+                state = exploreReducer(state, { type: "CHOOSE_BRIDGE", plan: "wood" });
+            }
+            state = setProblem(state, TEST_PROBLEM);
+            state = applyAnswer(state, "correct");
+        }
+
+        expect(state.temporaryFinds.at(-1)).toEqual(expect.objectContaining({
+            nodeId: finaleNode.id,
+            rarity: "rare",
+            discoveryFeatureId: "discovery-feature:firefly-flower-light-path",
+        }));
+        expect(state.temporaryFinds.at(-1)?.observationId).toBeUndefined();
+        expect(state.attempts.at(-1)?.encounterId).toBeUndefined();
     });
 
     const reachBridge = () => {

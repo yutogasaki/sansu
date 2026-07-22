@@ -1172,12 +1172,19 @@ const solveMakimodonOpening = async (page) => {
     if (index < 2) {
       await waitForNewExploreAttempt(page, previousAttemptKey);
     } else {
-      await closeBlockingResearchDiscovery(page, /大発見！.*ぜんぶ まきもどった/, 2);
+      await waitForExploreRouteBreak(page);
       assert(
         await page.locator(".explore-world").getAttribute("data-run-steps") === "3",
-        "three Makimodon answers should complete the opening ecology page",
+        "three Makimodon answers should complete only the opening beat",
       );
-      await waitForExploreRouteBreak(page);
+      assert(
+        await page.locator('.explore-research-overlay[role="dialog"]').count() === 0,
+        "opening payoff should not create a research-page modal",
+      );
+      assert(
+        await page.getByLabel("ちょうさノート 手掛かり 0/3").isVisible(),
+        "research should begin at zero only after the opening beat",
+      );
     }
   }
 };
@@ -1828,7 +1835,13 @@ const scenarioRootTangleVerticalSlice = async (
   assert(finalAttemptKey, "eighth-depth rapid-loop problem should expose an attempt key");
   await solveExploreNumericProblem(page);
   await waitForRouteBreakPastOptionalRareDiscovery(page);
-  await page.getByRole("button", { name: "ここまでを ノートに のこす" }).click();
+  const primaryReturn = page.getByTestId("explore-run-primary-return");
+  await primaryReturn.waitFor({ timeout: STEP_TIMEOUT_MS });
+  assert(
+    await page.getByRole("button", { name: "ここまでを ノートに のこす" }).count() === 0,
+    "terminal route should replace the voluntary notebook action",
+  );
+  await primaryReturn.click();
   await page.locator("#return-summary-title").waitFor({ timeout: STEP_TIMEOUT_MS });
   await assertResearchLibraryReturnLayout(page, viewport);
   assert(
@@ -1836,12 +1849,25 @@ const scenarioRootTangleVerticalSlice = async (
     "return summary should turn an unopened route into a next-run goal",
   );
   const completedRunId = await page.locator(".explore-world").getAttribute("data-run-id");
-  await page.getByRole("button", { name: "もういちど たんけん" }).click();
+  await page.getByTestId("research-library-primary-action").click();
   await waitForExploreFirstProblemReady(page);
   assert(
     await page.locator(".explore-world").getAttribute("data-run-id") !== completedRunId,
     "replay should start a new run instead of reviving the returned run",
   );
+  const freshWorld = page.locator(".explore-world");
+  assert(await freshWorld.getAttribute("data-run-status") === "active", "replay should be active");
+  assert(await freshWorld.getAttribute("data-run-steps") === "0", "replay should reset steps");
+  assert(
+    await freshWorld.getAttribute("data-confirmed-find-count") === "0",
+    "replay should clear confirmed finds",
+  );
+  assert(await page.locator("#return-summary-title").count() === 0, "replay should clear summary");
+  assert(
+    await page.locator('.explore-research-overlay[role="dialog"], [role="dialog"][aria-labelledby="discovery-title"]').count() === 0,
+    "replay should clear discovery dialogs",
+  );
+  await page.getByLabel("こたえ 未入力").waitFor({ timeout: STEP_TIMEOUT_MS });
 
   const logsAfter = await countIndexedDbRows(page, "logs");
   assert(
