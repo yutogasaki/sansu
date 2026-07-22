@@ -94,7 +94,8 @@ export const ExploreMap: React.FC<ExploreMapProps> = ({
         return (
             <section
                 aria-label={`いま ${fromNode?.title ?? "へんてこ生態の入口"}。${reactionCopy(reaction, focusNode.title)}`}
-                className="explore-map-frame relative h-full min-h-[82px] w-full rounded-[26px]"
+                className="explore-map-frame relative h-full w-full rounded-[26px]"
+                data-mode="compact"
             >
                 <WorldBackdrop compact />
                 <div className="relative flex h-full items-center justify-center gap-2 px-3 pb-6 pt-1 sm:gap-3 sm:px-4">
@@ -165,7 +166,8 @@ export const ExploreMap: React.FC<ExploreMapProps> = ({
     return (
         <section
             aria-label={`たんけんマップ。いま ${currentNode?.title ?? "入口"}。${availableCopy}`}
-            className="explore-map-frame relative h-full min-h-[250px] w-full rounded-[28px]"
+            className="explore-map-frame relative h-full w-full rounded-[28px]"
+            data-mode="full"
         >
             <WorldBackdrop />
 
@@ -181,7 +183,7 @@ export const ExploreMap: React.FC<ExploreMapProps> = ({
                     if (!from || !to) return null;
                     const isOpeningRoute = reaction === "opening" && edge.to === focusNodeId;
                     return (
-                        <g key={edge.id}>
+                        <g key={edge.id} className="explore-map-edge" data-state={edge.state}>
                             <line
                                 x1={from.x}
                                 y1={from.y}
@@ -278,7 +280,7 @@ export const ExploreMap: React.FC<ExploreMapProps> = ({
                 );
             })}
 
-            <div className="pointer-events-none absolute bottom-7 left-3 z-30 -rotate-1 rounded-[7px] border-2 border-[var(--explore-ink)] bg-[#fff8dd] px-3 py-1.5 text-[10px] font-black tracking-[0.1em] text-[var(--explore-ink)]">
+            <div className="explore-map-caption pointer-events-none absolute bottom-7 left-3 z-30 -rotate-1 rounded-[7px] border-2 border-[var(--explore-ink)] bg-[#fff8dd] px-3 py-1.5 text-[10px] font-black tracking-[0.1em] text-[var(--explore-ink)]">
                 へんてこ生態の道
             </div>
         </section>

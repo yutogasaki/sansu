@@ -278,23 +278,32 @@ const completeOnboarding = async (
   await waitForHash(page, /#\/explore$/);
 };
 
-const waitForExploreFirstProblemReady = async (page) => {
+const waitForExploreFirstProblemReady = async (page, openingArtSelector = ".makimodon-art") => {
   await waitForHash(page, /#\/explore$/);
-  const initialRouteChoice = page.locator("#explore-path-choice-title");
-  await initialRouteChoice.waitFor({ timeout: STEP_TIMEOUT_MS });
-  const initialRouteCards = initialRouteChoice.locator("xpath=ancestor::section[1]")
-    .locator(".explore-route-card");
-  assert(await initialRouteCards.count() >= 2, "the opening should offer at least two visible routes");
-  await initialRouteCards.first().click();
   await page.locator("#explore-problem-title").waitFor({ timeout: STEP_TIMEOUT_MS });
   const attempt = page.getByTestId("explore-attempt");
   await attempt.waitFor({ timeout: STEP_TIMEOUT_MS });
   assert(
     await attempt.getAttribute("data-attempt-number") === "1",
-    "the selected opening route should expose the first playable problem",
+    "the zero-tap opening should expose the first playable problem",
+  );
+  assert(
+    await page.locator("#explore-path-choice-title").count() === 0,
+    "the fixed cold open should not ask the child to choose a route that it cannot honor",
+  );
+  assert(
+    await page.locator(".explore-route-card").count() === 0,
+    "the fixed cold open should not flash route cards before its first problem",
+  );
+  assert(
+    await page.locator(".explore-world").getAttribute("data-run-steps") === "0",
+    "the first problem should remain the first run step",
   );
   assert(await page.locator("#explore-intro-title").count() === 0, "launch should skip the old explore intro");
-  assert(await page.locator(".makimodon-art").isVisible(), "the first problem should open the Makimodon ecology chain");
+  assert(
+    await page.locator(openingArtSelector).isVisible(),
+    `the first problem should expose its fixed opening art (${openingArtSelector})`,
+  );
 };
 
 const navigateHash = async (page, hash, pattern) => {
@@ -459,7 +468,7 @@ const scenarioExploreLaunchAndReturn = async (browser) => {
   await waitForExploreFirstProblemReady(page);
   const returningRunId = await page.locator(".explore-world").getAttribute("data-run-id");
   await solveMakimodonOpening(page);
-  await page.getByRole("button", { name: "いまの発見を もって 基地へ" }).click();
+  await page.getByRole("button", { name: "ここまでを ノートに のこす" }).click();
   await page.locator("#return-summary-title").waitFor({ timeout: STEP_TIMEOUT_MS });
   const returnSnapshot = await readExplorePersistenceSnapshot(page);
   const returnedRun = returnSnapshot.runs.find((candidate) => candidate.runId === returningRunId);
@@ -495,7 +504,7 @@ const scenarioRootPullV2Opening = async (browser) => {
     await world.getAttribute("data-opening-experience") === "root-pull-v2",
     "the validation URL should hold Root Pull v2 for the full UI run",
   );
-  await chooseFirstExploreRoute(page);
+  await waitForExploreFirstProblemReady(page, ".root-pull-opening-art");
 
   const rootPullArt = page.locator(".root-pull-opening-art");
   await rootPullArt.waitFor({ timeout: STEP_TIMEOUT_MS });
@@ -719,7 +728,7 @@ const scenarioSnapRootBreakthrough = async (
     /小学 1 年生/,
     "snap-root-v1",
   );
-  await chooseFirstExploreRoute(page);
+  await waitForExploreFirstProblemReady(page, ".snap-root-opening-art");
 
   const world = page.locator(".explore-world");
   const art = page.locator(".snap-root-opening-art");
@@ -922,7 +931,7 @@ const scenarioSnapRootTempoBenchmark = async (browser, runCount) => {
     }, { seed: `tempo-${runIndex}`, now: 2000 + runIndex });
     await clearClientStorage(page);
     await completeOnboarding(page, /足し算まで/, /小学 1 年生/, "snap-root-v1");
-    await chooseFirstExploreRoute(page);
+    await waitForExploreFirstProblemReady(page, ".snap-root-opening-art");
 
     for (let sampleIndex = 0; sampleIndex < 2; sampleIndex += 1) {
       const answer = await getExploreNumericAnswer(page);
@@ -1379,7 +1388,7 @@ const scenarioExploreReturnFinishRetry = async (browser) => {
   await openFirstExploreAttempt(page);
   const runId = await page.getByTestId("explore-attempt").getAttribute("data-run-id");
   await solveMakimodonOpening(page);
-  await page.getByRole("button", { name: "いまの発見を もって 基地へ" }).click();
+  await page.getByRole("button", { name: "ここまでを ノートに のこす" }).click();
   const retry = page.getByRole("button", { name: "もういちど きろくする" });
   await retry.waitFor({ timeout: STEP_TIMEOUT_MS });
 
@@ -1819,15 +1828,20 @@ const scenarioRootTangleVerticalSlice = async (
   assert(finalAttemptKey, "eighth-depth rapid-loop problem should expose an attempt key");
   await solveExploreNumericProblem(page);
   await waitForRouteBreakPastOptionalRareDiscovery(page);
-  await page.getByRole("button", { name: "いまの発見を もって 基地へ" }).click();
+  await page.getByRole("button", { name: "ここまでを ノートに のこす" }).click();
   await page.locator("#return-summary-title").waitFor({ timeout: STEP_TIMEOUT_MS });
   await assertResearchLibraryReturnLayout(page, viewport);
   assert(
     await page.getByLabel("つぎの たんけんの けはい").isVisible(),
     "return summary should turn an unopened route into a next-run goal",
   );
-  await page.getByRole("button", { name: "ちがう道を たんけん" }).click();
+  const completedRunId = await page.locator(".explore-world").getAttribute("data-run-id");
+  await page.getByRole("button", { name: "もういちど たんけん" }).click();
   await waitForExploreFirstProblemReady(page);
+  assert(
+    await page.locator(".explore-world").getAttribute("data-run-id") !== completedRunId,
+    "replay should start a new run instead of reviving the returned run",
+  );
 
   const logsAfter = await countIndexedDbRows(page, "logs");
   assert(

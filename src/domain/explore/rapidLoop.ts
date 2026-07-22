@@ -17,8 +17,10 @@ export const shouldAutoRouteExplorePath = (
     availableNodeCount === 1
     || (
         availableNodeCount > 0
-        && steps > 0
-        && steps % RAPID_LOOP_SEGMENT_LENGTH !== 0
+        && (
+            steps === 0
+            || steps % RAPID_LOOP_SEGMENT_LENGTH !== 0
+        )
     )
 );
 

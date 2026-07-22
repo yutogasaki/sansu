@@ -35,6 +35,7 @@ For image-led exploration UI, also read `.agents/skills/sansu-art-direction-loop
 - Avoid continuous loudness, social-ranking pressure, blinking, long forced sequences, and dark fear as the core fantasy
 - Use `src/index.css` tokens and shared surface utilities before inventing new local values
 - Keep one current objective or primary action clear; present route, return, or resource choices when they are meaningful
+- Never show a route, teaser, or destination choice before a fixed presentation that ignores it. Auto-route fixed openings, and expose a choice only when the next visible node, action, or encounter honors the selection
 - Ensure tap targets, contrast, focus visibility, and loading/error states stay usable
 - Do not rely on color, motion, or sound alone to communicate state
 - Respect reduced motion and keep the full flow understandable with sound off

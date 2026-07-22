@@ -67,8 +67,9 @@ describe("explore rapid-loop policy", () => {
         expect(selectOpeningProblemPresentation("snap-root")).toBe("snap-root");
     });
 
-    it("shows a choice every three answers but never asks for a one-option choice", () => {
-        expect(shouldAutoRouteExplorePath(0, 2)).toBe(false);
+    it("starts the opening immediately, then shows a real choice every three answers", () => {
+        expect(shouldAutoRouteExplorePath(0, 0)).toBe(false);
+        expect(shouldAutoRouteExplorePath(0, 2)).toBe(true);
         expect(shouldAutoRouteExplorePath(0, 1)).toBe(true);
         expect(shouldAutoRouteExplorePath(1, 2)).toBe(true);
         expect(shouldAutoRouteExplorePath(2, 2)).toBe(true);

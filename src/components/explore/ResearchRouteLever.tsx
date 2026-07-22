@@ -12,9 +12,9 @@ export const ResearchRouteLever: React.FC<ResearchRouteLeverProps> = ({
     replayTeaser,
     onRestart,
 }) => {
-    const actionLabel = replayTeaser ? "ちがう道を たんけん" : "もういっかい たんけん";
+    const actionLabel = "もういちど たんけん";
     const routeCopy = replayTeaser
-        ? `${replayTeaser.title}の けはいがする`
+        ? `${replayTeaser.title}に 出会えるかも`
         : "ページの先に、まだ道がある";
 
     return (

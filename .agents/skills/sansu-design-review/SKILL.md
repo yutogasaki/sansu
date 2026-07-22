@@ -21,6 +21,7 @@ For image-led exploration review, also read `.agents/skills/sansu-art-direction-
 
 - Visual magnetism: desire to enter the world, character attachment, material touch, depth, focal color, and anticipation/payoff
 - Game feel: action/reaction clarity, replay appeal, meaningful choices, and satisfying discoveries
+- Choice honesty: every route, teaser, or destination choice visibly changes the following node, action, or encounter; a fixed opening must not masquerade as a branch
 - Tone: calm readable baseline, vivid short peaks, no shame or ability judgment
 - Failure: brief, understandable, recoverable, and inviting to retry
 - Information design: one current objective, clear hierarchy, legible choices
