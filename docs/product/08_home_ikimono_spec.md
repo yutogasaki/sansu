@@ -1,12 +1,13 @@
 # 08 ホーム画面・いきもの仕様（実装ベース）
 
 > 最終更新: 2026-02-19  
-> 本書は **現行実装を正** とする。旧版との差異がある場合は本書を優先する。  
+> 本書は探索統合前の **現行実装スナップショット** を定義する。親仕様や [16_legacy_feature_decision.md](16_legacy_feature_decision.md) と差異がある場合は、親仕様と16を優先する。
 > 関連: [01_app_spec.md](01_app_spec.md), [06_screen_specs.md](06_screen_specs.md), [07_ui_design_guideline.md](07_ui_design_guideline.md)
 
 ---
 
 ## 0. 方針
+- 探索ピボット後は、いきものを探検相棒、ヒント係、発見リアクション係へ統合する。統合完了までは本書の現行挙動を維持する。
 - ホームは「学習開始前の入口」だが、情報量は最小固定ではなく、`いきもの` の状態把握に必要な要素を表示する。
 - `いきもの` は評価者ではなく伴走者として扱う。
 - 文言・動きは単調さを避けるためにランダム性を持つ。
@@ -148,6 +149,7 @@
 - `src/components/ikimono/hitokotoData.ts` 文言データ
 - `src/components/ikimono/ikimonoMotion.ts` モーション定義
 - `src/components/ikimono/IkimonoSvg.tsx` 画像表示
+- `src/components/ikimono/IkimonoArtwork.tsx` WebP表示とコードネイティブSVGフォールバック
 - `src/components/ikimono/NameModal.tsx` 命名モーダル
 
 ---

@@ -5,7 +5,6 @@ import { useStudySession } from "../hooks/useStudySession";
 import { useHissanSession } from "../hooks/useHissanSession";
 import { playSound, setSoundEnabled } from "../utils/audio";
 import { getActiveProfile, saveProfile } from "../domain/user/repository";
-import { logAttempt } from "../domain/learningRepository";
 import { StudyLayout } from "./StudyLayout";
 import { isFixedSessionKind, shouldPrefetchNextBlock, checkAnswer, shouldShowEndlessBreak, isFixedSessionComplete, isInputLocked } from "../hooks/useStudySession.logic";
 import { logInDev } from "../utils/debug";
@@ -64,6 +63,7 @@ export const Study: React.FC = () => {
 
     const [feedback, setFeedback] = useState<"none" | "correct" | "incorrect" | "skipped">("none");
     const [showCorrection, setShowCorrection] = useState(false);
+    const [saveError, setSaveError] = useState(false);
 
 
     // Processing Lock (Ref) to Prevent Double Submission / Spamming
@@ -81,8 +81,6 @@ export const Study: React.FC = () => {
     const [testRemainingSeconds, setTestRemainingSeconds] = useState<number | undefined>(undefined);
     const hasCompletedFixedSessionRef = React.useRef(false);
 
-    // Profile ID for skip logging
-    const [profileId, setProfileId] = useState<string | null>(null);
     const [englishAutoRead, setEnglishAutoRead] = useState(false);
     const [isEasyText, setIsEasyText] = useState(false);
     const [hissanModeEnabled, setHissanModeEnabled] = useState(false);
@@ -114,7 +112,6 @@ export const Study: React.FC = () => {
         getActiveProfile().then(profile => {
             if (profile) {
                 setSoundEnabled(profile.soundEnabled);
-                setProfileId(profile.id);
                 setEnglishAutoRead(profile.englishAutoRead || false);
                 setIsEasyText(profile.uiTextMode === "easy");
                 setHissanModeEnabled(profile.hissanModeEnabled ?? true);
@@ -149,6 +146,7 @@ export const Study: React.FC = () => {
         }
         setFeedback("none");
         setShowCorrection(false);
+        setSaveError(false);
         isProcessingRef.current = false;
 
         // 筆算モードリセット
@@ -163,6 +161,7 @@ export const Study: React.FC = () => {
         setActiveFieldIndex(0);
         setFeedback("none");
         setShowCorrection(false);
+        setSaveError(false);
         isProcessingRef.current = false;
         problemShownAtRef.current = Date.now();
         setIsFinished(false);
@@ -355,8 +354,10 @@ export const Study: React.FC = () => {
     }, [feedback, currentProblem, hissan]);
 
     const nextProblem = useCallback(() => {
+        if (isProcessingRef.current) return;
         setFeedback("none");
         setShowCorrection(false);
+        setSaveError(false);
         setUserInput("");
         setCurrentIndex(prev => prev + 1);
         problemShownAtRef.current = Date.now();
@@ -365,7 +366,8 @@ export const Study: React.FC = () => {
 
     // Submitting - useEffectより前に定義
     const handleSubmit = useCallback(async (choiceValue?: string) => {
-        if (feedback !== "none" || !currentProblem) return;
+        if (isInputLocked(feedback, isProcessingRef.current) || !currentProblem) return;
+        setSaveError(false);
 
         // 筆算モードの場合はhissanEnterを使う
         if (hissan.isHissanActive && hissan.gridData) {
@@ -376,9 +378,19 @@ export const Study: React.FC = () => {
                 const timeMs = Date.now() - problemShownAtRef.current;
                 setFeedback("correct");
                 playSound("correct");
-                handleResult(currentProblem, 'correct', timeMs);
-                setCorrectCount(prev => prev + 1);
-                scheduleUiTimeout(nextProblem, 500);
+                let saved = false;
+                try {
+                    saved = await handleResult(currentProblem, 'correct', timeMs);
+                    if (saved) {
+                        setCorrectCount(prev => prev + 1);
+                    } else {
+                        setFeedback("none");
+                        setSaveError(true);
+                    }
+                } finally {
+                    isProcessingRef.current = false;
+                }
+                if (saved) scheduleUiTimeout(nextProblem, 500);
             } else if (result === 'step-correct') {
                 playSound("correct");
             } else {
@@ -401,37 +413,62 @@ export const Study: React.FC = () => {
         if (isCorrect) {
             setFeedback("correct");
             playSound("correct");
-            handleResult(currentProblem, 'correct', timeMs);
-            setCorrectCount(prev => prev + 1);
+            let saved = false;
+            try {
+                saved = await handleResult(currentProblem, 'correct', timeMs);
+                if (saved) {
+                    setCorrectCount(prev => prev + 1);
+                } else {
+                    setFeedback("none");
+                    setSaveError(true);
+                }
+            } finally {
+                isProcessingRef.current = false;
+            }
 
-            scheduleUiTimeout(nextProblem, 500);
+            if (saved) scheduleUiTimeout(nextProblem, 500);
         } else {
             setFeedback("incorrect");
             playSound("incorrect");
-            handleResult(currentProblem, 'incorrect', timeMs);
-
-            setShowCorrection(true);
+            try {
+                const saved = await handleResult(currentProblem, 'incorrect', timeMs);
+                if (saved) {
+                    setShowCorrection(true);
+                } else {
+                    setFeedback("none");
+                    setSaveError(true);
+                }
+            } finally {
+                isProcessingRef.current = false;
+            }
             // Auto-advance removed. User must click Next.
         }
     }, [feedback, currentProblem, userInput, userInputs, handleResult, nextProblem, hissan, scheduleUiTimeout]);
 
     // スキップ処理（仕様 4.7）
     const handleSkip = useCallback(async () => {
-        if (isInputLocked(feedback, isProcessingRef.current) || !currentProblem || !profileId) return;
+        if (isInputLocked(feedback, isProcessingRef.current) || !currentProblem) return;
 
         isProcessingRef.current = true;
 
+        setSaveError(false);
         setFeedback("skipped");
-        setShowCorrection(true);
         playSound("incorrect");
 
-        if (!isDevSession) {
-            // スキップをログ（strength=1にリセット、不正解扱い）
-            await logAttempt(profileId, currentProblem.subject, currentProblem.categoryId, 'incorrect', true, currentProblem.isReview);
+        try {
+            const saved = await handleResult(currentProblem, 'skipped');
+            if (saved) {
+                setShowCorrection(true);
+            } else {
+                setFeedback("none");
+                setSaveError(true);
+            }
+        } finally {
+            isProcessingRef.current = false;
         }
 
         // Auto-advance removed. User must click Next.
-    }, [feedback, currentProblem, profileId, isDevSession]);
+    }, [feedback, currentProblem, handleResult]);
 
     // 左スワイプでスキップ
     const swipeHandlers = useSwipeable({
@@ -569,6 +606,7 @@ export const Study: React.FC = () => {
                 activeFieldIndex={activeFieldIndex}
                 feedback={feedback}
                 showCorrection={showCorrection}
+                saveError={saveError}
                 sessionKind={sessionKindParam || "normal"}
                 correctCount={correctCount}
                 sessionResult={sessionResult || undefined}

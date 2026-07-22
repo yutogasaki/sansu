@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { generators } from "./advanced";
 
 const compareValues = (left: number, right: number): string => {
@@ -7,6 +7,10 @@ const compareValues = (left: number, right: number): string => {
 };
 
 describe("advanced generators", () => {
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
     it("large_number_unit converts numbers into man or oku units", () => {
         const problem = generators.large_number_unit();
         const match = problem.questionText.match(/^([\d,]+) は なん(まん|おく)？$/);
@@ -47,25 +51,43 @@ describe("advanced generators", () => {
         expect(problem.correctAnswer).toBe(compareValues(left, right));
     });
 
+    it.each([0, 0.34, 0.99])("frac_compare terminates for a constant random source (%s)", (randomValue) => {
+        vi.spyOn(Math, "random").mockReturnValue(randomValue);
+
+        const problem = generators.frac_compare();
+
+        expect(problem.inputType).toBe("choice");
+        expect(problem.questionText).toMatch(/^\d+\/\d+ □ \d+\/\d+$/);
+    });
+
     it("percent_basic supports both percent directions", () => {
-        const problem = generators.percent_basic();
-        const fromWhole = problem.questionText.match(/^(\d+) は (\d+) の なん%？$/);
-        const fromPercent = problem.questionText.match(/^(\d+) の (\d+)% は？$/);
+        const problems = [
+            generators.percent_basic({ random: () => 0 }),
+            generators.percent_basic({ random: () => 0.999 }),
+        ];
 
-        expect(problem.inputType).toBe("number");
-        expect(Boolean(fromWhole || fromPercent)).toBe(true);
+        problems.forEach((problem) => {
+            const fromWhole = problem.questionText.match(/^(\d+) は (\d+) の なん%？$/);
+            const fromPercent = problem.questionText.match(/^(\d+) の (\d+)% は？$/);
 
-        if (fromWhole) {
-            const part = Number(fromWhole[1]);
-            const whole = Number(fromWhole[2]);
-            expect(problem.correctAnswer).toBe(String((part / whole) * 100));
-        }
+            expect(problem.inputType).toBe("number");
+            expect(Boolean(fromWhole || fromPercent)).toBe(true);
 
-        if (fromPercent) {
-            const whole = Number(fromPercent[1]);
-            const percent = Number(fromPercent[2]);
-            expect(problem.correctAnswer).toBe(String((whole * percent) / 100));
-        }
+            if (fromWhole) {
+                const part = Number(fromWhole[1]);
+                const whole = Number(fromWhole[2]);
+                expect(problem.correctAnswer).toBe(String((part / whole) * 100));
+            }
+
+            if (fromPercent) {
+                const whole = Number(fromPercent[1]);
+                const percent = Number(fromPercent[2]);
+                expect(problem.correctAnswer).toBe(String((whole * percent) / 100));
+            }
+        });
+
+        expect(problems[0].questionText).toMatch(/なん%？$/);
+        expect(problems[1].questionText).toMatch(/% は？$/);
     });
 
     it("average_basic returns the arithmetic mean", () => {

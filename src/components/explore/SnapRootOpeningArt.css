@@ -1,0 +1,76 @@
+.snap-root-opening-art {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background: #1cc9d2;
+}
+
+.snap-root-opening-art__preload {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    opacity: 0;
+}
+
+.snap-root-opening-art__preload img {
+    width: 1px;
+    height: 1px;
+}
+
+.snap-root-opening-art__scene {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: min(100%, 768px);
+    aspect-ratio: 390 / 500;
+    overflow: hidden;
+    transform: translateX(-50%);
+    transform-origin: top center;
+}
+
+.snap-root-opening-art__scene > picture {
+    position: absolute;
+    inset: 0;
+}
+
+.snap-root-opening-art__painted {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    user-select: none;
+}
+
+.snap-root-opening-art--reduced-motion * {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .snap-root-opening-art * {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@media (min-width: 600px) {
+    .snap-root-opening-art__scene {
+        width: 100%;
+        height: 66%;
+        aspect-ratio: auto;
+    }
+}
+
+@media (max-width: 480px) and (max-height: 720px) {
+    .snap-root-opening-art__scene {
+        width: min(93%, 350px);
+    }
+}

@@ -244,33 +244,32 @@ export const Onboarding: React.FC = () => {
 
     if (step === "welcome") {
         return (
-            <div className="relative flex h-full min-h-0 flex-col items-center justify-center overflow-hidden px-[var(--screen-padding-x)] animate-in fade-in duration-500">
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(103,232,249,0.2),_transparent_42%),radial-gradient(circle_at_bottom,_rgba(110,231,183,0.16),_transparent_38%)]" />
-                <div className="pointer-events-none absolute -left-16 top-12 h-40 w-40 rounded-full bg-cyan-100/45 blur-3xl" />
-                <div className="pointer-events-none absolute -right-10 bottom-10 h-36 w-36 rounded-full bg-emerald-100/45 blur-3xl" />
-                <SurfacePanel className={cn(panelClass, "relative z-10 max-w-md space-y-6 border-t-cyan-300/80 text-center")}>
-                    <div className="mx-auto flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[24px] border border-cyan-100/90 bg-[linear-gradient(145deg,rgba(236,254,255,0.94),rgba(209,250,229,0.84))] text-4xl shadow-[0_20px_34px_-24px_rgba(34,197,94,0.3)]">
-                        <span aria-hidden="true">🌱</span>
-                    </div>
-                    <Badge variant="primary" className="mx-auto">
-                        やさしく つづく
+            <div className="brand-onboarding relative flex h-full min-h-0 flex-col items-center justify-center overflow-hidden px-[var(--screen-padding-x)] animate-in fade-in duration-500">
+                <SurfacePanel className={cn(panelClass, "brand-onboarding__panel relative z-10 max-w-md space-y-5 text-center")}>
+                    <img
+                        src="/icons/icon-512.png"
+                        alt="黄色い葉帽子の探検相棒"
+                        className="brand-onboarding__mark mx-auto"
+                    />
+                    <Badge variant="primary" className="mx-auto border-[var(--brand-ink)] bg-[var(--brand-cream)] text-[var(--brand-ink)]">
+                        さんすうで ひらく
                     </Badge>
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                         <h1
-                            className="text-5xl font-black tracking-[-0.04em] text-slate-800"
+                            className="text-[2.35rem] font-black leading-[1.06] tracking-[-0.055em] text-[var(--brand-ink)]"
                             style={{ fontFamily: "var(--font-heading)" }}
                         >
-                            ふわまな
+                            ポッコの<br />ふしぎずかん
                         </h1>
-                        <p className="text-sm font-medium leading-7 text-slate-400">
-                            やさしく、しずかに
+                        <p className="text-sm font-black leading-7 text-[var(--brand-ink)]/75">
+                            ポッコと ふしぎを みつけよう
                             <br />
-                            つづくまなび
+                            さんすうが たんけんになる
                         </p>
                     </div>
                     <div className="flex flex-col items-center gap-3">
                         <Button onClick={() => setStep("name")} size="xl" className="w-full max-w-[220px] justify-center">
-                            はじめる
+                            たんけんを はじめる
                         </Button>
                         <button
                             onClick={() => navigate(-1)}
@@ -285,8 +284,7 @@ export const Onboarding: React.FC = () => {
     }
 
     return (
-        <div className="relative flex h-full min-h-0 flex-col overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(103,232,249,0.16),_transparent_42%),radial-gradient(circle_at_bottom,_rgba(251,191,36,0.12),_transparent_30%)]">
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0))]" />
+        <div className="brand-utility-screen relative flex h-full min-h-0 flex-col overflow-hidden">
             <Header
                 title={stepTitle}
                 showBack={!isSubmitting}

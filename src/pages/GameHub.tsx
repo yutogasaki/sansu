@@ -1,94 +1,141 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowLeftRight, Handshake, SlidersHorizontal } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { ScreenScaffold } from "../components/ScreenScaffold";
+import { MakimodonEncounterArt } from "../components/explore/MakimodonEncounterArt";
 import { Icons } from "../components/icons";
-import { Badge } from "../components/ui/Badge";
-import { Button } from "../components/ui/Button";
-import { InsetPanel, SectionLabel, SelectionCard, SurfacePanel, SurfacePanelHeader } from "../components/ui/SurfacePanel";
+import { ScreenScaffold } from "../components/ScreenScaffold";
 
-const GAME_OPTIONS = [
-    {
-        id: "tug_of_war",
-        emoji: "🪢",
-        title: "つなひき たいせん",
-        description: "さきに つなを ひっぱりきった ほうが かち",
-        badge: { label: "たいせん", variant: "primary" as const },
-        to: "/battle/play?mode=tug_of_war",
-    },
+const TWO_PLAYER_OPTIONS = [
     {
         id: "boss_coop",
-        emoji: "🐲",
-        title: "ボス きょうりょく",
-        description: "ふたりで ちからを あわせて ボスを たおそう",
-        badge: { label: "きょうりょく", variant: "warning" as const },
+        title: "ふたりで きょうりょく",
+        titleLines: ["ふたりで", "きょうりょく"],
+        description: "同時に こたえて、じかんないに ひとつのゲージを へらす",
+        badge: "きょうりょく",
+        tone: "turquoise",
+        icon: Handshake,
         to: "/battle/play?mode=boss_coop",
     },
-];
+    {
+        id: "tug_of_war",
+        title: "つなひき たいせん",
+        titleLines: ["つなひき", "たいせん"],
+        description: "同時に こたえて、つなを じぶんがわへ ひっぱる",
+        badge: "たいせん",
+        tone: "coral",
+        icon: ArrowLeftRight,
+        to: "/battle/play?mode=tug_of_war",
+    },
+] as const;
 
 export const GameHub: React.FC = () => {
     const navigate = useNavigate();
+    const reduceMotion = Boolean(useReducedMotion());
 
     return (
-        <div className="relative h-full overflow-hidden">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.16),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(245,158,11,0.18),transparent_28%)]" />
+        <div className="game-hub relative h-full overflow-hidden">
+            <span className="game-hub__backdrop-shape game-hub__backdrop-shape--sun" aria-hidden="true" />
+            <span className="game-hub__backdrop-shape game-hub__backdrop-shape--leaf" aria-hidden="true" />
 
             <ScreenScaffold
-                title="Game"
-                subtitle="あそびかたを えらぼう"
-                contentClassName="px-[var(--screen-padding-x)]"
+                title="探検基地"
+                subtitle="つぎの へんてこへ すぐ出発"
+                contentClassName="game-hub__scroll"
             >
-                <div className="space-y-4 pb-4">
-                    <SurfacePanel className="space-y-4">
-                        <div className="flex items-start justify-between gap-3">
-                            <SurfacePanelHeader
-                                title="ふたりで あそぶ"
-                                description="あそびたい ゲームを えらんで すぐに はじめよう"
+                <div className="game-hub__content">
+                    <motion.section
+                        className="game-hub__hero"
+                        aria-labelledby="game-hub-explore-title"
+                        initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: reduceMotion ? 0 : 0.28 }}
+                    >
+                        <div className="game-hub__hero-art" aria-hidden="true">
+                            <MakimodonEncounterArt
+                                stage="rolled"
+                                reducedMotion={reduceMotion}
+                                decorative
+                                className="game-hub__featured-creature"
                             />
-                            <Badge variant="primary">2 GAME</Badge>
                         </div>
 
-                        <div className="space-y-3">
-                            {GAME_OPTIONS.map((option, index) => (
-                                <motion.div
-                                    key={option.id}
-                                    initial={{ opacity: 0, y: 16 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.24, delay: index * 0.06 }}
-                                >
-                                    <SelectionCard
-                                        leading={<span aria-hidden="true">{option.emoji}</span>}
-                                        label={
-                                            <span className="flex items-center gap-2">
-                                                <span>{option.title}</span>
-                                                <Badge variant={option.badge.variant}>{option.badge.label}</Badge>
-                                            </span>
-                                        }
-                                        description={option.description}
-                                        trailing={<Icons.ArrowRight className="h-5 w-5" />}
+                        <div className="game-hub__hero-copy">
+                            <p className="game-hub__kicker">きょうの へんてこ</p>
+                            <h2 id="game-hub-explore-title">まきものの しょうたいを しらべよう</h2>
+                            <p>ほどけた みち、のってみる？</p>
+                        </div>
+
+                        <button
+                            type="button"
+                            className="game-hub__launch explore-focus-ring"
+                            onClick={() => navigate("/explore")}
+                            aria-label="すぐ たんけんを はじめる"
+                        >
+                            <span>
+                                <strong>すぐ たんけん</strong>
+                                <small>さんすうで 道をひらく</small>
+                            </span>
+                            <span className="game-hub__launch-arrow" aria-hidden="true">
+                                <Icons.ArrowRight />
+                            </span>
+                        </button>
+                    </motion.section>
+
+                    <section className="game-hub__two-player" aria-labelledby="game-hub-two-player-title">
+                        <div className="game-hub__section-heading">
+                            <div>
+                                <p className="game-hub__section-kicker">となりに だれかいたら</p>
+                                <h2 id="game-hub-two-player-title">ふたりで あそぶ</h2>
+                            </div>
+                            <span>2つの あそび</span>
+                        </div>
+
+                        <div className="game-hub__mode-grid">
+                            {TWO_PLAYER_OPTIONS.map((option, index) => {
+                                const ModeIcon = option.icon;
+
+                                return (
+                                    <motion.button
+                                        key={option.id}
+                                        type="button"
+                                        className={`game-hub__mode-card game-hub__mode-card--${option.tone}`}
                                         onClick={() => navigate(option.to)}
-                                    />
-                                </motion.div>
-                            ))}
+                                        aria-label={`${option.title}。${option.description}`}
+                                        initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{
+                                            duration: reduceMotion ? 0 : 0.22,
+                                            delay: reduceMotion ? 0 : 0.05 + index * 0.05,
+                                        }}
+                                    >
+                                        <span className="game-hub__mode-icon" aria-hidden="true">
+                                            <ModeIcon />
+                                        </span>
+                                        <span className="game-hub__mode-badge">{option.badge}</span>
+                                        <strong>
+                                            {option.titleLines.map((line) => <span key={line}>{line}</span>)}
+                                        </strong>
+                                        <small>{option.description}</small>
+                                        <Icons.ArrowRight className="game-hub__mode-arrow" aria-hidden="true" />
+                                    </motion.button>
+                                );
+                            })}
                         </div>
-                    </SurfacePanel>
 
-                    <SurfacePanel variant="flat" className="space-y-3">
-                        <SurfacePanelHeader
-                            title="じゅんびから はじめる"
-                            description="プレイヤー名や がくねんは このあと えらべるよ"
-                        />
-                        <Button size="xl" onClick={() => navigate("/battle/play")}>
-                            セットアップを ひらく
-                        </Button>
-                    </SurfacePanel>
-
-                    <InsetPanel className="space-y-2">
-                        <SectionLabel className="px-0">Game Menu</SectionLabel>
-                        <p className="text-sm font-medium leading-6 text-slate-600">
-                            これから ゲームを ふやしても、ここから えらべるように してあります。
-                        </p>
-                    </InsetPanel>
+                        <button
+                            type="button"
+                            className="game-hub__setup-link"
+                            onClick={() => navigate("/battle/play")}
+                        >
+                            <SlidersHorizontal aria-hidden="true" />
+                            <span>
+                                <strong>2人あそびを くわしく えらぶ</strong>
+                                <small>なまえ・がくねん・もんだいを 先にきめる</small>
+                            </span>
+                            <Icons.ArrowRight aria-hidden="true" />
+                        </button>
+                    </section>
                 </div>
             </ScreenScaffold>
         </div>

@@ -7,11 +7,23 @@ import { saveProfile } from "../user/repository";
 
 const SAME_ID_LIMIT = 2;
 
+const getLeastUsedCandidates = (
+    candidates: string[],
+    blockCounts: Map<string, number>
+): string[] => {
+    const underSoftLimit = candidates.filter(id => (blockCounts.get(id) || 0) < SAME_ID_LIMIT);
+    const pool = underSoftLimit.length > 0 ? underSoftLimit : candidates;
+    if (pool.length === 0) return [];
+
+    const minimumCount = Math.min(...pool.map(id => blockCounts.get(id) || 0));
+    return pool.filter(id => (blockCounts.get(id) || 0) === minimumCount);
+};
+
 const pickId = (
     candidates: string[],
     blockCounts: Map<string, number>
 ): string | undefined => {
-    const available = candidates.filter(id => (blockCounts.get(id) || 0) < SAME_ID_LIMIT);
+    const available = getLeastUsedCandidates(candidates, blockCounts);
     if (available.length === 0) return undefined;
     return available[Math.floor(Math.random() * available.length)];
 };
@@ -21,7 +33,7 @@ const pickMathId = (
     blockCounts: Map<string, number>,
     recentIds: string[]
 ): string | undefined => {
-    const available = candidates.filter(id => (blockCounts.get(id) || 0) < SAME_ID_LIMIT);
+    const available = getLeastUsedCandidates(candidates, blockCounts);
     if (available.length === 0) return undefined;
 
     const recentFamilies = recentIds.map(getMathSkillFamily);
@@ -38,7 +50,7 @@ const pickMathId = (
     return pool[Math.floor(Math.random() * pool.length)];
 };
 
-const buildPeriodicTestSet = (
+export const buildPeriodicTestSet = (
     profile: UserProfile,
     subject: SubjectKey
 ): PeriodicTestSet => {
@@ -53,7 +65,7 @@ const buildPeriodicTestSet = (
         const pool = skills.length > 0 ? skills : getSkillsForLevel(1);
         for (let i = 0; i < 20; i++) {
             const recentIds = problems.map(problem => problem.categoryId).slice(-5);
-            const id = pickMathId(pool, genOptions.blockCounts, recentIds) || pool[0];
+            const id = pickMathId(pool, genOptions.blockCounts, recentIds);
             if (!id) break;
             const problem = generateMathProblem(id, { profile });
             problems.push(problem);
@@ -63,7 +75,7 @@ const buildPeriodicTestSet = (
         const words = getWordsByLevel(level);
         const pool = words.length > 0 ? words.map(w => w.id) : getWordsByLevel(1).map(w => w.id);
         for (let i = 0; i < 20; i++) {
-            const id = pickId(pool, genOptions.blockCounts) || pool[0];
+            const id = pickId(pool, genOptions.blockCounts);
             if (!id) break;
             const problem = generateVocabProblem(id, { cooldownIds: [], kanjiMode: profile.kanjiMode });
             problems.push(problem);
@@ -86,7 +98,12 @@ export const ensurePeriodicTestSet = async (
     const currentLevel = subject === "math" ? (profile.mathMainLevel ?? 1) : (profile.vocabMainLevel ?? 1);
     const existing = profile.periodicTestSets?.[subject];
 
-    if (existing && existing.level === currentLevel && existing.problems.length === 20) {
+    const isPendingAutomaticTest = profile.periodicTestState?.[subject]?.isPending === true;
+    if (
+        existing
+        && existing.problems.length === 20
+        && (existing.level === currentLevel || isPendingAutomaticTest)
+    ) {
         return existing;
     }
 

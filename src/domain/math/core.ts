@@ -1,17 +1,23 @@
 import { Problem, UserProfile } from "../types";
+import type { RandomSource } from "../../utils/random";
 
 export interface MathGeneratorContext {
     profile?: UserProfile;
+    random?: RandomSource;
 }
 
 export type GeneratorFn = (context?: MathGeneratorContext) => Omit<Problem, 'id' | 'subject' | 'isReview'>;
 
-export const randomInt = (min: number, max: number): number => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+export const randomInt = (
+    min: number,
+    max: number,
+    random: RandomSource = Math.random,
+): number => {
+    return Math.floor(random() * (max - min + 1)) + min;
 };
 
-export const randomChoice = <T>(arr: T[]): T => {
-    return arr[randomInt(0, arr.length - 1)];
+export const randomChoice = <T>(arr: T[], random: RandomSource = Math.random): T => {
+    return arr[randomInt(0, arr.length - 1, random)];
 };
 
 export const createProblem = (

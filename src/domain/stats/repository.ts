@@ -1,6 +1,6 @@
 import { db } from "../../db";
 import { getLearningDayStart, getLearningDayEnd } from "../../utils/learningDay";
-import { getBatchRecentAccuracy } from "../learningRepository";
+import { getBatchRecentAccuracy, getBatchWeakStatus } from "../learningRepository";
 
 export interface DailyStats {
     count: number;
@@ -63,11 +63,14 @@ export const getWeakPoints = async (profileId: string): Promise<WeakPoint[]> => 
         .toArray();
 
     const mathIds = mathItems.map(item => item.id);
-    const mathAccuracyMap = await getBatchRecentAccuracy(profileId, mathIds, 'math');
+    const [mathAccuracyMap, mathWeakStatus] = await Promise.all([
+        getBatchRecentAccuracy(profileId, mathIds, 'math'),
+        getBatchWeakStatus(profileId, mathIds, 'math')
+    ]);
 
     for (const item of mathItems) {
         const accuracy = mathAccuracyMap.get(item.id);
-        if (accuracy !== null && accuracy !== undefined && accuracy < 0.6) {
+        if (accuracy !== null && accuracy !== undefined && mathWeakStatus.get(item.id) === true) {
             weakPoints.push({
                 id: item.id,
                 subject: 'math',
@@ -86,11 +89,14 @@ export const getWeakPoints = async (profileId: string): Promise<WeakPoint[]> => 
         .toArray();
 
     const vocabIds = vocabItems.map(item => item.id);
-    const vocabAccuracyMap = await getBatchRecentAccuracy(profileId, vocabIds, 'vocab');
+    const [vocabAccuracyMap, vocabWeakStatus] = await Promise.all([
+        getBatchRecentAccuracy(profileId, vocabIds, 'vocab'),
+        getBatchWeakStatus(profileId, vocabIds, 'vocab')
+    ]);
 
     for (const item of vocabItems) {
         const accuracy = vocabAccuracyMap.get(item.id);
-        if (accuracy !== null && accuracy !== undefined && accuracy < 0.6) {
+        if (accuracy !== null && accuracy !== undefined && vocabWeakStatus.get(item.id) === true) {
             weakPoints.push({
                 id: item.id,
                 subject: 'vocab',

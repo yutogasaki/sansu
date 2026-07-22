@@ -35,7 +35,6 @@ import { warmUpTTS } from "../utils/tts";
 import { buildWeeklyTrend, buildRadarData, type RadarCategoryPoint, type WeeklyTrendPoint } from "../domain/stats/aggregation";
 import { WeeklyTrendChart } from "../components/charts/WeeklyTrendChart";
 import { SkillRadarChart } from "../components/charts/SkillRadarChart";
-import { IkimonoGallery } from "../components/ikimono/IkimonoGallery";
 import { ScreenScaffold } from "../components/ScreenScaffold";
 import { logInDev } from "../utils/debug";
 
@@ -508,6 +507,28 @@ export const Stats: React.FC = () => {
                     </SurfacePanel>
                 )}
 
+                {eventCheckPending && (
+                    <SurfacePanel className="space-y-4 rounded-[28px] p-5">
+                        <SurfacePanelHeader
+                            title={t("ていき テスト (20もん)", "定期テスト (20問)")}
+                            description={t("がっこう テスト まえ の かくにん", "学校テスト前の確認")}
+                        />
+                        <Button
+                            size="sm"
+                            variant="primary"
+                            className="h-11 w-full text-sm"
+                            onClick={() => {
+                                localStorage.removeItem("sansu_event_check_pending");
+                                setEventCheckPending(false);
+                                warmUpTTS();
+                                navigate("/study?session=periodic-test");
+                            }}
+                        >
+                            {t("ちょうせん", "挑戦")}
+                        </Button>
+                    </SurfacePanel>
+                )}
+
                 {!showMore && (
                     <div className="flex justify-center">
                         <Button
@@ -603,27 +624,6 @@ export const Stats: React.FC = () => {
                             </div>
                         )}
 
-                        {eventCheckPending && (
-                            <InsetPanel className="flex flex-col gap-3 px-4 py-4 land:flex-row land:items-center land:justify-between">
-                                <div>
-                                    <div className="font-bold text-slate-700">{t("✨ ていき テスト (20もん)", "✨ 定期テスト (20問)")}</div>
-                                    <div className="text-xs text-slate-500">{t("がっこう テスト まえ の かくにん", "学校テスト前の確認")}</div>
-                                </div>
-                                <Button
-                                    size="sm"
-                                    variant="primary"
-                                    className="h-10 w-full shrink-0 text-sm land:w-auto"
-                                    onClick={() => {
-                                        localStorage.removeItem("sansu_event_check_pending");
-                                        setEventCheckPending(false);
-                                        warmUpTTS();
-                                        navigate("/study?session=periodic-test");
-                                    }}
-                                >
-                                    {t("ちょうせん", "挑戦")}
-                                </Button>
-                            </InsetPanel>
-                        )}
                     </SurfacePanel>
                 )}
 
@@ -713,16 +713,6 @@ export const Stats: React.FC = () => {
                                 ))}
                             </div>
                         )}
-                    </SurfacePanel>
-                )}
-
-                {showMore && (
-                    <SurfacePanel className="space-y-4 rounded-[28px] p-5">
-                        <SurfacePanelHeader
-                            title="ふわふわ アルバム"
-                            description={t("いままで の ふわふわ を ふりかえる", "成長の記録を静かに見返せます")}
-                        />
-                        <IkimonoGallery profileId={profile.id} />
                     </SurfacePanel>
                 )}
 

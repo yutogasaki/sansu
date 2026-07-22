@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { createInitialProfile } from "../domain/user/profile";
 import {
-    applyNormalSessionMathTrigger,
+    applyPendingPeriodicTestTrigger,
     applyPeriodicTestCompletion,
     checkAnswer,
     isFixedSessionComplete,
@@ -10,6 +10,7 @@ import {
     resolveProfileProgressionAfterAttempt,
     resolveSessionBlockSize,
     resolveSessionCompletionProfileUpdate,
+    shouldRecordLearningAttempt,
     shouldPrefetchNextBlock,
     shouldShowEndlessBreak,
 } from "./useStudySession.logic";
@@ -20,6 +21,14 @@ describe("useStudySession.logic", () => {
         expect(isFixedSessionKind("weak-review")).toBe(true);
         expect(isFixedSessionKind("check-event")).toBe(true);
         expect(isFixedSessionKind("normal")).toBe(false);
+    });
+
+    it("keeps periodic-test and dev answers out of learning records", () => {
+        expect(shouldRecordLearningAttempt("periodic-test")).toBe(false);
+        expect(shouldRecordLearningAttempt("dev")).toBe(false);
+        expect(shouldRecordLearningAttempt("normal")).toBe(true);
+        expect(shouldRecordLearningAttempt("review")).toBe(true);
+        expect(shouldRecordLearningAttempt("weak-review")).toBe(true);
     });
 
     it("resolves 20-question block sizes for periodic tests and check events", () => {
@@ -72,75 +81,46 @@ describe("useStudySession.logic", () => {
             math: { subject: "math", level: 4, createdAt: "2026-02-16", problems: [] },
         };
 
-        const checkMathTrigger = vi.fn();
         const updated = await resolveSessionCompletionProfileUpdate({
             currentProfile: profile,
             sessionKind: "periodic-test",
             sessionStats: { correct: 14, total: 20, durationSeconds: 240 },
             now,
             focusSubject: "math",
-            checkMathTrigger,
         });
 
-        expect(checkMathTrigger).not.toHaveBeenCalled();
         expect(updated?.testHistory?.at(-1)?.mode).toBe("auto");
         expect(updated?.periodicTestState?.math.isPending).toBe(false);
     });
 
-    it("resolveSessionCompletionProfileUpdate checks math trigger for normal sessions", async () => {
+    it("leaves normal and review trigger evaluation to the per-attempt path", async () => {
         const profile = createInitialProfile("T", 1, 1, 1, "mix");
-        profile.periodicTestState = {
-            math: { isPending: false, lastTriggeredAt: 123, reason: null },
-            vocab: { isPending: false, lastTriggeredAt: null, reason: null },
-        };
-
-        const checkMathTrigger = vi.fn().mockResolvedValue({ isTriggered: true, reason: "struggle" });
-        const updated = await resolveSessionCompletionProfileUpdate({
+        const normalUpdated = await resolveSessionCompletionProfileUpdate({
             currentProfile: profile,
             sessionKind: "normal",
             sessionStats: { correct: 10, total: 12, durationSeconds: 90 },
             now: Date.now(),
-            checkMathTrigger,
         });
-
-        expect(checkMathTrigger).toHaveBeenCalledWith(profile);
-        expect(updated?.periodicTestState?.math.isPending).toBe(true);
-        expect(updated?.periodicTestState?.math.reason).toBe("struggle");
-    });
-
-    it("resolveSessionCompletionProfileUpdate also checks math trigger for review sessions", async () => {
-        const profile = createInitialProfile("T", 1, 1, 1, "mix");
-        profile.periodicTestState = {
-            math: { isPending: false, lastTriggeredAt: null, reason: null },
-            vocab: { isPending: false, lastTriggeredAt: null, reason: null },
-        };
-
-        const checkMathTrigger = vi.fn().mockResolvedValue({ isTriggered: false, reason: null });
-        const updated = await resolveSessionCompletionProfileUpdate({
+        const reviewUpdated = await resolveSessionCompletionProfileUpdate({
             currentProfile: profile,
             sessionKind: "review",
             sessionStats: { correct: 5, total: 5, durationSeconds: 60 },
             now: Date.now(),
-            checkMathTrigger,
         });
 
-        expect(checkMathTrigger).toHaveBeenCalledWith(profile);
-        expect(updated).toBeNull();
+        expect(normalUpdated).toBeNull();
+        expect(reviewUpdated).toBeNull();
     });
 
     it("resolveSessionCompletionProfileUpdate ignores non-completing session kinds", async () => {
         const profile = createInitialProfile("T", 1, 1, 1, "mix");
-        const checkMathTrigger = vi.fn();
-
         const updated = await resolveSessionCompletionProfileUpdate({
             currentProfile: profile,
             sessionKind: "check-event",
             sessionStats: { correct: 20, total: 20, durationSeconds: 180 },
             now: Date.now(),
-            checkMathTrigger,
         });
 
-        expect(checkMathTrigger).not.toHaveBeenCalled();
         expect(updated).toBeNull();
     });
 
@@ -295,7 +275,7 @@ describe("useStudySession.logic", () => {
         const profile = createInitialProfile("T", 1, 3, 2, "vocab");
         profile.periodicTestState = {
             math: { isPending: false, lastTriggeredAt: null, reason: null },
-            vocab: { isPending: false, lastTriggeredAt: null, reason: null },
+            vocab: { isPending: false, lastTriggeredAt: 123, reason: null },
         };
         profile.testHistory = [];
 
@@ -303,32 +283,46 @@ describe("useStudySession.logic", () => {
         expect(updated.testHistory?.[0].subject).toBe("vocab");
         expect(updated.testHistory?.[0].mode).toBe("manual");
         expect(updated.testHistory?.[0].score).toBe(80);
+        expect(updated.periodicTestState?.vocab.lastTriggeredAt).toBe(123);
     });
 
-    it("applyNormalSessionMathTrigger returns updated profile when triggered and not pending", () => {
+    it("applyPendingPeriodicTestTrigger marks only the answered subject as pending", () => {
         const profile = createInitialProfile("T", 1, 1, 1, "mix");
         profile.periodicTestState = {
             math: { isPending: false, lastTriggeredAt: 123, reason: null },
             vocab: { isPending: false, lastTriggeredAt: null, reason: null },
         };
 
-        const updated = applyNormalSessionMathTrigger(profile, { isTriggered: true, reason: "struggle" });
+        const testSet = {
+            subject: "vocab" as const,
+            level: profile.vocabMainLevel,
+            createdAt: "2026-03-17T00:00:00.000Z",
+            problems: [],
+        };
+        const updated = applyPendingPeriodicTestTrigger(
+            profile,
+            "vocab",
+            { isTriggered: true, reason: "struggle" },
+            testSet,
+        );
 
         expect(updated).not.toBeNull();
-        expect(updated?.periodicTestState?.math.isPending).toBe(true);
-        expect(updated?.periodicTestState?.math.reason).toBe("struggle");
-        expect(updated?.periodicTestState?.math.lastTriggeredAt).toBe(123);
+        expect(updated?.periodicTestState?.math).toEqual(profile.periodicTestState.math);
+        expect(updated?.periodicTestState?.vocab.isPending).toBe(true);
+        expect(updated?.periodicTestState?.vocab.reason).toBe("struggle");
+        expect(updated?.periodicTestState?.vocab.lastTriggeredAt).toBeNull();
+        expect(updated?.periodicTestSets?.vocab).toBe(testSet);
     });
 
-    it("applyNormalSessionMathTrigger returns null when not triggered or already pending", () => {
+    it("applyPendingPeriodicTestTrigger returns null when not triggered or that subject is already pending", () => {
         const profile = createInitialProfile("T", 1, 1, 1, "mix");
         profile.periodicTestState = {
             math: { isPending: true, lastTriggeredAt: 123, reason: null },
             vocab: { isPending: false, lastTriggeredAt: null, reason: null },
         };
 
-        expect(applyNormalSessionMathTrigger(profile, { isTriggered: false, reason: null })).toBeNull();
-        expect(applyNormalSessionMathTrigger(profile, { isTriggered: true, reason: "slow" })).toBeNull();
+        expect(applyPendingPeriodicTestTrigger(profile, "vocab", { isTriggered: false, reason: null })).toBeNull();
+        expect(applyPendingPeriodicTestTrigger(profile, "math", { isTriggered: true, reason: "slow" })).toBeNull();
     });
 });
 

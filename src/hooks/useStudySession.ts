@@ -5,6 +5,7 @@ import {
     getRecentAttempts,
     getReviewItems,
     getWeakMathSkillIds,
+    getWeakVocabIds,
     getSkippedItemsToday,
     getRetiredMathSkillIds,
     logAttempt
@@ -21,11 +22,10 @@ import {
     BLOCK_SIZE,
     COOLDOWN_WINDOW,
     REVIEW_BLOCK_CHECK_WINDOW,
-    REVIEW_BLOCK_THRESHOLD,
     markPicked,
     canAddSessionReview,
-    calculateRecentReviewRatio,
     getMixSubject,
+    buildMathCooldownIds,
     buildVocabCooldownIds,
     buildVocabLevelWeights,
     generateSingleMathProblem,
@@ -33,15 +33,18 @@ import {
     createFallbackProblem,
     safeGenerateProblem,
     generateLevelBlock,
-    generateWeakReviewBlock
+    generateWeakReviewBlock,
+    shouldForceVocabReviewBlock,
 } from "./blockGenerators";
 import { checkPeriodTestTrigger } from "../domain/test/trigger";
-import { ensurePeriodicTestSet } from "../domain/test/testSet";
+import { buildPeriodicTestSet, ensurePeriodicTestSet } from "../domain/test/testSet";
 import {
+    applyPendingPeriodicTestTrigger,
     resolveProfileProgressionAfterAttempt,
     resolveSessionCompletionProfileUpdate,
     resolveSessionBlockSize,
     isFixedSessionKind,
+    shouldRecordLearningAttempt,
 } from "./useStudySession.logic";
 import { errorInDev, logInDev } from "../utils/debug";
 
@@ -63,6 +66,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     const profileRef = useRef<UserProfile | null>(null);
     const blockIndexRef = useRef(0);
     const sessionRequestIdRef = useRef(0);
+    const resultQueueRef = useRef<Promise<void>>(Promise.resolve());
 
     const sessionHistoryRef = useRef<SessionHistoryItem[]>([]);
     const sessionKey = options.sessionKey
@@ -244,14 +248,11 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
         // Determine subject
         const vocabDue = await getReviewItems(pid, 'vocab');
-        let forceVocabReviewBlock = false;
-
-        if (activeProfile.subjectMode === 'mix' && vocabDue.length > 0) {
-            const ratio = calculateRecentReviewRatio(recentAttempts);
-            if (ratio < REVIEW_BLOCK_THRESHOLD) {
-                forceVocabReviewBlock = true;
-            }
-        }
+        const forceVocabReviewBlock = shouldForceVocabReviewBlock(
+            activeProfile.subjectMode,
+            vocabDue.length,
+            recentAttempts,
+        );
 
         let subject: SubjectKey;
         if (activeProfile.subjectMode === 'math') {
@@ -268,7 +269,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         const skippedToday = await getSkippedItemsToday(pid, subject);
 
         const q: Problem[] = [];
-        const pendingMeta: { isReview: boolean }[] = [];
+        const pendingMeta: { isReview: boolean; countsTowardReviewCap?: boolean }[] = [];
         const pendingVocabIds: string[] = [];
 
         if (subject === 'math') {
@@ -290,14 +291,14 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 ].slice(-COOLDOWN_WINDOW);
 
                 const generatorOptions = {
-                    cooldownIds: [],
+                    cooldownIds: buildMathCooldownIds(recentAttempts, q.length),
                     skippedTodayIds: skippedToday,
                     blockCounts,
                     recentIds: dynamicRecentIds
                 };
 
                 const currentWeakCount = q.filter(
-                    item => item.subject === 'math' && !item.isReview && weakMathPool.includes(item.categoryId)
+                    item => item.subject === 'math' && weakMathPool.includes(item.categoryId)
                 ).length;
 
                 const result = generateSingleMathProblem({
@@ -307,7 +308,11 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                     maintenanceMathIds,
                     retiredMathIds,
                     options: generatorOptions,
-                    canAddReview: canAddSessionReview(sessionHistoryRef.current, pendingMeta),
+                    canAddReview: canAddSessionReview(
+                        sessionHistoryRef.current,
+                        pendingMeta,
+                        activeProfile.dailyGoal,
+                    ),
                     currentWeakCount,
                     plusCount,
                     plusLimit
@@ -325,12 +330,16 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
                 q.push(problem);
                 markPicked(problem.categoryId, blockCounts);
-                pendingMeta.push({ isReview: result.isReview });
+                pendingMeta.push({
+                    isReview: result.isReview,
+                    countsTowardReviewCap: result.countsTowardReviewCap,
+                });
             }
         } else {
             // Vocab generation
             const vocabLevel = activeProfile.vocabMainLevel ?? 1;
             const vocabLevelWeights = buildVocabLevelWeights(vocabLevel);
+            const weakVocabPool = await getWeakVocabIds(pid);
 
             const buildCooldownIds = (pending: string[]) =>
                 buildVocabCooldownIds(recentAttempts, sessionHistoryRef.current, pending);
@@ -348,13 +357,23 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                     recentIds: dynamicRecentIds
                 };
 
+                const currentWeakCount = q.filter(
+                    item => item.subject === 'vocab' && weakVocabPool.includes(item.categoryId)
+                ).length;
+
                 const result = generateSingleVocabProblem({
                     profile: activeProfile,
                     vocabDue,
                     vocabLevelWeights,
                     options: generatorOptions,
-                    canAddReview: canAddSessionReview(sessionHistoryRef.current, pendingMeta),
+                    canAddReview: canAddSessionReview(
+                        sessionHistoryRef.current,
+                        pendingMeta,
+                        activeProfile.dailyGoal,
+                    ),
                     forceReviewBlock: forceVocabReviewBlock,
+                    weakVocabPool,
+                    currentWeakCount,
                     pendingVocabIds,
                     buildCooldownIds
                 });
@@ -369,13 +388,21 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 q.push(problem);
                 markPicked(problem.categoryId, blockCounts);
                 pendingVocabIds.push(problem.categoryId);
-                pendingMeta.push({ isReview: result.isReview });
+                pendingMeta.push({
+                    isReview: result.isReview,
+                    countsTowardReviewCap: result.countsTowardReviewCap,
+                });
             }
         }
 
         sessionHistoryRef.current = [
             ...sessionHistoryRef.current,
-            ...q.map(item => ({ id: item.categoryId, subject: item.subject, isReview: item.isReview }))
+            ...q.map((item, index) => ({
+                id: item.categoryId,
+                subject: item.subject,
+                isReview: item.isReview,
+                countsTowardReviewCap: pendingMeta[index]?.countsTowardReviewCap ?? item.isReview,
+            }))
         ];
 
         return q;
@@ -547,42 +574,101 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     // ============================================================
     // Result Handling
     // ============================================================
-    const handleResult = async (problem: Problem, result: 'correct' | 'incorrect', timeMs?: number) => {
-        if (!profileId) return;
-        const sessionKind = options.sessionKind || "normal";
-        if (sessionKind === "dev") return;
+    const handleResult = (
+        problem: Problem,
+        result: 'correct' | 'incorrect' | 'skipped',
+        timeMs?: number,
+    ): Promise<boolean> => {
+        const processResult = async (): Promise<boolean> => {
+            const sessionKind = options.sessionKind || "normal";
+            if (!shouldRecordLearningAttempt(sessionKind)) return true;
+            if (!profileId) return false;
 
-        try {
-            await logAttempt(
-                profileId,
-                problem.subject,
-                problem.categoryId,
-                result,
-                false,
-                problem.isReview,
-                problem.isMaintenanceCheck || false,
-                timeMs
-            );
+            const skipped = result === 'skipped';
+            const scoredResult = result === 'correct' ? 'correct' : 'incorrect';
 
-            const currentProfile = await getActiveProfile();
-            if (!currentProfile) return;
-            const updatedProfile = await resolveProfileProgressionAfterAttempt({
-                currentProfile,
-                subject: problem.subject,
-                nowIso: new Date().toISOString(),
-                checkMathUnlock: async (profileToCheck) => checkLevelProgression(profileToCheck.id, profileToCheck.mathMainLevel),
-                checkMathPromotion: checkMathMainPromotion,
-                checkVocabUnlockReadiness,
-                checkVocabPromotion: checkVocabMainPromotion,
-            });
-
-            if (updatedProfile !== currentProfile) {
-                await saveProfile(updatedProfile);
-                updateProfile(updatedProfile);
+            try {
+                await logAttempt(
+                    profileId,
+                    problem.subject,
+                    problem.categoryId,
+                    scoredResult,
+                    skipped,
+                    problem.isReview,
+                    problem.isMaintenanceCheck || false,
+                    timeMs
+                );
+            } catch (err) {
+                errorInDev(
+                    "[useStudySession] error saving attempt:",
+                    err instanceof Error ? `${err.name}: ${err.message}` : err,
+                );
+                return false;
             }
-        } catch (err) {
-            errorInDev("[useStudySession] error handling result:", err);
-        }
+
+            try {
+                const currentProfile = await getActiveProfile();
+                if (!currentProfile) return true;
+                let triggerCheck: {
+                    trigger: Awaited<ReturnType<typeof checkPeriodTestTrigger>>;
+                    testSet?: ReturnType<typeof buildPeriodicTestSet>;
+                } | null = null;
+                if (sessionKind === "normal" || sessionKind === "review") {
+                    try {
+                        const trigger = await checkPeriodTestTrigger(currentProfile, problem.subject);
+                        triggerCheck = {
+                            trigger,
+                            testSet: trigger.isTriggered
+                                ? buildPeriodicTestSet(currentProfile, problem.subject)
+                                : undefined,
+                        };
+                    } catch (triggerError) {
+                        errorInDev("[useStudySession] periodic test trigger check failed:", triggerError);
+                    }
+                }
+                const updatedProfile = await resolveProfileProgressionAfterAttempt({
+                    currentProfile,
+                    subject: problem.subject,
+                    nowIso: new Date().toISOString(),
+                    checkMathUnlock: async (profileToCheck) => checkLevelProgression(profileToCheck.id, profileToCheck.mathMainLevel),
+                    checkMathPromotion: checkMathMainPromotion,
+                    checkVocabUnlockReadiness,
+                    checkVocabPromotion: checkVocabMainPromotion,
+                });
+
+                if (updatedProfile !== currentProfile) {
+                    await saveProfile(updatedProfile);
+                    updateProfile(updatedProfile);
+                }
+
+                if (triggerCheck) {
+                    const profileWithPendingTest = applyPendingPeriodicTestTrigger(
+                        updatedProfile,
+                        problem.subject,
+                        triggerCheck.trigger,
+                        triggerCheck.testSet,
+                    );
+
+                    if (profileWithPendingTest) {
+                        logInDev(
+                            `[Trigger] ${problem.subject} periodic test triggered!`,
+                            triggerCheck.trigger.reason,
+                        );
+                        await saveProfile(profileWithPendingTest);
+                        updateProfile(profileWithPendingTest);
+                    }
+                }
+            } catch (err) {
+                // The atomic attempt write already succeeded. Unlock/promotion
+                // checks are idempotent and will be evaluated again later.
+                errorInDev("[useStudySession] post-attempt progression check failed:", err);
+            }
+            return true;
+        };
+
+        const queuedResult = resultQueueRef.current.then(processResult, processResult);
+        resultQueueRef.current = queuedResult.then(() => undefined, () => undefined);
+        return queuedResult;
     };
 
     const initSessionOnProfileReady = useEffectEvent(() => {
@@ -608,6 +694,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         }
     ) => {
         if (!profileId || !profile) return;
+        await resultQueueRef.current;
         const currentProfile = await getActiveProfile();
         if (!currentProfile) return;
 
@@ -620,13 +707,6 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             sessionStats,
             now,
             focusSubject: options.focusSubject,
-            checkMathTrigger: async (nextProfile) => {
-                const mathTrigger = await checkPeriodTestTrigger(nextProfile, 'math');
-                if (mathTrigger.isTriggered) {
-                    logInDev("[Trigger] Periodic Test Triggered!", mathTrigger.reason);
-                }
-                return mathTrigger;
-            },
         });
 
         if (updated) {

@@ -2,6 +2,29 @@ import { describe, expect, it } from "vitest";
 import { generators } from "./counting";
 
 describe("counting generators visuals", () => {
+    const preschoolChoiceSkillIds = [
+        "count_5",
+        "count_dot",
+        "one_to_one_match",
+        "one_more",
+        "count_order",
+        "one_less",
+        "two_more",
+        "zero_concept",
+        "share_equal",
+        "two_less",
+    ] as const;
+
+    it.each(preschoolChoiceSkillIds)("%s follows the preschool choice contract", (skillId) => {
+        const problem = generators[skillId]();
+        const values = problem.inputConfig?.choices?.map(choice => choice.value) || [];
+
+        expect(problem.inputType).toBe("choice");
+        expect(values).toHaveLength(3);
+        expect(new Set(values).size).toBe(values.length);
+        expect(values).toContain(problem.correctAnswer);
+    });
+
     it("count_5 starts from one item and uses a 5-frame visual", () => {
         const problem = generators.count_5({
             profile: { mathSkills: { count_5: { totalAnswers: 0 } } },
@@ -86,7 +109,7 @@ describe("counting generators visuals", () => {
     it("one_more uses an addition visual", () => {
         const problem = generators.one_more();
         expect(problem.questionVisual?.kind).toBe("number-line");
-        expect(problem.inputType).toBe("number");
+        expect(problem.inputType).toBe("choice");
         if (problem.questionVisual?.kind === "number-line") {
             expect(problem.questionVisual.line.step).toBe(1);
         }
@@ -95,7 +118,7 @@ describe("counting generators visuals", () => {
     it("two_more uses a number-line visual with a two-step jump", () => {
         const problem = generators.two_more();
         expect(problem.questionVisual?.kind).toBe("number-line");
-        expect(problem.inputType).toBe("number");
+        expect(problem.inputType).toBe("choice");
         if (problem.questionVisual?.kind === "number-line") {
             expect(problem.questionVisual.line.step).toBe(2);
         }
@@ -417,7 +440,7 @@ describe("counting generators visuals", () => {
     it("one_less uses a number-line visual that moves back by one", () => {
         const problem = generators.one_less();
         expect(problem.questionVisual?.kind).toBe("number-line");
-        expect(problem.inputType).toBe("number");
+        expect(problem.inputType).toBe("choice");
         if (problem.questionVisual?.kind === "number-line") {
             expect(problem.questionVisual.line.step).toBe(-1);
         }
@@ -426,7 +449,7 @@ describe("counting generators visuals", () => {
     it("two_less uses a number-line visual that moves back by two", () => {
         const problem = generators.two_less();
         expect(problem.questionVisual?.kind).toBe("number-line");
-        expect(problem.inputType).toBe("number");
+        expect(problem.inputType).toBe("choice");
         if (problem.questionVisual?.kind === "number-line") {
             expect(problem.questionVisual.line.step).toBe(-2);
         }

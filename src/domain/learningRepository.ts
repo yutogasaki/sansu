@@ -1,16 +1,13 @@
 import { db, AttemptLog } from "../db";
-import { MemoryState, SubjectKey } from "./types";
-import { updateMemoryState, updateSkillStatus, getNextReviewDate, wilsonLower } from "./algorithms/srs";
-import { addDays, differenceInCalendarDays, parseISO } from "date-fns";
-import { getLearningDayStart, toLocaleDateKey } from "../utils/learningDay";
-import { getLevelForSkill } from "./math/curriculum";
-import { getWordLevel } from "./english/words";
-import { getProfile, saveProfile } from "./user/repository";
+import { SubjectKey } from "./types";
+import { differenceInCalendarDays, parseISO } from "date-fns";
+import { getLearningDayStart } from "../utils/learningDay";
+import {
+    getLearningAttemptTransactionTables,
+    writeLearningAttemptInTransaction,
+} from "./learningAttemptWriter";
 
-export const getInitialNextReviewIso = (strength: number, skipped: boolean): string => {
-    if (skipped) return getLearningDayStart().toISOString();
-    return getNextReviewDate(strength).toISOString();
-};
+export { getInitialNextReviewIso, resolveWeakStateAfterAttempt } from "./learningAttemptWriter";
 
 export const logAttempt = async (
     profileId: string,
@@ -21,147 +18,22 @@ export const logAttempt = async (
     isReview: boolean = false,
     isMaintenanceCheck: boolean = false, // 維持確認として出題されたか
     timeMs?: number // 回答にかかった時間（ミリ秒）
-) => {
-    const timestamp = new Date().toISOString();
-
-    const recentMathLogs =
-        subject === 'math'
-            ? await db.logs
-                .where('[profileId+subject]')
-                .equals([profileId, 'math'])
-                .filter(log => log.itemId === itemId)
-                .reverse()
-                .limit(9)
-                .toArray()
-            : [];
-
-    // 1. Add Log
-    const log: AttemptLog = {
+) => db.transaction(
+    "rw",
+    getLearningAttemptTransactionTables(db),
+    // Keep the writer inside Dexie's async transaction scope. Returning its
+    // native promise from a plain callback can commit IndexedDB too early.
+    async () => writeLearningAttemptInTransaction(db, {
         profileId,
         subject,
         itemId,
-        result: skipped ? 'skipped' : result,
-        skipped: skipped || undefined,
+        result: skipped ? "skipped" : result,
         isReview,
-        timestamp,
-        timeMs
-    };
-    const logId = await db.logs.add(log);
-
-    // 2. Update Memory State
-    const table = subject === 'math' ? db.memoryMath : db.memoryVocab;
-    const existing = await table.get([profileId, itemId]);
-
-    let newState: MemoryState;
-
-    if (existing) {
-        // スキップフラグを渡して正しくstrengthを更新
-        newState = updateMemoryState(existing, result === 'correct', skipped);
-        // Math status update（仕様 5.4: status遷移）
-        if (subject === 'math') {
-            const currentCorrect = result === 'correct' && !skipped;
-            const recentResults = [currentCorrect, ...recentMathLogs.map(l => l.result === 'correct')];
-
-            // 維持確認フラグを渡してstatus遷移を判定
-            const status = updateSkillStatus(newState, recentResults, isMaintenanceCheck);
-            if (status) newState.status = status;
-        }
-    } else {
-        // Initial State
-        newState = {
-            id: itemId,
-            strength: result === 'correct' ? 2 : 1,
-            nextReview: "", // Will be set below
-            totalAnswers: 1,
-            correctAnswers: result === 'correct' ? 1 : 0,
-            incorrectAnswers: result === 'correct' ? 0 : 1,
-            skippedAnswers: skipped ? 1 : 0,
-            lastCorrectAt: result === 'correct' ? timestamp : undefined,
-            updatedAt: timestamp,
-            status: subject === 'math' ? 'active' : undefined
-        };
-        // Use updateMemoryState to set nextReview correctly based on strength
-        // actually updateMemoryState expects a state to modify.
-        // Let's just manually set nextReview or call getNextReviewDate
-        // But wait, updateMemoryState sets nextReview.
-        // Let's just use the srs logic.
-        // Or simpler: Treat new item as strength 0 -> update?
-        // No, let's keep manual init for now to match srs.ts logic if possible.
-        // Let's just import getNextReviewDate.
-    }
-
-    // Fix: We need to set nextReview for new items if we didn't use updateMemoryState
-    if (!existing) {
-        newState.nextReview = getInitialNextReviewIso(newState.strength, skipped);
-    }
-
-    // 3. Save to DB (Extend with profileId)
-    // Dexie needs the keys in the object due to [profileId+id] primary key definition
-    const dbItem = { ...newState, profileId };
-    await table.put(dbItem);
-
-    const profile = await getProfile(profileId);
-    if (profile) {
-        const updateRecentAnswers = () => {
-            if (isReview) return;
-            const level = subject === 'math' ? getLevelForSkill(itemId) : getWordLevel(itemId);
-            if (!level) return;
-
-            if (subject === 'math') {
-                if (!profile.mathLevels) return;
-                if (level !== profile.mathMainLevel) return;
-                const updated = profile.mathLevels.map(l => {
-                    if (l.level !== level) return l;
-                    const ring = [...(l.recentAnswersNonReview || []), result === 'correct' && !skipped];
-                    const trimmed = ring.slice(-20);
-                    return { ...l, recentAnswersNonReview: trimmed, updatedAt: timestamp };
-                });
-                profile.mathLevels = updated;
-            } else {
-                if (!profile.vocabLevels) return;
-                if (level !== profile.vocabMainLevel) return;
-                const updated = profile.vocabLevels.map(l => {
-                    if (l.level !== level) return l;
-                    const ring = [...(l.recentAnswersNonReview || []), result === 'correct' && !skipped];
-                    const trimmed = ring.slice(-20);
-                    return { ...l, recentAnswersNonReview: trimmed, updatedAt: timestamp };
-                });
-                profile.vocabLevels = updated;
-            }
-        };
-
-        const dayStart = getLearningDayStart();
-        const todayKey = toLocaleDateKey(dayStart);
-        const yesterdayKey = toLocaleDateKey(addDays(dayStart, -1));
-
-        const isSameDay = profile.lastStudyDate === todayKey;
-        const isYesterday = profile.lastStudyDate === yesterdayKey;
-        const nextStreak = isSameDay ? profile.streak : isYesterday ? profile.streak + 1 : 1;
-        const nextTodayCount = isSameDay ? profile.todayCount + 1 : 1;
-
-        const recentAttempts = profile.recentAttempts ? [...profile.recentAttempts] : [];
-        recentAttempts.push({
-            id: logId.toString(),
-            timestamp,
-            subject,
-            skillId: itemId,
-            result: skipped ? "skipped" : result,
-            skipped: skipped || undefined,
-            timeMs
-        });
-        const trimmed = recentAttempts.slice(-300);
-
-        updateRecentAnswers();
-
-        await saveProfile({
-            ...profile,
-            streak: nextStreak,
-            todayCount: nextTodayCount,
-            lastStudyDate: todayKey,
-            recentAttempts: trimmed
-        });
-    }
-};
+        isMaintenanceCheck,
+        timestamp: new Date().toISOString(),
+        timeMs,
+    }),
+);
 
 export const getReviewItems = async (profileId: string, subject: SubjectKey) => {
     const table = subject === 'math' ? db.memoryMath : db.memoryVocab;
@@ -175,7 +47,13 @@ export const getReviewItems = async (profileId: string, subject: SubjectKey) => 
     const capOverdue = (days: number) => Math.max(0, Math.min(days, 7));
     const learningDayStart = getLearningDayStart();
 
-    return items.sort((a, b) => {
+    // 算数の retired / maintenance は通常 Due ではなく、専用の
+    // maintenance 抽選経路だけで扱う。status がない旧データは active 相当。
+    const reviewItems = subject === 'math'
+        ? items.filter(item => item.status !== 'retired' && item.status !== 'maintenance')
+        : items;
+
+    return reviewItems.sort((a, b) => {
         const aDays = capOverdue(differenceInCalendarDays(learningDayStart, parseISO(a.nextReview)));
         const bDays = capOverdue(differenceInCalendarDays(learningDayStart, parseISO(b.nextReview)));
         return bDays - aDays;
@@ -304,6 +182,108 @@ export const getBatchRecentCounts = async (
     return result;
 };
 
+/**
+ * 回答履歴（古い順）から weak 状態を復元する。
+ * IN: 最低5回答かつ直近10回答の正答率 < 60%
+ * OUT: 直近10回答の正答率 >= 80%
+ * 60%以上80%未満では直前の状態を維持する。
+ */
+export const resolveWeakState = (
+    resultsOldestFirst: AttemptLog['result'][],
+    windowSize: number = 10,
+    minAnswers: number = 5
+): boolean => {
+    let isWeak = false;
+    const recent: AttemptLog['result'][] = [];
+
+    for (const result of resultsOldestFirst) {
+        recent.push(result);
+        if (recent.length > windowSize) recent.shift();
+        if (recent.length < minAnswers) continue;
+
+        const correct = recent.filter(item => item === 'correct').length;
+        const accuracy = correct / recent.length;
+        if (accuracy < 0.6) {
+            isWeak = true;
+        } else if (accuracy >= 0.8) {
+            isWeak = false;
+        }
+    }
+
+    return isWeak;
+};
+
+/**
+ * 対象itemIdのweak状態を、ログを時系列に再生して一括復元する。
+ * 状態専用カラムを持たない既存データでもIN/OUTヒステリシスを守れる。
+ */
+export const getBatchWeakStatus = async (
+    profileId: string,
+    itemIds: string[],
+    subject: SubjectKey
+): Promise<Map<string, boolean>> => {
+    const result = new Map<string, boolean>();
+    if (itemIds.length === 0) return result;
+
+    const table = subject === 'math' ? db.memoryMath : db.memoryVocab;
+    const memoryItems = await table.bulkGet(itemIds.map(id => [profileId, id] as [string, string]));
+    const unresolvedIds: string[] = [];
+
+    itemIds.forEach((id, index) => {
+        const storedWeak = memoryItems[index]?.isWeak;
+        if (typeof storedWeak === 'boolean') {
+            result.set(id, storedWeak);
+        } else {
+            unresolvedIds.push(id);
+        }
+    });
+
+    if (unresolvedIds.length === 0) return result;
+
+    await db.transaction('rw', db.logs, table, async () => {
+        // Re-read after acquiring the write transaction. This serializes the
+        // one-time legacy backfill against a concurrent answer write.
+        const currentItems = await table.bulkGet(
+            unresolvedIds.map(id => [profileId, id] as [string, string]),
+        );
+        const stillUnresolvedIds = unresolvedIds.filter(
+            (_id, index) => typeof currentItems[index]?.isWeak !== 'boolean',
+        );
+
+        currentItems.forEach((item, index) => {
+            if (typeof item?.isWeak === 'boolean') {
+                result.set(unresolvedIds[index], item.isWeak);
+            }
+        });
+
+        if (stillUnresolvedIds.length === 0) return;
+
+        const itemIdSet = new Set(stillUnresolvedIds);
+        const logs = await db.logs
+            .where('[profileId+subject]')
+            .equals([profileId, subject])
+            .filter(log => itemIdSet.has(log.itemId))
+            .toArray();
+
+        const byItem = new Map<string, AttemptLog[]>();
+        for (const log of logs) {
+            const list = byItem.get(log.itemId) || [];
+            list.push(log);
+            byItem.set(log.itemId, list);
+        }
+
+        await Promise.all(stillUnresolvedIds.map(async (id) => {
+            const itemLogs = (byItem.get(id) || [])
+                .sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+            const isWeak = resolveWeakState(itemLogs.map(log => log.result));
+            result.set(id, isWeak);
+            await table.update([profileId, id], { isWeak });
+        }));
+    });
+
+    return result;
+};
+
 export const getWeakMathSkillIds = async (profileId: string): Promise<string[]> => {
     const mathItems = await db.memoryMath
         .where('profileId')
@@ -312,13 +292,9 @@ export const getWeakMathSkillIds = async (profileId: string): Promise<string[]> 
         .toArray();
 
     const itemIds = mathItems.map(item => item.id);
-    const countsMap = await getBatchRecentCounts(profileId, itemIds, 'math');
+    const weakStatus = await getBatchWeakStatus(profileId, itemIds, 'math');
 
-    return itemIds.filter(id => {
-        const counts = countsMap.get(id);
-        if (!counts) return false;
-        return wilsonLower(counts.correct, counts.total) < 0.6;
-    });
+    return itemIds.filter(id => weakStatus.get(id) === true);
 };
 
 export const getWeakVocabIds = async (profileId: string): Promise<string[]> => {
@@ -328,13 +304,9 @@ export const getWeakVocabIds = async (profileId: string): Promise<string[]> => {
         .toArray();
 
     const itemIds = vocabItems.map(item => item.id);
-    const countsMap = await getBatchRecentCounts(profileId, itemIds, 'vocab');
+    const weakStatus = await getBatchWeakStatus(profileId, itemIds, 'vocab');
 
-    return itemIds.filter(id => {
-        const counts = countsMap.get(id);
-        if (!counts) return false;
-        return wilsonLower(counts.correct, counts.total) < 0.6;
-    });
+    return itemIds.filter(id => weakStatus.get(id) === true);
 };
 
 export const getMaintenanceMathSkillIds = async (profileId: string): Promise<string[]> => {
@@ -355,14 +327,12 @@ export const getSkippedItemsToday = async (
     const dayStart = getLearningDayStart();
     const dayStartIso = dayStart.toISOString();
 
-    // 当日のスキップログを取得
+    // 当日の全回答を取得する。スキップだけに絞ってから並べると、間に
+    // 正答・誤答があっても「連続3回」と誤判定してしまう。
     const logs = await db.logs
         .where('[profileId+subject]')
         .equals([profileId, subject])
-        .filter(log =>
-            (log.skipped === true || log.result === 'skipped') &&
-            log.timestamp >= dayStartIso
-        )
+        .filter(log => log.timestamp >= dayStartIso)
         .toArray();
 
     const byItem = new Map<string, AttemptLog[]>();

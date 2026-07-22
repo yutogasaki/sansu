@@ -1,5 +1,6 @@
 import { ProblemVisual } from "../types";
 import { randomChoice } from "./core";
+import type { RandomSource } from "../../utils/random";
 
 const COUNTABLE_ITEMS = [
     { emoji: "🍎", label: "りんご" },
@@ -10,7 +11,7 @@ const COUNTABLE_ITEMS = [
 
 const DOT_ITEM = { emoji: "●", label: "てん" };
 
-const pickCountableItem = () => randomChoice(COUNTABLE_ITEMS);
+const pickCountableItem = (random: RandomSource = Math.random) => randomChoice(COUNTABLE_ITEMS, random);
 
 export const buildSingleCountVisual = (
     count: number,
@@ -21,9 +22,10 @@ export const buildSingleCountVisual = (
         style?: "grid" | "frame";
         item?: { emoji: string; label: string };
         questionText?: string;
+        random?: RandomSource;
     }
 ): { questionText: string; questionVisual: ProblemVisual } => {
-    const item = options?.item || pickCountableItem();
+    const item = options?.item || pickCountableItem(options?.random);
 
     return {
         questionText: options?.questionText || "いくつ ある？",
@@ -48,9 +50,10 @@ export const buildNumberReadVisual = (
         prompt?: string;
         item?: { emoji: string; label: string };
         questionText?: string;
+        random?: RandomSource;
     }
 ): { questionText: string; questionVisual: ProblemVisual } => {
-    const item = options?.item || pickCountableItem();
+    const item = options?.item || pickCountableItem(options?.random);
 
     return {
         questionText: options?.questionText || `${value} は？`,
@@ -90,8 +93,12 @@ export const buildReferenceChoiceGridVisual = (
     },
 });
 
-export const buildAdditionVisual = (a: number, b: number): { questionText: string; questionVisual: ProblemVisual } => {
-    const item = pickCountableItem();
+export const buildAdditionVisual = (
+    a: number,
+    b: number,
+    random: RandomSource = Math.random,
+): { questionText: string; questionVisual: ProblemVisual } => {
+    const item = pickCountableItem(random);
 
     return {
         questionText: `${item.label} ${a}こ と ${item.label} ${b}こ\nあわせて いくつ？`,
@@ -109,9 +116,10 @@ export const buildAdditionVisual = (a: number, b: number): { questionText: strin
 const buildMoreVisual = (
     count: number,
     increase: number,
-    prompt: string
+    prompt: string,
+    random: RandomSource,
 ): { questionText: string; questionVisual: ProblemVisual } => {
-    const item = pickCountableItem();
+    const item = pickCountableItem(random);
 
     return {
         questionText: `${item.label} ${count}こ に ${increase}こ ふえると\nいくつ？`,
@@ -126,14 +134,24 @@ const buildMoreVisual = (
     };
 };
 
-export const buildOneMoreVisual = (count: number): { questionText: string; questionVisual: ProblemVisual } =>
-    buildMoreVisual(count, 1, "1つ おおいと いくつ？");
+export const buildOneMoreVisual = (
+    count: number,
+    random: RandomSource = Math.random,
+): { questionText: string; questionVisual: ProblemVisual } =>
+    buildMoreVisual(count, 1, "1つ おおいと いくつ？", random);
 
-export const buildTwoMoreVisual = (count: number): { questionText: string; questionVisual: ProblemVisual } =>
-    buildMoreVisual(count, 2, "2つ おおいと いくつ？");
+export const buildTwoMoreVisual = (
+    count: number,
+    random: RandomSource = Math.random,
+): { questionText: string; questionVisual: ProblemVisual } =>
+    buildMoreVisual(count, 2, "2つ おおいと いくつ？", random);
 
-export const buildSubtractionVisual = (a: number, b: number): { questionText: string; questionVisual: ProblemVisual } => {
-    const item = pickCountableItem();
+export const buildSubtractionVisual = (
+    a: number,
+    b: number,
+    random: RandomSource = Math.random,
+): { questionText: string; questionVisual: ProblemVisual } => {
+    const item = pickCountableItem(random);
 
     return {
         questionText: `${item.label} ${a}こ あります\n${b}こ なくなると いくつ？`,
@@ -155,9 +173,10 @@ export const buildSubtractionVisual = (a: number, b: number): { questionText: st
 const buildLessVisual = (
     count: number,
     decrease: number,
-    prompt: string
+    prompt: string,
+    random: RandomSource,
 ): { questionText: string; questionVisual: ProblemVisual } => {
-    const item = pickCountableItem();
+    const item = pickCountableItem(random);
 
     return {
         questionText: `${item.label} ${count}こ から ${decrease}こ へると\nいくつ？`,
@@ -176,14 +195,24 @@ const buildLessVisual = (
     };
 };
 
-export const buildOneLessVisual = (count: number): { questionText: string; questionVisual: ProblemVisual } =>
-    buildLessVisual(count, 1, "1つ すくないと いくつ？");
+export const buildOneLessVisual = (
+    count: number,
+    random: RandomSource = Math.random,
+): { questionText: string; questionVisual: ProblemVisual } =>
+    buildLessVisual(count, 1, "1つ すくないと いくつ？", random);
 
-export const buildTwoLessVisual = (count: number): { questionText: string; questionVisual: ProblemVisual } =>
-    buildLessVisual(count, 2, "2つ すくないと いくつ？");
+export const buildTwoLessVisual = (
+    count: number,
+    random: RandomSource = Math.random,
+): { questionText: string; questionVisual: ProblemVisual } =>
+    buildLessVisual(count, 2, "2つ すくないと いくつ？", random);
 
-export const buildSharingVisual = (total: number, recipients: number): { questionText: string; questionVisual: ProblemVisual } => {
-    const item = pickCountableItem();
+export const buildSharingVisual = (
+    total: number,
+    recipients: number,
+    random: RandomSource = Math.random,
+): { questionText: string; questionVisual: ProblemVisual } => {
+    const item = pickCountableItem(random);
 
     return {
         questionText: `${item.label} ${total}こを ${recipients}にんで おなじに わけると\n1にんぶんは いくつ？`,
@@ -220,8 +249,11 @@ const PAIRING_SCENARIOS = [
     },
 ];
 
-export const buildOneToOneMatchVisual = (count: number): { questionText: string; questionVisual: ProblemVisual } => {
-    const scenario = randomChoice(PAIRING_SCENARIOS);
+export const buildOneToOneMatchVisual = (
+    count: number,
+    random: RandomSource = Math.random,
+): { questionText: string; questionVisual: ProblemVisual } => {
+    const scenario = randomChoice(PAIRING_SCENARIOS, random);
 
     return {
         questionText: `${scenario.source.label} ${count}${scenario.source.counter}に 1こずつ ${scenario.target.label}を あげるよ\nぜんぶで ${scenario.target.label}は なん${scenario.target.counter}？`,
@@ -243,8 +275,11 @@ export const buildOneToOneMatchVisual = (count: number): { questionText: string;
     };
 };
 
-export const buildZeroConceptVisual = (count: number): { questionText: string; questionVisual: ProblemVisual } => {
-    const item = pickCountableItem();
+export const buildZeroConceptVisual = (
+    count: number,
+    random: RandomSource = Math.random,
+): { questionText: string; questionVisual: ProblemVisual } => {
+    const item = pickCountableItem(random);
 
     return {
         questionText: `${item.label} ${count}こ あります\nぜんぶ なくなると いくつ？`,
@@ -263,8 +298,12 @@ export const buildZeroConceptVisual = (count: number): { questionText: string; q
     };
 };
 
-export const buildComparisonItemsVisual = (a: number, b: number): { questionText: string; questionVisual: ProblemVisual } => {
-    const item = pickCountableItem();
+export const buildComparisonItemsVisual = (
+    a: number,
+    b: number,
+    random: RandomSource = Math.random,
+): { questionText: string; questionVisual: ProblemVisual } => {
+    const item = pickCountableItem(random);
 
     return {
         questionText: `${a} □ ${b}`,
@@ -279,9 +318,16 @@ export const buildComparisonItemsVisual = (a: number, b: number): { questionText
     };
 };
 
-export const buildWhichMoreVisual = (a: number, b: number): { questionText: string; questionVisual: ProblemVisual } => {
-    const leftItem = pickCountableItem();
-    const rightItem = randomChoice(COUNTABLE_ITEMS.filter(item => item.emoji !== leftItem.emoji));
+export const buildWhichMoreVisual = (
+    a: number,
+    b: number,
+    random: RandomSource = Math.random,
+): { questionText: string; questionVisual: ProblemVisual } => {
+    const leftItem = pickCountableItem(random);
+    const rightItem = randomChoice(
+        COUNTABLE_ITEMS.filter(item => item.emoji !== leftItem.emoji),
+        random,
+    );
 
     return {
         questionText: "どちらが おおい？",
@@ -479,8 +525,11 @@ export const buildSequenceFillVisual = (
     },
 });
 
-export const buildItemOrderVisual = (counts: number[]): { questionText: string; questionVisual: ProblemVisual } => {
-    const item = pickCountableItem();
+export const buildItemOrderVisual = (
+    counts: number[],
+    random: RandomSource = Math.random,
+): { questionText: string; questionVisual: ProblemVisual } => {
+    const item = pickCountableItem(random);
 
     return {
         questionText: "いちばん ちいさい かずは？",

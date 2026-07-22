@@ -14,7 +14,8 @@ Keep only short active entries here, and put detailed execution context in `docs
 
 ## Current Queue
 
-- No shared queue entries are recorded here yet.
+- Cold-open Value Loop -> docs/tasks/active/2026-07-21-cold-open-value-loop.md
+- Whole-app brand coherence -> docs/tasks/active/2026-07-23-whole-app-brand-coherence.md
 
 When starting or resuming a task, add:
 

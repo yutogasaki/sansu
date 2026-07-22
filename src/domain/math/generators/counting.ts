@@ -1,4 +1,5 @@
 import { GeneratorFn, createProblem, randomChoice } from "../core";
+import type { RandomSource } from "../../../utils/random";
 import { shuffleArray } from "../../../utils/shuffle";
 import {
     buildAdditionVisual,
@@ -198,37 +199,56 @@ const getAttemptCount = (totalAnswers?: number): number | undefined =>
 const renderChoiceItems = (emoji: string, count: number): string =>
     Array.from({ length: count }, () => emoji).join(" ");
 
+const buildNumberChoices = (
+    answer: number,
+    min: number,
+    max: number,
+    candidates?: number[],
+    random: RandomSource = Math.random,
+) => {
+    const available = [...new Set(
+        candidates || Array.from({ length: max - min + 1 }, (_, index) => min + index)
+    )]
+        .filter(value => value !== answer && value >= min && value <= max)
+        .sort((a, b) => Math.abs(a - answer) - Math.abs(b - answer) || a - b);
+    const values = shuffleArray([answer, ...available.slice(0, 2)], random);
+
+    return {
+        choices: values.map(value => ({ label: value.toString(), value: value.toString() })),
+    };
+};
+
 export const generators: Record<string, GeneratorFn> = {
     // Level 0: 5まで数える
     "count_5": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_5?.totalAnswers);
-        const n = selectCount5Target(totalAnswers);
+        const n = selectCount5Target(totalAnswers, context?.random);
         const visual = buildSingleCountVisual(n, {
             prompt: "いくつ ある？",
             questionText: "いくつ ある？",
             frameSize: 5,
             columns: 5,
             style: "frame",
-            item: { emoji: randomChoice(COUNT_EMOJIS), label: "かず" },
+            item: { emoji: randomChoice(COUNT_EMOJIS, context?.random), label: "かず" },
         });
-        return createProblem("count_5", visual.questionText, n.toString(), "number", undefined, {
+        return createProblem("count_5", visual.questionText, n.toString(), "choice", buildNumberChoices(n, 1, 5, undefined, context?.random), {
             questionVisual: visual.questionVisual
         });
     },
     // Level 0: ドットを数える（1-10）
     "count_dot": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_dot?.totalAnswers);
-        const n = selectDotCountTarget(totalAnswers);
+        const n = selectDotCountTarget(totalAnswers, context?.random);
         const visual = buildDotCountVisual(n);
-        return createProblem("count_dot", visual.questionText, n.toString(), "number", undefined, {
+        return createProblem("count_dot", visual.questionText, n.toString(), "choice", buildNumberChoices(n, 1, 10, undefined, context?.random), {
             questionVisual: visual.questionVisual
         });
     },
     // Level 0: どっちが多い？
     "count_which_more": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_which_more?.totalAnswers);
-        const { left: a, right: b } = selectWhichMorePattern(totalAnswers);
-        const visual = buildWhichMoreVisual(a, b);
+        const { left: a, right: b } = selectWhichMorePattern(totalAnswers, context?.random);
+        const visual = buildWhichMoreVisual(a, b, context?.random);
         const left = visual.questionVisual.kind === "comparison-items" ? visual.questionVisual.groups[0] : undefined;
         const right = visual.questionVisual.kind === "comparison-items" ? visual.questionVisual.groups[1] : undefined;
         return createProblem("count_which_more", visual.questionText, a > b ? (left?.emoji || "🍎") : (right?.emoji || "🍊"), "choice", {
@@ -243,7 +263,7 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 0: 1つおおい
     "one_more": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.one_more?.totalAnswers);
-        const count = selectOneMoreCount(totalAnswers);
+        const count = selectOneMoreCount(totalAnswers, context?.random);
         const visual = buildNumberLineVisual(
             count,
             1,
@@ -251,7 +271,8 @@ export const generators: Record<string, GeneratorFn> = {
             `${count} の 1つ おおい かずは？`
         );
 
-        return createProblem("one_more", visual.questionText, (count + 1).toString(), "number", undefined, {
+        const answer = count + 1;
+        return createProblem("one_more", visual.questionText, answer.toString(), "choice", buildNumberChoices(answer, 2, 9, undefined, context?.random), {
             questionVisual: visual.questionVisual
         });
     },
@@ -264,17 +285,18 @@ export const generators: Record<string, GeneratorFn> = {
             { n: 10, reading: "じゅう" },
         ];
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_read?.totalAnswers);
-        const pattern = selectCountReadPattern(totalAnswers);
+        const pattern = selectCountReadPattern(totalAnswers, context?.random);
         const target = NUMS.find(item => item.n === pattern.target) || NUMS[0];
         const choices = shuffleArray(
             pattern.options
                 .map(number => NUMS.find(item => item.n === number))
-                .filter((item): item is NonNullable<typeof item> => Boolean(item))
+                .filter((item): item is NonNullable<typeof item> => Boolean(item)),
+            context?.random,
         );
         const visual = buildNumberReadVisual(target.n, {
             prompt: "よみかたは どれ？",
             questionText: `${target.n} は？`,
-            item: { emoji: randomChoice(COUNT_EMOJIS), label: "かず" },
+            item: { emoji: randomChoice(COUNT_EMOJIS, context?.random), label: "かず" },
         });
 
         return createProblem("count_read", visual.questionText, target.reading, "choice", {
@@ -286,19 +308,19 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 0: ならべよう（小さい順）
     "count_order": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_order?.totalAnswers);
-        const { values: nums } = selectCountOrderPattern(totalAnswers);
+        const { values: nums } = selectCountOrderPattern(totalAnswers, context?.random);
         const sorted = [...nums].sort((a, b) => a - b);
-        const shuffled = shuffleArray(nums);
+        const shuffled = shuffleArray(nums, context?.random);
         const visual = buildStaticNumberLineVisual(shuffled, "いちばん ちいさい かずは？", "いちばん ちいさい かずは？");
-        return createProblem("count_order", visual.questionText, sorted[0].toString(), "number", undefined, {
+        return createProblem("count_order", visual.questionText, sorted[0].toString(), "choice", buildNumberChoices(sorted[0], 1, 9, nums, context?.random), {
             questionVisual: visual.questionVisual
         });
     },
     // Level 0: なんばんめ？
     "ordinal_small": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.ordinal_small?.totalAnswers);
-        const pattern = selectOrdinalPattern(totalAnswers);
-        const items = shuffleArray(ORDINAL_EMOJIS).slice(0, pattern.length);
+        const pattern = selectOrdinalPattern(totalAnswers, context?.random);
+        const items = shuffleArray(ORDINAL_EMOJIS, context?.random).slice(0, pattern.length);
         const visual = buildOrdinalVisual(items, pattern.prompt);
         const answer = items[pattern.targetIndex];
 
@@ -311,9 +333,9 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 0: くりかえしのつづき
     "pattern_copy": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.pattern_copy?.totalAnswers);
-        const pattern = selectPatternCopyPattern(totalAnswers);
+        const pattern = selectPatternCopyPattern(totalAnswers, context?.random);
         const uniqueCount = Math.max(...pattern.visible, pattern.answerIndex) + 1;
-        const palette = shuffleArray(PATTERN_ITEMS).slice(0, uniqueCount);
+        const palette = shuffleArray(PATTERN_ITEMS, context?.random).slice(0, uniqueCount);
         const items = pattern.visible.map(index => palette[index] || PATTERN_ITEMS[0]);
         const visual = buildPatternVisual(items, "つぎは どれ？");
         const choices = palette.map(item => ({ label: item.emoji, value: item.emoji }));
@@ -328,8 +350,8 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 0: ながさくらべ
     "length_compare": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.length_compare?.totalAnswers);
-        const pattern = selectLengthComparePattern(totalAnswers);
-        const palette = shuffleArray(LENGTH_COMPARE_ITEMS).slice(0, 2);
+        const pattern = selectLengthComparePattern(totalAnswers, context?.random);
+        const palette = shuffleArray(LENGTH_COMPARE_ITEMS, context?.random).slice(0, 2);
         const left = palette[0] || LENGTH_COMPARE_ITEMS[0];
         const right = palette[1] || LENGTH_COMPARE_ITEMS[1];
         const visual = buildLengthCompareVisual([
@@ -350,8 +372,8 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 0: たかさくらべ
     "height_compare": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.height_compare?.totalAnswers);
-        const pattern = selectHeightComparePattern(totalAnswers);
-        const palette = shuffleArray(HEIGHT_COMPARE_ITEMS).slice(0, 2);
+        const pattern = selectHeightComparePattern(totalAnswers, context?.random);
+        const palette = shuffleArray(HEIGHT_COMPARE_ITEMS, context?.random).slice(0, 2);
         const left = palette[0] || HEIGHT_COMPARE_ITEMS[0];
         const right = palette[1] || HEIGHT_COMPARE_ITEMS[1];
         const visual = buildHeightCompareVisual([
@@ -372,8 +394,8 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 0: おもさくらべ
     "weight_compare": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.weight_compare?.totalAnswers);
-        const pattern = selectWeightComparePattern(totalAnswers);
-        const items = shuffleArray(WEIGHT_COMPARE_ITEMS).slice(0, 2);
+        const pattern = selectWeightComparePattern(totalAnswers, context?.random);
+        const items = shuffleArray(WEIGHT_COMPARE_ITEMS, context?.random).slice(0, 2);
         const left = items[0] || WEIGHT_COMPARE_ITEMS[0];
         const right = items[1] || WEIGHT_COMPARE_ITEMS[1];
         const visual = buildWeightCompareVisual([
@@ -394,20 +416,20 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 0: 1たい1たいおう
     "one_to_one_match": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.one_to_one_match?.totalAnswers);
-        const count = selectOneToOneCount(totalAnswers);
-        const visual = buildOneToOneMatchVisual(count);
+        const count = selectOneToOneCount(totalAnswers, context?.random);
+        const visual = buildOneToOneMatchVisual(count, context?.random);
 
-        return createProblem("one_to_one_match", visual.questionText, count.toString(), "number", undefined, {
+        return createProblem("one_to_one_match", visual.questionText, count.toString(), "choice", buildNumberChoices(count, 1, 5, undefined, context?.random), {
             questionVisual: visual.questionVisual
         });
     },
     // Level 0: なかまでわける
     "sort_by_attribute": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.sort_by_attribute?.totalAnswers);
-        const pattern = selectSortByAttributePattern(totalAnswers);
+        const pattern = selectSortByAttributePattern(totalAnswers, context?.random);
         const scenario = SORT_ATTRIBUTE_SETS[pattern.setIndex] || SORT_ATTRIBUTE_SETS[0];
         const targetBucket = scenario.buckets[pattern.targetBucket] || scenario.buckets[0];
-        const target = shuffleArray(targetBucket.items)[0] || targetBucket.items[0];
+        const target = shuffleArray(targetBucket.items, context?.random)[0] || targetBucket.items[0];
         const visual = buildCategorySortVisual(target, scenario.buckets, "どちらの なかま？");
 
         return createProblem("sort_by_attribute", visual.questionText, targetBucket.label, "choice", {
@@ -419,8 +441,8 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 0: おおきい・ちいさい
     "big_small_compare": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.big_small_compare?.totalAnswers);
-        const pattern = selectBigSmallPattern(totalAnswers);
-        const items = shuffleArray(VISUAL_COMPARE_ITEMS).slice(0, 2);
+        const pattern = selectBigSmallPattern(totalAnswers, context?.random);
+        const items = shuffleArray(VISUAL_COMPARE_ITEMS, context?.random).slice(0, 2);
         const left = items[0] || VISUAL_COMPARE_ITEMS[0];
         const right = items[1] || VISUAL_COMPARE_ITEMS[1];
         const visual = buildItemPairVisual([
@@ -441,8 +463,8 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 0: おなじ？ちがう？
     "same_or_different": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.same_or_different?.totalAnswers);
-        const pattern = selectSameOrDifferentPattern(totalAnswers);
-        const items = shuffleArray(VISUAL_COMPARE_ITEMS).slice(0, 2);
+        const pattern = selectSameOrDifferentPattern(totalAnswers, context?.random);
+        const items = shuffleArray(VISUAL_COMPARE_ITEMS, context?.random).slice(0, 2);
         const left = items[0] || VISUAL_COMPARE_ITEMS[0];
         const right = pattern.isSame ? left : (items[1] || VISUAL_COMPARE_ITEMS[1]);
         const visual = buildItemPairVisual([left, right], "2つは おなじ？ ちがう？");
@@ -459,9 +481,9 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 0: ばしょのことば
     "spatial_words": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.spatial_words?.totalAnswers);
-        const pattern = selectSpatialWordsPattern(totalAnswers);
+        const pattern = selectSpatialWordsPattern(totalAnswers, context?.random);
         if (pattern.mode === "pair") {
-            const items = shuffleArray(ORDINAL_EMOJIS).slice(0, 2);
+            const items = shuffleArray(ORDINAL_EMOJIS, context?.random).slice(0, 2);
             const target = items[pattern.targetIndex || 0] || items[0] || ORDINAL_EMOJIS[0];
             const prompt = `2つの うち、${target.label} は どこ？ ${pattern.choices[0]}？ ${pattern.choices[1]}？`;
             const visual = buildItemPairVisual(items, prompt, pattern.orientation || "row");
@@ -474,7 +496,7 @@ export const generators: Record<string, GeneratorFn> = {
         }
 
         if (pattern.mode === "front-back") {
-            const scene = randomChoice(FRONT_BACK_SCENES);
+            const scene = randomChoice(FRONT_BACK_SCENES, context?.random);
             const prompt = `${scene.target.label} は ${scene.reference.label} の まえ？ うしろ？`;
             const visual = buildPositionSceneVisual(
                 "front-back",
@@ -491,7 +513,7 @@ export const generators: Record<string, GeneratorFn> = {
             });
         }
 
-        const scene = randomChoice(INSIDE_OUTSIDE_SCENES);
+        const scene = randomChoice(INSIDE_OUTSIDE_SCENES, context?.random);
         const prompt = `${scene.target.label} は ${scene.reference.label} の なか？ そと？`;
         const visual = buildPositionSceneVisual(
             "inside-outside",
@@ -508,7 +530,7 @@ export const generators: Record<string, GeneratorFn> = {
         });
     },
     // Level 0: なかまはずれ（形・色）
-    "count_oddone": () => {
+    "count_oddone": (context) => {
         const groups = [
             { items: ["🍎", "🍎", "🍎", "🍊"], odd: "🍊" },
             { items: ["🔵", "🔵", "🔴", "🔵"], odd: "🔴" },
@@ -519,9 +541,9 @@ export const generators: Record<string, GeneratorFn> = {
             { items: ["🐟", "🐟", "🐦", "🐟"], odd: "🐦" },
             { items: ["🍌", "🍇", "🍌", "🍌"], odd: "🍇" },
         ];
-        const group = randomChoice(groups);
+        const group = randomChoice(groups, context?.random);
         // シャッフルして表示
-        const shuffled = shuffleArray(group.items);
+        const shuffled = shuffleArray(group.items, context?.random);
         const majority = group.items.find(i => i !== group.odd)!;
         const visual = buildItemGridVisual(
             shuffled.map(item => ({ emoji: item, label: item })),
@@ -545,12 +567,13 @@ export const generators: Record<string, GeneratorFn> = {
             { emoji: "🟦", name: "しかく" },
         ];
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_shape?.totalAnswers);
-        const pattern = selectShapeRecognitionPattern(totalAnswers);
+        const pattern = selectShapeRecognitionPattern(totalAnswers, context?.random);
         const target = SHAPES.find(shape => shape.name === pattern.target) || SHAPES[0];
         const choices = shuffleArray(
             pattern.options
                 .map(name => SHAPES.find(shape => shape.name === name))
-                .filter((shape): shape is NonNullable<typeof shape> => Boolean(shape))
+                .filter((shape): shape is NonNullable<typeof shape> => Boolean(shape)),
+            context?.random,
         );
         const visual = buildReferenceChoiceGridVisual(
             { emoji: target.emoji, label: target.name },
@@ -573,12 +596,13 @@ export const generators: Record<string, GeneratorFn> = {
             { emoji: "🟧", name: "オレンジ" }, { emoji: "🟪", name: "むらさき" },
         ];
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_color?.totalAnswers);
-        const pattern = selectColorRecognitionPattern(totalAnswers);
+        const pattern = selectColorRecognitionPattern(totalAnswers, context?.random);
         const target = COLORS.find(color => color.name === pattern.target) || COLORS[0];
         const choices = shuffleArray(
             pattern.options
                 .map(name => COLORS.find(color => color.name === name))
-                .filter((color): color is NonNullable<typeof color> => Boolean(color))
+                .filter((color): color is NonNullable<typeof color> => Boolean(color)),
+            context?.random,
         );
         const visual = buildReferenceChoiceGridVisual(
             { emoji: target.emoji, label: target.name },
@@ -596,9 +620,9 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 0: ペアをみつける（同じもの探し）
     "count_pair": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_pair?.totalAnswers);
-        const pattern = selectPairRecognitionPattern(totalAnswers);
+        const pattern = selectPairRecognitionPattern(totalAnswers, context?.random);
         const target = pattern.target;
-        const choices = shuffleArray(pattern.options);
+        const choices = shuffleArray(pattern.options, context?.random);
         const visual = buildReferenceChoiceGridVisual(
             { emoji: target, label: "おてほん" },
             choices.map(choice => ({ emoji: choice, label: choice })),
@@ -615,8 +639,8 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 0: おなじ数のまとまりを見つける
     "same_count_match": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.same_count_match?.totalAnswers);
-        const { target, options } = selectSameCountMatchPattern(totalAnswers);
-        const emojiPool = shuffleArray(MATCH_EMOJIS).slice(0, 4);
+        const { target, options } = selectSameCountMatchPattern(totalAnswers, context?.random);
+        const emojiPool = shuffleArray(MATCH_EMOJIS, context?.random).slice(0, 4);
         const targetEmoji = emojiPool[0] || "🍎";
         const choiceEmojis = emojiPool.slice(1);
         const visual = buildSingleCountVisual(target, {
@@ -639,14 +663,14 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 0: 5になるにはあといくつ？
     "compose_5": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.compose_5?.totalAnswers);
-        const filled = selectComposeFilledCount("compose_5", totalAnswers);
+        const filled = selectComposeFilledCount("compose_5", totalAnswers, context?.random);
         const visual = buildSingleCountVisual(filled, {
             prompt: "5になるには あといくつ？",
             questionText: "5になるには あといくつ？",
             frameSize: 5,
             columns: 5,
             style: "frame",
-            item: { emoji: randomChoice(COUNT_EMOJIS), label: "かず" },
+            item: { emoji: randomChoice(COUNT_EMOJIS, context?.random), label: "かず" },
         });
 
         return createProblem("compose_5", visual.questionText, (5 - filled).toString(), "number", undefined, {
@@ -656,8 +680,8 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 0: かんたんなたし算（1+1〜3+3）
     "add_tiny": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.add_tiny?.totalAnswers);
-        const [a, b] = selectAdditionPair("add_tiny", totalAnswers);
-        const visual = buildAdditionVisual(a, b);
+        const [a, b] = selectAdditionPair("add_tiny", totalAnswers, context?.random);
+        const visual = buildAdditionVisual(a, b, context?.random);
         return createProblem("add_tiny", visual.questionText, (a + b).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
         });
@@ -665,14 +689,14 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 1: 数を数える（1-10）
     "count_10": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_10?.totalAnswers);
-        const n = selectCount10Target(totalAnswers);
+        const n = selectCount10Target(totalAnswers, context?.random);
         const visual = buildSingleCountVisual(n, {
             prompt: "いくつ ある？",
             questionText: "いくつ ある？",
             frameSize: 10,
             columns: 5,
             style: "frame",
-            item: { emoji: randomChoice(COUNT_EMOJIS), label: "かず" },
+            item: { emoji: randomChoice(COUNT_EMOJIS, context?.random), label: "かず" },
         });
         return createProblem("count_10", visual.questionText, n.toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -681,7 +705,7 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 1: つぎのかず（1-9）
     "count_next_10": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_next_10?.totalAnswers);
-        const n = selectCountNext10Target(totalAnswers);
+        const n = selectCountNext10Target(totalAnswers, context?.random);
         const visual = buildNextNumberVisual(n);
         return createProblem("count_next_10", visual.questionText, (n + 1).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -690,8 +714,8 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 1: ゆびたしざん（絵つき、合計5まで）
     "add_finger": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.add_finger?.totalAnswers);
-        const [a, b] = selectAdditionPair("add_finger", totalAnswers);
-        const visual = buildAdditionVisual(a, b);
+        const [a, b] = selectAdditionPair("add_finger", totalAnswers, context?.random);
+        const visual = buildAdditionVisual(a, b, context?.random);
         return createProblem("add_finger", visual.questionText, (a + b).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
         });
@@ -699,7 +723,7 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 1: まえのかず（逆に数える、2-10）
     "count_back": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_back?.totalAnswers);
-        const n = selectCountBackTarget(totalAnswers);
+        const n = selectCountBackTarget(totalAnswers, context?.random);
         const visual = buildPreviousNumberVisual(n);
         return createProblem("count_back", visual.questionText, (n - 1).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -708,7 +732,7 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 1: 2つおおい
     "two_more": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.two_more?.totalAnswers);
-        const count = selectTwoMoreCount(totalAnswers);
+        const count = selectTwoMoreCount(totalAnswers, context?.random);
         const visual = buildNumberLineVisual(
             count,
             2,
@@ -716,14 +740,15 @@ export const generators: Record<string, GeneratorFn> = {
             `${count} の 2つ おおい かずは？`
         );
 
-        return createProblem("two_more", visual.questionText, (count + 2).toString(), "number", undefined, {
+        const answer = count + 2;
+        return createProblem("two_more", visual.questionText, answer.toString(), "choice", buildNumberChoices(answer, 3, 10, undefined, context?.random), {
             questionVisual: visual.questionVisual
         });
     },
     // Level 1: 1つすくない
     "one_less": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.one_less?.totalAnswers);
-        const count = selectOneLessCount(totalAnswers);
+        const count = selectOneLessCount(totalAnswers, context?.random);
         const visual = buildNumberLineVisual(
             count,
             -1,
@@ -731,31 +756,32 @@ export const generators: Record<string, GeneratorFn> = {
             `${count} の 1つ すくない かずは？`
         );
 
-        return createProblem("one_less", visual.questionText, (count - 1).toString(), "number", undefined, {
+        const answer = count - 1;
+        return createProblem("one_less", visual.questionText, answer.toString(), "choice", buildNumberChoices(answer, 1, 8, undefined, context?.random), {
             questionVisual: visual.questionVisual
         });
     },
     // Level 1: 0のかんかく
     "zero_concept": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.zero_concept?.totalAnswers);
-        const count = selectZeroConceptCount(totalAnswers);
-        const visual = buildZeroConceptVisual(count);
+        const count = selectZeroConceptCount(totalAnswers, context?.random);
+        const visual = buildZeroConceptVisual(count, context?.random);
 
-        return createProblem("zero_concept", visual.questionText, "0", "number", undefined, {
+        return createProblem("zero_concept", visual.questionText, "0", "choice", buildNumberChoices(0, 0, 5, undefined, context?.random), {
             questionVisual: visual.questionVisual
         });
     },
     // Level 1: からっぽ かな？
     "which_is_empty": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.which_is_empty?.totalAnswers);
-        const count = selectWhichIsEmptyCount(totalAnswers);
+        const count = selectWhichIsEmptyCount(totalAnswers, context?.random);
         const visual = buildSingleCountVisual(count, {
             prompt: "からっぽ かな？",
             questionText: "からっぽ かな？",
             frameSize: 5,
             columns: 5,
             style: "frame",
-            item: { emoji: randomChoice(COUNT_EMOJIS), label: "かず" },
+            item: { emoji: randomChoice(COUNT_EMOJIS, context?.random), label: "かず" },
         });
 
         return createProblem("which_is_empty", visual.questionText, count === 0 ? "はい" : "いいえ", "choice", {
@@ -770,16 +796,17 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 1: おなじにわける
     "share_equal": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.share_equal?.totalAnswers);
-        const { total, groups } = selectShareEqualPattern(totalAnswers);
-        const visual = buildSharingVisual(total, groups);
-        return createProblem("share_equal", visual.questionText, (total / groups).toString(), "number", undefined, {
+        const { total, groups } = selectShareEqualPattern(totalAnswers, context?.random);
+        const visual = buildSharingVisual(total, groups, context?.random);
+        const answer = total / groups;
+        return createProblem("share_equal", visual.questionText, answer.toString(), "choice", buildNumberChoices(answer, 1, 5, undefined, context?.random), {
             questionVisual: visual.questionVisual
         });
     },
     // Level 2: 数を数える（1-50）
     "count_50": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_50?.totalAnswers);
-        const n = selectCount50Target(totalAnswers);
+        const n = selectCount50Target(totalAnswers, context?.random);
         const visual = buildNextNumberVisual(n);
         return createProblem("count_50", visual.questionText, (n + 1).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -788,7 +815,7 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 2: つぎのかず（1-20）
     "count_next_20": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_next_20?.totalAnswers);
-        const n = selectCountNext20Target(totalAnswers);
+        const n = selectCountNext20Target(totalAnswers, context?.random);
         const visual = buildNextNumberVisual(n);
         return createProblem("count_next_20", visual.questionText, (n + 1).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -797,8 +824,8 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 2: 5までのたし算
     "add_5": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.add_5?.totalAnswers);
-        const [a, b] = selectAdditionPair("add_5", totalAnswers);
-        const visual = buildAdditionVisual(a, b);
+        const [a, b] = selectAdditionPair("add_5", totalAnswers, context?.random);
+        const visual = buildAdditionVisual(a, b, context?.random);
         return createProblem("add_5", visual.questionText, (a + b).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
         });
@@ -806,14 +833,14 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 2: 10になるにはあといくつ？
     "compose_10": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.compose_10?.totalAnswers);
-        const filled = selectComposeFilledCount("compose_10", totalAnswers);
+        const filled = selectComposeFilledCount("compose_10", totalAnswers, context?.random);
         const visual = buildSingleCountVisual(filled, {
             prompt: "10になるには あといくつ？",
             questionText: "10になるには あといくつ？",
             frameSize: 10,
             columns: 5,
             style: "frame",
-            item: { emoji: randomChoice(COUNT_EMOJIS), label: "かず" },
+            item: { emoji: randomChoice(COUNT_EMOJIS, context?.random), label: "かず" },
         });
 
         return createProblem("compose_10", visual.questionText, (10 - filled).toString(), "number", undefined, {
@@ -823,7 +850,7 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 2: 2つすくない
     "two_less": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.two_less?.totalAnswers);
-        const count = selectTwoLessCount(totalAnswers);
+        const count = selectTwoLessCount(totalAnswers, context?.random);
         const visual = buildNumberLineVisual(
             count,
             -2,
@@ -831,15 +858,16 @@ export const generators: Record<string, GeneratorFn> = {
             `${count} の 2つ すくない かずは？`
         );
 
-        return createProblem("two_less", visual.questionText, (count - 2).toString(), "number", undefined, {
+        const answer = count - 2;
+        return createProblem("two_less", visual.questionText, answer.toString(), "choice", buildNumberChoices(answer, 1, 7, undefined, context?.random), {
             questionVisual: visual.questionVisual
         });
     },
     // Level 2: かんたんなひき算（答えが正になる、5以下）
     "sub_tiny": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.sub_tiny?.totalAnswers);
-        const [a, b] = selectSubtractionPair("sub_tiny", totalAnswers);
-        const visual = buildSubtractionVisual(a, b);
+        const [a, b] = selectSubtractionPair("sub_tiny", totalAnswers, context?.random);
+        const visual = buildSubtractionVisual(a, b, context?.random);
         return createProblem("sub_tiny", visual.questionText, (a - b).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
         });
@@ -847,7 +875,7 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 3: 数を数える（1-100）
     "count_100": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_100?.totalAnswers);
-        const n = selectCount100Target(totalAnswers);
+        const n = selectCount100Target(totalAnswers, context?.random);
         const visual = buildNextNumberVisual(n);
         return createProblem("count_100", visual.questionText, (n + 1).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -856,7 +884,7 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 3: 数の順番
     "count_fill": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_fill?.totalAnswers);
-        const { start, missingIndex } = selectCountFillPattern(totalAnswers);
+        const { start, missingIndex } = selectCountFillPattern(totalAnswers, context?.random);
         const seq = [0, 1, 2, 3, 4].map(i => start + i);
         const ans = seq[missingIndex];
         const visual = buildSequenceFillVisual(seq, missingIndex);
@@ -867,7 +895,7 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 3: 大小比較（1桁）
     "compare_1d": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.compare_1d?.totalAnswers);
-        const [a, b] = selectComparisonPair("compare_1d", totalAnswers);
+        const [a, b] = selectComparisonPair("compare_1d", totalAnswers, context?.random);
         const visual = buildStaticNumberLineVisual([a, b], "□ に はいる きごうは？", `${a} □ ${b}`);
         return createProblem("compare_1d", visual.questionText, a > b ? ">" : "<", "choice", {
             choices: [{ label: ">", value: ">" }, { label: "=", value: "=" }, { label: "<", value: "<" }]
@@ -878,7 +906,7 @@ export const generators: Record<string, GeneratorFn> = {
     // Level 3: 大小比較（2桁）
     "compare_2d": (context) => {
         const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.compare_2d?.totalAnswers);
-        const [a, b] = selectComparisonPair("compare_2d", totalAnswers);
+        const [a, b] = selectComparisonPair("compare_2d", totalAnswers, context?.random);
         const usesNumberLine = Math.floor(a / 10) === Math.floor(b / 10);
         const visual = usesNumberLine
             ? buildStaticNumberLineVisual([a, b], "□ に はいる きごうは？", `${a} □ ${b}`)

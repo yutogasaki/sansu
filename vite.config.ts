@@ -11,6 +11,13 @@ const appVersion = process.env.VERCEL_GIT_COMMIT_SHA
     || process.env.CF_PAGES_COMMIT_SHA
     || new Date().toISOString()
 
+// Only production-ready assets belong in the offline pack. Drafts and visual
+// comparisons live under docs/design (or another production workspace), while
+// final encounter scenes use the scene-* contract under public/assets.
+const exploreArtworkGlob = 'assets/explore/**/scene-*.{jpg,jpeg,webp,avif}'
+const openingRootPullArtworkGlob = 'assets/explore/opening-root-pull-v*/*.{jpg,jpeg,webp,avif}'
+const ikimonoArtworkGlob = 'ikimono/*.webp'
+
 type AssetFile = {
     type: 'asset';
     fileName: string;
@@ -42,12 +49,21 @@ export default defineConfig({
         VitePWA({
             injectRegister: false,
             registerType: 'autoUpdate',
-            includeAssets: ['icons/*', 'sounds/*.mp3'],
+            includeAssets: [
+                'icons/*',
+                'sounds/*.mp3',
+                ikimonoArtworkGlob,
+                exploreArtworkGlob,
+                openingRootPullArtworkGlob,
+            ],
             manifest: false, // We use public/manifest.json
             workbox: {
                 skipWaiting: true,
                 clientsClaim: true,
-                globPatterns: ['**/*.{js,css,html,ico,png,svg,mp3,woff,woff2}'],
+                // Explicit includeAssets above owns approved offline media;
+                // this glob is intentionally limited to the app shell.
+                globPatterns: ['**/*.{js,css,html,ico,woff,woff2}'],
+                globIgnores: ['visual-tests/**/*'],
                 runtimeCaching: [
                     {
                         urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,

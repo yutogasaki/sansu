@@ -1,4 +1,4 @@
-import { SubjectKey, TriggerState, UserProfile, PeriodicTestResult, PeriodicTestState } from "../domain/types";
+import { SubjectKey, TriggerState, UserProfile, PeriodicTestResult, PeriodicTestSet, PeriodicTestState } from "../domain/types";
 import { BLOCK_SIZE } from "./blockGenerators";
 import type { SessionKind } from "./blockGenerators";
 import { MAX_MATH_LEVEL, MAX_VOCAB_LEVEL } from "../domain/math/curriculum";
@@ -17,7 +17,6 @@ type SessionCompletionOptions = {
     sessionStats: SessionStats;
     now: number;
     focusSubject?: SubjectKey;
-    checkMathTrigger?: (profile: UserProfile) => Promise<{ isTriggered: boolean; reason: TriggerState["reason"] }>;
 };
 
 type AttemptProgressionOptions = {
@@ -37,6 +36,9 @@ const createDefaultPeriodicTestState = (): PeriodicTestState => ({
 
 export const isFixedSessionKind = (sessionKind?: SessionKind | null): boolean =>
     sessionKind === "periodic-test" || sessionKind === "weak-review" || sessionKind === "check-event";
+
+export const shouldRecordLearningAttempt = (sessionKind?: SessionKind | null): boolean =>
+    sessionKind !== "periodic-test" && sessionKind !== "dev";
 
 export const resolveSessionBlockSize = (sessionKind?: SessionKind | null): number => {
     if (sessionKind === "periodic-test" || sessionKind === "check-event") {
@@ -76,12 +78,13 @@ export const applyPeriodicTestCompletion = (
     const safeTotal = Math.max(1, sessionStats.total);
     const safeCorrect = Math.max(0, Math.min(safeTotal, sessionStats.correct));
 
+    const isAutomatic = currentProfile.periodicTestState?.[subject]?.isPending === true;
     const result: PeriodicTestResult = {
         id: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2),
         timestamp: now,
         subject,
         level,
-        mode: currentProfile.periodicTestState?.[subject]?.isPending ? "auto" : "manual",
+        mode: isAutomatic ? "auto" : "manual",
         method: "online",
         correctCount: safeCorrect,
         totalQuestions: safeTotal,
@@ -94,7 +97,7 @@ export const applyPeriodicTestCompletion = (
     const nextState = { ...(currentProfile.periodicTestState || createDefaultPeriodicTestState()) };
     nextState[subject] = {
         isPending: false,
-        lastTriggeredAt: now,
+        lastTriggeredAt: isAutomatic ? now : nextState[subject].lastTriggeredAt,
         reason: null,
     };
 
@@ -109,24 +112,32 @@ export const applyPeriodicTestCompletion = (
     };
 };
 
-export const applyNormalSessionMathTrigger = (
+export const applyPendingPeriodicTestTrigger = (
     currentProfile: UserProfile,
-    mathTrigger: { isTriggered: boolean; reason: TriggerState["reason"] }
+    subject: SubjectKey,
+    trigger: { isTriggered: boolean; reason: TriggerState["reason"] },
+    testSet?: PeriodicTestSet,
 ): UserProfile | null => {
-    if (!mathTrigger.isTriggered) return null;
+    if (!trigger.isTriggered) return null;
 
     const nextState = { ...(currentProfile.periodicTestState || createDefaultPeriodicTestState()) };
-    if (nextState.math.isPending) return null;
+    if (nextState[subject].isPending) return null;
 
-    nextState.math = {
+    nextState[subject] = {
         isPending: true,
-        lastTriggeredAt: nextState.math.lastTriggeredAt,
-        reason: mathTrigger.reason,
+        lastTriggeredAt: nextState[subject].lastTriggeredAt,
+        reason: trigger.reason,
     };
 
     return {
         ...currentProfile,
         periodicTestState: nextState,
+        periodicTestSets: testSet
+            ? {
+                ...(currentProfile.periodicTestSets || {}),
+                [subject]: testSet,
+            }
+            : currentProfile.periodicTestSets,
     };
 };
 
@@ -136,19 +147,9 @@ export const resolveSessionCompletionProfileUpdate = async ({
     sessionStats,
     now,
     focusSubject,
-    checkMathTrigger,
 }: SessionCompletionOptions): Promise<UserProfile | null> => {
     if (sessionKind === "periodic-test") {
         return applyPeriodicTestCompletion(currentProfile, sessionStats, now, focusSubject);
-    }
-
-    if (sessionKind === "normal" || sessionKind === "review") {
-        if (!checkMathTrigger) {
-            return null;
-        }
-
-        const mathTrigger = await checkMathTrigger(currentProfile);
-        return applyNormalSessionMathTrigger(currentProfile, mathTrigger);
     }
 
     return null;

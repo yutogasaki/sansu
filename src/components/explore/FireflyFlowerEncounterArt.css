@@ -1,0 +1,323 @@
+.firefly-flower-art {
+    --firefly-sky: #74cfbd;
+    --firefly-far-bank: #9cdbc1;
+    --firefly-leaf: #3fa18f;
+    --firefly-ground: #5fbaa9;
+    --firefly-ground-seam: #2f9998;
+    --firefly-shadow: #37796f;
+    --firefly-petal-fold: #b83e38;
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    isolation: isolate;
+}
+
+.explore-immersive-firefly-art {
+    width: 100%;
+    height: auto;
+    min-height: 56%;
+    object-fit: cover;
+    object-position: top center;
+}
+
+/* The authored stage already separates the live world from the opaque answer
+   shelf. Do not put the legacy raster scrim or its gradient over this scene. */
+.firefly-flower-art + .explore-immersive-scrim {
+    background: transparent;
+}
+
+.firefly-flower-art__sky {
+    fill: var(--firefly-sky);
+}
+
+.firefly-flower-art__far-bank {
+    fill: var(--firefly-far-bank);
+}
+
+.firefly-flower-art__left-leaf,
+.firefly-flower-art__right-rock {
+    fill: var(--firefly-leaf);
+}
+
+.firefly-flower-art__left-leaf--small {
+    fill: var(--firefly-far-bank);
+}
+
+.firefly-flower-art__ground {
+    fill: var(--firefly-ground);
+}
+
+.firefly-flower-art__ground-seam {
+    fill: none;
+    stroke: var(--firefly-ground-seam);
+    stroke-width: 9;
+    stroke-linecap: round;
+    opacity: 0.68;
+}
+
+.firefly-flower-art__shadow {
+    fill: var(--firefly-shadow);
+    opacity: 0.28;
+}
+
+.firefly-flower-art__action-corridor,
+.firefly-flower-art__dew-guide {
+    fill: none;
+    stroke: var(--explore-cream);
+    stroke-linecap: round;
+}
+
+.firefly-flower-art__action-corridor {
+    stroke-width: 4;
+    stroke-dasharray: 2 11;
+}
+
+.firefly-flower-art__dew-guide {
+    stroke-width: 3;
+    stroke-dasharray: 2 12;
+    opacity: 0.72;
+}
+
+.firefly-flower-art__dew-fill {
+    fill: var(--explore-amber);
+    stroke: var(--explore-outline);
+    stroke-width: 3;
+    stroke-linejoin: round;
+}
+
+.firefly-flower-art__dew-cut {
+    fill: none;
+    stroke: var(--explore-cream);
+    stroke-width: 3;
+    stroke-linecap: round;
+}
+
+.firefly-flower-art__stem-outline {
+    fill: none;
+    stroke: var(--explore-outline);
+    stroke-width: 17;
+    stroke-linecap: round;
+}
+
+.firefly-flower-art__stem {
+    fill: none;
+    stroke: var(--firefly-leaf);
+    stroke-width: 10;
+    stroke-linecap: round;
+}
+
+.firefly-flower-art__leaf {
+    fill: var(--firefly-leaf);
+    stroke: var(--explore-outline);
+    stroke-width: 4;
+    stroke-linejoin: round;
+}
+
+.firefly-flower-art__leaf--right {
+    fill: var(--firefly-far-bank);
+}
+
+.firefly-flower-art__collar,
+.firefly-flower-art__bloom-collar {
+    fill: var(--explore-cream);
+    stroke: var(--explore-outline);
+    stroke-width: 4;
+    stroke-linejoin: round;
+}
+
+.firefly-flower-art__bud-shell,
+.firefly-flower-art__petal-fill {
+    fill: var(--explore-coral);
+    stroke: var(--explore-outline);
+    stroke-width: 4;
+    stroke-linejoin: round;
+}
+
+.firefly-flower-art__bud-fold,
+.firefly-flower-art__petal-crease {
+    fill: none;
+    stroke: var(--firefly-petal-fold);
+    stroke-width: 3;
+    stroke-linecap: round;
+}
+
+.firefly-flower-art__warm-seam,
+.firefly-flower-art__warm-ticks,
+.firefly-flower-art__ring-marks {
+    fill: none;
+    stroke: var(--explore-amber);
+    stroke-width: 6;
+    stroke-linecap: round;
+}
+
+.firefly-flower-art__warm-ticks {
+    stroke-width: 4;
+}
+
+.firefly-flower-art__petal-clapper {
+    fill: var(--explore-cream);
+    stroke: var(--explore-outline);
+    stroke-width: 3;
+    stroke-linejoin: round;
+}
+
+.firefly-flower-art__path-edge,
+.firefly-flower-art__path-dashes,
+.firefly-flower-art__path-stop {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.firefly-flower-art__path-edge {
+    stroke: var(--explore-outline);
+    stroke-width: 15;
+}
+
+.firefly-flower-art__path-dashes {
+    stroke: var(--explore-amber);
+    stroke-width: 8;
+    stroke-dasharray: 3 15;
+}
+
+.firefly-flower-art__path-stop {
+    stroke: var(--explore-cream);
+    stroke-width: 5;
+}
+
+.ribbon-antenna-companion__body {
+    fill: var(--explore-amber);
+    stroke: var(--explore-outline);
+    stroke-width: 4;
+    stroke-linejoin: round;
+}
+
+.ribbon-antenna-companion__antennae,
+.ribbon-antenna-companion__limb,
+.ribbon-antenna-companion__bag-detail {
+    fill: none;
+    stroke: var(--explore-outline);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.ribbon-antenna-companion__antennae {
+    stroke-width: 4;
+}
+
+.ribbon-antenna-companion__limb {
+    stroke-width: 7;
+}
+
+.ribbon-antenna-companion__eye {
+    fill: var(--explore-outline);
+}
+
+.ribbon-antenna-companion__bag {
+    fill: var(--explore-cream);
+    stroke: var(--explore-outline);
+    stroke-width: 4;
+    stroke-linejoin: round;
+}
+
+.ribbon-antenna-companion__bag-detail {
+    stroke: var(--firefly-ground-seam);
+    stroke-width: 3;
+}
+
+.firefly-flower-art__dew-drop,
+.firefly-flower-art__petal,
+.firefly-flower-art__closed-bud,
+.firefly-flower-art__companion-motion > .ribbon-antenna-companion {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.firefly-flower-art__dew-drop {
+    animation: firefly-dew-arrive 360ms var(--dew-delay) cubic-bezier(0.2, 0.74, 0.28, 1.1) both;
+}
+
+.firefly-flower-art__closed-bud--warm {
+    transform-origin: bottom center;
+    animation: firefly-bud-wake 380ms cubic-bezier(0.2, 0.74, 0.28, 1.08) both;
+}
+
+.firefly-flower-art__petal {
+    transform-origin: 50% 100%;
+    animation: firefly-petal-open 460ms var(--petal-delay) cubic-bezier(0.18, 0.76, 0.28, 1.08) both;
+}
+
+.firefly-flower-art__ring-marks {
+    animation: firefly-ring-mark 220ms 250ms ease-out both;
+}
+
+.firefly-flower-art__path-setup {
+    animation: firefly-path-arrive 380ms 240ms ease-out both;
+}
+
+.firefly-flower-art--dew-trail .firefly-flower-art__companion-motion > .ribbon-antenna-companion,
+.firefly-flower-art--warm-bud .firefly-flower-art__companion-motion > .ribbon-antenna-companion {
+    animation: firefly-companion-trace 280ms ease-out both;
+}
+
+.firefly-flower-art--ringing-petals .firefly-flower-art__companion-motion > .ribbon-antenna-companion {
+    animation: firefly-companion-listen 360ms cubic-bezier(0.2, 0.74, 0.28, 1.08) both;
+}
+
+@keyframes firefly-dew-arrive {
+    /* The parent g already owns its SVG translate. CSS transform would
+       replace that authored position and throw the drop to viewBox 0,0. */
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes firefly-bud-wake {
+    from { transform: rotate(7deg) translateY(7px); }
+    to { transform: rotate(0) translateY(0); }
+}
+
+@keyframes firefly-petal-open {
+    /* Keep each petal's SVG rotate/translate intact for camera consistency. */
+    from { opacity: 0.35; }
+    to { opacity: 1; }
+}
+
+@keyframes firefly-ring-mark {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes firefly-path-arrive {
+    from { opacity: 0; transform: translateX(12px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes firefly-companion-trace {
+    from { transform: rotate(0); }
+    to { transform: rotate(7deg); }
+}
+
+@keyframes firefly-companion-listen {
+    0% { transform: translateY(5px) scaleX(0.96); }
+    70% { transform: translateY(-2px) scaleX(1.03); }
+    100% { transform: translateY(0) scaleX(1); }
+}
+
+.firefly-flower-art--reduced-motion *,
+.firefly-flower-art--reduced-motion *::before,
+.firefly-flower-art--reduced-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .firefly-flower-art *,
+    .firefly-flower-art *::before,
+    .firefly-flower-art *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { ikimonoGalleryStorage } from "../../utils/storage";
 import { FuwafuwaAlbumStage, getFuwafuwaAlbumMemory } from "./fuwafuwaAlbumCopy";
+import { IkimonoArtwork } from "./IkimonoArtwork";
 
 interface IkimonoGalleryProps {
     profileId: string;
@@ -107,15 +108,12 @@ const AlbumDetailModal: React.FC<{
                             transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
                             className="relative z-10 mx-auto mb-5 h-36 w-36 rounded-full border-[4px] border-white/90 bg-white p-1 shadow-[0_22px_52px_-30px_rgba(15,23,42,0.45)]"
                         >
-                            <picture className="block h-full w-full overflow-hidden rounded-full bg-white">
-                                <source srcSet={`/ikimono/${imageSpecies}-${memory.imageSuffix}.webp`} type="image/webp" />
-                                <img
-                                    src={`/ikimono/${imageSpecies}-${memory.imageSuffix}.png`}
-                                    alt={entry.name}
-                                    className="h-full w-full rounded-full object-cover"
-                                    draggable={false}
-                                />
-                            </picture>
+                            <IkimonoArtwork
+                                species={imageSpecies}
+                                imageSuffix={memory.imageSuffix}
+                                alt={entry.name}
+                                className="rounded-full"
+                            />
                         </motion.div>
 
                         <div className="relative z-10 inline-flex rounded-full border border-white/80 bg-white/76 px-3 py-1 text-[11px] font-black tracking-wide text-slate-500">
@@ -230,15 +228,11 @@ export const IkimonoGallery: React.FC<IkimonoGalleryProps> = ({ profileId }) => 
                                 className="flex w-full items-center gap-3 rounded-2xl border border-white/80 bg-white/70 px-4 py-3 text-left shadow-sm transition hover:bg-white/90"
                                 aria-label={`${entry.name} の ふわふわを みる`}
                             >
-                                <picture className="h-10 w-10 overflow-hidden rounded-full bg-white">
-                                    <source srcSet={`/ikimono/${entry.species ?? 0}-${memory.imageSuffix}.webp`} type="image/webp" />
-                                    <img
-                                        src={`/ikimono/${entry.species ?? 0}-${memory.imageSuffix}.png`}
-                                        alt=""
-                                        className="h-10 w-10 rounded-full object-cover"
-                                        draggable={false}
-                                    />
-                                </picture>
+                                <IkimonoArtwork
+                                    species={entry.species ?? 0}
+                                    imageSuffix={memory.imageSuffix}
+                                    className="h-10 w-10 shrink-0 rounded-full"
+                                />
                                 <div className="min-w-0 flex-1">
                                     <div className="text-xs font-bold text-slate-400">
                                         だい{entry.generation}せだい

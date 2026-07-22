@@ -113,6 +113,9 @@ export interface MemoryState {
 
     // Math specific (optional for backward compat)
     status?: SkillStatus;
+    // Persisted weak-state hysteresis. Undefined means legacy data that must
+    // be reconstructed from attempt logs once.
+    isWeak?: boolean;
 }
 
 // ============================================================

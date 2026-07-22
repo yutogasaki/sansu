@@ -16,17 +16,10 @@ export const updateMemoryState = (
     isCorrect: boolean,
     isSkipped: boolean = false
 ): MemoryState => {
-    let newStrength = current.strength;
-
-    // 正解→+1, 不正解→-1(最低1), スキップ→維持(nextReviewだけ当日)
-    if (isSkipped) {
-        // スキップ: strengthは維持、nextReviewだけ当日に設定
-    } else if (isCorrect) {
-        newStrength = Math.min(newStrength + 1, 5);
-    } else {
-        // 不正解: 1段階ダウン（子供のモチベーション維持のため緩やかに）
-        newStrength = Math.max(1, newStrength - 1);
-    }
+    // 仕様 5.1: 正解は1段階上げ、不正解／スキップは strength 1 に戻す。
+    const newStrength = isCorrect && !isSkipped
+        ? Math.min(current.strength + 1, 5)
+        : 1;
 
     const now = new Date().toISOString();
 
@@ -40,7 +33,7 @@ export const updateMemoryState = (
         nextReview,
         totalAnswers: current.totalAnswers + 1,
         correctAnswers: current.correctAnswers + (isCorrect && !isSkipped ? 1 : 0),
-        incorrectAnswers: current.incorrectAnswers + (isCorrect ? 0 : 1),
+        incorrectAnswers: current.incorrectAnswers + (isCorrect && !isSkipped ? 0 : 1),
         skippedAnswers: (current.skippedAnswers || 0) + (isSkipped ? 1 : 0),
         lastCorrectAt: isCorrect && !isSkipped ? now : current.lastCorrectAt,
         updatedAt: now

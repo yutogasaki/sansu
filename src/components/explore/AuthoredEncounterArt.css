@@ -1,0 +1,107 @@
+.authored-encounter-art {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    isolation: isolate;
+}
+
+.authored-encounter-art__sky { fill: #74cfbd; }
+.authored-encounter-art__sky-patch.is-cream { fill: #fff4ce; opacity: 0.72; }
+.authored-encounter-art__sky-patch.is-leaf { fill: #3fa18f; }
+.authored-encounter-art__sky-patch.is-amber { fill: #f4c64f; opacity: 0.76; }
+.authored-encounter-art__horizon { fill: #5fbaa9; }
+
+.authored-encounter-art__line,
+.authored-encounter-art__limb,
+.authored-encounter-art__reaction,
+.authored-encounter-art__water-line,
+.authored-encounter-art__bridge-ribbon,
+.authored-encounter-art__bridge-seam,
+.authored-encounter-art__gap-mark,
+.authored-encounter-art__motion-dash,
+.authored-encounter-art__root-path,
+.authored-encounter-art__root-feet,
+.authored-encounter-art__flower-stem {
+    fill: none;
+    stroke: #173f49;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.authored-encounter-art__line { stroke-width: 4; }
+.authored-encounter-art__limb { stroke-width: 8; }
+.authored-encounter-art__reaction { stroke-width: 5; }
+.authored-encounter-art__ink { fill: #173f49; }
+.authored-encounter-art__companion-body { fill: #f4c64f; stroke: #173f49; stroke-width: 4; }
+.authored-encounter-art__bag { fill: #fff4ce; stroke: #173f49; stroke-width: 4; }
+.authored-encounter-art__bag-detail { fill: none; stroke: #2f9998; stroke-width: 3; stroke-linecap: round; }
+
+.authored-encounter-art__bank { stroke: #173f49; stroke-width: 4; stroke-linejoin: round; }
+.authored-encounter-art__bank--left { fill: #ee765f; }
+.authored-encounter-art__bank--right { fill: #83c971; }
+.authored-encounter-art__water-line { stroke: #2f9998; stroke-width: 10; opacity: 0.58; }
+.authored-encounter-art__bridge-ribbon { stroke: #fff4ce; stroke-width: 22; }
+.authored-encounter-art__bridge.is-incorrect .authored-encounter-art__bridge-ribbon { animation: authored-bridge-bend 260ms ease-out both; }
+.authored-encounter-art__bridge-lock { fill: #f4c64f; stroke: #173f49; stroke-width: 4; stroke-linejoin: round; }
+.authored-encounter-art__bridge-seam { stroke-width: 3; }
+.authored-encounter-art__bridge-eye { fill: #173f49; }
+.authored-encounter-art__gap-mark { stroke-width: 4; }
+.authored-encounter-art__anchor { fill: #fff4ce; stroke: #173f49; stroke-width: 4; stroke-linejoin: round; }
+.authored-encounter-art__bridge.is-connected { animation: authored-bridge-snap 360ms cubic-bezier(0.2, 0.78, 0.28, 1.12) both; }
+
+.authored-encounter-art__root-ground { fill: #f4b95b; stroke: #173f49; stroke-width: 4; }
+.authored-encounter-art__root-path { stroke: #fff4ce; stroke-width: 72; opacity: 0.88; }
+.authored-encounter-art__root-outline { fill: none; stroke: #173f49; stroke-width: 34; stroke-linecap: round; stroke-linejoin: round; }
+.authored-encounter-art__root-ribbon { fill: none; stroke: #ee765f; stroke-width: 25; stroke-linecap: round; stroke-linejoin: round; }
+.authored-encounter-art__root-knot.is-incorrect { animation: authored-root-curl 280ms ease-out both; }
+.authored-encounter-art__root-tip { fill: #fff4ce; stroke: #173f49; stroke-width: 4; stroke-linejoin: round; }
+.authored-encounter-art__root-loop { fill: #ee765f; stroke: #173f49; stroke-width: 4; }
+.authored-encounter-art__root-feet { stroke-width: 7; }
+.authored-encounter-art__root-eye { fill: #173f49; }
+.authored-encounter-art__root-walkers > g { animation: authored-root-step 420ms cubic-bezier(0.2, 0.74, 0.28, 1.1) both; }
+.authored-encounter-art__root-walkers > g:nth-child(2) { animation-delay: 50ms; }
+.authored-encounter-art__root-walkers > g:nth-child(3) { animation-delay: 100ms; }
+.authored-encounter-art__root-walkers > g:nth-child(4) { animation-delay: 150ms; }
+.authored-encounter-art__motion-dash { stroke: #fff4ce; stroke-width: 5; stroke-dasharray: 2 12; }
+.authored-encounter-art__flower-stem { stroke: #173f49; stroke-width: 7; }
+.authored-encounter-art__flower-petal { fill: #ee765f; stroke: #173f49; stroke-width: 4; }
+.authored-encounter-art__flower-center { fill: #f4c64f; stroke: #173f49; stroke-width: 4; }
+
+@keyframes authored-bridge-bend {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(7px); }
+}
+
+@keyframes authored-bridge-snap {
+    from { opacity: 0.72; transform: scaleX(0.9); transform-origin: center; }
+    to { opacity: 1; transform: scaleX(1); transform-origin: center; }
+}
+
+@keyframes authored-root-curl {
+    0%, 100% { transform: rotate(0); transform-origin: center; }
+    50% { transform: rotate(-3deg); transform-origin: center; }
+}
+
+@keyframes authored-root-step {
+    from { opacity: 0.45; transform: translateY(20px) rotate(-5deg); }
+    to { opacity: 1; transform: translateY(0) rotate(0); }
+}
+
+.authored-encounter-art--reduced-motion *,
+.authored-encounter-art--reduced-motion *::before,
+.authored-encounter-art--reduced-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .authored-encounter-art *,
+    .authored-encounter-art *::before,
+    .authored-encounter-art *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

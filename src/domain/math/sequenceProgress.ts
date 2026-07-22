@@ -1,3 +1,5 @@
+import type { RandomSource } from "../../utils/random";
+
 export interface CountFillPattern {
     start: number;
     missingIndex: number;
@@ -17,80 +19,98 @@ const EASY_PATTERNS: CountFillPattern[] = [
     { start: 5, missingIndex: 1 },
 ];
 
-const pickRandom = (maxStart: number): CountFillPattern => ({
-    start: Math.floor(Math.random() * maxStart) + 1,
-    missingIndex: Math.floor(Math.random() * 3) + 1,
+const pickRandom = (maxStart: number, random: RandomSource): CountFillPattern => ({
+    start: Math.floor(random() * maxStart) + 1,
+    missingIndex: Math.floor(random() * 3) + 1,
 });
 
-const pickFromRange = (min: number, max: number): number =>
-    Math.floor(Math.random() * (max - min + 1)) + min;
+const pickFromRange = (min: number, max: number, random: RandomSource): number =>
+    Math.floor(random() * (max - min + 1)) + min;
 
-export const selectCountFillPattern = (totalAnswers?: number): CountFillPattern => {
+export const selectCountFillPattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): CountFillPattern => {
     if (typeof totalAnswers === "number") {
         if (totalAnswers < EASY_PATTERNS.length) {
             return EASY_PATTERNS[totalAnswers];
         }
 
         if (totalAnswers < 12) {
-            return pickRandom(6);
+            return pickRandom(6, random);
         }
 
         if (totalAnswers < 20) {
-            return pickRandom(16);
+            return pickRandom(16, random);
         }
     }
 
-    return pickRandom(95);
+    return pickRandom(95, random);
 };
 
-export const selectCountNext10Target = (totalAnswers?: number): number => {
+export const selectCountNext10Target = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): number => {
     if (typeof totalAnswers === "number" && totalAnswers < COUNT_NEXT_10_SEQUENCE.length) {
         return COUNT_NEXT_10_SEQUENCE[totalAnswers] || 1;
     }
 
-    return pickFromRange(1, 9);
+    return pickFromRange(1, 9, random);
 };
 
-export const selectCountBackTarget = (totalAnswers?: number): number => {
+export const selectCountBackTarget = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): number => {
     if (typeof totalAnswers === "number" && totalAnswers < COUNT_BACK_SEQUENCE.length) {
         return COUNT_BACK_SEQUENCE[totalAnswers] || 2;
     }
 
-    return pickFromRange(2, 10);
+    return pickFromRange(2, 10, random);
 };
 
-export const selectCountNext20Target = (totalAnswers?: number): number => {
+export const selectCountNext20Target = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): number => {
     if (typeof totalAnswers === "number" && totalAnswers < COUNT_NEXT_20_SEQUENCE.length) {
         return COUNT_NEXT_20_SEQUENCE[totalAnswers] || 10;
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return pickFromRange(10, 19);
+        return pickFromRange(10, 19, random);
     }
 
-    return pickFromRange(1, 19);
+    return pickFromRange(1, 19, random);
 };
 
-export const selectCount50Target = (totalAnswers?: number): number => {
+export const selectCount50Target = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): number => {
     if (typeof totalAnswers === "number" && totalAnswers < COUNT_50_SEQUENCE.length) {
         return COUNT_50_SEQUENCE[totalAnswers] || 20;
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return pickFromRange(10, 39);
+        return pickFromRange(10, 39, random);
     }
 
-    return pickFromRange(1, 49);
+    return pickFromRange(1, 49, random);
 };
 
-export const selectCount100Target = (totalAnswers?: number): number => {
+export const selectCount100Target = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): number => {
     if (typeof totalAnswers === "number" && totalAnswers < COUNT_100_SEQUENCE.length) {
         return COUNT_100_SEQUENCE[totalAnswers] || 50;
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return pickFromRange(40, 79);
+        return pickFromRange(40, 79, random);
     }
 
-    return pickFromRange(1, 99);
+    return pickFromRange(1, 99, random);
 };

@@ -191,6 +191,10 @@ export const ikimonoGalleryStorage = {
         all.push(entry);
         set(STORAGE_KEYS.IKIMONO_GALLERY, all);
     },
+    removeProfile: (profileId: string): void => {
+        const all = get<StoredGalleryEntry[]>(STORAGE_KEYS.IKIMONO_GALLERY, []);
+        set(STORAGE_KEYS.IKIMONO_GALLERY, all.filter(entry => entry.profileId !== profileId));
+    },
 };
 
 export const ikimonoTransitionStorage = {
@@ -199,6 +203,16 @@ export const ikimonoTransitionStorage = {
     setState: (state: StoredIkimonoTransition): void =>
         set(STORAGE_KEYS.IKIMONO_TRANSITION, state),
     clear: (): void => remove(STORAGE_KEYS.IKIMONO_TRANSITION),
+};
+
+export const clearProfileStorageData = (profileId: string): void => {
+    if (ikimonoStorage.getState()?.profileId === profileId) {
+        ikimonoStorage.clear();
+    }
+    if (ikimonoTransitionStorage.getState()?.profileId === profileId) {
+        ikimonoTransitionStorage.clear();
+    }
+    ikimonoGalleryStorage.removeProfile(profileId);
 };
 
 /**

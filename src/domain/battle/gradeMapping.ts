@@ -17,11 +17,12 @@ export const GRADE_TO_LEVELS: Record<BattleGrade, { min: number; max: number }> 
 };
 
 /**
- * Skills unsuitable for battle mode because they require non-number input
- * or rely heavily on visual/conceptual scaffolding.
+ * Skills unsuitable for battle mode because they require multiple numeric
+ * fields or rely heavily on conceptual scaffolding. The engine can render
+ * choice problems, but the existing battle content boundary stays narrow.
  */
 export const EXCLUDED_SKILLS = new Set([
-    // choice input
+    // Conceptual / scaffold-heavy choice input
     "count_which_more",
     "count_read",
     "count_oddone",

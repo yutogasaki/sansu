@@ -35,6 +35,14 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, showBack, onBac
                         <Icons.Back className="w-5 h-5" />
                     </button>
                 )}
+                {title && !showBack && (
+                    <img
+                        src="/icons/icon-192.png"
+                        alt=""
+                        aria-hidden="true"
+                        className="h-10 w-10 shrink-0 rounded-[13px] border-2 border-[var(--brand-ink)] object-cover shadow-[0_5px_0_rgba(23,63,73,0.16)]"
+                    />
+                )}
                 <div className="min-w-0 flex flex-col">
                     {title && (
                         <h1

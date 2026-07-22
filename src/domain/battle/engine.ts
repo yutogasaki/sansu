@@ -38,6 +38,32 @@ const INCORRECT_LOCK_SEC = 2;
 // Problem Generation
 // ============================================================
 
+const toBattleMathProblem = (
+    raw: ReturnType<typeof generateMathProblem>
+): BattleProblem | null => {
+    if (Array.isArray(raw.correctAnswer)) return null;
+    if (raw.inputType !== "number" && raw.inputType !== "choice") return null;
+
+    const choices = raw.inputType === "choice" ? raw.inputConfig?.choices : undefined;
+    if (
+        raw.inputType === "choice"
+        && (!choices?.length || !choices.some(choice => choice.value === raw.correctAnswer))
+    ) {
+        return null;
+    }
+
+    return {
+        id: crypto.randomUUID(),
+        questionText: raw.questionText || "",
+        questionVisual: raw.questionVisual,
+        correctAnswer: raw.correctAnswer,
+        skillId: raw.categoryId,
+        showDecimal: raw.inputType === "number" && raw.categoryId.startsWith("dec_"),
+        inputType: raw.inputType,
+        choices,
+    };
+};
+
 export function generateBattleMathProblem(grade: BattleGrade): BattleProblem {
     const { min, max } = GRADE_TO_LEVELS[grade];
 
@@ -53,23 +79,22 @@ export function generateBattleMathProblem(grade: BattleGrade): BattleProblem {
         ? eligible
         : allSkills.filter((s) => !EXCLUDED_SKILLS.has(s));
 
-    const skillId = randomChoice(pool);
-    const raw = generateMathProblem(skillId);
-
-    // Safety: retry if somehow non-number type
-    if (raw.inputType !== "number") {
-        return generateBattleMathProblem(grade);
+    if (pool.length === 0) {
+        throw new Error(`No battle-compatible math skills for grade ${grade}`);
     }
 
-    return {
-        id: crypto.randomUUID(),
-        questionText: raw.questionText || "",
-        questionVisual: raw.questionVisual,
-        correctAnswer: raw.correctAnswer as string,
-        skillId: raw.categoryId,
-        showDecimal: raw.categoryId.startsWith("dec_"),
-        inputType: "number",
-    };
+    const preferredSkillId = randomChoice(pool);
+    const orderedPool = [preferredSkillId, ...pool.filter(skillId => skillId !== preferredSkillId)];
+
+    for (const skillId of orderedPool) {
+        const problem = toBattleMathProblem(generateMathProblem(skillId));
+        if (problem) return problem;
+    }
+
+    const fallback = toBattleMathProblem(generateMathProblem("add_tiny"));
+    if (fallback) return fallback;
+
+    throw new Error(`Failed to generate a battle-compatible math problem for grade ${grade}`);
 }
 
 export function generateBattleVocabProblem(grade: BattleGrade): BattleProblem {

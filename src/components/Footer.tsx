@@ -16,12 +16,12 @@ export const Footer: React.FC = () => {
     const currentPath = location.pathname;
 
     const leftTabs: TabItem[] = [
-        { to: "/", icon: Icons.Home, label: "ホーム" },
+        { to: "/explore", icon: Icons.Explore, label: "たんけん" },
         { to: "/stats", icon: Icons.Stats, label: "きろく" },
     ];
 
     const rightTabs: TabItem[] = [
-        { to: "/battle", icon: Icons.Play, label: "Game" },
+        { to: "/battle", icon: Icons.Play, label: "基地" },
         { to: "/settings", icon: Icons.Settings, label: "せってい", activePaths: ["/settings", "/parents", "/dev"] },
     ];
 
@@ -60,7 +60,7 @@ export const Footer: React.FC = () => {
     };
 
     return (
-        <nav className="fixed bottom-0 left-1/2 z-50 flex w-[min(100%,430px)] -translate-x-1/2 items-center justify-around border-t border-black/6 bg-[var(--toolbar-bg)] shadow-[var(--toolbar-shadow)] backdrop-blur-[var(--blur-lg)] h-[calc(56px+env(safe-area-inset-bottom,0px))] pb-[env(safe-area-inset-bottom,0px)]">
+        <nav className="fixed bottom-0 left-1/2 z-50 flex w-[min(100%,430px)] -translate-x-1/2 items-center justify-around border-t border-[var(--brand-paper-edge)] bg-[var(--toolbar-bg)] shadow-[var(--toolbar-shadow)] h-[calc(56px+env(safe-area-inset-bottom,0px))] pb-[env(safe-area-inset-bottom,0px)]">
 
             {leftTabs.map(renderTab)}
 

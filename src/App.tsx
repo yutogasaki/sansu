@@ -1,8 +1,7 @@
 import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
-import { useEffect } from 'react';
+import { useEffect, useState } from "react";
 import { Onboarding } from "./pages/Onboarding";
-import { Home } from "./pages/Home";
 import { Study } from "./pages/Study";
 import { Stats } from "./pages/Stats";
 import { Settings } from "./pages/Settings";
@@ -11,14 +10,50 @@ import { DevMode } from "./pages/DevMode";
 import { ParentsPage } from "./pages/parents/ParentsPage";
 import { Battle } from "./pages/Battle";
 import { GameHub } from "./pages/GameHub";
-import { loadSounds } from './utils/audio';
-import { getActiveProfileId } from "./domain/user/repository";
+import { Explore } from "./pages/Explore";
+import { Spinner } from "./components/ui/Spinner";
+import { loadSounds, setSoundEnabled } from "./utils/audio";
+import { getActiveProfile } from "./domain/user/repository";
 import { applyThemeForCurrentTime, getMsUntilNextThemeCheck } from "./utils/theme";
 
-// Mock auth check
+type ProfileResolution = "loading" | "ready" | "missing";
+
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
-    const hasProfile = getActiveProfileId();
-    return hasProfile ? <>{children}</> : <Navigate to="/onboarding" replace />;
+    const [resolution, setResolution] = useState<ProfileResolution>("loading");
+
+    useEffect(() => {
+        let cancelled = false;
+
+        void getActiveProfile()
+            .then((profile) => {
+                if (cancelled) return;
+
+                if (!profile) {
+                    setSoundEnabled(false);
+                    setResolution("missing");
+                    return;
+                }
+
+                // Apply the resolved profile setting before mounting a page that may play audio.
+                setSoundEnabled(profile.soundEnabled);
+                setResolution("ready");
+            })
+            .catch(() => {
+                if (cancelled) return;
+                setSoundEnabled(false);
+                setResolution("missing");
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    if (resolution === "loading") {
+        return <Spinner fullScreen message="プロフィールを よみこみちゅう..." />;
+    }
+
+    return resolution === "ready" ? <>{children}</> : <Navigate to="/onboarding" replace />;
 };
 
 function App() {
@@ -71,14 +106,15 @@ function App() {
                     </Route>
 
                     <Route element={<Layout />}>
-                        <Route path="/" element={
-                            <PrivateRoute>
-                                <Home />
-                            </PrivateRoute>
-                        } />
+                        <Route path="/" element={<Navigate to="/explore" replace />} />
                         <Route path="/study" element={
                             <PrivateRoute>
                                 <Study />
+                            </PrivateRoute>
+                        } />
+                        <Route path="/explore" element={
+                            <PrivateRoute>
+                                <Explore />
                             </PrivateRoute>
                         } />
                         <Route path="/stats" element={

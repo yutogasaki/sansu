@@ -42,7 +42,7 @@ describe("srs", () => {
         expect(result.strength).toBe(5);
     });
 
-    it("incorrect answer decreases strength by 1 (gentle penalty)", () => {
+    it("incorrect answer resets strength to 1", () => {
         const base: MemoryState = {
             id: "test",
             strength: 5,
@@ -55,7 +55,7 @@ describe("srs", () => {
         };
 
         const result = updateMemoryState(base, false, false);
-        expect(result.strength).toBe(4); // 5 - 1 = 4
+        expect(result.strength).toBe(1);
     });
 
     it("incorrect answer floors strength at 1", () => {
@@ -90,7 +90,7 @@ describe("srs", () => {
         expect(result.strength).toBe(1); // 2 - 1 = 1
     });
 
-    it("incorrect from strength 3 decreases to 2", () => {
+    it("incorrect from strength 3 resets to 1", () => {
         const base: MemoryState = {
             id: "test",
             strength: 3,
@@ -103,10 +103,10 @@ describe("srs", () => {
         };
 
         const result = updateMemoryState(base, false, false);
-        expect(result.strength).toBe(2); // 3 - 1 = 2
+        expect(result.strength).toBe(1);
     });
 
-    it("skip preserves strength but sets nextReview to today", () => {
+    it("skip resets strength to 1 and sets nextReview to today", () => {
         const base: MemoryState = {
             id: "test",
             strength: 4,
@@ -119,7 +119,8 @@ describe("srs", () => {
         };
 
         const result = updateMemoryState(base, false, true);
-        expect(result.strength).toBe(4); // strength preserved
+        expect(result.strength).toBe(1);
+        expect(result.incorrectAnswers).toBe(5);
         expect(result.skippedAnswers).toBe(1);
         // nextReview should be today (learning day start)
         expect(result.nextReview).toBe(getLearningDayStart().toISOString());

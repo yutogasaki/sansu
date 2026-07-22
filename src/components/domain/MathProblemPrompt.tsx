@@ -60,6 +60,7 @@ const SingleItemsCard: React.FC<{
                     return (
                         <span
                             key={`${group.emoji}-${index}`}
+                            data-count-slot={isFilled ? "filled" : "empty"}
                             className={cn(
                                 "flex h-10 w-10 items-center justify-center rounded-xl text-[clamp(20px,3.6vw,28px)] leading-none",
                                 isFilled

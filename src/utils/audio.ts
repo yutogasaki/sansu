@@ -36,7 +36,9 @@ let currentBgm: Howl | null = null;
 let currentBgmType: BgmType | null = null;
 
 // Global settings
-let isSoundEnabled = true;
+// Stay muted until the canonical active profile has been resolved by the route guard.
+let isSoundEnabled = false;
+Howler.mute(true);
 
 export const setSoundEnabled = (enabled: boolean) => {
     isSoundEnabled = enabled;

@@ -11,6 +11,10 @@ interface TenKeyProps {
     showDecimal?: boolean;
     onCursorMove?: (direction: "left" | "right") => void;
     compact?: boolean;
+    disabled?: boolean;
+    enterDisabled?: boolean;
+    className?: string;
+    minRowHeight?: number;
 }
 
 export const TenKey: React.FC<TenKeyProps> = ({
@@ -20,7 +24,11 @@ export const TenKey: React.FC<TenKeyProps> = ({
     onClear,
     showDecimal = false,
     onCursorMove,
-    compact = false
+    compact = false,
+    disabled = false,
+    enterDisabled = false,
+    className,
+    minRowHeight,
 }) => {
     const baseBtnClass = cn(
         "h-full w-full border border-white/75 bg-white/72 font-bold text-slate-700 shadow-[0_14px_24px_-20px_rgba(15,23,42,0.32)] transition-all active:scale-95 hover:bg-white/84",
@@ -35,17 +43,23 @@ export const TenKey: React.FC<TenKeyProps> = ({
 
     return (
         <div
+            role="group"
+            aria-label="すうじ キーパッド"
+            aria-disabled={disabled}
             className={cn(
                 "h-full w-full min-h-0 grid grid-cols-4 rounded-[28px] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.4),rgba(255,255,255,0.18))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] mobile:p-2",
-                compact ? "gap-2 mobile:gap-1.5" : "gap-3 mobile:gap-2"
+                compact ? "gap-2 mobile:gap-1.5" : "gap-3 mobile:gap-2",
+                className,
             )}
-            style={{ gridTemplateRows: `repeat(4, minmax(${compact ? "38px" : "44px"}, 1fr))` }}
+            style={{ gridTemplateRows: `repeat(4, minmax(${minRowHeight ?? (compact ? 38 : 44)}px, 1fr))` }}
         >
             {/* Row 1 */}
-            <Button onClick={() => onInput(7)} className={baseBtnClass} variant="ghost">7</Button>
-            <Button onClick={() => onInput(8)} className={baseBtnClass} variant="ghost">8</Button>
-            <Button onClick={() => onInput(9)} className={baseBtnClass} variant="ghost">9</Button>
+            <Button disabled={disabled} aria-label="7" onClick={() => onInput(7)} className={baseBtnClass} variant="ghost">7</Button>
+            <Button disabled={disabled} aria-label="8" onClick={() => onInput(8)} className={baseBtnClass} variant="ghost">8</Button>
+            <Button disabled={disabled} aria-label="9" onClick={() => onInput(9)} className={baseBtnClass} variant="ghost">9</Button>
             <Button
+                disabled={disabled}
+                aria-label="こたえを けす"
                 onClick={onClear}
                 className={cn(baseBtnClass, "border-rose-100/90 bg-rose-50/78 text-rose-500 hover:bg-rose-50 mobile:text-sm")}
                 variant="ghost"
@@ -54,10 +68,12 @@ export const TenKey: React.FC<TenKeyProps> = ({
             </Button>
 
             {/* Row 2 */}
-            <Button onClick={() => onInput(4)} className={baseBtnClass} variant="ghost">4</Button>
-            <Button onClick={() => onInput(5)} className={baseBtnClass} variant="ghost">5</Button>
-            <Button onClick={() => onInput(6)} className={baseBtnClass} variant="ghost">6</Button>
+            <Button disabled={disabled} aria-label="4" onClick={() => onInput(4)} className={baseBtnClass} variant="ghost">4</Button>
+            <Button disabled={disabled} aria-label="5" onClick={() => onInput(5)} className={baseBtnClass} variant="ghost">5</Button>
+            <Button disabled={disabled} aria-label="6" onClick={() => onInput(6)} className={baseBtnClass} variant="ghost">6</Button>
             <Button
+                disabled={disabled}
+                aria-label="ひとつ もどす"
                 onClick={onDelete}
                 className={cn(actionBtnClass, "text-lg font-medium mobile:text-sm")}
                 variant="ghost"
@@ -66,11 +82,11 @@ export const TenKey: React.FC<TenKeyProps> = ({
             </Button>
 
             {/* Row 3 */}
-            <Button onClick={() => onInput(1)} className={baseBtnClass} variant="ghost">1</Button>
-            <Button onClick={() => onInput(2)} className={baseBtnClass} variant="ghost">2</Button>
-            <Button onClick={() => onInput(3)} className={baseBtnClass} variant="ghost">3</Button>
+            <Button disabled={disabled} aria-label="1" onClick={() => onInput(1)} className={baseBtnClass} variant="ghost">1</Button>
+            <Button disabled={disabled} aria-label="2" onClick={() => onInput(2)} className={baseBtnClass} variant="ghost">2</Button>
+            <Button disabled={disabled} aria-label="3" onClick={() => onInput(3)} className={baseBtnClass} variant="ghost">3</Button>
             {showDecimal ? (
-                <Button onClick={() => onInput(".")} className={baseBtnClass} variant="ghost">.</Button>
+                <Button disabled={disabled} aria-label="しょうすうてん" onClick={() => onInput(".")} className={baseBtnClass} variant="ghost">.</Button>
             ) : (
                 <div /> /* Empty cell for alignment */
             )}
@@ -79,14 +95,18 @@ export const TenKey: React.FC<TenKeyProps> = ({
             {onCursorMove ? (
                 <>
                     <Button
+                        disabled={disabled}
+                        aria-label="カーソルを ひだりへ"
                         onClick={() => onCursorMove("left")}
                         className={actionBtnClass}
                         variant="ghost"
                     >
                         <Icons.ArrowLeft className={iconClass} />
                     </Button>
-                    <Button onClick={() => onInput(0)} className={baseBtnClass} variant="ghost">0</Button>
+                    <Button disabled={disabled} aria-label="0" onClick={() => onInput(0)} className={baseBtnClass} variant="ghost">0</Button>
                     <Button
+                        disabled={disabled}
+                        aria-label="カーソルを みぎへ"
                         onClick={() => onCursorMove("right")}
                         className={actionBtnClass}
                         variant="ghost"
@@ -97,13 +117,15 @@ export const TenKey: React.FC<TenKeyProps> = ({
             ) : (
                 <>
                     <div /> {/* Empty cell for alignment */}
-                    <Button onClick={() => onInput(0)} className={baseBtnClass} variant="ghost">0</Button>
+                    <Button disabled={disabled} aria-label="0" onClick={() => onInput(0)} className={baseBtnClass} variant="ghost">0</Button>
                     <div /> {/* Empty cell for alignment */}
                 </>
             )}
 
             {/* Enter Key */}
             <Button
+                disabled={disabled || enterDisabled}
+                aria-label="こたえる"
                 onClick={onEnter}
                 className={cn(
                     "flex h-full w-full flex-col items-center justify-center border border-cyan-200/80 bg-[linear-gradient(135deg,#2BBAA0,#5DC4D2)] text-white shadow-[0_18px_34px_-22px_rgba(34,197,214,0.62)] transition-all active:scale-95 hover:brightness-[1.03] mobile:text-base",

@@ -52,6 +52,22 @@ Use it to find the right source of truth before editing docs, tasks, runbooks, o
 | [ai/contributor-guide.md](/docs/ai/contributor-guide.md) | Shared AI collaboration boundaries | Yes |
 | [tasks/active/README.md](/docs/tasks/active/README.md) | Detailed active-task file rules | Yes |
 
+## Exploration Pivot Specs
+
+The repository is transitioning toward an exploration-first math game. [product/01_app_spec.md](/docs/product/01_app_spec.md) defines the overall direction and staged rollout, while the following child specs are authoritative for their exploration domains. The implementation may intentionally lag the target during MVP validation; check the rollout phase before changing the main flow. If documents conflict, follow the repository source-of-truth order and fix the lower-level document before implementation.
+
+| File | Role | Authority |
+|---|---|---|
+| [product/10_exploration_game_spec.md](/docs/product/10_exploration_game_spec.md) | Exploration loop, actions, resources, failure, and MVP run model | Target-state SSOT |
+| [product/11_learning_integration_spec.md](/docs/product/11_learning_integration_spec.md) | Learning-engine, problem-gate, SRS, and subject integration | Target-state SSOT |
+| [product/12_screen_flow_spec.md](/docs/product/12_screen_flow_spec.md) | Exploration routes, screens, and parent/child information split | Target-state SSOT |
+| [product/13_data_storage_migration_spec.md](/docs/product/13_data_storage_migration_spec.md) | Exploration persistence, schema, and migration boundaries | Target-state SSOT |
+| [product/14_ui_world_motion_spec.md](/docs/product/14_ui_world_motion_spec.md) | Exploration world, tone, motion, sound, and companion behavior | Target-state SSOT |
+| [product/15_mvp_rollout_verification_spec.md](/docs/product/15_mvp_rollout_verification_spec.md) | MVP phases, validation questions, and success measures | Target-state SSOT |
+| [product/16_legacy_feature_decision.md](/docs/product/16_legacy_feature_decision.md) | Keep/change/integrate/deprecate decisions for legacy features | Target-state SSOT |
+| [product/17_open_questions.md](/docs/product/17_open_questions.md) | Unresolved exploration decisions and recommendations | Decision queue, not settled behavior |
+| [ai/implementation_plan_explore_mvp.md](/docs/ai/implementation_plan_explore_mvp.md) | Suggested Codex implementation sequence and stop conditions | Execution guide, not product SSOT |
+
 ## Supporting Docs
 
 | File | Role | SSOT |

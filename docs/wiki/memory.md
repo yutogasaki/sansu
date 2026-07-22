@@ -71,6 +71,19 @@ Cross-cutting durable risks are tracked in `docs/wiki/risk_register.md`.
 - `.agents/memory/durable.md` stores shared agent-operational reminders only and must stay subordinate to `docs/wiki/memory.md`.
 - `AGENTS.md` and `CLAUDE.md` should stay concise and point to `.agents/` and `docs/` rather than duplicating long instructions.
 
+### 6. Approved Exploration Direction
+
+- Sansu's approved target direction is an exploration-first math game: children solve math to open paths, choose where to go, discover things, and decide when to return.
+- The intended world is a bright, wondrous underground setting, not a dark combat-oriented cave. Game tension may include short-term loss, rescue, and near-miss outcomes, but must not shame children or erase durable learning progress and confirmed discoveries.
+- The approved live-encounter visual direction is `いびつ生態ポップ`: one full-width scene, one actor, one subject, one math-powered world verb, the subject's unexpected return, and the actor's counter-pose. Pop comes from an extreme readable silhouette, a biased focal color, material collision, and a bodily fact told before progress. Calm means one clear cause and limited competing motion, not low saturation or an expressionless world. `docs/product/14_ui_world_motion_spec.md` is the exploration visual SSOT; `docs/design/research-library-2026-07-19/benchmark-yoshi-fukashigi.md` is measured evidence and records the IP boundary.
+- The current launch contract is `/` -> `/explore` with replace navigation, including after onboarding. `/study`, `/battle`, `/settings`, and the existing profile and learning data remain available without migration; the launch-route change alone must not write or reset them.
+- Exploration must preserve Sansu's original rapid problem-solving rhythm. One route decision starts a three-question section; ordinary correct answers advance with zero extra taps, ordinary discoveries never block input, and only a large discovery, return, or recoverable persistence error may interrupt the question stream. The target is 650ms from a correct answer to the next operable problem and 550ms from an incorrect answer to retry.
+- Because `/explore` is the launch surface, PWA version drift may reload it only before the first pointer/key interaction. After interaction begins, the active run remains update-protected.
+- The first validation surface remains a math-only `/explore` MVP. Its minimal learning bridge now uses the Study-shared planner/writer for reserved Due, weak, maintenance, follow-up, main, +1, and representation-retry assignments; unsupported game-only fallbacks remain outside SRS. Discovery persistence, run resume, and English exploration are still not integrated.
+- [product/10_exploration_game_spec.md](/docs/product/10_exploration_game_spec.md) through [product/16_legacy_feature_decision.md](/docs/product/16_legacy_feature_decision.md) are the target-state SSOTs for their exploration domains. [product/17_open_questions.md](/docs/product/17_open_questions.md) records unresolved choices and is not settled behavior.
+- The constitution and [product/01_app_spec.md](/docs/product/01_app_spec.md) establish the exploration direction and its staged rollout. The prior egg Home is no longer the launch surface; later integration work must still preserve the independent study and settings routes unless the parent spec explicitly changes them.
+- [ai/implementation_plan_explore_mvp.md](/docs/ai/implementation_plan_explore_mvp.md) is an execution guide only; implementation order does not override product specifications.
+
 ## When To Update Memory
 
 - A repeated explanation appears in multiple PRs/tasks.

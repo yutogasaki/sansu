@@ -1,3 +1,5 @@
+import type { RandomSource } from "../../utils/random";
+
 export interface SameCountMatchPattern {
     target: number;
     options: number[];
@@ -252,16 +254,16 @@ const WEIGHT_COMPARE_SEQUENCE: WeightComparePattern[] = [
 const COMPOSE_5_SEQUENCE = [4, 3, 2, 1, 3, 2];
 const COMPOSE_10_SEQUENCE = [9, 8, 7, 6, 5, 4, 8, 7];
 
-const pickRandom = <T,>(items: T[]): T => {
-    const index = Math.floor(Math.random() * items.length);
+const pickRandom = <T,>(items: T[], random: RandomSource): T => {
+    const index = Math.floor(random() * items.length);
     return items[index] || items[0];
 };
 
-const shuffle = <T,>(items: T[]): T[] => {
+const shuffle = <T,>(items: T[], random: RandomSource): T[] => {
     const next = [...items];
 
     for (let index = next.length - 1; index > 0; index -= 1) {
-        const swapIndex = Math.floor(Math.random() * (index + 1));
+        const swapIndex = Math.floor(random() * (index + 1));
         [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
     }
 
@@ -302,73 +304,92 @@ const buildDistinctPairPool = (minimumGap: number, min = 2, max = 8): { left: nu
 const pickDistractors = (
     target: number,
     max: number,
-    minimumGap: number
+    minimumGap: number,
+    random: RandomSource,
 ): number[] => {
     const far = buildCountRange(max).filter(value => value !== target && Math.abs(value - target) >= minimumGap);
     const fallback = buildCountRange(max).filter(value => value !== target);
     const pool = far.length >= 2 ? far : fallback;
 
-    return shuffle(pool).slice(0, 2);
+    return shuffle(pool, random).slice(0, 2);
 };
 
-export const selectSameCountMatchPattern = (totalAnswers?: number): SameCountMatchPattern => {
+export const selectSameCountMatchPattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): SameCountMatchPattern => {
     if (typeof totalAnswers === "number" && totalAnswers < SAME_COUNT_MATCH_SEQUENCE.length) {
         return SAME_COUNT_MATCH_SEQUENCE[totalAnswers];
     }
 
     const max = typeof totalAnswers === "number" && totalAnswers < 16 ? 4 : 5;
     const minimumGap = typeof totalAnswers === "number" && totalAnswers < 16 ? 2 : 1;
-    const target = pickRandom(buildCountRange(max));
-    const distractors = pickDistractors(target, max, minimumGap);
+    const target = pickRandom(buildCountRange(max), random);
+    const distractors = pickDistractors(target, max, minimumGap, random);
 
     return {
         target,
-        options: shuffle([target, ...distractors]),
+        options: shuffle([target, ...distractors], random),
     };
 };
 
-export const selectCount5Target = (totalAnswers?: number): number => {
+export const selectCount5Target = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): number => {
     if (typeof totalAnswers === "number" && totalAnswers < COUNT_5_SEQUENCE.length) {
         return COUNT_5_SEQUENCE[totalAnswers] || 1;
     }
 
-    return pickRandom(buildCountRange(5));
+    return pickRandom(buildCountRange(5), random);
 };
 
-export const selectDotCountTarget = (totalAnswers?: number): number => {
+export const selectDotCountTarget = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): number => {
     if (typeof totalAnswers === "number" && totalAnswers < COUNT_DOT_SEQUENCE.length) {
         return COUNT_DOT_SEQUENCE[totalAnswers] || 1;
     }
 
     const max = typeof totalAnswers === "number" && totalAnswers < 16 ? 6 : 10;
-    return pickRandom(buildCountRange(max));
+    return pickRandom(buildCountRange(max), random);
 };
 
-export const selectCount10Target = (totalAnswers?: number): number => {
+export const selectCount10Target = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): number => {
     if (typeof totalAnswers === "number" && totalAnswers < COUNT_10_SEQUENCE.length) {
         return COUNT_10_SEQUENCE[totalAnswers] || 6;
     }
 
     const min = typeof totalAnswers === "number" && totalAnswers < 16 ? 4 : 1;
-    return pickRandom(Array.from({ length: 10 - min + 1 }, (_, index) => min + index));
+    return pickRandom(Array.from({ length: 10 - min + 1 }, (_, index) => min + index), random);
 };
 
-export const selectCountReadPattern = (totalAnswers?: number): CountReadPattern => {
+export const selectCountReadPattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): CountReadPattern => {
     if (typeof totalAnswers === "number" && totalAnswers < COUNT_READ_SEQUENCE.length) {
         return COUNT_READ_SEQUENCE[totalAnswers];
     }
 
     const max = typeof totalAnswers === "number" && totalAnswers < 16 ? 6 : 10;
-    const target = pickRandom(buildCountRange(max));
-    const distractors = pickDistractors(target, max, 1);
+    const target = pickRandom(buildCountRange(max), random);
+    const distractors = pickDistractors(target, max, 1, random);
 
     return {
         target,
-        options: shuffle([target, ...distractors]),
+        options: shuffle([target, ...distractors], random),
     };
 };
 
-export const selectWhichMorePattern = (totalAnswers?: number): WhichMorePattern => {
+export const selectWhichMorePattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): WhichMorePattern => {
     if (typeof totalAnswers === "number" && totalAnswers < WHICH_MORE_SEQUENCE.length) {
         return WHICH_MORE_SEQUENCE[totalAnswers];
     }
@@ -377,47 +398,71 @@ export const selectWhichMorePattern = (totalAnswers?: number): WhichMorePattern 
         ? buildDistinctPairPool(2, 1, 5)
         : buildDistinctPairPool(1, 1, 6);
 
-    return pickRandom(pool);
+    return pickRandom(pool, random);
 };
 
-export const selectShapeRecognitionPattern = (totalAnswers?: number): RecognitionPattern => {
+export const selectShapeRecognitionPattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): RecognitionPattern => {
     if (typeof totalAnswers === "number" && totalAnswers < SHAPE_RECOGNITION_SEQUENCE.length) {
         return SHAPE_RECOGNITION_SEQUENCE[totalAnswers];
     }
 
     const easyPool = SHAPE_RECOGNITION_SEQUENCE.slice(0, 4);
-    return pickRandom(typeof totalAnswers === "number" && totalAnswers < 16 ? easyPool : SHAPE_RECOGNITION_SEQUENCE);
+    return pickRandom(
+        typeof totalAnswers === "number" && totalAnswers < 16 ? easyPool : SHAPE_RECOGNITION_SEQUENCE,
+        random,
+    );
 };
 
-export const selectColorRecognitionPattern = (totalAnswers?: number): RecognitionPattern => {
+export const selectColorRecognitionPattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): RecognitionPattern => {
     if (typeof totalAnswers === "number" && totalAnswers < COLOR_RECOGNITION_SEQUENCE.length) {
         return COLOR_RECOGNITION_SEQUENCE[totalAnswers];
     }
 
     const easyPool = COLOR_RECOGNITION_SEQUENCE.slice(0, 4);
-    return pickRandom(typeof totalAnswers === "number" && totalAnswers < 16 ? easyPool : COLOR_RECOGNITION_SEQUENCE);
+    return pickRandom(
+        typeof totalAnswers === "number" && totalAnswers < 16 ? easyPool : COLOR_RECOGNITION_SEQUENCE,
+        random,
+    );
 };
 
-export const selectPairRecognitionPattern = (totalAnswers?: number): RecognitionPattern => {
+export const selectPairRecognitionPattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): RecognitionPattern => {
     if (typeof totalAnswers === "number" && totalAnswers < PAIR_RECOGNITION_SEQUENCE.length) {
         return PAIR_RECOGNITION_SEQUENCE[totalAnswers];
     }
 
     const easyPool = PAIR_RECOGNITION_SEQUENCE.slice(0, 4);
-    return pickRandom(typeof totalAnswers === "number" && totalAnswers < 16 ? easyPool : PAIR_RECOGNITION_SEQUENCE);
+    return pickRandom(
+        typeof totalAnswers === "number" && totalAnswers < 16 ? easyPool : PAIR_RECOGNITION_SEQUENCE,
+        random,
+    );
 };
 
-export const selectCountOrderPattern = (totalAnswers?: number): CountOrderPattern => {
+export const selectCountOrderPattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): CountOrderPattern => {
     if (typeof totalAnswers === "number" && totalAnswers < COUNT_ORDER_SEQUENCE.length) {
         return COUNT_ORDER_SEQUENCE[totalAnswers] || COUNT_ORDER_SEQUENCE[0];
     }
 
     const easyPool = buildDistinctTriplePool(1, 9, 2);
     const fullPool = buildDistinctTriplePool(1, 9, 1);
-    return pickRandom(typeof totalAnswers === "number" && totalAnswers < 16 ? easyPool : fullPool);
+    return pickRandom(typeof totalAnswers === "number" && totalAnswers < 16 ? easyPool : fullPool, random);
 };
 
-export const selectShareEqualPattern = (totalAnswers?: number): ShareEqualPattern => {
+export const selectShareEqualPattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): ShareEqualPattern => {
     if (typeof totalAnswers === "number" && totalAnswers < SHARE_EQUAL_SEQUENCE.length) {
         return SHARE_EQUAL_SEQUENCE[totalAnswers];
     }
@@ -437,13 +482,16 @@ export const selectShareEqualPattern = (totalAnswers?: number): ShareEqualPatter
     ];
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return pickRandom(easyPool);
+        return pickRandom(easyPool, random);
     }
 
-    return pickRandom(fullPool);
+    return pickRandom(fullPool, random);
 };
 
-export const selectOrdinalPattern = (totalAnswers?: number): OrdinalPattern => {
+export const selectOrdinalPattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): OrdinalPattern => {
     if (typeof totalAnswers === "number" && totalAnswers < ORDINAL_SEQUENCE.length) {
         return ORDINAL_SEQUENCE[totalAnswers];
     }
@@ -462,13 +510,16 @@ export const selectOrdinalPattern = (totalAnswers?: number): OrdinalPattern => {
     ];
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return pickRandom(easyPool);
+        return pickRandom(easyPool, random);
     }
 
-    return pickRandom(fullPool);
+    return pickRandom(fullPool, random);
 };
 
-export const selectPatternCopyPattern = (totalAnswers?: number): PatternCopyPattern => {
+export const selectPatternCopyPattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): PatternCopyPattern => {
     if (typeof totalAnswers === "number" && totalAnswers < PATTERN_COPY_SEQUENCE.length) {
         return PATTERN_COPY_SEQUENCE[totalAnswers];
     }
@@ -487,37 +538,46 @@ export const selectPatternCopyPattern = (totalAnswers?: number): PatternCopyPatt
     ];
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return pickRandom(easyPool);
+        return pickRandom(easyPool, random);
     }
 
-    return pickRandom(fullPool);
+    return pickRandom(fullPool, random);
 };
 
-export const selectLengthComparePattern = (totalAnswers?: number): LengthComparePattern => {
+export const selectLengthComparePattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): LengthComparePattern => {
     if (typeof totalAnswers === "number" && totalAnswers < LENGTH_COMPARE_SEQUENCE.length) {
         return LENGTH_COMPARE_SEQUENCE[totalAnswers];
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return pickRandom(buildDistinctPairPool(3));
+        return pickRandom(buildDistinctPairPool(3), random);
     }
 
-    return pickRandom(buildDistinctPairPool(1));
+    return pickRandom(buildDistinctPairPool(1), random);
 };
 
-export const selectHeightComparePattern = (totalAnswers?: number): HeightComparePattern => {
+export const selectHeightComparePattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): HeightComparePattern => {
     if (typeof totalAnswers === "number" && totalAnswers < HEIGHT_COMPARE_SEQUENCE.length) {
         return HEIGHT_COMPARE_SEQUENCE[totalAnswers];
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return pickRandom(buildDistinctPairPool(3));
+        return pickRandom(buildDistinctPairPool(3), random);
     }
 
-    return pickRandom(buildDistinctPairPool(1));
+    return pickRandom(buildDistinctPairPool(1), random);
 };
 
-export const selectSortByAttributePattern = (totalAnswers?: number): SortByAttributePattern => {
+export const selectSortByAttributePattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): SortByAttributePattern => {
     if (typeof totalAnswers === "number" && totalAnswers < SORT_BY_ATTRIBUTE_SEQUENCE.length) {
         return SORT_BY_ATTRIBUTE_SEQUENCE[totalAnswers];
     }
@@ -537,13 +597,16 @@ export const selectSortByAttributePattern = (totalAnswers?: number): SortByAttri
     ];
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return pickRandom(easyPool);
+        return pickRandom(easyPool, random);
     }
 
-    return pickRandom(fullPool);
+    return pickRandom(fullPool, random);
 };
 
-export const selectBigSmallPattern = (totalAnswers?: number): BigSmallPattern => {
+export const selectBigSmallPattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): BigSmallPattern => {
     if (typeof totalAnswers === "number" && totalAnswers < BIG_SMALL_SEQUENCE.length) {
         return BIG_SMALL_SEQUENCE[totalAnswers];
     }
@@ -556,134 +619,165 @@ export const selectBigSmallPattern = (totalAnswers?: number): BigSmallPattern =>
     ];
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return pickRandom(easyPool);
+        return pickRandom(easyPool, random);
     }
 
-    return pickRandom(fullPool);
+    return pickRandom(fullPool, random);
 };
 
-export const selectSameOrDifferentPattern = (totalAnswers?: number): SameOrDifferentPattern => {
+export const selectSameOrDifferentPattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): SameOrDifferentPattern => {
     if (typeof totalAnswers === "number" && totalAnswers < SAME_OR_DIFFERENT_SEQUENCE.length) {
         return SAME_OR_DIFFERENT_SEQUENCE[totalAnswers];
     }
 
-    return { isSame: Math.random() < 0.5 };
+    return { isSame: random() < 0.5 };
 };
 
-export const selectSpatialWordsPattern = (totalAnswers?: number): SpatialWordsPattern => {
+export const selectSpatialWordsPattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): SpatialWordsPattern => {
     if (typeof totalAnswers === "number" && totalAnswers < SPATIAL_WORDS_SEQUENCE.length) {
         return SPATIAL_WORDS_SEQUENCE[totalAnswers];
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return pickRandom(SPATIAL_WORDS_SEQUENCE.slice(0, 6));
+        return pickRandom(SPATIAL_WORDS_SEQUENCE.slice(0, 6), random);
     }
 
-    return pickRandom(SPATIAL_WORDS_SEQUENCE);
+    return pickRandom(SPATIAL_WORDS_SEQUENCE, random);
 };
 
-export const selectWeightComparePattern = (totalAnswers?: number): WeightComparePattern => {
+export const selectWeightComparePattern = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): WeightComparePattern => {
     if (typeof totalAnswers === "number" && totalAnswers < WEIGHT_COMPARE_SEQUENCE.length) {
         return WEIGHT_COMPARE_SEQUENCE[totalAnswers];
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return pickRandom(buildDistinctPairPool(3));
+        return pickRandom(buildDistinctPairPool(3), random);
     }
 
-    return pickRandom(buildDistinctPairPool(1));
+    return pickRandom(buildDistinctPairPool(1), random);
 };
 
-export const selectOneMoreCount = (totalAnswers?: number): number => {
+export const selectOneMoreCount = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): number => {
     if (typeof totalAnswers === "number" && totalAnswers < ONE_MORE_SEQUENCE.length) {
         return ONE_MORE_SEQUENCE[totalAnswers] || 1;
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return Math.floor(Math.random() * 5) + 1;
+        return Math.floor(random() * 5) + 1;
     }
 
-    return Math.floor(Math.random() * 8) + 1;
+    return Math.floor(random() * 8) + 1;
 };
 
-export const selectTwoMoreCount = (totalAnswers?: number): number => {
+export const selectTwoMoreCount = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): number => {
     if (typeof totalAnswers === "number" && totalAnswers < TWO_MORE_SEQUENCE.length) {
         return TWO_MORE_SEQUENCE[totalAnswers] || 1;
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return Math.floor(Math.random() * 5) + 1;
+        return Math.floor(random() * 5) + 1;
     }
 
-    return Math.floor(Math.random() * 7) + 1;
+    return Math.floor(random() * 7) + 1;
 };
 
-export const selectOneLessCount = (totalAnswers?: number): number => {
+export const selectOneLessCount = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): number => {
     if (typeof totalAnswers === "number" && totalAnswers < ONE_LESS_SEQUENCE.length) {
         return ONE_LESS_SEQUENCE[totalAnswers] || 2;
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return Math.floor(Math.random() * 5) + 2;
+        return Math.floor(random() * 5) + 2;
     }
 
-    return Math.floor(Math.random() * 8) + 2;
+    return Math.floor(random() * 8) + 2;
 };
 
-export const selectTwoLessCount = (totalAnswers?: number): number => {
+export const selectTwoLessCount = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): number => {
     if (typeof totalAnswers === "number" && totalAnswers < TWO_LESS_SEQUENCE.length) {
         return TWO_LESS_SEQUENCE[totalAnswers] || 3;
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return Math.floor(Math.random() * 5) + 3;
+        return Math.floor(random() * 5) + 3;
     }
 
-    return Math.floor(Math.random() * 7) + 3;
+    return Math.floor(random() * 7) + 3;
 };
 
-export const selectZeroConceptCount = (totalAnswers?: number): number => {
+export const selectZeroConceptCount = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): number => {
     if (typeof totalAnswers === "number" && totalAnswers < ZERO_CONCEPT_SEQUENCE.length) {
         return ZERO_CONCEPT_SEQUENCE[totalAnswers];
     }
 
-    return Math.floor(Math.random() * 5) + 1;
+    return Math.floor(random() * 5) + 1;
 };
 
-export const selectWhichIsEmptyCount = (totalAnswers?: number): number => {
+export const selectWhichIsEmptyCount = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): number => {
     if (typeof totalAnswers === "number" && totalAnswers < WHICH_IS_EMPTY_SEQUENCE.length) {
         return WHICH_IS_EMPTY_SEQUENCE[totalAnswers] || 0;
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return Math.random() < 0.5 ? 0 : Math.floor(Math.random() * 3) + 1;
+        return random() < 0.5 ? 0 : Math.floor(random() * 3) + 1;
     }
 
-    return Math.random() < 0.4 ? 0 : Math.floor(Math.random() * 5) + 1;
+    return random() < 0.4 ? 0 : Math.floor(random() * 5) + 1;
 };
 
-export const selectOneToOneCount = (totalAnswers?: number): number => {
+export const selectOneToOneCount = (
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): number => {
     if (typeof totalAnswers === "number" && totalAnswers < ONE_TO_ONE_SEQUENCE.length) {
         return ONE_TO_ONE_SEQUENCE[totalAnswers];
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return Math.floor(Math.random() * 3) + 1;
+        return Math.floor(random() * 3) + 1;
     }
 
-    return Math.floor(Math.random() * 5) + 1;
+    return Math.floor(random() * 5) + 1;
 };
 
 export const selectComposeFilledCount = (
     skillId: "compose_5" | "compose_10",
-    totalAnswers?: number
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
 ): number => {
     if (skillId === "compose_5") {
         if (typeof totalAnswers === "number" && totalAnswers < COMPOSE_5_SEQUENCE.length) {
             return COMPOSE_5_SEQUENCE[totalAnswers];
         }
 
-        return Math.floor(Math.random() * 4) + 1;
+        return Math.floor(random() * 4) + 1;
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < COMPOSE_10_SEQUENCE.length) {
@@ -691,8 +785,8 @@ export const selectComposeFilledCount = (
     }
 
     if (typeof totalAnswers === "number" && totalAnswers < 16) {
-        return Math.floor(Math.random() * 6) + 4;
+        return Math.floor(random() * 6) + 4;
     }
 
-    return Math.floor(Math.random() * 9) + 1;
+    return Math.floor(random() * 9) + 1;
 };

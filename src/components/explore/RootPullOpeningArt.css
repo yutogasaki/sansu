@@ -1,0 +1,159 @@
+.root-pull-opening-art {
+    position: relative;
+    isolation: isolate;
+    inline-size: 100%;
+    aspect-ratio: 390 / 500;
+    margin: 0;
+    overflow: hidden;
+    color: var(--explore-outline, #163f3a);
+    background: #f2c849;
+}
+
+.root-pull-opening-art__image {
+    position: absolute;
+    inset: 0;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    object-position: center;
+    user-select: none;
+    animation: root-pull-opening-art-frame-in 220ms ease-out both;
+}
+
+.explore-immersive-root-pull-art {
+    inline-size: 100%;
+    block-size: auto;
+    min-block-size: 56%;
+}
+
+/* Root Pull is already a composed live-world plate. Keep the legacy raster
+   scrim from muting its authored action corridor. */
+.root-pull-opening-art + .explore-immersive-scrim {
+    background: transparent;
+}
+
+.root-pull-opening-art--comic-release .root-pull-opening-art__image {
+    animation-duration: 360ms;
+    animation-timing-function: cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+
+.root-pull-opening-art__semantics {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.root-pull-opening-art__fallback {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: grid;
+    align-content: center;
+    gap: 18px;
+    padding: clamp(28px, 9vw, 44px);
+    background: #f2c849;
+}
+
+.root-pull-opening-art__fallback[hidden] {
+    display: none;
+}
+
+.root-pull-opening-art__fallback-title {
+    max-inline-size: 12em;
+    margin: 0;
+    font-family: "Outfit", "Noto Sans JP", sans-serif;
+    font-size: clamp(1.5rem, 7vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.root-pull-opening-art__fallback-facts {
+    display: grid;
+    gap: 14px;
+    max-inline-size: 31rem;
+    margin: 0;
+}
+
+.root-pull-opening-art__fallback-facts div {
+    display: grid;
+    grid-template-columns: minmax(4.5rem, 0.34fr) minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+}
+
+.root-pull-opening-art__fallback-facts dt,
+.root-pull-opening-art__fallback-facts dd {
+    margin: 0;
+}
+
+.root-pull-opening-art__fallback-facts dt {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+}
+
+.root-pull-opening-art__fallback-facts dd {
+    font-size: clamp(0.875rem, 3.6vw, 1rem);
+    font-weight: 650;
+    line-height: 1.55;
+}
+
+.root-pull-opening-art--small-pull {
+    background: #eabf3e;
+}
+
+.root-pull-opening-art--bigger-pull {
+    background: #dfb136;
+}
+
+.root-pull-opening-art--comic-release {
+    background: #f0a83e;
+}
+
+.root-pull-opening-art--reduced-motion .root-pull-opening-art__image {
+    animation: none;
+}
+
+@keyframes root-pull-opening-art-frame-in {
+    from {
+        opacity: 0.82;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .root-pull-opening-art__image {
+        animation: none;
+    }
+}
+
+@media (min-width: 768px) {
+    /* The 4:5 plate must not scale to almost a full screen at tablet widths:
+       that pushed both actors behind the answer shelf. Crop the quiet sky and
+       keep the tugging faces above the controls instead. */
+    .explore-immersive-root-pull-art {
+        block-size: 66%;
+        min-block-size: 0;
+        aspect-ratio: auto;
+    }
+
+    .explore-immersive-root-pull-art .root-pull-opening-art__image {
+        object-position: center 60%;
+    }
+
+    .root-pull-opening-art__fallback-facts {
+        gap: 18px;
+    }
+}

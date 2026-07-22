@@ -102,7 +102,11 @@ const addMathCandidateIfEligible = (
 
 // --- Main Generator ---
 
-export const generateSessionQueue = (user: UserProfile, count = 5): SessionQueueItem[] => {
+export const generateSessionQueue = (
+    user: UserProfile,
+    count = 5,
+    random: () => number = Math.random,
+): SessionQueueItem[] => {
     const queue: SessionQueueItem[] = [];
 
     // 1. Decide Subject for this Block (Spec 5.3)
@@ -124,9 +128,9 @@ export const generateSessionQueue = (user: UserProfile, count = 5): SessionQueue
     } else {
         // Mix Mode
         if (englishDueIds.length > 0) {
-            subject = Math.random() < 0.7 ? 'vocab' : 'math';
+            subject = random() < 0.7 ? 'vocab' : 'math';
         } else {
-            subject = Math.random() < 0.5 ? 'math' : 'vocab';
+            subject = random() < 0.5 ? 'math' : 'vocab';
         }
     }
 
@@ -206,7 +210,7 @@ export const generateSessionQueue = (user: UserProfile, count = 5): SessionQueue
 
         // C. Maintenance (Retired) - 1% chance
         // Includes Explicit Retired (in DB) AND Implicit Retired (Levels < Main but not in DB)
-        if (Math.random() < CONSTANTS.MAINTENANCE_RATE) {
+        if (random() < CONSTANTS.MAINTENANCE_RATE) {
             // 1. Explicit Retired
             const explicitRetired = Object.values(user.mathSkills || {})
                 .filter(m => m.status === 'retired')
@@ -221,7 +225,7 @@ export const generateSessionQueue = (user: UserProfile, count = 5): SessionQueue
             const allRetired = [...explicitRetired, ...implicitRetired];
 
             if (allRetired.length > 0) {
-                const rndId = allRetired[Math.floor(Math.random() * allRetired.length)];
+                const rndId = allRetired[Math.floor(random() * allRetired.length)];
                 upsertCandidate(candidates, { id: rndId, subject: 'math', isReview: true, isMaintenance: true, priority: 200 });
             }
         }

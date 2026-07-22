@@ -35,6 +35,7 @@ interface StudyLayoutProps {
     activeFieldIndex: number;
     feedback: "none" | "correct" | "incorrect" | "skipped";
     showCorrection: boolean;
+    saveError?: boolean;
 
     // Session info for result display
     sessionKind?: SessionKind;
@@ -126,6 +127,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     activeFieldIndex,
     feedback,
     showCorrection,
+    saveError = false,
     onNavigate,
     onContinue,
     onNext,
@@ -410,8 +412,17 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     const promptScrollerClass = "w-full min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain px-1";
 
     return (
-        <div className="relative flex h-[100dvh] flex-col overflow-hidden safe-area-inset-bottom bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.26),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.22),rgba(255,255,255,0.08))]">
-            {import.meta.env.DEV && <LayoutDebugOverlay />}
+        <div className="brand-study-screen relative flex h-[100dvh] flex-col overflow-hidden safe-area-inset-bottom">
+            {import.meta.env.VITE_SHOW_LAYOUT_DEBUG === "1" && <LayoutDebugOverlay />}
+
+            {saveError && (
+                <div
+                    className="absolute left-4 right-4 top-[calc(var(--safe-area-top)+68px)] z-40 mx-auto max-w-sm rounded-[18px] border border-amber-200 bg-amber-50/95 px-4 py-3 text-center text-sm font-black text-amber-900 shadow-lg backdrop-blur"
+                    role="alert"
+                >
+                    きろくを ほぞんできなかったよ。同じこたえを もういちど おしてね
+                </div>
+            )}
 
             {/* Full Screen Feedback Overlays */}
             <AnimatePresence>

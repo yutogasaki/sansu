@@ -12,7 +12,21 @@ describe("battleReducer", () => {
         const problem = generateBattleMathProblem(-2);
 
         expect(problem.skillId).toBe("count_5");
+        expect(problem.inputType).toBe("choice");
+        expect(problem.choices?.map(choice => choice.value)).toContain(problem.correctAnswer);
         expect(problem.questionVisual?.kind).toBe("single-items");
+
+        spy.mockRestore();
+    });
+
+    it("keeps number input for numeric math problems", () => {
+        const spy = vi.spyOn(Math, "random").mockReturnValue(0);
+
+        const problem = generateBattleMathProblem(3);
+
+        expect(problem.skillId).toBe("count_100");
+        expect(problem.inputType).toBe("number");
+        expect(problem.choices).toBeUndefined();
 
         spy.mockRestore();
     });

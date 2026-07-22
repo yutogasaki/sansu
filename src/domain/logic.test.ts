@@ -31,10 +31,10 @@ describe('SRS Algorithm', () => {
             expect(next.strength).toBe(2);
         });
 
-        it('should decrease strength by 1 on incorrect answer (min 1)', () => {
+        it('should reset strength to 1 on incorrect answer', () => {
             const initial = mockState('1', 4);
             const next = updateMemoryState(initial, false);
-            expect(next.strength).toBe(3); // 4 - 1 = 3
+            expect(next.strength).toBe(1);
         });
     });
 
@@ -139,13 +139,16 @@ describe('English Level Progression', () => {
 });
 
 describe('Session Queue Generation', () => {
+    const generateQueue = (profile: UserProfile, count: number) =>
+        generateSessionQueue(profile, count, () => 0.5);
+
     it('should generate full queue even with few skills (Duplication Logic)', () => {
         // Use a level with a single skill so the queue has to duplicate.
         const profile = createInitialProfile("Test", 1, 0, 1, 'math');
         profile.mathMainLevel = 28;
         profile.mathMaxUnlocked = 28;
 
-        const queue = generateSessionQueue(profile, 5); // Request 5
+        const queue = generateQueue(profile, 5); // Request 5
 
         expect(queue.length).toBe(5);
         const ids = queue.map(q => q.categoryId);
@@ -160,7 +163,7 @@ describe('Session Queue Generation', () => {
     it('should respect subject overrides', () => {
         const profile = createInitialProfile("Test", 1, 1, 1, 'vocab');
         // subjectMode = vocab
-        const queue = generateSessionQueue(profile, 5);
+        const queue = generateQueue(profile, 5);
         expect(queue[0].subject).toBe('vocab');
     });
 
@@ -169,7 +172,7 @@ describe('Session Queue Generation', () => {
         profile.mathMainLevel = 0;
         profile.mathMaxUnlocked = 0;
 
-        const queue = generateSessionQueue(profile, 2);
+        const queue = generateQueue(profile, 2);
         const level0Skills = new Set(getSkillsForLevel(0));
 
         expect(queue).toHaveLength(2);
@@ -199,7 +202,7 @@ describe('Session Queue Generation', () => {
             },
         ];
 
-        const queue = generateSessionQueue(profile, 1);
+        const queue = generateQueue(profile, 1);
 
         expect(queue).toHaveLength(1);
         expect(queue[0]?.categoryId).toBe('add_1d_2_bridge');
@@ -227,7 +230,7 @@ describe('Session Queue Generation', () => {
             },
         ];
 
-        const queue = generateSessionQueue(profile, 1);
+        const queue = generateQueue(profile, 1);
 
         expect(queue).toHaveLength(1);
         expect(queue[0]?.categoryId).toBe('add_1d_1_bridge');
@@ -255,7 +258,7 @@ describe('Session Queue Generation', () => {
             },
         ];
 
-        const queue = generateSessionQueue(profile, 1);
+        const queue = generateQueue(profile, 1);
 
         expect(queue).toHaveLength(1);
         expect(queue[0]?.categoryId).toBe('add_tiny');
@@ -283,7 +286,7 @@ describe('Session Queue Generation', () => {
             },
         ];
 
-        const queue = generateSessionQueue(profile, 1);
+        const queue = generateQueue(profile, 1);
 
         expect(queue).toHaveLength(1);
         expect(queue[0]?.categoryId).toBe('add_1d_2');
@@ -311,7 +314,7 @@ describe('Session Queue Generation', () => {
             },
         ];
 
-        const queue = generateSessionQueue(profile, 1);
+        const queue = generateQueue(profile, 1);
 
         expect(queue).toHaveLength(1);
         expect(queue[0]?.categoryId).toBe('add_2d1d_mental_nc');
@@ -339,7 +342,7 @@ describe('Session Queue Generation', () => {
             },
         ];
 
-        const queue = generateSessionQueue(profile, 1);
+        const queue = generateQueue(profile, 1);
 
         expect(queue).toHaveLength(1);
         expect(queue[0]?.categoryId).toBe('add_2d1d_hissan_nc');
@@ -367,7 +370,7 @@ describe('Session Queue Generation', () => {
             },
         ];
 
-        const queue = generateSessionQueue(profile, 1);
+        const queue = generateQueue(profile, 1);
 
         expect(queue).toHaveLength(1);
         expect(queue[0]?.categoryId).toBe('add_2d1d_nc');

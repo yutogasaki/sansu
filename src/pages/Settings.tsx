@@ -199,7 +199,10 @@ export const Settings: React.FC = () => {
 
     const handleReset = async () => {
         if (confirm("ほんとうに 全部消しますか？")) {
-            if (profile) await deleteProfile(profile.id);
+            const allProfiles = await getAllProfiles();
+            for (const storedProfile of allProfiles) {
+                await deleteProfile(storedProfile.id);
+            }
             syncProfileState(null);
             storage.clearAll();
             navigate("/onboarding");

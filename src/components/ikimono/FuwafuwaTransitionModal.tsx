@@ -6,6 +6,7 @@ import { InsetPanel, SurfacePanel } from "../ui/SurfacePanel";
 import { cn } from "../../utils/cn";
 import { getFuwafuwaDisplayStage } from "./fuwafuwaVisuals";
 import { FuwafuwaMilestoneKind, VisibleIkimonoStage } from "./fuwafuwaMilestones";
+import { IkimonoArtwork } from "./IkimonoArtwork";
 
 type MilestoneModal = {
     kind: "milestone";
@@ -127,15 +128,11 @@ function getWelcomeCopy(): TransitionCopy {
 function renderImage(species: number, stage: VisibleIkimonoStage | "egg") {
     const suffix = stage === "egg" ? 1 : getFuwafuwaDisplayStage(stage);
     return (
-        <picture className="block h-full w-full overflow-hidden rounded-full bg-white">
-            <source srcSet={`/ikimono/${species}-${suffix}.webp`} type="image/webp" />
-            <img
-                src={`/ikimono/${species}-${suffix}.png`}
-                alt=""
-                className="h-full w-full object-cover"
-                draggable={false}
-            />
-        </picture>
+        <IkimonoArtwork
+            species={species}
+            imageSuffix={suffix}
+            className="rounded-full"
+        />
     );
 }
 

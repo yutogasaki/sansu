@@ -8,8 +8,13 @@ import { generateMathProblem } from "../domain/math";
 import { generateVocabProblem } from "../domain/english/generator";
 import { getMathSkillFamily, getSkillsForLevel } from "../domain/math/curriculum";
 import { getMathFollowupPlan } from "../domain/math/followups";
+import {
+    planMathProblems,
+    type MathProblemPlanSource,
+} from "../domain/math/planner";
 import { getWordsByLevel, ENGLISH_WORDS } from "../domain/english/words";
 import { errorInDev, warnInDev } from "../utils/debug";
+import type { RandomSource } from "../utils/random";
 
 // ============================================================
 // Types
@@ -27,6 +32,7 @@ export interface SessionHistoryItem {
     id: string;
     subject: SubjectKey;
     isReview: boolean;
+    countsTowardReviewCap?: boolean;
 }
 
 export type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test" | "dev";
@@ -35,6 +41,7 @@ export interface ProblemGenerationResult {
     problem: Omit<Problem, 'id' | 'subject' | 'isReview'>;
     isReview: boolean;
     isMaintenanceCheck: boolean;
+    countsTowardReviewCap: boolean;
 }
 
 export interface GeneratorOptions {
@@ -132,7 +139,7 @@ export const pickId = (
     candidates: string[],
     options: GeneratorOptions
 ): string | undefined => {
-    const { skippedTodayIds, blockCounts, recentIds } = options;
+    const { cooldownIds, skippedTodayIds, blockCounts, recentIds } = options;
 
     // Filter out skipped items (skip guard: 3+ skips today)
     const notSkipped = candidates.filter(id => !skippedTodayIds.includes(id));
@@ -143,8 +150,52 @@ export const pickId = (
     if (notOverused.length === 0) return undefined;
 
     // Prefer items not recently used
-    const cooled = notOverused.filter(id => !recentIds.includes(id));
+    const cooled = notOverused.filter(
+        id => !recentIds.includes(id) && !cooldownIds.includes(id)
+    );
     const pool = cooled.length > 0 ? cooled : notOverused;
+
+    return pool[Math.floor(Math.random() * pool.length)];
+};
+
+/**
+ * Pick the highest-priority ID that is currently eligible. Candidate order is
+ * significant (for example, Due items are already sorted by overdue days).
+ * Cooldown is soft only when every eligible candidate is cooling down.
+ */
+export const pickOrderedId = (
+    candidates: string[],
+    options: GeneratorOptions
+): string | undefined => {
+    const notSkipped = candidates.filter(id => !options.skippedTodayIds.includes(id));
+    const notOverused = notSkipped.filter(
+        id => (options.blockCounts.get(id) || 0) < SAME_ID_LIMIT
+    );
+
+    if (notOverused.length === 0) return undefined;
+
+    return notOverused.find(
+        id => !options.recentIds.includes(id) && !options.cooldownIds.includes(id)
+    ) ?? notOverused[0];
+};
+
+/**
+ * Keep a block balanced when its candidate pool is too small to satisfy the
+ * strict per-ID cap. This is used only after every candidate reached the cap.
+ */
+export const pickLeastUsedId = (
+    candidates: string[],
+    options: GeneratorOptions
+): string | undefined => {
+    const allowed = candidates.filter(id => !options.skippedTodayIds.includes(id));
+    if (allowed.length === 0) return undefined;
+
+    const minCount = Math.min(...allowed.map(id => options.blockCounts.get(id) || 0));
+    const leastUsed = allowed.filter(id => (options.blockCounts.get(id) || 0) === minCount);
+    const cooled = leastUsed.filter(
+        id => !options.recentIds.includes(id) && !options.cooldownIds.includes(id)
+    );
+    const pool = cooled.length > 0 ? cooled : leastUsed;
 
     return pool[Math.floor(Math.random() * pool.length)];
 };
@@ -156,14 +207,16 @@ export const pickMathSkillId = (
     candidates: string[],
     options: GeneratorOptions
 ): string | undefined => {
-    const { skippedTodayIds, blockCounts, recentIds } = options;
+    const { cooldownIds, skippedTodayIds, blockCounts, recentIds } = options;
 
     const notSkipped = candidates.filter(id => !skippedTodayIds.includes(id));
     const notOverused = notSkipped.filter(id => (blockCounts.get(id) || 0) < SAME_ID_LIMIT);
 
     if (notOverused.length === 0) return undefined;
 
-    const cooled = notOverused.filter(id => !recentIds.includes(id));
+    const cooled = notOverused.filter(
+        id => !recentIds.includes(id) && !cooldownIds.includes(id)
+    );
     const pool = cooled.length > 0 ? cooled : notOverused;
 
     const recentFamilies = recentIds.map(getMathSkillFamily);
@@ -181,17 +234,41 @@ export const pickMathSkillId = (
     return familyPool[Math.floor(Math.random() * familyPool.length)];
 };
 
+export const pickLeastUsedMathSkillId = (
+    candidates: string[],
+    options: GeneratorOptions
+): string | undefined => {
+    const allowed = candidates.filter(id => !options.skippedTodayIds.includes(id));
+    if (allowed.length === 0) return undefined;
+
+    const minCount = Math.min(...allowed.map(id => options.blockCounts.get(id) || 0));
+    const leastUsed = allowed.filter(id => (options.blockCounts.get(id) || 0) === minCount);
+    const cooled = leastUsed.filter(
+        id => !options.recentIds.includes(id) && !options.cooldownIds.includes(id)
+    );
+    const candidatesByCooldown = cooled.length > 0 ? cooled : leastUsed;
+    const recentFamilies = new Set(options.recentIds.slice(-2).map(getMathSkillFamily));
+    const familyCooled = candidatesByCooldown.filter(
+        id => !recentFamilies.has(getMathSkillFamily(id))
+    );
+    const pool = familyCooled.length > 0 ? familyCooled : candidatesByCooldown;
+
+    return pool[Math.floor(Math.random() * pool.length)];
+};
+
 const pickOrderedMathSkillId = (
     candidates: string[],
     options: GeneratorOptions
 ): string | undefined => {
-    const { skippedTodayIds, blockCounts, recentIds } = options;
+    const { cooldownIds, skippedTodayIds, blockCounts, recentIds } = options;
 
     const notSkipped = candidates.filter(id => !skippedTodayIds.includes(id));
     const notOverused = notSkipped.filter(id => (blockCounts.get(id) || 0) < SAME_ID_LIMIT);
     if (notOverused.length === 0) return undefined;
 
-    const cooled = notOverused.filter(id => !recentIds.includes(id));
+    const cooled = notOverused.filter(
+        id => !recentIds.includes(id) && !cooldownIds.includes(id)
+    );
     const pool = cooled.length > 0 ? cooled : notOverused;
 
     const recentFamilies = recentIds.map(getMathSkillFamily);
@@ -223,6 +300,7 @@ export interface MathGeneratorContext {
     currentWeakCount: number;
     plusCount: number;
     plusLimit: number;
+    random?: RandomSource;
 }
 
 /**
@@ -230,7 +308,10 @@ export interface MathGeneratorContext {
  */
 export const generateSingleMathProblem = (
     ctx: MathGeneratorContext
-): ProblemGenerationResult & { newPlusCount: number } => {
+): ProblemGenerationResult & {
+    source: MathProblemPlanSource;
+    newPlusCount: number;
+} => {
     const {
         profile,
         mathDue,
@@ -241,113 +322,55 @@ export const generateSingleMathProblem = (
         canAddReview,
         currentWeakCount,
         plusCount,
-        plusLimit
+        plusLimit,
+        random = Math.random,
     } = ctx;
 
-    let problem: Omit<Problem, 'id' | 'subject' | 'isReview'> | undefined;
-    let isReview = false;
-    let isMaintenanceCheck = false;
-    let newPlusCount = plusCount;
+    const [planItem] = planMathProblems({
+        profile,
+        count: 1,
+        dueSkillIds: mathDue.map(item => item.id),
+        weakSkillIds: weakMathPool,
+        maintenanceSkillIds: maintenanceMathIds,
+        retiredSkillIds: retiredMathIds,
+        cooldownIds: options.cooldownIds,
+        skippedTodayIds: options.skippedTodayIds,
+        recentIds: options.recentIds,
+        blockCounts: options.blockCounts,
+        canAddReview,
+        currentWeakCount,
+        weakLimit: Math.max(1, Math.floor(BLOCK_SIZE * WEAK_INJECTION_CAP)),
+        plusOneCount: plusCount,
+        plusOneLimit: plusLimit,
+        sameSkillLimit: SAME_ID_LIMIT,
+        recentWindow: COOLDOWN_WINDOW,
+        maintenanceRate: MAINTENANCE_RATE,
+        weakRate: WEAK_INJECTION_CAP,
+        plusOneRate: 0.3,
+        random,
+    });
 
-    // Priority 1: Review items
-    if (mathDue.length > 0 && canAddReview) {
-        const dueId = pickMathSkillId(mathDue.map(v => v.id), options);
-        if (dueId) {
-            isReview = true;
-            problem = safeGenerateProblem(
-                () => generateMathProblem(dueId, { profile }),
-                () => generateMathProblem("count_10", { profile }),
-                `math review: ${dueId}`
-            );
-        }
-    }
+    const selected = planItem || {
+        skillId: "count_10",
+        source: "main" as const,
+        isReview: false,
+        isMaintenanceCheck: false,
+        countsTowardReviewCap: false,
+    };
+    const problem = safeGenerateProblem(
+        () => generateMathProblem(selected.skillId, { profile, random }),
+        () => generateMathProblem("count_10", { profile, random }),
+        `math ${selected.source}: ${selected.skillId}`,
+    );
 
-    // Priority 2: Maintenance/Retired check (1% chance)
-    if (!problem) {
-        const maintenancePool = [...maintenanceMathIds, ...retiredMathIds];
-        const useMaintenanceOrRetired = maintenancePool.length > 0 && Math.random() < MAINTENANCE_RATE;
-
-        if (useMaintenanceOrRetired) {
-            const maintenanceId = pickMathSkillId(maintenancePool, options);
-            if (maintenanceId) {
-                isMaintenanceCheck = true;
-                problem = safeGenerateProblem(
-                    () => generateMathProblem(maintenanceId, { profile }),
-                    () => generateMathProblem("count_10", { profile }),
-                    `math maintenance: ${maintenanceId}`
-                );
-            }
-        }
-    }
-
-    // Priority 3: Weak skill injection (30% cap)
-    if (!problem) {
-        const weakLimit = Math.max(1, Math.floor(BLOCK_SIZE * WEAK_INJECTION_CAP));
-        const canUseWeak = weakMathPool.length > 0 && currentWeakCount < weakLimit;
-        const useWeak = canUseWeak && Math.random() < WEAK_INJECTION_CAP;
-
-        if (useWeak) {
-            const weakId = pickMathSkillId(weakMathPool, options);
-            if (weakId) {
-                problem = safeGenerateProblem(
-                    () => generateMathProblem(weakId, { profile }),
-                    () => generateMathProblem("count_10", { profile }),
-                    `math weak: ${weakId}`
-                );
-            }
-        }
-    }
-
-    // Priority 4: Representation-aware follow-up
-    if (!problem) {
-        const mathLevel = profile.mathMainLevel ?? 1;
-        const currentLevelSkills = getSkillsForLevel(mathLevel);
-        const followupCandidates = getMathFollowupPlan(
-            profile.recentAttempts,
-            currentLevelSkills,
-            profile.mathMaxUnlocked ?? mathLevel
-        ).map(candidate => candidate.skillId);
-        const followupId = pickOrderedMathSkillId(followupCandidates, options);
-
-        if (followupId) {
-            problem = safeGenerateProblem(
-                () => generateMathProblem(followupId, { profile }),
-                () => generateMathProblem("count_10", { profile }),
-                `math followup: ${followupId}`
-            );
-        }
-    }
-
-    // Priority 5: Normal level-based generation
-    if (!problem) {
-        const mathLevel = profile.mathMainLevel ?? 1;
-        const nextMathLevel = profile.mathMaxUnlocked >= mathLevel + 1 ? mathLevel + 1 : mathLevel;
-
-        const usePlus = nextMathLevel !== mathLevel && newPlusCount < plusLimit && Math.random() < 0.3;
-        const targetLevel = usePlus ? nextMathLevel : mathLevel;
-
-        const levelSkills = getSkillsForLevel(targetLevel);
-        const skills = levelSkills.length > 0 ? levelSkills : getSkillsForLevel(1);
-        const skillId = pickMathSkillId(skills, options) || skills[0];
-
-        if (skillId) {
-            problem = safeGenerateProblem(
-                () => generateMathProblem(skillId, { profile }),
-                () => generateMathProblem("count_10", { profile }),
-                `math normal: ${skillId}`
-            );
-            if (usePlus) newPlusCount += 1;
-        } else {
-            problem = createFallbackProblem('math', 'no valid skill found');
-        }
-    }
-
-    // Final fallback
-    if (!problem) {
-        problem = createFallbackProblem('math', 'all generation paths failed');
-    }
-
-    return { problem, isReview, isMaintenanceCheck, newPlusCount };
+    return {
+        problem,
+        source: selected.source,
+        isReview: selected.isReview,
+        isMaintenanceCheck: selected.isMaintenanceCheck,
+        countsTowardReviewCap: selected.countsTowardReviewCap,
+        newPlusCount: plusCount + (selected.source === "plus-one" ? 1 : 0),
+    };
 };
 
 // ============================================================
@@ -361,6 +384,8 @@ export interface VocabGeneratorContext {
     options: GeneratorOptions;
     canAddReview: boolean;
     forceReviewBlock: boolean;
+    weakVocabPool: string[];
+    currentWeakCount: number;
     pendingVocabIds: string[];
     buildCooldownIds: (pending: string[]) => string[];
 }
@@ -394,18 +419,22 @@ export const generateSingleVocabProblem = (
         options,
         canAddReview,
         forceReviewBlock,
+        weakVocabPool,
+        currentWeakCount,
         pendingVocabIds,
         buildCooldownIds
     } = ctx;
 
     let problem: Omit<Problem, 'id' | 'subject' | 'isReview'> | undefined;
     let isReview = false;
+    let countsTowardReviewCap = false;
 
     // Priority 1: Forced review block
     if (forceReviewBlock && vocabDue.length > 0 && canAddReview) {
-        const dueId = pickId(vocabDue.map(v => v.id), options);
+        const dueId = pickOrderedId(vocabDue.map(v => v.id), options);
         if (dueId) {
             isReview = true;
+            countsTowardReviewCap = true;
             problem = safeGenerateProblem(
                 () => generateVocabProblem(dueId, {
                     cooldownIds: buildCooldownIds(pendingVocabIds),
@@ -426,11 +455,35 @@ export const generateSingleVocabProblem = (
         }
     }
 
-    // Priority 2: Normal level-based generation
+    // Priority 2: Weak vocab injection. It is review-like for progression and
+    // shares the global review/weak/Due cap.
+    if (!problem && canAddReview) {
+        const weakLimit = Math.max(1, Math.floor(BLOCK_SIZE * WEAK_INJECTION_CAP));
+        const useWeak = weakVocabPool.length > 0
+            && currentWeakCount < weakLimit
+            && Math.random() < WEAK_INJECTION_CAP;
+        if (useWeak) {
+            const weakId = pickId(weakVocabPool, options);
+            if (weakId) {
+                countsTowardReviewCap = true;
+                problem = safeGenerateProblem(
+                    () => generateVocabProblem(weakId, {
+                        cooldownIds: buildCooldownIds(pendingVocabIds),
+                        kanjiMode: ctx.profile.kanjiMode
+                    }),
+                    () => createFallbackProblem('vocab', `vocab weak: ${weakId}`),
+                    `vocab weak: ${weakId}`
+                );
+            }
+        }
+    }
+
+    // Priority 3: Normal level-based generation
     if (!problem) {
         const level = pickWeightedLevel(vocabLevelWeights);
         const words = getWordsByLevel(level);
-        const wordId = pickId(words.map(w => w.id), options) || words[0]?.id;
+        const wordIds = words.map(w => w.id);
+        const wordId = pickId(wordIds, options) || pickLeastUsedId(wordIds, options);
 
         if (wordId) {
             problem = safeGenerateProblem(
@@ -449,7 +502,7 @@ export const generateSingleVocabProblem = (
         problem = createFallbackProblem('vocab', 'all vocab generation paths failed');
     }
 
-    return { problem, isReview, isMaintenanceCheck: false };
+    return { problem, isReview, isMaintenanceCheck: false, countsTowardReviewCap };
 };
 
 // ============================================================
@@ -492,24 +545,30 @@ export const generateLevelBlock = (
             // Fallback (e.g. if level has no skills defined, use level-1 or level 1)
             const validSkills = skills.length > 0 ? skills : getSkillsForLevel(1);
 
-            const skillId = pickMathSkillId(validSkills, genOptions) || validSkills[0];
+            const skillId = pickMathSkillId(validSkills, genOptions)
+                || pickLeastUsedMathSkillId(validSkills, genOptions);
 
-            problem = safeGenerateProblem(
-                () => generateMathProblem(skillId, { profile }),
-                () => createFallbackProblem('math', 'level block failed'),
-                `level block math: ${skillId}`
-            );
+            problem = skillId
+                ? safeGenerateProblem(
+                    () => generateMathProblem(skillId, { profile }),
+                    () => createFallbackProblem('math', 'level block failed'),
+                    `level block math: ${skillId}`
+                )
+                : createFallbackProblem('math', 'empty level block skill pool');
         } else {
             // Cumulative Logic for Vocab (Standard)
             const level = profile.vocabMainLevel ?? 1;
             const candidates = ENGLISH_WORDS.filter(w => w.level <= level);
-            const wordId = pickId(candidates.map(w => w.id), genOptions) || candidates[0]?.id;
+            const candidateIds = candidates.map(w => w.id);
+            const wordId = pickId(candidateIds, genOptions) || pickLeastUsedId(candidateIds, genOptions);
 
-            problem = safeGenerateProblem(
-                () => generateVocabProblem(wordId, { cooldownIds: [], kanjiMode: profile.kanjiMode }),
-                () => createFallbackProblem('vocab', 'level block failed'),
-                `level block vocab: ${wordId}`
-            );
+            problem = wordId
+                ? safeGenerateProblem(
+                    () => generateVocabProblem(wordId, { cooldownIds: [], kanjiMode: profile.kanjiMode }),
+                    () => createFallbackProblem('vocab', 'level block failed'),
+                    `level block vocab: ${wordId}`
+                )
+                : createFallbackProblem('vocab', 'empty level block vocab pool');
         }
 
         q.push({
@@ -620,7 +679,8 @@ export const generateWeakReviewBlock = async (
             }
 
             if (!problem) {
-                const id = pickMathSkillId(mathSkills, options) || mathSkills[0];
+                const id = pickMathSkillId(mathSkills, options)
+                    || pickLeastUsedMathSkillId(mathSkills, options);
                 if (id) {
                     problem = safeGenerateProblem(
                         () => generateMathProblem(id, { profile }),
@@ -643,7 +703,8 @@ export const generateWeakReviewBlock = async (
 
             // Priority 2: Random in Level
             if (!problem) {
-                const id = pickId(vocabWords.map(w => w.id), options) || vocabWords[0]?.id;
+                const vocabIds = vocabWords.map(w => w.id);
+                const id = pickId(vocabIds, options) || pickLeastUsedId(vocabIds, options);
                 if (id) {
                     problem = safeGenerateProblem(
                         () => generateVocabProblem(id, { cooldownIds: [], kanjiMode: profile.kanjiMode }),
@@ -699,17 +760,33 @@ export const generatePeriodicTestBlock = async (
  */
 export const canAddSessionReview = (
     sessionHistory: SessionHistoryItem[],
-    pendingMeta: { isReview: boolean }[]
+    pendingMeta: { isReview: boolean; countsTowardReviewCap?: boolean }[],
+    windowSize = 20,
 ): boolean => {
-    const total = sessionHistory.length + pendingMeta.length;
-    if (total === 0) return true;
+    const safeWindowSize = Math.max(1, Math.floor(windowSize));
+    const priorWindowSize = safeWindowSize - 1;
+    const allExisting = [...sessionHistory, ...pendingMeta]
+        .map(item => item.countsTowardReviewCap ?? item.isReview);
+    const existing = priorWindowSize === 0
+        ? []
+        : allExisting.slice(-priorWindowSize);
+    const totalAfterCandidate = existing.length + 1;
+    const reviewCountAfterCandidate = existing.filter(Boolean).length + 1;
+    const allowedReviewCount = Math.max(
+        1,
+        Math.floor(totalAfterCandidate * SESSION_REVIEW_CAP),
+    );
 
-    const reviewCount =
-        sessionHistory.filter(h => h.isReview).length +
-        pendingMeta.filter(p => p.isReview).length;
-
-    return reviewCount / total < SESSION_REVIEW_CAP;
+    return reviewCountAfterCandidate <= allowedReviewCount;
 };
+
+export const shouldForceVocabReviewBlock = (
+    subjectMode: UserProfile["subjectMode"],
+    vocabDueCount: number,
+    recentAttempts: { isReview: boolean }[],
+): boolean => subjectMode !== "math"
+    && vocabDueCount > 0
+    && calculateRecentReviewRatio(recentAttempts) < REVIEW_BLOCK_THRESHOLD;
 
 /**
  * Calculate recent review ratio from attempts
@@ -775,6 +852,23 @@ export const buildVocabCooldownIds = (
 
     return ids;
 };
+
+/**
+ * Build the persisted part of the common five-question cooldown for math.
+ * getRecentAttempts returns newest-first, so take the shared question window
+ * before filtering by subject. Newly queued questions displace persisted
+ * attempts from that window; their IDs are already carried by recentIds.
+ * Skipped questions still count because the item was shown to the learner.
+ */
+export const buildMathCooldownIds = (
+    recentAttempts: { subject: SubjectKey; itemId: string }[],
+    pendingQuestionCount = 0,
+): string[] => Array.from(new Set(
+    recentAttempts
+        .slice(0, Math.max(0, COOLDOWN_WINDOW - pendingQuestionCount))
+        .filter(attempt => attempt.subject === "math")
+        .map(attempt => attempt.itemId)
+));
 
 /**
  * Build vocab level weights based on profile

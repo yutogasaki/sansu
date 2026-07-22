@@ -1,5 +1,6 @@
 import React from 'react';
 import { IkimonoStage } from './types';
+import { IkimonoArtwork } from './IkimonoArtwork';
 
 interface IkimonoSvgProps {
     stage: IkimonoStage;
@@ -36,8 +37,6 @@ const STAGE_CONFIG: Record<VisibleStage, StageVisual> = {
 export const IkimonoSvg: React.FC<IkimonoSvgProps> = ({ stage, species = 0 }) => {
     const config = STAGE_CONFIG[stage as VisibleStage] ?? STAGE_CONFIG.egg;
     const imageSuffix = getImageSuffix(stage);
-    const webpImagePath = `/ikimono/${species}-${imageSuffix}.webp`;
-    const pngImagePath = `/ikimono/${species}-${imageSuffix}.png`;
 
     const filterParts: string[] = [];
     if (config.blur > 0) filterParts.push(`blur(${config.blur}px)`);
@@ -54,15 +53,12 @@ export const IkimonoSvg: React.FC<IkimonoSvgProps> = ({ stage, species = 0 }) =>
                 filter: filterValue,
             }}
         >
-            <picture className="flex h-full w-full items-center justify-center">
-                <source srcSet={webpImagePath} type="image/webp" />
-                <img
-                    src={pngImagePath}
-                    alt=""
-                    className="pointer-events-none h-[136%] w-[136%] object-cover"
-                    draggable={false}
-                />
-            </picture>
+            <IkimonoArtwork
+                species={species}
+                imageSuffix={imageSuffix}
+                className="flex items-center justify-center"
+                imageClassName="h-[136%] w-[136%]"
+            />
         </div>
     );
 };

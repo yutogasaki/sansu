@@ -1,4 +1,5 @@
 import { GeneratorFn, createProblem, randomInt } from "../core";
+import type { RandomSource } from "../../../utils/random";
 
 // Fraction: [numerator, denominator]
 const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
@@ -8,12 +9,21 @@ const reduce = (n: number, d: number): [number, number] => {
     return [n / common, d / common];
 };
 
+const randomDifferentDenominator = (
+    denominator: number,
+    random: RandomSource = Math.random,
+): number => {
+    const denominatorCount = 5; // 2, 3, 4, 5, 6
+    const offset = randomInt(1, denominatorCount - 1, random);
+    return 2 + ((denominator - 2 + offset) % denominatorCount);
+};
+
 export const generators: Record<string, GeneratorFn> = {
     // Level 17: 同分母の足し算 a/n + b/n
-    "frac_add_same": () => {
-        const n = randomInt(2, 12);
-        const a = randomInt(1, n - 1);
-        const b = randomInt(1, n - a); // a + b <= n (Simple case < 1) or allow > 1? Spec says a+b<=n.
+    "frac_add_same": (context) => {
+        const n = randomInt(2, 12, context?.random);
+        const a = randomInt(1, n - 1, context?.random);
+        const b = randomInt(1, n - a, context?.random); // a + b <= n (Simple case < 1) or allow > 1? Spec says a+b<=n.
 
         const sumN = a + b;
         const [ansN, ansD] = reduce(sumN, n);
@@ -27,10 +37,12 @@ export const generators: Record<string, GeneratorFn> = {
         );
     },
     // Level 17: 同分母の引き算
-    "frac_sub_same": () => {
-        const n = randomInt(2, 12);
-        const a = randomInt(2, n - 1);
-        const b = randomInt(1, a - 1);
+    "frac_sub_same": (context) => {
+        // A denominator of 2 has only one positive proper numerator, so a > b
+        // cannot be satisfied with two proper fractions.
+        const n = randomInt(3, 12, context?.random);
+        const a = randomInt(2, n - 1, context?.random);
+        const b = randomInt(1, a - 1, context?.random);
 
         const diffN = a - b;
         const [ansN, ansD] = reduce(diffN, n);
@@ -45,15 +57,14 @@ export const generators: Record<string, GeneratorFn> = {
     },
 
     // Level 18: 異分母の足し算
-    "frac_add_diff": () => {
+    "frac_add_diff": (context) => {
         // Simple denominators: 2,3,4,5,6
-        const m = randomInt(2, 6);
-        let n;
-        do { n = randomInt(2, 6); } while (n === m);
+        const m = randomInt(2, 6, context?.random);
+        const n = randomDifferentDenominator(m, context?.random);
 
         // a/m + b/n
-        const a = randomInt(1, m - 1);
-        const b = randomInt(1, n - 1);
+        const a = randomInt(1, m - 1, context?.random);
+        const b = randomInt(1, n - 1, context?.random);
 
         const num = a * n + b * m;
         const den = m * n;
@@ -69,13 +80,27 @@ export const generators: Record<string, GeneratorFn> = {
     },
 
     // Level 18: 異分母の引き算
-    "frac_sub_diff": () => {
-        const m = randomInt(2, 6);
-        let n;
-        do { n = randomInt(2, 6); } while (n === m);
+    "frac_sub_diff": (context) => {
+        const m = randomInt(2, 6, context?.random);
+        const n = randomDifferentDenominator(m, context?.random);
 
-        const a = randomInt(1, m - 1);
-        const b = randomInt(1, n - 1);
+        let a = randomInt(1, m - 1, context?.random);
+        let b = randomInt(1, n - 1, context?.random);
+
+        // Different denominators can still represent the same value (for
+        // example 1/2 and 2/4). Move one numerator within its proper-fraction
+        // range so subtraction always has a non-zero result.
+        if (a * n === b * m) {
+            if (b < n - 1) {
+                b += 1;
+            } else if (b > 1) {
+                b -= 1;
+            } else if (a < m - 1) {
+                a += 1;
+            } else {
+                a -= 1;
+            }
+        }
 
         // Ensure result > 0
         const val1 = a * n;
@@ -103,12 +128,17 @@ export const generators: Record<string, GeneratorFn> = {
 
     // Level 18: 帯分数の足し算 (Mixed fractions addition)
     // A b/n + B c/n
-    "frac_mixed": () => {
-        const n = randomInt(3, 12); // denominator
-        const A = randomInt(1, 3);  // integer part 1
-        const B = randomInt(1, 3);  // integer part 2
-        const b = randomInt(1, n - 1); // numerator 1
-        const c = randomInt(1, n - 1); // numerator 2
+    "frac_mixed": (context) => {
+        const n = randomInt(3, 12, context?.random); // denominator
+        const A = randomInt(1, 3, context?.random);  // integer part 1
+        const B = randomInt(1, 3, context?.random);  // integer part 2
+        const b = randomInt(1, n - 1, context?.random); // numerator 1
+        // Keep the result as a mixed fraction so this skill always honors its
+        // multi-number input contract. Select from every proper numerator
+        // except the one that would make b + c exactly one whole.
+        const excludedNumerator = n - b;
+        const cBeforeGap = randomInt(1, n - 2, context?.random);
+        const c = cBeforeGap >= excludedNumerator ? cBeforeGap + 1 : cBeforeGap;
 
         // Calculate sum: (A + B) + (b + c)/n
         let sumInt = A + B;
@@ -123,64 +153,37 @@ export const generators: Record<string, GeneratorFn> = {
         // Reduce fraction part if possible, but keeping it mixed? 
         // Specification says "Mixed Fraction" result. 
         // Usually, 3 2/4 should be 3 1/2.
-        // If sumNum is 0 (e.g. 1 1/2 + 1 1/2 = 3), result is just integer.
-
         const ansInt = sumInt.toString();
-        let ansN = "";
-        let ansD = "";
-        let fields = [{ label: "整数", length: 1 }];
+        const [rNum, rDen] = reduce(sumNum, n);
 
-        if (sumNum > 0) {
-            const [rNum, rDen] = reduce(sumNum, n);
-            ansN = rNum.toString();
-            ansD = rDen.toString();
-            fields = [
-                { label: "整数", length: 1 },
-                { label: "分子", length: 2 },
-                { label: "分母", length: 2 }
-            ];
-            return createProblem(
-                "frac_mixed",
-                `${A} ${b}/${n} + ${B} ${c}/${n} =`,
-                [ansInt, ansN, ansD],
-                "multi-number",
-                { fields }
-            );
-        } else {
-            // Integer result
-            return createProblem(
-                "frac_mixed",
-                `${A} ${b}/${n} + ${B} ${c}/${n} =`,
-                [ansInt],
-                "number", // Input type changes to single number if result is integer? 
-                // Or keep multi-input but expect empty fraction? 
-                // To keep it simple for MVP, let's FORCE a non-integer result or handle multi-input robustly.
-                // Actually, 'multi-number' UI expects specific fields. 
-                // If the answer is just integer, we should probably output "3" and maybe "0/1" or just hide fraction fields?
-                // Let's retry generating if result is integer to avoid UI complexity for now, 
-                // OR use a specific problem type for integer results.
-                // Ideally, we want the USER to input "3". 
-                // Let's stick to "multi-number" but maybe 1 field?
-                // No, easier to just Regenerate if sumNum == 0 for this specific level to ensure consistency.
-            );
-        }
-
-        // Fallback: Recurse if simple integer (to ensure mixed practice)
-        return generators["frac_mixed"]();
+        return createProblem(
+            "frac_mixed",
+            `${A} ${b}/${n} + ${B} ${c}/${n} =`,
+            [ansInt, rNum.toString(), rDen.toString()],
+            "multi-number",
+            {
+                fields: [
+                    { label: "整数", length: 1 },
+                    { label: "分子", length: 2 },
+                    { label: "分母", length: 2 }
+                ]
+            }
+        );
     },
 
     // Level 18: 帯分数の引き算 (Mixed fractions subtraction)
     // A b/n - B c/n
-    "frac_mixed_sub": () => {
-        const n = randomInt(3, 12);
+    "frac_mixed_sub": (context) => {
+        const n = randomInt(3, 12, context?.random);
 
         // Ensure A > B or A=B with b > c to avoid negative
-        const A = randomInt(2, 5);
-        const B = randomInt(1, A - 1);
+        const A = randomInt(2, 5, context?.random);
+        const B = randomInt(1, A - 1, context?.random);
 
         // Numerators
-        const b = randomInt(1, n - 1);
-        const c = randomInt(1, n - 1);
+        const b = randomInt(1, n - 1, context?.random);
+        const numeratorOffset = randomInt(1, n - 2, context?.random);
+        const c = 1 + ((b - 1 + numeratorOffset) % (n - 1));
 
         // Value check: A + b/n - (B + c/n)
         // If b < c, we need to borrow from A.
@@ -197,11 +200,6 @@ export const generators: Record<string, GeneratorFn> = {
         // If valNum is 0, it becomes integer.
 
         const ansInt = valInt.toString();
-
-        if (valNum === 0) {
-            // Integer result, recreate to force mixed/fraction result for practice
-            return generators["frac_mixed_sub"]();
-        }
 
         const [rNum, rDen] = reduce(valNum, n);
 
@@ -236,10 +234,10 @@ export const generators: Record<string, GeneratorFn> = {
     },
 
     // Level 19: 分数×整数
-    "frac_mul_int": () => {
-        const b = randomInt(2, 9); // denominator
-        const a = randomInt(1, b - 1); // numerator
-        const n = randomInt(2, 5); // int
+    "frac_mul_int": (context) => {
+        const b = randomInt(2, 9, context?.random); // denominator
+        const a = randomInt(1, b - 1, context?.random); // numerator
+        const n = randomInt(2, 5, context?.random); // int
 
         const [ansN, ansD] = reduce(a * n, b);
         return createProblem("frac_mul_int", `${a}/${b} × ${n} =`, [ansN.toString(), ansD.toString()], "multi-number",
@@ -248,11 +246,11 @@ export const generators: Record<string, GeneratorFn> = {
     },
 
     // Level 19: 分数×分数
-    "frac_mul_frac": () => {
-        const b = randomInt(2, 9);
-        const a = randomInt(1, b - 1);
-        const d = randomInt(2, 9);
-        const c = randomInt(1, d - 1);
+    "frac_mul_frac": (context) => {
+        const b = randomInt(2, 9, context?.random);
+        const a = randomInt(1, b - 1, context?.random);
+        const d = randomInt(2, 9, context?.random);
+        const c = randomInt(1, d - 1, context?.random);
 
         const [ansN, ansD] = reduce(a * c, b * d);
         return createProblem("frac_mul_frac", `${a}/${b} × ${c}/${d} =`, [ansN.toString(), ansD.toString()], "multi-number",
@@ -261,10 +259,10 @@ export const generators: Record<string, GeneratorFn> = {
     },
 
     // Level 20: 分数÷整数
-    "frac_div_int": () => {
-        const b = randomInt(2, 9);
-        const a = randomInt(1, b - 1);
-        const n = randomInt(2, 5);
+    "frac_div_int": (context) => {
+        const b = randomInt(2, 9, context?.random);
+        const a = randomInt(1, b - 1, context?.random);
+        const n = randomInt(2, 5, context?.random);
         // (a/b) / n = a / (b*n)
         const [ansN, ansD] = reduce(a, b * n);
         return createProblem("frac_div_int", `${a}/${b} ÷ ${n} =`, [ansN.toString(), ansD.toString()], "multi-number",
@@ -273,11 +271,11 @@ export const generators: Record<string, GeneratorFn> = {
     },
 
     // Level 20: 分数÷分数
-    "frac_div_frac": () => {
-        const b = randomInt(2, 9);
-        const a = randomInt(1, b - 1);
-        const d = randomInt(2, 9);
-        const c = randomInt(1, d - 1);
+    "frac_div_frac": (context) => {
+        const b = randomInt(2, 9, context?.random);
+        const a = randomInt(1, b - 1, context?.random);
+        const d = randomInt(2, 9, context?.random);
+        const c = randomInt(1, d - 1, context?.random);
 
         // (a/b) / (c/d) = (a*d) / (b*c)
         const [ansN, ansD] = reduce(a * d, b * c);

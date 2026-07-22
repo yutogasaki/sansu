@@ -7,7 +7,8 @@ export const Layout: React.FC = () => {
     const location = useLocation();
     const isStudy = location.pathname === "/study";
     const isBattlePlay = location.pathname.startsWith("/battle/play");
-    const isFullScreen = isStudy || isBattlePlay;
+    const isExplore = location.pathname === "/explore";
+    const isFullScreen = isStudy || isBattlePlay || isExplore;
     const showFooter = !isFullScreen;
 
     React.useEffect(() => {

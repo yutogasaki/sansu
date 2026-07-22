@@ -9,6 +9,8 @@ import { generators as advanced } from "./generators/advanced";
 
 import { GeneratorFn, MathGeneratorContext } from "./core";
 
+export * from "./planner";
+
 export const MATH_GENERATORS: Record<string, GeneratorFn> = {
     ...counting,
     ...addition,

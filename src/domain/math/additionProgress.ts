@@ -1,3 +1,5 @@
+import type { RandomSource } from "../../utils/random";
+
 export type AdditionPair = readonly [number, number];
 
 const ADD_TINY_SEQUENCE: AdditionPair[] = [
@@ -115,17 +117,21 @@ const ADD_5_POOL = buildPairs((a, b) => a <= 5 && b <= 5);
 const LEVEL5_FALLBACK_POOL = buildPairs((a, b) => a + b >= 6);
 const LEVEL5_CARRY_POOL = buildPairs((a, b) => a + b >= 10);
 
-const pickRandom = (pairs: AdditionPair[]): AdditionPair => {
-    const index = Math.floor(Math.random() * pairs.length);
+const pickRandom = (pairs: AdditionPair[], random: RandomSource): AdditionPair => {
+    const index = Math.floor(random() * pairs.length);
     return pairs[index] || pairs[0];
 };
 
-export const selectAdditionPair = (skillId: string, totalAnswers?: number): AdditionPair => {
+export const selectAdditionPair = (
+    skillId: string,
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): AdditionPair => {
     if (skillId === "add_tiny") {
         if (typeof totalAnswers === "number" && totalAnswers < ADD_TINY_SEQUENCE.length) {
             return ADD_TINY_SEQUENCE[totalAnswers];
         }
-        return pickRandom(ADD_TINY_POOL);
+        return pickRandom(ADD_TINY_POOL, random);
     }
 
     if (skillId === "add_finger") {
@@ -135,11 +141,11 @@ export const selectAdditionPair = (skillId: string, totalAnswers?: number): Addi
             }
 
             if (totalAnswers < ADD_FINGER_SEQUENCE.length + 8) {
-                return pickRandom(ADD_FINGER_SUM5_POOL);
+                return pickRandom(ADD_FINGER_SUM5_POOL, random);
             }
         }
 
-        return pickRandom(ADD_FINGER_POOL);
+        return pickRandom(ADD_FINGER_POOL, random);
     }
 
     if (skillId === "add_5") {
@@ -149,22 +155,22 @@ export const selectAdditionPair = (skillId: string, totalAnswers?: number): Addi
             }
 
             if (totalAnswers < ADD_5_SEQUENCE.length + 10) {
-                return pickRandom(ADD_5_PHASE_1_POOL);
+                return pickRandom(ADD_5_PHASE_1_POOL, random);
             }
 
             if (totalAnswers < ADD_5_SEQUENCE.length + 20) {
-                return pickRandom(ADD_5_PHASE_2_POOL);
+                return pickRandom(ADD_5_PHASE_2_POOL, random);
             }
         }
 
-        return pickRandom(ADD_5_POOL);
+        return pickRandom(ADD_5_POOL, random);
     }
 
     if (skillId === "add_1d_1") {
         if (typeof totalAnswers === "number" && totalAnswers < LEVEL4_SEQUENCE.length) {
             return LEVEL4_SEQUENCE[totalAnswers];
         }
-        return pickRandom(LEVEL4_POOL);
+        return pickRandom(LEVEL4_POOL, random);
     }
 
     if (skillId === "add_1d_2") {
@@ -183,10 +189,10 @@ export const selectAdditionPair = (skillId: string, totalAnswers?: number): Addi
                 return LEVEL5_CARRY_SEQUENCE[afterMakeTen];
             }
 
-            return pickRandom(LEVEL5_CARRY_POOL);
+            return pickRandom(LEVEL5_CARRY_POOL, random);
         }
 
-        return pickRandom(LEVEL5_FALLBACK_POOL);
+        return pickRandom(LEVEL5_FALLBACK_POOL, random);
     }
 
     return [1, 1];

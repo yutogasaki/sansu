@@ -10,7 +10,8 @@ import {
     Play,
     ArrowLeft,
     ArrowRight,
-    Pencil
+    Pencil,
+    Compass
 } from "lucide-react";
 
 export const Icons = {
@@ -25,5 +26,6 @@ export const Icons = {
     Play: Play,
     ArrowLeft: ArrowLeft,
     ArrowRight: ArrowRight,
-    Study: Pencil
+    Study: Pencil,
+    Explore: Compass
 };

@@ -1,0 +1,293 @@
+.makimodon-art {
+    --makimodon-sky: #72cdbd;
+    --makimodon-far-bank: #a7dfc6;
+    --makimodon-leaf: #3f9f8d;
+    --makimodon-ground: #5db7a6;
+    --makimodon-ground-seam: #2d9492;
+    --makimodon-shadow: #326f68;
+    --makimodon-band: #ef765f;
+    --makimodon-band-fold: #b83e38;
+    --makimodon-core: #39796e;
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    isolation: isolate;
+}
+
+.makimodon-art__sky {
+    fill: var(--makimodon-sky);
+}
+
+.makimodon-art__far-bank,
+.makimodon-art__left-leaf {
+    fill: var(--makimodon-far-bank);
+}
+
+.makimodon-art__right-leaf {
+    fill: var(--makimodon-leaf);
+}
+
+.makimodon-art__cream-leaf {
+    fill: var(--explore-cream);
+    opacity: 0.8;
+}
+
+.makimodon-art__ground {
+    fill: var(--makimodon-ground);
+}
+
+.makimodon-art__ground-seam {
+    fill: none;
+    stroke: var(--makimodon-ground-seam);
+    stroke-width: 9;
+    stroke-linecap: round;
+    opacity: 0.66;
+}
+
+.makimodon-art__shadow {
+    fill: var(--makimodon-shadow);
+    opacity: 0.28;
+}
+
+.makimodon-art__band-outline,
+.makimodon-art__band-fill,
+.makimodon-art__tucked-end-outline,
+.makimodon-art__tucked-end-fill,
+.makimodon-art__front-wrap-outline,
+.makimodon-art__front-wrap-fill,
+.makimodon-art__seat-rim-outline,
+.makimodon-art__seat-rim-fill {
+    fill: none;
+    stroke-linecap: butt;
+    stroke-linejoin: bevel;
+}
+
+.makimodon-art__band-outline {
+    stroke: var(--explore-outline);
+    stroke-width: 34;
+}
+
+.makimodon-art__band-fill {
+    stroke: var(--makimodon-band);
+    stroke-width: 24;
+}
+
+.makimodon-art__tucked-end-outline {
+    stroke: var(--explore-outline);
+    stroke-width: 30;
+}
+
+.makimodon-art__tucked-end-fill {
+    stroke: var(--makimodon-band);
+    stroke-width: 20;
+}
+
+.makimodon-art__band-notch {
+    fill: none;
+    stroke: var(--makimodon-band-fold);
+    stroke-width: 4;
+    stroke-linecap: square;
+    stroke-linejoin: bevel;
+}
+
+.makimodon-art__needle-leg {
+    fill: none;
+    stroke: var(--explore-outline);
+    stroke-width: 5;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+}
+
+.makimodon-art__needle-tip {
+    fill: var(--explore-outline);
+}
+
+.makimodon-art__core-body {
+    fill: var(--makimodon-core);
+    stroke: var(--explore-outline);
+    stroke-width: 4;
+    stroke-linejoin: bevel;
+}
+
+.makimodon-art__wedge-head {
+    fill: var(--explore-cream);
+    stroke: var(--explore-outline);
+    stroke-width: 4;
+    stroke-linejoin: bevel;
+}
+
+.makimodon-art__back-hollow,
+.makimodon-art__head-fold,
+.makimodon-art__flat-mark {
+    fill: none;
+    stroke: var(--explore-outline);
+    stroke-linecap: square;
+    stroke-linejoin: bevel;
+}
+
+.makimodon-art__back-hollow {
+    stroke: var(--explore-cream);
+    stroke-width: 4;
+}
+
+.makimodon-art__head-fold {
+    stroke: #d1bb83;
+    stroke-width: 2.5;
+}
+
+.makimodon-art__pin-eye {
+    fill: var(--explore-outline);
+}
+
+.makimodon-art__front-wrap-outline {
+    stroke: var(--explore-outline);
+    stroke-width: 28;
+}
+
+.makimodon-art__front-wrap-fill {
+    stroke: var(--makimodon-band);
+    stroke-width: 18;
+}
+
+.makimodon-art__flat-mark {
+    stroke-width: 4;
+}
+
+.makimodon-art__rewind-trace path {
+    fill: none;
+    stroke: var(--explore-outline);
+    stroke-width: 4;
+    stroke-linecap: square;
+    stroke-linejoin: bevel;
+    stroke-dasharray: 2 12;
+    opacity: 0.62;
+}
+
+.makimodon-art__seat-rim-outline {
+    stroke: var(--explore-outline);
+    stroke-width: 20;
+}
+
+.makimodon-art__seat-rim-fill {
+    stroke: var(--makimodon-band);
+    stroke-width: 12;
+}
+
+.makimodon-art .ribbon-antenna-companion__body {
+    fill: var(--explore-amber);
+    stroke: var(--explore-outline);
+    stroke-width: 4;
+    stroke-linejoin: round;
+}
+
+.makimodon-art .ribbon-antenna-companion__antennae,
+.makimodon-art .ribbon-antenna-companion__limb,
+.makimodon-art .ribbon-antenna-companion__bag-detail {
+    fill: none;
+    stroke: var(--explore-outline);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.makimodon-art .ribbon-antenna-companion__antennae {
+    stroke-width: 4;
+}
+
+.makimodon-art .ribbon-antenna-companion__limb {
+    stroke-width: 7;
+}
+
+.makimodon-art .ribbon-antenna-companion__eye {
+    fill: var(--explore-outline);
+}
+
+.makimodon-art .ribbon-antenna-companion__bag {
+    fill: var(--explore-cream);
+    stroke: var(--explore-outline);
+    stroke-width: 4;
+    stroke-linejoin: round;
+}
+
+.makimodon-art .ribbon-antenna-companion__bag-detail {
+    stroke: var(--makimodon-ground-seam);
+    stroke-width: 3;
+}
+
+.makimodon-art__band-extension {
+    transform-box: fill-box;
+    transform-origin: right center;
+    animation: makimodon-unroll 160ms cubic-bezier(0.18, 0.76, 0.28, 1.06) both;
+}
+
+.makimodon-art__companion-motion > .ribbon-antenna-companion {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.makimodon-art__companion-motion--startled > .ribbon-antenna-companion {
+    animation: makimodon-startle 150ms ease-out both;
+}
+
+.makimodon-art__companion-motion--one-step > .ribbon-antenna-companion {
+    animation: makimodon-step-on 160ms ease-out both;
+}
+
+.makimodon-art__companion-motion--seated > .ribbon-antenna-companion {
+    animation: makimodon-safe-seat 620ms cubic-bezier(0.2, 0.74, 0.28, 1) both;
+}
+
+.makimodon-art__rewind-trace {
+    animation: makimodon-rewind-trace 420ms ease-out both;
+}
+
+.makimodon-art__seat-rim {
+    animation: makimodon-seat-rim 140ms 590ms ease-out both;
+}
+
+@keyframes makimodon-unroll {
+    from { opacity: 0.4; transform: scaleX(0.32); }
+    to { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes makimodon-startle {
+    from { transform: rotate(0); }
+    to { transform: rotate(-7deg); }
+}
+
+@keyframes makimodon-step-on {
+    from { transform: translateY(4px); }
+    to { transform: translateY(0); }
+}
+
+@keyframes makimodon-safe-seat {
+    0% { opacity: 0.82; transform: translate(-172px, 142px) rotate(-18deg); }
+    72% { opacity: 1; transform: translate(5px, -5px) rotate(4deg); }
+    100% { opacity: 1; transform: translate(0, 0) rotate(0); }
+}
+
+@keyframes makimodon-rewind-trace {
+    from { opacity: 0; stroke-dashoffset: 24; }
+    to { opacity: 0.62; stroke-dashoffset: 0; }
+}
+
+@keyframes makimodon-seat-rim {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.makimodon-art--reduced-motion *,
+.makimodon-art--reduced-motion *::before,
+.makimodon-art--reduced-motion *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .makimodon-art *,
+    .makimodon-art *::before,
+    .makimodon-art *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}

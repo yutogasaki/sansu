@@ -25,6 +25,16 @@ For UI work, also read:
 2. `docs/product/design_review_checklist.md`
 3. `design-system/MASTER.md`
 
+For exploration work, also read:
+
+1. `docs/product/10_exploration_game_spec.md`
+2. `docs/product/11_learning_integration_spec.md`
+3. `docs/product/12_screen_flow_spec.md`
+4. `docs/product/14_ui_world_motion_spec.md`
+5. `docs/product/15_mvp_rollout_verification_spec.md`
+
+For image-led exploration work, route through `.agents/skills/sansu-art-direction-loop/SKILL.md` before generating art or changing runtime presentation.
+
 ## Repo Snapshot
 
 - Product: child-friendly math and English learning PWA
@@ -47,7 +57,7 @@ Do not duplicate the same durable rule across `docs/`, `.agents/`, `.claude/`, a
 - Spec first. `docs/product/01_app_spec.md` is the parent spec.
 - One change should have one primary purpose.
 - Verification is mandatory before closing work.
-- UX must stay gentle for children and clear for parents.
+- UX must invite replay without shaming children; exploration uses readable valleys and short, energetic peaks.
 - Routing, storage, tests, and PWA/update flows are high-risk areas.
 
 ## Key Commands
@@ -90,6 +100,7 @@ Core checks:
 
 Repo-local shared skills live in `.agents/skills/`:
 
+- `sansu-art-direction-loop`
 - `sansu-ui-builder`
 - `sansu-verify`
 - `sansu-doc-sync`

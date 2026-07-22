@@ -1,3 +1,5 @@
+import type { RandomSource } from "../../utils/random";
+
 export type ComparisonPair = readonly [number, number];
 
 const buildPairs = (
@@ -18,8 +20,8 @@ const buildPairs = (
     return pairs;
 };
 
-const pickRandom = (pairs: ComparisonPair[]): ComparisonPair => {
-    const index = Math.floor(Math.random() * pairs.length);
+const pickRandom = (pairs: ComparisonPair[], random: RandomSource): ComparisonPair => {
+    const index = Math.floor(random() * pairs.length);
     return pairs[index] || pairs[0];
 };
 
@@ -44,7 +46,11 @@ const COMPARE_2D_PHASE_2 = buildPairs(10, 99, (a, b) => Math.abs(a - b) >= 10 &&
 const COMPARE_2D_PHASE_3 = buildPairs(10, 99, (a, b) => Math.floor(a / 10) === Math.floor(b / 10));
 const COMPARE_2D_POOL = [...COMPARE_2D_PHASE_1, ...COMPARE_2D_PHASE_2, ...COMPARE_2D_PHASE_3];
 
-export const selectComparisonPair = (skillId: string, totalAnswers?: number): ComparisonPair => {
+export const selectComparisonPair = (
+    skillId: string,
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): ComparisonPair => {
     if (skillId === "compare_1d") {
         if (typeof totalAnswers === "number") {
             if (totalAnswers < COMPARE_1D_SEQUENCE.length) {
@@ -52,33 +58,33 @@ export const selectComparisonPair = (skillId: string, totalAnswers?: number): Co
             }
 
             if (totalAnswers < COMPARE_1D_SEQUENCE.length + 8) {
-                return pickRandom(COMPARE_1D_PHASE_1);
+                return pickRandom(COMPARE_1D_PHASE_1, random);
             }
 
             if (totalAnswers < COMPARE_1D_SEQUENCE.length + 16) {
-                return pickRandom(COMPARE_1D_PHASE_2);
+                return pickRandom(COMPARE_1D_PHASE_2, random);
             }
         }
 
-        return pickRandom(COMPARE_1D_POOL);
+        return pickRandom(COMPARE_1D_POOL, random);
     }
 
     if (skillId === "compare_2d") {
         if (typeof totalAnswers === "number") {
             if (totalAnswers < 8) {
-                return pickRandom(COMPARE_2D_PHASE_1);
+                return pickRandom(COMPARE_2D_PHASE_1, random);
             }
 
             if (totalAnswers < 16) {
-                return pickRandom(COMPARE_2D_PHASE_2);
+                return pickRandom(COMPARE_2D_PHASE_2, random);
             }
 
             if (totalAnswers < 24) {
-                return pickRandom(COMPARE_2D_PHASE_3);
+                return pickRandom(COMPARE_2D_PHASE_3, random);
             }
         }
 
-        return pickRandom(COMPARE_2D_POOL);
+        return pickRandom(COMPARE_2D_POOL, random);
     }
 
     return [1, 2];

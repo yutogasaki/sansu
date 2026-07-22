@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { buildReloadUrl, shouldResetAppCache, stripReloadMarker } from './pwaUpdateUtils'
+import {
+    buildReloadUrl,
+    isUpdateProtectedHashRoute,
+    shouldResetAppCache,
+    stripReloadMarker,
+} from './pwaUpdateUtils'
 
 describe('pwaUpdateUtils', () => {
     it('adds a stable update marker without dropping existing query params or hashes', () => {
@@ -24,5 +29,41 @@ describe('pwaUpdateUtils', () => {
         expect(shouldResetAppCache('google-fonts-cache')).toBe(true)
         expect(shouldResetAppCache('gstatic-fonts-cache')).toBe(true)
         expect(shouldResetAppCache('user-generated-assets')).toBe(false)
+    })
+
+    it.each([
+        '#/onboarding',
+        '#/onboarding?step=3',
+        '#/study',
+        '#/study?skill=addition',
+        '#/explore',
+        '#/explore/',
+        '#/battle/play?mode=tug_of_war',
+    ])('protects an in-memory session on %s', (hash) => {
+        expect(isUpdateProtectedHashRoute(hash)).toBe(true)
+    })
+
+    it('allows one startup refresh on explore before the child interacts', () => {
+        expect(isUpdateProtectedHashRoute('#/explore', {
+            allowExploreStartupReload: true,
+        })).toBe(false)
+        expect(isUpdateProtectedHashRoute('#/explore', {
+            allowExploreStartupReload: false,
+        })).toBe(true)
+        expect(isUpdateProtectedHashRoute('#/study', {
+            allowExploreStartupReload: true,
+        })).toBe(true)
+    })
+
+    it.each([
+        '',
+        '#/',
+        '#/battle',
+        '#/stats',
+        '#/onboard',
+        '#/studying',
+        '#/battle/player',
+    ])('does not protect ordinary navigation on %s', (hash) => {
+        expect(isUpdateProtectedHashRoute(hash)).toBe(false)
     })
 })

@@ -1,0 +1,16 @@
+Use case: stylized-concept
+Asset type: production 2D companion idle animation sheet for Agent Sprite Forge post-processing.
+Input image: the single companion sprite is the exact character identity and art reference. Preserve its pear-shaped lime body, asymmetrical two-leaf sprout, tiny rounded feet and tucked arms, two small dark-teal dot eyes, cream crescent belly mark, rounded dark-teal outline, three-step cel shading, palette, proportions, and matte cut-paper gouache texture.
+
+Create exactly four equal invisible cells in a 2x2 grid, read left-to-right across the top row and then left-to-right across the bottom row. There must be no visible grid, borders, dividers, labels, or frames.
+
+Animation:
+1. top-left: neutral friendly idle, body upright, both feet planted.
+2. top-right: subtle breathing compression, body lowers about 4%, leaves tilt gently inward.
+3. bottom-left: body returns slightly upward, crescent belly mark glows a little brighter, leaves open gently.
+4. bottom-right: settle back toward the neutral pose for a seamless loop.
+
+Style/medium: match the reference exactly; original Sansu cut-paper and cel-painted game asset; exactly three value steps; consistent rounded outline; low texture noise; clean mobile-readable silhouette; no redesign.
+Composition: same three-quarter front camera and same camera distance in all four cells. Full body centered in each cell. Subject fills about 60% of each cell. Keep the same standing-equivalent anatomical scale, body width, leaf size, outline weight, and feet/bottom contact line. Leave generous magenta padding on all four sides of every cell.
+Scene/backdrop: 100% solid flat #FF00FF across the entire sheet.
+Constraints: the entire character must fit inside each cell; no leaf, arm, foot, outline, or glow may cross any cell edge; no cast shadow, contact shadow, floor, reflection, background gradient, texture, or lighting variation; no detached effects; no text, numbers, UI, logo, watermark, extra props, extra characters, franchise symbols, or recognizable copyrighted design motifs; do not use magenta in the character.

@@ -1,3 +1,5 @@
+import type { RandomSource } from "../../utils/random";
+
 export type SubtractionPair = readonly [number, number];
 
 const SUB_TINY_SEQUENCE: SubtractionPair[] = [
@@ -51,8 +53,8 @@ const buildPairs = (predicate: (a: number, b: number) => boolean): SubtractionPa
     return pairs;
 };
 
-const pickRandom = (pairs: SubtractionPair[]): SubtractionPair => {
-    const index = Math.floor(Math.random() * pairs.length);
+const pickRandom = (pairs: SubtractionPair[], random: RandomSource): SubtractionPair => {
+    const index = Math.floor(random() * pairs.length);
     return pairs[index] || pairs[0];
 };
 
@@ -67,17 +69,21 @@ const SUB_1D_CARRY_PHASE_2 = buildPairs((a, b) => a >= 11 && a <= 18 && b > (a %
 const SUB_1D_CARRY_PHASE_3 = buildPairs((a, b) => a >= 11 && a <= 18 && b > (a % 10) && b - (a % 10) >= 3);
 const SUB_1D_CARRY_POOL = [...SUB_1D_CARRY_PHASE_1, ...SUB_1D_CARRY_PHASE_2, ...SUB_1D_CARRY_PHASE_3];
 
-export const selectSubtractionPair = (skillId: string, totalAnswers?: number): SubtractionPair => {
+export const selectSubtractionPair = (
+    skillId: string,
+    totalAnswers?: number,
+    random: RandomSource = Math.random,
+): SubtractionPair => {
     if (skillId === "sub_tiny") {
         if (typeof totalAnswers === "number" && totalAnswers < SUB_TINY_SEQUENCE.length) {
             return SUB_TINY_SEQUENCE[totalAnswers];
         }
 
         if (typeof totalAnswers === "number" && totalAnswers < SUB_TINY_SEQUENCE.length + 6) {
-            return pickRandom(SUB_TINY_PHASE_1_POOL);
+            return pickRandom(SUB_TINY_PHASE_1_POOL, random);
         }
 
-        return pickRandom(SUB_TINY_POOL);
+        return pickRandom(SUB_TINY_POOL, random);
     }
 
     if (skillId === "sub_1d1d_nc") {
@@ -86,14 +92,14 @@ export const selectSubtractionPair = (skillId: string, totalAnswers?: number): S
         }
 
         if (typeof totalAnswers === "number" && totalAnswers < SUB_1D_NO_CARRY_SEQUENCE.length + 10) {
-            return pickRandom(SUB_1D_NO_CARRY_PHASE_1_POOL);
+            return pickRandom(SUB_1D_NO_CARRY_PHASE_1_POOL, random);
         }
 
         if (typeof totalAnswers === "number" && totalAnswers < SUB_1D_NO_CARRY_SEQUENCE.length + 20) {
-            return pickRandom(SUB_1D_NO_CARRY_PHASE_2_POOL);
+            return pickRandom(SUB_1D_NO_CARRY_PHASE_2_POOL, random);
         }
 
-        return pickRandom(SUB_1D_NO_CARRY_POOL);
+        return pickRandom(SUB_1D_NO_CARRY_POOL, random);
     }
 
     if (skillId === "sub_1d1d_c") {
@@ -113,7 +119,7 @@ export const selectSubtractionPair = (skillId: string, totalAnswers?: number): S
             }
         }
 
-        return pickRandom(SUB_1D_CARRY_POOL);
+        return pickRandom(SUB_1D_CARRY_POOL, random);
     }
 
     return [2, 1];

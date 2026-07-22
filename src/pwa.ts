@@ -1,6 +1,11 @@
 import { Workbox } from 'workbox-window'
 import { resolveAppAssetPath } from './utils/assets'
-import { buildReloadUrl, shouldResetAppCache, stripReloadMarker } from './pwaUpdateUtils'
+import {
+    buildReloadUrl,
+    isUpdateProtectedHashRoute,
+    shouldResetAppCache,
+    stripReloadMarker,
+} from './pwaUpdateUtils'
 
 const UPDATE_CHECK_INTERVAL_MS = 5 * 60 * 1000
 const UPDATE_RECOVERY_DELAY_MS = 4000
@@ -12,6 +17,9 @@ const SERVICE_WORKER_SCOPE = APP_BASE_URL
 let hasTriggeredReload = false
 let hasScheduledRecoveryReload = false
 let updateCheckInFlight: Promise<void> | null = null
+let deferredReloadVersion: string | null = null
+let deferredRecoveryVersion: string | null = null
+let hasUserInteracted = false
 
 type AppVersionPayload = {
     version?: string
@@ -27,8 +35,18 @@ const clearReloadMarkerFromUrl = () => {
     window.history.replaceState(window.history.state, '', cleanedUrl)
 }
 
+const isCurrentUpdateProtected = () => isUpdateProtectedHashRoute(
+    window.location.hash,
+    { allowExploreStartupReload: !hasUserInteracted },
+)
+
 const reloadForUpdate = (version = Date.now().toString()) => {
     if (hasTriggeredReload) {
+        return
+    }
+
+    if (isCurrentUpdateProtected()) {
+        deferredReloadVersion = version
         return
     }
 
@@ -94,7 +112,12 @@ const resetStaleServiceWorkerState = async () => {
 }
 
 const scheduleRecoveryReload = (version: string) => {
-    if (hasScheduledRecoveryReload || hasTriggeredReload) {
+    if (hasScheduledRecoveryReload || deferredRecoveryVersion || hasTriggeredReload) {
+        return
+    }
+
+    if (isCurrentUpdateProtected()) {
+        deferredRecoveryVersion = version
         return
     }
 
@@ -105,12 +128,38 @@ const scheduleRecoveryReload = (version: string) => {
             return
         }
 
+        if (isCurrentUpdateProtected()) {
+            hasScheduledRecoveryReload = false
+            deferredRecoveryVersion = version
+            return
+        }
+
         void resetStaleServiceWorkerState()
             .catch(() => undefined)
             .finally(() => {
                 reloadForUpdate(version)
             })
     }, UPDATE_RECOVERY_DELAY_MS)
+}
+
+const resumeDeferredUpdate = () => {
+    if (hasTriggeredReload || isCurrentUpdateProtected()) {
+        return
+    }
+
+    if (deferredReloadVersion) {
+        const version = deferredReloadVersion
+        deferredReloadVersion = null
+        deferredRecoveryVersion = null
+        reloadForUpdate(version)
+        return
+    }
+
+    if (deferredRecoveryVersion) {
+        const version = deferredRecoveryVersion
+        deferredRecoveryVersion = null
+        scheduleRecoveryReload(version)
+    }
 }
 
 const runVersionDriftRecoveryCheck = () => {
@@ -169,9 +218,17 @@ const attachUpdateCheckTriggers = (triggerUpdateCheck: () => void) => {
 export const registerPWA = () => {
     clearReloadMarkerFromUrl()
 
+    const markUserInteraction = () => {
+        hasUserInteracted = true
+    }
+    window.addEventListener('pointerdown', markUserInteraction, { capture: true, once: true })
+    window.addEventListener('keydown', markUserInteraction, { capture: true, once: true })
+
     if (!import.meta.env.PROD) {
         return
     }
+
+    window.addEventListener('hashchange', resumeDeferredUpdate)
 
     let triggerUpdateCheck = runVersionDriftRecoveryCheck
     attachUpdateCheckTriggers(() => {
