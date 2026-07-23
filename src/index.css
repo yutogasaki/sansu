@@ -2105,13 +2105,18 @@ body.app-mode-fullscreen .app-container {
     }
 }
 
-    @media (max-width: 480px) and (max-height: 720px) {
+@media (max-width: 480px) and (max-height: 720px) {
     .explore-run-grid {
         grid-template-rows: 122px minmax(0, 1fr);
     }
 
     .explore-run-grid[data-phase="action"] {
         grid-template-rows: 94px minmax(0, 1fr);
+    }
+
+    .explore-run-grid[data-encounter],
+    .explore-run-grid[data-rapid-problem] {
+        grid-template-rows: minmax(0, 1fr);
     }
 
     .explore-run-grid[data-phase="choice"] > .explore-map-frame {
@@ -2122,21 +2127,26 @@ body.app-mode-fullscreen .app-container {
         margin-top: -12px;
     }
 
-    .explore-run-grid[data-encounter] .explore-action-region {
+    .explore-run-grid[data-encounter] .explore-action-region,
+    .explore-run-grid[data-rapid-problem] .explore-action-region {
         margin-top: 0;
     }
 
-        .explore-immersive-stage {
-            gap: 0;
-            padding: 0;
+    .explore-immersive-stage {
+        gap: 0;
+        padding: 0;
     }
 
-        .explore-immersive-brief {
-            padding: 6px 9px 4px;
+    .explore-immersive-brief {
+        padding: 6px 9px 4px;
     }
 
     .explore-immersive-title {
         font-size: 0.8rem;
+    }
+
+    .explore-immersive-spacer {
+        min-height: 0;
     }
 
     .explore-immersive-equation {
@@ -2153,10 +2163,10 @@ body.app-mode-fullscreen .app-container {
         max-height: 78px;
     }
 
-        .explore-immersive-keypad-shell {
-            min-height: 186px;
-            padding: 3px 7px calc(var(--safe-area-bottom) + 4px);
-        }
+    .explore-immersive-keypad-shell {
+        min-height: 186px;
+        padding: 3px 7px calc(var(--safe-area-bottom) + 4px);
+    }
 
     .explore-route-card {
         min-height: 84px;

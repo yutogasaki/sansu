@@ -463,13 +463,19 @@ const scenarioOnboardingShown = async (browser) => {
   await context.close();
 };
 
-const scenarioOnboardingToExploreProblem = async (browser) => {
-  const context = await browser.newContext({ baseURL: activeBaseUrl });
+const scenarioOnboardingToExploreProblem = async (browser, viewport) => {
+  const context = await browser.newContext({
+    baseURL: activeBaseUrl,
+    ...(viewport ? { viewport } : {}),
+  });
   const page = await context.newPage();
   await clearClientStorage(page);
 
   await completeOnboarding(page);
   await waitForExploreFirstProblemReady(page);
+  if (viewport) {
+    await assertExploreProblemViewportFit(page, viewport);
+  }
 
   await context.close();
 };
@@ -800,6 +806,58 @@ const assertSnapRootViewportFit = async (page, viewport, { requireTappable = tru
   if (requireTappable) {
     assert(fit.digitHit.every(Boolean), `TenKey 0-9 centers should be tappable: ${JSON.stringify(fit)}`);
   }
+};
+
+const assertExploreProblemViewportFit = async (page, viewport) => {
+  const fit = await page.evaluate(() => {
+    const rect = (selector) => document.querySelector(selector)?.getBoundingClientRect();
+    const controls = [
+      ...["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].map((digit) => (
+        [...document.querySelectorAll("button")].find(
+          (button) => button.textContent?.trim() === digit,
+        )?.getBoundingClientRect()
+      )),
+      [...document.querySelectorAll("button")].find(
+        (button) => button.getAttribute("aria-label") === "こたえる",
+      )?.getBoundingClientRect(),
+    ];
+
+    return {
+      innerWidth: window.innerWidth,
+      innerHeight: window.innerHeight,
+      grid: rect(".explore-run-grid"),
+      action: rect(".explore-action-region"),
+      encounter: rect(".explore-immersive"),
+      keypad: rect(".explore-immersive-keypad-shell"),
+      controls,
+    };
+  });
+
+  assert(
+    fit.innerWidth === viewport.width && fit.innerHeight === viewport.height,
+    `expected ${viewport.width}x${viewport.height}; got ${fit.innerWidth}x${fit.innerHeight}`,
+  );
+  for (const [name, rect] of [
+    ["grid", fit.grid],
+    ["action", fit.action],
+    ["encounter", fit.encounter],
+    ["keypad", fit.keypad],
+  ]) {
+    assert(
+      rect && rect.top >= -1 && rect.bottom <= fit.innerHeight + 1,
+      `${name} should fit the short exploration viewport: ${JSON.stringify(fit)}`,
+    );
+  }
+  assert(
+    fit.encounter.height >= fit.innerHeight - 1,
+    `rapid problem should keep the full grid row: ${JSON.stringify(fit)}`,
+  );
+  assert(
+    fit.controls.every(
+      (rect) => rect && rect.top >= 0 && rect.bottom <= fit.innerHeight + 1,
+    ),
+    `TenKey controls should stay visible in the short exploration viewport: ${JSON.stringify(fit)}`,
+  );
 };
 
 const assertSnapRootPaintedResolution = async (page, viewport) => {
@@ -5850,6 +5908,14 @@ const main = async () => {
       if (!results.every(Boolean)) process.exitCode = 1;
       return;
     }
+    if (process.env.SANSU_E2E_SHORT_EXPLORE_ONLY === "1") {
+      results.push(await runScenario(
+        "keeps the classic opening playable with expanded mobile browser chrome",
+        () => scenarioOnboardingToExploreProblem(browser, { width: 390, height: 700 }),
+      ));
+      if (!results.every(Boolean)) process.exitCode = 1;
+      return;
+    }
     if (process.env.SANSU_E2E_SNAP_ROOT_ONLY === "1") {
       results.push(await runScenario(
         "runs the Snap Root breakthrough loop at 390px",
@@ -5900,6 +5966,10 @@ const main = async () => {
     }
     results.push(await runScenario("redirects to onboarding when no profile", () => scenarioOnboardingShown(browser)));
     results.push(await runScenario("completes onboarding, chooses a route, and opens Makimodon", () => scenarioOnboardingToExploreProblem(browser)));
+    results.push(await runScenario(
+      "keeps the classic opening playable with expanded mobile browser chrome",
+      () => scenarioOnboardingToExploreProblem(browser, { width: 390, height: 700 }),
+    ));
     results.push(await runScenario("keeps the direct study route working", () => scenarioStudyRoute(browser)));
     results.push(await runScenario("keeps the direct review route working", () => scenarioReviewRoute(browser)));
     results.push(await runScenario("keeps the direct settings route working", () => scenarioSettingsRoute(browser)));
