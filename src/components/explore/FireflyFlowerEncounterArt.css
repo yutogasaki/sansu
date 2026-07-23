@@ -32,6 +32,15 @@
     opacity: 1;
 }
 
+/* Mid-size portrait screens place the answer shelf slightly higher than the
+   source plate's paper seam. Lift the same-camera plates just enough to keep
+   Pokko's feet fully in the world instead of under the interactive shelf. */
+@media (min-width: 600px) and (max-width: 1023px) {
+    .firefly-flower-art__scene {
+        transform: translateY(-32px);
+    }
+}
+
 .firefly-flower-art--reduced-motion .firefly-flower-art__scene {
     transition-duration: 0.01ms !important;
 }
