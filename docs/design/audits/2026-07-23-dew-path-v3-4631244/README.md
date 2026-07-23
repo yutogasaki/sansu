@@ -3,8 +3,8 @@
 ## Verdict
 
 This evidence is from the exact detached build at revision
-`2495f6cb31301eafb347eca0115321d9dc01a997`, source tree
-`66fd670e4a8e6c7e02cc3ee275bdc658b845508f`, delivery
+`463124498a67680255928de41fbe3dd9c7503120`, source tree
+`9ecf364f87273460631257ffa2eca626e2c32a52`, delivery
 `snap-root-v1`, and visual lineage `pokko-field-v1`.
 
 The three non-compensating gates are:
@@ -57,6 +57,7 @@ copied.
 - `manifest.json`: build provenance, asset hashes, runtime geometry, camera
   continuity, decoded media, TenKey, overflow, and lineage results.
 
-The earlier `b27c4a4` diagnostic exposed a real density break at the old
-light-bridge and root-tangle plates. It is superseded and is not release
-evidence for this candidate.
+The generic return archive uses the neutral dew-path finding, while an actual
+root-tangle provenance keeps its root-specific finding. The earlier `b27c4a4`
+diagnostic exposed a real density break at the old light-bridge and root-tangle
+plates. It is superseded and is not release evidence for this candidate.

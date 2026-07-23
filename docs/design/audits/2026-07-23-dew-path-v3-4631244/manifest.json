@@ -1,19 +1,19 @@
 {
   "schemaVersion": "sansu-critical-path-visual-audit-v1",
-  "auditId": "d2d0d2ff-69c1-448f-aed2-065329d09016",
-  "generatedAt": "2026-07-23T12:23:27.333Z",
+  "auditId": "645a50c4-cd21-47a5-b52e-cb70301567aa",
+  "generatedAt": "2026-07-23T12:36:25.987Z",
   "actualTarget": "http://127.0.0.1:4187",
   "targetVersion": {
-    "url": "http://127.0.0.1:4187/version.json?visualAudit=1784809391842",
-    "version": "2495f6cb31301eafb347eca0115321d9dc01a997",
-    "revision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+    "url": "http://127.0.0.1:4187/version.json?visualAudit=1784810169406",
+    "version": "463124498a67680255928de41fbe3dd9c7503120",
+    "revision": "463124498a67680255928de41fbe3dd9c7503120",
     "delivery": "snap-root-v1",
     "visualLineage": "pokko-field-v1"
   },
   "targetVersionBeforePublication": {
-    "url": "http://127.0.0.1:4187/version.json?visualAudit=1784809407252",
-    "version": "2495f6cb31301eafb347eca0115321d9dc01a997",
-    "revision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+    "url": "http://127.0.0.1:4187/version.json?visualAudit=1784810185878",
+    "version": "463124498a67680255928de41fbe3dd9c7503120",
+    "revision": "463124498a67680255928de41fbe3dd9c7503120",
     "delivery": "snap-root-v1",
     "visualLineage": "pokko-field-v1"
   },
@@ -23,24 +23,24 @@
       "wrapperId": "sansu-local-visual-audit-v1",
       "mode": "exact-clean-head-local-wrapper-v1",
       "verifiedExactCleanBuild": true,
-      "revision": "2495f6cb31301eafb347eca0115321d9dc01a997",
-      "sourceTreeSha": "66fd670e4a8e6c7e02cc3ee275bdc658b845508f",
+      "revision": "463124498a67680255928de41fbe3dd9c7503120",
+      "sourceTreeSha": "9ecf364f87273460631257ffa2eca626e2c32a52",
       "delivery": "snap-root-v1",
       "visualLineage": "pokko-field-v1",
       "baseUrl": "http://127.0.0.1:4187",
-      "createdAt": "2026-07-23T12:23:11.110Z",
+      "createdAt": "2026-07-23T12:36:08.668Z",
       "packageLockSha256": "6a1330af82201b651b934fdd767479e093ef7179c94f0399d586424336192bc5",
       "nodeVersion": "v22.22.3",
       "npmVersion": "11.15.0",
       "targetAttestation": {
         "path": "sansu-visual-audit-target.json",
-        "nonce": "c3427d35-bc13-470b-b937-c14ae468bda8",
-        "sha256": "eacc2438b0523cca39a8714bdce645527f6e88001cd8995db89f4059112eb858"
+        "nonce": "27644713-926b-4b61-a5b2-8058a12ac240",
+        "sha256": "8497dfafe5d424594a6c35a064ef02832ce522e8edf271a6737f52e7a0294273"
       },
       "dist": {
-        "sha256": "cf8be2e3db79ffda0507f4643f8f9da81f2cbbbb8b117b92b6ebb8f016758390",
+        "sha256": "2e382b6c394ef9fe5edb594753cb406ea1dfc7db9b01b185c3f729e2419276b6",
         "fileCount": 96,
-        "totalBytes": 19042757
+        "totalBytes": 19042851
       }
     },
     "beforePublication": {
@@ -48,24 +48,24 @@
       "wrapperId": "sansu-local-visual-audit-v1",
       "mode": "exact-clean-head-local-wrapper-v1",
       "verifiedExactCleanBuild": true,
-      "revision": "2495f6cb31301eafb347eca0115321d9dc01a997",
-      "sourceTreeSha": "66fd670e4a8e6c7e02cc3ee275bdc658b845508f",
+      "revision": "463124498a67680255928de41fbe3dd9c7503120",
+      "sourceTreeSha": "9ecf364f87273460631257ffa2eca626e2c32a52",
       "delivery": "snap-root-v1",
       "visualLineage": "pokko-field-v1",
       "baseUrl": "http://127.0.0.1:4187",
-      "createdAt": "2026-07-23T12:23:11.110Z",
+      "createdAt": "2026-07-23T12:36:08.668Z",
       "packageLockSha256": "6a1330af82201b651b934fdd767479e093ef7179c94f0399d586424336192bc5",
       "nodeVersion": "v22.22.3",
       "npmVersion": "11.15.0",
       "targetAttestation": {
         "path": "sansu-visual-audit-target.json",
-        "nonce": "c3427d35-bc13-470b-b937-c14ae468bda8",
-        "sha256": "eacc2438b0523cca39a8714bdce645527f6e88001cd8995db89f4059112eb858"
+        "nonce": "27644713-926b-4b61-a5b2-8058a12ac240",
+        "sha256": "8497dfafe5d424594a6c35a064ef02832ce522e8edf271a6737f52e7a0294273"
       },
       "dist": {
-        "sha256": "cf8be2e3db79ffda0507f4643f8f9da81f2cbbbb8b117b92b6ebb8f016758390",
+        "sha256": "2e382b6c394ef9fe5edb594753cb406ea1dfc7db9b01b185c3f729e2419276b6",
         "fileCount": 96,
-        "totalBytes": 19042757
+        "totalBytes": 19042851
       }
     },
     "verifiedExactCleanBuild": true
@@ -269,15 +269,15 @@
     }
   },
   "repository": {
-    "headRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
-    "headTree": "66fd670e4a8e6c7e02cc3ee275bdc658b845508f",
+    "headRevision": "463124498a67680255928de41fbe3dd9c7503120",
+    "headTree": "9ecf364f87273460631257ffa2eca626e2c32a52",
     "targetMatchesHead": true,
     "dirty": false,
     "dirtyRuntimeInputs": [],
     "nonRuntimeDirtyEntryCount": 0,
     "beforePublication": {
-      "headRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
-      "headTree": "66fd670e4a8e6c7e02cc3ee275bdc658b845508f",
+      "headRevision": "463124498a67680255928de41fbe3dd9c7503120",
+      "headTree": "9ecf364f87273460631257ffa2eca626e2c32a52",
       "targetMatchesHead": true,
       "dirty": false,
       "dirtyRuntimeInputs": [],
@@ -331,9 +331,9 @@
         "height": 844
       },
       "screenshot": "390x844/01-cold-launch.jpg",
-      "screenshotSha256": "5baa837ccea9759c41aaa6e1e1cb1a11ca30ab81c053712d04edf454ad77a487",
-      "capturedAt": "2026-07-23T12:23:13.340Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "258e7bafdc9b52c0195c47fe8d075103dc7aab2d16363c19884d33c54d21b5b9",
+      "capturedAt": "2026-07-23T12:36:12.291Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "dig-pop-painted-v2",
@@ -723,17 +723,17 @@
         "cumulativeResponseCount": 21
       },
       "run": {
-        "runId": "explore-mrxhfhlk-s9tlz-1784809393112",
+        "runId": "explore-mrxhw6nr-ddt71-1784810172087",
         "status": "active",
         "steps": 0,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"0406b6a2-d61e-4864-be63-4cf38b0c33ad\",\"explore-mrxhfhlk-s9tlz-1784809393112\",\"explore-mrxhfhlk-s9tlz-1784809393112:node-1-0\",1]",
-        "gateId": "explore-mrxhfhlk-s9tlz-1784809393112:node-1-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"dd88c5ee-d186-4933-ac45-65830adec967\",\"explore-mrxhw6nr-ddt71-1784810172087\",\"explore-mrxhw6nr-ddt71-1784810172087:node-1-0\",1]",
+        "gateId": "explore-mrxhw6nr-ddt71-1784810172087:node-1-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfhlk-s9tlz-1784809393112:node-1-0:attempt-0",
+        "problemId": "explore-mrxhw6nr-ddt71-1784810172087:node-1-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -741,7 +741,7 @@
       "freshRunPersistence": {
         "runCount": 1,
         "eventCount": 1,
-        "runId": "explore-mrxhfhlk-s9tlz-1784809393112",
+        "runId": "explore-mrxhw6nr-ddt71-1784810172087",
         "status": "active"
       }
     },
@@ -755,9 +755,9 @@
         "height": 844
       },
       "screenshot": "390x844/02-ready.jpg",
-      "screenshotSha256": "5baa837ccea9759c41aaa6e1e1cb1a11ca30ab81c053712d04edf454ad77a487",
-      "capturedAt": "2026-07-23T12:23:13.490Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "258e7bafdc9b52c0195c47fe8d075103dc7aab2d16363c19884d33c54d21b5b9",
+      "capturedAt": "2026-07-23T12:36:12.442Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "dig-pop-painted-v2",
@@ -1147,17 +1147,17 @@
         "cumulativeResponseCount": 21
       },
       "run": {
-        "runId": "explore-mrxhfhlk-s9tlz-1784809393112",
+        "runId": "explore-mrxhw6nr-ddt71-1784810172087",
         "status": "active",
         "steps": 0,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"0406b6a2-d61e-4864-be63-4cf38b0c33ad\",\"explore-mrxhfhlk-s9tlz-1784809393112\",\"explore-mrxhfhlk-s9tlz-1784809393112:node-1-0\",1]",
-        "gateId": "explore-mrxhfhlk-s9tlz-1784809393112:node-1-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"dd88c5ee-d186-4933-ac45-65830adec967\",\"explore-mrxhw6nr-ddt71-1784810172087\",\"explore-mrxhw6nr-ddt71-1784810172087:node-1-0\",1]",
+        "gateId": "explore-mrxhw6nr-ddt71-1784810172087:node-1-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfhlk-s9tlz-1784809393112:node-1-0:attempt-0",
+        "problemId": "explore-mrxhw6nr-ddt71-1784810172087:node-1-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -1173,9 +1173,9 @@
         "height": 844
       },
       "screenshot": "390x844/03-dig-one.jpg",
-      "screenshotSha256": "45643056bcc178804d6dae3fb836cf085e6f22a8bca738a39275dfd76c62d51e",
-      "capturedAt": "2026-07-23T12:23:13.988Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "72ef555523946829df70fb9ab8de214d27982e99bb181d48f51e347a1ec367d0",
+      "capturedAt": "2026-07-23T12:36:12.945Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "dig-pop-painted-v2",
@@ -1565,17 +1565,17 @@
         "cumulativeResponseCount": 22
       },
       "run": {
-        "runId": "explore-mrxhfhlk-s9tlz-1784809393112",
+        "runId": "explore-mrxhw6nr-ddt71-1784810172087",
         "status": "active",
         "steps": 1,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"0406b6a2-d61e-4864-be63-4cf38b0c33ad\",\"explore-mrxhfhlk-s9tlz-1784809393112\",\"explore-mrxhfhlk-s9tlz-1784809393112:node-2-0\",1]",
-        "gateId": "explore-mrxhfhlk-s9tlz-1784809393112:node-2-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"dd88c5ee-d186-4933-ac45-65830adec967\",\"explore-mrxhw6nr-ddt71-1784810172087\",\"explore-mrxhw6nr-ddt71-1784810172087:node-2-0\",1]",
+        "gateId": "explore-mrxhw6nr-ddt71-1784810172087:node-2-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfhlk-s9tlz-1784809393112:node-2-0:attempt-0",
+        "problemId": "explore-mrxhw6nr-ddt71-1784810172087:node-2-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -1591,9 +1591,9 @@
         "height": 844
       },
       "screenshot": "390x844/04-dig-two.jpg",
-      "screenshotSha256": "9fe75d80c4fd6ee550725f5bce02f60f9650e2ee0b7769c960ecd6daaa84f7bf",
-      "capturedAt": "2026-07-23T12:23:14.421Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "21319b70dc7b482f44613a8589b97a5b2e0516c2ce112251a8244a918c4f992a",
+      "capturedAt": "2026-07-23T12:36:13.425Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "dig-pop-painted-v2",
@@ -1983,17 +1983,17 @@
         "cumulativeResponseCount": 23
       },
       "run": {
-        "runId": "explore-mrxhfhlk-s9tlz-1784809393112",
+        "runId": "explore-mrxhw6nr-ddt71-1784810172087",
         "status": "active",
         "steps": 2,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"0406b6a2-d61e-4864-be63-4cf38b0c33ad\",\"explore-mrxhfhlk-s9tlz-1784809393112\",\"explore-mrxhfhlk-s9tlz-1784809393112:node-3-0\",1]",
-        "gateId": "explore-mrxhfhlk-s9tlz-1784809393112:node-3-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"dd88c5ee-d186-4933-ac45-65830adec967\",\"explore-mrxhw6nr-ddt71-1784810172087\",\"explore-mrxhw6nr-ddt71-1784810172087:node-3-0\",1]",
+        "gateId": "explore-mrxhw6nr-ddt71-1784810172087:node-3-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfhlk-s9tlz-1784809393112:node-3-0:attempt-0",
+        "problemId": "explore-mrxhw6nr-ddt71-1784810172087:node-3-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -2009,9 +2009,9 @@
         "height": 844
       },
       "screenshot": "390x844/05-popped.jpg",
-      "screenshotSha256": "87eb5ec5acdda19ca05bf5bb4a8e0c75b2e1d50bcab3380667d94d4cc7c5128f",
-      "capturedAt": "2026-07-23T12:23:14.788Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "ad307e8ec7d54f440397ebf6d32afba4cdc9853332cfd1a1a865c3ce20a6bb13",
+      "capturedAt": "2026-07-23T12:36:13.808Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "dig-pop-painted-v2",
@@ -2401,17 +2401,17 @@
         "cumulativeResponseCount": 24
       },
       "run": {
-        "runId": "explore-mrxhfhlk-s9tlz-1784809393112",
+        "runId": "explore-mrxhw6nr-ddt71-1784810172087",
         "status": "active",
         "steps": 2,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"0406b6a2-d61e-4864-be63-4cf38b0c33ad\",\"explore-mrxhfhlk-s9tlz-1784809393112\",\"explore-mrxhfhlk-s9tlz-1784809393112:node-3-0\",1]",
-        "gateId": "explore-mrxhfhlk-s9tlz-1784809393112:node-3-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"dd88c5ee-d186-4933-ac45-65830adec967\",\"explore-mrxhw6nr-ddt71-1784810172087\",\"explore-mrxhw6nr-ddt71-1784810172087:node-3-0\",1]",
+        "gateId": "explore-mrxhw6nr-ddt71-1784810172087:node-3-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfhlk-s9tlz-1784809393112:node-3-0:attempt-0",
+        "problemId": "explore-mrxhw6nr-ddt71-1784810172087:node-3-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -2427,9 +2427,9 @@
         "height": 844
       },
       "screenshot": "390x844/06-route-choice.jpg",
-      "screenshotSha256": "f3120613fbcbce373145f0575d213aaa7c5d515add3993154b91daea9edea3ea",
-      "capturedAt": "2026-07-23T12:23:15.721Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "0c9f134da7e00e61cb5e33fed71dca46a695f86e0f69a4440f3818ebabf0726a",
+      "capturedAt": "2026-07-23T12:36:14.394Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "pokko-route-map-v3",
@@ -2660,7 +2660,7 @@
         "cumulativeResponseCount": 25
       },
       "run": {
-        "runId": "explore-mrxhfhlk-s9tlz-1784809393112",
+        "runId": "explore-mrxhw6nr-ddt71-1784810172087",
         "status": "active",
         "steps": 3,
         "openingExperience": "snap-root-v1",
@@ -2687,9 +2687,9 @@
         "height": 844
       },
       "screenshot": "390x844/07-q4-ordinary.jpg",
-      "screenshotSha256": "f27b803531edb6829ade44c6e67b93d288e4fe29c19bfe18467792f4f93bd979",
-      "capturedAt": "2026-07-23T12:23:15.955Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "e484b87a3ab33a1da6f6eef49d71a18c246c2020326728662514e4f5d19a4ce1",
+      "capturedAt": "2026-07-23T12:36:14.623Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "firefly-dew-path-painted-v3",
@@ -3252,17 +3252,17 @@
         "cumulativeResponseCount": 29
       },
       "run": {
-        "runId": "explore-mrxhfhlk-s9tlz-1784809393112",
+        "runId": "explore-mrxhw6nr-ddt71-1784810172087",
         "status": "active",
         "steps": 3,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"0406b6a2-d61e-4864-be63-4cf38b0c33ad\",\"explore-mrxhfhlk-s9tlz-1784809393112\",\"explore-mrxhfhlk-s9tlz-1784809393112:node-4-0\",1]",
-        "gateId": "explore-mrxhfhlk-s9tlz-1784809393112:node-4-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"dd88c5ee-d186-4933-ac45-65830adec967\",\"explore-mrxhw6nr-ddt71-1784810172087\",\"explore-mrxhw6nr-ddt71-1784810172087:node-4-0\",1]",
+        "gateId": "explore-mrxhw6nr-ddt71-1784810172087:node-4-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfhlk-s9tlz-1784809393112:node-4-0:attempt-0",
+        "problemId": "explore-mrxhw6nr-ddt71-1784810172087:node-4-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -3279,8 +3279,8 @@
       },
       "screenshot": "390x844/08-major-encounter-idle.jpg",
       "screenshotSha256": "405ea9651d561275aa934563d8834a68cc35ca4190245143837cca9613db891d",
-      "capturedAt": "2026-07-23T12:23:16.254Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "capturedAt": "2026-07-23T12:36:14.941Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "light-bridge-dew-path-v3",
@@ -3854,17 +3854,17 @@
         "cumulativeResponseCount": 32
       },
       "run": {
-        "runId": "explore-mrxhfhlk-s9tlz-1784809393112",
+        "runId": "explore-mrxhw6nr-ddt71-1784810172087",
         "status": "active",
         "steps": 4,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"0406b6a2-d61e-4864-be63-4cf38b0c33ad\",\"explore-mrxhfhlk-s9tlz-1784809393112\",\"explore-mrxhfhlk-s9tlz-1784809393112:node-5-0\",1]",
-        "gateId": "explore-mrxhfhlk-s9tlz-1784809393112:node-5-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"dd88c5ee-d186-4933-ac45-65830adec967\",\"explore-mrxhw6nr-ddt71-1784810172087\",\"explore-mrxhw6nr-ddt71-1784810172087:node-5-0\",1]",
+        "gateId": "explore-mrxhw6nr-ddt71-1784810172087:node-5-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfhlk-s9tlz-1784809393112:node-5-0:attempt-0",
+        "problemId": "explore-mrxhw6nr-ddt71-1784810172087:node-5-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -3881,8 +3881,8 @@
       },
       "screenshot": "390x844/09-major-encounter-correct.jpg",
       "screenshotSha256": "0ef84834ee56279103c0da83ab663f24cdbbe83b2a5487701b011c3a10d71788",
-      "capturedAt": "2026-07-23T12:23:16.454Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "capturedAt": "2026-07-23T12:36:15.156Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "light-bridge-dew-path-v3",
@@ -4477,17 +4477,17 @@
         "cumulativeResponseCount": 32
       },
       "run": {
-        "runId": "explore-mrxhfhlk-s9tlz-1784809393112",
+        "runId": "explore-mrxhw6nr-ddt71-1784810172087",
         "status": "active",
         "steps": 4,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"0406b6a2-d61e-4864-be63-4cf38b0c33ad\",\"explore-mrxhfhlk-s9tlz-1784809393112\",\"explore-mrxhfhlk-s9tlz-1784809393112:node-5-0\",1]",
-        "gateId": "explore-mrxhfhlk-s9tlz-1784809393112:node-5-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"dd88c5ee-d186-4933-ac45-65830adec967\",\"explore-mrxhw6nr-ddt71-1784810172087\",\"explore-mrxhw6nr-ddt71-1784810172087:node-5-0\",1]",
+        "gateId": "explore-mrxhw6nr-ddt71-1784810172087:node-5-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfhlk-s9tlz-1784809393112:node-5-0:attempt-0",
+        "problemId": "explore-mrxhw6nr-ddt71-1784810172087:node-5-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -4503,9 +4503,9 @@
         "height": 844
       },
       "screenshot": "390x844/10-q7-before.jpg",
-      "screenshotSha256": "a714e931dcd4119592d4022f40d82378a683c87ccfc2ff8819396cacd0e06d07",
-      "capturedAt": "2026-07-23T12:23:16.987Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "18d7a03235a6ae3c0fb519060fb1ffa19f2530755614a48ee3675ba3e9e3b210",
+      "capturedAt": "2026-07-23T12:36:15.692Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "root-tangle-dew-path-v3",
@@ -5079,17 +5079,17 @@
         "cumulativeResponseCount": 35
       },
       "run": {
-        "runId": "explore-mrxhfhlk-s9tlz-1784809393112",
+        "runId": "explore-mrxhw6nr-ddt71-1784810172087",
         "status": "active",
         "steps": 6,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"0406b6a2-d61e-4864-be63-4cf38b0c33ad\",\"explore-mrxhfhlk-s9tlz-1784809393112\",\"explore-mrxhfhlk-s9tlz-1784809393112:node-7-0\",1]",
-        "gateId": "explore-mrxhfhlk-s9tlz-1784809393112:node-7-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"dd88c5ee-d186-4933-ac45-65830adec967\",\"explore-mrxhw6nr-ddt71-1784810172087\",\"explore-mrxhw6nr-ddt71-1784810172087:node-7-0\",1]",
+        "gateId": "explore-mrxhw6nr-ddt71-1784810172087:node-7-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfhlk-s9tlz-1784809393112:node-7-0:attempt-0",
+        "problemId": "explore-mrxhw6nr-ddt71-1784810172087:node-7-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -5098,7 +5098,7 @@
     {
       "stage": "q7-observation",
       "captureScope": "locator-detail",
-      "revealGroupId": "02144f92-8ad7-4452-97ca-ababbb6cb928",
+      "revealGroupId": "0dd221eb-ec0b-44b9-9f92-3caca944cb53",
       "parentStage": "q7-reveal-composite",
       "viewport": {
         "width": 390,
@@ -5106,8 +5106,8 @@
       },
       "screenshot": "390x844/11-q7-observation.jpg",
       "screenshotSha256": "ff801d25ecd4cf535c05a9927c1a3665f47c9183ffb5d8caf2c90728f79213fe",
-      "capturedAt": "2026-07-23T12:23:18.186Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "capturedAt": "2026-07-23T12:36:16.887Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "root-tangle-dew-path-v3",
@@ -5501,7 +5501,7 @@
         "cumulativeResponseCount": 35
       },
       "run": {
-        "runId": "explore-mrxhfhlk-s9tlz-1784809393112",
+        "runId": "explore-mrxhw6nr-ddt71-1784810172087",
         "status": "active",
         "steps": 7,
         "openingExperience": "snap-root-v1",
@@ -5604,7 +5604,7 @@
     {
       "stage": "field-book",
       "captureScope": "locator-detail",
-      "revealGroupId": "02144f92-8ad7-4452-97ca-ababbb6cb928",
+      "revealGroupId": "0dd221eb-ec0b-44b9-9f92-3caca944cb53",
       "parentStage": "q7-reveal-composite",
       "viewport": {
         "width": 390,
@@ -5612,8 +5612,8 @@
       },
       "screenshot": "390x844/12-field-book.jpg",
       "screenshotSha256": "f8ad16ad2044de81bb2a776f919f0385213904c4604881dc6310b4d4b7deea76",
-      "capturedAt": "2026-07-23T12:23:18.418Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "capturedAt": "2026-07-23T12:36:17.122Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "firefly-field-book-v1",
@@ -5903,7 +5903,7 @@
         "cumulativeResponseCount": 35
       },
       "run": {
-        "runId": "explore-mrxhfhlk-s9tlz-1784809393112",
+        "runId": "explore-mrxhw6nr-ddt71-1784810172087",
         "status": "active",
         "steps": 7,
         "openingExperience": "snap-root-v1",
@@ -5923,9 +5923,9 @@
         "height": 844
       },
       "screenshot": "390x844/13-q8.jpg",
-      "screenshotSha256": "2156d1eebe9928d507913e8d8446cbbd0054ac18c17bf09907716e6fa178c61a",
-      "capturedAt": "2026-07-23T12:23:18.620Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "3f5b9145f4d644fc04db46f000d02cc91914191bc8160c3fc7a0bb20e09adfc5",
+      "capturedAt": "2026-07-23T12:36:17.343Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "firefly-dew-path-painted-v3",
@@ -6488,17 +6488,17 @@
         "cumulativeResponseCount": 35
       },
       "run": {
-        "runId": "explore-mrxhfhlk-s9tlz-1784809393112",
+        "runId": "explore-mrxhw6nr-ddt71-1784810172087",
         "status": "active",
         "steps": 7,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"0406b6a2-d61e-4864-be63-4cf38b0c33ad\",\"explore-mrxhfhlk-s9tlz-1784809393112\",\"explore-mrxhfhlk-s9tlz-1784809393112:node-8-0\",1]",
-        "gateId": "explore-mrxhfhlk-s9tlz-1784809393112:node-8-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"dd88c5ee-d186-4933-ac45-65830adec967\",\"explore-mrxhw6nr-ddt71-1784810172087\",\"explore-mrxhw6nr-ddt71-1784810172087:node-8-0\",1]",
+        "gateId": "explore-mrxhw6nr-ddt71-1784810172087:node-8-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfhlk-s9tlz-1784809393112:node-8-0:attempt-0",
+        "problemId": "explore-mrxhw6nr-ddt71-1784810172087:node-8-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -6514,9 +6514,9 @@
         "height": 844
       },
       "screenshot": "390x844/14-return.jpg",
-      "screenshotSha256": "fd25523235b11c2b9b3867a0c9c4ffaa8fade966587d08d1b8283e66edcc6c35",
-      "capturedAt": "2026-07-23T12:23:19.071Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "763a61a5db7f8bb2fb34c42f24978338c164ff644683d33a4950021e2919c9f1",
+      "capturedAt": "2026-07-23T12:36:17.806Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "research-library-pokko-v1",
@@ -6756,14 +6756,14 @@
         "cacheNames": [
           "workbox-precache-v2-http://127.0.0.1:4187/"
         ],
-        "responseCount": 1,
-        "diskCacheResponseCount": 1,
-        "serviceWorkerResponseCount": 1,
+        "responseCount": 2,
+        "diskCacheResponseCount": 2,
+        "serviceWorkerResponseCount": 2,
         "prefetchCacheResponseCount": 0,
-        "cumulativeResponseCount": 36
+        "cumulativeResponseCount": 37
       },
       "run": {
-        "runId": "explore-mrxhfhlk-s9tlz-1784809393112",
+        "runId": "explore-mrxhw6nr-ddt71-1784810172087",
         "status": "returned",
         "steps": 8,
         "openingExperience": "snap-root-v1",
@@ -6783,9 +6783,9 @@
         "height": 844
       },
       "screenshot": "390x844/15-relaunch.jpg",
-      "screenshotSha256": "a5bf4558636a976570b2da411ece80d51716ab5653f83ad62a565a5a139ef717",
-      "capturedAt": "2026-07-23T12:23:19.288Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "c68e54e68d14ba7c17871968fedfce3255237ab8c4a0eab98f4193ccf06529a9",
+      "capturedAt": "2026-07-23T12:36:18.075Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "dig-pop-painted-v2",
@@ -7172,20 +7172,20 @@
         "diskCacheResponseCount": 4,
         "serviceWorkerResponseCount": 4,
         "prefetchCacheResponseCount": 0,
-        "cumulativeResponseCount": 40
+        "cumulativeResponseCount": 41
       },
       "run": {
-        "runId": "explore-mrxhfm7y-vrgs8-1784809399102",
+        "runId": "explore-mrxhwb3i-av46p-1784810177838",
         "status": "active",
         "steps": 0,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"0406b6a2-d61e-4864-be63-4cf38b0c33ad\",\"explore-mrxhfm7y-vrgs8-1784809399102\",\"explore-mrxhfm7y-vrgs8-1784809399102:node-1-0\",1]",
-        "gateId": "explore-mrxhfm7y-vrgs8-1784809399102:node-1-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"dd88c5ee-d186-4933-ac45-65830adec967\",\"explore-mrxhwb3i-av46p-1784810177838\",\"explore-mrxhwb3i-av46p-1784810177838:node-1-0\",1]",
+        "gateId": "explore-mrxhwb3i-av46p-1784810177838:node-1-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfm7y-vrgs8-1784809399102:node-1-0:attempt-0",
+        "problemId": "explore-mrxhwb3i-av46p-1784810177838:node-1-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -7202,8 +7202,8 @@
       },
       "screenshot": "390x844/16-base.jpg",
       "screenshotSha256": "a04eb8884aa767708f7cd07c076879a9fdd389723710a2d6751e47a2fc01105b",
-      "capturedAt": "2026-07-23T12:23:19.455Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "capturedAt": "2026-07-23T12:36:18.240Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "pokko-base-painted-v1",
@@ -7463,7 +7463,7 @@
         "diskCacheResponseCount": 2,
         "serviceWorkerResponseCount": 2,
         "prefetchCacheResponseCount": 0,
-        "cumulativeResponseCount": 42
+        "cumulativeResponseCount": 43
       },
       "run": null,
       "attempt": null,
@@ -7480,9 +7480,9 @@
         "height": 1024
       },
       "screenshot": "768x1024/01-cold-launch.jpg",
-      "screenshotSha256": "a982b2f819410ce9aa06ac8e2f25c0079ddb60f9cff5513da9689c2ed0f8910a",
-      "capturedAt": "2026-07-23T12:23:20.608Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "246022153d5113f2910035cf8a350eda0129443e73d04283018d31e567e74fa5",
+      "capturedAt": "2026-07-23T12:36:19.527Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "dig-pop-painted-v2",
@@ -7872,17 +7872,17 @@
         "cumulativeResponseCount": 21
       },
       "run": {
-        "runId": "explore-mrxhfn82-njdn0-1784809400402",
+        "runId": "explore-mrxhwc83-d9djh-1784810179299",
         "status": "active",
         "steps": 0,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"67e36bb5-e6d0-4834-b9e3-1506605e825d\",\"explore-mrxhfn82-njdn0-1784809400402\",\"explore-mrxhfn82-njdn0-1784809400402:node-1-0\",1]",
-        "gateId": "explore-mrxhfn82-njdn0-1784809400402:node-1-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"ad019954-2d47-4d89-8a5e-37f2c4f7ff27\",\"explore-mrxhwc83-d9djh-1784810179299\",\"explore-mrxhwc83-d9djh-1784810179299:node-1-0\",1]",
+        "gateId": "explore-mrxhwc83-d9djh-1784810179299:node-1-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfn82-njdn0-1784809400402:node-1-0:attempt-0",
+        "problemId": "explore-mrxhwc83-d9djh-1784810179299:node-1-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -7890,7 +7890,7 @@
       "freshRunPersistence": {
         "runCount": 1,
         "eventCount": 1,
-        "runId": "explore-mrxhfn82-njdn0-1784809400402",
+        "runId": "explore-mrxhwc83-d9djh-1784810179299",
         "status": "active"
       }
     },
@@ -7904,9 +7904,9 @@
         "height": 1024
       },
       "screenshot": "768x1024/02-ready.jpg",
-      "screenshotSha256": "a982b2f819410ce9aa06ac8e2f25c0079ddb60f9cff5513da9689c2ed0f8910a",
-      "capturedAt": "2026-07-23T12:23:20.757Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "246022153d5113f2910035cf8a350eda0129443e73d04283018d31e567e74fa5",
+      "capturedAt": "2026-07-23T12:36:19.679Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "dig-pop-painted-v2",
@@ -8296,17 +8296,17 @@
         "cumulativeResponseCount": 21
       },
       "run": {
-        "runId": "explore-mrxhfn82-njdn0-1784809400402",
+        "runId": "explore-mrxhwc83-d9djh-1784810179299",
         "status": "active",
         "steps": 0,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"67e36bb5-e6d0-4834-b9e3-1506605e825d\",\"explore-mrxhfn82-njdn0-1784809400402\",\"explore-mrxhfn82-njdn0-1784809400402:node-1-0\",1]",
-        "gateId": "explore-mrxhfn82-njdn0-1784809400402:node-1-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"ad019954-2d47-4d89-8a5e-37f2c4f7ff27\",\"explore-mrxhwc83-d9djh-1784810179299\",\"explore-mrxhwc83-d9djh-1784810179299:node-1-0\",1]",
+        "gateId": "explore-mrxhwc83-d9djh-1784810179299:node-1-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfn82-njdn0-1784809400402:node-1-0:attempt-0",
+        "problemId": "explore-mrxhwc83-d9djh-1784810179299:node-1-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -8322,9 +8322,9 @@
         "height": 1024
       },
       "screenshot": "768x1024/03-dig-one.jpg",
-      "screenshotSha256": "89fbf527810f023e1970a53b3b470915cb9ebb7e850e6cea06d589115735484c",
-      "capturedAt": "2026-07-23T12:23:21.242Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "fe09c484697a84fda86a6ad4fc0c11049ad44bacbff8f4c5f4a15efd506e3553",
+      "capturedAt": "2026-07-23T12:36:20.193Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "dig-pop-painted-v2",
@@ -8714,17 +8714,17 @@
         "cumulativeResponseCount": 22
       },
       "run": {
-        "runId": "explore-mrxhfn82-njdn0-1784809400402",
+        "runId": "explore-mrxhwc83-d9djh-1784810179299",
         "status": "active",
         "steps": 1,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"67e36bb5-e6d0-4834-b9e3-1506605e825d\",\"explore-mrxhfn82-njdn0-1784809400402\",\"explore-mrxhfn82-njdn0-1784809400402:node-2-0\",1]",
-        "gateId": "explore-mrxhfn82-njdn0-1784809400402:node-2-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"ad019954-2d47-4d89-8a5e-37f2c4f7ff27\",\"explore-mrxhwc83-d9djh-1784810179299\",\"explore-mrxhwc83-d9djh-1784810179299:node-2-0\",1]",
+        "gateId": "explore-mrxhwc83-d9djh-1784810179299:node-2-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfn82-njdn0-1784809400402:node-2-0:attempt-0",
+        "problemId": "explore-mrxhwc83-d9djh-1784810179299:node-2-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -8740,9 +8740,9 @@
         "height": 1024
       },
       "screenshot": "768x1024/04-dig-two.jpg",
-      "screenshotSha256": "745cd3a32037ecd5bfb092e9c07ac5627f87301bd498fdc0c44fb8d8dd778e30",
-      "capturedAt": "2026-07-23T12:23:21.692Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "aa7cf84b649e5563d07b61a1028478c133599838fa68dcc6e9d8c67b690fdc53",
+      "capturedAt": "2026-07-23T12:36:20.677Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "dig-pop-painted-v2",
@@ -9132,17 +9132,17 @@
         "cumulativeResponseCount": 23
       },
       "run": {
-        "runId": "explore-mrxhfn82-njdn0-1784809400402",
+        "runId": "explore-mrxhwc83-d9djh-1784810179299",
         "status": "active",
         "steps": 2,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"67e36bb5-e6d0-4834-b9e3-1506605e825d\",\"explore-mrxhfn82-njdn0-1784809400402\",\"explore-mrxhfn82-njdn0-1784809400402:node-3-0\",1]",
-        "gateId": "explore-mrxhfn82-njdn0-1784809400402:node-3-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"ad019954-2d47-4d89-8a5e-37f2c4f7ff27\",\"explore-mrxhwc83-d9djh-1784810179299\",\"explore-mrxhwc83-d9djh-1784810179299:node-3-0\",1]",
+        "gateId": "explore-mrxhwc83-d9djh-1784810179299:node-3-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfn82-njdn0-1784809400402:node-3-0:attempt-0",
+        "problemId": "explore-mrxhwc83-d9djh-1784810179299:node-3-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -9158,9 +9158,9 @@
         "height": 1024
       },
       "screenshot": "768x1024/05-popped.jpg",
-      "screenshotSha256": "7ec74746625dcc4ba780c887fd7a3c1edbc054482c9d8e2fad28d2eeec60c787",
-      "capturedAt": "2026-07-23T12:23:22.058Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "0ccaeb5d29714212c5bb732320d3ca996c50e8e14886480dc631bee9e36bf5e2",
+      "capturedAt": "2026-07-23T12:36:21.044Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "dig-pop-painted-v2",
@@ -9550,17 +9550,17 @@
         "cumulativeResponseCount": 24
       },
       "run": {
-        "runId": "explore-mrxhfn82-njdn0-1784809400402",
+        "runId": "explore-mrxhwc83-d9djh-1784810179299",
         "status": "active",
         "steps": 2,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"67e36bb5-e6d0-4834-b9e3-1506605e825d\",\"explore-mrxhfn82-njdn0-1784809400402\",\"explore-mrxhfn82-njdn0-1784809400402:node-3-0\",1]",
-        "gateId": "explore-mrxhfn82-njdn0-1784809400402:node-3-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"ad019954-2d47-4d89-8a5e-37f2c4f7ff27\",\"explore-mrxhwc83-d9djh-1784810179299\",\"explore-mrxhwc83-d9djh-1784810179299:node-3-0\",1]",
+        "gateId": "explore-mrxhwc83-d9djh-1784810179299:node-3-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfn82-njdn0-1784809400402:node-3-0:attempt-0",
+        "problemId": "explore-mrxhwc83-d9djh-1784810179299:node-3-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -9576,9 +9576,9 @@
         "height": 1024
       },
       "screenshot": "768x1024/06-route-choice.jpg",
-      "screenshotSha256": "95c3aa964ba89d394209eaea078bd1bddec20b7101b9969ccebae036026212db",
-      "capturedAt": "2026-07-23T12:23:22.992Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "1576851f28b9a8a918a7cf4c01b16a3f8a78df84c8bbedd86e191c4564819871",
+      "capturedAt": "2026-07-23T12:36:21.494Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "pokko-route-map-v3",
@@ -9809,7 +9809,7 @@
         "cumulativeResponseCount": 25
       },
       "run": {
-        "runId": "explore-mrxhfn82-njdn0-1784809400402",
+        "runId": "explore-mrxhwc83-d9djh-1784810179299",
         "status": "active",
         "steps": 3,
         "openingExperience": "snap-root-v1",
@@ -9837,8 +9837,8 @@
       },
       "screenshot": "768x1024/07-q4-ordinary.jpg",
       "screenshotSha256": "431097dc846e2a8a7e3facfb9648788a726f286dfe511ced2c79016307ce06b1",
-      "capturedAt": "2026-07-23T12:23:23.208Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "capturedAt": "2026-07-23T12:36:21.727Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "firefly-dew-path-painted-v3",
@@ -10401,17 +10401,17 @@
         "cumulativeResponseCount": 29
       },
       "run": {
-        "runId": "explore-mrxhfn82-njdn0-1784809400402",
+        "runId": "explore-mrxhwc83-d9djh-1784810179299",
         "status": "active",
         "steps": 3,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"67e36bb5-e6d0-4834-b9e3-1506605e825d\",\"explore-mrxhfn82-njdn0-1784809400402\",\"explore-mrxhfn82-njdn0-1784809400402:node-4-0\",1]",
-        "gateId": "explore-mrxhfn82-njdn0-1784809400402:node-4-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"ad019954-2d47-4d89-8a5e-37f2c4f7ff27\",\"explore-mrxhwc83-d9djh-1784810179299\",\"explore-mrxhwc83-d9djh-1784810179299:node-4-0\",1]",
+        "gateId": "explore-mrxhwc83-d9djh-1784810179299:node-4-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfn82-njdn0-1784809400402:node-4-0:attempt-0",
+        "problemId": "explore-mrxhwc83-d9djh-1784810179299:node-4-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -10427,9 +10427,9 @@
         "height": 1024
       },
       "screenshot": "768x1024/08-major-encounter-idle.jpg",
-      "screenshotSha256": "18d15a917332527672cd3adb31a6a5c9211fe9250cb5fa9ed400d77d8ed1f30e",
-      "capturedAt": "2026-07-23T12:23:23.506Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "7fee48ecfe9a6f5fb067d1dea7f7de171c96f07b7795b12cff5e63d76c631e0a",
+      "capturedAt": "2026-07-23T12:36:22.043Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "light-bridge-dew-path-v3",
@@ -11003,17 +11003,17 @@
         "cumulativeResponseCount": 32
       },
       "run": {
-        "runId": "explore-mrxhfn82-njdn0-1784809400402",
+        "runId": "explore-mrxhwc83-d9djh-1784810179299",
         "status": "active",
         "steps": 4,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"67e36bb5-e6d0-4834-b9e3-1506605e825d\",\"explore-mrxhfn82-njdn0-1784809400402\",\"explore-mrxhfn82-njdn0-1784809400402:node-5-0\",1]",
-        "gateId": "explore-mrxhfn82-njdn0-1784809400402:node-5-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"ad019954-2d47-4d89-8a5e-37f2c4f7ff27\",\"explore-mrxhwc83-d9djh-1784810179299\",\"explore-mrxhwc83-d9djh-1784810179299:node-5-0\",1]",
+        "gateId": "explore-mrxhwc83-d9djh-1784810179299:node-5-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfn82-njdn0-1784809400402:node-5-0:attempt-0",
+        "problemId": "explore-mrxhwc83-d9djh-1784810179299:node-5-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -11030,8 +11030,8 @@
       },
       "screenshot": "768x1024/09-major-encounter-correct.jpg",
       "screenshotSha256": "422923ba833975bafe57185e9829900be8c4dee29223362c320fa22dba11c225",
-      "capturedAt": "2026-07-23T12:23:23.725Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "capturedAt": "2026-07-23T12:36:22.259Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "light-bridge-dew-path-v3",
@@ -11626,17 +11626,17 @@
         "cumulativeResponseCount": 32
       },
       "run": {
-        "runId": "explore-mrxhfn82-njdn0-1784809400402",
+        "runId": "explore-mrxhwc83-d9djh-1784810179299",
         "status": "active",
         "steps": 4,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"67e36bb5-e6d0-4834-b9e3-1506605e825d\",\"explore-mrxhfn82-njdn0-1784809400402\",\"explore-mrxhfn82-njdn0-1784809400402:node-5-0\",1]",
-        "gateId": "explore-mrxhfn82-njdn0-1784809400402:node-5-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"ad019954-2d47-4d89-8a5e-37f2c4f7ff27\",\"explore-mrxhwc83-d9djh-1784810179299\",\"explore-mrxhwc83-d9djh-1784810179299:node-5-0\",1]",
+        "gateId": "explore-mrxhwc83-d9djh-1784810179299:node-5-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfn82-njdn0-1784809400402:node-5-0:attempt-0",
+        "problemId": "explore-mrxhwc83-d9djh-1784810179299:node-5-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -11652,9 +11652,9 @@
         "height": 1024
       },
       "screenshot": "768x1024/10-q7-before.jpg",
-      "screenshotSha256": "6145093a1ce4fe496f31fbb9819311fc09d00819f56af3c0c938ffc7947d4183",
-      "capturedAt": "2026-07-23T12:23:24.274Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "c6cf7f94e7cdd55f73a4fe304c0c0999b50df41840a140cd10412a4f795b4c6d",
+      "capturedAt": "2026-07-23T12:36:22.809Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "root-tangle-dew-path-v3",
@@ -12228,17 +12228,17 @@
         "cumulativeResponseCount": 35
       },
       "run": {
-        "runId": "explore-mrxhfn82-njdn0-1784809400402",
+        "runId": "explore-mrxhwc83-d9djh-1784810179299",
         "status": "active",
         "steps": 6,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"67e36bb5-e6d0-4834-b9e3-1506605e825d\",\"explore-mrxhfn82-njdn0-1784809400402\",\"explore-mrxhfn82-njdn0-1784809400402:node-7-0\",1]",
-        "gateId": "explore-mrxhfn82-njdn0-1784809400402:node-7-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"ad019954-2d47-4d89-8a5e-37f2c4f7ff27\",\"explore-mrxhwc83-d9djh-1784810179299\",\"explore-mrxhwc83-d9djh-1784810179299:node-7-0\",1]",
+        "gateId": "explore-mrxhwc83-d9djh-1784810179299:node-7-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfn82-njdn0-1784809400402:node-7-0:attempt-0",
+        "problemId": "explore-mrxhwc83-d9djh-1784810179299:node-7-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -12247,7 +12247,7 @@
     {
       "stage": "q7-observation",
       "captureScope": "locator-detail",
-      "revealGroupId": "c1302c40-6376-4db2-ba2a-292b16f81da4",
+      "revealGroupId": "d00753dd-31f7-49e5-a4c9-a6117300d735",
       "parentStage": "q7-reveal-composite",
       "viewport": {
         "width": 768,
@@ -12255,8 +12255,8 @@
       },
       "screenshot": "768x1024/11-q7-observation.jpg",
       "screenshotSha256": "6c426d531ec3396c91fe15d16584517a739303c2346ad2b8bfe36276f344bf1e",
-      "capturedAt": "2026-07-23T12:23:25.471Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "capturedAt": "2026-07-23T12:36:24.042Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "root-tangle-dew-path-v3",
@@ -12650,7 +12650,7 @@
         "cumulativeResponseCount": 35
       },
       "run": {
-        "runId": "explore-mrxhfn82-njdn0-1784809400402",
+        "runId": "explore-mrxhwc83-d9djh-1784810179299",
         "status": "active",
         "steps": 7,
         "openingExperience": "snap-root-v1",
@@ -12753,7 +12753,7 @@
     {
       "stage": "field-book",
       "captureScope": "locator-detail",
-      "revealGroupId": "c1302c40-6376-4db2-ba2a-292b16f81da4",
+      "revealGroupId": "d00753dd-31f7-49e5-a4c9-a6117300d735",
       "parentStage": "q7-reveal-composite",
       "viewport": {
         "width": 768,
@@ -12761,8 +12761,8 @@
       },
       "screenshot": "768x1024/12-field-book.jpg",
       "screenshotSha256": "c7041ff7028b0b0f8d528a2fe252387d07d5d58952e60bc1b8f2e1f9e953c457",
-      "capturedAt": "2026-07-23T12:23:25.702Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "capturedAt": "2026-07-23T12:36:24.272Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "firefly-field-book-v1",
@@ -13052,7 +13052,7 @@
         "cumulativeResponseCount": 35
       },
       "run": {
-        "runId": "explore-mrxhfn82-njdn0-1784809400402",
+        "runId": "explore-mrxhwc83-d9djh-1784810179299",
         "status": "active",
         "steps": 7,
         "openingExperience": "snap-root-v1",
@@ -13072,9 +13072,9 @@
         "height": 1024
       },
       "screenshot": "768x1024/13-q8.jpg",
-      "screenshotSha256": "92902568916788fc8b8545b594e71db365a1f91372c6a29c08430ca547c8641d",
-      "capturedAt": "2026-07-23T12:23:25.907Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "1735ed99a4e5aaa428a1956e5e57257fbc02eb42e66efb879af1523c93deac8b",
+      "capturedAt": "2026-07-23T12:36:24.494Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "firefly-dew-path-painted-v3",
@@ -13637,17 +13637,17 @@
         "cumulativeResponseCount": 35
       },
       "run": {
-        "runId": "explore-mrxhfn82-njdn0-1784809400402",
+        "runId": "explore-mrxhwc83-d9djh-1784810179299",
         "status": "active",
         "steps": 7,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"67e36bb5-e6d0-4834-b9e3-1506605e825d\",\"explore-mrxhfn82-njdn0-1784809400402\",\"explore-mrxhfn82-njdn0-1784809400402:node-8-0\",1]",
-        "gateId": "explore-mrxhfn82-njdn0-1784809400402:node-8-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"ad019954-2d47-4d89-8a5e-37f2c4f7ff27\",\"explore-mrxhwc83-d9djh-1784810179299\",\"explore-mrxhwc83-d9djh-1784810179299:node-8-0\",1]",
+        "gateId": "explore-mrxhwc83-d9djh-1784810179299:node-8-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfn82-njdn0-1784809400402:node-8-0:attempt-0",
+        "problemId": "explore-mrxhwc83-d9djh-1784810179299:node-8-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -13663,9 +13663,9 @@
         "height": 1024
       },
       "screenshot": "768x1024/14-return.jpg",
-      "screenshotSha256": "8ae4809cb3872838e3fb06930c83b8cc243c4210c7544535aa8060d81eb6d99f",
-      "capturedAt": "2026-07-23T12:23:26.375Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "6963cb65aa209e3f16cccec737c177bcd815ab0021fbe5a2e83f8aa814e81df2",
+      "capturedAt": "2026-07-23T12:36:24.960Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "research-library-pokko-v1",
@@ -13905,14 +13905,14 @@
         "cacheNames": [
           "workbox-precache-v2-http://127.0.0.1:4187/"
         ],
-        "responseCount": 2,
-        "diskCacheResponseCount": 2,
-        "serviceWorkerResponseCount": 2,
+        "responseCount": 1,
+        "diskCacheResponseCount": 1,
+        "serviceWorkerResponseCount": 1,
         "prefetchCacheResponseCount": 0,
-        "cumulativeResponseCount": 37
+        "cumulativeResponseCount": 36
       },
       "run": {
-        "runId": "explore-mrxhfn82-njdn0-1784809400402",
+        "runId": "explore-mrxhwc83-d9djh-1784810179299",
         "status": "returned",
         "steps": 8,
         "openingExperience": "snap-root-v1",
@@ -13932,9 +13932,9 @@
         "height": 1024
       },
       "screenshot": "768x1024/15-relaunch.jpg",
-      "screenshotSha256": "a43a37ce06df2d10c5821cd317a6f13bc44d6df50ee76e173930bdd794848322",
-      "capturedAt": "2026-07-23T12:23:26.626Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "screenshotSha256": "877604b724ae2d1b291c9b3602164ebbfe0154926062837883064ba407f77405",
+      "capturedAt": "2026-07-23T12:36:25.227Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "dig-pop-painted-v2",
@@ -14321,20 +14321,20 @@
         "diskCacheResponseCount": 4,
         "serviceWorkerResponseCount": 4,
         "prefetchCacheResponseCount": 0,
-        "cumulativeResponseCount": 41
+        "cumulativeResponseCount": 40
       },
       "run": {
-        "runId": "explore-mrxhfruq-a06ft-1784809406402",
+        "runId": "explore-mrxhwgm4-hwuau-1784810184988",
         "status": "active",
         "steps": 0,
         "openingExperience": "snap-root-v1",
         "persistence": "ready"
       },
       "attempt": {
-        "attemptKey": "[\"explore-attempt-v1\",\"67e36bb5-e6d0-4834-b9e3-1506605e825d\",\"explore-mrxhfruq-a06ft-1784809406402\",\"explore-mrxhfruq-a06ft-1784809406402:node-1-0\",1]",
-        "gateId": "explore-mrxhfruq-a06ft-1784809406402:node-1-0",
+        "attemptKey": "[\"explore-attempt-v1\",\"ad019954-2d47-4d89-8a5e-37f2c4f7ff27\",\"explore-mrxhwgm4-hwuau-1784810184988\",\"explore-mrxhwgm4-hwuau-1784810184988:node-1-0\",1]",
+        "gateId": "explore-mrxhwgm4-hwuau-1784810184988:node-1-0",
         "attemptNumber": 1,
-        "problemId": "explore-mrxhfruq-a06ft-1784809406402:node-1-0:attempt-0",
+        "problemId": "explore-mrxhwgm4-hwuau-1784810184988:node-1-0:attempt-0",
         "saveState": "idle"
       },
       "url": "http://127.0.0.1:4187/#/explore",
@@ -14351,8 +14351,8 @@
       },
       "screenshot": "768x1024/16-base.jpg",
       "screenshotSha256": "f1b974207c7a55bc60668310b19de4f945a011ad64a42fd37e7c5816e08d675f",
-      "capturedAt": "2026-07-23T12:23:26.790Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "capturedAt": "2026-07-23T12:36:25.391Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visualCandidateId": "pokko-base-painted-v1",
@@ -14612,7 +14612,7 @@
         "diskCacheResponseCount": 1,
         "serviceWorkerResponseCount": 1,
         "prefetchCacheResponseCount": 0,
-        "cumulativeResponseCount": 42
+        "cumulativeResponseCount": 41
       },
       "run": null,
       "attempt": null,
@@ -14629,15 +14629,15 @@
         "q7-observation",
         "field-book"
       ],
-      "revealGroupId": "02144f92-8ad7-4452-97ca-ababbb6cb928",
+      "revealGroupId": "0dd221eb-ec0b-44b9-9f92-3caca944cb53",
       "viewport": {
         "width": 390,
         "height": 844
       },
       "screenshot": "390x844/supporting-q7-reveal-composite.jpg",
       "screenshotSha256": "5ca5042bdbba64f0be09db2e816bc8a99189bde474a6f0c972edffef35cd5110",
-      "capturedAt": "2026-07-23T12:23:17.957Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "capturedAt": "2026-07-23T12:36:16.658Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visibleIdentities": [
@@ -14931,15 +14931,15 @@
         "q7-observation",
         "field-book"
       ],
-      "revealGroupId": "c1302c40-6376-4db2-ba2a-292b16f81da4",
+      "revealGroupId": "d00753dd-31f7-49e5-a4c9-a6117300d735",
       "viewport": {
         "width": 768,
         "height": 1024
       },
       "screenshot": "768x1024/supporting-q7-reveal-composite.jpg",
       "screenshotSha256": "26eb75afe108151d5c65279b7278669163c5838f49ddc816d24c666cfe77e621",
-      "capturedAt": "2026-07-23T12:23:25.240Z",
-      "buildRevision": "2495f6cb31301eafb347eca0115321d9dc01a997",
+      "capturedAt": "2026-07-23T12:36:23.795Z",
+      "buildRevision": "463124498a67680255928de41fbe3dd9c7503120",
       "deliveryId": "snap-root-v1",
       "visualLineageId": "pokko-field-v1",
       "visibleIdentities": [
@@ -15229,7 +15229,7 @@
   ],
   "contactSheet": {
     "path": "contact-sheet.jpg",
-    "sha256": "d6859017f75f0f651d74473f04bdb486ef6fa00804ae20cd0ea2040911fb4d88"
+    "sha256": "6be3f60712933826c2ff3d080e233a1f1e210f606875838ce892bdff65c7f15e"
   },
   "evidenceSemantics": {
     "coldLaunchAndReady": {
@@ -15240,8 +15240,8 @@
             "width": 390,
             "height": 844
           },
-          "coldLaunchSha256": "5baa837ccea9759c41aaa6e1e1cb1a11ca30ab81c053712d04edf454ad77a487",
-          "readySha256": "5baa837ccea9759c41aaa6e1e1cb1a11ca30ab81c053712d04edf454ad77a487",
+          "coldLaunchSha256": "258e7bafdc9b52c0195c47fe8d075103dc7aab2d16363c19884d33c54d21b5b9",
+          "readySha256": "258e7bafdc9b52c0195c47fe8d075103dc7aab2d16363c19884d33c54d21b5b9",
           "pixelIdentical": true
         },
         {
@@ -15249,8 +15249,8 @@
             "width": 768,
             "height": 1024
           },
-          "coldLaunchSha256": "a982b2f819410ce9aa06ac8e2f25c0079ddb60f9cff5513da9689c2ed0f8910a",
-          "readySha256": "a982b2f819410ce9aa06ac8e2f25c0079ddb60f9cff5513da9689c2ed0f8910a",
+          "coldLaunchSha256": "246022153d5113f2910035cf8a350eda0129443e73d04283018d31e567e74fa5",
+          "readySha256": "246022153d5113f2910035cf8a350eda0129443e73d04283018d31e567e74fa5",
           "pixelIdentical": true
         }
       ]
