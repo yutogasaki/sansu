@@ -123,7 +123,7 @@ Dexie schema、migration、回答transactionは5.2、探索reducer / UIによる
 - 同じ `attemptKey` の逐次・並行再送では、最初にcommit済みのeventから同じreceiptを復元し、run集計を二重加算しない。keyが同じなのに正誤または記録skillが違う場合はデータ競合として拒否する。
 - event追加に失敗した場合は、先に行ったrun集計更新もtransaction rollbackし、receiptを返さない。
 
-この縦切りではSRS対象回答とreducer / UI統合まで実装した。MVP-2cではindexを増やさないoptional `activeCheckpoint` を同じversion 5 run行へ追加し、発見書き込みとは分離してrun再開を実装する。
+この縦切りではSRS対象回答とreducer / UI統合に加え、MVP-2cとしてindexを増やさないoptional `activeCheckpoint` を同じversion 5 run行へ追加し、発見書き込みとは分離してrun再開まで実装した。
 
 ### 5.3 receipt駆動UIとrun終了境界
 

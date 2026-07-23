@@ -9,6 +9,7 @@ import {
 import type { AppData, MemoryState, UserProfile } from "../../types";
 import { deleteProfileOwnedIndexedDbRows } from "../../user/repository";
 import { createAttemptIdentity } from "../attemptIdentity";
+import { createExploreLearningAssignment } from "../learningAssignment";
 import {
     createExplorePersistenceRepository,
     ExplorePersistenceConflictError,
@@ -18,6 +19,7 @@ import type {
     ExploreLearningSource,
     ReserveExploreLearningAssignmentInput,
 } from "../persistenceTypes";
+import { exploreReducer, getAvailableExploreNodes } from "../reducer";
 import { getLearningDayStart, toLocaleDateKey } from "../../../utils/learningDay";
 
 const indexedDbOptions: DexieOptions = { indexedDB, IDBKeyRange };
@@ -114,6 +116,50 @@ const reserveAssignment = (
     repository: ExplorePersistenceRepository,
     input: ReserveExploreLearningAssignmentInput,
 ) => repository.reserveExploreLearningAssignment(input);
+
+const createCheckpointPendingProblem = async (
+    repository: ExplorePersistenceRepository,
+    runId: string,
+    state: NonNullable<Awaited<ReturnType<ExplorePersistenceRepository["startExploreRun"]>>["activeCheckpoint"]>["state"],
+) => {
+    const node = getAvailableExploreNodes(state)[0];
+    const selected = exploreReducer(state, { type: "SELECT_NODE", nodeId: node.id });
+    const gate = selected.pendingProblem!;
+    const problem = {
+        id: `${gate.gateId}:attempt-0`,
+        subject: "math" as const,
+        categoryId: "add_1d_1_bridge",
+        questionText: "1 + 1",
+        inputType: "number" as const,
+        correctAnswer: "2",
+        isReview: false,
+    };
+    const assignment = await reserveAssignment(repository, reserveInput(
+        runId,
+        state.profileId,
+        gate.gateId,
+        problem.id,
+        problem.categoryId,
+    ));
+    // Keep this explicit construction aligned with the persisted assignment;
+    // it catches accidental mutation of assignment identity in the fixture.
+    expect(assignment).toEqual(createExploreLearningAssignment({
+        ...reserveInput(
+            runId,
+            state.profileId,
+            gate.gateId,
+            problem.id,
+            problem.categoryId,
+        ),
+    }));
+    const pending = exploreReducer(selected, {
+        type: "SET_PROBLEM",
+        problem,
+        assignment,
+        encounterId: undefined,
+    });
+    return { assignment, gate, pending, problem };
+};
 
 afterEach(async () => {
     if (database) {
@@ -1037,6 +1083,414 @@ describe("exploration persistence repository", () => {
                 runId: "run-1",
                 payload: expect.objectContaining({ status: "abandoned" }),
             }));
+    });
+
+    it("starts with a versioned checkpoint and returns the same active run for resume", async () => {
+        const testDatabase = await openVersion5Database("checkpoint-start");
+        await testDatabase.profiles.add(profile("profile-1"));
+        const repository = createExplorePersistenceRepository(testDatabase);
+
+        const run = await repository.startExploreRun({
+            runId: "run-1",
+            profileId: "profile-1",
+            seed: "seed-1",
+            startedAt: 100,
+        });
+        const resumable = await repository.getResumableExploreRun("profile-1");
+
+        expect(run.activeCheckpoint).toEqual(expect.objectContaining({
+            schemaVersion: 1,
+            revision: 0,
+            openingExperienceId: "classic-v1",
+            state: expect.objectContaining({
+                runId: "run-1",
+                profileId: "profile-1",
+                seed: "seed-1",
+            }),
+        }));
+        expect(resumable).toEqual({ run, checkpoint: run.activeCheckpoint });
+        await expect(testDatabase.exploreRunEvents.where("type").equals("run_started").count())
+            .resolves.toBe(1);
+    });
+
+    it("saves checkpoints with revision compare-and-swap", async () => {
+        const testDatabase = await openVersion5Database("checkpoint-cas");
+        await testDatabase.profiles.add(profile("profile-1"));
+        const repository = createExplorePersistenceRepository(testDatabase);
+        const run = await repository.startExploreRun({
+            runId: "run-1",
+            profileId: "profile-1",
+            seed: "seed-1",
+            startedAt: 100,
+        });
+        const state = run.activeCheckpoint!.state;
+        const node = getAvailableExploreNodes(state)[0];
+        const selected = exploreReducer(state, { type: "SELECT_NODE", nodeId: node.id });
+
+        const receipt = await repository.saveExploreRunCheckpoint({
+            runId: run.runId,
+            profileId: run.profileId,
+            expectedRevision: 0,
+            state: selected,
+            openingExperienceId: "classic-v1",
+            savedAt: 120,
+        });
+
+        expect(receipt.checkpointRevision).toBe(1);
+        await expect(repository.saveExploreRunCheckpoint({
+            runId: run.runId,
+            profileId: run.profileId,
+            expectedRevision: 0,
+            state: selected,
+            openingExperienceId: "classic-v1",
+            savedAt: 121,
+        })).rejects.toBeInstanceOf(ExplorePersistenceConflictError);
+    });
+
+    it("commits an answer and reducer checkpoint atomically when revision is supplied", async () => {
+        const testDatabase = await openVersion5Database("checkpoint-commit");
+        await testDatabase.profiles.add(profile("profile-1"));
+        const repository = createExplorePersistenceRepository(testDatabase);
+        const run = await repository.startExploreRun({
+            runId: "run-1",
+            profileId: "profile-1",
+            seed: "seed-1",
+            startedAt: 100,
+        });
+        const fixture = await createCheckpointPendingProblem(
+            repository,
+            run.runId,
+            run.activeCheckpoint!.state,
+        );
+        const saved = await repository.saveExploreRunCheckpoint({
+            runId: run.runId,
+            profileId: run.profileId,
+            expectedRevision: 0,
+            state: fixture.pending,
+            openingExperienceId: "classic-v1",
+            savedAt: 160,
+        });
+        const identity = createAttemptIdentity({
+            profileId: run.profileId,
+            runId: run.runId,
+            gateId: fixture.gate.gateId,
+            attemptNumber: 1,
+        });
+
+        const receipt = await repository.commitExploreAttempt({
+            identity,
+            problem: {
+                id: fixture.problem.id,
+                categoryId: fixture.problem.categoryId,
+            },
+            result: "correct",
+            committedAt: 200,
+            expectedCheckpointRevision: saved.checkpointRevision,
+        });
+        const stored = await testDatabase.exploreRuns.get(run.runId);
+
+        expect(receipt.checkpointRevision).toBe(2);
+        expect(stored).toEqual(expect.objectContaining({
+            problemsAnswered: 1,
+            correctCount: 1,
+            activeCheckpoint: expect.objectContaining({
+                revision: 2,
+                state: expect.objectContaining({
+                    steps: 1,
+                    committedAttemptKeys: [receipt.attemptKey],
+                    pendingProblem: undefined,
+                }),
+            }),
+        }));
+        await expect(testDatabase.exploreRunEvents.where("attemptKey")
+            .equals(receipt.attemptKey).count()).resolves.toBe(1);
+
+        const discoveryId = stored!.activeCheckpoint!.state.temporaryFinds[0].id;
+        const acknowledged = await repository.saveExploreRunCheckpoint({
+            runId: run.runId,
+            profileId: run.profileId,
+            expectedRevision: receipt.checkpointRevision!,
+            state: stored!.activeCheckpoint!.state,
+            openingExperienceId: "classic-v1",
+            acknowledgedDiscoveryId: discoveryId,
+            savedAt: 210,
+        });
+        expect(acknowledged.checkpointRevision).toBe(3);
+        await expect(repository.saveExploreRunCheckpoint({
+            runId: run.runId,
+            profileId: run.profileId,
+            expectedRevision: acknowledged.checkpointRevision,
+            state: stored!.activeCheckpoint!.state,
+            openingExperienceId: "classic-v1",
+            acknowledgedDiscoveryId: undefined,
+            savedAt: 220,
+        })).rejects.toBeInstanceOf(ExplorePersistenceConflictError);
+    });
+
+    it("rejects an old idempotent answer resend after a later checkpoint", async () => {
+        const testDatabase = await openVersion5Database("checkpoint-stale-resend");
+        await testDatabase.profiles.add(profile("profile-1"));
+        const repository = createExplorePersistenceRepository(testDatabase);
+        const run = await repository.startExploreRun({
+            runId: "run-1",
+            profileId: "profile-1",
+            seed: "seed-1",
+            startedAt: 100,
+        });
+        const fixture = await createCheckpointPendingProblem(
+            repository,
+            run.runId,
+            run.activeCheckpoint!.state,
+        );
+        const pendingReceipt = await repository.saveExploreRunCheckpoint({
+            runId: run.runId,
+            profileId: run.profileId,
+            expectedRevision: 0,
+            state: fixture.pending,
+            openingExperienceId: "classic-v1",
+            savedAt: 160,
+        });
+        const request = {
+            identity: createAttemptIdentity({
+                profileId: run.profileId,
+                runId: run.runId,
+                gateId: fixture.gate.gateId,
+                attemptNumber: 1,
+            }),
+            problem: {
+                id: fixture.problem.id,
+                categoryId: fixture.problem.categoryId,
+            },
+            result: "correct" as const,
+            committedAt: 200,
+            expectedCheckpointRevision: pendingReceipt.checkpointRevision,
+        };
+        const committed = await repository.commitExploreAttempt(request);
+        const stored = (await testDatabase.exploreRuns.get(run.runId))!;
+        const discoveryId = stored.activeCheckpoint!.state.temporaryFinds[0].id;
+        await repository.saveExploreRunCheckpoint({
+            runId: run.runId,
+            profileId: run.profileId,
+            expectedRevision: committed.checkpointRevision!,
+            state: stored.activeCheckpoint!.state,
+            openingExperienceId: "classic-v1",
+            acknowledgedDiscoveryId: discoveryId,
+            savedAt: 210,
+        });
+
+        await expect(repository.commitExploreAttempt(request))
+            .rejects.toBeInstanceOf(ExplorePersistenceConflictError);
+        await expect(testDatabase.exploreRunEvents.where("attemptKey")
+            .equals(committed.attemptKey).count()).resolves.toBe(1);
+    });
+
+    it("rejects skipped attempts at a checkpointed reducer boundary", async () => {
+        const testDatabase = await openVersion5Database("checkpoint-skip");
+        await testDatabase.profiles.add(profile("profile-1"));
+        const repository = createExplorePersistenceRepository(testDatabase);
+        const run = await repository.startExploreRun({
+            runId: "run-1",
+            profileId: "profile-1",
+            seed: "seed-1",
+            startedAt: 100,
+        });
+        const fixture = await createCheckpointPendingProblem(
+            repository,
+            run.runId,
+            run.activeCheckpoint!.state,
+        );
+        const pendingReceipt = await repository.saveExploreRunCheckpoint({
+            runId: run.runId,
+            profileId: run.profileId,
+            expectedRevision: 0,
+            state: fixture.pending,
+            openingExperienceId: "classic-v1",
+            savedAt: 160,
+        });
+
+        await expect(repository.commitExploreAttempt({
+            identity: createAttemptIdentity({
+                profileId: run.profileId,
+                runId: run.runId,
+                gateId: fixture.gate.gateId,
+                attemptNumber: 1,
+            }),
+            problem: {
+                id: fixture.problem.id,
+                categoryId: fixture.problem.categoryId,
+            },
+            result: "skipped",
+            committedAt: 200,
+            expectedCheckpointRevision: pendingReceipt.checkpointRevision,
+        })).rejects.toBeInstanceOf(ExplorePersistenceConflictError);
+        await expect(testDatabase.exploreRunEvents.where("type")
+            .equals("problem_answered").count()).resolves.toBe(0);
+    });
+
+    it("checks terminal retry revisions and persists checkpoint-owned discoveries", async () => {
+        const testDatabase = await openVersion5Database("checkpoint-finish-integrity");
+        await testDatabase.profiles.add(profile("profile-1"));
+        const repository = createExplorePersistenceRepository(testDatabase);
+        const run = await repository.startExploreRun({
+            runId: "run-1",
+            profileId: "profile-1",
+            seed: "seed-1",
+            startedAt: 100,
+        });
+        const fixture = await createCheckpointPendingProblem(
+            repository,
+            run.runId,
+            run.activeCheckpoint!.state,
+        );
+        const pendingReceipt = await repository.saveExploreRunCheckpoint({
+            runId: run.runId,
+            profileId: run.profileId,
+            expectedRevision: 0,
+            state: fixture.pending,
+            openingExperienceId: "classic-v1",
+            savedAt: 160,
+        });
+        const committed = await repository.commitExploreAttempt({
+            identity: createAttemptIdentity({
+                profileId: run.profileId,
+                runId: run.runId,
+                gateId: fixture.gate.gateId,
+                attemptNumber: 1,
+            }),
+            problem: {
+                id: fixture.problem.id,
+                categoryId: fixture.problem.categoryId,
+            },
+            result: "correct",
+            committedAt: 200,
+            expectedCheckpointRevision: pendingReceipt.checkpointRevision,
+        });
+        const active = (await testDatabase.exploreRuns.get(run.runId))!;
+        const checkpoint = active.activeCheckpoint!;
+        const canonicalDiscovery = checkpoint.state.temporaryFinds[0];
+        const finishInput = {
+            runId: run.runId,
+            profileId: run.profileId,
+            status: "returned" as const,
+            endedAt: 300,
+            energyUsed: checkpoint.state.maxEnergy - checkpoint.state.energy,
+            discoveries: [{ ...canonicalDiscovery, name: "tampered-name" }],
+            routeSummary: [...checkpoint.state.openedNodeIds],
+            expectedCheckpointRevision: committed.checkpointRevision,
+        };
+
+        await repository.finishExploreRun(finishInput);
+        await expect(testDatabase.exploreRuns.get(run.runId)).resolves.toEqual(
+            expect.objectContaining({
+                discoveries: [canonicalDiscovery],
+            }),
+        );
+        await expect(repository.finishExploreRun({
+            ...finishInput,
+            expectedCheckpointRevision: committed.checkpointRevision! + 1,
+        })).rejects.toBeInstanceOf(ExplorePersistenceConflictError);
+    });
+
+    it("folds one legacy answer tail during resume and rejects checkpoint-less legacy rows", async () => {
+        const testDatabase = await openVersion5Database("checkpoint-tail");
+        await testDatabase.profiles.bulkAdd([profile("profile-1"), profile("profile-2")]);
+        const repository = createExplorePersistenceRepository(testDatabase);
+        const run = await repository.startExploreRun({
+            runId: "run-1",
+            profileId: "profile-1",
+            seed: "seed-1",
+            startedAt: 100,
+        });
+        const fixture = await createCheckpointPendingProblem(
+            repository,
+            run.runId,
+            run.activeCheckpoint!.state,
+        );
+        const saved = await repository.saveExploreRunCheckpoint({
+            runId: run.runId,
+            profileId: run.profileId,
+            expectedRevision: 0,
+            state: fixture.pending,
+            openingExperienceId: "classic-v1",
+            savedAt: 160,
+        });
+        const identity = createAttemptIdentity({
+            profileId: run.profileId,
+            runId: run.runId,
+            gateId: fixture.gate.gateId,
+            attemptNumber: 1,
+        });
+        const committed = await repository.commitExploreAttempt({
+            identity,
+            problem: {
+                id: fixture.problem.id,
+                categoryId: fixture.problem.categoryId,
+            },
+            result: "correct",
+            committedAt: 200,
+            // Deliberately omit expectedCheckpointRevision to model a row
+            // written by the transitional client.
+        });
+        expect(committed.checkpointRevision).toBeUndefined();
+
+        const resumed = await repository.getResumableExploreRun(run.profileId);
+        expect(resumed?.checkpoint).toEqual(expect.objectContaining({
+            revision: saved.checkpointRevision + 1,
+            state: expect.objectContaining({
+                steps: 1,
+                committedAttemptKeys: [committed.attemptKey],
+            }),
+        }));
+
+        const firstEvent = await testDatabase.exploreRunEvents
+            .where("attemptKey")
+            .equals(committed.attemptKey)
+            .first();
+        if (!firstEvent || firstEvent.type !== "problem_answered") {
+            throw new Error("Expected the committed answer event");
+        }
+        await testDatabase.exploreRunEvents.bulkAdd([
+            {
+                ...firstEvent,
+                id: undefined,
+                attemptKey: "unapplied-tail-2",
+                attemptNumber: createAttemptIdentity({
+                    profileId: run.profileId,
+                    runId: run.runId,
+                    gateId: fixture.gate.gateId,
+                    attemptNumber: 2,
+                }).attemptNumber,
+                timestamp: 210,
+            },
+            {
+                ...firstEvent,
+                id: undefined,
+                attemptKey: "unapplied-tail-3",
+                attemptNumber: createAttemptIdentity({
+                    profileId: run.profileId,
+                    runId: run.runId,
+                    gateId: fixture.gate.gateId,
+                    attemptNumber: 3,
+                }).attemptNumber,
+                timestamp: 220,
+            },
+        ]);
+        await testDatabase.exploreRuns.update(run.runId, {
+            problemsAnswered: 3,
+            correctCount: 3,
+            updatedAt: 220,
+        });
+        await expect(repository.getResumableExploreRun(run.profileId))
+            .rejects.toBeInstanceOf(ExplorePersistenceConflictError);
+
+        const legacy = await repository.startExploreRun({
+            runId: "run-legacy",
+            profileId: "profile-2",
+            seed: "seed-legacy",
+            startedAt: 300,
+        });
+        await testDatabase.exploreRuns.put({ ...legacy, activeCheckpoint: undefined });
+        await expect(repository.getResumableExploreRun("profile-2")).resolves.toBeUndefined();
     });
 
     it("isolates profiles and deletes only the selected profile's explore rows", async () => {

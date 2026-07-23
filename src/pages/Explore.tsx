@@ -35,6 +35,7 @@ import {
 } from "../components/explore/exploreAnswerInput";
 import {
     commitExploreAttemptFromUi,
+    createExploreActiveCheckpoint,
     createAndReserveExploreProblemPlan,
     createAttemptIdentityKey,
     createExploreAttemptRecordingTarget,
@@ -48,9 +49,11 @@ import {
     getExploreOpeningExperience,
     getAvailableExploreNodes,
     getExploreReplayTeaser,
+    getResumableExploreRunFromUi,
     getExploreBenchmarkE2EOptions,
     getExploreRunE2EOptions,
     getRemainingRapidLoopBudgetMs,
+    ExplorePersistenceConflictError,
     isExploreOpeningCompletion,
     isExploreOpeningStep,
     isExploreAnswerCorrect,
@@ -61,6 +64,7 @@ import {
     selectExploreEncounterPhase,
     selectExploreDiscoveryPresentation,
     selectDeterministicRapidLoopNodeId,
+    saveExploreRunCheckpointFromUi,
     shouldAutoRouteExplorePath,
     startExploreRunFromUi,
     willCompleteExploreOpeningStep,
@@ -69,9 +73,11 @@ import {
     type ExploreBridgePlan,
     type ExploreEncounterId,
     type ExploreAttemptCommitReceipt,
+    type ExploreActiveCheckpoint,
     type ExploreLearningAssignment,
     type FinishExploreRunInput,
     type ExploreOpeningExperienceDefinition,
+    type ExploreRunState,
 } from "../domain/explore";
 import type { Problem, UserProfile } from "../domain/types";
 import { getActiveProfile } from "../domain/user/repository";
@@ -135,10 +141,36 @@ export const selectConfirmedResearchPage = (
     return pageSummaries[0];
 };
 
+// eslint-disable-next-line react-refresh/only-export-components -- durable reveal selection is pure and unit tested.
+export const selectNextUnacknowledgedDiscovery = (
+    discoveries: readonly DiscoveryInstance[],
+    acknowledgedDiscoveryId?: string,
+): DiscoveryInstance | undefined => {
+    const acknowledgedIndex = acknowledgedDiscoveryId
+        ? discoveries.findIndex((find) => find.id === acknowledgedDiscoveryId)
+        : -1;
+    return discoveries[Math.max(0, acknowledgedIndex + 1)];
+};
+
+// eslint-disable-next-line react-refresh/only-export-components -- barrier selection is pure and unit tested.
+export const selectUnacknowledgedBlockingDiscovery = (
+    discoveries: readonly DiscoveryInstance[],
+    acknowledgedDiscoveryId?: string,
+): DiscoveryInstance | undefined => {
+    const acknowledgedIndex = acknowledgedDiscoveryId
+        ? discoveries.findIndex((find) => find.id === acknowledgedDiscoveryId)
+        : -1;
+    return discoveries
+        .slice(Math.max(0, acknowledgedIndex + 1))
+        .find(isBlockingDiscoveryReveal);
+};
+
 type ExploreRunPersistenceState =
-    | { status: "idle" | "starting" | "ready" }
+    | { status: "idle" | "starting" }
+    | { status: "ready"; runId: string; checkpointRevision: number }
+    | { status: "checkpointing"; runId: string; checkpointRevision: number }
     | { status: "finishing"; intent: ExploreRunFinishIntent }
-    | { status: "error"; operation: "start" | ExploreRunFinishIntent };
+    | { status: "error"; operation: "start" | "checkpoint" | ExploreRunFinishIntent };
 
 interface FrozenExploreAttempt {
     input: CommitExploreAttemptInput;
@@ -312,7 +344,9 @@ export const Explore: React.FC = () => {
     const reduceMotion = useReducedMotion();
     // Presentation is captured once and never persisted. Environment or URL
     // changes therefore cannot swap the visual rule in the middle of a run.
-    const [openingExperience] = useState(resolveOpeningExperienceForUiSession);
+    const [openingExperience, setOpeningExperience] = useState(
+        resolveOpeningExperienceForUiSession,
+    );
     const benchmark = getExploreBenchmarkE2EOptions();
     const [state, dispatch] = useReducer(exploreReducer, undefined, createFreshRun);
     const [phase, setPhase] = useState<ExploreScreenPhase>(INITIAL_EXPLORE_PHASE);
@@ -326,6 +360,8 @@ export const Explore: React.FC = () => {
     const [problemPlanRetryNonce, setProblemPlanRetryNonce] = useState(0);
     const [showAttemptSavingNotice, setShowAttemptSavingNotice] = useState(false);
     const [runPersistence, setRunPersistence] = useState<ExploreRunPersistenceState>({ status: "idle" });
+    const runPersistenceRef = useRef(runPersistence);
+    runPersistenceRef.current = runPersistence;
     const [startRetryNonce, setStartRetryNonce] = useState(0);
     const [revealedDiscovery, setRevealedDiscovery] = useState<DiscoveryInstance | null>(null);
     const [worldReaction, setWorldReaction] = useState<ExploreWorldReaction | null>(null);
@@ -333,6 +369,16 @@ export const Explore: React.FC = () => {
     const revealTimerRef = useRef<number | null>(null);
     const attemptSavingNoticeTimerRef = useRef<number | null>(null);
     const lastRevealIdRef = useRef<string | null>(null);
+    const acknowledgedDiscoveryIdRef = useRef<string | undefined>(undefined);
+    const checkpointRef = useRef<ExploreActiveCheckpoint | null>(null);
+    const checkpointStateRef = useRef<ExploreRunState | null>(null);
+    const checkpointQueueRef = useRef<Promise<void>>(Promise.resolve());
+    const checkpointOperationsRef = useRef(0);
+    const checkpointEpochRef = useRef(0);
+    const checkpointFailedEpochRef = useRef<number | null>(null);
+    const checkpointTransitionInFlightRef = useRef(false);
+    const runBootstrapInFlightRef = useRef(false);
+    const revealPersistenceInFlightRef = useRef<string | null>(null);
     const attemptSaveInFlightRef = useRef(false);
     const frozenAttemptRef = useRef<FrozenExploreAttempt | null>(null);
     const runFinishInFlightRef = useRef(false);
@@ -413,31 +459,80 @@ export const Explore: React.FC = () => {
             setRunPersistence({ status: "error", operation: "start" });
             return;
         }
-        if (state.profileId === profile.id) {
-            setRunPersistence((current) => current.status === "ready"
-                ? current
-                : { status: "ready" });
-            return;
-        }
+        const currentPersistence = runPersistenceRef.current;
+        if (
+            currentPersistence.status === "ready"
+            && currentPersistence.runId === state.runId
+            && state.profileId === profile.id
+        ) return;
+        if (runBootstrapInFlightRef.current) return;
 
         let cancelled = false;
+        runBootstrapInFlightRef.current = true;
         setRunPersistence({ status: "starting" });
         const releasePwaUpdateHold = holdPwaUpdateForCriticalPersistence();
-        void startExploreRunFromUi({
-            runId: state.runId,
-            profileId: profile.id,
-            seed: state.seed,
-            startedAt: state.startedAt,
-        }).then((run) => {
+        void (async () => {
+            const resumable = await getResumableExploreRunFromUi(profile.id);
+            if (cancelled) return;
+
+            const freshState = {
+                ...createInitialExploreState({
+                    seed: state.seed,
+                    now: state.startedAt,
+                    config: state.config,
+                }),
+                profileId: profile.id,
+            };
+            const checkpoint = resumable?.checkpoint ?? createExploreActiveCheckpoint({
+                state: freshState,
+                openingExperienceId: openingExperience.id,
+                revision: 0,
+                updatedAt: state.startedAt,
+            });
+            const run = resumable?.run ?? await startExploreRunFromUi({
+                runId: state.runId,
+                profileId: profile.id,
+                seed: state.seed,
+                startedAt: state.startedAt,
+                activeCheckpoint: checkpoint,
+            });
             if (cancelled) return;
             if (run.status !== "active") {
                 throw new Error(`Explore run ${run.runId} is not active`);
             }
-            dispatch({ type: "APPLY_STARTED_RUN", run });
-            setRunPersistence({ status: "ready" });
-        }).catch(() => {
+
+            const activeCheckpoint = resumable?.checkpoint ?? run.activeCheckpoint;
+            if (!activeCheckpoint) {
+                throw new Error(`Explore run ${run.runId} has no active checkpoint`);
+            }
+            checkpointRef.current = activeCheckpoint;
+            checkpointStateRef.current = activeCheckpoint.state;
+            acknowledgedDiscoveryIdRef.current = activeCheckpoint.acknowledgedDiscoveryId;
+            lastRevealIdRef.current = activeCheckpoint.acknowledgedDiscoveryId ?? null;
+            checkpointQueueRef.current = Promise.resolve();
+            checkpointOperationsRef.current = 0;
+            checkpointEpochRef.current += 1;
+            checkpointFailedEpochRef.current = null;
+            checkpointTransitionInFlightRef.current = false;
+            setOpeningExperience(getExploreOpeningExperience(
+                activeCheckpoint.openingExperienceId,
+            ));
+            setAnswer("");
+            setFeedback("idle");
+            setAttemptSaveStatus("idle");
+            setProblemPlanStatus("idle");
+            setRevealedDiscovery(null);
+            setWorldReaction(null);
+            dispatch({ type: "RESET", state: activeCheckpoint.state });
+            setRunPersistence({
+                status: "ready",
+                runId: activeCheckpoint.state.runId,
+                checkpointRevision: activeCheckpoint.revision,
+            });
+        })().catch(() => {
             if (!cancelled) setRunPersistence({ status: "error", operation: "start" });
         }).finally(() => {
+            runBootstrapInFlightRef.current = false;
             releasePwaUpdateHold();
         });
 
@@ -454,11 +549,151 @@ export const Explore: React.FC = () => {
         state.seed,
         state.startedAt,
         state.status,
+        state.config,
+        openingExperience.id,
     ]);
 
     const runPersistenceReady = runPersistence.status === "ready"
+        && runPersistence.runId === state.runId
         && Boolean(profile)
         && state.profileId === profile?.id;
+
+    const persistProjectedCheckpoint = useCallback((
+        projectState: (current: ExploreRunState) => ExploreRunState,
+        options: { acknowledgedDiscoveryId?: string } = {},
+    ): Promise<ExploreActiveCheckpoint> => {
+        if (attemptSaveInFlightRef.current) {
+            return Promise.reject(new Error(
+                "An answer commit is already moving the exploration checkpoint",
+            ));
+        }
+        checkpointOperationsRef.current += 1;
+        // Hold from enqueue through settlement. A deferred PWA reload must not
+        // slip into the gap between two serialized checkpoint writes.
+        const releasePwaUpdateHold = holdPwaUpdateForCriticalPersistence();
+        const currentCheckpoint = checkpointRef.current;
+        const operationEpoch = checkpointEpochRef.current;
+        const operationRunId = currentCheckpoint?.state.runId;
+        if (currentCheckpoint) {
+            setRunPersistence({
+                status: "checkpointing",
+                runId: currentCheckpoint.state.runId,
+                checkpointRevision: currentCheckpoint.revision,
+            });
+        }
+
+        const task = checkpointQueueRef.current.then(async () => {
+            if (
+                checkpointEpochRef.current !== operationEpoch
+                || checkpointFailedEpochRef.current === operationEpoch
+            ) {
+                throw new Error("Exploration checkpoint operation is no longer current");
+            }
+            const checkpoint = checkpointRef.current;
+            const persistedState = checkpointStateRef.current;
+            if (!profile || !checkpoint || !persistedState) {
+                throw new Error("Active exploration checkpoint is not ready");
+            }
+            if (
+                checkpoint.state.runId !== persistedState.runId
+                || checkpoint.state.runId !== operationRunId
+                || persistedState.profileId !== profile.id
+            ) {
+                throw new Error("Active exploration checkpoint changed ownership");
+            }
+
+            const nextState = projectState(persistedState);
+            const acknowledgedDiscoveryId = options.acknowledgedDiscoveryId
+                ?? acknowledgedDiscoveryIdRef.current;
+            if (
+                nextState === persistedState
+                && acknowledgedDiscoveryId === checkpoint.acknowledgedDiscoveryId
+            ) return checkpoint;
+
+            const receipt = await saveExploreRunCheckpointFromUi({
+                runId: persistedState.runId,
+                profileId: profile.id,
+                expectedRevision: checkpoint.revision,
+                state: nextState,
+                openingExperienceId: checkpoint.openingExperienceId,
+                acknowledgedDiscoveryId,
+                savedAt: Date.now(),
+            });
+            if (
+                checkpointEpochRef.current !== operationEpoch
+                || checkpointFailedEpochRef.current === operationEpoch
+            ) {
+                throw new Error("Exploration checkpoint operation was invalidated");
+            }
+            const savedCheckpoint = createExploreActiveCheckpoint({
+                state: nextState,
+                openingExperienceId: checkpoint.openingExperienceId,
+                acknowledgedDiscoveryId,
+                revision: receipt.checkpointRevision,
+                updatedAt: receipt.savedAt,
+            });
+            checkpointRef.current = savedCheckpoint;
+            checkpointStateRef.current = nextState;
+            acknowledgedDiscoveryIdRef.current = acknowledgedDiscoveryId;
+            return savedCheckpoint;
+        });
+
+        const heldTask = task.finally(releasePwaUpdateHold);
+        checkpointQueueRef.current = heldTask.then(
+            () => undefined,
+            () => {
+                if (checkpointEpochRef.current === operationEpoch) {
+                    checkpointFailedEpochRef.current = operationEpoch;
+                }
+            },
+        );
+        return heldTask.then((checkpoint) => {
+            checkpointOperationsRef.current = Math.max(
+                0,
+                checkpointOperationsRef.current - 1,
+            );
+            if (
+                checkpointOperationsRef.current === 0
+                && checkpointEpochRef.current === operationEpoch
+            ) {
+                setRunPersistence({
+                    status: "ready",
+                    runId: checkpoint.state.runId,
+                    checkpointRevision: checkpoint.revision,
+                });
+            }
+            return checkpoint;
+        }).catch((error) => {
+            checkpointOperationsRef.current = Math.max(
+                0,
+                checkpointOperationsRef.current - 1,
+            );
+            if (checkpointEpochRef.current === operationEpoch) {
+                setRunPersistence({ status: "error", operation: "checkpoint" });
+            }
+            throw error;
+        });
+    }, [profile]);
+
+    const applyCheckpointedActions = useCallback(async (
+        actions: readonly Parameters<typeof exploreReducer>[1][],
+    ): Promise<ExploreActiveCheckpoint | undefined> => {
+        if (checkpointTransitionInFlightRef.current) return undefined;
+        checkpointTransitionInFlightRef.current = true;
+        try {
+            const checkpoint = await persistProjectedCheckpoint(
+                (current) => actions.reduce(exploreReducer, current),
+            );
+            if (
+                !isExploreMountedRef.current
+                || activeExploreRunIdRef.current !== checkpoint.state.runId
+            ) return undefined;
+            dispatch({ type: "RESET", state: checkpoint.state });
+            return checkpoint;
+        } finally {
+            checkpointTransitionInFlightRef.current = false;
+        }
+    }, [persistProjectedCheckpoint]);
 
     useEffect(() => {
         const mediaQuery = window.matchMedia("(min-width: 1024px)");
@@ -469,9 +704,23 @@ export const Explore: React.FC = () => {
     }, []);
 
     const availableNodes = useMemo(() => getAvailableExploreNodes(state), [state]);
+    const acknowledgedDiscoveryId = checkpointRef.current?.acknowledgedDiscoveryId;
+    const nextUnacknowledgedDiscovery = useMemo(() => (
+        selectNextUnacknowledgedDiscovery(
+            state.temporaryFinds,
+            acknowledgedDiscoveryId,
+        )
+    ), [acknowledgedDiscoveryId, state.temporaryFinds]);
+    const unacknowledgedBlockingDiscovery = useMemo(() => (
+        selectUnacknowledgedBlockingDiscovery(
+            state.temporaryFinds,
+            acknowledgedDiscoveryId,
+        )
+    ), [acknowledgedDiscoveryId, state.temporaryFinds]);
     const isBlockingDiscoveryOpen = Boolean(
         revealedDiscovery && isBlockingDiscoveryReveal(revealedDiscovery),
     );
+    const isBlockingDiscoveryBarrier = Boolean(unacknowledgedBlockingDiscovery);
     const shouldAutoRoute = shouldAutoRouteExplorePath(state.steps, availableNodes.length);
     const currentNodeX = state.nodes.find((node) => node.id === state.currentNodeId)?.x ?? 0;
     const autoRouteNodeId = useMemo(() => (
@@ -537,25 +786,32 @@ export const Explore: React.FC = () => {
             || feedback !== "idle"
             || state.rescuePending
             || worldReaction
-            || isBlockingDiscoveryOpen
+            || isBlockingDiscoveryBarrier
             || !shouldAutoRoute
         ) return;
 
         if (pendingGate) {
             if (pendingGate.actionType === "bridge" && !pendingGate.bridgePlan) {
-                dispatch({ type: "CHOOSE_BRIDGE", plan: RAPID_LOOP_AUTO_BRIDGE_PLAN });
+                void applyCheckpointedActions([{
+                    type: "CHOOSE_BRIDGE",
+                    plan: RAPID_LOOP_AUTO_BRIDGE_PLAN,
+                }]).catch(() => undefined);
             }
             return;
         }
 
         if (autoRouteNodeId) {
-            dispatch({ type: "SELECT_NODE", nodeId: autoRouteNodeId });
+            void applyCheckpointedActions([{
+                type: "SELECT_NODE",
+                nodeId: autoRouteNodeId,
+            }]).catch(() => undefined);
         }
     }, [
+        applyCheckpointedActions,
         attemptSaveStatus,
         autoRouteNodeId,
         feedback,
-        isBlockingDiscoveryOpen,
+        isBlockingDiscoveryBarrier,
         pendingGate,
         phase,
         runPersistenceReady,
@@ -572,20 +828,22 @@ export const Explore: React.FC = () => {
             || phase !== "run"
             || !pendingGate
             || pendingGate.problem
+            || isBlockingDiscoveryBarrier
         ) return;
         if (pendingGate.actionType === "bridge" && !pendingGate.bridgePlan) return;
 
         let cancelled = false;
         setProblemPlanStatus("loading");
         void createAndReserveExploreProblemPlan(state, pendingGate, profile ?? undefined)
-            .then((plan) => {
+            .then(async (plan) => {
                 if (cancelled) return;
-                dispatch({
+                const checkpoint = await applyCheckpointedActions([{
                     type: "SET_PROBLEM",
                     problem: plan.problem,
                     assignment: plan.assignment,
                     encounterId: plan.encounterId,
-                });
+                }]);
+                if (cancelled || !checkpoint) return;
                 setAnswer("");
                 setProblemPlanStatus("idle");
             })
@@ -597,6 +855,8 @@ export const Explore: React.FC = () => {
             cancelled = true;
         };
     }, [
+        applyCheckpointedActions,
+        isBlockingDiscoveryBarrier,
         pendingGate,
         phase,
         problemPlanRetryNonce,
@@ -607,8 +867,13 @@ export const Explore: React.FC = () => {
     ]);
 
     useEffect(() => {
-        const discovery = state.temporaryFinds[state.temporaryFinds.length - 1];
-        if (!discovery || lastRevealIdRef.current === discovery.id) return;
+        const discovery = nextUnacknowledgedDiscovery;
+        if (
+            !discovery
+            || attemptSaveStatus !== "idle"
+            || lastRevealIdRef.current === discovery.id
+            || revealPersistenceInFlightRef.current === discovery.id
+        ) return;
         const presentation = selectExploreDiscoveryPresentation({
             discovery,
             completedSteps: state.steps,
@@ -616,10 +881,20 @@ export const Explore: React.FC = () => {
             rescuePending: state.rescuePending,
         });
         if (presentation === "absorbed-opening" || presentation === "deferred-return") {
-            lastRevealIdRef.current = discovery.id;
-            setWorldReaction((current) => current?.nodeId === discovery.nodeId
-                ? null
-                : current);
+            revealPersistenceInFlightRef.current = discovery.id;
+            void persistProjectedCheckpoint((current) => current, {
+                acknowledgedDiscoveryId: discovery.id,
+            }).then(() => {
+                if (!isExploreMountedRef.current) return;
+                lastRevealIdRef.current = discovery.id;
+                setWorldReaction((current) => current?.nodeId === discovery.nodeId
+                    ? null
+                    : current);
+            }).catch(() => undefined).finally(() => {
+                if (revealPersistenceInFlightRef.current === discovery.id) {
+                    revealPersistenceInFlightRef.current = null;
+                }
+            });
             return;
         }
         const revealDelay = worldReaction?.encounterId
@@ -629,15 +904,37 @@ export const Explore: React.FC = () => {
                 ? 70
                 : RAPID_LOOP_REVEAL_DELAY_MS;
         revealTimerRef.current = window.setTimeout(() => {
-            lastRevealIdRef.current = discovery.id;
-            setRevealedDiscovery(discovery);
-            if (!isBlockingDiscoveryReveal(discovery)) {
-                setWorldReaction((current) => current?.nodeId === discovery.nodeId
-                    ? null
-                    : current);
+            if (attemptSaveInFlightRef.current) {
+                revealTimerRef.current = null;
+                return;
             }
-            playSound(presentation === "blocking" ? "level_up" : "clear");
-            revealTimerRef.current = null;
+            const showDiscovery = () => {
+                if (!isExploreMountedRef.current) return;
+                lastRevealIdRef.current = discovery.id;
+                setRevealedDiscovery(discovery);
+                if (!isBlockingDiscoveryReveal(discovery)) {
+                    setWorldReaction((current) => current?.nodeId === discovery.nodeId
+                        ? null
+                        : current);
+                }
+                playSound(presentation === "blocking" ? "level_up" : "clear");
+            };
+
+            if (presentation === "blocking") {
+                showDiscovery();
+                revealTimerRef.current = null;
+                return;
+            }
+
+            revealPersistenceInFlightRef.current = discovery.id;
+            void persistProjectedCheckpoint((current) => current, {
+                acknowledgedDiscoveryId: discovery.id,
+            }).then(showDiscovery).catch(() => undefined).finally(() => {
+                if (revealPersistenceInFlightRef.current === discovery.id) {
+                    revealPersistenceInFlightRef.current = null;
+                }
+                revealTimerRef.current = null;
+            });
         }, revealDelay);
 
         return () => {
@@ -648,10 +945,13 @@ export const Explore: React.FC = () => {
         };
     }, [
         availableNodes.length,
+        attemptSaveStatus,
         reduceMotion,
+        persistProjectedCheckpoint,
         state.rescuePending,
         state.steps,
-        state.temporaryFinds,
+        nextUnacknowledgedDiscovery,
+        unacknowledgedBlockingDiscovery,
         worldReaction?.encounterId,
     ]);
 
@@ -661,13 +961,16 @@ export const Explore: React.FC = () => {
             || attemptSaveStatus !== "idle"
             || state.pendingProblem
             || state.rescuePending
-            || isBlockingDiscoveryOpen
+            || isBlockingDiscoveryBarrier
             || worldReaction
             || feedback !== "idle"
         ) return;
 
         playSound("tap");
-        dispatch({ type: "SELECT_NODE", nodeId });
+        void applyCheckpointedActions([{
+            type: "SELECT_NODE",
+            nodeId,
+        }]).catch(() => undefined);
     };
 
     const submitAnswer = useCallback(async () => {
@@ -677,6 +980,9 @@ export const Explore: React.FC = () => {
         if (
             !profile
             || !runPersistenceReady
+            || !checkpointRef.current
+            || checkpointOperationsRef.current !== 0
+            || checkpointFailedEpochRef.current === checkpointEpochRef.current
             || !problem
             || !assignment
             || answer.length === 0
@@ -706,6 +1012,7 @@ export const Explore: React.FC = () => {
                         problem: { id: problem.id, categoryId: target.skillId },
                         result: expectedResult,
                         committedAt: Date.now(),
+                        expectedCheckpointRevision: checkpointRef.current?.revision,
                     },
                     problem,
                     assignment,
@@ -723,6 +1030,7 @@ export const Explore: React.FC = () => {
             || frozen.problem.categoryId !== problem.categoryId
             || frozen.assignment.assignmentKey !== assignment.assignmentKey
             || frozen.answer !== answer
+            || frozen.input.expectedCheckpointRevision !== checkpointRef.current.revision
         ) return;
 
         frozenAttemptRef.current = frozen;
@@ -744,11 +1052,49 @@ export const Explore: React.FC = () => {
             if (!receiptMatchesFrozenAttempt(receipt, frozen)) {
                 throw new Error("Exploration commit receipt did not match its submission");
             }
+            const expectedCheckpointRevision = frozen.input.expectedCheckpointRevision;
+            if (
+                expectedCheckpointRevision !== undefined
+                && receipt.checkpointRevision !== expectedCheckpointRevision + 1
+            ) {
+                // The answer exists, but another client already moved the run
+                // past this local boundary. Never project it onto stale state;
+                // offer the durable checkpoint recovery path instead.
+                setRunPersistence({ status: "error", operation: "checkpoint" });
+                throw new Error("Exploration checkpoint advanced in another client");
+            }
             const committedAction = {
                 type: "APPLY_COMMITTED_ATTEMPT" as const,
                 receipt,
                 expectedResult: frozen.expectedResult,
             };
+            const previousCheckpoint = checkpointRef.current;
+            const previousCheckpointState = checkpointStateRef.current;
+            if (
+                !previousCheckpoint
+                || !previousCheckpointState
+                || receipt.checkpointRevision !== previousCheckpoint.revision + 1
+            ) {
+                throw new Error("Exploration checkpoint receipt is stale");
+            }
+            const committedState = exploreReducer(previousCheckpointState, committedAction);
+            if (committedState === previousCheckpointState) {
+                throw new Error("Exploration checkpoint did not accept its committed receipt");
+            }
+            const committedCheckpoint = createExploreActiveCheckpoint({
+                state: committedState,
+                openingExperienceId: previousCheckpoint.openingExperienceId,
+                acknowledgedDiscoveryId: previousCheckpoint.acknowledgedDiscoveryId,
+                revision: receipt.checkpointRevision,
+                updatedAt: Math.max(previousCheckpoint.updatedAt, receipt.committedAt),
+            });
+            checkpointRef.current = committedCheckpoint;
+            checkpointStateRef.current = committedState;
+            setRunPersistence({
+                status: "ready",
+                runId: committedState.runId,
+                checkpointRevision: committedCheckpoint.revision,
+            });
             frozenAttemptRef.current = null;
             hideAttemptSavingNotice();
             setAttemptSaveStatus("idle");
@@ -768,7 +1114,7 @@ export const Explore: React.FC = () => {
                 const isOpeningStep = isExploreOpeningStep(state.steps);
                 const completesOpening = willCompleteExploreOpeningStep(state.steps);
                 const correctProjectionCandidate = !(isOpeningStep && completesOpening)
-                    ? projectRapidLoopAfterCorrectCommit(state, committedAction)
+                    ? projectRapidLoopAfterCorrectCommit(previousCheckpointState, committedAction)
                     : undefined;
                 const projectedFinds = correctProjectionCandidate?.committedState.temporaryFinds;
                 const projectedDiscovery = projectedFinds?.[projectedFinds.length - 1];
@@ -828,19 +1174,29 @@ export const Explore: React.FC = () => {
                         }
                         if (rapidLoopTransitionRef.current !== transition) return;
 
-                        dispatch(committedAction);
+                        let advancedWithCheckpoint = false;
                         if (
                             prefetched.status === "ready"
                             && correctProjection
                         ) {
-                            correctProjection.routeActions.forEach(dispatch);
-                            dispatch({
-                                type: "SET_PROBLEM",
-                                problem: prefetched.value.problem,
-                                assignment: prefetched.value.assignment,
-                                encounterId: prefetched.value.encounterId,
-                            });
+                            try {
+                                const checkpoint = await applyCheckpointedActions([
+                                    ...correctProjection.routeActions,
+                                    {
+                                        type: "SET_PROBLEM",
+                                        problem: prefetched.value.problem,
+                                        assignment: prefetched.value.assignment,
+                                        encounterId: prefetched.value.encounterId,
+                                    },
+                                ]);
+                                advancedWithCheckpoint = Boolean(checkpoint);
+                            } catch {
+                                // The committed answer remains durable. Recovery
+                                // resumes from that boundary without applying a
+                                // speculative route or problem.
+                            }
                         }
+                        if (!advancedWithCheckpoint) dispatch(committedAction);
                         if (isOpeningStep && !completesOpening) {
                             setWorldReaction(null);
                         }
@@ -854,7 +1210,6 @@ export const Explore: React.FC = () => {
                 return;
             }
 
-            const committedState = exploreReducer(state, committedAction);
             const refreshState = committedState.pendingProblem?.problemRefreshPending
                 && !committedState.rescuePending
                 ? exploreReducer(committedState, { type: "ADVANCE_AFTER_INCORRECT" })
@@ -887,13 +1242,20 @@ export const Explore: React.FC = () => {
                     }
                     if (rapidLoopTransitionRef.current !== transition) return;
                     if (prefetched.status === "ready") {
-                        dispatch({ type: "ADVANCE_AFTER_INCORRECT" });
-                        dispatch({
-                            type: "SET_PROBLEM",
-                            problem: prefetched.value.problem,
-                            assignment: prefetched.value.assignment,
-                            encounterId: prefetched.value.encounterId,
-                        });
+                        try {
+                            await applyCheckpointedActions([
+                                { type: "ADVANCE_AFTER_INCORRECT" },
+                                {
+                                    type: "SET_PROBLEM",
+                                    problem: prefetched.value.problem,
+                                    assignment: prefetched.value.assignment,
+                                    encounterId: prefetched.value.encounterId,
+                                },
+                            ]);
+                        } catch {
+                            // Keep the already committed incorrect boundary.
+                            // The recovery action reloads that exact checkpoint.
+                        }
                     }
                     setAnswer("");
                     setFeedback("idle");
@@ -902,7 +1264,7 @@ export const Explore: React.FC = () => {
                 };
                 void finishIncorrectFeedback();
             }, retryDelayMs);
-        } catch {
+        } catch (error) {
             if (
                 !isExploreMountedRef.current
                 || activeExploreRunIdRef.current !== frozen.input.identity.runId
@@ -910,11 +1272,18 @@ export const Explore: React.FC = () => {
             hideAttemptSavingNotice();
             if (frozen.expectedResult === "incorrect") setFeedback("idle");
             setAttemptSaveStatus("error");
+            if (error instanceof ExplorePersistenceConflictError) {
+                // A stale tab cannot safely rebase a frozen answer by itself.
+                // The checkpoint recovery action reloads the one durable run
+                // before accepting more input.
+                setRunPersistence({ status: "error", operation: "checkpoint" });
+            }
         } finally {
             releasePwaUpdateHold();
             attemptSaveInFlightRef.current = false;
         }
     }, [
+        applyCheckpointedActions,
         answer,
         attemptSaveStatus,
         beginAttemptSavingNotice,
@@ -933,7 +1302,7 @@ export const Explore: React.FC = () => {
             !runPersistenceReady
             || attemptSaveStatus !== "idle"
             || !state.pendingProblem?.problem
-            || isBlockingDiscoveryOpen
+            || isBlockingDiscoveryBarrier
             || feedback !== "idle"
         ) return;
         const activeProblem = state.pendingProblem.problem;
@@ -980,7 +1349,7 @@ export const Explore: React.FC = () => {
     }, [
         attemptSaveStatus,
         feedback,
-        isBlockingDiscoveryOpen,
+        isBlockingDiscoveryBarrier,
         phase,
         runPersistenceReady,
         state.pendingProblem?.problem,
@@ -989,12 +1358,24 @@ export const Explore: React.FC = () => {
     ]);
 
     const finishActiveRun = useCallback(async (intent: ExploreRunFinishIntent) => {
+        const frozenRetry = frozenRunFinishRef.current;
+        const canRetryFrozenFinish = runPersistence.status === "error"
+            && runPersistence.operation === intent
+            && frozenRetry?.intent === intent
+            && frozenRetry.input.runId === state.runId
+            && frozenRetry.input.expectedCheckpointRevision === checkpointRef.current?.revision;
         if (
             !profile
+            || (!runPersistenceReady && !canRetryFrozenFinish)
             || !state.profileId
             || state.profileId !== profile.id
             || state.status !== "active"
+            || !checkpointRef.current
+            || checkpointOperationsRef.current !== 0
+            || checkpointFailedEpochRef.current === checkpointEpochRef.current
+            || attemptSaveInFlightRef.current
             || runFinishInFlightRef.current
+            || (intent !== "exit" && isBlockingDiscoveryBarrier)
             || (intent === "returned" && Boolean(state.pendingProblem || state.rescuePending))
             || (intent === "rescued" && (!state.rescuePending || state.energy !== 0))
         ) return;
@@ -1014,6 +1395,7 @@ export const Explore: React.FC = () => {
                     energyUsed: state.maxEnergy - state.energy,
                     discoveries: [...state.temporaryFinds],
                     routeSummary: [...state.openedNodeIds],
+                    expectedCheckpointRevision: checkpointRef.current.revision,
                 },
             };
 
@@ -1033,21 +1415,40 @@ export const Explore: React.FC = () => {
                 || receipt.profileId !== frozen.input.profileId
                 || receipt.status !== frozen.input.status
             ) throw new Error("Exploration finish receipt did not match its request");
+            if (
+                frozen.input.expectedCheckpointRevision !== undefined
+                && receipt.checkpointRevision !== frozen.input.expectedCheckpointRevision
+            ) {
+                throw new ExplorePersistenceConflictError(
+                    "Exploration finish checkpoint receipt is stale",
+                );
+            }
 
             frozenRunFinishRef.current = null;
-            setRunPersistence({ status: "ready" });
+            setRunPersistence({
+                status: "ready",
+                runId: receipt.runId,
+                checkpointRevision: receipt.checkpointRevision
+                    ?? frozen.input.expectedCheckpointRevision
+                    ?? 0,
+            });
             if (intent === "exit") {
                 navigate("/battle", { replace: true });
                 return;
             }
             dispatch({ type: "APPLY_FINISHED_RUN", receipt });
             if (intent === "returned") playSound("clear");
-        } catch {
+        } catch (error) {
             if (
                 !isExploreMountedRef.current
                 || activeExploreRunIdRef.current !== frozen.input.runId
             ) return;
-            setRunPersistence({ status: "error", operation: intent });
+            setRunPersistence({
+                status: "error",
+                operation: error instanceof ExplorePersistenceConflictError
+                    ? "checkpoint"
+                    : intent,
+            });
         } finally {
             releasePwaUpdateHold();
             runFinishInFlightRef.current = false;
@@ -1055,6 +1456,9 @@ export const Explore: React.FC = () => {
     }, [
         navigate,
         profile,
+        isBlockingDiscoveryBarrier,
+        runPersistence,
+        runPersistenceReady,
         state.energy,
         state.maxEnergy,
         state.openedNodeIds,
@@ -1088,7 +1492,18 @@ export const Explore: React.FC = () => {
         hideAttemptSavingNotice();
         frozenAttemptRef.current = null;
         frozenRunFinishRef.current = null;
+        checkpointRef.current = null;
+        checkpointStateRef.current = null;
+        checkpointQueueRef.current = Promise.resolve();
+        checkpointOperationsRef.current = 0;
+        checkpointEpochRef.current += 1;
+        checkpointFailedEpochRef.current = null;
+        checkpointTransitionInFlightRef.current = false;
+        revealPersistenceInFlightRef.current = null;
+        acknowledgedDiscoveryIdRef.current = undefined;
+        runBootstrapInFlightRef.current = false;
         dispatch({ type: "RESET", state: createFreshRun() });
+        setOpeningExperience(resolveOpeningExperienceForUiSession());
         setAnswer("");
         setFeedback("idle");
         setAttemptSaveStatus("idle");
@@ -1102,7 +1517,12 @@ export const Explore: React.FC = () => {
     };
 
     const returnToBase = () => {
-        if (!runPersistenceReady || state.pendingProblem || state.rescuePending) return;
+        if (
+            !runPersistenceReady
+            || state.pendingProblem
+            || state.rescuePending
+            || isBlockingDiscoveryBarrier
+        ) return;
         if (feedbackTimerRef.current !== null) window.clearTimeout(feedbackTimerRef.current);
         if (revealTimerRef.current !== null) window.clearTimeout(revealTimerRef.current);
         setFeedback("idle");
@@ -1114,9 +1534,27 @@ export const Explore: React.FC = () => {
     const activeRevealId = revealedDiscovery?.id;
     const finishDiscoveryReveal = useCallback(() => {
         if (!activeRevealId) return;
+        if (isBlockingDiscoveryOpen) {
+            if (revealPersistenceInFlightRef.current === activeRevealId) return;
+            revealPersistenceInFlightRef.current = activeRevealId;
+            void persistProjectedCheckpoint((current) => current, {
+                acknowledgedDiscoveryId: activeRevealId,
+            }).then(() => {
+                if (!isExploreMountedRef.current) return;
+                lastRevealIdRef.current = activeRevealId;
+                setRevealedDiscovery((current) => (
+                    current?.id === activeRevealId ? null : current
+                ));
+                setWorldReaction(null);
+            }).catch(() => undefined).finally(() => {
+                if (revealPersistenceInFlightRef.current === activeRevealId) {
+                    revealPersistenceInFlightRef.current = null;
+                }
+            });
+            return;
+        }
         setRevealedDiscovery((current) => current?.id === activeRevealId ? null : current);
-        if (isBlockingDiscoveryOpen) setWorldReaction(null);
-    }, [activeRevealId, isBlockingDiscoveryOpen]);
+    }, [activeRevealId, isBlockingDiscoveryOpen, persistProjectedCheckpoint]);
 
     useEffect(() => {
         if (
@@ -1125,14 +1563,14 @@ export const Explore: React.FC = () => {
             || state.status !== "active"
             || !runPersistenceReady
             || feedback !== "idle"
-            || isBlockingDiscoveryOpen
+            || isBlockingDiscoveryBarrier
             || worldReaction
         ) return;
         void finishActiveRun("rescued");
     }, [
         feedback,
         finishActiveRun,
-        isBlockingDiscoveryOpen,
+        isBlockingDiscoveryBarrier,
         phase,
         runPersistenceReady,
         state.rescuePending,
@@ -1142,7 +1580,34 @@ export const Explore: React.FC = () => {
 
     const retryRunPersistence = () => {
         if (runPersistence.status !== "error") return;
-        if (runPersistence.operation === "start") {
+        if (
+            runPersistence.operation === "start"
+            || runPersistence.operation === "checkpoint"
+        ) {
+            if (feedbackTimerRef.current !== null) window.clearTimeout(feedbackTimerRef.current);
+            if (revealTimerRef.current !== null) window.clearTimeout(revealTimerRef.current);
+            rapidLoopTransitionRef.current?.controller.abort();
+            rapidLoopTransitionRef.current = null;
+            checkpointRef.current = null;
+            checkpointStateRef.current = null;
+            checkpointQueueRef.current = Promise.resolve();
+            checkpointOperationsRef.current = 0;
+            checkpointEpochRef.current += 1;
+            checkpointFailedEpochRef.current = null;
+            checkpointTransitionInFlightRef.current = false;
+            revealPersistenceInFlightRef.current = null;
+            acknowledgedDiscoveryIdRef.current = undefined;
+            lastRevealIdRef.current = null;
+            runBootstrapInFlightRef.current = false;
+            frozenAttemptRef.current = null;
+            setAnswer("");
+            setFeedback("idle");
+            setAttemptSaveStatus("idle");
+            setProblemPlanStatus("idle");
+            setRevealedDiscovery(null);
+            setWorldReaction(null);
+            dispatch({ type: "RESET", state: createFreshRun() });
+            setRunPersistence({ status: "idle" });
             setProfileResolved(false);
             setStartRetryNonce((current) => current + 1);
             return;
@@ -1254,6 +1719,9 @@ export const Explore: React.FC = () => {
             data-benchmark-id={benchmark.fixtureId}
             data-run-attempt-count={state.attempts.length}
             data-run-committed-attempt-count={state.committedAttemptKeys.length}
+            data-checkpoint-revision={checkpointRef.current?.revision}
+            data-acknowledged-discovery-id={checkpointRef.current?.acknowledgedDiscoveryId}
+            data-run-persistence={runPersistence.status}
         >
             <ExploreWorldBackdrop />
 
@@ -1273,8 +1741,8 @@ export const Explore: React.FC = () => {
                 <div className="relative flex h-full min-h-0 flex-col">
                     <div
                         className="relative flex min-h-0 flex-1 flex-col"
-                        aria-hidden={isBlockingDiscoveryOpen || undefined}
-                        inert={isBlockingDiscoveryOpen || undefined}
+                        aria-hidden={isBlockingDiscoveryBarrier || undefined}
+                        inert={isBlockingDiscoveryBarrier || undefined}
                     >
                         <ExploreHud
                             energy={state.energy}
@@ -1286,7 +1754,7 @@ export const Explore: React.FC = () => {
                             steps={state.steps}
                             variant={isRapidProblemView && !isWideLayout ? "encounter" : "default"}
                             disabled={Boolean(
-                                isBlockingDiscoveryOpen
+                                isBlockingDiscoveryBarrier
                                 || worldReaction
                                 || !runPersistenceReady
                                 || attemptSaveStatus !== "idle"
@@ -1348,13 +1816,17 @@ export const Explore: React.FC = () => {
                                     <ExplorePersistenceRecovery
                                         title={runPersistence.operation === "start"
                                             ? "たんけんノートを じゅんびできなかったよ"
-                                            : "ノートに まだ かけなかったよ"}
+                                            : runPersistence.operation === "checkpoint"
+                                                ? "たんけんの しおりを はさめなかったよ"
+                                                : "ノートに まだ かけなかったよ"}
                                         detail={runPersistence.operation === "start"
                                             ? "ここで まっているよ。もういちど じゅんびしよう。"
                                             : "いまの たんけんは そのままです。"}
                                         buttonLabel={runPersistence.operation === "start"
                                             ? "もういちど じゅんびする"
-                                            : undefined}
+                                            : runPersistence.operation === "checkpoint"
+                                                ? "保存したところへ もどる"
+                                                : undefined}
                                         secondaryLabel={runPersistence.operation === "start"
                                             ? "あそびメニューへ もどる"
                                             : undefined}
@@ -1390,8 +1862,11 @@ export const Explore: React.FC = () => {
                                         <BridgeChoicePanel
                                             baseEnergyCost={state.config.correctEnergyCost}
                                             onChoose={(plan) => {
-                                                dispatch({ type: "CHOOSE_BRIDGE", plan });
                                                 playSound("tap");
+                                                void applyCheckpointedActions([{
+                                                    type: "CHOOSE_BRIDGE",
+                                                    plan,
+                                                }]).catch(() => undefined);
                                             }}
                                         />
                                     )
@@ -1438,9 +1913,15 @@ export const Explore: React.FC = () => {
                                                     completedSteps={state.steps}
                                                     rootPullAssetSet={openingExperience.rootPullAssetSet}
                                                     rootPullPayoffVariant={rootPullPayoffVariant}
-                                                    inputDisabled={attemptSaveStatus !== "idle"}
+                                                    inputDisabled={
+                                                        attemptSaveStatus !== "idle"
+                                                        || !runPersistenceReady
+                                                    }
                                                     onAnswerChange={(nextAnswer) => {
-                                                        if (attemptSaveStatus === "idle") setAnswer(nextAnswer);
+                                                        if (
+                                                            attemptSaveStatus === "idle"
+                                                            && runPersistenceReady
+                                                        ) setAnswer(nextAnswer);
                                                     }}
                                                     onSubmit={submitAnswer}
                                                 />
@@ -1453,9 +1934,15 @@ export const Explore: React.FC = () => {
                                                     answer={answer}
                                                     attemptCount={pendingGate.attemptCount}
                                                     incorrectEnergyCost={state.config.incorrectEnergyCost}
-                                                    inputDisabled={attemptSaveStatus !== "idle"}
+                                                    inputDisabled={
+                                                        attemptSaveStatus !== "idle"
+                                                        || !runPersistenceReady
+                                                    }
                                                     onAnswerChange={(nextAnswer) => {
-                                                        if (attemptSaveStatus === "idle") setAnswer(nextAnswer);
+                                                        if (
+                                                            attemptSaveStatus === "idle"
+                                                            && runPersistenceReady
+                                                        ) setAnswer(nextAnswer);
                                                     }}
                                                     onSubmit={submitAnswer}
                                                 />
@@ -1472,9 +1959,15 @@ export const Explore: React.FC = () => {
                                                     targetKind={targetKind}
                                                     incorrectEnergyCost={state.config.incorrectEnergyCost}
                                                     completedSteps={state.steps}
-                                                    inputDisabled={attemptSaveStatus !== "idle"}
+                                                    inputDisabled={
+                                                        attemptSaveStatus !== "idle"
+                                                        || !runPersistenceReady
+                                                    }
                                                     onAnswerChange={(nextAnswer) => {
-                                                        if (attemptSaveStatus === "idle") setAnswer(nextAnswer);
+                                                        if (
+                                                            attemptSaveStatus === "idle"
+                                                            && runPersistenceReady
+                                                        ) setAnswer(nextAnswer);
                                                     }}
                                                     onSubmit={submitAnswer}
                                                 />

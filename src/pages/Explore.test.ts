@@ -11,6 +11,8 @@ import {
     RAPID_LOOP_PAYOFF_HOLD_MS,
     RAPID_LOOP_REVEAL_DELAY_MS,
     selectConfirmedResearchPage,
+    selectNextUnacknowledgedDiscovery,
+    selectUnacknowledgedBlockingDiscovery,
 } from "./Explore";
 import { selectOpeningProblemPresentation } from "../components/explore/rootPullPresentation";
 import {
@@ -131,5 +133,28 @@ describe("confirmed research page selection", () => {
         ];
 
         expect(selectConfirmedResearchPage(finds)?.definition).toBe(FIREFLY_FLOWER_DISCOVERY_PAGE);
+    });
+});
+
+describe("durable blocking discovery cursor", () => {
+    it("keeps the finale barrier until that exact discovery is acknowledged", () => {
+        const clue = researchDiscovery(
+            "clue",
+            FIREFLY_FLOWER_DISCOVERY_PAGE.id,
+            FIREFLY_FLOWER_DISCOVERY_PAGE.chain.featureIds[0],
+        );
+        const finale = researchDiscovery(
+            "finale",
+            FIREFLY_FLOWER_DISCOVERY_PAGE.id,
+            FIREFLY_FLOWER_DISCOVERY_PAGE.chain.bigDiscoveryFeatureId,
+        );
+        const discoveries = [clue, finale];
+
+        expect(selectNextUnacknowledgedDiscovery(discoveries)).toBe(clue);
+        expect(selectUnacknowledgedBlockingDiscovery(discoveries)).toBe(finale);
+        expect(selectNextUnacknowledgedDiscovery(discoveries, clue.id)).toBe(finale);
+        expect(selectUnacknowledgedBlockingDiscovery(discoveries, clue.id)).toBe(finale);
+        expect(selectNextUnacknowledgedDiscovery(discoveries, finale.id)).toBeUndefined();
+        expect(selectUnacknowledgedBlockingDiscovery(discoveries, finale.id)).toBeUndefined();
     });
 });

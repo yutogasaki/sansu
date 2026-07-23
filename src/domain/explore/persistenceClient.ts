@@ -1,14 +1,19 @@
 import {
     commitExploreAttempt,
     finishExploreRun,
+    getResumableExploreRun,
+    saveExploreRunCheckpoint,
     startExploreRun,
 } from "./persistenceRepository";
 import type {
     CommitExploreAttemptInput,
     ExploreAttemptCommitReceipt,
+    ExploreRunCheckpointSaveReceipt,
     ExploreRunFinishReceipt,
     ExploreRunRecord,
     FinishExploreRunInput,
+    ResumableExploreRun,
+    SaveExploreRunCheckpointInput,
     StartExploreRunInput,
 } from "./persistenceTypes";
 
@@ -121,6 +126,14 @@ export const startExploreRunFromUi = async (
     }
     return startExploreRun(input);
 };
+
+export const getResumableExploreRunFromUi = async (
+    profileId: string,
+): Promise<ResumableExploreRun | undefined> => getResumableExploreRun(profileId);
+
+export const saveExploreRunCheckpointFromUi = async (
+    input: SaveExploreRunCheckpointInput,
+): Promise<ExploreRunCheckpointSaveReceipt> => saveExploreRunCheckpoint(input);
 
 export const finishExploreRunFromUi = async (
     input: FinishExploreRunInput,

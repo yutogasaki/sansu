@@ -1194,6 +1194,247 @@ const openFirstExploreAttempt = async (page) => {
   await waitForExploreFirstProblemReady(page);
 };
 
+const waitForFixedTenExploreAttempt = async (
+  page,
+  benchmarkIndex,
+  attemptNumber,
+  previousAttemptKey,
+) => {
+  await page.waitForFunction(
+    ({ expectedIndex, expectedAttemptNumber, priorKey }) => {
+      const world = document.querySelector(".explore-world");
+      const attempt = document.querySelector('[data-testid="explore-attempt"]');
+      const digit = [...document.querySelectorAll("button")].find(
+        (button) => button.getAttribute("aria-label") === "1",
+      );
+      return world instanceof HTMLElement
+        && world.dataset.runPersistence === "ready"
+        && attempt instanceof HTMLElement
+        && Number(attempt.dataset.benchmarkIndex) === expectedIndex
+        && Number(attempt.dataset.attemptNumber) === expectedAttemptNumber
+        && Boolean(attempt.dataset.attemptKey)
+        && (!priorKey || attempt.dataset.attemptKey !== priorKey)
+        && attempt.dataset.saveState === "idle"
+        && document.querySelector('[aria-label="こたえ 未入力"]')
+        && digit instanceof HTMLButtonElement
+        && !digit.disabled;
+    },
+    {
+      expectedIndex: benchmarkIndex,
+      expectedAttemptNumber: attemptNumber,
+      priorKey: previousAttemptKey || null,
+    },
+    { timeout: STEP_TIMEOUT_MS },
+  );
+};
+
+const readExploreAttemptBoundary = async (page) => {
+  const world = page.locator(".explore-world");
+  const attempt = page.getByTestId("explore-attempt");
+  return {
+    runId: await attempt.getAttribute("data-run-id"),
+    gateId: await attempt.getAttribute("data-gate-id"),
+    problemId: await attempt.getAttribute("data-problem-id"),
+    attemptNumber: await attempt.getAttribute("data-attempt-number"),
+    attemptKey: await attempt.getAttribute("data-attempt-key"),
+    benchmarkIndex: await attempt.getAttribute("data-benchmark-index"),
+    question: await page.locator("[data-question-text]").getAttribute("data-question-text"),
+    energy: await page.getByRole("progressbar", { name: "ひかり" }).getAttribute("aria-valuenow"),
+    steps: await world.getAttribute("data-run-steps"),
+    checkpointRevision: await world.getAttribute("data-checkpoint-revision"),
+  };
+};
+
+const assertExploreAttemptBoundary = (before, after, label) => {
+  for (const key of Object.keys(before)) {
+    assert(
+      after[key] === before[key],
+      `${label} changed ${key}: ${before[key]} -> ${after[key]}`,
+    );
+  }
+};
+
+const readExploreRouteBreakBoundary = async (page, runId) => {
+  const routeCards = page.locator("#explore-path-choice-title")
+    .locator("xpath=ancestor::section[1]")
+    .locator(".explore-route-card");
+  const options = await routeCards.evaluateAll((cards) => cards.map((card) => ({
+    label: card.getAttribute("aria-label"),
+    tone: card.getAttribute("data-tone"),
+    text: card.textContent?.replace(/\s+/g, " ").trim(),
+  })));
+  const snapshot = await readExplorePersistenceSnapshot(page);
+  const run = snapshot.runs.find((candidate) => candidate.runId === runId);
+  assert(run?.activeCheckpoint, `active checkpoint for ${runId} should exist at the route break`);
+  return {
+    route: {
+      currentNodeId: run.activeCheckpoint.state.currentNodeId,
+      openedNodeIds: run.activeCheckpoint.state.openedNodeIds,
+    },
+    options,
+    finds: run.activeCheckpoint.state.temporaryFinds,
+    events: snapshot.events.filter((event) => event.runId === runId),
+  };
+};
+
+const scenarioExploreInterruptionResume = async (browser) => {
+  const context = await browser.newContext({
+    baseURL: activeBaseUrl,
+    locale: "ja-JP",
+    reducedMotion: "reduce",
+    serviceWorkers: "block",
+    viewport: { width: 390, height: 844 },
+  });
+  const page = await context.newPage();
+  await page.addInitScript(() => {
+    window.__SANSU_E2E__ = {
+      exploreBenchmark: { fixtureId: "cold-open-fixed-ten-v1", startIndex: 0 },
+      exploreRun: { seed: "fixed-ten-interruption-resume", maxEnergy: 12 },
+    };
+  });
+
+  try {
+    await openFirstExploreAttempt(page);
+    await waitForFixedTenExploreAttempt(page, 0, 1);
+
+    const q1FirstAttempt = await readExploreAttemptBoundary(page);
+    const q1Answer = await getExploreNumericAnswer(page);
+    await page.keyboard.type(String(q1Answer + 1));
+    await page.getByRole("button", { name: "こたえる" }).click();
+    await waitForFixedTenExploreAttempt(page, 0, 2, q1FirstAttempt.attemptKey);
+
+    const q1Retry = await readExploreAttemptBoundary(page);
+    assert(q1Retry.attemptNumber === "2", `Q1 retry should be attempt 2; got ${q1Retry.attemptNumber}`);
+    assert(q1Retry.runId === q1FirstAttempt.runId, "Q1 miss should keep the run identity");
+    assert(q1Retry.gateId === q1FirstAttempt.gateId, "Q1 miss should keep the gate identity");
+    assert(q1Retry.problemId === q1FirstAttempt.problemId, "Q1 miss should keep the problem identity");
+    assert(
+      Number(q1Retry.energy) === Number(q1FirstAttempt.energy) - 1,
+      `Q1 miss should spend one energy; got ${q1FirstAttempt.energy} -> ${q1Retry.energy}`,
+    );
+
+    await page.keyboard.type("1");
+    await page.getByLabel("こたえ 1").waitFor({ timeout: STEP_TIMEOUT_MS });
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await waitForFixedTenExploreAttempt(page, 0, 2);
+    const q1Resumed = await readExploreAttemptBoundary(page);
+    assertExploreAttemptBoundary(q1Retry, q1Resumed, "Q1 partial-input reload");
+    assert(await page.getByLabel("こたえ 未入力").count() === 1, "Q1 partial input should not persist");
+
+    await solveExploreAndWaitForNextProblem(page);
+    await waitForFixedTenExploreAttempt(page, 1, 1);
+    await solveExploreAndWaitForNextProblem(page);
+    await waitForFixedTenExploreAttempt(page, 2, 1);
+    await solveExploreNumericProblem(page);
+    await waitForExploreRouteBreak(page);
+
+    const routeWorld = page.locator(".explore-world");
+    const runId = await routeWorld.getAttribute("data-run-id");
+    assert(runId, "Q3 route break should expose its run id");
+    assert(await routeWorld.getAttribute("data-run-steps") === "3", "Q3 should stop at the route break");
+    const routeBeforeReload = await readExploreRouteBreakBoundary(page, runId);
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await page.locator("#explore-path-choice-title").waitFor({ timeout: STEP_TIMEOUT_MS });
+    await page.waitForFunction(
+      () => document.querySelector(".explore-world")?.getAttribute("data-run-persistence") === "ready",
+      undefined,
+      { timeout: STEP_TIMEOUT_MS },
+    );
+    const routeAfterReload = await readExploreRouteBreakBoundary(page, runId);
+    assert(
+      JSON.stringify(routeAfterReload) === JSON.stringify(routeBeforeReload),
+      `Q3 reload changed route/options/finds/events: ${JSON.stringify({ routeBeforeReload, routeAfterReload })}`,
+    );
+
+    await chooseFirstExploreRoute(page);
+    await waitForFixedTenExploreAttempt(page, 3, 1);
+    for (let benchmarkIndex = 3; benchmarkIndex < 6; benchmarkIndex += 1) {
+      await solveExploreAndWaitForNextProblem(page);
+      await waitForFixedTenExploreAttempt(page, benchmarkIndex + 1, 1);
+    }
+
+    const q7Attempt = await readExploreAttemptBoundary(page);
+    assert(q7Attempt.benchmarkIndex === "6", `expected Q7 before discovery; got ${q7Attempt.benchmarkIndex}`);
+    await solveExploreNumericProblem(page);
+    const firstQ7Modal = page.locator('.explore-research-overlay[role="dialog"]');
+    await firstQ7Modal.waitFor({ timeout: STEP_TIMEOUT_MS });
+    assert(await firstQ7Modal.count() === 1, "Q7 should show one blocking discovery modal");
+
+    const q7Snapshot = await readExplorePersistenceSnapshot(page);
+    const q7Run = q7Snapshot.runs.find((candidate) => candidate.runId === runId);
+    const q7Checkpoint = q7Run?.activeCheckpoint;
+    const q7Discovery = q7Checkpoint?.state.temporaryFinds.at(-1);
+    assert(q7Checkpoint?.state.steps === 7, `blocking discovery should be the Q7 boundary; got ${q7Checkpoint?.state.steps}`);
+    assert(q7Discovery, "Q7 blocking discovery should be durable before it is acknowledged");
+    assert(
+      q7Checkpoint?.acknowledgedDiscoveryId !== q7Discovery.id,
+      "Q7 discovery should remain unacknowledged while its modal is open",
+    );
+
+    await page.addInitScript(() => {
+      window.__exploreResearchRevealMountCount = 0;
+      const seen = new WeakSet();
+      const recordMounts = () => {
+        document.querySelectorAll('.explore-research-overlay[role="dialog"]').forEach((dialog) => {
+          if (seen.has(dialog)) return;
+          seen.add(dialog);
+          window.__exploreResearchRevealMountCount += 1;
+        });
+      };
+      new MutationObserver(recordMounts).observe(document, { childList: true, subtree: true });
+      recordMounts();
+    });
+    await page.reload({ waitUntil: "domcontentloaded" });
+    const resumedQ7Modal = page.locator('.explore-research-overlay[role="dialog"]');
+    await resumedQ7Modal.waitFor({ timeout: STEP_TIMEOUT_MS });
+    await page.waitForTimeout(250);
+    assert(await resumedQ7Modal.count() === 1, "Q7 reload should render one blocking modal");
+    assert(
+      await page.evaluate(() => window.__exploreResearchRevealMountCount) === 1,
+      "Q7 reload should mount the blocking modal exactly once",
+    );
+    assert(await page.locator(".explore-world").getAttribute("data-run-steps") === "7", "Q7 reload should not advance steps");
+    assert(await page.getByTestId("explore-attempt").count() === 0, "Q7 modal should block Q8 from opening");
+    const resumedQ7Snapshot = await readExplorePersistenceSnapshot(page);
+    const resumedQ7Run = resumedQ7Snapshot.runs.find((candidate) => candidate.runId === runId);
+    assert(!resumedQ7Run?.activeCheckpoint?.state.pendingProblem, "Q7 reload should not persist a speculative Q8 gate");
+    assert(
+      JSON.stringify(resumedQ7Run?.activeCheckpoint?.state.temporaryFinds)
+        === JSON.stringify(q7Checkpoint.state.temporaryFinds),
+      "Q7 reload should keep the same discoveries",
+    );
+    assert(
+      JSON.stringify(resumedQ7Snapshot.events.filter((event) => event.runId === runId))
+        === JSON.stringify(q7Snapshot.events.filter((event) => event.runId === runId)),
+      "Q7 reload should not append events",
+    );
+
+    await resumedQ7Modal.getByRole("button", { name: "調査ノートを とじる" }).click();
+    await resumedQ7Modal.waitFor({ state: "hidden", timeout: STEP_TIMEOUT_MS });
+    await waitForFixedTenExploreAttempt(page, 7, 1);
+    const q8BeforeReload = await readExploreAttemptBoundary(page);
+    assert(
+      await page.locator(".explore-world").getAttribute("data-acknowledged-discovery-id") === q7Discovery.id,
+      "continuing should durably acknowledge the Q7 discovery before Q8",
+    );
+
+    await page.keyboard.type("1");
+    await page.getByLabel("こたえ 1").waitFor({ timeout: STEP_TIMEOUT_MS });
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await waitForFixedTenExploreAttempt(page, 7, 1);
+    const q8AfterReload = await readExploreAttemptBoundary(page);
+    assertExploreAttemptBoundary(q8BeforeReload, q8AfterReload, "Q8 partial-input reload");
+    assert(await page.getByLabel("こたえ 未入力").count() === 1, "Q8 partial input should not persist");
+    assert(await page.locator('.explore-research-overlay[role="dialog"]').count() === 0, "acknowledged Q7 modal should not replay at Q8");
+    assert(
+      await page.evaluate(() => window.__exploreResearchRevealMountCount) === 0,
+      "Q8 reload should not remount the acknowledged Q7 modal",
+    );
+  } finally {
+    await context.close();
+  }
+};
+
 const scenarioExploreDoubleCommit = async (browser) => {
   const context = await browser.newContext({
     baseURL: activeBaseUrl,
@@ -1921,6 +2162,14 @@ const main = async () => {
       if (!results.every(Boolean)) process.exitCode = 1;
       return;
     }
+    if (process.env.SANSU_E2E_EXPLORE_RESUME_ONLY === "1") {
+      results.push(await runScenario(
+        "resumes fixed-ten explore across retry, route, discovery, and partial-input boundaries",
+        () => scenarioExploreInterruptionResume(browser),
+      ));
+      if (!results.every(Boolean)) process.exitCode = 1;
+      return;
+    }
     if (process.env.SANSU_E2E_SNAP_ROOT_ONLY === "1") {
       results.push(await runScenario(
         "runs the Snap Root breakthrough loop at 390px",
@@ -1955,6 +2204,10 @@ const main = async () => {
     results.push(await runScenario("can exit safely after explore start persistence fails", () => scenarioExploreStartFailureExit(browser)));
     results.push(await runScenario("commits one explore answer under rapid double submit", () => scenarioExploreDoubleCommit(browser)));
     results.push(await runScenario("retries the same explore attempt after a save failure", () => scenarioExploreCommitRetry(browser)));
+    results.push(await runScenario(
+      "resumes fixed-ten explore across retry, route, discovery, and partial-input boundaries",
+      () => scenarioExploreInterruptionResume(browser),
+    ));
     results.push(await runScenario("finishes last-light rescue without blocking on an ordinary clue", () => scenarioExploreLastLightRescueFinish(browser)));
     results.push(await runScenario("retries voluntary return without early terminal progress", () => scenarioExploreReturnFinishRetry(browser)));
     results.push(await runScenario("grows the immersive light bridge from an addition answer", () => scenarioLightBridgeVerticalSlice(browser)));

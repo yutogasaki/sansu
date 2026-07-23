@@ -18,6 +18,7 @@
 - locked background、承認済みcharacter / prop reference、state overlayでauthoringし、質感を保つUI文字なしflattened frameをruntimeへ渡す制作契約
 - validation flag内のpresentation catalog / renderer境界
 - 実問題、TenKey、Study共通planner / writer、保存receiptを通す3問graybox
+- version付きactive checkpoint、CAS、回答tail復旧、確認済みdiscovery cursorによる同一run再開
 - 非補償の視覚的磁力、無文字理解・安全、runtime整合の三ゲートと、390×844、reduced motion、sound off、200%文字、answer leak監査
 - 最大2回の改善と、Go / action変更の判断
 
@@ -25,7 +26,7 @@
 
 - Root Pullのproduction採用、Snap Rootの固有名・永続図鑑登録・探検基地への固定
 - 本番actor rig、sprite量産、最終背景、音声量産
-- 9〜12問run、複数encounter pack、図鑑永続化、run再開、基地全面改修
+- 9〜12問run、複数encounter pack、図鑑永続化、基地全面改修
 - planner / writer / SRS / Due / weak / assignment / receiptの再設計
 - 既存 `root-tangle` domain、observation provenance、legacy保存IDの削除や移行
 
@@ -42,8 +43,8 @@
 
 ## Docs To Touch
 
-- Must update: 上記product specs、本task、`.agents/tasks/TASKS.md`
-- Intentionally unchanged: `docs/product/13_data_storage_migration_spec.md`、Dexie schema、学習skill定義、done log（task完了前）。PWA runbookはSnap Root precache契約へ更新する
+- Must update: 上記product specs、`docs/product/13_data_storage_migration_spec.md`、本task、`.agents/tasks/TASKS.md`
+- Intentionally unchanged: Dexie index schema、学習skill定義、done log（task完了前）。PWA runbookはSnap Root precache契約へ更新する
 
 ## Safety And Truth Invariants
 
@@ -110,11 +111,11 @@
 - 同じ10軸でv2を **77 / 100（±3）** と再採点した。身体ギャグ8、次beat8へ上がった一方、テンポ7、ポップ7、リプレイ7、拡張性6でHOLD。payoff anti-repeat、誤答中の支援assignment先読み、v2専用E2E、count-slot solverまで反映した独立再採点でも77、最初の6軸46 / 60のままとした。証跡は `docs/design/audits/2026-07-21-root-pull-v2-loop/README.md` に保存した。
 - V1のDEV限定fixture `cold-open-fixed-ten-v1` と `npm run benchmark:fixed-ten` を実装した。Studyは非記録10問で止まり、Exploreは実run 8問 → 帰還 / summary / replay → 別run 2問を `game-only-fallback / affectsSrs = false` で通す。clean revision `184f5334f95a39a04f83eed406348fee22435635`、Chromium 145、390×844、reduced motion、sound off、physical keyboardで4セル各10runを完走し、`evidence.eligible = true / pass = true`。all-correct中央値はStudy **123.2問/分**、Explore **252.9問/分**、未丸め比率 **2.053**。Q1 / Q2正解20sample P95 **122.5ms**、Explore同問誤答20sample P95 **453.0ms**、Study訂正表示20sample P95 **22.9ms**。Exploreは全220回答eventでreceipt / assignment一致、重複0、`game-only-fallback / affectsSrs = false`、learning logなし、run集計・`returned / rescued` 終端一致、学習状態不変を確認した。all-correctの操作中断はStudy 0、Explore 5で、Q3道選択、Q7 / Q8発見close、帰還、再出発の内訳。throughputはGOだが、Q8の2回目blocking発見はG2報酬ループで削減する
 - G2報酬グラフをclean revision `85b1bf19548db523b535d10549bd622294f149bf` で再計測した。4セル各10run、Chromium 145、390×844、reduced motion、sound off、physical keyboardで `evidence.eligible = true / pass = true`。all-correct中央値はStudy **123.6問/分**、Explore **270.0問/分**、未丸め比率 **2.184**。Q1 / Q2正解20sample P95 **121.7ms**、Explore同問誤答20sample P95 **451.7ms**。中断は全runで `Q3 route / Q7 semantic discovery / Q8 return / replay` の4件に一致し、Q8のランダムrare停止0、初期390×844 viewport外CTA 0、2run目stale overlay / reaction / page進捗0、全receipt / assignment / run集計 / 学習状態不変を通過した
+- G3-1のactive run再開を実装した。version 1 checkpointへfull reducer state、pending Problem、opening experience ID、確認済みdiscovery cursor、単調revisionを保存し、回答・run集計・学習更新・checkpointを同一transactionで前進させる。route / bridge / problemは保存後だけ表示へ適用し、typed answerは復元しない。stale CAS、assignment差、複数answer tail、順序を飛ばすdiscovery cursorを拒否し、PWA holdとepochで待機中・失敗後の古い保存を無効化する。390×844 fixed-ten E2EはQ1誤答中、Q3分岐、Q7未確認大発見、Q8入力途中の4 reloadを同一runで通過し、Q7確認後の再表示0を確認した。`verify:core` は732テスト・build・asset gate、全smokeは23 scenario、PWA更新は3 scenarioを通過し、独立domain / runtime監査は残存P0/P1なしと判定した
 
 ### Next
 
 - runtime候補を意図未共有の5人へ無文字で見せ、主動詞・payoff一致4/5、続行希望4/5、危険解釈0件を回答原文で確認する。
-- G3-1: active run再開をdomain化し、予約済みcurrent problem / answer境界 / route / energy / findsに加えて、表示済みdiscovery cursorを復元する。Q7を閉じた後のreloadで大発見を再表示せず、未確認なら1回だけ再表示する。
 - G3-2: 見た目だけでなく学習問題も3問区間として先にplan / reserveし、区間途中のprofile unlockや+1抽選でQ7→Q8の桁数が急変しないようにする。保存済みassignmentと実出題categoryは変えない。
 - G3-3: `number input可能` と `rapid-loop適合` を分離し、4桁筆算などはDueを消化せずStudyまたは将来のじっくり遭遇へ残す。全planner sourceを `mathMaxUnlocked` 内へ制限し、除外Dueを回答済みにしない。
 - G4-1: cold-open絵本actor、通常探索、Q7、持ち帰り、基地のcritical-path contact sheetを実配信targetの同一buildで作り、帰還だけ白い別キャラになるlineage driftを非補償HOLDとして解消する。

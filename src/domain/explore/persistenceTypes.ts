@@ -1,6 +1,7 @@
 import type { Problem } from "../types";
 import type { AttemptIdentity, AttemptNumber } from "./attemptIdentity";
-import type { DiscoveryInstance } from "./types";
+import type { ExploreOpeningExperienceId } from "./openingExperience";
+import type { DiscoveryInstance, ExploreRunState } from "./types";
 
 export type PersistedExploreRunStatus = "active" | "returned" | "rescued" | "abandoned";
 export type PersistedExploreRunTerminalStatus = Exclude<PersistedExploreRunStatus, "active">;
@@ -30,6 +31,20 @@ export interface ExploreLearningAssignment {
     reservedAt: number;
 }
 
+/**
+ * Versioned, JSON-serializable snapshot of the active reducer state. The
+ * answer being typed is deliberately UI-only; `pendingProblem` and its
+ * one-based attempt boundary live inside `state`.
+ */
+export interface ExploreActiveCheckpoint {
+    schemaVersion: 1;
+    revision: number;
+    openingExperienceId: ExploreOpeningExperienceId;
+    acknowledgedDiscoveryId?: string;
+    state: ExploreRunState;
+    updatedAt: number;
+}
+
 export interface ExploreRunRecord {
     runId: string;
     profileId: string;
@@ -46,6 +61,7 @@ export interface ExploreRunRecord {
     routeSummary: string[];
     updatedAt: number;
     learningAssignments?: Record<string, ExploreLearningAssignment>;
+    activeCheckpoint?: ExploreActiveCheckpoint;
 }
 
 export interface ExploreDiscoveryRecord {
@@ -111,6 +127,7 @@ export interface StartExploreRunInput {
     profileId: string;
     seed: string;
     startedAt: number;
+    activeCheckpoint?: ExploreActiveCheckpoint;
 }
 
 export interface CommitExploreAttemptInput {
@@ -119,6 +136,7 @@ export interface CommitExploreAttemptInput {
     result: PersistedExploreAttemptResult;
     committedAt: number;
     timeMs?: number;
+    expectedCheckpointRevision?: number;
 }
 
 export interface ReserveExploreLearningAssignmentInput {
@@ -143,6 +161,7 @@ export interface FinishExploreRunInput {
     energyUsed: number;
     discoveries: DiscoveryInstance[];
     routeSummary: string[];
+    expectedCheckpointRevision?: number;
 }
 
 export interface ExploreAttemptCommitReceipt {
@@ -155,6 +174,7 @@ export interface ExploreAttemptCommitReceipt {
     learningSource?: ExploreLearningSource;
     learningLogId?: number;
     committedAt: number;
+    checkpointRevision?: number;
 }
 
 export interface ExploreRunFinishReceipt {
@@ -162,4 +182,27 @@ export interface ExploreRunFinishReceipt {
     profileId: string;
     status: PersistedExploreRunTerminalStatus;
     endedAt: number;
+    checkpointRevision?: number;
+}
+
+export interface SaveExploreRunCheckpointInput {
+    runId: string;
+    profileId: string;
+    expectedRevision: number;
+    state: ExploreRunState;
+    openingExperienceId: ExploreOpeningExperienceId;
+    acknowledgedDiscoveryId?: string;
+    savedAt: number;
+}
+
+export interface ExploreRunCheckpointSaveReceipt {
+    runId: string;
+    profileId: string;
+    checkpointRevision: number;
+    savedAt: number;
+}
+
+export interface ResumableExploreRun {
+    run: ExploreRunRecord;
+    checkpoint: ExploreActiveCheckpoint;
 }

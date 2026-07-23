@@ -1,6 +1,6 @@
 # docs/product/15_mvp_rollout_verification_spec.md — MVP・段階導入・検証仕様
 
-> 状態: gameplayは **MVP-0/1**、run・回答receipt・終了status保存は **MVP-2a**、Study共通plannerからSRSへつなぐ最小縦切りは **MVP-2b**。`/` は `/explore` へ転送し、連問探索を通常起動面にする。`/battle` の探検基地化と発見図鑑のメモリ内縦切りは実装済み。cold-openのproduction defaultは `classic-v1` とする。旧編み根版はREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。`snap-root-v1` slotのlocal validationには `dig-pop-painted-v2` を配線済みでruntime視覚と旧高速Studyとのclean revision・10反復適格throughputは個別サブゲートを通過したが、実配信targetの同一build証拠と無文字5人テストは未実施のためrelease Gate Cとproduction判定はHOLDである。発見図鑑の永続化とrun再開はまだ行わない。
+> 状態: gameplayは **MVP-0/1**、run・回答receipt・終了status保存は **MVP-2a**、Study共通plannerからSRSへつなぐ最小縦切りは **MVP-2b**、version付きactive checkpointから同じrunへ戻る中断再開は **MVP-2c**。`/` は `/explore` へ転送し、連問探索を通常起動面にする。`/battle` の探検基地化と発見図鑑のメモリ内縦切りは実装済み。cold-openのproduction defaultは `classic-v1` とする。旧編み根版はREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。`snap-root-v1` slotのlocal validationには `dig-pop-painted-v2` を配線済みでruntime視覚と旧高速Studyとのclean revision・10反復適格throughputは個別サブゲートを通過したが、実配信targetの同一build証拠と無文字5人テストは未実施のためrelease Gate Cとproduction判定はHOLDである。発見図鑑のrun横断永続化はまだ行わない。
 
 ## 1. MVPの目的
 
@@ -67,6 +67,7 @@ MVPは学習効果を証明する前に、次を検証する。
 - 回答eventがcheckpointより1件だけ先行したcrashは、保存済みreceiptを同じpending gateへ1回だけfoldする。stale revision、複数tail、assignment不一致を拒否する
 - 確認済みdiscovery cursorを保存し、Q7大発見は未確認ならreload後に1回、確認済みなら0回再表示する
 - checkpointなし旧active runは学習状態を変えずabandonedとし、fresh runへ移る。発見図鑑のrun横断保存は後続とする
+- 2026-07-23実装証拠では `verify:core` の732テスト・build・asset gate、全23 smoke scenario、PWA更新3 scenarioを通過した。390×844 fixed-tenの専用scenarioでQ1誤答retry、Q3 route break、Q7未確認blocking discovery、Q8部分入力の4 reloadを同じrunId / gate / Problem / energy / finds / event境界で復帰し、入力文字列だけを破棄した
 
 ## 5. 起動面統合 / MVP-3
 
