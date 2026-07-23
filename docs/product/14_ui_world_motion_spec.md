@@ -187,6 +187,18 @@ delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行v
 - reduced motionでは承認済み静止frameを即時差し替え、transition、土の飛散、跳ね、回転、zoomを止める。状態や最終位置は省略しない
 - production defaultは `classic-v1` とし、local validation candidate `dig-pop-painted-v2`、source HOLDの `dig-pop-painted-v1`、一本葉を引くBloom版、水やり版、`root-pull-v1` / `root-pull-v2` は現行defaultから外す。既存の引き算専用遭遇 `root-tangle`、そのreceipt、観察、保存IDとは共有しない
 
+### 4.5 ほたる花のしずく道
+
+通常調査の現行visual candidateを `firefly-dew-path-painted-v3`、固定cameraを `firefly-flower-side-v3` とする。分岐面は同じ舞台文法の `pokko-route-map-v3`、中立Q7 finaleは `firefly-q7-dew-path-v3`、帰還図鑑の汎用挿絵は `firefly-field-book-painted-v3` とする。旧 `firefly-painted-pokko-v2` と旧分岐plateは、密度・奥行き・素材の強さが現行benchmarkから外れるため現行runtimeへ混在させない。
+
+- 全frameを16:9の横舞台とし、青緑の静かな大色面を55〜65%以上、詳細描写を35%以下、支配色相を青緑・黄土橙・葉緑の3族以内に保つ。全面粒子、映画的奥行き、金色発光、画面全体のvignetteを使わない
+- Q4〜Q7直前は、同じ一輪の花、同じポッコ、同じ四つのしずく、同じ一本の溝を `waiting / dew-trail / warm-bud / ringing-petals` で連続させる。別の花、別相棒、電飾、無関係な道を後段だけへ追加しない
+- `waiting` は乾いた一本の溝と閉じた一輪、`dew-trail` は先頭の一滴を押す一動作、`warm-bud` は半分まで進んだ四滴と開きかけのつぼみ、`ringing-petals` は花まで届いた四滴と五枚花を見せる
+- 中立Q7 finaleは三滴を一本の道へ残し、最後の一滴を葉帽子へ落としてポッコが安全に尻もちをつく。一つの因果と一つの身体オチへ絞り、進捗線、光線、粒子、別キャラクターで代替しない
+- root-tangleのcommit済み観察provenanceがある場合は、中立Q7 plateへ置換せず、解いたroot sceneとcameraを観察・帰還図鑑まで保持する。provenanceがない場合だけ汎用しずく道を使う
+- 2分岐と3分岐は同じ青緑空・黄土面・葉帽子の横舞台で、一本の溝が物理的に2本または3本へ分かれることを無文字で読ませる。旧密集林の分岐plateをthumbnailや大絵へ残さない
+- phoneでは横長plateを縦へcropせず、青緑の静かな余白の中へ全景をcontainする。390×844と768×1024の両方でポッコ、花、作用するしずく、TenKeyを同時に欠けなく表示する
+
 ## 5. 音
 
 音はゲーム性と掛け合いを支える。genericな正解音を鳴らすだけでなく、視覚の因果と同じ順序を持たせる。

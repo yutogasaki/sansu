@@ -18,8 +18,8 @@ describe("FireflyFlowerEncounterArt", () => {
     ] as const)("renders the %s clue state in one stable camera", (stage, clueCount) => {
         const markup = renderStage(stage);
 
-        expect(markup).toContain('data-camera-key="firefly-flower-side-v2"');
-        expect(markup).toContain('data-visual-candidate-id="firefly-painted-pokko-v2"');
+        expect(markup).toContain('data-camera-key="firefly-flower-side-v3"');
+        expect(markup).toContain('data-visual-candidate-id="firefly-dew-path-painted-v3"');
         expect(markup).toContain('data-visual-mode="world-painted"');
         expect(markup).toContain(`data-stage="${stage}"`);
         expect(markup).toContain(`data-clue-count="${clueCount}"`);
@@ -30,8 +30,8 @@ describe("FireflyFlowerEncounterArt", () => {
         const warmMarkup = renderStage("warm-bud");
         const ringingMarkup = renderStage("ringing-petals");
 
-        expect(dewMarkup).toContain("scene-waiting-pokko-v2.jpg");
-        expect(dewMarkup).toContain("scene-dew-trail-pokko-v2.jpg");
+        expect(dewMarkup).toContain("scene-waiting-dew-path-pokko-v3.jpg");
+        expect(dewMarkup).toContain("scene-dew-trail-dew-path-pokko-v3.jpg");
         expect(dewMarkup).toContain('data-painted-stage="dew-trail" data-active="true"');
         expect(warmMarkup).toContain('data-painted-stage="warm-bud" data-active="true"');
         expect(ringingMarkup).toContain('data-painted-stage="ringing-petals" data-active="true"');
@@ -44,8 +44,8 @@ describe("FireflyFlowerEncounterArt", () => {
         );
 
         expect(markup).toContain('role="img"');
-        expect(markup).toContain("五枚の花びらが鈴のように開き");
-        expect(markup).toContain("ポッコが両手を上げて音を聞いている");
+        expect(markup).toContain("四つのしずくが花まで届き");
+        expect(markup).toContain("一本になった水の道を見ている");
         expect(markup).toContain('data-reduced-motion="true"');
         expect(markup).toContain('data-character-id="pokko"');
     });

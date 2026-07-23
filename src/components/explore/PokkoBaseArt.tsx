@@ -23,7 +23,7 @@ export const PokkoBaseArt = ({
         aria-hidden={decorative || undefined}
     >
         <img
-            src="/assets/explore/route-choice/scene-fork-two-pokko-v1.jpg"
+            src="/assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.jpg"
             alt={decorative
                 ? ""
                 : "葉帽子のポッコが、明るい地底の分かれ道で次の行き先を見つめている。"}

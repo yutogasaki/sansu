@@ -73,28 +73,28 @@ const ROOT_TANGLE_OBSERVATION_FOCALS =
   PAINTED_ENCOUNTER_FOCALS["explore-encounter-root-tangle:root-tangle-crossed"];
 const FIREFLY_PAINTED_STAGE_CONTRACT = {
   waiting: {
-    asset: "/assets/explore/firefly-flower/scene-waiting-pokko-v2.jpg",
-    actorFace: [220, 560],
-    actorFeet: [220, 635],
-    actionPayoff: [585, 320],
+    asset: "/assets/explore/firefly-flower/scene-waiting-dew-path-pokko-v3.jpg",
+    actorFace: [180, 552],
+    actorFeet: [180, 650],
+    actionPayoff: [1005, 267],
   },
   "dew-trail": {
-    asset: "/assets/explore/firefly-flower/scene-dew-trail-pokko-v2.jpg",
-    actorFace: [220, 555],
-    actorFeet: [220, 625],
-    actionPayoff: [405, 560],
+    asset: "/assets/explore/firefly-flower/scene-dew-trail-dew-path-pokko-v3.jpg",
+    actorFace: [224, 555],
+    actorFeet: [224, 650],
+    actionPayoff: [381, 613],
   },
   "warm-bud": {
-    asset: "/assets/explore/firefly-flower/scene-warm-bud-pokko-v2.jpg",
-    actorFace: [220, 555],
-    actorFeet: [220, 625],
-    actionPayoff: [570, 315],
+    asset: "/assets/explore/firefly-flower/scene-warm-bud-dew-path-pokko-v3.jpg",
+    actorFace: [237, 525],
+    actorFeet: [237, 640],
+    actionPayoff: [987, 245],
   },
   "ringing-petals": {
-    asset: "/assets/explore/firefly-flower/scene-ringing-petals-pokko-v2.jpg",
-    actorFace: [220, 555],
-    actorFeet: [220, 625],
-    actionPayoff: [565, 360],
+    asset: "/assets/explore/firefly-flower/scene-ringing-petals-dew-path-pokko-v3.jpg",
+    actorFace: [387, 587],
+    actorFeet: [387, 665],
+    actionPayoff: [997, 293],
   },
 };
 const REQUIRED_VISUAL_ASSET_SHA256 = {
@@ -110,18 +110,20 @@ const REQUIRED_VISUAL_ASSET_SHA256 = {
     "4f9c76f483c1b1414dce6e45f7773a0c1492c227d7c194ae73bca3d57c4e0dc8",
   "/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg":
     "78b1cc26bff82c73bfe4b42663cef6358f4d72a2561908011ee5d9d4ea45c1f5",
-  "/assets/explore/route-choice/scene-fork-two-pokko-v1.jpg":
-    "b5ad845b04ffb238a7e701045941b895cec9b090fd3da3b46ab9dc2e51153438",
-  "/assets/explore/route-choice/scene-fork-three-pokko-v1.jpg":
-    "781c922d55e398caf686189193ff523409140647687e9ad4123ff9ccdb3d029e",
-  "/assets/explore/firefly-flower/scene-waiting-pokko-v2.jpg":
-    "2d96afa4d80565e30f841055b30718dcd58ee12a3207f73fec2876ef8493090f",
-  "/assets/explore/firefly-flower/scene-dew-trail-pokko-v2.jpg":
-    "982b357d69a1eea639fbce74b0bde18a4de095170a23c98b2e7aff3c1096c5ef",
-  "/assets/explore/firefly-flower/scene-warm-bud-pokko-v2.jpg":
-    "3ca693589f8086182224eb0e8056940721e94cc1f90c4eb1ed3997269b3f7df7",
-  "/assets/explore/firefly-flower/scene-ringing-petals-pokko-v2.jpg":
-    "bb78fd27b1fa3c892232f1c5b2881d531ce98518c8fb3a0cafececd7158fa49c",
+  "/assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.jpg":
+    "7587c7e460a587fcecff2da7e8ddea73520d68cf4ecaa8141657ac0086809041",
+  "/assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.jpg":
+    "43b29df9ea4b6ac0025341565224d60d7b4596ec97eb483a41a48ac057af7d99",
+  "/assets/explore/firefly-flower/scene-waiting-dew-path-pokko-v3.jpg":
+    "2c32d77fc8dfc97e101f45f5dc40daa1df720034967af0a96f83065dcf7e1644",
+  "/assets/explore/firefly-flower/scene-dew-trail-dew-path-pokko-v3.jpg":
+    "b874391ecc5138af65944b82ea44bd75482167b8470db5b570eaea82916ba81a",
+  "/assets/explore/firefly-flower/scene-warm-bud-dew-path-pokko-v3.jpg":
+    "0df9b215b56364a2caafa4542e8848994631baa636fb2b86306a1f63a7d0d712",
+  "/assets/explore/firefly-flower/scene-ringing-petals-dew-path-pokko-v3.jpg":
+    "b33a8177260501e06e527d3eedeef67878c08b81b665f5b415490bfe196fcf8e",
+  "/assets/explore/firefly-flower/scene-light-path-dew-path-pokko-v3.jpg":
+    "4377ae107aea1cba1b57c5745b51ac2fdb1509a982e3b042e1e4da9055c3be8a",
 };
 const LEGACY_VISUAL_AUDIT_DIR = path.resolve(
   "docs/design/breakout-loop-2026-07-21/runtime-painted-v2-audit",
@@ -1232,6 +1234,83 @@ const scenarioExploreStartFailureExit = async (browser) => {
   await context.close();
 };
 
+const scenarioExplorePendingProblemExit = async (browser) => {
+  const context = await browser.newContext({
+    baseURL: activeBaseUrl,
+    reducedMotion: "reduce",
+    viewport: { width: 390, height: 844 },
+  });
+  const page = await context.newPage();
+  await clearClientStorage(page);
+  await page.addInitScript(() => {
+    window.__SANSU_E2E__ = {
+      exploreFinish: { failuresRemaining: 1 },
+    };
+  });
+
+  await openFirstExploreAttempt(page);
+  const firstAttemptKey = await page.getByTestId("explore-attempt")
+    .getAttribute("data-attempt-key");
+  const runId = await page.getByTestId("explore-attempt").getAttribute("data-run-id");
+  assert(firstAttemptKey, "the pending-problem exit scenario should start from an identified attempt");
+  assert(runId, "the pending-problem exit scenario should expose its run");
+
+  await solveExploreNumericProblem(page);
+  await waitForNewExploreAttempt(page, firstAttemptKey);
+  const pendingProblemId = await page.getByTestId("explore-attempt")
+    .getAttribute("data-problem-id");
+  const exit = page.getByRole("button", {
+    name: "たんけんを おえて 基地へ帰る",
+  });
+  await exit.waitFor({ timeout: STEP_TIMEOUT_MS });
+  assert(!await exit.isDisabled(), "a ready pending problem should allow safe run exit");
+
+  await exit.click();
+  const retry = page.getByRole("button", { name: "もういちど きろくする" });
+  await retry.waitFor({ timeout: STEP_TIMEOUT_MS });
+  const failedSnapshot = await readExplorePersistenceSnapshot(page);
+  const failedRun = failedSnapshot.runs.find((candidate) => candidate.runId === runId);
+  const failedEndEvents = failedSnapshot.events.filter((event) => (
+    event.runId === runId && event.type === "run_ended"
+  ));
+  assert(
+    failedRun?.status === "active",
+    `failed pending-problem exit should keep the run active; got ${failedRun?.status}`,
+  );
+  assert(failedEndEvents.length === 0, "failed pending-problem exit should not write an end event");
+  assert(
+    await page.locator(".explore-world").getAttribute("data-run-status") === "active",
+    "failed pending-problem exit should keep the UI run active",
+  );
+
+  await retry.click();
+  await waitForHash(page, /#\/battle/);
+  const committedSnapshot = await readExplorePersistenceSnapshot(page);
+  const abandonedRun = committedSnapshot.runs.find((candidate) => candidate.runId === runId);
+  const abandonedEvents = committedSnapshot.events.filter((event) => (
+    event.runId === runId && event.type === "run_ended"
+  ));
+  const answerEvents = committedSnapshot.events.filter((event) => (
+    event.runId === runId && event.type === "problem_answered"
+  ));
+  assert(
+    abandonedRun?.status === "abandoned",
+    `pending-problem exit retry should finish abandoned; got ${abandonedRun?.status}`,
+  );
+  assert(abandonedEvents.length === 1, "pending-problem exit should write one end event");
+  assert(
+    abandonedEvents[0].payload?.status === "abandoned",
+    "pending-problem exit should preserve abandoned meaning",
+  );
+  assert(answerEvents.length === 1, "pending-problem exit should preserve the committed answer");
+  assert(
+    abandonedRun?.activeCheckpoint?.state?.pendingProblem?.problem?.id === pendingProblemId,
+    "pending-problem exit should retain the frozen checkpoint instead of forging a return boundary",
+  );
+
+  await context.close();
+};
+
 const solveExploreAddition = async (page) => {
   const problemHeading = page.locator("#explore-problem-title");
   await problemHeading.waitFor({ timeout: STEP_TIMEOUT_MS });
@@ -1605,6 +1684,28 @@ const scenarioExploreInterruptionResume = async (browser) => {
     const firstQ7Modal = page.locator('.explore-research-overlay[role="dialog"]');
     await firstQ7Modal.waitFor({ timeout: STEP_TIMEOUT_MS });
     assert(await firstQ7Modal.count() === 1, "Q7 should show one blocking discovery modal");
+    const genericQ7PaintedScene = firstQ7Modal.locator(
+      '[data-visual-candidate-id="firefly-q7-dew-path-v3"]'
+      + '[data-painted-stage="light-path"]'
+      + '[data-discovery-complete="true"]',
+    );
+    assert(
+      await genericQ7PaintedScene.count() === 1,
+      "generic Q7 should stay in the painted Pokko lineage instead of remounting the flat research SVG",
+    );
+    assert(
+      await genericQ7PaintedScene.locator("img").evaluate((image) => (
+        image instanceof HTMLImageElement
+        && image.currentSrc.endsWith("/assets/explore/firefly-flower/scene-light-path-dew-path-pokko-v3.jpg")
+      )),
+      "generic Q7 should decode the approved same-camera Firefly Flower plate",
+    );
+    assert(
+      await firstQ7Modal.locator(
+        '[data-visual-candidate-id="firefly-research-pokko-v1"]',
+      ).count() === 0,
+      "generic Q7 must not reintroduce the retired flat SVG candidate",
+    );
 
     const q7Snapshot = await readExplorePersistenceSnapshot(page);
     const q7Run = q7Snapshot.runs.find((candidate) => candidate.runId === runId);
@@ -1723,17 +1824,6 @@ const scenarioExploreDoubleCommit = async (browser) => {
   const energyBefore = Number(
     await page.getByRole("progressbar", { name: "ひかり" }).getAttribute("aria-valuenow"),
   );
-  const openAttemptBack = page.getByRole("button", { name: /(?:あそびメニュー|Game)へ もどる/ });
-  assert(await openAttemptBack.isDisabled(), "an open attempt should disable run exit/return");
-  await openAttemptBack.evaluate((button) => button.click());
-  await page.waitForTimeout(50);
-  const openAttemptSnapshot = await readExplorePersistenceSnapshot(page);
-  const stillActiveRun = openAttemptSnapshot.runs.find((candidate) => candidate.runId === runId);
-  const prematureEndEvents = openAttemptSnapshot.events.filter((event) => (
-    event.runId === runId && event.type === "run_ended"
-  ));
-  assert(stillActiveRun?.status === "active", "disabled return should keep the open-attempt run active");
-  assert(prematureEndEvents.length === 0, "disabled return should not write an end event");
   const answer = await getExploreNumericAnswer(page);
   await page.keyboard.type(String(answer));
   await page.getByRole("button", { name: "こたえる" }).evaluate((submit) => {
@@ -3801,11 +3891,11 @@ const readPaintedFireflyCrop = async (surface) => surface.evaluate(async (
     };
   };
   const figure = element.matches(
-    '.firefly-flower-art[data-visual-candidate-id="firefly-painted-pokko-v2"]',
+    '.firefly-flower-art[data-visual-candidate-id="firefly-dew-path-painted-v3"]',
   )
     ? element
     : element.querySelector(
-      '.firefly-flower-art[data-visual-candidate-id="firefly-painted-pokko-v2"]',
+      '.firefly-flower-art[data-visual-candidate-id="firefly-dew-path-painted-v3"]',
     );
   if (!(figure instanceof HTMLElement)) {
     return {
@@ -3880,7 +3970,7 @@ const readPaintedFireflyCrop = async (surface) => surface.evaluate(async (
   const activeStyle = activeImage instanceof HTMLImageElement
     ? window.getComputedStyle(activeImage)
     : null;
-  const imageBounds = activeImage instanceof HTMLImageElement
+  const imageElementBounds = activeImage instanceof HTMLImageElement
     ? boundsOf(activeImage)
     : null;
   const naturalWidth = activeImage instanceof HTMLImageElement
@@ -3889,16 +3979,38 @@ const readPaintedFireflyCrop = async (surface) => surface.evaluate(async (
   const naturalHeight = activeImage instanceof HTMLImageElement
     ? activeImage.naturalHeight
     : 0;
-  const scaleX = imageBounds && naturalWidth > 0
-    ? imageBounds.width / naturalWidth
+  const renderedScale = imageElementBounds && naturalWidth > 0 && naturalHeight > 0
+    ? activeStyle?.objectFit === "contain"
+      ? Math.min(
+        imageElementBounds.width / naturalWidth,
+        imageElementBounds.height / naturalHeight,
+      )
+      : Math.max(
+        imageElementBounds.width / naturalWidth,
+        imageElementBounds.height / naturalHeight,
+      )
     : Number.NaN;
-  const scaleY = imageBounds && naturalHeight > 0
-    ? imageBounds.height / naturalHeight
-    : Number.NaN;
+  const imageBounds = imageElementBounds && Number.isFinite(renderedScale)
+    ? {
+      left: imageElementBounds.left
+        + (imageElementBounds.width - naturalWidth * renderedScale) / 2,
+      right: imageElementBounds.right
+        - (imageElementBounds.width - naturalWidth * renderedScale) / 2,
+      top: imageElementBounds.top
+        + (imageElementBounds.height - naturalHeight * renderedScale) / 2,
+      bottom: imageElementBounds.bottom
+        - (imageElementBounds.height - naturalHeight * renderedScale) / 2,
+      width: naturalWidth * renderedScale,
+      height: naturalHeight * renderedScale,
+    }
+    : null;
+  const scaleX = renderedScale;
+  const scaleY = renderedScale;
   const projectionValid = Boolean(imageBounds)
-    && activeStyle?.objectFit === "cover"
-    && naturalWidth === 780
-    && naturalHeight === 1000
+    && activeStyle?.objectFit === "contain"
+    && activeStyle?.objectPosition === "50% 50%"
+    && naturalWidth === 1280
+    && naturalHeight === 720
     && Number.isFinite(scaleX)
     && Number.isFinite(scaleY)
     && Math.abs(scaleX - scaleY) <= Math.max(scaleX, scaleY) * 0.002;
@@ -4023,6 +4135,7 @@ const readPaintedFireflyCrop = async (surface) => surface.evaluate(async (
       objectPosition: activeStyle?.objectPosition ?? null,
       opacity: activeOpacity,
       visible: activeVisible,
+      elementBounds: imageElementBounds,
       bounds: imageBounds,
     },
     viewport: {
@@ -4117,7 +4230,7 @@ const readVisualAuditRuntimeSnapshot = async (
   const observationCrop = surfaceIdentity.candidateId === "root-tangle-light-path-v2"
     ? await readRootObservationCrop(surface)
     : null;
-  const fireflyCrop = surfaceIdentity.candidateId === "firefly-painted-pokko-v2"
+  const fireflyCrop = surfaceIdentity.candidateId === "firefly-dew-path-painted-v3"
     ? await readPaintedFireflyCrop(surface)
     : null;
 
@@ -4487,7 +4600,7 @@ const captureVisualAuditStage = async ({
       `${stage} root observation focal crop failed: ${JSON.stringify(snapshot.observationCrop)}`,
     );
   }
-  if (expected.candidateId === "firefly-painted-pokko-v2") {
+  if (expected.candidateId === "firefly-dew-path-painted-v3") {
     assert(
       snapshot.fireflyCrop?.pass,
       `${stage} painted Firefly Flower safe-zone failed: ${JSON.stringify(snapshot.fireflyCrop)}`,
@@ -5205,7 +5318,7 @@ const runVisualAuditViewport = async (
 
     const routeChoice = page.locator(".explore-path-choice");
     const routeCapture = await capture("route-choice", routeChoice, {
-      candidateId: "pokko-route-map-v2",
+      candidateId: "pokko-route-map-v3",
       mode: "route-map",
     });
     const routeLayout = await routeChoice.evaluate((element) => {
@@ -5242,8 +5355,8 @@ const runVisualAuditViewport = async (
       `route fork art must expose a supported branch count; got ${routeBranchCount}`,
     );
     const expectedRouteAsset = routeBranchCount === 3
-      ? "/assets/explore/route-choice/scene-fork-three-pokko-v1.jpg"
-      : "/assets/explore/route-choice/scene-fork-two-pokko-v1.jpg";
+      ? "/assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.jpg"
+      : "/assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.jpg";
     const routeForkImage = routeForkArt.locator("img");
     const expectsRouteForkArt = (
       viewport.width < 600 && viewport.height >= 800
@@ -5320,10 +5433,10 @@ const runVisualAuditViewport = async (
     );
     await ordinaryQ4.waitFor({ timeout: STEP_TIMEOUT_MS });
     await capture("q4-ordinary", ordinaryQ4, {
-      candidateId: "firefly-painted-pokko-v2",
+      candidateId: "firefly-dew-path-painted-v3",
       mode: "world-painted",
       surfaceId: "explore-ordinary-firefly",
-      cameraKey: "firefly-flower-side-v2",
+      cameraKey: "firefly-flower-side-v3",
     }, { requireTenKey: true });
     await solveExploreAndWaitForNextProblem(page);
 
@@ -5569,10 +5682,10 @@ const runVisualAuditViewport = async (
     );
     await ordinaryQ8.waitFor({ timeout: STEP_TIMEOUT_MS });
     await capture("q8", ordinaryQ8, {
-      candidateId: "firefly-painted-pokko-v2",
+      candidateId: "firefly-dew-path-painted-v3",
       mode: "world-painted",
       surfaceId: "explore-ordinary-firefly",
-      cameraKey: "firefly-flower-side-v2",
+      cameraKey: "firefly-flower-side-v3",
     }, { requireTenKey: true });
     await solveExploreNumericProblem(page);
     await waitForRouteBreakPastOptionalRareDiscovery(page);
@@ -5916,6 +6029,14 @@ const main = async () => {
       if (!results.every(Boolean)) process.exitCode = 1;
       return;
     }
+    if (process.env.SANSU_E2E_EXPLORE_BACK_ONLY === "1") {
+      results.push(await runScenario(
+        "safely exits and retries from a pending explore problem",
+        () => scenarioExplorePendingProblemExit(browser),
+      ));
+      if (!results.every(Boolean)) process.exitCode = 1;
+      return;
+    }
     if (process.env.SANSU_E2E_SNAP_ROOT_ONLY === "1") {
       results.push(await runScenario(
         "runs the Snap Root breakthrough loop at 390px",
@@ -5988,6 +6109,7 @@ const main = async () => {
       { seed: "b", now: 1000 },
     )));
     results.push(await runScenario("can exit safely after explore start persistence fails", () => scenarioExploreStartFailureExit(browser)));
+    results.push(await runScenario("safely exits and retries from a pending explore problem", () => scenarioExplorePendingProblemExit(browser)));
     results.push(await runScenario("commits one explore answer under rapid double submit", () => scenarioExploreDoubleCommit(browser)));
     results.push(await runScenario("retries the same explore attempt after a save failure", () => scenarioExploreCommitRetry(browser)));
     results.push(await runScenario(

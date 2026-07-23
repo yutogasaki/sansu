@@ -19,6 +19,7 @@ import {
     FIREFLY_FLOWER_DISCOVERY_PAGE,
     MAKIMODON_DISCOVERY_PAGE,
     RAPID_LOOP_AUTO_BRIDGE_PLAN,
+    ROOT_TANGLE_OBSERVATION,
     type DiscoveryInstance,
     type DiscoveryPageFeatureId,
     type DiscoveryPageId,
@@ -133,6 +134,17 @@ describe("confirmed research page selection", () => {
         ];
 
         expect(selectConfirmedResearchPage(finds)?.definition).toBe(FIREFLY_FLOWER_DISCOVERY_PAGE);
+    });
+
+    it("preserves the committed observation used by the completed page", () => {
+        const finds = FIREFLY_FLOWER_DISCOVERY_PAGE.chain.featureIds.map((featureId, index) => ({
+            ...researchDiscovery(`firefly-${index}`, FIREFLY_FLOWER_DISCOVERY_PAGE.id, featureId),
+            observationId: featureId === FIREFLY_FLOWER_DISCOVERY_PAGE.chain.bigDiscoveryFeatureId
+                ? ROOT_TANGLE_OBSERVATION.id
+                : undefined,
+        }));
+
+        expect(selectConfirmedResearchPage(finds)?.observation).toBe(ROOT_TANGLE_OBSERVATION);
     });
 });
 

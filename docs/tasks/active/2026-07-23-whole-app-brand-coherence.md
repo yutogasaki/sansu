@@ -45,7 +45,7 @@ The prior checklist completed brand metadata and utility styling, but did not pr
 | G4-3 major encounters | G4-2 | light bridge and root tangle use same-camera three-state painted scenes | Complete (candidate) |
 | G4-4 semantic Q7 | G4-2, G4-3 | world reaction provenance reaches same-camera payoff before the book | Complete (candidate) |
 | G4-5 return and base | G4-2, G4-4 | same Pokko and latest finding remain legible through replay/base | Complete (candidate) |
-| G4-6 critical-path audit | G4-1..G4-5 | 390/768 contact sheet from one build, mixed lineage 0, TenKey fit | Complete (local) |
+| G4-6 critical-path audit | G4-1..G4-5 | 390/768 contact sheet from one build, mixed lineage 0, TenKey fit | Pending v3 re-audit |
 | G5 blind value test | G4-6 | 4/5 same action/payoff, 4/5 want more, danger 0 | Pending |
 | G6 production promotion | G5 | cold-cache/PWA actual target evidence and explicit default switch | Pending |
 
@@ -67,7 +67,16 @@ The prior checklist completed brand metadata and utility styling, but did not pr
 - Independent whole-flow screening scores are **8.8 / 10 coherence**, **9.0 / 10 tempo**, and **8.2 / 10 expansion readiness**, all GO. Runtime integrity passes with zero visible mixed lineage and zero visible legacy actors.
 - The independent six-axis visual score is **52 / 60**, with every axis at least 8 / 10, so the local visual gate passes.
 - `lint`, `typecheck`, 30 focused tests, production build and asset budgets passed. Full browser smoke passed, including 390×800, five bridge sizes, five root-tangle sizes, persistence, return, parent gate, and PWA-critical flows.
-- Local G4 is complete. Production remains **HOLD** until G5 records five uninstructed observers and G6 verifies the actual delivery target after cold cache or PWA update. These external gates are not inferred from local screenshots.
+- For that exact `83210fd` candidate, local G4 was complete. Production remained **HOLD** until G5 could record five uninstructed observers and G6 could verify the actual delivery target after cold cache or PWA update. These external gates are not inferred from local screenshots.
+
+### G4 lightweight art reset — `firefly-dew-path-painted-v3`
+
+- The user rejected the prior ordinary/Q7 flower plates as too dense, too cinematic, and insufficiently pop. The `83210fd` evidence remains historical for its exact candidate and does not approve the new visual candidate.
+- The current candidate uses one 16:9 cyan/ochre/leaf-green stage through Q4–Q7: one flower, one Pokko, four droplets, and one groove. The neutral Q7 payoff leaves three droplets on the path, drops the fourth onto the leaf hat, and ends with a safe seated body gag.
+- Two-way and three-way route plates now use the same quiet stage and physical groove split. The prior dense forest route plates and prior four dense flower plates are removed from production precache.
+- Generic return pages use the new final plate; committed root-tangle observation provenance still preserves the actual root source scene and camera through the archive.
+- Local 390×844 and 768×1024 Chromium runs keep the full horizontal plate, equation, and complete TenKey visible without page overflow. Focused browser verification also passes the pending-problem back-arrow `abandoned` path. These local checks are diagnostic until the exact clean revision audit is regenerated.
+- Production and external value gates remain **HOLD**. G4-6 must be regenerated for this candidate; G5 still requires five uninstructed observers, and G6 still requires the canonical production target after cold cache/PWA update.
 
 ## Non-goals
 

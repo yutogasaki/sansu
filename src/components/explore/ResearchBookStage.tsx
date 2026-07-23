@@ -15,43 +15,62 @@ interface ResearchBookStageProps {
 
 const FIREFLY_ARCHIVE_SCENES = [
     {
-        src: "/assets/explore/firefly-flower/scene-waiting-pokko-v2.jpg",
+        src: "/assets/explore/firefly-flower/scene-waiting-dew-path-pokko-v3.jpg",
         sceneId: "firefly-archive-waiting",
-        alt: "葉帽子のポッコが、まだ閉じたほたる花を見つめている。",
+        alt: "葉帽子のポッコが、閉じたほたる花まで続く一本の溝と四つのしずくを見ている。",
     },
     {
-        src: "/assets/explore/firefly-flower/scene-dew-trail-pokko-v2.jpg",
+        src: "/assets/explore/firefly-flower/scene-dew-trail-dew-path-pokko-v3.jpg",
         sceneId: "firefly-archive-dew-trail",
-        alt: "葉帽子のポッコが、ほたる花へ続く四つの光るしずくを見つけている。",
+        alt: "ポッコが先頭のしずくを押し、四つのしずくが一本の溝をころがっている。",
     },
     {
-        src: "/assets/explore/firefly-flower/scene-warm-bud-pokko-v2.jpg",
+        src: "/assets/explore/firefly-flower/scene-warm-bud-dew-path-pokko-v3.jpg",
         sceneId: "firefly-archive-warm-bud",
-        alt: "葉帽子のポッコが、あたたかく光りはじめたほたる花のつぼみを見つめている。",
+        alt: "しずくが溝の半分まで進み、つぼみの先が少しひらいている。",
     },
     {
-        src: "/assets/explore/firefly-flower/scene-ringing-petals-pokko-v2.jpg",
+        src: "/assets/explore/firefly-flower/scene-ringing-petals-dew-path-pokko-v3.jpg",
         sceneId: "firefly-archive-ringing-petals",
-        alt: "葉帽子のポッコの前で、ほたる花の五枚の花びらがひらき、光るしずくが道になっている。",
+        alt: "四つのしずくが花まで届き、五枚の花びらと一本の水の道ができている。",
     },
     {
-        src: "/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg",
-        sceneId: "firefly-archive-root-light-path",
-        alt: "ほどけた根っこの間から、ほたる花の光る道が奥へ続き、葉帽子のポッコが走り出している。",
+        src: "/assets/explore/firefly-flower/scene-light-path-dew-path-pokko-v3.jpg",
+        sceneId: "firefly-archive-light-path",
+        alt: "三つのしずくが一本の道に並び、最後の一滴が葉帽子へ落ちて、ポッコが尻もちをついている。",
     },
 ] as const;
 
 const getFireflyArchiveScene = (
     researchPage: ResearchPageSummaryState,
 ) => {
+    if (researchPage.observation) {
+        return {
+            src: researchPage.observation.visual.sceneSrc,
+            sceneId: researchPage.observation.visual.sceneId,
+            alt: researchPage.observation.copy.finding,
+            candidateId: researchPage.observation.visual.candidateId,
+            cameraKey: researchPage.observation.camera.key,
+            objectPosition: researchPage.observation.camera.objectPosition,
+            objectFit: "cover" as const,
+        };
+    }
+
     const discovered = new Set(researchPage.discoveredFeatureIds);
     const discoveredCount = researchPage.definition.features.filter((feature) => (
         discovered.has(feature.id)
     )).length;
-
-    return FIREFLY_ARCHIVE_SCENES[
+    const scene = FIREFLY_ARCHIVE_SCENES[
         Math.min(discoveredCount, FIREFLY_ARCHIVE_SCENES.length - 1)
     ];
+
+    return {
+        ...scene,
+        candidateId: "firefly-field-book-painted-v3",
+        cameraKey: "firefly-flower-side-v3",
+        objectPosition: "50% 50%",
+        objectFit: "contain" as const,
+    };
 };
 
 const EmptyResearchPageArt: React.FC = () => (
@@ -105,18 +124,20 @@ export const ResearchBookStage: React.FC<ResearchBookStageProps> = ({
                             ? " research-library-book-art--painted"
                             : ""}`}
                         data-visual-lineage-id={fireflyArchiveScene ? "pokko-field-v1" : undefined}
-                        data-visual-candidate-id={fireflyArchiveScene
-                            ? "firefly-field-book-painted-v2"
-                            : undefined}
+                        data-visual-candidate-id={fireflyArchiveScene?.candidateId}
                         data-visual-mode={fireflyArchiveScene ? "field-book" : undefined}
                         data-visual-scene-id={fireflyArchiveScene?.sceneId}
-                        data-camera-key={fireflyArchiveScene ? "firefly-flower-side-v2" : undefined}
+                        data-camera-key={fireflyArchiveScene?.cameraKey}
                     >
                         {fireflyArchiveScene ? (
                             <img
                                 className="research-library-book-painted-image"
                                 src={fireflyArchiveScene.src}
                                 alt={fireflyArchiveScene.alt}
+                                style={{
+                                    objectFit: fireflyArchiveScene.objectFit,
+                                    objectPosition: fireflyArchiveScene.objectPosition,
+                                }}
                                 data-character-id="pokko"
                                 draggable={false}
                                 decoding="async"

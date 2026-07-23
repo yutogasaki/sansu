@@ -51,10 +51,17 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
     const slotGridStyle = {
         gridTemplateColumns: `repeat(${Math.max(1, Math.min(clueFeatureIds.length, 3))}, minmax(0, 1fr))`,
     };
+    const isNeutralFireflyFinale = (
+        definition.id === FIREFLY_FLOWER_DISCOVERY_PAGE.id
+        && isBigDiscovery
+        && !observation
+    );
     const fieldBookIdentity: ExploreVisualIdentity = definition.id === FIREFLY_FLOWER_DISCOVERY_PAGE.id
         ? {
             lineageId: "pokko-field-v1",
-            candidateId: "firefly-field-book-v1",
+            candidateId: isNeutralFireflyFinale
+                ? "firefly-q7-dew-path-v3"
+                : "firefly-field-book-v1",
             mode: "field-book",
             surfaceId: "explore-field-book-firefly",
         }
@@ -65,6 +72,12 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
             surfaceId: "explore-field-book-legacy",
         };
     const revealIdentity = observation?.visual ?? fieldBookIdentity;
+    const physicalTitle = isNeutralFireflyFinale
+        ? "しずくの道が、葉帽子まで走った！"
+        : currentFeature?.title;
+    const physicalFinding = isNeutralFireflyFinale
+        ? "四つのしずくが一本の溝を走り、花がひらいた。最後の一滴がポッコの葉帽子へ、ぽとん"
+        : currentFeature?.finding;
 
     useEffect(() => {
         if (!currentFeature || !isBlockingReveal) return;
@@ -160,7 +173,11 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
                     <div className="relative mx-auto w-fit rounded-full border-2 border-[#f7e8bd]/70 bg-[#173f49] px-4 py-1.5 text-xs font-black tracking-[0.12em] text-[#fff4ce] shadow-lg">
                         <span className="inline-flex items-center gap-2">
                             <Sparkles className="h-4 w-4 text-[#f4c64f]" aria-hidden="true" />
-                            {isBigDiscovery ? "てがかりが つながった" : "めずらしい てがかり"}
+                            {isNeutralFireflyFinale
+                                ? "ころころ → ひらく → ぽとん"
+                                : isBigDiscovery
+                                    ? "てがかりが つながった"
+                                    : "めずらしい てがかり"}
                         </span>
                     </div>
 
@@ -226,10 +243,10 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
                         </span>
                         <p className="text-xs font-black tracking-[0.12em] text-[var(--explore-mid)]">{definition.title}</p>
                         <h2 id="research-big-discovery-title" className="mt-1 text-balance text-[20px] font-black leading-tight tracking-[-0.035em] text-[var(--explore-ink)] sm:text-[clamp(22px,5.5vw,36px)]">
-                            {isBigDiscovery ? "大発見！" : "とくべつな発見！"} {currentFeature.title}
+                            {isBigDiscovery ? "大発見！" : "とくべつな発見！"} {physicalTitle}
                         </h2>
                         <p id="research-big-discovery-description" className="mx-auto mt-1 max-w-xl text-xs font-semibold leading-5 text-[var(--explore-muted)] sm:mt-2 sm:text-sm sm:leading-6">
-                            {currentFeature.finding}
+                            {physicalFinding}
                         </p>
 
                         <ol

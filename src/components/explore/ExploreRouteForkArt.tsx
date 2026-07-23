@@ -3,8 +3,8 @@ interface ExploreRouteForkArtProps {
 }
 
 const ROUTE_FORK_ASSETS: Record<2 | 3, string> = {
-    2: "/assets/explore/route-choice/scene-fork-two-pokko-v1.jpg",
-    3: "/assets/explore/route-choice/scene-fork-three-pokko-v1.jpg",
+    2: "/assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.jpg",
+    3: "/assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.jpg",
 };
 
 // A valid decoded 1x1 fallback keeps short phones from overflowing while tall

@@ -130,14 +130,17 @@ export const selectConfirmedResearchPage = (
     const pageSummaries = latestPageIds.flatMap((pageId) => {
         const definition = getDiscoveryPageDefinition(pageId);
         if (!definition) return [];
+        const pageFinds = finds.filter((find) => find.discoveryPageId === pageId);
+        const latestObservation = [...pageFinds].reverse().find((find) => find.observationId);
 
         return [{
             definition,
-            discoveredFeatureIds: finds.flatMap((find) => (
-                find.discoveryPageId === pageId && find.discoveryFeatureId
+            discoveredFeatureIds: pageFinds.flatMap((find) => (
+                find.discoveryFeatureId
                     ? [find.discoveryFeatureId]
                     : []
             )),
+            observation: getExploreObservationDefinition(latestObservation?.observationId),
         } satisfies ResearchPageSummaryState];
     });
 
@@ -1571,6 +1574,14 @@ export const Explore: React.FC = () => {
         void finishActiveRun("returned");
     };
 
+    const leaveExploreFromHud = () => {
+        if (state.pendingProblem || state.steps === 0) {
+            exitExplore();
+            return;
+        }
+        returnToBase();
+    };
+
     const activeRevealId = revealedDiscovery?.id;
     const finishDiscoveryReveal = useCallback(() => {
         if (!activeRevealId) return;
@@ -1806,11 +1817,10 @@ export const Explore: React.FC = () => {
                                 || worldReaction
                                 || !runPersistenceReady
                                 || attemptSaveStatus !== "idle"
-                                || Boolean(pendingGate)
                                 || state.rescuePending
                                 || feedback !== "idle"
                             )}
-                            onBack={() => state.steps > 0 ? returnToBase() : exitExplore()}
+                            onBack={leaveExploreFromHud}
                         />
 
                         <main

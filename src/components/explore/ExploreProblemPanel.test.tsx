@@ -103,8 +103,8 @@ describe("ExploreProblemPanel rapid-trail art", () => {
     it("uses authored same-camera painted flower art", () => {
         const markup = renderPanel(3, "idle");
 
-        expect(markup).toContain('data-camera-key="firefly-flower-side-v2"');
-        expect(markup).toContain('data-visual-candidate-id="firefly-painted-pokko-v2"');
+        expect(markup).toContain('data-camera-key="firefly-flower-side-v3"');
+        expect(markup).toContain('data-visual-candidate-id="firefly-dew-path-painted-v3"');
         expect(markup).toContain('data-visual-mode="world-painted"');
         expect(markup).toContain('data-stage="waiting"');
         expect(markup).not.toContain("scene-run-pop-v1.webp");

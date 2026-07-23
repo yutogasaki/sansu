@@ -5,12 +5,14 @@ import {
     getNextDiscoveryPageClue,
     type DiscoveryPageDefinition,
     type DiscoveryPageFeatureId,
+    type ExploreObservationDefinition,
 } from "../../domain/explore";
 import { ResearchClueStampRail } from "./ResearchClueStampRail";
 
 export interface ResearchPageSummaryState {
     definition: DiscoveryPageDefinition;
     discoveredFeatureIds: readonly DiscoveryPageFeatureId[];
+    observation?: ExploreObservationDefinition;
 }
 
 export const ResearchPageSummary: React.FC<ResearchPageSummaryState> = ({

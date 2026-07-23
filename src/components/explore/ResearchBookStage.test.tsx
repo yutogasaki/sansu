@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
     FIREFLY_FLOWER_DISCOVERY_PAGE,
     MAKIMODON_DISCOVERY_PAGE,
+    ROOT_TANGLE_OBSERVATION,
 } from "../../domain/explore";
 import { ResearchBookStage } from "./ResearchBookStage";
 
@@ -18,11 +19,30 @@ describe("ResearchBookStage", () => {
             />,
         );
 
-        expect(markup).toContain('data-visual-candidate-id="firefly-field-book-painted-v2"');
+        expect(markup).toContain('data-visual-candidate-id="firefly-field-book-painted-v3"');
         expect(markup).toContain('data-visual-mode="field-book"');
         expect(markup).toContain('data-character-id="pokko"');
-        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg");
+        expect(markup).toContain("/assets/explore/firefly-flower/scene-light-path-dew-path-pokko-v3.jpg");
+        expect(markup).toContain("object-fit:contain");
         expect(markup).not.toContain("firefly-research-pokko-v1");
+    });
+
+    it("keeps the committed root-tangle observation in the return archive", () => {
+        const markup = renderToStaticMarkup(
+            <ResearchBookStage
+                researchPage={{
+                    definition: FIREFLY_FLOWER_DISCOVERY_PAGE,
+                    discoveredFeatureIds: FIREFLY_FLOWER_DISCOVERY_PAGE.chain.featureIds,
+                    observation: ROOT_TANGLE_OBSERVATION,
+                }}
+                storyLine="花たちの光が、地底の道になった。"
+            />,
+        );
+
+        expect(markup).toContain('data-visual-candidate-id="root-tangle-light-path-v2"');
+        expect(markup).toContain('data-camera-key="root-tangle-camera-v1"');
+        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg");
+        expect(markup).toContain("object-fit:cover");
     });
 
     it("keeps non-Firefly legacy pages on their registered archive renderer", () => {
@@ -36,7 +56,7 @@ describe("ResearchBookStage", () => {
             />,
         );
 
-        expect(markup).not.toContain('data-visual-candidate-id="firefly-field-book-painted-v2"');
+        expect(markup).not.toContain('data-visual-candidate-id="firefly-field-book-painted-v3"');
         expect(markup).toContain("makimodon-research-art");
         expect(markup).toContain("マキモドン");
     });

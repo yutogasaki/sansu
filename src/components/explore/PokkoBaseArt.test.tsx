@@ -10,7 +10,7 @@ describe("PokkoBaseArt", () => {
         expect(markup).toContain('data-visual-candidate-id="pokko-base-painted-v1"');
         expect(markup).toContain('data-visual-mode="base-map"');
         expect(markup).toContain('data-character-id="pokko"');
-        expect(markup).toContain("/assets/explore/route-choice/scene-fork-two-pokko-v1.jpg");
+        expect(markup).toContain("/assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.jpg");
         expect(markup).not.toContain("マキモドン");
     });
 });

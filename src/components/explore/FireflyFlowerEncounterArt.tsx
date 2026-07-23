@@ -16,17 +16,17 @@ export interface FireflyFlowerEncounterArtProps {
 }
 
 const STAGE_DESCRIPTIONS: Record<FireflyFlowerArtStage, string> = {
-    waiting: "閉じたほたる花のつぼみを、葉帽子のポッコが少し離れて見ている。",
-    "dew-trail": "四つのひかるしずくがつぼみへ並び、ポッコが指で行き先を示している。",
-    "warm-bud": "しずくの先でつぼみが起き上がってあたたまり、ポッコがよろこんでいる。",
-    "ringing-petals": "五枚の花びらが鈴のように開き、ポッコが両手を上げて音を聞いている。",
+    waiting: "閉じたほたる花のつぼみまで、一本の乾いた溝が続いている。葉帽子のポッコは、四つのしずくを見ている。",
+    "dew-trail": "ポッコが先頭のしずくを押し、四つのしずくが一本の溝をころがりはじめる。",
+    "warm-bud": "四つのしずくが溝の半分まで進み、ポッコが腰を落として見送る。つぼみの先が少しひらく。",
+    "ringing-petals": "四つのしずくが花まで届き、五枚の花びらがひらく。ポッコは一本になった水の道を見ている。",
 };
 
 const STAGE_ASSETS: Record<FireflyFlowerArtStage, string> = {
-    waiting: "/assets/explore/firefly-flower/scene-waiting-pokko-v2.jpg",
-    "dew-trail": "/assets/explore/firefly-flower/scene-dew-trail-pokko-v2.jpg",
-    "warm-bud": "/assets/explore/firefly-flower/scene-warm-bud-pokko-v2.jpg",
-    "ringing-petals": "/assets/explore/firefly-flower/scene-ringing-petals-pokko-v2.jpg",
+    waiting: "/assets/explore/firefly-flower/scene-waiting-dew-path-pokko-v3.jpg",
+    "dew-trail": "/assets/explore/firefly-flower/scene-dew-trail-dew-path-pokko-v3.jpg",
+    "warm-bud": "/assets/explore/firefly-flower/scene-warm-bud-dew-path-pokko-v3.jpg",
+    "ringing-petals": "/assets/explore/firefly-flower/scene-ringing-petals-dew-path-pokko-v3.jpg",
 };
 
 const getClueCount = (stage: FireflyFlowerArtStage) => (
@@ -55,9 +55,9 @@ export const FireflyFlowerEncounterArt = ({
         role={decorative ? undefined : "img"}
         aria-label={decorative ? undefined : `${ariaLabel}。${STAGE_DESCRIPTIONS[stage]}`}
         aria-hidden={decorative || undefined}
-        data-camera-key="firefly-flower-side-v2"
+        data-camera-key="firefly-flower-side-v3"
         data-visual-lineage-id="pokko-field-v1"
-        data-visual-candidate-id="firefly-painted-pokko-v2"
+        data-visual-candidate-id="firefly-dew-path-painted-v3"
         data-visual-mode="world-painted"
         data-stage={stage}
         data-clue-count={getClueCount(stage)}
