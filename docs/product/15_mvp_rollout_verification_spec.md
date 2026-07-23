@@ -60,7 +60,13 @@ MVPは学習効果を証明する前に、次を検証する。
 - unique `attemptKey` を境界に、run集計、探索event、学習ログ、MemoryState、プロフィールを同一transactionで原子的・冪等に保存する
 - UIが送る `affectsSrs` は使わず、保存済みassignmentからrepositoryが判定する
 - 未対応入力・生成不能のgame-only fallbackは `affectsSrs = false` のままにする
-- 発見図鑑のDexie保存とrun再開は後続縦切りとする
+
+### MVP-2c: active run再開
+
+- run行へversion付きoptional checkpointを保存し、route、energy、finds、attempt、完全なpending Problem、opening experience IDを復元する
+- 回答eventがcheckpointより1件だけ先行したcrashは、保存済みreceiptを同じpending gateへ1回だけfoldする。stale revision、複数tail、assignment不一致を拒否する
+- 確認済みdiscovery cursorを保存し、Q7大発見は未確認ならreload後に1回、確認済みなら0回再表示する
+- checkpointなし旧active runは学習状態を変えずabandonedとし、fresh runへ移る。発見図鑑のrun横断保存は後続とする
 
 ## 5. 起動面統合 / MVP-3
 
@@ -129,7 +135,7 @@ src/domain/explore/problemAdapter.ts
 
 ### Task 6: Persistence
 
-Dexie version 5のrun行にoptional assignmentを保存し、SRS対象回答まで接続する。index追加がないためversion 6には上げない。発見保存とrun再開は後続で拡張する。
+Dexie version 5のrun行にoptional assignmentとversion付きactive checkpointを保存する。index追加がないためversion 6には上げない。回答eventよりcheckpointが1件遅れた場合のtail replay、stale revision拒否、Q7確認cursorまでをrun再開境界とし、発見図鑑のrun横断保存は後続で拡張する。
 
 ### Task 7: Launch integration
 

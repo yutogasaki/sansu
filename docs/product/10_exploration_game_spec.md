@@ -291,4 +291,7 @@ MVPは本格グリッドではなく、ノード型でよい。
 - 帰還要約では未訪問の専用遭遇、未体験の地形、別ルートの順に1件だけ「つぎの たんけんの けはい」を出し、同じ画面から別ルートへ再出発できる。報酬量や永続進捗は増やさない
 - 問題は同じrun seed、gate、試行、skill、プロフィールsnapshotから式と数量視覚まで再現でき、別候補の乱数消費に影響されない
 - 画面内ゲーム状態は純粋reducerで進め、run・予約assignment・回答event・終了statusはDexieへ保存する
-- 予約済み学習assignmentの回答はStudy共通writerでSRSへ接続し、発見図鑑の永続化とrun再開は後続に残す
+- 予約済み学習assignmentの回答はStudy共通writerでSRSへ接続する。active runはrun行のoptional checkpointから同じrunId、route、energy、finds、pending Problem、attemptNumberへ自動復帰し、別の導入画面を増やさない
+- checkpointはversion、単調revision、opening experience ID、確認済みdiscovery cursorを持つ。Q7大発見は未確認ならreload後に1回だけ再表示し、「調査ノートを とじる」のcheckpoint保存が成功した後は再表示しない
+- 回答commit後は次の操作を解禁する前にcheckpointを更新する。commit済みanswer eventがcheckpointより1件だけ先行したcrashは保存receiptをreducerへ1回だけfoldし、複数tail、別gate、別assignment、未知schema、stale revisionは推測復元しない
+- checkpointを持たない旧active runは、既存の回答ログ・SRSを変更せずabandonedとして閉じてfresh runへ進む。finished rowと既存学習データは変更しない。発見図鑑のrun横断永続化は別の後続契約とする

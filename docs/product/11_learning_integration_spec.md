@@ -134,6 +134,16 @@ run開始も回答の前提にする。プロフィール解決後に `startExpl
 
 帰還・救出は `finishExploreRun` が `returned | rescued` を保存した後だけsummaryへ進む。退出・再出発はactive runを `abandoned` として閉じてから遷移し、終了保存に失敗した場合は現在のrunを維持して同じ操作を再試行できるようにする。同一run・同一statusの終了再送は冪等、別terminal statusは競合とする。
 
+### 3.3 active run checkpointと回答tail復旧
+
+- Explore起動時はfresh runを開始する前に同一プロフィールのactive runを検索する。有効なversion付きcheckpointがあれば、同じrunId、seed、route、energy、finds、attempt、pending Problemへ直接復帰し、新しい `run_started` を作らない
+- checkpointは完全なpending `Problem` と予約assignmentを照合できるkeyを保持する。回答途中の入力文字列は保存せず、reload後は同じ式・同じattemptNumberの空入力へ戻す
+- route選択、bridge plan、問題予約はcheckpoint保存後に回答を解禁する。回答commit後も、投影したreducer stateのcheckpoint保存が成功するまで次問を解禁しない
+- `problem_answered` eventだけがcheckpointより1件先行した場合は、checkpoint内のpending Problem / assignmentへ既存receiptを1回だけ適用してcheckpointを前進させる。`committedAttemptKeys`済みeventは再適用せず、未反映eventが複数、gate / category / source不一致、未知schemaでは自動replanや近似復元をしない
+- checkpoint revisionは単調増加とし、回答commit、checkpoint更新、run終了は呼び出し元が見たrevisionを照合する。別tabや古い非同期処理によるstale更新は競合として拒否する
+- opening experience IDをcheckpointへ固定し、reloadでactorや演出系統を切り替えない。確認済みdiscovery cursorは存在するfindの順序だけを前進でき、Q7 blocking発見はcursor保存成功後にだけ閉じる
+- indexを増やさないrun行のoptional fieldとして保存するため、Dexie version 5を維持する。checkpointのない旧active runはSRSや発見を推測せずabandonedとし、finished rowはそのまま読む
+
 ## 4. 正誤処理
 
 ### 4.1 正解
@@ -212,6 +222,7 @@ cold-openでも3問のassignment順はplannerが決める。`beat-1 / beat-2 / p
 | MVP-0 | 純粋reducerによる探索ループ。保存・SRS書き込みなし |
 | MVP-1 | `generateMathProblem` / `MATH_GENERATORS` 接続、テンキー再利用、ラン中の回答履歴のみ保持 |
 | MVP-2a | 探索run・`affectsSrs = false` の回答event・終了statusを保存し、保存済みreceipt後だけゲームを進める。既存学習ログとSRSは変更しない |
-| MVP-2b | 学習planner対象回答を保存し、SRS / Due / weak / 解放 / 昇格用回答窓へ接続。発見保存とrun再開は後続 |
+| MVP-2b | 学習planner対象回答を保存し、SRS / Due / weak / 解放 / 昇格用回答窓へ接続 |
+| MVP-2c | version付きactive checkpoint、最大1件のanswer tail replay、確認済みdiscovery cursorでrun再開へ接続。発見図鑑のrun横断永続化は後続 |
 | MVP-3 | ホーム探索CTA、いきものリアクション、きろくの発見ノートを統合 |
 | MVP-4 | 検証結果から通常導線を探索中心へ移すか判断 |

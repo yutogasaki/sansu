@@ -4,7 +4,7 @@
 
 既存 `UserProfile` に探索データを大量追加しない。正式導入時はDexie version 5以降で探索専用テーブルを追加する。
 
-既定起動面の探索へMVP-2bの最小学習接続を追加する。run行へplanner assignmentを予約し、SRS対象回答は探索event・run集計・既存回答ログ・MemoryState・プロフィール進捗を同一transactionで保存する。未予約fallbackは従来どおり探索eventだけを保存する。発見図鑑とrun再開は後続縦切りとする。
+既定起動面の探索へMVP-2bの最小学習接続を追加する。run行へplanner assignmentを予約し、SRS対象回答は探索event・run集計・既存回答ログ・MemoryState・プロフィール進捗を同一transactionで保存する。未予約fallbackは従来どおり探索eventだけを保存する。MVP-2cでは同じrun行のoptional active checkpointからrun再開を行い、発見図鑑のrun横断永続化は後続縦切りとする。
 
 ## 2. 既存テーブル
 
@@ -49,6 +49,7 @@ export interface ExploreRunRecord {
   routeSummary: string[];
   updatedAt: number;
   learningAssignments?: Record<string, ExploreLearningAssignment>;
+  activeCheckpoint?: ExploreActiveCheckpointV1;
 }
 
 export interface ExploreDiscoveryRecord {
@@ -122,7 +123,7 @@ Dexie schema、migration、回答transactionは5.2、探索reducer / UIによる
 - 同じ `attemptKey` の逐次・並行再送では、最初にcommit済みのeventから同じreceiptを復元し、run集計を二重加算しない。keyが同じなのに正誤または記録skillが違う場合はデータ競合として拒否する。
 - event追加に失敗した場合は、先に行ったrun集計更新もtransaction rollbackし、receiptを返さない。
 
-この縦切りではSRS対象回答とreducer / UI統合まで実装する。run再開と発見書き込みは実装しない。
+この縦切りではSRS対象回答とreducer / UI統合まで実装した。MVP-2cではindexを増やさないoptional `activeCheckpoint` を同じversion 5 run行へ追加し、発見書き込みとは分離してrun再開を実装する。
 
 ### 5.3 receipt駆動UIとrun終了境界
 
@@ -133,15 +134,17 @@ Dexie schema、migration、回答transactionは5.2、探索reducer / UIによる
 - 帰還・救出は終了receiptを受け取った後だけsummaryへ進む。退出・再出発は `abandoned` の終了成功後だけ遷移する。失敗時は現在のrunを保持して再試行する。
 - `startExploreRun` は新run追加と同じtransactionで、同一profileに残った別active runを `abandoned` 化する。通常経路では意味どおりのfinishを優先し、この処理はcrash・旧データ・応答欠落時にもactiveを最大1件へ収束させる保険とする。
 
-SRS対象assignmentでは既存 `logs` / MemoryState / weak / 解放・昇格用回答窓を更新し、game-only fallbackでは変更しない。発見図鑑とrun再開は変更しない。
+SRS対象assignmentでは既存 `logs` / MemoryState / weak / 解放・昇格用回答窓を更新し、game-only fallbackでは変更しない。MVP-2cのcheckpoint保存や復旧だけを理由に学習状態を更新しない。
 
 ## 6. 中断・再開
 
-正式版では `active` のランをプロフィールごとに1つだけ保持する。MVP-2aは新run開始transactionで別activeをabandoned化してこの上限を守るが、再開UIはまだ提供しない。
+`active` のランはプロフィールごとに1つだけ保持する。MVP-2cは新run開始より先にcheckpoint付きactive runを検索し、直接同じ問題面へ自動復帰する。
 
-- アプリ終了時: active runを保存
-- 再起動時: 「前の探検を続ける」または「帰還する」
-- 長時間経過後: 自動帰還扱い。発見登録済みは保持、未確定素材は仕様に従う
+- checkpointはschema version、単調revision、opening experience ID、reducer state、確認済みdiscovery cursorを持つ。入力途中の数字は保存しない
+- 回答eventだけがcheckpointより1件先行した場合に限り、完全なpending Problemと予約assignmentへreceiptを1回foldする。複数tailや不一致は推測しない
+- Q7 blocking発見は確認cursorの保存成功後にだけ閉じ、未確認なら再起動後に1回だけ表示する
+- checkpointなしの旧active runは学習・発見を推測せずabandonedへ閉じる。finished rowは変更しない
+- index追加がないためDexie version 5を維持し、バックアップなしの破壊的migrationを行わない
 
 ## 7. 移行
 
