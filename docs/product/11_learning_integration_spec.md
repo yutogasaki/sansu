@@ -155,7 +155,16 @@ run開始も回答の前提にする。プロフィール解決後に `startExpl
 - review候補の上限は固定booleanで一度だけ許可せず、既存assignmentと同じsegmentで既に計画したslotを含め、候補ごとにcallbackで再判定する。通常のDue候補は同segmentで1回だけ予約し、予約だけではMemoryStateのDueを消化しない
 - Q7開始時のQ8 slot予約は保存済み学習planに限る。Q7のblocking discovery確認checkpointが保存される前に、Q8を `SET_PROBLEM` 相当のruntime stateへ適用しない
 - profile / Memory / logs / runを読むplanner snapshotとsegment書込みは同じDexie transactionをlinearization点とする。別tabのStudy回答をtransactionの途中へ混ぜず、古いread snapshotを後からfirst-writerにしない
-- これは出題順の安定化であり、`number input可能` と高速loop適格性の判定や全sourceの `mathMaxUnlocked` guardは次の独立境界で行う。segment予約によって不適格問題を適格扱いしない
+- これは出題順の安定化であり、`number input可能` とrapid-loop適格性を同一視しない。新規予約の適格性と全sourceの解放上限は3.5を正とする
+
+### 3.5 rapid-loop適格性境界
+
+- 判定単位はskill IDだけではなく、計画時profile、curriculum metadata、各gate seedから生成した実Problemの組である。未保存のbase segment slotまたはrepresentation retryを新規予約するときだけ判定し、保存済みsegment / assignment / retryをrestore・表示・commit時に再評価しない
+- rapid-loop適格条件は、`inputType === "number"` の単一回答欄、正規化済み非負数、最短正答入力が3操作以内かつ決定込み4操作以内、representationが `concrete | bridge | symbol | strategy | reverse | mental`、筆算 / `algorithm` でなく、familyが `application | number-advanced` でないことのANDとする。数字と小数点を各1操作と数え、`100` / `1.2` は適格、`1000` / `0.25` は不適格とする
+- `due | weak | maintenance | followup | main | plus-one | representation-retry` の全候補は、既知curriculum levelが計画時 `mathMaxUnlocked` 以下であることを共通guardで確認する。未知skill、解放上限超過、先頭skillや `count_10` への無条件fallbackはfail-closedとする
+- plannerが新規base segment slotを満たせない場合は、学習候補と別identityのrapid-safe Problemを `game-only-fallback / affectsSrs = false` で不足slotだけ埋める。不適格だったDueそのものをgame-onlyへ変換・再利用しない
+- 除外候補はassignmentを作らず、`strength`、`nextReview`、`status`、`isWeak`、`logs`、recentAttempts、プロフィール回答窓を変更しない。予約・除外を回答として扱わず、除外DueはDueのままStudyまたは将来のじっくり遭遇へ残す
+- 保存済みsegment / assignment / retryはplanner versionを含むfirst-writer正本とし、新policyで差し替えない。旧runから採用した現在full Problemも維持し、同時に新規生成する残りslotだけ現行policyを通す。判定不能や候補枯渇でもsegment transactionを部分commitしない
 
 ## 4. 正誤処理
 

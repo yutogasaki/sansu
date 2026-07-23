@@ -19,7 +19,7 @@ MVPは学習効果を証明する前に、次を検証する。
 | ルート | `/explore` 新規 |
 | 現行入口 | 通常起動 / 初回設定完了 → `/` → `/explore`。`/battle` からも到達可能 |
 | 状態管理 | 純粋reducer、メモリ内 |
-| 問題 | Study共通plannerが選んだDue / weak / maintenance / followup / main / +1のうち、既存単一数字入力で扱える問題を呼ぶ |
+| 問題 | Study共通planner候補のうち、計画時の解放上限内かつrapid-loop適格な生成済みProblemを新規segmentへ予約する。不足分は別identityのgame-only問題で埋める |
 | SRS書き込み | runへ予約したplanner assignmentと実出題skillが一致する回答だけ。未対応入力・安全fallbackは対象外 |
 | マップ | ノード型15ノード、開始から終点まで8行動。固定cold-openは0タップ開始、道選択は最初の3問完了後を含む区間境界だけ |
 | 行き先 | 2択中心、1層だけ3択、終盤は合流 |
@@ -81,6 +81,15 @@ MVPは学習効果を証明する前に、次を検証する。
 - 旧active runのpending full Problemを現在slotへそのまま採用し、回答前に残りslotを固定することを自動検証する
 - Q7で保存されたQ8 full Problemがunlock後もdeep equalで復元される一方、blocking discovery確認前にはQ8が表示・入力可能化されないことを自動検証する
 - 2026-07-23実装証拠ではclean revision `2b45b9396b164399a7d4ddc1b0fc6a9985833571` で `verify:core` の770テスト・build・asset gate、全23 smoke scenario、PWA更新3 scenarioを通過した。固定10問は4セル各10runで `evidence.eligible = true / pass = true`、all-correct中央値はStudy **124.9問/分**、Explore **262.2問/分**、未丸め比率 **2.100**、Q1 / Q2正解P95 **136.1ms**、同問誤答復帰P95 **450.0ms**。4中断の完全一致、追加0タップ、persistence integrity、学習状態不変、fixture / runtime identityを全件通過した
+
+### MVP-2e: rapid-loop適格性
+
+- `due | weak | maintenance | followup | main | plus-one | representation-retry` の全sourceで、未知skillまたは `mathMaxUnlocked` 超過候補が新規SRS assignmentにならないことを自動検証する
+- `100` / `1.2` は適格、`1000` / `0.25`、multi / choice、筆算 / algorithm、`application` / `number-advanced` は不適格となるpure policy境界を自動検証する
+- 不適格DueのMemoryState、`nextReview`、logs、recentAttempts、プロフィール回答窓を前後deep equalで確認し、Dueのまま残ることを検証する
+- 候補枯渇時も全segment slotが埋まり、不足分だけ別identityの `game-only-fallback / affectsSrs = false` となり、除外Dueの流用が0件であることを検証する
+- policy導入前の保存済みsegment / retryをreloadし、Problem / assignmentがdeep equal、書換え0件であることを検証する。旧runの現在slotはそのまま採用し、残りの新規slotだけ現行policyを通す
+- planner 1 call / segment、segment atomic rollback、通常planner 3問graybox、fixed-ten throughputを回帰確認し、入力適格性の強化で連問テンポやSRS writerを壊さない
 
 ## 5. 起動面統合 / MVP-3
 

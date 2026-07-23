@@ -110,6 +110,9 @@
 - 予約済み連問区間はindexを増やさないrun行のoptional dataとして保存し、step、gate、node、Problem、assignment、計画時プロフィール境界を照合して再開する。旧active runが区間途中で区間dataを持たない場合は、完了済みstepを変更せず残りslotだけを一度予約する
 - 旧active runが既にpending full Problemを表示している場合は、そのProblemとassignmentを現在slotの正本として入力解禁前にsegmentへ取り込み、同じsnapshotで残りslotを予約する。現在問の回答によるunlockを次slotの再計画へ混ぜない
 - 各slotの完全なProblemを保存値の正本とし、fresh profileとseedからの再生成で置き換えない。保存値はsegment ID、絶対step、slot順、planner / generator versionも持ち、review capは既存assignmentと同じsegmentで計画済みのslotを含めて候補ごとに再判定する
+- Exploreで新しいbase segment slotまたはrepresentation retryを予約するときは、すべてのplanner sourceを計画時 `mathMaxUnlocked` 内へ制限し、生成済みProblemをrapid-loop適格性で判定する。適格条件は単一のnumber入力、正規化済み非負数、答え入力3操作以内かつ決定込み4操作以内、筆算 / `algorithm` 面でなく、`application` / `number-advanced` の高認知負荷familyでないこととする
+- 不適格なDue等はassignment化せず、別identityのrapid-safe `game-only-fallback / affectsSrs = false` で不足slotだけを埋める。除外した学習候補をfallbackへ偽装せず、`logs`、MemoryState、recentAttempts、Due状態、プロフィール回答窓を変更しない
+- rapid-loop適格性は未保存の新規予約時だけ適用する。保存済みsegment / assignment / retryと、旧runから現在slotへ採用したfull Problemは新規則で再評価・差替えせず、旧runで同時に新規生成する残りslotだけ現行規則を通す
 - ランの最初の3問は、学習問題の意味を変えず、`解く → 即世界反応`を2回積み重ね、3問目に同じ身体規則から読めるオチへ到達するcold-openとする。1・2問目は追加0タップ・submitから650ms以内に次問を操作可能にし、誤答はsubmitから550ms以内に同じ問題へ戻す
 - 1ラン8問の体験順は `Q1〜3 cold-open → Q3後の道選択 → Q4〜6 主調査の手掛かり → Q7 大発見1回 → Q8 持ち帰り → 帰還要約 → 再出発` とする。cold-openは主調査ページへ特徴を付与せず、通常標本とレア標本は希少度だけを理由に操作を止めない。明示的に止める報酬は意味づけされた大発見だけとし、8問完了時は「基地へ もちかえる」を唯一の主操作にする
 - delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行visual candidate `dig-pop-painted-v2` は、同じ相棒、同じスコップ、同じ土、同じ大きな根生物、同じcameraを保ち、commit済み正解数だけを `ready → dig-one → dig-two → popped` へ写す。相棒は根生物の身体や葉ではなく周囲の同じ土だけを掘る。土が飛ぶ、根生物が持ち上がって足が見える、全身でぽんと抜ける、という三段変化の最後に、相棒が安全に尻もちをつき、柔らかい土塊が葉帽子へ載る。1・2問目の途中発見はtoastを出さず、3問目も説明モーダルや追加CTAを挟まない。先読みが期限に間に合わない場合、正解後は通常plannerへ戻し、誤答後は先読みをabortして同じ問題を操作可能にする。blocking discoveryを越えて次問を先読みしない。v2のruntime視覚サブゲートはmobile `52 / 53 / 52 / 53`、tablet `52 / 53 / 53 / 53`、clean revision `85b1bf19548db523b535d10549bd622294f149bf`・10反復のG2後throughputサブゲートは、Q7大発見を含む4中断で比率 **2.184** を通過した。両者を実際の配信targetの同一buildで結んだcontact sheetと無文字5人テストが終わるまでproductionへ昇格しない
@@ -323,7 +326,7 @@
 
 * **1問（Problem）**: 1回の解答入力（または一連の入力完了）で完結する最小単位。
 * 計算の途中経過や、位ごとの分割入力は、それ全体で「1問」とみなす。
-* 問題データ（種、正解、オペランド）は都度生成され、永続保存はしない。
+* Studyの通常問題は都度生成し、教材リストとして永続保存しない。Exploreのactive runでは、中断再開とimmutable segmentのため、完全なProblemをrun行のcheckpoint / segmentへ一時永続し、run外の教材リストへ昇格しない。
 
 ### 4.6 算数：複数入力（あまり・分数・帯分数）の入力仕様（専用パッド）
 
@@ -401,6 +404,7 @@
 
 - 子どもが選ぶのはルート、地形、報酬傾向、ゲーム上のリスクであり、問題難度そのものではない
 - 探索アダプターは Study と共通の算数 planner と既存問題生成を呼び、Due、weak、maintenance、レベル配分、表現フォロー、3問区間を守る
+- `due | weak | maintenance | followup | main | plus-one | representation-retry` の全sourceは、Exploreで新しく予約する前に既知curriculum levelが計画時 `mathMaxUnlocked` 以下であることを共通guardで確認する。未知skillと無条件 `count_10` fallbackはfail-closedとし、guardを迂回しない
 - planner が run に予約した assignment と実出題 skill が一致した回答だけを、回答ログ、SRS、解放・昇格・苦手判定へ算入する
 - 未予約問題、未対応入力の代替、生成失敗時の安全 fallback は `affectsSrs = false` とし、探索イベントだけへ残す
 - 学習上の正誤と、ゲーム上の成功・失敗・報酬を別の状態として扱う
@@ -767,7 +771,7 @@ UIに露出しない内部用語でも、仕様上の基準として定義する
 
 ### 7.1.3 ログ保存方針（Logging Policy）
 
-* **Problem（個々の問題）**: **永続保存しない**。都度生成し、使い捨てとする。
+* **Problem（個々の問題）**: Studyでは都度生成して教材リストとして永続保存しない。Exploreのactive runに限り、checkpoint / immutable segment / retryの正本としてrun行へ一時永続し、完了済みrun外の再利用問題集にはしない。
 * **SkillStats（累積統計）**: `memoryMath` / `memoryVocab` で永続保持する。
 * **AttemptLog（全回答履歴）**: `logs` に保存し、SRS・統計・旧weak状態の復元に使う。
 * **RecentAttempt（直近履歴）**: `UserProfile.recentAttempts` に **直近300件** をリングバッファで保持し、出題クールダウンや直近判定に使う。
@@ -962,6 +966,8 @@ interface MemoryState {
 | 期限超過上限 | 7日 | overdueDays 上限 | 5.3 |
 | クールダウン | 5問 | 同一項目の連続回避 | 5.3 |
 | ブロック内同一ID上限 | 2回 | 1ブロック内での同一ID出題上限 | 5.3 |
+| Explore rapid-loop 答え入力上限 | 3操作 | 数字と小数点を各1操作として数える最短正答入力。`100` / `1.2` は可、`1000` / `0.25` は不可 | 1.2、5.0.1、11 |
+| Explore rapid-loop 正答完了上限 | 4操作 | 答え入力3操作以内 + 決定1操作 | 1.2、5.0.1、11 |
 | Gate C固定問題比較 | 10反復 | Study / Exploreの表示throughput適格計測 | 1.2、15 |
 | Gate C throughput比 | 1.000以上 | Explore回答数/分の未丸め中央値 ÷ Study回答数/分の未丸め中央値 | 1.2、15 |
 | 苦手判定 最低回答数 | 5回 | 苦手判定開始 | 5.5 |

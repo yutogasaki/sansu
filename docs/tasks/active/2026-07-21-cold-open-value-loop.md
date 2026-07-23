@@ -27,7 +27,7 @@
 - Root Pullのproduction採用、Snap Rootの固有名・永続図鑑登録・探検基地への固定
 - 本番actor rig、sprite量産、最終背景、音声量産
 - 9〜12問run、複数encounter pack、図鑑永続化、基地全面改修
-- planner / writer / SRS / Due / weak / assignment / receiptの再設計
+- planner優先順位、writer、SRS、Due、weak、receiptアルゴリズムの再設計。G3-3ではExploreの新規予約入口に置くeligibility adapterと全source解放guardだけを対象にする
 - 既存 `root-tangle` domain、observation provenance、legacy保存IDの削除や移行
 
 ## SSOT References
@@ -69,6 +69,7 @@
 9. V8: 水やり版をHOLDかつ非採用とし、別visual candidate `dig-pop-painted-v1` を `ready → dig-one → dig-two → popped` で作る。source v1の視覚的磁力50 / 60を受け、locked-background / overlay v2がsource gateを通るまでruntimeへ切り替えない。production defaultは `classic-v1` を維持する。
 10. V9: `dig-pop-painted-v1` の50 / 60 HOLDを承認継承せず、locked background、固定character / prop、state overlayで別candidate `dig-pop-painted-v2` を作る。source Gate A通過後、mobile / tablet flattened 4 frameを `snap-root-v1` local validationへ配線する。
 11. V10: 実problem panelの390×844 / 768×1024を4状態ずつ再採点する。tablet `dig-two` がanswer shelfで足とスコップ刃を隠して50 / 60となったためaction overlayだけを再配置し、最終53 / 60へ修正する。顔、作用する手・道具先端、接地・露出した足、payoff propのsafe zoneを恒久ルール化する。
+12. G3-3: `number input可能` と `rapid-loop適格` を分離し、全planner sourceを解放上限内へguardする。不適格Dueを学習状態不変のまま残し、別identityのgame-only fallbackで連問を埋め、保存済みsegment / retryは非遡及で復元する。
 
 ## Definition of Done
 
@@ -118,7 +119,11 @@
 ### Next
 
 - runtime候補を意図未共有の5人へ無文字で見せ、主動詞・payoff一致4/5、続行希望4/5、危険解釈0件を回答原文で確認する。
-- G3-3: `number input可能` と `rapid-loop適合` を分離し、4桁筆算などはDueを消化せずStudyまたは将来のじっくり遭遇へ残す。全planner sourceを `mathMaxUnlocked` 内へ制限し、除外Dueを回答済みにしない。
+- G3-3a: 単一number入力、答え入力3操作、筆算 / algorithm除外、高認知負荷family除外をpure rapid-loop policyとして固定する。
+- G3-3b: `due | weak | maintenance | followup | main | plus-one | representation-retry` の新規予約を計画時 `mathMaxUnlocked` 内へ制限し、未知skillと無条件fallbackをfail-closedにする。
+- G3-3c: 不適格Dueをassignment化せず学習状態不変のまま残し、別identityのrapid-safe game-only問題で不足slotだけを埋める。
+- G3-3d: 保存済みsegment / retryと旧runの現在full Problemを再評価・差替えせず、新規生成するslotだけ現行policyを通す。
+- G3-3e: pure policy、全source、Due deep-equal、候補枯渇、旧segment復元、通常planner graybox、fixed-ten throughputを検証する。
 - G4-1: cold-open絵本actor、通常探索、Q7、持ち帰り、基地のcritical-path contact sheetを実配信targetの同一buildで作り、帰還だけ白い別キャラになるlineage driftを非補償HOLDとして解消する。
 - production昇格前に200% text、sound off、offline、critical-path contact sheetとcold-cache / PWA updateを最終確認する。
 - 三ゲートをすべて通るまで `classic-v1` production default、固有名、永続図鑑、量産encounterを変更しない。
