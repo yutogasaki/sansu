@@ -1,6 +1,6 @@
 # docs/product/11_learning_integration_spec.md — 学習ロジック統合仕様
 
-> 状態: 既定起動面の探索へ **MVP-2b の最小学習接続**と **MVP-2d の3 / 3 / 2問segment予約**を適用する。Study と共通の算数 planner が選んだ assignment だけをSRS対象とし、run・回答receipt・学習記録を同じ冪等保存境界で扱う。未対応入力や安全fallbackは引き続き学習進捗へ混ぜない。
+> 状態: 既定起動面の探索へ **MVP-2b の最小学習接続**、**MVP-2d の3 / 3 / 2問segment予約**、**MVP-2e のrapid-loop適格性と全source解放guard**を適用する。Study と共通の算数 planner が選んだ適格assignmentだけをSRS対象とし、run・回答receipt・学習記録を同じ冪等保存境界で扱う。不適格候補は学習状態を変えずDueへ残し、別identityのgame-only fallbackを学習進捗へ混ぜない。
 
 ## 1. 基本方針
 

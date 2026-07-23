@@ -115,15 +115,12 @@
 - G3-1のactive run再開を実装した。version 1 checkpointへfull reducer state、pending Problem、opening experience ID、確認済みdiscovery cursor、単調revisionを保存し、回答・run集計・学習更新・checkpointを同一transactionで前進させる。route / bridge / problemは保存後だけ表示へ適用し、typed answerは復元しない。stale CAS、assignment差、複数answer tail、順序を飛ばすdiscovery cursorを拒否し、PWA holdとepochで待機中・失敗後の古い保存を無効化する。390×844 fixed-ten E2EはQ1誤答中、Q3分岐、Q7未確認大発見、Q8入力途中の4 reloadを同一runで通過し、Q7確認後の再表示0を確認した。`verify:core` は732テスト・build・asset gate、全smokeは23 scenario、PWA更新は3 scenarioを通過し、独立domain / runtime監査は残存P0/P1なしと判定した
 - G3-2の3 / 3 / 2問segment予約を実装した。各区間は一つのprofile / Due / weak snapshotと一回のplanner callから、実際のgate順にfull `Problem` とassignmentを同じrun rowへ原子的に保存する。区間途中のprofile更新やunlockは保存済みslotを変えず次区間から反映し、retryは同じstep・同じfull Problemをcheckpoint CAS付きで復元する。旧active runは表示中Problemを入力解禁前に現在slotとして採用する。Q7中に保存したQ8はblocking discovery確認まではdormantのままにし、確認後も同一Problem / assignmentを適用する。future slotはretry / cooldown / review-cap履歴へ混入させない
 - G3-2をclean revision `2b45b9396b164399a7d4ddc1b0fc6a9985833571` で検証した。`verify:core` は770テスト・build・asset gate、全smokeは23 scenario、PWA更新は3 scenarioを通過し、独立したdomain / runtime / benchmark harness監査は残存P0/P1なしと判定した。固定10問は4セル各10runで `evidence.eligible = true / pass = true`。all-correct中央値はStudy **124.9問/分**、Explore **262.2問/分**、未丸め比率 **2.100**、Q1 / Q2正解20sample P95 **136.1ms**、Explore同問誤答20sample P95 **450.0ms**。全runで4中断の順序、追加0タップ、receipt / checkpoint / 学習状態不変、fixture / runtime identityを通過した
+- G3-3のrapid-loop適格性を実装した。単一number入力・最大3入力操作・筆算 / algorithmと高認知負荷family除外をpure policyへ固定し、`due | weak | maintenance | followup | main | plus-one | representation-retry` の全sourceを `mathMaxUnlocked` と同じ入口でguardする。不適格Dueはassignment化せず学習状態不変のまま残し、欠けたslotだけ別identityの `game-only-fallback / affectsSrs = false` で埋める。保存済みsegment / retry / 旧run現在Problemは非遡及でdeep-equal復元し、新規slotだけ現行policyを通す
+- G3-3をclean revision `89291b6a0bd39b1246f2e6536991a25a3f71866b` で検証した。`verify:core` は814テスト・build・asset gate、全smokeは23 scenario、PWA更新は3 scenarioを通過し、独立したlearning / runtime / code監査は残存P0/P1なしと判定した。固定10問は4セル各10runで `evidence.eligible = true / pass = true`。all-correct中央値はStudy **124.4問/分**、Explore **262.1問/分**、未丸め比率 **2.106**、Q1 / Q2正解20sample P95 **136.4ms**、Explore同問誤答20sample P95 **451.7ms**。4中断、追加0タップ、persistence integrity、除外Dueを含む学習状態不変、fixture / runtime identityを全件通過した
 
 ### Next
 
 - runtime候補を意図未共有の5人へ無文字で見せ、主動詞・payoff一致4/5、続行希望4/5、危険解釈0件を回答原文で確認する。
-- G3-3a: 単一number入力、答え入力3操作、筆算 / algorithm除外、高認知負荷family除外をpure rapid-loop policyとして固定する。
-- G3-3b: `due | weak | maintenance | followup | main | plus-one | representation-retry` の新規予約を計画時 `mathMaxUnlocked` 内へ制限し、未知skillと無条件fallbackをfail-closedにする。
-- G3-3c: 不適格Dueをassignment化せず学習状態不変のまま残し、別identityのrapid-safe game-only問題で不足slotだけを埋める。
-- G3-3d: 保存済みsegment / retryと旧runの現在full Problemを再評価・差替えせず、新規生成するslotだけ現行policyを通す。
-- G3-3e: pure policy、全source、Due deep-equal、候補枯渇、旧segment復元、通常planner graybox、fixed-ten throughputを検証する。
 - G4-1: cold-open絵本actor、通常探索、Q7、持ち帰り、基地のcritical-path contact sheetを実配信targetの同一buildで作り、帰還だけ白い別キャラになるlineage driftを非補償HOLDとして解消する。
 - production昇格前に200% text、sound off、offline、critical-path contact sheetとcold-cache / PWA updateを最終確認する。
 - 三ゲートをすべて通るまで `classic-v1` production default、固有名、永続図鑑、量産encounterを変更しない。

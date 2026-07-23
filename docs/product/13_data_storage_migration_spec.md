@@ -4,7 +4,7 @@
 
 既存 `UserProfile` に探索データを大量追加しない。正式導入時はDexie version 5以降で探索専用テーブルを追加する。
 
-既定起動面の探索へMVP-2bの最小学習接続を追加する。run行へplanner assignmentを予約し、SRS対象回答は探索event・run集計・既存回答ログ・MemoryState・プロフィール進捗を同一transactionで保存する。未予約fallbackは従来どおり探索eventだけを保存する。MVP-2cでは同じrun行のoptional active checkpointからrun再開を行い、発見図鑑のrun横断永続化は後続縦切りとする。
+既定起動面の探索へMVP-2bの最小学習接続を追加する。run行へplanner assignmentを予約し、SRS対象回答は探索event・run集計・既存回答ログ・MemoryState・プロフィール進捗を同一transactionで保存する。MVP-2eで不適格候補を除外した場合は別identityのgame-only fallbackだけを予約し、学習状態を変更しない。MVP-2cでは同じrun行のoptional active checkpointからrun再開を行い、発見図鑑のrun横断永続化は後続縦切りとする。
 
 ## 2. 既存テーブル
 

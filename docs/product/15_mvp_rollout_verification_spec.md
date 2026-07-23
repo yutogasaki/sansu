@@ -1,6 +1,6 @@
 # docs/product/15_mvp_rollout_verification_spec.md — MVP・段階導入・検証仕様
 
-> 状態: gameplayは **MVP-0/1**、run・回答receipt・終了status保存は **MVP-2a**、Study共通plannerからSRSへつなぐ最小縦切りは **MVP-2b**、version付きactive checkpointから同じrunへ戻る中断再開は **MVP-2c**、3 / 3 / 2問segment予約は **MVP-2d**。`/` は `/explore` へ転送し、連問探索を通常起動面にする。`/battle` の探検基地化と発見図鑑のメモリ内縦切りは実装済み。cold-openのproduction defaultは `classic-v1` とする。旧編み根版はREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。`snap-root-v1` slotのlocal validationには `dig-pop-painted-v2` を配線済みでruntime視覚と旧高速Studyとのclean revision・10反復適格throughputは個別サブゲートを通過したが、実配信targetの同一build証拠と無文字5人テストは未実施のためrelease Gate Cとproduction判定はHOLDである。発見図鑑のrun横断永続化はまだ行わない。
+> 状態: gameplayは **MVP-0/1**、run・回答receipt・終了status保存は **MVP-2a**、Study共通plannerからSRSへつなぐ最小縦切りは **MVP-2b**、version付きactive checkpointから同じrunへ戻る中断再開は **MVP-2c**、3 / 3 / 2問segment予約は **MVP-2d**、rapid-loop適格性と全source解放guardは **MVP-2e**。`/` は `/explore` へ転送し、連問探索を通常起動面にする。`/battle` の探検基地化と発見図鑑のメモリ内縦切りは実装済み。cold-openのproduction defaultは `classic-v1` とする。旧編み根版はREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。`snap-root-v1` slotのlocal validationには `dig-pop-painted-v2` を配線済みでruntime視覚と旧高速Studyとのclean revision・10反復適格throughputは個別サブゲートを通過したが、実配信targetの同一build証拠と無文字5人テストは未実施のためrelease Gate Cとproduction判定はHOLDである。発見図鑑のrun横断永続化はまだ行わない。
 
 ## 1. MVPの目的
 
@@ -90,6 +90,7 @@ MVPは学習効果を証明する前に、次を検証する。
 - 候補枯渇時も全segment slotが埋まり、不足分だけ別identityの `game-only-fallback / affectsSrs = false` となり、除外Dueの流用が0件であることを検証する
 - policy導入前の保存済みsegment / retryをreloadし、Problem / assignmentがdeep equal、書換え0件であることを検証する。旧runの現在slotはそのまま採用し、残りの新規slotだけ現行policyを通す
 - planner 1 call / segment、segment atomic rollback、通常planner 3問graybox、fixed-ten throughputを回帰確認し、入力適格性の強化で連問テンポやSRS writerを壊さない
+- 2026-07-23実装証拠ではclean revision `89291b6a0bd39b1246f2e6536991a25a3f71866b` で `verify:core` の814テスト・build・asset gate、全23 smoke scenario、PWA更新3 scenarioを通過し、独立したlearning / runtime / code監査は残存P0/P1なしと判定した。固定10問は4セル各10runで `evidence.eligible = true / pass = true`。all-correct中央値はStudy **124.4問/分**、Explore **262.1問/分**、未丸め比率 **2.106**、Q1 / Q2正解20sample P95 **136.4ms**、Explore同問誤答20sample P95 **451.7ms**。4中断の完全一致、追加0タップ、receipt / assignment / checkpoint整合、除外Dueを含む学習状態不変、fixture / runtime identityを全件通過した
 
 ## 5. 起動面統合 / MVP-3
 

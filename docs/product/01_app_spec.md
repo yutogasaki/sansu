@@ -1,6 +1,6 @@
 # 01 アプリ仕様書
 
-> 状態: 探索ピボットの親仕様。2026-07-23時点では `/` を `/explore` へ転送し、説明画面を挟まず探索ランを通常起動面とする。Study共通planner / writerによる最小学習接続、`/battle` を探索優先の「探検基地」へ再編する縦切り、version付きactive checkpointから同じ問題境界へ戻るrun再開、3 / 3 / 2問のimmutable segment予約まで実装済み。production defaultは安全なrollback先の `classic-v1` とする。旧編み根版は50 / 100のREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用とする。delivery / feature-flag ID `snap-root-v1` のlocal validationにはvisual candidate `dig-pop-painted-v2` を配線済みで、390×844と768×1024のruntime視覚サブゲート、および旧高速Studyとのclean revision・10反復適格throughputサブゲートを通過した。一方、両証拠は別buildであり、実際の配信targetにおける同一build contact sheetと無文字5人テストは未実施のためrelease Gate Cとproduction判定はHOLDである。`/study`・2人ゲーム・設定系ルートと既存データは維持し、発見図鑑のrun横断保存は後続とする。
+> 状態: 探索ピボットの親仕様。2026-07-23時点では `/` を `/explore` へ転送し、説明画面を挟まず探索ランを通常起動面とする。Study共通planner / writerによる最小学習接続、`/battle` を探索優先の「探検基地」へ再編する縦切り、version付きactive checkpointから同じ問題境界へ戻るrun再開、3 / 3 / 2問のimmutable segment予約、全planner sourceの解放上限guardとrapid-loop適格性まで実装済み。production defaultは安全なrollback先の `classic-v1` とする。旧編み根版は50 / 100のREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用とする。delivery / feature-flag ID `snap-root-v1` のlocal validationにはvisual candidate `dig-pop-painted-v2` を配線済みで、390×844と768×1024のruntime視覚サブゲート、および旧高速Studyとのclean revision・10反復適格throughputサブゲートを通過した。一方、両証拠は別buildであり、実際の配信targetにおける同一build contact sheetと無文字5人テストは未実施のためrelease Gate Cとproduction判定はHOLDである。`/study`・2人ゲーム・設定系ルートと既存データは維持し、発見図鑑のrun横断保存は後続とする。
 
 ## 目次
 
