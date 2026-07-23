@@ -80,6 +80,7 @@ MVPは学習効果を証明する前に、次を検証する。
 - 旧active runは現在stepから区間末尾までだけを予約し、過去のcheckpoint / event / assignmentを変更しない。高速loop適格性と `mathMaxUnlocked` 全source guardはMVP-2e相当の別ゲートとする
 - 旧active runのpending full Problemを現在slotへそのまま採用し、回答前に残りslotを固定することを自動検証する
 - Q7で保存されたQ8 full Problemがunlock後もdeep equalで復元される一方、blocking discovery確認前にはQ8が表示・入力可能化されないことを自動検証する
+- 2026-07-23実装証拠ではclean revision `2b45b9396b164399a7d4ddc1b0fc6a9985833571` で `verify:core` の770テスト・build・asset gate、全23 smoke scenario、PWA更新3 scenarioを通過した。固定10問は4セル各10runで `evidence.eligible = true / pass = true`、all-correct中央値はStudy **124.9問/分**、Explore **262.2問/分**、未丸め比率 **2.100**、Q1 / Q2正解P95 **136.1ms**、同問誤答復帰P95 **450.0ms**。4中断の完全一致、追加0タップ、persistence integrity、学習状態不変、fixture / runtime identityを全件通過した
 
 ## 5. 起動面統合 / MVP-3
 
