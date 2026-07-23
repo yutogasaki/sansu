@@ -5314,7 +5314,8 @@ const runVisualAuditViewport = async (
     await page.locator("#return-summary-title").waitFor({ timeout: STEP_TIMEOUT_MS });
 
     const returned = page.getByTestId("research-library-scene");
-    await returned.locator('[data-character-id="pokko"]').waitFor({ timeout: STEP_TIMEOUT_MS });
+    await returned.locator('[data-character-id="pokko"]:visible').first()
+      .waitFor({ timeout: STEP_TIMEOUT_MS });
     await returned.getByText(/ほたる花/, { exact: false }).first()
       .waitFor({ timeout: STEP_TIMEOUT_MS });
     const returnCapture = await capture("return", returned, {
