@@ -63,12 +63,12 @@ describe("painted encounter visual lineage", () => {
             markup,
             "explore-encounter-light-bridge",
             "light-bridge-idle",
-            "light-bridge-side-v3",
-            "light-bridge-dew-path-v3",
+            "light-bridge-side-v4",
+            "light-bridge-carry-bloom-v4",
         );
-        expect(markup).toContain("/assets/explore/light-bridge/scene-idle-leaf-dew-path-pokko-v6.jpg");
-        expect(markup).toContain("/assets/explore/light-bridge/scene-complete-leaf-dew-path-pokko-v6.jpg");
-        expect(markup).toContain("/assets/explore/light-bridge/scene-crossed-leaf-dew-path-pokko-v6.jpg");
+        expect(markup).toContain("/assets/explore/light-bridge/scene-idle-leaf-carry-bloom-pokko-v7.jpg");
+        expect(markup).toContain("/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.jpg");
+        expect(markup).toContain("/assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.jpg");
         expect(markup).not.toContain("explore-immersive-art--layered");
     });
 
@@ -85,8 +85,8 @@ describe("painted encounter visual lineage", () => {
             markup,
             "explore-encounter-light-bridge",
             "light-bridge-complete",
-            "light-bridge-side-v3",
-            "light-bridge-dew-path-v3",
+            "light-bridge-side-v4",
+            "light-bridge-carry-bloom-v4",
         );
         expect(markup).toContain(
             "explore-immersive-scene explore-immersive-scene-complete is-visible",
@@ -107,12 +107,12 @@ describe("painted encounter visual lineage", () => {
             markup,
             "explore-encounter-root-tangle",
             "root-tangle-dew-blocked",
-            "root-tangle-side-v3",
-            "root-tangle-dew-path-v3",
+            "root-tangle-side-v4",
+            "root-tangle-carry-bloom-v4",
         );
-        expect(markup).toContain("/assets/explore/root-tangle/scene-tangled-dew-path-pokko-v6.jpg");
-        expect(markup).toContain("/assets/explore/root-tangle/scene-open-dew-path-pokko-v6.jpg");
-        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-dew-path-pokko-v6.jpg");
+        expect(markup).toContain("/assets/explore/root-tangle/scene-tangled-carry-bloom-pokko-v7.jpg");
+        expect(markup).toContain("/assets/explore/root-tangle/scene-open-carry-bloom-pokko-v7.jpg");
+        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg");
         expect(markup).not.toContain("explore-immersive-art--layered");
     });
 
@@ -125,8 +125,8 @@ describe("painted encounter visual lineage", () => {
             markup,
             "explore-encounter-root-tangle",
             "root-tangle-dew-gag",
-            "root-tangle-side-v3",
-            "root-tangle-dew-path-v3",
+            "root-tangle-side-v4",
+            "root-tangle-carry-bloom-v4",
         );
         expect(markup).toContain(
             "explore-immersive-scene explore-immersive-scene-crossed is-visible",
@@ -143,15 +143,15 @@ describe("painted encounter visual lineage", () => {
             loadingMarkup,
             "explore-encounter-light-bridge",
             "light-bridge-idle",
-            "light-bridge-side-v3",
-            "light-bridge-dew-path-v3",
+            "light-bridge-side-v4",
+            "light-bridge-carry-bloom-v4",
         );
         expectIdentityOnRootAndArt(
             completionMarkup,
             "explore-encounter-light-bridge",
             "light-bridge-crossed",
-            "light-bridge-side-v3",
-            "light-bridge-dew-path-v3",
+            "light-bridge-side-v4",
+            "light-bridge-carry-bloom-v4",
         );
         expect(loadingMarkup).not.toContain('data-action-prop="bridge-leaf-clasp"');
         expect(completionMarkup).toContain('data-action-prop="bridge-leaf-clasp"');

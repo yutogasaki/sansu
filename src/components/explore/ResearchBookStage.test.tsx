@@ -19,10 +19,10 @@ describe("ResearchBookStage", () => {
             />,
         );
 
-        expect(markup).toContain('data-visual-candidate-id="firefly-field-book-painted-v3"');
+        expect(markup).toContain('data-visual-candidate-id="firefly-field-book-painted-v4"');
         expect(markup).toContain('data-visual-mode="field-book"');
         expect(markup).toContain('data-character-id="pokko"');
-        expect(markup).toContain("/assets/explore/firefly-flower/scene-light-path-dew-path-pokko-v3.jpg");
+        expect(markup).toContain("/assets/explore/firefly-flower/scene-light-path-carry-bloom-pokko-v4.jpg");
         expect(markup).toContain("object-fit:contain");
         expect(markup).not.toContain("firefly-research-pokko-v1");
     });
@@ -39,9 +39,9 @@ describe("ResearchBookStage", () => {
             />,
         );
 
-        expect(markup).toContain('data-visual-candidate-id="root-tangle-dew-path-v3"');
-        expect(markup).toContain('data-camera-key="root-tangle-side-v3"');
-        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-dew-path-pokko-v6.jpg");
+        expect(markup).toContain('data-visual-candidate-id="root-tangle-carry-bloom-v4"');
+        expect(markup).toContain('data-camera-key="root-tangle-side-v4"');
+        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg");
         expect(markup).toContain("object-fit:contain");
     });
 
@@ -56,7 +56,7 @@ describe("ResearchBookStage", () => {
             />,
         );
 
-        expect(markup).not.toContain('data-visual-candidate-id="firefly-field-book-painted-v3"');
+        expect(markup).not.toContain('data-visual-candidate-id="firefly-field-book-painted-v4"');
         expect(markup).toContain("makimodon-research-art");
         expect(markup).toContain("マキモドン");
     });

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   extractPrecacheUrls,
+  isDeprecatedExploreArtworkPath,
   isExploreArtworkPath,
   isLegacyIkimonoPngPath,
   isNonProductionAssetPath,
@@ -35,8 +36,25 @@ describe("asset production policy", () => {
   it("accepts only final exploration artwork as production art", () => {
     expect(isExploreArtworkPath("assets/explore/root-tangle/scene-open.jpg")).toBe(true);
     expect(isExploreArtworkPath("assets/explore/new-pack/scene-complete.avif")).toBe(true);
-    expect(isExploreArtworkPath("assets/explore/opening-snap-root-painted/scene-dig-two.jpg")).toBe(true);
+    expect(isExploreArtworkPath(
+      "assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-two.jpg",
+    )).toBe(true);
     expect(isExploreArtworkPath("assets/explore/new-pack/raw-scene.png")).toBe(false);
+  });
+
+  it.each([
+    "assets/explore/firefly-flower/scene-waiting-dew-path-pokko-v3.jpg",
+    "assets/explore/light-bridge/scene-idle-leaf-dew-path-pokko-v6.jpg",
+    "assets/explore/root-tangle/scene-tangled-dew-path-pokko-v6.jpg",
+    "assets/explore/opening-snap-root-painted/scene-ready-tablet.jpg",
+  ])("rejects deprecated HOLD artwork from production delivery: %s", (assetPath) => {
+    expect(isDeprecatedExploreArtworkPath(assetPath)).toBe(true);
+  });
+
+  it("keeps the carry-bloom candidates outside the deprecated contract", () => {
+    expect(isDeprecatedExploreArtworkPath(
+      "assets/explore/firefly-flower/scene-waiting-carry-bloom-pokko-v4.jpg",
+    )).toBe(false);
   });
 
   it("recognizes only runtime ikimono PNGs as legacy fallbacks", () => {

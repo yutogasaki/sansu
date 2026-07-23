@@ -14,6 +14,10 @@ import {
 } from "../../domain/explore";
 import { cn } from "../../utils/cn";
 import { DiscoveryPageArt } from "./DiscoveryPageArt";
+import {
+    FIREFLY_FLOWER_FIELD_BOOK_CANDIDATE_ID,
+    FIREFLY_FLOWER_Q7_CANDIDATE_ID,
+} from "./fireflyFlowerSceneCatalog";
 
 export interface DiscoveryResearchRevealItem {
     definition: DiscoveryPageDefinition;
@@ -60,8 +64,8 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
         ? {
             lineageId: "pokko-field-v1",
             candidateId: isNeutralFireflyFinale
-                ? "firefly-q7-dew-path-v3"
-                : "firefly-field-book-v1",
+                ? FIREFLY_FLOWER_Q7_CANDIDATE_ID
+                : FIREFLY_FLOWER_FIELD_BOOK_CANDIDATE_ID,
             mode: "field-book",
             surfaceId: "explore-field-book-firefly",
         }
@@ -73,10 +77,10 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
         };
     const revealIdentity = observation?.visual ?? fieldBookIdentity;
     const physicalTitle = isNeutralFireflyFinale
-        ? "しずくの道が、葉帽子まで走った！"
+        ? "こぼれた一滴が、葉帽子へ戻った！"
         : currentFeature?.title;
     const physicalFinding = isNeutralFireflyFinale
-        ? "四つのしずくが一本の溝を走り、花がひらいた。最後の一滴がポッコの葉帽子へ、ぽとん"
+        ? "四つのしずくを運んだら、花がぱっとひらいた。最後の一滴だけ跳ね返り、葉帽子へぽとん"
         : currentFeature?.finding;
 
     useEffect(() => {
@@ -174,7 +178,7 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
                         <span className="inline-flex items-center gap-2">
                             <Sparkles className="h-4 w-4 text-[#f4c64f]" aria-hidden="true" />
                             {isNeutralFireflyFinale
-                                ? "ころころ → ひらく → ぽとん"
+                                ? "はこぶ → ころん → ぽとん"
                                 : isBigDiscovery
                                     ? "てがかりが つながった"
                                     : "めずらしい てがかり"}

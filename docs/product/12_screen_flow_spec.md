@@ -94,10 +94,10 @@
 - active runのreloadは説明画面や「続ける」確認を挟まず、同じroute、energy、finds、式、attemptNumberへ直接戻す。入力途中の数字だけを空にし、保存済み回答をもう一度解かせない
 - 未確認のQ7大発見はreload後に1回だけ再表示する。確認操作のcheckpoint保存が成功した後は、reloadしても大発見modalを再掲せずQ8へ戻す。通常toastの再表示可否をcomponent refだけで決めない
 - checkpointの復元・tail replay・保存に失敗した場合は問題を推測して進めず、現在のProblemを保った責めない再試行面を出す。旧active runにcheckpointがない場合だけ、安全にabandonedとして新しいrunへ切り替える
-- delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行visual candidate `dig-pop-painted-v2` は、同じカメラ、相棒、スコップ、土、根生物を保つ。commit済み正解数に応じて `ready → dig-one → dig-two → popped` と進み、1・2問目は続行操作を置かずsubmitから650ms以内に次問を操作可能にする。相棒が根生物の身体や葉を引かず同じ土を掘り、土が飛ぶ、根生物の足が見える、全身でぽんと抜ける進行を見せ、3問目は相棒の安全な尻もちと柔らかい土塊の葉帽子をinlineで見せる。v2はlocal runtimeへ配線済みで、mobile / tablet視覚ゲートを通過したが、残る非補償ゲートが通るまでproductionへ昇格しない
+- delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行visual candidate `dig-pop-carry-bloom-v3` は、同じカメラ、相棒、スコップ、土、根生物を保つ。commit済み正解数に応じて `ready → dig-one → dig-two → popped` と進み、1・2問目は続行操作を置かずsubmitから650ms以内に次問を操作可能にする。相棒が根生物の身体や葉を引かず同じ土を掘り、土が飛ぶ、根生物の足が見える、全身でぽんと抜ける進行を見せ、3問目は相棒の安全な尻もちと柔らかい土塊の葉帽子をinlineで見せる。v3はlocal runtimeへ配線するが、旧v2の視覚点を継承せず、残る非補償ゲートが通るまでproductionへ昇格しない
 - cold-openの問題式と入力は通常のDOMを使い、演出のために問題の値・演算・category・assignment・SRS扱いを変更しない。誤答ではstageと同じ問題を維持し、submitから550ms以内を目標に再入力可能にする。支援先読みがtimeoutまたはerrorになった場合も、遅れて問題を差し替えず同じ入力面へ戻す
 - 1・2問目のopening途中発見はtoastを抑止し、問題、TenKey、身体変化を同時に読める状態を維持する。3問目も同じ画像を結果modalへ再掲せず、説明CTAなしで次の道選択へ進める
-- production defaultは `classic-v1` とする。旧編み根版Snap Rootとそのpayoff variantは50 / 100のREJECTであり、localを含む安全候補から外す。一本葉を引くBloom版と水やり版は同じ `snap-root-v1` slotの旧visual candidateとしてHOLDかつ非採用とする。`dig-pop-painted-v1` はsource HOLDの履歴、`dig-pop-painted-v2` はlocal validation candidate、`root-pull-v1` / `root-pull-v2` は比較用presentationとし、production価値ゲート通過前は基地、きろく、永続図鑑catalogへ固定しない
+- production defaultは `classic-v1` とする。旧編み根版Snap Rootとそのpayoff variantは50 / 100のREJECTであり、localを含む安全候補から外す。一本葉を引くBloom版と水やり版は同じ `snap-root-v1` slotの旧visual candidateとしてHOLDかつ非採用とする。`dig-pop-painted-v1` はsource HOLD、`dig-pop-painted-v2` は画風混在を残した旧runtime候補、`dig-pop-carry-bloom-v3` はlocal validation candidate、`root-pull-v1` / `root-pull-v2` は比較用presentationとし、production価値ゲート通過前は基地、きろく、永続図鑑catalogへ固定しない
 
 ## 5. 問題表示
 
@@ -145,7 +145,7 @@ OK:
 - Golden Discovery Page の特徴発見は、開いた調査ノートに3つの手掛かりスロットを示し、今回埋まった1件と次の未発見ヒント1件だけを読めるようにする
 - Golden Discovery Page の通常特徴も約900msの非blocking toastとし、今回の発見文を先に見せ、詳細な3スロットと次の手掛かりは帰還時の調査ページで再読できるようにする
 - 定義済みの特徴連鎖が完成した場合は、希少度にかかわらず「大発見」へ切り替え、明示的な続行操作を置く
-- `dig-pop-painted-v2` の1・2問目はopening途中発見のtoastを出さず、問題UIを隠さない。3問目の `popped` は同じ画像を別の結果モーダルへ再掲せず、説明用CTAを挟まず次の道選択へ進める。大発見・固有名・図鑑遷移はcold-openへ追加しない
+- `dig-pop-carry-bloom-v3` の1・2問目はopening途中発見のtoastを出さず、問題UIを隠さない。3問目の `popped` は同じ画像を別の結果モーダルへ再掲せず、説明用CTAを挟まず次の道選択へ進める。大発見・固有名・図鑑遷移はcold-openへ追加しない
 - root-tangleの大発見は、保存済み回答による開通・相棒通過を見せた同じcameraを紙・濃線の観察画へ変換し、その上へ因果文と3つの前提手掛かりを置く。別の汎用挿絵へ切り替えない
 - 観察画はcommit済みattempt key、node、encounter、直近discovery、最終featureが一致する場合だけ開く。保存中、保存失敗、別node、古いreaction、前提不足では開かない
 - 大発見の表示中だけ背後の探索UIを `inert` にする。通常標本、レア標本、通常調査手掛かりのtoastは、標本希少度に関係なく背後を操作可能に保つ

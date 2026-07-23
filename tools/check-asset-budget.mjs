@@ -5,6 +5,7 @@ import {
   ASSET_BUDGETS,
   extractPrecacheUrls,
   formatBytes,
+  isDeprecatedExploreArtworkPath,
   isExploreArtworkPath,
   isLegacyIkimonoPngPath,
   isNonProductionAssetPath,
@@ -51,6 +52,10 @@ const main = async () => {
       );
       continue;
     }
+    if (isDeprecatedExploreArtworkPath(file.relativePath)) {
+      errors.push(`${file.relativePath}: deprecated HOLD artwork must not ship from public`);
+      continue;
+    }
 
     if (!isExploreArtworkPath(file.relativePath)) continue;
     exploreArtwork.push({ ...file, fileSize });
@@ -83,6 +88,9 @@ const main = async () => {
     }
     if (isLegacyIkimonoPngPath(url)) {
       errors.push(`${url}: large PNG fallback leaked into the PWA precache; use WebP`);
+    }
+    if (isDeprecatedExploreArtworkPath(url)) {
+      errors.push(`${url}: deprecated HOLD artwork leaked into the PWA precache`);
     }
 
     const outputPath = path.join(DIST_DIR, url);

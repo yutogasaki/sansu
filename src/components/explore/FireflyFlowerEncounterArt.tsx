@@ -1,11 +1,13 @@
 import { cn } from "../../utils/cn";
+import {
+    FIREFLY_FLOWER_CAMERA_KEY,
+    FIREFLY_FLOWER_SCENES,
+    FIREFLY_FLOWER_WORLD_CANDIDATE_ID,
+    type FireflyFlowerSceneStage,
+} from "./fireflyFlowerSceneCatalog";
 import "./FireflyFlowerEncounterArt.css";
 
-export type FireflyFlowerArtStage =
-    | "waiting"
-    | "dew-trail"
-    | "warm-bud"
-    | "ringing-petals";
+export type FireflyFlowerArtStage = FireflyFlowerSceneStage;
 
 export interface FireflyFlowerEncounterArtProps {
     stage: FireflyFlowerArtStage;
@@ -16,17 +18,11 @@ export interface FireflyFlowerEncounterArtProps {
 }
 
 const STAGE_DESCRIPTIONS: Record<FireflyFlowerArtStage, string> = {
-    waiting: "閉じたほたる花のつぼみまで、一本の乾いた溝が続いている。葉帽子のポッコは、四つのしずくを見ている。",
-    "dew-trail": "ポッコが先頭のしずくを押し、四つのしずくが一本の溝をころがりはじめる。",
-    "warm-bud": "四つのしずくが溝の半分まで進み、ポッコが腰を落として見送る。つぼみの先が少しひらく。",
-    "ringing-petals": "四つのしずくが花まで届き、五枚の花びらがひらく。ポッコは一本になった水の道を見ている。",
-};
-
-const STAGE_ASSETS: Record<FireflyFlowerArtStage, string> = {
-    waiting: "/assets/explore/firefly-flower/scene-waiting-dew-path-pokko-v3.jpg",
-    "dew-trail": "/assets/explore/firefly-flower/scene-dew-trail-dew-path-pokko-v3.jpg",
-    "warm-bud": "/assets/explore/firefly-flower/scene-warm-bud-dew-path-pokko-v3.jpg",
-    "ringing-petals": "/assets/explore/firefly-flower/scene-ringing-petals-dew-path-pokko-v3.jpg",
+    waiting: FIREFLY_FLOWER_SCENES.waiting.description,
+    "dew-trail": FIREFLY_FLOWER_SCENES["dew-trail"].description,
+    "warm-bud": FIREFLY_FLOWER_SCENES["warm-bud"].description,
+    "ringing-petals": FIREFLY_FLOWER_SCENES["ringing-petals"].description,
+    "light-path": FIREFLY_FLOWER_SCENES["light-path"].description,
 };
 
 const getClueCount = (stage: FireflyFlowerArtStage) => (
@@ -35,7 +31,7 @@ const getClueCount = (stage: FireflyFlowerArtStage) => (
 
 /**
  * Same-camera painted plates for the ordinary Firefly Flower trail.
- * All four states stay mounted so the next 280KB plate is decoded before a
+ * All five states stay mounted so the next painted plate is decoded before a
  * rapid correct-answer transition asks for it. The host owns text and input.
  */
 export const FireflyFlowerEncounterArt = ({
@@ -55,21 +51,28 @@ export const FireflyFlowerEncounterArt = ({
         role={decorative ? undefined : "img"}
         aria-label={decorative ? undefined : `${ariaLabel}。${STAGE_DESCRIPTIONS[stage]}`}
         aria-hidden={decorative || undefined}
-        data-camera-key="firefly-flower-side-v3"
+        data-camera-key={FIREFLY_FLOWER_CAMERA_KEY}
         data-visual-lineage-id="pokko-field-v1"
-        data-visual-candidate-id="firefly-dew-path-painted-v3"
+        data-visual-candidate-id={FIREFLY_FLOWER_WORLD_CANDIDATE_ID}
         data-visual-mode="world-painted"
         data-stage={stage}
         data-clue-count={getClueCount(stage)}
-        data-light-path={stage === "ringing-petals" ? "setup" : "hidden"}
+        data-light-path={stage === "light-path"
+            ? "complete"
+            : stage === "ringing-petals"
+                ? "setup"
+                : "hidden"}
         data-reduced-motion={reducedMotion ? "true" : "false"}
         data-character-id="pokko"
     >
-        {(Object.entries(STAGE_ASSETS) as [FireflyFlowerArtStage, string][])
-            .map(([assetStage, src]) => (
+        {(Object.entries(FIREFLY_FLOWER_SCENES) as [
+            FireflyFlowerArtStage,
+            (typeof FIREFLY_FLOWER_SCENES)[FireflyFlowerArtStage],
+        ][])
+            .map(([assetStage, scene]) => (
                 <img
                     key={assetStage}
-                    src={src}
+                    src={scene.src}
                     alt=""
                     className="firefly-flower-art__scene"
                     data-painted-stage={assetStage}

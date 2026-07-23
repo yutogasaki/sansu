@@ -20,6 +20,15 @@ export const getRapidTrailArtStage = (
     completedSteps: number,
     feedback: ExploreProblemFeedback,
 ): FireflyFlowerArtStage => {
+    if (completedSteps >= RAPID_TRAIL_START_STEP + RAPID_TRAIL_CLUE_COUNT + 1) {
+        return "light-path";
+    }
+    if (
+        completedSteps >= RAPID_TRAIL_START_STEP + RAPID_TRAIL_CLUE_COUNT
+        && feedback === "correct"
+    ) {
+        return "light-path";
+    }
     const completedClues = clampClueCount(completedSteps);
     const visibleClues = feedback === "correct"
         ? Math.min(RAPID_TRAIL_CLUE_COUNT, completedClues + 1)
@@ -43,9 +52,10 @@ export const getRapidTrailProgressMarks = (stage: FireflyFlowerArtStage): string
 };
 
 export const getRapidTrailStateLabel = (stage: FireflyFlowerArtStage): string => {
-    if (stage === "ringing-petals") return "はなびら りん";
-    if (stage === "warm-bud") return "つぼみ ぽかぽか";
-    if (stage === "dew-trail") return "しずくの道";
+    if (stage === "light-path") return "はっぱに ぽとん";
+    if (stage === "ringing-petals") return "しりもちで ぱっ";
+    if (stage === "warm-bud") return "葉帽子 ぐらり";
+    if (stage === "dew-trail") return "しずくを はこぶ";
     return "つぼみ すやすや";
 };
 
@@ -54,20 +64,23 @@ export const getRapidTrailStatusCopy = (
     feedback: ExploreProblemFeedback,
 ): string => {
     if (feedback === "incorrect") {
-        if (stage === "warm-bud") return "あたたかさは そのまま。もういちど";
+        if (stage === "light-path") return "はっぱの一滴は そのまま。もういちど";
+        if (stage === "warm-bud") return "葉帽子は そのまま。もういちど";
         if (stage === "dew-trail") return "しずくは そのまま。もういちど";
         if (stage === "ringing-petals") return "はなびらは そのまま。もういちど";
         return "つぼみは そのまま。もういちど";
     }
 
     if (feedback === "correct") {
-        if (stage === "ringing-petals") return "はなびらが りん。道の先が きこえた！";
-        if (stage === "warm-bud") return "つぼみが ぽっと あたたかい。つぎ！";
-        if (stage === "dew-trail") return "しずくが つぼみへ ならんだ。つぎ！";
+        if (stage === "light-path") return "さいごの一滴が、はっぱに ぽとん！";
+        if (stage === "ringing-petals") return "ころん。しずくがこぼれて、花が ぱっ！";
+        if (stage === "warm-bud") return "でこぼこで 葉帽子が ぐらり。つぎ！";
+        if (stage === "dew-trail") return "四つのしずくが 葉帽子へのった。つぎ！";
     }
 
-    if (stage === "ringing-petals") return "はなびらの 音が のこっている";
-    if (stage === "warm-bud") return "あたたかい つぼみを たしかめよう";
-    if (stage === "dew-trail") return "しずくの 先を たしかめよう";
-    return "しずくの 行き先を たしかめよう";
+    if (stage === "light-path") return "ずれた葉帽子で、つぎへ いこう";
+    if (stage === "ringing-petals") return "しりもちで ひらいた花を たしかめよう";
+    if (stage === "warm-bud") return "でこぼこを ゆっくり こえよう";
+    if (stage === "dew-trail") return "葉帽子で しずくを はこぼう";
+    return "四つのしずくを 葉帽子へ のせよう";
 };

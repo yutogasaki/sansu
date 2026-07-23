@@ -1,6 +1,6 @@
 # docs/product/10_exploration_game_spec.md — 探索ゲーム仕様
 
-> 状態: gameplayの **MVP-0/1**、run保存の **MVP-2a**、Study共通planner / SRS接続の **MVP-2b**、version付きactive checkpointによるrun再開の **MVP-2c**、3 / 3 / 2問segment予約の **MVP-2d**、rapid-loop適格性と全source解放guardの **MVP-2e** を実装済み。1ラン8行動・15ノードを3問単位の連問区間として遊ぶ。production defaultは `classic-v1` とする。旧編み根版は50 / 100のREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。既存delivery / feature-flag ID `snap-root-v1` のlocal validationにはvisual candidate `dig-pop-painted-v2` を配線済みで、runtime視覚と旧高速Studyとのclean revision・10反復適格throughputは個別サブゲートGOである。ただし実配信targetの同一build証拠と無文字5人テストは未実施のためrelease Gate Cとproduction判定はHOLDとする。本格グリッド、道具、鉱脈連鎖、未確定素材の損失は将来案として区別する。
+> 状態: gameplayの **MVP-0/1**、run保存の **MVP-2a**、Study共通planner / SRS接続の **MVP-2b**、version付きactive checkpointによるrun再開は **MVP-2c**、3 / 3 / 2問segment予約は **MVP-2d**、rapid-loop適格性と全source解放guardは **MVP-2e** を実装済み。1ラン8行動・15ノードを3問単位の連問区間として遊ぶ。production defaultは `classic-v1` とする。旧編み根版は50 / 100のREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。既存delivery / feature-flag ID `snap-root-v1` のlocal validationには、後続のしずく道と同じ横舞台へ統一したvisual candidate `dig-pop-carry-bloom-v3` を配線する。旧v2の採点と速度証拠は新候補へ継承せず、実配信targetの同一build証拠と無文字5人テストが終わるまでrelease Gate Cとproduction判定はHOLDとする。本格グリッド、道具、鉱脈連鎖、未確定素材の損失は将来案として区別する。
 
 ## 1. コンセプト
 
@@ -67,9 +67,9 @@ Q8     最後の標本 → 「基地へ もちかえる」（primary）
 - 1・2問目は問題UIを隠さず、追加0タップ・正解から650ms以内で次問を操作可能にする。世界反応と次問準備は同時進行させる
 - 3問目だけ、同じ身体規則を拡大したオチを読ませる区切りを置いてよい。ただし光、紙吹雪、巨大文字、説明文だけをオチの代わりにしない。オチ自体で原因と結果が読める場合、同じ静止画を別モーダルで繰り返したり、説明用の「つぎへ」を追加したりしない
 - 対象の数、大きさ、並び、ゲージなどから問題の正答を推測できるanswer leakを作らない
-- `snap-root-v1` slotのlocal validationへ載せる現行visual candidate `dig-pop-painted-v2` は、スコップを持つ相棒、土へ半分埋まった大きな根生物を同じcameraに置き、`ready → dig-one → dig-two → popped` の3問で完結する。相棒は根生物の身体や葉を引かず、周囲の同じ土だけを掘る。正解ごとに土塊が飛び、同じ根生物が持ち上がり、足が見える。3問目は根生物が全身でぽんと抜け、相棒が安全に尻もちをつき、柔らかい土塊が葉帽子へ載る。payoff variantは持たず、問題値や演算から見た目を選ばない。v2は実problem panelのmobile / tablet視覚ゲートを通過したが、残る非補償ゲートが通るまでproductionへ昇格しない
+- `snap-root-v1` slotのlocal validationへ載せる現行visual candidate `dig-pop-carry-bloom-v3` は、スコップを持つ葉帽子のポッコ、土へ半分埋まった大きな根生物を、後続調査と同じ横camera・シアン・黄土・葉緑・コーラルの色面へ置き、`ready → dig-one → dig-two → popped` の3問で完結する。ポッコは根生物の身体や葉を引かず、中央の同じ土だけを掘る。正解ごとに一つの土塊が飛び、同じ根生物が持ち上がり、両足が見える。3問目は根生物が全身でぽんと抜け、ポッコが安全に尻もちをつき、柔らかい土塊が葉帽子へ載る。payoff variantは持たず、問題値や演算から見た目を選ばない。旧v2の合格点を継承せず、残る非補償ゲートが通るまでproductionへ昇格しない
 - 1・2問目で生成されるopening途中の発見は保存してもtoastを出さない。問題と身体変化を同時に読ませ、3問目も説明modalや追加CTAを挟まず次の意味ある道選択へ進める
-- production defaultは `classic-v1` とする。旧編み根版Snap Rootは実機画像による子どもの安全・無文字理解・身体完全性の再監査で50 / 100のREJECTとし、87〜88点を失効させる。一本葉を引くBloom版と水やり版は同じ `snap-root-v1` slotの旧visual candidateとしてHOLDかつ非採用とする。`dig-pop-painted-v1` はsource art 50 / 60のHOLDとなった履歴、`dig-pop-painted-v2` はlocal validation candidate、`root-pull-v1` / `root-pull-v2` は比較用presentation、既存の専用遭遇 `root-tangle` は別契約とする。いずれの固有名やlegacy保存IDも `snap-root-v1` の図鑑登録へ流用せず、delivery IDとvisual candidate IDを別々に記録する
+- production defaultは `classic-v1` とする。旧編み根版Snap Rootは実機画像による子どもの安全・無文字理解・身体完全性の再監査で50 / 100のREJECTとし、87〜88点を失効させる。一本葉を引くBloom版と水やり版は同じ `snap-root-v1` slotの旧visual candidateとしてHOLDかつ非採用とする。`dig-pop-painted-v1` はsource art 50 / 60のHOLD、`dig-pop-painted-v2` は後続画面と役者・縦横構図が分裂した旧runtime候補、`dig-pop-carry-bloom-v3` はlocal validation candidate、`root-pull-v1` / `root-pull-v2` は比較用presentation、既存の専用遭遇 `root-tangle` は別契約とする。いずれの固有名やlegacy保存IDも `snap-root-v1` の図鑑登録へ流用せず、delivery IDとvisual candidate IDを別々に記録する
 - 深度1〜3は通常の `dig` ノードと正解コスト1を使う。後続の橋の見た目や追加コストをcold-openで隠さない
 
 岩タイプ:
@@ -241,7 +241,7 @@ Golden Discovery Page 縦切りでは、次を固定契約とする。
 - 次の未発見手掛かりは常に0件または1件だけ返す
 - 最初の縦切りは、1ラン内の通常発見で開く3つの手掛かり特徴と、receipt確定済みのQ7 finaleで開く1つの大発見を持つ
 - 最終特徴は、3つの前提手掛かりとQ7 finale roleがそろったときだけ開く。4件目の通常発見、正答数、希少度だけでは大発見にしない。catalog指定遭遇と対応skillもそろった場合だけ固有の観察provenanceを付ける
-- root-tangle縦切りでは `ほたる花の ひかり道` を最終特徴とし、commit済みattempt key、node、encounter、直近discoveryが一致した場合だけ観察へ進む
+- root-tangle縦切りでは `はねかえりの 一滴` を最終特徴とし、commit済みattempt key、node、encounter、直近discoveryが一致した場合だけ観察へ進む
 - 誤答、救助帰還、後日の復習で、すでに見つけた特徴を取り消さない
 - `found` はゲーム上の観察事実、`mastered` はMVP-2以降の学習証拠とし、同じ状態にしない
 - MVP-0/1段階の縦切りはメモリ内だけで動かした。現行MVP-2bでは予約済み学習assignmentの回答だけDexie / SRSへ原子的に書き込み、game-only fallbackは学習状態へ混ぜない

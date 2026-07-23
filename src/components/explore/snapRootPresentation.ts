@@ -1,7 +1,7 @@
 import type { ExploreProblemFeedback } from "./ExploreProblemPanel";
 
 export const SNAP_ROOT_BEAT_COUNT = 3;
-export const SNAP_ROOT_CAMERA_KEY = "opening-snap-root-side-v1";
+export const SNAP_ROOT_CAMERA_KEY = "opening-snap-root-side-v2";
 
 export type SnapRootOpeningStage = "ready" | "dig-one" | "dig-two" | "popped";
 

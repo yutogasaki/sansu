@@ -34,12 +34,13 @@ describe("exploration observation catalog", () => {
         expect(getExploreObservationDefinition(ROOT_TANGLE_OBSERVATION.id)).toBe(ROOT_TANGLE_OBSERVATION);
         expect(ROOT_TANGLE_OBSERVATION.visual).toEqual(expect.objectContaining({
             lineageId: "pokko-field-v1",
-            candidateId: "root-tangle-dew-path-v3",
+            candidateId: "root-tangle-carry-bloom-v4",
             mode: "observation",
             cameraKey: ROOT_TANGLE_OBSERVATION.camera.key,
             sceneId: "root-tangle-dew-gag",
-            sceneSrc: "/assets/explore/root-tangle/scene-crossed-dew-path-pokko-v6.jpg",
+            sceneSrc: "/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg",
         }));
+        expect(ROOT_TANGLE_OBSERVATION.camera.key).toBe("root-tangle-side-v4");
         expect(getExploreObservationForEncounter("light-bridge")).toBeUndefined();
     });
 });

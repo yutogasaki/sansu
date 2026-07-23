@@ -775,7 +775,7 @@ const runExploreLane = async (browser, scenario, repetition) => {
       visualCandidateId: await openingArt.getAttribute("data-visual-candidate-id"),
     };
     assert(runtimeIdentity.deliveryId === "snap-root-v1", `Unexpected delivery: ${JSON.stringify(runtimeIdentity)}`);
-    assert(runtimeIdentity.visualCandidateId === "dig-pop-painted-v2", `Unexpected candidate: ${JSON.stringify(runtimeIdentity)}`);
+    assert(runtimeIdentity.visualCandidateId === "dig-pop-carry-bloom-v3", `Unexpected candidate: ${JSON.stringify(runtimeIdentity)}`);
 
     const beforeLearning = await readLearningSnapshot(page);
     assert(
@@ -1081,7 +1081,7 @@ const buildReport = (runs, environment) => {
     .filter((run) => run.lane === "explore")
     .every((run) => (
       run.runtimeIdentity.deliveryId === OPENING_EXPERIENCE
-      && run.runtimeIdentity.visualCandidateId === "dig-pop-painted-v2"
+      && run.runtimeIdentity.visualCandidateId === "dig-pop-carry-bloom-v3"
     ));
   const candidateColdOpenCorrectSamples = runs
     .filter((run) => run.lane === "explore" && run.scenario === "all-correct")
@@ -1204,7 +1204,7 @@ const main = async () => {
       },
       productionDefaultOpeningExperience: "classic-v1",
       validationOpeningExperience: OPENING_EXPERIENCE,
-      visualCandidateId: "dig-pop-painted-v2",
+      visualCandidateId: "dig-pop-carry-bloom-v3",
     };
 
     const runs = [];

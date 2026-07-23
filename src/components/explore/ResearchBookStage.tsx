@@ -7,6 +7,11 @@ import {
 import type { ResearchPageSummaryState } from "./ResearchPageSummary";
 import { DiscoveryPageArt } from "./DiscoveryPageArt";
 import { ResearchClueStampRail } from "./ResearchClueStampRail";
+import {
+    FIREFLY_FLOWER_CAMERA_KEY,
+    FIREFLY_FLOWER_FIELD_BOOK_CANDIDATE_ID,
+    FIREFLY_FLOWER_SCENES,
+} from "./fireflyFlowerSceneCatalog";
 
 interface ResearchBookStageProps {
     researchPage?: ResearchPageSummaryState;
@@ -15,29 +20,29 @@ interface ResearchBookStageProps {
 
 const FIREFLY_ARCHIVE_SCENES = [
     {
-        src: "/assets/explore/firefly-flower/scene-waiting-dew-path-pokko-v3.jpg",
+        src: FIREFLY_FLOWER_SCENES.waiting.src,
         sceneId: "firefly-archive-waiting",
-        alt: "葉帽子のポッコが、閉じたほたる花まで続く一本の溝と四つのしずくを見ている。",
+        alt: FIREFLY_FLOWER_SCENES.waiting.description,
     },
     {
-        src: "/assets/explore/firefly-flower/scene-dew-trail-dew-path-pokko-v3.jpg",
+        src: FIREFLY_FLOWER_SCENES["dew-trail"].src,
         sceneId: "firefly-archive-dew-trail",
-        alt: "ポッコが先頭のしずくを押し、四つのしずくが一本の溝をころがっている。",
+        alt: FIREFLY_FLOWER_SCENES["dew-trail"].description,
     },
     {
-        src: "/assets/explore/firefly-flower/scene-warm-bud-dew-path-pokko-v3.jpg",
+        src: FIREFLY_FLOWER_SCENES["warm-bud"].src,
         sceneId: "firefly-archive-warm-bud",
-        alt: "しずくが溝の半分まで進み、つぼみの先が少しひらいている。",
+        alt: FIREFLY_FLOWER_SCENES["warm-bud"].description,
     },
     {
-        src: "/assets/explore/firefly-flower/scene-ringing-petals-dew-path-pokko-v3.jpg",
+        src: FIREFLY_FLOWER_SCENES["ringing-petals"].src,
         sceneId: "firefly-archive-ringing-petals",
-        alt: "四つのしずくが花まで届き、五枚の花びらと一本の水の道ができている。",
+        alt: FIREFLY_FLOWER_SCENES["ringing-petals"].description,
     },
     {
-        src: "/assets/explore/firefly-flower/scene-light-path-dew-path-pokko-v3.jpg",
+        src: FIREFLY_FLOWER_SCENES["light-path"].src,
         sceneId: "firefly-archive-light-path",
-        alt: "三つのしずくが一本の道に並び、最後の一滴が葉帽子へ落ちて、ポッコが尻もちをついている。",
+        alt: FIREFLY_FLOWER_SCENES["light-path"].description,
     },
 ] as const;
 
@@ -66,8 +71,8 @@ const getFireflyArchiveScene = (
 
     return {
         ...scene,
-        candidateId: "firefly-field-book-painted-v3",
-        cameraKey: "firefly-flower-side-v3",
+        candidateId: FIREFLY_FLOWER_FIELD_BOOK_CANDIDATE_ID,
+        cameraKey: FIREFLY_FLOWER_CAMERA_KEY,
         objectPosition: "50% 50%",
         objectFit: "contain" as const,
     };

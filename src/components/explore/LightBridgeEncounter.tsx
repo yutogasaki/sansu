@@ -9,18 +9,18 @@ import {
 
 const LIGHT_BRIDGE_DEFINITION: ImmersiveEncounterDefinition = {
     scene: {
-        idleSrc: "/assets/explore/light-bridge/scene-idle-leaf-dew-path-pokko-v6.jpg",
-        completeSrc: "/assets/explore/light-bridge/scene-complete-leaf-dew-path-pokko-v6.jpg",
-        resolvedSrc: "/assets/explore/light-bridge/scene-crossed-leaf-dew-path-pokko-v6.jpg",
+        idleSrc: "/assets/explore/light-bridge/scene-idle-leaf-carry-bloom-pokko-v7.jpg",
+        completeSrc: "/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.jpg",
+        resolvedSrc: "/assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.jpg",
         completeActionProp: "bridge-leaf-clasp",
         resolvedActionProp: "bridge-leaf-clasp",
     },
     visualIdentity: {
         lineageId: "pokko-field-v1",
-        candidateId: "light-bridge-dew-path-v3",
+        candidateId: "light-bridge-carry-bloom-v4",
         mode: "world-painted",
         surfaceId: "explore-encounter-light-bridge",
-        cameraKey: "light-bridge-side-v3",
+        cameraKey: "light-bridge-side-v4",
         sceneIds: {
             idle: "light-bridge-idle",
             complete: "light-bridge-complete",

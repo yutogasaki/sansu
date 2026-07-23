@@ -21,7 +21,7 @@ describe("discovery reveal interaction contract", () => {
             rarity: "common",
         })).toBe(false);
         expect(isBlockingDiscoveryReveal({
-            name: "ひかる しずく",
+            name: "葉帽子の しずく",
             kind: "flower",
             rarity: "rare",
             discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
@@ -36,7 +36,7 @@ describe("discovery reveal interaction contract", () => {
             rarity: "rare",
         })).toBe(false);
         expect(isBlockingDiscoveryReveal({
-            name: "ねっこの むこうの ひかり道",
+            name: "はねかえりの 一滴",
             kind: "flower",
             rarity: "rare",
             discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
@@ -62,10 +62,10 @@ describe("discovery reveal interaction contract", () => {
         expect(markup).not.toContain("ひょうほんを バッグへ");
     });
 
-    it("keeps an ordinary clue from covering the next dedicated encounter", () => {
+    it("keeps an ordinary clue from covering the next rapid problem", () => {
         const ordinary = renderToStaticMarkup(React.createElement(DiscoveryReveal, {
             discovery: {
-                name: "ひかる しずく",
+                name: "葉帽子の しずく",
                 kind: "flower" as const,
                 rarity: "rare" as const,
                 discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
@@ -76,7 +76,7 @@ describe("discovery reveal interaction contract", () => {
         }));
         const blocking = renderToStaticMarkup(React.createElement(DiscoveryReveal, {
             discovery: {
-                name: "ねっこの むこうの ひかり道",
+                name: "はねかえりの 一滴",
                 kind: "flower" as const,
                 rarity: "rare" as const,
                 discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
@@ -88,7 +88,7 @@ describe("discovery reveal interaction contract", () => {
 
         expect(ordinary).toContain('class="sr-only"');
         expect(ordinary).toContain('role="status"');
-        expect(ordinary).toContain("ひかる しずくを バッグに しまったよ");
+        expect(ordinary).toContain("葉帽子の しずくを バッグに しまったよ");
         expect(ordinary).not.toContain("explore-specimen-card");
         expect(blocking).toContain('role="dialog"');
     });
@@ -120,14 +120,14 @@ describe("discovery reveal interaction contract", () => {
         expect(markup).toContain("マキモドン");
         expect(markup).toContain('data-visual-lineage-id="legacy-mixed-v0"');
         expect(markup).toContain('data-visual-candidate-id="legacy-discovery-page-v0"');
-        expect(markup).not.toContain('data-visual-candidate-id="firefly-field-book-v1"');
+        expect(markup).not.toContain('data-visual-candidate-id="firefly-field-book-painted-v4"');
     });
 
     it("shows the committed root observation in the same camera before the field book", () => {
         const currentFeatureId = FIREFLY_FLOWER_DISCOVERY_PAGE.chain.bigDiscoveryFeatureId;
         const markup = renderToStaticMarkup(React.createElement(DiscoveryReveal, {
             discovery: {
-                name: "ねっこの むこうの ひかり道",
+                name: "はねかえりの 一滴",
                 kind: "flower" as const,
                 rarity: "rare" as const,
                 discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
@@ -143,11 +143,11 @@ describe("discovery reveal interaction contract", () => {
         }));
 
         expect(markup).toContain('data-testid="explore-observation-scene"');
-        expect(markup).toContain('data-camera-key="root-tangle-side-v3"');
+        expect(markup).toContain('data-camera-key="root-tangle-side-v4"');
         expect(markup).toContain('data-visual-mode="observation"');
-        expect(markup).toContain('data-visual-candidate-id="firefly-field-book-v1"');
+        expect(markup).toContain('data-visual-candidate-id="firefly-field-book-painted-v4"');
         expect(markup).toContain('data-visual-mode="field-book"');
-        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-dew-path-pokko-v6.jpg");
+        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg");
         expect(markup).toContain("object-contain");
         expect(markup).toContain(ROOT_TANGLE_OBSERVATION.copy.action);
         expect(markup).toContain(ROOT_TANGLE_OBSERVATION.copy.reaction);
@@ -157,7 +157,7 @@ describe("discovery reveal interaction contract", () => {
         const currentFeatureId = FIREFLY_FLOWER_DISCOVERY_PAGE.chain.bigDiscoveryFeatureId;
         const markup = renderToStaticMarkup(React.createElement(DiscoveryReveal, {
             discovery: {
-                name: "ねっこの むこうの ひかり道",
+                name: "はねかえりの 一滴",
                 kind: "flower" as const,
                 rarity: "rare" as const,
                 discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
@@ -172,13 +172,13 @@ describe("discovery reveal interaction contract", () => {
         }));
 
         expect(markup).toContain('data-visual-lineage-id="pokko-field-v1"');
-        expect(markup).toContain('data-visual-candidate-id="firefly-q7-dew-path-v3"');
+        expect(markup).toContain('data-visual-candidate-id="firefly-q7-carry-bloom-v4"');
         expect(markup).toContain('data-painted-stage="light-path"');
         expect(markup).toContain('data-light-path="complete"');
         expect(markup).toContain('data-discovery-complete="true"');
-        expect(markup).toContain("/assets/explore/firefly-flower/scene-light-path-dew-path-pokko-v3.jpg");
-        expect(markup).toContain("しずくの道が、葉帽子まで走った！");
-        expect(markup).toContain("ころころ");
+        expect(markup).toContain("/assets/explore/firefly-flower/scene-light-path-carry-bloom-pokko-v4.jpg");
+        expect(markup).toContain("こぼれた一滴が、葉帽子へ戻った！");
+        expect(markup).toContain("跳ね返り");
         expect(markup).toContain("ぽとん");
         expect(markup).not.toContain("firefly-research-pokko-v1");
         expect(markup).not.toContain("RibbonAntennaCompanion");

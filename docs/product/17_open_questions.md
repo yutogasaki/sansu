@@ -12,7 +12,7 @@
 | 8 | いきもの消失 | 維持 / 旅立ち / 常駐 | 旅立ちか常駐 | 愛着損失を避ける |
 | 9 | コンボ | MVPから / MVP後 | MVP後または簡易 | 先に基本ループ検証 |
 | 10 | 保護者向け表現 | 学習成果中心 / ゲーム説明中心 | 両方 | 保護者信頼に必要 |
-| 11 | cold-openのproduction actorと身体action | マキモドン継続 / Root Pull / Dig Pop / 別案 | **production採用は未決定**。local validationは `snap-root-v1` / `dig-pop-painted-v2` | v2はruntime視覚52〜53 / 60と速度・入力サブゲートを通過したが、無文字5人テストと旧高速10問throughput比較が未完了。defaultは `classic-v1` |
+| 11 | cold-openのproduction actorと身体action | マキモドン継続 / Root Pull / Dig Pop / 別案 | **production採用は未決定**。local validationは `snap-root-v1` / `dig-pop-carry-bloom-v3` | v3は後続と同じ横舞台へ統一した新候補。旧v2の点数を継承せず、同一build監査と無文字5人テストまでdefaultは `classic-v1` |
 
 ## MVP-0/1で採用中の実装選択
 
@@ -28,6 +28,6 @@ The first `/explore` implementation resolves only the following build-time choic
 
 - 承認済みなのは「解く → 即世界反応 → 3問目に同じ身体規則のオチ」という体験順だけで、actor、固有名、図鑑ページは未決定
 - 固定cold-openだったマキモドンはproduction承認を撤回する。既存コードやlegacy保存IDが残ることを採用根拠にしない
-- `opening-root-pull-v1` は旧比較用検証IDであり、現行local validationのdelivery / feature flagは `snap-root-v1`、visual candidateは別ID `dig-pop-painted-v2` とする。既存 `root-tangle` 遭遇とは別物である
+- `opening-root-pull-v1` は旧比較用検証IDであり、現行local validationのdelivery / feature flagは `snap-root-v1`、visual candidateは別ID `dig-pop-carry-bloom-v3` とする。既存 `root-tangle` 遭遇とは別物である
 - Go条件は [15_mvp_rollout_verification_spec.md](/docs/product/15_mvp_rollout_verification_spec.md) の非補償三ゲートを正とする。runtime視覚52 / 60以上かつ全6軸8以上、無文字の主動詞・payoff一致4/5、続行希望4/5、危険解釈0、650ms / 550ms、追加0タップ、answer leak 0、同一10問throughput同等以上をすべて満たす。旧86点などの混合点は採用条件にしない
-- 比較根拠は [2026-07-20 score benchmark](/docs/design/audits/2026-07-20-score-benchmark/README.md)、旧案の欠陥履歴は [2026-07-21 Root Pull value loop](/docs/design/audits/2026-07-21-root-pull-value-loop/README.md)、現行runtime証跡は [Dig Pop Painted v2 runtime監査](/docs/design/audits/2026-07-21-dig-pop-painted-v2/README.md) を参照する。自己採点や自動テストだけでproduction採用しない
+- 比較根拠は [2026-07-20 score benchmark](/docs/design/audits/2026-07-20-score-benchmark/README.md)、旧案の欠陥履歴は [2026-07-21 Root Pull value loop](/docs/design/audits/2026-07-21-root-pull-value-loop/README.md)、旧runtimeのplumbing証拠は [Dig Pop Painted v2 runtime監査](/docs/design/audits/2026-07-21-dig-pop-painted-v2/README.md) を参照する。v3は新しいexact-build証拠を正とし、自己採点や自動テストだけでproduction採用しない

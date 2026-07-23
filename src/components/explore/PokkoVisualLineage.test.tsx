@@ -28,9 +28,9 @@ describe("Pokko visual lineage", () => {
             <FireflyFlowerResearchArt discoveredFeatureIds={[]} />,
         );
 
-        expect(markup).toContain('data-visual-candidate-id="firefly-field-book-painted-v3"');
+        expect(markup).toContain('data-visual-candidate-id="firefly-field-book-painted-v4"');
         expect(markup).toContain('data-visual-mode="field-book"');
-        expect(markup).toContain("/assets/explore/firefly-flower/scene-waiting-dew-path-pokko-v3.jpg");
+        expect(markup).toContain("/assets/explore/firefly-flower/scene-waiting-carry-bloom-pokko-v4.jpg");
         expect(markup).toContain('data-character-id="pokko"');
         expect(markup).not.toContain("firefly-research-pokko-v1");
     });

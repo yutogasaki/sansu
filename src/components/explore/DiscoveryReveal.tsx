@@ -86,10 +86,9 @@ export const DiscoveryReveal: React.FC<DiscoveryRevealProps> = ({
         };
     }, [isBlockingReveal, onContinue, researchPage]);
 
-    // Ordinary clue slips are allowed to overlap the next rapid question, but
-    // a dedicated encounter needs its physical subject unobscured. Keep the
-    // component mounted so its 900ms acknowledgement timer and polite spoken
-    // confirmation still complete without covering the encounter artwork.
+    // Every rapid problem needs its physical action unobscured. Keep an
+    // ordinary clue mounted as a spoken-only acknowledgement so its 900ms
+    // timer still completes without covering the next problem artwork.
     if (suppressNonBlocking && !isBlockingReveal) {
         return (
             <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">

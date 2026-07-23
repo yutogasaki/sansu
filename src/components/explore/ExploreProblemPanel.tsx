@@ -40,6 +40,10 @@ import {
     getRapidTrailStateLabel,
     getRapidTrailStatusCopy,
 } from "./rapidTrailPresentation";
+import {
+    FIREFLY_FLOWER_CAMERA_KEY,
+    FIREFLY_FLOWER_WORLD_CANDIDATE_ID,
+} from "./fireflyFlowerSceneCatalog";
 
 export type ExploreProblemFeedback = "idle" | "correct" | "incorrect";
 export type ExploreProblemPresentation = "rapid-trail" | "makimodon" | "root-pull" | "snap-root";
@@ -98,10 +102,10 @@ export const ExploreProblemPanel: React.FC<ExploreProblemPanelProps> = ({
     const visualIdentity: ImmersiveEncounterVisualIdentity = isSnapRoot
         ? {
             lineageId: "pokko-field-v1",
-            candidateId: "dig-pop-painted-v2",
+            candidateId: "dig-pop-carry-bloom-v3",
             mode: "world-painted",
             surfaceId: "explore-opening-snap-root",
-            cameraKey: "opening-snap-root-side-v1",
+            cameraKey: "opening-snap-root-side-v2",
             sceneIds: {
                 idle: `snap-root-${snapRootStage}`,
                 complete: `snap-root-${snapRootStage}`,
@@ -136,10 +140,10 @@ export const ExploreProblemPanel: React.FC<ExploreProblemPanelProps> = ({
                 }
                 : {
                     lineageId: "pokko-field-v1",
-                    candidateId: "firefly-dew-path-painted-v3",
+                    candidateId: FIREFLY_FLOWER_WORLD_CANDIDATE_ID,
                     mode: "world-painted",
                     surfaceId: "explore-ordinary-firefly",
-                    cameraKey: "firefly-flower-side-v3",
+                    cameraKey: FIREFLY_FLOWER_CAMERA_KEY,
                     sceneIds: {
                         idle: `firefly-${rapidTrailStage}`,
                         complete: `firefly-${rapidTrailStage}`,

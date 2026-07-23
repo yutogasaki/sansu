@@ -32,8 +32,11 @@ const VISUAL_AUDIT_STAGE_ORDER = [
   "popped",
   "route-choice",
   "q4-ordinary",
+  "q4-correct",
   "major-encounter-idle",
   "major-encounter-correct",
+  "q6-ordinary",
+  "q6-correct",
   "q7-before",
   "q7-observation",
   "field-book",
@@ -72,86 +75,100 @@ const captureFocusedE2EStage = async (page, viewport, name) => {
 };
 const PAINTED_ENCOUNTER_FOCALS = {
   "explore-encounter-light-bridge:light-bridge-idle": {
-    actorFace: [235, 455],
-    actorFeet: [235, 535],
-    actionPayoff: [700, 550],
+    actorFace: [350, 455],
+    actorFeet: [305, 540],
+    actionPayoff: [695, 580],
   },
   "explore-encounter-light-bridge:light-bridge-complete": {
-    actorFace: [235, 455],
-    actorFeet: [250, 535],
-    actionPayoff: [700, 555],
+    actorFace: [310, 440],
+    actorFeet: [258, 540],
+    actionPayoff: [665, 550],
   },
   "explore-encounter-light-bridge:light-bridge-crossed": {
-    actorFace: [225, 480],
-    actorFeet: [270, 540],
-    actionPayoff: [870, 550],
+    actorFace: [445, 490],
+    actorFeet: [380, 550],
+    actionPayoff: [560, 568],
   },
   "explore-encounter-root-tangle:root-tangle-dew-blocked": {
-    actorFace: [205, 440],
-    actorFeet: [205, 535],
-    actionPayoff: [790, 500],
+    actorFace: [350, 470],
+    actorFeet: [260, 528],
+    actionPayoff: [790, 455],
   },
   "explore-encounter-root-tangle:root-tangle-dew-gag": {
-    actorFace: [215, 475],
-    actorFeet: [245, 535],
-    actionPayoff: [600, 555],
+    actorFace: [305, 463],
+    actorFeet: [270, 535],
+    actionPayoff: [275, 360],
   },
 };
 const ROOT_TANGLE_OBSERVATION_FOCALS =
   PAINTED_ENCOUNTER_FOCALS["explore-encounter-root-tangle:root-tangle-dew-gag"];
 const FIREFLY_PAINTED_STAGE_CONTRACT = {
   waiting: {
-    asset: "/assets/explore/firefly-flower/scene-waiting-dew-path-pokko-v3.jpg",
-    actorFace: [180, 552],
-    actorFeet: [180, 650],
-    actionPayoff: [1005, 267],
+    asset: "/assets/explore/firefly-flower/scene-waiting-carry-bloom-pokko-v4.jpg",
+    actorFace: [310, 530],
+    actorFeet: [270, 590],
+    actionPayoff: [890, 225],
   },
   "dew-trail": {
-    asset: "/assets/explore/firefly-flower/scene-dew-trail-dew-path-pokko-v3.jpg",
-    actorFace: [224, 555],
-    actorFeet: [224, 650],
-    actionPayoff: [381, 613],
+    asset: "/assets/explore/firefly-flower/scene-dew-trail-carry-bloom-pokko-v4.jpg",
+    actorFace: [285, 510],
+    actorFeet: [260, 580],
+    actionPayoff: [275, 430],
   },
   "warm-bud": {
-    asset: "/assets/explore/firefly-flower/scene-warm-bud-dew-path-pokko-v3.jpg",
-    actorFace: [237, 525],
-    actorFeet: [237, 640],
-    actionPayoff: [987, 245],
+    asset: "/assets/explore/firefly-flower/scene-warm-bud-carry-bloom-pokko-v4.jpg",
+    actorFace: [335, 476],
+    actorFeet: [365, 560],
+    actionPayoff: [365, 560],
   },
   "ringing-petals": {
-    asset: "/assets/explore/firefly-flower/scene-ringing-petals-dew-path-pokko-v3.jpg",
-    actorFace: [387, 587],
-    actorFeet: [387, 665],
-    actionPayoff: [997, 293],
+    asset: "/assets/explore/firefly-flower/scene-ringing-petals-carry-bloom-pokko-v4.jpg",
+    actorFace: [268, 522],
+    actorFeet: [280, 578],
+    actionPayoff: [870, 215],
+  },
+  "light-path": {
+    asset: "/assets/explore/firefly-flower/scene-light-path-carry-bloom-pokko-v4.jpg",
+    actorFace: [270, 548],
+    actorFeet: [285, 575],
+    actionPayoff: [240, 455],
   },
 };
 const REQUIRED_VISUAL_ASSET_SHA256 = {
-  "/assets/explore/light-bridge/scene-idle-leaf-dew-path-pokko-v6.jpg":
-    "0385fd404cd310dd09b6f89b96787a8ec231a2795032ecd9955bb81a59eba036",
-  "/assets/explore/light-bridge/scene-complete-leaf-dew-path-pokko-v6.jpg":
-    "68ae35780822921900d945ae02214c1efccfcc6eb8b34306a613a1a3f9354b62",
-  "/assets/explore/light-bridge/scene-crossed-leaf-dew-path-pokko-v6.jpg":
-    "8fa71ea648b6b7ec384e58dbbeea433af097f9ca16145b2bb99dbdea363e9f43",
-  "/assets/explore/root-tangle/scene-tangled-dew-path-pokko-v6.jpg":
-    "245c9d0abc9217dccae4942a3fc154a0a756ccbdb74264cf4049cd58e7b17cb7",
-  "/assets/explore/root-tangle/scene-open-dew-path-pokko-v6.jpg":
-    "389317df0d7587075dd394d73e5339df5e4148ab20df0aef58992f6cefe91c6c",
-  "/assets/explore/root-tangle/scene-crossed-dew-path-pokko-v6.jpg":
-    "e7106a363549493e8a5e61ef1ec249b6d6e53b3a524bb6b85cef4e25db0fed7b",
+  "/assets/explore/opening-snap-root-carry-bloom-v3/scene-ready.jpg":
+    "d7f338adbe08f219e2f8721394f4cb81be985378b3c2f13d682f870ebaaa7ac2",
+  "/assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-one.jpg":
+    "cc3f19cbb88591a5caad738ec83d57c908bffed77e44f3bc8ab8230997e9d72e",
+  "/assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-two.jpg":
+    "5fdca23b5d3ae174fc8459a854e2cee263a82bb5634a863f0be6536e587f4929",
+  "/assets/explore/opening-snap-root-carry-bloom-v3/scene-popped.jpg":
+    "3c2ed5cf890f3be30698da900d8ffba17a051f3c0ebb17f3fe4e5047b43c233c",
+  "/assets/explore/light-bridge/scene-idle-leaf-carry-bloom-pokko-v7.jpg":
+    "a9f985178feb7911b73eec42b9e3ace657df036e8700937b55aea48d80422afa",
+  "/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.jpg":
+    "f1fdfad9425bb535705518570427f1ca0563aefc0333fc3eabe344bda903e3f5",
+  "/assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.jpg":
+    "abab4542ddddacb1dd485eff7c6d3927d8ac9f3a471235c528eab4146941086b",
+  "/assets/explore/root-tangle/scene-tangled-carry-bloom-pokko-v7.jpg":
+    "62c0b3306ad834b250f9f7ef33becfa1e5f34994b353a69b13c6acba9618187b",
+  "/assets/explore/root-tangle/scene-open-carry-bloom-pokko-v7.jpg":
+    "0e57a38bedc079f23904b2991efa34649eb4e402db851d13eaae7a468c2fcca4",
+  "/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg":
+    "17d265e09b1c576bc9ff4ff2c93fe38fd267b62dab65d21accf849bc18faa9b9",
   "/assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.jpg":
     "7587c7e460a587fcecff2da7e8ddea73520d68cf4ecaa8141657ac0086809041",
   "/assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.jpg":
     "43b29df9ea4b6ac0025341565224d60d7b4596ec97eb483a41a48ac057af7d99",
-  "/assets/explore/firefly-flower/scene-waiting-dew-path-pokko-v3.jpg":
-    "2c32d77fc8dfc97e101f45f5dc40daa1df720034967af0a96f83065dcf7e1644",
-  "/assets/explore/firefly-flower/scene-dew-trail-dew-path-pokko-v3.jpg":
-    "b874391ecc5138af65944b82ea44bd75482167b8470db5b570eaea82916ba81a",
-  "/assets/explore/firefly-flower/scene-warm-bud-dew-path-pokko-v3.jpg":
-    "0df9b215b56364a2caafa4542e8848994631baa636fb2b86306a1f63a7d0d712",
-  "/assets/explore/firefly-flower/scene-ringing-petals-dew-path-pokko-v3.jpg":
-    "b33a8177260501e06e527d3eedeef67878c08b81b665f5b415490bfe196fcf8e",
-  "/assets/explore/firefly-flower/scene-light-path-dew-path-pokko-v3.jpg":
-    "4377ae107aea1cba1b57c5745b51ac2fdb1509a982e3b042e1e4da9055c3be8a",
+  "/assets/explore/firefly-flower/scene-waiting-carry-bloom-pokko-v4.jpg":
+    "6c87ff7d8e377ca95f097e16a5652ed13316c8b3d0d6b7be60dc42e0a9de7a5e",
+  "/assets/explore/firefly-flower/scene-dew-trail-carry-bloom-pokko-v4.jpg":
+    "71c51c20bdb34c626d7f763226db8befe59b449c3f733077996c1c63f22165b9",
+  "/assets/explore/firefly-flower/scene-warm-bud-carry-bloom-pokko-v4.jpg":
+    "4a674c98cdbbc27a7663ecd7f468c2db3e7f733cd60af4e5b30fcd0e71395c03",
+  "/assets/explore/firefly-flower/scene-ringing-petals-carry-bloom-pokko-v4.jpg":
+    "3d942d9e50f58b4e99a8110707d3e955b72adfb8e602802d25fa2cca00ec86a7",
+  "/assets/explore/firefly-flower/scene-light-path-carry-bloom-pokko-v4.jpg":
+    "a8942fa7a64a437c8340a283256ef2b9106da95e174dcf44d052cb6376f5fc7f",
 };
 const LEGACY_VISUAL_AUDIT_DIR = path.resolve(
   "docs/design/breakout-loop-2026-07-21/runtime-painted-v2-audit",
@@ -931,7 +948,7 @@ const assertSnapRootPaintedResolution = async (page, viewport) => {
   });
 
   assert(result.deliveryId === "snap-root-v1", `${viewport.width}px delivery slot should stay snap-root-v1: ${JSON.stringify(result)}`);
-  assert(result.visualCandidateId === "dig-pop-painted-v2", `${viewport.width}px should expose the painted candidate: ${JSON.stringify(result)}`);
+  assert(result.visualCandidateId === "dig-pop-carry-bloom-v3", `${viewport.width}px should expose the carry-bloom candidate: ${JSON.stringify(result)}`);
   assert(result.stage === "popped", `${viewport.width}px Snap Root should resolve as popped: ${JSON.stringify(result)}`);
   assert(result.actorState === "safe-seated", `${viewport.width}px popped actor should be safely seated: ${JSON.stringify(result)}`);
   assert(result.subjectState === "free-standing", `${viewport.width}px popped subject should stand free: ${JSON.stringify(result)}`);
@@ -940,11 +957,11 @@ const assertSnapRootPaintedResolution = async (page, viewport) => {
   assert(result.subjectContact === "none", `${viewport.width}px actor should never contact the subject: ${JSON.stringify(result)}`);
   assert(result.liftContact === "none", `${viewport.width}px actor should not lift the subject: ${JSON.stringify(result)}`);
   assert(result.assetState === "ready", `${viewport.width}px selected four-frame set should be ready: ${JSON.stringify(result)}`);
-  assert(result.assetVariant === (viewport.width >= 600 ? "tablet" : "mobile"), `${viewport.width}px should select its matching art set: ${JSON.stringify(result)}`);
+  assert(result.assetVariant === "shared-landscape", `${viewport.width}px should use the shared horizontal art set: ${JSON.stringify(result)}`);
   assert(result.oldNestCount === 0, `${viewport.width}px painted DOM should not retain nest nodes: ${JSON.stringify(result)}`);
   assert(result.oldWateringAssetCount === 0, `${viewport.width}px painted DOM should not retain watering assets: ${JSON.stringify(result)}`);
   assert(result.paintedVisible, `${viewport.width}px popped painted frame should remain visible: ${JSON.stringify(result)}`);
-  assert(result.paintedCurrentSrc.includes(viewport.width >= 600 ? "scene-popped-tablet.jpg" : "scene-popped.jpg"), `${viewport.width}px should render its popped crop: ${JSON.stringify(result)}`);
+  assert(result.paintedCurrentSrc.includes("/opening-snap-root-carry-bloom-v3/scene-popped.jpg"), `${viewport.width}px should render the shared popped frame: ${JSON.stringify(result)}`);
 };
 
 const scenarioSnapRootBreakthrough = async (
@@ -967,7 +984,7 @@ const scenarioSnapRootBreakthrough = async (
   const paintedRequests = [];
   page.on("request", (request) => {
     const url = request.url();
-    if (url.includes("/assets/explore/opening-snap-root-painted/")) {
+    if (url.includes("/assets/explore/opening-snap-root-carry-bloom-v3/")) {
       paintedRequests.push(new URL(url).pathname);
     }
   });
@@ -998,7 +1015,7 @@ const scenarioSnapRootBreakthrough = async (
   );
   assert(await world.getAttribute("data-opening-experience") === "snap-root-v1", "Snap Root URL should remain frozen for the run");
   assert(await art.getAttribute("data-delivery-id") === "snap-root-v1", "Snap Root should expose its delivery slot");
-  assert(await art.getAttribute("data-visual-candidate-id") === "dig-pop-painted-v2", "Snap Root should expose the painted candidate");
+  assert(await art.getAttribute("data-visual-candidate-id") === "dig-pop-carry-bloom-v3", "Snap Root should expose the carry-bloom candidate");
   assert(await art.getAttribute("data-stage") === "ready", "Snap Root should open on the painted ready frame");
   assert(await art.getAttribute("data-actor-state") === "ready", "Snap Root actor should start ready to dig");
   assert(await art.getAttribute("data-subject-state") === "planted", "Snap Root subject should start planted");
@@ -1007,13 +1024,12 @@ const scenarioSnapRootBreakthrough = async (
   assert(await art.getAttribute("data-subject-contact") === "none", "Snap Root actor should dig soil without touching the subject");
   assert(await art.getAttribute("data-lift-contact") === "none", "Snap Root actor should never lift the subject");
   assert(await art.getAttribute("data-reduced-motion") === "true", "reduced motion should keep the authored static stages");
-  const expectedAssetVariant = viewport.width >= 600 ? "tablet" : "mobile";
-  assert(await art.getAttribute("data-asset-variant") === expectedAssetVariant, `Snap Root should select ${expectedAssetVariant} assets`);
+  assert(await art.getAttribute("data-asset-variant") === "shared-landscape", "Snap Root should use one shared horizontal asset set");
   const uniquePaintedRequests = [...new Set(paintedRequests)];
   assert(uniquePaintedRequests.length === 4, `Snap Root should preload exactly one four-frame set: ${JSON.stringify(uniquePaintedRequests)}`);
   assert(
-    uniquePaintedRequests.every((path) => (expectedAssetVariant === "tablet" ? path.endsWith("-tablet.jpg") : !path.endsWith("-tablet.jpg"))),
-    `Snap Root should not download the non-matching asset variant: ${JSON.stringify(uniquePaintedRequests)}`,
+    uniquePaintedRequests.every((path) => !path.endsWith("-tablet.jpg")),
+    `Snap Root should not download a second viewport-specific asset set: ${JSON.stringify(uniquePaintedRequests)}`,
   );
   const reducedMotionTransitionMs = await page.locator(".snap-root-opening-art__painted").evaluate((image) => {
     const style = window.getComputedStyle(image);
@@ -1031,7 +1047,7 @@ const scenarioSnapRootBreakthrough = async (
   );
   await assertSnapRootViewportFit(page, viewport);
 
-  const runtimeAuditDir = "docs/design/breakout-loop-2026-07-21/runtime-painted-v2-audit";
+  const runtimeAuditDir = "/tmp/sansu-runtime-painted-smoke-v3";
   await writeVisualAuditScreenshot(page, `${runtimeAuditDir}/${viewport.width}-ready.png`);
 
   if (viewport.width === 390) {
@@ -1409,6 +1425,54 @@ const solveExploreNumericProblem = async (page) => {
   return answer;
 };
 
+const holdReducedMotionCorrectAdvance = async (page) => {
+  await page.evaluate(() => {
+    if (window.__sansuVisualAuditFeedbackHold) {
+      throw new Error("visual audit feedback hold is already installed");
+    }
+    const originalSetTimeout = window.setTimeout.bind(window);
+    const originalClearTimeout = window.clearTimeout.bind(window);
+    const heldTimers = new Map();
+
+    window.setTimeout = (handler, delay = 0, ...args) => {
+      if (Number(delay) >= 80 && Number(delay) <= 100) {
+        const timerId = originalSetTimeout(() => undefined, 60_000);
+        heldTimers.set(timerId, { handler, args });
+        return timerId;
+      }
+      return originalSetTimeout(handler, delay, ...args);
+    };
+    window.clearTimeout = (timerId) => {
+      heldTimers.delete(timerId);
+      originalClearTimeout(timerId);
+    };
+    window.__sansuVisualAuditFeedbackHold = {
+      release: () => {
+        window.setTimeout = originalSetTimeout;
+        window.clearTimeout = originalClearTimeout;
+        for (const [timerId, held] of heldTimers) {
+          originalClearTimeout(timerId);
+          originalSetTimeout(() => {
+            if (typeof held.handler === "function") {
+              held.handler(...held.args);
+            }
+          }, 0);
+        }
+        heldTimers.clear();
+      },
+    };
+  });
+};
+
+const releaseReducedMotionCorrectAdvance = async (page) => {
+  await page.evaluate(() => {
+    const hold = window.__sansuVisualAuditFeedbackHold;
+    if (!hold) throw new Error("visual audit feedback hold is not installed");
+    hold.release();
+    delete window.__sansuVisualAuditFeedbackHold;
+  });
+};
+
 const waitForNewExploreAttempt = async (page, previousAttemptKey) => {
   const startedAt = Date.now();
   await page.waitForFunction(
@@ -1713,7 +1777,7 @@ const scenarioExploreInterruptionResume = async (browser) => {
     await firstQ7Modal.waitFor({ timeout: STEP_TIMEOUT_MS });
     assert(await firstQ7Modal.count() === 1, "Q7 should show one blocking discovery modal");
     const genericQ7PaintedScene = firstQ7Modal.locator(
-      '[data-visual-candidate-id="firefly-q7-dew-path-v3"]'
+      '[data-visual-candidate-id="firefly-q7-carry-bloom-v4"]'
       + '[data-painted-stage="light-path"]'
       + '[data-discovery-complete="true"]',
     );
@@ -1724,9 +1788,9 @@ const scenarioExploreInterruptionResume = async (browser) => {
     assert(
       await genericQ7PaintedScene.locator("img").evaluate((image) => (
         image instanceof HTMLImageElement
-        && image.currentSrc.endsWith("/assets/explore/firefly-flower/scene-light-path-dew-path-pokko-v3.jpg")
+        && image.currentSrc.endsWith("/assets/explore/firefly-flower/scene-light-path-carry-bloom-pokko-v4.jpg")
       )),
-      "generic Q7 should decode the approved same-camera Firefly Flower plate",
+      "generic Q7 should decode the current same-camera Firefly Flower plate",
     );
     assert(
       await firstQ7Modal.locator(
@@ -2176,7 +2240,7 @@ const scenarioLightBridgeVerticalSlice = async (
   }));
   assert(
     lightBridgeIdentity.lineageId === "pokko-field-v1"
-      && lightBridgeIdentity.candidateId === "light-bridge-dew-path-v3"
+      && lightBridgeIdentity.candidateId === "light-bridge-carry-bloom-v4"
       && lightBridgeIdentity.mode === "world-painted"
       && lightBridgeIdentity.sceneId === "light-bridge-idle",
     `the painted light bridge should enter with its Pokko idle identity; got ${JSON.stringify(lightBridgeIdentity)}`,
@@ -2306,13 +2370,23 @@ const scenarioLightBridgeVerticalSlice = async (
   );
 
   const ordinaryToast = page.locator(".explore-research-slip");
-  await ordinaryToast.waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
+  assert(
+    await page.locator(".explore-world").getAttribute("data-suppress-nonblocking-discovery") === "true",
+    "the next rapid problem should suppress the previous ordinary clue card",
+  );
+  assert(
+    await ordinaryToast.count() === 0,
+    "the ordinary discovery should stay spoken-only instead of covering the next rapid problem",
+  );
   assert(await page.getByRole("dialog").count() === 0, "ordinary discovery should be a toast, not a modal");
   const rapidAttemptKey = await page.getByTestId("explore-attempt").getAttribute("data-attempt-key");
   assert(rapidAttemptKey, "ordinary rapid-loop problem should expose an attempt key");
   const rapidAnswer = await getExploreNumericAnswer(page);
   await page.keyboard.type(String(rapidAnswer));
-  assert(await ordinaryToast.isVisible(), "ordinary discovery toast should remain visible while the next answer is entered");
+  assert(
+    await ordinaryToast.count() === 0,
+    "the previous ordinary clue card should remain absent while the next answer is entered",
+  );
   assert(
     await page.locator(`[aria-label="こたえ ${rapidAnswer}"]`).isVisible(),
     "the next problem should accept input while the ordinary discovery toast is visible",
@@ -2438,14 +2512,14 @@ const scenarioRootTangleVerticalSlice = async (
   );
   assert(
     await rootStage.getAttribute("data-visual-lineage-id") === "pokko-field-v1"
-      && await rootStage.getAttribute("data-visual-candidate-id") === "root-tangle-dew-path-v3"
+      && await rootStage.getAttribute("data-visual-candidate-id") === "root-tangle-carry-bloom-v4"
       && await rootStage.getAttribute("data-visual-mode") === "world-painted"
       && await rootStage.getAttribute("data-visual-scene-id") === "root-tangle-dew-blocked",
     "the painted root tangle should enter with its Pokko tangled identity",
   );
   await captureFocusedE2EStage(page, viewport, "root-tangle-idle");
   const rootCameraKey = await rootStage.getAttribute("data-camera-key");
-  assert(rootCameraKey === "root-tangle-side-v3", "root tangle should expose its locked camera");
+  assert(rootCameraKey === "root-tangle-side-v4", "root tangle should expose its locked camera");
   assert(
     await rootStage.locator(".explore-immersive-state").getByText("しずくが せき止められた").isVisible(),
     "root tangle should keep its current world state visible during a combo",
@@ -2567,7 +2641,7 @@ const scenarioRootTangleVerticalSlice = async (
       && await observationDiorama.getAttribute("data-camera-key") === rootCameraKey,
     "Q7 should carry the committed root observation into the same-camera payoff",
   );
-  await closeBlockingResearchDiscovery(page, /大発見！.*ねっこの むこうの ひかり道/, 3);
+  await closeBlockingResearchDiscovery(page, /大発見！.*はねかえりの 一滴/, 3);
   await waitForNewExploreAttempt(page, rootAttemptKey);
 
   const finalAttemptKey = await page.getByTestId("explore-attempt").getAttribute("data-attempt-key");
@@ -2803,7 +2877,7 @@ const attestRequiredVisualAssets = async (baseUrl) => {
     const sha256 = createHash("sha256").update(bytes).digest("hex");
     assert(
       sha256 === expectedSha256,
-      `required painted asset changed without a new approved contract: ${assetPath} expected ${expectedSha256}, got ${sha256}`,
+      `required painted asset changed without a new attested contract: ${assetPath} expected ${expectedSha256}, got ${sha256}`,
     );
     assets.push({
       path: assetPath,
@@ -2814,7 +2888,7 @@ const attestRequiredVisualAssets = async (baseUrl) => {
     });
   }
   return {
-    contract: "pokko-field-v1-approved-critical-raster-sha256",
+    contract: "pokko-field-v1-carry-bloom-v4-critical-raster-sha256",
     count: assets.length,
     assets,
     pass: true,
@@ -2918,7 +2992,7 @@ const readVisualAuditBuildProvenance = async ({
     return {
       mode: "target-self-identification-plus-local-source-match",
       verifiedExactCleanBuild: false,
-      note: "No exact-build wrapper provenance was supplied. Revision metadata, DOM identity, local HEAD, and approved painted assets are verified, but the complete served build is not attested as a clean-HEAD build.",
+      note: "No exact-build wrapper provenance was supplied. Revision metadata, DOM identity, local HEAD, and attested painted assets are verified, but the complete served build is not attested as a clean-HEAD build.",
     };
   }
 
@@ -3658,8 +3732,8 @@ const readPaintedEncounterCrop = async (surface, surfaceIdentity) => {
       && sceneId !== "light-bridge-idle";
     const physicalPayoffId = activeScene.getAttribute("data-action-prop");
     const physicalPayoffExpectedAsset = sceneId === "light-bridge-crossed"
-      ? "/assets/explore/light-bridge/scene-crossed-leaf-dew-path-pokko-v6.jpg"
-      : "/assets/explore/light-bridge/scene-complete-leaf-dew-path-pokko-v6.jpg";
+      ? "/assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.jpg"
+      : "/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.jpg";
     const physicalPayoffPass = !physicalPayoffRequired || Boolean(
       physicalPayoffId === "bridge-leaf-clasp"
       && activeScene.currentSrc.endsWith(physicalPayoffExpectedAsset)
@@ -3934,11 +4008,11 @@ const readPaintedFireflyCrop = async (surface) => surface.evaluate(async (
     };
   };
   const figure = element.matches(
-    '.firefly-flower-art[data-visual-candidate-id="firefly-dew-path-painted-v3"]',
+    '.firefly-flower-art[data-visual-candidate-id="firefly-carry-bloom-painted-v4"]',
   )
     ? element
     : element.querySelector(
-      '.firefly-flower-art[data-visual-candidate-id="firefly-dew-path-painted-v3"]',
+      '.firefly-flower-art[data-visual-candidate-id="firefly-carry-bloom-painted-v4"]',
     );
   if (!(figure instanceof HTMLElement)) {
     return {
@@ -4270,17 +4344,17 @@ const readVisualAuditRuntimeSnapshot = async (
   const paintedCrop = (
     surfaceIdentity.mode === "world-painted"
       && (
-        surfaceIdentity.candidateId === "light-bridge-dew-path-v3"
-          || surfaceIdentity.candidateId === "root-tangle-dew-path-v3"
+        surfaceIdentity.candidateId === "light-bridge-carry-bloom-v4"
+          || surfaceIdentity.candidateId === "root-tangle-carry-bloom-v4"
       )
   )
     ? await readPaintedEncounterCrop(surface, surfaceIdentity)
     : null;
-  const observationCrop = surfaceIdentity.candidateId === "root-tangle-dew-path-v3"
+  const observationCrop = surfaceIdentity.candidateId === "root-tangle-carry-bloom-v4"
     && surfaceIdentity.mode === "observation"
     ? await readRootObservationCrop(surface)
     : null;
-  const fireflyCrop = surfaceIdentity.candidateId === "firefly-dew-path-painted-v3"
+  const fireflyCrop = surfaceIdentity.candidateId === "firefly-carry-bloom-painted-v4"
     ? await readPaintedFireflyCrop(surface)
     : null;
 
@@ -4641,8 +4715,8 @@ const captureVisualAuditStage = async ({
   if (
     expected.mode === "world-painted"
       && (
-        expected.candidateId === "light-bridge-dew-path-v3"
-          || expected.candidateId === "root-tangle-dew-path-v3"
+        expected.candidateId === "light-bridge-carry-bloom-v4"
+          || expected.candidateId === "root-tangle-carry-bloom-v4"
       )
   ) {
     assert(
@@ -4651,7 +4725,7 @@ const captureVisualAuditStage = async ({
     );
   }
   if (
-    expected.candidateId === "root-tangle-dew-path-v3"
+    expected.candidateId === "root-tangle-carry-bloom-v4"
       && expected.mode === "observation"
   ) {
     assert(
@@ -4659,7 +4733,7 @@ const captureVisualAuditStage = async ({
       `${stage} root observation focal crop failed: ${JSON.stringify(snapshot.observationCrop)}`,
     );
   }
-  if (expected.candidateId === "firefly-dew-path-painted-v3") {
+  if (expected.candidateId === "firefly-carry-bloom-painted-v4") {
     assert(
       snapshot.fireflyCrop?.pass,
       `${stage} painted Firefly Flower safe-zone failed: ${JSON.stringify(snapshot.fireflyCrop)}`,
@@ -4914,8 +4988,8 @@ const captureVisualAuditSupportingViewport = async ({
     runtime.visibleIdentities.map((identity) => identity.candidateId).filter(Boolean),
   )];
   assert(
-    visibleCandidateIds.includes("root-tangle-dew-path-v3")
-      && visibleCandidateIds.includes("firefly-field-book-v1"),
+    visibleCandidateIds.includes("root-tangle-carry-bloom-v4")
+      && visibleCandidateIds.includes("firefly-field-book-painted-v4"),
     `supporting reveal composite must contain observation and field-book candidates: ${JSON.stringify(visibleCandidateIds)}`,
   );
   const revealGeometry = runtime.revealGeometry;
@@ -5325,11 +5399,11 @@ const runVisualAuditViewport = async (
       `cold fresh launch must create exactly one new unanswered run: ${JSON.stringify(freshLaunchPersistence)}`,
     );
     const coldLaunchCapture = await capture("cold-launch", opening, {
-      candidateId: "dig-pop-painted-v2",
+      candidateId: "dig-pop-carry-bloom-v3",
       mode: "world-painted",
       surfaceId: "explore-opening-snap-root",
       sceneId: "snap-root-ready",
-      cameraKey: "opening-snap-root-side-v1",
+      cameraKey: "opening-snap-root-side-v2",
     }, { requireTenKey: true });
     coldLaunchCapture.freshRunPersistence = {
       runCount: freshLaunchPersistence.runs.length,
@@ -5340,11 +5414,11 @@ const runVisualAuditViewport = async (
     await page.locator('.snap-root-opening-art[data-asset-state="ready"]')
       .waitFor({ timeout: STEP_TIMEOUT_MS });
     await capture("ready", opening, {
-      candidateId: "dig-pop-painted-v2",
+      candidateId: "dig-pop-carry-bloom-v3",
       mode: "world-painted",
       surfaceId: "explore-opening-snap-root",
       sceneId: "snap-root-ready",
-      cameraKey: "opening-snap-root-side-v1",
+      cameraKey: "opening-snap-root-side-v2",
     }, { requireTenKey: true });
 
     for (const stage of ["dig-one", "dig-two"]) {
@@ -5353,11 +5427,11 @@ const runVisualAuditViewport = async (
         `.explore-immersive[data-visual-surface-id="explore-opening-snap-root"][data-visual-scene-id="snap-root-${stage}"]`,
       );
       await capture(stage, progressedOpening, {
-        candidateId: "dig-pop-painted-v2",
+        candidateId: "dig-pop-carry-bloom-v3",
         mode: "world-painted",
         surfaceId: "explore-opening-snap-root",
         sceneId: `snap-root-${stage}`,
-        cameraKey: "opening-snap-root-side-v1",
+        cameraKey: "opening-snap-root-side-v2",
       }, { requireTenKey: true });
     }
 
@@ -5367,11 +5441,11 @@ const runVisualAuditViewport = async (
     );
     await poppedOpening.waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
     await capture("popped", poppedOpening, {
-      candidateId: "dig-pop-painted-v2",
+      candidateId: "dig-pop-carry-bloom-v3",
       mode: "world-painted",
       surfaceId: "explore-opening-snap-root",
       sceneId: "snap-root-popped",
-      cameraKey: "opening-snap-root-side-v1",
+      cameraKey: "opening-snap-root-side-v2",
     }, { requireTenKeyLayout: true });
     await waitForExploreRouteBreak(page);
 
@@ -5492,23 +5566,42 @@ const runVisualAuditViewport = async (
     );
     await ordinaryQ4.waitFor({ timeout: STEP_TIMEOUT_MS });
     await capture("q4-ordinary", ordinaryQ4, {
-      candidateId: "firefly-dew-path-painted-v3",
+      candidateId: "firefly-carry-bloom-painted-v4",
       mode: "world-painted",
       surfaceId: "explore-ordinary-firefly",
-      cameraKey: "firefly-flower-side-v3",
+      sceneId: "firefly-waiting",
+      cameraKey: "firefly-flower-side-v4",
     }, { requireTenKey: true });
-    await solveExploreAndWaitForNextProblem(page);
+    const q4AttemptKey = await page.getByTestId("explore-attempt")
+      .getAttribute("data-attempt-key");
+    assert(q4AttemptKey, "visual audit Q4 must expose an attempt key");
+    await holdReducedMotionCorrectAdvance(page);
+    await solveExploreNumericProblem(page);
+    const completedQ4 = page.locator(
+      '.explore-immersive[data-visual-surface-id="explore-ordinary-firefly"]'
+      + '[data-visual-scene-id="firefly-dew-trail"]',
+    );
+    await completedQ4.waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
+    await capture("q4-correct", completedQ4, {
+      candidateId: "firefly-carry-bloom-painted-v4",
+      mode: "world-painted",
+      surfaceId: "explore-ordinary-firefly",
+      sceneId: "firefly-dew-trail",
+      cameraKey: "firefly-flower-side-v4",
+    }, { requireTenKeyLayout: true, waitForFiniteAnimations: false });
+    await releaseReducedMotionCorrectAdvance(page);
+    await waitForNewExploreAttempt(page, q4AttemptKey);
 
     const bridge = page.locator(
       '.explore-immersive[data-visual-surface-id="explore-encounter-light-bridge"]',
     );
     await bridge.waitFor({ timeout: STEP_TIMEOUT_MS });
     await capture("major-encounter-idle", bridge, {
-      candidateId: "light-bridge-dew-path-v3",
+      candidateId: "light-bridge-carry-bloom-v4",
       mode: "world-painted",
       surfaceId: "explore-encounter-light-bridge",
       sceneId: "light-bridge-idle",
-      cameraKey: "light-bridge-side-v3",
+      cameraKey: "light-bridge-side-v4",
     }, { requireTenKey: true });
     const bridgeAttemptKey = await page.getByTestId("explore-attempt")
       .getAttribute("data-attempt-key");
@@ -5522,11 +5615,11 @@ const runVisualAuditViewport = async (
     );
     await completedBridge.waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
     await capture("major-encounter-correct", completedBridge, {
-      candidateId: "light-bridge-dew-path-v3",
+      candidateId: "light-bridge-carry-bloom-v4",
       mode: "world-painted",
       surfaceId: "explore-encounter-light-bridge",
       sceneId: "light-bridge-complete",
-      cameraKey: "light-bridge-side-v3",
+      cameraKey: "light-bridge-side-v4",
     }, { requireTenKeyLayout: true, waitForFiniteAnimations: false });
     await waitForNewExploreAttempt(page, bridgeAttemptKey);
 
@@ -5534,24 +5627,49 @@ const runVisualAuditViewport = async (
       '.explore-immersive[data-visual-surface-id="explore-ordinary-firefly"]',
     );
     await ordinaryQ6.waitFor({ timeout: STEP_TIMEOUT_MS });
+    await capture("q6-ordinary", ordinaryQ6, {
+      candidateId: "firefly-carry-bloom-painted-v4",
+      mode: "world-painted",
+      surfaceId: "explore-ordinary-firefly",
+      sceneId: "firefly-warm-bud",
+      cameraKey: "firefly-flower-side-v4",
+    }, { requireTenKey: true });
     await seedDueMathSkills(page, [
       "sub_1d1d_nc_bridge",
       "sub_1d1d_c_bridge",
       "sub_2d1d_nc_bridge",
       "sub_2d1d_c_bridge",
     ]);
-    await solveExploreAndWaitForNextProblem(page);
+    const q6AttemptKey = await page.getByTestId("explore-attempt")
+      .getAttribute("data-attempt-key");
+    assert(q6AttemptKey, "visual audit Q6 must expose an attempt key");
+    await holdReducedMotionCorrectAdvance(page);
+    await solveExploreNumericProblem(page);
+    const completedQ6 = page.locator(
+      '.explore-immersive[data-visual-surface-id="explore-ordinary-firefly"]'
+      + '[data-visual-scene-id="firefly-ringing-petals"]',
+    );
+    await completedQ6.waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
+    await capture("q6-correct", completedQ6, {
+      candidateId: "firefly-carry-bloom-painted-v4",
+      mode: "world-painted",
+      surfaceId: "explore-ordinary-firefly",
+      sceneId: "firefly-ringing-petals",
+      cameraKey: "firefly-flower-side-v4",
+    }, { requireTenKeyLayout: true, waitForFiniteAnimations: false });
+    await releaseReducedMotionCorrectAdvance(page);
+    await waitForNewExploreAttempt(page, q6AttemptKey);
 
     const root = page.locator(
       '.explore-immersive[data-visual-surface-id="explore-encounter-root-tangle"]',
     );
     await root.waitFor({ timeout: STEP_TIMEOUT_MS });
     const rootCapture = await capture("q7-before", root, {
-      candidateId: "root-tangle-dew-path-v3",
+      candidateId: "root-tangle-carry-bloom-v4",
       mode: "world-painted",
       surfaceId: "explore-encounter-root-tangle",
       sceneId: "root-tangle-dew-blocked",
-      cameraKey: "root-tangle-side-v3",
+      cameraKey: "root-tangle-side-v4",
     }, { requireTenKey: true });
     const rootAttemptKey = await page.getByTestId("explore-attempt")
       .getAttribute("data-attempt-key");
@@ -5576,7 +5694,7 @@ const runVisualAuditViewport = async (
       resolvedRootCrop.activeScene?.decoded
         && resolvedRootCrop.projection?.valid
         && resolvedRootCrop.activeScene.currentSrc.endsWith(
-          "/assets/explore/root-tangle/scene-crossed-dew-path-pokko-v6.jpg",
+          "/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg",
         ),
       `Q7 continuity reference must be the decoded committed crossed world scene: ${JSON.stringify(resolvedRootCrop)}`,
     );
@@ -5596,11 +5714,11 @@ const runVisualAuditViewport = async (
     supportingCapture.observationCrop = naturalObservationCrop;
     supportingCaptures.push(supportingCapture);
     const observationCapture = await capture("q7-observation", observation, {
-      candidateId: "root-tangle-dew-path-v3",
+      candidateId: "root-tangle-carry-bloom-v4",
       mode: "observation",
       surfaceId: "explore-observation-root-tangle",
       sceneId: "root-tangle-dew-gag",
-      cameraKey: "root-tangle-side-v3",
+      cameraKey: "root-tangle-side-v4",
       observationId: "explore-observation:root-tangle-light-path",
       sourceEncounterId: "root-tangle",
     }, {
@@ -5710,7 +5828,7 @@ const runVisualAuditViewport = async (
     };
     assert(
       observationCapture.surfaceMedia.visibleImages.some((image) => (
-        image.currentSrc.endsWith("/assets/explore/root-tangle/scene-crossed-dew-path-pokko-v6.jpg")
+        image.currentSrc.endsWith("/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg")
       )),
       "root observation must render the crossed root-tangle scene from the committed encounter",
     );
@@ -5719,7 +5837,7 @@ const runVisualAuditViewport = async (
       '.explore-research-book[data-visual-surface-id="explore-field-book-firefly"]',
     );
     const fieldBookCapture = await capture("field-book", fieldBook, {
-      candidateId: "firefly-field-book-v1",
+      candidateId: "firefly-field-book-painted-v4",
       mode: "field-book",
       surfaceId: "explore-field-book-firefly",
     }, {
@@ -5736,7 +5854,7 @@ const runVisualAuditViewport = async (
         && supportingCapture.revealGroupId === fieldBookCapture.revealGroupId,
       "Q7 natural viewport and both locator details must belong to one reveal group",
     );
-    await closeBlockingResearchDiscovery(page, /大発見！.*ねっこの むこうの ひかり道/, 3);
+    await closeBlockingResearchDiscovery(page, /大発見！.*はねかえりの 一滴/, 3);
     await waitForNewExploreAttempt(page, rootAttemptKey);
 
     const ordinaryQ8 = page.locator(
@@ -5744,10 +5862,10 @@ const runVisualAuditViewport = async (
     );
     await ordinaryQ8.waitFor({ timeout: STEP_TIMEOUT_MS });
     await capture("q8", ordinaryQ8, {
-      candidateId: "firefly-dew-path-painted-v3",
+      candidateId: "firefly-carry-bloom-painted-v4",
       mode: "world-painted",
       surfaceId: "explore-ordinary-firefly",
-      cameraKey: "firefly-flower-side-v3",
+      cameraKey: "firefly-flower-side-v4",
     }, { requireTenKey: true });
     await solveExploreNumericProblem(page);
     await waitForRouteBreakPastOptionalRareDiscovery(page);
@@ -5775,11 +5893,11 @@ const runVisualAuditViewport = async (
       '.explore-immersive[data-visual-surface-id="explore-opening-snap-root"]',
     );
     await capture("relaunch", relaunched, {
-      candidateId: "dig-pop-painted-v2",
+      candidateId: "dig-pop-carry-bloom-v3",
       mode: "world-painted",
       surfaceId: "explore-opening-snap-root",
       sceneId: "snap-root-ready",
-      cameraKey: "opening-snap-root-side-v1",
+      cameraKey: "opening-snap-root-side-v2",
     }, { requireTenKey: true });
 
     await navigateHash(page, "/battle", /#\/battle$/);

@@ -1780,7 +1780,7 @@ export const Explore: React.FC = () => {
             data-checkpoint-revision={checkpointRef.current?.revision}
             data-acknowledged-discovery-id={checkpointRef.current?.acknowledgedDiscoveryId}
             data-run-persistence={runPersistence.status}
-            data-suppress-nonblocking-discovery={activeEncounterId ? true : undefined}
+            data-suppress-nonblocking-discovery={pendingGate?.problem ? true : undefined}
         >
             <ExploreWorldBackdrop />
 
@@ -2058,7 +2058,7 @@ export const Explore: React.FC = () => {
                                 key={revealedDiscovery.id}
                                 discovery={revealedDiscovery}
                                 researchPage={researchReveal}
-                                suppressNonBlocking={Boolean(activeEncounterId)}
+                                suppressNonBlocking={Boolean(pendingGate?.problem)}
                                 onContinue={finishDiscoveryReveal}
                             />
                         ) : null}

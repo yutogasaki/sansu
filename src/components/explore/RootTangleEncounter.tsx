@@ -9,16 +9,16 @@ import {
 
 const ROOT_TANGLE_DEFINITION: ImmersiveEncounterDefinition = {
     scene: {
-        idleSrc: "/assets/explore/root-tangle/scene-tangled-dew-path-pokko-v6.jpg",
-        completeSrc: "/assets/explore/root-tangle/scene-open-dew-path-pokko-v6.jpg",
-        resolvedSrc: "/assets/explore/root-tangle/scene-crossed-dew-path-pokko-v6.jpg",
+        idleSrc: "/assets/explore/root-tangle/scene-tangled-carry-bloom-pokko-v7.jpg",
+        completeSrc: "/assets/explore/root-tangle/scene-open-carry-bloom-pokko-v7.jpg",
+        resolvedSrc: "/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg",
     },
     visualIdentity: {
         lineageId: "pokko-field-v1",
-        candidateId: "root-tangle-dew-path-v3",
+        candidateId: "root-tangle-carry-bloom-v4",
         mode: "world-painted",
         surfaceId: "explore-encounter-root-tangle",
-        cameraKey: "root-tangle-side-v3",
+        cameraKey: "root-tangle-side-v4",
         sceneIds: {
             idle: "root-tangle-dew-blocked",
             complete: "root-tangle-dew-open",

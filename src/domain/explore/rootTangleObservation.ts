@@ -11,15 +11,15 @@ export const ROOT_TANGLE_OBSERVATION = {
     prerequisiteFeatureIds: ROOT_TANGLE_PREREQUISITES,
     visual: {
         lineageId: "pokko-field-v1",
-        candidateId: "root-tangle-dew-path-v3",
+        candidateId: "root-tangle-carry-bloom-v4",
         mode: "observation",
         surfaceId: "explore-observation-root-tangle",
-        cameraKey: "root-tangle-side-v3",
+        cameraKey: "root-tangle-side-v4",
         sceneId: "root-tangle-dew-gag",
-        sceneSrc: "/assets/explore/root-tangle/scene-crossed-dew-path-pokko-v6.jpg",
+        sceneSrc: "/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg",
     },
     camera: {
-        key: "root-tangle-side-v3",
+        key: "root-tangle-side-v4",
         objectPosition: "50% 50%",
     },
     copy: {

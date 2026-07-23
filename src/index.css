@@ -614,8 +614,8 @@ body.app-mode-fullscreen .app-container {
             inset 0 0 0 3px rgba(255, 244, 206, 0.66);
     }
 
-    /* Presence keeps an exiting clue mounted for its short animation. Once a
-       dedicated encounter owns the stage, remove only that old visual layer
+    /* Presence can keep an exiting clue mounted for its short animation. Once
+       the next rapid problem owns the stage, remove that old visual layer
        immediately; the polite sr-only acknowledgement remains mounted. */
     .explore-world[data-suppress-nonblocking-discovery="true"] .explore-research-slip,
     .explore-world[data-suppress-nonblocking-discovery="true"] [data-testid="explore-discovery-toast"] {
@@ -664,6 +664,18 @@ body.app-mode-fullscreen .app-container {
             linear-gradient(115deg, rgba(247, 232, 189, 0.06) 1px, transparent 1px) 0 0 / 28px 28px,
             radial-gradient(circle at 50% 32%, rgba(79, 193, 196, 0.32), transparent 38%),
             #173f49;
+    }
+
+    .explore-research-overlay:is(
+        [data-visual-candidate-id="firefly-q7-carry-bloom-v4"],
+        [data-visual-candidate-id="root-tangle-carry-bloom-v4"]
+    ) {
+        background:
+            linear-gradient(180deg, #52cedc 0 38%, #e6b43a 38% 100%);
+    }
+
+    .explore-research-overlay .explore-research-book {
+        min-height: 180px;
     }
 
     .explore-cut-paper {
@@ -1578,21 +1590,27 @@ body.app-mode-fullscreen .app-container {
     }
 
     .explore-immersive:is(
-        [data-visual-candidate-id="light-bridge-dew-path-v3"],
-        [data-visual-candidate-id="root-tangle-dew-path-v3"]
+        [data-visual-candidate-id="light-bridge-carry-bloom-v4"],
+        [data-visual-candidate-id="root-tangle-carry-bloom-v4"]
     ) .explore-immersive-art {
-        background: #2cbed3;
+        background: #d9a72d;
     }
 
     .explore-immersive:is(
-        [data-visual-candidate-id="light-bridge-dew-path-v3"],
-        [data-visual-candidate-id="root-tangle-dew-path-v3"]
+        [data-visual-candidate-id="light-bridge-carry-bloom-v4"],
+        [data-visual-candidate-id="root-tangle-carry-bloom-v4"]
     ) .explore-immersive-scene {
         top: 0;
         bottom: auto;
-        height: 44%;
+        height: auto;
+        aspect-ratio: 16 / 9;
         object-fit: contain;
         object-position: 50% 0%;
+    }
+
+    .explore-immersive[data-visual-candidate-id="firefly-carry-bloom-painted-v4"]
+    .explore-immersive-art--layered {
+        background: #d9a72d;
     }
 
     @media (min-width: 600px) and (max-width: 1023px),
@@ -1972,11 +1990,12 @@ body.app-mode-fullscreen .app-container {
     }
 
     .explore-run-grid[data-encounter] .explore-immersive:is(
-        [data-visual-candidate-id="light-bridge-dew-path-v3"],
-        [data-visual-candidate-id="root-tangle-dew-path-v3"]
+        [data-visual-candidate-id="light-bridge-carry-bloom-v4"],
+        [data-visual-candidate-id="root-tangle-carry-bloom-v4"]
     ) .explore-immersive-scene {
         top: 0;
-        height: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
         object-fit: contain;
         object-position: 50% 50%;
     }

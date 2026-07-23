@@ -103,8 +103,8 @@ describe("ExploreProblemPanel rapid-trail art", () => {
     it("uses authored same-camera painted flower art", () => {
         const markup = renderPanel(3, "idle");
 
-        expect(markup).toContain('data-camera-key="firefly-flower-side-v3"');
-        expect(markup).toContain('data-visual-candidate-id="firefly-dew-path-painted-v3"');
+        expect(markup).toContain('data-camera-key="firefly-flower-side-v4"');
+        expect(markup).toContain('data-visual-candidate-id="firefly-carry-bloom-painted-v4"');
         expect(markup).toContain('data-visual-mode="world-painted"');
         expect(markup).toContain('data-stage="waiting"');
         expect(markup).not.toContain("scene-run-pop-v1.webp");
@@ -116,7 +116,7 @@ describe("ExploreProblemPanel rapid-trail art", () => {
         expect(markup).toContain('data-question-text="7 × 8"');
         expect(markup).toContain('data-skill-id="mul_arbitrary_family"');
         expect(markup).toContain('data-stage="warm-bud"');
-        expect(markup).toContain("つぼみが ぽっと あたたかい");
+        expect(markup).toContain("でこぼこで 葉帽子が ぐらり。つぎ！");
     });
 
     it("does not advance the flower art after a wrong answer", () => {
@@ -125,6 +125,20 @@ describe("ExploreProblemPanel rapid-trail art", () => {
         expect(markup).toContain('data-stage="dew-trail"');
         expect(markup).toContain("しずくは そのまま。もういちど");
         expect(markup).toContain('role="alert"');
+    });
+
+    it("shows the Q7 body payoff and keeps that settled plate for Q8", () => {
+        const q7Correct = renderPanel(6, "correct");
+        const q8Ready = renderPanel(7, "idle");
+
+        expect(q7Correct).toContain('data-stage="light-path"');
+        expect(q7Correct).toContain('data-light-path="complete"');
+        expect(q7Correct).toContain("さいごの一滴が、はっぱに ぽとん！");
+        expect(q8Ready).toContain('data-stage="light-path"');
+        expect(q8Ready).toContain("ずれた葉帽子で、つぎへ いこう");
+        expect(q8Ready).toContain(">1</button>");
+        expect(q8Ready).toContain(">2</button>");
+        expect(q8Ready).toContain(">3</button>");
     });
 });
 
@@ -216,8 +230,9 @@ describe("ExploreProblemPanel Snap Root opening", () => {
 
         expect(markup).toContain('data-opening-art="snap-root"');
         expect(markup).toContain('data-delivery-id="snap-root-v1"');
-        expect(markup).toContain('data-visual-candidate-id="dig-pop-painted-v2"');
-        expect(markup).toContain('data-camera-key="opening-snap-root-side-v1"');
+        expect(markup).toContain('data-visual-candidate-id="dig-pop-carry-bloom-v3"');
+        expect(markup).toContain('data-camera-key="opening-snap-root-side-v2"');
+        expect(markup).toContain('data-asset-variant="shared-landscape"');
         expect(markup).toContain('data-stage="ready"');
         expect(markup).toContain('data-actor-state="ready"');
         expect(markup).toContain('data-subject-state="planted"');
@@ -225,8 +240,8 @@ describe("ExploreProblemPanel Snap Root opening", () => {
         expect(markup).toContain('data-contact-state="none"');
         expect(markup).toContain('data-subject-contact="none"');
         expect(markup).toContain('data-lift-contact="none"');
-        expect(markup).toContain("/assets/explore/opening-snap-root-painted/scene-ready.jpg");
-        expect(markup).toContain("/assets/explore/opening-snap-root-painted/scene-ready-tablet.jpg");
+        expect(markup).toContain("/assets/explore/opening-snap-root-carry-bloom-v3/scene-ready.jpg");
+        expect(markup).not.toContain("scene-ready-tablet.jpg");
         expect(markup).toContain(">1</button>");
         expect(markup).toContain(">2</button>");
         expect(markup).toContain(">3</button>");
@@ -239,7 +254,7 @@ describe("ExploreProblemPanel Snap Root opening", () => {
         expect(markup).toContain('data-actor-state="digging"');
         expect(markup).toContain('data-subject-state="rising"');
         expect(markup).toContain('data-action-state="dig-one"');
-        expect(markup).toContain("/assets/explore/opening-snap-root-painted/scene-dig-one.jpg");
+        expect(markup).toContain("/assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-one.jpg");
         expect(markup).toContain("だいじょうぶ。もういちど！");
         expect(markup).toContain('role="alert"');
     });
@@ -252,7 +267,7 @@ describe("ExploreProblemPanel Snap Root opening", () => {
         expect(markup).toContain('data-subject-state="free-standing"');
         expect(markup).toContain('data-action-state="pop"');
         expect(markup).toContain('data-contact-state="none"');
-        expect(markup).toContain("/assets/explore/opening-snap-root-painted/scene-popped.jpg");
+        expect(markup).toContain("/assets/explore/opening-snap-root-carry-bloom-v3/scene-popped.jpg");
         expect(markup).toContain("できた！ つちぼうし！");
         expect(markup).not.toContain("data-payoff-variant");
         expect(markup).not.toContain("data-watering-state");

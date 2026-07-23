@@ -162,7 +162,7 @@
 
 ### 4.4 cold-open導入区間
 
-delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行visual candidateを `dig-pop-painted-v2` とする。二つのIDは別々に記録し、同じslotを使った旧candidateの承認や点数を継承しない。390×844と768×1024で同じ相棒、スコップ、土、根生物、cameraを保ち、次の状態を問題の前後で連続して読ませる。
+delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行visual candidateを `dig-pop-carry-bloom-v3` とする。二つのIDは別々に記録し、同じslotを使った旧candidateの承認や点数を継承しない。390×844と768×1024で同じ相棒、スコップ、土、根生物、cameraを保ち、次の状態を問題の前後で連続して読ませる。
 
 - commit済み正解数だけを `ready / dig-one / dig-two / popped` へ写す
 - `ready`: 葉帽子の相棒がスコップを持ち、同じ大きな根生物が土へ半分埋まった状態を予告する。相棒と根生物は互いを見る
@@ -175,27 +175,27 @@ delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行v
 - `prefers-reduced-motion` では移動補間、土の飛散、跳ね、回転、zoomを止めても、4状態の地面線、対象高、足の露出、最終位置、原因と結果を静止差分で維持する
 - 旧編み根、`nest-squash | nest-tip`、旧 `landed`、根生物の頭の葉を相棒が引く `tug / tumble` は撤去する。実機画像で、相棒が編み輪に締め付けられた身体、根生物が浮遊する切断頭部、一本葉が舌・腸・蛇や引っ張られる髪へ見える危険が確認されたため、安全な比較variantとして再利用しない
 - payoffはコピーを隠した64pxでも相棒と根生物の全身が連続し、土や葉が首・顔・胸を横切らず、スコップが身体へ向いていないことを必須とする
-- 旧source candidate `dig-pop-painted-v1` は視覚的磁力 **50 / 60** のHOLDとする。背景、相棒、根生物、スコップの形がstate間でdriftし、`dig-one → dig-two` の差が弱かったため、現行runtimeやv2の承認根拠として扱わない
-- `dig-pop-painted-v2` は一枚のlocked backgroundと承認済みcharacter / prop referenceへ作用差分だけを重ね、実problem panelへ配線した。runtime再採点は390×844で **52 / 53 / 52 / 53**、768×1024で **52 / 53 / 53 / 53**、全6軸8以上となり視覚ゲートを通過した。最初のtablet `dig-two` はanswer shelfが両足とスコップ刃を隠して **50 / 60** のHOLDとなったため、背景を変えずaction overlayを上へ再配置し **53 / 60** へ修正した。顔、作用する手・道具先端、対象の接地・露出した足、payoff propはすべてのcanonical cropでanswer-shelf fadeより上に保つ
+- 旧source candidate `dig-pop-painted-v1` は視覚的磁力 **50 / 60** のHOLDとする。旧runtime candidate `dig-pop-painted-v2` は単体runtime点と速度を通したが、冒頭だけ白目・大口・縦長／4:3構図となり、Q4以降の葉帽子ポッコと別作品に見えるため現行critical pathとPWA precacheから撤去する。どちらの承認もv3へ継承しない
+- `dig-pop-carry-bloom-v3` は後続と同じ横長16:9、黄色い丸い身体、緑の葉帽子、点目、シアン・黄土・葉緑・コーラルの大色面へ統一する。`ready / dig-one / dig-two / popped` は同じ二人・一つのスコップ・一つの土山を保ち、土塊一つ、対象高、両足、最後の安全な尻もちだけを変える。顔、作用する手・道具先端、対象の接地・露出した足、payoff propはすべてのcanonical cropでanswer-shelf fadeより上に保つ
 
-#### `dig-pop-painted-v2` authoring / flattened delivery
+#### `dig-pop-carry-bloom-v3` authoring / flattened delivery
 
-- authoring sourceは一枚のlocked background、承認済みの相棒・根生物・スコップreference、地面線・土塊・姿勢のstate overlayへ分ける。同一characterをstateごとにゼロから再生成せず、camera、比率、顔、葉、道具、光を固定する
-- deliveryは絵本調の土、葉、空、身体の材質と継ぎ目を守るため、UI文字なしのmobile 800×1000とtablet 1024×768のflattened JPEGをそれぞれ `ready / dig-one / dig-two / popped` の4枚にする。`<picture>` は現在viewportの4枚だけを先読みする。各frameは180KiB以下を目標とし、問題、答え、進捗、TenKey、状態文言はDOMへ残す。layered authoringは必須だが、runtimeを分解SVGへ戻すことは要件にしない
+- authoring sourceは承認済みの相棒・根生物・スコップreferenceと直前frameを使い、camera、比率、顔、葉、道具、色面を固定して作用差分だけを編集する。characterや背景をstateごとに無関係な指示から作り直さない
+- deliveryはUI文字なしの1280×720 flattened JPEGを `ready / dig-one / dig-two / popped` の4枚だけ持ち、mobile / tabletで同じsourceを共有する。各frameは800KiB以下とし、問題、答え、進捗、TenKey、状態文言はDOMへ残す。旧portrait / tablet専用8枚をpublicとPWA precacheへ残さない
 - visual candidate ID、stage、actor、対象、action、asset load状態、reduced motionはDOMの安定属性とARIA descriptionで検査でき、画像内文字やファイル名だけを判定根拠にしない
 - payoff variantは作らない。最初の安全証明は一つのcanonical `popped` で行い、別オチは視覚的磁力、身体完全性、silent testを別々に通過した後だけ追加する
 - reduced motionでは承認済み静止frameを即時差し替え、transition、土の飛散、跳ね、回転、zoomを止める。状態や最終位置は省略しない
-- production defaultは `classic-v1` とし、local validation candidate `dig-pop-painted-v2`、source HOLDの `dig-pop-painted-v1`、一本葉を引くBloom版、水やり版、`root-pull-v1` / `root-pull-v2` は現行defaultから外す。既存の引き算専用遭遇 `root-tangle`、そのreceipt、観察、保存IDとは共有しない
+- production defaultは `classic-v1` とし、local validation candidate `dig-pop-carry-bloom-v3`、source HOLDの `dig-pop-painted-v1`、一本葉を引くBloom版、水やり版、`root-pull-v1` / `root-pull-v2` は現行defaultから外す。既存の引き算専用遭遇 `root-tangle`、そのreceipt、観察、保存IDとは共有しない
 
 ### 4.5 ほたる花のしずく道
 
-通常調査の現行visual candidateを `firefly-dew-path-painted-v3`、固定cameraを `firefly-flower-side-v3` とする。分岐面は同じ舞台文法の `pokko-route-map-v3`、中立Q7 finaleは `firefly-q7-dew-path-v3`、帰還図鑑の汎用挿絵は `firefly-field-book-painted-v3` とする。旧 `firefly-painted-pokko-v2` と旧分岐plateは、密度・奥行き・素材の強さが現行benchmarkから外れるため現行runtimeへ混在させない。
+通常調査の現行visual candidateを `firefly-carry-bloom-painted-v4`、固定cameraを `firefly-flower-side-v4` とする。分岐面は同じ舞台文法の `pokko-route-map-v3`、中立Q7 finaleは `firefly-q7-carry-bloom-v4`、帰還図鑑の汎用挿絵は `firefly-field-book-painted-v4` とする。旧 `firefly-painted-pokko-v2` と旧しずく道v3、旧分岐plateは、密度・奥行き・素材の強さが現行benchmarkから外れるため現行runtimeへ混在させない。
 
 - 全frameを16:9の横舞台とし、青緑の静かな大色面を55〜65%以上、詳細描写を35%以下、支配色相を青緑・黄土橙・葉緑の3族以内に保つ。全面粒子、映画的奥行き、金色発光、画面全体のvignetteを使わない
-- Q4〜Q7直前は、同じ一輪の花、同じポッコ、同じ四つのしずく、同じ一本の溝を `waiting / dew-trail / warm-bud / ringing-petals` で連続させる。別の花、別相棒、電飾、無関係な道を後段だけへ追加しない
-- `waiting` は乾いた一本の溝と閉じた一輪、`dew-trail` は先頭の一滴を押す一動作、`warm-bud` は半分まで進んだ四滴と開きかけのつぼみ、`ringing-petals` は花まで届いた四滴と五枚花を見せる
-- 専用遭遇も別世界へ切り替えない。葉橋は `light-bridge-dew-path-v3 / light-bridge-side-v3` で離れた二枚葉が一度だけ噛み合い、四滴が渡ってポッコが安全に尻もちをつく。root-tangleは `root-tangle-dew-path-v3 / root-tangle-side-v3` で一つの根の輪が四滴をせき止め、ほどけた後の一滴が葉帽子へ落ちる。どちらも同じ一輪、一人、四滴、一本の道、青緑・黄土橙・葉緑＋珊瑚accentを保持する
-- 中立Q7 finaleは三滴を一本の道へ残し、最後の一滴を葉帽子へ落としてポッコが安全に尻もちをつく。一つの因果と一つの身体オチへ絞り、進捗線、光線、粒子、別キャラクターで代替しない
+- Q4〜Q8は、同じ一輪の花、同じポッコ、同じ四つのしずく、同じ一本の溝を `waiting / dew-trail / warm-bud / ringing-petals / light-path` で連続させる。別の花、別相棒、電飾、無関係な道を後段だけへ追加しない
+- `waiting` は閉じた一輪と四滴、`dew-trail` は四滴を葉帽子へ載せて運ぶ一動作、`warm-bud` は一つのでこぼこで帽子が傾く予告、`ringing-petals` は安全な尻もちと四滴の弧で五枚花が開く反応、`light-path` は三滴を溝へ残し、跳ね返った最後の一滴が葉帽子へ乗り、帽子のふちが片目へかぶさったまま安全に座る身体オチを見せる
+- 専用遭遇も別世界へ切り替えない。葉橋は `light-bridge-carry-bloom-v4 / light-bridge-side-v4`、root-tangleは `root-tangle-carry-bloom-v4 / root-tangle-side-v4` とし、同じ横舞台、一輪、一人、四滴、一本の道、青緑・黄土橙・葉緑＋珊瑚accentを保持する。Q6で開いた五枚花はQ7のroot-tangleでも開いたままにし、つぼみへ巻き戻さない
+- 中立Q7 finaleは三滴を一本の道へ残し、跳ね返った最後の一滴で葉帽子がずれたポッコを安全に座らせる。一つの因果と一つの身体オチへ絞り、進捗線、光線、粒子、別キャラクターで代替しない
 - root-tangleのcommit済み観察provenanceがある場合は、中立Q7 plateへ置換せず、解いたroot sceneとcameraを観察・帰還図鑑まで保持する。provenanceがない場合だけ汎用しずく道を使う
 - 2分岐と3分岐は同じ青緑空・黄土面・葉帽子の横舞台で、一本の溝が物理的に2本または3本へ分かれることを無文字で読ませる。旧密集林の分岐plateをthumbnailや大絵へ残さない
 - phoneでは横長plateを縦へcropせず、青緑の静かな余白の中へ全景をcontainする。390×844と768×1024の両方でポッコ、花、作用するしずく、TenKeyを同時に欠けなく表示する
