@@ -45,7 +45,7 @@ The prior checklist completed brand metadata and utility styling, but did not pr
 | G4-3 major encounters | G4-2 | light bridge and root tangle use same-camera three-state painted scenes | Complete (candidate) |
 | G4-4 semantic Q7 | G4-2, G4-3 | world reaction provenance reaches same-camera payoff before the book | Complete (candidate) |
 | G4-5 return and base | G4-2, G4-4 | same Pokko and latest finding remain legible through replay/base | Complete (candidate) |
-| G4-6 critical-path audit | G4-1..G4-5 | 390/768 contact sheet from one build, mixed lineage 0, TenKey fit | Pending v3 re-audit |
+| G4-6 critical-path audit | G4-1..G4-5 | 390/768 contact sheet from one build, mixed lineage 0, TenKey fit | Complete (local exact `2495f6c`) |
 | G5 blind value test | G4-6 | 4/5 same action/payoff, 4/5 want more, danger 0 | Pending |
 | G6 production promotion | G5 | cold-cache/PWA actual target evidence and explicit default switch | Pending |
 
@@ -76,8 +76,10 @@ The prior checklist completed brand metadata and utility styling, but did not pr
 - Two-way and three-way route plates now use the same quiet stage and physical groove split. The prior dense forest route plates and prior four dense flower plates are removed from production precache.
 - Generic return pages use the new final plate. The committed root-tangle provenance now uses the same lightweight stage as `root-tangle-dew-path-v3 / root-tangle-side-v3`: one root loop blocks four drops, the loop opens, and the resolved droplet/leaf-hat body gag remains the exact source scene through observation and archive.
 - The leaf bridge is also reset to `light-bridge-dew-path-v3 / light-bridge-side-v3`: two separated leaf halves join once, the same four drops cross, and Pokko lands safely seated. Old tall bridge, dense root, flow, and dense WebP plates have no runtime references and are removed from `public`.
-- Local 390×844 and 768×1024 Chromium captures keep the full horizontal plates, equation, and complete TenKey visible without page overflow; five bridge sizes and five root-tangle sizes pass focused browser verification. The pending-problem back-arrow `abandoned` path also passes. These local checks remain diagnostic until the exact clean revision audit is regenerated.
-- Production and external value gates remain **HOLD**. G4-6 must be regenerated for this candidate; G5 still requires five uninstructed observers, and G6 still requires the canonical production target after cold cache/PWA update.
+- Pre-audit 390×844 and 768×1024 Chromium captures kept the full horizontal plates, equation, and complete TenKey visible without page overflow; five bridge sizes and five root-tangle sizes passed focused browser verification. The pending-problem back-arrow `abandoned` path also passed. These checks were diagnostic inputs to the exact clean revision audit below.
+- Exact detached-build evidence for revision `2495f6cb31301eafb347eca0115321d9dc01a997`, delivery `snap-root-v1`, and lineage `pokko-field-v1` is stored at `docs/design/audits/2026-07-23-dew-path-v3-2495f6c/`: 32 critical-path captures, two Q7 composites, one contact sheet, and a machine-readable manifest. Runtime integrity passed with decoded media, required TenKey reachability, horizontal overflow 0, visible legacy 0, and mixed visible lineage 0.
+- Human review of that exact contact sheet gives the author/benchmark visual diagnostic **52 / 60**, every axis at least 8 / 10. Q4 through return contains no unrelated dense forest, golden-light road, second companion, or cinematic plate. The denser cold-open remains an intentional peak beat inside the same cyan/ochre/leaf handmade world.
+- Local G4-6 is complete for `2495f6c`. Production and external value gates remain **HOLD**: G5 still requires five uninstructed observers, and G6 still requires an explicit delivery decision plus canonical production cold-cache/PWA evidence. `classic-v1` remains the default.
 
 ## Non-goals
 
