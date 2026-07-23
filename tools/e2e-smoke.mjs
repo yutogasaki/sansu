@@ -5552,7 +5552,7 @@ const runVisualAuditViewport = async (
     await navigateHash(page, "/battle", /#\/battle$/);
     const base = page.locator(".game-hub");
     await capture("base", base, {
-      candidateId: "pokko-base-map-v1",
+      candidateId: "pokko-base-painted-v1",
       mode: "base-map",
     });
 
