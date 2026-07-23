@@ -2,7 +2,7 @@ import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeftRight, Handshake, SlidersHorizontal } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { MakimodonEncounterArt } from "../components/explore/MakimodonEncounterArt";
+import { PokkoBaseArt } from "../components/explore/PokkoBaseArt";
 import { Icons } from "../components/icons";
 import { ScreenScaffold } from "../components/ScreenScaffold";
 
@@ -34,7 +34,12 @@ export const GameHub: React.FC = () => {
     const reduceMotion = Boolean(useReducedMotion());
 
     return (
-        <div className="game-hub relative h-full overflow-hidden">
+        <div
+            className="game-hub relative h-full overflow-hidden"
+            data-visual-lineage-id="pokko-field-v1"
+            data-visual-candidate-id="pokko-base-map-v1"
+            data-visual-mode="base-map"
+        >
             <span className="game-hub__backdrop-shape game-hub__backdrop-shape--sun" aria-hidden="true" />
             <span className="game-hub__backdrop-shape game-hub__backdrop-shape--leaf" aria-hidden="true" />
 
@@ -52,18 +57,16 @@ export const GameHub: React.FC = () => {
                         transition={{ duration: reduceMotion ? 0 : 0.28 }}
                     >
                         <div className="game-hub__hero-art" aria-hidden="true">
-                            <MakimodonEncounterArt
-                                stage="rolled"
-                                reducedMotion={reduceMotion}
+                            <PokkoBaseArt
                                 decorative
                                 className="game-hub__featured-creature"
                             />
                         </div>
 
                         <div className="game-hub__hero-copy">
-                            <p className="game-hub__kicker">きょうの へんてこ</p>
-                            <h2 id="game-hub-explore-title">まきものの しょうたいを しらべよう</h2>
-                            <p>ほどけた みち、のってみる？</p>
+                            <p className="game-hub__kicker">つぎの けはい</p>
+                            <h2 id="game-hub-explore-title">葉っぱの むこうを たしかめよう</h2>
+                            <p>ポッコと まだ見ぬ道へ</p>
                         </div>
 
                         <button

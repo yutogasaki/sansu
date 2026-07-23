@@ -83,6 +83,15 @@
 - 比較根拠、IP境界、実装優先順位は `docs/design/research-library-2026-07-19/benchmark-yoshi-fukashigi.md` を参照する
 - 絵主導candidateは、承認済み絵本調benchmarkをruntime screenshotの横へ置いて比較する。視覚的磁力は画像だけを6軸で採点し **52 / 60以上かつ各軸8 / 10以上**、無文字理解は未説明の5人中4人以上が同じ主動詞とpayoffを答え4人以上が続きを望み、痛み・拘束・切断・武器・恐怖などの危険解釈0件を必須とする。これらとruntime整合は相互に補償せず、一つでもHOLDならproductionへ進めない
 
+### 3.3 ポッコのvisual lineageとsurface identity
+
+- 現行の全体visual lineage IDは `pokko-field-v1` とする。ポッコの不変silhouetteは `黄色い豆型の身体 + 広く低い緑の葉帽子 + 小さな黒い手足 + 単純な顔` であり、画面密度や素材を変えても頭身、帽子の輪郭、身体色、手足の色を別キャラクターへ置換しない
+- visual modeは `world-painted / world-live / observation / field-book / archive / route-map / base-map / legacy` に正規化する。`world-painted` は絵本調flattened frame、`world-live` は同じ役者を簡略化したlive art、`observation` は直前cameraを残す観察線、`field-book` は保存済み紙面、`archive` は帰還記録、`route-map` は道選択、`base-map` は同じ役者と世界を縮約した基地とする。mode変更は報酬の編集工程であり、actor変更や無関係な画風を正当化しない
+- cold-open、通常問題、大遭遇、Q7直前、Q7 same-camera payoff、図鑑、Q8、帰還、再出発、基地の各rootは `data-visual-lineage-id`、`data-visual-candidate-id`、`data-visual-mode` を持つ。app rootはbuild revisionとdelivery IDを持ち、captureの画像だけでなくDOM identityから同一build・同一系統を検証できること
+- 生成画像は、承認済みポッコreferenceとlocked cameraを使ったobject editまたはstate editを原則とする。stateごとの全再生成で相棒、対象、地平線、光源をdriftさせない。新しいsurface candidateは既存candidateの点数を継承せず、runtime screenshotで再監査する
+- Q7の大発見は、直前のworld reactionが持つ観察provenanceをpresentationへ渡す。root-tangleを解いたのに無関係なほたる花へ切り替えるなど、本文と絵の因果が分裂する場合はruntime FAILとする
+- 探検基地はproduction価値ゲート未通過の旧actorを主役へ固定しない。現行lineageのポッコと、同じrunで持ち帰った対象または次の気配だけを予告する
+
 ## 4. モーション
 
 旧仕様では派手な拡縮や勝利演出を抑えていた。新仕様では、常用しない範囲で決め場の派手さを許可する。

@@ -7,8 +7,13 @@ import { cn } from "../../utils/cn";
 import { MathProblemPrompt } from "../domain/MathProblemPrompt";
 import { ExploreAnswerPad } from "./ExploreAnswerPad";
 import { useExploreStageFocus } from "./useExploreStageFocus";
+import type { ExploreVisualIdentity } from "../../domain/explore";
 
 type ImmersiveEncounterScenePhase = "idle" | "complete" | "resolved";
+
+export interface ImmersiveEncounterVisualIdentity extends ExploreVisualIdentity {
+    sceneIds: Record<ImmersiveEncounterScenePhase, string>;
+}
 
 export interface ImmersiveEncounterCopyContext {
     phase: ExploreEncounterProblemPhase;
@@ -22,6 +27,7 @@ export interface ImmersiveEncounterDefinition {
         completeSrc: string;
         resolvedSrc: string;
     };
+    visualIdentity?: ImmersiveEncounterVisualIdentity;
     problem: {
         titleId: string;
         kicker: string;
@@ -81,12 +87,22 @@ const ImmersiveEncounterSceneArt: React.FC<ImmersiveEncounterSceneArtProps> = ({
     definition,
     phase,
 }) => {
+    const visualIdentity = definition.visualIdentity;
     const hasDistinctCompleteScene = definition.scene.completeSrc !== definition.scene.idleSrc;
     const hasDistinctResolvedScene = definition.scene.resolvedSrc !== definition.scene.idleSrc
         && definition.scene.resolvedSrc !== definition.scene.completeSrc;
 
     return (
-        <div className="explore-immersive-art" aria-hidden="true">
+        <div
+            className="explore-immersive-art"
+            data-visual-lineage-id={visualIdentity?.lineageId}
+            data-visual-candidate-id={visualIdentity?.candidateId}
+            data-visual-mode={visualIdentity?.mode}
+            data-visual-surface-id={visualIdentity?.surfaceId}
+            data-visual-scene-id={visualIdentity?.sceneIds[phase]}
+            data-camera-key={visualIdentity?.cameraKey}
+            aria-hidden="true"
+        >
             <img
                 src={definition.scene.idleSrc}
                 alt=""
@@ -141,6 +157,8 @@ export const ImmersiveEncounter: React.FC<ImmersiveEncounterProps> = ({
         && Boolean(problem.questionVisual);
     const equationProblem = { ...problem, questionVisual: undefined };
     const complete = phase === "correct";
+    const scenePhase: ImmersiveEncounterScenePhase = complete ? "complete" : "idle";
+    const visualIdentity = definition.visualIdentity;
     const statusCopy = definition.problem.getStatusCopy({
         phase,
         attemptCount,
@@ -154,6 +172,12 @@ export const ImmersiveEncounter: React.FC<ImmersiveEncounterProps> = ({
             data-reduced-motion={reduceMotion || undefined}
             data-question-text={problem.questionText}
             data-skill-id={problem.categoryId}
+            data-visual-lineage-id={visualIdentity?.lineageId}
+            data-visual-candidate-id={visualIdentity?.candidateId}
+            data-visual-mode={visualIdentity?.mode}
+            data-visual-surface-id={visualIdentity?.surfaceId}
+            data-visual-scene-id={visualIdentity?.sceneIds[scenePhase]}
+            data-camera-key={visualIdentity?.cameraKey}
             aria-labelledby={definition.problem.titleId}
             animate={reduceMotion
                 ? undefined
@@ -163,14 +187,22 @@ export const ImmersiveEncounter: React.FC<ImmersiveEncounterProps> = ({
             transition={{ duration: 0.3, ease: "easeOut" }}
         >
             {sceneArt ? (
-                <div className="explore-immersive-art explore-immersive-art--layered">
+                <div
+                    className="explore-immersive-art explore-immersive-art--layered"
+                    data-visual-lineage-id={visualIdentity?.lineageId}
+                    data-visual-candidate-id={visualIdentity?.candidateId}
+                    data-visual-mode={visualIdentity?.mode}
+                    data-visual-surface-id={visualIdentity?.surfaceId}
+                    data-visual-scene-id={visualIdentity?.sceneIds[scenePhase]}
+                    data-camera-key={visualIdentity?.cameraKey}
+                >
                     {sceneArt}
                     <div className="explore-immersive-scrim" aria-hidden="true" />
                 </div>
             ) : (
                 <ImmersiveEncounterSceneArt
                     definition={definition}
-                    phase={complete ? "complete" : "idle"}
+                    phase={scenePhase}
                 />
             )}
 
@@ -289,17 +321,32 @@ export const ImmersiveEncounterCompletion: React.FC<ImmersiveEncounterCompletion
     sceneArt,
 }) => {
     const headingRef = useExploreStageFocus<HTMLHeadingElement>();
+    const visualIdentity = definition.visualIdentity;
 
     return (
         <section
             className="explore-immersive h-full min-h-0 overflow-hidden rounded-[28px]"
             data-state="complete"
+            data-visual-lineage-id={visualIdentity?.lineageId}
+            data-visual-candidate-id={visualIdentity?.candidateId}
+            data-visual-mode={visualIdentity?.mode}
+            data-visual-surface-id={visualIdentity?.surfaceId}
+            data-visual-scene-id={visualIdentity?.sceneIds.resolved}
+            data-camera-key={visualIdentity?.cameraKey}
             role="status"
             aria-live="polite"
             aria-labelledby={definition.completion.titleId}
         >
             {sceneArt ? (
-                <div className="explore-immersive-art explore-immersive-art--layered">
+                <div
+                    className="explore-immersive-art explore-immersive-art--layered"
+                    data-visual-lineage-id={visualIdentity?.lineageId}
+                    data-visual-candidate-id={visualIdentity?.candidateId}
+                    data-visual-mode={visualIdentity?.mode}
+                    data-visual-surface-id={visualIdentity?.surfaceId}
+                    data-visual-scene-id={visualIdentity?.sceneIds.resolved}
+                    data-camera-key={visualIdentity?.cameraKey}
+                >
                     {sceneArt}
                     <div className="explore-immersive-scrim" aria-hidden="true" />
                 </div>
@@ -327,23 +374,41 @@ export const ImmersiveEncounterCompletion: React.FC<ImmersiveEncounterCompletion
 export const ImmersiveEncounterLoading: React.FC<ImmersiveEncounterLoadingProps> = ({
     definition,
     sceneArt,
-}) => (
-    <section
-        className="explore-immersive h-full min-h-0 overflow-hidden rounded-[28px]"
-        role="status"
-        aria-live="polite"
-    >
-        {sceneArt ? (
-            <div className="explore-immersive-art explore-immersive-art--layered">
-                {sceneArt}
-                <div className="explore-immersive-scrim" aria-hidden="true" />
+}) => {
+    const visualIdentity = definition.visualIdentity;
+
+    return (
+        <section
+            className="explore-immersive h-full min-h-0 overflow-hidden rounded-[28px]"
+            data-visual-lineage-id={visualIdentity?.lineageId}
+            data-visual-candidate-id={visualIdentity?.candidateId}
+            data-visual-mode={visualIdentity?.mode}
+            data-visual-surface-id={visualIdentity?.surfaceId}
+            data-visual-scene-id={visualIdentity?.sceneIds.idle}
+            data-camera-key={visualIdentity?.cameraKey}
+            role="status"
+            aria-live="polite"
+        >
+            {sceneArt ? (
+                <div
+                    className="explore-immersive-art explore-immersive-art--layered"
+                    data-visual-lineage-id={visualIdentity?.lineageId}
+                    data-visual-candidate-id={visualIdentity?.candidateId}
+                    data-visual-mode={visualIdentity?.mode}
+                    data-visual-surface-id={visualIdentity?.surfaceId}
+                    data-visual-scene-id={visualIdentity?.sceneIds.idle}
+                    data-camera-key={visualIdentity?.cameraKey}
+                >
+                    {sceneArt}
+                    <div className="explore-immersive-scrim" aria-hidden="true" />
+                </div>
+            ) : (
+                <ImmersiveEncounterSceneArt definition={definition} phase="idle" />
+            )}
+            <div className="explore-immersive-loading-card">
+                <Sparkles className="h-5 w-5" aria-hidden="true" />
+                <span>{definition.loadingCopy}</span>
             </div>
-        ) : (
-            <ImmersiveEncounterSceneArt definition={definition} phase="idle" />
-        )}
-        <div className="explore-immersive-loading-card">
-            <Sparkles className="h-5 w-5" aria-hidden="true" />
-            <span>{definition.loadingCopy}</span>
-        </div>
-    </section>
-);
+        </section>
+    );
+};

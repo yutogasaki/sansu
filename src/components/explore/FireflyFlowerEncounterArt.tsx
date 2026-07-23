@@ -107,15 +107,15 @@ const getAccessibleDescription = (stage: FireflyFlowerArtStage, hasCompanion: bo
     const subjectDescription = STAGE_DESCRIPTIONS[stage];
     if (!hasCompanion) return subjectDescription;
     if (stage === "ringing-petals") {
-        return `${subjectDescription} 相棒は足を広げ、左右のリボン触角で音を聞いている。`;
+        return `${subjectDescription} 葉帽子のポッコは足を広げ、花びらの音へ耳をすませている。`;
     }
     if (stage === "warm-bud") {
-        return `${subjectDescription} 相棒はしずくの列を指でたどっている。`;
+        return `${subjectDescription} 葉帽子のポッコはしずくの列を指でたどっている。`;
     }
     if (stage === "dew-trail") {
-        return `${subjectDescription} 相棒は身を乗り出し、列の先を見ている。`;
+        return `${subjectDescription} 葉帽子のポッコは身を乗り出し、列の先を見ている。`;
     }
-    return `${subjectDescription} 相棒が少し離れて様子を見ている。`;
+    return `${subjectDescription} 葉帽子のポッコが少し離れて様子を見ている。`;
 };
 
 /**
@@ -153,6 +153,9 @@ export const FireflyFlowerEncounterArt = ({
             aria-hidden={decorative || undefined}
             focusable="false"
             data-camera-key="firefly-flower-side-v1"
+            data-visual-lineage-id="pokko-field-v1"
+            data-visual-candidate-id="firefly-live-pokko-v1"
+            data-visual-mode="world-live"
             data-stage={stage}
             data-clue-count={clueCount}
             data-light-path={showRingingPetals ? "setup" : "hidden"}

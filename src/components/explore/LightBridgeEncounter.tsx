@@ -1,5 +1,4 @@
 import React from "react";
-import { useReducedMotion } from "framer-motion";
 import {
     ImmersiveEncounter,
     ImmersiveEncounterCompletion,
@@ -7,13 +6,24 @@ import {
     type ImmersiveEncounterDefinition,
     type ImmersiveEncounterProps,
 } from "./ImmersiveEncounter";
-import { AuthoredEncounterArt } from "./AuthoredEncounterArt";
 
 const LIGHT_BRIDGE_DEFINITION: ImmersiveEncounterDefinition = {
     scene: {
-        idleSrc: "/assets/explore/light-bridge/scene-idle-flow-v3.webp",
-        completeSrc: "/assets/explore/light-bridge/scene-complete-flow-v3.webp",
-        resolvedSrc: "/assets/explore/light-bridge/scene-crossed-flow-v3.webp",
+        idleSrc: "/assets/explore/light-bridge/scene-idle-pokko-v4.jpg",
+        completeSrc: "/assets/explore/light-bridge/scene-complete-pokko-v4.jpg",
+        resolvedSrc: "/assets/explore/light-bridge/scene-crossed-pokko-v4.jpg",
+    },
+    visualIdentity: {
+        lineageId: "pokko-field-v1",
+        candidateId: "pokko-painted-encounters-v4",
+        mode: "world-painted",
+        surfaceId: "explore-encounter-light-bridge",
+        cameraKey: "light-bridge-camera-v1",
+        sceneIds: {
+            idle: "light-bridge-idle",
+            complete: "light-bridge-complete",
+            resolved: "light-bridge-crossed",
+        },
     },
     problem: {
         titleId: "explore-problem-title",
@@ -52,58 +62,23 @@ const LIGHT_BRIDGE_DEFINITION: ImmersiveEncounterDefinition = {
 type LightBridgeEncounterProps = Omit<ImmersiveEncounterProps, "definition">;
 
 export const LightBridgeEncounter: React.FC<LightBridgeEncounterProps> = (props) => {
-    const reduceMotion = useReducedMotion();
     return (
         <ImmersiveEncounter
             definition={LIGHT_BRIDGE_DEFINITION}
             {...props}
-            sceneArt={(
-                <AuthoredEncounterArt
-                    kind="light-bridge"
-                    stage={props.phase === "correct"
-                        ? "correct"
-                        : props.phase === "incorrect" ? "incorrect" : "idle"}
-                    reducedMotion={Boolean(reduceMotion)}
-                    className="explore-immersive-authored-art"
-                />
-            )}
         />
     );
 };
 
 interface LightBridgeCompletionProps { combo: number }
 
-export const LightBridgeCompletion: React.FC<LightBridgeCompletionProps> = ({ combo }) => {
-    const reduceMotion = useReducedMotion();
-    return (
-        <ImmersiveEncounterCompletion
-            definition={LIGHT_BRIDGE_DEFINITION}
-            combo={combo}
-            sceneArt={(
-                <AuthoredEncounterArt
-                    kind="light-bridge"
-                    stage="resolved"
-                    reducedMotion={Boolean(reduceMotion)}
-                    className="explore-immersive-authored-art"
-                />
-            )}
-        />
-    );
-};
+export const LightBridgeCompletion: React.FC<LightBridgeCompletionProps> = ({ combo }) => (
+    <ImmersiveEncounterCompletion
+        definition={LIGHT_BRIDGE_DEFINITION}
+        combo={combo}
+    />
+);
 
-export const LightBridgeLoading: React.FC = () => {
-    const reduceMotion = useReducedMotion();
-    return (
-        <ImmersiveEncounterLoading
-            definition={LIGHT_BRIDGE_DEFINITION}
-            sceneArt={(
-                <AuthoredEncounterArt
-                    kind="light-bridge"
-                    stage="idle"
-                    reducedMotion={Boolean(reduceMotion)}
-                    className="explore-immersive-authored-art"
-                />
-            )}
-        />
-    );
-};
+export const LightBridgeLoading: React.FC = () => (
+    <ImmersiveEncounterLoading definition={LIGHT_BRIDGE_DEFINITION} />
+);

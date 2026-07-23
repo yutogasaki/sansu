@@ -46,6 +46,7 @@ import {
     getDiscoveryPageDefinition,
     getDiscoveryPageProgress,
     getExploreEncounterDefinition,
+    getExploreObservationDefinition,
     getExploreOpeningExperience,
     getExploreLearningSegmentKey,
     getAvailableExploreNodes,
@@ -63,6 +64,7 @@ import {
     RAPID_LOOP_AUTO_BRIDGE_PLAN,
     settleRapidLoopPrefetchWithin,
     selectExploreEncounterPhase,
+    selectExploreObservation,
     selectExploreDiscoveryPresentation,
     selectDeterministicRapidLoopNodeId,
     saveExploreRunCheckpointFromUi,
@@ -72,8 +74,8 @@ import {
     type CommitExploreAttemptInput,
     type DiscoveryInstance,
     type ExploreBridgePlan,
-    type ExploreEncounterId,
     type ExploreAttemptCommitReceipt,
+    type CommittedExploreWorldReactionIdentity,
     type ExploreActiveCheckpoint,
     type ExploreLearningAssignment,
     type FinishExploreRunInput,
@@ -191,12 +193,10 @@ interface RapidLoopTransition {
     controller: AbortController;
 }
 
-interface ExploreWorldReaction {
+interface ExploreWorldReaction extends CommittedExploreWorldReactionIdentity {
     fromNodeId: string;
-    nodeId: string;
     actionType: "dig" | "bridge";
     bridgePlan?: ExploreBridgePlan;
-    encounterId?: ExploreEncounterId;
 }
 
 const createFreshRun = () => createInitialExploreState(getExploreRunE2EOptions());
@@ -779,9 +779,6 @@ export const Explore: React.FC = () => {
     })), [availableNodeIds, openedNodeIds, state.currentNodeId, state.edges]);
 
     const pendingGate = state.pendingProblem;
-    const pendingNode = pendingGate
-        ? state.nodes.find((node) => node.id === pendingGate.nodeId)
-        : undefined;
     const activeAttemptTarget = useMemo(() => {
         if (!profile || state.profileId !== profile.id || !pendingGate?.problem) return undefined;
         return createExploreAttemptRecordingTarget({
@@ -1174,6 +1171,11 @@ export const Explore: React.FC = () => {
                     actionType: gate.actionType,
                     bridgePlan: gate.bridgePlan,
                     encounterId: gate.encounterId,
+                    attemptKey: receipt.attemptKey,
+                    gateId: receipt.identity.gateId,
+                    attemptNumber: receipt.identity.attemptNumber,
+                    recordedSkillId: receipt.recordedSkillId,
+                    result: "correct",
                 });
                 setFeedback("correct");
                 playSound("correct");
@@ -1677,6 +1679,12 @@ export const Explore: React.FC = () => {
     const activeResearchProgress = useMemo(() => (
         getDiscoveryPageProgress(activeResearchDefinition, activeResearchFeatureIds)
     ), [activeResearchDefinition, activeResearchFeatureIds]);
+    const revealedObservation = useMemo(() => selectExploreObservation({
+        state,
+        reaction: worldReaction,
+        revealedDiscoveryId: revealedDiscovery?.id,
+        getDefinition: getExploreObservationDefinition,
+    }), [revealedDiscovery?.id, state, worldReaction]);
     const researchReveal = useMemo(() => {
         if (!revealedDiscovery?.discoveryPageId || !revealedDiscovery.discoveryFeatureId) return undefined;
         const definition = getDiscoveryPageDefinition(revealedDiscovery.discoveryPageId);
@@ -1693,8 +1701,9 @@ export const Explore: React.FC = () => {
             definition,
             currentFeatureId,
             discoveredFeatureIds,
+            observation: revealedObservation,
         };
-    }, [revealedDiscovery, state.temporaryFinds]);
+    }, [revealedDiscovery, revealedObservation, state.temporaryFinds]);
     const confirmedResearchPage = useMemo(
         () => selectConfirmedResearchPage(state.confirmedFinds),
         [state.confirmedFinds],
@@ -1880,7 +1889,7 @@ export const Explore: React.FC = () => {
                                         />
                                     ) : (
                                         <ExploreActionResult
-                                            nodeTitle={actionNode.title}
+                                            nodeTitle="ほたる花の 道"
                                             nodeKind={actionNode.kind}
                                             combo={state.combo}
                                             researchPage={{
@@ -1984,9 +1993,7 @@ export const Explore: React.FC = () => {
                                                 <ExploreProblemPanel
                                                     problem={pendingGate.problem}
                                                     answer={answer}
-                                                    prompt={pendingNode?.kind === "bridge"
-                                                        ? "橋の しかけを うごかそう"
-                                                        : `${pendingNode?.title ?? "岩"}を ひらこう`}
+                                                    prompt="ほたる花の けはいを たしかめよう"
                                                     feedback={feedback}
                                                     attemptCount={pendingGate.attemptCount}
                                                     combo={state.combo}

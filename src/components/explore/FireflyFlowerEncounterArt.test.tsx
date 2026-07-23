@@ -42,7 +42,8 @@ describe("FireflyFlowerEncounterArt", () => {
 
         expect(markup).toContain('role="img"');
         expect(markup).toContain("五枚の長い花びらが鈴のように開き");
-        expect(markup).toContain("左右のリボン触角で音を聞いている");
+        expect(markup).toContain("葉帽子のポッコは足を広げ");
+        expect(markup).not.toContain("リボン触角");
         expect(markup).toContain('data-reduced-motion="true"');
         expect(markup).toContain('data-companion-pose="listen"');
     });

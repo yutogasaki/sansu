@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import {
     FIREFLY_FLOWER_DISCOVERY_PAGE,
     MAKIMODON_DISCOVERY_PAGE,
+    ROOT_TANGLE_OBSERVATION,
 } from "../../domain/explore";
 import {
     DiscoveryReveal,
@@ -86,5 +87,37 @@ describe("discovery reveal interaction contract", () => {
 
         expect(markup).toContain("ぜんぶ まきもどった");
         expect(markup).toContain("マキモドン");
+        expect(markup).toContain('data-visual-lineage-id="legacy-mixed-v0"');
+        expect(markup).toContain('data-visual-candidate-id="legacy-discovery-page-v0"');
+        expect(markup).not.toContain('data-visual-candidate-id="firefly-field-book-v1"');
+    });
+
+    it("shows the committed root observation in the same camera before the field book", () => {
+        const currentFeatureId = FIREFLY_FLOWER_DISCOVERY_PAGE.chain.bigDiscoveryFeatureId;
+        const markup = renderToStaticMarkup(React.createElement(DiscoveryReveal, {
+            discovery: {
+                name: "ほたる花の ひかり道",
+                kind: "flower" as const,
+                rarity: "rare" as const,
+                discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
+                discoveryFeatureId: currentFeatureId,
+            },
+            researchPage: {
+                definition: FIREFLY_FLOWER_DISCOVERY_PAGE,
+                currentFeatureId,
+                discoveredFeatureIds: FIREFLY_FLOWER_DISCOVERY_PAGE.chain.featureIds,
+                observation: ROOT_TANGLE_OBSERVATION,
+            },
+            onContinue: () => undefined,
+        }));
+
+        expect(markup).toContain('data-testid="explore-observation-scene"');
+        expect(markup).toContain('data-camera-key="root-tangle-camera-v1"');
+        expect(markup).toContain('data-visual-mode="observation"');
+        expect(markup).toContain('data-visual-candidate-id="firefly-field-book-v1"');
+        expect(markup).toContain('data-visual-mode="field-book"');
+        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg");
+        expect(markup).toContain(ROOT_TANGLE_OBSERVATION.copy.action);
+        expect(markup).toContain(ROOT_TANGLE_OBSERVATION.copy.reaction);
     });
 });

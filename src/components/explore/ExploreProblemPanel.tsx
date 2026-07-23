@@ -4,6 +4,7 @@ import type { Problem } from "../../domain/types";
 import {
     ImmersiveEncounter,
     type ImmersiveEncounterDefinition,
+    type ImmersiveEncounterVisualIdentity,
 } from "./ImmersiveEncounter";
 import type { ExploreGlyphKind } from "./ExploreGlyph";
 import { FireflyFlowerEncounterArt } from "./FireflyFlowerEncounterArt";
@@ -94,12 +95,64 @@ export const ExploreProblemPanel: React.FC<ExploreProblemPanelProps> = ({
     const snapRootStateLabel = getSnapRootStateLabel(snapRootStage);
     const rapidTrailStage = getRapidTrailArtStage(completedSteps, feedback);
     const rapidTrailStateLabel = getRapidTrailStateLabel(rapidTrailStage);
+    const visualIdentity: ImmersiveEncounterVisualIdentity = isSnapRoot
+        ? {
+            lineageId: "pokko-field-v1",
+            candidateId: "dig-pop-painted-v2",
+            mode: "world-painted",
+            surfaceId: "explore-opening-snap-root",
+            cameraKey: "opening-snap-root-side-v1",
+            sceneIds: {
+                idle: `snap-root-${snapRootStage}`,
+                complete: `snap-root-${snapRootStage}`,
+                resolved: `snap-root-${snapRootStage}`,
+            },
+        }
+        : isRootPull
+            ? {
+                lineageId: "legacy-mixed-v0",
+                candidateId: `root-pull-${rootPullAssetSet}`,
+                mode: "legacy",
+                surfaceId: "explore-opening-root-pull",
+                cameraKey: "opening-root-pull-side-v1",
+                sceneIds: {
+                    idle: `root-pull-${rootPullStage}`,
+                    complete: `root-pull-${rootPullStage}`,
+                    resolved: `root-pull-${rootPullStage}`,
+                },
+            }
+            : isMakimodon
+                ? {
+                    lineageId: "legacy-mixed-v0",
+                    candidateId: "makimodon-live-v0",
+                    mode: "legacy",
+                    surfaceId: "explore-opening-makimodon",
+                    cameraKey: "makimodon-side-v1",
+                    sceneIds: {
+                        idle: `makimodon-${makimodonStage}`,
+                        complete: `makimodon-${makimodonStage}`,
+                        resolved: `makimodon-${makimodonStage}`,
+                    },
+                }
+                : {
+                    lineageId: "pokko-field-v1",
+                    candidateId: "firefly-live-pokko-v1",
+                    mode: "world-live",
+                    surfaceId: "explore-ordinary-firefly",
+                    cameraKey: "firefly-flower-side-v1",
+                    sceneIds: {
+                        idle: `firefly-${rapidTrailStage}`,
+                        complete: `firefly-${rapidTrailStage}`,
+                        resolved: `firefly-${rapidTrailStage}`,
+                    },
+                };
     const definition: ImmersiveEncounterDefinition = {
         scene: {
             idleSrc: "",
             completeSrc: "",
             resolvedSrc: "",
         },
+        visualIdentity,
         problem: {
             titleId: "explore-problem-title",
             kicker: isSnapRoot

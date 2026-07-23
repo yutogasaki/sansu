@@ -39,7 +39,12 @@ export const ExplorePathChoice: React.FC<ExplorePathChoiceProps> = ({
     const isInvalidDeadEnd = mode === "invalid-dead-end";
 
     return (
-        <section className="explore-field-sheet explore-path-choice flex h-full min-h-0 flex-col overflow-y-auto rounded-[24px] px-3.5 pb-3.5 pt-3 sm:px-5 sm:pb-5">
+        <section
+            className="explore-field-sheet explore-path-choice flex h-full min-h-0 flex-col overflow-y-auto rounded-[24px] px-3.5 pb-3.5 pt-3 sm:px-5 sm:pb-5"
+            data-visual-lineage-id="pokko-field-v1"
+            data-visual-candidate-id={isRunEnd ? "pokko-carry-home-v1" : "pokko-route-map-v1"}
+            data-visual-mode={isRunEnd ? "field-book" : "route-map"}
+        >
 
         <div className="flex items-start gap-3">
             <span className="explore-path-choice-mark flex h-10 w-10 shrink-0 -rotate-3 items-center justify-center rounded-[13px] text-[var(--explore-ink)]" aria-hidden="true">

@@ -2,19 +2,24 @@ import React, { useEffect, useMemo, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, BookOpen, Sparkles, Stamp } from "lucide-react";
 import {
+    FIREFLY_FLOWER_DISCOVERY_PAGE,
     getDiscoveryPageClueFeatureIds,
     getDiscoveryPageFeature,
     getDiscoveryPageProgress,
     isDiscoveryPageBigDiscovery,
     type DiscoveryPageDefinition,
     type DiscoveryPageFeatureId,
+    type ExploreObservationDefinition,
+    type ExploreVisualIdentity,
 } from "../../domain/explore";
+import { cn } from "../../utils/cn";
 import { DiscoveryPageArt } from "./DiscoveryPageArt";
 
 export interface DiscoveryResearchRevealItem {
     definition: DiscoveryPageDefinition;
     currentFeatureId: DiscoveryPageFeatureId;
     discoveredFeatureIds: readonly DiscoveryPageFeatureId[];
+    observation?: ExploreObservationDefinition;
 }
 
 interface DiscoveryResearchRevealProps extends DiscoveryResearchRevealItem {
@@ -26,6 +31,7 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
     definition,
     currentFeatureId,
     discoveredFeatureIds,
+    observation,
     forceBlocking = false,
     onContinue,
 }) => {
@@ -45,6 +51,20 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
     const slotGridStyle = {
         gridTemplateColumns: `repeat(${Math.max(1, Math.min(clueFeatureIds.length, 3))}, minmax(0, 1fr))`,
     };
+    const fieldBookIdentity: ExploreVisualIdentity = definition.id === FIREFLY_FLOWER_DISCOVERY_PAGE.id
+        ? {
+            lineageId: "pokko-field-v1",
+            candidateId: "firefly-field-book-v1",
+            mode: "field-book",
+            surfaceId: "explore-field-book-firefly",
+        }
+        : {
+            lineageId: "legacy-mixed-v0",
+            candidateId: "legacy-discovery-page-v0",
+            mode: "legacy",
+            surfaceId: "explore-field-book-legacy",
+        };
+    const revealIdentity = observation?.visual ?? fieldBookIdentity;
 
     useEffect(() => {
         if (!currentFeature || !isBlockingReveal) return;
@@ -84,6 +104,10 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
             >
                 <motion.section
                     className="explore-research-slip relative grid grid-cols-[72px_minmax(0,1fr)] items-center gap-3 overflow-hidden rounded-[22px] p-3 shadow-xl backdrop-blur-md"
+                    data-visual-lineage-id={fieldBookIdentity.lineageId}
+                    data-visual-candidate-id={fieldBookIdentity.candidateId}
+                    data-visual-mode={fieldBookIdentity.mode}
+                    data-visual-surface-id={fieldBookIdentity.surfaceId}
                     initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 34, scale: 0.92 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 48, y: -10, scale: 0.86 }}
@@ -116,6 +140,11 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
     return (
         <div
             className="explore-research-overlay absolute inset-0 z-50 overflow-y-auto"
+            data-visual-lineage-id={revealIdentity.lineageId}
+            data-visual-candidate-id={revealIdentity.candidateId}
+            data-visual-mode={revealIdentity.mode}
+            data-visual-surface-id={revealIdentity.surfaceId}
+            data-camera-key={observation?.camera.key}
             role="dialog"
             aria-modal="true"
             aria-labelledby="research-big-discovery-title"
@@ -135,14 +164,57 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
                         </span>
                     </div>
 
-                    <div className="explore-paper-diorama relative mx-auto mt-3 aspect-[16/9] max-h-[38dvh] w-full max-w-2xl overflow-hidden rounded-[30px] sm:rounded-[38px]" aria-hidden="true">
-                        <DiscoveryPageArt
-                            definition={definition}
-                            discoveredFeatureIds={discoveredFeatureIds}
-                        />
+                    <div
+                        className={cn(
+                            "explore-paper-diorama relative mx-auto mt-3 w-full max-w-2xl overflow-hidden rounded-[30px] sm:rounded-[38px]",
+                            observation ? "aspect-[4/5] max-h-[52dvh]" : "aspect-[16/9] max-h-[38dvh]",
+                        )}
+                        data-visual-lineage-id={revealIdentity.lineageId}
+                        data-visual-candidate-id={revealIdentity.candidateId}
+                        data-visual-mode={revealIdentity.mode}
+                        data-visual-surface-id={revealIdentity.surfaceId}
+                        data-camera-key={observation?.camera.key}
+                        aria-hidden="true"
+                    >
+                        {observation ? (
+                            <img
+                                src={observation.visual.sceneSrc}
+                                alt=""
+                                decoding="async"
+                                className="h-full w-full object-cover"
+                                style={{ objectPosition: observation.camera.objectPosition }}
+                                data-testid="explore-observation-scene"
+                            />
+                        ) : (
+                            <DiscoveryPageArt
+                                definition={definition}
+                                discoveredFeatureIds={discoveredFeatureIds}
+                            />
+                        )}
                     </div>
 
-                    <div className="explore-research-book relative mx-auto -mt-4 max-w-2xl rounded-[28px] px-4 pb-4 pt-6 text-center sm:px-7 sm:pb-6">
+                    {observation ? (
+                        <div
+                            className="relative mx-auto -mt-3 max-w-xl rounded-[22px] border-2 border-[#173f49] bg-[#fff4ce] px-4 py-3 text-left shadow-lg"
+                            data-testid="explore-observation-copy"
+                        >
+                            <p className="text-[10px] font-black tracking-[0.12em] text-[#b43f35]">{observation.copy.kicker}</p>
+                            <p className="mt-1 text-base font-black leading-5 text-[#173f49]">{observation.copy.title}</p>
+                            <p className="mt-1 text-xs font-bold leading-5 text-[#315d5f]">
+                                {observation.copy.action}。{observation.copy.reaction}。
+                            </p>
+                        </div>
+                    ) : null}
+
+                    <div className={cn(
+                        "explore-research-book relative mx-auto max-w-2xl rounded-[28px] px-4 pb-4 pt-6 text-center sm:px-7 sm:pb-6",
+                        observation ? "mt-3" : "-mt-4",
+                    )}
+                        data-visual-lineage-id={fieldBookIdentity.lineageId}
+                        data-visual-candidate-id={fieldBookIdentity.candidateId}
+                        data-visual-mode={fieldBookIdentity.mode}
+                        data-visual-surface-id={fieldBookIdentity.surfaceId}
+                    >
                         <span className="absolute left-1/2 top-0 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[#173f49] bg-[#f4c64f] text-[#173f49]" aria-hidden="true">
                             <BookOpen className="h-4 w-4" />
                         </span>

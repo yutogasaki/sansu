@@ -23,3 +23,4 @@ export * from "./replay";
 export * from "./reducer";
 export * from "./rewards";
 export * from "./types";
+export * from "./visualIdentity";

@@ -215,6 +215,9 @@ cold-openは、productionの通常起動面、探検基地、図鑑、production
 - 390×844と768×1024のcrop、keyboard、touch、sound off、reduced motion、ARIA、個別・総asset容量、PWA precache、required regressionをすべて通す
 - 実際にユーザーが開くapp targetについて、build revision、delivery / feature flag、DOM上のvisual candidate ID、cold-cacheまたはPWA update後のassetを同じ証跡へ記録する。source、prompt、local mock、別buildのcaptureでは代用しない
 - 起動からcold-open、次の意味ある遷移先までを同一端末・同一buildでcontact sheet化し、REJECT / HOLD / legacy candidateや無関係な画風の混在を0件にする。意図した世界 / 観察 / 保存mode差はcandidate IDと素材契約で説明できること
+- critical-path contact sheetは少なくとも390×844と768×1024の `cold launch / ready / dig-one / dig-two / popped / 道選択 / Q4通常問題 / 大遭遇idle / 大遭遇correct / Q7直前 / Q7 same-camera payoff / 図鑑 / Q8 / 帰還 / 再出発 / 基地` を、actual app target・同一build revision・同一deliveryで収録する。各captureには `pokko-field-v1`、surface candidate、visual mode、cache状態を機械可読manifestへ併記する
+- 通常のsmoke testはversion管理された監査画像を上書きしない。監査captureは明示的なvisual-audit modeでだけ生成し、manifestのbuild revisionと画像群が一致しない証跡をrelease判定へ使わない
+- app rootのbuild revision / delivery IDと各critical surfaceのlineage / candidate / modeが欠ける、同じrunに白い長耳・cream cat・リボン触角の洋梨型・旧マキモドンが現れる、またはQ7の観察対象と絵が一致しない場合、Gate CをFAILとする
 
 固定10問比較は `npm run benchmark:fixed-ten` で実施する。fixture `cold-open-fixed-ten-v1` の順序は `1+1, 2+3, 4+2, 5+3, 7+1, 8+2, 9+3, 6+2, 3+3, 9+1` とし、390×844、reduced motion、sound off、physical keyboard、asset warm済みでlane順を反復ごとに交互化する。Studyは現行高速回答面の非記録proxy、Exploreは8回答の実run、実帰還、実summary / replay、別runの2回答で構成し、productionの1ランを10行動へ延長しない。
 

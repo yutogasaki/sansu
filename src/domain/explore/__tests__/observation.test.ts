@@ -32,6 +32,13 @@ describe("exploration observation catalog", () => {
     it("keeps root-specific semantics behind stable generic lookups", () => {
         expect(getExploreObservationForEncounter("root-tangle")).toBe(ROOT_TANGLE_OBSERVATION);
         expect(getExploreObservationDefinition(ROOT_TANGLE_OBSERVATION.id)).toBe(ROOT_TANGLE_OBSERVATION);
+        expect(ROOT_TANGLE_OBSERVATION.visual).toEqual(expect.objectContaining({
+            lineageId: "pokko-field-v1",
+            candidateId: "root-tangle-observation-v1",
+            mode: "observation",
+            cameraKey: ROOT_TANGLE_OBSERVATION.camera.key,
+            sceneSrc: "/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg",
+        }));
         expect(getExploreObservationForEncounter("light-bridge")).toBeUndefined();
     });
 });

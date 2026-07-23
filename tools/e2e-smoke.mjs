@@ -10,12 +10,18 @@ const SCENARIO_TIMEOUT_MS = 60_000;
 const RAPID_LOOP_CI_BUDGET_MS = 1_500;
 const RAPID_LOOP_CORRECT_PRODUCT_BUDGET_MS = 650;
 const RAPID_LOOP_INCORRECT_PRODUCT_BUDGET_MS = 550;
+const WRITE_VISUAL_AUDIT = process.env.SANSU_WRITE_VISUAL_AUDIT === "1";
 let activeBaseUrl = `http://${HOST}:${PORT_CANDIDATES[0]}`;
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
+};
+
+const writeVisualAuditScreenshot = async (page, path) => {
+  if (!WRITE_VISUAL_AUDIT) return;
+  await page.screenshot({ path });
 };
 
 const buildBaseUrl = (port) => `http://${HOST}:${port}`;
@@ -732,9 +738,19 @@ const scenarioSnapRootBreakthrough = async (
 
   const world = page.locator(".explore-world");
   const art = page.locator(".snap-root-opening-art");
+  const appContainer = page.locator(".app-container");
   await art.waitFor({ timeout: STEP_TIMEOUT_MS });
   await page.locator('.snap-root-opening-art[data-asset-state="ready"]')
     .waitFor({ timeout: STEP_TIMEOUT_MS });
+  assert(Boolean(await appContainer.getAttribute("data-build-revision")), "runtime should expose its build revision");
+  const configuredDeliveryId = await appContainer.getAttribute("data-configured-delivery-id");
+  assert(Boolean(configuredDeliveryId), "runtime should expose its configured delivery ID");
+  assert(
+    await appContainer.getAttribute("data-visual-lineage-id") === (
+      configuredDeliveryId === "snap-root-v1" ? "pokko-field-v1" : "legacy-mixed-v0"
+    ),
+    "runtime lineage should describe its configured delivery instead of a URL override",
+  );
   assert(await world.getAttribute("data-opening-experience") === "snap-root-v1", "Snap Root URL should remain frozen for the run");
   assert(await art.getAttribute("data-delivery-id") === "snap-root-v1", "Snap Root should expose its delivery slot");
   assert(await art.getAttribute("data-visual-candidate-id") === "dig-pop-painted-v2", "Snap Root should expose the painted candidate");
@@ -771,7 +787,7 @@ const scenarioSnapRootBreakthrough = async (
   await assertSnapRootViewportFit(page, viewport);
 
   const runtimeAuditDir = "docs/design/breakout-loop-2026-07-21/runtime-painted-v2-audit";
-  await page.screenshot({ path: `${runtimeAuditDir}/${viewport.width}-ready.png` });
+  await writeVisualAuditScreenshot(page, `${runtimeAuditDir}/${viewport.width}-ready.png`);
 
   if (viewport.width === 390) {
     for (const digit of ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]) {
@@ -853,7 +869,7 @@ const scenarioSnapRootBreakthrough = async (
       assert(await art.getAttribute("data-subject-state") === expectedSubject, `Snap Root subject should visibly progress in ${expectedStage}`);
       assert(await art.getAttribute("data-action-state") === expectedAction, `Snap Root action should settle on ${expectedAction}`);
       assert(await art.getAttribute("data-contact-state") === "none", `Snap Root should keep bodies separate in ${expectedStage}`);
-      await page.screenshot({ path: `${runtimeAuditDir}/390-${expectedStage}.png` });
+      await writeVisualAuditScreenshot(page, `${runtimeAuditDir}/390-${expectedStage}.png`);
     }
 
     const finalAnswer = await getExploreNumericAnswer(page);
@@ -862,7 +878,7 @@ const scenarioSnapRootBreakthrough = async (
     await page.locator('.snap-root-opening-art[data-stage="popped"]')
       .waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
     await assertSnapRootPaintedResolution(page, viewport);
-    await page.screenshot({ path: `${runtimeAuditDir}/390-popped.png` });
+    await writeVisualAuditScreenshot(page, `${runtimeAuditDir}/390-popped.png`);
     await waitForExploreRouteBreak(page);
     assert(await page.getByRole("dialog").count() === 0, "Snap Root payoff should remain inline");
     console.log("Snap Root measured ms", {
@@ -889,7 +905,7 @@ const scenarioSnapRootBreakthrough = async (
       assert(await art.getAttribute("data-action-state") === expectedAction, `tablet Snap Root action should settle on ${expectedAction}`);
       assert(await art.getAttribute("data-contact-state") === "none", `tablet Snap Root should keep bodies separate in ${expectedStage}`);
       await assertSnapRootViewportFit(page, viewport);
-      await page.screenshot({ path: `${runtimeAuditDir}/${viewport.width}-${expectedStage}.png` });
+      await writeVisualAuditScreenshot(page, `${runtimeAuditDir}/${viewport.width}-${expectedStage}.png`);
     }
 
     const finalAnswer = await getExploreNumericAnswer(page);
@@ -899,7 +915,7 @@ const scenarioSnapRootBreakthrough = async (
       .waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
     await assertSnapRootViewportFit(page, viewport, { requireTappable: false });
     await assertSnapRootPaintedResolution(page, viewport);
-    await page.screenshot({ path: `${runtimeAuditDir}/${viewport.width}-popped.png` });
+    await writeVisualAuditScreenshot(page, `${runtimeAuditDir}/${viewport.width}-popped.png`);
     await waitForExploreRouteBreak(page);
     assert(await page.getByRole("dialog").count() === 0, "tablet Snap Root payoff should remain inline");
   }
@@ -1764,6 +1780,12 @@ const scenarioLightBridgeVerticalSlice = async (
     viewport,
   });
   const page = await context.newPage();
+  await page.addInitScript(() => {
+    window.__SANSU_E2E__ = {
+      ...(window.__SANSU_E2E__ || {}),
+      exploreRun: { seed: "light-bridge-vertical-slice", now: 1000 },
+    };
+  });
   await clearClientStorage(page);
 
   await completeOnboarding(page, /足し算まで/);
@@ -1772,13 +1794,16 @@ const scenarioLightBridgeVerticalSlice = async (
 
   const logsBefore = await countIndexedDbRows(page, "logs");
   await solveMakimodonOpening(page);
-  await chooseFirstExploreRoute(page);
+  // Seed the authored addition skills before the next immutable three-question
+  // segment is reserved. Pinning the run above keeps both viewports on the
+  // same encounter instead of making visual coverage depend on random run data.
   await seedDueMathSkills(page, [
     "add_1d_1_bridge",
     "add_1d_2_bridge",
     "add_2d1d_nc_bridge",
     "add_2d1d_c_bridge",
   ]);
+  await chooseFirstExploreRoute(page);
   await solveExploreAndWaitForNextProblem(page);
   assert(
     await page.locator(".explore-world").getAttribute("data-run-steps") === "4",
@@ -1791,11 +1816,18 @@ const scenarioLightBridgeVerticalSlice = async (
 
   const lightBridge = page.locator(".explore-immersive");
   await lightBridge.waitFor({ timeout: STEP_TIMEOUT_MS });
-  const lightBridgeArt = page.getByTestId("authored-light-bridge-art");
-  await lightBridgeArt.waitFor({ timeout: STEP_TIMEOUT_MS });
+  const lightBridgeIdentity = await lightBridge.evaluate((element) => ({
+    lineageId: element.getAttribute("data-visual-lineage-id"),
+    candidateId: element.getAttribute("data-visual-candidate-id"),
+    mode: element.getAttribute("data-visual-mode"),
+    sceneId: element.getAttribute("data-visual-scene-id"),
+  }));
   assert(
-    await lightBridgeArt.getAttribute("data-stage") === "idle",
-    "the authored light bridge should enter at its idle stage",
+    lightBridgeIdentity.lineageId === "pokko-field-v1"
+      && lightBridgeIdentity.candidateId === "pokko-painted-encounters-v4"
+      && lightBridgeIdentity.mode === "world-painted"
+      && lightBridgeIdentity.sceneId === "light-bridge-idle",
+    `the painted light bridge should enter with its Pokko idle identity; got ${JSON.stringify(lightBridgeIdentity)}`,
   );
   assert(
     (await page.getByTestId("explore-attempt").getAttribute("data-gate-id"))?.endsWith(":node-5-0"),
@@ -1843,8 +1875,8 @@ const scenarioLightBridgeVerticalSlice = async (
   await page.getByRole("button", { name: "こたえる" }).click();
   await page.getByText(/橋が ぽよん/).waitFor({ timeout: STEP_TIMEOUT_MS });
   assert(
-    await lightBridgeArt.getAttribute("data-stage") === "incorrect",
-    "the authored bridge should react to an incorrect answer",
+    await lightBridge.getAttribute("data-visual-scene-id") === "light-bridge-idle",
+    "an incorrect answer should keep the painted bridge physically disconnected",
   );
   assert(
     await page.getByRole("button", { name: "たんけんを おえて 基地へ帰る" }).isDisabled(),
@@ -1866,8 +1898,8 @@ const scenarioLightBridgeVerticalSlice = async (
   await solveExploreAddition(page);
   await page.getByText(/せいかい！ ひかりが ぱっと つながった/).waitFor({ timeout: STEP_TIMEOUT_MS });
   assert(
-    await lightBridgeArt.getAttribute("data-stage") === "correct",
-    "the authored bridge should reveal its connected state on a correct answer",
+    await lightBridge.getAttribute("data-visual-scene-id") === "light-bridge-complete",
+    "the painted bridge should reveal its connected plate on a correct answer",
   );
   await waitForNewExploreAttempt(page, bridgeAttemptKey);
   assert(
@@ -1973,12 +2005,15 @@ const scenarioRootTangleVerticalSlice = async (
   await rootEquation.waitFor({ timeout: STEP_TIMEOUT_MS });
   const rootStage = page.locator('.explore-immersive');
   await rootStage.waitFor({ timeout: STEP_TIMEOUT_MS });
-  const rootArt = page.getByTestId("authored-root-tangle-art");
-  await rootArt.waitFor({ timeout: STEP_TIMEOUT_MS });
   assert(
-    await rootArt.getAttribute("data-stage") === "idle",
-    "the authored root tangle should enter at its tangled idle stage",
+    await rootStage.getAttribute("data-visual-lineage-id") === "pokko-field-v1"
+      && await rootStage.getAttribute("data-visual-candidate-id") === "pokko-painted-encounters-v4"
+      && await rootStage.getAttribute("data-visual-mode") === "world-painted"
+      && await rootStage.getAttribute("data-visual-scene-id") === "root-tangle-tangled",
+    "the painted root tangle should enter with its Pokko tangled identity",
   );
+  const rootCameraKey = await rootStage.getAttribute("data-camera-key");
+  assert(rootCameraKey === "root-tangle-camera-v1", "root tangle should expose its locked camera");
   assert(
     await rootStage.locator(".explore-immersive-state").getByText("道が ぎゅうぎゅう").isVisible(),
     "root tangle should keep its current world state visible during a combo",
@@ -2027,8 +2062,8 @@ const scenarioRootTangleVerticalSlice = async (
   await page.getByRole("button", { name: "こたえる" }).click();
   await page.getByText(/根っこが くるん/).waitFor({ timeout: STEP_TIMEOUT_MS });
   assert(
-    await rootArt.getAttribute("data-stage") === "incorrect",
-    "the authored root tangle should react to an incorrect answer",
+    await rootStage.getAttribute("data-visual-scene-id") === "root-tangle-tangled",
+    "an incorrect answer should keep the painted roots physically tangled",
   );
   await waitForExploreEnergy(page, energyBeforeMiss - 1);
   const energyAfterMiss = Number(
@@ -2086,8 +2121,17 @@ const scenarioRootTangleVerticalSlice = async (
   await page.getByRole("button", { name: "こたえる" }).click();
   await page.getByText(/せいかい！ ねっこが ぱっと ほどけた/).waitFor({ timeout: STEP_TIMEOUT_MS });
   assert(
-    await rootArt.getAttribute("data-stage") === "correct",
-    "the authored root tangle should reveal its opened passage after a correct answer",
+    await rootStage.getAttribute("data-visual-scene-id") === "root-tangle-open",
+    "the painted root tangle should reveal its opened passage after a correct answer",
+  );
+  const observationScene = page.getByTestId("explore-observation-scene");
+  await observationScene.waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
+  const observationDiorama = observationScene.locator("xpath=parent::*");
+  assert(
+    await observationDiorama.getAttribute("data-visual-lineage-id") === "pokko-field-v1"
+      && await observationDiorama.getAttribute("data-visual-mode") === "observation"
+      && await observationDiorama.getAttribute("data-camera-key") === rootCameraKey,
+    "Q7 should carry the committed root observation into the same-camera payoff",
   );
   await closeBlockingResearchDiscovery(page, /大発見！.*ほたる花の ひかり道/, 3);
   await waitForNewExploreAttempt(page, rootAttemptKey);

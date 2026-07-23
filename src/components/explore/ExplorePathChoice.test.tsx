@@ -35,6 +35,8 @@ describe("ExplorePathChoice", () => {
         expect(markup).toContain("見つけたものを もちかえろう");
         expect(markup).toContain("もちかえり");
         expect(markup).toContain("基地へ もちかえる");
+        expect(markup).toContain('data-visual-candidate-id="pokko-carry-home-v1"');
+        expect(markup).toContain('data-visual-mode="field-book"');
         expect(markup).toContain('data-testid="explore-run-primary-return"');
         expect(markup).toContain('data-testid="explore-return-page-preview"');
         expect(markup).toContain("ほたる花の ひみつ");

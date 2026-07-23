@@ -19,7 +19,7 @@ Current-run screenshots are stored under `docs/design/audits/2026-07-23-whole-ap
 - Onboarding, Study, Records, Settings, and parent surfaces still use the older pastel glass language.
 - Study exposes `Layout Debugger` in ordinary development previews.
 
-Overall baseline: **HOLD**. Strong art in one flow cannot compensate for mixed visual lineage elsewhere.
+Overall baseline: **HOLD**. The latest whole-run audit found a painted leaf-hat Pokko in the cold-open, a ribbon-antenna pear in ordinary encounters, white or cream cat-like actors in research/return, and legacy Makimodon in the base. Strong art in one flow cannot compensate for mixed visual lineage elsewhere.
 
 ## Scope
 
@@ -32,6 +32,31 @@ Overall baseline: **HOLD**. Strong art in one flow cannot compensate for mixed v
 - [x] Keep the visually unintegrated legacy album out of child-facing Records while preserving its data.
 - [x] Re-capture the critical path at the same viewport and judge before/after together.
 - [x] Run release verification before publication.
+
+## G4 whole-flow lineage graph
+
+The prior checklist completed brand metadata and utility styling, but did not prove one game experience. G4 is therefore a separate dependency graph; a child node cannot be called complete only because its parent screen renders.
+
+| Node | Depends on | Deliverable | Status |
+|---|---|---|---|
+| G4-0 evidence contract | G3-3 | actual-target capture list, opt-in writes, non-compensating gates | Complete |
+| G4-1 runtime identity | G4-0 | build revision, delivery, `pokko-field-v1`, candidate and mode in DOM | Complete |
+| G4-2 canonical Pokko | G4-0 | one silhouette across painted, live, research and base modes | Complete (candidate) |
+| G4-3 major encounters | G4-2 | light bridge and root tangle use same-camera three-state painted scenes | Complete (candidate) |
+| G4-4 semantic Q7 | G4-2, G4-3 | world reaction provenance reaches same-camera payoff before the book | Complete (candidate) |
+| G4-5 return and base | G4-2, G4-4 | same Pokko and latest finding remain legible through replay/base | Complete (candidate) |
+| G4-6 critical-path audit | G4-1..G4-5 | 390/768 contact sheet from one build, mixed lineage 0, TenKey fit | In progress |
+| G5 blind value test | G4-6 | 4/5 same action/payoff, 4/5 want more, danger 0 | Pending |
+| G6 production promotion | G5 | cold-cache/PWA actual target evidence and explicit default switch | Pending |
+
+### G4 implementation checkpoint — 2026-07-23
+
+- Canonicalized the yellow seed-body / broad green leaf-hat Pokko across ordinary problems, research art, return, replay, and the base. The legacy component export remains only as an API adapter; its rendered silhouette and DOM character ID are Pokko.
+- Replaced the light bridge and root tangle with `pokko-painted-encounters-v4`, each using locked-camera idle / correct / crossed frames. Rejected smooth cinematic generations were not wired into production assets.
+- Carried committed attempt identity into the Q7 observation selector. A compatible root-tangle clear now keeps the crossed root scene and camera before the separate `firefly-field-book-v1` paper edit; an incompatible ordinary clear remains an ordinary field-book reveal.
+- Added build revision and delivery identity at the app root, surface lineage / candidate / mode identity at critical roots, and opt-in-only audit screenshot writes. Normal smoke runs no longer mutate versioned visual evidence.
+- Kept TenKey structure and answer cadence unchanged. `verify:core` passed 90 files / 826 tests, the full smoke path passed at phone and tablet sizes, asset budgets passed, and the three PWA update handoff scenarios passed.
+- Production remains **HOLD**. G4-6 still needs the same-build 390 / 768 critical-path contact sheet; G5 still needs the blind five-person value test, and G6 still needs actual delivery-target cold-cache / PWA evidence before changing the default.
 
 ## Non-goals
 
@@ -53,6 +78,9 @@ Overall baseline: **HOLD**. Strong art in one flow cannot compensate for mixed v
 5. `Layout Debugger` is absent unless `VITE_SHOW_LAYOUT_DEBUG=1`.
 6. Existing keypad and problem tempo remain unchanged.
 7. Release verification passes and current-run screenshot evidence is attached.
+8. Cold-open, ordinary problem, major encounter, Q7, field book, return, replay, and base all expose `pokko-field-v1` and show the same Pokko silhouette; legacy actors are absent.
+9. Q7 keeps the solved encounter and observation causally aligned before the field-book edit.
+10. A same-build 390/768 critical-path contact sheet passes visual appeal, silent comprehension/safety, and runtime integrity as separate gates. Until then production remains HOLD.
 
 ## Verification
 

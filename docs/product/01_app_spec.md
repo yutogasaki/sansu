@@ -167,6 +167,8 @@
 - ブランドの顔は、黄色い葉帽子・小さな目・スコップを持つ探検相棒とする。汎用的な本、芽、雲、宝石、巨大な光沢目を主アイコンにしない。
 - 色の骨格は、明るい空のシアン、土の黄土、根のコーラル、葉の緑、濃い青緑の輪郭、紙のクリームで全画面をつなぐ。
 - 探索問題は手触りのある絵本調、マップと基地は同じ役者・色・素材を簡略化した地図／切り紙調、記録・設定・保護者画面は同じ世界の「探検ノート」調とする。描画密度は変えてよいが、別作品のパステルガラスUIへ戻さない。
+- 起動から通常問題、大発見、帰還、再出発、探検基地までの現行visual lineageを `pokko-field-v1` とする。同じ黄色い豆型の身体、広い緑の葉帽子、小さな黒い手足、単純な顔をポッコの不変silhouetteとし、白い長耳、クリーム色の猫、リボン触角の洋梨型、旧マキモドンを同じrunへ混ぜない。visual modeは `world-painted / world-live / observation / field-book / archive / route-map / base-map / legacy` に正規化する。各critical surfaceはlineage ID、surface candidate ID、visual modeをDOMへ出し、差が意図した編集工程だと検証できること。
+- `dig-pop-painted-v2` はcold-open固有のsurface candidateであり、後続surfaceの承認を兼ねない。後続の大遭遇、Q7、帰還、基地はそれぞれ同一ポッコと直前の因果を保つ候補を持ち、actual app target・同一buildのcritical-path contact sheetで混在0件を確認するまでproduction defaultを変更しない。
 - 起動、オンボーディング、共通ナビ、通常学習、記録、設定のいずれから入っても、表示名、相棒、色、紙面、言葉の調子から同じアプリだと分かることを必須にする。
 - 通常学習と探索の問題入力は、視覚統合のために問題数、入力数、確認操作、待ち時間を増やさない。ブランド変更より既存の高速回答テンポを優先する。
 

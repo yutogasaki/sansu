@@ -1,5 +1,4 @@
 import React from "react";
-import { useReducedMotion } from "framer-motion";
 import {
     ImmersiveEncounter,
     ImmersiveEncounterCompletion,
@@ -7,18 +6,29 @@ import {
     type ImmersiveEncounterDefinition,
     type ImmersiveEncounterProps,
 } from "./ImmersiveEncounter";
-import { AuthoredEncounterArt } from "./AuthoredEncounterArt";
 
 const ROOT_TANGLE_DEFINITION: ImmersiveEncounterDefinition = {
     scene: {
-        idleSrc: "/assets/explore/root-tangle/scene-tangled-dense-v3.webp",
-        completeSrc: "/assets/explore/root-tangle/scene-open-dense-v3.webp",
-        resolvedSrc: "/assets/explore/root-tangle/scene-crossed-dense-v3.webp",
+        idleSrc: "/assets/explore/root-tangle/scene-tangled-pokko-v4.jpg",
+        completeSrc: "/assets/explore/root-tangle/scene-open-pokko-v4.jpg",
+        resolvedSrc: "/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg",
+    },
+    visualIdentity: {
+        lineageId: "pokko-field-v1",
+        candidateId: "pokko-painted-encounters-v4",
+        mode: "world-painted",
+        surfaceId: "explore-encounter-root-tangle",
+        cameraKey: "root-tangle-camera-v1",
+        sceneIds: {
+            idle: "root-tangle-tangled",
+            complete: "root-tangle-open",
+            resolved: "root-tangle-crossed",
+        },
     },
     problem: {
         titleId: "explore-problem-title",
-        kicker: "ねっこが 先にいっちゃった！",
-        title: "ひいて 道をひらこう",
+        kicker: "ねっこの からまり！",
+        title: "ひき算で 道をひらこう",
         incompleteState: "道が ぎゅうぎゅう",
         completeState: "ぱっと ほどけた！",
         equationTestId: "root-tangle-equation",
@@ -33,7 +43,7 @@ const ROOT_TANGLE_DEFINITION: ImmersiveEncounterDefinition = {
                         : "根っこが くるん。ひかりは そのままだよ"
                     : attemptCount > 0
                         ? "しきで のこりを見て、もういちど ためせるよ"
-                        : "いっちゃったぶんを ひいて、道をひらこう"
+                        : "のこりの数を見つけて、道をひらこう"
         ),
     },
     completion: {
@@ -52,58 +62,23 @@ const ROOT_TANGLE_DEFINITION: ImmersiveEncounterDefinition = {
 type RootTangleEncounterProps = Omit<ImmersiveEncounterProps, "definition">;
 
 export const RootTangleEncounter: React.FC<RootTangleEncounterProps> = (props) => {
-    const reduceMotion = useReducedMotion();
     return (
         <ImmersiveEncounter
             definition={ROOT_TANGLE_DEFINITION}
             {...props}
-            sceneArt={(
-                <AuthoredEncounterArt
-                    kind="root-tangle"
-                    stage={props.phase === "correct"
-                        ? "correct"
-                        : props.phase === "incorrect" ? "incorrect" : "idle"}
-                    reducedMotion={Boolean(reduceMotion)}
-                    className="explore-immersive-authored-art"
-                />
-            )}
         />
     );
 };
 
 interface RootTangleCompletionProps { combo: number }
 
-export const RootTangleCompletion: React.FC<RootTangleCompletionProps> = ({ combo }) => {
-    const reduceMotion = useReducedMotion();
-    return (
-        <ImmersiveEncounterCompletion
-            definition={ROOT_TANGLE_DEFINITION}
-            combo={combo}
-            sceneArt={(
-                <AuthoredEncounterArt
-                    kind="root-tangle"
-                    stage="resolved"
-                    reducedMotion={Boolean(reduceMotion)}
-                    className="explore-immersive-authored-art"
-                />
-            )}
-        />
-    );
-};
+export const RootTangleCompletion: React.FC<RootTangleCompletionProps> = ({ combo }) => (
+    <ImmersiveEncounterCompletion
+        definition={ROOT_TANGLE_DEFINITION}
+        combo={combo}
+    />
+);
 
-export const RootTangleLoading: React.FC = () => {
-    const reduceMotion = useReducedMotion();
-    return (
-        <ImmersiveEncounterLoading
-            definition={ROOT_TANGLE_DEFINITION}
-            sceneArt={(
-                <AuthoredEncounterArt
-                    kind="root-tangle"
-                    stage="idle"
-                    reducedMotion={Boolean(reduceMotion)}
-                    className="explore-immersive-authored-art"
-                />
-            )}
-        />
-    );
-};
+export const RootTangleLoading: React.FC = () => (
+    <ImmersiveEncounterLoading definition={ROOT_TANGLE_DEFINITION} />
+);

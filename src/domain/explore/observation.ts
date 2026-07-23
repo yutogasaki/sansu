@@ -4,6 +4,7 @@ import type {
     ExploreObservationId,
     ExploreRunState,
 } from "./types";
+import type { ExploreVisualIdentity } from "./visualIdentity";
 
 export interface ExploreObservationDefinition {
     readonly id: ExploreObservationId;
@@ -11,6 +12,9 @@ export interface ExploreObservationDefinition {
     readonly pageId: DiscoveryPageId;
     readonly featureId: DiscoveryPageFeatureId;
     readonly prerequisiteFeatureIds: readonly DiscoveryPageFeatureId[];
+    readonly visual: ExploreVisualIdentity & {
+        readonly sceneSrc: string;
+    };
     readonly camera: {
         readonly key: string;
         readonly objectPosition: string;

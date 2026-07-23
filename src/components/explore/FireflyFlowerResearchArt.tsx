@@ -4,6 +4,7 @@ import {
     type DiscoveryPageFeatureId,
 } from "../../domain/explore";
 import type { DiscoveryPageArtVariant } from "./DiscoveryPageArt";
+import { RibbonAntennaCompanion } from "./RibbonAntennaCompanion";
 
 export interface FireflyFlowerResearchArtProps {
     discoveredFeatureIds: readonly DiscoveryPageFeatureId[];
@@ -34,6 +35,9 @@ export const FireflyFlowerResearchArt: React.FC<FireflyFlowerResearchArtProps> =
             preserveAspectRatio={variant === "reveal" ? "xMidYMid meet" : "xMidYMid slice"}
             role="img"
             aria-label={`ほたる花の調査絵。${discoveredFeatureIds.length}件を発見`}
+            data-visual-lineage-id="pokko-field-v1"
+            data-visual-candidate-id="firefly-research-pokko-v1"
+            data-visual-mode="field-book"
         >
             <path d="M0 0H360V260H0Z" fill="var(--explore-turquoise)" />
             <path d="M0 0H360V34L318 28 296 57 255 47 229 76 188 58 150 73 119 48 77 59 53 27 0 36Z" fill="var(--explore-outline)" />
@@ -166,15 +170,12 @@ export const FireflyFlowerResearchArt: React.FC<FireflyFlowerResearchArtProps> =
                 </g>
             )}
 
-            <g transform="translate(250 188)">
-                <path d="M9 29C9 12 20 2 36 2C52 2 63 13 63 29C63 48 53 59 36 59C19 59 9 48 9 29Z" fill="var(--explore-parchment)" stroke="var(--explore-outline)" strokeWidth="5" />
-                <path d="M18 9L9 -3L27 4M53 9L63 -2L45 4" fill="var(--explore-parchment)" stroke="var(--explore-outline)" strokeWidth="5" strokeLinejoin="round" />
-                <circle cx="28" cy="28" r="3.5" fill="var(--explore-outline)" />
-                <circle cx="45" cy="28" r="3.5" fill="var(--explore-outline)" />
-                <path d={showLightPath ? "M30 38C34 46 41 46 45 38" : "M32 39C35 42 39 42 42 39"} fill="none" stroke="var(--explore-outline)" strokeWidth="3" strokeLinecap="round" />
-                {showLightPath ? (
-                    <path d="M13 38L1 27M59 38L70 25" fill="none" stroke="var(--explore-outline)" strokeWidth="5" strokeLinecap="round" />
-                ) : null}
+            <g
+                transform="translate(260 187) scale(0.43)"
+                data-layer="pokko-companion"
+                aria-hidden="true"
+            >
+                <RibbonAntennaCompanion pose={showLightPath ? "listen" : "ready"} />
             </g>
         </svg>
     );
