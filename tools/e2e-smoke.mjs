@@ -4885,10 +4885,17 @@ const runVisualAuditViewport = async (
       "the deployed visual-audit build must launch Snap Root without a development URL override",
     );
     const freshLaunchPersistence = await readExplorePersistenceSnapshot(page);
+    const freshRun = freshLaunchPersistence.runs[0];
+    const freshRunStartedEvent = freshLaunchPersistence.events[0];
     assert(
       freshLaunchPersistence.runs.length === 1
-        && freshLaunchPersistence.runs[0]?.status === "active"
-        && freshLaunchPersistence.events.length === 0,
+        && freshRun?.status === "active"
+        && freshRun.problemsAnswered === 0
+        && freshRun.correctCount === 0
+        && freshRun.incorrectCount === 0
+        && freshLaunchPersistence.events.length === 1
+        && freshRunStartedEvent?.type === "run_started"
+        && freshRunStartedEvent.runId === freshRun.runId,
       `cold fresh launch must create exactly one new unanswered run: ${JSON.stringify(freshLaunchPersistence)}`,
     );
     const coldLaunchCapture = await capture("cold-launch", opening, {
@@ -4901,8 +4908,8 @@ const runVisualAuditViewport = async (
     coldLaunchCapture.freshRunPersistence = {
       runCount: freshLaunchPersistence.runs.length,
       eventCount: freshLaunchPersistence.events.length,
-      runId: freshLaunchPersistence.runs[0].id,
-      status: freshLaunchPersistence.runs[0].status,
+      runId: freshRun.runId,
+      status: freshRun.status,
     };
     await page.locator('.snap-root-opening-art[data-asset-state="ready"]')
       .waitFor({ timeout: STEP_TIMEOUT_MS });
