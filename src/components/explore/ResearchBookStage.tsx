@@ -52,7 +52,7 @@ const getFireflyArchiveScene = (
             candidateId: researchPage.observation.visual.candidateId,
             cameraKey: researchPage.observation.camera.key,
             objectPosition: researchPage.observation.camera.objectPosition,
-            objectFit: "cover" as const,
+            objectFit: "contain" as const,
         };
     }
 

@@ -45,10 +45,11 @@ export const ReturnSummary: React.FC<ReturnSummaryProps> = ({
         ? getDiscoveryPageProgress(researchPage.definition, researchPage.discoveredFeatureIds)
         : undefined;
     const completedResearchFinding = researchProgress?.isComplete && researchPage
-        ? getDiscoveryPageFeature(
-            researchPage.definition,
-            researchPage.definition.chain.bigDiscoveryFeatureId,
-        )?.finding
+        ? researchPage.observation?.copy.finding
+            ?? getDiscoveryPageFeature(
+                researchPage.definition,
+                researchPage.definition.chain.bigDiscoveryFeatureId,
+            )?.finding
         : undefined;
     const storyLine = completedResearchFinding
         ? completedResearchFinding

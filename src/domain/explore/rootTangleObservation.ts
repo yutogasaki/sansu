@@ -11,26 +11,22 @@ export const ROOT_TANGLE_OBSERVATION = {
     prerequisiteFeatureIds: ROOT_TANGLE_PREREQUISITES,
     visual: {
         lineageId: "pokko-field-v1",
-        candidateId: "root-tangle-light-path-v2",
+        candidateId: "root-tangle-dew-path-v3",
         mode: "observation",
         surfaceId: "explore-observation-root-tangle",
-        cameraKey: "root-tangle-camera-v1",
-        sceneId: "root-tangle-crossed",
-        sceneSrc: "/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg",
+        cameraKey: "root-tangle-side-v3",
+        sceneId: "root-tangle-dew-gag",
+        sceneSrc: "/assets/explore/root-tangle/scene-crossed-dew-path-pokko-v6.jpg",
     },
     camera: {
-        key: "root-tangle-camera-v1",
-        // The compact observation frame is wider than the encounter's tall
-        // story window. 57.5% keeps the same source-space action, Pokko, and
-        // ground edge in view instead of merely copying the encounter's CSS
-        // percentage into a differently shaped box.
-        objectPosition: "50% 57.5%",
+        key: "root-tangle-side-v3",
+        objectPosition: "50% 50%",
     },
     copy: {
-        kicker: "ねっこが ほどけた！",
-        title: "花の ひかり道だ！",
-        action: "ひき算で、ねっこの むすびが ほどけた",
-        reaction: "ねっこの むこうで、花の光が 道になった",
-        finding: "花たちの光が つながって、道になった",
+        kicker: "ねっこが するん！",
+        title: "しずくの道が ひらいた！",
+        action: "ひき算で、ねっこの わっかが ほどけた",
+        reaction: "四つのしずくが走って、一滴が 葉帽子へ ぽとん",
+        finding: "ねっこが ほどけ、四つのしずくが 一本の道を走った",
     },
 } as const satisfies ExploreObservationDefinition;

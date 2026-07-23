@@ -1577,27 +1577,28 @@ body.app-mode-fullscreen .app-container {
         object-position: 50% 50%;
     }
 
-    /* The v5 encounter plates are authored as tall book pages. Reframe those
-       plates inside the rapid answer shelf so Pokko and the world action stay
-       visible above the opaque problem controls at every canonical width. */
-    @media (max-width: 599px) {
-        .explore-immersive[data-visual-candidate-id="pokko-painted-encounters-v5"] .explore-immersive-scene {
-            top: -32%;
-            bottom: auto;
-            height: 112%;
-            object-position: 50% 50%;
-        }
+    .explore-immersive:is(
+        [data-visual-candidate-id="light-bridge-dew-path-v3"],
+        [data-visual-candidate-id="root-tangle-dew-path-v3"]
+    ) .explore-immersive-art {
+        background: #2cbed3;
+    }
 
+    .explore-immersive:is(
+        [data-visual-candidate-id="light-bridge-dew-path-v3"],
+        [data-visual-candidate-id="root-tangle-dew-path-v3"]
+    ) .explore-immersive-scene {
+        top: 0;
+        bottom: auto;
+        height: 44%;
+        object-fit: contain;
+        object-position: 50% 0%;
     }
 
     @media (min-width: 600px) and (max-width: 1023px),
         (min-width: 1024px) and (orientation: portrait) {
         .explore-immersive {
             --explore-world-fade-start: 62.5%;
-        }
-
-        .explore-immersive[data-visual-candidate-id="pokko-painted-encounters-v5"] .explore-immersive-scene {
-            object-position: 50% 97%;
         }
 
         .explore-immersive .explore-immersive-scrim {
@@ -1968,6 +1969,16 @@ body.app-mode-fullscreen .app-container {
 
     .explore-run-grid[data-encounter] .explore-immersive-scene {
         object-position: 50% 68%;
+    }
+
+    .explore-run-grid[data-encounter] .explore-immersive:is(
+        [data-visual-candidate-id="light-bridge-dew-path-v3"],
+        [data-visual-candidate-id="root-tangle-dew-path-v3"]
+    ) .explore-immersive-scene {
+        top: 0;
+        height: 100%;
+        object-fit: contain;
+        object-position: 50% 50%;
     }
 
     .explore-run-grid[data-encounter] .explore-immersive-scrim {

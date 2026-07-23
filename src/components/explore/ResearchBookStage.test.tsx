@@ -39,10 +39,10 @@ describe("ResearchBookStage", () => {
             />,
         );
 
-        expect(markup).toContain('data-visual-candidate-id="root-tangle-light-path-v2"');
-        expect(markup).toContain('data-camera-key="root-tangle-camera-v1"');
-        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg");
-        expect(markup).toContain("object-fit:cover");
+        expect(markup).toContain('data-visual-candidate-id="root-tangle-dew-path-v3"');
+        expect(markup).toContain('data-camera-key="root-tangle-side-v3"');
+        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-dew-path-pokko-v6.jpg");
+        expect(markup).toContain("object-fit:contain");
     });
 
     it("keeps non-Firefly legacy pages on their registered archive renderer", () => {

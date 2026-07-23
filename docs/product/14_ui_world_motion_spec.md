@@ -194,10 +194,12 @@ delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行v
 - 全frameを16:9の横舞台とし、青緑の静かな大色面を55〜65%以上、詳細描写を35%以下、支配色相を青緑・黄土橙・葉緑の3族以内に保つ。全面粒子、映画的奥行き、金色発光、画面全体のvignetteを使わない
 - Q4〜Q7直前は、同じ一輪の花、同じポッコ、同じ四つのしずく、同じ一本の溝を `waiting / dew-trail / warm-bud / ringing-petals` で連続させる。別の花、別相棒、電飾、無関係な道を後段だけへ追加しない
 - `waiting` は乾いた一本の溝と閉じた一輪、`dew-trail` は先頭の一滴を押す一動作、`warm-bud` は半分まで進んだ四滴と開きかけのつぼみ、`ringing-petals` は花まで届いた四滴と五枚花を見せる
+- 専用遭遇も別世界へ切り替えない。葉橋は `light-bridge-dew-path-v3 / light-bridge-side-v3` で離れた二枚葉が一度だけ噛み合い、四滴が渡ってポッコが安全に尻もちをつく。root-tangleは `root-tangle-dew-path-v3 / root-tangle-side-v3` で一つの根の輪が四滴をせき止め、ほどけた後の一滴が葉帽子へ落ちる。どちらも同じ一輪、一人、四滴、一本の道、青緑・黄土橙・葉緑＋珊瑚accentを保持する
 - 中立Q7 finaleは三滴を一本の道へ残し、最後の一滴を葉帽子へ落としてポッコが安全に尻もちをつく。一つの因果と一つの身体オチへ絞り、進捗線、光線、粒子、別キャラクターで代替しない
 - root-tangleのcommit済み観察provenanceがある場合は、中立Q7 plateへ置換せず、解いたroot sceneとcameraを観察・帰還図鑑まで保持する。provenanceがない場合だけ汎用しずく道を使う
 - 2分岐と3分岐は同じ青緑空・黄土面・葉帽子の横舞台で、一本の溝が物理的に2本または3本へ分かれることを無文字で読ませる。旧密集林の分岐plateをthumbnailや大絵へ残さない
 - phoneでは横長plateを縦へcropせず、青緑の静かな余白の中へ全景をcontainする。390×844と768×1024の両方でポッコ、花、作用するしずく、TenKeyを同時に欠けなく表示する
+- 現行runtimeから外れた旧縦長 light-bridge v5、旧密集root-tangle v4/v5、旧flow/dense WebPは `public` とPWA precacheへ残さない。過去audit内の画像は履歴証拠であって現行candidateではない
 
 ## 5. 音
 

@@ -1,6 +1,10 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { MAKIMODON_DISCOVERY_PAGE } from "../../domain/explore";
+import {
+    FIREFLY_FLOWER_DISCOVERY_PAGE,
+    MAKIMODON_DISCOVERY_PAGE,
+    ROOT_TANGLE_OBSERVATION,
+} from "../../domain/explore";
 import { ReturnSummary } from "./ReturnSummary";
 
 describe("ReturnSummary", () => {
@@ -52,6 +56,27 @@ describe("ReturnSummary", () => {
         expect(markup).toContain("根っこの道に 出会えるかも");
         expect(markup.match(/ちがう道へ しゅっぱつ/g)).toHaveLength(1);
         expect(markup).not.toContain("もういちど たんけん");
+    });
+
+    it("keeps the committed observation finding in the return story", () => {
+        const markup = renderToStaticMarkup(
+            <ReturnSummary
+                status="returned"
+                finds={[]}
+                steps={8}
+                energy={1}
+                researchPage={{
+                    definition: FIREFLY_FLOWER_DISCOVERY_PAGE,
+                    discoveredFeatureIds: FIREFLY_FLOWER_DISCOVERY_PAGE.chain.featureIds,
+                    observation: ROOT_TANGLE_OBSERVATION,
+                }}
+                onRestart={() => undefined}
+                onExit={() => undefined}
+            />,
+        );
+
+        expect(markup).toContain(ROOT_TANGLE_OBSERVATION.copy.finding);
+        expect(markup).not.toContain("花たちの光が ひとすじの道になった");
     });
 
     it("does not claim the final light path for an incomplete page", () => {

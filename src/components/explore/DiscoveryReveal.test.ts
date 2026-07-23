@@ -143,11 +143,12 @@ describe("discovery reveal interaction contract", () => {
         }));
 
         expect(markup).toContain('data-testid="explore-observation-scene"');
-        expect(markup).toContain('data-camera-key="root-tangle-camera-v1"');
+        expect(markup).toContain('data-camera-key="root-tangle-side-v3"');
         expect(markup).toContain('data-visual-mode="observation"');
         expect(markup).toContain('data-visual-candidate-id="firefly-field-book-v1"');
         expect(markup).toContain('data-visual-mode="field-book"');
-        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg");
+        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-dew-path-pokko-v6.jpg");
+        expect(markup).toContain("object-contain");
         expect(markup).toContain(ROOT_TANGLE_OBSERVATION.copy.action);
         expect(markup).toContain(ROOT_TANGLE_OBSERVATION.copy.reaction);
     });

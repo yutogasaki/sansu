@@ -184,7 +184,7 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
                     <div
                         className={cn(
                             "explore-paper-diorama relative mx-auto mt-3 w-full max-w-2xl overflow-hidden rounded-[30px] sm:rounded-[38px]",
-                            observation ? "aspect-[4/5] max-h-[45dvh] sm:max-h-[52dvh]" : "aspect-[16/9] max-h-[38dvh]",
+                            "aspect-[16/9] max-h-[38dvh]",
                         )}
                         data-visual-lineage-id={revealIdentity.lineageId}
                         data-visual-candidate-id={revealIdentity.candidateId}
@@ -201,7 +201,7 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
                                 src={observation.visual.sceneSrc}
                                 alt=""
                                 decoding="async"
-                                className="explore-observation-scene h-full w-full object-cover"
+                                className="explore-observation-scene h-full w-full object-contain"
                                 style={{
                                     "--explore-observation-object-position": observation.camera.objectPosition,
                                 } as React.CSSProperties}

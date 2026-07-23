@@ -36,9 +36,10 @@ const expectIdentityOnRootAndArt = (
     surfaceId: string,
     sceneId: string,
     cameraKey: string,
+    candidateId: string,
 ) => {
     expect(markup.match(/data-visual-lineage-id="pokko-field-v1"/g)).toHaveLength(2);
-    expect(markup.match(/data-visual-candidate-id="pokko-painted-encounters-v5"/g))
+    expect(markup.match(new RegExp(`data-visual-candidate-id="${candidateId}"`, "g")))
         .toHaveLength(2);
     expect(markup.match(/data-visual-mode="world-painted"/g)).toHaveLength(2);
     expect(markup.match(new RegExp(`data-visual-surface-id="${surfaceId}"`, "g")))
@@ -62,11 +63,12 @@ describe("painted encounter visual lineage", () => {
             markup,
             "explore-encounter-light-bridge",
             "light-bridge-idle",
-            "light-bridge-camera-v1",
+            "light-bridge-side-v3",
+            "light-bridge-dew-path-v3",
         );
-        expect(markup).toContain("/assets/explore/light-bridge/scene-idle-leaf-pokko-v5.jpg");
-        expect(markup).toContain("/assets/explore/light-bridge/scene-complete-leaf-pokko-v5.jpg");
-        expect(markup).toContain("/assets/explore/light-bridge/scene-crossed-leaf-pokko-v5.jpg");
+        expect(markup).toContain("/assets/explore/light-bridge/scene-idle-leaf-dew-path-pokko-v6.jpg");
+        expect(markup).toContain("/assets/explore/light-bridge/scene-complete-leaf-dew-path-pokko-v6.jpg");
+        expect(markup).toContain("/assets/explore/light-bridge/scene-crossed-leaf-dew-path-pokko-v6.jpg");
         expect(markup).not.toContain("explore-immersive-art--layered");
     });
 
@@ -83,7 +85,8 @@ describe("painted encounter visual lineage", () => {
             markup,
             "explore-encounter-light-bridge",
             "light-bridge-complete",
-            "light-bridge-camera-v1",
+            "light-bridge-side-v3",
+            "light-bridge-dew-path-v3",
         );
         expect(markup).toContain(
             "explore-immersive-scene explore-immersive-scene-complete is-visible",
@@ -103,12 +106,13 @@ describe("painted encounter visual lineage", () => {
         expectIdentityOnRootAndArt(
             markup,
             "explore-encounter-root-tangle",
-            "root-tangle-tangled",
-            "root-tangle-camera-v1",
+            "root-tangle-dew-blocked",
+            "root-tangle-side-v3",
+            "root-tangle-dew-path-v3",
         );
-        expect(markup).toContain("/assets/explore/root-tangle/scene-tangled-pokko-v4.jpg");
-        expect(markup).toContain("/assets/explore/root-tangle/scene-open-pokko-v4.jpg");
-        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg");
+        expect(markup).toContain("/assets/explore/root-tangle/scene-tangled-dew-path-pokko-v6.jpg");
+        expect(markup).toContain("/assets/explore/root-tangle/scene-open-dew-path-pokko-v6.jpg");
+        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-dew-path-pokko-v6.jpg");
         expect(markup).not.toContain("explore-immersive-art--layered");
     });
 
@@ -120,8 +124,9 @@ describe("painted encounter visual lineage", () => {
         expectIdentityOnRootAndArt(
             markup,
             "explore-encounter-root-tangle",
-            "root-tangle-crossed",
-            "root-tangle-camera-v1",
+            "root-tangle-dew-gag",
+            "root-tangle-side-v3",
+            "root-tangle-dew-path-v3",
         );
         expect(markup).toContain(
             "explore-immersive-scene explore-immersive-scene-crossed is-visible",
@@ -138,13 +143,15 @@ describe("painted encounter visual lineage", () => {
             loadingMarkup,
             "explore-encounter-light-bridge",
             "light-bridge-idle",
-            "light-bridge-camera-v1",
+            "light-bridge-side-v3",
+            "light-bridge-dew-path-v3",
         );
         expectIdentityOnRootAndArt(
             completionMarkup,
             "explore-encounter-light-bridge",
             "light-bridge-crossed",
-            "light-bridge-camera-v1",
+            "light-bridge-side-v3",
+            "light-bridge-dew-path-v3",
         );
         expect(loadingMarkup).not.toContain('data-action-prop="bridge-leaf-clasp"');
         expect(completionMarkup).toContain('data-action-prop="bridge-leaf-clasp"');
