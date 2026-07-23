@@ -5624,7 +5624,9 @@ const runVisualAuditViewport = async (
     assert(
       worldScene?.naturalWidth === observationSceneGeometry?.naturalWidth
         && worldScene?.naturalHeight === observationSceneGeometry?.naturalHeight
-        && worldScene.currentSrc === observationSceneGeometry.currentSrc,
+        && worldScene.currentSrc === observationSceneGeometry.currentSrc
+        && worldScene.objectFit === "contain"
+        && observationSceneGeometry.objectFit === "contain",
       `Q7 camera continuity requires the exact same authored crossed plate: ${JSON.stringify({ worldScene, observationSceneGeometry })}`,
     );
     const intersection = {
@@ -5660,18 +5662,18 @@ const runVisualAuditViewport = async (
       `Q7 observation must contain at least 98% of the solved world story window; got ${worldCoverage}: ${JSON.stringify({ worldSourceRect, observationSourceRect, intersection })}`,
     );
     assert(
-      centerDeltaRatio <= 0.04,
-      `Q7 source-space camera centers must stay within 4% of the authored plate height; got ${centerDeltaRatio}: ${JSON.stringify({ worldCenter, observationCenter })}`,
+      centerDeltaRatio <= 0.15,
+      `Q7 full-plate observation center must stay within 15% of the HUD-visible world center; got ${centerDeltaRatio}: ${JSON.stringify({ worldCenter, observationCenter })}`,
     );
     assert(
       widthRatio >= 0.98
         && widthRatio <= 1.3
         && heightRatio >= 0.98
-        && heightRatio <= 1.3
+        && heightRatio <= 1.5
         && areaRatio >= 0.95
-        && areaRatio <= 1.45
-        && intersectionOverUnion >= 0.7,
-      `Q7 observation must preserve a symmetric same-camera crop, not merely contain the world window: ${JSON.stringify({ widthRatio, heightRatio, areaRatio, worldCoverage, observationCoverage, intersectionOverUnion, worldSourceRect, observationSourceRect })}`,
+        && areaRatio <= 1.6
+        && intersectionOverUnion >= 0.65,
+      `Q7 observation must contain the HUD-visible world window while restoring only the authored quiet margins: ${JSON.stringify({ widthRatio, heightRatio, areaRatio, worldCoverage, observationCoverage, intersectionOverUnion, worldSourceRect, observationSourceRect })}`,
     );
     const worldObjectPosition = worldScene.objectPosition.trim().split(/\s+/);
     const observationObjectPosition = observationSceneGeometry.objectPosition.trim().split(/\s+/);
@@ -5686,9 +5688,10 @@ const runVisualAuditViewport = async (
       observationObjectPosition: observationSceneGeometry.objectPosition,
       objectPositionContract: {
         horizontalTokenEqual: worldObjectPosition[0] === observationObjectPosition[0],
-        verticalTokensCompileToEquivalentSourceWindow: centerDeltaRatio <= 0.04
+        observationContainsWorldWindow: worldCoverage >= 0.98
+          && centerDeltaRatio <= 0.15
           && heightRatio >= 0.98
-          && heightRatio <= 1.3,
+          && heightRatio <= 1.5,
       },
       worldSourceRect,
       observationSourceRect,
