@@ -353,7 +353,9 @@ export const Explore: React.FC = () => {
     const [phase, setPhase] = useState<ExploreScreenPhase>(INITIAL_EXPLORE_PHASE);
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [profileResolved, setProfileResolved] = useState(false);
-    const [isWideLayout, setIsWideLayout] = useState(() => window.matchMedia("(min-width: 1024px)").matches);
+    const [isWideLayout, setIsWideLayout] = useState(() => (
+        window.matchMedia("(min-width: 1024px) and (orientation: landscape)").matches
+    ));
     const [answer, setAnswer] = useState("");
     const [feedback, setFeedback] = useState<ExploreProblemFeedback>("idle");
     const [attemptSaveStatus, setAttemptSaveStatus] = useState<ExploreAttemptSaveStatus>("idle");
@@ -718,7 +720,9 @@ export const Explore: React.FC = () => {
     }, [persistProjectedCheckpoint]);
 
     useEffect(() => {
-        const mediaQuery = window.matchMedia("(min-width: 1024px)");
+        const mediaQuery = window.matchMedia(
+            "(min-width: 1024px) and (orientation: landscape)",
+        );
         const handleChange = () => setIsWideLayout(mediaQuery.matches);
         handleChange();
         mediaQuery.addEventListener("change", handleChange);
@@ -1765,6 +1769,7 @@ export const Explore: React.FC = () => {
             data-checkpoint-revision={checkpointRef.current?.revision}
             data-acknowledged-discovery-id={checkpointRef.current?.acknowledgedDiscoveryId}
             data-run-persistence={runPersistence.status}
+            data-suppress-nonblocking-discovery={activeEncounterId ? true : undefined}
         >
             <ExploreWorldBackdrop />
 
@@ -2043,6 +2048,7 @@ export const Explore: React.FC = () => {
                                 key={revealedDiscovery.id}
                                 discovery={revealedDiscovery}
                                 researchPage={researchReveal}
+                                suppressNonBlocking={Boolean(activeEncounterId)}
                                 onContinue={finishDiscoveryReveal}
                             />
                         ) : null}

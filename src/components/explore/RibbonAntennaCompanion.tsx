@@ -103,28 +103,49 @@ export const RibbonAntennaCompanion = ({
         />
 
         <ellipse
-            className="ribbon-antenna-companion__eye"
+            className="ribbon-antenna-companion__eye-white"
             cx="31"
             cy="59"
-            rx="2.8"
-            ry="3.8"
+            rx="4.2"
+            ry="6"
+            fill="var(--explore-cream)"
+        />
+        <ellipse
+            className="ribbon-antenna-companion__eye-white"
+            cx="48"
+            cy="59"
+            rx="4.2"
+            ry="6"
+            fill="var(--explore-cream)"
+        />
+        <ellipse
+            className="ribbon-antenna-companion__eye"
+            cx="32"
+            cy="60"
+            rx="2"
+            ry="3"
             fill="var(--explore-outline)"
         />
         <ellipse
             className="ribbon-antenna-companion__eye"
-            cx="48"
-            cy="59"
-            rx="2.8"
-            ry="3.8"
+            cx="49"
+            cy="60"
+            rx="2"
+            ry="3"
             fill="var(--explore-outline)"
         />
+        <circle cx="32.5" cy="59" r="0.7" fill="var(--explore-cream)" />
+        <circle cx="49.5" cy="59" r="0.7" fill="var(--explore-cream)" />
         <path
             className="ribbon-antenna-companion__mouth"
-            d={pose === "listen" ? "M35 70c4 5 8 5 12 0" : "M36 70c3 3 7 3 10 0"}
-            fill="none"
+            d={pose === "listen"
+                ? "M35 70c3 8 8 9 12 0-4 2-8 2-12 0Z"
+                : "M36 70c3 6 7 7 10 0-3 2-7 2-10 0Z"}
+            fill="var(--explore-coral)"
             stroke="var(--explore-outline)"
-            strokeWidth="2.8"
+            strokeWidth="2"
             strokeLinecap="round"
+            strokeLinejoin="round"
         />
 
         {pose === "trace" ? (

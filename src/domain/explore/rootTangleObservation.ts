@@ -15,11 +15,16 @@ export const ROOT_TANGLE_OBSERVATION = {
         mode: "observation",
         surfaceId: "explore-observation-root-tangle",
         cameraKey: "root-tangle-camera-v1",
+        sceneId: "root-tangle-crossed",
         sceneSrc: "/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg",
     },
     camera: {
         key: "root-tangle-camera-v1",
-        objectPosition: "50% 48%",
+        // The compact observation frame is wider than the encounter's tall
+        // story window. 57.5% keeps the same source-space action, Pokko, and
+        // ground edge in view instead of merely copying the encounter's CSS
+        // percentage into a differently shaped box.
+        objectPosition: "50% 57.5%",
     },
     copy: {
         kicker: "せかいが かんさつページに なった",

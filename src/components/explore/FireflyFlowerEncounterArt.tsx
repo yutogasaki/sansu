@@ -202,7 +202,12 @@ export const FireflyFlowerEncounterArt = ({
             )}
 
             {showRingingPetals ? (
-                <g className="firefly-flower-art__path-setup" data-layer="light-path-setup" aria-hidden="true">
+                <g
+                    className="firefly-flower-art__path-setup"
+                    data-layer="light-path-setup"
+                    transform="translate(0 -24)"
+                    aria-hidden="true"
+                >
                     <path className="firefly-flower-art__path-edge" d="M306 398c-29-18-59-17-89 2-19 12-35 18-49 18" />
                     <path className="firefly-flower-art__path-dashes" d="M306 398c-29-18-59-17-89 2-19 12-35 18-49 18" />
                     <path className="firefly-flower-art__path-stop" d="m162 407-10 12 12 9" />

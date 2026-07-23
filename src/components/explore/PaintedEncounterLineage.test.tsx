@@ -88,6 +88,7 @@ describe("painted encounter visual lineage", () => {
         expect(markup).toContain(
             "explore-immersive-scene explore-immersive-scene-complete is-visible",
         );
+        expect(markup).toContain('data-action-prop="bridge-painted-latch"');
     });
 
     it("keeps an incorrect root answer on the tangled plate", () => {
@@ -144,6 +145,11 @@ describe("painted encounter visual lineage", () => {
             "explore-encounter-light-bridge",
             "light-bridge-crossed",
             "light-bridge-camera-v1",
+        );
+        expect(loadingMarkup).not.toContain('data-action-prop="bridge-painted-latch"');
+        expect(completionMarkup).toContain('data-action-prop="bridge-painted-latch"');
+        expect(completionMarkup).toContain(
+            "explore-immersive-scene explore-immersive-scene-crossed is-visible",
         );
     });
 });

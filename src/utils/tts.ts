@@ -1,5 +1,5 @@
 /**
- * Text-to-Speech Utility for Fuwamana (English)
+ * Text-to-Speech utility for Pokko no Fushigi Zukan (English)
  */
 
 let ttsWarmedUp = false;

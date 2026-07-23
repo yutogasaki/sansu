@@ -37,6 +37,7 @@ describe("exploration observation catalog", () => {
             candidateId: "root-tangle-observation-v1",
             mode: "observation",
             cameraKey: ROOT_TANGLE_OBSERVATION.camera.key,
+            sceneId: "root-tangle-crossed",
             sceneSrc: "/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg",
         }));
         expect(getExploreObservationForEncounter("light-bridge")).toBeUndefined();

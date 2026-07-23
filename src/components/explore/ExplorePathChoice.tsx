@@ -7,6 +7,7 @@ import type {
 } from "../../domain/explore";
 import { selectExplorePathChoiceMode } from "../../domain/explore";
 import { ExploreGlyph, type ExploreGlyphKind } from "./ExploreGlyph";
+import { ExploreRouteForkArt } from "./ExploreRouteForkArt";
 import { useExploreStageFocus } from "./useExploreStageFocus";
 
 interface ExplorePathChoiceProps {
@@ -22,6 +23,7 @@ interface ExplorePathChoiceProps {
 
 const choiceHeading = (count: number) => {
     if (count === 0) return "いちばん おくまで きた";
+    if (count === 1) return "この道を すすもう";
     if (count >= 3) return "どの道へ いく？";
     return "どっちへ いく？";
 };
@@ -42,7 +44,11 @@ export const ExplorePathChoice: React.FC<ExplorePathChoiceProps> = ({
         <section
             className="explore-field-sheet explore-path-choice flex h-full min-h-0 flex-col overflow-y-auto rounded-[24px] px-3.5 pb-3.5 pt-3 sm:px-5 sm:pb-5"
             data-visual-lineage-id="pokko-field-v1"
-            data-visual-candidate-id={isRunEnd ? "pokko-carry-home-v1" : "pokko-route-map-v1"}
+            data-visual-candidate-id={isRunEnd
+                ? "pokko-carry-home-v1"
+                : mode === "routes"
+                    ? "pokko-route-map-v2"
+                    : "pokko-route-map-v1"}
             data-visual-mode={isRunEnd ? "field-book" : "route-map"}
         >
 
@@ -76,30 +82,35 @@ export const ExplorePathChoice: React.FC<ExplorePathChoiceProps> = ({
             </div>
         </div>
 
-        {mode === "routes" ? <div className="explore-choice-grid mt-3 grid flex-1 content-start gap-2.5">
-            {nodes.map((node) => (
-                <button
-                    key={node.id}
-                    type="button"
-                    data-tone={node.kind}
-                    aria-label={`${node.title}へ すすむ`}
-                    onClick={() => onSelect(node.id)}
-                    className="explore-route-card explore-focus-ring group flex min-h-[86px] items-center gap-3 rounded-[20px] p-3 text-left transition-[transform,filter] duration-150 hover:brightness-[1.015] active:translate-y-0.5 active:scale-[0.99]"
-                >
-                    <span className="relative flex h-14 w-14 shrink-0 items-center justify-center" aria-hidden="true">
-                        <span className="explore-route-glyph-plate absolute inset-1 -rotate-2 rounded-[20px]" />
-                        <ExploreGlyph kind={node.kind as ExploreGlyphKind} className="relative h-12 w-12" />
-                    </span>
-                    <span className="min-w-0 flex-1 pr-1">
-                        <span className="block text-[1.05rem] font-black tracking-[-0.015em] text-[var(--explore-ink)]">{node.title}</span>
-                        <span className="explore-route-hint mt-1 block text-xs font-bold leading-5">{node.hint}</span>
-                    </span>
-                    <span className="explore-route-arrow flex h-8 w-8 shrink-0 rotate-2 items-center justify-center rounded-[10px] text-[var(--explore-ink)] transition-transform duration-150 group-hover:translate-x-0.5" aria-hidden="true">
-                        <ChevronRight className="h-4 w-4" />
-                    </span>
-                </button>
-            ))}
-        </div> : isRunEnd ? (
+        {mode === "routes" ? <>
+            <div className="explore-choice-grid mt-3 grid flex-1 content-start gap-2.5">
+                {nodes.map((node) => (
+                    <button
+                        key={node.id}
+                        type="button"
+                        data-tone={node.kind}
+                        aria-label={`${node.title}へ すすむ`}
+                        onClick={() => onSelect(node.id)}
+                        className="explore-route-card explore-focus-ring group flex min-h-[86px] items-center gap-3 rounded-[20px] p-3 text-left transition-[transform,filter] duration-150 hover:brightness-[1.015] active:translate-y-0.5 active:scale-[0.99]"
+                    >
+                        <span className="relative flex h-14 w-14 shrink-0 items-center justify-center" aria-hidden="true">
+                            <span className="explore-route-glyph-plate absolute inset-1 -rotate-2 rounded-[20px]" />
+                            <ExploreGlyph kind={node.kind as ExploreGlyphKind} className="relative h-12 w-12" />
+                        </span>
+                        <span className="min-w-0 flex-1 pr-1">
+                            <span className="block text-[1.05rem] font-black tracking-[-0.015em] text-[var(--explore-ink)]">{node.title}</span>
+                            <span className="explore-route-hint mt-1 block text-xs font-bold leading-5">{node.hint}</span>
+                        </span>
+                        <span className="explore-route-arrow flex h-8 w-8 shrink-0 rotate-2 items-center justify-center rounded-[10px] text-[var(--explore-ink)] transition-transform duration-150 group-hover:translate-x-0.5" aria-hidden="true">
+                            <ChevronRight className="h-4 w-4" />
+                        </span>
+                    </button>
+                ))}
+            </div>
+            {nodes.length >= 2 ? (
+                <ExploreRouteForkArt branchCount={nodes.length >= 3 ? 3 : 2} />
+            ) : null}
+        </> : isRunEnd ? (
             <div className="mt-3 flex min-h-0 flex-1 flex-col justify-center gap-2.5">
                 {researchPage ? (
                     <div

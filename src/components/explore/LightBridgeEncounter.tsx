@@ -12,6 +12,8 @@ const LIGHT_BRIDGE_DEFINITION: ImmersiveEncounterDefinition = {
         idleSrc: "/assets/explore/light-bridge/scene-idle-pokko-v4.jpg",
         completeSrc: "/assets/explore/light-bridge/scene-complete-pokko-v4.jpg",
         resolvedSrc: "/assets/explore/light-bridge/scene-crossed-pokko-v4.jpg",
+        completeActionProp: "bridge-painted-latch",
+        resolvedActionProp: "bridge-painted-latch",
     },
     visualIdentity: {
         lineageId: "pokko-field-v1",

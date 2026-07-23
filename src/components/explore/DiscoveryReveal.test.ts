@@ -62,6 +62,37 @@ describe("discovery reveal interaction contract", () => {
         expect(markup).not.toContain("ひょうほんを バッグへ");
     });
 
+    it("keeps an ordinary clue from covering the next dedicated encounter", () => {
+        const ordinary = renderToStaticMarkup(React.createElement(DiscoveryReveal, {
+            discovery: {
+                name: "ひかる しずく",
+                kind: "flower" as const,
+                rarity: "rare" as const,
+                discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
+                discoveryFeatureId: FIREFLY_FLOWER_DISCOVERY_PAGE.chain.featureIds[0],
+            },
+            suppressNonBlocking: true,
+            onContinue: () => undefined,
+        }));
+        const blocking = renderToStaticMarkup(React.createElement(DiscoveryReveal, {
+            discovery: {
+                name: "ほたる花の ひかり道",
+                kind: "flower" as const,
+                rarity: "rare" as const,
+                discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
+                discoveryFeatureId: FIREFLY_FLOWER_DISCOVERY_PAGE.chain.bigDiscoveryFeatureId,
+            },
+            suppressNonBlocking: true,
+            onContinue: () => undefined,
+        }));
+
+        expect(ordinary).toContain('class="sr-only"');
+        expect(ordinary).toContain('role="status"');
+        expect(ordinary).toContain("ひかる しずくを バッグに しまったよ");
+        expect(ordinary).not.toContain("explore-specimen-card");
+        expect(blocking).toContain('role="dialog"');
+    });
+
     it("keeps legacy stored opening pages readable without using them for new rewards", () => {
         const currentFeatureId = MAKIMODON_DISCOVERY_PAGE.chain.bigDiscoveryFeatureId;
         const sharedProps = {

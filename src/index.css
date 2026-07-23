@@ -465,6 +465,18 @@ body.app-mode-fullscreen .app-container {
         box-shadow: 0 2px 0 rgba(23, 63, 73, 0.28);
     }
 
+    .explore-route-fork-art-frame {
+        display: none;
+    }
+
+    .explore-route-fork-art {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 54%;
+    }
+
     .explore-path-return {
         background: #fffdf2;
         border: 2px dashed rgba(23, 63, 73, 0.46);
@@ -512,6 +524,14 @@ body.app-mode-fullscreen .app-container {
         box-shadow:
             0 30px 70px -34px rgba(8, 47, 73, 0.72),
             inset 0 0 0 3px rgba(255, 244, 206, 0.66);
+    }
+
+    /* Presence keeps an exiting clue mounted for its short animation. Once a
+       dedicated encounter owns the stage, remove only that old visual layer
+       immediately; the polite sr-only acknowledgement remains mounted. */
+    .explore-world[data-suppress-nonblocking-discovery="true"] .explore-research-slip,
+    .explore-world[data-suppress-nonblocking-discovery="true"] [data-testid="explore-discovery-toast"] {
+        display: none;
     }
 
     .explore-research-slip::before,
@@ -1413,6 +1433,7 @@ body.app-mode-fullscreen .app-container {
        keypad occupy one continuous answer shelf. Correct-answer motion happens
        behind the controls instead of introducing another card or screen. */
     .explore-immersive {
+        --explore-world-fade-start: 52%;
         border: 0;
         border-radius: 0 !important;
         background: #f7d45f;
@@ -1439,6 +1460,89 @@ body.app-mode-fullscreen .app-container {
         object-position: 50% 50%;
     }
 
+    /* The v4 encounter plates are authored as tall book pages. Reframe those
+       plates inside the rapid answer shelf so Pokko and the world action stay
+       visible above the opaque problem controls at every canonical width. */
+    @media (max-width: 599px) {
+        .explore-immersive[data-visual-candidate-id="pokko-painted-encounters-v4"] .explore-immersive-scene {
+            top: -32%;
+            bottom: auto;
+            height: 112%;
+            object-position: 50% 50%;
+        }
+
+    }
+
+    @media (min-width: 600px) and (max-width: 1023px),
+        (min-width: 1024px) and (orientation: portrait) {
+        .explore-immersive {
+            --explore-world-fade-start: 62.5%;
+        }
+
+        .explore-immersive[data-visual-candidate-id="pokko-painted-encounters-v4"] .explore-immersive-scene {
+            object-position: 50% 93.5%;
+        }
+
+        .explore-immersive .explore-immersive-scrim {
+            background: linear-gradient(
+                180deg,
+                rgba(255, 252, 226, 0.02) 0%,
+                rgba(255, 252, 226, 0.02) var(--explore-world-fade-start),
+                rgba(255, 249, 218, 0.42) 67%,
+                rgba(255, 249, 218, 0.96) 74%,
+                #fff9da 100%
+            );
+        }
+
+        .explore-immersive-brief {
+            padding: 5px 12px 3px;
+        }
+
+        .explore-immersive-equation {
+            min-height: 48px;
+            margin-top: 0;
+        }
+
+        .explore-immersive-answer {
+            min-height: 42px;
+        }
+
+        .explore-immersive-message {
+            min-height: 17px;
+            margin-top: 0;
+        }
+
+        .explore-immersive-hint {
+            max-height: 54px;
+            padding-block: 1px 2px;
+        }
+
+        .explore-immersive-hint-visual {
+            max-height: 38px;
+        }
+
+        .explore-immersive-keypad-shell {
+            padding-top: 0;
+        }
+    }
+
+    @media (min-width: 1024px) and (orientation: portrait) and (min-height: 1600px) {
+        .explore-immersive {
+            --explore-world-fade-start: 70%;
+        }
+
+        .explore-immersive .explore-immersive-scrim {
+            background: linear-gradient(
+                180deg,
+                rgba(255, 252, 226, 0.02) 0%,
+                rgba(255, 252, 226, 0.02) var(--explore-world-fade-start),
+                rgba(255, 249, 218, 0.42) 74%,
+                rgba(255, 249, 218, 0.96) 80%,
+                #fff9da 100%
+            );
+        }
+    }
+
     .explore-immersive-scene-complete,
     .explore-immersive-scene-crossed {
         transition-duration: 220ms;
@@ -1448,7 +1552,7 @@ body.app-mode-fullscreen .app-container {
         background: linear-gradient(
             180deg,
             rgba(255, 252, 226, 0.02) 0%,
-            rgba(255, 252, 226, 0.02) 52%,
+            rgba(255, 252, 226, 0.02) var(--explore-world-fade-start),
             rgba(255, 249, 218, 0.42) 62%,
             rgba(255, 249, 218, 0.96) 73%,
             #fff9da 100%
@@ -1718,6 +1822,74 @@ body.app-mode-fullscreen .app-container {
         margin-top: 0;
     }
 
+    /* Dedicated encounters use the landscape as a picture-book spread.
+       Keeping the world and the answer controls in separate panes prevents
+       the tall authored plate from disappearing behind the TenKey. */
+    .explore-run-grid[data-encounter] {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .explore-run-grid[data-encounter] > .explore-map-frame {
+        display: none;
+    }
+
+    .explore-run-grid[data-encounter] .explore-action-region {
+        grid-column: 1;
+        min-width: 0;
+    }
+
+    .explore-run-grid[data-encounter] .explore-immersive {
+        --explore-world-fade-start: 100%;
+    }
+
+    .explore-run-grid[data-encounter] .explore-immersive-art {
+        right: auto;
+        width: 44%;
+        border-right: 4px solid rgba(23, 63, 73, 0.72);
+        box-shadow: 10px 0 24px -18px rgba(23, 63, 73, 0.48);
+    }
+
+    .explore-run-grid[data-encounter] .explore-immersive-scene {
+        object-position: 50% 68%;
+    }
+
+    .explore-run-grid[data-encounter] .explore-immersive-scrim {
+        background: linear-gradient(
+            180deg,
+            rgba(255, 252, 226, 0.02) 0%,
+            rgba(255, 252, 226, 0.02) 72%,
+            rgba(255, 249, 218, 0.2) 100%
+        );
+    }
+
+    .explore-run-grid[data-encounter] .explore-immersive-stage,
+    .explore-run-grid[data-encounter] .explore-immersive-completion-stage {
+        width: 56%;
+        margin-left: auto;
+        background: #fff9da;
+        padding: 10px 12px;
+    }
+
+    .explore-run-grid[data-encounter] .explore-immersive-stage {
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .explore-run-grid[data-encounter] .explore-immersive-spacer {
+        display: none;
+    }
+
+    .explore-run-grid[data-encounter] .explore-immersive-completion-stage {
+        align-items: center;
+    }
+
+    .explore-run-grid[data-encounter] .explore-immersive-loading-card {
+        right: 12px;
+        left: auto;
+        width: calc(56% - 24px);
+        transform: none;
+    }
+
     .explore-run-grid[data-phase="choice"] .explore-action-region {
         display: flex;
         align-items: center;
@@ -1776,6 +1948,35 @@ body.app-mode-fullscreen .app-container {
     .explore-path-choice .explore-choice-grid,
     .explore-bridge-choice .explore-choice-grid {
         flex: 0 1 auto;
+    }
+}
+
+@media (min-width: 600px) and (orientation: portrait) and (min-height: 760px) {
+    .explore-action-region[data-panel="path-choice"] {
+        align-items: stretch;
+    }
+
+    .explore-path-choice {
+        height: 100%;
+        min-height: 0;
+    }
+
+    .explore-path-choice .explore-choice-grid {
+        flex: 0 0 auto;
+    }
+
+    .explore-route-fork-art-frame {
+        display: block;
+        width: 100%;
+        height: 0;
+        min-height: 180px;
+        flex: 1 1 180px;
+        margin: 8px 0 0;
+        overflow: hidden;
+        border: 3px solid var(--explore-outline);
+        border-radius: 20px;
+        box-shadow: 0 4px 0 rgba(23, 63, 73, 0.2);
+        pointer-events: none;
     }
 }
 
@@ -2291,6 +2492,16 @@ body.app-mode-fullscreen .app-container {
     .game-hub__mode-card,
     .game-hub__setup-link {
         transition: none;
+    }
+}
+
+.explore-observation-scene {
+    object-position: var(--explore-observation-object-position, 50% 57.5%);
+}
+
+@media (min-width: 600px) and (max-width: 1023px) {
+    .explore-observation-scene {
+        object-position: 50% 60%;
     }
 }
 

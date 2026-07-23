@@ -167,13 +167,16 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
                     <div
                         className={cn(
                             "explore-paper-diorama relative mx-auto mt-3 w-full max-w-2xl overflow-hidden rounded-[30px] sm:rounded-[38px]",
-                            observation ? "aspect-[4/5] max-h-[52dvh]" : "aspect-[16/9] max-h-[38dvh]",
+                            observation ? "aspect-[4/5] max-h-[45dvh] sm:max-h-[52dvh]" : "aspect-[16/9] max-h-[38dvh]",
                         )}
                         data-visual-lineage-id={revealIdentity.lineageId}
                         data-visual-candidate-id={revealIdentity.candidateId}
                         data-visual-mode={revealIdentity.mode}
                         data-visual-surface-id={revealIdentity.surfaceId}
+                        data-visual-scene-id={observation?.visual.sceneId}
                         data-camera-key={observation?.camera.key}
+                        data-observation-id={observation?.id}
+                        data-source-encounter-id={observation?.encounterId}
                         aria-hidden="true"
                     >
                         {observation ? (
@@ -181,8 +184,10 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
                                 src={observation.visual.sceneSrc}
                                 alt=""
                                 decoding="async"
-                                className="h-full w-full object-cover"
-                                style={{ objectPosition: observation.camera.objectPosition }}
+                                className="explore-observation-scene h-full w-full object-cover"
+                                style={{
+                                    "--explore-observation-object-position": observation.camera.objectPosition,
+                                } as React.CSSProperties}
                                 data-testid="explore-observation-scene"
                             />
                         ) : (
@@ -195,11 +200,11 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
 
                     {observation ? (
                         <div
-                            className="relative mx-auto -mt-3 max-w-xl rounded-[22px] border-2 border-[#173f49] bg-[#fff4ce] px-4 py-3 text-left shadow-lg"
+                            className="relative mx-auto -mt-3 max-w-xl rounded-[22px] border-2 border-[#173f49] bg-[#fff4ce] px-3 py-2 text-left shadow-lg sm:px-4 sm:py-3"
                             data-testid="explore-observation-copy"
                         >
-                            <p className="text-[10px] font-black tracking-[0.12em] text-[#b43f35]">{observation.copy.kicker}</p>
-                            <p className="mt-1 text-base font-black leading-5 text-[#173f49]">{observation.copy.title}</p>
+                            <p className="text-xs font-black tracking-[0.12em] text-[#b43f35]">{observation.copy.kicker}</p>
+                            <p className="mt-1 text-[15px] font-black leading-5 text-[#173f49] sm:text-base">{observation.copy.title}</p>
                             <p className="mt-1 text-xs font-bold leading-5 text-[#315d5f]">
                                 {observation.copy.action}。{observation.copy.reaction}。
                             </p>
@@ -207,7 +212,7 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
                     ) : null}
 
                     <div className={cn(
-                        "explore-research-book relative mx-auto max-w-2xl rounded-[28px] px-4 pb-4 pt-6 text-center sm:px-7 sm:pb-6",
+                        "explore-research-book relative mx-auto max-w-2xl rounded-[24px] px-3 pb-3 pt-5 text-center sm:rounded-[28px] sm:px-7 sm:pb-6 sm:pt-6",
                         observation ? "mt-3" : "-mt-4",
                     )}
                         data-visual-lineage-id={fieldBookIdentity.lineageId}
@@ -219,24 +224,24 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
                             <BookOpen className="h-4 w-4" />
                         </span>
                         <p className="text-xs font-black tracking-[0.12em] text-[var(--explore-mid)]">{definition.title}</p>
-                        <h2 id="research-big-discovery-title" className="mt-1 text-balance text-[clamp(22px,5.5vw,36px)] font-black leading-tight tracking-[-0.035em] text-[var(--explore-ink)]">
+                        <h2 id="research-big-discovery-title" className="mt-1 text-balance text-[20px] font-black leading-tight tracking-[-0.035em] text-[var(--explore-ink)] sm:text-[clamp(22px,5.5vw,36px)]">
                             {isBigDiscovery ? "大発見！" : "とくべつな発見！"} {currentFeature.title}
                         </h2>
-                        <p id="research-big-discovery-description" className="mx-auto mt-2 max-w-xl text-sm font-semibold leading-6 text-[var(--explore-muted)]">
+                        <p id="research-big-discovery-description" className="mx-auto mt-1 max-w-xl text-xs font-semibold leading-5 text-[var(--explore-muted)] sm:mt-2 sm:text-sm sm:leading-6">
                             {currentFeature.finding}
                         </p>
 
                         <ol
-                            className="mt-4 grid gap-2"
+                            className="mt-2 grid gap-1.5 sm:mt-4 sm:gap-2"
                             style={slotGridStyle}
                             aria-label={`${clueFeatureIds.length}つの手掛かりを発見`}
                         >
                             {clueFeatureIds.map((featureId) => {
                                 const feature = getDiscoveryPageFeature(definition, featureId);
                                 return (
-                                    <li key={featureId} className="explore-research-stamp is-found flex min-h-14 flex-col items-center justify-center rounded-[16px] px-2 py-2">
+                                    <li key={featureId} className="explore-research-stamp is-found flex min-h-12 flex-col items-center justify-center rounded-[14px] px-1 py-1.5 sm:min-h-14 sm:rounded-[16px] sm:px-2 sm:py-2">
                                         <Stamp className="h-4 w-4 text-[#c95f4f]" aria-hidden="true" />
-                                        <span className="mt-1 text-xs font-black leading-4">{feature?.title}</span>
+                                        <span className="mt-0.5 text-xs font-black leading-4 sm:mt-1">{feature?.title}</span>
                                     </li>
                                 );
                             })}
@@ -247,7 +252,7 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
                             type="button"
                             onClick={onContinue}
                             aria-keyshortcuts="Enter Escape"
-                            className="explore-primary-action explore-focus-ring mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-[16px] text-sm font-black transition active:scale-[0.98]"
+                            className="explore-primary-action explore-focus-ring mt-2 flex min-h-14 w-full items-center justify-center gap-2 rounded-[16px] text-sm font-black transition active:scale-[0.98] sm:mt-4"
                         >
                             調査ノートを とじる
                             <ArrowRight className="h-4 w-4" aria-hidden="true" />

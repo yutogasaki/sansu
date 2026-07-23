@@ -21,6 +21,19 @@
     object-position: top center;
 }
 
+/* The live SVG uses a phone-authored 390×500 camera. Letting it fill a
+   768px-wide portrait viewport doubles the actors and pushes Pokko's body
+   behind the answer shelf. Keep the whole interaction in the upper world
+   stage while the surrounding sky continues edge to edge. */
+@media (min-width: 600px) and (max-width: 1023px),
+    (min-width: 1024px) and (orientation: portrait) {
+    .explore-immersive[data-visual-candidate-id="firefly-live-pokko-v1"] .explore-immersive-firefly-art {
+        width: 70%;
+        min-height: 0;
+        margin-inline: auto;
+    }
+}
+
 /* The authored stage already separates the live world from the opaque answer
    shelf. Do not put the legacy raster scrim or its gradient over this scene. */
 .firefly-flower-art + .explore-immersive-scrim {

@@ -19,6 +19,8 @@
         "verify:release": "npm run verify:core && npm run e2e:smoke && npm run e2e:pwa-update",
         "preview": "vite preview",
         "e2e:smoke": "node tools/e2e-smoke.mjs",
+        "e2e:visual-audit": "node tools/e2e-smoke.mjs --visual-audit",
+        "e2e:visual-audit:local": "node tools/run-local-visual-audit.mjs",
         "e2e:pwa-update": "node tools/e2e-pwa-update.mjs",
         "benchmark:fixed-ten": "node tools/e2e-fixed-ten-throughput.mjs"
     },

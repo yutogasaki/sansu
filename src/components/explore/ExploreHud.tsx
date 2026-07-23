@@ -35,10 +35,13 @@ export const ExploreHud: React.FC<ExploreHudProps> = ({
     const displayedClueCount = Math.max(0, Math.min(researchClueCount, researchClueTarget));
 
     return (
-        <header className={cn(
-            "flex shrink-0 items-center gap-2.5 px-3 pb-2 pt-[calc(var(--safe-area-top)+8px)] sm:gap-3 sm:px-5",
-            variant === "encounter" && "absolute inset-x-0 top-0 z-30 gap-1.5 px-2 pb-1 pt-[calc(var(--safe-area-top)+4px)] sm:px-3",
-        )}>
+        <header
+            data-testid="explore-hud"
+            className={cn(
+                "flex shrink-0 items-center gap-2.5 px-3 pb-2 pt-[calc(var(--safe-area-top)+8px)] sm:gap-3 sm:px-5",
+                variant === "encounter" && "absolute inset-x-0 top-0 z-30 gap-1.5 px-2 pb-1 pt-[calc(var(--safe-area-top)+4px)] sm:px-3",
+            )}
+        >
             <button
                 type="button"
                 onClick={onBack}

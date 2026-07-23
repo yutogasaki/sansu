@@ -26,6 +26,8 @@ export interface ImmersiveEncounterDefinition {
         idleSrc: string;
         completeSrc: string;
         resolvedSrc: string;
+        completeActionProp?: string;
+        resolvedActionProp?: string;
     };
     visualIdentity?: ImmersiveEncounterVisualIdentity;
     problem: {
@@ -115,6 +117,9 @@ const ImmersiveEncounterSceneArt: React.FC<ImmersiveEncounterSceneArtProps> = ({
                     src={definition.scene.completeSrc}
                     alt=""
                     decoding="async"
+                    data-action-prop={phase === "complete"
+                        ? definition.scene.completeActionProp
+                        : undefined}
                     className={cn(
                         "explore-immersive-scene explore-immersive-scene-complete",
                         phase !== "idle" && "is-visible",
@@ -126,6 +131,9 @@ const ImmersiveEncounterSceneArt: React.FC<ImmersiveEncounterSceneArtProps> = ({
                     src={definition.scene.resolvedSrc}
                     alt=""
                     decoding="async"
+                    data-action-prop={phase === "resolved"
+                        ? definition.scene.resolvedActionProp
+                        : undefined}
                     className={cn(
                         "explore-immersive-scene explore-immersive-scene-crossed",
                         phase === "resolved" && "is-visible",

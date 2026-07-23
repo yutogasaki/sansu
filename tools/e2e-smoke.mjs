@@ -1,5 +1,8 @@
 import { chromium } from "playwright";
 import { spawn, spawnSync } from "node:child_process";
+import { createHash, randomUUID } from "node:crypto";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 
 const HOST = "127.0.0.1";
 const PORT_CANDIDATES = [4173, 4174, 4175];
@@ -11,6 +14,84 @@ const RAPID_LOOP_CI_BUDGET_MS = 1_500;
 const RAPID_LOOP_CORRECT_PRODUCT_BUDGET_MS = 650;
 const RAPID_LOOP_INCORRECT_PRODUCT_BUDGET_MS = 550;
 const WRITE_VISUAL_AUDIT = process.env.SANSU_WRITE_VISUAL_AUDIT === "1";
+const VISUAL_AUDIT_MODE = process.argv.includes("--visual-audit");
+const VISUAL_AUDIT_EXPECTED_REVISION = process.env.SANSU_VISUAL_AUDIT_EXPECTED_REVISION;
+const VISUAL_AUDIT_BUILD_PROVENANCE_PATH =
+  process.env.SANSU_VISUAL_AUDIT_BUILD_PROVENANCE_PATH;
+const VISUAL_AUDIT_TARGET_ATTESTATION_FILE = "sansu-visual-audit-target.json";
+const VISUAL_AUDIT_VIEWPORTS = [
+  { width: 390, height: 844 },
+  { width: 768, height: 1024 },
+];
+const VISUAL_AUDIT_STAGE_ORDER = [
+  "cold-launch",
+  "ready",
+  "dig-one",
+  "dig-two",
+  "popped",
+  "route-choice",
+  "q4-ordinary",
+  "major-encounter-idle",
+  "major-encounter-correct",
+  "q7-before",
+  "q7-observation",
+  "field-book",
+  "q8",
+  "return",
+  "relaunch",
+  "base",
+];
+const VISUAL_AUDIT_SETTLE_TIMEOUT_MS = 5_000;
+const PAINTED_ENCOUNTER_FOCALS = {
+  "explore-encounter-light-bridge:light-bridge-idle": {
+    actorFace: [170, 1080],
+    actorFeet: [170, 1230],
+    actionPayoff: [390, 750],
+  },
+  "explore-encounter-light-bridge:light-bridge-complete": {
+    actorFace: [170, 1080],
+    actorFeet: [170, 1230],
+    actionPayoff: [390, 750],
+  },
+  "explore-encounter-light-bridge:light-bridge-crossed": {
+    actorFace: [170, 1080],
+    actorFeet: [170, 1230],
+    actionPayoff: [390, 750],
+  },
+  "explore-encounter-root-tangle:root-tangle-tangled": {
+    actorFace: [220, 1080],
+    actorFeet: [220, 1230],
+    actionPayoff: [390, 700],
+  },
+  "explore-encounter-root-tangle:root-tangle-crossed": {
+    actorFace: [390, 1050],
+    actorFeet: [390, 1165],
+    actionPayoff: [390, 700],
+  },
+};
+const ROOT_TANGLE_OBSERVATION_FOCALS =
+  PAINTED_ENCOUNTER_FOCALS["explore-encounter-root-tangle:root-tangle-crossed"];
+const REQUIRED_VISUAL_ASSET_SHA256 = {
+  "/assets/explore/light-bridge/scene-idle-pokko-v4.jpg":
+    "13bf2015482f3a8302cfc854891ac9d438344f2e9831a5db1988ca595a4638eb",
+  "/assets/explore/light-bridge/scene-complete-pokko-v4.jpg":
+    "ab20a9122df078d0fd48fb18b6df0555ad856b9fb55d229f745c385fc87d5959",
+  "/assets/explore/light-bridge/scene-crossed-pokko-v4.jpg":
+    "4b0727141e10b6f50ebdde8226515936f1c3dcd19685fb3aa13dec80762d873b",
+  "/assets/explore/root-tangle/scene-tangled-pokko-v4.jpg":
+    "665f97d12bdb3da0889038e13c67ee140692e2cf942acf128283fcab78ec9ef2",
+  "/assets/explore/root-tangle/scene-open-pokko-v4.jpg":
+    "4f9c76f483c1b1414dce6e45f7773a0c1492c227d7c194ae73bca3d57c4e0dc8",
+  "/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg":
+    "2b8becaa19e09a5d81c876eacfacb4df0d7698f92fe9b7da397a785eb884072a",
+  "/assets/explore/route-choice/scene-fork-two-pokko-v1.jpg":
+    "b5ad845b04ffb238a7e701045941b895cec9b090fd3da3b46ab9dc2e51153438",
+  "/assets/explore/route-choice/scene-fork-three-pokko-v1.jpg":
+    "781c922d55e398caf686189193ff523409140647687e9ad4123ff9ccdb3d029e",
+};
+const LEGACY_VISUAL_AUDIT_DIR = path.resolve(
+  "docs/design/breakout-loop-2026-07-21/runtime-painted-v2-audit",
+);
 let activeBaseUrl = `http://${HOST}:${PORT_CANDIDATES[0]}`;
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -67,7 +148,7 @@ const waitForServer = async (url, timeoutMs) => {
     }
     await delay(500);
   }
-  throw new Error(`Fuwamana dev server did not become ready within ${timeoutMs}ms: ${url}`);
+  throw new Error(`Pokko dev server did not become ready within ${timeoutMs}ms: ${url}`);
 };
 
 const startDevServer = (port) => {
@@ -110,7 +191,7 @@ const getServerSession = async () => {
 
     if (probe.expected) {
       reusableServerUrl ||= url;
-      console.log(`Fuwamana is already running on ${url}; looking for a dedicated smoke-test port.`);
+      console.log(`Pokko is already running on ${url}; looking for a dedicated smoke-test port.`);
       continue;
     }
 
@@ -137,7 +218,7 @@ const getServerSession = async () => {
     return { baseUrl: reusableServerUrl, devServer: null, startedByScript: false };
   }
 
-  throw new Error(`Unable to find a free port for Fuwamana dev server. Tried: ${PORT_CANDIDATES.join(", ")}`);
+  throw new Error(`Unable to find a free port for Pokko dev server. Tried: ${PORT_CANDIDATES.join(", ")}`);
 };
 
 const clearClientStorage = async (page) => {
@@ -1816,6 +1897,10 @@ const scenarioLightBridgeVerticalSlice = async (
 
   const lightBridge = page.locator(".explore-immersive");
   await lightBridge.waitFor({ timeout: STEP_TIMEOUT_MS });
+  assert(
+    await page.locator('.explore-research-slip, [data-testid="explore-discovery-toast"]').count() === 0,
+    "an ordinary Q4 clue must not overlap the dedicated light-bridge encounter",
+  );
   const lightBridgeIdentity = await lightBridge.evaluate((element) => ({
     lineageId: element.getAttribute("data-visual-lineage-id"),
     candidateId: element.getAttribute("data-visual-candidate-id"),
@@ -1828,6 +1913,10 @@ const scenarioLightBridgeVerticalSlice = async (
       && lightBridgeIdentity.mode === "world-painted"
       && lightBridgeIdentity.sceneId === "light-bridge-idle",
     `the painted light bridge should enter with its Pokko idle identity; got ${JSON.stringify(lightBridgeIdentity)}`,
+  );
+  assert(
+    await lightBridge.locator('[data-action-prop="bridge-painted-latch"]').count() === 0,
+    "the disconnected bridge must not show a painted latch before the answer",
   );
   assert(
     (await page.getByTestId("explore-attempt").getAttribute("data-gate-id"))?.endsWith(":node-5-0"),
@@ -1879,6 +1968,10 @@ const scenarioLightBridgeVerticalSlice = async (
     "an incorrect answer should keep the painted bridge physically disconnected",
   );
   assert(
+    await lightBridge.locator('[data-action-prop="bridge-painted-latch"]').count() === 0,
+    "an incorrect answer must not add the painted bridge latch",
+  );
+  assert(
     await page.getByRole("button", { name: "たんけんを おえて 基地へ帰る" }).isDisabled(),
     "return should stay disabled during incorrect feedback",
   );
@@ -1901,6 +1994,29 @@ const scenarioLightBridgeVerticalSlice = async (
     await lightBridge.getAttribute("data-visual-scene-id") === "light-bridge-complete",
     "the painted bridge should reveal its connected plate on a correct answer",
   );
+  assert(
+    await lightBridge.locator('[data-action-prop="bridge-painted-latch"]').count() === 1,
+    "a correct answer should expose exactly one baked-in bridge latch",
+  );
+  await page.waitForFunction(() => {
+    const image = document.querySelector(
+      '.explore-immersive[data-visual-surface-id="explore-encounter-light-bridge"] .explore-immersive-scene-complete.is-visible',
+    );
+    return image instanceof HTMLImageElement
+      && Number.parseFloat(getComputedStyle(image).opacity || "0") >= 0.98;
+  }, undefined, { timeout: STEP_TIMEOUT_MS });
+  const connectedBridgeCrop = await readPaintedEncounterCrop(lightBridge, {
+    surfaceId: "explore-encounter-light-bridge",
+    sceneId: "light-bridge-complete",
+  });
+  assert(
+    connectedBridgeCrop.pass && connectedBridgeCrop.physicalPayoff?.pass,
+    `the connected bridge and painted latch must stay visible at the authored action point at ${viewport.width}x${viewport.height}: ${JSON.stringify(connectedBridgeCrop)}`,
+  );
+  await writeVisualAuditScreenshot(
+    page,
+    `/tmp/sansu-light-bridge-${viewport.width}x${viewport.height}.png`,
+  );
   await waitForNewExploreAttempt(page, bridgeAttemptKey);
   assert(
     await page.getByTestId("rapid-loop-equation").isVisible(),
@@ -1909,6 +2025,15 @@ const scenarioLightBridgeVerticalSlice = async (
   assert(
     await page.getByLabel("ちょうさノート 手掛かり 2/3").isVisible(),
     "the depth-five bridge answer should award Firefly clue two",
+  );
+
+  const ordinaryFirefly = page.locator(
+    '.explore-immersive[data-visual-surface-id="explore-ordinary-firefly"]',
+  );
+  const ordinaryFireflyCrop = await readLiveFireflyCrop(ordinaryFirefly);
+  assert(
+    ordinaryFireflyCrop.pass,
+    `the live Firefly actors and action must stay above the answer fade at ${viewport.width}x${viewport.height}: ${JSON.stringify(ordinaryFireflyCrop)}`,
   );
 
   const ordinaryToast = page.locator(".explore-research-slip");
@@ -2005,6 +2130,43 @@ const scenarioRootTangleVerticalSlice = async (
   await rootEquation.waitFor({ timeout: STEP_TIMEOUT_MS });
   const rootStage = page.locator('.explore-immersive');
   await rootStage.waitFor({ timeout: STEP_TIMEOUT_MS });
+  const rootOverlapArtifacts = await page
+    .locator('.explore-research-slip, [data-testid="explore-discovery-toast"]')
+    .evaluateAll((elements) => elements.flatMap((element) => {
+      const bounds = element.getBoundingClientRect();
+      const style = window.getComputedStyle(element);
+      if (
+        style.display === "none"
+        || style.visibility === "hidden"
+        || Number(style.opacity) <= 0.01
+        || bounds.width <= 0
+        || bounds.height <= 0
+      ) return [];
+      return [{
+        className: element.className,
+        testId: element.getAttribute("data-testid"),
+        role: element.getAttribute("role"),
+        text: element.textContent?.replace(/\s+/g, " ").trim().slice(0, 160),
+        display: style.display,
+        visibility: style.visibility,
+        opacity: style.opacity,
+        bounds: {
+          x: bounds.x,
+          y: bounds.y,
+          width: bounds.width,
+          height: bounds.height,
+        },
+      }];
+    }));
+  const rootOverlapContext = {
+    encounter: await page.locator(".explore-run-grid").getAttribute("data-encounter"),
+    gateId: await page.getByTestId("explore-attempt").getAttribute("data-gate-id"),
+    artifacts: rootOverlapArtifacts,
+  };
+  assert(
+    rootOverlapArtifacts.length === 0,
+    `the ordinary Q6 clue must not overlap the dedicated root-tangle encounter: ${JSON.stringify(rootOverlapContext)}`,
+  );
   assert(
     await rootStage.getAttribute("data-visual-lineage-id") === "pokko-field-v1"
       && await rootStage.getAttribute("data-visual-candidate-id") === "pokko-painted-encounters-v4"
@@ -2200,12 +2362,3240 @@ const scenarioParentsGateShown = async (browser) => {
   await context.close();
 };
 
+const visualAuditPathExists = async (candidatePath) => {
+  try {
+    await fs.access(candidatePath);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+const isPathInside = (candidatePath, parentPath) => (
+  candidatePath === parentPath
+  || candidatePath.startsWith(`${parentPath}${path.sep}`)
+);
+
+const createVisualAuditWorkspace = async (requestedOutputDir) => {
+  assert(requestedOutputDir, "SANSU_VISUAL_AUDIT_OUTPUT_DIR is required");
+  const finalDir = path.resolve(requestedOutputDir);
+  const filesystemRoot = path.parse(finalDir).root;
+  assert(finalDir !== filesystemRoot, "visual audit output cannot be a filesystem root");
+  assert(
+    !isPathInside(finalDir, LEGACY_VISUAL_AUDIT_DIR),
+    `visual audit output must not touch the protected legacy evidence directory: ${LEGACY_VISUAL_AUDIT_DIR}`,
+  );
+  assert(
+    !(await visualAuditPathExists(finalDir)),
+    `visual audit output already exists; refusing to overwrite it: ${finalDir}`,
+  );
+
+  const parentDir = path.dirname(finalDir);
+  await fs.mkdir(parentDir, { recursive: true });
+  const tempDir = path.join(
+    parentDir,
+    `.${path.basename(finalDir)}.tmp-${randomUUID()}`,
+  );
+  await fs.mkdir(tempDir, { recursive: false });
+  return { finalDir, tempDir };
+};
+
+const sha256File = async (filePath) => {
+  const contents = await fs.readFile(filePath);
+  return createHash("sha256").update(contents).digest("hex");
+};
+
+const hashVisualAuditDirectoryTree = async (rootDir) => {
+  const files = [];
+  const compareCodeUnits = (left, right) => (
+    left < right ? -1 : left > right ? 1 : 0
+  );
+  const visit = async (directory, prefix = "") => {
+    const entries = await fs.readdir(directory, { withFileTypes: true });
+    entries.sort((left, right) => compareCodeUnits(left.name, right.name));
+    for (const entry of entries) {
+      const relativePath = prefix
+        ? `${prefix}/${entry.name}`
+        : entry.name;
+      const absolutePath = path.join(directory, entry.name);
+      if (entry.isSymbolicLink()) {
+        throw new Error(`visual audit dist tree must not contain symlinks: ${relativePath}`);
+      }
+      if (entry.isDirectory()) {
+        await visit(absolutePath, relativePath);
+        continue;
+      }
+      assert(entry.isFile(), `visual audit dist tree contains unsupported entry: ${relativePath}`);
+      const contents = await fs.readFile(absolutePath);
+      files.push({
+        path: relativePath,
+        bytes: contents.byteLength,
+        sha256: createHash("sha256").update(contents).digest("hex"),
+      });
+    }
+  };
+  await visit(rootDir);
+  files.sort((left, right) => compareCodeUnits(left.path, right.path));
+  const aggregate = createHash("sha256");
+  let totalBytes = 0;
+  for (const file of files) {
+    aggregate.update(file.path);
+    aggregate.update("\0");
+    aggregate.update(String(file.bytes));
+    aggregate.update("\0");
+    aggregate.update(file.sha256);
+    aggregate.update("\n");
+    totalBytes += file.bytes;
+  }
+  return {
+    sha256: aggregate.digest("hex"),
+    fileCount: files.length,
+    totalBytes,
+  };
+};
+
+const normalizeVisualAuditBaseUrl = (rawBaseUrl) => {
+  assert(rawBaseUrl, "SANSU_VISUAL_AUDIT_BASE_URL is required");
+  const target = new URL(rawBaseUrl);
+  assert(
+    target.protocol === "https:" || target.protocol === "http:",
+    `visual audit target must use HTTP(S); got ${target.protocol}`,
+  );
+  target.hash = "";
+  target.search = "";
+  return target.toString().replace(/\/$/, "");
+};
+
+const readVisualAuditTargetVersion = async (baseUrl) => {
+  assert(
+    VISUAL_AUDIT_EXPECTED_REVISION,
+    "SANSU_VISUAL_AUDIT_EXPECTED_REVISION is required",
+  );
+  assert(
+    /^[0-9a-f]{40}$/.test(VISUAL_AUDIT_EXPECTED_REVISION),
+    "SANSU_VISUAL_AUDIT_EXPECTED_REVISION must be a full lowercase Git commit SHA",
+  );
+  const versionUrl = new URL("version.json", `${baseUrl}/`);
+  versionUrl.searchParams.set("visualAudit", Date.now().toString());
+  const response = await fetch(versionUrl, {
+    headers: {
+      "cache-control": "no-cache, no-store, must-revalidate",
+      pragma: "no-cache",
+    },
+  });
+  assert(response.ok, `visual audit target version request failed: ${response.status} ${versionUrl}`);
+  const version = await response.json();
+  assert(typeof version.revision === "string" && version.revision, "version.json must expose revision");
+  assert(
+    version.revision !== "development-local",
+    "release visual audit requires a deployed build revision, not development-local",
+  );
+  assert(
+    version.revision === VISUAL_AUDIT_EXPECTED_REVISION,
+    `visual audit target revision must equal SANSU_VISUAL_AUDIT_EXPECTED_REVISION; got ${version.revision}`,
+  );
+  assert(typeof version.delivery === "string" && version.delivery, "version.json must expose delivery");
+  assert(
+    version.delivery === "snap-root-v1",
+    `visual audit target must be built with snap-root-v1; got ${version.delivery}`,
+  );
+  assert(
+    version.visualLineage === "pokko-field-v1",
+    `version.json visualLineage must be pokko-field-v1; got ${version.visualLineage}`,
+  );
+  return {
+    url: versionUrl.toString(),
+    version: version.version ?? null,
+    revision: version.revision,
+    delivery: version.delivery,
+    visualLineage: version.visualLineage,
+  };
+};
+
+const attestRequiredVisualAssets = async (baseUrl) => {
+  const assets = [];
+  for (const [assetPath, expectedSha256] of Object.entries(
+    REQUIRED_VISUAL_ASSET_SHA256,
+  )) {
+    const assetUrl = new URL(assetPath, `${baseUrl}/`);
+    assetUrl.searchParams.set("visualAuditAsset", Date.now().toString());
+    const response = await fetch(assetUrl, {
+      headers: {
+        "cache-control": "no-cache, no-store, must-revalidate",
+        pragma: "no-cache",
+      },
+    });
+    assert(response.ok, `required painted asset request failed: ${response.status} ${assetUrl}`);
+    const bytes = Buffer.from(await response.arrayBuffer());
+    const sha256 = createHash("sha256").update(bytes).digest("hex");
+    assert(
+      sha256 === expectedSha256,
+      `required painted asset changed without a new approved contract: ${assetPath} expected ${expectedSha256}, got ${sha256}`,
+    );
+    assets.push({
+      path: assetPath,
+      sha256,
+      bytes: bytes.byteLength,
+      contentType: response.headers.get("content-type"),
+      pass: true,
+    });
+  }
+  return {
+    contract: "pokko-field-v1-approved-critical-raster-sha256",
+    count: assets.length,
+    assets,
+    pass: true,
+  };
+};
+
+const readVisualAuditRepositoryState = (expectedRevision) => {
+  const headResult = spawnSync("git", ["rev-parse", "HEAD"], {
+    cwd: process.cwd(),
+    encoding: "utf8",
+  });
+  assert(
+    headResult.status === 0,
+    `visual audit could not read local Git HEAD: ${headResult.stderr || headResult.stdout}`,
+  );
+  const headRevision = headResult.stdout.trim();
+  assert(
+    headRevision === expectedRevision,
+    `visual audit target revision ${expectedRevision} must equal local Git HEAD ${headRevision}`,
+  );
+  const treeResult = spawnSync("git", ["rev-parse", "HEAD^{tree}"], {
+    cwd: process.cwd(),
+    encoding: "utf8",
+  });
+  assert(
+    treeResult.status === 0,
+    `visual audit could not read local Git source tree: ${treeResult.stderr || treeResult.stdout}`,
+  );
+  const headTree = treeResult.stdout.trim();
+  assert(/^[0-9a-f]{40}$/.test(headTree), `visual audit got an invalid HEAD tree: ${headTree}`);
+
+  const statusResult = spawnSync(
+    "git",
+    ["status", "--porcelain=v1", "-z", "--untracked-files=all"],
+    {
+    cwd: process.cwd(),
+    encoding: "utf8",
+    },
+  );
+  assert(
+    statusResult.status === 0,
+    `visual audit could not read local Git status: ${statusResult.stderr || statusResult.stdout}`,
+  );
+  const statusRecords = statusResult.stdout.split("\0");
+  const dirtyEntries = [];
+  for (let index = 0; index < statusRecords.length; index += 1) {
+    const record = statusRecords[index];
+    if (!record) continue;
+    const status = record.slice(0, 2);
+    const paths = [record.slice(3)];
+    if (status.includes("R") || status.includes("C")) {
+      const originalPath = statusRecords[index + 1];
+      assert(originalPath, `visual audit could not parse renamed Git path: ${record}`);
+      paths.push(originalPath);
+      index += 1;
+    }
+    dirtyEntries.push({ status, path: paths[0], paths });
+  }
+  const runtimeInputPrefixes = [
+    ".env",
+    "index.html",
+    "package.json",
+    "package-lock.json",
+    "postcss.config",
+    "public/",
+    "scripts/",
+    "src/",
+    "tailwind.config",
+    "tools/",
+    "tsconfig",
+    "vite.config",
+  ];
+  const dirtyRuntimeInputs = dirtyEntries.filter(({ paths }) => (
+    paths.some((candidatePath) => runtimeInputPrefixes.some((prefix) => (
+      prefix.endsWith("/")
+        ? candidatePath.startsWith(prefix)
+        : candidatePath === prefix || candidatePath.startsWith(`${prefix}.`)
+    )))
+  ));
+  assert(
+    dirtyRuntimeInputs.length === 0,
+    `visual audit refuses dirty runtime inputs: ${JSON.stringify(dirtyRuntimeInputs)}`,
+  );
+
+  return {
+    headRevision,
+    headTree,
+    targetMatchesHead: true,
+    dirty: dirtyEntries.length > 0,
+    dirtyRuntimeInputs,
+    nonRuntimeDirtyEntryCount: dirtyEntries.length,
+  };
+};
+
+const readVisualAuditBuildProvenance = async ({
+  targetVersion,
+  repository,
+  baseUrl,
+}) => {
+  if (!VISUAL_AUDIT_BUILD_PROVENANCE_PATH) {
+    return {
+      mode: "target-self-identification-plus-local-source-match",
+      verifiedExactCleanBuild: false,
+      note: "No exact-build wrapper provenance was supplied. Revision metadata, DOM identity, local HEAD, and approved painted assets are verified, but the complete served build is not attested as a clean-HEAD build.",
+    };
+  }
+
+  const provenancePath = path.resolve(VISUAL_AUDIT_BUILD_PROVENANCE_PATH);
+  let provenance;
+  try {
+    provenance = JSON.parse(await fs.readFile(provenancePath, "utf8"));
+  } catch (error) {
+    throw new Error(`visual audit could not read build provenance: ${error.message}`);
+  }
+  assert(
+    provenance.schemaVersion === "sansu-exact-clean-build-v1"
+      && provenance.wrapperId === "sansu-local-visual-audit-v1",
+    `visual audit build provenance schema is unsupported: ${JSON.stringify(provenance)}`,
+  );
+  assert(
+    provenance.revision === targetVersion.revision
+      && provenance.sourceTreeSha === repository.headTree
+      && provenance.delivery === targetVersion.delivery
+      && provenance.visualLineage === targetVersion.visualLineage
+      && normalizeVisualAuditBaseUrl(provenance.baseUrl) === baseUrl,
+    `visual audit build provenance identity mismatch: ${JSON.stringify({ provenance, targetVersion, repository, baseUrl })}`,
+  );
+  assert(
+    typeof provenance.packageLockSha256 === "string"
+      && /^[0-9a-f]{64}$/.test(provenance.packageLockSha256)
+      && typeof provenance.nodeVersion === "string"
+      && typeof provenance.npmVersion === "string",
+    `visual audit build provenance is missing dependency/runtime identity: ${JSON.stringify(provenance)}`,
+  );
+  const localPackageLockSha256 = await sha256File(path.resolve("package-lock.json"));
+  assert(
+    localPackageLockSha256 === provenance.packageLockSha256,
+    `visual audit build provenance package-lock does not match exact local HEAD: ${JSON.stringify({ expected: provenance.packageLockSha256, actual: localPackageLockSha256 })}`,
+  );
+  assert(
+    provenance.targetAttestation
+      && provenance.targetAttestation.path === VISUAL_AUDIT_TARGET_ATTESTATION_FILE
+      && typeof provenance.targetAttestation.nonce === "string"
+      && provenance.targetAttestation.nonce.length >= 16
+      && /^[0-9a-f]{64}$/.test(provenance.targetAttestation.sha256),
+    `visual audit build provenance is missing its served-target nonce: ${JSON.stringify(provenance)}`,
+  );
+  const targetAttestationUrl = new URL(
+    provenance.targetAttestation.path,
+    `${baseUrl}/`,
+  );
+  targetAttestationUrl.searchParams.set("visualAuditTarget", randomUUID());
+  const targetAttestationResponse = await fetch(targetAttestationUrl, {
+    headers: {
+      "cache-control": "no-cache, no-store, must-revalidate",
+      pragma: "no-cache",
+    },
+  });
+  assert(
+    targetAttestationResponse.ok,
+    `visual audit served-target attestation request failed: ${targetAttestationResponse.status} ${targetAttestationUrl}`,
+  );
+  const targetAttestationBytes = Buffer.from(
+    await targetAttestationResponse.arrayBuffer(),
+  );
+  let targetAttestation;
+  try {
+    targetAttestation = JSON.parse(targetAttestationBytes.toString("utf8"));
+  } catch (error) {
+    throw new Error(`visual audit served-target attestation is invalid JSON: ${error.message}`);
+  }
+  assert(
+    createHash("sha256").update(targetAttestationBytes).digest("hex")
+        === provenance.targetAttestation.sha256
+      && targetAttestation.schemaVersion === "sansu-local-visual-audit-target-v1"
+      && targetAttestation.wrapperId === provenance.wrapperId
+      && targetAttestation.revision === provenance.revision
+      && targetAttestation.sourceTreeSha === provenance.sourceTreeSha
+      && targetAttestation.nonce === provenance.targetAttestation.nonce,
+    `visual audit target is not the exact dist identified by build provenance: ${JSON.stringify({ expected: provenance.targetAttestation, actual: targetAttestation })}`,
+  );
+  assert(
+    provenance.dist
+      && typeof provenance.dist.path === "string"
+      && /^[0-9a-f]{64}$/.test(provenance.dist.sha256),
+    `visual audit build provenance is missing its dist tree: ${JSON.stringify(provenance)}`,
+  );
+  const distTree = await hashVisualAuditDirectoryTree(path.resolve(provenance.dist.path));
+  assert(
+    distTree.sha256 === provenance.dist.sha256
+      && distTree.fileCount === provenance.dist.fileCount
+      && distTree.totalBytes === provenance.dist.totalBytes,
+    `visual audit dist tree changed after exact-HEAD build: ${JSON.stringify({ expected: provenance.dist, actual: distTree })}`,
+  );
+  return {
+    schemaVersion: provenance.schemaVersion,
+    wrapperId: provenance.wrapperId,
+    mode: "exact-clean-head-local-wrapper-v1",
+    verifiedExactCleanBuild: true,
+    revision: provenance.revision,
+    sourceTreeSha: provenance.sourceTreeSha,
+    delivery: provenance.delivery,
+    visualLineage: provenance.visualLineage,
+    baseUrl: provenance.baseUrl,
+    createdAt: provenance.createdAt,
+    packageLockSha256: provenance.packageLockSha256,
+    nodeVersion: provenance.nodeVersion,
+    npmVersion: provenance.npmVersion,
+    targetAttestation: provenance.targetAttestation,
+    dist: distTree,
+  };
+};
+
+const canonicalVisualAuditBuildProvenance = (provenance) => ({
+  schemaVersion: provenance.schemaVersion ?? null,
+  wrapperId: provenance.wrapperId ?? null,
+  mode: provenance.mode,
+  verifiedExactCleanBuild: provenance.verifiedExactCleanBuild,
+  revision: provenance.revision ?? null,
+  sourceTreeSha: provenance.sourceTreeSha ?? null,
+  delivery: provenance.delivery ?? null,
+  visualLineage: provenance.visualLineage ?? null,
+  baseUrl: provenance.baseUrl
+    ? normalizeVisualAuditBaseUrl(provenance.baseUrl)
+    : null,
+  createdAt: provenance.createdAt ?? null,
+  packageLockSha256: provenance.packageLockSha256 ?? null,
+  nodeVersion: provenance.nodeVersion ?? null,
+  npmVersion: provenance.npmVersion ?? null,
+  targetAttestation: provenance.targetAttestation
+    ? {
+        path: provenance.targetAttestation.path,
+        nonce: provenance.targetAttestation.nonce,
+        sha256: provenance.targetAttestation.sha256,
+      }
+    : null,
+  dist: provenance.dist
+    ? {
+        sha256: provenance.dist.sha256,
+        fileCount: provenance.dist.fileCount,
+        totalBytes: provenance.dist.totalBytes,
+      }
+    : null,
+});
+
+const assertVisualAuditBuildProvenanceStable = (start, current, stage) => {
+  const expected = canonicalVisualAuditBuildProvenance(start);
+  const actual = canonicalVisualAuditBuildProvenance(current);
+  assert(
+    JSON.stringify(actual) === JSON.stringify(expected),
+    `visual audit build provenance changed ${stage}: ${JSON.stringify({ expected, actual })}`,
+  );
+};
+
+const clearVisualAuditRuntimeCaches = async (context, page) => {
+  await page.evaluate(async () => {
+    if ("serviceWorker" in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(registrations.map((registration) => registration.unregister()));
+    }
+    if ("caches" in window) {
+      const names = await caches.keys();
+      await Promise.all(names.map((name) => caches.delete(name)));
+    }
+  });
+  const session = await context.newCDPSession(page);
+  try {
+    await session.send("Network.enable");
+    await session.send("Network.clearBrowserCache");
+  } finally {
+    await session.detach();
+  }
+};
+
+const createVisualAuditNetworkProbe = async (context, page, targetOrigin) => {
+  const entries = [];
+  let lastReadIndex = 0;
+  const session = await context.newCDPSession(page);
+  await session.send("Network.enable");
+  session.on("Network.responseReceived", ({ response, type }) => {
+    try {
+      if (new URL(response.url).origin !== targetOrigin) return;
+    } catch {
+      return;
+    }
+    entries.push({
+      url: response.url,
+      type,
+      status: response.status,
+      fromDiskCache: Boolean(response.fromDiskCache),
+      fromServiceWorker: Boolean(response.fromServiceWorker),
+      fromPrefetchCache: Boolean(response.fromPrefetchCache),
+    });
+  });
+  return {
+    entries,
+    takeEntries: () => {
+      const stageEntries = entries.slice(lastReadIndex);
+      lastReadIndex = entries.length;
+      return stageEntries;
+    },
+    detach: () => session.detach(),
+  };
+};
+
+const readVisualAuditCacheState = async (page, networkProbe, label) => {
+  const runtime = await page.evaluate(async () => {
+    const cacheNames = "caches" in window ? await caches.keys() : [];
+    return {
+      serviceWorkerControlled: Boolean(navigator.serviceWorker?.controller),
+      cacheNames,
+    };
+  });
+  const entries = networkProbe.takeEntries();
+  return {
+    label,
+    serviceWorkerControlled: runtime.serviceWorkerControlled,
+    cacheNames: runtime.cacheNames,
+    responseCount: entries.length,
+    diskCacheResponseCount: entries.filter((entry) => entry.fromDiskCache).length,
+    serviceWorkerResponseCount: entries.filter((entry) => entry.fromServiceWorker).length,
+    prefetchCacheResponseCount: entries.filter((entry) => entry.fromPrefetchCache).length,
+    cumulativeResponseCount: networkProbe.entries.length,
+  };
+};
+
+const settleVisualAuditPage = async (page, { waitForFiniteAnimations = true } = {}) => {
+  await page.waitForFunction(
+    () => !document.fonts || document.fonts.status === "loaded",
+    undefined,
+    { timeout: VISUAL_AUDIT_SETTLE_TIMEOUT_MS },
+  );
+  await page.evaluate(async () => {
+    if (document.fonts) await document.fonts.ready;
+    await new Promise((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(resolve));
+    });
+  });
+
+  if (!waitForFiniteAnimations) {
+    await page.evaluate(() => {
+      document.getAnimations().forEach((animation) => {
+        const endTime = animation.effect?.getComputedTiming().endTime;
+        if (typeof endTime === "number" && Number.isFinite(endTime)) {
+          try {
+            animation.finish();
+          } catch {
+            // A detached transition can disappear between enumeration and
+            // finish. The postcondition below still rejects a live remainder.
+          }
+        }
+      });
+    });
+  }
+
+  if (waitForFiniteAnimations) {
+    await page.waitForFunction(
+      () => document.getAnimations().every((animation) => {
+        const endTime = animation.effect?.getComputedTiming().endTime;
+        const isFinite = typeof endTime === "number" && Number.isFinite(endTime);
+        return !isFinite || animation.playState === "finished" || animation.playState === "idle";
+      }),
+      undefined,
+      { timeout: VISUAL_AUDIT_SETTLE_TIMEOUT_MS },
+    );
+  }
+  await page.evaluate(() => new Promise((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(resolve));
+  }));
+
+  await page.waitForFunction(
+    () => {
+      const isVisible = (image) => {
+        const style = window.getComputedStyle(image);
+        const bounds = image.getBoundingClientRect();
+        return style.display !== "none"
+          && style.visibility !== "hidden"
+          && Number.parseFloat(style.opacity || "1") > 0
+          && bounds.width > 0
+          && bounds.height > 0
+          && bounds.right > 0
+          && bounds.bottom > 0
+          && bounds.left < window.innerWidth
+          && bounds.top < window.innerHeight;
+      };
+      return Array.from(document.images)
+        .filter(isVisible)
+        .every((image) => (
+          image.complete
+          && image.naturalWidth > 0
+          && image.naturalHeight > 0
+        ));
+    },
+    undefined,
+    { timeout: VISUAL_AUDIT_SETTLE_TIMEOUT_MS },
+  );
+  await page.evaluate(async () => {
+    const isVisible = (image) => {
+      const style = window.getComputedStyle(image);
+      const bounds = image.getBoundingClientRect();
+      return style.display !== "none"
+        && style.visibility !== "hidden"
+        && Number.parseFloat(style.opacity || "1") > 0
+        && bounds.width > 0
+        && bounds.height > 0
+        && bounds.right > 0
+        && bounds.bottom > 0
+        && bounds.left < window.innerWidth
+        && bounds.top < window.innerHeight;
+    };
+    await Promise.all(
+      Array.from(document.images)
+        .filter(isVisible)
+        .map((image) => image.decode()),
+    );
+    await new Promise((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(resolve));
+    });
+  });
+  if (waitForFiniteAnimations) {
+    await page.waitForFunction(
+      () => document.getAnimations().every((animation) => {
+        const endTime = animation.effect?.getComputedTiming().endTime;
+        const isFinite = typeof endTime === "number" && Number.isFinite(endTime);
+        return !isFinite || animation.playState === "finished" || animation.playState === "idle";
+      }),
+      undefined,
+      { timeout: VISUAL_AUDIT_SETTLE_TIMEOUT_MS },
+    );
+  }
+  await page.evaluate(() => new Promise((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(resolve));
+  }));
+
+  return page.evaluate((settleOptions) => {
+    const boundsOf = (element) => {
+      const bounds = element.getBoundingClientRect();
+      return {
+        left: bounds.left,
+        right: bounds.right,
+        top: bounds.top,
+        bottom: bounds.bottom,
+        width: bounds.width,
+        height: bounds.height,
+      };
+    };
+    const isVisible = (image) => {
+      const style = window.getComputedStyle(image);
+      const bounds = image.getBoundingClientRect();
+      return style.display !== "none"
+        && style.visibility !== "hidden"
+        && Number.parseFloat(style.opacity || "1") > 0
+        && bounds.width > 0
+        && bounds.height > 0
+        && bounds.right > 0
+        && bounds.bottom > 0
+        && bounds.left < window.innerWidth
+        && bounds.top < window.innerHeight;
+    };
+    const describeAnimation = (animation) => {
+      const timing = animation.effect?.getComputedTiming();
+      return {
+        playState: animation.playState,
+        currentTime: typeof animation.currentTime === "number"
+          ? animation.currentTime
+          : null,
+        endTime: typeof timing?.endTime === "number" && Number.isFinite(timing.endTime)
+          ? timing.endTime
+          : null,
+        infinite: timing?.endTime === Infinity,
+      };
+    };
+    const animations = document.getAnimations().map(describeAnimation);
+    const visibleImages = Array.from(document.images)
+      .filter(isVisible)
+      .map((image) => ({
+        currentSrc: image.currentSrc || image.src,
+        className: image.className,
+        complete: image.complete,
+        naturalWidth: image.naturalWidth,
+        naturalHeight: image.naturalHeight,
+        decoded: image.complete && image.naturalWidth > 0 && image.naturalHeight > 0,
+        opacity: Number.parseFloat(window.getComputedStyle(image).opacity || "1"),
+        bounds: boundsOf(image),
+      }));
+    return {
+      finiteAnimationWaitApplied: settleOptions.waitForFiniteAnimations,
+      fontsStatus: document.fonts?.status ?? "unsupported",
+      visibleImageCount: visibleImages.length,
+      allVisibleImagesDecoded: visibleImages.every((image) => image.decoded),
+      visibleImages,
+      finiteAnimationsRemaining: animations.filter(
+        (animation) => !animation.infinite
+          && animation.playState !== "finished"
+          && animation.playState !== "idle",
+      ),
+      infiniteAnimations: animations.filter((animation) => animation.infinite),
+    };
+  }, { waitForFiniteAnimations });
+};
+
+const readPaintedEncounterCrop = async (surface, surfaceIdentity) => {
+  const focalContractKey = `${surfaceIdentity.surfaceId}:${surfaceIdentity.sceneId}`;
+  const sourceFocals = PAINTED_ENCOUNTER_FOCALS[focalContractKey];
+  assert(
+    sourceFocals,
+    `painted encounter has no focal-point contract: ${focalContractKey}`,
+  );
+
+  return surface.evaluate(async (element, contract) => {
+    const { focalPoints, sceneId, surfaceId } = contract;
+    const sceneImages = Array.from(
+      element.querySelectorAll("img.explore-immersive-scene"),
+    );
+    const activeScene = [...sceneImages].reverse().find(
+      (image) => image.classList.contains("is-visible"),
+    ) ?? sceneImages.find(
+      (image) => image.classList.contains("explore-immersive-scene-idle"),
+    );
+    if (!(activeScene instanceof HTMLImageElement)) {
+      return {
+        applied: true,
+        pass: false,
+        error: "No active painted encounter scene image was found.",
+        sourceFocals: focalPoints,
+      };
+    }
+
+    await activeScene.decode();
+
+    const numberFromStyle = (value) => Number.parseFloat(value) || 0;
+    const boundsOf = (target) => {
+      const bounds = target.getBoundingClientRect();
+      return {
+        left: bounds.left,
+        right: bounds.right,
+        top: bounds.top,
+        bottom: bounds.bottom,
+        width: bounds.width,
+        height: bounds.height,
+      };
+    };
+    const style = window.getComputedStyle(activeScene);
+    const imageBounds = boundsOf(activeScene);
+    const surfaceBounds = boundsOf(element);
+    const surfaceStyle = window.getComputedStyle(element);
+    const scrim = element.querySelector(".explore-immersive-scrim");
+    const scrimBackgroundImage = scrim
+      ? window.getComputedStyle(scrim).backgroundImage
+      : "";
+    const fadeStartToken = surfaceStyle.getPropertyValue("--explore-world-fade-start").trim();
+    const fadeStartPercent = Number.parseFloat(fadeStartToken);
+    const fadeStartY = Number.isFinite(fadeStartPercent)
+      ? surfaceBounds.top + surfaceBounds.height * (fadeStartPercent / 100)
+      : Number.NaN;
+    const isPortrait = window.innerHeight > window.innerWidth;
+    const expectedScrimStops = window.innerWidth >= 1024 && isPortrait
+      && window.innerHeight >= 1600
+      ? ["70%", "74%", "80%"]
+      : window.innerWidth >= 600 && (window.innerWidth <= 1023 || isPortrait)
+        ? ["62.5%", "67%", "74%"]
+        : window.innerWidth >= 1024
+          ? ["72%", "100%"]
+          : ["52%", "62%", "73%"];
+    const scrimContractPass = expectedScrimStops.every(
+      (stop) => scrimBackgroundImage.includes(stop),
+    );
+    const focalSafeMargin = window.innerWidth >= 600 ? 24 : 16;
+    const borderLeft = numberFromStyle(style.borderLeftWidth);
+    const borderRight = numberFromStyle(style.borderRightWidth);
+    const borderTop = numberFromStyle(style.borderTopWidth);
+    const borderBottom = numberFromStyle(style.borderBottomWidth);
+    const paddingLeft = numberFromStyle(style.paddingLeft);
+    const paddingRight = numberFromStyle(style.paddingRight);
+    const paddingTop = numberFromStyle(style.paddingTop);
+    const paddingBottom = numberFromStyle(style.paddingBottom);
+    const contentBox = {
+      left: imageBounds.left + borderLeft + paddingLeft,
+      top: imageBounds.top + borderTop + paddingTop,
+      width: imageBounds.width
+        - borderLeft
+        - borderRight
+        - paddingLeft
+        - paddingRight,
+      height: imageBounds.height
+        - borderTop
+        - borderBottom
+        - paddingTop
+        - paddingBottom,
+    };
+    contentBox.right = contentBox.left + contentBox.width;
+    contentBox.bottom = contentBox.top + contentBox.height;
+
+    const naturalWidth = activeScene.naturalWidth;
+    const naturalHeight = activeScene.naturalHeight;
+    const containScale = Math.min(
+      contentBox.width / naturalWidth,
+      contentBox.height / naturalHeight,
+    );
+    const coverScale = Math.max(
+      contentBox.width / naturalWidth,
+      contentBox.height / naturalHeight,
+    );
+    let scaleX = 0;
+    let scaleY = 0;
+    let objectFitSupported = true;
+    switch (style.objectFit) {
+      case "cover":
+        scaleX = coverScale;
+        scaleY = coverScale;
+        break;
+      case "contain":
+        scaleX = containScale;
+        scaleY = containScale;
+        break;
+      case "fill":
+        scaleX = contentBox.width / naturalWidth;
+        scaleY = contentBox.height / naturalHeight;
+        break;
+      case "none":
+        scaleX = 1;
+        scaleY = 1;
+        break;
+      case "scale-down":
+        scaleX = Math.min(1, containScale);
+        scaleY = scaleX;
+        break;
+      default:
+        objectFitSupported = false;
+    }
+
+    const renderedWidth = naturalWidth * scaleX;
+    const renderedHeight = naturalHeight * scaleY;
+    const freeSpaceX = contentBox.width - renderedWidth;
+    const freeSpaceY = contentBox.height - renderedHeight;
+    const positionTokens = style.objectPosition.trim().split(/\s+/);
+    let horizontalToken = positionTokens[0] ?? "50%";
+    let verticalToken = positionTokens[1] ?? "50%";
+    if (positionTokens.length === 1) {
+      if (horizontalToken === "top" || horizontalToken === "bottom") {
+        verticalToken = horizontalToken;
+        horizontalToken = "50%";
+      } else {
+        verticalToken = "50%";
+      }
+    } else if (
+      (horizontalToken === "top" || horizontalToken === "bottom")
+      && (verticalToken === "left" || verticalToken === "right")
+    ) {
+      [horizontalToken, verticalToken] = [verticalToken, horizontalToken];
+    }
+    const parsePosition = (token, axis, freeSpace) => {
+      const normalized = token.toLowerCase();
+      const keywords = axis === "x"
+        ? { left: 0, center: 0.5, right: 1 }
+        : { top: 0, center: 0.5, bottom: 1 };
+      if (Object.hasOwn(keywords, normalized)) {
+        return {
+          supported: true,
+          token,
+          kind: "keyword",
+          offset: freeSpace * keywords[normalized],
+        };
+      }
+      if (/^-?(?:\d+|\d*\.\d+)%$/.test(normalized)) {
+        return {
+          supported: true,
+          token,
+          kind: "percentage",
+          offset: freeSpace * (Number.parseFloat(normalized) / 100),
+        };
+      }
+      if (/^-?(?:\d+|\d*\.\d+)px$/.test(normalized) || normalized === "0") {
+        return {
+          supported: true,
+          token,
+          kind: "length",
+          offset: Number.parseFloat(normalized),
+        };
+      }
+      return {
+        supported: false,
+        token,
+        kind: "unsupported",
+        offset: 0,
+      };
+    };
+    const positionX = parsePosition(horizontalToken, "x", freeSpaceX);
+    const positionY = parsePosition(verticalToken, "y", freeSpaceY);
+    const objectPositionSupported = positionTokens.length <= 2
+      && positionX.supported
+      && positionY.supported;
+    const offsetX = positionX.offset;
+    const offsetY = positionY.offset;
+
+    const shelf = element.querySelector(".explore-immersive-brief");
+    const shelfBounds = shelf ? boundsOf(shelf) : null;
+    const shelfOverlapsImage = Boolean(shelfBounds)
+      && shelfBounds.left < imageBounds.right
+      && shelfBounds.right > imageBounds.left;
+    const shelfStyle = shelf ? window.getComputedStyle(shelf) : null;
+    const backgroundColor = shelfStyle?.backgroundColor ?? null;
+    const colorParts = backgroundColor?.match(/[\d.]+%?/g) ?? [];
+    const alphaToken = colorParts.length >= 4 ? colorParts[3] : "1";
+    const backgroundAlpha = alphaToken.endsWith("%")
+      ? Number.parseFloat(alphaToken) / 100
+      : Number.parseFloat(alphaToken);
+    const shelfOpacity = Number.parseFloat(shelfStyle?.opacity ?? "1");
+    const effectiveShelfAlpha = backgroundAlpha * shelfOpacity;
+    const shelfIsOpaque = Boolean(shelfBounds)
+      && Number.isFinite(effectiveShelfAlpha)
+      && effectiveShelfAlpha >= 0.9;
+
+    const isVisibleElement = (target) => {
+      if (!(target instanceof HTMLElement || target instanceof SVGElement)) return false;
+      const targetStyle = window.getComputedStyle(target);
+      const targetBounds = target.getBoundingClientRect();
+      return targetStyle.display !== "none"
+        && targetStyle.visibility !== "hidden"
+        && Number.parseFloat(targetStyle.opacity || "1") > 0
+        && targetBounds.width > 0
+        && targetBounds.height > 0
+        && targetBounds.right > 0
+        && targetBounds.bottom > 0
+        && targetBounds.left < window.innerWidth
+        && targetBounds.top < window.innerHeight;
+    };
+    const hud = document.querySelector('[data-testid="explore-hud"]');
+    const hudBounds = isVisibleElement(hud) ? boundsOf(hud) : null;
+    const overlayBounds = Array.from(document.querySelectorAll([
+      ".explore-research-slip",
+      ".explore-specimen-card",
+      ".explore-immersive-brief",
+      ".explore-immersive-hint",
+      ".explore-immersive-keypad-shell",
+    ].join(",")))
+      .filter(isVisibleElement)
+      .map((target) => ({
+        selector: target.className,
+        bounds: boundsOf(target),
+      }));
+    const screenPointState = (viewportX, viewportY) => {
+      const belowHud = !hudBounds || viewportY > hudBounds.bottom;
+      const occludingOverlays = overlayBounds.filter(({ bounds }) => (
+        viewportX >= bounds.left
+        && viewportX <= bounds.right
+        && viewportY >= bounds.top
+        && viewportY <= bounds.bottom
+      ));
+      return {
+        belowHud,
+        occludingOverlays,
+        unobscured: belowHud && occludingOverlays.length === 0,
+      };
+    };
+
+    const projectPoint = ([sourceX, sourceY]) => {
+      const viewportX = contentBox.left + offsetX + sourceX * scaleX;
+      const viewportY = contentBox.top + offsetY + sourceY * scaleY;
+      const withinViewport = viewportX >= 0
+        && viewportX <= window.innerWidth
+        && viewportY >= 0
+        && viewportY <= window.innerHeight;
+      const withinSurface = viewportX >= surfaceBounds.left
+        && viewportX <= surfaceBounds.right
+        && viewportY >= surfaceBounds.top
+        && viewportY <= surfaceBounds.bottom;
+      const aboveShelf = !shelfBounds || !(
+        viewportX >= shelfBounds.left
+        && viewportX <= shelfBounds.right
+        && viewportY >= shelfBounds.top
+        && viewportY <= shelfBounds.bottom
+      );
+      const fadeClearance = fadeStartY - viewportY;
+      const aboveFade = Number.isFinite(fadeClearance)
+        && fadeClearance >= focalSafeMargin;
+      const visibility = screenPointState(viewportX, viewportY);
+      return {
+        source: { x: sourceX, y: sourceY },
+        viewport: { x: viewportX, y: viewportY },
+        withinViewport,
+        withinSurface,
+        aboveShelf,
+        aboveFade,
+        fadeClearance,
+        ...visibility,
+        pass: withinViewport
+          && withinSurface
+          && aboveShelf
+          && aboveFade
+          && visibility.unobscured,
+      };
+    };
+    const points = {
+      actorFace: projectPoint(focalPoints.actorFace),
+      actorFeet: projectPoint(focalPoints.actorFeet),
+      actionPayoff: projectPoint(focalPoints.actionPayoff),
+    };
+    const storyViewportRect = {
+      left: Math.max(surfaceBounds.left, imageBounds.left, 0),
+      right: Math.min(surfaceBounds.right, imageBounds.right, window.innerWidth),
+      top: Math.max(
+        surfaceBounds.top,
+        imageBounds.top,
+        hudBounds?.bottom ?? 0,
+        0,
+      ),
+      bottom: Math.min(
+        surfaceBounds.bottom,
+        imageBounds.bottom,
+        shelfOverlapsImage ? shelfBounds.top : Number.POSITIVE_INFINITY,
+        fadeStartY - focalSafeMargin,
+        window.innerHeight,
+      ),
+    };
+    storyViewportRect.width = Math.max(0, storyViewportRect.right - storyViewportRect.left);
+    storyViewportRect.height = Math.max(0, storyViewportRect.bottom - storyViewportRect.top);
+    const viewportRectToSource = (rect) => ({
+      left: Math.max(0, Math.min(
+        naturalWidth,
+        (rect.left - contentBox.left - offsetX) / scaleX,
+      )),
+      right: Math.max(0, Math.min(
+        naturalWidth,
+        (rect.right - contentBox.left - offsetX) / scaleX,
+      )),
+      top: Math.max(0, Math.min(
+        naturalHeight,
+        (rect.top - contentBox.top - offsetY) / scaleY,
+      )),
+      bottom: Math.max(0, Math.min(
+        naturalHeight,
+        (rect.bottom - contentBox.top - offsetY) / scaleY,
+      )),
+    });
+    const storySourceRect = viewportRectToSource(storyViewportRect);
+    storySourceRect.width = Math.max(0, storySourceRect.right - storySourceRect.left);
+    storySourceRect.height = Math.max(0, storySourceRect.bottom - storySourceRect.top);
+    storySourceRect.area = storySourceRect.width * storySourceRect.height;
+    const physicalPayoffRequired = surfaceId === "explore-encounter-light-bridge"
+      && sceneId !== "light-bridge-idle";
+    const physicalPayoffId = activeScene.getAttribute("data-action-prop");
+    const physicalPayoffExpectedAsset = sceneId === "light-bridge-crossed"
+      ? "/assets/explore/light-bridge/scene-crossed-pokko-v4.jpg"
+      : "/assets/explore/light-bridge/scene-complete-pokko-v4.jpg";
+    const physicalPayoffPass = !physicalPayoffRequired || Boolean(
+      physicalPayoffId === "bridge-painted-latch"
+      && activeScene.currentSrc.endsWith(physicalPayoffExpectedAsset)
+      && points.actionPayoff.pass,
+    );
+    const activeOpacity = Number.parseFloat(style.opacity || "1");
+    const activeVisible = style.display !== "none"
+      && style.visibility !== "hidden"
+      && activeOpacity >= 0.98
+      && imageBounds.width > 0
+      && imageBounds.height > 0
+      && imageBounds.right > 0
+      && imageBounds.bottom > 0
+      && imageBounds.left < window.innerWidth
+      && imageBounds.top < window.innerHeight;
+    const decoded = activeScene.complete && naturalWidth > 0 && naturalHeight > 0;
+    const projectionValid = objectFitSupported
+      && objectPositionSupported
+      && Number.isFinite(scaleX)
+      && Number.isFinite(scaleY)
+      && scaleX > 0
+      && scaleY > 0;
+
+    return {
+      applied: true,
+      pass: decoded
+        && activeVisible
+        && projectionValid
+        && scrimContractPass
+        && shelfIsOpaque
+        && Object.values(points).every((point) => point.pass)
+        && physicalPayoffPass,
+      sourceFocals: focalPoints,
+      activeScene: {
+        src: activeScene.getAttribute("src"),
+        currentSrc: activeScene.currentSrc,
+        className: activeScene.className,
+        complete: activeScene.complete,
+        decoded,
+        naturalWidth,
+        naturalHeight,
+        display: style.display,
+        visibility: style.visibility,
+        opacity: activeOpacity,
+        objectFit: style.objectFit,
+        objectPosition: style.objectPosition,
+        bounds: imageBounds,
+        contentBox,
+      },
+      shelf: {
+        present: Boolean(shelf),
+        bounds: shelfBounds,
+        overlapsImage: shelfOverlapsImage,
+        backgroundColor,
+        backgroundAlpha,
+        opacity: shelfOpacity,
+        effectiveAlpha: effectiveShelfAlpha,
+        opaque: shelfIsOpaque,
+      },
+      fade: {
+        startToken: fadeStartToken,
+        startPercent: fadeStartPercent,
+        startY: fadeStartY,
+        safeMargin: focalSafeMargin,
+        scrimBackgroundImage,
+        expectedScrimStops,
+        scrimContractPass,
+      },
+      hud: {
+        present: Boolean(hud),
+        bounds: hudBounds,
+      },
+      overlays: overlayBounds,
+      physicalPayoff: {
+        required: physicalPayoffRequired,
+        kind: "baked-raster",
+        id: physicalPayoffId,
+        present: physicalPayoffId === "bridge-painted-latch",
+        expectedAsset: physicalPayoffExpectedAsset,
+        sourcePoint: points.actionPayoff.source,
+        projectedPoint: points.actionPayoff.viewport,
+        pass: physicalPayoffPass,
+      },
+      projection: {
+        valid: projectionValid,
+        objectFitSupported,
+        objectPositionSupported,
+        scaleX,
+        scaleY,
+        renderedWidth,
+        renderedHeight,
+        freeSpaceX,
+        freeSpaceY,
+        offsetX,
+        offsetY,
+        positionX,
+        positionY,
+      },
+      viewport: {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      },
+      surfaceBounds,
+      storyViewportRect,
+      storySourceRect,
+      points,
+    };
+  }, {
+    focalPoints: sourceFocals,
+    sceneId: surfaceIdentity.sceneId,
+    surfaceId: surfaceIdentity.surfaceId,
+  });
+};
+
+const readRootObservationCrop = async (surface) => surface.evaluate(async (element, focalPoints) => {
+  const image = element.querySelector("img.explore-observation-scene");
+  if (!(image instanceof HTMLImageElement)) {
+    return {
+      applied: true,
+      pass: false,
+      error: "The root observation scene image was not found.",
+    };
+  }
+  await image.decode();
+
+  const boundsOf = (target) => {
+    const bounds = target.getBoundingClientRect();
+    return {
+      left: bounds.left,
+      right: bounds.right,
+      top: bounds.top,
+      bottom: bounds.bottom,
+      width: bounds.width,
+      height: bounds.height,
+    };
+  };
+  const parsePositionRatio = (token, axis) => {
+    const normalized = token.toLowerCase();
+    const keywords = axis === "x"
+      ? { left: 0, center: 0.5, right: 1 }
+      : { top: 0, center: 0.5, bottom: 1 };
+    if (Object.hasOwn(keywords, normalized)) return keywords[normalized];
+    if (/^-?(?:\d+|\d*\.\d+)%$/.test(normalized)) {
+      return Number.parseFloat(normalized) / 100;
+    }
+    return Number.NaN;
+  };
+
+  const style = window.getComputedStyle(image);
+  const imageBounds = boundsOf(image);
+  const surfaceBounds = boundsOf(element);
+  const naturalWidth = image.naturalWidth;
+  const naturalHeight = image.naturalHeight;
+  const scale = Math.max(
+    imageBounds.width / naturalWidth,
+    imageBounds.height / naturalHeight,
+  );
+  const renderedWidth = naturalWidth * scale;
+  const renderedHeight = naturalHeight * scale;
+  const freeSpaceX = imageBounds.width - renderedWidth;
+  const freeSpaceY = imageBounds.height - renderedHeight;
+  const positionTokens = style.objectPosition.trim().split(/\s+/);
+  const positionX = parsePositionRatio(positionTokens[0] ?? "50%", "x");
+  const positionY = parsePositionRatio(positionTokens[1] ?? "50%", "y");
+  const offsetX = freeSpaceX * positionX;
+  const offsetY = freeSpaceY * positionY;
+  const visibleViewportRect = {
+    left: Math.max(surfaceBounds.left, imageBounds.left, 0),
+    right: Math.min(surfaceBounds.right, imageBounds.right, window.innerWidth),
+    top: Math.max(surfaceBounds.top, imageBounds.top, 0),
+    bottom: Math.min(surfaceBounds.bottom, imageBounds.bottom, window.innerHeight),
+  };
+  visibleViewportRect.width = Math.max(0, visibleViewportRect.right - visibleViewportRect.left);
+  visibleViewportRect.height = Math.max(0, visibleViewportRect.bottom - visibleViewportRect.top);
+  const sourceRect = {
+    left: Math.max(0, (visibleViewportRect.left - imageBounds.left - offsetX) / scale),
+    right: Math.min(naturalWidth, (visibleViewportRect.right - imageBounds.left - offsetX) / scale),
+    top: Math.max(0, (visibleViewportRect.top - imageBounds.top - offsetY) / scale),
+    bottom: Math.min(naturalHeight, (visibleViewportRect.bottom - imageBounds.top - offsetY) / scale),
+  };
+  sourceRect.width = Math.max(0, sourceRect.right - sourceRect.left);
+  sourceRect.height = Math.max(0, sourceRect.bottom - sourceRect.top);
+  sourceRect.area = sourceRect.width * sourceRect.height;
+  const safeMargin = window.innerWidth >= 600 ? 24 : 16;
+  const projectPoint = ([sourceX, sourceY]) => {
+    const viewportX = imageBounds.left + offsetX + sourceX * scale;
+    const viewportY = imageBounds.top + offsetY + sourceY * scale;
+    const edgeClearance = Math.min(
+      viewportX - visibleViewportRect.left,
+      visibleViewportRect.right - viewportX,
+      viewportY - visibleViewportRect.top,
+      visibleViewportRect.bottom - viewportY,
+    );
+    return {
+      source: { x: sourceX, y: sourceY },
+      viewport: { x: viewportX, y: viewportY },
+      edgeClearance,
+      pass: edgeClearance >= safeMargin,
+    };
+  };
+  const points = {
+    actorFace: projectPoint(focalPoints.actorFace),
+    actorFeet: projectPoint(focalPoints.actorFeet),
+    actionPayoff: projectPoint(focalPoints.actionPayoff),
+  };
+  const decoded = image.complete && naturalWidth > 0 && naturalHeight > 0;
+  const projectionValid = style.objectFit === "cover"
+    && Number.isFinite(scale)
+    && scale > 0
+    && Number.isFinite(positionX)
+    && Number.isFinite(positionY);
+
+  return {
+    applied: true,
+    pass: decoded
+      && projectionValid
+      && visibleViewportRect.width > 0
+      && visibleViewportRect.height > 0
+      && Object.values(points).every((point) => point.pass),
+    activeScene: {
+      currentSrc: image.currentSrc,
+      complete: image.complete,
+      decoded,
+      naturalWidth,
+      naturalHeight,
+      objectFit: style.objectFit,
+      objectPosition: style.objectPosition,
+      bounds: imageBounds,
+    },
+    projection: {
+      valid: projectionValid,
+      scale,
+      renderedWidth,
+      renderedHeight,
+      freeSpaceX,
+      freeSpaceY,
+      offsetX,
+      offsetY,
+      positionX,
+      positionY,
+    },
+    visibleViewportRect,
+    sourceRect,
+    safeMargin,
+    points,
+  };
+}, ROOT_TANGLE_OBSERVATION_FOCALS);
+
+const readLiveFireflyCrop = async (surface) => surface.evaluate((element) => {
+  const tolerance = 2;
+  const boundsOf = (target) => {
+    const bounds = target.getBoundingClientRect();
+    return {
+      left: bounds.left,
+      right: bounds.right,
+      top: bounds.top,
+      bottom: bounds.bottom,
+      width: bounds.width,
+      height: bounds.height,
+    };
+  };
+  const svg = element.querySelector(
+    'svg[data-visual-candidate-id="firefly-live-pokko-v1"]',
+  );
+  if (!(svg instanceof SVGElement)) {
+    return {
+      applied: true,
+      pass: false,
+      error: "The live Firefly Flower SVG was not found.",
+    };
+  }
+
+  const stage = svg.getAttribute("data-stage");
+  const activeActionLayerByStage = {
+    waiting: "action-corridor",
+    "dew-trail": "dew-trail",
+    "warm-bud": "dew-trail",
+    "ringing-petals": "light-path-setup",
+  };
+  const activeActionLayerName = activeActionLayerByStage[stage];
+  const companion = svg.querySelector('[data-layer="companion"]');
+  const activeAction = activeActionLayerName
+    ? svg.querySelector(`[data-layer="${activeActionLayerName}"]`)
+    : null;
+  const shelf = element.querySelector(".explore-immersive-brief");
+  const surfaceBounds = boundsOf(element);
+  const shelfBounds = shelf ? boundsOf(shelf) : null;
+  const surfaceStyle = window.getComputedStyle(element);
+  const fadeStartToken = surfaceStyle.getPropertyValue("--explore-world-fade-start").trim();
+  const fadeStartPercent = Number.parseFloat(fadeStartToken);
+  const fadeStartY = Number.isFinite(fadeStartPercent)
+    ? surfaceBounds.top + surfaceBounds.height * (fadeStartPercent / 100)
+    : Number.NaN;
+  const focalSafeMargin = window.innerWidth >= 600 ? 24 : 16;
+
+  const describeLayer = (layer, name) => {
+    if (!(layer instanceof SVGElement)) {
+      return {
+        name,
+        present: false,
+        visible: false,
+        insideViewport: false,
+        insideSurface: false,
+        aboveShelf: false,
+        pass: false,
+        bounds: null,
+        styleChain: [],
+      };
+    }
+    const bounds = boundsOf(layer);
+    const styleChain = [];
+    let current = layer;
+    while (current instanceof Element) {
+      const style = window.getComputedStyle(current);
+      styleChain.push({
+        element: current === layer
+          ? `${current.tagName.toLowerCase()}[data-layer="${name}"]`
+          : current.tagName.toLowerCase(),
+        display: style.display,
+        visibility: style.visibility,
+        opacity: Number.parseFloat(style.opacity || "1"),
+      });
+      if (current === element) break;
+      current = current.parentElement;
+    }
+    const visible = bounds.width > 0
+      && bounds.height > 0
+      && styleChain.every((style) => (
+        style.display !== "none"
+        && style.visibility !== "hidden"
+        && style.opacity > 0
+      ));
+    const insideViewport = bounds.left >= 0
+      && bounds.right <= window.innerWidth
+      && bounds.top >= 0
+      && bounds.bottom <= window.innerHeight;
+    const insideSurface = bounds.left >= surfaceBounds.left
+      && bounds.right <= surfaceBounds.right
+      && bounds.top >= surfaceBounds.top
+      && bounds.bottom <= surfaceBounds.bottom;
+    const shelfOverlapsLayer = Boolean(shelfBounds)
+      && bounds.left < shelfBounds.right
+      && bounds.right > shelfBounds.left;
+    const aboveShelf = Boolean(shelfBounds)
+      && (!shelfOverlapsLayer || bounds.bottom <= shelfBounds.top + tolerance);
+    const fadeClearance = fadeStartY - bounds.bottom;
+    const aboveFade = Number.isFinite(fadeClearance)
+      && fadeClearance >= focalSafeMargin;
+    return {
+      name,
+      present: true,
+      visible,
+      insideViewport,
+      insideSurface,
+      aboveShelf,
+      shelfOverlapsLayer,
+      aboveFade,
+      fadeClearance,
+      pass: visible && insideViewport && insideSurface && aboveShelf && aboveFade,
+      bounds,
+      styleChain,
+    };
+  };
+
+  const layers = {
+    companion: describeLayer(companion, "companion"),
+    activeAction: describeLayer(activeAction, activeActionLayerName ?? "unknown"),
+  };
+  const availableActionLayers = [
+    "action-corridor",
+    "dew-trail",
+    "light-path-setup",
+  ].filter((name) => svg.querySelector(`[data-layer="${name}"]`));
+
+  return {
+    applied: true,
+    pass: Boolean(activeActionLayerName)
+      && Boolean(shelfBounds)
+      && layers.companion.pass
+      && layers.activeAction.pass,
+    tolerance,
+    stage,
+    activeActionLayerName: activeActionLayerName ?? null,
+    availableActionLayers,
+    svg: {
+      bounds: boundsOf(svg),
+      viewBox: svg.getAttribute("viewBox"),
+      preserveAspectRatio: svg.getAttribute("preserveAspectRatio"),
+    },
+    viewport: {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    },
+    surfaceBounds,
+    shelf: {
+      present: Boolean(shelf),
+      bounds: shelfBounds,
+    },
+    fade: {
+      startToken: fadeStartToken,
+      startPercent: fadeStartPercent,
+      startY: fadeStartY,
+      safeMargin: focalSafeMargin,
+    },
+    layers,
+  };
+});
+
+const readVisualAuditRuntimeSnapshot = async (
+  page,
+  surface,
+  { waitForFiniteAnimations = true } = {},
+) => {
+  const visualSettle = await settleVisualAuditPage(page, { waitForFiniteAnimations });
+  const surfaceIdentity = await surface.evaluate((element) => {
+    const bounds = element.getBoundingClientRect();
+    const visibleImages = Array.from(element.querySelectorAll("img"))
+      .filter((image) => {
+        const style = window.getComputedStyle(image);
+        const imageBounds = image.getBoundingClientRect();
+        return style.display !== "none"
+          && style.visibility !== "hidden"
+          && Number.parseFloat(style.opacity || "1") > 0
+          && imageBounds.width > 0
+          && imageBounds.height > 0;
+      })
+      .map((image) => {
+        const imageBounds = image.getBoundingClientRect();
+        return {
+          currentSrc: image.currentSrc || image.src,
+          complete: image.complete,
+          naturalWidth: image.naturalWidth,
+          naturalHeight: image.naturalHeight,
+          decoded: image.complete
+            && image.naturalWidth > 0
+            && image.naturalHeight > 0,
+          bounds: {
+            left: imageBounds.left,
+            right: imageBounds.right,
+            top: imageBounds.top,
+            bottom: imageBounds.bottom,
+            width: imageBounds.width,
+            height: imageBounds.height,
+          },
+        };
+      });
+    return {
+      lineageId: element.getAttribute("data-visual-lineage-id"),
+      candidateId: element.getAttribute("data-visual-candidate-id"),
+      mode: element.getAttribute("data-visual-mode"),
+      surfaceId: element.getAttribute("data-visual-surface-id"),
+      sceneId: element.getAttribute("data-visual-scene-id"),
+      cameraKey: element.getAttribute("data-camera-key"),
+      observationId: element.getAttribute("data-observation-id"),
+      sourceEncounterId: element.getAttribute("data-source-encounter-id"),
+      bounds: {
+        left: bounds.left,
+        right: bounds.right,
+        top: bounds.top,
+        bottom: bounds.bottom,
+        width: bounds.width,
+        height: bounds.height,
+      },
+      media: {
+        visibleImageCount: visibleImages.length,
+        allVisibleImagesDecoded: visibleImages.every((image) => image.decoded),
+        visibleImages,
+      },
+    };
+  });
+  const paintedCrop = surfaceIdentity.candidateId === "pokko-painted-encounters-v4"
+    ? await readPaintedEncounterCrop(surface, surfaceIdentity)
+    : null;
+  const observationCrop = surfaceIdentity.candidateId === "root-tangle-observation-v1"
+    ? await readRootObservationCrop(surface)
+    : null;
+  const liveCrop = surfaceIdentity.candidateId === "firefly-live-pokko-v1"
+    ? await readLiveFireflyCrop(surface)
+    : null;
+
+  const runtime = await page.evaluate(() => {
+    const isVisible = (element) => {
+      if (!(element instanceof HTMLElement || element instanceof SVGElement)) return false;
+      const style = window.getComputedStyle(element);
+      const bounds = element.getBoundingClientRect();
+      return style.display !== "none"
+        && style.visibility !== "hidden"
+        && Number.parseFloat(style.opacity || "1") > 0
+        && bounds.width > 0
+        && bounds.height > 0
+        && bounds.right > 0
+        && bounds.bottom > 0
+        && bounds.left < window.innerWidth
+        && bounds.top < window.innerHeight;
+    };
+    const identityOf = (element) => ({
+      lineageId: element.getAttribute("data-visual-lineage-id"),
+      candidateId: element.getAttribute("data-visual-candidate-id"),
+      mode: element.getAttribute("data-visual-mode"),
+      surfaceId: element.getAttribute("data-visual-surface-id"),
+      sceneId: element.getAttribute("data-visual-scene-id"),
+      cameraKey: element.getAttribute("data-camera-key"),
+    });
+    const visibleIdentityMap = new Map();
+    document.querySelectorAll("[data-visual-lineage-id]").forEach((element) => {
+      if (!isVisible(element)) return;
+      const identity = identityOf(element);
+      visibleIdentityMap.set(JSON.stringify(identity), identity);
+    });
+
+    const legacySelectors = [
+      '[data-visual-lineage-id="legacy-mixed-v0"]',
+      '[data-visual-mode="legacy"]',
+      '[data-visual-candidate-id^="root-pull-"]',
+      '[data-visual-candidate-id="makimodon-live-v0"]',
+      ".makimodon-art",
+      ".root-pull-opening-art",
+      'img[src*="/opening-root-pull-"]',
+      'img[src*="makimodon"]',
+    ];
+    const legacyElements = new Set();
+    legacySelectors.forEach((selector) => {
+      document.querySelectorAll(selector).forEach((element) => {
+        if (isVisible(element)) legacyElements.add(element);
+      });
+    });
+
+    const keyPad = document.querySelector('[role="group"][aria-label="すうじ キーパッド"]');
+    const keyPadButtons = Array.from(keyPad?.querySelectorAll("button") ?? []);
+    const findButtonByText = (text) => keyPadButtons
+      .find((button) => button.textContent?.trim() === text);
+    const findButtonByName = (name) => keyPadButtons
+      .find((button) => button.getAttribute("aria-label") === name);
+    const readKey = (element) => {
+      if (!(element instanceof HTMLButtonElement)) {
+        return {
+          present: false,
+          visible: false,
+          withinViewport: false,
+          centerHit: false,
+          disabled: null,
+          bounds: null,
+        };
+      }
+      const bounds = element.getBoundingClientRect();
+      const visible = isVisible(element);
+      const withinViewport = bounds.left >= 0
+        && bounds.right <= window.innerWidth
+        && bounds.top >= 0
+        && bounds.bottom <= window.innerHeight;
+      const centerX = bounds.left + bounds.width / 2;
+      const centerY = bounds.top + bounds.height / 2;
+      const hitElement = visible
+        && centerX >= 0
+        && centerX < window.innerWidth
+        && centerY >= 0
+        && centerY < window.innerHeight
+        ? document.elementFromPoint(centerX, centerY)
+        : null;
+      const centerHit = hitElement === element
+        || Boolean(hitElement && element.contains(hitElement));
+      return {
+        present: true,
+        visible,
+        withinViewport,
+        centerHit,
+        disabled: element.disabled,
+        bounds: {
+          left: bounds.left,
+          right: bounds.right,
+          top: bounds.top,
+          bottom: bounds.bottom,
+          width: bounds.width,
+          height: bounds.height,
+        },
+      };
+    };
+    const digits = Object.fromEntries(
+      ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+        .map((digit) => [digit, readKey(findButtonByText(digit))]),
+    );
+    const tenKey = {
+      digits,
+      clear: readKey(findButtonByName("こたえを けす")),
+      backspace: readKey(findButtonByName("ひとつ もどす")),
+      confirm: readKey(findButtonByName("こたえる")),
+    };
+    const directlyReachableTenKeyEntries = [
+      ...Object.values(tenKey.digits),
+      tenKey.clear,
+      tenKey.backspace,
+    ];
+    const confirmReachableWhenEnabled = tenKey.confirm.present
+      && tenKey.confirm.visible
+      && tenKey.confirm.withinViewport
+      && (tenKey.confirm.centerHit || tenKey.confirm.disabled === true);
+    const allTenKeyEntries = [
+      ...Object.values(tenKey.digits),
+      tenKey.clear,
+      tenKey.backspace,
+      tenKey.confirm,
+    ];
+
+    const app = document.querySelector(".app-container");
+    const world = document.querySelector(".explore-world");
+    const attempt = document.querySelector('[data-testid="explore-attempt"]');
+    const documentElement = document.documentElement;
+    return {
+      app: {
+        buildRevision: app?.getAttribute("data-build-revision") ?? null,
+        deliveryId: app?.getAttribute("data-delivery-id") ?? null,
+        lineageId: app?.getAttribute("data-visual-lineage-id") ?? null,
+      },
+      visibleIdentities: Array.from(visibleIdentityMap.values()),
+      legacyVisibleCount: legacyElements.size,
+      overflow: {
+        viewportWidth: window.innerWidth,
+        viewportHeight: window.innerHeight,
+        documentScrollWidth: documentElement.scrollWidth,
+        documentScrollHeight: documentElement.scrollHeight,
+        horizontal: documentElement.scrollWidth > window.innerWidth + 1,
+        vertical: documentElement.scrollHeight > window.innerHeight + 1,
+      },
+      tenKey: {
+        ...tenKey,
+        confirmReachableWhenEnabled,
+        layoutCompleteAndVisible: allTenKeyEntries.every(
+          (key) => key.present && key.visible && key.withinViewport,
+        ),
+        completeAndReachable: allTenKeyEntries.every(
+          (key) => key.present && key.visible && key.withinViewport,
+        ) && directlyReachableTenKeyEntries.every(
+          (key) => key.present && key.visible && key.centerHit,
+        ) && confirmReachableWhenEnabled,
+      },
+      run: world ? {
+        runId: world.getAttribute("data-run-id"),
+        status: world.getAttribute("data-run-status"),
+        steps: Number(world.getAttribute("data-run-steps")),
+        openingExperience: world.getAttribute("data-opening-experience"),
+        persistence: world.getAttribute("data-run-persistence"),
+      } : null,
+      attempt: attempt ? {
+        attemptKey: attempt.getAttribute("data-attempt-key"),
+        gateId: attempt.getAttribute("data-gate-id"),
+        attemptNumber: Number(attempt.getAttribute("data-attempt-number")),
+        problemId: attempt.getAttribute("data-problem-id"),
+        saveState: attempt.getAttribute("data-save-state"),
+      } : null,
+      url: window.location.href,
+      hash: window.location.hash,
+    };
+  });
+
+  return {
+    ...runtime,
+    surface: surfaceIdentity,
+    visualSettle,
+    paintedCrop,
+    observationCrop,
+    liveCrop,
+  };
+};
+
+const captureVisualAuditStage = async ({
+  page,
+  surface,
+  stage,
+  viewport,
+  tempDir,
+  targetVersion,
+  networkProbe,
+  cacheLabel,
+  expected,
+  requireTenKey = false,
+  requireTenKeyLayout = false,
+  captureScope = "viewport",
+  revealGroupId = null,
+  parentStage = null,
+  waitForFiniteAnimations = true,
+}) => {
+  assert(
+    VISUAL_AUDIT_STAGE_ORDER.includes(stage),
+    `unknown visual audit stage: ${stage}`,
+  );
+  assert(
+    captureScope === "viewport" || captureScope === "locator-detail",
+    `${stage} has an unsupported capture scope: ${captureScope}`,
+  );
+  if (captureScope === "locator-detail") {
+    assert(revealGroupId, `${stage} locator detail must identify its reveal group`);
+    assert(parentStage, `${stage} locator detail must identify its parent stage`);
+  }
+  await surface.waitFor({ state: "visible", timeout: STEP_TIMEOUT_MS });
+  if (captureScope === "locator-detail") {
+    await surface.evaluate((element) => {
+      element.scrollIntoView({ block: "center", inline: "nearest" });
+    });
+    await page.evaluate(() => new Promise((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(resolve));
+    }));
+  }
+  const snapshot = await readVisualAuditRuntimeSnapshot(page, surface, {
+    waitForFiniteAnimations,
+  });
+  const surfaceIntersection = {
+    left: Math.max(0, snapshot.surface.bounds.left),
+    right: Math.min(viewport.width, snapshot.surface.bounds.right),
+    top: Math.max(0, snapshot.surface.bounds.top),
+    bottom: Math.min(viewport.height, snapshot.surface.bounds.bottom),
+  };
+  surfaceIntersection.width = Math.max(0, surfaceIntersection.right - surfaceIntersection.left);
+  surfaceIntersection.height = Math.max(0, surfaceIntersection.bottom - surfaceIntersection.top);
+  surfaceIntersection.area = surfaceIntersection.width * surfaceIntersection.height;
+  const surfaceArea = snapshot.surface.bounds.width * snapshot.surface.bounds.height;
+  const surfaceViewportIntersectionRatio = surfaceArea > 0
+    ? surfaceIntersection.area / surfaceArea
+    : 0;
+  const surfaceWhollyVisible = snapshot.surface.bounds.left >= 0
+    && snapshot.surface.bounds.right <= viewport.width
+    && snapshot.surface.bounds.top >= 0
+    && snapshot.surface.bounds.bottom <= viewport.height;
+
+  assert(
+    snapshot.visualSettle.fontsStatus === "loaded"
+      || snapshot.visualSettle.fontsStatus === "unsupported",
+    `${stage} fonts did not settle: ${JSON.stringify(snapshot.visualSettle)}`,
+  );
+  assert(
+    snapshot.visualSettle.allVisibleImagesDecoded,
+    `${stage} contains a visible image that was not decoded: ${JSON.stringify(snapshot.visualSettle)}`,
+  );
+  assert(
+    snapshot.visualSettle.finiteAnimationsRemaining.length === 0,
+    `${stage} contains an unsettled finite animation: ${JSON.stringify(snapshot.visualSettle)}`,
+  );
+  assert(
+    snapshot.app.buildRevision === targetVersion.revision,
+    `${stage} build revision mismatch: DOM=${snapshot.app.buildRevision}, version.json=${targetVersion.revision}`,
+  );
+  assert(
+    snapshot.app.deliveryId === targetVersion.delivery,
+    `${stage} delivery mismatch: DOM=${snapshot.app.deliveryId}, version.json=${targetVersion.delivery}`,
+  );
+  assert(
+    snapshot.app.lineageId === targetVersion.visualLineage,
+    `${stage} app lineage must be ${targetVersion.visualLineage}`,
+  );
+  assert(
+    snapshot.surface.lineageId === targetVersion.visualLineage,
+    `${stage} surface lineage must be ${targetVersion.visualLineage}`,
+  );
+  assert(
+    snapshot.surface.candidateId === expected.candidateId,
+    `${stage} candidate mismatch: expected ${expected.candidateId}, got ${snapshot.surface.candidateId}`,
+  );
+  assert(
+    snapshot.surface.mode === expected.mode,
+    `${stage} mode mismatch: expected ${expected.mode}, got ${snapshot.surface.mode}`,
+  );
+  if (expected.surfaceId) {
+    assert(
+      snapshot.surface.surfaceId === expected.surfaceId,
+      `${stage} surface mismatch: expected ${expected.surfaceId}, got ${snapshot.surface.surfaceId}`,
+    );
+  }
+  if (expected.sceneId) {
+    assert(
+      snapshot.surface.sceneId === expected.sceneId,
+      `${stage} scene mismatch: expected ${expected.sceneId}, got ${snapshot.surface.sceneId}`,
+    );
+  }
+  if (expected.cameraKey) {
+    assert(
+      snapshot.surface.cameraKey === expected.cameraKey,
+      `${stage} camera mismatch: expected ${expected.cameraKey}, got ${snapshot.surface.cameraKey}`,
+    );
+  }
+  if (expected.observationId) {
+    assert(
+      snapshot.surface.observationId === expected.observationId,
+      `${stage} observation mismatch: expected ${expected.observationId}, got ${snapshot.surface.observationId}`,
+    );
+  }
+  if (expected.sourceEncounterId) {
+    assert(
+      snapshot.surface.sourceEncounterId === expected.sourceEncounterId,
+      `${stage} source encounter mismatch: expected ${expected.sourceEncounterId}, got ${snapshot.surface.sourceEncounterId}`,
+    );
+  }
+  const offLineage = snapshot.visibleIdentities.filter(
+    (identity) => identity.lineageId !== targetVersion.visualLineage,
+  );
+  assert(
+    offLineage.length === 0,
+    `${stage} contains mixed visible lineages: ${JSON.stringify(offLineage)}`,
+  );
+  assert(
+    snapshot.legacyVisibleCount === 0,
+    `${stage} contains ${snapshot.legacyVisibleCount} visible legacy actor or asset nodes`,
+  );
+  assert(!snapshot.overflow.horizontal, `${stage} has horizontal document overflow`);
+  assert(
+    snapshot.surface.bounds.left >= -1
+      && snapshot.surface.bounds.right <= viewport.width + 1,
+    `${stage} surface exceeds the ${viewport.width}px viewport: ${JSON.stringify(snapshot.surface.bounds)}`,
+  );
+  assert(
+    surfaceViewportIntersectionRatio >= 0.5
+      && surfaceIntersection.height >= Math.min(180, viewport.height * 0.35),
+    `${stage} target surface must meaningfully intersect the captured viewport: ${JSON.stringify({ bounds: snapshot.surface.bounds, intersection: surfaceIntersection, ratio: surfaceViewportIntersectionRatio })}`,
+  );
+  if (captureScope === "locator-detail") {
+    assert(
+      surfaceWhollyVisible,
+      `${stage} locator detail surface must be wholly visible: ${JSON.stringify(snapshot.surface.bounds)}`,
+    );
+    assert(
+      snapshot.surface.media.allVisibleImagesDecoded,
+      `${stage} locator detail contains undecoded surface media: ${JSON.stringify(snapshot.surface.media)}`,
+    );
+  }
+  if (requireTenKey) {
+    assert(
+      snapshot.tenKey.completeAndReachable,
+      `${stage} must keep the full 0-9/C/backspace/confirm TenKey visible and reachable: ${JSON.stringify(snapshot.tenKey)}`,
+    );
+  }
+  if (requireTenKeyLayout) {
+    assert(
+      snapshot.tenKey.layoutCompleteAndVisible,
+      `${stage} must keep the complete TenKey layout visible inside the viewport while locked: ${JSON.stringify(snapshot.tenKey)}`,
+    );
+  }
+  if (expected.candidateId === "pokko-painted-encounters-v4") {
+    assert(
+      snapshot.paintedCrop?.pass,
+      `${stage} painted focal crop failed: ${JSON.stringify(snapshot.paintedCrop)}`,
+    );
+  }
+  if (expected.candidateId === "root-tangle-observation-v1") {
+    assert(
+      snapshot.observationCrop?.pass,
+      `${stage} root observation focal crop failed: ${JSON.stringify(snapshot.observationCrop)}`,
+    );
+  }
+  if (expected.candidateId === "firefly-live-pokko-v1") {
+    assert(
+      snapshot.liveCrop?.pass,
+      `${stage} live Firefly Flower safe-zone failed: ${JSON.stringify(snapshot.liveCrop)}`,
+    );
+  }
+
+  const viewportName = `${viewport.width}x${viewport.height}`;
+  const stageNumber = String(VISUAL_AUDIT_STAGE_ORDER.indexOf(stage) + 1).padStart(2, "0");
+  const relativePath = `${viewportName}/${stageNumber}-${stage}.jpg`;
+  const screenshotPath = path.join(tempDir, relativePath);
+  await fs.mkdir(path.dirname(screenshotPath), { recursive: true });
+  if (captureScope === "locator-detail") {
+    await surface.screenshot({
+      path: screenshotPath,
+      type: "jpeg",
+      quality: 88,
+      animations: "disabled",
+    });
+  } else {
+    await page.screenshot({
+      path: screenshotPath,
+      type: "jpeg",
+      quality: 88,
+      fullPage: false,
+      animations: "disabled",
+    });
+  }
+
+  return {
+    stage,
+    captureScope,
+    revealGroupId,
+    parentStage,
+    viewport,
+    screenshot: relativePath,
+    screenshotSha256: await sha256File(screenshotPath),
+    capturedAt: new Date().toISOString(),
+    buildRevision: snapshot.app.buildRevision,
+    deliveryId: snapshot.app.deliveryId,
+    visualLineageId: snapshot.surface.lineageId,
+    visualCandidateId: snapshot.surface.candidateId,
+    visualMode: snapshot.surface.mode,
+    visualSurfaceId: snapshot.surface.surfaceId,
+    visualSceneId: snapshot.surface.sceneId,
+    cameraKey: snapshot.surface.cameraKey,
+    observationId: snapshot.surface.observationId,
+    sourceEncounterId: snapshot.surface.sourceEncounterId,
+    visibleIdentities: snapshot.visibleIdentities,
+    legacyVisibleCount: snapshot.legacyVisibleCount,
+    overflow: snapshot.overflow,
+    surfaceBounds: snapshot.surface.bounds,
+    surfaceIntersection,
+    surfaceViewportIntersectionRatio,
+    surfaceWhollyVisible,
+    surfaceMedia: snapshot.surface.media,
+    tenKey: snapshot.tenKey,
+    visualSettle: snapshot.visualSettle,
+    paintedCrop: snapshot.paintedCrop,
+    observationCrop: snapshot.observationCrop,
+    liveCrop: snapshot.liveCrop,
+    cache: await readVisualAuditCacheState(page, networkProbe, cacheLabel),
+    run: snapshot.run,
+    attempt: snapshot.attempt,
+    url: snapshot.url,
+    hash: snapshot.hash,
+  };
+};
+
+const captureVisualAuditSupportingViewport = async ({
+  page,
+  viewport,
+  tempDir,
+  targetVersion,
+  revealGroupId,
+  networkProbe,
+}) => {
+  assert(revealGroupId, "supporting reveal composite must identify its reveal group");
+  const settled = await settleVisualAuditPage(page);
+  const runtime = await page.evaluate(() => {
+    const app = document.querySelector(".app-container");
+    const boundsOf = (element) => {
+      if (!(element instanceof HTMLElement || element instanceof SVGElement)) return null;
+      const bounds = element.getBoundingClientRect();
+      const intersection = {
+        left: Math.max(0, bounds.left),
+        right: Math.min(window.innerWidth, bounds.right),
+        top: Math.max(0, bounds.top),
+        bottom: Math.min(window.innerHeight, bounds.bottom),
+      };
+      intersection.width = Math.max(0, intersection.right - intersection.left);
+      intersection.height = Math.max(0, intersection.bottom - intersection.top);
+      intersection.area = intersection.width * intersection.height;
+      const area = bounds.width * bounds.height;
+      return {
+        left: bounds.left,
+        right: bounds.right,
+        top: bounds.top,
+        bottom: bounds.bottom,
+        width: bounds.width,
+        height: bounds.height,
+        area,
+        intersection,
+        viewportIntersectionRatio: area > 0 ? intersection.area / area : 0,
+        whollyInsideViewport: bounds.left >= 0
+          && bounds.right <= window.innerWidth
+          && bounds.top >= 0
+          && bounds.bottom <= window.innerHeight,
+      };
+    };
+    const isVisible = (element) => {
+      if (!(element instanceof HTMLElement || element instanceof SVGElement)) return false;
+      const style = window.getComputedStyle(element);
+      const bounds = element.getBoundingClientRect();
+      return style.display !== "none"
+        && style.visibility !== "hidden"
+        && Number.parseFloat(style.opacity || "1") > 0
+        && bounds.width > 0
+        && bounds.height > 0
+        && bounds.right > 0
+        && bounds.bottom > 0
+        && bounds.left < window.innerWidth
+        && bounds.top < window.innerHeight;
+    };
+    const visibleIdentities = Array.from(document.querySelectorAll("[data-visual-lineage-id]"))
+      .filter(isVisible)
+      .map((element) => ({
+        lineageId: element.getAttribute("data-visual-lineage-id"),
+        candidateId: element.getAttribute("data-visual-candidate-id"),
+        mode: element.getAttribute("data-visual-mode"),
+        surfaceId: element.getAttribute("data-visual-surface-id"),
+        sceneId: element.getAttribute("data-visual-scene-id"),
+      }));
+    const legacySelectors = [
+      '[data-visual-lineage-id="legacy-mixed-v0"]',
+      '[data-visual-mode="legacy"]',
+      '[data-visual-candidate-id^="root-pull-"]',
+      '[data-visual-candidate-id="makimodon-live-v0"]',
+      ".makimodon-art",
+      ".root-pull-opening-art",
+      'img[src*="/opening-root-pull-"]',
+      'img[src*="makimodon"]',
+    ];
+    const legacyElements = new Set();
+    legacySelectors.forEach((selector) => {
+      document.querySelectorAll(selector).forEach((element) => {
+        if (isVisible(element)) legacyElements.add(element);
+      });
+    });
+    const visibleImages = Array.from(document.images).filter(isVisible);
+    const documentElement = document.documentElement;
+    const overlay = document.querySelector(".explore-research-overlay");
+    const observation = document.querySelector(
+      '[data-visual-surface-id="explore-observation-root-tangle"]',
+    );
+    const fieldBook = document.querySelector(
+      '[data-visual-surface-id="explore-field-book-firefly"]',
+    );
+    const observationCopy = document.querySelector(
+      '[data-testid="explore-observation-copy"]',
+    );
+    const observationCopyFontSizes = Array.from(
+      observationCopy?.querySelectorAll("p") ?? [],
+    ).map((element) => Number.parseFloat(window.getComputedStyle(element).fontSize));
+    const continueAction = fieldBook?.querySelector("button") ?? null;
+    const continueActionBounds = boundsOf(continueAction);
+    const continueActionCenter = continueActionBounds ? {
+      x: continueActionBounds.left + continueActionBounds.width / 2,
+      y: continueActionBounds.top + continueActionBounds.height / 2,
+    } : null;
+    const continueActionHit = continueActionCenter
+      && continueActionCenter.x >= 0
+      && continueActionCenter.x < window.innerWidth
+      && continueActionCenter.y >= 0
+      && continueActionCenter.y < window.innerHeight
+      ? document.elementFromPoint(continueActionCenter.x, continueActionCenter.y)
+      : null;
+    return {
+      buildRevision: app?.getAttribute("data-build-revision") ?? null,
+      deliveryId: app?.getAttribute("data-delivery-id") ?? null,
+      lineageId: app?.getAttribute("data-visual-lineage-id") ?? null,
+      visibleIdentities,
+      legacyVisibleCount: legacyElements.size,
+      overflow: {
+        documentScrollWidth: documentElement.scrollWidth,
+        documentScrollHeight: documentElement.scrollHeight,
+        horizontal: documentElement.scrollWidth > window.innerWidth + 1,
+        vertical: documentElement.scrollHeight > window.innerHeight + 1,
+      },
+      visualSettle: {
+        fontsStatus: document.fonts?.status ?? "unsupported",
+        visibleImageCount: visibleImages.length,
+        allVisibleImagesDecoded: visibleImages.every((image) => (
+          image.complete && image.naturalWidth > 0 && image.naturalHeight > 0
+        )),
+      },
+      revealGeometry: {
+        overlay: {
+          bounds: boundsOf(overlay),
+          scrollTop: overlay instanceof HTMLElement ? overlay.scrollTop : null,
+          scrollHeight: overlay instanceof HTMLElement ? overlay.scrollHeight : null,
+          clientHeight: overlay instanceof HTMLElement ? overlay.clientHeight : null,
+        },
+        observation: boundsOf(observation),
+        observationCopy: {
+          bounds: boundsOf(observationCopy),
+          fontSizes: observationCopyFontSizes,
+          minimumMeaningfulFontSize: observationCopyFontSizes.length > 0
+            ? Math.min(...observationCopyFontSizes)
+            : 0,
+        },
+        fieldBook: boundsOf(fieldBook),
+        continueAction: {
+          bounds: continueActionBounds,
+          minimumHeightPass: Boolean(continueActionBounds?.height >= 56),
+          focused: document.activeElement === continueAction,
+          centerHit: continueActionHit === continueAction
+            || Boolean(continueAction && continueActionHit && continueAction.contains(continueActionHit)),
+        },
+      },
+      url: window.location.href,
+      hash: window.location.hash,
+    };
+  });
+  assert(
+    runtime.buildRevision === targetVersion.revision
+      && runtime.deliveryId === targetVersion.delivery,
+    `supporting reveal composite runtime identity changed: ${JSON.stringify(runtime)}`,
+  );
+  assert(
+    runtime.lineageId === targetVersion.visualLineage
+      && runtime.visibleIdentities.every((identity) => (
+        identity.lineageId === targetVersion.visualLineage
+      )),
+    `supporting reveal composite contains mixed visual lineage: ${JSON.stringify(runtime.visibleIdentities)}`,
+  );
+  assert(
+    runtime.legacyVisibleCount === 0,
+    `supporting reveal composite contains ${runtime.legacyVisibleCount} visible legacy nodes`,
+  );
+  assert(
+    !runtime.overflow.horizontal,
+    `supporting reveal composite has horizontal overflow: ${JSON.stringify(runtime.overflow)}`,
+  );
+  assert(
+    (runtime.visualSettle.fontsStatus === "loaded"
+      || runtime.visualSettle.fontsStatus === "unsupported")
+      && runtime.visualSettle.allVisibleImagesDecoded
+      && settled.finiteAnimationsRemaining.length === 0,
+    `supporting reveal composite did not settle: ${JSON.stringify({ runtime: runtime.visualSettle, settled })}`,
+  );
+  const visibleCandidateIds = [...new Set(
+    runtime.visibleIdentities.map((identity) => identity.candidateId).filter(Boolean),
+  )];
+  assert(
+    visibleCandidateIds.includes("root-tangle-observation-v1")
+      && visibleCandidateIds.includes("firefly-field-book-v1"),
+    `supporting reveal composite must contain observation and field-book candidates: ${JSON.stringify(visibleCandidateIds)}`,
+  );
+  const revealGeometry = runtime.revealGeometry;
+  assert(
+    revealGeometry.overlay.scrollTop !== null
+      && revealGeometry.overlay.scrollTop <= 1,
+    `q7 reveal must be audited before any programmatic scroll: ${JSON.stringify(revealGeometry.overlay)}`,
+  );
+  assert(
+    revealGeometry.observation?.viewportIntersectionRatio >= 0.85,
+    `q7 observation must be meaningfully visible in the natural reveal: ${JSON.stringify(revealGeometry.observation)}`,
+  );
+  assert(
+    revealGeometry.observationCopy.bounds?.viewportIntersectionRatio >= 0.85
+      && revealGeometry.observationCopy.minimumMeaningfulFontSize >= 12,
+    `q7 causal copy must remain meaningfully visible and at least 12px: ${JSON.stringify(revealGeometry.observationCopy)}`,
+  );
+  assert(
+    revealGeometry.fieldBook?.viewportIntersectionRatio >= 0.85,
+    `q7 field book must be meaningfully visible in the natural reveal: ${JSON.stringify(revealGeometry.fieldBook)}`,
+  );
+  assert(
+    revealGeometry.continueAction.bounds?.whollyInsideViewport
+      && revealGeometry.continueAction.minimumHeightPass
+      && revealGeometry.continueAction.focused
+      && revealGeometry.continueAction.centerHit,
+    `q7 close action must own focus and be a fully visible, reachable 56px target without scrolling: ${JSON.stringify(revealGeometry.continueAction)}`,
+  );
+
+  const stage = "q7-reveal-composite";
+  const viewportName = `${viewport.width}x${viewport.height}`;
+  const relativePath = `${viewportName}/supporting-${stage}.jpg`;
+  const screenshotPath = path.join(tempDir, relativePath);
+  await fs.mkdir(path.dirname(screenshotPath), { recursive: true });
+  await page.screenshot({
+    path: screenshotPath,
+    type: "jpeg",
+    quality: 88,
+    fullPage: false,
+    animations: "disabled",
+  });
+  return {
+    stage,
+    captureScope: "viewport",
+    detailStages: ["q7-observation", "field-book"],
+    revealGroupId,
+    viewport,
+    screenshot: relativePath,
+    screenshotSha256: await sha256File(screenshotPath),
+    capturedAt: new Date().toISOString(),
+    buildRevision: runtime.buildRevision,
+    deliveryId: runtime.deliveryId,
+    visualLineageId: runtime.lineageId,
+    visibleIdentities: runtime.visibleIdentities,
+    visibleCandidateIds,
+    legacyVisibleCount: runtime.legacyVisibleCount,
+    overflow: runtime.overflow,
+    visualSettle: runtime.visualSettle,
+    revealGeometry,
+    cache: await readVisualAuditCacheState(page, networkProbe, "warm-same-context"),
+    url: runtime.url,
+    hash: runtime.hash,
+  };
+};
+
+const escapeVisualAuditHtml = (value) => String(value)
+  .replaceAll("&", "&amp;")
+  .replaceAll("<", "&lt;")
+  .replaceAll(">", "&gt;")
+  .replaceAll('"', "&quot;");
+
+const createVisualAuditContactSheet = async (
+  browser,
+  tempDir,
+  captures,
+  supportingCaptures,
+  targetVersion,
+  repository,
+  buildProvenance,
+) => {
+  const cardsByStage = [];
+  for (const stage of VISUAL_AUDIT_STAGE_ORDER) {
+    const stageCaptures = VISUAL_AUDIT_VIEWPORTS.map((viewport) => {
+      const capture = captures.find((candidate) => (
+        candidate.stage === stage
+        && candidate.viewport.width === viewport.width
+        && candidate.viewport.height === viewport.height
+      ));
+      assert(capture, `contact sheet is missing ${stage} at ${viewport.width}x${viewport.height}`);
+      return capture;
+    });
+    const detailRow = stageCaptures.every(
+      (capture) => capture.captureScope === "locator-detail",
+    );
+    const cards = [];
+    for (const capture of stageCaptures) {
+      const image = await fs.readFile(path.join(tempDir, capture.screenshot));
+      const supportingCapture = detailRow
+        ? supportingCaptures.find((candidate) => (
+          candidate.viewport.width === capture.viewport.width
+          && candidate.viewport.height === capture.viewport.height
+          && candidate.revealGroupId === capture.revealGroupId
+          && candidate.detailStages.includes(stage)
+        ))
+        : null;
+      assert(
+        !detailRow || supportingCapture,
+        `contact sheet is missing the full-viewport reveal for ${stage} at ${capture.viewport.width}x${capture.viewport.height}`,
+      );
+      const supportingImage = supportingCapture
+        ? await fs.readFile(path.join(tempDir, supportingCapture.screenshot))
+        : null;
+      const media = supportingImage
+        ? `
+          <div class="media-stack">
+            <figure class="evidence-frame evidence-frame--viewport">
+              <figcaption>FULL VIEWPORT · shared simultaneous reveal</figcaption>
+              <img src="data:image/jpeg;base64,${supportingImage.toString("base64")}" alt="">
+            </figure>
+            <figure class="evidence-frame evidence-frame--detail">
+              <figcaption>LOCATOR DETAIL · ${escapeVisualAuditHtml(stage)}</figcaption>
+              <img src="data:image/jpeg;base64,${image.toString("base64")}" alt="">
+            </figure>
+          </div>
+        `
+        : `<img class="stage-image" src="data:image/jpeg;base64,${image.toString("base64")}" alt="">`;
+      cards.push(`
+        <article class="card">
+          <header>
+            <strong>${escapeVisualAuditHtml(`${capture.viewport.width}×${capture.viewport.height} · ${capture.captureScope}`)}</strong>
+            <span>${escapeVisualAuditHtml(capture.visualCandidateId)} · ${escapeVisualAuditHtml(capture.visualMode)}</span>
+          </header>
+          ${media}
+          <footer>
+            <code>${escapeVisualAuditHtml(`scope: ${capture.captureScope}${capture.parentStage ? ` · parent: ${capture.parentStage}` : ""}`)}</code>
+            <code>${escapeVisualAuditHtml(capture.visualSurfaceId ?? "surface-id: none")}</code>
+            <code>${escapeVisualAuditHtml(capture.visualSceneId ?? "scene-id: none")}</code>
+          </footer>
+        </article>
+      `);
+    }
+    cardsByStage.push(`
+      <section class="stage">
+        <h2>${String(VISUAL_AUDIT_STAGE_ORDER.indexOf(stage) + 1).padStart(2, "0")} · ${escapeVisualAuditHtml(stage)}${detailRow ? " · LOCATOR DETAIL" : ""}</h2>
+        <div class="pair">${cards.join("")}</div>
+      </section>
+    `);
+  }
+
+  const context = await browser.newContext({
+    viewport: { width: 1600, height: 900 },
+    deviceScaleFactor: 1,
+  });
+  const page = await context.newPage();
+  try {
+    await page.setContent(`
+      <!doctype html>
+      <html lang="ja">
+      <meta charset="utf-8">
+      <style>
+        * { box-sizing: border-box; }
+        body {
+          margin: 0;
+          padding: 38px;
+          background: #102f37;
+          color: #fff4ce;
+          font-family: -apple-system, BlinkMacSystemFont, "Noto Sans JP", sans-serif;
+        }
+        .sheet-head {
+          margin-bottom: 30px;
+          padding: 24px 28px;
+          border: 3px solid #173f49;
+          border-radius: 24px;
+          background: #32bed1;
+          color: #173f49;
+          box-shadow: 8px 9px 0 #d99a27;
+        }
+        .sheet-head h1 { margin: 0; font-size: 32px; }
+        .sheet-head p { margin: 8px 0 0; font-weight: 800; }
+        .stage {
+          margin: 0 0 30px;
+          padding: 20px;
+          border-radius: 24px;
+          background: #fff4ce;
+          color: #173f49;
+        }
+        .stage h2 { margin: 0 0 14px; font-size: 23px; }
+        .pair {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 18px;
+          align-items: start;
+        }
+        .card {
+          overflow: hidden;
+          border: 3px solid #173f49;
+          border-radius: 18px;
+          background: #f8edc8;
+        }
+        .card header, .card footer {
+          display: flex;
+          justify-content: space-between;
+          gap: 12px;
+          padding: 10px 12px;
+          font-size: 14px;
+          font-weight: 800;
+        }
+        .card header span { text-align: right; }
+        .stage-image,
+        .evidence-frame img {
+          display: block;
+          width: 100%;
+          height: 560px;
+          object-fit: contain;
+          background: #d7bd6c;
+        }
+        .media-stack {
+          display: grid;
+          gap: 10px;
+          padding: 10px;
+          background: #d7bd6c;
+        }
+        .evidence-frame {
+          margin: 0;
+          overflow: hidden;
+          border: 2px solid #173f49;
+          border-radius: 12px;
+          background: #f8edc8;
+        }
+        .evidence-frame figcaption {
+          padding: 7px 9px;
+          color: #173f49;
+          font-size: 11px;
+          font-weight: 900;
+          letter-spacing: 0.04em;
+        }
+        .evidence-frame--viewport img { height: 560px; }
+        .evidence-frame--detail img { height: 360px; }
+        .card footer {
+          flex-direction: column;
+          color: #315d5f;
+          font-size: 12px;
+        }
+      </style>
+      <body>
+        <header class="sheet-head">
+          <h1>Pokko field G4-6 · same-build critical path</h1>
+          <p>revision ${escapeVisualAuditHtml(targetVersion.revision)} · delivery ${escapeVisualAuditHtml(targetVersion.delivery)}</p>
+          <p>${escapeVisualAuditHtml(buildProvenance.verifiedExactCleanBuild
+            ? `exact clean-HEAD build verified · source tree ${buildProvenance.sourceTreeSha} · dist ${buildProvenance.dist.sha256}`
+            : "target self-identification + local source HEAD match · exact build provenance not supplied")}</p>
+          <p>runtime inputs clean · ${repository.nonRuntimeDirtyEntryCount} non-runtime worktree entries</p>
+          <p>Cold launch is a cold-cache fresh run; Ready rechecks that same asset state and may be pixel-identical. Q7 detail rows always include their natural unscrolled full viewport.</p>
+        </header>
+        ${cardsByStage.join("")}
+      </body>
+      </html>
+    `, { waitUntil: "load" });
+    await page.waitForFunction(
+      () => Array.from(document.images).every((image) => (
+        image.complete && image.naturalWidth > 0 && image.naturalHeight > 0
+      )),
+      undefined,
+      { timeout: VISUAL_AUDIT_SETTLE_TIMEOUT_MS },
+    );
+    await page.evaluate(async () => {
+      await document.fonts.ready;
+      await Promise.all(Array.from(document.images).map((image) => image.decode()));
+      await new Promise((resolve) => {
+        requestAnimationFrame(() => requestAnimationFrame(resolve));
+      });
+    });
+    const relativePath = "contact-sheet.jpg";
+    const outputPath = path.join(tempDir, relativePath);
+    await page.screenshot({
+      path: outputPath,
+      type: "jpeg",
+      quality: 88,
+      fullPage: true,
+      animations: "disabled",
+    });
+    return {
+      path: relativePath,
+      sha256: await sha256File(outputPath),
+    };
+  } finally {
+    await context.close();
+  }
+};
+
+const assertVisualAuditRunContinuity = (captures, viewport) => {
+  const originalRunStages = VISUAL_AUDIT_STAGE_ORDER.slice(
+    0,
+    VISUAL_AUDIT_STAGE_ORDER.indexOf("return") + 1,
+  );
+  const originalRunCaptures = captures.filter(
+    (capture) => originalRunStages.includes(capture.stage),
+  );
+  const missingRunIds = originalRunCaptures
+    .filter((capture) => !capture.run?.runId)
+    .map((capture) => capture.stage);
+  assert(
+    missingRunIds.length === 0,
+    `${viewport.width}x${viewport.height} audit stages must all expose a run ID; missing ${JSON.stringify(missingRunIds)}`,
+  );
+  const originalRunIds = new Set(
+    originalRunCaptures.map((capture) => capture.run.runId),
+  );
+  assert(
+    originalRunIds.size === 1,
+    `${viewport.width}x${viewport.height} audit must keep one run through return; got ${JSON.stringify([...originalRunIds])}`,
+  );
+  const [originalRunId] = originalRunIds;
+  const relaunch = captures.find((capture) => capture.stage === "relaunch");
+  assert(relaunch?.run?.runId, "relaunch capture must expose its new run ID");
+  assert(
+    relaunch.run.runId !== originalRunId,
+    `${viewport.width}x${viewport.height} relaunch must start a new run`,
+  );
+};
+
+const runVisualAuditViewport = async (
+  browser,
+  viewport,
+  tempDir,
+  targetVersion,
+) => {
+  const context = await browser.newContext({
+    baseURL: activeBaseUrl,
+    reducedMotion: "reduce",
+    viewport,
+    deviceScaleFactor: 1,
+    serviceWorkers: "allow",
+  });
+  let page;
+  let networkProbe;
+  try {
+    const bootstrapPage = await context.newPage();
+    await clearClientStorage(bootstrapPage);
+    await completeOnboarding(bootstrapPage, /引き算まで/, /小学 1 年生/);
+    await navigateHash(bootstrapPage, "/settings", /#\/settings$/);
+    await clearIndexedDbRows(bootstrapPage, "memoryMath");
+    await clearVisualAuditRuntimeCaches(context, bootstrapPage);
+    await clearIndexedDbRows(bootstrapPage, "exploreRunEvents");
+    await clearIndexedDbRows(bootstrapPage, "exploreRuns");
+    assert(
+      await countIndexedDbRows(bootstrapPage, "exploreRunEvents") === 0
+        && await countIndexedDbRows(bootstrapPage, "exploreRuns") === 0,
+      "visual-audit bootstrap must leave no resumable run before the cold fresh launch",
+    );
+    await bootstrapPage.close();
+
+    page = await context.newPage();
+    networkProbe = await createVisualAuditNetworkProbe(
+      context,
+      page,
+      new URL(activeBaseUrl).origin,
+    );
+    await page.goto("/#/", { waitUntil: "domcontentloaded" });
+    await waitForHash(page, /#\/explore$/);
+
+    const captures = [];
+    const supportingCaptures = [];
+    const capture = async (stage, surface, expected, options = {}) => {
+      const result = await captureVisualAuditStage({
+        page,
+        surface,
+        stage,
+        viewport,
+        tempDir,
+        targetVersion,
+        networkProbe,
+        cacheLabel: stage === "cold-launch" ? "cold-fresh-run" : "warm-same-context",
+        expected,
+        requireTenKey: Boolean(options.requireTenKey),
+        requireTenKeyLayout: Boolean(options.requireTenKeyLayout),
+        captureScope: options.captureScope ?? "viewport",
+        revealGroupId: options.revealGroupId ?? null,
+        parentStage: options.parentStage ?? null,
+        waitForFiniteAnimations: options.waitForFiniteAnimations ?? true,
+      });
+      captures.push(result);
+      return result;
+    };
+
+    const opening = page.locator(
+      '.explore-immersive[data-visual-surface-id="explore-opening-snap-root"]',
+    );
+    await waitForExploreFirstProblemReady(page, ".snap-root-opening-art");
+    assert(
+      await page.locator(".explore-world").getAttribute("data-opening-experience")
+        === "snap-root-v1",
+      "the deployed visual-audit build must launch Snap Root without a development URL override",
+    );
+    const freshLaunchPersistence = await readExplorePersistenceSnapshot(page);
+    assert(
+      freshLaunchPersistence.runs.length === 1
+        && freshLaunchPersistence.runs[0]?.status === "active"
+        && freshLaunchPersistence.events.length === 0,
+      `cold fresh launch must create exactly one new unanswered run: ${JSON.stringify(freshLaunchPersistence)}`,
+    );
+    const coldLaunchCapture = await capture("cold-launch", opening, {
+      candidateId: "dig-pop-painted-v2",
+      mode: "world-painted",
+      surfaceId: "explore-opening-snap-root",
+      sceneId: "snap-root-ready",
+      cameraKey: "opening-snap-root-side-v1",
+    }, { requireTenKey: true });
+    coldLaunchCapture.freshRunPersistence = {
+      runCount: freshLaunchPersistence.runs.length,
+      eventCount: freshLaunchPersistence.events.length,
+      runId: freshLaunchPersistence.runs[0].id,
+      status: freshLaunchPersistence.runs[0].status,
+    };
+    await page.locator('.snap-root-opening-art[data-asset-state="ready"]')
+      .waitFor({ timeout: STEP_TIMEOUT_MS });
+    await capture("ready", opening, {
+      candidateId: "dig-pop-painted-v2",
+      mode: "world-painted",
+      surfaceId: "explore-opening-snap-root",
+      sceneId: "snap-root-ready",
+      cameraKey: "opening-snap-root-side-v1",
+    }, { requireTenKey: true });
+
+    for (const stage of ["dig-one", "dig-two"]) {
+      await solveExploreAndWaitForNextProblem(page);
+      const progressedOpening = page.locator(
+        `.explore-immersive[data-visual-surface-id="explore-opening-snap-root"][data-visual-scene-id="snap-root-${stage}"]`,
+      );
+      await capture(stage, progressedOpening, {
+        candidateId: "dig-pop-painted-v2",
+        mode: "world-painted",
+        surfaceId: "explore-opening-snap-root",
+        sceneId: `snap-root-${stage}`,
+        cameraKey: "opening-snap-root-side-v1",
+      }, { requireTenKey: true });
+    }
+
+    await solveExploreNumericProblem(page);
+    const poppedOpening = page.locator(
+      '.explore-immersive[data-visual-surface-id="explore-opening-snap-root"][data-visual-scene-id="snap-root-popped"]',
+    );
+    await poppedOpening.waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
+    await capture("popped", poppedOpening, {
+      candidateId: "dig-pop-painted-v2",
+      mode: "world-painted",
+      surfaceId: "explore-opening-snap-root",
+      sceneId: "snap-root-popped",
+      cameraKey: "opening-snap-root-side-v1",
+    }, { requireTenKeyLayout: true });
+    await waitForExploreRouteBreak(page);
+
+    const routeChoice = page.locator(".explore-path-choice");
+    const routeCapture = await capture("route-choice", routeChoice, {
+      candidateId: "pokko-route-map-v2",
+      mode: "route-map",
+    });
+    const routeLayout = await routeChoice.evaluate((element) => {
+      const returnAction = element.querySelector(".explore-path-return");
+      const returnBounds = returnAction?.getBoundingClientRect();
+      return {
+        clientHeight: element.clientHeight,
+        scrollHeight: element.scrollHeight,
+        returnAction: returnBounds ? {
+          top: returnBounds.top,
+          bottom: returnBounds.bottom,
+          height: returnBounds.height,
+        } : null,
+        viewportHeight: window.innerHeight,
+      };
+    });
+    assert(
+      routeLayout.scrollHeight <= routeLayout.clientHeight + 1,
+      `${viewport.width}x${viewport.height} route choice must not hide actions below an internal scroll edge: ${JSON.stringify(routeLayout)}`,
+    );
+    assert(
+      routeLayout.returnAction
+        && routeLayout.returnAction.bottom <= routeLayout.viewportHeight,
+      `${viewport.width}x${viewport.height} route return action must be initially visible: ${JSON.stringify(routeLayout)}`,
+    );
+    assert(
+      routeCapture.surfaceBounds.bottom >= viewport.height - 24,
+      `${viewport.width}x${viewport.height} route choice leaves an unfocused lower void: ${JSON.stringify(routeCapture.surfaceBounds)}`,
+    );
+    const routeForkArt = page.getByTestId("explore-route-fork-art");
+    const routeBranchCount = Number(await routeForkArt.getAttribute("data-branch-count"));
+    assert(
+      routeBranchCount === 2 || routeBranchCount === 3,
+      `route fork art must expose a supported branch count; got ${routeBranchCount}`,
+    );
+    const expectedRouteAsset = routeBranchCount === 3
+      ? "/assets/explore/route-choice/scene-fork-three-pokko-v1.jpg"
+      : "/assets/explore/route-choice/scene-fork-two-pokko-v1.jpg";
+    const routeForkImage = routeForkArt.locator("img");
+    if (viewport.width >= 600) {
+      await routeForkArt.waitFor({ state: "visible", timeout: STEP_TIMEOUT_MS });
+      await routeForkImage.evaluate((image) => image.decode());
+      assert(
+        (await routeForkImage.getAttribute("src"))?.startsWith("data:image/gif")
+          && (await routeForkImage.evaluate((image) => image.currentSrc)).endsWith(expectedRouteAsset),
+        `tablet route art must select the matching responsive source ${expectedRouteAsset}`,
+      );
+      const routeForkArtBounds = await routeForkArt.evaluate((element) => {
+        const bounds = element.getBoundingClientRect();
+        return {
+          width: bounds.width,
+          height: bounds.height,
+          top: bounds.top,
+          bottom: bounds.bottom,
+        };
+      });
+      assert(
+        routeForkArtBounds.height >= 180
+          && routeForkArtBounds.bottom <= viewport.height,
+        `${viewport.width}x${viewport.height} route fork art must fill the tablet decision stage: ${JSON.stringify(routeForkArtBounds)}`,
+      );
+    } else {
+      assert(await routeForkArt.isHidden(), "phone route fork art should remain out of the rapid choice stack");
+      const phoneRouteImage = await routeForkImage.evaluate(async (image) => {
+        await image.decode();
+        return {
+          currentSrc: image.currentSrc,
+          complete: image.complete,
+          naturalWidth: image.naturalWidth,
+          naturalHeight: image.naturalHeight,
+        };
+      });
+      assert(
+        phoneRouteImage.currentSrc.startsWith("data:image/gif")
+          && phoneRouteImage.complete
+          && phoneRouteImage.naturalWidth === 1
+          && phoneRouteImage.naturalHeight === 1,
+        `phone route choice must select and decode only its transparent fallback; PWA precache behavior is a separate contract: ${JSON.stringify(phoneRouteImage)}`,
+      );
+    }
+    routeCapture.routeFork = {
+      branchCount: routeBranchCount,
+      authoredAsset: expectedRouteAsset,
+      selectedCurrentSrc: await routeForkImage.evaluate((image) => image.currentSrc),
+      selectionMode: viewport.width >= 600 ? "tablet-authored-raster" : "phone-transparent-fallback",
+      bothBranchVariantsCoveredByComponentTest: true,
+    };
+    await seedDueMathSkills(page, [
+      "add_1d_1_bridge",
+      "add_1d_2_bridge",
+      "add_2d1d_nc_bridge",
+      "add_2d1d_c_bridge",
+    ]);
+    await chooseFirstExploreRoute(page);
+
+    const ordinaryQ4 = page.locator(
+      '.explore-immersive[data-visual-surface-id="explore-ordinary-firefly"]',
+    );
+    await ordinaryQ4.waitFor({ timeout: STEP_TIMEOUT_MS });
+    await capture("q4-ordinary", ordinaryQ4, {
+      candidateId: "firefly-live-pokko-v1",
+      mode: "world-live",
+      surfaceId: "explore-ordinary-firefly",
+      cameraKey: "firefly-flower-side-v1",
+    }, { requireTenKey: true });
+    await solveExploreAndWaitForNextProblem(page);
+
+    const bridge = page.locator(
+      '.explore-immersive[data-visual-surface-id="explore-encounter-light-bridge"]',
+    );
+    await bridge.waitFor({ timeout: STEP_TIMEOUT_MS });
+    await capture("major-encounter-idle", bridge, {
+      candidateId: "pokko-painted-encounters-v4",
+      mode: "world-painted",
+      surfaceId: "explore-encounter-light-bridge",
+      sceneId: "light-bridge-idle",
+      cameraKey: "light-bridge-camera-v1",
+    }, { requireTenKey: true });
+    const bridgeAttemptKey = await page.getByTestId("explore-attempt")
+      .getAttribute("data-attempt-key");
+    assert(bridgeAttemptKey, "visual audit bridge must expose an attempt key");
+    await page.locator(
+      '.explore-immersive[data-visual-surface-id="explore-encounter-light-bridge"] img.explore-immersive-scene-complete',
+    ).evaluate((image) => image.decode());
+    await solveExploreNumericProblem(page);
+    const completedBridge = page.locator(
+      '.explore-immersive[data-visual-surface-id="explore-encounter-light-bridge"][data-visual-scene-id="light-bridge-complete"]',
+    );
+    await completedBridge.waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
+    await capture("major-encounter-correct", completedBridge, {
+      candidateId: "pokko-painted-encounters-v4",
+      mode: "world-painted",
+      surfaceId: "explore-encounter-light-bridge",
+      sceneId: "light-bridge-complete",
+      cameraKey: "light-bridge-camera-v1",
+    }, { requireTenKeyLayout: true, waitForFiniteAnimations: false });
+    await waitForNewExploreAttempt(page, bridgeAttemptKey);
+
+    const ordinaryQ6 = page.locator(
+      '.explore-immersive[data-visual-surface-id="explore-ordinary-firefly"]',
+    );
+    await ordinaryQ6.waitFor({ timeout: STEP_TIMEOUT_MS });
+    await seedDueMathSkills(page, [
+      "sub_1d1d_nc_bridge",
+      "sub_1d1d_c_bridge",
+      "sub_2d1d_nc_bridge",
+      "sub_2d1d_c_bridge",
+    ]);
+    await solveExploreAndWaitForNextProblem(page);
+
+    const root = page.locator(
+      '.explore-immersive[data-visual-surface-id="explore-encounter-root-tangle"]',
+    );
+    await root.waitFor({ timeout: STEP_TIMEOUT_MS });
+    const rootCapture = await capture("q7-before", root, {
+      candidateId: "pokko-painted-encounters-v4",
+      mode: "world-painted",
+      surfaceId: "explore-encounter-root-tangle",
+      sceneId: "root-tangle-tangled",
+      cameraKey: "root-tangle-camera-v1",
+    }, { requireTenKey: true });
+    const rootAttemptKey = await page.getByTestId("explore-attempt")
+      .getAttribute("data-attempt-key");
+    assert(rootAttemptKey, "visual audit root tangle must expose an attempt key");
+    await solveExploreNumericProblem(page);
+
+    const observation = page.locator(
+      '.explore-paper-diorama[data-visual-surface-id="explore-observation-root-tangle"]',
+    );
+    await observation.waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
+    const revealGroupId = randomUUID();
+    const resolvedRoot = page.locator(
+      '.explore-immersive[data-visual-surface-id="explore-encounter-root-tangle"][data-visual-scene-id="root-tangle-crossed"]',
+    );
+    await resolvedRoot.waitFor({ state: "attached", timeout: RAPID_LOOP_CI_BUDGET_MS });
+    const resolvedRootCameraKey = await resolvedRoot.getAttribute("data-camera-key");
+    const resolvedRootCrop = await readPaintedEncounterCrop(resolvedRoot, {
+      surfaceId: "explore-encounter-root-tangle",
+      sceneId: "root-tangle-crossed",
+    });
+    assert(
+      resolvedRootCrop.activeScene?.decoded
+        && resolvedRootCrop.projection?.valid
+        && resolvedRootCrop.activeScene.currentSrc.endsWith(
+          "/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg",
+        ),
+      `Q7 continuity reference must be the decoded committed crossed world scene: ${JSON.stringify(resolvedRootCrop)}`,
+    );
+    const supportingCapture = await captureVisualAuditSupportingViewport({
+      page,
+      viewport,
+      tempDir,
+      targetVersion,
+      revealGroupId,
+      networkProbe,
+    });
+    const naturalObservationCrop = await readRootObservationCrop(observation);
+    assert(
+      naturalObservationCrop.pass,
+      `Q7 observation focal points must be readable before any programmatic scroll: ${JSON.stringify(naturalObservationCrop)}`,
+    );
+    supportingCapture.observationCrop = naturalObservationCrop;
+    supportingCaptures.push(supportingCapture);
+    const observationCapture = await capture("q7-observation", observation, {
+      candidateId: "root-tangle-observation-v1",
+      mode: "observation",
+      surfaceId: "explore-observation-root-tangle",
+      sceneId: "root-tangle-crossed",
+      cameraKey: "root-tangle-camera-v1",
+      observationId: "explore-observation:root-tangle-light-path",
+      sourceEncounterId: "root-tangle",
+    }, {
+      captureScope: "locator-detail",
+      revealGroupId,
+      parentStage: "q7-reveal-composite",
+    });
+    assert(
+      observationCapture.cameraKey === rootCapture.cameraKey
+        && observationCapture.cameraKey === resolvedRootCameraKey,
+      `root observation camera must equal the solved and resolved world camera: ${JSON.stringify({ before: rootCapture.cameraKey, resolved: resolvedRootCameraKey, observation: observationCapture.cameraKey })}`,
+    );
+    const worldSourceRect = resolvedRootCrop.storySourceRect;
+    const observationSourceRect = naturalObservationCrop.sourceRect;
+    const worldScene = resolvedRootCrop.activeScene;
+    const observationSceneGeometry = naturalObservationCrop.activeScene;
+    assert(
+      worldSourceRect?.area > 0 && observationSourceRect?.area > 0,
+      `Q7 camera continuity requires measurable source-space windows: ${JSON.stringify({ worldSourceRect, observationSourceRect })}`,
+    );
+    assert(
+      worldScene?.naturalWidth === observationSceneGeometry?.naturalWidth
+        && worldScene?.naturalHeight === observationSceneGeometry?.naturalHeight
+        && worldScene.currentSrc === observationSceneGeometry.currentSrc,
+      `Q7 camera continuity requires the exact same authored crossed plate: ${JSON.stringify({ worldScene, observationSceneGeometry })}`,
+    );
+    const intersection = {
+      left: Math.max(worldSourceRect.left, observationSourceRect.left),
+      right: Math.min(worldSourceRect.right, observationSourceRect.right),
+      top: Math.max(worldSourceRect.top, observationSourceRect.top),
+      bottom: Math.min(worldSourceRect.bottom, observationSourceRect.bottom),
+    };
+    intersection.width = Math.max(0, intersection.right - intersection.left);
+    intersection.height = Math.max(0, intersection.bottom - intersection.top);
+    intersection.area = intersection.width * intersection.height;
+    const worldCoverage = intersection.area / worldSourceRect.area;
+    const observationCoverage = intersection.area / observationSourceRect.area;
+    const unionArea = worldSourceRect.area + observationSourceRect.area - intersection.area;
+    const intersectionOverUnion = unionArea > 0 ? intersection.area / unionArea : 0;
+    const widthRatio = observationSourceRect.width / worldSourceRect.width;
+    const heightRatio = observationSourceRect.height / worldSourceRect.height;
+    const areaRatio = observationSourceRect.area / worldSourceRect.area;
+    const worldCenter = {
+      x: (worldSourceRect.left + worldSourceRect.right) / 2,
+      y: (worldSourceRect.top + worldSourceRect.bottom) / 2,
+    };
+    const observationCenter = {
+      x: (observationSourceRect.left + observationSourceRect.right) / 2,
+      y: (observationSourceRect.top + observationSourceRect.bottom) / 2,
+    };
+    const centerDeltaRatio = Math.hypot(
+      observationCenter.x - worldCenter.x,
+      observationCenter.y - worldCenter.y,
+    ) / worldScene.naturalHeight;
+    assert(
+      worldCoverage >= 0.98,
+      `Q7 observation must contain at least 98% of the solved world story window; got ${worldCoverage}: ${JSON.stringify({ worldSourceRect, observationSourceRect, intersection })}`,
+    );
+    assert(
+      centerDeltaRatio <= 0.04,
+      `Q7 source-space camera centers must stay within 4% of the authored plate height; got ${centerDeltaRatio}: ${JSON.stringify({ worldCenter, observationCenter })}`,
+    );
+    assert(
+      widthRatio >= 0.98
+        && widthRatio <= 1.3
+        && heightRatio >= 0.98
+        && heightRatio <= 1.3
+        && areaRatio >= 0.95
+        && areaRatio <= 1.45
+        && intersectionOverUnion >= 0.7,
+      `Q7 observation must preserve a symmetric same-camera crop, not merely contain the world window: ${JSON.stringify({ widthRatio, heightRatio, areaRatio, worldCoverage, observationCoverage, intersectionOverUnion, worldSourceRect, observationSourceRect })}`,
+    );
+    const worldObjectPosition = worldScene.objectPosition.trim().split(/\s+/);
+    const observationObjectPosition = observationSceneGeometry.objectPosition.trim().split(/\s+/);
+    assert(
+      worldObjectPosition[0] === observationObjectPosition[0]
+        && worldObjectPosition[0] === "50%",
+      `Q7 resolved and observation scenes must share the authored horizontal object position: ${JSON.stringify({ worldObjectPosition, observationObjectPosition })}`,
+    );
+    observationCapture.cameraContinuity = {
+      cameraKey: observationCapture.cameraKey,
+      worldObjectPosition: worldScene.objectPosition,
+      observationObjectPosition: observationSceneGeometry.objectPosition,
+      objectPositionContract: {
+        horizontalTokenEqual: worldObjectPosition[0] === observationObjectPosition[0],
+        verticalTokensCompileToEquivalentSourceWindow: centerDeltaRatio <= 0.04
+          && heightRatio >= 0.98
+          && heightRatio <= 1.3,
+      },
+      worldSourceRect,
+      observationSourceRect,
+      intersection,
+      worldCoverage,
+      observationCoverage,
+      intersectionOverUnion,
+      widthRatio,
+      heightRatio,
+      areaRatio,
+      worldCenter,
+      observationCenter,
+      centerDeltaRatio,
+      focalPoints: naturalObservationCrop.points,
+      pass: true,
+    };
+    assert(
+      observationCapture.surfaceMedia.visibleImages.some((image) => (
+        image.currentSrc.endsWith("/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg")
+      )),
+      "root observation must render the crossed root-tangle scene from the committed encounter",
+    );
+
+    const fieldBook = page.locator(
+      '.explore-research-book[data-visual-surface-id="explore-field-book-firefly"]',
+    );
+    const fieldBookCapture = await capture("field-book", fieldBook, {
+      candidateId: "firefly-field-book-v1",
+      mode: "field-book",
+      surfaceId: "explore-field-book-firefly",
+    }, {
+      captureScope: "locator-detail",
+      revealGroupId,
+      parentStage: "q7-reveal-composite",
+    });
+    assert(
+      observationCapture.screenshotSha256 !== fieldBookCapture.screenshotSha256,
+      "q7 observation and field-book locator details must not be duplicate images",
+    );
+    assert(
+      supportingCapture.revealGroupId === observationCapture.revealGroupId
+        && supportingCapture.revealGroupId === fieldBookCapture.revealGroupId,
+      "Q7 natural viewport and both locator details must belong to one reveal group",
+    );
+    await closeBlockingResearchDiscovery(page, /大発見！.*ほたる花の ひかり道/, 3);
+    await waitForNewExploreAttempt(page, rootAttemptKey);
+
+    const ordinaryQ8 = page.locator(
+      '.explore-immersive[data-visual-surface-id="explore-ordinary-firefly"]',
+    );
+    await ordinaryQ8.waitFor({ timeout: STEP_TIMEOUT_MS });
+    await capture("q8", ordinaryQ8, {
+      candidateId: "firefly-live-pokko-v1",
+      mode: "world-live",
+      surfaceId: "explore-ordinary-firefly",
+      cameraKey: "firefly-flower-side-v1",
+    }, { requireTenKey: true });
+    await solveExploreNumericProblem(page);
+    await waitForRouteBreakPastOptionalRareDiscovery(page);
+    const primaryReturn = page.getByTestId("explore-run-primary-return");
+    await primaryReturn.waitFor({ timeout: STEP_TIMEOUT_MS });
+    await primaryReturn.click();
+    await page.locator("#return-summary-title").waitFor({ timeout: STEP_TIMEOUT_MS });
+
+    const returned = page.getByTestId("research-library-scene");
+    await returned.locator('[data-character-id="pokko"]').waitFor({ timeout: STEP_TIMEOUT_MS });
+    await returned.getByText(/ほたる花/, { exact: false }).first()
+      .waitFor({ timeout: STEP_TIMEOUT_MS });
+    const returnCapture = await capture("return", returned, {
+      candidateId: "research-library-pokko-v1",
+      mode: "archive",
+    });
+    assert(
+      returnCapture.run?.runId === rootCapture.run?.runId,
+      `return summary must remain attached to the original run: ${rootCapture.run?.runId} -> ${returnCapture.run?.runId}`,
+    );
+    await page.getByTestId("research-library-primary-action").click();
+    await waitForExploreFirstProblemReady(page, ".snap-root-opening-art");
+    const relaunched = page.locator(
+      '.explore-immersive[data-visual-surface-id="explore-opening-snap-root"]',
+    );
+    await capture("relaunch", relaunched, {
+      candidateId: "dig-pop-painted-v2",
+      mode: "world-painted",
+      surfaceId: "explore-opening-snap-root",
+      sceneId: "snap-root-ready",
+      cameraKey: "opening-snap-root-side-v1",
+    }, { requireTenKey: true });
+
+    await navigateHash(page, "/battle", /#\/battle$/);
+    const base = page.locator(".game-hub");
+    await capture("base", base, {
+      candidateId: "pokko-base-map-v1",
+      mode: "base-map",
+    });
+
+    assert(
+      captures.length === VISUAL_AUDIT_STAGE_ORDER.length,
+      `${viewport.width}x${viewport.height} must produce all ${VISUAL_AUDIT_STAGE_ORDER.length} stages`,
+    );
+    assert(
+      supportingCaptures.length === 1
+        && supportingCaptures[0].revealGroupId === revealGroupId,
+      `${viewport.width}x${viewport.height} must produce one grouped q7 reveal composite`,
+    );
+    assertVisualAuditRunContinuity(captures, viewport);
+    return { captures, supportingCaptures };
+  } finally {
+    if (networkProbe) await networkProbe.detach();
+    await context.close();
+  }
+};
+
+const runVisualAudit = async (browser) => {
+  activeBaseUrl = normalizeVisualAuditBaseUrl(
+    process.env.SANSU_VISUAL_AUDIT_BASE_URL,
+  );
+  const workspace = await createVisualAuditWorkspace(
+    process.env.SANSU_VISUAL_AUDIT_OUTPUT_DIR,
+  );
+  let published = false;
+  try {
+    const targetVersion = await readVisualAuditTargetVersion(activeBaseUrl);
+    const visualAssetAttestation = await attestRequiredVisualAssets(activeBaseUrl);
+    const repository = readVisualAuditRepositoryState(targetVersion.revision);
+    const buildProvenance = await readVisualAuditBuildProvenance({
+      targetVersion,
+      repository,
+      baseUrl: activeBaseUrl,
+    });
+    const captures = [];
+    const supportingCaptures = [];
+    for (const viewport of VISUAL_AUDIT_VIEWPORTS) {
+      const viewportEvidence = await runVisualAuditViewport(
+        browser,
+        viewport,
+        workspace.tempDir,
+        targetVersion,
+      );
+      captures.push(...viewportEvidence.captures);
+      supportingCaptures.push(...viewportEvidence.supportingCaptures);
+    }
+    const revisions = new Set(captures.map((capture) => capture.buildRevision));
+    const deliveries = new Set(captures.map((capture) => capture.deliveryId));
+    assert(
+      revisions.size === 1 && revisions.has(targetVersion.revision),
+      `all visual audit captures must use one build: ${JSON.stringify([...revisions])}`,
+    );
+    assert(
+      deliveries.size === 1 && deliveries.has(targetVersion.delivery),
+      `all visual audit captures must use one delivery: ${JSON.stringify([...deliveries])}`,
+    );
+    assert(
+      supportingCaptures.length === VISUAL_AUDIT_VIEWPORTS.length
+        && supportingCaptures.every((capture) => (
+          capture.buildRevision === targetVersion.revision
+          && capture.deliveryId === targetVersion.delivery
+        ))
+        && VISUAL_AUDIT_VIEWPORTS.every((viewport) => (
+          supportingCaptures.filter((capture) => (
+            capture.viewport.width === viewport.width
+            && capture.viewport.height === viewport.height
+          )).length === 1
+        ))
+        && new Set(
+          supportingCaptures.map((capture) => capture.revealGroupId),
+        ).size === VISUAL_AUDIT_VIEWPORTS.length,
+      "visual audit must include one same-build q7 reveal composite per viewport",
+    );
+
+    const contactSheet = await createVisualAuditContactSheet(
+      browser,
+      workspace.tempDir,
+      captures,
+      supportingCaptures,
+      targetVersion,
+      repository,
+      buildProvenance,
+    );
+    const coldLaunchAndReady = VISUAL_AUDIT_VIEWPORTS.map((viewport) => {
+      const coldLaunch = captures.find((capture) => (
+        capture.stage === "cold-launch"
+        && capture.viewport.width === viewport.width
+        && capture.viewport.height === viewport.height
+      ));
+      const ready = captures.find((capture) => (
+        capture.stage === "ready"
+        && capture.viewport.width === viewport.width
+        && capture.viewport.height === viewport.height
+      ));
+      assert(coldLaunch && ready, `cold-launch/ready evidence missing at ${viewport.width}x${viewport.height}`);
+      return {
+        viewport,
+        coldLaunchSha256: coldLaunch.screenshotSha256,
+        readySha256: ready.screenshotSha256,
+        pixelIdentical: coldLaunch.screenshotSha256 === ready.screenshotSha256,
+      };
+    });
+    const targetVersionBeforePublication = await readVisualAuditTargetVersion(activeBaseUrl);
+    assert(
+      targetVersionBeforePublication.revision === targetVersion.revision
+        && targetVersionBeforePublication.delivery === targetVersion.delivery
+        && targetVersionBeforePublication.visualLineage === targetVersion.visualLineage,
+      `visual audit target identity changed during capture: ${JSON.stringify({ start: targetVersion, end: targetVersionBeforePublication })}`,
+    );
+    const visualAssetAttestationBeforePublication = await attestRequiredVisualAssets(
+      activeBaseUrl,
+    );
+    const repositoryBeforePublication = readVisualAuditRepositoryState(
+      targetVersion.revision,
+    );
+    assert(
+      repositoryBeforePublication.headRevision === repository.headRevision
+        && repositoryBeforePublication.headTree === repository.headTree,
+      `repository HEAD changed during visual audit: ${repository.headRevision} -> ${repositoryBeforePublication.headRevision}`,
+    );
+    const buildProvenanceBeforePublication = await readVisualAuditBuildProvenance({
+      targetVersion: targetVersionBeforePublication,
+      repository: repositoryBeforePublication,
+      baseUrl: activeBaseUrl,
+    });
+    assertVisualAuditBuildProvenanceStable(
+      buildProvenance,
+      buildProvenanceBeforePublication,
+      "during capture",
+    );
+    const manifest = {
+      schemaVersion: "sansu-critical-path-visual-audit-v1",
+      auditId: randomUUID(),
+      generatedAt: new Date().toISOString(),
+      actualTarget: activeBaseUrl,
+      targetVersion,
+      targetVersionBeforePublication,
+      buildProvenance: {
+        captureStart: buildProvenance,
+        beforePublication: buildProvenanceBeforePublication,
+        verifiedExactCleanBuild: buildProvenance.verifiedExactCleanBuild
+          && buildProvenanceBeforePublication.verifiedExactCleanBuild,
+      },
+      visualAssetAttestation: {
+        captureStart: visualAssetAttestation,
+        beforePublication: visualAssetAttestationBeforePublication,
+      },
+      repository: {
+        ...repository,
+        beforePublication: repositoryBeforePublication,
+        stableHead: true,
+        runtimeInputsCleanAtStartAndBeforePublication: true,
+      },
+      browser: {
+        engine: "chromium",
+        version: browser.version(),
+      },
+      visualLineageId: "pokko-field-v1",
+      requiredStages: VISUAL_AUDIT_STAGE_ORDER,
+      viewports: VISUAL_AUDIT_VIEWPORTS,
+      captureCount: captures.length,
+      captures,
+      supportingCaptureCount: supportingCaptures.length,
+      supportingCaptures,
+      contactSheet,
+      evidenceSemantics: {
+        coldLaunchAndReady: {
+          note: "Cold launch clears HTTP/SW caches and prior explore run rows, then captures the first fully decoded frame of one newly created unanswered run. Ready rechecks that same asset state, so pixel identity is allowed and recorded explicitly.",
+          byViewport: coldLaunchAndReady,
+        },
+        q7Reveal: {
+          note: "Observation and field-book locator details are both paired with the same-build, same-moment full viewport composite.",
+          simultaneousCompositeRequired: true,
+          supportingStage: "q7-reveal-composite",
+        },
+      },
+      gates: {
+        visualMagnetism: {
+          verdict: "PENDING_HUMAN_REVIEW",
+          note: "Score the runtime contact sheet beside the approved benchmark.",
+        },
+        silentComprehensionAndSafety: {
+          verdict: "PENDING_G5",
+          note: "Requires five independent observers and verbatim answers.",
+        },
+        runtimeIntegrity: {
+          verdict: "PASS",
+          mixedVisibleLineageCount: [...captures, ...supportingCaptures].reduce(
+            (count, capture) => count + capture.visibleIdentities.filter(
+              (identity) => identity.lineageId !== "pokko-field-v1",
+            ).length,
+            0,
+          ),
+          visibleLegacyCount: [...captures, ...supportingCaptures].reduce(
+            (count, capture) => count + capture.legacyVisibleCount,
+            0,
+          ),
+          supportingCompositeCount: supportingCaptures.length,
+        },
+        production: {
+          verdict: "HOLD",
+          note: "G5 blind value testing and G6 production promotion remain separate.",
+        },
+      },
+    };
+    await fs.writeFile(
+      path.join(workspace.tempDir, "manifest.json"),
+      `${JSON.stringify(manifest, null, 2)}\n`,
+      { flag: "wx" },
+    );
+    assert(
+      !(await visualAuditPathExists(workspace.finalDir)),
+      `visual audit output appeared during capture; refusing to overwrite it: ${workspace.finalDir}`,
+    );
+    const publicationGuardRepository = readVisualAuditRepositoryState(
+      targetVersion.revision,
+    );
+    const publicationGuardTarget = await readVisualAuditTargetVersion(activeBaseUrl);
+    const publicationGuardBuildProvenance = await readVisualAuditBuildProvenance({
+      targetVersion: publicationGuardTarget,
+      repository: publicationGuardRepository,
+      baseUrl: activeBaseUrl,
+    });
+    assertVisualAuditBuildProvenanceStable(
+      buildProvenance,
+      publicationGuardBuildProvenance,
+      "before publication",
+    );
+    assert(
+      publicationGuardRepository.headRevision === repository.headRevision
+        && publicationGuardRepository.headTree === repository.headTree
+        && publicationGuardTarget.revision === targetVersion.revision
+        && publicationGuardTarget.delivery === targetVersion.delivery
+        && publicationGuardTarget.visualLineage === targetVersion.visualLineage,
+      `visual audit publication guard changed after manifest creation: ${JSON.stringify({ publicationGuardRepository, publicationGuardTarget, publicationGuardBuildProvenance })}`,
+    );
+    await fs.rename(workspace.tempDir, workspace.finalDir);
+    published = true;
+    console.log(`Visual audit evidence written to ${workspace.finalDir}`);
+  } finally {
+    if (!published && await visualAuditPathExists(workspace.tempDir)) {
+      await fs.rm(workspace.tempDir, { recursive: true, force: true });
+    }
+  }
+};
+
 const main = async () => {
   let devServer;
   let startedByScript = false;
   let browser;
 
   try {
+    if (VISUAL_AUDIT_MODE) {
+      browser = await chromium.launch({ headless: true });
+      await runVisualAudit(browser);
+      return;
+    }
+
     const session = await getServerSession();
     activeBaseUrl = session.baseUrl;
     devServer = session.devServer;
@@ -2250,6 +5640,38 @@ const main = async () => {
       if (!results.every(Boolean)) process.exitCode = 1;
       return;
     }
+    if (process.env.SANSU_E2E_LIGHT_BRIDGE_ONLY === "1") {
+      for (const viewport of [
+        { width: 390, height: 844 },
+        { width: 768, height: 1024 },
+        { width: 1024, height: 768 },
+        { width: 1024, height: 1366 },
+        { width: 1080, height: 1920 },
+      ]) {
+        results.push(await runScenario(
+          `keeps the light bridge playable at ${viewport.width}x${viewport.height}`,
+          () => scenarioLightBridgeVerticalSlice(browser, viewport),
+        ));
+      }
+      if (!results.every(Boolean)) process.exitCode = 1;
+      return;
+    }
+    if (process.env.SANSU_E2E_ROOT_TANGLE_ONLY === "1") {
+      for (const viewport of [
+        { width: 390, height: 844 },
+        { width: 768, height: 1024 },
+        { width: 1024, height: 768 },
+        { width: 1024, height: 1366 },
+        { width: 1080, height: 1920 },
+      ]) {
+        results.push(await runScenario(
+          `keeps the root tangle playable at ${viewport.width}x${viewport.height}`,
+          () => scenarioRootTangleVerticalSlice(browser, viewport),
+        ));
+      }
+      if (!results.every(Boolean)) process.exitCode = 1;
+      return;
+    }
     results.push(await runScenario("redirects to onboarding when no profile", () => scenarioOnboardingShown(browser)));
     results.push(await runScenario("completes onboarding, chooses a route, and opens Makimodon", () => scenarioOnboardingToExploreProblem(browser)));
     results.push(await runScenario("keeps the direct study route working", () => scenarioStudyRoute(browser)));
@@ -2279,6 +5701,18 @@ const main = async () => {
       browser,
       { width: 768, height: 1024 },
     )));
+    results.push(await runScenario("keeps the light bridge connected on a landscape tablet", () => scenarioLightBridgeVerticalSlice(
+      browser,
+      { width: 1024, height: 768 },
+    )));
+    results.push(await runScenario("keeps the light bridge playable on a 1024px portrait tablet", () => scenarioLightBridgeVerticalSlice(
+      browser,
+      { width: 1024, height: 1366 },
+    )));
+    results.push(await runScenario("keeps the light bridge playable on a wide portrait tablet", () => scenarioLightBridgeVerticalSlice(
+      browser,
+      { width: 1080, height: 1920 },
+    )));
     results.push(await runScenario("opens the root tangle with profile-near subtraction", () => scenarioRootTangleVerticalSlice(browser)));
     results.push(await runScenario("keeps the root tangle playable on tablet", () => scenarioRootTangleVerticalSlice(
       browser,
@@ -2287,6 +5721,14 @@ const main = async () => {
     results.push(await runScenario("keeps the root tangle playable on a landscape tablet", () => scenarioRootTangleVerticalSlice(
       browser,
       { width: 1024, height: 768 },
+    )));
+    results.push(await runScenario("keeps the root tangle playable on a 1024px portrait tablet", () => scenarioRootTangleVerticalSlice(
+      browser,
+      { width: 1024, height: 1366 },
+    )));
+    results.push(await runScenario("keeps the root tangle playable on a wide portrait tablet", () => scenarioRootTangleVerticalSlice(
+      browser,
+      { width: 1080, height: 1920 },
     )));
     results.push(await runScenario("guards /parents route behind parent gate", () => scenarioParentsGateShown(browser)));
 

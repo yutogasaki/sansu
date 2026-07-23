@@ -40,12 +40,14 @@ export const isBlockingDiscoveryReveal = (discovery: DiscoveryRevealItem): boole
 interface DiscoveryRevealProps {
     discovery: DiscoveryRevealItem;
     researchPage?: DiscoveryResearchRevealItem;
+    suppressNonBlocking?: boolean;
     onContinue: () => void;
 }
 
 export const DiscoveryReveal: React.FC<DiscoveryRevealProps> = ({
     discovery,
     researchPage,
+    suppressNonBlocking = false,
     onContinue,
 }) => {
     const reduceMotion = useReducedMotion();
@@ -84,6 +86,18 @@ export const DiscoveryReveal: React.FC<DiscoveryRevealProps> = ({
         };
     }, [isBlockingReveal, onContinue, researchPage]);
 
+    // Ordinary clue slips are allowed to overlap the next rapid question, but
+    // a dedicated encounter needs its physical subject unobscured. Keep the
+    // component mounted so its 900ms acknowledgement timer and polite spoken
+    // confirmation still complete without covering the encounter artwork.
+    if (suppressNonBlocking && !isBlockingReveal) {
+        return (
+            <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+                {discovery.name}を バッグに しまったよ
+            </div>
+        );
+    }
+
     if (researchPage) {
         return (
             <DiscoveryResearchReveal
@@ -95,7 +109,12 @@ export const DiscoveryReveal: React.FC<DiscoveryRevealProps> = ({
 
     if (!isBlockingReveal) {
         return (
-            <div className="pointer-events-none absolute inset-x-3 top-[calc(var(--safe-area-top)+66px)] z-50 mx-auto max-w-sm" role="status" aria-live="polite">
+            <div
+                className="pointer-events-none absolute inset-x-3 top-[calc(var(--safe-area-top)+66px)] z-50 mx-auto max-w-sm"
+                data-testid="explore-discovery-toast"
+                role="status"
+                aria-live="polite"
+            >
                 <motion.div
                     className="explore-specimen-card relative flex items-center gap-3 overflow-hidden rounded-[22px] p-3 backdrop-blur-md"
                     initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 54, scale: 0.84 }}

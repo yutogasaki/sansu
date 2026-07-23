@@ -13,6 +13,7 @@ export interface ExploreObservationDefinition {
     readonly featureId: DiscoveryPageFeatureId;
     readonly prerequisiteFeatureIds: readonly DiscoveryPageFeatureId[];
     readonly visual: ExploreVisualIdentity & {
+        readonly sceneId: string;
         readonly sceneSrc: string;
     };
     readonly camera: {
