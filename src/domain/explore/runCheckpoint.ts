@@ -203,9 +203,12 @@ export const assertExploreActiveCheckpointForRun = (
         if (gate.problem && gate.learningAssignment) {
             const isRepresentationRetry = gate.learningAssignment.source
                 === "representation-retry";
+            const isReservedRetry = gate.attemptCount >= 2
+                && gate.learningAssignment.reservedProblem !== undefined;
+            const isNonSegmentRetry = isRepresentationRetry || isReservedRetry;
             const isOriginalSegmentProblem = gate.problem.id === currentSegmentSlot.problem.id;
             if (
-                (!isOriginalSegmentProblem && !isRepresentationRetry)
+                (!isOriginalSegmentProblem && !isNonSegmentRetry)
                 || (isOriginalSegmentProblem && (
                     !exploreJsonValuesMatch(gate.problem, currentSegmentSlot.problem)
                     || !assignmentsMatch(

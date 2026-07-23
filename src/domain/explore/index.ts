@@ -12,6 +12,7 @@ export * from "./learningPlanner";
 export * from "./learningSegment";
 export * from "./problemAdapter";
 export * from "./rapidLoop";
+export * from "./rapidLoopEligibility";
 export * from "./runStructure";
 export * from "./runCheckpoint";
 export * from "./rewardPresentation";

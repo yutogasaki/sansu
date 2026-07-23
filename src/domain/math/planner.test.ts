@@ -1,7 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { createInitialProfile } from "../user/profile";
 import { createSeededRandom } from "../../utils/random";
-import { planMathProblems } from "./planner";
+import {
+    getAvailableSkills,
+    getLevelForSkill,
+    isMathSkillUnlockedForProfile,
+} from "./curriculum";
+import { planMathProblemSlots, planMathProblems } from "./planner";
 
 const createMathProfile = (mainLevel = 8, maxUnlocked = mainLevel) => {
     const profile = createInitialProfile("Planner", 1, mainLevel, 1, "math");
@@ -11,6 +16,28 @@ const createMathProfile = (mainLevel = 8, maxUnlocked = mainLevel) => {
 };
 
 describe("planMathProblems", () => {
+    it("fails closed for unknown, locked, and malformed curriculum boundaries", () => {
+        const unlocked = createMathProfile(3, 3);
+
+        expect(isMathSkillUnlockedForProfile("count_10", unlocked)).toBe(true);
+        expect(isMathSkillUnlockedForProfile("add_1d_1_bridge", unlocked)).toBe(false);
+        expect(isMathSkillUnlockedForProfile("unknown-skill", unlocked)).toBe(false);
+        expect(isMathSkillUnlockedForProfile("count_10", {
+            mathMaxUnlocked: Number.NaN,
+        })).toBe(false);
+        expect(isMathSkillUnlockedForProfile("count_10", {
+            mathMaxUnlocked: -1,
+        })).toBe(false);
+        expect(isMathSkillUnlockedForProfile("count_10", {
+            mathMaxUnlocked: 29,
+        })).toBe(false);
+        expect(getAvailableSkills(Number.POSITIVE_INFINITY)).toEqual([]);
+        expect(planMathProblems({
+            profile: createMathProfile(8, Number.POSITIVE_INFINITY),
+            count: 1,
+        })).toEqual([]);
+    });
+
     it("creates the three-question default and supports an arbitrary count", () => {
         const profile = createMathProfile(11);
 
@@ -197,5 +224,175 @@ describe("planMathProblems", () => {
             skillId: "add_1d_1",
             source: "main",
         });
+    });
+
+    it.each([
+        {
+            source: "retry",
+            options: { retrySkillIds: ["unknown-skill", "add_1d_1_bridge"] },
+        },
+        {
+            source: "due",
+            options: { dueSkillIds: ["unknown-skill", "add_1d_1_bridge"] },
+        },
+        {
+            source: "maintenance",
+            options: {
+                maintenanceSkillIds: ["unknown-skill", "add_1d_1_bridge"],
+                maintenanceRate: 1,
+            },
+        },
+        {
+            source: "retired maintenance",
+            options: {
+                retiredSkillIds: ["unknown-skill", "add_1d_1_bridge"],
+                maintenanceRate: 1,
+            },
+        },
+        {
+            source: "weak",
+            options: {
+                weakSkillIds: ["unknown-skill", "add_1d_1_bridge"],
+                weakRate: 1,
+            },
+        },
+    ])("blocks unknown and locked $source candidates before falling back", ({ options }) => {
+        const profile = createMathProfile(3, 3);
+        const plan = planMathProblems({
+            profile,
+            count: 1,
+            random: () => 0,
+            ...options,
+        });
+
+        expect(plan).toHaveLength(1);
+        expect(plan[0]?.source).toBe("main");
+        expect(getLevelForSkill(plan[0]?.skillId || "")).not.toBeNull();
+        expect(getLevelForSkill(plan[0]?.skillId || "")).toBeLessThanOrEqual(
+            profile.mathMaxUnlocked,
+        );
+    });
+
+    it("blocks locked follow-up and main candidates with the same built-in guard", () => {
+        const followupProfile = createMathProfile(9, 8);
+        followupProfile.recentAttempts = [{
+            id: "locked-symbol-miss",
+            timestamp: "2026-07-23T00:00:00.000Z",
+            subject: "math",
+            skillId: "add_1d_2",
+            result: "incorrect",
+        }];
+
+        expect(planMathProblems({
+            profile: followupProfile,
+            count: 1,
+            canAddReview: false,
+            isSkillEligible: skillId => skillId === "add_1d_2_bridge",
+            random: () => 0,
+        })).toEqual([]);
+
+        const mainProfile = createMathProfile(8, 7);
+        expect(planMathProblems({
+            profile: mainProfile,
+            count: 1,
+            canAddReview: false,
+            isSkillEligible: skillId => getLevelForSkill(skillId) === 8,
+            random: () => 0,
+        })).toEqual([]);
+    });
+
+    it("keeps +1 inside the unlock boundary and ANDs caller eligibility", () => {
+        const profile = createMathProfile(8, 9);
+        const [plusOne] = planMathProblems({
+            profile,
+            count: 1,
+            plusOneRate: 1,
+            random: () => 0,
+        });
+        const [callerFiltered] = planMathProblems({
+            profile,
+            count: 1,
+            plusOneRate: 1,
+            isSkillEligible: skillId => getLevelForSkill(skillId) === 8,
+            random: () => 0,
+        });
+
+        expect(plusOne.source).toBe("plus-one");
+        expect(getLevelForSkill(plusOne.skillId)).toBeLessThanOrEqual(
+            profile.mathMaxUnlocked,
+        );
+        expect(callerFiltered.source).toBe("main");
+        expect(getLevelForSkill(callerFiltered.skillId)).toBe(8);
+    });
+
+    it("passes the current planned index to eligibility and returns a partial plan", () => {
+        const seenIndexes = new Set<number>();
+        const plan = planMathProblems({
+            profile: createMathProfile(8),
+            count: 3,
+            plusOneRate: 0,
+            isSkillEligible: (skillId, plannedIndex) => {
+                seenIndexes.add(plannedIndex);
+                if (plannedIndex === 0) return skillId === "add_1d_1_bridge";
+                if (plannedIndex === 1) return skillId === "add_1d_1";
+                return false;
+            },
+            random: () => 0,
+        });
+
+        expect(plan.map(item => item.skillId)).toEqual([
+            "add_1d_1_bridge",
+            "add_1d_1",
+        ]);
+        expect(seenIndexes).toEqual(new Set([0, 1, 2]));
+        expect(plan).toHaveLength(2);
+        expect(plan.some(item => item.skillId === "count_10")).toBe(false);
+    });
+
+    it("preserves an ineligible slot without discarding an eligible later position", () => {
+        const slots = planMathProblemSlots({
+            profile: createMathProfile(8),
+            count: 3,
+            plusOneRate: 0,
+            isSkillEligible: (skillId, plannedIndex) => (
+                plannedIndex === 1 && skillId === "add_1d_1"
+            ),
+            random: () => 0,
+        });
+
+        expect(slots).toEqual([
+            undefined,
+            expect.objectContaining({
+                skillId: "add_1d_1",
+                source: "main",
+            }),
+            undefined,
+        ]);
+    });
+
+    it("reports prior empty slots to per-candidate review admission", () => {
+        const observedSlotCounts: number[] = [];
+        const slots = planMathProblemSlots({
+            profile: createMathProfile(8),
+            count: 3,
+            dueSkillIds: ["add_1d_1"],
+            canAddReview: (_planned, plannedSlots) => {
+                observedSlotCounts.push(plannedSlots.length);
+                return plannedSlots.length > 0;
+            },
+            plusOneRate: 0,
+            isSkillEligible: (skillId, plannedIndex) => (
+                plannedIndex === 1 && skillId === "add_1d_1"
+            ),
+            random: () => 0,
+        });
+
+        expect(slots[0]).toBeUndefined();
+        expect(slots[1]).toMatchObject({
+            skillId: "add_1d_1",
+            source: "due",
+        });
+        expect(slots[2]).toBeUndefined();
+        expect(observedSlotCounts).toContain(1);
     });
 });

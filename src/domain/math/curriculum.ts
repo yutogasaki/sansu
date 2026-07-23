@@ -1,4 +1,8 @@
-import type { MathRepresentationMode, MathSkillMetadata } from "../types";
+import type {
+    MathRepresentationMode,
+    MathSkillMetadata,
+    UserProfile,
+} from "../types";
 
 export const MAX_MATH_LEVEL = 28;
 export const MAX_VOCAB_LEVEL = 20;
@@ -242,6 +246,13 @@ export const getSkillsForLevel = (level: number): string[] => {
 };
 
 export const getAvailableSkills = (maxLevel: number): string[] => {
+    if (
+        !Number.isSafeInteger(maxLevel)
+        || maxLevel < 0
+        || maxLevel > MAX_MATH_LEVEL
+    ) {
+        return [];
+    }
     let skills: string[] = [];
     for (let i = 0; i <= maxLevel; i++) {
         if (MATH_CURRICULUM[i]) {
@@ -258,6 +269,26 @@ export const getLevelForSkill = (skillId: string): number | null => {
         }
     }
     return null;
+};
+
+/**
+ * Fail-closed curriculum boundary shared by every math-plan source.
+ * Unknown skill IDs and malformed profile unlock state are never eligible.
+ */
+export const isMathSkillUnlockedForProfile = (
+    skillId: string,
+    profile: Pick<UserProfile, "mathMaxUnlocked">,
+): boolean => {
+    if (
+        !Number.isSafeInteger(profile.mathMaxUnlocked)
+        || profile.mathMaxUnlocked < 0
+        || profile.mathMaxUnlocked > MAX_MATH_LEVEL
+    ) {
+        return false;
+    }
+
+    const level = getLevelForSkill(skillId);
+    return level !== null && level <= profile.mathMaxUnlocked;
 };
 
 export const getMathSkillFamily = (skillId: string): string => {

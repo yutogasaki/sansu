@@ -190,7 +190,7 @@ describe("blockGenerators utilities", () => {
     });
 
     it("generateSingleMathProblem prioritizes due review items", () => {
-        const profile = createInitialProfile("T", 1, 1, 1, "math");
+        const profile = createInitialProfile("T", 1, 2, 1, "math");
         const result = generateSingleMathProblem({
             profile,
             mathDue: [{ id: "count_10" }],
@@ -268,7 +268,7 @@ describe("blockGenerators utilities", () => {
     it("generateSingleMathProblem prioritizes maintenance checks when the rate fires", () => {
         vi.spyOn(Math, "random").mockReturnValue(0);
 
-        const profile = createInitialProfile("T", 1, 1, 1, "math");
+        const profile = createInitialProfile("T", 1, 2, 1, "math");
         const result = generateSingleMathProblem({
             profile,
             mathDue: [],

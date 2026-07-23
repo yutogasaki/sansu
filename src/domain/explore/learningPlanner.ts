@@ -9,14 +9,15 @@ import {
     getWeakMathSkillIds,
 } from "../learningRepository";
 import {
+    planMathProblemSlots,
     planMathProblems,
     type MathProblemPlanItem,
+    type MathProblemPlanSlot,
 } from "../math";
 import {
-    getAvailableSkills,
     getMathSkillMetadata,
 } from "../math/curriculum";
-import type { UserProfile } from "../types";
+import type { Problem, UserProfile } from "../types";
 import { getProfile } from "../user/repository";
 import {
     getExploreBenchmarkE2EOptions,
@@ -24,7 +25,6 @@ import {
 } from "./persistenceClient";
 import { getExploreAssistCandidates } from "./problemAdapter";
 import {
-    createExploreProblemPlan,
     createExploreProblemPlanForSkill,
     EXPLORE_PROBLEM_GENERATOR_VERSION,
     type ExploreProblemPlan,
@@ -57,13 +57,18 @@ import {
     assignmentsMatch,
     createExploreLearningAssignment,
 } from "./learningAssignment";
+import {
+    EXPLORE_RAPID_FALLBACK_CATEGORY_ID,
+    isRapidLoopEligibleProblem,
+} from "./rapidLoopEligibility";
 
 const EXPLORE_PLAN_WINDOW = 10;
 const EXPLORE_COOLDOWN_WINDOW = 5;
 const EXPLORE_REVIEW_CAP = 0.6;
 const EXPLORE_WEAK_LIMIT = 3;
 const EXPLORE_PLUS_ONE_LIMIT = 3;
-export const EXPLORE_LEARNING_PLANNER_VERSION = "explore-learning-planner-v2";
+export const EXPLORE_LEARNING_PLANNER_VERSION = "explore-learning-planner-v3";
+const EXPLORE_RAPID_SAFE_FALLBACK_VERSION = "explore-rapid-fallback-v1";
 
 interface ExploreLearningPlannerSnapshot {
     run: ExploreRunRecord;
@@ -351,8 +356,8 @@ const orderSelectionsForAuthoredGates = (
     state: ExploreRunState,
     projection: ExploreLearningSegmentGateProjection,
     profile: UserProfile,
-    selections: readonly MathProblemPlanItem[],
-): MathProblemPlanItem[] => {
+    selections: readonly MathProblemPlanSlot[],
+): MathProblemPlanSlot[] => {
     // The shared planner remains authoritative. We only reorder two items
     // with the exact same learning policy so an authored node can receive a
     // compatible visual representation; no Due or source is replaced.
@@ -375,14 +380,22 @@ const orderSelectionsForAuthoredGates = (
         if (!requestedEncounter || !current) return;
         if (planFor(current, gate)?.encounterId === requestedEncounter) return;
 
-        const compatibleIndex = ordered.findIndex((candidate, candidateIndex) => (
-            candidateIndex > slotIndex
-            && candidate.source === current.source
-            && candidate.isReview === current.isReview
-            && candidate.isMaintenanceCheck === current.isMaintenanceCheck
-            && candidate.countsTowardReviewCap === current.countsTowardReviewCap
-            && planFor(candidate, gate)?.encounterId === requestedEncounter
-        ));
+        const compatibleIndex = ordered.findIndex((candidate, candidateIndex) => {
+            if (!candidate || candidateIndex <= slotIndex) return false;
+            const candidateGate = projection.slots[candidateIndex]?.gate;
+            if (!candidateGate) return false;
+            const candidateAtCurrentGate = planFor(candidate, gate);
+            const currentAtCandidateGate = planFor(current, candidateGate);
+            return candidate.source === current.source
+                && candidate.isReview === current.isReview
+                && candidate.isMaintenanceCheck === current.isMaintenanceCheck
+                && candidate.countsTowardReviewCap === current.countsTowardReviewCap
+                && candidateAtCurrentGate?.encounterId === requestedEncounter
+                && candidateAtCurrentGate !== null
+                && currentAtCandidateGate !== null
+                && isRapidLoopEligibleProblem(candidateAtCurrentGate.problem)
+                && isRapidLoopEligibleProblem(currentAtCandidateGate.problem);
+        });
         if (compatibleIndex < 0) return;
         [ordered[slotIndex], ordered[compatibleIndex]] = [
             ordered[compatibleIndex],
@@ -436,6 +449,37 @@ export const createFixedTenExploreBenchmarkPlan = (
     };
 };
 
+const createRapidSafeFallbackPlan = (
+    state: ExploreRunState,
+    gate: ExploreProblemGate,
+): ExploreProblemPlan => {
+    const random = createSeededRandom(JSON.stringify([
+        EXPLORE_RAPID_SAFE_FALLBACK_VERSION,
+        state.seed,
+        gate.gateId,
+        gate.attemptCount,
+    ]));
+    const left = 1 + Math.floor(random() * 4);
+    const right = 1 + Math.floor(random() * (9 - left));
+    const problem: Problem = {
+        id: `${gate.gateId}:attempt-${gate.attemptCount}`,
+        subject: "math",
+        categoryId: EXPLORE_RAPID_FALLBACK_CATEGORY_ID,
+        questionText: `${left} + ${right} =`,
+        inputType: "number",
+        correctAnswer: String(left + right),
+        isReview: false,
+        isMaintenanceCheck: false,
+    };
+    if (!isRapidLoopEligibleProblem(problem)) {
+        throw new Error(`Rapid-safe fallback for gate ${gate.gateId} is invalid`);
+    }
+    return {
+        problem,
+        encounterId: resolveExploreEncounterId(state, gate, problem),
+    };
+};
+
 const createAndReserveSegmentPlan = async (
     state: ExploreRunState,
     projection: ExploreLearningSegmentGateProjection,
@@ -463,7 +507,6 @@ const createAndReserveSegmentPlan = async (
         .filter((attempt) => attempt.subject === "math")
         .map((attempt) => attempt.itemId)
         .slice(0, EXPLORE_COOLDOWN_WINDOW);
-    const availableSkills = new Set(getAvailableSkills(profile.mathMaxUnlocked));
     const compatiblePlans = new Map<string, ExploreProblemPlan | null>();
     const getCompatiblePlan = (skillId: string, gate: ExploreProblemGate) => {
         const key = `${gate.gateId}\u0000${skillId}`;
@@ -480,20 +523,23 @@ const createAndReserveSegmentPlan = async (
         ...projection,
         slots: planningSlots,
     };
-    const isSkillEligible = (skillId: string) => planningSlots.every(
-        ({ gate }) => getCompatiblePlan(skillId, gate) !== null,
-    );
+    const isSkillEligible = (skillId: string, plannedIndex = 0) => {
+        const plannedSlot = planningSlots[plannedIndex];
+        if (!plannedSlot) return false;
+        const plan = getCompatiblePlan(skillId, plannedSlot.gate);
+        return plan !== null && isRapidLoopEligibleProblem(plan.problem);
+    };
     const segmentSeed = createSegmentSeed(state, projection);
     const benchmark = getExploreBenchmarkE2EOptions();
     const isFixedTenBenchmark = benchmark.fixtureId === COLD_OPEN_FIXED_TEN_ID
         && benchmark.startIndex !== undefined;
-    const selections = isFixedTenBenchmark
+    const selections: MathProblemPlanSlot[] = isFixedTenBenchmark
         ? []
-        : planMathProblems({
+        : planMathProblemSlots({
             profile,
             count: planningSlots.length,
             dueSkillIds: [...new Set(due.map((item) => item.id))],
-            weakSkillIds: weak.filter((skillId) => availableSkills.has(skillId)),
+            weakSkillIds: weak,
             maintenanceSkillIds: maintenance,
             retiredSkillIds: retired,
             cooldownIds: [...new Set([...recentLogIds, ...recentAssignmentIds])],
@@ -502,9 +548,11 @@ const createAndReserveSegmentPlan = async (
             // This map starts empty so the planner's same-skill guard applies
             // to this segment, while cooldownIds still carries prior history.
             blockCounts: new Map(),
-            canAddReview: (planned) => canAddExploreReviewAssignment([
+            canAddReview: (_planned, plannedSlots) => canAddExploreReviewAssignment([
                 ...assignments,
-                ...planned,
+                ...plannedSlots.map((slot) => ({
+                    countsTowardReviewCap: slot?.countsTowardReviewCap ?? false,
+                })),
             ], profile.dailyGoal ?? 20),
             currentWeakCount: planWindow.filter((item) => item.source === "weak").length,
             weakLimit: EXPLORE_WEAK_LIMIT,
@@ -518,9 +566,6 @@ const createAndReserveSegmentPlan = async (
             isSkillEligible,
             random: createSeededRandom(segmentSeed),
         });
-    if (!isFixedTenBenchmark && selections.length !== planningSlots.length) {
-        throw new Error(`Planner did not fill segment ${projection.segmentId}`);
-    }
     const orderedSelections = isFixedTenBenchmark
         ? selections
         : orderSelectionsForAuthoredGates(state, planningProjection, profile, selections);
@@ -596,17 +641,25 @@ const createAndReserveSegmentPlan = async (
                         },
                     )
                     : null;
-                if (!selection || !exactPlan) {
-                    throw new Error(`Segment ${projection.segmentId} has no compatible slot ${step}`);
+                if (!selection || !exactPlan || !isRapidLoopEligibleProblem(exactPlan.problem)) {
+                    plan = createRapidSafeFallbackPlan(state, gate);
+                    policy = {
+                        source: "game-only-fallback",
+                        isReview: false,
+                        isMaintenanceCheck: false,
+                        countsTowardReviewCap: false,
+                        affectsSrs: false,
+                    };
+                } else {
+                    plan = exactPlan;
+                    policy = {
+                        source: toExploreLearningSource(selection.source),
+                        isReview: selection.isReview,
+                        isMaintenanceCheck: selection.isMaintenanceCheck,
+                        countsTowardReviewCap: selection.countsTowardReviewCap,
+                        affectsSrs: true,
+                    };
                 }
-                plan = exactPlan;
-                policy = {
-                    source: toExploreLearningSource(selection.source),
-                    isReview: selection.isReview,
-                    isMaintenanceCheck: selection.isMaintenanceCheck,
-                    countsTowardReviewCap: selection.countsTowardReviewCap,
-                    affectsSrs: true,
-                };
             }
             const assignment = createSegmentAssignment(
                 state,
@@ -691,7 +744,6 @@ const createAndReserveRetryPlan = async (
         .filter((attempt) => attempt.subject === "math")
         .map((attempt) => attempt.itemId)
         .slice(0, EXPLORE_COOLDOWN_WINDOW);
-    const availableSkills = new Set(getAvailableSkills(profile.mathMaxUnlocked));
     const compatiblePlans = new Map<string, ExploreProblemPlan | null>();
     const getCompatiblePlan = (skillId: string) => {
         if (!compatiblePlans.has(skillId)) {
@@ -707,7 +759,7 @@ const createAndReserveRetryPlan = async (
         profile,
         count: 1,
         dueSkillIds: [...new Set(due.map((item) => item.id))],
-        weakSkillIds: weak.filter((skillId) => availableSkills.has(skillId)),
+        weakSkillIds: weak,
         maintenanceSkillIds: maintenance,
         retiredSkillIds: retired,
         retrySkillIds: getRetrySkillIds(gate),
@@ -729,7 +781,10 @@ const createAndReserveRetryPlan = async (
         maintenanceRate: 0.01,
         weakRate: 0.3,
         plusOneRate: 0.3,
-        isSkillEligible: (skillId) => getCompatiblePlan(skillId) !== null,
+        isSkillEligible: (skillId) => {
+            const plan = getCompatiblePlan(skillId);
+            return plan !== null && isRapidLoopEligibleProblem(plan.problem);
+        },
         random: createSeededRandom(JSON.stringify([
             "explore-learning-plan-v1",
             state.seed,
@@ -749,7 +804,7 @@ const createAndReserveRetryPlan = async (
                 isMaintenanceCheck: selection.isMaintenanceCheck,
             },
         );
-        if (exactPlan) {
+        if (exactPlan && isRapidLoopEligibleProblem(exactPlan.problem)) {
             return reservePlan(state, gate, exactPlan, {
                 source: toExploreLearningSource(selection.source),
                 isReview: selection.isReview,
@@ -760,8 +815,9 @@ const createAndReserveRetryPlan = async (
         }
     }
 
-    // Unsupported answer/input types remain playable but must not influence SRS.
-    return reservePlan(state, gate, createExploreProblemPlan(state, gate, profile), {
+    // An excluded learning candidate stays untouched. A separate deterministic
+    // game-only identity keeps the current gate playable without writing SRS.
+    return reservePlan(state, gate, createRapidSafeFallbackPlan(state, gate), {
         source: "game-only-fallback",
         isReview: false,
         isMaintenanceCheck: false,

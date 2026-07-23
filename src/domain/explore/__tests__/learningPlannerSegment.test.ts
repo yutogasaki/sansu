@@ -18,12 +18,17 @@ const {
 } = await import("../reducer");
 const {
     commitExploreAttempt,
+    getResumableExploreRun,
     reserveExploreLearningAssignment,
     saveExploreRunCheckpoint,
     startExploreRun,
 } = await import("../persistenceRepository");
 const { createAndReserveExploreProblemPlan } = await import("../learningPlanner");
 const { createExploreProblemPlanForSkill } = await import("../problemAdapter");
+const {
+    EXPLORE_RAPID_FALLBACK_CATEGORY_ID,
+    isRapidLoopEligibleProblem,
+} = await import("../rapidLoopEligibility");
 
 interface RoutedRunFixture {
     state: ExploreRunState;
@@ -205,6 +210,87 @@ describe("Explore immutable learning-segment planner integration", () => {
             .resolves.toBe(3);
     });
 
+    it("fills a rapid-ineligible segment with a separate game-only identity without consuming Due", async () => {
+        const profile = createProfile();
+        profile.mathMainLevel = 28;
+        profile.mathMaxUnlocked = 28;
+        await persistProfile(profile);
+        await addDueSkills(profile.id, ["large_number_unit"]);
+        const profileBefore = structuredClone(
+            (await db.appData.get("app"))?.profiles[profile.id],
+        );
+        const logCountBefore = await db.logs.count();
+        const dueBefore = structuredClone(
+            await db.memoryMath.get([profile.id, "large_number_unit"]),
+        );
+        const fixture = await startRoutedRun(profile, "segment-rapid-safe-fallback");
+
+        const plan = await reserveOpeningSegment(profile, fixture);
+        const { run, segment } = await getOpeningSegment(fixture.state.runId);
+
+        expect(segment.slots).toHaveLength(3);
+        expect(segment.slots.every((slot) => (
+            slot.problem.categoryId === EXPLORE_RAPID_FALLBACK_CATEGORY_ID
+            && slot.assignment.categoryId === EXPLORE_RAPID_FALLBACK_CATEGORY_ID
+            && slot.assignment.source === "game-only-fallback"
+            && slot.assignment.affectsSrs === false
+            && isRapidLoopEligibleProblem(slot.problem)
+        ))).toBe(true);
+        expect(Object.values(run.learningAssignments || {}).some(
+            (assignment) => assignment.categoryId === "large_number_unit",
+        )).toBe(false);
+        expect(await db.memoryMath.get([profile.id, "large_number_unit"]))
+            .toEqual(dueBefore);
+
+        const problemCheckpoint = await savePendingProblem(profile, fixture, plan);
+        const gate = fixture.state.pendingProblem;
+        if (!gate) throw new Error("Expected the fallback gate");
+        const receipt = await commitExploreAttempt({
+            identity: createAttemptIdentity({
+                profileId: profile.id,
+                runId: fixture.state.runId,
+                gateId: gate.gateId,
+                attemptNumber: 1,
+            }),
+            problem: {
+                id: plan.problem.id,
+                categoryId: plan.problem.categoryId,
+            },
+            result: "correct",
+            committedAt: 103,
+            expectedCheckpointRevision: problemCheckpoint.checkpointRevision,
+        });
+
+        expect(receipt.learningLogId).toBeUndefined();
+        expect(await db.logs.count()).toBe(logCountBefore);
+        expect(await db.memoryMath.get([profile.id, "large_number_unit"]))
+            .toEqual(dueBefore);
+        expect((await db.appData.get("app"))?.profiles[profile.id]).toEqual(profileBefore);
+    });
+
+    it("leaves a rapid-safe but locked Due untouched while reserving unlocked slots", async () => {
+        const profile = createProfile();
+        await persistProfile(profile);
+        await addDueSkills(profile.id, ["add_1d_2_bridge"]);
+        const dueBefore = structuredClone(
+            await db.memoryMath.get([profile.id, "add_1d_2_bridge"]),
+        );
+        const fixture = await startRoutedRun(profile, "segment-locked-due");
+
+        await reserveOpeningSegment(profile, fixture);
+        const { run, segment } = await getOpeningSegment(fixture.state.runId);
+
+        expect(segment.slots).toHaveLength(3);
+        expect(segment.slots.every(
+            (slot) => slot.problem.categoryId !== "add_1d_2_bridge",
+        )).toBe(true);
+        expect(Object.values(run.learningAssignments || {}).some(
+            (assignment) => assignment.categoryId === "add_1d_2_bridge",
+        )).toBe(false);
+        expect(await db.memoryMath.get([profile.id, "add_1d_2_bridge"]))
+            .toEqual(dueBefore);
+    });
+
     it("rolls back all segment slots and assignments when the single run-row write fails", async () => {
         const profile = createProfile();
         await persistProfile(profile);
@@ -334,6 +420,7 @@ describe("Explore immutable learning-segment planner integration", () => {
 
     it("does not let future Q2/Q3 assignments cool down Q1's representation retry", async () => {
         const profile = createProfile();
+        profile.mathMaxUnlocked = 9;
         await persistProfile(profile);
         // The Q1 Due target is one level above main. The remaining level-8
         // slots therefore reserve both add_1d_1 representations, including
@@ -389,6 +476,216 @@ describe("Explore immutable learning-segment planner integration", () => {
 
         expect(retry.assignment.source).toBe("representation-retry");
         expect(retry.problem.categoryId).toBe("add_1d_1_bridge");
+    });
+
+    it("uses a separate rapid-safe game-only identity when a new retry has no eligible learning candidate", async () => {
+        const profile = createProfile();
+        profile.mathMainLevel = 25;
+        profile.mathMaxUnlocked = 25;
+        await persistProfile(profile);
+        const fixture = await startRoutedRun(profile, "retry-rapid-safe-fallback");
+        const gate = fixture.state.pendingProblem;
+        if (!gate) throw new Error("Expected a legacy current gate");
+        const legacyPlan = createExploreProblemPlanForSkill(
+            fixture.state,
+            gate,
+            "large_number_unit",
+            profile,
+            { isReview: false, isMaintenanceCheck: false },
+        );
+        if (!legacyPlan) throw new Error("Expected a legacy high-load Problem");
+        const legacyAssignment = await reserveExploreLearningAssignment({
+            profileId: profile.id,
+            runId: fixture.state.runId,
+            gateId: gate.gateId,
+            problemId: legacyPlan.problem.id,
+            categoryId: legacyPlan.problem.categoryId,
+            source: "main",
+            isReview: false,
+            isMaintenanceCheck: false,
+            countsTowardReviewCap: false,
+            affectsSrs: true,
+            reservedAt: 105,
+        });
+        const visibleState = exploreReducer(fixture.state, {
+            type: "SET_PROBLEM",
+            problem: legacyPlan.problem,
+            assignment: legacyAssignment,
+            encounterId: legacyPlan.encounterId,
+        });
+        const visibleCheckpoint = await saveExploreRunCheckpoint({
+            runId: fixture.state.runId,
+            profileId: profile.id,
+            expectedRevision: fixture.revision,
+            state: visibleState,
+            openingExperienceId: "classic-v1",
+            savedAt: 106,
+        });
+        await createAndReserveExploreProblemPlan(
+            visibleState,
+            visibleState.pendingProblem!,
+            profile,
+            { expectedCheckpointRevision: visibleCheckpoint.checkpointRevision },
+        );
+
+        let checkpointRevision = visibleCheckpoint.checkpointRevision;
+        for (const attemptNumber of [1, 2] as const) {
+            const receipt = await commitExploreAttempt({
+                identity: createAttemptIdentity({
+                    profileId: profile.id,
+                    runId: fixture.state.runId,
+                    gateId: gate.gateId,
+                    attemptNumber,
+                }),
+                problem: {
+                    id: legacyPlan.problem.id,
+                    categoryId: legacyPlan.problem.categoryId,
+                },
+                result: "incorrect",
+                committedAt: 106 + attemptNumber,
+                expectedCheckpointRevision: checkpointRevision,
+            });
+            if (receipt.checkpointRevision === undefined) {
+                throw new Error("Expected an incorrect-answer checkpoint");
+            }
+            checkpointRevision = receipt.checkpointRevision;
+        }
+        const checkpoint = (await db.exploreRuns.get(fixture.state.runId))?.activeCheckpoint;
+        if (!checkpoint) throw new Error("Expected the retry checkpoint");
+        const retryState = exploreReducer(checkpoint.state, {
+            type: "ADVANCE_AFTER_INCORRECT",
+        });
+        const retryGate = retryState.pendingProblem;
+        if (!retryGate) throw new Error("Expected a retry planning gate");
+
+        const retry = await createAndReserveExploreProblemPlan(
+            retryState,
+            retryGate,
+            profile,
+            { expectedCheckpointRevision: checkpointRevision },
+        );
+
+        expect(retry.problem.categoryId).toBe(EXPLORE_RAPID_FALLBACK_CATEGORY_ID);
+        expect(isRapidLoopEligibleProblem(retry.problem)).toBe(true);
+        expect(retry.assignment).toMatchObject({
+            categoryId: EXPLORE_RAPID_FALLBACK_CATEGORY_ID,
+            source: "game-only-fallback",
+            affectsSrs: false,
+        });
+        expect((await db.exploreRuns.get(fixture.state.runId))
+            ?.learningAssignments?.[legacyPlan.problem.id]).toEqual(legacyAssignment);
+
+        const displayedRetryState = exploreReducer(retryState, {
+            type: "SET_PROBLEM",
+            problem: retry.problem,
+            assignment: retry.assignment,
+            encounterId: retry.encounterId,
+        });
+        const displayedRetryCheckpoint = await saveExploreRunCheckpoint({
+            runId: fixture.state.runId,
+            profileId: profile.id,
+            expectedRevision: checkpointRevision,
+            state: displayedRetryState,
+            openingExperienceId: "classic-v1",
+            savedAt: 109,
+        });
+        const resumed = await getResumableExploreRun(profile.id);
+
+        expect(resumed?.checkpoint.state.pendingProblem?.problem).toEqual(retry.problem);
+        expect(resumed?.checkpoint.state.pendingProblem?.learningAssignment)
+            .toEqual(retry.assignment);
+
+        const fallbackReceipt = await commitExploreAttempt({
+            identity: createAttemptIdentity({
+                profileId: profile.id,
+                runId: fixture.state.runId,
+                gateId: retryGate.gateId,
+                attemptNumber: 3,
+            }),
+            problem: {
+                id: retry.problem.id,
+                categoryId: retry.problem.categoryId,
+            },
+            result: "correct",
+            committedAt: 110,
+            expectedCheckpointRevision: displayedRetryCheckpoint.checkpointRevision,
+        });
+
+        expect(fallbackReceipt.learningLogId).toBeUndefined();
+    });
+
+    it("checkpoints and resumes a full-reserved retry selected from the main source", async () => {
+        const profile = createProfile();
+        profile.mathMainLevel = 13;
+        profile.mathMaxUnlocked = 13;
+        await persistProfile(profile);
+        const fixture = await startRoutedRun(profile, "retry-main-source-checkpoint");
+        const initial = await reserveOpeningSegment(profile, fixture);
+        expect(initial.problem.categoryId).toMatch(/^mul_99_/);
+        const problemCheckpoint = await savePendingProblem(profile, fixture, initial);
+        const gate = fixture.state.pendingProblem;
+        if (!gate) throw new Error("Expected the original multiplication gate");
+
+        let checkpointRevision = problemCheckpoint.checkpointRevision;
+        for (const attemptNumber of [1, 2] as const) {
+            const receipt = await commitExploreAttempt({
+                identity: createAttemptIdentity({
+                    profileId: profile.id,
+                    runId: fixture.state.runId,
+                    gateId: gate.gateId,
+                    attemptNumber,
+                }),
+                problem: {
+                    id: initial.problem.id,
+                    categoryId: initial.problem.categoryId,
+                },
+                result: "incorrect",
+                committedAt: 140 + attemptNumber,
+                expectedCheckpointRevision: checkpointRevision,
+            });
+            if (receipt.checkpointRevision === undefined) {
+                throw new Error("Expected an incorrect-answer checkpoint");
+            }
+            checkpointRevision = receipt.checkpointRevision;
+        }
+
+        const checkpoint = (await db.exploreRuns.get(fixture.state.runId))?.activeCheckpoint;
+        if (!checkpoint) throw new Error("Expected the retry checkpoint");
+        const retryState = exploreReducer(checkpoint.state, {
+            type: "ADVANCE_AFTER_INCORRECT",
+        });
+        const retryGate = retryState.pendingProblem;
+        if (!retryGate) throw new Error("Expected a refreshed retry gate");
+        const retry = await createAndReserveExploreProblemPlan(
+            retryState,
+            retryGate,
+            profile,
+            { expectedCheckpointRevision: checkpointRevision },
+        );
+
+        expect(retry.assignment.source).toBe("main");
+        expect(retry.assignment.reservedProblem).toEqual(retry.problem);
+
+        const displayed = exploreReducer(retryState, {
+            type: "SET_PROBLEM",
+            problem: retry.problem,
+            assignment: retry.assignment,
+            encounterId: retry.encounterId,
+        });
+        const saved = await saveExploreRunCheckpoint({
+            runId: fixture.state.runId,
+            profileId: profile.id,
+            expectedRevision: checkpointRevision,
+            state: displayed,
+            openingExperienceId: "classic-v1",
+            savedAt: 143,
+        });
+        const resumed = await getResumableExploreRun(profile.id);
+
+        expect(saved.checkpointRevision).toBe(checkpointRevision + 1);
+        expect(resumed?.checkpoint.state.pendingProblem?.problem).toEqual(retry.problem);
+        expect(resumed?.checkpoint.state.pendingProblem?.learningAssignment)
+            .toEqual(retry.assignment);
     });
 
     it("writes no retry assignment when its expected checkpoint revision is stale", async () => {
@@ -593,6 +890,84 @@ describe("Explore immutable learning-segment planner integration", () => {
         expect(adopted.assignment).toEqual(legacyAssignment);
         expect(legacyState.pendingProblem?.problem).toEqual(legacyPlan.problem);
         expect(run.learningAssignments?.[legacyPlan.problem.id]).toEqual(legacyAssignment);
+    });
+
+    it("restores a saved v2 segment byte-for-byte without retroactively rejecting its current Problem", async () => {
+        const profile = createProfile();
+        profile.mathMainLevel = 25;
+        profile.mathMaxUnlocked = 25;
+        await persistProfile(profile);
+        const fixture = await startRoutedRun(profile, "legacy-v2-rapid-policy-boundary");
+        const gate = fixture.state.pendingProblem;
+        if (!gate) throw new Error("Expected a legacy current gate");
+        const legacyPlan = createExploreProblemPlanForSkill(
+            fixture.state,
+            gate,
+            "large_number_unit",
+            profile,
+            { isReview: true, isMaintenanceCheck: false },
+        );
+        if (!legacyPlan) throw new Error("Expected a legacy high-load Problem");
+        expect(isRapidLoopEligibleProblem(legacyPlan.problem)).toBe(false);
+        const legacyAssignment = await reserveExploreLearningAssignment({
+            profileId: profile.id,
+            runId: fixture.state.runId,
+            gateId: gate.gateId,
+            problemId: legacyPlan.problem.id,
+            categoryId: legacyPlan.problem.categoryId,
+            source: "due",
+            isReview: true,
+            isMaintenanceCheck: false,
+            countsTowardReviewCap: true,
+            affectsSrs: true,
+            reservedAt: 115,
+        });
+        const legacyState = exploreReducer(fixture.state, {
+            type: "SET_PROBLEM",
+            problem: legacyPlan.problem,
+            assignment: legacyAssignment,
+            encounterId: legacyPlan.encounterId,
+        });
+        const legacyCheckpoint = await saveExploreRunCheckpoint({
+            runId: fixture.state.runId,
+            profileId: profile.id,
+            expectedRevision: fixture.revision,
+            state: legacyState,
+            openingExperienceId: "classic-v1",
+            savedAt: 116,
+        });
+
+        await createAndReserveExploreProblemPlan(
+            legacyState,
+            legacyState.pendingProblem!,
+            profile,
+            { expectedCheckpointRevision: legacyCheckpoint.checkpointRevision },
+        );
+        const stored = await db.exploreRuns.get(fixture.state.runId);
+        const newlyAdopted = stored?.learningSegments?.["0"];
+        if (!stored || !newlyAdopted) throw new Error("Expected an adopted segment");
+        const savedV2Segment: ExploreLearningSegment = {
+            ...structuredClone(newlyAdopted),
+            plannerVersion: "explore-learning-planner-v2",
+        };
+        stored.learningSegments = {
+            ...stored.learningSegments,
+            "0": savedV2Segment,
+        };
+        await db.exploreRuns.put(stored);
+
+        const restored = await createAndReserveExploreProblemPlan(
+            legacyState,
+            legacyState.pendingProblem!,
+            profile,
+            { expectedCheckpointRevision: legacyCheckpoint.checkpointRevision },
+        );
+
+        expect(restored.problem).toEqual(legacyPlan.problem);
+        expect(restored.assignment).toEqual(legacyAssignment);
+        expect(restored.learningSegment).toEqual(savedV2Segment);
+        expect((await db.exploreRuns.get(fixture.state.runId))?.learningSegments?.["0"])
+            .toEqual(savedV2Segment);
     });
 
     it("adopts a legacy current Problem after one incorrect attempt before reserving later slots", async () => {

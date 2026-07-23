@@ -15,6 +15,7 @@ import {
     isExploreProblemCompatible,
     isExploreAnswerCorrect,
 } from "../problemAdapter";
+import { evaluateRapidLoopEligibility } from "../rapidLoopEligibility";
 import type { ExploreProblemGate } from "../types";
 
 const createGate = (attemptCount = 0, skillId?: string): ExploreProblemGate => ({
@@ -53,6 +54,20 @@ const createRootTangleGate = (
 describe("exploration problem adapter", () => {
     afterEach(() => {
         vi.restoreAllMocks();
+    });
+
+    it("keeps technical input compatibility separate from new-slot rapid eligibility", () => {
+        const savedProblem = {
+            categoryId: "add_1d_1",
+            inputType: "number" as const,
+            correctAnswer: "1000",
+        };
+
+        expect(isExploreProblemCompatible(savedProblem)).toBe(true);
+        expect(evaluateRapidLoopEligibility(savedProblem)).toMatchObject({
+            eligible: false,
+            reason: "answer-over-action-budget",
+        });
     });
 
     it("replays the same problem plan from the same run, gate, and attempt", () => {

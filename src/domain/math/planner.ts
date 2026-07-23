@@ -3,6 +3,7 @@ import type { RandomSource } from "../../utils/random";
 import {
     getMathSkillFamily,
     getSkillsForLevel,
+    isMathSkillUnlockedForProfile,
 } from "./curriculum";
 import { getMathFollowupPlan } from "./followups";
 
@@ -23,9 +24,14 @@ export interface MathProblemPlanItem {
     countsTowardReviewCap: boolean;
 }
 
+export type MathProblemPlanSlot = MathProblemPlanItem | undefined;
+
 type ReviewAdmission =
     | boolean
-    | ((planned: readonly MathProblemPlanItem[]) => boolean);
+    | ((
+        planned: readonly MathProblemPlanItem[],
+        plannedSlots: readonly MathProblemPlanSlot[],
+    ) => boolean);
 
 export interface MathProblemPlanOptions {
     profile: UserProfile;
@@ -56,8 +62,11 @@ export interface MathProblemPlanOptions {
     maintenanceRate?: number;
     weakRate?: number;
     plusOneRate?: number;
-    /** Lets a surface exclude generators its current answer UI cannot render. */
-    isSkillEligible?: (skillId: string) => boolean;
+    /**
+     * Lets a surface exclude generators its current answer UI cannot render.
+     * The callback is ANDed with the built-in curriculum/unlock guard.
+     */
+    isSkillEligible?: (skillId: string, plannedIndex: number) => boolean;
     random?: RandomSource;
 }
 
@@ -74,7 +83,8 @@ interface SelectionOptions {
     recentIds: readonly string[];
     blockCounts: ReadonlyMap<string, number>;
     sameSkillLimit: number;
-    isSkillEligible: (skillId: string) => boolean;
+    plannedIndex: number;
+    isSkillEligible: (skillId: string, plannedIndex: number) => boolean;
     random: RandomSource;
 }
 
@@ -88,7 +98,7 @@ const getEligible = (
     candidates: readonly string[],
     options: SelectionOptions,
 ): string[] => candidates.filter(skillId =>
-    options.isSkillEligible(skillId)
+    options.isSkillEligible(skillId, options.plannedIndex)
     && !options.skippedTodayIds.includes(skillId)
     && (options.blockCounts.get(skillId) || 0) < options.sameSkillLimit
 );
@@ -161,7 +171,7 @@ const pickLeastUsedMathSkillId = (
     options: SelectionOptions,
 ): string | undefined => {
     const allowed = candidates.filter(
-        skillId => options.isSkillEligible(skillId)
+        skillId => options.isSkillEligible(skillId, options.plannedIndex)
             && !options.skippedTodayIds.includes(skillId),
     );
     if (allowed.length === 0) return undefined;
@@ -203,17 +213,19 @@ const createPlanItem = (
 const isReviewAllowed = (
     admission: ReviewAdmission | undefined,
     planned: readonly MathProblemPlanItem[],
+    plannedSlots: readonly MathProblemPlanSlot[],
 ): boolean => typeof admission === "function"
-    ? admission(planned)
+    ? admission(planned, plannedSlots)
     : admission ?? true;
 
 /**
- * Produces a pure skill-level plan shared by Study and Explore. It does not
- * generate operands or mutate persistence; callers own those two boundaries.
+ * Produces a position-preserving skill plan. Undefined slots let a surface
+ * supply a separate non-learning fallback without discarding eligible later
+ * positions. It does not generate operands or mutate persistence.
  */
-export const planMathProblems = (
+export const planMathProblemSlots = (
     options: MathProblemPlanOptions,
-): MathProblemPlanItem[] => {
+): MathProblemPlanSlot[] => {
     const count = Math.max(0, Math.floor(options.count ?? DEFAULT_PLAN_COUNT));
     if (count === 0) return [];
 
@@ -237,27 +249,32 @@ export const planMathProblems = (
 
     const blockCounts = new Map(options.blockCounts || []);
     const initialRecentIds = [...(options.recentIds || [])];
-    const planned: MathProblemPlanItem[] = [];
+    const plannedSlots: MathProblemPlanSlot[] = [];
+    const plannedItems: MathProblemPlanItem[] = [];
     let weakCount = Math.max(0, options.currentWeakCount ?? 0);
     let plusOneCount = Math.max(0, options.plusOneCount ?? 0);
     let retryCount = 0;
+    const callerEligibility = options.isSkillEligible ?? (() => true);
 
     const getSelectionOptions = (): SelectionOptions => ({
-        cooldownIds: options.cooldownIdsForIndex?.(planned.length)
+        cooldownIds: options.cooldownIdsForIndex?.(plannedSlots.length)
             ?? options.cooldownIds
             ?? [],
         skippedTodayIds: options.skippedTodayIds ?? [],
         recentIds: [
             ...initialRecentIds,
-            ...planned.map(item => item.skillId),
+            ...plannedItems.map(item => item.skillId),
         ].slice(-recentWindow),
         blockCounts,
         sameSkillLimit,
-        isSkillEligible: options.isSkillEligible ?? (() => true),
+        plannedIndex: plannedSlots.length,
+        isSkillEligible: (skillId, plannedIndex) =>
+            isMathSkillUnlockedForProfile(skillId, options.profile)
+            && callerEligibility(skillId, plannedIndex),
         random,
     });
 
-    while (planned.length < count) {
+    while (plannedSlots.length < count) {
         const selection = getSelectionOptions();
         let item: MathProblemPlanItem | undefined;
 
@@ -270,12 +287,12 @@ export const planMathProblems = (
         }
 
         if (!item && (options.dueSkillIds?.length || 0) > 0
-            && isReviewAllowed(options.canAddReview, planned)) {
+            && isReviewAllowed(options.canAddReview, plannedItems, plannedSlots)) {
             const dueId = pickOrderedId(options.dueSkillIds || [], selection);
             if (dueId) item = createPlanItem(dueId, "due");
         }
 
-        if (!item && isReviewAllowed(options.canAddReview, planned)) {
+        if (!item && isReviewAllowed(options.canAddReview, plannedItems, plannedSlots)) {
             const maintenancePool = [
                 ...(options.maintenanceSkillIds || []),
                 ...(options.retiredSkillIds || []),
@@ -288,7 +305,7 @@ export const planMathProblems = (
             }
         }
 
-        if (!item && isReviewAllowed(options.canAddReview, planned)
+        if (!item && isReviewAllowed(options.canAddReview, plannedItems, plannedSlots)
             && weakCount < weakLimit
             && (options.weakSkillIds?.length || 0) > 0
             && random() < weakRate) {
@@ -332,14 +349,26 @@ export const planMathProblems = (
                 source = "main";
             }
 
-            item = createPlanItem(skillId || "count_10", source);
+            if (skillId) item = createPlanItem(skillId, source);
         }
 
-        planned.push(item);
+        plannedSlots.push(item);
+        if (!item) continue;
+        plannedItems.push(item);
         blockCounts.set(item.skillId, (blockCounts.get(item.skillId) || 0) + 1);
         if (item.source === "weak") weakCount += 1;
         if (item.source === "plus-one") plusOneCount += 1;
     }
 
-    return planned;
+    return plannedSlots;
 };
+
+/**
+ * Compact shared Study plan. Surfaces that must preserve exact positions,
+ * such as Explore segments, use `planMathProblemSlots` instead.
+ */
+export const planMathProblems = (
+    options: MathProblemPlanOptions,
+): MathProblemPlanItem[] => planMathProblemSlots(options).filter(
+    (item): item is MathProblemPlanItem => item !== undefined,
+);
