@@ -2,7 +2,7 @@
 
 - Date: 2026-07-23
 - Owner: Codex `/root`
-- Status: Active
+- Status: Awaiting external validation
 - Review By: 2026-07-30
 - Related ADR / Runbooks: `docs/runbooks/pwa-release.md`
 
@@ -10,7 +10,7 @@
 
 Replace the legacy `ふわまな` identity with the child-facing product `ポッコのふしぎずかん` and make the complete app read as one exploration game without slowing arithmetic input.
 
-## Runtime baseline
+## Prior runtime baseline
 
 Current-run screenshots are stored under `docs/design/audits/2026-07-23-whole-app-brand/`.
 
@@ -45,7 +45,7 @@ The prior checklist completed brand metadata and utility styling, but did not pr
 | G4-3 major encounters | G4-2 | light bridge and root tangle use same-camera three-state painted scenes | Complete (candidate) |
 | G4-4 semantic Q7 | G4-2, G4-3 | world reaction provenance reaches same-camera payoff before the book | Complete (candidate) |
 | G4-5 return and base | G4-2, G4-4 | same Pokko and latest finding remain legible through replay/base | Complete (candidate) |
-| G4-6 critical-path audit | G4-1..G4-5 | 390/768 contact sheet from one build, mixed lineage 0, TenKey fit | In progress |
+| G4-6 critical-path audit | G4-1..G4-5 | 390/768 contact sheet from one build, mixed lineage 0, TenKey fit | Complete (local) |
 | G5 blind value test | G4-6 | 4/5 same action/payoff, 4/5 want more, danger 0 | Pending |
 | G6 production promotion | G5 | cold-cache/PWA actual target evidence and explicit default switch | Pending |
 
@@ -57,6 +57,17 @@ The prior checklist completed brand metadata and utility styling, but did not pr
 - Added build revision and delivery identity at the app root, surface lineage / candidate / mode identity at critical roots, and opt-in-only audit screenshot writes. Normal smoke runs no longer mutate versioned visual evidence.
 - Kept TenKey structure and answer cadence unchanged. `verify:core` passed 90 files / 826 tests, the full smoke path passed at phone and tablet sizes, asset budgets passed, and the three PWA update handoff scenarios passed.
 - Production remains **HOLD**. G4-6 still needs the same-build 390 / 768 critical-path contact sheet; G5 still needs the blind five-person value test, and G6 still needs actual delivery-target cold-cache / PWA evidence before changing the default.
+
+### G4 final local checkpoint — revision `83210fd`
+
+- Exact detached-build evidence is stored at `docs/design/audits/2026-07-23-pokko-field-v1-83210fd/`: 32 critical-path screenshots, two Q7 composites, one contact sheet, and a machine-readable manifest from revision `83210fdf287f4e4673e00e158f9b50f9b5962f1f`, delivery `snap-root-v1`, lineage `pokko-field-v1`.
+- Replaced the white-strip bridge with a same-camera living leaf bridge. Idle shows two separated leaf tips, correct joins them with a large flower clasp, and resolved places Pokko on the load-bearing bridge.
+- Unified Q7 into one visible cause: opened roots reveal the previously investigated flowers and glowing dew as a path. The same resolved scene continues into the observation and return book; the visible three-card recap was removed from the action beat while its ordered semantics remain available to assistive technology.
+- Added route-card scene previews and replaced the flat return/base hero art with approved painted runtime scenes. Independent image screening now passes route differentiation, Q7 causality, TenKey visibility, and child-safety checks.
+- Independent whole-flow screening scores are **8.8 / 10 coherence**, **9.0 / 10 tempo**, and **8.2 / 10 expansion readiness**, all GO. Runtime integrity passes with zero visible mixed lineage and zero visible legacy actors.
+- The independent six-axis visual score is **52 / 60**, with every axis at least 8 / 10, so the local visual gate passes.
+- `lint`, `typecheck`, 30 focused tests, production build and asset budgets passed. Full browser smoke passed, including 390×800, five bridge sizes, five root-tangle sizes, persistence, return, parent gate, and PWA-critical flows.
+- Local G4 is complete. Production remains **HOLD** until G5 records five uninstructed observers and G6 verifies the actual delivery target after cold cache or PWA update. These external gates are not inferred from local screenshots.
 
 ## Non-goals
 
@@ -87,4 +98,4 @@ The prior checklist completed brand metadata and utility styling, but did not pr
 - Commands: `npm run docs:check`, `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build`, `npm run e2e:smoke`.
 - Automated: title marker, route smoke, legacy album hidden, PWA asset policy, existing learning and persistence suites.
 - Manual: 390 × 844 current-run capture of onboarding, Explore, Base, Records, Settings, Study; compare the baseline and current runtime in one board.
-- Evidence: `docs/design/audits/2026-07-23-whole-app-brand/`.
+- Evidence: `docs/design/audits/2026-07-23-pokko-field-v1-83210fd/`.
