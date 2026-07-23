@@ -2,6 +2,7 @@ import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, House, Lightbulb, MapPinned, Sparkles } from "lucide-react";
 import {
+    FIREFLY_FLOWER_DISCOVERY_PAGE,
     getDiscoveryPageFeature,
     getDiscoveryPageProgress,
     type DiscoveryKind,
@@ -46,10 +47,12 @@ export const ReturnSummary: React.FC<ReturnSummaryProps> = ({
         : undefined;
     const completedResearchFinding = researchProgress?.isComplete && researchPage
         ? researchPage.observation?.copy.finding
-            ?? getDiscoveryPageFeature(
-                researchPage.definition,
-                researchPage.definition.chain.bigDiscoveryFeatureId,
-            )?.finding
+            ?? (researchPage.definition.id === FIREFLY_FLOWER_DISCOVERY_PAGE.id
+                ? "四つのしずくが 一本の道を走り、花が ひらいた"
+                : getDiscoveryPageFeature(
+                    researchPage.definition,
+                    researchPage.definition.chain.bigDiscoveryFeatureId,
+                )?.finding)
         : undefined;
     const storyLine = completedResearchFinding
         ? completedResearchFinding

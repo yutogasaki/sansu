@@ -79,6 +79,26 @@ describe("ReturnSummary", () => {
         expect(markup).not.toContain("花たちの光が ひとすじの道になった");
     });
 
+    it("uses the neutral droplet finding when no root observation was committed", () => {
+        const markup = renderToStaticMarkup(
+            <ReturnSummary
+                status="returned"
+                finds={[]}
+                steps={8}
+                energy={3}
+                researchPage={{
+                    definition: FIREFLY_FLOWER_DISCOVERY_PAGE,
+                    discoveredFeatureIds: FIREFLY_FLOWER_DISCOVERY_PAGE.chain.featureIds,
+                }}
+                onRestart={() => undefined}
+                onExit={() => undefined}
+            />,
+        );
+
+        expect(markup).toContain("四つのしずくが 一本の道を走り、花が ひらいた");
+        expect(markup).not.toContain("ねっこが ほどけた先");
+    });
+
     it("does not claim the final light path for an incomplete page", () => {
         const markup = renderToStaticMarkup(
             <ReturnSummary
