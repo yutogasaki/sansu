@@ -54,8 +54,8 @@ const PAINTED_ENCOUNTER_FOCALS = {
     actionPayoff: [390, 750],
   },
   "explore-encounter-light-bridge:light-bridge-crossed": {
-    actorFace: [170, 1080],
-    actorFeet: [170, 1230],
+    actorFace: [420, 690],
+    actorFeet: [420, 805],
     actionPayoff: [390, 750],
   },
   "explore-encounter-root-tangle:root-tangle-tangled": {
@@ -64,9 +64,9 @@ const PAINTED_ENCOUNTER_FOCALS = {
     actionPayoff: [390, 700],
   },
   "explore-encounter-root-tangle:root-tangle-crossed": {
-    actorFace: [390, 1050],
-    actorFeet: [390, 1165],
-    actionPayoff: [390, 700],
+    actorFace: [440, 1110],
+    actorFeet: [430, 1215],
+    actionPayoff: [390, 900],
   },
 };
 const ROOT_TANGLE_OBSERVATION_FOCALS =
@@ -98,18 +98,18 @@ const FIREFLY_PAINTED_STAGE_CONTRACT = {
   },
 };
 const REQUIRED_VISUAL_ASSET_SHA256 = {
-  "/assets/explore/light-bridge/scene-idle-pokko-v4.jpg":
-    "13bf2015482f3a8302cfc854891ac9d438344f2e9831a5db1988ca595a4638eb",
-  "/assets/explore/light-bridge/scene-complete-pokko-v4.jpg":
-    "ab20a9122df078d0fd48fb18b6df0555ad856b9fb55d229f745c385fc87d5959",
-  "/assets/explore/light-bridge/scene-crossed-pokko-v4.jpg":
-    "4b0727141e10b6f50ebdde8226515936f1c3dcd19685fb3aa13dec80762d873b",
+  "/assets/explore/light-bridge/scene-idle-leaf-pokko-v5.jpg":
+    "ee53836b54cb2437647cac86ee90a8156432c194ec70488be166a6831e7bd898",
+  "/assets/explore/light-bridge/scene-complete-leaf-pokko-v5.jpg":
+    "98a473dc1cd432a3684a5f3e42fc34154566a75ee2f925e0011662ea274ca357",
+  "/assets/explore/light-bridge/scene-crossed-leaf-pokko-v5.jpg":
+    "853f9537b7dad34aceff142378a0ae728e3868a76075780969cfc205a963e785",
   "/assets/explore/root-tangle/scene-tangled-pokko-v4.jpg":
     "665f97d12bdb3da0889038e13c67ee140692e2cf942acf128283fcab78ec9ef2",
   "/assets/explore/root-tangle/scene-open-pokko-v4.jpg":
     "4f9c76f483c1b1414dce6e45f7773a0c1492c227d7c194ae73bca3d57c4e0dc8",
-  "/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg":
-    "2b8becaa19e09a5d81c876eacfacb4df0d7698f92fe9b7da397a785eb884072a",
+  "/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg":
+    "78b1cc26bff82c73bfe4b42663cef6358f4d72a2561908011ee5d9d4ea45c1f5",
   "/assets/explore/route-choice/scene-fork-two-pokko-v1.jpg":
     "b5ad845b04ffb238a7e701045941b895cec9b090fd3da3b46ab9dc2e51153438",
   "/assets/explore/route-choice/scene-fork-three-pokko-v1.jpg":
@@ -1299,10 +1299,25 @@ const closeBlockingResearchDiscovery = async (page, expectedTitle, expectedClueC
     await page.locator(".explore-world [inert]").count() === 1,
     "a blocking research discovery should inert the exploration controls",
   );
+  const orderedClues = discovery.getByRole("list", {
+    name: `${expectedClueCount}つの手掛かりを発見`,
+    includeHidden: true,
+  });
   assert(
-    await discovery.getByRole("list", { name: `${expectedClueCount}つの手掛かりを発見` }).isVisible(),
-    `blocking research discovery should be backed by ${expectedClueCount} ordered clues`,
+    await orderedClues.count() === 1,
+    `blocking research discovery should preserve ${expectedClueCount} ordered clues for assistive technology`,
   );
+  if (await discovery.getByTestId("explore-observation-scene").count() > 0) {
+    assert(
+      (await orderedClues.getAttribute("class"))?.split(/\s+/).includes("sr-only"),
+      "the root payoff should keep prior clue cards out of the visual action beat",
+    );
+  } else {
+    assert(
+      await orderedClues.isVisible(),
+      "a generic big discovery should show its ordered clue cards",
+    );
+  }
   await discovery.getByRole("button", { name: "調査ノートを とじる" }).click();
   await discovery.waitFor({ state: "hidden", timeout: STEP_TIMEOUT_MS });
 };
@@ -1985,14 +2000,14 @@ const scenarioLightBridgeVerticalSlice = async (
   }));
   assert(
     lightBridgeIdentity.lineageId === "pokko-field-v1"
-      && lightBridgeIdentity.candidateId === "pokko-painted-encounters-v4"
+      && lightBridgeIdentity.candidateId === "pokko-painted-encounters-v5"
       && lightBridgeIdentity.mode === "world-painted"
       && lightBridgeIdentity.sceneId === "light-bridge-idle",
     `the painted light bridge should enter with its Pokko idle identity; got ${JSON.stringify(lightBridgeIdentity)}`,
   );
   assert(
-    await lightBridge.locator('[data-action-prop="bridge-painted-latch"]').count() === 0,
-    "the disconnected bridge must not show a painted latch before the answer",
+    await lightBridge.locator('[data-action-prop="bridge-leaf-clasp"]').count() === 0,
+    "the disconnected bridge must not show its leaf clasp before the answer",
   );
   assert(
     (await page.getByTestId("explore-attempt").getAttribute("data-gate-id"))?.endsWith(":node-5-0"),
@@ -2044,8 +2059,8 @@ const scenarioLightBridgeVerticalSlice = async (
     "an incorrect answer should keep the painted bridge physically disconnected",
   );
   assert(
-    await lightBridge.locator('[data-action-prop="bridge-painted-latch"]').count() === 0,
-    "an incorrect answer must not add the painted bridge latch",
+    await lightBridge.locator('[data-action-prop="bridge-leaf-clasp"]').count() === 0,
+    "an incorrect answer must not add the leaf bridge clasp",
   );
   assert(
     await page.getByRole("button", { name: "たんけんを おえて 基地へ帰る" }).isDisabled(),
@@ -2059,20 +2074,20 @@ const scenarioLightBridgeVerticalSlice = async (
     energyAfterMiss === energyBeforeMiss - 1,
     `light bridge miss should consume one light; got ${energyBeforeMiss} -> ${energyAfterMiss}`,
   );
-  await page.getByText(/左右の ひかりの流れを見て、もういちど ためせるよ/)
+  await page.getByText(/左右の 葉っぱを見て、もういちど ためせるよ/)
     .waitFor({ timeout: STEP_TIMEOUT_MS });
 
   const bridgeAttemptKey = await page.getByTestId("explore-attempt").getAttribute("data-attempt-key");
   assert(bridgeAttemptKey, "light bridge retry should expose its attempt key");
   await solveExploreAddition(page);
-  await page.getByText(/せいかい！ ひかりが ぱっと つながった/).waitFor({ timeout: STEP_TIMEOUT_MS });
+  await page.getByText(/せいかい！ 葉っぱが ぱちんと つながった/).waitFor({ timeout: STEP_TIMEOUT_MS });
   assert(
     await lightBridge.getAttribute("data-visual-scene-id") === "light-bridge-complete",
     "the painted bridge should reveal its connected plate on a correct answer",
   );
   assert(
-    await lightBridge.locator('[data-action-prop="bridge-painted-latch"]').count() === 1,
-    "a correct answer should expose exactly one baked-in bridge latch",
+    await lightBridge.locator('[data-action-prop="bridge-leaf-clasp"]').count() === 1,
+    "a correct answer should expose exactly one baked-in leaf clasp",
   );
   await page.waitForFunction(() => {
     const image = document.querySelector(
@@ -2245,7 +2260,7 @@ const scenarioRootTangleVerticalSlice = async (
   );
   assert(
     await rootStage.getAttribute("data-visual-lineage-id") === "pokko-field-v1"
-      && await rootStage.getAttribute("data-visual-candidate-id") === "pokko-painted-encounters-v4"
+      && await rootStage.getAttribute("data-visual-candidate-id") === "pokko-painted-encounters-v5"
       && await rootStage.getAttribute("data-visual-mode") === "world-painted"
       && await rootStage.getAttribute("data-visual-scene-id") === "root-tangle-tangled",
     "the painted root tangle should enter with its Pokko tangled identity",
@@ -2371,7 +2386,7 @@ const scenarioRootTangleVerticalSlice = async (
       && await observationDiorama.getAttribute("data-camera-key") === rootCameraKey,
     "Q7 should carry the committed root observation into the same-camera payoff",
   );
-  await closeBlockingResearchDiscovery(page, /大発見！.*ほたる花の ひかり道/, 3);
+  await closeBlockingResearchDiscovery(page, /大発見！.*ねっこの むこうの ひかり道/, 3);
   await waitForNewExploreAttempt(page, rootAttemptKey);
 
   const finalAttemptKey = await page.getByTestId("explore-attempt").getAttribute("data-attempt-key");
@@ -3461,10 +3476,10 @@ const readPaintedEncounterCrop = async (surface, surfaceIdentity) => {
       && sceneId !== "light-bridge-idle";
     const physicalPayoffId = activeScene.getAttribute("data-action-prop");
     const physicalPayoffExpectedAsset = sceneId === "light-bridge-crossed"
-      ? "/assets/explore/light-bridge/scene-crossed-pokko-v4.jpg"
-      : "/assets/explore/light-bridge/scene-complete-pokko-v4.jpg";
+      ? "/assets/explore/light-bridge/scene-crossed-leaf-pokko-v5.jpg"
+      : "/assets/explore/light-bridge/scene-complete-leaf-pokko-v5.jpg";
     const physicalPayoffPass = !physicalPayoffRequired || Boolean(
-      physicalPayoffId === "bridge-painted-latch"
+      physicalPayoffId === "bridge-leaf-clasp"
       && activeScene.currentSrc.endsWith(physicalPayoffExpectedAsset)
       && points.actionPayoff.pass,
     );
@@ -3540,7 +3555,7 @@ const readPaintedEncounterCrop = async (surface, surfaceIdentity) => {
         required: physicalPayoffRequired,
         kind: "baked-raster",
         id: physicalPayoffId,
-        present: physicalPayoffId === "bridge-painted-latch",
+        present: physicalPayoffId === "bridge-leaf-clasp",
         expectedAsset: physicalPayoffExpectedAsset,
         sourcePoint: points.actionPayoff.source,
         projectedPoint: points.actionPayoff.viewport,
@@ -4038,10 +4053,10 @@ const readVisualAuditRuntimeSnapshot = async (
       },
     };
   });
-  const paintedCrop = surfaceIdentity.candidateId === "pokko-painted-encounters-v4"
+  const paintedCrop = surfaceIdentity.candidateId === "pokko-painted-encounters-v5"
     ? await readPaintedEncounterCrop(surface, surfaceIdentity)
     : null;
-  const observationCrop = surfaceIdentity.candidateId === "root-tangle-observation-v1"
+  const observationCrop = surfaceIdentity.candidateId === "root-tangle-light-path-v2"
     ? await readRootObservationCrop(surface)
     : null;
   const fireflyCrop = surfaceIdentity.candidateId === "firefly-painted-pokko-v2"
@@ -4402,13 +4417,13 @@ const captureVisualAuditStage = async ({
       `${stage} must keep the complete TenKey layout visible inside the viewport while locked: ${JSON.stringify(snapshot.tenKey)}`,
     );
   }
-  if (expected.candidateId === "pokko-painted-encounters-v4") {
+  if (expected.candidateId === "pokko-painted-encounters-v5") {
     assert(
       snapshot.paintedCrop?.pass,
       `${stage} painted focal crop failed: ${JSON.stringify(snapshot.paintedCrop)}`,
     );
   }
-  if (expected.candidateId === "root-tangle-observation-v1") {
+  if (expected.candidateId === "root-tangle-light-path-v2") {
     assert(
       snapshot.observationCrop?.pass,
       `${stage} root observation focal crop failed: ${JSON.stringify(snapshot.observationCrop)}`,
@@ -4669,7 +4684,7 @@ const captureVisualAuditSupportingViewport = async ({
     runtime.visibleIdentities.map((identity) => identity.candidateId).filter(Boolean),
   )];
   assert(
-    visibleCandidateIds.includes("root-tangle-observation-v1")
+    visibleCandidateIds.includes("root-tangle-light-path-v2")
       && visibleCandidateIds.includes("firefly-field-book-v1"),
     `supporting reveal composite must contain observation and field-book candidates: ${JSON.stringify(visibleCandidateIds)}`,
   );
@@ -5259,7 +5274,7 @@ const runVisualAuditViewport = async (
     );
     await bridge.waitFor({ timeout: STEP_TIMEOUT_MS });
     await capture("major-encounter-idle", bridge, {
-      candidateId: "pokko-painted-encounters-v4",
+      candidateId: "pokko-painted-encounters-v5",
       mode: "world-painted",
       surfaceId: "explore-encounter-light-bridge",
       sceneId: "light-bridge-idle",
@@ -5277,7 +5292,7 @@ const runVisualAuditViewport = async (
     );
     await completedBridge.waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
     await capture("major-encounter-correct", completedBridge, {
-      candidateId: "pokko-painted-encounters-v4",
+      candidateId: "pokko-painted-encounters-v5",
       mode: "world-painted",
       surfaceId: "explore-encounter-light-bridge",
       sceneId: "light-bridge-complete",
@@ -5302,7 +5317,7 @@ const runVisualAuditViewport = async (
     );
     await root.waitFor({ timeout: STEP_TIMEOUT_MS });
     const rootCapture = await capture("q7-before", root, {
-      candidateId: "pokko-painted-encounters-v4",
+      candidateId: "pokko-painted-encounters-v5",
       mode: "world-painted",
       surfaceId: "explore-encounter-root-tangle",
       sceneId: "root-tangle-tangled",
@@ -5331,7 +5346,7 @@ const runVisualAuditViewport = async (
       resolvedRootCrop.activeScene?.decoded
         && resolvedRootCrop.projection?.valid
         && resolvedRootCrop.activeScene.currentSrc.endsWith(
-          "/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg",
+          "/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg",
         ),
       `Q7 continuity reference must be the decoded committed crossed world scene: ${JSON.stringify(resolvedRootCrop)}`,
     );
@@ -5351,7 +5366,7 @@ const runVisualAuditViewport = async (
     supportingCapture.observationCrop = naturalObservationCrop;
     supportingCaptures.push(supportingCapture);
     const observationCapture = await capture("q7-observation", observation, {
-      candidateId: "root-tangle-observation-v1",
+      candidateId: "root-tangle-light-path-v2",
       mode: "observation",
       surfaceId: "explore-observation-root-tangle",
       sceneId: "root-tangle-crossed",
@@ -5462,7 +5477,7 @@ const runVisualAuditViewport = async (
     };
     assert(
       observationCapture.surfaceMedia.visibleImages.some((image) => (
-        image.currentSrc.endsWith("/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg")
+        image.currentSrc.endsWith("/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg")
       )),
       "root observation must render the crossed root-tangle scene from the committed encounter",
     );
@@ -5488,7 +5503,7 @@ const runVisualAuditViewport = async (
         && supportingCapture.revealGroupId === fieldBookCapture.revealGroupId,
       "Q7 natural viewport and both locator details must belong to one reveal group",
     );
-    await closeBlockingResearchDiscovery(page, /大発見！.*ほたる花の ひかり道/, 3);
+    await closeBlockingResearchDiscovery(page, /大発見！.*ねっこの むこうの ひかり道/, 3);
     await waitForNewExploreAttempt(page, rootAttemptKey);
 
     const ordinaryQ8 = page.locator(

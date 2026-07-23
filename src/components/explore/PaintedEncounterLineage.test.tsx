@@ -38,7 +38,7 @@ const expectIdentityOnRootAndArt = (
     cameraKey: string,
 ) => {
     expect(markup.match(/data-visual-lineage-id="pokko-field-v1"/g)).toHaveLength(2);
-    expect(markup.match(/data-visual-candidate-id="pokko-painted-encounters-v4"/g))
+    expect(markup.match(/data-visual-candidate-id="pokko-painted-encounters-v5"/g))
         .toHaveLength(2);
     expect(markup.match(/data-visual-mode="world-painted"/g)).toHaveLength(2);
     expect(markup.match(new RegExp(`data-visual-surface-id="${surfaceId}"`, "g")))
@@ -64,9 +64,9 @@ describe("painted encounter visual lineage", () => {
             "light-bridge-idle",
             "light-bridge-camera-v1",
         );
-        expect(markup).toContain("/assets/explore/light-bridge/scene-idle-pokko-v4.jpg");
-        expect(markup).toContain("/assets/explore/light-bridge/scene-complete-pokko-v4.jpg");
-        expect(markup).toContain("/assets/explore/light-bridge/scene-crossed-pokko-v4.jpg");
+        expect(markup).toContain("/assets/explore/light-bridge/scene-idle-leaf-pokko-v5.jpg");
+        expect(markup).toContain("/assets/explore/light-bridge/scene-complete-leaf-pokko-v5.jpg");
+        expect(markup).toContain("/assets/explore/light-bridge/scene-crossed-leaf-pokko-v5.jpg");
         expect(markup).not.toContain("explore-immersive-art--layered");
     });
 
@@ -88,7 +88,7 @@ describe("painted encounter visual lineage", () => {
         expect(markup).toContain(
             "explore-immersive-scene explore-immersive-scene-complete is-visible",
         );
-        expect(markup).toContain('data-action-prop="bridge-painted-latch"');
+        expect(markup).toContain('data-action-prop="bridge-leaf-clasp"');
     });
 
     it("keeps an incorrect root answer on the tangled plate", () => {
@@ -108,7 +108,7 @@ describe("painted encounter visual lineage", () => {
         );
         expect(markup).toContain("/assets/explore/root-tangle/scene-tangled-pokko-v4.jpg");
         expect(markup).toContain("/assets/explore/root-tangle/scene-open-pokko-v4.jpg");
-        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg");
+        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg");
         expect(markup).not.toContain("explore-immersive-art--layered");
     });
 
@@ -146,8 +146,8 @@ describe("painted encounter visual lineage", () => {
             "light-bridge-crossed",
             "light-bridge-camera-v1",
         );
-        expect(loadingMarkup).not.toContain('data-action-prop="bridge-painted-latch"');
-        expect(completionMarkup).toContain('data-action-prop="bridge-painted-latch"');
+        expect(loadingMarkup).not.toContain('data-action-prop="bridge-leaf-clasp"');
+        expect(completionMarkup).toContain('data-action-prop="bridge-leaf-clasp"');
         expect(completionMarkup).toContain(
             "explore-immersive-scene explore-immersive-scene-crossed is-visible",
         );

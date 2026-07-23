@@ -37,7 +37,7 @@ export const GameHub: React.FC = () => {
         <div
             className="game-hub relative h-full overflow-hidden"
             data-visual-lineage-id="pokko-field-v1"
-            data-visual-candidate-id="pokko-base-map-v1"
+            data-visual-candidate-id="pokko-base-painted-v1"
             data-visual-mode="base-map"
         >
             <span className="game-hub__backdrop-shape game-hub__backdrop-shape--sun" aria-hidden="true" />

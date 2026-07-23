@@ -11,11 +11,11 @@ const ROOT_TANGLE_DEFINITION: ImmersiveEncounterDefinition = {
     scene: {
         idleSrc: "/assets/explore/root-tangle/scene-tangled-pokko-v4.jpg",
         completeSrc: "/assets/explore/root-tangle/scene-open-pokko-v4.jpg",
-        resolvedSrc: "/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg",
+        resolvedSrc: "/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg",
     },
     visualIdentity: {
         lineageId: "pokko-field-v1",
-        candidateId: "pokko-painted-encounters-v4",
+        candidateId: "pokko-painted-encounters-v5",
         mode: "world-painted",
         surfaceId: "explore-encounter-root-tangle",
         cameraKey: "root-tangle-camera-v1",
@@ -49,11 +49,11 @@ const ROOT_TANGLE_DEFINITION: ImmersiveEncounterDefinition = {
     completion: {
         titleId: "explore-root-tangle-complete-title",
         kicker: "ほどけた根が ひかりの道になった",
-        title: "花のみちが ひらいた！",
+        title: "花の ひかり道が ひらいた！",
         getSummary: (combo) => (
             combo > 1
-                ? `${combo}れんさ！ ひらいた道の先へ、道が つづいてる`
-                : "ねっこが ほどけた。つぎの道が ひらいた！"
+                ? `${combo}れんさ！ ほどけた根の先で、花の光が つながった`
+                : "ねっこが ほどけて、花の ひかり道が みえた！"
         ),
     },
     loadingCopy: "根っこの もようを えらんでいるよ",

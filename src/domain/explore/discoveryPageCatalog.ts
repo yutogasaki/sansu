@@ -76,9 +76,9 @@ export const FIREFLY_FLOWER_DISCOVERY_PAGE = {
         },
         {
             id: "discovery-feature:firefly-flower-light-path",
-            title: "ほたる花の ひかり道",
+            title: "ねっこの むこうの ひかり道",
             clue: "花の音が そろう場所で、さいごの ひかりを たしかめよう",
-            finding: "花たちの光が つながって、地底に ひとすじの道が できた",
+            finding: "ねっこが ほどけた先で、花たちの光が ひとすじの道になった",
         },
     ],
     chain: {

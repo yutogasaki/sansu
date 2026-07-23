@@ -9,15 +9,15 @@ import {
 
 const LIGHT_BRIDGE_DEFINITION: ImmersiveEncounterDefinition = {
     scene: {
-        idleSrc: "/assets/explore/light-bridge/scene-idle-pokko-v4.jpg",
-        completeSrc: "/assets/explore/light-bridge/scene-complete-pokko-v4.jpg",
-        resolvedSrc: "/assets/explore/light-bridge/scene-crossed-pokko-v4.jpg",
-        completeActionProp: "bridge-painted-latch",
-        resolvedActionProp: "bridge-painted-latch",
+        idleSrc: "/assets/explore/light-bridge/scene-idle-leaf-pokko-v5.jpg",
+        completeSrc: "/assets/explore/light-bridge/scene-complete-leaf-pokko-v5.jpg",
+        resolvedSrc: "/assets/explore/light-bridge/scene-crossed-leaf-pokko-v5.jpg",
+        completeActionProp: "bridge-leaf-clasp",
+        resolvedActionProp: "bridge-leaf-clasp",
     },
     visualIdentity: {
         lineageId: "pokko-field-v1",
-        candidateId: "pokko-painted-encounters-v4",
+        candidateId: "pokko-painted-encounters-v5",
         mode: "world-painted",
         surfaceId: "explore-encounter-light-bridge",
         cameraKey: "light-bridge-camera-v1",
@@ -29,36 +29,36 @@ const LIGHT_BRIDGE_DEFINITION: ImmersiveEncounterDefinition = {
     },
     problem: {
         titleId: "explore-problem-title",
-        kicker: "ひかりが あとすこし！",
+        kicker: "葉っぱが あとすこし！",
         title: "あわせて 橋をつなごう",
         incompleteState: "あと ひといき",
-        completeState: "ぱっと つながった！",
+        completeState: "葉っぱが ぱちん！",
         equationTestId: "light-bridge-equation",
         hintAriaLabel: "たし算の まとまり ヒント",
-        hintLabel: "ひかりの もよう",
+        hintLabel: "葉っぱの すじ",
         getStatusCopy: ({ phase, attemptCount, incorrectEnergyCost }) => (
             phase === "correct"
-                ? "せいかい！ ひかりが ぱっと つながった！"
+                ? "せいかい！ 葉っぱが ぱちんと つながった！"
                 : phase === "incorrect"
                     ? incorrectEnergyCost > 0
                         ? `橋が ぽよん。ひかりを ${incorrectEnergyCost}つ つかったよ`
                         : "橋が ぽよん。ひかりは そのままだよ"
                     : attemptCount > 0
-                        ? "左右の ひかりの流れを見て、もういちど ためせるよ"
-                        : "左右の ひかりの流れを つなごう"
+                        ? "左右の 葉っぱを見て、もういちど ためせるよ"
+                        : "左右の 葉っぱを つなごう"
         ),
     },
     completion: {
         titleId: "explore-light-bridge-complete-title",
-        kicker: "こたえが 光のアーチになった",
-        title: "つぎの道が ひらいた！",
+        kicker: "こたえで 葉っぱが ぱちん！",
+        title: "わたれる橋に なった！",
         getSummary: (combo) => (
             combo > 1
-                ? `${combo}れんさ！ 光のアーチの先へ、道が つづいてる`
-                : "ひかりが ひとつになった。つぎの道が ひらいた！"
+                ? `${combo}れんさ！ 葉っぱの橋を ポッコが わたっていく`
+                : "葉っぱが ひとつになった。ポッコが わたりはじめた！"
         ),
     },
-    loadingCopy: "ひかりの もようを えらんでいるよ",
+    loadingCopy: "葉っぱの もようを えらんでいるよ",
 };
 
 type LightBridgeEncounterProps = Omit<ImmersiveEncounterProps, "definition">;

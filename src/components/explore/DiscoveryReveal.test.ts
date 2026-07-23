@@ -36,7 +36,7 @@ describe("discovery reveal interaction contract", () => {
             rarity: "rare",
         })).toBe(false);
         expect(isBlockingDiscoveryReveal({
-            name: "ほたる花の ひかり道",
+            name: "ねっこの むこうの ひかり道",
             kind: "flower",
             rarity: "rare",
             discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
@@ -76,7 +76,7 @@ describe("discovery reveal interaction contract", () => {
         }));
         const blocking = renderToStaticMarkup(React.createElement(DiscoveryReveal, {
             discovery: {
-                name: "ほたる花の ひかり道",
+                name: "ねっこの むこうの ひかり道",
                 kind: "flower" as const,
                 rarity: "rare" as const,
                 discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
@@ -127,7 +127,7 @@ describe("discovery reveal interaction contract", () => {
         const currentFeatureId = FIREFLY_FLOWER_DISCOVERY_PAGE.chain.bigDiscoveryFeatureId;
         const markup = renderToStaticMarkup(React.createElement(DiscoveryReveal, {
             discovery: {
-                name: "ほたる花の ひかり道",
+                name: "ねっこの むこうの ひかり道",
                 kind: "flower" as const,
                 rarity: "rare" as const,
                 discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
@@ -147,7 +147,7 @@ describe("discovery reveal interaction contract", () => {
         expect(markup).toContain('data-visual-mode="observation"');
         expect(markup).toContain('data-visual-candidate-id="firefly-field-book-v1"');
         expect(markup).toContain('data-visual-mode="field-book"');
-        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg");
+        expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg");
         expect(markup).toContain(ROOT_TANGLE_OBSERVATION.copy.action);
         expect(markup).toContain(ROOT_TANGLE_OBSERVATION.copy.reaction);
     });

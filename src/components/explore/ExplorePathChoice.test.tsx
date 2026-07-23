@@ -100,6 +100,49 @@ describe("ExplorePathChoice", () => {
         expect(markup).toContain('data-branch-count="3"');
         expect(markup).toContain("scene-fork-three-pokko-v1.jpg");
         expect(markup).not.toContain("scene-fork-two-pokko-v1.jpg");
+        expect(markup.match(/data-testid="explore-route-preview"/g)).toHaveLength(3);
+        expect(markup).toContain('data-branch-index="0"');
+        expect(markup).toContain('data-branch-index="1"');
+        expect(markup).toContain('data-branch-index="2"');
+        expect(markup).toContain('data-route-kind="crystal"');
+        expect(markup).toContain('data-route-kind="fossil"');
+        expect(markup).toContain('data-route-kind="soil"');
+        expect(markup).toContain('data-preview-mood="open"');
+        expect(markup).toContain('aria-label="きらきら岩へ すすむ"');
+    });
+
+    it("previews open and hidden destinations as different scenes without changing the labels", () => {
+        const markup = renderToStaticMarkup(
+            <ExplorePathChoice
+                nodes={[
+                    {
+                        ...NEXT_NODE,
+                        id: "node-4-0",
+                        lane: 0,
+                        kind: "soil",
+                        title: "やわらかい土",
+                    },
+                    {
+                        ...NEXT_NODE,
+                        id: "node-4-1",
+                        lane: 1,
+                        kind: "mystery",
+                        title: "なぞの壁",
+                    },
+                ]}
+                steps={3}
+                onSelect={() => undefined}
+                onReturn={() => undefined}
+            />,
+        );
+
+        expect(markup).toContain('data-preview-mood="open"');
+        expect(markup).toContain('data-preview-mood="hidden"');
+        expect(markup).toContain('data-route-kind="soil"');
+        expect(markup).toContain('data-route-kind="mystery"');
+        expect(markup.match(/scene-fork-two-pokko-v1\.jpg/g)).toHaveLength(3);
+        expect(markup).toContain('aria-label="やわらかい土へ すすむ"');
+        expect(markup).toContain('aria-label="なぞの壁へ すすむ"');
     });
 
     it("shows an honest recovery instead of a false success at an early dead-end", () => {

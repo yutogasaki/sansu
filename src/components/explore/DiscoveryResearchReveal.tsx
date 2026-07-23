@@ -206,8 +206,9 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
                             <p className="text-xs font-black tracking-[0.12em] text-[#b43f35]">{observation.copy.kicker}</p>
                             <p className="mt-1 text-[15px] font-black leading-5 text-[#173f49] sm:text-base">{observation.copy.title}</p>
                             <p className="mt-1 text-xs font-bold leading-5 text-[#315d5f]">
-                                {observation.copy.action}。{observation.copy.reaction}。
+                                {observation.copy.reaction}。
                             </p>
+                            <span className="sr-only">{observation.copy.action}。</span>
                         </div>
                     ) : null}
 
@@ -232,16 +233,21 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
                         </p>
 
                         <ol
-                            className="mt-2 grid gap-1.5 sm:mt-4 sm:gap-2"
-                            style={slotGridStyle}
+                            className={observation
+                                ? "sr-only"
+                                : "mt-2 grid gap-1.5 sm:mt-4 sm:gap-2"}
+                            style={observation ? undefined : slotGridStyle}
                             aria-label={`${clueFeatureIds.length}つの手掛かりを発見`}
                         >
                             {clueFeatureIds.map((featureId) => {
                                 const feature = getDiscoveryPageFeature(definition, featureId);
                                 return (
-                                    <li key={featureId} className="explore-research-stamp is-found flex min-h-12 flex-col items-center justify-center rounded-[14px] px-1 py-1.5 sm:min-h-14 sm:rounded-[16px] sm:px-2 sm:py-2">
-                                        <Stamp className="h-4 w-4 text-[#c95f4f]" aria-hidden="true" />
-                                        <span className="mt-0.5 text-xs font-black leading-4 sm:mt-1">{feature?.title}</span>
+                                    <li key={featureId} className={observation
+                                        ? undefined
+                                        : "explore-research-stamp is-found flex min-h-12 flex-col items-center justify-center rounded-[14px] px-1 py-1.5 sm:min-h-14 sm:rounded-[16px] sm:px-2 sm:py-2"}
+                                    >
+                                        {observation ? null : <Stamp className="h-4 w-4 text-[#c95f4f]" aria-hidden="true" />}
+                                        <span className={observation ? undefined : "mt-0.5 text-xs font-black leading-4 sm:mt-1"}>{feature?.title}</span>
                                     </li>
                                 );
                             })}

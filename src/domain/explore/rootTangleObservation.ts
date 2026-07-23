@@ -11,12 +11,12 @@ export const ROOT_TANGLE_OBSERVATION = {
     prerequisiteFeatureIds: ROOT_TANGLE_PREREQUISITES,
     visual: {
         lineageId: "pokko-field-v1",
-        candidateId: "root-tangle-observation-v1",
+        candidateId: "root-tangle-light-path-v2",
         mode: "observation",
         surfaceId: "explore-observation-root-tangle",
         cameraKey: "root-tangle-camera-v1",
         sceneId: "root-tangle-crossed",
-        sceneSrc: "/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg",
+        sceneSrc: "/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg",
     },
     camera: {
         key: "root-tangle-camera-v1",
@@ -28,9 +28,9 @@ export const ROOT_TANGLE_OBSERVATION = {
     },
     copy: {
         kicker: "ねっこが ほどけた！",
-        title: "むこうに ひかり道！",
+        title: "花の ひかり道だ！",
         action: "ひき算で、ねっこの むすびが ほどけた",
-        reaction: "ねっこが 左右へ ひらいて、道が みえた",
+        reaction: "ねっこの むこうで、花の光が 道になった",
         finding: "花たちの光が つながって、道になった",
     },
 } as const satisfies ExploreObservationDefinition;

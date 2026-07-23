@@ -1,6 +1,9 @@
 import React from "react";
 import { BookOpen, Sparkles } from "lucide-react";
-import { getDiscoveryPageProgress } from "../../domain/explore";
+import {
+    FIREFLY_FLOWER_DISCOVERY_PAGE,
+    getDiscoveryPageProgress,
+} from "../../domain/explore";
 import type { ResearchPageSummaryState } from "./ResearchPageSummary";
 import { DiscoveryPageArt } from "./DiscoveryPageArt";
 import { ResearchClueStampRail } from "./ResearchClueStampRail";
@@ -9,6 +12,47 @@ interface ResearchBookStageProps {
     researchPage?: ResearchPageSummaryState;
     storyLine: string;
 }
+
+const FIREFLY_ARCHIVE_SCENES = [
+    {
+        src: "/assets/explore/firefly-flower/scene-waiting-pokko-v2.jpg",
+        sceneId: "firefly-archive-waiting",
+        alt: "葉帽子のポッコが、まだ閉じたほたる花を見つめている。",
+    },
+    {
+        src: "/assets/explore/firefly-flower/scene-dew-trail-pokko-v2.jpg",
+        sceneId: "firefly-archive-dew-trail",
+        alt: "葉帽子のポッコが、ほたる花へ続く四つの光るしずくを見つけている。",
+    },
+    {
+        src: "/assets/explore/firefly-flower/scene-warm-bud-pokko-v2.jpg",
+        sceneId: "firefly-archive-warm-bud",
+        alt: "葉帽子のポッコが、あたたかく光りはじめたほたる花のつぼみを見つめている。",
+    },
+    {
+        src: "/assets/explore/firefly-flower/scene-ringing-petals-pokko-v2.jpg",
+        sceneId: "firefly-archive-ringing-petals",
+        alt: "葉帽子のポッコの前で、ほたる花の五枚の花びらがひらき、光るしずくが道になっている。",
+    },
+    {
+        src: "/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg",
+        sceneId: "firefly-archive-root-light-path",
+        alt: "ほどけた根っこの間から、ほたる花の光る道が奥へ続き、葉帽子のポッコが走り出している。",
+    },
+] as const;
+
+const getFireflyArchiveScene = (
+    researchPage: ResearchPageSummaryState,
+) => {
+    const discovered = new Set(researchPage.discoveredFeatureIds);
+    const discoveredCount = researchPage.definition.features.filter((feature) => (
+        discovered.has(feature.id)
+    )).length;
+
+    return FIREFLY_ARCHIVE_SCENES[
+        Math.min(discoveredCount, FIREFLY_ARCHIVE_SCENES.length - 1)
+    ];
+};
 
 const EmptyResearchPageArt: React.FC = () => (
     <svg
@@ -40,6 +84,10 @@ export const ResearchBookStage: React.FC<ResearchBookStageProps> = ({
         : progress
             ? `${progress.discoveredClueCount}/${progress.clueTarget} の てがかりを のこした`
             : "道の先に、まだ見ぬ けはいが ある";
+    const isFireflyPage = researchPage?.definition.id === FIREFLY_FLOWER_DISCOVERY_PAGE.id;
+    const fireflyArchiveScene = researchPage && isFireflyPage
+        ? getFireflyArchiveScene(researchPage)
+        : undefined;
 
     return (
         <article className="research-library-book-stage" aria-labelledby="research-library-book-title">
@@ -52,8 +100,28 @@ export const ResearchBookStage: React.FC<ResearchBookStageProps> = ({
                 </span>
 
                 <div className="research-library-book-spread">
-                    <div className="research-library-book-art explore-cut-paper">
-                        {researchPage ? (
+                    <div
+                        className={`research-library-book-art explore-cut-paper${fireflyArchiveScene
+                            ? " research-library-book-art--painted"
+                            : ""}`}
+                        data-visual-lineage-id={fireflyArchiveScene ? "pokko-field-v1" : undefined}
+                        data-visual-candidate-id={fireflyArchiveScene
+                            ? "firefly-field-book-painted-v2"
+                            : undefined}
+                        data-visual-mode={fireflyArchiveScene ? "field-book" : undefined}
+                        data-visual-scene-id={fireflyArchiveScene?.sceneId}
+                        data-camera-key={fireflyArchiveScene ? "firefly-flower-side-v2" : undefined}
+                    >
+                        {fireflyArchiveScene ? (
+                            <img
+                                className="research-library-book-painted-image"
+                                src={fireflyArchiveScene.src}
+                                alt={fireflyArchiveScene.alt}
+                                data-character-id="pokko"
+                                draggable={false}
+                                decoding="async"
+                            />
+                        ) : researchPage ? (
                             <DiscoveryPageArt
                                 definition={researchPage.definition}
                                 discoveredFeatureIds={researchPage.discoveredFeatureIds}

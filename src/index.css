@@ -437,6 +437,95 @@ body.app-mode-fullscreen .app-container {
         --route-soft: #66c6c0;
     }
 
+    .explore-route-preview {
+        --explore-route-preview-image: none;
+        --explore-route-preview-position: 50%;
+        --explore-route-preview-size: 230%;
+        position: relative;
+        display: block;
+        width: 76px;
+        height: 56px;
+        flex: 0 0 76px;
+        overflow: hidden;
+        border: 2px solid var(--explore-ink);
+        border-radius: 17px 13px 18px 14px;
+        background-color: #43c9df;
+        background-image:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(23, 63, 73, 0.08)),
+            var(--explore-route-preview-image);
+        background-position:
+            center,
+            var(--explore-route-preview-position) 70%;
+        background-repeat: no-repeat;
+        background-size:
+            100% 100%,
+            var(--explore-route-preview-size) auto;
+        box-shadow:
+            inset 0 0 0 2px rgba(255, 248, 206, 0.44),
+            2px 3px 0 rgba(23, 63, 73, 0.22);
+    }
+
+    .explore-route-preview::before {
+        content: "";
+        position: absolute;
+        inset: auto -8px -10px -8px;
+        height: 25px;
+        background: #e7c36e;
+        border-top: 2px solid rgba(23, 63, 73, 0.52);
+        border-radius: 50% 50% 0 0;
+        opacity: 0.54;
+    }
+
+    .explore-route-preview[data-preview-mood="hidden"]::after {
+        content: "";
+        position: absolute;
+        top: -8px;
+        right: -10px;
+        width: 29px;
+        height: 69px;
+        border-left: 2px solid rgba(23, 63, 73, 0.48);
+        border-radius: 70% 0 0 70%;
+        background: #dc6752;
+        opacity: 0.78;
+        transform: rotate(10deg);
+    }
+
+    .explore-route-preview[data-preview-mood="water"]::before {
+        height: 21px;
+        border-top-color: rgba(23, 63, 73, 0.6);
+        background:
+            repeating-radial-gradient(
+                ellipse at 50% -4px,
+                #69d5de 0 8px,
+                #3aaebd 9px 12px
+            );
+        opacity: 0.88;
+    }
+
+    .explore-route-preview[data-preview-mood="winding"]::before {
+        right: 12px;
+        left: -9px;
+        border-radius: 65% 35% 0 0;
+        background: #86bb68;
+        transform: rotate(-5deg);
+    }
+
+    .explore-route-preview-landmark {
+        position: absolute;
+        z-index: 2;
+        top: 7px;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        transform: translateX(-50%);
+        filter: drop-shadow(1px 2px 0 rgba(23, 63, 73, 0.3));
+    }
+
+    .explore-route-preview[data-preview-mood="hidden"] .explore-route-preview-landmark {
+        left: 57%;
+        transform: translateX(-50%) scale(0.92);
+    }
+
     .explore-route-number {
         color: var(--explore-ink);
         background: #fff5c8;
@@ -449,7 +538,6 @@ body.app-mode-fullscreen .app-container {
         color: rgba(23, 63, 73, 0.88);
     }
 
-    .explore-route-glyph-plate,
     .explore-route-arrow,
     .explore-route-cost {
         background: #fff7d6;
@@ -752,6 +840,35 @@ body.app-mode-fullscreen .app-container {
         display: block;
         width: 100%;
         height: 100%;
+    }
+
+    .research-library-book-art--painted {
+        position: relative;
+        height: 172px;
+        border: 2px solid rgba(23, 63, 73, 0.72);
+        background: #2cbed3;
+        box-shadow:
+            0 5px 0 rgba(23, 63, 73, 0.18),
+            0 16px 24px -20px rgba(23, 63, 73, 0.72);
+    }
+
+    .research-library-book-art--painted::after {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        box-shadow:
+            inset 0 0 0 2px rgba(255, 244, 206, 0.2),
+            inset 0 -22px 30px -26px rgba(23, 63, 73, 0.46);
+        content: "";
+        pointer-events: none;
+    }
+
+    .research-library-book-painted-image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 67%;
     }
 
     .research-library-book-notes {
@@ -1460,11 +1577,11 @@ body.app-mode-fullscreen .app-container {
         object-position: 50% 50%;
     }
 
-    /* The v4 encounter plates are authored as tall book pages. Reframe those
+    /* The v5 encounter plates are authored as tall book pages. Reframe those
        plates inside the rapid answer shelf so Pokko and the world action stay
        visible above the opaque problem controls at every canonical width. */
     @media (max-width: 599px) {
-        .explore-immersive[data-visual-candidate-id="pokko-painted-encounters-v4"] .explore-immersive-scene {
+        .explore-immersive[data-visual-candidate-id="pokko-painted-encounters-v5"] .explore-immersive-scene {
             top: -32%;
             bottom: auto;
             height: 112%;
@@ -1479,7 +1596,7 @@ body.app-mode-fullscreen .app-container {
             --explore-world-fade-start: 62.5%;
         }
 
-        .explore-immersive[data-visual-candidate-id="pokko-painted-encounters-v4"] .explore-immersive-scene {
+        .explore-immersive[data-visual-candidate-id="pokko-painted-encounters-v5"] .explore-immersive-scene {
             object-position: 50% 97%;
         }
 
@@ -2071,7 +2188,8 @@ body.app-mode-fullscreen .app-container {
 .game-hub {
     color: var(--explore-ink);
     background:
-        linear-gradient(164deg, #fff0ad 0 34%, #f8df79 34% 41%, #8ed7c0 41% 100%);
+        radial-gradient(circle at 86% 7%, rgba(255, 255, 237, 0.72) 0 86px, transparent 87px),
+        linear-gradient(166deg, #fff0ad 0 39%, #f8df79 39% 44%, #8ed7c0 44% 100%);
 }
 
 .game-hub__backdrop-shape {
@@ -2119,24 +2237,21 @@ body.app-mode-fullscreen .app-container {
     position: relative;
     min-height: 466px;
     overflow: hidden;
-    border: 3px solid var(--explore-outline);
-    border-radius: 32px 26px 35px 24px;
-    background: #74cfbd;
-    box-shadow: 0 7px 0 rgba(23, 63, 73, 0.3), 0 28px 48px -34px rgba(23, 63, 73, 0.64);
+    border: 2px solid rgba(23, 63, 73, 0.72);
+    border-radius: 28px;
+    background: #2cbed3;
+    box-shadow: 0 7px 0 rgba(23, 63, 73, 0.22), 0 28px 48px -34px rgba(23, 63, 73, 0.64);
     isolation: isolate;
 }
 
 .game-hub__hero::after {
     position: absolute;
     z-index: 1;
-    right: -36px;
-    bottom: 52px;
-    width: 150px;
-    height: 58px;
-    border-radius: 50%;
-    background: rgba(255, 244, 206, 0.24);
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(18, 109, 129, 0.06) 0 48%, rgba(18, 58, 64, 0.22) 100%);
     content: "";
-    transform: rotate(-8deg);
+    pointer-events: none;
 }
 
 .game-hub__hero-art {
@@ -2148,11 +2263,19 @@ body.app-mode-fullscreen .app-container {
 
 .game-hub__featured-creature {
     position: absolute;
-    top: 2px;
-    left: 50%;
+    inset: 0;
     width: 100%;
+    height: 100%;
     max-width: none;
-    transform: translateX(-50%);
+    margin: 0;
+}
+
+.game-hub__featured-creature img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
 }
 
 .game-hub__hero-copy {
@@ -2161,24 +2284,14 @@ body.app-mode-fullscreen .app-container {
     width: min(78%, 270px);
     margin: 14px 0 0 14px;
     padding: 12px 15px 13px;
-    border: 3px solid var(--explore-outline);
-    border-radius: 18px 22px 20px 14px;
-    background: var(--explore-cream);
-    box-shadow: 3px 4px 0 rgba(23, 63, 73, 0.22);
-    transform: rotate(-1deg);
+    border: 2px solid rgba(23, 63, 73, 0.72);
+    border-radius: 18px;
+    background: rgba(255, 248, 216, 0.94);
+    box-shadow: 0 10px 22px -16px rgba(23, 63, 73, 0.76);
 }
 
 .game-hub__hero-copy::after {
-    position: absolute;
-    bottom: -12px;
-    left: 34px;
-    width: 20px;
-    height: 20px;
-    border-right: 3px solid var(--explore-outline);
-    border-bottom: 3px solid var(--explore-outline);
-    background: var(--explore-cream);
-    content: "";
-    transform: rotate(45deg);
+    content: none;
 }
 
 .game-hub__kicker,
@@ -2217,8 +2330,8 @@ body.app-mode-fullscreen .app-container {
     align-items: center;
     justify-content: space-between;
     gap: 14px;
-    border: 3px solid var(--explore-outline);
-    border-radius: 20px 18px 22px 17px;
+    border: 2px solid var(--explore-outline);
+    border-radius: 20px;
     background: #ffd15d;
     padding: 9px 11px 9px 18px;
     color: var(--explore-outline);
@@ -2262,7 +2375,7 @@ body.app-mode-fullscreen .app-container {
     height: 44px;
     flex: 0 0 auto;
     place-items: center;
-    border: 3px solid var(--explore-outline);
+    border: 2px solid var(--explore-outline);
     border-radius: 50%;
     background: #fff8d8;
 }

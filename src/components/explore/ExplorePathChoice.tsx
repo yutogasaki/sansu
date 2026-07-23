@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type CSSProperties } from "react";
 import { Backpack, BookOpen, ChevronRight, House, Route, Stamp } from "lucide-react";
 import type {
     DiscoveryPageDefinition,
@@ -28,6 +28,64 @@ const choiceHeading = (count: number) => {
     return "どっちへ いく？";
 };
 
+const ROUTE_PREVIEW_ASSETS: Record<2 | 3, string> = {
+    2: "/assets/explore/route-choice/scene-fork-two-pokko-v1.jpg",
+    3: "/assets/explore/route-choice/scene-fork-three-pokko-v1.jpg",
+};
+
+const getRoutePreviewMood = (kind: ExploreNode["kind"]) => {
+    if (kind === "soil" || kind === "fossil" || kind === "crystal") return "open";
+    if (kind === "mystery") return "hidden";
+    if (kind === "bridge") return "water";
+    return "winding";
+};
+
+const getRoutePreviewPosition = (
+    branchCount: 2 | 3,
+    branchIndex: number,
+) => {
+    if (branchCount === 3) return [8, 50, 92][branchIndex] ?? 50;
+    return [10, 90][branchIndex] ?? 50;
+};
+
+interface ExploreRoutePreviewProps {
+    node: ExploreNode;
+    branchCount: 2 | 3;
+    branchIndex: number;
+}
+
+const ExploreRoutePreview = ({
+    node,
+    branchCount,
+    branchIndex,
+}: ExploreRoutePreviewProps) => {
+    const previewStyle = {
+        "--explore-route-preview-image": `url("${ROUTE_PREVIEW_ASSETS[branchCount]}")`,
+        "--explore-route-preview-position": `${getRoutePreviewPosition(branchCount, branchIndex)}%`,
+        "--explore-route-preview-size": branchCount === 3 ? "300%" : "230%",
+    } as CSSProperties;
+
+    return (
+        <span
+            aria-hidden="true"
+            className="explore-route-preview"
+            data-branch-count={branchCount}
+            data-branch-index={branchIndex}
+            data-preview-mood={getRoutePreviewMood(node.kind)}
+            data-route-kind={node.kind}
+            data-testid="explore-route-preview"
+            style={previewStyle}
+        >
+            <span className="explore-route-preview-landmark">
+                <ExploreGlyph
+                    kind={node.kind as ExploreGlyphKind}
+                    className="h-10 w-10"
+                />
+            </span>
+        </span>
+    );
+};
+
 export const ExplorePathChoice: React.FC<ExplorePathChoiceProps> = ({
     nodes,
     steps,
@@ -39,6 +97,7 @@ export const ExplorePathChoice: React.FC<ExplorePathChoiceProps> = ({
     const mode = selectExplorePathChoiceMode(steps, nodes.length);
     const isRunEnd = mode === "return-ready";
     const isInvalidDeadEnd = mode === "invalid-dead-end";
+    const routeBranchCount = nodes.length >= 3 ? 3 : 2;
 
     return (
         <section
@@ -84,7 +143,7 @@ export const ExplorePathChoice: React.FC<ExplorePathChoiceProps> = ({
 
         {mode === "routes" ? <>
             <div className="explore-choice-grid mt-3 grid flex-1 content-start gap-2.5">
-                {nodes.map((node) => (
+                {nodes.map((node, branchIndex) => (
                     <button
                         key={node.id}
                         type="button"
@@ -93,10 +152,11 @@ export const ExplorePathChoice: React.FC<ExplorePathChoiceProps> = ({
                         onClick={() => onSelect(node.id)}
                         className="explore-route-card explore-focus-ring group flex min-h-[86px] items-center gap-3 rounded-[20px] p-3 text-left transition-[transform,filter] duration-150 hover:brightness-[1.015] active:translate-y-0.5 active:scale-[0.99]"
                     >
-                        <span className="relative flex h-14 w-14 shrink-0 items-center justify-center" aria-hidden="true">
-                            <span className="explore-route-glyph-plate absolute inset-1 -rotate-2 rounded-[20px]" />
-                            <ExploreGlyph kind={node.kind as ExploreGlyphKind} className="relative h-12 w-12" />
-                        </span>
+                        <ExploreRoutePreview
+                            node={node}
+                            branchCount={routeBranchCount}
+                            branchIndex={branchIndex}
+                        />
                         <span className="min-w-0 flex-1 pr-1">
                             <span className="block text-[1.05rem] font-black tracking-[-0.015em] text-[var(--explore-ink)]">{node.title}</span>
                             <span className="explore-route-hint mt-1 block text-xs font-bold leading-5">{node.hint}</span>

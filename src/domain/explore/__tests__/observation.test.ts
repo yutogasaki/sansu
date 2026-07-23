@@ -34,11 +34,11 @@ describe("exploration observation catalog", () => {
         expect(getExploreObservationDefinition(ROOT_TANGLE_OBSERVATION.id)).toBe(ROOT_TANGLE_OBSERVATION);
         expect(ROOT_TANGLE_OBSERVATION.visual).toEqual(expect.objectContaining({
             lineageId: "pokko-field-v1",
-            candidateId: "root-tangle-observation-v1",
+            candidateId: "root-tangle-light-path-v2",
             mode: "observation",
             cameraKey: ROOT_TANGLE_OBSERVATION.camera.key,
             sceneId: "root-tangle-crossed",
-            sceneSrc: "/assets/explore/root-tangle/scene-crossed-pokko-v4.jpg",
+            sceneSrc: "/assets/explore/root-tangle/scene-crossed-light-path-pokko-v5.jpg",
         }));
         expect(getExploreObservationForEncounter("light-bridge")).toBeUndefined();
     });
