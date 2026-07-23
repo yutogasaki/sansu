@@ -100,13 +100,14 @@ const renderSnapRootPanel = (
 );
 
 describe("ExploreProblemPanel rapid-trail art", () => {
-    it("uses authored same-camera flower art instead of the old raster", () => {
+    it("uses authored same-camera painted flower art", () => {
         const markup = renderPanel(3, "idle");
 
-        expect(markup).toContain('data-camera-key="firefly-flower-side-v1"');
+        expect(markup).toContain('data-camera-key="firefly-flower-side-v2"');
+        expect(markup).toContain('data-visual-candidate-id="firefly-painted-pokko-v2"');
+        expect(markup).toContain('data-visual-mode="world-painted"');
         expect(markup).toContain('data-stage="waiting"');
         expect(markup).not.toContain("scene-run-pop-v1.webp");
-        expect(markup).not.toContain("<image");
     });
 
     it("keeps arbitrary problem identity while showing the next physical clue", () => {

@@ -71,6 +71,32 @@ const PAINTED_ENCOUNTER_FOCALS = {
 };
 const ROOT_TANGLE_OBSERVATION_FOCALS =
   PAINTED_ENCOUNTER_FOCALS["explore-encounter-root-tangle:root-tangle-crossed"];
+const FIREFLY_PAINTED_STAGE_CONTRACT = {
+  waiting: {
+    asset: "/assets/explore/firefly-flower/scene-waiting-pokko-v2.jpg",
+    actorFace: [220, 560],
+    actorFeet: [220, 635],
+    actionPayoff: [585, 320],
+  },
+  "dew-trail": {
+    asset: "/assets/explore/firefly-flower/scene-dew-trail-pokko-v2.jpg",
+    actorFace: [220, 555],
+    actorFeet: [220, 625],
+    actionPayoff: [405, 560],
+  },
+  "warm-bud": {
+    asset: "/assets/explore/firefly-flower/scene-warm-bud-pokko-v2.jpg",
+    actorFace: [220, 555],
+    actorFeet: [220, 625],
+    actionPayoff: [570, 315],
+  },
+  "ringing-petals": {
+    asset: "/assets/explore/firefly-flower/scene-ringing-petals-pokko-v2.jpg",
+    actorFace: [220, 555],
+    actorFeet: [220, 625],
+    actionPayoff: [565, 360],
+  },
+};
 const REQUIRED_VISUAL_ASSET_SHA256 = {
   "/assets/explore/light-bridge/scene-idle-pokko-v4.jpg":
     "13bf2015482f3a8302cfc854891ac9d438344f2e9831a5db1988ca595a4638eb",
@@ -88,6 +114,14 @@ const REQUIRED_VISUAL_ASSET_SHA256 = {
     "b5ad845b04ffb238a7e701045941b895cec9b090fd3da3b46ab9dc2e51153438",
   "/assets/explore/route-choice/scene-fork-three-pokko-v1.jpg":
     "781c922d55e398caf686189193ff523409140647687e9ad4123ff9ccdb3d029e",
+  "/assets/explore/firefly-flower/scene-waiting-pokko-v2.jpg":
+    "2d96afa4d80565e30f841055b30718dcd58ee12a3207f73fec2876ef8493090f",
+  "/assets/explore/firefly-flower/scene-dew-trail-pokko-v2.jpg":
+    "982b357d69a1eea639fbce74b0bde18a4de095170a23c98b2e7aff3c1096c5ef",
+  "/assets/explore/firefly-flower/scene-warm-bud-pokko-v2.jpg":
+    "3ca693589f8086182224eb0e8056940721e94cc1f90c4eb1ed3997269b3f7df7",
+  "/assets/explore/firefly-flower/scene-ringing-petals-pokko-v2.jpg":
+    "bb78fd27b1fa3c892232f1c5b2881d531ce98518c8fb3a0cafececd7158fa49c",
 };
 const LEGACY_VISUAL_AUDIT_DIR = path.resolve(
   "docs/design/breakout-loop-2026-07-21/runtime-painted-v2-audit",
@@ -546,8 +580,12 @@ const scenarioStatsToPeriodicTest = async (browser) => {
   await context.close();
 };
 
-const scenarioExploreLaunchAndReturn = async (browser) => {
-  const context = await browser.newContext({ baseURL: activeBaseUrl, reducedMotion: "reduce" });
+const scenarioExploreLaunchAndReturn = async (browser, viewport) => {
+  const context = await browser.newContext({
+    baseURL: activeBaseUrl,
+    reducedMotion: "reduce",
+    ...(viewport ? { viewport } : {}),
+  });
   const page = await context.newPage();
   await clearClientStorage(page);
 
@@ -555,6 +593,44 @@ const scenarioExploreLaunchAndReturn = async (browser) => {
   await waitForExploreFirstProblemReady(page);
   const returningRunId = await page.locator(".explore-world").getAttribute("data-run-id");
   await solveMakimodonOpening(page);
+  if (viewport) {
+    const routeLayout = await page.locator(".explore-path-choice").evaluate((element) => {
+      const art = element.querySelector(".explore-route-fork-art-frame");
+      const returnAction = element.querySelector(".explore-path-return");
+      const artBounds = art?.getBoundingClientRect();
+      const returnBounds = returnAction?.getBoundingClientRect();
+      return {
+        clientHeight: element.clientHeight,
+        scrollHeight: element.scrollHeight,
+        art: artBounds ? {
+          display: window.getComputedStyle(art).display,
+          top: artBounds.top,
+          bottom: artBounds.bottom,
+          height: artBounds.height,
+        } : null,
+        returnAction: returnBounds ? {
+          top: returnBounds.top,
+          bottom: returnBounds.bottom,
+          height: returnBounds.height,
+        } : null,
+        viewportHeight: window.innerHeight,
+      };
+    });
+    assert(
+      routeLayout.scrollHeight <= routeLayout.clientHeight + 1,
+      `${viewport.width}x${viewport.height} route choice must not need internal scroll: ${JSON.stringify(routeLayout)}`,
+    );
+    assert(
+      routeLayout.art?.display !== "none"
+        && routeLayout.art.height >= 140
+        && routeLayout.art.bottom <= viewport.height,
+      `${viewport.width}x${viewport.height} route art must remain visible: ${JSON.stringify(routeLayout)}`,
+    );
+    assert(
+      routeLayout.returnAction?.bottom <= viewport.height,
+      `${viewport.width}x${viewport.height} route return action must remain visible: ${JSON.stringify(routeLayout)}`,
+    );
+  }
   await page.getByRole("button", { name: "ここまでを ノートに のこす" }).click();
   await page.locator("#return-summary-title").waitFor({ timeout: STEP_TIMEOUT_MS });
   const returnSnapshot = await readExplorePersistenceSnapshot(page);
@@ -2030,10 +2106,10 @@ const scenarioLightBridgeVerticalSlice = async (
   const ordinaryFirefly = page.locator(
     '.explore-immersive[data-visual-surface-id="explore-ordinary-firefly"]',
   );
-  const ordinaryFireflyCrop = await readLiveFireflyCrop(ordinaryFirefly);
+  const ordinaryFireflyCrop = await readPaintedFireflyCrop(ordinaryFirefly);
   assert(
     ordinaryFireflyCrop.pass,
-    `the live Firefly actors and action must stay above the answer fade at ${viewport.width}x${viewport.height}: ${JSON.stringify(ordinaryFireflyCrop)}`,
+    `the painted Firefly actors and action must stay above the answer fade at ${viewport.width}x${viewport.height}: ${JSON.stringify(ordinaryFireflyCrop)}`,
   );
 
   const ordinaryToast = page.locator(".explore-research-slip");
@@ -3635,7 +3711,10 @@ const readRootObservationCrop = async (surface) => surface.evaluate(async (eleme
   };
 }, ROOT_TANGLE_OBSERVATION_FOCALS);
 
-const readLiveFireflyCrop = async (surface) => surface.evaluate((element) => {
+const readPaintedFireflyCrop = async (surface) => surface.evaluate(async (
+  element,
+  stageContracts,
+) => {
   const tolerance = 2;
   const boundsOf = (target) => {
     const bounds = target.getBoundingClientRect();
@@ -3648,133 +3727,230 @@ const readLiveFireflyCrop = async (surface) => surface.evaluate((element) => {
       height: bounds.height,
     };
   };
-  const svg = element.querySelector(
-    'svg[data-visual-candidate-id="firefly-live-pokko-v1"]',
-  );
-  if (!(svg instanceof SVGElement)) {
+  const figure = element.matches(
+    '.firefly-flower-art[data-visual-candidate-id="firefly-painted-pokko-v2"]',
+  )
+    ? element
+    : element.querySelector(
+      '.firefly-flower-art[data-visual-candidate-id="firefly-painted-pokko-v2"]',
+    );
+  if (!(figure instanceof HTMLElement)) {
     return {
       applied: true,
       pass: false,
-      error: "The live Firefly Flower SVG was not found.",
+      error: "The painted Firefly Flower figure was not found.",
     };
   }
 
-  const stage = svg.getAttribute("data-stage");
-  const activeActionLayerByStage = {
-    waiting: "action-corridor",
-    "dew-trail": "dew-trail",
-    "warm-bud": "dew-trail",
-    "ringing-petals": "light-path-setup",
-  };
-  const activeActionLayerName = activeActionLayerByStage[stage];
-  const companion = svg.querySelector('[data-layer="companion"]');
-  const activeAction = activeActionLayerName
-    ? svg.querySelector(`[data-layer="${activeActionLayerName}"]`)
+  const surfaceElement = element.matches(".explore-immersive")
+    ? element
+    : element.closest(".explore-immersive") ?? element;
+  const stage = figure.getAttribute("data-stage");
+  const stageContract = stage && Object.prototype.hasOwnProperty.call(stageContracts, stage)
+    ? stageContracts[stage]
     : null;
-  const shelf = element.querySelector(".explore-immersive-brief");
-  const surfaceBounds = boundsOf(element);
+  const sceneImages = Array.from(
+    figure.querySelectorAll("img.firefly-flower-art__scene"),
+  );
+  const activeImages = sceneImages.filter(
+    (image) => image.getAttribute("data-active") === "true",
+  );
+  const activeImage = activeImages[0] ?? null;
+  if (activeImage instanceof HTMLImageElement) {
+    await activeImage.decode().catch(() => undefined);
+  }
+
+  const mountedScenes = sceneImages.map((image) => {
+    const style = window.getComputedStyle(image);
+    const opacity = Number.parseFloat(style.opacity || "1");
+    const bounds = boundsOf(image);
+    const currentSrc = image.currentSrc || image.src;
+    return {
+      stage: image.getAttribute("data-painted-stage"),
+      src: image.getAttribute("src"),
+      currentSrc,
+      active: image.getAttribute("data-active") === "true",
+      decoded: image.complete && image.naturalWidth > 0 && image.naturalHeight > 0,
+      naturalWidth: image.naturalWidth,
+      naturalHeight: image.naturalHeight,
+      display: style.display,
+      visibility: style.visibility,
+      opacity,
+      visible: style.display !== "none"
+        && style.visibility !== "hidden"
+        && opacity > 0.01
+        && bounds.width > 0
+        && bounds.height > 0,
+      bounds,
+    };
+  });
+  const expectedStages = Object.keys(stageContracts);
+  const mountedStageSet = new Set(mountedScenes.map((scene) => scene.stage));
+  const mountedSceneContractPass = mountedScenes.length === expectedStages.length
+    && mountedStageSet.size === expectedStages.length
+    && expectedStages.every((expectedStage) => {
+      const mounted = mountedScenes.find((scene) => scene.stage === expectedStage);
+      return mounted?.src === stageContracts[expectedStage].asset;
+    });
+  const visibleScenes = mountedScenes.filter((scene) => scene.visible);
+  const shelf = surfaceElement.querySelector(".explore-immersive-brief");
+  const surfaceBounds = boundsOf(surfaceElement);
+  const figureBounds = boundsOf(figure);
   const shelfBounds = shelf ? boundsOf(shelf) : null;
-  const surfaceStyle = window.getComputedStyle(element);
+  const surfaceStyle = window.getComputedStyle(surfaceElement);
   const fadeStartToken = surfaceStyle.getPropertyValue("--explore-world-fade-start").trim();
   const fadeStartPercent = Number.parseFloat(fadeStartToken);
   const fadeStartY = Number.isFinite(fadeStartPercent)
     ? surfaceBounds.top + surfaceBounds.height * (fadeStartPercent / 100)
     : Number.NaN;
   const focalSafeMargin = window.innerWidth >= 600 ? 24 : 16;
+  const activeStyle = activeImage instanceof HTMLImageElement
+    ? window.getComputedStyle(activeImage)
+    : null;
+  const imageBounds = activeImage instanceof HTMLImageElement
+    ? boundsOf(activeImage)
+    : null;
+  const naturalWidth = activeImage instanceof HTMLImageElement
+    ? activeImage.naturalWidth
+    : 0;
+  const naturalHeight = activeImage instanceof HTMLImageElement
+    ? activeImage.naturalHeight
+    : 0;
+  const scaleX = imageBounds && naturalWidth > 0
+    ? imageBounds.width / naturalWidth
+    : Number.NaN;
+  const scaleY = imageBounds && naturalHeight > 0
+    ? imageBounds.height / naturalHeight
+    : Number.NaN;
+  const projectionValid = Boolean(imageBounds)
+    && activeStyle?.objectFit === "cover"
+    && naturalWidth === 780
+    && naturalHeight === 1000
+    && Number.isFinite(scaleX)
+    && Number.isFinite(scaleY)
+    && Math.abs(scaleX - scaleY) <= Math.max(scaleX, scaleY) * 0.002;
+  const activeOpacity = Number.parseFloat(activeStyle?.opacity || "0");
+  const activeVisible = activeStyle?.display !== "none"
+    && activeStyle?.visibility !== "hidden"
+    && activeOpacity >= 0.98
+    && Boolean(imageBounds?.width)
+    && Boolean(imageBounds?.height);
+  const activeAssetPath = activeImage instanceof HTMLImageElement
+    ? new URL(activeImage.currentSrc || activeImage.src, window.location.href).pathname
+    : null;
+  const activeAssetMatchesStage = Boolean(stageContract)
+    && activeAssetPath === stageContract.asset;
 
-  const describeLayer = (layer, name) => {
-    if (!(layer instanceof SVGElement)) {
+  const projectPoint = (name, source, requiresFadeClearance) => {
+    if (!imageBounds || !projectionValid) {
       return {
         name,
-        present: false,
-        visible: false,
+        source: source ? { x: source[0], y: source[1] } : null,
+        viewport: null,
         insideViewport: false,
         insideSurface: false,
+        insideImageSafeZone: false,
         aboveShelf: false,
+        aboveFade: false,
         pass: false,
-        bounds: null,
-        styleChain: [],
       };
     }
-    const bounds = boundsOf(layer);
-    const styleChain = [];
-    let current = layer;
-    while (current instanceof Element) {
-      const style = window.getComputedStyle(current);
-      styleChain.push({
-        element: current === layer
-          ? `${current.tagName.toLowerCase()}[data-layer="${name}"]`
-          : current.tagName.toLowerCase(),
-        display: style.display,
-        visibility: style.visibility,
-        opacity: Number.parseFloat(style.opacity || "1"),
-      });
-      if (current === element) break;
-      current = current.parentElement;
-    }
-    const visible = bounds.width > 0
-      && bounds.height > 0
-      && styleChain.every((style) => (
-        style.display !== "none"
-        && style.visibility !== "hidden"
-        && style.opacity > 0
-      ));
-    const insideViewport = bounds.left >= 0
-      && bounds.right <= window.innerWidth
-      && bounds.top >= 0
-      && bounds.bottom <= window.innerHeight;
-    const insideSurface = bounds.left >= surfaceBounds.left
-      && bounds.right <= surfaceBounds.right
-      && bounds.top >= surfaceBounds.top
-      && bounds.bottom <= surfaceBounds.bottom;
-    const shelfOverlapsLayer = Boolean(shelfBounds)
-      && bounds.left < shelfBounds.right
-      && bounds.right > shelfBounds.left;
+    const viewportX = imageBounds.left + source[0] * scaleX;
+    const viewportY = imageBounds.top + source[1] * scaleY;
+    const edgeClearance = Math.min(
+      viewportX - imageBounds.left,
+      imageBounds.right - viewportX,
+      viewportY - imageBounds.top,
+      imageBounds.bottom - viewportY,
+    );
+    const insideViewport = viewportX >= focalSafeMargin
+      && viewportX <= window.innerWidth - focalSafeMargin
+      && viewportY >= focalSafeMargin
+      && viewportY <= window.innerHeight - focalSafeMargin;
+    const insideSurface = viewportX >= surfaceBounds.left - tolerance
+      && viewportX <= surfaceBounds.right + tolerance
+      && viewportY >= surfaceBounds.top - tolerance
+      && viewportY <= surfaceBounds.bottom + tolerance;
+    const insideImageSafeZone = edgeClearance >= focalSafeMargin;
+    const shelfOverlapsPoint = Boolean(shelfBounds)
+      && viewportX >= shelfBounds.left - focalSafeMargin
+      && viewportX <= shelfBounds.right + focalSafeMargin;
     const aboveShelf = Boolean(shelfBounds)
-      && (!shelfOverlapsLayer || bounds.bottom <= shelfBounds.top + tolerance);
-    const fadeClearance = fadeStartY - bounds.bottom;
-    const aboveFade = Number.isFinite(fadeClearance)
-      && fadeClearance >= focalSafeMargin;
+      && (!shelfOverlapsPoint || viewportY <= shelfBounds.top - tolerance);
+    const fadeClearance = fadeStartY - viewportY;
+    const aboveFade = !requiresFadeClearance
+      || (Number.isFinite(fadeClearance) && fadeClearance >= focalSafeMargin);
     return {
       name,
-      present: true,
-      visible,
+      source: { x: source[0], y: source[1] },
+      viewport: { x: viewportX, y: viewportY },
+      edgeClearance,
       insideViewport,
       insideSurface,
+      insideImageSafeZone,
       aboveShelf,
-      shelfOverlapsLayer,
-      aboveFade,
+      shelfOverlapsPoint,
       fadeClearance,
-      pass: visible && insideViewport && insideSurface && aboveShelf && aboveFade,
-      bounds,
-      styleChain,
+      aboveFade,
+      pass: insideViewport
+        && insideSurface
+        && insideImageSafeZone
+        && aboveShelf
+        && aboveFade,
     };
   };
-
-  const layers = {
-    companion: describeLayer(companion, "companion"),
-    activeAction: describeLayer(activeAction, activeActionLayerName ?? "unknown"),
-  };
-  const availableActionLayers = [
-    "action-corridor",
-    "dew-trail",
-    "light-path-setup",
-  ].filter((name) => svg.querySelector(`[data-layer="${name}"]`));
+  const points = stageContract ? {
+    actorFace: projectPoint("actorFace", stageContract.actorFace, true),
+    actorFeet: projectPoint("actorFeet", stageContract.actorFeet, false),
+    actionPayoff: projectPoint("actionPayoff", stageContract.actionPayoff, true),
+  } : {};
+  const activeDecoded = activeImage instanceof HTMLImageElement
+    && activeImage.complete
+    && naturalWidth > 0
+    && naturalHeight > 0;
 
   return {
     applied: true,
-    pass: Boolean(activeActionLayerName)
+    pass: Boolean(stageContract)
       && Boolean(shelfBounds)
-      && layers.companion.pass
-      && layers.activeAction.pass,
+      && mountedSceneContractPass
+      && mountedScenes.every((scene) => scene.decoded)
+      && activeImages.length === 1
+      && visibleScenes.length === 1
+      && visibleScenes[0]?.active === true
+      && activeDecoded
+      && activeVisible
+      && activeAssetMatchesStage
+      && projectionValid
+      && Object.values(points).every((point) => point.pass),
     tolerance,
     stage,
-    activeActionLayerName: activeActionLayerName ?? null,
-    availableActionLayers,
-    svg: {
-      bounds: boundsOf(svg),
-      viewBox: svg.getAttribute("viewBox"),
-      preserveAspectRatio: svg.getAttribute("preserveAspectRatio"),
+    expectedAsset: stageContract?.asset ?? null,
+    activeAssetPath,
+    activeAssetMatchesStage,
+    mountedSceneContractPass,
+    mountedScenes,
+    activeSceneCount: activeImages.length,
+    visibleSceneCount: visibleScenes.length,
+    figure: {
+      candidateId: figure.getAttribute("data-visual-candidate-id"),
+      cameraKey: figure.getAttribute("data-camera-key"),
+      bounds: figureBounds,
+    },
+    activeScene: {
+      present: activeImage instanceof HTMLImageElement,
+      currentSrc: activeImage instanceof HTMLImageElement
+        ? activeImage.currentSrc || activeImage.src
+        : null,
+      complete: activeImage instanceof HTMLImageElement ? activeImage.complete : false,
+      decoded: activeDecoded,
+      naturalWidth,
+      naturalHeight,
+      objectFit: activeStyle?.objectFit ?? null,
+      objectPosition: activeStyle?.objectPosition ?? null,
+      opacity: activeOpacity,
+      visible: activeVisible,
+      bounds: imageBounds,
     },
     viewport: {
       width: window.innerWidth,
@@ -3791,9 +3967,14 @@ const readLiveFireflyCrop = async (surface) => surface.evaluate((element) => {
       startY: fadeStartY,
       safeMargin: focalSafeMargin,
     },
-    layers,
+    projection: {
+      valid: projectionValid,
+      scaleX,
+      scaleY,
+    },
+    points,
   };
-});
+}, FIREFLY_PAINTED_STAGE_CONTRACT);
 
 const readVisualAuditRuntimeSnapshot = async (
   page,
@@ -3863,8 +4044,8 @@ const readVisualAuditRuntimeSnapshot = async (
   const observationCrop = surfaceIdentity.candidateId === "root-tangle-observation-v1"
     ? await readRootObservationCrop(surface)
     : null;
-  const liveCrop = surfaceIdentity.candidateId === "firefly-live-pokko-v1"
-    ? await readLiveFireflyCrop(surface)
+  const fireflyCrop = surfaceIdentity.candidateId === "firefly-painted-pokko-v2"
+    ? await readPaintedFireflyCrop(surface)
     : null;
 
   const runtime = await page.evaluate(() => {
@@ -4047,7 +4228,7 @@ const readVisualAuditRuntimeSnapshot = async (
     visualSettle,
     paintedCrop,
     observationCrop,
-    liveCrop,
+    fireflyCrop,
   };
 };
 
@@ -4233,10 +4414,10 @@ const captureVisualAuditStage = async ({
       `${stage} root observation focal crop failed: ${JSON.stringify(snapshot.observationCrop)}`,
     );
   }
-  if (expected.candidateId === "firefly-live-pokko-v1") {
+  if (expected.candidateId === "firefly-painted-pokko-v2") {
     assert(
-      snapshot.liveCrop?.pass,
-      `${stage} live Firefly Flower safe-zone failed: ${JSON.stringify(snapshot.liveCrop)}`,
+      snapshot.fireflyCrop?.pass,
+      `${stage} painted Firefly Flower safe-zone failed: ${JSON.stringify(snapshot.fireflyCrop)}`,
     );
   }
 
@@ -4293,7 +4474,7 @@ const captureVisualAuditStage = async ({
     visualSettle: snapshot.visualSettle,
     paintedCrop: snapshot.paintedCrop,
     observationCrop: snapshot.observationCrop,
-    liveCrop: snapshot.liveCrop,
+    fireflyCrop: snapshot.fireflyCrop,
     cache: await readVisualAuditCacheState(page, networkProbe, cacheLabel),
     run: snapshot.run,
     attempt: snapshot.attempt,
@@ -4991,13 +5172,20 @@ const runVisualAuditViewport = async (
       ? "/assets/explore/route-choice/scene-fork-three-pokko-v1.jpg"
       : "/assets/explore/route-choice/scene-fork-two-pokko-v1.jpg";
     const routeForkImage = routeForkArt.locator("img");
-    if (viewport.width >= 600) {
+    const expectsRouteForkArt = (
+      viewport.width < 600 && viewport.height >= 800
+    ) || (
+      viewport.width >= 600
+        && viewport.height >= 760
+        && viewport.height >= viewport.width
+    );
+    if (expectsRouteForkArt) {
       await routeForkArt.waitFor({ state: "visible", timeout: STEP_TIMEOUT_MS });
       await routeForkImage.evaluate((image) => image.decode());
       assert(
         (await routeForkImage.getAttribute("src"))?.startsWith("data:image/gif")
           && (await routeForkImage.evaluate((image) => image.currentSrc)).endsWith(expectedRouteAsset),
-        `tablet route art must select the matching responsive source ${expectedRouteAsset}`,
+        `route art must select the matching responsive source ${expectedRouteAsset}`,
       );
       const routeForkArtBounds = await routeForkArt.evaluate((element) => {
         const bounds = element.getBoundingClientRect();
@@ -5011,10 +5199,13 @@ const runVisualAuditViewport = async (
       assert(
         routeForkArtBounds.height >= 180
           && routeForkArtBounds.bottom <= viewport.height,
-        `${viewport.width}x${viewport.height} route fork art must fill the tablet decision stage: ${JSON.stringify(routeForkArtBounds)}`,
+        `${viewport.width}x${viewport.height} route fork art must fill the decision stage: ${JSON.stringify(routeForkArtBounds)}`,
       );
     } else {
-      assert(await routeForkArt.isHidden(), "phone route fork art should remain out of the rapid choice stack");
+      assert(
+        await routeForkArt.isHidden(),
+        "short-phone route fork art should remain out of the rapid choice stack",
+      );
       const phoneRouteImage = await routeForkImage.evaluate(async (image) => {
         await image.decode();
         return {
@@ -5029,14 +5220,18 @@ const runVisualAuditViewport = async (
           && phoneRouteImage.complete
           && phoneRouteImage.naturalWidth === 1
           && phoneRouteImage.naturalHeight === 1,
-        `phone route choice must select and decode only its transparent fallback; PWA precache behavior is a separate contract: ${JSON.stringify(phoneRouteImage)}`,
+        `short-phone route choice must select and decode only its transparent fallback; PWA precache behavior is a separate contract: ${JSON.stringify(phoneRouteImage)}`,
       );
     }
     routeCapture.routeFork = {
       branchCount: routeBranchCount,
       authoredAsset: expectedRouteAsset,
       selectedCurrentSrc: await routeForkImage.evaluate((image) => image.currentSrc),
-      selectionMode: viewport.width >= 600 ? "tablet-authored-raster" : "phone-transparent-fallback",
+      selectionMode: viewport.width >= 600
+        ? "tablet-authored-raster"
+        : viewport.height >= 800
+          ? "tall-phone-authored-raster"
+          : "short-phone-transparent-fallback",
       bothBranchVariantsCoveredByComponentTest: true,
     };
     await seedDueMathSkills(page, [
@@ -5052,10 +5247,10 @@ const runVisualAuditViewport = async (
     );
     await ordinaryQ4.waitFor({ timeout: STEP_TIMEOUT_MS });
     await capture("q4-ordinary", ordinaryQ4, {
-      candidateId: "firefly-live-pokko-v1",
-      mode: "world-live",
+      candidateId: "firefly-painted-pokko-v2",
+      mode: "world-painted",
       surfaceId: "explore-ordinary-firefly",
-      cameraKey: "firefly-flower-side-v1",
+      cameraKey: "firefly-flower-side-v2",
     }, { requireTenKey: true });
     await solveExploreAndWaitForNextProblem(page);
 
@@ -5301,10 +5496,10 @@ const runVisualAuditViewport = async (
     );
     await ordinaryQ8.waitFor({ timeout: STEP_TIMEOUT_MS });
     await capture("q8", ordinaryQ8, {
-      candidateId: "firefly-live-pokko-v1",
-      mode: "world-live",
+      candidateId: "firefly-painted-pokko-v2",
+      mode: "world-painted",
       surfaceId: "explore-ordinary-firefly",
-      cameraKey: "firefly-flower-side-v1",
+      cameraKey: "firefly-flower-side-v2",
     }, { requireTenKey: true });
     await solveExploreNumericProblem(page);
     await waitForRouteBreakPastOptionalRareDiscovery(page);
@@ -5632,6 +5827,14 @@ const main = async () => {
       if (!results.every(Boolean)) process.exitCode = 1;
       return;
     }
+    if (process.env.SANSU_E2E_ROUTE_BOUNDARY_ONLY === "1") {
+      results.push(await runScenario(
+        "keeps the 390x800 route boundary fully visible",
+        () => scenarioExploreLaunchAndReturn(browser, { width: 390, height: 800 }),
+      ));
+      if (!results.every(Boolean)) process.exitCode = 1;
+      return;
+    }
     if (process.env.SANSU_E2E_SNAP_ROOT_ONLY === "1") {
       results.push(await runScenario(
         "runs the Snap Root breakthrough loop at 390px",
@@ -5688,6 +5891,10 @@ const main = async () => {
     results.push(await runScenario("keeps legacy fuwafuwa album out of child records", () => scenarioLegacyAlbumHidden(browser)));
     results.push(await runScenario("completes periodic test from stats and opens results", () => scenarioStatsToPeriodicTest(browser)));
     results.push(await runScenario("launches explore immediately and safely returns at a route break", () => scenarioExploreLaunchAndReturn(browser)));
+    results.push(await runScenario("keeps the 390x800 route boundary fully visible", () => scenarioExploreLaunchAndReturn(
+      browser,
+      { width: 390, height: 800 },
+    )));
     results.push(await runScenario("runs Root Pull v2 inline with reduced motion and the numeric keypad", () => scenarioRootPullV2Opening(browser)));
     results.push(await runScenario("runs the Snap Root breakthrough loop at 390px", () => scenarioSnapRootBreakthrough(browser)));
     results.push(await runScenario("keeps the Snap Root breakthrough loop playable on tablet", () => scenarioSnapRootBreakthrough(

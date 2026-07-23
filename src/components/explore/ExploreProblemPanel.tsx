@@ -136,10 +136,10 @@ export const ExploreProblemPanel: React.FC<ExploreProblemPanelProps> = ({
                 }
                 : {
                     lineageId: "pokko-field-v1",
-                    candidateId: "firefly-live-pokko-v1",
-                    mode: "world-live",
+                    candidateId: "firefly-painted-pokko-v2",
+                    mode: "world-painted",
                     surfaceId: "explore-ordinary-firefly",
-                    cameraKey: "firefly-flower-side-v1",
+                    cameraKey: "firefly-flower-side-v2",
                     sceneIds: {
                         idle: `firefly-${rapidTrailStage}`,
                         complete: `firefly-${rapidTrailStage}`,

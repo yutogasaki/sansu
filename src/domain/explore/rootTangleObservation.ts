@@ -27,10 +27,10 @@ export const ROOT_TANGLE_OBSERVATION = {
         objectPosition: "50% 57.5%",
     },
     copy: {
-        kicker: "せかいが かんさつページに なった",
-        title: "根っこの むこうに、ひかり道！",
-        action: "ひき算の こたえで 根のむすびがほどけた",
-        reaction: "根っこが 左右にひらいて、ポッコに道が見えた",
+        kicker: "ねっこが ほどけた！",
+        title: "むこうに ひかり道！",
+        action: "ひき算で、ねっこの むすびが ほどけた",
+        reaction: "ねっこが 左右へ ひらいて、道が みえた",
         finding: "花たちの光が つながって、道になった",
     },
 } as const satisfies ExploreObservationDefinition;
