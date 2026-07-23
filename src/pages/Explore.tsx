@@ -47,6 +47,7 @@ import {
     getDiscoveryPageProgress,
     getExploreEncounterDefinition,
     getExploreOpeningExperience,
+    getExploreLearningSegmentKey,
     getAvailableExploreNodes,
     getExploreReplayTeaser,
     getResumableExploreRunFromUi,
@@ -505,6 +506,27 @@ export const Explore: React.FC = () => {
             if (!activeCheckpoint) {
                 throw new Error(`Explore run ${run.runId} has no active checkpoint`);
             }
+            const resumedGate = activeCheckpoint.state.pendingProblem;
+            const resumedSegmentKey = getExploreLearningSegmentKey(
+                activeCheckpoint.state.steps,
+            );
+            if (
+                resumedGate?.problem
+                && resumedGate.learningAssignment
+                && resumedSegmentKey
+                && !run.learningSegments?.[resumedSegmentKey]
+            ) {
+                // A checkpoint written by the pre-segment build already owns
+                // its visible Problem. Freeze that exact slot and the rest of
+                // the current segment before input is enabled.
+                await createAndReserveExploreProblemPlan(
+                    activeCheckpoint.state,
+                    resumedGate,
+                    profile,
+                    { expectedCheckpointRevision: activeCheckpoint.revision },
+                );
+                if (cancelled) return;
+            }
             checkpointRef.current = activeCheckpoint;
             checkpointStateRef.current = activeCheckpoint.state;
             acknowledgedDiscoveryIdRef.current = activeCheckpoint.acknowledgedDiscoveryId;
@@ -825,6 +847,7 @@ export const Explore: React.FC = () => {
         if (
             !profileResolved
             || !runPersistenceReady
+            || !checkpointRef.current
             || phase !== "run"
             || !pendingGate
             || pendingGate.problem
@@ -834,7 +857,12 @@ export const Explore: React.FC = () => {
 
         let cancelled = false;
         setProblemPlanStatus("loading");
-        void createAndReserveExploreProblemPlan(state, pendingGate, profile ?? undefined)
+        void createAndReserveExploreProblemPlan(
+            state,
+            pendingGate,
+            profile ?? undefined,
+            { expectedCheckpointRevision: checkpointRef.current.revision },
+        )
             .then(async (plan) => {
                 if (cancelled) return;
                 const checkpoint = await applyCheckpointedActions([{
@@ -1127,7 +1155,10 @@ export const Explore: React.FC = () => {
                         correctProjection.routedState,
                         correctProjection.nextGate,
                         profile,
-                        { signal: transition.controller.signal },
+                        {
+                            signal: transition.controller.signal,
+                            expectedCheckpointRevision: committedCheckpoint.revision,
+                        },
                     )
                     : undefined;
                 const prefetchedCorrectResult = settleRapidLoopPrefetchWithin(
@@ -1220,7 +1251,10 @@ export const Explore: React.FC = () => {
                     refreshState,
                     refreshGate,
                     profile,
-                    { signal: transition.controller.signal },
+                    {
+                        signal: transition.controller.signal,
+                        expectedCheckpointRevision: committedCheckpoint.revision,
+                    },
                 )
                 : undefined;
             dispatch(committedAction);

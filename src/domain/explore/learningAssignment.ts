@@ -40,4 +40,7 @@ export const assignmentsMatch = (
     && left.isMaintenanceCheck === right.isMaintenanceCheck
     && left.countsTowardReviewCap === right.countsTowardReviewCap
     && left.affectsSrs === right.affectsSrs
+    && left.reservedEncounterId === right.reservedEncounterId
+    && JSON.stringify(left.reservedProblem ?? null)
+        === JSON.stringify(right.reservedProblem ?? null)
 );

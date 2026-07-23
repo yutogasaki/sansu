@@ -44,6 +44,8 @@ const createPendingFixture = () => {
         countsTowardReviewCap: false,
         affectsSrs: false,
         reservedAt: 120,
+        reservedProblem: problem,
+        reservedEncounterId: undefined,
     });
     const state = exploreReducer(selected, {
         type: "SET_PROBLEM",
@@ -119,6 +121,27 @@ describe("active exploration checkpoint", () => {
                         ...assignment,
                         source: "main",
                         affectsSrs: true,
+                    },
+                },
+            },
+            openingExperienceId: checkpoint.openingExperienceId,
+            updatedAt: checkpoint.updatedAt,
+        });
+
+        expect(() => assertExploreActiveCheckpointForRun(mismatchedCheckpoint, run))
+            .toThrow(ExploreCheckpointConflictError);
+    });
+
+    it("rejects a retry checkpoint whose displayed Problem differs from its reservation", () => {
+        const { checkpoint, run, state } = createPendingFixture();
+        const mismatchedCheckpoint = createExploreActiveCheckpoint({
+            state: {
+                ...state,
+                pendingProblem: {
+                    ...state.pendingProblem!,
+                    problem: {
+                        ...state.pendingProblem!.problem!,
+                        correctAnswer: "3",
                     },
                 },
             },

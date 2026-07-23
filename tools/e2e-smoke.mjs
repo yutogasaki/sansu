@@ -1364,8 +1364,16 @@ const scenarioExploreInterruptionResume = async (browser) => {
     const q7Run = q7Snapshot.runs.find((candidate) => candidate.runId === runId);
     const q7Checkpoint = q7Run?.activeCheckpoint;
     const q7Discovery = q7Checkpoint?.state.temporaryFinds.at(-1);
+    const q7Segment = q7Run?.learningSegments?.["6"];
+    const reservedQ8Slot = q7Segment?.slots?.find((slot) => slot.step === 7);
     assert(q7Checkpoint?.state.steps === 7, `blocking discovery should be the Q7 boundary; got ${q7Checkpoint?.state.steps}`);
     assert(q7Discovery, "Q7 blocking discovery should be durable before it is acknowledged");
+    assert(q7Segment?.slots?.length === 2, "Q7 should have atomically reserved its Q7-Q8 segment");
+    assert(reservedQ8Slot?.problem?.id, "Q8 full Problem should be reserved behind the Q7 barrier");
+    assert(
+      reservedQ8Slot.assignment?.problemId === reservedQ8Slot.problem.id,
+      "reserved Q8 Problem and assignment should share one identity",
+    );
     assert(
       q7Checkpoint?.acknowledgedDiscoveryId !== q7Discovery.id,
       "Q7 discovery should remain unacknowledged while its modal is open",
@@ -1413,6 +1421,18 @@ const scenarioExploreInterruptionResume = async (browser) => {
     await resumedQ7Modal.waitFor({ state: "hidden", timeout: STEP_TIMEOUT_MS });
     await waitForFixedTenExploreAttempt(page, 7, 1);
     const q8BeforeReload = await readExploreAttemptBoundary(page);
+    const visibleQ8Snapshot = await readExplorePersistenceSnapshot(page);
+    const visibleQ8Run = visibleQ8Snapshot.runs.find((candidate) => candidate.runId === runId);
+    const visibleQ8Gate = visibleQ8Run?.activeCheckpoint?.state?.pendingProblem;
+    assert(
+      JSON.stringify(visibleQ8Gate?.problem) === JSON.stringify(reservedQ8Slot.problem),
+      "Q8 should display the exact full Problem reserved before Q7 acknowledgement",
+    );
+    assert(
+      visibleQ8Gate?.learningAssignment?.assignmentKey
+        === reservedQ8Slot.assignment.assignmentKey,
+      "Q8 should display the assignment reserved before Q7 acknowledgement",
+    );
     assert(
       await page.locator(".explore-world").getAttribute("data-acknowledged-discovery-id") === q7Discovery.id,
       "continuing should durably acknowledge the Q7 discovery before Q8",

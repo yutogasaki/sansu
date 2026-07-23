@@ -1,6 +1,6 @@
 # docs/product/11_learning_integration_spec.md — 学習ロジック統合仕様
 
-> 状態: 既定起動面の探索へ **MVP-2b の最小学習接続**を適用する。Study と共通の算数 planner が選んだ assignment だけをSRS対象とし、run・回答receipt・学習記録を同じ冪等保存境界で扱う。未対応入力や安全fallbackは引き続き学習進捗へ混ぜない。
+> 状態: 既定起動面の探索へ **MVP-2b の最小学習接続**と **MVP-2d の3 / 3 / 2問segment予約**を適用する。Study と共通の算数 planner が選んだ assignment だけをSRS対象とし、run・回答receipt・学習記録を同じ冪等保存境界で扱う。未対応入力や安全fallbackは引き続き学習進捗へ混ぜない。
 
 ## 1. 基本方針
 
@@ -143,6 +143,19 @@ run開始も回答の前提にする。プロフィール解決後に `startExpl
 - checkpoint revisionは単調増加とし、回答commit、checkpoint更新、run終了は呼び出し元が見たrevisionを照合する。別tabや古い非同期処理によるstale更新は競合として拒否する
 - opening experience IDをcheckpointへ固定し、reloadでactorや演出系統を切り替えない。確認済みdiscovery cursorは存在するfindの順序だけを前進でき、Q7 blocking発見はcursor保存成功後にだけ閉じる
 - indexを増やさないrun行のoptional fieldとして保存するため、Dexie version 5を維持する。checkpointのない旧active runはSRSや発見を推測せずabandonedとし、finished rowはそのまま読む
+
+### 3.4 immutable 3問learning segment
+
+- 正解stepは `0〜2 / 3〜5 / 6〜7` のsegmentへ分ける。segmentの最初の実gateが決まった時点で、残りのzero-tap routeを実nodeへ純粋投影し、回答writeと混ざらない単一snapshotからStudy共通plannerをsegment長で一度だけ呼ぶ
+- 各slotは絶対step、slot / sequence順、実gate / node、完全な `Problem`、encounter、source / review / maintenance / review-cap / `affectsSrs` を含むassignment、stable segment seed、planner / generator versionを持つ。run行のoptional `learningSegments` と `learningAssignments` を同一transactionで保存し、checkpoint revisionと所有profileを照合する。full Problemが正本でありfresh profileから再生成しない
+- segmentを保存した後は、プロフィールの `mathMainLevel / mathMaxUnlocked / mathSkills` やDue状態が変わってもslotを再生成しない。次segmentだけ最新snapshotで計画する。Dueは予約だけでは消化せず、そのslotの回答commit時だけ既存writerへ渡す
+- 1回目の誤答は同じProblemを維持し、2回目以降のrepresentation retryは元slotと同じstepの別assignmentとする。retryはcheckpoint revision / step / gate / attemptをCAS照合し、完全なProblemとencounterをassignmentと同時に保存する。retryは次slotを消費せず、segment本体を置換しない
+- 旧active runがsegment途中で `learningSegments` を持たない場合は、過去の回答・assignmentを変えず、現在stepからsegment末尾までだけを一度予約する。既存segment、同slotの別gate binding、assignment policy不一致はfirst-writerの保存値を正本とし、推測mergeしない
+- 旧active runのcheckpointに現在のfull Problemがある場合は、それを現在slotへbyte-for-byteで採用してから入力を解禁する。既存assignmentだけがありProblem未適用なら、その既存assignmentを現在slotとして復元し、同じ予約transactionで残りslotを固定する
+- review候補の上限は固定booleanで一度だけ許可せず、既存assignmentと同じsegmentで既に計画したslotを含め、候補ごとにcallbackで再判定する。通常のDue候補は同segmentで1回だけ予約し、予約だけではMemoryStateのDueを消化しない
+- Q7開始時のQ8 slot予約は保存済み学習planに限る。Q7のblocking discovery確認checkpointが保存される前に、Q8を `SET_PROBLEM` 相当のruntime stateへ適用しない
+- profile / Memory / logs / runを読むplanner snapshotとsegment書込みは同じDexie transactionをlinearization点とする。別tabのStudy回答をtransactionの途中へ混ぜず、古いread snapshotを後からfirst-writerにしない
+- これは出題順の安定化であり、`number input可能` と高速loop適格性の判定や全sourceの `mathMaxUnlocked` guardは次の独立境界で行う。segment予約によって不適格問題を適格扱いしない
 
 ## 4. 正誤処理
 

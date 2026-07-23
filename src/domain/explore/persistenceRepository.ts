@@ -17,12 +17,32 @@ import {
     assignmentsMatch,
     createExploreLearningAssignment,
 } from "./learningAssignment";
-import { createInitialExploreState } from "./reducer";
+import {
+    createExploreLearningSegmentId,
+    getExploreLearningSegmentWindow,
+    projectExploreLearningSegmentGates,
+    type ExploreLearningSegmentGateProjection,
+} from "./learningSegment";
+import {
+    exploreJsonValuesMatch,
+    exploreLearningSegmentsMatch,
+} from "./learningSegmentPersistence";
+import {
+    RAPID_LOOP_AUTO_BRIDGE_PLAN,
+    selectDeterministicRapidLoopNodeId,
+    shouldAutoRouteExplorePath,
+} from "./rapidLoop";
+import {
+    createInitialExploreState,
+    exploreReducer,
+    getAvailableExploreNodes,
+} from "./reducer";
 import type {
     CommitExploreAttemptInput,
     ExploreActiveCheckpoint,
     ExploreAttemptCommitReceipt,
     ExploreLearningAssignment,
+    ExploreLearningSegment,
     ExploreProblemAnsweredEventRecord,
     ExploreRunCheckpointSaveReceipt,
     ExploreRunRecord,
@@ -32,6 +52,7 @@ import type {
     PersistedExploreRunTerminalStatus,
     ResumableExploreRun,
     ReserveExploreLearningAssignmentInput,
+    ReserveExploreLearningSegmentInput,
     SaveExploreRunCheckpointInput,
     StartExploreRunInput,
 } from "./persistenceTypes";
@@ -323,6 +344,150 @@ const assertIdempotentCheckpointRevision = (
     }
 };
 
+const assertLearningAssignmentPolicy = (assignment: ExploreLearningAssignment) => {
+    const isGameOnly = assignment.source === "game-only-fallback";
+    const countsTowardReviewCap = assignment.source === "due"
+        || assignment.source === "maintenance"
+        || assignment.source === "weak";
+    if (
+        assignment.affectsSrs === isGameOnly
+        || assignment.isReview !== (assignment.source === "due")
+        || assignment.isMaintenanceCheck !== (assignment.source === "maintenance")
+        || assignment.countsTowardReviewCap !== countsTowardReviewCap
+        || !Number.isFinite(assignment.reservedAt)
+        || assignment.reservedAt < 0
+    ) {
+        throw new ExplorePersistenceConflictError(
+            `problemId ${assignment.problemId} has an invalid learning policy`,
+        );
+    }
+};
+
+const getCheckpointSegmentProjection = (
+    checkpoint: ExploreActiveCheckpoint,
+): ExploreLearningSegmentGateProjection | undefined => {
+    if (checkpoint.state.pendingProblem) {
+        return projectExploreLearningSegmentGates(checkpoint.state);
+    }
+    const availableNodes = getAvailableExploreNodes(checkpoint.state);
+    if (!shouldAutoRouteExplorePath(checkpoint.state.steps, availableNodes.length)) {
+        return undefined;
+    }
+    const currentX = checkpoint.state.nodes.find(
+        (node) => node.id === checkpoint.state.currentNodeId,
+    )?.x ?? 50;
+    const nodeId = selectDeterministicRapidLoopNodeId(availableNodes, currentX);
+    if (!nodeId) return undefined;
+    let routedState = exploreReducer(checkpoint.state, { type: "SELECT_NODE", nodeId });
+    if (
+        routedState.pendingProblem?.actionType === "bridge"
+        && !routedState.pendingProblem.bridgePlan
+    ) {
+        routedState = exploreReducer(routedState, {
+            type: "CHOOSE_BRIDGE",
+            plan: RAPID_LOOP_AUTO_BRIDGE_PLAN,
+        });
+    }
+    return projectExploreLearningSegmentGates(routedState);
+};
+
+const assertLearningSegmentMatchesBoundary = (
+    run: ExploreRunRecord,
+    input: ReserveExploreLearningSegmentInput,
+    projection: ExploreLearningSegmentGateProjection,
+) => {
+    const { segment } = input;
+    const window = getExploreLearningSegmentWindow(segment.plannedFromStep);
+    const expectedId = createExploreLearningSegmentId(run.runId, segment.plannedFromStep);
+    if (
+        segment.schemaVersion !== 1
+        || !window
+        || !expectedId
+        || segment.segmentId !== expectedId
+        || segment.segmentId !== projection.segmentId
+        || segment.segmentKey !== window.key
+        || segment.segmentKey !== projection.segmentKey
+        || segment.startStep !== window.startStep
+        || segment.endStepExclusive !== window.endStepExclusive
+        || segment.plannedFromStep !== input.expectedStartStep
+        || segment.plannedFromStep !== projection.plannedFromStep
+        || !segment.plannerVersion
+        || !segment.generatorVersion
+        || !segment.seed
+        || !Number.isFinite(segment.plannedAt)
+        || segment.plannedAt < 0
+        || !Number.isSafeInteger(segment.profileSnapshot.mathMainLevel)
+        || segment.profileSnapshot.mathMainLevel < 1
+        || !Number.isSafeInteger(segment.profileSnapshot.mathMaxUnlocked)
+        || segment.profileSnapshot.mathMaxUnlocked < segment.profileSnapshot.mathMainLevel
+        || segment.slots.length !== projection.slots.length
+    ) {
+        throw new ExplorePersistenceConflictError("learning segment does not match its boundary");
+    }
+
+    const problemIds = new Set<string>();
+    const gateIds = new Set<string>();
+    segment.slots.forEach((slot, index) => {
+        const projected = projection.slots[index];
+        const canonicalAssignment = createExploreLearningAssignment({
+            profileId: slot.assignment.profileId,
+            runId: slot.assignment.runId,
+            gateId: slot.assignment.gateId,
+            problemId: slot.assignment.problemId,
+            categoryId: slot.assignment.categoryId,
+            source: slot.assignment.source,
+            isReview: slot.assignment.isReview,
+            isMaintenanceCheck: slot.assignment.isMaintenanceCheck,
+            countsTowardReviewCap: slot.assignment.countsTowardReviewCap,
+            affectsSrs: slot.assignment.affectsSrs,
+            reservedAt: slot.assignment.reservedAt,
+            reservedProblem: slot.assignment.reservedProblem,
+            reservedEncounterId: slot.assignment.reservedEncounterId,
+        });
+        if (
+            !projected
+            || slot.step !== projected.step
+            || slot.slotIndex !== slot.step - segment.startStep
+            || slot.sequenceOrdinal !== slot.step
+            || slot.gateId !== projected.gate.gateId
+            || slot.nodeId !== projected.gate.nodeId
+            || slot.actionType !== projected.gate.actionType
+            || slot.attemptCount !== projected.gate.attemptCount
+            || slot.bridgePlan !== projected.gate.bridgePlan
+            || !slot.problem.id
+            || slot.problem.subject !== "math"
+            || !slot.problem.categoryId
+            || slot.problem.id !== slot.assignment.problemId
+            || slot.problem.categoryId !== slot.assignment.categoryId
+            || slot.problem.isReview !== slot.assignment.isReview
+            || Boolean(slot.problem.isMaintenanceCheck) !== slot.assignment.isMaintenanceCheck
+            || slot.assignment.profileId !== run.profileId
+            || slot.assignment.runId !== run.runId
+            || slot.assignment.gateId !== slot.gateId
+            || !assignmentsMatch(slot.assignment, canonicalAssignment)
+            || (
+                slot.assignment.reservedProblem !== undefined
+                && (
+                    !exploreJsonValuesMatch(
+                        slot.problem,
+                        slot.assignment.reservedProblem,
+                    )
+                    || slot.encounterId !== slot.assignment.reservedEncounterId
+                )
+            )
+            || problemIds.has(slot.problem.id)
+            || gateIds.has(slot.gateId)
+        ) {
+            throw new ExplorePersistenceConflictError(
+                `learning segment slot ${index} does not match its gate or assignment`,
+            );
+        }
+        assertLearningAssignmentPolicy(slot.assignment);
+        problemIds.add(slot.problem.id);
+        gateIds.add(slot.gateId);
+    });
+};
+
 export interface ExplorePersistenceRepository {
     startExploreRun(input: StartExploreRunInput): Promise<ExploreRunRecord>;
     getResumableExploreRun(profileId: string): Promise<ResumableExploreRun | undefined>;
@@ -331,8 +496,16 @@ export interface ExplorePersistenceRepository {
     ): Promise<ExploreRunCheckpointSaveReceipt>;
     reserveExploreLearningAssignment(
         input: ReserveExploreLearningAssignmentInput,
-        options?: { signal?: AbortSignal },
+        options?: {
+            signal?: AbortSignal;
+            expectedCheckpointRevision?: number;
+            expectedStep?: number;
+            expectedAttemptCount?: number;
+        },
     ): Promise<ExploreLearningAssignment>;
+    reserveExploreLearningSegment(
+        input: ReserveExploreLearningSegmentInput,
+    ): Promise<ExploreLearningSegment>;
     commitExploreAttempt(input: CommitExploreAttemptInput): Promise<ExploreAttemptCommitReceipt>;
     finishExploreRun(input: FinishExploreRunInput): Promise<ExploreRunFinishReceipt>;
 }
@@ -522,6 +695,33 @@ export const createExplorePersistenceRepository = (
                     `runId ${run.runId} is not active`,
                 );
             }
+            if (options.expectedCheckpointRevision !== undefined) {
+                const checkpoint = assertExpectedCheckpointRevision(
+                    run,
+                    options.expectedCheckpointRevision,
+                );
+                const checkpointGate = checkpoint.state.pendingProblem;
+                if (
+                    (
+                        options.expectedStep !== undefined
+                        && checkpoint.state.steps !== options.expectedStep
+                    )
+                    || !checkpointGate
+                    || checkpointGate.gateId !== input.gateId
+                    || (
+                        options.expectedAttemptCount !== undefined
+                        && checkpointGate.attemptCount !== options.expectedAttemptCount
+                    )
+                    || (
+                        (options.expectedAttemptCount ?? 0) >= 2
+                        && !checkpointGate.problemRefreshPending
+                    )
+                ) {
+                    throw new ExplorePersistenceConflictError(
+                        `runId ${run.runId} is not at the expected assignment boundary`,
+                    );
+                }
+            }
             if (input.source === "game-only-fallback" ? input.affectsSrs : !input.affectsSrs) {
                 throw new ExplorePersistenceConflictError(
                     "learning assignment source and affectsSrs do not match",
@@ -535,6 +735,26 @@ export const createExplorePersistenceRepository = (
             if (input.source === "maintenance" && !input.isMaintenanceCheck) {
                 throw new ExplorePersistenceConflictError(
                     "maintenance assignments must be marked as maintenance checks",
+                );
+            }
+            if (input.reservedProblem && (
+                input.reservedProblem.id !== input.problemId
+                || input.reservedProblem.subject !== "math"
+                || input.reservedProblem.categoryId !== input.categoryId
+                || input.reservedProblem.isReview !== input.isReview
+                || Boolean(input.reservedProblem.isMaintenanceCheck)
+                    !== input.isMaintenanceCheck
+            )) {
+                throw new ExplorePersistenceConflictError(
+                    `problemId ${input.problemId} does not match its reserved Problem`,
+                );
+            }
+            if (
+                (options.expectedAttemptCount ?? 0) >= 2
+                && !input.reservedProblem
+            ) {
+                throw new ExplorePersistenceConflictError(
+                    `retry problemId ${input.problemId} must reserve its full Problem`,
                 );
             }
 
@@ -564,6 +784,83 @@ export const createExplorePersistenceRepository = (
             // the deadline elapsed while the update was in flight.
             assertReservationActive();
             return assignment;
+        },
+    ),
+
+    reserveExploreLearningSegment: async (input) => database.transaction(
+        "rw",
+        database.exploreRuns,
+        async () => {
+            const run = await database.exploreRuns.get(input.runId);
+            if (!run) {
+                throw new ExplorePersistenceConflictError(
+                    `runId ${input.runId} does not exist`,
+                );
+            }
+            if (run.profileId !== input.profileId || run.status !== "active") {
+                throw new ExplorePersistenceConflictError(
+                    `runId ${input.runId} is not an active run for ${input.profileId}`,
+                );
+            }
+            const checkpoint = assertExpectedCheckpointRevision(
+                run,
+                input.expectedCheckpointRevision,
+            );
+            if (checkpoint.state.steps !== input.expectedStartStep) {
+                throw new ExplorePersistenceConflictError(
+                    `runId ${run.runId} is not at learning step ${input.expectedStartStep}`,
+                );
+            }
+            const projection = getCheckpointSegmentProjection(checkpoint);
+            if (
+                !projection
+                || projection.slots[0]?.gate.gateId !== input.expectedStartGateId
+            ) {
+                throw new ExplorePersistenceConflictError(
+                    `runId ${run.runId} does not expose gate ${input.expectedStartGateId}`,
+                );
+            }
+            assertLearningSegmentMatchesBoundary(run, input, projection);
+
+            const existingSegment = run.learningSegments?.[input.segment.segmentKey];
+            if (existingSegment) {
+                if (!exploreLearningSegmentsMatch(existingSegment, input.segment)) {
+                    throw new ExplorePersistenceConflictError(
+                        `segment ${input.segment.segmentId} was already reserved differently`,
+                    );
+                }
+                return existingSegment;
+            }
+
+            const learningAssignments = { ...(run.learningAssignments || {}) };
+            input.segment.slots.forEach(({ assignment }) => {
+                const existing = learningAssignments[assignment.problemId];
+                if (existing && !assignmentsMatch(existing, assignment)) {
+                    throw new ExplorePersistenceConflictError(
+                        `problemId ${assignment.problemId} already has a different learning assignment`,
+                    );
+                }
+                if (!existing) learningAssignments[assignment.problemId] = assignment;
+            });
+            const timestamp = Math.max(
+                run.updatedAt,
+                input.segment.plannedAt,
+                ...input.segment.slots.map(({ assignment }) => assignment.reservedAt),
+            );
+            const nextRun: ExploreRunRecord = {
+                ...run,
+                learningAssignments,
+                learningSegments: {
+                    ...(run.learningSegments || {}),
+                    [input.segment.segmentKey]: input.segment,
+                },
+                updatedAt: timestamp,
+            };
+            const updated = await database.exploreRuns.put(nextRun);
+            if (updated !== run.runId) {
+                throw new Error(`Failed to reserve learning segment for ${run.runId}`);
+            }
+            return input.segment;
         },
     ),
 
@@ -852,7 +1149,15 @@ export const getResumableExploreRun = explorePersistenceRepository.getResumableE
 export const saveExploreRunCheckpoint = explorePersistenceRepository.saveExploreRunCheckpoint;
 export const reserveExploreLearningAssignment = (
     input: ReserveExploreLearningAssignmentInput,
-    options?: { signal?: AbortSignal },
+    options?: {
+        signal?: AbortSignal;
+        expectedCheckpointRevision?: number;
+        expectedStep?: number;
+        expectedAttemptCount?: number;
+    },
 ) => explorePersistenceRepository.reserveExploreLearningAssignment(input, options);
+export const reserveExploreLearningSegment = (
+    input: ReserveExploreLearningSegmentInput,
+) => explorePersistenceRepository.reserveExploreLearningSegment(input);
 export const commitExploreAttempt = explorePersistenceRepository.commitExploreAttempt;
 export const finishExploreRun = explorePersistenceRepository.finishExploreRun;

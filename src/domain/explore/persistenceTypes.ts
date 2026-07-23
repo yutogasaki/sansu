@@ -1,7 +1,18 @@
 import type { Problem } from "../types";
 import type { AttemptIdentity, AttemptNumber } from "./attemptIdentity";
+import type {
+    ExploreLearningSegmentEndStepExclusive,
+    ExploreLearningSegmentKey,
+    ExploreLearningSegmentStartStep,
+    ExploreLearningStep,
+} from "./learningSegment";
 import type { ExploreOpeningExperienceId } from "./openingExperience";
-import type { DiscoveryInstance, ExploreRunState } from "./types";
+import type {
+    DiscoveryInstance,
+    ExploreEncounterId,
+    ExploreProblemGate,
+    ExploreRunState,
+} from "./types";
 
 export type PersistedExploreRunStatus = "active" | "returned" | "rescued" | "abandoned";
 export type PersistedExploreRunTerminalStatus = Exclude<PersistedExploreRunStatus, "active">;
@@ -29,6 +40,43 @@ export interface ExploreLearningAssignment {
     countsTowardReviewCap: boolean;
     affectsSrs: boolean;
     reservedAt: number;
+    /** Retry plans keep their exact generated Problem here; base plans live in learningSegments. */
+    reservedProblem?: Problem;
+    reservedEncounterId?: ExploreEncounterId;
+}
+
+export interface ExploreLearningProfileSnapshotBoundary {
+    mathMainLevel: number;
+    mathMaxUnlocked: number;
+}
+
+export interface ExploreLearningSegmentSlot {
+    step: ExploreLearningStep;
+    slotIndex: number;
+    sequenceOrdinal: number;
+    gateId: string;
+    nodeId: string;
+    actionType: ExploreProblemGate["actionType"];
+    attemptCount: number;
+    bridgePlan?: ExploreProblemGate["bridgePlan"];
+    problem: Problem;
+    encounterId?: ExploreEncounterId;
+    assignment: ExploreLearningAssignment;
+}
+
+export interface ExploreLearningSegment {
+    schemaVersion: 1;
+    segmentId: string;
+    segmentKey: ExploreLearningSegmentKey;
+    startStep: ExploreLearningSegmentStartStep;
+    endStepExclusive: ExploreLearningSegmentEndStepExclusive;
+    plannedFromStep: ExploreLearningStep;
+    plannerVersion: string;
+    generatorVersion: string;
+    seed: string;
+    profileSnapshot: ExploreLearningProfileSnapshotBoundary;
+    plannedAt: number;
+    slots: readonly ExploreLearningSegmentSlot[];
 }
 
 /**
@@ -61,6 +109,7 @@ export interface ExploreRunRecord {
     routeSummary: string[];
     updatedAt: number;
     learningAssignments?: Record<string, ExploreLearningAssignment>;
+    learningSegments?: Partial<Record<ExploreLearningSegmentKey, ExploreLearningSegment>>;
     activeCheckpoint?: ExploreActiveCheckpoint;
 }
 
@@ -151,6 +200,17 @@ export interface ReserveExploreLearningAssignmentInput {
     countsTowardReviewCap: boolean;
     affectsSrs: boolean;
     reservedAt: number;
+    reservedProblem?: Problem;
+    reservedEncounterId?: ExploreEncounterId;
+}
+
+export interface ReserveExploreLearningSegmentInput {
+    runId: string;
+    profileId: string;
+    expectedCheckpointRevision: number;
+    expectedStartStep: ExploreLearningStep;
+    expectedStartGateId: string;
+    segment: ExploreLearningSegment;
 }
 
 export interface FinishExploreRunInput {

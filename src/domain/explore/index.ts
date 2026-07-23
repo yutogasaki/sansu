@@ -9,6 +9,7 @@ export * from "./discoveryPage";
 export * from "./discoveryPageCatalog";
 export * from "./generator";
 export * from "./learningPlanner";
+export * from "./learningSegment";
 export * from "./problemAdapter";
 export * from "./rapidLoop";
 export * from "./runStructure";

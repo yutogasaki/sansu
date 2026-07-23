@@ -201,12 +201,14 @@ export interface ExploreProblemPlan {
     encounterId?: ExploreEncounterId;
 }
 
+export const EXPLORE_PROBLEM_GENERATOR_VERSION = "explore-problem-v1";
+
 export const createExploreProblemRandomKey = (
     state: Pick<ExploreRunState, "seed">,
     gate: Pick<ExploreProblemGate, "gateId" | "attemptCount">,
     skillId: string,
 ): string => JSON.stringify([
-    "explore-problem-v1",
+    EXPLORE_PROBLEM_GENERATOR_VERSION,
     state.seed,
     gate.gateId,
     gate.attemptCount,

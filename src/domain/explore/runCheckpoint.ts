@@ -4,6 +4,10 @@ import {
     type ExploreOpeningExperienceId,
 } from "./openingExperience";
 import { assignmentsMatch } from "./learningAssignment";
+import {
+    exploreJsonValuesMatch,
+    getExploreLearningSegmentsIntegrityError,
+} from "./learningSegmentPersistence";
 import { exploreReducer } from "./reducer";
 import { createAttemptIdentity } from "./attemptIdentity";
 import type {
@@ -146,6 +150,11 @@ export const assertExploreActiveCheckpointForRun = (
         throw new ExploreCheckpointConflictError("checkpoint discovery cursor is outside the run");
     }
 
+    const segmentIntegrityError = getExploreLearningSegmentsIntegrityError(run);
+    if (segmentIntegrityError) {
+        throw new ExploreCheckpointConflictError(segmentIntegrityError);
+    }
+
     const gate = state.pendingProblem;
     if (gate?.problem) {
         const assignment = gate.learningAssignment;
@@ -160,10 +169,56 @@ export const assertExploreActiveCheckpointForRun = (
             || assignment.problemId !== gate.problem.id
             || assignment.categoryId !== gate.problem.categoryId
             || assignment.isReview !== gate.problem.isReview
+            || (
+                storedAssignment.reservedProblem !== undefined
+                && (
+                    !exploreJsonValuesMatch(
+                        gate.problem,
+                        storedAssignment.reservedProblem,
+                    )
+                    || gate.encounterId !== storedAssignment.reservedEncounterId
+                )
+            )
         ) {
             throw new ExploreCheckpointConflictError(
                 "checkpoint pending problem does not match its stored assignment",
             );
+        }
+    }
+
+    const currentSegmentSlot = Object.values(run.learningSegments || {})
+        .flatMap((segment) => segment?.slots || [])
+        .find((slot) => slot.step === state.steps);
+    if (currentSegmentSlot && gate) {
+        if (
+            currentSegmentSlot.gateId !== gate.gateId
+            || currentSegmentSlot.nodeId !== gate.nodeId
+            || currentSegmentSlot.actionType !== gate.actionType
+            || currentSegmentSlot.bridgePlan !== gate.bridgePlan
+        ) {
+            throw new ExploreCheckpointConflictError(
+                "checkpoint pending gate does not match its learning segment slot",
+            );
+        }
+        if (gate.problem && gate.learningAssignment) {
+            const isRepresentationRetry = gate.learningAssignment.source
+                === "representation-retry";
+            const isOriginalSegmentProblem = gate.problem.id === currentSegmentSlot.problem.id;
+            if (
+                (!isOriginalSegmentProblem && !isRepresentationRetry)
+                || (isOriginalSegmentProblem && (
+                    !exploreJsonValuesMatch(gate.problem, currentSegmentSlot.problem)
+                    || !assignmentsMatch(
+                        gate.learningAssignment,
+                        currentSegmentSlot.assignment,
+                    )
+                    || gate.encounterId !== currentSegmentSlot.encounterId
+                ))
+            ) {
+                throw new ExploreCheckpointConflictError(
+                    "checkpoint pending problem does not match its learning segment slot",
+                );
+            }
         }
     }
 };

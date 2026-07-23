@@ -1,6 +1,6 @@
 # docs/product/15_mvp_rollout_verification_spec.md — MVP・段階導入・検証仕様
 
-> 状態: gameplayは **MVP-0/1**、run・回答receipt・終了status保存は **MVP-2a**、Study共通plannerからSRSへつなぐ最小縦切りは **MVP-2b**、version付きactive checkpointから同じrunへ戻る中断再開は **MVP-2c**。`/` は `/explore` へ転送し、連問探索を通常起動面にする。`/battle` の探検基地化と発見図鑑のメモリ内縦切りは実装済み。cold-openのproduction defaultは `classic-v1` とする。旧編み根版はREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。`snap-root-v1` slotのlocal validationには `dig-pop-painted-v2` を配線済みでruntime視覚と旧高速Studyとのclean revision・10反復適格throughputは個別サブゲートを通過したが、実配信targetの同一build証拠と無文字5人テストは未実施のためrelease Gate Cとproduction判定はHOLDである。発見図鑑のrun横断永続化はまだ行わない。
+> 状態: gameplayは **MVP-0/1**、run・回答receipt・終了status保存は **MVP-2a**、Study共通plannerからSRSへつなぐ最小縦切りは **MVP-2b**、version付きactive checkpointから同じrunへ戻る中断再開は **MVP-2c**、3 / 3 / 2問segment予約は **MVP-2d**。`/` は `/explore` へ転送し、連問探索を通常起動面にする。`/battle` の探検基地化と発見図鑑のメモリ内縦切りは実装済み。cold-openのproduction defaultは `classic-v1` とする。旧編み根版はREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。`snap-root-v1` slotのlocal validationには `dig-pop-painted-v2` を配線済みでruntime視覚と旧高速Studyとのclean revision・10反復適格throughputは個別サブゲートを通過したが、実配信targetの同一build証拠と無文字5人テストは未実施のためrelease Gate Cとproduction判定はHOLDである。発見図鑑のrun横断永続化はまだ行わない。
 
 ## 1. MVPの目的
 
@@ -68,6 +68,18 @@ MVPは学習効果を証明する前に、次を検証する。
 - 確認済みdiscovery cursorを保存し、Q7大発見は未確認ならreload後に1回、確認済みなら0回再表示する
 - checkpointなし旧active runは学習状態を変えずabandonedとし、fresh runへ移る。発見図鑑のrun横断保存は後続とする
 - 2026-07-23実装証拠では `verify:core` の732テスト・build・asset gate、全23 smoke scenario、PWA更新3 scenarioを通過した。390×844 fixed-tenの専用scenarioでQ1誤答retry、Q3 route break、Q7未確認blocking discovery、Q8部分入力の4 reloadを同じrunId / gate / Problem / energy / finds / event境界で復帰し、入力文字列だけを破棄した
+
+### MVP-2d: 3問segment予約
+
+- runを `Q1〜3 / Q4〜6 / Q7〜8` に分け、各区間の最初のgate確定時にzero-tap routeを実nodeへ投影し、全slotの完全なProblemとassignmentをbulk reserveする
+- segmentとassignment群はcheckpoint revision付きの同一transactionで保存し、保存成功後だけ最初のProblemを表示する。reload / 別tab / 遅延prefetchで既存segmentを上書きしない
+- 3slot中1件でも既存policyと競合すればsegment / assignmentを0件追加するatomic rollback、同segmentの並行再送、同区間review cap、Due重複なしを自動検証する
+- 区間途中でprofile unlockを注入しても残りslotのgate / category / Problem / sourceが不変で、次区間からだけ新snapshotを使うことを自動検証する
+- 1回目誤答は同じProblem、2回目以降の支援は同じstepの別attemptとし、次slotを消費しない。予約Dueは回答commitまで学習済みにしない
+- stale checkpointからの支援予約が0件書込みで失敗し、予約済み支援Problemがprofile更新後もdeep equalで復元されることを自動検証する
+- 旧active runは現在stepから区間末尾までだけを予約し、過去のcheckpoint / event / assignmentを変更しない。高速loop適格性と `mathMaxUnlocked` 全source guardはMVP-2e相当の別ゲートとする
+- 旧active runのpending full Problemを現在slotへそのまま採用し、回答前に残りslotを固定することを自動検証する
+- Q7で保存されたQ8 full Problemがunlock後もdeep equalで復元される一方、blocking discovery確認前にはQ8が表示・入力可能化されないことを自動検証する
 
 ## 5. 起動面統合 / MVP-3
 

@@ -125,6 +125,15 @@ Dexie schema、migration、回答transactionは5.2、探索reducer / UIによる
 
 この縦切りではSRS対象回答とreducer / UI統合に加え、MVP-2cとしてindexを増やさないoptional `activeCheckpoint` を同じversion 5 run行へ追加し、発見書き込みとは分離してrun再開まで実装した。
 
+G3-2では同じrun行へoptional `learningSegments` を追加する。segmentはschema version、segment ID、絶対start / planned-from / end step、計画時プロフィール境界、実gate / nodeに結び付いた完全なProblemとassignment slotを持つ。新store / indexは追加せずDexie version 5を維持する。
+
+- `reserveExploreLearningSegment` はactive checkpoint revision、profile、run、step境界を照合し、segmentと全slotの `learningAssignments` を同一transactionで保存する
+- 同じsegment IDの再送は最初の保存値を返し、既存slotを別gate / Problem / policyで上書きしない。同一segment slotへ異なるproblem IDをbindしない
+- segment予約だけでは `logs` / MemoryState / profile / Dueを更新しない。各assignmentは該当answer commit時だけ従来writerへ渡す
+- checkpoint付き旧runにsegmentがない場合は現在step以降だけを追加できる。finished row、既存assignment、回答eventは変更しない
+- 現在問がcheckpointへ既に保存済みなら、そのfull Problem / assignmentをsegment先頭へ採用し、入力解禁前に残りslotを予約する。representation retryはsegment外の同step assignmentとしてfull Problem / encounterを保持し、checkpoint revision / gate / attempt CASを通す
+- plannerのprofile / Memory / logs読取とrun rowへのsegment書込みは同一transactionで直列化する。予約abortまたはpolicy競合はtransaction全体をrollbackし、未表示slotやretry assignmentを部分的に残さない
+
 ### 5.3 receipt駆動UIとrun終了境界
 
 - `ExploreAttemptCommitReceipt` は保存eventの `result` を含める。reducerはrun / gate / 1始まりattemptNumber / result / 実出題skill / version付きattempt keyを照合し、同keyの再適用を無視する。

@@ -287,6 +287,27 @@ const readExploreSnapshot = async (page) => page.evaluate(() => new Promise((res
   };
 }));
 
+const clearExploreBenchmarkRunState = async (page) => page.evaluate(() => new Promise(
+  (resolveClear, reject) => {
+    const request = indexedDB.open("SansuDatabase");
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => {
+      const database = request.result;
+      const transaction = database.transaction(
+        ["exploreRuns", "exploreRunEvents"],
+        "readwrite",
+      );
+      transaction.objectStore("exploreRuns").clear();
+      transaction.objectStore("exploreRunEvents").clear();
+      transaction.onerror = () => reject(transaction.error);
+      transaction.oncomplete = () => {
+        database.close();
+        resolveClear();
+      };
+    };
+  },
+));
+
 const snapshotsEqual = (left, right) => JSON.stringify(left) === JSON.stringify(right);
 
 const markNow = async (page) => page.evaluate(() => performance.now());
@@ -621,13 +642,41 @@ const settleExploreCorrect = async ({
       const heading = page.locator("#explore-path-choice-title");
       const section = heading.locator("xpath=ancestor::section[1]");
       const routeCards = section.locator(".explore-route-card");
-      if (await routeCards.count()) {
+      if (questionIndex !== 7) {
+        try {
+          // The persistence-ready rerender can replace the heading locator
+          // between the post-answer observation and this branch. Re-resolve
+          // the expected route card instead of treating that transient detach
+          // as a graph dead end.
+          await routeCards.first().waitFor({ state: "visible", timeout: 3_000 });
+        } catch {
+          const diagnostic = await page.evaluate(() => {
+            const world = document.querySelector(".explore-world");
+            const currentHeading = document.querySelector("#explore-path-choice-title");
+            return {
+              heading: currentHeading?.textContent?.replace(/\s+/g, " ").trim(),
+              world: world instanceof HTMLElement ? { ...world.dataset } : null,
+              routeCardCount: document.querySelectorAll(".explore-route-card").length,
+              visibleButtons: [...document.querySelectorAll("button")]
+                .filter((button) => {
+                  const rect = button.getBoundingClientRect();
+                  return rect.width > 0 && rect.height > 0;
+                })
+                .map((button) => button.textContent?.replace(/\s+/g, " ").trim()),
+            };
+          });
+          const snapshot = await readExploreSnapshot(page);
+          throw new Error(`empty route appeared after Q${questionIndex + 1}: ${JSON.stringify({
+            diagnostic,
+            runs: snapshot.exploreRuns,
+          })}`);
+        }
         interruptions.push({ afterQuestion: questionIndex + 1, kind: "route-choice" });
         await routeCards.first().click();
+        await heading.waitFor({ state: "hidden", timeout: STEP_TIMEOUT_MS });
         continue;
       }
-
-      assert(questionIndex === 7, `empty route appeared after Q${questionIndex + 1}`);
+      assert(await routeCards.count() === 0, "terminal Q8 unexpectedly exposed another route");
       interruptions.push({ afterQuestion: 8, kind: "return" });
       const primaryReturn = section.getByTestId("explore-run-primary-return");
       await primaryReturn.waitFor({ timeout: STEP_TIMEOUT_MS });
@@ -693,6 +742,13 @@ const runExploreLane = async (browser, scenario, repetition) => {
   try {
     await completeOnboarding(page);
     await setProfileSoundOff(page);
+    // Onboarding opens a warm Explore run so painted assets are ready. Active
+    // run resume is production behavior, therefore navigating back would now
+    // correctly restore that warm seed. Remove only benchmark run/event rows
+    // after unmounting Explore so the measured lane starts from its declared
+    // clean seed without touching profile or learning state.
+    await navigateHash(page, "/battle", /#\/battle/);
+    await clearExploreBenchmarkRunState(page);
     await page.evaluate(({ fixtureId, seed, now }) => {
       window.__SANSU_E2E__ = {
         ...(window.__SANSU_E2E__ || {}),
@@ -704,7 +760,6 @@ const runExploreLane = async (browser, scenario, repetition) => {
       seed: `fixed-ten-${scenario}-${repetition}-a`,
       now: 10_000 + repetition,
     });
-    await navigateHash(page, "/battle", /#\/battle/);
     await navigateHash(page, "/explore", /#\/explore/);
     await waitForExploreAttempt(page, 0);
     await page.locator('.snap-root-opening-art[data-asset-state="ready"]')

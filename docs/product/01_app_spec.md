@@ -1,6 +1,6 @@
 # 01 アプリ仕様書
 
-> 状態: 探索ピボットの親仕様。2026-07-23時点では `/` を `/explore` へ転送し、説明画面を挟まず探索ランを通常起動面とする。Study共通planner / writerによる最小学習接続、`/battle` を探索優先の「探検基地」へ再編する縦切り、version付きactive checkpointから同じ問題境界へ戻るrun再開まで実装済み。production defaultは安全なrollback先の `classic-v1` とする。旧編み根版は50 / 100のREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用とする。delivery / feature-flag ID `snap-root-v1` のlocal validationにはvisual candidate `dig-pop-painted-v2` を配線済みで、390×844と768×1024のruntime視覚サブゲート、および旧高速Studyとのclean revision・10反復適格throughputサブゲートを通過した。一方、両証拠は別buildであり、実際の配信targetにおける同一build contact sheetと無文字5人テストは未実施のためrelease Gate Cとproduction判定はHOLDである。`/study`・2人ゲーム・設定系ルートと既存データは維持し、発見図鑑のrun横断保存は後続とする。
+> 状態: 探索ピボットの親仕様。2026-07-23時点では `/` を `/explore` へ転送し、説明画面を挟まず探索ランを通常起動面とする。Study共通planner / writerによる最小学習接続、`/battle` を探索優先の「探検基地」へ再編する縦切り、version付きactive checkpointから同じ問題境界へ戻るrun再開、3 / 3 / 2問のimmutable segment予約まで実装済み。production defaultは安全なrollback先の `classic-v1` とする。旧編み根版は50 / 100のREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用とする。delivery / feature-flag ID `snap-root-v1` のlocal validationにはvisual candidate `dig-pop-painted-v2` を配線済みで、390×844と768×1024のruntime視覚サブゲート、および旧高速Studyとのclean revision・10反復適格throughputサブゲートを通過した。一方、両証拠は別buildであり、実際の配信targetにおける同一build contact sheetと無文字5人テストは未実施のためrelease Gate Cとproduction判定はHOLDである。`/study`・2人ゲーム・設定系ルートと既存データは維持し、発見図鑑のrun横断保存は後続とする。
 
 ## 目次
 
@@ -102,9 +102,14 @@
 - `/battle` は探索から退出した後の「探検基地」とし、相棒と次の未発見を予告する即再出発の主CTAを最上段、既存2人ゲームを下位導線に置く。価値ゲート未通過のcold-open actorや固有名を基地の恒久的な顔として固定しない。`/settings`、`/stats` と既存2人ゲームのURLは削除しない
 - 子どもはルート、地形、報酬傾向、帰還タイミングを選ぶ。問題難度そのものは直接選ばせない
 - 既定起動面となる探索では、Study と共通の算数 planner が Due、weak、maintenance、表現フォロー、現在レベル、解放済み +1 レベルを選び、3問の連問区間へ供給する
+- 連問区間はrunの正解step `0〜2 / 3〜5 / 6〜7` の3区間とし、区間の最初のgateが確定した時点で、区間内の自動routeを実nodeへ投影して全slotの完全なProblemと学習assignmentを単一snapshot・1回のplanner call・同一transactionで先に予約する。区間途中の正解でプロフィールがunlock / level-upしても既存slotを差し替えず、次区間だけ最新プロフィールから再計画する
+- 誤答は同じstep slotに留まり、1回目は同じProblem、2回目以降は支援assignmentを別attemptとして使う。支援assignmentもcheckpoint CASと完全なProblemを一緒に予約し、再読込時にfresh profileから再生成しない。支援問題を出しても次slotを消費・再計画せず、未回答Dueを回答済みにしない
 - 探索の学習対象回答は、planner が予約した実出題 skill と source を保存境界で照合できた場合だけ SRS 対象にする。近傍レベルへの表示 fallback や未対応入力の代替問題を、学習進捗へ混ぜない
 - 探索の1回答は、探索イベント、run 集計、既存回答ログ、MemoryState、プロフィール内の直近履歴・学習日・メインレベル回答窓を、同一の冪等 transaction で保存する
 - active探索runは、新規runを作る前に同一プロフィールのversion付きcheckpointを検索して自動復帰する。checkpointはroute、energy、finds、attempt境界、完全なpending Problem、opening experience ID、確認済みdiscovery cursorを保持し、入力途中の数字は保持しない。回答eventだけがcheckpointより1件先行した場合は、保存済みreceiptを同じpending gateへ1回だけ適用して復旧し、複数tailや照合不一致を推測で進めない
+- 予約済み連問区間はindexを増やさないrun行のoptional dataとして保存し、step、gate、node、Problem、assignment、計画時プロフィール境界を照合して再開する。旧active runが区間途中で区間dataを持たない場合は、完了済みstepを変更せず残りslotだけを一度予約する
+- 旧active runが既にpending full Problemを表示している場合は、そのProblemとassignmentを現在slotの正本として入力解禁前にsegmentへ取り込み、同じsnapshotで残りslotを予約する。現在問の回答によるunlockを次slotの再計画へ混ぜない
+- 各slotの完全なProblemを保存値の正本とし、fresh profileとseedからの再生成で置き換えない。保存値はsegment ID、絶対step、slot順、planner / generator versionも持ち、review capは既存assignmentと同じsegmentで計画済みのslotを含めて候補ごとに再判定する
 - ランの最初の3問は、学習問題の意味を変えず、`解く → 即世界反応`を2回積み重ね、3問目に同じ身体規則から読めるオチへ到達するcold-openとする。1・2問目は追加0タップ・submitから650ms以内に次問を操作可能にし、誤答はsubmitから550ms以内に同じ問題へ戻す
 - 1ラン8問の体験順は `Q1〜3 cold-open → Q3後の道選択 → Q4〜6 主調査の手掛かり → Q7 大発見1回 → Q8 持ち帰り → 帰還要約 → 再出発` とする。cold-openは主調査ページへ特徴を付与せず、通常標本とレア標本は希少度だけを理由に操作を止めない。明示的に止める報酬は意味づけされた大発見だけとし、8問完了時は「基地へ もちかえる」を唯一の主操作にする
 - delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行visual candidate `dig-pop-painted-v2` は、同じ相棒、同じスコップ、同じ土、同じ大きな根生物、同じcameraを保ち、commit済み正解数だけを `ready → dig-one → dig-two → popped` へ写す。相棒は根生物の身体や葉ではなく周囲の同じ土だけを掘る。土が飛ぶ、根生物が持ち上がって足が見える、全身でぽんと抜ける、という三段変化の最後に、相棒が安全に尻もちをつき、柔らかい土塊が葉帽子へ載る。1・2問目の途中発見はtoastを出さず、3問目も説明モーダルや追加CTAを挟まない。先読みが期限に間に合わない場合、正解後は通常plannerへ戻し、誤答後は先読みをabortして同じ問題を操作可能にする。blocking discoveryを越えて次問を先読みしない。v2のruntime視覚サブゲートはmobile `52 / 53 / 52 / 53`、tablet `52 / 53 / 53 / 53`、clean revision `85b1bf19548db523b535d10549bd622294f149bf`・10反復のG2後throughputサブゲートは、Q7大発見を含む4中断で比率 **2.184** を通過した。両者を実際の配信targetの同一buildで結んだcontact sheetと無文字5人テストが終わるまでproductionへ昇格しない

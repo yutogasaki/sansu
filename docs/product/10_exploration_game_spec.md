@@ -1,6 +1,6 @@
 # docs/product/10_exploration_game_spec.md — 探索ゲーム仕様
 
-> 状態: gameplayの **MVP-0/1**、run保存の **MVP-2a**、Study共通planner / SRS接続の **MVP-2b**、version付きactive checkpointによるrun再開の **MVP-2c** を実装済み。1ラン8行動・15ノードを3問単位の連問区間として遊ぶ。production defaultは `classic-v1` とする。旧編み根版は50 / 100のREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。既存delivery / feature-flag ID `snap-root-v1` のlocal validationにはvisual candidate `dig-pop-painted-v2` を配線済みで、runtime視覚と旧高速Studyとのclean revision・10反復適格throughputは個別サブゲートGOである。ただし実配信targetの同一build証拠と無文字5人テストは未実施のためrelease Gate Cとproduction判定はHOLDとする。本格グリッド、道具、鉱脈連鎖、未確定素材の損失は将来案として区別する。
+> 状態: gameplayの **MVP-0/1**、run保存の **MVP-2a**、Study共通planner / SRS接続の **MVP-2b**、version付きactive checkpointによるrun再開の **MVP-2c**、3 / 3 / 2問segment予約の **MVP-2d** を実装済み。1ラン8行動・15ノードを3問単位の連問区間として遊ぶ。production defaultは `classic-v1` とする。旧編み根版は50 / 100のREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用である。既存delivery / feature-flag ID `snap-root-v1` のlocal validationにはvisual candidate `dig-pop-painted-v2` を配線済みで、runtime視覚と旧高速Studyとのclean revision・10反復適格throughputは個別サブゲートGOである。ただし実配信targetの同一build証拠と無文字5人テストは未実施のためrelease Gate Cとproduction判定はHOLDとする。本格グリッド、道具、鉱脈連鎖、未確定素材の損失は将来案として区別する。
 
 ## 1. コンセプト
 
@@ -290,8 +290,12 @@ MVPは本格グリッドではなく、ノード型でよい。
 - 発見はラン中だけ保持し、任意帰還・救助帰還のどちらでも帰還要約へ確定する。未確定素材の損失はまだ実装しない
 - 帰還要約では未訪問の専用遭遇、未体験の地形、別ルートの順に1件だけ「つぎの たんけんの けはい」を出し、同じ画面から別ルートへ再出発できる。報酬量や永続進捗は増やさない
 - 問題は同じrun seed、gate、試行、skill、プロフィールsnapshotから式と数量視覚まで再現でき、別候補の乱数消費に影響されない
+- 正解step `0〜2 / 3〜5 / 6〜7` ごとに、最初の実gateから区間内の自動routeを純粋に投影し、全slotの実node / gate、完全なProblem、encounter、immutable assignmentをbulk reserveする。slotは絶対stepで識別し、区間途中のプロフィール更新や別tabからの再planで上書きしない
+- 1回目の誤答は同じslot / Problemへ戻し、2回目以降の表現支援は同じstepにぶら下がる別attemptとする。正解するまで次slotを消費せず、支援assignmentを区間の残り問題として数えない
 - 画面内ゲーム状態は純粋reducerで進め、run・予約assignment・回答event・終了statusはDexieへ保存する
 - 予約済み学習assignmentの回答はStudy共通writerでSRSへ接続する。active runはrun行のoptional checkpointから同じrunId、route、energy、finds、pending Problem、attemptNumberへ自動復帰し、別の導入画面を増やさない
 - checkpointはversion、単調revision、opening experience ID、確認済みdiscovery cursorを持つ。Q7大発見は未確認ならreload後に1回だけ再表示し、「調査ノートを とじる」のcheckpoint保存が成功した後は再表示しない
 - 回答commit後は次の操作を解禁する前にcheckpointを更新する。commit済みanswer eventがcheckpointより1件だけ先行したcrashは保存receiptをreducerへ1回だけfoldし、複数tail、別gate、別assignment、未知schema、stale revisionは推測復元しない
 - checkpointを持たない旧active runは、既存の回答ログ・SRSを変更せずabandonedとして閉じてfresh runへ進む。finished rowと既存学習データは変更しない。発見図鑑のrun横断永続化は別の後続契約とする
+- 予約区間はcheckpoint revisionへanchorしてrun行へassignment群と原子的に保存する。保存後・問題表示前のreloadでは同じslotを復元し、区間dataのgate / category / source / review / SRS属性がassignmentまたはcheckpointと違う場合は再生成で隠さず競合として止める
+- Q7開始時にQ8のfull slotを予約することは学習planの永続化であり、blocking discoveryを越えるruntime先読みではない。Q7発見の確認checkpointが保存される前にQ8をpending Problemへ適用、表示、入力可能化してはならない
