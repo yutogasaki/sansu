@@ -1,6 +1,6 @@
 import { chromium } from "playwright";
 import { spawn, spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 
 const HOST = "127.0.0.1";
 const PORT_CANDIDATES = [4273, 4274, 4275];
@@ -285,6 +285,79 @@ const verifySameRouteBattleCheckpoint = async (page, markerRequests) => {
   );
 };
 
+const verifyRealVersionDriftRecovery = async (page, markerRequests) => {
+  const currentVersion = JSON.parse(
+    readFileSync("dist/version.json", "utf8"),
+  ).version;
+  const nextVersion = `${currentVersion}-next`;
+  const markerCountBefore = markerRequests.length;
+  const versionRequests = [];
+  let servedVersion = currentVersion;
+  let resolveInitialVersionRequest;
+  const initialVersionRequest = new Promise((resolve) => {
+    resolveInitialVersionRequest = resolve;
+  });
+
+  await page.route("**/version.json*", async (route) => {
+    versionRequests.push(route.request().url());
+    if (servedVersion === currentVersion) {
+      resolveInitialVersionRequest();
+    }
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      headers: { "Cache-Control": "no-store" },
+      body: JSON.stringify({ version: servedVersion }),
+    });
+  });
+
+  const handleRequest = (request) => {
+    if (!request.isNavigationRequest() || request.frame() !== page.mainFrame()) return;
+    if (new URL(request.url()).searchParams.get("__app-update") === nextVersion) {
+      servedVersion = currentVersion;
+    }
+  };
+  page.on("request", handleRequest);
+
+  try {
+    await page.goto("/#/battle");
+    await initialVersionRequest;
+    await page.waitForFunction(
+      () => navigator.serviceWorker.controller !== null,
+      undefined,
+      { timeout: STEP_TIMEOUT_MS },
+    );
+    await delay(100);
+    const loadCountBefore = await getLoadCount(page);
+    const markedNavigation = waitForMarkedNavigation(page, nextVersion);
+    servedVersion = nextVersion;
+    await navigateWithReactRouter(page, "/study");
+    await markedNavigation;
+    await page.waitForFunction(
+      ({ countKey, expected }) => Number(sessionStorage.getItem(countKey) || "0") === expected,
+      { countKey: LOAD_COUNT_KEY, expected: loadCountBefore + 1 },
+      { timeout: STEP_TIMEOUT_MS },
+    );
+    await page.waitForFunction(() => location.hash === "#/study", undefined, {
+      timeout: STEP_TIMEOUT_MS,
+    });
+    await delay(500);
+
+    assert(versionRequests.length >= 1, "The app never checked version.json");
+    assert(
+      markerRequests.length === markerCountBefore + 1,
+      `Expected one real version-drift reload, got ${markerRequests.length - markerCountBefore}`,
+    );
+    assert(
+      await getLoadCount(page) === loadCountBefore + 1,
+      "Real version drift caused a duplicate reload",
+    );
+  } finally {
+    page.off("request", handleRequest);
+    await page.unroute("**/version.json*");
+  }
+};
+
 const main = async () => {
   if (!existsSync("dist/index.html")) {
     throw new Error("dist/index.html is missing. Run npm run build before e2e:pwa-update.");
@@ -321,6 +394,36 @@ const main = async () => {
     console.log("PASS PWA same-route battle checkpoint");
 
     await context.close();
+
+    const serviceWorkerContext = await browser.newContext({
+      baseURL: preview.baseUrl,
+      reducedMotion: "reduce",
+      serviceWorkers: "allow",
+      viewport: { width: 1024, height: 768 },
+    });
+    const serviceWorkerPage = await serviceWorkerContext.newPage();
+    const serviceWorkerMarkerRequests = [];
+    serviceWorkerPage.on("request", (request) => {
+      if (!request.isNavigationRequest() || request.frame() !== serviceWorkerPage.mainFrame()) return;
+      if (new URL(request.url()).searchParams.has("__app-update")) {
+        serviceWorkerMarkerRequests.push(request.url());
+      }
+    });
+    await installPwaE2EControl(serviceWorkerPage);
+    await serviceWorkerPage.goto("/#/onboarding");
+    await serviceWorkerPage.getByRole("button", { name: "たんけんを はじめる" }).click();
+    await serviceWorkerPage.getByRole("textbox", { name: "あだ名でOK" }).fill("PWA実更新");
+    await serviceWorkerPage.getByRole("button", { name: "次へ" }).click();
+    await serviceWorkerPage.getByRole("button", { name: /小学 1 年生/ }).click();
+    await serviceWorkerPage.getByRole("button", { name: /さんすう だけ/ }).click();
+    await serviceWorkerPage.getByRole("button", { name: /足し算まで/ }).click();
+    await serviceWorkerPage.waitForFunction(() => location.hash === "#/explore", undefined, {
+      timeout: STEP_TIMEOUT_MS,
+    });
+
+    await verifyRealVersionDriftRecovery(serviceWorkerPage, serviceWorkerMarkerRequests);
+    console.log("PASS PWA service-worker-controlled version-drift recovery");
+    await serviceWorkerContext.close();
   } finally {
     if (browser) await browser.close();
     if (previewServer) stopPreviewServer(previewServer);

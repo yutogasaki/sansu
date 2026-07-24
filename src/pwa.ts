@@ -10,7 +10,7 @@ import {
     stripReloadMarker,
 } from './pwaUpdateUtils'
 
-const UPDATE_CHECK_INTERVAL_MS = 5 * 60 * 1000
+const UPDATE_CHECK_INTERVAL_MS = 60 * 1000
 const UPDATE_RECOVERY_DELAY_MS = 4000
 const APP_BASE_URL = resolveAppAssetPath('/')
 const VERSION_URL = resolveAppAssetPath('/version.json')
@@ -24,6 +24,7 @@ let deferredReloadVersion: string | null = null
 let deferredRecoveryVersion: string | null = null
 let updateSessionSequence = 0
 let criticalPersistenceCount = 0
+let triggerUpdateCheck: () => void = () => undefined
 let updateProtectionState = createAppUpdateProtectionState(
     '',
     'bootstrap',
@@ -201,7 +202,9 @@ export const notifyPwaRouteNavigation = (
         `router:${navigationKey}`,
     )
 
-    return resumeDeferredUpdate()
+    const updateTookOver = resumeDeferredUpdate()
+    triggerUpdateCheck()
+    return updateTookOver
 }
 
 export const reachPwaUpdateCheckpoint = (
@@ -332,7 +335,7 @@ export const registerPWA = () => {
         )
     })
 
-    let triggerUpdateCheck = runVersionDriftRecoveryCheck
+    triggerUpdateCheck = runVersionDriftRecoveryCheck
     attachUpdateCheckTriggers(() => {
         triggerUpdateCheck()
     })

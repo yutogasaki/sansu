@@ -912,7 +912,7 @@ interface MemoryState {
 
 ### 8.1 PWA更新契約
 
-- 起動中のPWAは、起動時、復帰時、再接続時、フォーカス時、および定期確認で新しいbuildとService Workerを確認し、手動キャッシュ削除なしで新しいbuildへ移る。
+- 起動中のPWAは、起動時、復帰時、再接続時、フォーカス時、SPA内の画面遷移時、および表示中は最大60秒間隔で新しいbuildとService Workerを確認し、手動キャッシュ削除なしで新しいbuildへ移る。オフライン中に確認できなかった更新は、次の再接続・復帰・フォーカス・画面遷移のいずれかで再確認する。
 - `/onboarding`、`/study`、`/explore`、`/battle/play` はpointer/key操作後の同一進行中セッションだけ更新reloadから保護する。各画面の初回表示から最初の操作までは更新を適用できる。
 - 更新を進行中セッションで検出した場合は即時reloadせず、保護対象外の画面へ移る、別の保護対象セッションを開く、または同一画面の結果・休憩を確認して「もう一回」「続ける」「cancel」を選んだ安全なcheckpointで一度だけreloadする。結果・報酬画面が表示されただけではreloadしない。React RouterのSPA遷移はnative `hashchange` に依存せず観測する。
 - 安全なcheckpointは、そのrun・テスト・プロフィール更新など中断できない保存が完了した後にだけ公開する。reload後はcheckpointの行き先または同一画面を保ち、子どもに終えた操作を繰り返させない。

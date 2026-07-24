@@ -32,6 +32,7 @@
 - `sw.js` is generated in build output
 - `index.html`, `manifest.json`, and `sw.js` are not strongly cached on supported hosts
 - `updateViaCache: 'none'` behavior is still intact
+- 表示中は最大60秒間隔で確認し、起動・復帰・再接続・フォーカス・pageshow・SPA内の画面遷移でも確認する
 - App still reloads after version drift or service worker activation
 - `/onboarding`、`/study`、`/explore`、`/battle/play` は、子どもがまだpointer/key操作をしていない初回表示ではversion driftのreloadを許可し、操作後の同一セッションだけを保護する
 - Studyの回答/テスト保存、Exploreのrun開始/回答/帰還保存が進行中は、route遷移後もreloadを待機し、全critical persistence解放後にだけ再開する
@@ -53,7 +54,7 @@
 7. Scenario B（fresh old build → new build）: interact with one protected route, confirm the update does not interrupt it, then leave for a safe route and confirm exactly one reload at the destination.
 8. Scenario C（fresh old build → new build）: interact with protected route A, then use an actual in-app React Router action to enter protected route B. Confirm exactly one reload before B's first interaction and confirm the destination is preserved.
 9. Scenario D（fresh old build → new build for each case）: verify same-route checkpoints independently at Explore replay, Battle cancel/replay, and Study persisted break/continue. Confirm the result/reward/break remains visible, no reload happens before persistence or the child's next action, and exactly one reload follows that action.
-10. Run `npm run e2e:pwa-update`; confirm safe and protected Router handoffs, delayed recovery, and the same-route Battle checkpoint pass without `hashchange` or duplicate reloads.
+10. Run `npm run e2e:pwa-update`; confirm a real `version.json` drift causes exactly one reload, and that safe/protected Router handoffs, delayed recovery, and the same-route Battle checkpoint pass without `hashchange` or duplicate reloads.
 11. On iOS, repeat relaunch/update timing because activation can lag behind Chromium.
 
 ## Rollback Clues

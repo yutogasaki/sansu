@@ -7,6 +7,7 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 
 ## Current Index
 
+- 2026-07-24: PWA update pickup hardening and Service Worker-controlled drift regression -> `docs/done/2026-07.md`
 - 2026-07-18: Exploration direction, independent `/explore` MVP, and app-wide consistency -> `docs/done/2026-07.md`
 - 2026-07-19: Immersive encounter foundation, root-tangle slice, deterministic problems, and replay goal -> `docs/done/2026-07.md`
 - 2026-07-19: Research Library return visual slice and real-flow layout evidence -> `docs/done/2026-07.md`
