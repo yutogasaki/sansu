@@ -1,0 +1,3809 @@
+{
+  "schemaVersion": 2,
+  "fixtureId": "cold-open-fixed-ten-v1",
+  "fixtureHash": "64b051d0cfc1ff67807fd02c56448262c6b3e45b1da20e1854c04bedff5353d5",
+  "generatedAt": "2026-07-24T06:43:02.677Z",
+  "environment": {
+    "git": {
+      "revision": "ea10f298c7d86947e9292f1ad499defdbb089218",
+      "dirty": false
+    },
+    "app": {
+      "titleMarker": "<title>ポッコのふしぎずかん</title>",
+      "baseUrl": "http://127.0.0.1:4173"
+    },
+    "server": {
+      "startedByHarness": true
+    },
+    "browser": {
+      "engine": "chromium",
+      "version": "145.0.7632.6"
+    },
+    "productionDefaultOpeningExperience": "snap-root-v1",
+    "validationOpeningExperience": "snap-root-v1",
+    "visualCandidateId": "dig-pop-carry-bloom-v3"
+  },
+  "conditions": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "reducedMotion": true,
+    "sound": "off-in-active-profile",
+    "input": "physical-keyboard",
+    "assets": "warmed-before-measurement",
+    "openingExperience": "snap-root-v1",
+    "repetitions": 10,
+    "order": "Study/Explore alternated by repetition and scenario",
+    "thinkingTime": "automation-only; no artificial child thinking delay",
+    "plannerTruth": "fixed UI fixture; production planner authenticity remains a separate gate"
+  },
+  "semantics": {
+    "allCorrect": "Primary apples-to-apples fixed-ten throughput gate.",
+    "missAtQ4Q8": "Diagnostic recovery/friction evidence. Study shows correction then advances; Explore retries and corrects the same question.",
+    "incorrectTiming": "The 550ms gate applies only to Explore same-question operability. Study correction feedback and explicit advance are reported separately.",
+    "exploreRunShape": "8 answers, real return, real summary/restart, then 2 answers.",
+    "interruptions": "Every required non-answer click is counted; automation clicks immediately, so child decision time is not included."
+  },
+  "aggregates": [
+    {
+      "lane": "study",
+      "scenario": "all-correct",
+      "runCount": 10,
+      "completedProblemsPerMinute": {
+        "median": 123.2,
+        "p95": 124.6,
+        "range": [
+          122.8,
+          124.6
+        ]
+      },
+      "attemptsPerMinute": {
+        "median": 123.2
+      },
+      "accuracy": {
+        "firstPass": 1,
+        "attempt": 1,
+        "eventual": 1
+      },
+      "correctOperableMs": {
+        "sampleCount": 90,
+        "median": 531.6,
+        "p95": 539.9
+      },
+      "coldOpenCorrectOperableMs": {
+        "sampleCount": 0,
+        "median": null,
+        "p95": null
+      },
+      "terminalResultMs": {
+        "sampleCount": 10,
+        "median": 22,
+        "p95": 23.9
+      },
+      "correctionFeedbackReadyMs": {
+        "sampleCount": 0,
+        "median": null,
+        "p95": null
+      },
+      "correctionAdvanceMs": {
+        "sampleCount": 0,
+        "median": null,
+        "p95": null
+      },
+      "sameQuestionOperableMs": {
+        "sampleCount": 0,
+        "median": null,
+        "p95": null
+      },
+      "interruptionCount": {
+        "median": 0,
+        "range": [
+          0,
+          0
+        ],
+        "breakdown": {}
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "all-correct",
+      "runCount": 10,
+      "completedProblemsPerMinute": {
+        "median": 258.8,
+        "p95": 263.8,
+        "range": [
+          258.1,
+          263.8
+        ]
+      },
+      "attemptsPerMinute": {
+        "median": 258.8
+      },
+      "accuracy": {
+        "firstPass": 1,
+        "attempt": 1,
+        "eventual": 1
+      },
+      "correctOperableMs": {
+        "sampleCount": 60,
+        "median": 127.8,
+        "p95": 137.5
+      },
+      "coldOpenCorrectOperableMs": {
+        "sampleCount": 20,
+        "median": 131.9,
+        "p95": 137.5
+      },
+      "terminalResultMs": {
+        "sampleCount": 0,
+        "median": null,
+        "p95": null
+      },
+      "correctionFeedbackReadyMs": {
+        "sampleCount": 0,
+        "median": null,
+        "p95": null
+      },
+      "correctionAdvanceMs": {
+        "sampleCount": 0,
+        "median": null,
+        "p95": null
+      },
+      "sameQuestionOperableMs": {
+        "sampleCount": 0,
+        "median": null,
+        "p95": null
+      },
+      "interruptionCount": {
+        "median": 4,
+        "range": [
+          4,
+          4
+        ],
+        "breakdown": {
+          "route-choice": 10,
+          "discovery-close": 10,
+          "return": 10,
+          "replay": 10
+        }
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "miss-at-q4-q8",
+      "runCount": 10,
+      "completedProblemsPerMinute": {
+        "median": 154.3,
+        "p95": 154.8,
+        "range": [
+          153.8,
+          154.8
+        ]
+      },
+      "attemptsPerMinute": {
+        "median": 154.3
+      },
+      "accuracy": {
+        "firstPass": 0.8,
+        "attempt": 0.8,
+        "eventual": 0.8
+      },
+      "correctOperableMs": {
+        "sampleCount": 70,
+        "median": 529.9,
+        "p95": 539.3
+      },
+      "coldOpenCorrectOperableMs": {
+        "sampleCount": 0,
+        "median": null,
+        "p95": null
+      },
+      "terminalResultMs": {
+        "sampleCount": 10,
+        "median": 20.5,
+        "p95": 26.4
+      },
+      "correctionFeedbackReadyMs": {
+        "sampleCount": 20,
+        "median": 20.8,
+        "p95": 23.2
+      },
+      "correctionAdvanceMs": {
+        "sampleCount": 20,
+        "median": 51.9,
+        "p95": 63.3
+      },
+      "sameQuestionOperableMs": {
+        "sampleCount": 0,
+        "median": null,
+        "p95": null
+      },
+      "interruptionCount": {
+        "median": 2,
+        "range": [
+          2,
+          2
+        ],
+        "breakdown": {
+          "correction-next": 20
+        }
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "miss-at-q4-q8",
+      "runCount": 10,
+      "completedProblemsPerMinute": {
+        "median": 185.4,
+        "p95": 188.2,
+        "range": [
+          182.6,
+          188.2
+        ]
+      },
+      "attemptsPerMinute": {
+        "median": 222.4
+      },
+      "accuracy": {
+        "firstPass": 0.8,
+        "attempt": 0.833,
+        "eventual": 1
+      },
+      "correctOperableMs": {
+        "sampleCount": 60,
+        "median": 128.6,
+        "p95": 143.4
+      },
+      "coldOpenCorrectOperableMs": {
+        "sampleCount": 20,
+        "median": 131.3,
+        "p95": 138
+      },
+      "terminalResultMs": {
+        "sampleCount": 0,
+        "median": null,
+        "p95": null
+      },
+      "correctionFeedbackReadyMs": {
+        "sampleCount": 0,
+        "median": null,
+        "p95": null
+      },
+      "correctionAdvanceMs": {
+        "sampleCount": 0,
+        "median": null,
+        "p95": null
+      },
+      "sameQuestionOperableMs": {
+        "sampleCount": 20,
+        "median": 447.9,
+        "p95": 450.4
+      },
+      "interruptionCount": {
+        "median": 4,
+        "range": [
+          4,
+          4
+        ],
+        "breakdown": {
+          "route-choice": 10,
+          "discovery-close": 10,
+          "return": 10,
+          "replay": 10
+        }
+      }
+    }
+  ],
+  "comparison": {
+    "allCorrectExploreToStudyThroughputRatio": 2.102,
+    "allCorrectStudyMedianProblemsPerMinute": 123.2,
+    "allCorrectExploreMedianProblemsPerMinute": 258.8,
+    "missFlowExploreToStudyThroughputRatio": 1.201,
+    "missFlowStudyMedianProblemsPerMinute": 154.3,
+    "missFlowExploreMedianProblemsPerMinute": 185.4,
+    "candidateQ1Q2CorrectOperableP95Ms": 137.5,
+    "exploreSameQuestionOperableP95Ms": 450.4
+  },
+  "evidence": {
+    "status": "gating",
+    "eligible": true,
+    "eligibility": {
+      "tenRunsInEveryCell": true,
+      "twentyCandidateQ1Q2CorrectSamples": true,
+      "twentyExploreIncorrectSamples": true,
+      "twentyStudyCorrectionFeedbackSamples": true,
+      "exactFixture": true,
+      "cleanRevision": true,
+      "harnessOwnedServer": true,
+      "runtimeIdentityMatches": true
+    },
+    "cellRunCounts": {
+      "study:all-correct": 10,
+      "explore:all-correct": 10,
+      "study:miss-at-q4-q8": 10,
+      "explore:miss-at-q4-q8": 10
+    },
+    "sampleCounts": {
+      "candidateQ1Q2Correct": 20,
+      "exploreIncorrectSameQuestion": 20,
+      "studyCorrectionFeedback": 20
+    }
+  },
+  "gates": {
+    "exactFixedTen": true,
+    "allCorrectExploreThroughputNotBelowStudy": true,
+    "candidateQ1Q2CorrectOperableP95Within650Ms": true,
+    "exploreSameQuestionOperableP95Within550Ms": true,
+    "persistenceIntegrity": true,
+    "noUnexpectedInterruptions": true,
+    "firstTwoExploreAnswersNeedNoExtraTap": true,
+    "exactExploreInterruptionSequence": true,
+    "runtimeIdentityMatches": true
+  },
+  "fixedTenTechnicalPass": true,
+  "pass": true,
+  "productionDecision": "not-evaluated-hold",
+  "runs": [
+    {
+      "lane": "study",
+      "scenario": "all-correct",
+      "repetition": 1,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 4814.699999988079,
+      "completedProblemsPerMinute": 124.61835628418916,
+      "attemptsPerMinute": 124.61835628418916,
+      "correctOperableMs": [
+        533.5,
+        525.2999999523163,
+        529.8999999761581,
+        527,
+        532.2999999523163,
+        527.4000000357628,
+        525.3000000119209,
+        527.1000000238419,
+        520.6999999880791
+      ],
+      "terminalResultMs": 21.399999976158142,
+      "correctionAdvanceMs": [],
+      "correctionFeedbackReadyMs": [],
+      "interruptions": [],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "all-correct",
+      "repetition": 1,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 2324.899999976158,
+      "completedProblemsPerMinute": 258.07561615818014,
+      "attemptsPerMinute": 258.07561615818014,
+      "correctOperableMs": [
+        129.5,
+        134.69999998807907,
+        143.10000002384186,
+        117,
+        126.59999996423721,
+        129.5
+      ],
+      "coldOpenCorrectOperableMs": [
+        129.5,
+        134.69999998807907
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 752.3000000119209
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 315.7000000476837
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 298.10000002384186
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 148.60000002384186
+        }
+      ],
+      "sameQuestionOperableMs": [],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-all-correct-1-a-10001",
+        "explore-fixed-ten-all-correct-1-b-20001"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 10,
+        "uniqueAttemptKeyCount": 10,
+        "affectsSrsFalseCount": 10,
+        "gameOnlyFallbackCount": 10,
+        "learningLogAbsentCount": 10,
+        "assignmentIntegrityCount": 10,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-all-correct-1-a-10001",
+            "status": "returned",
+            "problemsAnswered": 8,
+            "correctCount": 8,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-all-correct-1-b-20001",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 1,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 12,
+      "correctCount": 10,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 10,
+      "durationMs": 3286.699999988079,
+      "completedProblemsPerMinute": 182.55392947399403,
+      "attemptsPerMinute": 219.06471536879286,
+      "correctOperableMs": [
+        128.5,
+        134.69999998807907,
+        146.5999999642372,
+        128.5,
+        130.5,
+        118.30000001192093
+      ],
+      "coldOpenCorrectOperableMs": [
+        128.5,
+        134.69999998807907
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 751.3999999761581
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 328.7999999523163
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 314.19999998807907
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 169.80000001192093
+        }
+      ],
+      "sameQuestionOperableMs": [
+        445.7999999523163,
+        453.39999997615814
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-miss-at-q4-q8-1-a-10001",
+        "explore-fixed-ten-miss-at-q4-q8-1-b-20001"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 12,
+        "uniqueAttemptKeyCount": 12,
+        "affectsSrsFalseCount": 12,
+        "gameOnlyFallbackCount": 12,
+        "learningLogAbsentCount": 12,
+        "assignmentIntegrityCount": 12,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-1-a-10001",
+            "status": "returned",
+            "problemsAnswered": 10,
+            "correctCount": 8,
+            "incorrectCount": 2,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-1-b-20001",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 1,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 8,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 8,
+      "durationMs": 3882.400000035763,
+      "completedProblemsPerMinute": 154.54358128850018,
+      "attemptsPerMinute": 154.54358128850018,
+      "correctOperableMs": [
+        530.2000000476837,
+        531,
+        528.3000000119209,
+        524,
+        537,
+        542.6999999880791,
+        520.6999999880791
+      ],
+      "terminalResultMs": 20.30000001192093,
+      "correctionAdvanceMs": [
+        56.40000003576279,
+        50.60000002384186
+      ],
+      "correctionFeedbackReadyMs": [
+        21.900000035762787,
+        18.80000001192093
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 4,
+          "kind": "correction-next"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "correction-next"
+        }
+      ],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "all-correct",
+      "repetition": 2,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 2322.300000011921,
+      "completedProblemsPerMinute": 258.36455238208674,
+      "attemptsPerMinute": 258.36455238208674,
+      "correctOperableMs": [
+        136.69999998807907,
+        132.30000001192093,
+        142,
+        117.5,
+        126.60000002384186,
+        118.19999998807907
+      ],
+      "coldOpenCorrectOperableMs": [
+        136.69999998807907,
+        132.30000001192093
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 751.5
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 313.39999997615814
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 299.9000000357628
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 154.89999997615814
+        }
+      ],
+      "sameQuestionOperableMs": [],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-all-correct-2-a-10002",
+        "explore-fixed-ten-all-correct-2-b-20002"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 10,
+        "uniqueAttemptKeyCount": 10,
+        "affectsSrsFalseCount": 10,
+        "gameOnlyFallbackCount": 10,
+        "learningLogAbsentCount": 10,
+        "assignmentIntegrityCount": 10,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-all-correct-2-a-10002",
+            "status": "returned",
+            "problemsAnswered": 8,
+            "correctCount": 8,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-all-correct-2-b-20002",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "all-correct",
+      "repetition": 2,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 4831.699999988079,
+      "completedProblemsPerMinute": 124.17989527526136,
+      "attemptsPerMinute": 124.17989527526136,
+      "correctOperableMs": [
+        516.8999999761581,
+        522.8000000119209,
+        533.3000000119209,
+        531.8000000119209,
+        528.6999999880791,
+        536,
+        540.1000000238419,
+        527.5999999642372,
+        529.0999999642372
+      ],
+      "terminalResultMs": 13.400000035762787,
+      "correctionAdvanceMs": [],
+      "correctionFeedbackReadyMs": [],
+      "interruptions": [],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 2,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 8,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 8,
+      "durationMs": 3881.5,
+      "completedProblemsPerMinute": 154.57941517454591,
+      "attemptsPerMinute": 154.57941517454591,
+      "correctOperableMs": [
+        531.6000000238419,
+        528.3999999761581,
+        524.8999999761581,
+        517.6000000238419,
+        528.5,
+        535.3999999761581,
+        519.5999999642372
+      ],
+      "terminalResultMs": 18.30000001192093,
+      "correctionAdvanceMs": [
+        52.89999997615814,
+        56
+      ],
+      "correctionFeedbackReadyMs": [
+        15.099999964237213,
+        20.80000001192093
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 4,
+          "kind": "correction-next"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "correction-next"
+        }
+      ],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 2,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 12,
+      "correctCount": 10,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 10,
+      "durationMs": 3239.300000011921,
+      "completedProblemsPerMinute": 185.22520297526995,
+      "attemptsPerMinute": 222.27024357032394,
+      "correctOperableMs": [
+        129.80000001192093,
+        134,
+        148.39999997615814,
+        129.60000002384186,
+        130.5,
+        128.5
+      ],
+      "coldOpenCorrectOperableMs": [
+        129.80000001192093,
+        134
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 745.1000000238419
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 323.30000001192093
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 280.69999998807907
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 165.4000000357628
+        }
+      ],
+      "sameQuestionOperableMs": [
+        449.69999998807907,
+        441.5
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-miss-at-q4-q8-2-a-10002",
+        "explore-fixed-ten-miss-at-q4-q8-2-b-20002"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 12,
+        "uniqueAttemptKeyCount": 12,
+        "affectsSrsFalseCount": 12,
+        "gameOnlyFallbackCount": 12,
+        "learningLogAbsentCount": 12,
+        "assignmentIntegrityCount": 12,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-2-a-10002",
+            "status": "returned",
+            "problemsAnswered": 10,
+            "correctCount": 8,
+            "incorrectCount": 2,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-2-b-20002",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "all-correct",
+      "repetition": 3,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 4861.400000035763,
+      "completedProblemsPerMinute": 123.42123667988359,
+      "attemptsPerMinute": 123.42123667988359,
+      "correctOperableMs": [
+        531.6000000238419,
+        534.1999999880791,
+        529.3000000119209,
+        532.8000000119209,
+        527.3000000119209,
+        526.8999999761581,
+        541,
+        534,
+        532.3999999761581
+      ],
+      "terminalResultMs": 22.100000023841858,
+      "correctionAdvanceMs": [],
+      "correctionFeedbackReadyMs": [],
+      "interruptions": [],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "all-correct",
+      "repetition": 3,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 2318.199999988079,
+      "completedProblemsPerMinute": 258.821499440551,
+      "attemptsPerMinute": 258.821499440551,
+      "correctOperableMs": [
+        125.69999998807907,
+        133.4000000357628,
+        132,
+        117.29999995231628,
+        129.19999998807907,
+        120.19999998807907
+      ],
+      "coldOpenCorrectOperableMs": [
+        125.69999998807907,
+        133.4000000357628
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 746.1000000238419
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 312.19999998807907
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 298.89999997615814
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 167.5
+        }
+      ],
+      "sameQuestionOperableMs": [],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-all-correct-3-a-10003",
+        "explore-fixed-ten-all-correct-3-b-20003"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 10,
+        "uniqueAttemptKeyCount": 10,
+        "affectsSrsFalseCount": 10,
+        "gameOnlyFallbackCount": 10,
+        "learningLogAbsentCount": 10,
+        "assignmentIntegrityCount": 10,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-all-correct-3-a-10003",
+            "status": "returned",
+            "problemsAnswered": 8,
+            "correctCount": 8,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-all-correct-3-b-20003",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 3,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 12,
+      "correctCount": 10,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 10,
+      "durationMs": 3190,
+      "completedProblemsPerMinute": 188.08777429467085,
+      "attemptsPerMinute": 225.70532915360502,
+      "correctOperableMs": [
+        130,
+        133.39999997615814,
+        131.69999998807907,
+        117,
+        126.59999996423721,
+        112.20000004768372
+      ],
+      "coldOpenCorrectOperableMs": [
+        130,
+        133.39999997615814
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 746.6999999880791
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 323
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 274.5
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 163.60000002384186
+        }
+      ],
+      "sameQuestionOperableMs": [
+        448,
+        449
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-miss-at-q4-q8-3-a-10003",
+        "explore-fixed-ten-miss-at-q4-q8-3-b-20003"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 12,
+        "uniqueAttemptKeyCount": 12,
+        "affectsSrsFalseCount": 12,
+        "gameOnlyFallbackCount": 12,
+        "learningLogAbsentCount": 12,
+        "assignmentIntegrityCount": 12,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-3-a-10003",
+            "status": "returned",
+            "problemsAnswered": 10,
+            "correctCount": 8,
+            "incorrectCount": 2,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-3-b-20003",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 3,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 8,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 8,
+      "durationMs": 3900.599999964237,
+      "completedProblemsPerMinute": 153.8224888492799,
+      "attemptsPerMinute": 153.8224888492799,
+      "correctOperableMs": [
+        530.9000000357628,
+        528.6999999880791,
+        526.6000000238419,
+        518.5,
+        538.3000000119209,
+        540,
+        518
+      ],
+      "terminalResultMs": 20.5,
+      "correctionAdvanceMs": [
+        64.40000003576279,
+        51.39999997615814
+      ],
+      "correctionFeedbackReadyMs": [
+        22.200000047683716,
+        18.30000001192093
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 4,
+          "kind": "correction-next"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "correction-next"
+        }
+      ],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "all-correct",
+      "repetition": 4,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 2307.400000035763,
+      "completedProblemsPerMinute": 260.03293750138704,
+      "attemptsPerMinute": 260.03293750138704,
+      "correctOperableMs": [
+        130.30000001192093,
+        135.89999997615814,
+        120.69999998807907,
+        127,
+        116.29999995231628,
+        115.80000001192093
+      ],
+      "coldOpenCorrectOperableMs": [
+        130.30000001192093,
+        135.89999997615814
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 760.5999999642372
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 311.10000002384186
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 300.89999997615814
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 156.60000002384186
+        }
+      ],
+      "sameQuestionOperableMs": [],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-all-correct-4-a-10004",
+        "explore-fixed-ten-all-correct-4-b-20004"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 10,
+        "uniqueAttemptKeyCount": 10,
+        "affectsSrsFalseCount": 10,
+        "gameOnlyFallbackCount": 10,
+        "learningLogAbsentCount": 10,
+        "assignmentIntegrityCount": 10,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-all-correct-4-a-10004",
+            "status": "returned",
+            "problemsAnswered": 8,
+            "correctCount": 8,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-all-correct-4-b-20004",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "all-correct",
+      "repetition": 4,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 4867.599999964237,
+      "completedProblemsPerMinute": 123.26403155649771,
+      "attemptsPerMinute": 123.26403155649771,
+      "correctOperableMs": [
+        535.5,
+        523.3000000119209,
+        531.4000000357628,
+        529.8999999761581,
+        528.3999999761581,
+        534.1000000238419,
+        539,
+        533.8999999761581,
+        526.7999999523163
+      ],
+      "terminalResultMs": 22,
+      "correctionAdvanceMs": [],
+      "correctionFeedbackReadyMs": [],
+      "interruptions": [],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 4,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 8,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 8,
+      "durationMs": 3876,
+      "completedProblemsPerMinute": 154.79876160990713,
+      "attemptsPerMinute": 154.79876160990713,
+      "correctOperableMs": [
+        533.5,
+        529.8999999761581,
+        525.3999999761581,
+        525.2999999523163,
+        536.8000000119209,
+        534,
+        519.1000000238419
+      ],
+      "terminalResultMs": 22.600000023841858,
+      "correctionAdvanceMs": [
+        50.60000002384186,
+        49.39999997615814
+      ],
+      "correctionFeedbackReadyMs": [
+        22.200000047683716,
+        19.5
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 4,
+          "kind": "correction-next"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "correction-next"
+        }
+      ],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 4,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 12,
+      "correctCount": 10,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 10,
+      "durationMs": 3237,
+      "completedProblemsPerMinute": 185.35681186283597,
+      "attemptsPerMinute": 222.42817423540316,
+      "correctOperableMs": [
+        125.69999998807907,
+        135.10000002384186,
+        132.10000002384186,
+        131.70000004768372,
+        128.5999999642372,
+        118.09999996423721
+      ],
+      "coldOpenCorrectOperableMs": [
+        125.69999998807907,
+        135.10000002384186
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 762
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 325.60000002384186
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 282.60000002384186
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 172.70000004768372
+        }
+      ],
+      "sameQuestionOperableMs": [
+        449,
+        438.19999998807907
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-miss-at-q4-q8-4-a-10004",
+        "explore-fixed-ten-miss-at-q4-q8-4-b-20004"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 12,
+        "uniqueAttemptKeyCount": 12,
+        "affectsSrsFalseCount": 12,
+        "gameOnlyFallbackCount": 12,
+        "learningLogAbsentCount": 12,
+        "assignmentIntegrityCount": 12,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-4-a-10004",
+            "status": "returned",
+            "problemsAnswered": 10,
+            "correctCount": 8,
+            "incorrectCount": 2,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-4-b-20004",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "all-correct",
+      "repetition": 5,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 4873.699999988079,
+      "completedProblemsPerMinute": 123.109752344516,
+      "attemptsPerMinute": 123.109752344516,
+      "correctOperableMs": [
+        526.6999999880791,
+        535.8000000119209,
+        528.2000000476837,
+        529.3000000119209,
+        531,
+        532.5,
+        537.4000000357628,
+        530.9000000357628,
+        534.6000000238419
+      ],
+      "terminalResultMs": 23.899999976158142,
+      "correctionAdvanceMs": [],
+      "correctionFeedbackReadyMs": [],
+      "interruptions": [],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "all-correct",
+      "repetition": 5,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 2322.300000011921,
+      "completedProblemsPerMinute": 258.36455238208674,
+      "attemptsPerMinute": 258.36455238208674,
+      "correctOperableMs": [
+        135.80000001192093,
+        125.39999997615814,
+        119.5,
+        126,
+        134,
+        121.10000002384186
+      ],
+      "coldOpenCorrectOperableMs": [
+        135.80000001192093,
+        125.39999997615814
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 749.3999999761581
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 308.10000002384186
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 302.4000000357628
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 167.30000001192093
+        }
+      ],
+      "sameQuestionOperableMs": [],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-all-correct-5-a-10005",
+        "explore-fixed-ten-all-correct-5-b-20005"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 10,
+        "uniqueAttemptKeyCount": 10,
+        "affectsSrsFalseCount": 10,
+        "gameOnlyFallbackCount": 10,
+        "learningLogAbsentCount": 10,
+        "assignmentIntegrityCount": 10,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-all-correct-5-a-10005",
+            "status": "returned",
+            "problemsAnswered": 8,
+            "correctCount": 8,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-all-correct-5-b-20005",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 5,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 12,
+      "correctCount": 10,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 10,
+      "durationMs": 3223.199999988079,
+      "completedProblemsPerMinute": 186.15040953158945,
+      "attemptsPerMinute": 223.38049143790732,
+      "correctOperableMs": [
+        137.5,
+        124.69999998807907,
+        143.39999997615814,
+        117.90000003576279,
+        126.19999998807907,
+        127.39999997615814
+      ],
+      "coldOpenCorrectOperableMs": [
+        137.5,
+        124.69999998807907
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 738.0999999642372
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 326.10000002384186
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 290.4000000357628
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 163.5999999642372
+        }
+      ],
+      "sameQuestionOperableMs": [
+        447.80000001192093,
+        448.60000002384186
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-miss-at-q4-q8-5-a-10005",
+        "explore-fixed-ten-miss-at-q4-q8-5-b-20005"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 12,
+        "uniqueAttemptKeyCount": 12,
+        "affectsSrsFalseCount": 12,
+        "gameOnlyFallbackCount": 12,
+        "learningLogAbsentCount": 12,
+        "assignmentIntegrityCount": 12,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-5-a-10005",
+            "status": "returned",
+            "problemsAnswered": 10,
+            "correctCount": 8,
+            "incorrectCount": 2,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-5-b-20005",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 5,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 8,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 8,
+      "durationMs": 3896.199999988079,
+      "completedProblemsPerMinute": 153.99620142750263,
+      "attemptsPerMinute": 153.99620142750263,
+      "correctOperableMs": [
+        527.5,
+        535.5,
+        528.1999999880791,
+        525.8000000119209,
+        531.3000000119209,
+        538.5,
+        518.6000000238419
+      ],
+      "terminalResultMs": 26.400000035762787,
+      "correctionAdvanceMs": [
+        59.80000001192093,
+        58.80000001192093
+      ],
+      "correctionFeedbackReadyMs": [
+        23.200000047683716,
+        20.80000001192093
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 4,
+          "kind": "correction-next"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "correction-next"
+        }
+      ],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "all-correct",
+      "repetition": 6,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 2307.099999964237,
+      "completedProblemsPerMinute": 260.0667504699843,
+      "attemptsPerMinute": 260.0667504699843,
+      "correctOperableMs": [
+        130.0999999642372,
+        137.10000002384186,
+        119.69999998807907,
+        128.4000000357628,
+        127.80000001192093,
+        120
+      ],
+      "coldOpenCorrectOperableMs": [
+        130.0999999642372,
+        137.10000002384186
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 759.2999999523163
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 313
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 284.0999999642372
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 155.19999998807907
+        }
+      ],
+      "sameQuestionOperableMs": [],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-all-correct-6-a-10006",
+        "explore-fixed-ten-all-correct-6-b-20006"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 10,
+        "uniqueAttemptKeyCount": 10,
+        "affectsSrsFalseCount": 10,
+        "gameOnlyFallbackCount": 10,
+        "learningLogAbsentCount": 10,
+        "assignmentIntegrityCount": 10,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-all-correct-6-a-10006",
+            "status": "returned",
+            "problemsAnswered": 8,
+            "correctCount": 8,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-all-correct-6-b-20006",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "all-correct",
+      "repetition": 6,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 4877.900000035763,
+      "completedProblemsPerMinute": 123.00375161352243,
+      "attemptsPerMinute": 123.00375161352243,
+      "correctOperableMs": [
+        533.5,
+        532.1999999880791,
+        533.4000000357628,
+        533.6000000238419,
+        529.1999999880791,
+        533.5,
+        539,
+        528.1000000238419,
+        535.2000000476837
+      ],
+      "terminalResultMs": 22.100000023841858,
+      "correctionAdvanceMs": [],
+      "correctionFeedbackReadyMs": [],
+      "interruptions": [],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 6,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 8,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 8,
+      "durationMs": 3888,
+      "completedProblemsPerMinute": 154.320987654321,
+      "attemptsPerMinute": 154.320987654321,
+      "correctOperableMs": [
+        530.5999999642372,
+        537.2999999523163,
+        527,
+        518.5,
+        536.8999999761581,
+        533.5,
+        527.8000000119209
+      ],
+      "terminalResultMs": 24.69999998807907,
+      "correctionAdvanceMs": [
+        48.39999997615814,
+        52.89999997615814
+      ],
+      "correctionFeedbackReadyMs": [
+        24.099999964237213,
+        19.600000023841858
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 4,
+          "kind": "correction-next"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "correction-next"
+        }
+      ],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 6,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 12,
+      "correctCount": 10,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 10,
+      "durationMs": 3187.399999976158,
+      "completedProblemsPerMinute": 188.24119972532097,
+      "attemptsPerMinute": 225.88943967038514,
+      "correctOperableMs": [
+        128.60000002384186,
+        135.4000000357628,
+        116.59999996423721,
+        115.10000002384186,
+        127.39999997615814,
+        112.79999995231628
+      ],
+      "coldOpenCorrectOperableMs": [
+        128.60000002384186,
+        135.4000000357628
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 748.1000000238419
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 326.4000000357628
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 290.10000002384186
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 162.39999997615814
+        }
+      ],
+      "sameQuestionOperableMs": [
+        447.39999997615814,
+        447.2000000476837
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-miss-at-q4-q8-6-a-10006",
+        "explore-fixed-ten-miss-at-q4-q8-6-b-20006"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 12,
+        "uniqueAttemptKeyCount": 12,
+        "affectsSrsFalseCount": 12,
+        "gameOnlyFallbackCount": 12,
+        "learningLogAbsentCount": 12,
+        "assignmentIntegrityCount": 12,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-6-a-10006",
+            "status": "returned",
+            "problemsAnswered": 10,
+            "correctCount": 8,
+            "incorrectCount": 2,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-6-b-20006",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "all-correct",
+      "repetition": 7,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 4875.899999976158,
+      "completedProblemsPerMinute": 123.05420537807048,
+      "attemptsPerMinute": 123.05420537807048,
+      "correctOperableMs": [
+        533.8000000119209,
+        532.1000000238419,
+        528.3000000119209,
+        528.1999999880791,
+        534.1999999880791,
+        533.8999999761581,
+        535.6999999880791,
+        526.8000000119209,
+        536.1000000238419
+      ],
+      "terminalResultMs": 21.600000023841858,
+      "correctionAdvanceMs": [],
+      "correctionFeedbackReadyMs": [],
+      "interruptions": [],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "all-correct",
+      "repetition": 7,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 2307.699999988079,
+      "completedProblemsPerMinute": 259.9991333375653,
+      "attemptsPerMinute": 259.9991333375653,
+      "correctOperableMs": [
+        137,
+        131.60000002384186,
+        124.5,
+        117.90000003576279,
+        130.5,
+        120.10000002384186
+      ],
+      "coldOpenCorrectOperableMs": [
+        137,
+        131.60000002384186
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 767.5999999642372
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 311.4000000357628
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 300.60000002384186
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 138.4000000357628
+        }
+      ],
+      "sameQuestionOperableMs": [],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-all-correct-7-a-10007",
+        "explore-fixed-ten-all-correct-7-b-20007"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 10,
+        "uniqueAttemptKeyCount": 10,
+        "affectsSrsFalseCount": 10,
+        "gameOnlyFallbackCount": 10,
+        "learningLogAbsentCount": 10,
+        "assignmentIntegrityCount": 10,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-all-correct-7-a-10007",
+            "status": "returned",
+            "problemsAnswered": 8,
+            "correctCount": 8,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-all-correct-7-b-20007",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 7,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 12,
+      "correctCount": 10,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 10,
+      "durationMs": 3189.300000011921,
+      "completedProblemsPerMinute": 188.1290565320783,
+      "attemptsPerMinute": 225.75486783849396,
+      "correctOperableMs": [
+        138,
+        120.29999995231628,
+        132.60000002384186,
+        118.5,
+        126,
+        112.59999996423721
+      ],
+      "coldOpenCorrectOperableMs": [
+        138,
+        120.29999995231628
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 737.1999999880791
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 327.19999998807907
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 288.89999997615814
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 163.29999995231628
+        }
+      ],
+      "sameQuestionOperableMs": [
+        447.60000002384186,
+        447.10000002384186
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-miss-at-q4-q8-7-a-10007",
+        "explore-fixed-ten-miss-at-q4-q8-7-b-20007"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 12,
+        "uniqueAttemptKeyCount": 12,
+        "affectsSrsFalseCount": 12,
+        "gameOnlyFallbackCount": 12,
+        "learningLogAbsentCount": 12,
+        "assignmentIntegrityCount": 12,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-7-a-10007",
+            "status": "returned",
+            "problemsAnswered": 10,
+            "correctCount": 8,
+            "incorrectCount": 2,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-7-b-20007",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 7,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 8,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 8,
+      "durationMs": 3892.400000035763,
+      "completedProblemsPerMinute": 154.14654197782534,
+      "attemptsPerMinute": 154.14654197782534,
+      "correctOperableMs": [
+        522.4000000357628,
+        526,
+        534.8999999761581,
+        526.5,
+        539,
+        539.3999999761581,
+        520.4000000357628
+      ],
+      "terminalResultMs": 20,
+      "correctionAdvanceMs": [
+        63.30000001192093,
+        47.90000003576279
+      ],
+      "correctionFeedbackReadyMs": [
+        21.899999976158142,
+        19.200000047683716
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 4,
+          "kind": "correction-next"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "correction-next"
+        }
+      ],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "all-correct",
+      "repetition": 8,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 2274.600000023842,
+      "completedProblemsPerMinute": 263.782643099319,
+      "attemptsPerMinute": 263.782643099319,
+      "correctOperableMs": [
+        140.20000004768372,
+        118.69999998807907,
+        131.29999995231628,
+        118.09999996423721,
+        130.10000002384186,
+        119.80000001192093
+      ],
+      "coldOpenCorrectOperableMs": [
+        140.20000004768372,
+        118.69999998807907
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 748.8000000119209
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 311.60000002384186
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 250.4000000357628
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 167.89999997615814
+        }
+      ],
+      "sameQuestionOperableMs": [],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-all-correct-8-a-10008",
+        "explore-fixed-ten-all-correct-8-b-20008"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 10,
+        "uniqueAttemptKeyCount": 10,
+        "affectsSrsFalseCount": 10,
+        "gameOnlyFallbackCount": 10,
+        "learningLogAbsentCount": 10,
+        "assignmentIntegrityCount": 10,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-all-correct-8-a-10008",
+            "status": "returned",
+            "problemsAnswered": 8,
+            "correctCount": 8,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-all-correct-8-b-20008",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "all-correct",
+      "repetition": 8,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 4885.100000023842,
+      "completedProblemsPerMinute": 122.82246013327705,
+      "attemptsPerMinute": 122.82246013327705,
+      "correctOperableMs": [
+        534.6999999880791,
+        528.8999999761581,
+        528.8999999761581,
+        536.5,
+        533.1000000238419,
+        533.1999999880791,
+        539.9000000357628,
+        527.6000000238419,
+        534.1000000238419
+      ],
+      "terminalResultMs": 22.599999964237213,
+      "correctionAdvanceMs": [],
+      "correctionFeedbackReadyMs": [],
+      "interruptions": [],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 8,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 8,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 8,
+      "durationMs": 3882.899999976158,
+      "completedProblemsPerMinute": 154.52368075502437,
+      "attemptsPerMinute": 154.52368075502437,
+      "correctOperableMs": [
+        530.3000000119209,
+        528.6000000238419,
+        534.5,
+        519.6000000238419,
+        536.3000000119209,
+        533.5999999642372,
+        519.5
+      ],
+      "terminalResultMs": 22.099999964237213,
+      "correctionAdvanceMs": [
+        51.80000001192093,
+        51.90000003576279
+      ],
+      "correctionFeedbackReadyMs": [
+        22.600000023841858,
+        19.400000035762787
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 4,
+          "kind": "correction-next"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "correction-next"
+        }
+      ],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 8,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 12,
+      "correctCount": 10,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 10,
+      "durationMs": 3255.600000023842,
+      "completedProblemsPerMinute": 184.29782528431195,
+      "attemptsPerMinute": 221.15739034117433,
+      "correctOperableMs": [
+        137.29999995231628,
+        131.29999995231628,
+        142.80000001192093,
+        128.39999997615814,
+        130.30000001192093,
+        120.20000004768372
+      ],
+      "coldOpenCorrectOperableMs": [
+        137.29999995231628,
+        131.29999995231628
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 753
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 324.5
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 288.69999998807907
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 169.39999997615814
+        }
+      ],
+      "sameQuestionOperableMs": [
+        448.19999998807907,
+        450.39999997615814
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-miss-at-q4-q8-8-a-10008",
+        "explore-fixed-ten-miss-at-q4-q8-8-b-20008"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 12,
+        "uniqueAttemptKeyCount": 12,
+        "affectsSrsFalseCount": 12,
+        "gameOnlyFallbackCount": 12,
+        "learningLogAbsentCount": 12,
+        "assignmentIntegrityCount": 12,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-8-a-10008",
+            "status": "returned",
+            "problemsAnswered": 10,
+            "correctCount": 8,
+            "incorrectCount": 2,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-8-b-20008",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "all-correct",
+      "repetition": 9,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 4843.5,
+      "completedProblemsPerMinute": 123.87736141220192,
+      "attemptsPerMinute": 123.87736141220192,
+      "correctOperableMs": [
+        526.3000000119209,
+        534.3000000119209,
+        527.8999999761581,
+        528.6000000238419,
+        533.1999999880791,
+        534.0999999642372,
+        527.3999999761581,
+        516,
+        522.1999999880791
+      ],
+      "terminalResultMs": 23.400000035762787,
+      "correctionAdvanceMs": [],
+      "correctionFeedbackReadyMs": [],
+      "interruptions": [],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "all-correct",
+      "repetition": 9,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 2317.899999976158,
+      "completedProblemsPerMinute": 258.8549980612501,
+      "attemptsPerMinute": 258.8549980612501,
+      "correctOperableMs": [
+        127.89999997615814,
+        126.89999997615814,
+        133.4000000357628,
+        116.20000004768372,
+        133.5,
+        130.10000002384186
+      ],
+      "coldOpenCorrectOperableMs": [
+        127.89999997615814,
+        126.89999997615814
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 747.0999999642372
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 309.69999998807907
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 299.89999997615814
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 160.5
+        }
+      ],
+      "sameQuestionOperableMs": [],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-all-correct-9-a-10009",
+        "explore-fixed-ten-all-correct-9-b-20009"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 10,
+        "uniqueAttemptKeyCount": 10,
+        "affectsSrsFalseCount": 10,
+        "gameOnlyFallbackCount": 10,
+        "learningLogAbsentCount": 10,
+        "assignmentIntegrityCount": 10,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-all-correct-9-a-10009",
+            "status": "returned",
+            "problemsAnswered": 8,
+            "correctCount": 8,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-all-correct-9-b-20009",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 9,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 12,
+      "correctCount": 10,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 10,
+      "durationMs": 3243.600000023842,
+      "completedProblemsPerMinute": 184.9796522368941,
+      "attemptsPerMinute": 221.97558268427292,
+      "correctOperableMs": [
+        139.19999998807907,
+        131.10000002384186,
+        138.80000001192093,
+        125.19999998807907,
+        127.39999997615814,
+        127.69999998807907
+      ],
+      "coldOpenCorrectOperableMs": [
+        139.19999998807907,
+        131.10000002384186
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 745.4000000357628
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 323.30000001192093
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 292.19999998807907
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 166.69999998807907
+        }
+      ],
+      "sameQuestionOperableMs": [
+        449.9000000357628,
+        447.89999997615814
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-miss-at-q4-q8-9-a-10009",
+        "explore-fixed-ten-miss-at-q4-q8-9-b-20009"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 12,
+        "uniqueAttemptKeyCount": 12,
+        "affectsSrsFalseCount": 12,
+        "gameOnlyFallbackCount": 12,
+        "learningLogAbsentCount": 12,
+        "assignmentIntegrityCount": 12,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-9-a-10009",
+            "status": "returned",
+            "problemsAnswered": 10,
+            "correctCount": 8,
+            "incorrectCount": 2,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-9-b-20009",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 9,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 8,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 8,
+      "durationMs": 3894.699999988079,
+      "completedProblemsPerMinute": 154.05551133638957,
+      "attemptsPerMinute": 154.05551133638957,
+      "correctOperableMs": [
+        524,
+        534.1999999880791,
+        535.3000000119209,
+        528,
+        530.7999999523163,
+        533.5999999642372,
+        527.3999999761581
+      ],
+      "terminalResultMs": 18.400000035762787,
+      "correctionAdvanceMs": [
+        58.5,
+        60
+      ],
+      "correctionFeedbackReadyMs": [
+        22.69999998807907,
+        21.400000035762787
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 4,
+          "kind": "correction-next"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "correction-next"
+        }
+      ],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "all-correct",
+      "repetition": 10,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 2320.699999988079,
+      "completedProblemsPerMinute": 258.542681088931,
+      "attemptsPerMinute": 258.542681088931,
+      "correctOperableMs": [
+        137.5,
+        131.89999997615814,
+        119.5,
+        125.10000002384186,
+        132,
+        120.40000003576279
+      ],
+      "coldOpenCorrectOperableMs": [
+        137.5,
+        131.89999997615814
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 756.5
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 317.89999997615814
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 295.89999997615814
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 149.80000001192093
+        }
+      ],
+      "sameQuestionOperableMs": [],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-all-correct-10-a-10010",
+        "explore-fixed-ten-all-correct-10-b-20010"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 10,
+        "uniqueAttemptKeyCount": 10,
+        "affectsSrsFalseCount": 10,
+        "gameOnlyFallbackCount": 10,
+        "learningLogAbsentCount": 10,
+        "assignmentIntegrityCount": 10,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-all-correct-10-a-10010",
+            "status": "returned",
+            "problemsAnswered": 8,
+            "correctCount": 8,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-all-correct-10-b-20010",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "all-correct",
+      "repetition": 10,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 10,
+      "firstPassCorrectCount": 10,
+      "eventualCorrectCount": 10,
+      "durationMs": 4872,
+      "completedProblemsPerMinute": 123.15270935960591,
+      "attemptsPerMinute": 123.15270935960591,
+      "correctOperableMs": [
+        522.6999999880791,
+        529.8999999761581,
+        526.7999999523163,
+        534.6000000238419,
+        530.5,
+        540,
+        541.2999999523163,
+        531.8000000119209,
+        531.3000000119209
+      ],
+      "terminalResultMs": 21.19999998807907,
+      "correctionAdvanceMs": [],
+      "correctionFeedbackReadyMs": [],
+      "interruptions": [],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "study",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 10,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 10,
+      "correctCount": 8,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 8,
+      "durationMs": 3885.900000035763,
+      "completedProblemsPerMinute": 154.4043850831154,
+      "attemptsPerMinute": 154.4043850831154,
+      "correctOperableMs": [
+        531,
+        535.6000000238419,
+        535.8000000119209,
+        520.5,
+        539.3000000119209,
+        532.6999999880791,
+        519.1999999880791
+      ],
+      "terminalResultMs": 25.80000001192093,
+      "correctionAdvanceMs": [
+        51,
+        49.19999998807907
+      ],
+      "correctionFeedbackReadyMs": [
+        20.5,
+        19.100000023841858
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 4,
+          "kind": "correction-next"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "correction-next"
+        }
+      ],
+      "persistence": {
+        "receiptScope": "not-applicable-dev-session",
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    },
+    {
+      "lane": "explore",
+      "scenario": "miss-at-q4-q8",
+      "repetition": 10,
+      "questions": [
+        "1 + 1 =",
+        "2 + 3 =",
+        "4 + 2 =",
+        "5 + 3 =",
+        "7 + 1 =",
+        "8 + 2 =",
+        "9 + 3 =",
+        "6 + 2 =",
+        "3 + 3 =",
+        "9 + 1 ="
+      ],
+      "attempts": 12,
+      "correctCount": 10,
+      "firstPassCorrectCount": 8,
+      "eventualCorrectCount": 10,
+      "durationMs": 3225.7000000476837,
+      "completedProblemsPerMinute": 186.00613819981106,
+      "attemptsPerMinute": 223.20736583977327,
+      "correctOperableMs": [
+        130.69999998807907,
+        135.69999998807907,
+        147.29999995231628,
+        127.19999998807907,
+        130.4000000357628,
+        119.40000003576279
+      ],
+      "coldOpenCorrectOperableMs": [
+        130.69999998807907,
+        135.69999998807907
+      ],
+      "correctBoundaryMs": [
+        {
+          "question": 3,
+          "state": "path-choice",
+          "milliseconds": 747
+        },
+        {
+          "question": 7,
+          "state": "discovery",
+          "milliseconds": 322.9000000357628
+        },
+        {
+          "question": 8,
+          "state": "path-choice",
+          "milliseconds": 266.19999998807907
+        },
+        {
+          "question": 10,
+          "state": "summary",
+          "milliseconds": 173.69999998807907
+        }
+      ],
+      "sameQuestionOperableMs": [
+        449.5,
+        440
+      ],
+      "interruptions": [
+        {
+          "afterQuestion": 3,
+          "kind": "route-choice"
+        },
+        {
+          "afterQuestion": 7,
+          "kind": "discovery-close"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "return"
+        },
+        {
+          "afterQuestion": 8,
+          "kind": "replay"
+        }
+      ],
+      "runIds": [
+        "explore-fixed-ten-miss-at-q4-q8-10-a-10010",
+        "explore-fixed-ten-miss-at-q4-q8-10-b-20010"
+      ],
+      "runtimeIdentity": {
+        "deliveryId": "snap-root-v1",
+        "visualCandidateId": "dig-pop-carry-bloom-v3"
+      },
+      "persistence": {
+        "receiptCount": 12,
+        "uniqueAttemptKeyCount": 12,
+        "affectsSrsFalseCount": 12,
+        "gameOnlyFallbackCount": 12,
+        "learningLogAbsentCount": 12,
+        "assignmentIntegrityCount": 12,
+        "runAggregateIntegrity": true,
+        "terminalEventIntegrity": true,
+        "runAggregates": [
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-10-a-10010",
+            "status": "returned",
+            "problemsAnswered": 10,
+            "correctCount": 8,
+            "incorrectCount": 2,
+            "skippedCount": 0
+          },
+          {
+            "runId": "explore-fixed-ten-miss-at-q4-q8-10-b-20010",
+            "status": "rescued",
+            "problemsAnswered": 2,
+            "correctCount": 2,
+            "incorrectCount": 0,
+            "skippedCount": 0
+          }
+        ],
+        "learningStateUnchanged": true
+      },
+      "diagnostics": {
+        "pageErrors": [],
+        "failedLocalRequests": []
+      }
+    }
+  ]
+}
