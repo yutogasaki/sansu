@@ -94,10 +94,10 @@
 - active runのreloadは説明画面や「続ける」確認を挟まず、同じroute、energy、finds、式、attemptNumberへ直接戻す。入力途中の数字だけを空にし、保存済み回答をもう一度解かせない
 - 未確認のQ7大発見はreload後に1回だけ再表示する。確認操作のcheckpoint保存が成功した後は、reloadしても大発見modalを再掲せずQ8へ戻す。通常toastの再表示可否をcomponent refだけで決めない
 - checkpointの復元・tail replay・保存に失敗した場合は問題を推測して進めず、現在のProblemを保った責めない再試行面を出す。旧active runにcheckpointがない場合だけ、安全にabandonedとして新しいrunへ切り替える
-- delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行visual candidate `dig-pop-carry-bloom-v3` は、同じカメラ、相棒、スコップ、土、根生物を保つ。commit済み正解数に応じて `ready → dig-one → dig-two → popped` と進み、1・2問目は続行操作を置かずsubmitから650ms以内に次問を操作可能にする。相棒が根生物の身体や葉を引かず同じ土を掘り、土が飛ぶ、根生物の足が見える、全身でぽんと抜ける進行を見せ、3問目は相棒の安全な尻もちと柔らかい土塊の葉帽子をinlineで見せる。v3はlocal runtimeへ配線するが、旧v2の視覚点を継承せず、残る非補償ゲートが通るまでproductionへ昇格しない
+- delivery / feature-flag ID `snap-root-v1` の現行containment visual candidate `dig-pop-carry-bloom-v3` は、同じカメラ、相棒、スコップ、土、根生物を保つ。commit済み正解数に応じて `ready → dig-one → dig-two → popped` と進み、1・2問目は続行操作を置かずsubmitから650ms以内に次問を操作可能にする。相棒が根生物の身体や葉を引かず同じ土を掘り、土が飛ぶ、根生物の足が見える、全身でぽんと抜ける進行を見せ、3問目は相棒の安全な尻もちと柔らかい土塊の葉帽子をinlineで見せる。旧v2の視覚点を継承せず、残る非補償ゲートが通るまでformal production採用はHOLDとする
 - cold-openの問題式と入力は通常のDOMを使い、演出のために問題の値・演算・category・assignment・SRS扱いを変更しない。誤答ではstageと同じ問題を維持し、submitから550ms以内を目標に再入力可能にする。支援先読みがtimeoutまたはerrorになった場合も、遅れて問題を差し替えず同じ入力面へ戻す
 - 1・2問目のopening途中発見はtoastを抑止し、問題、TenKey、身体変化を同時に読める状態を維持する。3問目も同じ画像を結果modalへ再掲せず、説明CTAなしで次の道選択へ進める
-- production defaultは `classic-v1` とする。旧編み根版Snap Rootとそのpayoff variantは50 / 100のREJECTであり、localを含む安全候補から外す。一本葉を引くBloom版と水やり版は同じ `snap-root-v1` slotの旧visual candidateとしてHOLDかつ非採用とする。`dig-pop-painted-v1` はsource HOLD、`dig-pop-painted-v2` は画風混在を残した旧runtime候補、`dig-pop-carry-bloom-v3` はlocal validation candidate、`root-pull-v1` / `root-pull-v2` は比較用presentationとし、production価値ゲート通過前は基地、きろく、永続図鑑catalogへ固定しない
+- production defaultは `snap-root-v1` とし、cold-open `dig-pop-carry-bloom-v3` から通常Q4〜Q8 `firefly-stumble-bloom-painted-v5` へ同じ横舞台でつなぐ。`classic-v1` は旧マキモドンから別rendererへ切り替わる既知のmixed-lineage FAILのためrollback先に使わない。旧編み根版、一本葉を引くBloom版、水やり版、`dig-pop-painted-v1` / `v2`、`root-pull-v1` / `v2` は現行defaultから外す。保存済みactive runはcheckpointのopening IDを保持し、新規runだけ現行defaultを使う。このcontainmentをformal visual承認やGate B通過とみなさない
 
 ## 5. 問題表示
 

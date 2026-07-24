@@ -76,9 +76,9 @@ export const FIREFLY_FLOWER_DISCOVERY_PAGE = {
         },
         {
             id: "discovery-feature:firefly-flower-light-path",
-            title: "はねかえりの 一滴",
-            clue: "ひらいた花から、さいごの一滴を 見とどけよう",
-            finding: "さいごの一滴だけ跳ね返り、ポッコの葉帽子へ ぽとん",
+            title: "花のまんなかに 四滴",
+            clue: "とんだ四滴が どこへ入るか 見とどけよう",
+            finding: "四つのしずくが 花のまんなかへ ぽちゃん。葉帽子が片目へずれて、ポッコは尻もちのまま にっこり",
         },
     ],
     chain: {

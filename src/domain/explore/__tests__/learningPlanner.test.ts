@@ -1,6 +1,7 @@
 import { IDBKeyRange, indexedDB } from "fake-indexeddb";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 import type { MemoryState, UserProfile } from "../../types";
+import { DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID } from "../openingExperience";
 import type { ExploreRunState } from "../types";
 
 Object.assign(globalThis, { indexedDB, IDBKeyRange });
@@ -61,7 +62,7 @@ const startRun = async (
         profileId: profile.id,
         expectedRevision: 0,
         state: selected,
-        openingExperienceId: "classic-v1",
+        openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
         savedAt: 101,
     });
     return { state: selected, revision: receipt.checkpointRevision };
@@ -145,7 +146,7 @@ describe("createAndReserveExploreProblemPlan", () => {
                 assignment: initialPlan.assignment,
                 encounterId: initialPlan.encounterId,
             }),
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 102,
         });
         let checkpoint = (await db.exploreRuns.get(state.runId))!.activeCheckpoint!;

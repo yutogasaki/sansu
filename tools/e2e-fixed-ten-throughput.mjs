@@ -1202,7 +1202,7 @@ const main = async () => {
         engine: "chromium",
         version: browser.version(),
       },
-      productionDefaultOpeningExperience: "classic-v1",
+      productionDefaultOpeningExperience: "snap-root-v1",
       validationOpeningExperience: OPENING_EXPERIENCE,
       visualCandidateId: "dig-pop-carry-bloom-v3",
     };

@@ -9,7 +9,7 @@ export type ExploreOpeningExperienceId = typeof EXPLORE_OPENING_EXPERIENCE_IDS[n
 export type ExploreOpeningPresentationKey = "classic" | "root-pull" | "snap-root";
 export type ExploreRootPullAssetSet = "v1" | "v2";
 
-export const DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID: ExploreOpeningExperienceId = "classic-v1";
+export const DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID: ExploreOpeningExperienceId = "snap-root-v1";
 export const EXPLORE_OPENING_EXPERIENCE_QUERY_PARAM = "explore_experience";
 
 export interface ExploreOpeningExperienceDefinition {

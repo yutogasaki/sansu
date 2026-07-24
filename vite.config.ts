@@ -7,7 +7,7 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 
-const DEFAULT_EXPLORE_DELIVERY_ID = 'classic-v1'
+const DEFAULT_EXPLORE_DELIVERY_ID = 'snap-root-v1'
 const EXPLORE_DELIVERY_IDS = new Set([
     'classic-v1',
     'root-pull-v1',

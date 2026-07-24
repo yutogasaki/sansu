@@ -41,7 +41,7 @@
 - PWA precacheが12 MiB以下で、探索本番画像の合計が8 MiB以下・1枚800 KiB以下である
 - `raw / concept / draft / comparison / visual-tests` がprecacheへ入っていない
 - 探索本番画像は原則 `public/assets/explore/<encounter-id>/scene-*`、制作入力は `docs/design/` に分離されている
-- production defaultは `classic-v1` とする。旧編み根版 `snap-root-v1` の `prop-sheet.png`、`leaf-landed.svg`、旧landed pose、`nest-squash | nest-tip` は実機安全監査で50 / 100のREJECT、一本葉を引くBloom版も75 / 100のHOLDとなったため、active safety candidateやproduction assetとして扱わない。水やりBloomへ切り替えるreleaseでは、全身相棒、全身の根生物、触られない葉冠、閉じた花、開いた花、青いじょうろ、水滴の実runtime URLだけを個別globへ追加し、旧編み根・旧landed・引っ張る一本葉assetをコード参照とprecacheの両方から外す。新assetが未実装、旧assetが参照中、または因果・身体完全性のmanual gateが未記録ならreleaseを止める。`root-pull-v1` / `root-pull-v2` の既存画像も比較用presentationとして当面precacheへ残す。制作sourceは `docs/design/` からprecacheへ混ぜない
+- production defaultは `snap-root-v1` とし、buildの `version.json` がdelivery `snap-root-v1` / visualLineage `pokko-field-v1` を返すことを確認する。`classic-v1` は旧マキモドンから別rendererへ切り替わる既知のmixed-lineage FAILのためrollback先に使わない。現行production assetはcold-open `dig-pop-carry-bloom-v3` と後続 `firefly-stumble-bloom-painted-v5` の実runtime URLだけをprecacheし、旧編み根、旧landed、一本葉を引く版、水やり版、旧firefly v4をコード参照とprecacheから外す。新assetが未実装、旧assetが参照中、因果・身体完全性のmanual gateが未記録、またはcritical pathにvisible legacy / mixed lineageが1件でもあればreleaseを止める。保存済みactive runのopening IDは途中で差し替えない。制作sourceは `docs/design/` からprecacheへ混ぜない
 
 ## Manual Verification
 

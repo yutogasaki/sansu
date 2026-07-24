@@ -64,7 +64,9 @@ export const ExploreHud: React.FC<ExploreHudProps> = ({
                         <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[9px] bg-amber-100" aria-hidden="true">
                             <ExploreGlyph kind="light" className="h-5 w-5" />
                         </span>
-                        <span className={cn("truncate", variant === "encounter" && "sr-only")}>ランタンの ひかり</span>
+                        <span className="truncate">
+                            {variant === "encounter" ? "ひかり" : "ランタンの ひかり"}
+                        </span>
                     </span>
                     <span className="shrink-0 text-[var(--explore-ink)]">{energy} / {maxEnergy}</span>
                 </div>

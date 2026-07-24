@@ -5,6 +5,7 @@ import { SansuDatabase } from "../../../db";
 import type { Problem, UserProfile } from "../../types";
 import { createAttemptIdentity } from "../attemptIdentity";
 import { createExploreLearningAssignment } from "../learningAssignment";
+import { DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID } from "../openingExperience";
 import {
     projectExploreLearningSegmentGates,
     type ExploreLearningSegmentGateProjection,
@@ -327,7 +328,7 @@ describe("reserveExploreLearningSegment", () => {
             profileId: profile.id,
             expectedRevision: 0,
             state: answerable,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 130,
         });
         await repository.commitExploreAttempt({
@@ -401,7 +402,7 @@ describe("reserveExploreLearningSegment", () => {
             profileId: profile.id,
             expectedRevision: 0,
             state: checkpointState,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 200,
         });
         const stored = await db.exploreRuns.get("run-1") as ExploreRunRecord;

@@ -176,6 +176,7 @@ export const ImmersiveEncounter: React.FC<ImmersiveEncounterProps> = ({
     return (
         <motion.section
             className="explore-immersive h-full min-h-0 overflow-hidden rounded-[28px]"
+            data-layout="answer"
             data-state={complete ? "complete" : phase === "incorrect" ? "incorrect" : "idle"}
             data-reduced-motion={reduceMotion || undefined}
             data-question-text={problem.questionText}
@@ -215,108 +216,114 @@ export const ImmersiveEncounter: React.FC<ImmersiveEncounterProps> = ({
             )}
 
             <div className="explore-immersive-stage">
-                <div className="explore-immersive-brief">
-                    <div className="flex items-start justify-between gap-3">
-                        <div className="min-w-0">
-                            <p className="explore-immersive-kicker">{definition.problem.kicker}</p>
-                            <h2
-                                id={definition.problem.titleId}
-                                ref={headingRef}
-                                tabIndex={-1}
-                                className="explore-immersive-title focus:outline-none"
-                            >
-                                {definition.problem.title}
-                            </h2>
-                        </div>
-                        <div className="explore-immersive-status-cluster">
-                            <span className="explore-immersive-state">
-                                {complete
-                                    ? definition.problem.completeState
-                                    : definition.problem.incompleteState}
-                            </span>
-                            {combo > 1 ? (
-                                <span className="explore-immersive-combo">
-                                    <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-                                    {combo} れんさ
-                                </span>
-                            ) : null}
-                        </div>
-                    </div>
+                <div className="explore-immersive-spacer" aria-hidden="true" />
 
-                    <div
-                        className="explore-immersive-equation"
-                        data-testid={definition.problem.equationTestId}
-                    >
-                        <MathProblemPrompt
-                            problem={equationProblem}
-                            className="text-[clamp(32px,9vw,52px)] font-black leading-none text-[#173f49]"
-                        />
-                        <output
-                            aria-label={`こたえ ${answer || "未入力"}`}
-                            aria-live="polite"
-                            aria-atomic="true"
+                <div className={cn(
+                    "explore-immersive-answer-shelf",
+                    showVisualSupport && "has-visual-support",
+                )}>
+                    <div className="explore-immersive-brief">
+                        <div className="flex items-start justify-between gap-3">
+                            <div className="min-w-0">
+                                <p className="explore-immersive-kicker">{definition.problem.kicker}</p>
+                                <h2
+                                    id={definition.problem.titleId}
+                                    ref={headingRef}
+                                    tabIndex={-1}
+                                    className="explore-immersive-title focus:outline-none"
+                                >
+                                    {definition.problem.title}
+                                </h2>
+                            </div>
+                            <div className="explore-immersive-status-cluster">
+                                <span className="explore-immersive-state">
+                                    {complete
+                                        ? definition.problem.completeState
+                                        : definition.problem.incompleteState}
+                                </span>
+                                {combo > 1 ? (
+                                    <span className="explore-immersive-combo">
+                                        <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                                        {combo} れんさ
+                                    </span>
+                                ) : null}
+                            </div>
+                        </div>
+
+                        <div
+                            className="explore-immersive-equation"
+                            data-testid={definition.problem.equationTestId}
+                        >
+                            <MathProblemPrompt
+                                problem={equationProblem}
+                                className="text-[clamp(32px,9vw,52px)] font-black leading-none text-[#173f49]"
+                            />
+                            <output
+                                aria-label={`こたえ ${answer || "未入力"}`}
+                                aria-live="polite"
+                                aria-atomic="true"
+                                className={cn(
+                                    "explore-immersive-answer",
+                                    phase === "correct" && "is-correct",
+                                    phase === "incorrect" && "is-incorrect",
+                                )}
+                            >
+                                {answer || "?"}
+                            </output>
+                        </div>
+
+                        <div
                             className={cn(
-                                "explore-immersive-answer",
+                                "explore-immersive-message",
+                                phase === "ready" && "is-ready",
                                 phase === "correct" && "is-correct",
                                 phase === "incorrect" && "is-incorrect",
                             )}
+                            role={phase === "incorrect" ? "alert" : "status"}
+                            aria-live={phase === "incorrect" ? "assertive" : "polite"}
+                            aria-atomic="true"
                         >
-                            {answer || "?"}
-                        </output>
-                    </div>
-
-                    <div
-                        className={cn(
-                            "explore-immersive-message",
-                            phase === "correct" && "is-correct",
-                            phase === "incorrect" && "is-incorrect",
-                        )}
-                        role={phase === "incorrect" ? "alert" : "status"}
-                        aria-live={phase === "incorrect" ? "assertive" : "polite"}
-                        aria-atomic="true"
-                    >
-                        {phase === "correct" ? (
-                            <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-                        ) : null}
-                        {phase === "incorrect" ? (
-                            <RotateCcw className="h-4 w-4" aria-hidden="true" />
-                        ) : null}
-                        {phase === "ready" ? (
-                            <Sparkles className="h-4 w-4" aria-hidden="true" />
-                        ) : null}
-                        <span>{statusCopy}</span>
-                    </div>
-                </div>
-
-                {showVisualSupport ? (
-                    <div
-                        className="explore-immersive-hint"
-                        role="status"
-                        aria-label={definition.problem.hintAriaLabel}
-                    >
-                        <span className="explore-immersive-hint-label">
-                            {definition.problem.hintLabel}
-                        </span>
-                        <div className="explore-immersive-hint-visual">
-                            <MathProblemPrompt problem={problem} />
+                            {phase === "correct" ? (
+                                <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+                            ) : null}
+                            {phase === "incorrect" ? (
+                                <RotateCcw className="h-4 w-4" aria-hidden="true" />
+                            ) : null}
+                            {phase === "ready" ? (
+                                <Sparkles className="h-4 w-4" aria-hidden="true" />
+                            ) : null}
+                            <span>{statusCopy}</span>
                         </div>
                     </div>
-                ) : null}
 
-                <div className="explore-immersive-spacer" aria-hidden="true" />
+                    {showVisualSupport ? (
+                        <div
+                            className="explore-immersive-hint"
+                            role="status"
+                            aria-label={definition.problem.hintAriaLabel}
+                        >
+                            <span className="explore-immersive-hint-label">
+                                {definition.problem.hintLabel}
+                            </span>
+                            <div className="explore-immersive-hint-visual">
+                                <MathProblemPrompt problem={problem} />
+                            </div>
+                        </div>
+                    ) : null}
 
-                <div
-                    className={cn("explore-immersive-keypad-shell", inputLocked && "is-locked")}
-                    aria-disabled={inputLocked}
-                >
-                    <ExploreAnswerPad
-                        problem={problem}
-                        answer={answer}
-                        disabled={inputLocked}
-                        className="explore-immersive-keypad !rounded-[20px] !border-0 !bg-transparent !p-1 !shadow-none"
-                        onAnswerChange={onAnswerChange}
-                        onSubmit={onSubmit}
-                    />
+                    <div
+                        className={cn("explore-immersive-keypad-shell", inputLocked && "is-locked")}
+                        aria-disabled={inputLocked}
+                    >
+                        <ExploreAnswerPad
+                            problem={problem}
+                            answer={answer}
+                            disabled={inputLocked}
+                            className="explore-immersive-keypad !rounded-[20px] !border-0 !bg-transparent !p-1 !shadow-none"
+                            onAnswerChange={onAnswerChange}
+                            onSubmit={onSubmit}
+                        />
+                    </div>
                 </div>
             </div>
         </motion.section>
@@ -334,6 +341,7 @@ export const ImmersiveEncounterCompletion: React.FC<ImmersiveEncounterCompletion
     return (
         <section
             className="explore-immersive h-full min-h-0 overflow-hidden rounded-[28px]"
+            data-layout="completion"
             data-state="complete"
             data-visual-lineage-id={visualIdentity?.lineageId}
             data-visual-candidate-id={visualIdentity?.candidateId}
@@ -388,6 +396,7 @@ export const ImmersiveEncounterLoading: React.FC<ImmersiveEncounterLoadingProps>
     return (
         <section
             className="explore-immersive h-full min-h-0 overflow-hidden rounded-[28px]"
+            data-layout="loading"
             data-visual-lineage-id={visualIdentity?.lineageId}
             data-visual-candidate-id={visualIdentity?.candidateId}
             data-visual-mode={visualIdentity?.mode}

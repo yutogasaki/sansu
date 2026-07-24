@@ -9,12 +9,13 @@ import {
 } from "../openingExperience";
 
 describe("explore opening experience", () => {
-    it("keeps classic as the production fallback while Snap Root remains a local candidate", () => {
+    it("keeps one painted lineage as the production fallback", () => {
         expect(resolveExploreOpeningExperience().id).toBe(
             DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
         );
-        expect(resolveExploreOpeningExperience({ envValue: "unknown" }).id).toBe("classic-v1");
-        expect(DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID).toBe("classic-v1");
+        expect(resolveExploreOpeningExperience({ envValue: "unknown" }).id).toBe("snap-root-v1");
+        expect(DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID).toBe("snap-root-v1");
+        expect(getExploreOpeningExperience("snap-root-v1").presentationKey).toBe("snap-root");
         expect(getExploreOpeningExperience("classic-v1").presentationKey).toBe("classic");
     });
 

@@ -19,10 +19,10 @@ describe("ResearchBookStage", () => {
             />,
         );
 
-        expect(markup).toContain('data-visual-candidate-id="firefly-field-book-painted-v4"');
+        expect(markup).toContain('data-visual-candidate-id="firefly-field-book-painted-v5"');
         expect(markup).toContain('data-visual-mode="field-book"');
         expect(markup).toContain('data-character-id="pokko"');
-        expect(markup).toContain("/assets/explore/firefly-flower/scene-light-path-carry-bloom-pokko-v4.jpg");
+        expect(markup).toContain("/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.jpg");
         expect(markup).toContain("object-fit:contain");
         expect(markup).not.toContain("firefly-research-pokko-v1");
     });
@@ -56,7 +56,7 @@ describe("ResearchBookStage", () => {
             />,
         );
 
-        expect(markup).not.toContain('data-visual-candidate-id="firefly-field-book-painted-v4"');
+        expect(markup).not.toContain('data-visual-candidate-id="firefly-field-book-painted-v5"');
         expect(markup).toContain("makimodon-research-art");
         expect(markup).toContain("マキモドン");
     });

@@ -13,6 +13,21 @@ const arbitraryProblem: Problem = {
     isReview: false,
 };
 
+const visualSupportProblem: Problem = {
+    ...arbitraryProblem,
+    id: "rapid-trail-visual-support-problem",
+    categoryId: "add_1d_1",
+    questionText: "2 + 3",
+    correctAnswer: "5",
+    questionVisual: {
+        kind: "addition-items",
+        groups: [
+            { emoji: "●", label: "ふたつ", count: 2 },
+            { emoji: "●", label: "みっつ", count: 3 },
+        ],
+    },
+};
+
 const renderPanel = (completedSteps: number, feedback: "idle" | "correct" | "incorrect") => (
     renderToStaticMarkup(
         <ExploreProblemPanel
@@ -103,8 +118,8 @@ describe("ExploreProblemPanel rapid-trail art", () => {
     it("uses authored same-camera painted flower art", () => {
         const markup = renderPanel(3, "idle");
 
-        expect(markup).toContain('data-camera-key="firefly-flower-side-v4"');
-        expect(markup).toContain('data-visual-candidate-id="firefly-carry-bloom-painted-v4"');
+        expect(markup).toContain('data-camera-key="firefly-flower-side-v5"');
+        expect(markup).toContain('data-visual-candidate-id="firefly-stumble-bloom-painted-v5"');
         expect(markup).toContain('data-visual-mode="world-painted"');
         expect(markup).toContain('data-stage="waiting"');
         expect(markup).not.toContain("scene-run-pop-v1.webp");
@@ -133,12 +148,42 @@ describe("ExploreProblemPanel rapid-trail art", () => {
 
         expect(q7Correct).toContain('data-stage="light-path"');
         expect(q7Correct).toContain('data-light-path="complete"');
-        expect(q7Correct).toContain("さいごの一滴が、はっぱに ぽとん！");
+        expect(q7Correct).toContain("四つのしずくが、花のまんなかへ ぽちゃん！");
         expect(q8Ready).toContain('data-stage="light-path"');
-        expect(q8Ready).toContain("ずれた葉帽子で、つぎへ いこう");
+        expect(q8Ready).toContain("ずれた葉帽子で、花の四滴を みよう");
         expect(q8Ready).toContain(">1</button>");
         expect(q8Ready).toContain(">2</button>");
         expect(q8Ready).toContain(">3</button>");
+    });
+
+    it("activates the compact mobile shelf only while visual support is shown", () => {
+        const renderVisualSupport = (feedback: "idle" | "correct") => renderToStaticMarkup(
+            <ExploreProblemPanel
+                problem={visualSupportProblem}
+                answer={feedback === "correct" ? "5" : ""}
+                prompt="しずくを かぞえよう"
+                feedback={feedback}
+                attemptCount={0}
+                combo={0}
+                targetKind="flower"
+                incorrectEnergyCost={1}
+                completedSteps={3}
+                inputDisabled={feedback === "correct"}
+                onAnswerChange={() => undefined}
+                onSubmit={() => undefined}
+            />,
+        );
+        const ready = renderVisualSupport("idle");
+        const correct = renderVisualSupport("correct");
+
+        expect(ready).toContain(
+            'class="explore-immersive-answer-shelf has-visual-support"',
+        );
+        expect(ready).toContain('class="explore-immersive-message is-ready"');
+        expect(ready).toContain('aria-label="この問題の 数のヒント"');
+        expect(correct).toContain('class="explore-immersive-answer-shelf"');
+        expect(correct).not.toContain("has-visual-support");
+        expect(correct).not.toContain("explore-immersive-message is-ready");
     });
 });
 

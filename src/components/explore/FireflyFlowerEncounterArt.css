@@ -6,10 +6,12 @@
     aspect-ratio: 16 / 9;
     overflow: hidden;
     isolation: isolate;
-    background: #12aee0;
+    background: #07dae3;
 }
 
 .explore-immersive-firefly-art {
+    position: absolute;
+    inset: auto 0 var(--explore-answer-shelf-size, 45%);
     width: 100%;
     height: auto;
     min-height: 0;

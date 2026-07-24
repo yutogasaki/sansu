@@ -19,8 +19,8 @@ describe("FireflyFlowerEncounterArt", () => {
     ] as const)("renders the %s clue state in one stable camera", (stage, clueCount) => {
         const markup = renderStage(stage);
 
-        expect(markup).toContain('data-camera-key="firefly-flower-side-v4"');
-        expect(markup).toContain('data-visual-candidate-id="firefly-carry-bloom-painted-v4"');
+        expect(markup).toContain('data-camera-key="firefly-flower-side-v5"');
+        expect(markup).toContain('data-visual-candidate-id="firefly-stumble-bloom-painted-v5"');
         expect(markup).toContain('data-visual-mode="world-painted"');
         expect(markup).toContain(`data-stage="${stage}"`);
         expect(markup).toContain(`data-clue-count="${clueCount}"`);
@@ -32,9 +32,9 @@ describe("FireflyFlowerEncounterArt", () => {
         const ringingMarkup = renderStage("ringing-petals");
         const lightPathMarkup = renderStage("light-path");
 
-        expect(dewMarkup).toContain("scene-waiting-carry-bloom-pokko-v4.jpg");
-        expect(dewMarkup).toContain("scene-dew-trail-carry-bloom-pokko-v4.jpg");
-        expect(dewMarkup).toContain("scene-light-path-carry-bloom-pokko-v4.jpg");
+        expect(dewMarkup).toContain("scene-waiting-stumble-bloom-pokko-v5.jpg");
+        expect(dewMarkup).toContain("scene-dew-trail-stumble-bloom-pokko-v5.jpg");
+        expect(dewMarkup).toContain("scene-light-path-stumble-bloom-pokko-v5.jpg");
         expect(dewMarkup).toContain('data-painted-stage="dew-trail" data-active="true"');
         expect(warmMarkup).toContain('data-painted-stage="warm-bud" data-active="true"');
         expect(ringingMarkup).toContain('data-painted-stage="ringing-petals" data-active="true"');
@@ -49,7 +49,7 @@ describe("FireflyFlowerEncounterArt", () => {
         );
 
         expect(markup).toContain('role="img"');
-        expect(markup).toContain("跳ね返った最後の一滴");
+        expect(markup).toContain("四つのしずくが開いた花の中心へおさまり");
         expect(markup).toContain("帽子のふちが片目へかぶさった");
         expect(markup).toContain("安全に座っている");
         expect(markup).toContain('data-reduced-motion="true"');

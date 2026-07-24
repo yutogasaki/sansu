@@ -162,7 +162,7 @@
 
 ### 4.4 cold-open導入区間
 
-delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行visual candidateを `dig-pop-carry-bloom-v3` とする。二つのIDは別々に記録し、同じslotを使った旧candidateの承認や点数を継承しない。390×844と768×1024で同じ相棒、スコップ、土、根生物、cameraを保ち、次の状態を問題の前後で連続して読ませる。
+delivery / feature-flag ID `snap-root-v1` の現行containment visual candidateを `dig-pop-carry-bloom-v3` とする。二つのIDは別々に記録し、同じslotを使った旧candidateの承認や点数を継承しない。390×844と768×1024で同じ相棒、スコップ、土、根生物、cameraを保ち、次の状態を問題の前後で連続して読ませる。
 
 - commit済み正解数だけを `ready / dig-one / dig-two / popped` へ写す
 - `ready`: 葉帽子の相棒がスコップを持ち、同じ大きな根生物が土へ半分埋まった状態を予告する。相棒と根生物は互いを見る
@@ -185,17 +185,17 @@ delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行v
 - visual candidate ID、stage、actor、対象、action、asset load状態、reduced motionはDOMの安定属性とARIA descriptionで検査でき、画像内文字やファイル名だけを判定根拠にしない
 - payoff variantは作らない。最初の安全証明は一つのcanonical `popped` で行い、別オチは視覚的磁力、身体完全性、silent testを別々に通過した後だけ追加する
 - reduced motionでは承認済み静止frameを即時差し替え、transition、土の飛散、跳ね、回転、zoomを止める。状態や最終位置は省略しない
-- production defaultは `classic-v1` とし、local validation candidate `dig-pop-carry-bloom-v3`、source HOLDの `dig-pop-painted-v1`、一本葉を引くBloom版、水やり版、`root-pull-v1` / `root-pull-v2` は現行defaultから外す。既存の引き算専用遭遇 `root-tangle`、そのreceipt、観察、保存IDとは共有しない
+- production defaultは `snap-root-v1` とし、cold-openは `dig-pop-carry-bloom-v3`、通常Q4〜Q8は `firefly-stumble-bloom-painted-v5` を使う。`classic-v1` は旧マキモドンから別rendererへ切り替わる既知のmixed-lineage FAILのためrollback先に戻さない。source HOLDの `dig-pop-painted-v1`、一本葉を引くBloom版、水やり版、`root-pull-v1` / `root-pull-v2` は現行defaultから外す。既存の引き算専用遭遇 `root-tangle`、そのreceipt、観察、保存IDとは共有しない
 
 ### 4.5 ほたる花のしずく道
 
-通常調査の現行visual candidateを `firefly-carry-bloom-painted-v4`、固定cameraを `firefly-flower-side-v4` とする。分岐面は同じ舞台文法の `pokko-route-map-v3`、中立Q7 finaleは `firefly-q7-carry-bloom-v4`、帰還図鑑の汎用挿絵は `firefly-field-book-painted-v4` とする。旧 `firefly-painted-pokko-v2` と旧しずく道v3、旧分岐plateは、密度・奥行き・素材の強さが現行benchmarkから外れるため現行runtimeへ混在させない。
+通常調査の現行visual candidateを `firefly-stumble-bloom-painted-v5`、固定cameraを `firefly-flower-side-v5` とする。分岐面は同じ舞台文法の `pokko-route-map-v3`、中立Q7 finaleは `firefly-q7-stumble-bloom-v5`、帰還図鑑の汎用挿絵は `firefly-field-book-painted-v5` とする。旧 `firefly-painted-pokko-v2` と旧しずく道v3、旧分岐plateは、密度・奥行き・素材の強さが現行benchmarkから外れるため現行runtimeへ混在させない。
 
 - 全frameを16:9の横舞台とし、青緑の静かな大色面を55〜65%以上、詳細描写を35%以下、支配色相を青緑・黄土橙・葉緑の3族以内に保つ。全面粒子、映画的奥行き、金色発光、画面全体のvignetteを使わない
-- Q4〜Q8は、同じ一輪の花、同じポッコ、同じ四つのしずく、同じ一本の溝を `waiting / dew-trail / warm-bud / ringing-petals / light-path` で連続させる。別の花、別相棒、電飾、無関係な道を後段だけへ追加しない
-- `waiting` は閉じた一輪と四滴、`dew-trail` は四滴を葉帽子へ載せて運ぶ一動作、`warm-bud` は一つのでこぼこで帽子が傾く予告、`ringing-petals` は安全な尻もちと四滴の弧で五枚花が開く反応、`light-path` は三滴を溝へ残し、跳ね返った最後の一滴が葉帽子へ乗り、帽子のふちが片目へかぶさったまま安全に座る身体オチを見せる
+- Q4〜Q8は、同じ一輪の花、同じポッコ、同じ四つのしずく、同じ一本の道と一つの小さなでこぼこを `waiting / dew-trail / warm-bud / ringing-petals / light-path` で連続させる。別の花、別相棒、電飾、無関係な道を後段だけへ追加しない
+- `waiting` は閉じた一輪と道に並ぶ四滴、`dew-trail` は四滴を葉帽子へ載せて運ぶ一動作、`warm-bud` は一つのでこぼこへ足が当たり帽子と四滴が揺れる予告、`ringing-petals` はよろけた身体と四滴の短い弧で五枚花が開く反応、`light-path` は花芯へ収まった四滴と、帽子のふちが片目へかぶさったまま安全に尻もちで笑う身体オチを見せる
 - 専用遭遇も別世界へ切り替えない。葉橋は `light-bridge-carry-bloom-v4 / light-bridge-side-v4`、root-tangleは `root-tangle-carry-bloom-v4 / root-tangle-side-v4` とし、同じ横舞台、一輪、一人、四滴、一本の道、青緑・黄土橙・葉緑＋珊瑚accentを保持する。Q6で開いた五枚花はQ7のroot-tangleでも開いたままにし、つぼみへ巻き戻さない
-- 中立Q7 finaleは三滴を一本の道へ残し、跳ね返った最後の一滴で葉帽子がずれたポッコを安全に座らせる。一つの因果と一つの身体オチへ絞り、進捗線、光線、粒子、別キャラクターで代替しない
+- 中立Q7 finaleは開いた一輪の花芯へ四滴を収め、葉帽子が片目へずれたポッコを安全に座らせる。一つの因果と一つの身体オチへ絞り、進捗線、光線、粒子、別キャラクターで代替しない
 - root-tangleのcommit済み観察provenanceがある場合は、中立Q7 plateへ置換せず、解いたroot sceneとcameraを観察・帰還図鑑まで保持する。provenanceがない場合だけ汎用しずく道を使う
 - 2分岐と3分岐は同じ青緑空・黄土面・葉帽子の横舞台で、一本の溝が物理的に2本または3本へ分かれることを無文字で読ませる。旧密集林の分岐plateをthumbnailや大絵へ残さない
 - phoneでは横長plateを縦へcropせず、青緑の静かな余白の中へ全景をcontainする。390×844と768×1024の両方でポッコ、花、作用するしずく、TenKeyを同時に欠けなく表示する

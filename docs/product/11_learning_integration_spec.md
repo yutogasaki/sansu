@@ -51,7 +51,7 @@ Q7の調査ページfinaleは学習categoryとは独立した報酬roleであり
 
 2回目以降の誤答では専用遭遇の見た目より、既存の `reviewFallbackSkillIds` と概念安全な支援順序を優先する。支援問題が同じ世界アクションと一致しない場合は通常の問題表示へ戻してよく、問題の意味を偽らない。
 
-cold-openの最初の3問は専用算数遭遇ではなく、保存済み正解数を一つの身体規則へ写す表示専用ビートである。各問の `Problem.categoryId`、演算、正答値、planner assignment、`affectsSrs` は通常の学習計画を正とし、演出のために差し替えない。delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行visual candidate `dig-pop-carry-bloom-v3` は、正解数 `0 / 1 / 2 / 3` を `ready / dig-one / dig-two / popped` へ写し、誤答はstageを進めない。旧 `landed`、一本葉を引く `tug / tumble`、水やり版 `pour / splash / bloomed`、payoff variantは現行候補から撤去する。土塊の個数、掘る距離、根生物の高さは正答値を表さず、相棒・スコップ・土・根生物は表示専用であり、planner / writer / SRS / receipt契約を変更しない。`dig-pop-painted-v1` はsource art 50 / 60のHOLDとして履歴に残す。v3はlocal runtimeへ配線するが、旧v2の承認を継承せず、残る非補償ゲートが通るまでproduction defaultへ昇格しない。
+cold-openの最初の3問は専用算数遭遇ではなく、保存済み正解数を一つの身体規則へ写す表示専用ビートである。各問の `Problem.categoryId`、演算、正答値、planner assignment、`affectsSrs` は通常の学習計画を正とし、演出のために差し替えない。production default `snap-root-v1` の現行visual candidate `dig-pop-carry-bloom-v3` は、正解数 `0 / 1 / 2 / 3` を `ready / dig-one / dig-two / popped` へ写し、誤答はstageを進めない。旧 `landed`、一本葉を引く `tug / tumble`、水やり版 `pour / splash / bloomed`、payoff variantは現行候補から撤去する。土塊の個数、掘る距離、根生物の高さは正答値を表さず、相棒・スコップ・土・根生物は表示専用であり、planner / writer / SRS / receipt契約を変更しない。`dig-pop-painted-v1` はsource art 50 / 60のHOLDとして履歴に残す。`classic-v1` のmixed-lineage実機FAILを止めるcontainmentとしてv3を配信するが、旧v2の承認を継承せず、残る非補償ゲートが通るまでformal visual承認はHOLDとする。
 
 ### 2.4 ラン中の問題再現性
 

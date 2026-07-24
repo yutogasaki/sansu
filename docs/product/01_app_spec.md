@@ -1,6 +1,6 @@
 # 01 アプリ仕様書
 
-> 状態: 探索ピボットの親仕様。2026-07-24時点では `/` を `/explore` へ転送し、説明画面を挟まず探索ランを通常起動面とする。Study共通planner / writerによる最小学習接続、`/battle` を探索優先の「探検基地」へ再編する縦切り、version付きactive checkpointから同じ問題境界へ戻るrun再開、3 / 3 / 2問のimmutable segment予約、全planner sourceの解放上限guardとrapid-loop適格性まで実装済み。production defaultは安全なrollback先の `classic-v1` とする。旧編み根版は50 / 100のREJECT、一本葉を引くBloom版と「3問で水やり」版はHOLDかつ非採用とする。delivery / feature-flag ID `snap-root-v1` のlocal validationには、後続のしずく道と同じ横舞台・ポッコ・色面へ統一したvisual candidate `dig-pop-carry-bloom-v3` を配線する。旧v2の視覚点・throughput点は新候補へ継承せず、同一build contact sheetと無文字5人テストが終わるまでrelease Gate Cとproduction判定はHOLDとする。`/study`・2人ゲーム・設定系ルートと既存データは維持し、発見図鑑のrun横断保存は後続とする。
+> 状態: 探索ピボットの親仕様。2026-07-24時点では `/` を `/explore` へ転送し、説明画面を挟まず探索ランを通常起動面とする。Study共通planner / writerによる最小学習接続、`/battle` を探索優先の「探検基地」へ再編する縦切り、version付きactive checkpointから同じ問題境界へ戻るrun再開、3 / 3 / 2問のimmutable segment予約、全planner sourceの解放上限guardとrapid-loop適格性まで実装済み。ユーザー実機で `classic-v1` がQ1〜Q3の旧マキモドンからQ4以降の別画風へ切り替わることを確認したため、既知のmixed-lineage FAILとしてdefaultから撤去し、production defaultを `snap-root-v1` へ変更する。これは価値ゲート通過の宣言ではなく、既知FAILを配信し続けないためのcontainmentである。cold-openは `dig-pop-carry-bloom-v3`、後続Q4〜Q8は大きな役者と一つの段差オチへ再構成した `firefly-stumble-bloom-painted-v5` を使う。formal Gate Bの未説明5人テストとexact-build監査が終わるまで最終visual承認はHOLDとする。`/study`・2人ゲーム・設定系ルートと既存データは維持し、発見図鑑のrun横断保存は後続とする。
 
 ## 目次
 
@@ -115,9 +115,9 @@
 - rapid-loop適格性は未保存の新規予約時だけ適用する。保存済みsegment / assignment / retryと、旧runから現在slotへ採用したfull Problemは新規則で再評価・差替えせず、旧runで同時に新規生成する残りslotだけ現行規則を通す
 - ランの最初の3問は、学習問題の意味を変えず、`解く → 即世界反応`を2回積み重ね、3問目に同じ身体規則から読めるオチへ到達するcold-openとする。1・2問目は追加0タップ・submitから650ms以内に次問を操作可能にし、誤答はsubmitから550ms以内に同じ問題へ戻す
 - 1ラン8問の体験順は `Q1〜3 cold-open → Q3後の道選択 → Q4〜6 主調査の手掛かり → Q7 大発見1回 → Q8 持ち帰り → 帰還要約 → 再出発` とする。cold-openは主調査ページへ特徴を付与せず、通常標本とレア標本は希少度だけを理由に操作を止めない。明示的に止める報酬は意味づけされた大発見だけとし、8問完了時は「基地へ もちかえる」を唯一の主操作にする
-- delivery / feature-flag ID `snap-root-v1` のlocal validationへ載せる現行visual candidate `dig-pop-carry-bloom-v3` は、後続と同じ黄色い葉帽子のポッコ、シアンの空、黄土の地面、コーラルの根生物、同じ横cameraを保ち、commit済み正解数だけを `ready → dig-one → dig-two → popped` へ写す。相棒は根生物の身体や葉ではなく中央の同じ土だけを掘る。一つの土塊が飛ぶ、根生物が持ち上がって両足が見える、全身でぽんと抜ける、という三段変化の最後に、相棒が安全に尻もちをつき、柔らかい土塊が葉帽子へ載る。1・2問目の途中発見はtoastを出さず、3問目も説明モーダルや追加CTAを挟まない。先読みが期限に間に合わない場合、正解後は通常plannerへ戻し、誤答後は先読みをabortして同じ問題を操作可能にする。blocking discoveryを越えて次問を先読みしない。旧v2のruntime視覚点とthroughput点はv3へ継承せず、actual targetの同一build contact sheetと無文字5人テストが終わるまでproductionへ昇格しない
-- production defaultは `classic-v1` とする。旧 `ready → tug → tumble → landed`、編み根、`nest-squash | nest-tip` は実機画像で身体の切断・拘束・浮遊頭部へ読める危険が見つかったため、安全候補から撤去する。旧87〜88点は失効し50 / 100のREJECTとする。一本葉を引くBloom版と水やり版は同じ `snap-root-v1` slotを使った旧visual candidateであり、HOLDかつ非採用とする。`dig-pop-painted-v1` はstate driftと弱い中間差分によりsource art 50 / 60のHOLD、`dig-pop-painted-v2` は後続画面と役者・構図が分裂した旧runtime候補、`dig-pop-carry-bloom-v3` は0から監査する現行local candidateとする。旧候補、`root-pull-v1` / `root-pull-v2` と旧マキモドン表示はproduction価値ゲート通過前は現行defaultの承認根拠、子ども向け固有名、永続図鑑catalogとして扱わない。delivery IDの再利用をvisual承認の継承とみなさない
-- 絵主導のcold-openは、`視覚的磁力`、`無文字の因果理解と安全`、`runtime整合` を別々の非補償ゲートとして判定し、総合点へ平均しない。視覚的磁力は承認済み絵本調benchmark **52 / 60以上かつ6軸すべて8 / 10以上**、無文字テストは未説明の5人中4人以上が同じ主動詞とpayoffを説明し4人以上が続きを望み、危険解釈0件を必須とする。runtimeは1・2問目の正解から次問入力までP95 650ms以内、誤答から再入力までP95 550ms以内、追加0タップ、answer leak 0件、旧高速学習と同一固定問題で同等以上のthroughput、およびmobile / tablet・入力・reduced motion・asset・PWA検証の通過を必須とする。三ゲートすべてを実runtimeで通るまでproduction defaultを変えない
+- delivery / feature-flag ID `snap-root-v1` のcold-open visual candidate `dig-pop-carry-bloom-v3` は、後続と同じ黄色い葉帽子のポッコ、シアンの空、黄土の地面、コーラルの根生物、同じ横cameraを保ち、commit済み正解数だけを `ready → dig-one → dig-two → popped` へ写す。相棒は根生物の身体や葉ではなく中央の同じ土だけを掘る。一つの土塊が飛ぶ、根生物が持ち上がって両足が見える、全身でぽんと抜ける、という三段変化の最後に、相棒が安全に尻もちをつき、柔らかい土塊が葉帽子へ載る。1・2問目の途中発見はtoastを出さず、3問目も説明モーダルや追加CTAを挟まない。先読みが期限に間に合わない場合、正解後は通常plannerへ戻し、誤答後は先読みをabortして同じ問題を操作可能にする。blocking discoveryを越えて次問を先読みしない。旧v2のruntime視覚点とthroughput点はv3へ継承しない
+- production defaultは `snap-root-v1` とする。`classic-v1` は旧マキモドンから後続の別rendererへ切り替わる実機FAILのためrollback先として使わない。旧 `ready → tug → tumble → landed`、編み根、`nest-squash | nest-tip`、一本葉を引くBloom版、水やり版、`dig-pop-painted-v1`、`dig-pop-painted-v2`、`root-pull-v1` / `root-pull-v2` は非採用のままとする。default変更を `dig-pop-carry-bloom-v3` や後続v5のformal visual承認、Gate B通過、過去候補の点数継承とみなさない。保存済みactive runのopening IDは途中で差し替えず、新規runから現行defaultを使う
+- 絵主導のcold-openは、`視覚的磁力`、`無文字の因果理解と安全`、`runtime整合` を別々の非補償ゲートとして判定し、総合点へ平均しない。視覚的磁力は承認済み絵本調benchmark **52 / 60以上かつ6軸すべて8 / 10以上**、無文字テストは未説明の5人中4人以上が同じ主動詞とpayoffを説明し4人以上が続きを望み、危険解釈0件を必須とする。runtimeは1・2問目の正解から次問入力までP95 650ms以内、誤答から再入力までP95 550ms以内、追加0タップ、answer leak 0件、旧高速学習と同一固定問題で同等以上のthroughput、およびmobile / tablet・入力・reduced motion・asset・PWA検証の通過を必須とする。三ゲートすべてを実runtimeで通るまで最終visual承認を出さない。現在defaultがmandatory gateを実機で明確にFAILした場合は、既知FAILをrollback先に残さず、最小の同一lineage候補へcontainmentし、その未通過gateをHOLDとして明記する
 - Gate Cの同一問題比較にはDEV限定fixture `cold-open-fixed-ten-v1` を使う。Studyは非記録session、Exploreは8問の実runを帰還・summary・再出発した後に別runで2問を解き、Exploreの全回答を `game-only-fallback / affectsSrs = false` とする。10反復all-correctの未丸め中央値で `Explore回答数/分 ÷ Study回答数/分 >= 1.000` を必須とする。Q4 / Q8誤答はStudyが訂正表示から明示Nextで次問へ進み、Exploreが同じ問題へ戻るため、相互のthroughput合否へ混ぜず回復時間・正答率・操作中断の別証拠にする。このfixtureは通常plannerの同一skill上限を意図的に外す表示throughput検証であり、planner / SRS真正性は既存の実planner 3問grayboxで別に確認する
 - 全問足し算の固定10問はroot-tangleの引き算遭遇を偽装せず、Q7では3手掛かりをつなぐ中立の調査ページpayoffだけを開く。Explore中断は `Q3後の道選択 / Q7大発見 / Q8後に持ち帰る / 帰還要約から再出発` の4件へ固定し、Q1〜2、Q4〜6、Q8〜10はblocking表示0件とする。root固有の動作・観察provenanceは、実plannerが対応引き算を割り当てるroot-tangle E2Eで別に検証する
 
@@ -141,7 +141,7 @@
 - 複数の性質がつながったときだけ短い「大発見」のピークを作り、通常発見との山と谷を明確にする
 - 「谷」は低彩度で無表情な待機画面を意味しない。通常遭遇にも、対象固有の極端な輪郭、相棒との視線・重心の関係、一つの読める因果を置き、静止時点だけでも触りたくなる状態を保つ
 - 「山」は全要素を同時に派手にすることではない。色、縮尺、表情、素材、密度、動勢のうち、その発見に必要な2〜3軸だけを強める
-- Golden Discovery Page の最初の縦切りでは、通常発見で3つの手掛かりを集めた後、receipt確定済みのQ7 finaleだけが最終特徴「はねかえりの 一滴」を開く。通常調査は、四滴を葉帽子で運ぶ、一つのでこぼこで安全に尻もちをつく、五枚花が開く、最後の一滴が葉帽子へ戻る、という一続きの因果にする。対応引き算なら `root-tangle` 固有の動作と観察provenanceを付け、非対応skillなら問題の意味を変えず中立のページpayoffにする。4件目という順番、正答数、希少度だけでは大発見にしない
+- Golden Discovery Page の最初の縦切りでは、通常発見で3つの手掛かりを集めた後、receipt確定済みのQ7 finaleだけが最終特徴「花のまんなかに 四滴」を開く。通常調査は、四滴を葉帽子で運ぶ、一つのでこぼこで安全に尻もちをつく、五枚花が開く、四滴が花の中心へ収まってポッコが帽子を片目にかぶったまま笑う、という一続きの因果にする。対応引き算なら `root-tangle` 固有の動作と観察provenanceを付け、非対応skillなら問題の意味を変えず中立のページpayoffにする。4件目という順番、正答数、希少度だけでは大発見にしない
 - 現行MVPの調査特徴はrun内の一時進捗であり、rootを選ばず帰還した未完成ページが次runへ持ち越されるとは表現しない。run横断の特徴永続化はMVP-2bで扱う
 - ランごとに予測可能だが読み切れない変化を入れる
 - 学習上は子どもを責めず、ゲーム上は短期的で回復可能な失敗を許可する
@@ -168,7 +168,7 @@
 - 色の骨格は、明るい空のシアン、土の黄土、根のコーラル、葉の緑、濃い青緑の輪郭、紙のクリームで全画面をつなぐ。
 - 探索問題は手触りのある絵本調、マップと基地は同じ役者・色・素材を簡略化した地図／切り紙調、記録・設定・保護者画面は同じ世界の「探検ノート」調とする。描画密度は変えてよいが、別作品のパステルガラスUIへ戻さない。
 - 起動から通常問題、大発見、帰還、再出発、探検基地までの現行visual lineageを `pokko-field-v1` とする。同じ黄色い豆型の身体、広い緑の葉帽子、小さな黒い手足、単純な顔をポッコの不変silhouetteとし、白い長耳、クリーム色の猫、リボン触角の洋梨型、旧マキモドンを同じrunへ混ぜない。visual modeは `world-painted / world-live / observation / field-book / archive / route-map / base-map / legacy` に正規化する。各critical surfaceはlineage ID、surface candidate ID、visual modeをDOMへ出し、差が意図した編集工程だと検証できること。
-- `dig-pop-carry-bloom-v3` はcold-open固有のsurface candidateであり、後続surfaceの承認を兼ねない。後続Q4〜Q8の検証候補は `firefly-carry-bloom-painted-v4`、中立Q7は `firefly-q7-carry-bloom-v4`、帰還図鑑は `firefly-field-book-painted-v4` とする。大遭遇、Q7、帰還、基地はそれぞれ同一ポッコと直前の因果を保ち、actual app target・同一buildのcritical-path contact sheetで混在0件を確認するまでproduction defaultを変更しない。
+- `dig-pop-carry-bloom-v3` はcold-open固有のsurface candidateであり、後続surfaceの承認を兼ねない。後続Q4〜Q8の検証候補は `firefly-stumble-bloom-painted-v5`、中立Q7は `firefly-q7-stumble-bloom-v5`、帰還図鑑は `firefly-field-book-painted-v5` とする。大遭遇、Q7、帰還、基地はそれぞれ同一ポッコと直前の因果を保ち、actual app target・同一buildのcritical-path contact sheetで混在0件を確認する。mixed visible lineage 1件以上はrelease FAILとする。
 - 起動、オンボーディング、共通ナビ、通常学習、記録、設定のいずれから入っても、表示名、相棒、色、紙面、言葉の調子から同じアプリだと分かることを必須にする。
 - 通常学習と探索の問題入力は、視覚統合のために問題数、入力数、確認操作、待ち時間を増やさない。ブランド変更より既存の高速回答テンポを優先する。
 

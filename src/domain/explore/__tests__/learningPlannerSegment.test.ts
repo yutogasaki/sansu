@@ -2,6 +2,7 @@ import { IDBKeyRange, indexedDB } from "fake-indexeddb";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { MemoryState, UserProfile } from "../../types";
 import type { ReservedExploreProblemPlan } from "../learningPlanner";
+import { DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID } from "../openingExperience";
 import type { ExploreLearningSegment, ExploreRunRecord } from "../persistenceTypes";
 import type { ExploreRunState } from "../types";
 
@@ -106,7 +107,7 @@ const startRoutedRun = async (
         profileId: profile.id,
         expectedRevision: run.activeCheckpoint?.revision ?? 0,
         state: routed,
-        openingExperienceId: "classic-v1",
+        openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
         savedAt: 101,
     });
     return { state: routed, revision: saved.checkpointRevision };
@@ -152,7 +153,7 @@ const savePendingProblem = async (
         profileId: profile.id,
         expectedRevision: fixture.revision,
         state: pending,
-        openingExperienceId: "classic-v1",
+        openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
         savedAt: 102,
     });
 };
@@ -377,7 +378,7 @@ describe("Explore immutable learning-segment planner integration", () => {
             profileId: profile.id,
             expectedRevision: committed.checkpointRevision,
             state: routedQ2,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 104,
         });
         const q2Gate = routedQ2.pendingProblem;
@@ -518,7 +519,7 @@ describe("Explore immutable learning-segment planner integration", () => {
             profileId: profile.id,
             expectedRevision: fixture.revision,
             state: visibleState,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 106,
         });
         await createAndReserveExploreProblemPlan(
@@ -586,7 +587,7 @@ describe("Explore immutable learning-segment planner integration", () => {
             profileId: profile.id,
             expectedRevision: checkpointRevision,
             state: displayedRetryState,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 109,
         });
         const resumed = await getResumableExploreRun(profile.id);
@@ -677,7 +678,7 @@ describe("Explore immutable learning-segment planner integration", () => {
             profileId: profile.id,
             expectedRevision: checkpointRevision,
             state: displayed,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 143,
         });
         const resumed = await getResumableExploreRun(profile.id);
@@ -868,7 +869,7 @@ describe("Explore immutable learning-segment planner integration", () => {
             profileId: profile.id,
             expectedRevision: fixture.revision,
             state: legacyState,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 111,
         });
         expect((await db.exploreRuns.get(fixture.state.runId))?.learningSegments)
@@ -933,7 +934,7 @@ describe("Explore immutable learning-segment planner integration", () => {
             profileId: profile.id,
             expectedRevision: fixture.revision,
             state: legacyState,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 116,
         });
 
@@ -1008,7 +1009,7 @@ describe("Explore immutable learning-segment planner integration", () => {
             profileId: profile.id,
             expectedRevision: fixture.revision,
             state: legacyState,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 121,
         });
         const incorrect = await commitExploreAttempt({
@@ -1090,7 +1091,7 @@ describe("Explore immutable learning-segment planner integration", () => {
             profileId: profile.id,
             expectedRevision: fixture.revision,
             state: legacyState,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 131,
         });
 
@@ -1144,7 +1145,7 @@ describe("Explore immutable learning-segment planner integration", () => {
             profileId: profile.id,
             expectedRevision: checkpointRevision,
             state: displayedRetryState,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 134,
         });
         expect((await db.exploreRuns.get(fixture.state.runId))?.learningSegments)

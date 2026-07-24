@@ -10,6 +10,7 @@ import type { AppData, MemoryState, UserProfile } from "../../types";
 import { deleteProfileOwnedIndexedDbRows } from "../../user/repository";
 import { createAttemptIdentity } from "../attemptIdentity";
 import { createExploreLearningAssignment } from "../learningAssignment";
+import { DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID } from "../openingExperience";
 import {
     createExplorePersistenceRepository,
     ExplorePersistenceConflictError,
@@ -19,7 +20,8 @@ import type {
     ExploreLearningSource,
     ReserveExploreLearningAssignmentInput,
 } from "../persistenceTypes";
-import { exploreReducer, getAvailableExploreNodes } from "../reducer";
+import { exploreReducer, createInitialExploreState, getAvailableExploreNodes } from "../reducer";
+import { createExploreActiveCheckpoint } from "../runCheckpoint";
 import { getLearningDayStart, toLocaleDateKey } from "../../../utils/learningDay";
 
 const indexedDbOptions: DexieOptions = { indexedDB, IDBKeyRange };
@@ -1101,7 +1103,7 @@ describe("exploration persistence repository", () => {
         expect(run.activeCheckpoint).toEqual(expect.objectContaining({
             schemaVersion: 1,
             revision: 0,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             state: expect.objectContaining({
                 runId: "run-1",
                 profileId: "profile-1",
@@ -1111,6 +1113,45 @@ describe("exploration persistence repository", () => {
         expect(resumable).toEqual({ run, checkpoint: run.activeCheckpoint });
         await expect(testDatabase.exploreRunEvents.where("type").equals("run_started").count())
             .resolves.toBe(1);
+    });
+
+    it("keeps a saved classic opening on its active run while new runs use the new default", async () => {
+        const testDatabase = await openVersion5Database("checkpoint-classic-preservation");
+        await testDatabase.profiles.add(profile("profile-1"));
+        const repository = createExplorePersistenceRepository(testDatabase);
+        const legacyState = {
+            ...createInitialExploreState({ seed: "seed-1", now: 100 }),
+            runId: "run-1",
+            profileId: "profile-1",
+        };
+        const run = await repository.startExploreRun({
+            runId: legacyState.runId,
+            profileId: legacyState.profileId,
+            seed: legacyState.seed,
+            startedAt: legacyState.startedAt,
+            activeCheckpoint: createExploreActiveCheckpoint({
+                state: legacyState,
+                openingExperienceId: "classic-v1",
+            }),
+        });
+
+        const saved = await repository.saveExploreRunCheckpoint({
+            runId: run.runId,
+            profileId: run.profileId,
+            expectedRevision: 0,
+            state: legacyState,
+            openingExperienceId: "classic-v1",
+            savedAt: 120,
+        });
+        expect(run.activeCheckpoint?.openingExperienceId).toBe("classic-v1");
+        await expect(repository.saveExploreRunCheckpoint({
+            runId: run.runId,
+            profileId: run.profileId,
+            expectedRevision: saved.checkpointRevision,
+            state: legacyState,
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
+            savedAt: 121,
+        })).rejects.toBeInstanceOf(ExplorePersistenceConflictError);
     });
 
     it("saves checkpoints with revision compare-and-swap", async () => {
@@ -1132,7 +1173,7 @@ describe("exploration persistence repository", () => {
             profileId: run.profileId,
             expectedRevision: 0,
             state: selected,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 120,
         });
 
@@ -1142,7 +1183,7 @@ describe("exploration persistence repository", () => {
             profileId: run.profileId,
             expectedRevision: 0,
             state: selected,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 121,
         })).rejects.toBeInstanceOf(ExplorePersistenceConflictError);
     });
@@ -1167,7 +1208,7 @@ describe("exploration persistence repository", () => {
             profileId: run.profileId,
             expectedRevision: 0,
             state: fixture.pending,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 160,
         });
         const identity = createAttemptIdentity({
@@ -1211,7 +1252,7 @@ describe("exploration persistence repository", () => {
             profileId: run.profileId,
             expectedRevision: receipt.checkpointRevision!,
             state: stored!.activeCheckpoint!.state,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             acknowledgedDiscoveryId: discoveryId,
             savedAt: 210,
         });
@@ -1221,7 +1262,7 @@ describe("exploration persistence repository", () => {
             profileId: run.profileId,
             expectedRevision: acknowledged.checkpointRevision,
             state: stored!.activeCheckpoint!.state,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             acknowledgedDiscoveryId: undefined,
             savedAt: 220,
         })).rejects.toBeInstanceOf(ExplorePersistenceConflictError);
@@ -1247,7 +1288,7 @@ describe("exploration persistence repository", () => {
             profileId: run.profileId,
             expectedRevision: 0,
             state: fixture.pending,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 160,
         });
         const request = {
@@ -1273,7 +1314,7 @@ describe("exploration persistence repository", () => {
             profileId: run.profileId,
             expectedRevision: committed.checkpointRevision!,
             state: stored.activeCheckpoint!.state,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             acknowledgedDiscoveryId: discoveryId,
             savedAt: 210,
         });
@@ -1304,7 +1345,7 @@ describe("exploration persistence repository", () => {
             profileId: run.profileId,
             expectedRevision: 0,
             state: fixture.pending,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 160,
         });
 
@@ -1347,7 +1388,7 @@ describe("exploration persistence repository", () => {
             profileId: run.profileId,
             expectedRevision: 0,
             state: fixture.pending,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 160,
         });
         const committed = await repository.commitExploreAttempt({
@@ -1411,7 +1452,7 @@ describe("exploration persistence repository", () => {
             profileId: run.profileId,
             expectedRevision: 0,
             state: fixture.pending,
-            openingExperienceId: "classic-v1",
+            openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
             savedAt: 160,
         });
         const identity = createAttemptIdentity({

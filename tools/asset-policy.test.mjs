@@ -53,7 +53,7 @@ describe("asset production policy", () => {
 
   it("keeps the carry-bloom candidates outside the deprecated contract", () => {
     expect(isDeprecatedExploreArtworkPath(
-      "assets/explore/firefly-flower/scene-waiting-carry-bloom-pokko-v4.jpg",
+      "assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.jpg",
     )).toBe(false);
   });
 

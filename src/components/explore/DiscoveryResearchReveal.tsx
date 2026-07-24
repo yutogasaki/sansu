@@ -76,12 +76,14 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
             surfaceId: "explore-field-book-legacy",
         };
     const revealIdentity = observation?.visual ?? fieldBookIdentity;
-    const physicalTitle = isNeutralFireflyFinale
-        ? "こぼれた一滴が、葉帽子へ戻った！"
-        : currentFeature?.title;
-    const physicalFinding = isNeutralFireflyFinale
-        ? "四つのしずくを運んだら、花がぱっとひらいた。最後の一滴だけ跳ね返り、葉帽子へぽとん"
-        : currentFeature?.finding;
+    const physicalTitle = observation?.copy.title
+        ?? (isNeutralFireflyFinale
+            ? "花のまんなかに 四滴！"
+            : currentFeature?.title);
+    const physicalFinding = observation?.copy.finding
+        ?? (isNeutralFireflyFinale
+            ? "四つのしずくが 花のまんなかへ ぽちゃん。葉帽子が片目へずれたポッコは、尻もちのまま にっこり"
+            : currentFeature?.finding);
 
     useEffect(() => {
         if (!currentFeature || !isBlockingReveal) return;
@@ -178,7 +180,7 @@ export const DiscoveryResearchReveal: React.FC<DiscoveryResearchRevealProps> = (
                         <span className="inline-flex items-center gap-2">
                             <Sparkles className="h-4 w-4 text-[#f4c64f]" aria-hidden="true" />
                             {isNeutralFireflyFinale
-                                ? "はこぶ → ころん → ぽとん"
+                                ? "はこぶ → ころん → 花が ぱっ"
                                 : isBigDiscovery
                                     ? "てがかりが つながった"
                                     : "めずらしい てがかり"}

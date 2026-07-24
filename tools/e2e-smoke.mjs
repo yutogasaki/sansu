@@ -104,34 +104,34 @@ const ROOT_TANGLE_OBSERVATION_FOCALS =
   PAINTED_ENCOUNTER_FOCALS["explore-encounter-root-tangle:root-tangle-dew-gag"];
 const FIREFLY_PAINTED_STAGE_CONTRACT = {
   waiting: {
-    asset: "/assets/explore/firefly-flower/scene-waiting-carry-bloom-pokko-v4.jpg",
-    actorFace: [310, 530],
-    actorFeet: [270, 590],
-    actionPayoff: [890, 225],
+    asset: "/assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.jpg",
+    actorFace: [360, 435],
+    actorFeet: [280, 635],
+    actionPayoff: [1000, 330],
   },
   "dew-trail": {
-    asset: "/assets/explore/firefly-flower/scene-dew-trail-carry-bloom-pokko-v4.jpg",
-    actorFace: [285, 510],
-    actorFeet: [260, 580],
-    actionPayoff: [275, 430],
+    asset: "/assets/explore/firefly-flower/scene-dew-trail-stumble-bloom-pokko-v5.jpg",
+    actorFace: [340, 410],
+    actorFeet: [240, 625],
+    actionPayoff: [300, 265],
   },
   "warm-bud": {
-    asset: "/assets/explore/firefly-flower/scene-warm-bud-carry-bloom-pokko-v4.jpg",
-    actorFace: [335, 476],
-    actorFeet: [365, 560],
-    actionPayoff: [365, 560],
+    asset: "/assets/explore/firefly-flower/scene-warm-bud-stumble-bloom-pokko-v5.jpg",
+    actorFace: [320, 380],
+    actorFeet: [500, 605],
+    actionPayoff: [260, 140],
   },
   "ringing-petals": {
-    asset: "/assets/explore/firefly-flower/scene-ringing-petals-carry-bloom-pokko-v4.jpg",
-    actorFace: [268, 522],
-    actorFeet: [280, 578],
-    actionPayoff: [870, 215],
+    asset: "/assets/explore/firefly-flower/scene-ringing-petals-stumble-bloom-pokko-v5.jpg",
+    actorFace: [290, 405],
+    actorFeet: [475, 605],
+    actionPayoff: [730, 345],
   },
   "light-path": {
-    asset: "/assets/explore/firefly-flower/scene-light-path-carry-bloom-pokko-v4.jpg",
-    actorFace: [270, 548],
-    actorFeet: [285, 575],
-    actionPayoff: [240, 455],
+    asset: "/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.jpg",
+    actorFace: [410, 370],
+    actorFeet: [420, 630],
+    actionPayoff: [985, 305],
   },
 };
 const REQUIRED_VISUAL_ASSET_SHA256 = {
@@ -159,16 +159,16 @@ const REQUIRED_VISUAL_ASSET_SHA256 = {
     "7587c7e460a587fcecff2da7e8ddea73520d68cf4ecaa8141657ac0086809041",
   "/assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.jpg":
     "43b29df9ea4b6ac0025341565224d60d7b4596ec97eb483a41a48ac057af7d99",
-  "/assets/explore/firefly-flower/scene-waiting-carry-bloom-pokko-v4.jpg":
-    "6c87ff7d8e377ca95f097e16a5652ed13316c8b3d0d6b7be60dc42e0a9de7a5e",
-  "/assets/explore/firefly-flower/scene-dew-trail-carry-bloom-pokko-v4.jpg":
-    "71c51c20bdb34c626d7f763226db8befe59b449c3f733077996c1c63f22165b9",
-  "/assets/explore/firefly-flower/scene-warm-bud-carry-bloom-pokko-v4.jpg":
-    "4a674c98cdbbc27a7663ecd7f468c2db3e7f733cd60af4e5b30fcd0e71395c03",
-  "/assets/explore/firefly-flower/scene-ringing-petals-carry-bloom-pokko-v4.jpg":
-    "3d942d9e50f58b4e99a8110707d3e955b72adfb8e602802d25fa2cca00ec86a7",
-  "/assets/explore/firefly-flower/scene-light-path-carry-bloom-pokko-v4.jpg":
-    "a8942fa7a64a437c8340a283256ef2b9106da95e174dcf44d052cb6376f5fc7f",
+  "/assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.jpg":
+    "79b4b69f5843e1927d1f2bc6dd693a68dc003f92cdf7fd094712bcb67d7ffeae",
+  "/assets/explore/firefly-flower/scene-dew-trail-stumble-bloom-pokko-v5.jpg":
+    "9bacadb8e625da373b4cee014d2f5725f1f8e3c1f7126c60fff7db4e32394293",
+  "/assets/explore/firefly-flower/scene-warm-bud-stumble-bloom-pokko-v5.jpg":
+    "86c4d34264f72ce3d7a247b739cde31c0c55b3fc4598d5fcf2160d83df8e9cf6",
+  "/assets/explore/firefly-flower/scene-ringing-petals-stumble-bloom-pokko-v5.jpg":
+    "5d95d253530ab2ea8761b21bc1fe6793123939109e021b24e3b76025822341a3",
+  "/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.jpg":
+    "200e4c9502318a2bd6aefe62bde641c855480c27855ee5f8681f225376a91ce4",
 };
 const LEGACY_VISUAL_AUDIT_DIR = path.resolve(
   "docs/design/breakout-loop-2026-07-21/runtime-painted-v2-audit",
@@ -858,16 +858,24 @@ const assertSnapRootViewportFit = async (page, viewport, { requireTappable = tru
 const assertExploreProblemViewportFit = async (page, viewport) => {
   const fit = await page.evaluate(() => {
     const rect = (selector) => document.querySelector(selector)?.getBoundingClientRect();
-    const controls = [
+    const controlElements = [
       ...["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].map((digit) => (
         [...document.querySelectorAll("button")].find(
           (button) => button.textContent?.trim() === digit,
-        )?.getBoundingClientRect()
+        )
       )),
       [...document.querySelectorAll("button")].find(
         (button) => button.getAttribute("aria-label") === "こたえる",
-      )?.getBoundingClientRect(),
+      ),
     ];
+    const controls = controlElements.map((element) => element?.getBoundingClientRect());
+    const visualShelf = document.querySelector(
+      ".explore-immersive-answer-shelf.has-visual-support",
+    );
+    const readyMessage = visualShelf?.querySelector(".explore-immersive-message.is-ready");
+    const readyMessageStyle = readyMessage instanceof HTMLElement
+      ? getComputedStyle(readyMessage)
+      : null;
 
     return {
       innerWidth: window.innerWidth,
@@ -876,7 +884,29 @@ const assertExploreProblemViewportFit = async (page, viewport) => {
       action: rect(".explore-action-region"),
       encounter: rect(".explore-immersive"),
       keypad: rect(".explore-immersive-keypad-shell"),
+      equation: visualShelf?.querySelector(".explore-immersive-equation")
+        ?.getBoundingClientRect(),
+      hint: visualShelf?.querySelector(".explore-immersive-hint")
+        ?.getBoundingClientRect(),
+      hintVisual: visualShelf?.querySelector(".explore-immersive-hint-visual")
+        ?.getBoundingClientRect(),
+      readyMessage: readyMessage?.getBoundingClientRect(),
+      readyMessageClipPath: readyMessageStyle?.clipPath,
       controls,
+      controlHits: controlElements.map((element) => {
+        if (!(element instanceof HTMLButtonElement)) {
+          return { hit: false, disabled: false };
+        }
+        const bounds = element.getBoundingClientRect();
+        const hitTarget = document.elementFromPoint(
+          bounds.left + bounds.width / 2,
+          bounds.top + bounds.height / 2,
+        );
+        return {
+          hit: hitTarget === element || element.contains(hitTarget),
+          disabled: element.disabled,
+        };
+      }),
     };
   });
 
@@ -905,6 +935,27 @@ const assertExploreProblemViewportFit = async (page, viewport) => {
     ),
     `TenKey controls should stay visible in the short exploration viewport: ${JSON.stringify(fit)}`,
   );
+  assert(
+    fit.controlHits.every(({ hit, disabled }) => hit || disabled),
+    `enabled TenKey control centers should remain tappable: ${JSON.stringify(fit)}`,
+  );
+  if (fit.hint) {
+    assert(
+      fit.equation && fit.equation.bottom <= fit.hint.top + 1,
+      `visual support must not overlap the equation: ${JSON.stringify(fit)}`,
+    );
+    assert(
+      fit.hintVisual && fit.keypad && fit.hintVisual.bottom <= fit.keypad.top + 1,
+      `visual support must not overlap the TenKey: ${JSON.stringify(fit)}`,
+    );
+    assert(
+      fit.readyMessage
+        && fit.readyMessage.width <= 1
+        && fit.readyMessage.height <= 1
+        && fit.readyMessageClipPath === "inset(50%)",
+      `ready status should stay accessible without occupying the compact shelf: ${JSON.stringify(fit)}`,
+    );
+  }
 };
 
 const assertSnapRootPaintedResolution = async (page, viewport) => {
@@ -1777,7 +1828,7 @@ const scenarioExploreInterruptionResume = async (browser) => {
     await firstQ7Modal.waitFor({ timeout: STEP_TIMEOUT_MS });
     assert(await firstQ7Modal.count() === 1, "Q7 should show one blocking discovery modal");
     const genericQ7PaintedScene = firstQ7Modal.locator(
-      '[data-visual-candidate-id="firefly-q7-carry-bloom-v4"]'
+      '[data-visual-candidate-id="firefly-q7-stumble-bloom-v5"]'
       + '[data-painted-stage="light-path"]'
       + '[data-discovery-complete="true"]',
     );
@@ -1788,7 +1839,7 @@ const scenarioExploreInterruptionResume = async (browser) => {
     assert(
       await genericQ7PaintedScene.locator("img").evaluate((image) => (
         image instanceof HTMLImageElement
-        && image.currentSrc.endsWith("/assets/explore/firefly-flower/scene-light-path-carry-bloom-pokko-v4.jpg")
+        && image.currentSrc.endsWith("/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.jpg")
       )),
       "generic Q7 should decode the current same-camera Firefly Flower plate",
     );
@@ -2641,7 +2692,7 @@ const scenarioRootTangleVerticalSlice = async (
       && await observationDiorama.getAttribute("data-camera-key") === rootCameraKey,
     "Q7 should carry the committed root observation into the same-camera payoff",
   );
-  await closeBlockingResearchDiscovery(page, /大発見！.*はねかえりの 一滴/, 3);
+  await closeBlockingResearchDiscovery(page, /大発見！.*しずくの道が ひらいた！/, 3);
   await waitForNewExploreAttempt(page, rootAttemptKey);
 
   const finalAttemptKey = await page.getByTestId("explore-attempt").getAttribute("data-attempt-key");
@@ -2888,7 +2939,7 @@ const attestRequiredVisualAssets = async (baseUrl) => {
     });
   }
   return {
-    contract: "pokko-field-v1-carry-bloom-v4-critical-raster-sha256",
+    contract: "pokko-field-v1-stumble-bloom-v5-critical-raster-sha256",
     count: assets.length,
     assets,
     pass: true,
@@ -3584,7 +3635,8 @@ const readPaintedEncounterCrop = async (surface, surfaceIdentity) => {
     const offsetX = positionX.offset;
     const offsetY = positionY.offset;
 
-    const shelf = element.querySelector(".explore-immersive-brief");
+    const shelf = element.querySelector(".explore-immersive-answer-shelf")
+      ?? element.querySelector(".explore-immersive-brief");
     const shelfBounds = shelf ? boundsOf(shelf) : null;
     const shelfOverlapsImage = Boolean(shelfBounds)
       && shelfBounds.left < imageBounds.right
@@ -4008,11 +4060,11 @@ const readPaintedFireflyCrop = async (surface) => surface.evaluate(async (
     };
   };
   const figure = element.matches(
-    '.firefly-flower-art[data-visual-candidate-id="firefly-carry-bloom-painted-v4"]',
+    '.firefly-flower-art[data-visual-candidate-id="firefly-stumble-bloom-painted-v5"]',
   )
     ? element
     : element.querySelector(
-      '.firefly-flower-art[data-visual-candidate-id="firefly-carry-bloom-painted-v4"]',
+      '.firefly-flower-art[data-visual-candidate-id="firefly-stumble-bloom-painted-v5"]',
     );
   if (!(figure instanceof HTMLElement)) {
     return {
@@ -4354,7 +4406,7 @@ const readVisualAuditRuntimeSnapshot = async (
     && surfaceIdentity.mode === "observation"
     ? await readRootObservationCrop(surface)
     : null;
-  const fireflyCrop = surfaceIdentity.candidateId === "firefly-carry-bloom-painted-v4"
+  const fireflyCrop = surfaceIdentity.candidateId === "firefly-stumble-bloom-painted-v5"
     ? await readPaintedFireflyCrop(surface)
     : null;
 
@@ -4733,7 +4785,7 @@ const captureVisualAuditStage = async ({
       `${stage} root observation focal crop failed: ${JSON.stringify(snapshot.observationCrop)}`,
     );
   }
-  if (expected.candidateId === "firefly-carry-bloom-painted-v4") {
+  if (expected.candidateId === "firefly-stumble-bloom-painted-v5") {
     assert(
       snapshot.fireflyCrop?.pass,
       `${stage} painted Firefly Flower safe-zone failed: ${JSON.stringify(snapshot.fireflyCrop)}`,
@@ -4989,7 +5041,7 @@ const captureVisualAuditSupportingViewport = async ({
   )];
   assert(
     visibleCandidateIds.includes("root-tangle-carry-bloom-v4")
-      && visibleCandidateIds.includes("firefly-field-book-painted-v4"),
+      && visibleCandidateIds.includes("firefly-field-book-painted-v5"),
     `supporting reveal composite must contain observation and field-book candidates: ${JSON.stringify(visibleCandidateIds)}`,
   );
   const revealGeometry = runtime.revealGeometry;
@@ -5566,11 +5618,11 @@ const runVisualAuditViewport = async (
     );
     await ordinaryQ4.waitFor({ timeout: STEP_TIMEOUT_MS });
     await capture("q4-ordinary", ordinaryQ4, {
-      candidateId: "firefly-carry-bloom-painted-v4",
+      candidateId: "firefly-stumble-bloom-painted-v5",
       mode: "world-painted",
       surfaceId: "explore-ordinary-firefly",
       sceneId: "firefly-waiting",
-      cameraKey: "firefly-flower-side-v4",
+      cameraKey: "firefly-flower-side-v5",
     }, { requireTenKey: true });
     const q4AttemptKey = await page.getByTestId("explore-attempt")
       .getAttribute("data-attempt-key");
@@ -5583,11 +5635,11 @@ const runVisualAuditViewport = async (
     );
     await completedQ4.waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
     await capture("q4-correct", completedQ4, {
-      candidateId: "firefly-carry-bloom-painted-v4",
+      candidateId: "firefly-stumble-bloom-painted-v5",
       mode: "world-painted",
       surfaceId: "explore-ordinary-firefly",
       sceneId: "firefly-dew-trail",
-      cameraKey: "firefly-flower-side-v4",
+      cameraKey: "firefly-flower-side-v5",
     }, { requireTenKeyLayout: true, waitForFiniteAnimations: false });
     await releaseReducedMotionCorrectAdvance(page);
     await waitForNewExploreAttempt(page, q4AttemptKey);
@@ -5628,11 +5680,11 @@ const runVisualAuditViewport = async (
     );
     await ordinaryQ6.waitFor({ timeout: STEP_TIMEOUT_MS });
     await capture("q6-ordinary", ordinaryQ6, {
-      candidateId: "firefly-carry-bloom-painted-v4",
+      candidateId: "firefly-stumble-bloom-painted-v5",
       mode: "world-painted",
       surfaceId: "explore-ordinary-firefly",
       sceneId: "firefly-warm-bud",
-      cameraKey: "firefly-flower-side-v4",
+      cameraKey: "firefly-flower-side-v5",
     }, { requireTenKey: true });
     await seedDueMathSkills(page, [
       "sub_1d1d_nc_bridge",
@@ -5651,11 +5703,11 @@ const runVisualAuditViewport = async (
     );
     await completedQ6.waitFor({ timeout: RAPID_LOOP_CI_BUDGET_MS });
     await capture("q6-correct", completedQ6, {
-      candidateId: "firefly-carry-bloom-painted-v4",
+      candidateId: "firefly-stumble-bloom-painted-v5",
       mode: "world-painted",
       surfaceId: "explore-ordinary-firefly",
       sceneId: "firefly-ringing-petals",
-      cameraKey: "firefly-flower-side-v4",
+      cameraKey: "firefly-flower-side-v5",
     }, { requireTenKeyLayout: true, waitForFiniteAnimations: false });
     await releaseReducedMotionCorrectAdvance(page);
     await waitForNewExploreAttempt(page, q6AttemptKey);
@@ -5837,7 +5889,7 @@ const runVisualAuditViewport = async (
       '.explore-research-book[data-visual-surface-id="explore-field-book-firefly"]',
     );
     const fieldBookCapture = await capture("field-book", fieldBook, {
-      candidateId: "firefly-field-book-painted-v4",
+      candidateId: "firefly-field-book-painted-v5",
       mode: "field-book",
       surfaceId: "explore-field-book-firefly",
     }, {
@@ -5854,7 +5906,7 @@ const runVisualAuditViewport = async (
         && supportingCapture.revealGroupId === fieldBookCapture.revealGroupId,
       "Q7 natural viewport and both locator details must belong to one reveal group",
     );
-    await closeBlockingResearchDiscovery(page, /大発見！.*はねかえりの 一滴/, 3);
+    await closeBlockingResearchDiscovery(page, /大発見！.*しずくの道が ひらいた！/, 3);
     await waitForNewExploreAttempt(page, rootAttemptKey);
 
     const ordinaryQ8 = page.locator(
@@ -5862,10 +5914,10 @@ const runVisualAuditViewport = async (
     );
     await ordinaryQ8.waitFor({ timeout: STEP_TIMEOUT_MS });
     await capture("q8", ordinaryQ8, {
-      candidateId: "firefly-carry-bloom-painted-v4",
+      candidateId: "firefly-stumble-bloom-painted-v5",
       mode: "world-painted",
       surfaceId: "explore-ordinary-firefly",
-      cameraKey: "firefly-flower-side-v4",
+      cameraKey: "firefly-flower-side-v5",
     }, { requireTenKey: true });
     await solveExploreNumericProblem(page);
     await waitForRouteBreakPastOptionalRareDiscovery(page);

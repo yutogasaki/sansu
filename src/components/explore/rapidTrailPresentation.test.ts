@@ -22,8 +22,8 @@ describe("Firefly Flower rapid-trail presentation", () => {
         expect(getRapidTrailArtStage(7, "idle")).toBe("light-path");
         expect(getRapidTrailArtStage(7, "incorrect")).toBe("light-path");
         expect(getRapidTrailArtStage(7, "correct")).toBe("light-path");
-        expect(getRapidTrailStateLabel("light-path")).toBe("はっぱに ぽとん");
-        expect(getRapidTrailStatusCopy("light-path", "correct")).toContain("ぽとん");
+        expect(getRapidTrailStateLabel("light-path")).toBe("花のなかに 四滴");
+        expect(getRapidTrailStatusCopy("light-path", "correct")).toContain("ぽちゃん");
     });
 
     it("keeps the current clue after an incorrect answer", () => {

@@ -52,7 +52,7 @@ export const getRapidTrailProgressMarks = (stage: FireflyFlowerArtStage): string
 };
 
 export const getRapidTrailStateLabel = (stage: FireflyFlowerArtStage): string => {
-    if (stage === "light-path") return "はっぱに ぽとん";
+    if (stage === "light-path") return "花のなかに 四滴";
     if (stage === "ringing-petals") return "しりもちで ぱっ";
     if (stage === "warm-bud") return "葉帽子 ぐらり";
     if (stage === "dew-trail") return "しずくを はこぶ";
@@ -64,7 +64,7 @@ export const getRapidTrailStatusCopy = (
     feedback: ExploreProblemFeedback,
 ): string => {
     if (feedback === "incorrect") {
-        if (stage === "light-path") return "はっぱの一滴は そのまま。もういちど";
+        if (stage === "light-path") return "花の四滴は そのまま。もういちど";
         if (stage === "warm-bud") return "葉帽子は そのまま。もういちど";
         if (stage === "dew-trail") return "しずくは そのまま。もういちど";
         if (stage === "ringing-petals") return "はなびらは そのまま。もういちど";
@@ -72,13 +72,13 @@ export const getRapidTrailStatusCopy = (
     }
 
     if (feedback === "correct") {
-        if (stage === "light-path") return "さいごの一滴が、はっぱに ぽとん！";
-        if (stage === "ringing-petals") return "ころん。しずくがこぼれて、花が ぱっ！";
+        if (stage === "light-path") return "四つのしずくが、花のまんなかへ ぽちゃん！";
+        if (stage === "ringing-petals") return "ころん。四つのしずくが飛んで、花が ぱっ！";
         if (stage === "warm-bud") return "でこぼこで 葉帽子が ぐらり。つぎ！";
         if (stage === "dew-trail") return "四つのしずくが 葉帽子へのった。つぎ！";
     }
 
-    if (stage === "light-path") return "ずれた葉帽子で、つぎへ いこう";
+    if (stage === "light-path") return "ずれた葉帽子で、花の四滴を みよう";
     if (stage === "ringing-petals") return "しりもちで ひらいた花を たしかめよう";
     if (stage === "warm-bud") return "でこぼこを ゆっくり こえよう";
     if (stage === "dew-trail") return "葉帽子で しずくを はこぼう";

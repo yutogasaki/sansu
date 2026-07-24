@@ -36,7 +36,7 @@ describe("discovery reveal interaction contract", () => {
             rarity: "rare",
         })).toBe(false);
         expect(isBlockingDiscoveryReveal({
-            name: "はねかえりの 一滴",
+            name: "花のまんなかに 四滴",
             kind: "flower",
             rarity: "rare",
             discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
@@ -76,7 +76,7 @@ describe("discovery reveal interaction contract", () => {
         }));
         const blocking = renderToStaticMarkup(React.createElement(DiscoveryReveal, {
             discovery: {
-                name: "はねかえりの 一滴",
+                name: "花のまんなかに 四滴",
                 kind: "flower" as const,
                 rarity: "rare" as const,
                 discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
@@ -120,14 +120,14 @@ describe("discovery reveal interaction contract", () => {
         expect(markup).toContain("マキモドン");
         expect(markup).toContain('data-visual-lineage-id="legacy-mixed-v0"');
         expect(markup).toContain('data-visual-candidate-id="legacy-discovery-page-v0"');
-        expect(markup).not.toContain('data-visual-candidate-id="firefly-field-book-painted-v4"');
+        expect(markup).not.toContain('data-visual-candidate-id="firefly-field-book-painted-v5"');
     });
 
     it("shows the committed root observation in the same camera before the field book", () => {
         const currentFeatureId = FIREFLY_FLOWER_DISCOVERY_PAGE.chain.bigDiscoveryFeatureId;
         const markup = renderToStaticMarkup(React.createElement(DiscoveryReveal, {
             discovery: {
-                name: "はねかえりの 一滴",
+                name: "花のまんなかに 四滴",
                 kind: "flower" as const,
                 rarity: "rare" as const,
                 discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
@@ -145,7 +145,7 @@ describe("discovery reveal interaction contract", () => {
         expect(markup).toContain('data-testid="explore-observation-scene"');
         expect(markup).toContain('data-camera-key="root-tangle-side-v4"');
         expect(markup).toContain('data-visual-mode="observation"');
-        expect(markup).toContain('data-visual-candidate-id="firefly-field-book-painted-v4"');
+        expect(markup).toContain('data-visual-candidate-id="firefly-field-book-painted-v5"');
         expect(markup).toContain('data-visual-mode="field-book"');
         expect(markup).toContain("/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg");
         expect(markup).toContain("object-contain");
@@ -157,7 +157,7 @@ describe("discovery reveal interaction contract", () => {
         const currentFeatureId = FIREFLY_FLOWER_DISCOVERY_PAGE.chain.bigDiscoveryFeatureId;
         const markup = renderToStaticMarkup(React.createElement(DiscoveryReveal, {
             discovery: {
-                name: "はねかえりの 一滴",
+                name: "花のまんなかに 四滴",
                 kind: "flower" as const,
                 rarity: "rare" as const,
                 discoveryPageId: FIREFLY_FLOWER_DISCOVERY_PAGE.id,
@@ -172,14 +172,16 @@ describe("discovery reveal interaction contract", () => {
         }));
 
         expect(markup).toContain('data-visual-lineage-id="pokko-field-v1"');
-        expect(markup).toContain('data-visual-candidate-id="firefly-q7-carry-bloom-v4"');
+        expect(markup).toContain('data-visual-candidate-id="firefly-q7-stumble-bloom-v5"');
         expect(markup).toContain('data-painted-stage="light-path"');
         expect(markup).toContain('data-light-path="complete"');
         expect(markup).toContain('data-discovery-complete="true"');
-        expect(markup).toContain("/assets/explore/firefly-flower/scene-light-path-carry-bloom-pokko-v4.jpg");
-        expect(markup).toContain("こぼれた一滴が、葉帽子へ戻った！");
-        expect(markup).toContain("跳ね返り");
-        expect(markup).toContain("ぽとん");
+        expect(markup).toContain("/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.jpg");
+        expect(markup).toContain("花のまんなかに 四滴！");
+        expect(markup).toContain("葉帽子が片目へずれた");
+        expect(markup).toContain("尻もちのまま にっこり");
+        expect(markup).not.toContain("跳ね返り");
+        expect(markup).not.toContain("葉帽子へ戻った");
         expect(markup).not.toContain("firefly-research-pokko-v1");
         expect(markup).not.toContain("RibbonAntennaCompanion");
         expect(markup).not.toContain("/assets/explore/root-tangle/");
