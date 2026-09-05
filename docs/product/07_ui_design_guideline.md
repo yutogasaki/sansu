@@ -15,6 +15,8 @@
 
 ## 1. デザインコンセプト
 
+教科共通の遊園地試作は [22_shared_subject_build_and_play_spec.md](22_shared_subject_build_and_play_spec.md) に従う明るい玩具の独立表現とする。既存探索の相棒・画像承認を継承しない。配置中は一方向のコースと人形を見せ、学習中は動きを止め、問題と全入力を主役にする。共通tap target・focus・音なし・reduced motion・非懲罰性を守る。
+
 ### 1.1 テーマ
 
 **「きらめく発見が、もう一問を呼ぶ。」**

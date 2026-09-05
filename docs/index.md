@@ -66,9 +66,13 @@ The repository is transitioning toward an exploration-first math game. [product/
 | [product/15_mvp_rollout_verification_spec.md](/docs/product/15_mvp_rollout_verification_spec.md) | MVP phases, validation questions, and success measures | Target-state SSOT |
 | [product/16_legacy_feature_decision.md](/docs/product/16_legacy_feature_decision.md) | Keep/change/integrate/deprecate decisions for legacy features | Target-state SSOT |
 | [product/17_open_questions.md](/docs/product/17_open_questions.md) | Unresolved exploration decisions and recommendations | Decision queue, not settled behavior |
+| [product/18_core_game_redesign_proposal.md](/docs/product/18_core_game_redesign_proposal.md) | Definition of fun, core-loop alternatives, recommended graybox, and migration boundary | Design proposal, not production SSOT |
+| [product/19_problem_first_core_design.md](/docs/product/19_problem_first_core_design.md) | Problem-first design order, borrowed-mechanic policy, skill-coverage gate, and the wager core candidate | Design proposal, not production SSOT |
 | [ai/implementation_plan_explore_mvp.md](/docs/ai/implementation_plan_explore_mvp.md) | Suggested Codex implementation sequence and stop conditions | Execution guide, not product SSOT |
 
 ## Supporting Docs
+
+- [product/22_shared_subject_build_and_play_spec.md](/docs/product/22_shared_subject_build_and_play_spec.md): 教科共通の遊園地MVP、学習・保存契約。
 
 | File | Role | SSOT |
 |---|---|---|

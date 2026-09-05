@@ -18,6 +18,8 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 | `npm run build` | TypeScript build + production build + `assets:check` |
 | `npm run e2e:smoke` | Smoke E2E for critical flows |
 | `npm run e2e:pwa-update` | Production-preview regression for protected-route and same-route update checkpoints |
+| `npm run e2e:park` | Flag有効のDEVで制作・配置・再演・再開・プロフィール分離とphone/tabletの入力を検査 |
+| `npm run e2e:park-pwa` | Flag有効のproduction previewで遊園地の更新checkpoint・保存hold・旧run優先を検査 |
 | `npm run benchmark:fixed-ten` | Study / Exploreの固定10問throughput、回復、中断、game-only receipt整合を比較 |
 | `npm run verify:core` | Docs check + full local quality gate |
 | `npm run verify:release` | Full local quality gate + smoke E2E + production PWA checkpoint E2E |
@@ -33,6 +35,7 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 | Learning/domain logic | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build` | Targeted scenario walkthrough | Add/update tests when logic changes |
 | Exploration pure domain | `npm run docs:check`, `npm run lint`, `npm run typecheck`, targeted reducer/generator tests, `npm run test:run`, `npm run build` | Fixed-seed run, incorrect-answer penalty, voluntary return, energy depletion | Ensure energy never goes below zero and every run can end |
 | Exploration page/routing | `npm run verify:core`, `npm run e2e:smoke` | Complete and replay one run on phone-width and tablet-width layouts; check reduced motion | Existing `/study`, `/battle`, onboarding, and private-route behavior must remain reachable |
+| Build-and-play domain/page/storage | `npm run verify:core`, `npm run e2e:smoke`, `npm run e2e:pwa-update`, `npm run e2e:park`, `npm run e2e:park-pwa` | 390×844と768×1024で初回再演→制作→支援/再開→配置変更→次制作を確認。視覚的魅力・無文字理解・実装整合を別々に記録 | DEVはflag有効で5187、production previewはflag有効で5287を先に起動。接続先は各scriptの環境変数で変更可能。PWA hook検証と実機インストール検証を区別する |
 | Image-led UI / encounter | `npm run verify:core`, `npm run e2e:smoke`, `npm run assets:check`, `npm run benchmark:fixed-ten` | On the actual app target, compare 390×844 and 768×1024 runtime screenshots beside the approved benchmark; capture launch through the next destination; verify full TenKey, fixed-question throughput, sound off, reduced motion, and cold-cache/PWA update | Fixed-tenはreportの `evidence.eligible = true` かつ `pass = true` とversioned監査への集計転記を必須とし、10反復未満をdiagnostic、通常planner真正性を別検証とする。Record build revision, delivery flag, rendered candidate ID, and cache state. Report visual magnetism, silent comprehension/safety, and runtime integrity separately; mixed legacy/HOLD visual lineage is a HOLD |
 | Storage/schema/profile data | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build` | Existing profile load/save | Write ADR or migration note if needed |
 | PWA/deploy/update flow | `npm run lint`, `npm run typecheck`, `npm run test:run`, `npm run build`, `npm run assets:check`, `npm run e2e:smoke`, `npm run e2e:pwa-update` | Real two-build install/update/reload path; iOS relaunch | Review host cache behavior, precache size, persistence-before-checkpoint, and production-asset boundaries too |

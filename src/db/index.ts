@@ -1,5 +1,6 @@
 import Dexie, { type DexieOptions, type Table } from 'dexie';
 import type { UserProfile, MemoryState, AppData } from '../domain/types';
+import type { ParkRecord, ParkPlan, ParkEvent } from '../domain/park/types';
 import type {
     ExploreDiscoveryRecord,
     ExploreRunEventRecord,
@@ -37,6 +38,9 @@ export const SANSU_V5_STORES = {
 } as const;
 
 export class SansuDatabase extends Dexie {
+    parks!: Table<ParkRecord, string>;
+    parkPlans!: Table<ParkPlan, string>;
+    parkEvents!: Table<ParkEvent, string>;
     profiles!: Table<UserProfile, string>; // id is UUID string
     logs!: Table<AttemptLog, number>;      // id is auto-increment
 
@@ -83,6 +87,12 @@ export class SansuDatabase extends Dexie {
         this.version(4).stores(SANSU_V4_STORES);
 
         this.version(5).stores(SANSU_V5_STORES);
+        this.version(6).stores({
+            ...SANSU_V5_STORES,
+            parks: '&profileId',
+            parkPlans: '&id, profileId, [profileId+status]',
+            parkEvents: '&id, profileId, planId, type, timestamp',
+        });
     }
 }
 

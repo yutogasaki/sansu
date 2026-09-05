@@ -215,7 +215,7 @@ describe("SansuDatabase version 5 migration", () => {
         database = new SansuDatabase(databaseName, indexedDbOptions);
         await database.open();
 
-        expect(database.verno).toBe(5);
+        expect(database.verno).toBe(6);
         await expect(database.profiles.get(legacyProfile.id)).resolves.toEqual(legacyProfile);
         await expect(database.logs.get(1)).resolves.toEqual(legacyLog);
         await expect(database.memoryMath.get([legacyProfile.id, legacyMath.id]))
@@ -1587,6 +1587,9 @@ describe("exploration persistence repository", () => {
                 testDatabase.exploreRuns,
                 testDatabase.exploreRunEvents,
                 testDatabase.exploreDiscoveries,
+                testDatabase.parks,
+                testDatabase.parkPlans,
+                testDatabase.parkEvents,
             ],
             () => deleteProfileOwnedIndexedDbRows(testDatabase, "profile-1"),
         );

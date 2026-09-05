@@ -16,6 +16,7 @@
 | 話題 | 正本 | 補助文書 | 更新するタイミング |
 |---|---|---|---|
 | プロダクトの挙動と約束 | [product/01_app_spec.md](/docs/product/01_app_spec.md) | `docs/product/` 配下の子仕様 | ユーザー向け挙動、ルール、画面の役割が変わるとき |
+| 教科共通の制作・試遊ゲーム | [product/22_shared_subject_build_and_play_spec.md](/docs/product/22_shared_subject_build_and_play_spec.md) | [product/01_app_spec.md](/docs/product/01_app_spec.md), [product/13_data_storage_migration_spec.md](/docs/product/13_data_storage_migration_spec.md) | `/park`、部品・配置、短い学習区間、支援、再演、保存、導入flagが変わるとき |
 | 探索ゲームの目標体験・ゲームループ | [product/10_exploration_game_spec.md](/docs/product/10_exploration_game_spec.md) | [product/15_mvp_rollout_verification_spec.md](/docs/product/15_mvp_rollout_verification_spec.md), [product/17_open_questions.md](/docs/product/17_open_questions.md) | 掘る、進む、帰還、橋、発見、リソース、失敗設計が変わるとき |
 | 探索と学習ロジックの接続 | [product/11_learning_integration_spec.md](/docs/product/11_learning_integration_spec.md) | [product/10_exploration_game_spec.md](/docs/product/10_exploration_game_spec.md), [product/15_mvp_rollout_verification_spec.md](/docs/product/15_mvp_rollout_verification_spec.md) | 問題選択、正誤処理、SRS接続、科目範囲が変わるとき |
 | 探索の画面・遷移 | [product/12_screen_flow_spec.md](/docs/product/12_screen_flow_spec.md) | [product/06_screen_specs.md](/docs/product/06_screen_specs.md), [product/01_app_spec.md](/docs/product/01_app_spec.md) | `/explore`、探検基地、発見・帰還画面、既存ルートとの関係が変わるとき |

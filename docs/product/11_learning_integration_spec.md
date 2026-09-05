@@ -4,6 +4,8 @@
 
 ## 1. 基本方針
 
+教科共通の制作接続には [22_shared_subject_build_and_play_spec.md](22_shared_subject_build_and_play_spec.md) を追加契約として使う。算数共通plannerから全入力を受け、rapid-loop適格性で除外しない。英語はプロフィール予定に従う既存4択。支援後の正答は専用eventで制作を進め、独力correctへ変換しない。独力確認待ちのDueを維持する。旧探索writer・予約契約は維持する。
+
 探索を面白くするためにゲーム上の失敗・選択・運を導入する。ただし、算数カリキュラム、問題生成、SRS、Due、weak、解放、昇格はプロダクトの学習基盤として維持する。
 
 ## 2. 問題選択の原則

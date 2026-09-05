@@ -10,6 +10,7 @@ const UPDATE_PROTECTED_HASH_ROUTES = [
     '/onboarding',
     '/study',
     '/explore',
+    '/park',
     '/battle/play',
 ]
 

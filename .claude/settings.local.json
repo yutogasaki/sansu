@@ -31,7 +31,8 @@
       "Bash(while read:*)",
       "Bash(do wc:*)",
       "Bash(done)",
-      "Bash(find /Users/yutogasaki/Projects/sansu/src/components -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" \\\\\\) ! -name \"*.test.*\" ! -name \"*.spec.*\" -exec wc -l {} +)"
+      "Bash(find /Users/yutogasaki/Projects/sansu/src/components -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" \\\\\\) ! -name \"*.test.*\" ! -name \"*.spec.*\" -exec wc -l {} +)",
+      "Bash(pkill -f \"capture-suika-lab\")"
     ]
   }
 }

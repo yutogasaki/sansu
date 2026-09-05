@@ -75,6 +75,24 @@ export const playSound = (type: SoundType) => {
     seInstances[type]?.play();
 };
 
+/** Short toy bell; uses the shared mute gate and can be stopped on leaving play. */
+export const playParkBell = (): (() => void) => {
+    if (!isSoundEnabled || !Howler.ctx || !Howler.masterGain) return () => {};
+    const context = Howler.ctx;
+    const gain = context.createGain();
+    const oscillator = context.createOscillator();
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(1046, context.currentTime);
+    gain.gain.setValueAtTime(.09, context.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.001, context.currentTime + .4);
+    oscillator.connect(gain);
+    gain.connect(Howler.masterGain);
+    oscillator.start();
+    oscillator.stop(context.currentTime + .42);
+    oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
+    return () => { gain.disconnect(); };
+};
+
 export const playBgm = (type: BgmType) => {
     if (!isSoundEnabled) return;
     if (currentBgmType === type && currentBgm?.playing()) return;

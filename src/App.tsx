@@ -1,6 +1,6 @@
 import { HashRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect, useState } from "react";
 import { Onboarding } from "./pages/Onboarding";
 import { Study } from "./pages/Study";
 import { Stats } from "./pages/Stats";
@@ -16,8 +16,36 @@ import { loadSounds, setSoundEnabled } from "./utils/audio";
 import { getActiveProfile } from "./domain/user/repository";
 import { applyThemeForCurrentTime, getMsUntilNextThemeCheck } from "./utils/theme";
 import { notifyPwaRouteNavigation } from "./pwa";
+import { LaunchRoute } from "./components/park/LaunchRoute";
+import { BUILD_PLAY_AVAILABLE } from "./domain/park/feature";
+
+const Park = lazy(() => import('./pages/Park'));
 
 type ProfileResolution = "loading" | "ready" | "missing";
+
+const G0WhiteboxLab = (
+    import.meta.env.DEV || import.meta.env.MODE === "test"
+)
+    ? lazy(() => import("./pages/dev/G0WhiteboxLab"))
+    : null;
+
+const G0MechanicRemixLab = (
+    import.meta.env.DEV || import.meta.env.MODE === "test"
+)
+    ? lazy(() => import("./pages/dev/G0MechanicRemixLab"))
+    : null;
+
+const NumberSuikaLab = (
+    import.meta.env.DEV || import.meta.env.MODE === "test"
+)
+    ? lazy(() => import("./pages/dev/NumberSuikaLab"))
+    : null;
+
+const WagerCoreLab = (
+    import.meta.env.DEV || import.meta.env.MODE === "test"
+)
+    ? lazy(() => import("./pages/dev/WagerCoreLab"))
+    : null;
 
 const PwaRouteObserver = () => {
     const location = useLocation();
@@ -131,6 +159,48 @@ function App() {
             <HashRouter>
                 <PwaRouteObserver />
                 <Routes>
+                    {WagerCoreLab && (
+                        <Route
+                            path="/__dev/wager"
+                            element={(
+                                <Suspense fallback={<Spinner fullScreen message="かけ探検を じゅんびちゅう..." />}>
+                                    <WagerCoreLab />
+                                </Suspense>
+                            )}
+                        />
+                    )}
+
+                    {NumberSuikaLab && (
+                        <Route
+                            path="/__dev/suika"
+                            element={(
+                                <Suspense fallback={<Spinner fullScreen message="かずのスイカを じゅんびちゅう..." />}>
+                                    <NumberSuikaLab />
+                                </Suspense>
+                            )}
+                        />
+                    )}
+
+                    {G0MechanicRemixLab && (
+                        <Route
+                            path="/__dev/g0-v2"
+                            element={(
+                                <Suspense fallback={<Spinner fullScreen message="G0 v2ラボを じゅんびちゅう..." />}>
+                                    <G0MechanicRemixLab />
+                                </Suspense>
+                            )}
+                        />
+                    )}
+                    {G0WhiteboxLab && (
+                        <Route
+                            path="/__dev/g0"
+                            element={(
+                                <Suspense fallback={<Spinner fullScreen message="G0ラボを じゅんびちゅう..." />}>
+                                    <G0WhiteboxLab />
+                                </Suspense>
+                            )}
+                        />
+                    )}
                     <Route path="/onboarding" element={<Onboarding />} />
 
                     <Route path="/battle" element={<Layout />}>
@@ -147,7 +217,11 @@ function App() {
                     </Route>
 
                     <Route element={<Layout />}>
-                        <Route path="/" element={<Navigate to="/explore" replace />} />
+                        <Route path="/" element={<LaunchRoute />} />
+                        <Route path="/park" element={BUILD_PLAY_AVAILABLE ?
+                            <PrivateRoute><Suspense fallback={<Spinner fullScreen message="ゆうえんちを じゅんびちゅう…" />}><Park /></Suspense></PrivateRoute>
+                            : <Navigate to="/" replace />
+                        } />
                         <Route path="/study" element={
                             <PrivateRoute>
                                 <Study />

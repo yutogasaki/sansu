@@ -9,6 +9,8 @@ Sansu / ポッコのふしぎずかん is not only a learning utility. It is a *
 
 ## 1. Product North Star
 
+The user-authorized `build-play-v1` MVP also follows `docs/product/22_shared_subject_build_and_play_spec.md`. A fixed companion, exploration, random discovery, eight-question runs, and math as an immediate world action are rules for the existing exploration mode, not universal requirements. The shared game connects reserved learning segments to chosen functional parts; free placement and replay determine the outcome. Assisted completion and independent mastery remain separate. All data-safety, non-shaming, and verification rules apply to both modes.
+
 > ポッコのふしぎずかんは、子どもが相棒ポッコと明るい地底世界を探検し、算数で掘り進み、発見・判断・失敗・再挑戦をくり返すことで、自然に計算練習を続けたくなるPWAである。
 
 ## 2. Priority Order

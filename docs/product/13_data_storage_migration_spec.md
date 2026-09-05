@@ -2,6 +2,8 @@
 
 ## 1. 基本方針
 
+教科共通ゲームは [22_shared_subject_build_and_play_spec.md](22_shared_subject_build_and_play_spec.md) の実装契約に従いDexie v6へ `parks / parkPlans / parkEvents` を追加する。v5の全store・index・行・checkpointは無変換。profile削除は新3storeも同じtransactionに含める。ロールバックはv6対応buildのflag無効化で行い、v5しか知らない旧buildへの巻戻しやDB削除は使わない。
+
 既存 `UserProfile` に探索データを大量追加しない。正式導入時はDexie version 5以降で探索専用テーブルを追加する。
 
 既定起動面の探索へMVP-2bの最小学習接続を追加する。run行へplanner assignmentを予約し、SRS対象回答は探索event・run集計・既存回答ログ・MemoryState・プロフィール進捗を同一transactionで保存する。MVP-2eで不適格候補を除外した場合は別identityのgame-only fallbackだけを予約し、学習状態を変更しない。MVP-2cでは同じrun行のoptional active checkpointからrun再開を行い、発見図鑑のrun横断永続化は後続縦切りとする。

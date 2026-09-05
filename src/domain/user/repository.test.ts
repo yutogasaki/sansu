@@ -30,6 +30,9 @@ const mocks = vi.hoisted(() => ({
     exploreDiscoveriesWhere: vi.fn(),
     exploreDiscoveriesEquals: vi.fn(),
     exploreDiscoveriesDelete: vi.fn(),
+    parksDelete: vi.fn(),
+    parkPlansDelete: vi.fn(),
+    parkEventsDelete: vi.fn(),
     getLocalActiveId: vi.fn(),
     setLocalActiveId: vi.fn(),
     clearLocalActiveId: vi.fn(),
@@ -39,6 +42,9 @@ const mocks = vi.hoisted(() => ({
 vi.mock("../../db", () => ({
     db: {
         transaction: mocks.transaction,
+        parks: { delete: mocks.parksDelete },
+        parkPlans: { where: () => ({ equals: () => ({ delete: mocks.parkPlansDelete }) }) },
+        parkEvents: { where: () => ({ equals: () => ({ delete: mocks.parkEventsDelete }) }) },
         appData: {
             get: mocks.appDataGet,
             put: mocks.appDataPut,
@@ -329,6 +335,9 @@ describe("getActiveProfile", () => {
         expect(mocks.exploreRunsDelete).toHaveBeenCalledOnce();
         expect(mocks.exploreRunEventsDelete).toHaveBeenCalledOnce();
         expect(mocks.exploreDiscoveriesDelete).toHaveBeenCalledOnce();
+        expect(mocks.parksDelete).toHaveBeenCalledWith(removed.id);
+        expect(mocks.parkPlansDelete).toHaveBeenCalledOnce();
+        expect(mocks.parkEventsDelete).toHaveBeenCalledOnce();
         expect(mocks.clearProfileStorageData).toHaveBeenCalledWith(removed.id);
         expect(mocks.setLocalActiveId).toHaveBeenCalledWith(kept.id);
     });

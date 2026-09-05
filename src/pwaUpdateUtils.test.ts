@@ -43,6 +43,7 @@ describe('pwaUpdateUtils', () => {
         '#/study',
         '#/study?skill=addition',
         '#/explore',
+        '#/park',
         '#/explore/',
         '#/battle/play?mode=tug_of_war',
     ])('protects an in-memory session on %s', (hash) => {

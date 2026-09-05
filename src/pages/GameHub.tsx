@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { PokkoBaseArt } from "../components/explore/PokkoBaseArt";
 import { Icons } from "../components/icons";
 import { ScreenScaffold } from "../components/ScreenScaffold";
+import { BUILD_PLAY_AVAILABLE } from "../domain/park/feature";
 
 const TWO_PLAYER_OPTIONS = [
     {
@@ -49,6 +50,7 @@ export const GameHub: React.FC = () => {
                 contentClassName="game-hub__scroll"
             >
                 <div className="game-hub__content">
+                    {BUILD_PLAY_AVAILABLE && <button className="game-hub__launch explore-focus-ring" onClick={() => navigate('/park')}>ちいさな遊園地で あそぶ</button>}
                     <motion.section
                         className="game-hub__hero"
                         aria-labelledby="game-hub-explore-title"

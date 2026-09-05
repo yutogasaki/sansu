@@ -4,6 +4,8 @@
 
 ## 1. ルート方針
 
+`/park` は [22_shared_subject_build_and_play_spec.md](22_shared_subject_build_and_play_spec.md) の作品再演 → 制作選択 → 学習 → 試遊・再編集を全画面表示する。起動flag有効時の `/` は旧active探索を先に復帰し、それがなければ遊園地を開く。未完制作があっても無料再演できる。プロフィールなしはonboardingへ送る。
+
 ### 1.1 現行ルート
 
 | ルート | 分類 | 方針 |

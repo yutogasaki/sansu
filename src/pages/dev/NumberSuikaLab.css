@@ -1,0 +1,438 @@
+.suika-lab {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    min-height: 100%;
+    overflow: hidden;
+    overscroll-behavior: contain;
+    color: var(--brand-ink);
+    background: var(--brand-cream);
+    font-family: var(--font-body);
+}
+
+.suika-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/* header ---------------------------------------------------------- */
+
+.suika-header {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) 48px;
+    align-items: center;
+    gap: 10px;
+    padding:
+        calc(var(--safe-area-top) + 8px)
+        clamp(12px, 3vw, 24px)
+        6px;
+}
+
+.suika-icon-button {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border: 2px solid var(--brand-ink);
+    border-radius: 50%;
+    color: var(--brand-ink);
+    background: var(--brand-paper);
+    font-size: 1.05rem;
+    font-weight: 900;
+    touch-action: manipulation;
+}
+
+.suika-heading {
+    min-width: 0;
+    text-align: center;
+}
+
+.suika-heading span {
+    display: block;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    opacity: 0.6;
+}
+
+.suika-heading h1 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 900;
+}
+
+/* tabs ------------------------------------------------------------ */
+
+.suika-tabs {
+    display: flex;
+    gap: 6px;
+    padding: 0 clamp(10px, 3vw, 20px) 6px;
+}
+
+.suika-tabs button {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 1px;
+    align-items: center;
+    padding: 7px 4px;
+    border: 2px solid var(--brand-ink);
+    border-radius: 12px;
+    background: var(--brand-paper);
+    color: var(--brand-ink);
+    touch-action: manipulation;
+}
+
+.suika-tabs button[aria-pressed="true"] {
+    background: var(--brand-ink);
+    color: var(--brand-paper);
+}
+
+.suika-tabs strong {
+    font-size: 0.82rem;
+    font-weight: 900;
+}
+
+.suika-tabs small {
+    font-size: 0.6rem;
+    opacity: 0.75;
+}
+
+/* main ------------------------------------------------------------ */
+
+.suika-main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 0;
+    padding: 0 clamp(10px, 3vw, 20px) 10px;
+}
+
+.suika-lab--participant .suika-main {
+    padding-top: calc(var(--safe-area-top) + 10px);
+}
+
+.suika-hud {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 52px;
+}
+
+.suika-hud__score {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.suika-hud__score strong {
+    font-size: 1.9rem;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+
+.suika-hud__score small {
+    font-size: 0.75rem;
+    opacity: 0.6;
+}
+
+.suika-hud__next {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.suika-chip {
+    display: grid;
+    place-items: center;
+    border: 2px solid var(--brand-ink);
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 900;
+    text-shadow:
+        -1px -1px 0 rgb(0 0 0 / 45%),
+        1px -1px 0 rgb(0 0 0 / 45%),
+        -1px 1px 0 rgb(0 0 0 / 45%),
+        1px 1px 0 rgb(0 0 0 / 45%);
+}
+
+.suika-hud__next .suika-chip:first-child {
+    opacity: 1;
+}
+
+.suika-hud__next .suika-chip:not(:first-child) {
+    opacity: 0.55;
+}
+
+/* stage ----------------------------------------------------------- */
+
+.suika-stage-shell {
+    position: relative;
+    display: grid;
+    flex: 1;
+    place-items: center;
+    min-height: 0;
+}
+
+.suika-stage {
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.suika-stage:focus-visible {
+    outline: 3px solid var(--brand-ink);
+    outline-offset: 3px;
+}
+
+.suika-stage__vessel {
+    fill: var(--brand-paper);
+    stroke: var(--brand-ink);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.suika-stage__deadline {
+    stroke: var(--brand-ink);
+    stroke-width: 0.6;
+    stroke-dasharray: 3 3;
+    opacity: 0.35;
+}
+
+.suika-stage__deadline[data-danger="true"] {
+    stroke: #ef476f;
+    stroke-width: 1.1;
+    opacity: 1;
+}
+
+.suika-stage__aim {
+    stroke: var(--brand-ink);
+    stroke-width: 0.5;
+    stroke-dasharray: 2 3;
+    opacity: 0.3;
+}
+
+.suika-ball__body {
+    stroke: rgb(0 0 0 / 55%);
+    stroke-width: 0.7;
+}
+
+.suika-ball__value {
+    fill: #ffffff;
+    stroke: rgb(0 0 0 / 55%);
+    stroke-width: 0.9;
+    paint-order: stroke fill;
+    font-weight: 900;
+    text-anchor: middle;
+}
+
+.suika-ball__bar {
+    stroke: #ffffff;
+    stroke-linecap: round;
+}
+
+.suika-ball[data-flashing="true"] .suika-ball__body {
+    stroke: #ffffff;
+    stroke-width: 2;
+}
+
+.suika-ball[data-popping="true"] .suika-ball__body {
+    stroke: #ffffff;
+    stroke-width: 2.6;
+    filter: brightness(1.35);
+}
+
+.suika-ball[data-rejecting="true"] .suika-ball__body {
+    stroke: #ef476f;
+    stroke-width: 1.8;
+}
+
+.suika-held {
+    opacity: 0.9;
+}
+
+.suika-cue {
+    fill: var(--brand-ink);
+    stroke: var(--brand-paper);
+    stroke-width: 1.4;
+    paint-order: stroke fill;
+    font-weight: 900;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+.suika-cue--pop {
+    fill: #d68102;
+}
+
+.suika-cue--reject {
+    fill: #ef476f;
+    text-decoration: line-through;
+    opacity: 0.9;
+}
+
+/* overlay --------------------------------------------------------- */
+
+.suika-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 16px 8px;
+    background: rgb(255 255 255 / 84%);
+}
+
+.suika-overlay__lead {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 900;
+}
+
+.suika-overlay__score {
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+
+.suika-charm-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    width: 100%;
+}
+
+.suika-charm {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    max-width: 116px;
+    min-height: 122px;
+    padding: 12px 6px;
+    border: 3px solid var(--brand-ink);
+    border-radius: 16px;
+    background: var(--brand-paper);
+    color: var(--brand-ink);
+    text-align: center;
+    touch-action: manipulation;
+}
+
+.suika-charm span {
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.suika-charm strong {
+    font-size: 0.86rem;
+    font-weight: 900;
+}
+
+.suika-charm small {
+    font-size: 0.68rem;
+    line-height: 1.35;
+    opacity: 0.75;
+}
+
+.suika-replay {
+    display: grid;
+    width: 84px;
+    height: 84px;
+    place-items: center;
+    border: 3px solid var(--brand-ink);
+    border-radius: 50%;
+    background: var(--brand-paper);
+    color: var(--brand-ink);
+    font-size: 2rem;
+    font-weight: 900;
+    touch-action: manipulation;
+}
+
+/* charm shelf ----------------------------------------------------- */
+
+.suika-charm-shelf {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    min-height: 26px;
+}
+
+.suika-charm-badge {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    padding: 3px 9px;
+    border: 2px solid var(--brand-ink);
+    border-radius: 999px;
+    background: var(--brand-paper);
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+/* metrics --------------------------------------------------------- */
+
+.suika-metrics {
+    padding: 8px clamp(12px, 3vw, 24px) calc(var(--safe-area-bottom, 0px) + 12px);
+    font-size: 0.78rem;
+}
+
+.suika-metrics summary {
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.suika-metrics p {
+    margin: 8px 0;
+    opacity: 0.7;
+}
+
+.suika-metrics dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 6px 12px;
+    margin: 0;
+}
+
+.suika-metrics dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 3px 0;
+    border-bottom: 1px solid rgb(0 0 0 / 10%);
+}
+
+.suika-metrics dt {
+    opacity: 0.65;
+}
+
+.suika-metrics dd {
+    margin: 0;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .suika-ball__body {
+        filter: none;
+    }
+}
