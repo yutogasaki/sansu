@@ -109,6 +109,11 @@ const main = async () => {
   }
 
   const precacheSet = new Set(precacheUrls);
+  const parkManifest = JSON.parse(await readFile(path.join(ROOT, 'src/components/park/artManifest.json'), 'utf8'));
+  for (const sprite of Object.values(parkManifest.sprites)) {
+    const url = `assets/park/resin-v1/${sprite.file}`;
+    if (!precacheSet.has(url)) errors.push(`${url}: park sprite is missing from precache`);
+  }
   for (const file of exploreArtwork) {
     if (!precacheSet.has(file.relativePath)) {
       errors.push(`${file.relativePath}: production encounter artwork is missing from precache`);

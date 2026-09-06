@@ -89,10 +89,11 @@ Cross-cutting durable risks are tracked in `docs/wiki/risk_register.md`.
 ### 7. Shared-Subject Build and Play
 
 - [product/22_shared_subject_build_and_play_spec.md](/docs/product/22_shared_subject_build_and_play_spec.md) governs the separate `/park` mode: a deterministic toy course, owned physical parts, free editing/replay, and short reserved learning segments. The existing exploration protagonist and rapid-answer rhythm do not constrain this mode.
-- `VITE_BUILD_PLAY_ENABLED=true` enables the production route and root launch; its default is off. DEV exposes `/park` directly and from the hub. An existing active exploration run still wins root launch when the flag is on.
+- `VITE_BUILD_PLAY_ENABLED=true` enables the production route and root launch; the generic local-build default is off. The user-authorized production rollout sets it to true with `VITE_PARK_RENDERER=three` in Vercel's versioned buildCommand. DEV exposes `/park` directly and from the hub. An existing active exploration run still wins root launch when the flag is on.
 - Math uses the shared planner/writer across all existing skill/input types. English uses the existing vocabulary curriculum, not a new preschool curriculum. Assistance remains sticky across reload and never records an independent correct answer; an independent-check Due remains pending.
 - Dexie v6 adds profile-owned parks, immutable learning plans, and events. Completion, answer persistence, and the unique part reward commit atomically. See [product/13_data_storage_migration_spec.md](/docs/product/13_data_storage_migration_spec.md) for additive migration and flag-off rollback; do not downgrade a v6 database to a v5-only app.
 - `/park` participates in the global PWA route/persistence protection. Replay and learning-resume checkpoints occur only after persistence. Free replay metrics remain separate from learning continuation.
+- PWA `version` is unique per build, independently of the source `revision`, so rebuilding the same commit with new flags also triggers automatic pickup. App and manifest embed the same version; cache recovery never clears IndexedDB or localStorage.
 - `little-park-vector-v1` is a distinct prototype visual candidate. Existing exploration artwork approval and automated correctness do not establish its child appeal or silent comprehension.
 
 ## When To Update Memory

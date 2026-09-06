@@ -1,55 +1,123 @@
-import { motion, useReducedMotion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useReducedMotion } from 'framer-motion';
+import { Component, lazy, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { simulateCourse, type PlayBeat } from '../../domain/park/simulation';
 import type { PartKind } from '../../domain/park/types';
-import { PartShape, ToyDoll } from './PartArt';
+import { ParkSprite, PARK_ART_CANDIDATE } from './PartArt';
 import { playParkBell } from '../../utils/audio';
 import { BEAT_MS, beatDuration } from './playback';
-function MovingDoll({ beat, start, end, reduced, climb }: { beat?: PlayBeat; start: number; end: number; reduced: boolean; climb: boolean }) {
-    const [landed, setLanded] = useState(false);
+import { threeParkRequested, supportsThreePark } from './three/config';
+import { depth, project, sampleParkBeat, slotX } from './sceneGeometry';
+
+const THREE_WIDTH = 730;
+const viewWidth = (length: number) => THREE_WIDTH + Math.max(0, length - 3) * 1.5 * Math.cos(25 * Math.PI / 180) * 120;
+
+function AnimatedScene({ layout, beat, reduced, preview }: { layout: (PartKind | null)[]; beat?: PlayBeat; reduced: boolean; preview: boolean }) {
+    const [progress, setProgress] = useState(0);
+    const duration = beat ? (beat.action === 'walk' ? beatDuration(beat) : BEAT_MS) : 0;
     useEffect(() => {
-        if (!beat?.popped) return;
-        const timer = window.setTimeout(() => setLanded(true), reduced ? 400 : BEAT_MS * .85);
-        return () => window.clearTimeout(timer);
-    }, [beat?.popped, reduced]);
-    const slide = beat?.action === 'slide';
-    const jump = beat?.action === 'jump' ? -145 : beat?.action === 'hop' ? -56 : 0;
-    const xs = slide ? [start - 19, start + 5, end + 36] : [start, (start + end) / 2, end - (climb ? 19 : 0)];
-    const ys = slide ? [155, 200, 246] : climb ? [246, 215, 155] : [246, 246 + jump, 246];
-    return <motion.g data-toy-action={beat?.action ?? 'ready'} data-bubble-popped={Boolean(beat?.popped && landed)}
-        initial={false} animate={{ x: reduced ? xs[2] : xs, y: reduced ? ys[2] : ys }}
-        transition={{ duration: reduced ? 0 : (beat?.action === 'walk' ? beatDuration(beat) : BEAT_MS) / 1000 * .85, times: [0, .5, 1], ease: 'easeInOut' }}>
-        <ToyDoll pink={beat?.pink ?? false} bubble={beat?.bubble ?? false} bubblePink={beat?.bubblePink ?? false} popped={beat?.popped && landed} />
-    </motion.g>;
-}
-export function ParkStage({ layout, beat, preview = false, sound = false }: { layout: (PartKind | null)[]; beat?: PlayBeat; preview?: boolean; sound?: boolean }) {
-    const reduced = useReducedMotion();
-    const width = 160 + layout.length * 120;
-    const x = (position: number) => position < 0 ? 36 : 80 + position * 120;
-    const start = beat ? x(beat.from) + (beat.action === 'walk' && layout[beat.from] === 'slide' ? 36 : 0) : 36;
-    const end = beat ? x(beat.to) : 36;
+        if (!duration) return;
+        const start = performance.now();
+        let frame = 0;
+        const tick = () => {
+            const t = Math.min(1, (performance.now() - start) / duration);
+            setProgress(t);
+            if (t < 1) frame = requestAnimationFrame(tick);
+        };
+        frame = requestAnimationFrame(tick);
+        return () => cancelAnimationFrame(frame);
+    }, [duration]);
+    const state = sampleParkBeat(layout, beat, progress);
+    const movement = reduced ? sampleParkBeat(layout, beat, 1) : state;
+    const point = project(movement.point), ground = project({ ...movement.point, z: 0 });
+    const layers: { id: string; depth: number; node: ReactNode }[] = [];
+    for (const [i, kind] of layout.entries()) {
+        if (!kind) continue;
+        const world = { x: i * 1.5, y: 0, z: 0 }, p = project(world);
+        const compressed = !reduced && kind === 'trampoline' && (beat?.action === 'jump' || beat?.action === 'hop')
+            && ((beat.from === i && progress < .12) || (beat.to === i && progress >= .85 && progress < 1));
+        layers.push({ id: `${i}-back`, depth: depth(world) - .2, node: <ParkSprite name={compressed ? 'trampoline-compressed' : `${kind}-back`} x={p.x} y={p.y} /> });
+        if (kind === 'slide' || kind === 'bubble' || kind === 'paint') {
+            layers.push({ id: `${i}-front`, depth: depth(world) + .23, node: <ParkSprite name={`${kind}-front`} x={p.x} y={p.y} /> });
+        }
+    }
+    const actorDepth = depth(movement.point);
+    if (state.bubble) layers.push({ id: 'bubble-back', depth: actorDepth - .01, node: <ParkSprite name="bubble-fx-back" x={point.x} y={point.y} /> });
+    layers.push({ id: 'actor', depth: actorDepth, node: <g data-toy-action={beat?.action ?? 'ready'} data-bubble-popped={state.popped}
+        data-world-x={movement.point.x} data-world-z={movement.point.z} data-bubble-visible={state.bubble} data-pose={movement.pose} data-progress={progress}>
+        <ParkSprite name={`actor-${state.pink ? 'pink' : 'violet'}-${movement.pose}`} x={point.x} y={point.y} />
+    </g> });
+    if (state.bubble) layers.push({ id: 'bubble-front', depth: actorDepth + .01, node: <g className={state.bubblePink ? 'park-pink-bubble' : undefined}>
+        <ParkSprite name="bubble-fx-front" x={point.x} y={point.y} />
+    </g> });
     const paths = simulateCourse(layout).filter(b => b.action === 'jump');
+    return <>
+        <ParkSprite name={`base-${layout.length}`} />
+        {layout.map((kind, i) => {
+            const p = project({ x: i * 1.5, y: 0, z: 0 });
+            return kind ? <ParkSprite key={i} name={`${kind}-shadow`} x={p.x} y={p.y} />
+                : <ellipse key={i} cx={p.x} cy={p.y} rx="37" ry="12" fill="none" stroke="#65795e" strokeOpacity=".4" strokeWidth="2" strokeDasharray="3 7" />;
+        })}
+        <ellipse cx={ground.x} cy={ground.y} rx={20 + movement.point.z * 3} ry="5" fill="#506245" opacity={.22 / (1 + movement.point.z)} />
+        {[...layers].sort((a, b) => a.depth - b.depth).map(layer => <g key={layer.id}>{layer.node}</g>)}
+        {beat?.action === 'bell' && progress > .35 && <g transform={`translate(${project({ x: slotX(beat.to, layout.length), y: .3, z: .86 }).x},${project({ x: slotX(beat.to, layout.length), y: .3, z: .86 }).y})`} stroke="#c19636" strokeWidth="3" fill="none">
+            <path d="M-25-6l-10-9M25-6l10-9M-28 8h-12M28 8h12" />
+        </g>}
+        {state.popped && <g transform={`translate(${point.x},${point.y - 62})`} fill="none" stroke={state.bubblePink ? '#e4a1b4' : '#86bcbc'} strokeWidth="2.5" opacity=".9">
+            <path d="M-61-14l-10-4M63-18l10-5M-28-57l-4-10M33-55l5-9M-27 56l-5 9M36 49l7 8" />
+            <circle cx="-48" cy="-42" r="5" /><circle cx="56" cy="33" r="4" />
+        </g>}
+        {(preview || reduced) && paths.map((path, i) => {
+            const samples = Array.from({ length: 33 }, (_, j) => project(sampleParkBeat(layout, path, .12 + j / 32 * .73).point));
+            return <path key={i} d={samples.map((p, j) => `${j ? 'L' : 'M'}${p.x},${p.y}`).join(' ')} stroke="#58736c" opacity=".4" strokeDasharray="4 9" strokeWidth="2" fill="none" />;
+        })}
+    </>;
+}
+
+function LegacyParkStage({ layout, beat, preview = false, sound = false }: { layout: (PartKind | null)[]; beat?: PlayBeat; preview?: boolean; sound?: boolean }) {
+    const reduced = Boolean(useReducedMotion());
+    const viewport = useRef<HTMLDivElement>(null);
+    const width = viewWidth(layout.length);
     useEffect(() => {
         if (sound && beat?.action === 'bell') return playParkBell();
     }, [sound, beat?.action, beat?.to]);
-    return <div className="park-stage">
-        <svg viewBox={`0 0 ${width} 320`} role="img" aria-label={beat?.caption ?? 'すべりだいから ゴールへ つながる コース'}>
-            <path d={`M0 78Q${width * .2} 11 ${width * .4} 69T${width} 56V320H0Z`} fill="var(--park-mint)" />
-            <path d={`M0 245Q${width * .3} 222 ${width * .5} 243T${width} 237V320H0Z`} fill="var(--park-ground)" />
-            <path d={`M18 254H${width - 18}`} stroke="var(--park-cream)" strokeWidth="20" strokeLinecap="round" />
-            <path d={`M18 254H${width - 18}`} stroke="var(--park-ink)" strokeOpacity=".2" strokeWidth="2" strokeDasharray="2 10" />
-            <g transform={`translate(${width - 35},250)`}>
-                <path d="M0 0V-70" stroke="var(--park-ink)" strokeWidth="4" />
-                <path d="M1-69H26L16-57L26-45H1Z" fill="var(--park-coral)" />
-            </g>
-            {layout.map((kind, i) => <g key={i} transform={`translate(${x(i)},248)`}>
-                {kind ? <PartShape kind={kind} /> : <ellipse rx="36" ry="8" fill="none" stroke="var(--park-ink)" strokeOpacity=".28" strokeWidth="2" strokeDasharray="4 6" />}
-                {beat?.action === 'bell' && beat.to === i && <g stroke="var(--park-coral)" strokeWidth="5" fill="none"><path d="M32-89l14-10M38-65h17M-45-81l-12-9" /><circle cy="-60" r="49" strokeWidth="2" /></g>}
-            </g>)}
-            {(preview || (reduced && beat?.action === 'jump')) && paths.map((path, i) => <path key={i} d={`M${x(path.from)} 205 Q${(x(path.from) + x(path.to)) / 2} 15 ${x(path.to)} 225`} stroke="var(--park-ink)" opacity=".4" strokeDasharray="6 7" strokeWidth="3" fill="none" />)}
-            <MovingDoll key={beat ? `${beat.from}:${beat.to}:${beat.action}` : 'ready'} beat={beat} start={start} end={end}
-                reduced={Boolean(reduced)} climb={beat?.action === 'walk' && layout[beat.to] === 'slide'} />
-        </svg>
+    useEffect(() => {
+        const element = viewport.current;
+        if (!element || !beat || layout.length <= 3) return;
+        const destination = project({ x: slotX(beat.to, layout.length), y: 0, z: 0 });
+        const scale = element.clientWidth / THREE_WIDTH;
+        // Bring the landing place into view at takeoff, preserving the actor's scale.
+        element.scrollTo({ left: (destination.x + 185) * scale - element.clientWidth * .72, behavior: reduced ? 'instant' : 'smooth' });
+    }, [beat?.to, beat?.action, beat, layout.length, reduced]);
+    return <div className="park-stage" data-art-candidate={PARK_ART_CANDIDATE}>
+        <div className="park-stage-viewport" ref={viewport}>
+            <svg viewBox={`-185 -505 ${width} ${615 + Math.max(0, layout.length - 3) * 20}`} style={{ width: `${width / THREE_WIDTH * 100}%` }} role="img" aria-label={beat?.caption ?? 'すべりだいから ゴールへ つながる コース'}>
+                <AnimatedScene key={beat ? `${beat.from}:${beat.to}:${beat.action}` : `ready:${layout.join(',')}`} layout={layout} beat={beat} reduced={reduced} preview={preview} />
+            </svg>
+        </div>
+        {layout.length > 3 && <div className="park-pan-controls" aria-label="コースの みる ばしょ">
+            <button onClick={() => viewport.current?.scrollBy({ left: -220, behavior: reduced ? 'instant' : 'smooth' })} aria-label="ひだりを みる">←</button>
+            <span>よこへ うごかして みよう</span>
+            <button onClick={() => viewport.current?.scrollBy({ left: 220, behavior: reduced ? 'instant' : 'smooth' })} aria-label="みぎを みる">→</button>
+        </div>}
         <p className="park-stage-caption" aria-live="polite">{beat?.caption ?? (preview ? 'てんせんは ジャンプの みち' : 'ならべて、うごかしてみよう')}</p>
     </div>;
+}
+
+
+const ThreeParkStage = lazy(() => import('./three/ThreeParkStage'));
+type StageProps = Parameters<typeof LegacyParkStage>[0];
+class StageBoundary extends Component<{ children: ReactNode; fallback: ReactNode }, { failed: boolean }> {
+    state = { failed: false };
+    static getDerivedStateFromError() { return { failed: true }; }
+    render() { return this.state.failed ? this.props.fallback : this.props.children; }
+}
+
+export function ParkStage(props: StageProps) {
+    const [failed, setFailed] = useState(false);
+    const fail = useCallback(() => setFailed(true), []);
+    const fallback = <LegacyParkStage {...props} />;
+    if (!threeParkRequested() || !supportsThreePark(props.layout) || failed) return fallback;
+    return <StageBoundary fallback={fallback}>
+        <Suspense fallback={fallback}><ThreeParkStage layout={props.layout} beat={props.beat} compact={props.preview} onFailure={fail} /></Suspense>
+    </StageBoundary>;
 }

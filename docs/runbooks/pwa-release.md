@@ -8,6 +8,8 @@
 
 ## Preflight
 
+- 本番 `https://sansu-seven.vercel.app` はGitHub `yutogasaki/sansu` のmainからVercelへ自動配信する。2026-09-06の追加ユーザー依頼により `vercel.json` のbuildCommandは `VITE_BUILD_PLAY_ENABLED=true VITE_PARK_RENDERER=three npm run build`。ローカル汎用buildはflag未指定の既定動作を維持する。
+- 遊園地の表示だけ戻す場合はbuildCommandのrendererを `legacy` にして再配信する。起動先も戻す場合は `VITE_BUILD_PLAY_ENABLED=false` を指定する。IndexedDBや保存済み作品は削除しない。
 - `npm run lint`
 - `npm run test:run`
 - `npm run build`
@@ -29,6 +31,7 @@
 ## Checklist
 
 - `version.json` is generated in build output
+- `version` はbuildごとに一意、`revision` はsourceのGit SHA。同じrevisionでも再ビルド時のversionが変わり、埋め込み `__APP_VERSION__` とmanifestが一致することを検証する。manifestの `park.enabled=true` / `park.renderer=three` と実stage候補属性で公開設定を確認する。
 - `sw.js` is generated in build output
 - `index.html`, `manifest.json`, and `sw.js` are not strongly cached on supported hosts
 - `updateViaCache: 'none'` behavior is still intact
@@ -41,7 +44,7 @@
 - PWA precacheが12 MiB以下で、探索本番画像の合計が8 MiB以下・1枚800 KiB以下である
 - `raw / concept / draft / comparison / visual-tests` がprecacheへ入っていない
 - 探索本番画像は原則 `public/assets/explore/<encounter-id>/scene-*`、制作入力は `docs/design/` に分離されている
-- production defaultは `snap-root-v1` とし、buildの `version.json` がdelivery `snap-root-v1` / visualLineage `pokko-field-v1` を返すことを確認する。`classic-v1` は旧マキモドンから別rendererへ切り替わる既知のmixed-lineage FAILのためrollback先に使わない。現行production assetはcold-open `dig-pop-carry-bloom-v3` と後続 `firefly-stumble-bloom-painted-v5` の実runtime URLだけをprecacheし、旧編み根、旧landed、一本葉を引く版、水やり版、旧firefly v4をコード参照とprecacheから外す。新assetが未実装、旧assetが参照中、因果・身体完全性のmanual gateが未記録、またはcritical pathにvisible legacy / mixed lineageが1件でもあればreleaseを止める。保存済みactive runのopening IDは途中で差し替えない。制作sourceは `docs/design/` からprecacheへ混ぜない
+- 既存探索のdefaultは `snap-root-v1` とし、buildの `version.json` が探索用delivery `snap-root-v1` / visualLineage `pokko-field-v1` を返すことを確認する。遊園地の公開設定は別の `park` フィールドと実stage属性で確認する。`classic-v1` は旧マキモドンから別rendererへ切り替わる既知のmixed-lineage FAILのため探索のrollback先に使わない。現行探索production assetはcold-open `dig-pop-carry-bloom-v3` と後続 `firefly-stumble-bloom-painted-v5` の実runtime URLだけをprecacheし、旧編み根、旧landed、一本葉を引く版、水やり版、旧firefly v4をコード参照とprecacheから外す。探索の新assetが未実装、旧assetが参照中、因果・身体完全性のmanual gateが未記録、またはcritical pathにvisible legacy / mixed lineageが1件でもあれば探索releaseを止める。保存済みactive runのopening IDは途中で差し替えない。制作sourceは `docs/design/` からprecacheへ混ぜない
 
 ## Manual Verification
 
@@ -56,6 +59,10 @@
 9. Scenario D（fresh old build → new build for each case）: verify same-route checkpoints independently at Explore replay, Battle cancel/replay, and Study persisted break/continue. Confirm the result/reward/break remains visible, no reload happens before persistence or the child's next action, and exactly one reload follows that action.
 10. Run `npm run e2e:pwa-update`; confirm a real `version.json` drift causes exactly one reload, and that safe/protected Router handoffs, delayed recovery, and the same-route Battle checkpoint pass without `hashchange` or duplicate reloads.
 11. On iOS, repeat relaunch/update timing because activation can lag behind Chromium.
+
+実際の公開二ビルド監査には、公開前に `SANSU_PARK_LIVE_URL=https://sansu-seven.vercel.app node tools/e2e-park-live-update.mjs` を起動する。専用ブラウザのテストプロフィールで旧版をSW制御下・offlineに保持し、公開後に新しい40桁のGit SHAを標準入力へ渡す。オンライン復帰による自動更新、保護中フォーム、1回のreload、IndexedDB/localStorage保持、公開Three.jsを確認する。実機検証とは区別する。
+
+電源OFF、OSによる停止、オフラインの端末をサーバー側から即時更新することはできない。オンラインでの次回起動・復帰時に確認し、入力や保存中は安全なcheckpointまで待つ。強制更新のためにプロフィール、学習履歴、作品を消す運用は行わない。
 
 ## Rollback Clues
 

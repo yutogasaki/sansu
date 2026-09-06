@@ -46,6 +46,7 @@ try {
     await fs.mkdir('output/playwright/park', { recursive: true });
     await page.screenshot({ path: 'output/playwright/park/production-ready.png' });
     const revision = await page.locator('[data-game-id]').getAttribute('data-build-revision');
+    const candidate = await page.locator('[data-game-id]').getAttribute('data-visual-candidate-id');
     await page.getByRole('button', { name: 'つくる', exact: true }).click();
     await page.getByRole('button', { name: 'シャボンゲートを つくる', exact: true }).click();
     await page.locator('.park-answer').waitFor();
@@ -96,7 +97,7 @@ try {
     assert.deepEqual((await stored()).plans, before.plans);
     assert.deepEqual(errors, []);
     await fs.writeFile('output/playwright/park/production-report.json', JSON.stringify({ target: base, revision,
-        flag: 'VITE_BUILD_PLAY_ENABLED=true', candidate: 'little-park-vector-v1',
+        flag: 'VITE_BUILD_PLAY_ENABLED=true', candidate,
         passed: ['pending learning checkpoint', 'critical persistence navigation hold', 'old active run precedence'] }, null, 2));
     console.log('PASS production old run remains the launch priority');
 } finally { await context.close(); await browser.close(); }

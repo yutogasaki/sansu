@@ -3,10 +3,10 @@ import { promises as fs } from 'node:fs';
 import assert from 'node:assert/strict';
 
 const base = process.env.SANSU_PARK_BASE_URL || 'http://127.0.0.1:5187';
-const out = 'output/playwright/park';
+const out = process.env.SANSU_PARK_OUTPUT || 'output/playwright/park';
 await fs.mkdir(out, { recursive: true });
-const browser = await chromium.launch();
-const report = { target: base, flag: 'VITE_BUILD_PLAY_ENABLED=true', candidate: 'little-park-vector-v1', scenarios: [] };
+const browser = await chromium.launch(process.env.SANSU_PARK_BROWSER_GPU === 'metal' ? { headless: true, args: ['--use-angle=metal'] } : {});
+const report = { target: base, flag: 'VITE_BUILD_PLAY_ENABLED=true', candidate: process.env.SANSU_PARK_CANDIDATE || 'park-resin-blender-v1', scenarios: [] };
 
 async function seed(page, skill, subject = 'math') {
     return page.evaluate(async ({ skill, subject }) => {
@@ -77,6 +77,10 @@ try {
         const id = await seed(page, scenario.skill, scenario.subject);
         await page.goto(`${base}/#/`);
         await page.locator('[data-game-id="build-play-v1"]').waitFor();
+        assert.equal(await page.locator('[data-game-id]').getAttribute('data-visual-candidate-id'), report.candidate);
+        await page.waitForFunction(() => [...document.querySelectorAll('svg image')].every(image => {
+            const loaded = new Image(); loaded.src = image.getAttribute('href'); return loaded.complete && loaded.naturalWidth > 0;
+        }));
         assert.equal(new URL(page.url()).hash, '#/park');
         await capture(page, `${scenario.name}-ready`);
         const revision = await page.locator('[data-game-id]').getAttribute('data-build-revision');

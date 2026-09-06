@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import { loadEnv } from 'vite'
 import path from 'path'
+import { randomUUID } from 'node:crypto'
 
 // https://vitejs.dev/config/
 
@@ -26,9 +27,13 @@ const resolveBuildMetadata = (mode: string) => {
     const deliveryId = requestedDeliveryId && EXPLORE_DELIVERY_IDS.has(requestedDeliveryId)
         ? requestedDeliveryId
         : DEFAULT_EXPLORE_DELIVERY_ID
-    const appVersion = buildRevision === 'development-local'
-        ? new Date().toISOString()
-        : buildRevision
+    // A redeploy can change flags/assets without changing the Git revision.
+    // Generate once per build and share it between the app and version.json.
+    const appVersion = `${buildRevision}:${randomUUID()}`
+    const park = {
+        enabled: env.VITE_BUILD_PLAY_ENABLED === 'true',
+        renderer: env.VITE_PARK_RENDERER === 'three' ? 'three' : 'legacy',
+    }
     const visualLineage = deliveryId === 'snap-root-v1'
         ? 'pokko-field-v1'
         : 'legacy-mixed-v0'
@@ -38,6 +43,7 @@ const resolveBuildMetadata = (mode: string) => {
         buildRevision,
         deliveryId,
         visualLineage,
+        park,
     }
 }
 
@@ -47,6 +53,7 @@ const resolveBuildMetadata = (mode: string) => {
 const exploreArtworkGlob = 'assets/explore/**/scene-*.{jpg,jpeg,webp,avif}'
 const openingRootPullArtworkGlob = 'assets/explore/opening-root-pull-v*/*.{jpg,jpeg,webp,avif}'
 const ikimonoArtworkGlob = 'ikimono/*.webp'
+const parkArtworkGlob = 'assets/park/resin-v1/*.webp'
 
 type AssetFile = {
     type: 'asset';
@@ -63,6 +70,7 @@ const appVersionManifestPlugin = ({
     buildRevision,
     deliveryId,
     visualLineage,
+    park,
 }: ReturnType<typeof resolveBuildMetadata>) => ({
     name: 'app-version-manifest',
     generateBundle(this: BundleContext) {
@@ -74,6 +82,7 @@ const appVersionManifestPlugin = ({
                 revision: buildRevision,
                 delivery: deliveryId,
                 visualLineage,
+                park,
             }),
         })
     }
@@ -101,6 +110,8 @@ export default defineConfig(({ mode }) => {
                     ikimonoArtworkGlob,
                     exploreArtworkGlob,
                     openingRootPullArtworkGlob,
+                    parkArtworkGlob,
+                    'assets/park/three-v1/*-icon.png',
                 ],
                 manifest: false, // We use public/manifest.json
                 workbox: {

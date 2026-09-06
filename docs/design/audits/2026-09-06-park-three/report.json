@@ -1,0 +1,142 @@
+{
+  "target": "http://127.0.0.1:5188",
+  "candidate": "park-three-resin-v1",
+  "delivery": "build-play-v1",
+  "flags": "VITE_BUILD_PLAY_ENABLED=true VITE_PARK_RENDERER=three",
+  "browser": "145.0.7632.6",
+  "device": "Playwright Chromium desktop host, viewport emulation; not physical mobile",
+  "gpuMode": "metal",
+  "scenarios": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "4102126-park-three-review",
+      "initialRender": {
+        "frames": 3,
+        "calls": 142,
+        "triangles": 100122,
+        "geometries": 27,
+        "textures": 5,
+        "actorPixels": 64.25259638505145,
+        "foot": {
+          "x": 46.13456174583104,
+          "y": 204.9250518348896
+        },
+        "head": {
+          "x": 46.13456174583104,
+          "y": 140.67245544983814
+        },
+        "buffer": {
+          "width": 682,
+          "height": 612
+        },
+        "dpr": 1.75
+      },
+      "idleStopped": true,
+      "actualUiSwap": true,
+      "replayNoLearningWrites": true,
+      "stopDisposed": true,
+      "contextLossFallback": true,
+      "learningNoCanvas": true,
+      "sixSlotPreserved": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "4102126-park-three-review",
+      "initialRender": {
+        "frames": 3,
+        "calls": 142,
+        "triangles": 100122,
+        "geometries": 27,
+        "textures": 5,
+        "actorPixels": 98.85014828469448,
+        "foot": {
+          "x": 70.97624883974007,
+          "y": 271.0385412844455
+        },
+        "head": {
+          "x": 70.97624883974007,
+          "y": 172.188392999751
+        },
+        "buffer": {
+          "width": 1050,
+          "height": 787
+        },
+        "dpr": 1.75
+      },
+      "idleStopped": true,
+      "actualUiSwap": true,
+      "replayNoLearningWrites": true,
+      "stopDisposed": true,
+      "contextLossFallback": true,
+      "learningNoCanvas": true,
+      "sixSlotPreserved": true
+    },
+    {
+      "failure": "webgl-unavailable",
+      "fallback": true
+    },
+    {
+      "failure": "module-load",
+      "fallback": true
+    },
+    {
+      "recording": "A",
+      "source": "actual /park application playback",
+      "seconds": 7.154999999999999
+    },
+    {
+      "recording": "B",
+      "source": "actual /park application playback",
+      "seconds": 9.164
+    }
+  ],
+  "errors": [],
+  "performance": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "devicePixelRatio": 1,
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+    "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "sampleCount": 598,
+    "gapsOver250ms": 0,
+    "averageIntervalMs": 13.673913043478262,
+    "p95IntervalMs": 14.100000000000364,
+    "averageFps": 73.13195548489665,
+    "render": {
+      "frames": 607,
+      "calls": 148,
+      "triangles": 107114,
+      "geometries": 33,
+      "textures": 5,
+      "actorPixels": 64.25259638505145,
+      "foot": {
+        "x": 344.3567433309157,
+        "y": 269.1247654245624
+      },
+      "head": {
+        "x": 344.3567433309157,
+        "y": 204.87216903951096
+      },
+      "buffer": {
+        "width": 390,
+        "height": 350
+      },
+      "dpr": 1
+    },
+    "warmupReplays": 1,
+    "measuredReplays": 1,
+    "cpuThrottle": 1,
+    "video": false,
+    "screenshots": false,
+    "physicalMobile": false
+  },
+  "pass": true
+}

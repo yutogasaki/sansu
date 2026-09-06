@@ -4,14 +4,14 @@ import { simulateCourse } from '../../domain/park/simulation';
 import { PART_KINDS, type PartKind } from '../../domain/park/types';
 import { PartIcon } from './PartArt';
 import { ParkStage } from './ParkStage';
-import { beatDuration } from './playback';
+import { parkBeatDuration } from './playback';
 
 function PartDemo({ kind }: { kind: PartKind }) {
     const layout: (PartKind | null)[] = kind === 'bubble' ? ['slide', 'bubble', 'trampoline']
         : kind === 'paint' ? ['paint', 'bubble', 'trampoline'] : ['slide', kind, 'bubble'];
     const beats = simulateCourse(layout);
     const [index, setIndex] = useState(-1);
-    const duration = index >= 0 ? beatDuration(beats[index]) : 0;
+    const duration = index >= 0 ? parkBeatDuration(beats[index], layout) : 0;
     useEffect(() => {
         if (index < 0 || index >= beats.length - 1) return;
         const timer = window.setTimeout(() => setIndex(i => i + 1), duration);

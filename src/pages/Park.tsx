@@ -9,11 +9,12 @@ import { openPark, recordParkVisit, saveParkEdit, startParkPlan } from '../domai
 import { commitParkLearning } from '../domain/park/commit';
 import { simulateCourse } from '../domain/park/simulation';
 import type { ParkLearningAction, PartKind } from '../domain/park/types';
+import { THREE_PARK_CANDIDATE, threeParkRequested } from '../components/park/three/config';
 import { ParkStage } from '../components/park/ParkStage';
-import { beatDuration } from '../components/park/playback';
+import { parkBeatDuration } from '../components/park/playback';
 import { ParkEditor } from '../components/park/ParkEditor';
 import { PartWorkshop } from '../components/park/PartWorkshop';
-import { PartIcon } from '../components/park/PartArt';
+import { PartIcon, PARK_ART_CANDIDATE } from '../components/park/PartArt';
 import { ParkAnswerForm } from '../components/park/ParkAnswerForm';
 import { useParkActions } from '../components/park/useParkActions';
 import { reachPwaUpdateCheckpoint } from '../pwa';
@@ -39,7 +40,7 @@ function ParkSession({ profile }: { profile: UserProfile }) {
                 setPlay({ ...play, done: true });
                 void run(() => recordParkVisit(profile.id, `${play.id}:completed`, 'replay_completed', play.courseId));
             }
-        }, beatDuration(simulateCourse(play.layout)[play.index]));
+        }, parkBeatDuration(simulateCourse(play.layout)[play.index], play.layout));
         return () => window.clearTimeout(timer);
     }, [play, profile.id, run]);
 
@@ -81,8 +82,8 @@ function ParkSession({ profile }: { profile: UserProfile }) {
     const course = park.courses.find(c => c.id === park.activeCourseId)!;
     const layout = courseLayout(park, course.id);
     const slot = plan?.slots[plan.cursor];
-    return <div className="park-page" data-game-id="build-play-v1" data-visual-lineage-id="little-park-v1" data-visual-candidate-id="little-park-vector-v1" data-visual-mode={screen === 'learning' ? 'learning' : 'toy-course'}
-        data-build-revision={__BUILD_REVISION__} data-delivery-id="build-play-v1">
+    return <div className="park-page" data-game-id="build-play-v1" data-visual-lineage-id="little-park-v1" data-visual-candidate-id={threeParkRequested() ? THREE_PARK_CANDIDATE : PARK_ART_CANDIDATE} data-visual-mode={screen === 'learning' ? 'learning' : 'toy-course'}
+        data-build-revision={__BUILD_REVISION__} data-delivery-id="build-play-v1" data-editing={editing && !playing && screen === 'course'}>
         <header className="park-header">
             <div><p>{profile.name}の</p><h1>ちいさな遊園地</h1></div>
             <button className="park-text-button" disabled={busy} onClick={() => navigate('/settings')}>せってい</button>
@@ -109,7 +110,7 @@ function ParkSession({ profile }: { profile: UserProfile }) {
                     </button>)}
                     {park.courses.length < 3 && <button className="park-text-button" disabled={busy || playing} onClick={() => { setPlay(undefined); setEditing(true); void run(() => saveParkEdit(profile.id, park.revision, { type: 'add-course' })); }}>＋</button>}
                 </nav>
-                <ParkStage layout={play?.layout ?? layout} beat={play ? simulateCourse(play.layout)[play.index] : undefined} preview={editing && !play} sound={profile.soundEnabled} />
+                <ParkStage key={play?.id ?? course.id} layout={play?.layout ?? layout} beat={play ? simulateCourse(play.layout)[play.index] : undefined} preview={editing && !play} sound={profile.soundEnabled} />
                 <div className="park-main-actions">
                     {playing ? <button className="park-button park-primary" disabled={busy} onClick={() => { setPlay(undefined); setEditing(true); }}>とめて つくりなおす</button>
                         : <button className="park-button park-primary" disabled={busy} onClick={() => void replay()}>▷ {play ? 'もういっかい' : 'あそばせる'}</button>}

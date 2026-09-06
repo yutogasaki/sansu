@@ -1,6 +1,6 @@
 .park-page {
     --park-ink: var(--explore-outline, #284b4c);
-    --park-cream: #fff9e9;
+    --park-cream: #f6f0e6;
     --park-mint: #b3dfce;
     --park-mint-dark: #498b77;
     --park-coral: #ea8973;
@@ -28,7 +28,13 @@
 .park-course-thumb { display: flex; height: 28px; align-items: end; justify-content: center; }
 .park-course-thumb svg { height: 26px; min-width: 0; }
 .park-stage { position: relative; margin: 6px -18px 14px; width: calc(100% + 36px); max-width: 796px; }
-.park-stage > svg { width: 100%; height: clamp(220px, 35vh, 330px); overflow: visible; }
+.park-stage-viewport { width: 100%; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain; }
+.park-stage-viewport::-webkit-scrollbar { display: none; }
+.park-stage-viewport > svg { display: block; max-width: none; height: auto; overflow: hidden; }
+.park-pan-controls { display: flex; justify-content: space-between; align-items: center; margin: 0 18px; }
+.park-pan-controls button { min-width: 48px; min-height: 48px; border-radius: 50%; background: #e8e9d7; font-size: 21px; }
+.park-pan-controls span { font-size: 11px; color: #65745f; }
+.park-pink-bubble { filter: sepia(.25) hue-rotate(285deg) saturate(1.5); }
 .park-stage-caption { padding: 0 18px; min-height: 40px; margin-top: 5px; font-size: 14px; font-weight: 700; text-align: center; line-height: 1.7; }
 .park-main-actions { display: flex; gap: 12px; align-items: stretch; margin-bottom: 20px; }
 .park-main-actions .park-primary { flex: 1; }
@@ -63,7 +69,7 @@
 .park-catalog .park-part small { font-size: 12px; }
 .park-demo { margin-block: 16px; }
 .park-demo .park-stage { margin-bottom: 0; }
-.park-demo .park-stage > svg { height: 195px; }
+.park-demo .park-stage-viewport { max-width: 540px; margin-inline: auto; }
 .park-demo > button { display: block; margin-inline: auto; }
 .park-workshop > .park-primary { width: 100%; font-size: 17px; }
 .park-note { font-size: 12px; text-align: center; line-height: 1.8; margin-top: 14px; }
@@ -87,7 +93,7 @@
 @media (min-width: 700px) {
     .park-page { padding: 28px 32px; }
     .park-stage { margin-inline: auto; width: 100%; }
-    .park-stage > svg { height: 360px; }
+    .park-stage-viewport { max-width: 540px; margin-inline: auto; }
     .park-main-actions { max-width: 500px; }
     .park-header { margin-bottom: 28px; }
     .park-learning { max-width: 600px; }
@@ -95,4 +101,22 @@
 @media (prefers-reduced-motion: reduce) {
     .park-page *, .park-page *::before, .park-page *::after { animation: none !important; transition: none !important; }
     .park-button:active { transform: none; }
+}
+
+/* Three.js candidate: fixed camera, HTML controls own all touch interaction. */
+.park-page:has(.park-three-stage) { --park-cream: #fbf7ee; }
+.park-three-canvas { display: block; width: 100%; height: 350px; pointer-events: none; }
+.park-three-stage { isolation: isolate; }
+.park-demo .park-three-canvas { height: 310px; }
+@media (min-width: 700px) {
+    .park-three-stage { max-width: 600px; }
+    .park-three-canvas { height: 450px; }
+    .park-demo .park-three-canvas { height: 390px; }
+}
+
+.park-page[data-editing=true] .park-three-canvas { height: 240px; }
+.park-page[data-editing=true] .park-header { margin-bottom: 8px; }
+.park-page[data-editing=true] .park-main-actions { margin-bottom: 12px; }
+@media (min-width: 700px) {
+    .park-page[data-editing=true] .park-three-canvas { height: 330px; }
 }

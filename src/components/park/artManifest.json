@@ -1,0 +1,688 @@
+{
+  "candidate": "park-resin-blender-v1",
+  "ppu": 120,
+  "camera": {
+    "yaw": 25,
+    "elevation": 15,
+    "projection": "orthographic"
+  },
+  "color": {
+    "view": "AgX",
+    "look": "Medium High Contrast",
+    "exposure": 0,
+    "alpha": "straight"
+  },
+  "sprites": {
+    "bubble-fx-back": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "bubble-fx-back.webp",
+      "bounds": [
+        118,
+        131,
+        266,
+        206
+      ]
+    },
+    "bubble-fx-front": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "bubble-fx-front.webp",
+      "bounds": [
+        118,
+        137,
+        266,
+        279
+      ]
+    },
+    "slide-shadow": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "slide-shadow.webp",
+      "bounds": [
+        0,
+        0,
+        384,
+        384
+      ]
+    },
+    "slide-back": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "slide-back.webp",
+      "bounds": [
+        97,
+        130,
+        281,
+        276
+      ]
+    },
+    "slide-front": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "slide-front.webp",
+      "bounds": [
+        89,
+        149,
+        248,
+        274
+      ]
+    },
+    "slide-icon": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "slide-icon.webp",
+      "bounds": [
+        89,
+        130,
+        281,
+        276
+      ]
+    },
+    "trampoline-shadow": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "trampoline-shadow.webp",
+      "bounds": [
+        0,
+        0,
+        384,
+        384
+      ]
+    },
+    "trampoline-back": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "trampoline-back.webp",
+      "bounds": [
+        125,
+        221,
+        259,
+        281
+      ]
+    },
+    "trampoline-icon": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "trampoline-icon.webp",
+      "bounds": [
+        125,
+        221,
+        259,
+        281
+      ]
+    },
+    "trampoline-compressed": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "trampoline-compressed.webp",
+      "bounds": [
+        125,
+        221,
+        259,
+        281
+      ]
+    },
+    "bubble-shadow": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "bubble-shadow.webp",
+      "bounds": [
+        0,
+        0,
+        384,
+        384
+      ]
+    },
+    "bubble-back": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "bubble-back.webp",
+      "bounds": [
+        184,
+        99,
+        249,
+        258
+      ]
+    },
+    "bubble-front": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "bubble-front.webp",
+      "bounds": [
+        135,
+        100,
+        200,
+        283
+      ]
+    },
+    "bubble-icon": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "bubble-icon.webp",
+      "bounds": [
+        135,
+        99,
+        249,
+        283
+      ]
+    },
+    "mat-shadow": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "mat-shadow.webp",
+      "bounds": [
+        0,
+        0,
+        384,
+        384
+      ]
+    },
+    "mat-back": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "mat-back.webp",
+      "bounds": [
+        125,
+        231,
+        258,
+        281
+      ]
+    },
+    "mat-icon": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "mat-icon.webp",
+      "bounds": [
+        125,
+        231,
+        258,
+        281
+      ]
+    },
+    "bell-shadow": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "bell-shadow.webp",
+      "bounds": [
+        0,
+        0,
+        384,
+        384
+      ]
+    },
+    "bell-back": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "bell-back.webp",
+      "bounds": [
+        167,
+        130,
+        247,
+        267
+      ]
+    },
+    "bell-icon": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "bell-icon.webp",
+      "bounds": [
+        167,
+        130,
+        247,
+        267
+      ]
+    },
+    "paint-shadow": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "paint-shadow.webp",
+      "bounds": [
+        0,
+        0,
+        384,
+        384
+      ]
+    },
+    "paint-back": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "paint-back.webp",
+      "bounds": [
+        184,
+        99,
+        249,
+        258
+      ]
+    },
+    "paint-front": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "paint-front.webp",
+      "bounds": [
+        135,
+        100,
+        200,
+        283
+      ]
+    },
+    "paint-icon": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "paint-icon.webp",
+      "bounds": [
+        135,
+        99,
+        249,
+        283
+      ]
+    },
+    "actor-violet-stand": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-violet-stand.webp",
+      "bounds": [
+        153,
+        150,
+        232,
+        272
+      ]
+    },
+    "actor-violet-walk-a": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-violet-walk-a.webp",
+      "bounds": [
+        154,
+        148,
+        231,
+        271
+      ]
+    },
+    "actor-violet-walk-b": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-violet-walk-b.webp",
+      "bounds": [
+        152,
+        148,
+        233,
+        269
+      ]
+    },
+    "actor-violet-sit": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-violet-sit.webp",
+      "bounds": [
+        155,
+        160,
+        234,
+        275
+      ]
+    },
+    "actor-violet-soar": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-violet-soar.webp",
+      "bounds": [
+        150,
+        150,
+        235,
+        272
+      ]
+    },
+    "actor-violet-crouch": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-violet-crouch.webp",
+      "bounds": [
+        152,
+        159,
+        233,
+        272
+      ]
+    },
+    "actor-violet-land": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-violet-land.webp",
+      "bounds": [
+        152,
+        159,
+        233,
+        272
+      ]
+    },
+    "actor-violet-wave": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-violet-wave.webp",
+      "bounds": [
+        153,
+        150,
+        223,
+        272
+      ]
+    },
+    "actor-pink-stand": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-pink-stand.webp",
+      "bounds": [
+        153,
+        150,
+        232,
+        272
+      ]
+    },
+    "actor-pink-walk-a": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-pink-walk-a.webp",
+      "bounds": [
+        154,
+        148,
+        231,
+        271
+      ]
+    },
+    "actor-pink-walk-b": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-pink-walk-b.webp",
+      "bounds": [
+        152,
+        148,
+        233,
+        269
+      ]
+    },
+    "actor-pink-sit": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-pink-sit.webp",
+      "bounds": [
+        155,
+        160,
+        234,
+        275
+      ]
+    },
+    "actor-pink-soar": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-pink-soar.webp",
+      "bounds": [
+        150,
+        150,
+        235,
+        272
+      ]
+    },
+    "actor-pink-crouch": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-pink-crouch.webp",
+      "bounds": [
+        152,
+        159,
+        233,
+        272
+      ]
+    },
+    "actor-pink-land": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-pink-land.webp",
+      "bounds": [
+        152,
+        159,
+        233,
+        272
+      ]
+    },
+    "actor-pink-wave": {
+      "width": 384,
+      "height": 384,
+      "pivot": [
+        192.0,
+        267.3423
+      ],
+      "file": "actor-pink-wave.webp",
+      "bounds": [
+        153,
+        150,
+        223,
+        272
+      ]
+    },
+    "base-3": {
+      "width": 822,
+      "height": 432,
+      "pivot": [
+        234.2701,
+        258.4218
+      ],
+      "file": "base-3.webp",
+      "bounds": [
+        55,
+        219,
+        767,
+        366
+      ]
+    },
+    "base-4": {
+      "width": 1002,
+      "height": 432,
+      "pivot": [
+        242.7024,
+        248.5774
+      ],
+      "file": "base-4.webp",
+      "bounds": [
+        64,
+        209,
+        938,
+        375
+      ]
+    },
+    "base-5": {
+      "width": 1182,
+      "height": 432,
+      "pivot": [
+        251.1347,
+        238.7331
+      ],
+      "file": "base-5.webp",
+      "bounds": [
+        72,
+        199,
+        1110,
+        385
+      ]
+    },
+    "base-6": {
+      "width": 1362,
+      "height": 432,
+      "pivot": [
+        259.567,
+        228.8887
+      ],
+      "file": "base-6.webp",
+      "bounds": [
+        81,
+        189,
+        1282,
+        395
+      ]
+    }
+  },
+  "markers": {
+    "fps": 24,
+    "takeoff": 0.12,
+    "apex": 0.5,
+    "land": 0.85,
+    "bubbleAttach": 0.55,
+    "bubblePop": "land",
+    "settle": 1
+  },
+  "compressedBytes": 197440,
+  "expandedBytes": 31140864
+}

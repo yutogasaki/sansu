@@ -1,0 +1,133 @@
+{
+  "target": "http://127.0.0.1:5188",
+  "revision": "4102126-park-three-review",
+  "candidate": "park-three-resin-v1",
+  "browser": "145.0.7632.6",
+  "headless": true,
+  "gpuMode": "metal",
+  "physicalMobile": false,
+  "measurement": "RAF cadence of changes to actual renderer frame count; no GPU timer query",
+  "warmupReplays": 1,
+  "measuredReplaysPerViewport": 3,
+  "screenshots": false,
+  "video": false,
+  "cpuThrottle": 1,
+  "results": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "info": {
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "frames": 611,
+        "calls": 148,
+        "triangles": 107114,
+        "geometries": 33,
+        "textures": 5,
+        "actorPixels": 64.25259638505145,
+        "foot": {
+          "x": 344.3567433309157,
+          "y": 269.1247654245624
+        },
+        "head": {
+          "x": 344.3567433309157,
+          "y": 204.87216903951096
+        },
+        "buffer": {
+          "width": 682,
+          "height": 612
+        },
+        "dpr": 1.75
+      },
+      "runs": [
+        {
+          "count": 598,
+          "meanMs": 13.338461538461537,
+          "p95Ms": 14.299999999999272,
+          "maxMs": 14.400000000001455,
+          "over33ms": 0
+        },
+        {
+          "count": 598,
+          "meanMs": 13.336622073578594,
+          "p95Ms": 14.200000000000728,
+          "maxMs": 14.399999999997817,
+          "over33ms": 0
+        },
+        {
+          "count": 599,
+          "meanMs": 13.338230383973292,
+          "p95Ms": 14.200000000000728,
+          "maxMs": 14.400000000001455,
+          "over33ms": 0
+        }
+      ],
+      "meanFps": [
+        74.97116493656287,
+        74.98150539791607,
+        74.97246420346448
+      ],
+      "idleDrawsOver500ms": 0
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "deviceScaleFactor": 2,
+      "info": {
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "frames": 609,
+        "calls": 148,
+        "triangles": 107114,
+        "geometries": 33,
+        "textures": 5,
+        "actorPixels": 98.85014828469448,
+        "foot": {
+          "x": 529.7796051244857,
+          "y": 369.8073314224037
+        },
+        "head": {
+          "x": 529.7796051244857,
+          "y": 270.95718313770914
+        },
+        "buffer": {
+          "width": 1050,
+          "height": 787
+        },
+        "dpr": 1.75
+      },
+      "runs": [
+        {
+          "count": 598,
+          "meanMs": 13.338294314381272,
+          "p95Ms": 14,
+          "maxMs": 14.399999999999636,
+          "over33ms": 0
+        },
+        {
+          "count": 597,
+          "meanMs": 13.338358458961475,
+          "p95Ms": 14.100000000002183,
+          "maxMs": 14.400000000001455,
+          "over33ms": 0
+        },
+        {
+          "count": 597,
+          "meanMs": 13.337855946398667,
+          "p95Ms": 14,
+          "maxMs": 14.399999999997817,
+          "over33ms": 0
+        }
+      ],
+      "meanFps": [
+        74.97210486064967,
+        74.97174431746829,
+        74.97456892762501
+      ],
+      "idleDrawsOver500ms": 0
+    }
+  ]
+}
