@@ -120,3 +120,29 @@
 @media (min-width: 700px) {
     .park-page[data-editing=true] .park-three-canvas { height: 330px; }
 }
+
+/* The first visit uses the same toys and palette as the child's own course. */
+.park-welcome { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.park-welcome > * { flex-shrink: 0; }
+.park-welcome-heading { text-align: center; }
+.park-welcome-heading p { font-size: 14px; font-weight: 600; letter-spacing: .1em; }
+.park-welcome-heading h1 { margin-top: 8px; font-size: clamp(36px, 8vw, 50px); font-weight: 800; letter-spacing: -.05em; line-height: 1.5; }
+.park-welcome .park-three-canvas { height: 280px; }
+.park-welcome .park-stage-caption { display: none; }
+.park-welcome .park-stage { margin-block: 12px 4px; }
+.park-welcome-copy { margin: 6px 0 28px; text-align: center; font-size: 17px; font-weight: 600; line-height: 1.9; }
+.park-welcome > .park-primary { width: 100%; max-width: 360px; min-height: 60px; }
+.park-welcome .park-note { margin-top: 20px; }
+.park-onboarding-setup { padding: 0; background: #fbf7ee; }
+.park-onboarding-setup > * { width: 100%; }
+.park-onboarding-setup .park-onboarding-content { min-height: 0; overflow-y: auto; align-items: flex-start; padding-top: 20px; }
+.park-onboarding-setup .park-onboarding-grades { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.park-onboarding-grade { min-height: 64px; padding: 12px 6px; text-align: center; }
+.park-onboarding-ready-art svg { width: 56px; height: 56px; }
+@media (min-width: 700px) {
+    .park-welcome .park-three-canvas { height: 350px; }
+}
+@media (max-height: 650px) {
+    .park-welcome { justify-content: flex-start; }
+    .park-welcome .park-three-canvas { height: 240px; }
+}

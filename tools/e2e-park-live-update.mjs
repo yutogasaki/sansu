@@ -7,7 +7,7 @@ import assert from 'node:assert/strict';
 // Start before deploying; send the new Git SHA on stdin after production is ready.
 const base = process.env.SANSU_PARK_LIVE_URL;
 assert(base, 'Set SANSU_PARK_LIVE_URL to the existing production origin');
-const out = 'output/playwright/park-release';
+const out = process.env.SANSU_PARK_LIVE_OUTPUT || 'output/playwright/park-release';
 await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch({ args: ['--use-angle=metal'] });
 const report = { target: base, browser: browser.version(), device: 'Desktop Chromium / Metal; not physical mobile', navigations: { safe: [], protected: [] }, errors: [] };
@@ -31,7 +31,7 @@ async function openOld(key) {
     page.on('pageerror', e => report.errors.push(e.message));
     page.on('request', r => { if (r.isNavigationRequest() && new URL(r.url()).searchParams.has('__app-update')) report.navigations[key].push(r.url()); });
     await page.goto(`${base}/#/onboarding`);
-    await page.getByRole('button', { name: 'たんけんを はじめる' }).waitFor();
+    await page.getByRole('button', { name: /^(たんけんを はじめる|はじめる)$/ }).waitFor();
     await page.evaluate(async () => { await navigator.serviceWorker.ready; });
     await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller));
     return { context, page };
@@ -46,7 +46,7 @@ async function finishOnboarding(page) {
 try {
     report.before = await (await fetch(`${base}/version.json?t=${Date.now()}`, { cache: 'no-store' })).json();
     const safe = await openOld('safe');
-    await safe.page.getByRole('button', { name: 'たんけんを はじめる' }).click();
+    await safe.page.getByRole('button', { name: /^(たんけんを はじめる|はじめる)$/ }).click();
     await safe.page.getByRole('textbox', { name: 'あだ名でOK' }).fill('更新データ確認');
     await finishOnboarding(safe.page);
     await safe.page.goto(`${base}/#/settings`);
@@ -54,7 +54,7 @@ try {
     await safe.page.evaluate(() => localStorage.setItem('sansu-release-preservation', 'retain'));
     const beforeData = await stored(safe.page);
     const protectedTab = await openOld('protected');
-    await protectedTab.page.getByRole('button', { name: 'たんけんを はじめる' }).click();
+    await protectedTab.page.getByRole('button', { name: /^(たんけんを はじめる|はじめる)$/ }).click();
     await protectedTab.page.getByRole('textbox', { name: 'あだ名でOK' }).fill('更新途中');
     const oldBundle = await bundle(safe.page);
     assert.equal(await bundle(protectedTab.page), oldBundle);

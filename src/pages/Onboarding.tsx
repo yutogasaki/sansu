@@ -16,6 +16,10 @@ import { useNavigate } from "react-router-dom";
 import { useTimeoutScheduler } from "../hooks/useTimeoutScheduler";
 import { logInDev } from "../utils/debug";
 import { cn } from "../utils/cn";
+import { BUILD_PLAY_ENABLED } from "../domain/park/feature";
+import { threeParkRequested } from "../components/park/three/config";
+import { ParkWelcome } from "../components/park/ParkWelcome";
+import { PartIcon } from "../components/park/PartArt";
 
 type Step = "welcome" | "name" | "grade" | "subject" | "math-check" | "english-check" | "done";
 type SubjectMode = "mix" | "math" | "vocab";
@@ -27,6 +31,7 @@ type OnboardingSelections = {
 };
 
 export const Onboarding: React.FC = () => {
+    const parkOnboarding = BUILD_PLAY_ENABLED || (import.meta.env.DEV && threeParkRequested());
     const navigate = useNavigate();
     const [step, setStep] = useState<Step>("welcome");
     const [name, setName] = useState("");
@@ -243,6 +248,7 @@ export const Onboarding: React.FC = () => {
     const panelClass = "w-full border-t-[3px] shadow-[0_28px_54px_-38px_rgba(15,23,42,0.34)]";
 
     if (step === "welcome") {
+        if (parkOnboarding) return <ParkWelcome onStart={() => setStep("name")} />;
         return (
             <div className="brand-onboarding relative flex h-full min-h-0 flex-col items-center justify-center overflow-hidden px-[var(--screen-padding-x)] animate-in fade-in duration-500">
                 <SurfacePanel className={cn(panelClass, "brand-onboarding__panel relative z-10 max-w-md space-y-5 text-center")}>
@@ -284,14 +290,14 @@ export const Onboarding: React.FC = () => {
     }
 
     return (
-        <div className="brand-utility-screen relative flex h-full min-h-0 flex-col overflow-hidden">
-            <Header
+        <div className={cn("relative flex h-full min-h-0 flex-col overflow-hidden", parkOnboarding ? "park-page park-onboarding-setup" : "brand-utility-screen")}>
+            {(!parkOnboarding || step !== "done") && <Header
                 title={stepTitle}
                 showBack={!isSubmitting}
                 onBack={goBack}
-            />
+            />}
 
-            <div className="relative z-10 flex flex-1 items-center justify-center px-[var(--screen-padding-x)] pb-[var(--screen-bottom-padding)]">
+            <div className={cn("relative z-10 flex flex-1 items-center justify-center px-[var(--screen-padding-x)] pb-[var(--screen-bottom-padding)]", parkOnboarding && "park-onboarding-content")}>
                 {step === "name" && (
                     <SurfacePanel className={cn(panelClass, "max-w-lg space-y-5 border-t-cyan-300/80 animate-in slide-in-from-right duration-300")}>
                         <SurfacePanelHeader
@@ -318,13 +324,14 @@ export const Onboarding: React.FC = () => {
                             title="いまの がくねんに ちかい ところ"
                             description="ぴったりじゃなくて だいじょうぶ"
                         />
-                        <div className="grid grid-cols-1 gap-3 land:grid-cols-2">
+                        <div className={cn("grid grid-cols-1 gap-3 land:grid-cols-2", parkOnboarding && "park-onboarding-grades")}>
                             {gradeOptions.map((option) => (
                                 <SelectionCard
                                     key={option.value}
                                     label={option.label}
-                                    leading={option.leading}
-                                    trailing="→"
+                                    className={parkOnboarding ? "park-onboarding-grade" : undefined}
+                                    leading={parkOnboarding ? undefined : option.leading}
+                                    trailing={parkOnboarding ? undefined : "→"}
                                     disabled={isSubmitting}
                                     onClick={() => !isSubmitting && handleGradeSelect(option.value)}
                                 />
@@ -418,7 +425,7 @@ export const Onboarding: React.FC = () => {
                             じゅんび ちゅう
                         </Badge>
                         <div className="mx-auto flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[24px] border border-emerald-100/90 bg-[linear-gradient(145deg,rgba(236,253,245,0.95),rgba(220,252,231,0.85))] text-4xl shadow-[0_20px_34px_-24px_rgba(34,197,94,0.28)]">
-                            <span aria-hidden="true">🌿</span>
+                            {parkOnboarding ? <div className="park-onboarding-ready-art"><PartIcon kind="trampoline" /></div> : <span aria-hidden="true">🌿</span>}
                         </div>
                         <div>
                             <div className="text-2xl font-bold text-slate-700">じゅんび できたよ</div>

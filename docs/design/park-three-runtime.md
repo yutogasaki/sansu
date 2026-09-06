@@ -18,6 +18,7 @@ VITE_BUILD_PLAY_ENABLED=true VITE_PARK_RENDERER=three SANSU_BUILD_REVISION=41021
 - ローカルproduction preview: 同じflagを付けて `npm run build` 後、`npm run preview -- --host 127.0.0.1 --port 5288 --strictPort`。ルートは `http://127.0.0.1:5288/#/park`。
 - 3位置かつslide/trampoline/bubble/nullのみが3D対象。4〜6位置、mat/bell/paintを含む作品、WebGL2不可、context loss、lazy module読込失敗では旧表示に戻す。保存内容を削除・変換しない。
 - 初期所有は既存どおりすべり台1個・トランポリン1個、3位置目は空き。A/B監査のgateは新規テストプロフィール専用fixture。ユーザーデータに付与するDEV機能は追加していない。
+- 遊園地を起動先にする場合、未登録の初回画面も「ちいさな遊園地」と同じstageになる。「はじめる」→名前→学年→教科→開始範囲→自分の遊園地を実UIで確認する。歓迎画面は静止し、登録フォームへ進むとrendererを破棄する。profile/開始レベル/学習保存の処理は変更しない。旧探索を起動先にする汎用buildは従来の歓迎画面を維持する。
 
 ## 参照と採用判断
 
@@ -79,6 +80,7 @@ VITE_BUILD_PLAY_ENABLED=true VITE_PARK_RENDERER=three SANSU_BUILD_REVISION=41021
 | `src/components/park/three/choreography.test.ts` | 境界・A/B・弱いhop・泡保持・未対応保存の回帰 |
 | `src/components/park/{ParkStage.tsx,PartArt.tsx,PartWorkshop.tsx,playback.ts,Park.css}` | 既存画面への候補接続、静止サムネイル、再生時間、タップ配置用レイアウト |
 | `src/pages/Park.tsx` | 候補情報・編集状態・表示用の再生時間 |
+| `src/components/park/ParkWelcome.tsx`, `src/pages/Onboarding.tsx` | 公開された遊園地に揃えた初回表示、既存登録処理への接続、全学年を選べる配置 |
 | `package.json`, `package-lock.json`, `vite.config.ts` | Three.jsと型の固定版、3枚のUIアイコンをoffline packへ追加 |
 | `public/assets/park/three-v1/*-icon.png`, `tools/park/render-three-icons.mjs` | 同じモデルからの静止UIアイコンと再生成手順 |
 | `tools/e2e-park-three*.mjs`, `tools/e2e-park.mjs`, `tools/e2e-park-pwa.mjs` | 3D・録画・性能・offline検証、候補と出力先を実際の実行条件へ合わせる |
