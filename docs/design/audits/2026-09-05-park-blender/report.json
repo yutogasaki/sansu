@@ -1,0 +1,28 @@
+{
+  "target": "http://127.0.0.1:5187",
+  "candidate": "park-resin-blender-v1",
+  "flag": "VITE_BUILD_PLAY_ENABLED=true",
+  "scenarios": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "revision": "4102126-park-resin-088562a6cc48",
+      "actorUnitCssPixels": 64.10670280456543,
+      "sixUnitCssPixels": 64.10833358764648,
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "revision": "4102126-park-resin-088562a6cc48",
+      "actorUnitCssPixels": 88.76523971557617,
+      "sixUnitCssPixels": 88.76389503479004,
+      "pass": true
+    }
+  ],
+  "errors": []
+}

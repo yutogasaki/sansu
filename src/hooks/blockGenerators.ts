@@ -7,7 +7,6 @@ import { Problem, SubjectKey, UserProfile } from "../domain/types";
 import { generateMathProblem } from "../domain/math";
 import { generateVocabProblem } from "../domain/english/generator";
 import { getMathSkillFamily, getSkillsForLevel } from "../domain/math/curriculum";
-import { getMathFollowupPlan } from "../domain/math/followups";
 import {
     planMathProblems,
     type MathProblemPlanSource,
@@ -256,28 +255,6 @@ export const pickLeastUsedMathSkillId = (
     return pool[Math.floor(Math.random() * pool.length)];
 };
 
-const pickOrderedMathSkillId = (
-    candidates: string[],
-    options: GeneratorOptions
-): string | undefined => {
-    const { cooldownIds, skippedTodayIds, blockCounts, recentIds } = options;
-
-    const notSkipped = candidates.filter(id => !skippedTodayIds.includes(id));
-    const notOverused = notSkipped.filter(id => (blockCounts.get(id) || 0) < SAME_ID_LIMIT);
-    if (notOverused.length === 0) return undefined;
-
-    const cooled = notOverused.filter(
-        id => !recentIds.includes(id) && !cooldownIds.includes(id)
-    );
-    const pool = cooled.length > 0 ? cooled : notOverused;
-
-    const recentFamilies = recentIds.map(getMathSkillFamily);
-    const recentFamilyWindow = new Set(recentFamilies.slice(-2));
-    const familyCooled = pool.filter(id => !recentFamilyWindow.has(getMathSkillFamily(id)));
-
-    return familyCooled[0] || pool[0];
-};
-
 /**
  * Mark an ID as picked for block-level deduplication
  */
@@ -386,6 +363,8 @@ export interface VocabGeneratorContext {
     forceReviewBlock: boolean;
     weakVocabPool: string[];
     currentWeakCount: number;
+    plusCount?: number;
+    plusLimit?: number;
     pendingVocabIds: string[];
     buildCooldownIds: (pending: string[]) => string[];
 }
@@ -412,7 +391,7 @@ export const pickWeightedLevel = (weights: { level: number; weight: number }[]):
  */
 export const generateSingleVocabProblem = (
     ctx: VocabGeneratorContext
-): ProblemGenerationResult => {
+): ProblemGenerationResult & { newPlusCount: number } => {
     const {
         vocabDue,
         vocabLevelWeights,
@@ -421,6 +400,8 @@ export const generateSingleVocabProblem = (
         forceReviewBlock,
         weakVocabPool,
         currentWeakCount,
+        plusCount = 0,
+        plusLimit = Math.floor(BLOCK_SIZE * 0.3),
         pendingVocabIds,
         buildCooldownIds
     } = ctx;
@@ -428,6 +409,7 @@ export const generateSingleVocabProblem = (
     let problem: Omit<Problem, 'id' | 'subject' | 'isReview'> | undefined;
     let isReview = false;
     let countsTowardReviewCap = false;
+    let newPlusCount = plusCount;
 
     // Priority 1: Forced review block
     if (forceReviewBlock && vocabDue.length > 0 && canAddReview) {
@@ -480,10 +462,22 @@ export const generateSingleVocabProblem = (
 
     // Priority 3: Normal level-based generation
     if (!problem) {
-        const level = pickWeightedLevel(vocabLevelWeights);
-        const words = getWordsByLevel(level);
-        const wordIds = words.map(w => w.id);
-        const wordId = pickId(wordIds, options) || pickLeastUsedId(wordIds, options);
+        const mainLevel = ctx.profile.vocabMainLevel;
+        // Keep the per-block +1 ceiling independent of Due/weak selection.
+        // A completely stopped level must not force an unrelated fallback.
+        const eligibleWeights = vocabLevelWeights.filter(({ level }) =>
+            (level <= mainLevel || plusCount < plusLimit)
+            && getWordsByLevel(level).some(word => !options.skippedTodayIds.includes(word.id))
+        );
+        const level = pickWeightedLevel(eligibleWeights);
+        const wordIds = eligibleWeights.length > 0 ? getWordsByLevel(level).map(w => w.id) : [];
+        const unattemptedIds = level === mainLevel + 1
+            ? wordIds.filter(id => !(ctx.profile.vocabWords[id]?.totalAnswers > 0)
+                && !pendingVocabIds.includes(id))
+            : [];
+        const wordId = pickId(unattemptedIds, options)
+            || pickId(wordIds, options)
+            || pickLeastUsedId(wordIds, options);
 
         if (wordId) {
             problem = safeGenerateProblem(
@@ -494,6 +488,7 @@ export const generateSingleVocabProblem = (
                 () => createFallbackProblem('vocab', `vocab level ${level}`),
                 `vocab normal: ${wordId}`
             );
+            if (level === mainLevel + 1) newPlusCount++;
         }
     }
 
@@ -502,7 +497,7 @@ export const generateSingleVocabProblem = (
         problem = createFallbackProblem('vocab', 'all vocab generation paths failed');
     }
 
-    return { problem, isReview, isMaintenanceCheck: false, countsTowardReviewCap };
+    return { problem, isReview, isMaintenanceCheck: false, countsTowardReviewCap, newPlusCount };
 };
 
 // ============================================================
@@ -591,142 +586,80 @@ export const generateLevelBlock = (
 
 /**
  * Weakness Review Block (10 questions)
- * Prioritizes: Weak > Maintenance/LowStrength > Random in Main Level
+ * Prioritizes: Weak > low strength > remaining current test range.
  */
 export const generateWeakReviewBlock = async (
     profile: UserProfile,
     ctx: {
         weakMathIds: string[];
+        weakVocabIds?: string[];
         maintenanceMathIds: string[];
         mathDue: { id: string }[];
         vocabDue: { id: string }[];
+        skippedMathIds?: string[];
+        skippedVocabIds?: string[];
     }
 ): Promise<Problem[]> => {
     const q: Problem[] = [];
-    const blockSize = 10;
     const blockCounts = new Map<string, number>();
-
-    // Determine subject (Same logic as normal block, or strictly mix?)
-    // Spec says: "Subject independently" but usually we run mixed session.
-    // For simplicity in V1, we respect subjectMode.
-
-    // Helper to decide subject for each question
-    const getSubject = (i: number): SubjectKey => {
-        if (profile.subjectMode === 'math') return 'math';
-        if (profile.subjectMode === 'vocab') return 'vocab';
-        return i % 2 === 0 ? 'math' : 'vocab';
+    const failedIds = new Set<string>();
+    const testLevel = (subject: SubjectKey) => {
+        const pendingSet = profile.periodicTestState?.[subject]?.isPending
+            ? profile.periodicTestSets?.[subject]
+            : undefined;
+        return pendingSet?.level ?? (subject === 'math' ? profile.mathMainLevel : profile.vocabMainLevel);
     };
+    const pools = {
+        math: getSkillsForLevel(testLevel('math')),
+        vocab: getWordsByLevel(testLevel('vocab')).map(word => word.id),
+    };
+    const skipped = { math: ctx.skippedMathIds ?? [], vocab: ctx.skippedVocabIds ?? [] };
+    const weak = { math: ctx.weakMathIds, vocab: ctx.weakVocabIds ?? [] };
 
-    const { weakMathIds, maintenanceMathIds, mathDue, vocabDue } = ctx;
-    const mathLevel = profile.mathMainLevel ?? 1;
-    const mathSkills = getSkillsForLevel(mathLevel);
-
-    const vocabLevel = profile.vocabMainLevel ?? 1;
-    const vocabWords = getWordsByLevel(vocabLevel);
-
-
-    for (let i = 0; i < blockSize; i++) {
-        const subject = getSubject(i);
+    while (q.length < BLOCK_SIZE) {
+        const subject: SubjectKey = profile.subjectMode === 'mix'
+            ? (q.length % 2 === 0 ? 'math' : 'vocab')
+            : profile.subjectMode;
+        const pool = pools[subject].filter(id => !failedIds.has(id) && !skipped[subject].includes(id));
+        if (pool.length === 0) {
+            // Only a real day stop is a successful empty/short review. A
+            // missing range or exhausted generators must offer a retry.
+            if (pools[subject].length > 0 && pools[subject].every(id => skipped[subject].includes(id))) break;
+            throw new Error(`Unable to generate weak review for ${subject} level ${testLevel(subject)}`);
+        }
         const options: GeneratorOptions = {
             cooldownIds: [],
-            skippedTodayIds: [], // We might want to allow skipped items in review? No, stick to standard.
+            skippedTodayIds: skipped[subject],
             blockCounts,
-            recentIds: q.filter(item => item.subject === "math").map(item => item.categoryId).slice(-COOLDOWN_WINDOW)
+            recentIds: q.filter(item => item.subject === subject).map(item => item.categoryId).slice(-COOLDOWN_WINDOW),
         };
+        const pick = subject === 'math' ? pickMathSkillId : pickId;
+        const pickLeastUsed = subject === 'math' ? pickLeastUsedMathSkillId : pickLeastUsedId;
+        const memory = subject === 'math' ? profile.mathSkills : profile.vocabWords;
+        const weakId = pick(pool.filter(id => weak[subject].includes(id)), options);
+        const underLimit = pool.filter(id => (blockCounts.get(id) ?? 0) < SAME_ID_LIMIT);
+        const lowestStrength = Math.min(...underLimit.map(id => memory[id]?.strength ?? 0));
+        const lowStrength = underLimit.filter(id => (memory[id]?.strength ?? 0) === lowestStrength);
+        const id = weakId || pick(lowStrength, options) || pickLeastUsed(pool, options);
+        if (!id) throw new Error(`Unable to select a weak review item for ${subject}`);
 
-        let problem: Omit<Problem, 'id' | 'subject' | 'isReview'> | undefined;
-
-        if (subject === 'math') {
-            // Priority 1: Weak Math
-            const availableWeak = weakMathIds.filter(id => mathSkills.includes(id));
-            const weakId = pickMathSkillId(availableWeak, options);
-            if (weakId) {
-                problem = safeGenerateProblem(
-                    () => generateMathProblem(weakId, { profile }),
-                    () => generateMathProblem("count_10", { profile }),
-                    `weak-review math weak: ${weakId}`
-                );
-            }
-
-            // Priority 2: Due / Maintenance (Low Strength)
-            if (!problem) {
-                const pool = [...mathDue.map(d => d.id), ...maintenanceMathIds];
-                const id = pickMathSkillId(pool, options);
-                if (id) {
-                    problem = safeGenerateProblem(
-                        () => generateMathProblem(id, { profile }),
-                        () => generateMathProblem("count_10", { profile }),
-                        `weak-review math due/maint: ${id}`
-                    );
-                }
-            }
-
-            // Priority 3: Random in Level
-            if (!problem) {
-                const followupCandidates = getMathFollowupPlan(
-                    profile.recentAttempts,
-                    mathSkills,
-                    profile.mathMaxUnlocked ?? mathLevel
-                ).map(candidate => candidate.skillId);
-                const followupId = pickOrderedMathSkillId(followupCandidates, options);
-                if (followupId) {
-                    problem = safeGenerateProblem(
-                        () => generateMathProblem(followupId, { profile }),
-                        () => generateMathProblem("count_10", { profile }),
-                        `weak-review math followup: ${followupId}`
-                    );
-                }
-            }
-
-            if (!problem) {
-                const id = pickMathSkillId(mathSkills, options)
-                    || pickLeastUsedMathSkillId(mathSkills, options);
-                if (id) {
-                    problem = safeGenerateProblem(
-                        () => generateMathProblem(id, { profile }),
-                        () => generateMathProblem("count_10", { profile }),
-                        `weak-review math random: ${id}`
-                    );
-                }
-            }
-        } else {
-            // Vocab Logic
-            // Priority 1: Due
-            const dueId = pickId(vocabDue.map(v => v.id), options);
-            if (dueId) {
-                problem = safeGenerateProblem(
-                    () => generateVocabProblem(dueId, { cooldownIds: [], kanjiMode: profile.kanjiMode }),
-                    () => createFallbackProblem('vocab', 'weak-review fallback'),
-                    `weak-review vocab due: ${dueId}`
-                );
-            }
-
-            // Priority 2: Random in Level
-            if (!problem) {
-                const vocabIds = vocabWords.map(w => w.id);
-                const id = pickId(vocabIds, options) || pickLeastUsedId(vocabIds, options);
-                if (id) {
-                    problem = safeGenerateProblem(
-                        () => generateVocabProblem(id, { cooldownIds: [], kanjiMode: profile.kanjiMode }),
-                        () => createFallbackProblem('vocab', 'weak-review level fallback'),
-                        `weak-review vocab random: ${id}`
-                    );
-                }
-            }
+        try {
+            const problem = subject === 'math'
+                ? generateMathProblem(id, { profile })
+                : generateVocabProblem(id, { cooldownIds: options.recentIds, kanjiMode: profile.kanjiMode });
+            q.push({
+                ...problem,
+                id: `weak-${q.length}-${Date.now()}`,
+                subject,
+                isReview: true,
+            });
+            markPicked(id, blockCounts);
+        } catch (error) {
+            // Retry with another eligible item in the same test range, never
+            // a generic count_10/apple fallback that changes the lesson.
+            failedIds.add(id);
+            errorInDev(`[BlockGenerator] weak-review ${subject}: ${id}`, error);
         }
-
-        if (!problem) {
-            problem = createFallbackProblem(subject, 'weak-review total failure');
-        }
-
-        q.push({
-            ...problem,
-            id: `weak-${i}-${Date.now()}`,
-            subject,
-            isReview: true // Always treat as review for data purposes? Or depend on source?
-            // Spec says: "Weak update OK".
-        });
-        markPicked(problem.categoryId, blockCounts);
     }
 
     return q;
@@ -873,11 +806,24 @@ export const buildMathCooldownIds = (
 /**
  * Build vocab level weights based on profile
  */
-export const buildVocabLevelWeights = (vocabLevel: number): { level: number; weight: number }[] => {
-    return [
+export const buildVocabLevelWeights = (profile: UserProfile): { level: number; weight: number }[] => {
+    const vocabLevel = profile.vocabMainLevel;
+    const isEnabled = (level: number) => {
+        const state = profile.vocabLevels?.find(item => item.level === level);
+        return level >= 1 && level <= profile.vocabMaxUnlocked
+            && (!state || (state.unlocked && state.enabled));
+    };
+    const base = [
         { level: vocabLevel, weight: 0.5 },
         { level: vocabLevel - 1, weight: 0.25 },
         { level: vocabLevel - 2, weight: 0.15 },
         { level: vocabLevel - 3, weight: 0.1 }
-    ].filter(w => w.level >= 1);
+    ].filter(w => isEnabled(w.level));
+    const plusLevel = vocabLevel + 1;
+    if (!isEnabled(plusLevel) || getWordsByLevel(plusLevel).length === 0) return base;
+    const baseWeight = base.reduce((sum, item) => sum + item.weight, 0);
+    return [
+        { level: plusLevel, weight: 0.3 },
+        ...base.map(item => ({ ...item, weight: item.weight / baseWeight * 0.7 })),
+    ];
 };

@@ -34,6 +34,14 @@ const resolveBuildMetadata = (mode: string) => {
         enabled: env.VITE_BUILD_PLAY_ENABLED === 'true',
         renderer: env.VITE_PARK_RENDERER === 'three' ? 'three' : 'legacy',
     }
+    const island = {
+        enabled: env.VITE_ISLAND_ENABLED === 'true',
+        delivery: 'mystic-island-v1',
+        candidate: 'mystic-island-procedural-v2',
+        learningCandidate: 'mystic-island-learning-v2',
+        artDirection: ['festival', 'moon-garden', 'prism'].includes(env.VITE_ISLAND_ART_DIRECTION)
+            ? env.VITE_ISLAND_ART_DIRECTION : 'moon-garden',
+    }
     const visualLineage = deliveryId === 'snap-root-v1'
         ? 'pokko-field-v1'
         : 'legacy-mixed-v0'
@@ -44,6 +52,7 @@ const resolveBuildMetadata = (mode: string) => {
         deliveryId,
         visualLineage,
         park,
+        island,
     }
 }
 
@@ -71,6 +80,7 @@ const appVersionManifestPlugin = ({
     deliveryId,
     visualLineage,
     park,
+    island,
 }: ReturnType<typeof resolveBuildMetadata>) => ({
     name: 'app-version-manifest',
     generateBundle(this: BundleContext) {
@@ -83,6 +93,7 @@ const appVersionManifestPlugin = ({
                 delivery: deliveryId,
                 visualLineage,
                 park,
+                island,
             }),
         })
     }

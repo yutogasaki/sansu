@@ -1,0 +1,33 @@
+{
+  "pass": true,
+  "completedAt": "2026-09-07T03:04:36.941265+00:00",
+  "revision": "aa36adad7dcc-island-learning-99d08b2a0e4c-park-regression",
+  "sideBuild": true,
+  "flags": {
+    "VITE_ISLAND_ENABLED": false,
+    "VITE_BUILD_PLAY_ENABLED": true,
+    "VITE_PARK_RENDERER": "three"
+  },
+  "commands": [
+    {
+      "command": "npm run e2e:park",
+      "target": "http://127.0.0.1:5187",
+      "exitCode": 0,
+      "passed": 6,
+      "report": "dev/report.json"
+    },
+    {
+      "command": "npm run e2e:park-pwa",
+      "target": "http://127.0.0.1:5287",
+      "exitCode": 0,
+      "passed": 3,
+      "report": "production/production-report.json"
+    }
+  ],
+  "browserClosed": true,
+  "sourceEdits": false,
+  "finalIsland5298Modified": false,
+  "limitations": [
+    "Park PWA verification uses the existing checkpoint and persistence hooks with service workers blocked; it is not an offline/install test."
+  ]
+}

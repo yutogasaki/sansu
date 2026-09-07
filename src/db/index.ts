@@ -1,6 +1,7 @@
 import Dexie, { type DexieOptions, type Table } from 'dexie';
 import type { UserProfile, MemoryState, AppData } from '../domain/types';
 import type { ParkRecord, ParkPlan, ParkEvent } from '../domain/park/types';
+import type { IslandRecord, IslandPlan, IslandEvent } from '../domain/island/types';
 import type {
     ExploreDiscoveryRecord,
     ExploreRunEventRecord,
@@ -37,7 +38,17 @@ export const SANSU_V5_STORES = {
     exploreDiscoveries: '[profileId+discoveryId], profileId, kind, firstFoundAt',
 } as const;
 
+export const SANSU_V6_STORES = {
+    ...SANSU_V5_STORES,
+    parks: '&profileId',
+    parkPlans: '&id, profileId, [profileId+status]',
+    parkEvents: '&id, profileId, planId, type, timestamp',
+} as const;
+
 export class SansuDatabase extends Dexie {
+    islands!: Table<IslandRecord, string>;
+    islandPlans!: Table<IslandPlan, string>;
+    islandEvents!: Table<IslandEvent, string>;
     parks!: Table<ParkRecord, string>;
     parkPlans!: Table<ParkPlan, string>;
     parkEvents!: Table<ParkEvent, string>;
@@ -87,11 +98,12 @@ export class SansuDatabase extends Dexie {
         this.version(4).stores(SANSU_V4_STORES);
 
         this.version(5).stores(SANSU_V5_STORES);
-        this.version(6).stores({
-            ...SANSU_V5_STORES,
-            parks: '&profileId',
-            parkPlans: '&id, profileId, [profileId+status]',
-            parkEvents: '&id, profileId, planId, type, timestamp',
+        this.version(6).stores(SANSU_V6_STORES);
+        this.version(7).stores({
+            ...SANSU_V6_STORES,
+            islands: '&profileId',
+            islandPlans: '&id, profileId, [profileId+status]',
+            islandEvents: '&id, profileId, planId, type, timestamp',
         });
     }
 }

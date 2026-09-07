@@ -1,0 +1,70 @@
+{
+  "target": "http://127.0.0.1:5198",
+  "flag": "VITE_ISLAND_ENABLED=true",
+  "startedAt": "2026-09-06T23:38:10.433Z",
+  "scenarios": [
+    {
+      "name": "renderer-recovery",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "drawCalls": 154,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "passed": true,
+      "evidenceScope": "Actual WebGL context loss shows retry; an answer persists during fallback and another after Three recovery."
+    }
+  ],
+  "captures": [
+    {
+      "file": "renderer-context-loss-learning.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "fallback",
+      "drawCalls": 152,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "renderer-recovered-learning.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "drawCalls": 154,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    }
+  ],
+  "pass": true,
+  "completedAt": "2026-09-06T23:38:12.648Z"
+}

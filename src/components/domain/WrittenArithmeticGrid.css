@@ -1,0 +1,52 @@
+.written-arithmetic {
+    --written-ink: var(--island-ink, var(--color-dark, #2d3436));
+    --written-accent: #245bbd;
+    --written-line: #cad5db;
+    --written-paper: var(--island-workbench-paper, var(--app-surface-strong));
+    width: 100%; max-width: 410px; min-height: 0; color: var(--written-ink); text-align: left;
+    font-variant-numeric: tabular-nums;
+}
+.written-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:5px; font-size:16px; font-weight:650; letter-spacing:.06em; }
+.written-kind { font-size:11px; font-weight:500; letter-spacing:.03em; color:#586a77; }
+.written-guidance { display:flex; align-items:center; gap:8px; min-height:30px; margin-bottom:4px; font-size:12px; line-height:1.45; }
+.written-guidance strong { flex:none; padding:3px 8px; border-radius:6px; background:#e7eefb; color:#194eaa; font-weight:650; }
+.written-paper { width:calc(var(--written-columns) * 44px + 56px); max-width:100%; margin-inline:auto; border:1px solid var(--written-line); border-radius:12px; background:var(--written-paper); padding:5px 6px; overflow:hidden; }
+.written-row { display:grid; grid-template-columns:42px minmax(0,1fr); align-items:center; position:relative; }
+.written-row-label { padding-right:4px; font-size:10px; line-height:1.25; color:#586a77; overflow-wrap:anywhere; }
+.written-row-label[data-operator=true] { text-align:center; font-size:25px; color:var(--written-ink); }
+.written-digits { display:grid; grid-template-columns:repeat(var(--written-columns),minmax(0,44px)); justify-content:end; }
+.written-cell { display:flex; align-items:center; justify-content:center; width:100%; min-width:0; height:30px; border-right:1px solid #dbe2e67a; font-size:25px; line-height:1; font-weight:550; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+.written-cell[data-empty=true] { border-color:transparent; }
+.written-cell[data-focus=true] { color:#194eaa; background:#e7eefb; text-decoration:underline; text-underline-offset:4px; }
+.written-row[data-current=true] { background:#eef3fc; border-radius:7px; }
+.written-cell[data-completed=true] { color:#526771; height:36px; }
+button.written-cell { height:44px; border:1px solid #9dadc4; border-radius:5px; background:var(--written-paper); color:var(--written-ink); cursor:pointer; box-shadow:none; }
+button.written-cell[data-active=true] { border:2px solid var(--written-accent); outline:1px solid var(--written-accent); outline-offset:-1px; color:#194eaa; background:#e7eefb; }
+button.written-cell:focus-visible { outline:3px solid var(--written-accent); outline-offset:1px; position:relative; z-index:1; }
+button.written-cell:disabled { cursor:default; }
+.written-placeholder { color:#72849b; font-size:22px; }
+.written-cell[data-active=true] .written-placeholder { color:var(--written-accent); }
+.written-row[data-dividend=true] .written-digits { border-top:2px solid var(--written-ink); }
+.written-row[data-dividend=true] .written-row-label { text-align:right; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:25px; color:var(--written-ink); }
+.written-row[data-quotient=true] { margin-bottom:3px; }
+.written-rule { height:2px; margin:3px 0 3px 42px; background:var(--written-ink); }
+.written-row[data-line-above=true] .written-digits { border-top:2px solid var(--written-ink); }
+.written-history { position:relative; max-height:134px; overflow-y:auto; overflow-x:hidden; overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:#98a7b5 transparent; }
+.written-history:focus-visible { outline:2px solid var(--written-accent); outline-offset:-2px; }
+.written-input-guide { display:flex; justify-content:space-between; gap:6px; padding-top:5px; min-height:22px; font-size:10px; line-height:1.4; color:#586a77; }
+.written-input-guide > span:first-child { color:#194eaa; font-weight:650; }
+.written-arithmetic[data-written-operation=division] .written-history { max-height:100px; }
+.park-answer[data-assisted=true] .written-history { max-height:74px; }
+@media(min-width:700px) {
+    .written-heading { font-size:19px; }
+    .written-guidance { font-size:13px; min-height:34px; }
+    .written-row { grid-template-columns:52px minmax(0,1fr); }
+    .written-paper { width:calc(var(--written-columns) * 48px + 66px); }
+    .written-row-label { font-size:11px; }
+    .written-cell { height:34px; font-size:28px; }
+    .written-digits { grid-template-columns:repeat(var(--written-columns),minmax(0,48px)); }
+    button.written-cell { height:48px; }
+    .written-history { max-height:154px; }
+    .written-rule { margin-left:52px; }
+    .written-input-guide { font-size:11px; }
+}

@@ -1,0 +1,939 @@
+{
+  "target": "http://127.0.0.1:5201",
+  "evidence": "Actual useHissanSession, engines, and timeout scheduler in Chromium. Native keydown batches run before React commits. Only the harness HTML is intercepted; application modules execute unchanged.",
+  "boundary": "Save outcomes are controlled caller results testing retryHissanSave; actual persistence, planner, application keyboard bindings, and layout are covered separately.",
+  "sourceStart": {
+    "src/hooks/useHissanSession.ts": "2497d8655e61c852acf7f981f727b6cc08016ec1ea0ff38ac552facdcfe58832",
+    "src/hooks/useTimeoutScheduler.ts": "ec573a79b78343bbefde728f84f3e9a82c71c92cb0482ab577806bef92832d35",
+    "src/domain/math/hissanEngine.ts": "d222f57730ec9b7cce8eb521faf1860f083543942b7544d2fed2d321a7ada263",
+    "src/domain/math/writtenArithmetic.ts": "ab447958c7cb1ba1322adf6efe6da401c856ae423583d93edae0bf426081072c",
+    "src/domain/math/hissanTypes.ts": "b132594e69ceadc927f9f805c3457da4d90f47035db192e2744524460da302c7",
+    "tools/written-hissan-hook-probe.tsx": "68f512b4c4b6366e8ce4d7ce368194a413c6a950fb74de472d22928039ceee7e"
+  },
+  "sourceEnd": {
+    "src/hooks/useHissanSession.ts": "2497d8655e61c852acf7f981f727b6cc08016ec1ea0ff38ac552facdcfe58832",
+    "src/hooks/useTimeoutScheduler.ts": "ec573a79b78343bbefde728f84f3e9a82c71c92cb0482ab577806bef92832d35",
+    "src/domain/math/hissanEngine.ts": "d222f57730ec9b7cce8eb521faf1860f083543942b7544d2fed2d321a7ada263",
+    "src/domain/math/writtenArithmetic.ts": "ab447958c7cb1ba1322adf6efe6da401c856ae423583d93edae0bf426081072c",
+    "src/domain/math/hissanTypes.ts": "b132594e69ceadc927f9f805c3457da4d90f47035db192e2744524460da302c7",
+    "tools/written-hissan-hook-probe.tsx": "68f512b4c4b6366e8ce4d7ce368194a413c6a950fb74de472d22928039ceee7e"
+  },
+  "cases": [
+    {
+      "name": "empty Enter and duplicate Enter are silent, incomplete, and do not submit",
+      "pass": true,
+      "actual": {
+        "results": [
+          "incomplete",
+          "incomplete"
+        ],
+        "step": 0,
+        "feedback": "none",
+        "values": [],
+        "cell": [
+          2,
+          3
+        ],
+        "saves": []
+      },
+      "expected": {
+        "results": [
+          "incomplete",
+          "incomplete"
+        ],
+        "step": 0,
+        "feedback": "none",
+        "values": [],
+        "cell": [
+          2,
+          3
+        ],
+        "saves": []
+      }
+    },
+    {
+      "name": "partly filled Enter retains input and focuses the first empty digit",
+      "pass": true,
+      "actual": {
+        "result": "incomplete",
+        "step": 0,
+        "feedback": "none",
+        "row": "2",
+        "cell": [
+          2,
+          2
+        ]
+      },
+      "expected": {
+        "result": "incomplete",
+        "step": 0,
+        "feedback": "none",
+        "row": "2",
+        "cell": [
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "name": "batched native digits then same-turn Enter read the whole row exactly once",
+      "pass": true,
+      "actual": {
+        "results": [
+          "step-correct",
+          "incomplete"
+        ],
+        "firstRow": "92",
+        "step": 1,
+        "cell": [
+          3,
+          2
+        ],
+        "saves": []
+      },
+      "expected": {
+        "results": [
+          "step-correct",
+          "incomplete"
+        ],
+        "firstRow": "92",
+        "step": 1,
+        "cell": [
+          3,
+          2
+        ],
+        "saves": []
+      }
+    },
+    {
+      "name": "second partial product accepts right-to-left input",
+      "pass": true,
+      "actual": {
+        "first": "92",
+        "second": "23",
+        "cell": null
+      },
+      "expected": {
+        "first": "92",
+        "second": "23",
+        "cell": null
+      }
+    },
+    {
+      "name": "Backspace from a full row reopens its last entered cell",
+      "pass": true,
+      "actual": {
+        "first": "92",
+        "second": "3",
+        "cell": [
+          3,
+          1
+        ]
+      },
+      "expected": {
+        "first": "92",
+        "second": "3",
+        "cell": [
+          3,
+          1
+        ]
+      }
+    },
+    {
+      "name": "Backspace from an empty cell moves back in input order within the current row",
+      "pass": true,
+      "actual": {
+        "first": "92",
+        "second": "",
+        "cell": [
+          3,
+          2
+        ]
+      },
+      "expected": {
+        "first": "92",
+        "second": "",
+        "cell": [
+          3,
+          2
+        ]
+      }
+    },
+    {
+      "name": "C clears only the current row and restores its starting cell",
+      "pass": true,
+      "actual": {
+        "first": "92",
+        "second": "",
+        "cell": [
+          3,
+          2
+        ],
+        "step": 1
+      },
+      "expected": {
+        "first": "92",
+        "second": "",
+        "cell": [
+          3,
+          2
+        ],
+        "step": 1
+      }
+    },
+    {
+      "name": "a completed row cannot accidentally become editable",
+      "pass": true,
+      "actual": {
+        "active": true,
+        "step": 1,
+        "cell": [
+          3,
+          2
+        ],
+        "feedback": "none",
+        "values": [
+          [
+            "2-2",
+            "9"
+          ],
+          [
+            "2-3",
+            "2"
+          ]
+        ]
+      },
+      "expected": {
+        "active": true,
+        "step": 1,
+        "cell": [
+          3,
+          2
+        ],
+        "feedback": "none",
+        "values": [
+          [
+            "2-2",
+            "9"
+          ],
+          [
+            "2-3",
+            "2"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "tapping a current-row cell permits targeted correction",
+      "pass": true,
+      "actual": {
+        "first": "92",
+        "second": "29",
+        "cell": [
+          3,
+          1
+        ]
+      },
+      "expected": {
+        "first": "92",
+        "second": "29",
+        "cell": [
+          3,
+          1
+        ]
+      }
+    },
+    {
+      "name": "multiplication starts at the visible rightmost answer cell",
+      "pass": true,
+      "actual": [
+        2,
+        5
+      ],
+      "expected": [
+        2,
+        5
+      ]
+    },
+    {
+      "name": "Left moves one visible column left despite right-to-left entry order",
+      "pass": true,
+      "actual": [
+        2,
+        4
+      ],
+      "expected": [
+        2,
+        4
+      ]
+    },
+    {
+      "name": "Right moves right and stops at the visible row edge",
+      "pass": true,
+      "actual": [
+        2,
+        5
+      ],
+      "expected": [
+        2,
+        5
+      ]
+    },
+    {
+      "name": "Left stops at the first answer digit rather than entering empty alignment cells",
+      "pass": true,
+      "actual": [
+        2,
+        2
+      ],
+      "expected": [
+        2,
+        2
+      ]
+    },
+    {
+      "name": "Right moves back toward the units position",
+      "pass": true,
+      "actual": [
+        2,
+        3
+      ],
+      "expected": [
+        2,
+        3
+      ]
+    },
+    {
+      "name": "C restores the multiplication units cell after arrow navigation",
+      "pass": true,
+      "actual": [
+        2,
+        5
+      ],
+      "expected": [
+        2,
+        5
+      ]
+    },
+    {
+      "name": "an incorrect later row leaves the accepted partial product intact",
+      "pass": true,
+      "actual": {
+        "results": [
+          "step-correct",
+          "incorrect"
+        ],
+        "step": 1,
+        "feedback": "incorrect",
+        "first": "92",
+        "second": "99",
+        "saves": []
+      },
+      "expected": {
+        "results": [
+          "step-correct",
+          "incorrect"
+        ],
+        "step": 1,
+        "feedback": "incorrect",
+        "first": "92",
+        "second": "99",
+        "saves": []
+      }
+    },
+    {
+      "name": "incorrect feedback locks edits and duplicate submissions until recovery",
+      "pass": true,
+      "actual": {
+        "state": {
+          "active": true,
+          "step": 1,
+          "cell": null,
+          "feedback": "incorrect",
+          "values": [
+            [
+              "2-2",
+              "9"
+            ],
+            [
+              "2-3",
+              "2"
+            ],
+            [
+              "3-1",
+              "9"
+            ],
+            [
+              "3-2",
+              "9"
+            ]
+          ]
+        },
+        "result": "incomplete"
+      },
+      "expected": {
+        "state": {
+          "active": true,
+          "step": 1,
+          "cell": null,
+          "feedback": "incorrect",
+          "values": [
+            [
+              "2-2",
+              "9"
+            ],
+            [
+              "2-3",
+              "2"
+            ],
+            [
+              "3-1",
+              "9"
+            ],
+            [
+              "3-2",
+              "9"
+            ]
+          ]
+        },
+        "result": "incomplete"
+      }
+    },
+    {
+      "name": "the actual retry timer clears only the failed row",
+      "pass": true,
+      "actual": {
+        "step": 1,
+        "feedback": "none",
+        "first": "92",
+        "second": "",
+        "cell": [
+          3,
+          2
+        ]
+      },
+      "expected": {
+        "step": 1,
+        "feedback": "none",
+        "first": "92",
+        "second": "",
+        "cell": [
+          3,
+          2
+        ]
+      }
+    },
+    {
+      "name": "retrying the later row advances without resubmitting prior work",
+      "pass": true,
+      "actual": {
+        "first": "92",
+        "second": "23",
+        "step": 2,
+        "saves": []
+      },
+      "expected": {
+        "first": "92",
+        "second": "23",
+        "step": 2,
+        "saves": []
+      }
+    },
+    {
+      "name": "only the final row calls the save boundary, and duplicate Enter stays locked",
+      "pass": true,
+      "actual": {
+        "results": [
+          "all-correct",
+          "incomplete"
+        ],
+        "final": "322",
+        "feedback": "correct",
+        "step": 2,
+        "saves": [
+          false
+        ]
+      },
+      "expected": {
+        "results": [
+          "all-correct",
+          "incomplete"
+        ],
+        "final": "322",
+        "feedback": "correct",
+        "step": 2,
+        "saves": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "failed-save recovery preserves all rows and reopens the final submission",
+      "pass": true,
+      "actual": {
+        "values": [
+          [
+            "2-2",
+            "9"
+          ],
+          [
+            "2-3",
+            "2"
+          ],
+          [
+            "3-1",
+            "2"
+          ],
+          [
+            "3-2",
+            "3"
+          ],
+          [
+            "4-1",
+            "3"
+          ],
+          [
+            "4-2",
+            "2"
+          ],
+          [
+            "4-3",
+            "2"
+          ]
+        ],
+        "feedback": "none",
+        "step": 2
+      },
+      "expected": {
+        "values": [
+          [
+            "2-2",
+            "9"
+          ],
+          [
+            "2-3",
+            "2"
+          ],
+          [
+            "3-1",
+            "2"
+          ],
+          [
+            "3-2",
+            "3"
+          ],
+          [
+            "4-1",
+            "3"
+          ],
+          [
+            "4-2",
+            "2"
+          ],
+          [
+            "4-3",
+            "2"
+          ]
+        ],
+        "feedback": "none",
+        "step": 2
+      }
+    },
+    {
+      "name": "save retry resubmits the completed final row once without retyping or reset",
+      "pass": true,
+      "actual": {
+        "results": [
+          "all-correct",
+          "incomplete"
+        ],
+        "values": [
+          [
+            "2-2",
+            "9"
+          ],
+          [
+            "2-3",
+            "2"
+          ],
+          [
+            "3-1",
+            "2"
+          ],
+          [
+            "3-2",
+            "3"
+          ],
+          [
+            "4-1",
+            "3"
+          ],
+          [
+            "4-2",
+            "2"
+          ],
+          [
+            "4-3",
+            "2"
+          ]
+        ],
+        "saves": [
+          false,
+          true
+        ],
+        "feedback": "correct"
+      },
+      "expected": {
+        "results": [
+          "all-correct",
+          "incomplete"
+        ],
+        "values": [
+          [
+            "2-2",
+            "9"
+          ],
+          [
+            "2-3",
+            "2"
+          ],
+          [
+            "3-1",
+            "2"
+          ],
+          [
+            "3-2",
+            "3"
+          ],
+          [
+            "4-1",
+            "3"
+          ],
+          [
+            "4-2",
+            "2"
+          ],
+          [
+            "4-3",
+            "2"
+          ]
+        ],
+        "saves": [
+          false,
+          true
+        ],
+        "feedback": "correct"
+      }
+    },
+    {
+      "name": "legacy decimal mode retains the normalized answer and decimal input capability",
+      "pass": true,
+      "actual": {
+        "answer": "0.3",
+        "decimal": true,
+        "writtenLayout": null
+      },
+      "expected": {
+        "answer": "0.3",
+        "decimal": true,
+        "writtenLayout": null
+      }
+    },
+    {
+      "name": "decimal input rejects a misplaced dot or a digit in the decimal-point cell",
+      "pass": true,
+      "actual": {
+        "row": "3",
+        "cell": [
+          3,
+          2
+        ]
+      },
+      "expected": {
+        "row": "3",
+        "cell": [
+          3,
+          2
+        ]
+      }
+    },
+    {
+      "name": "the legacy decimal point is entered explicitly and graded once",
+      "pass": true,
+      "actual": {
+        "row": "0.3",
+        "results": [
+          "all-correct",
+          "incomplete"
+        ],
+        "feedback": "correct",
+        "saves": [
+          true
+        ]
+      },
+      "expected": {
+        "row": "0.3",
+        "results": [
+          "all-correct",
+          "incomplete"
+        ],
+        "feedback": "correct",
+        "saves": [
+          true
+        ]
+      }
+    },
+    {
+      "name": "initial mental mode keeps a ready grid available for the mode toggle",
+      "pass": true,
+      "actual": {
+        "active": false,
+        "eligible": true,
+        "toggle": true,
+        "layout": "multiplication"
+      },
+      "expected": {
+        "active": false,
+        "eligible": true,
+        "toggle": true,
+        "layout": "multiplication"
+      }
+    },
+    {
+      "name": "disabled Hissan does not collect hidden input",
+      "pass": true,
+      "actual": {
+        "values": [],
+        "results": [
+          "incomplete"
+        ],
+        "saves": []
+      },
+      "expected": {
+        "values": [],
+        "results": [
+          "incomplete"
+        ],
+        "saves": []
+      }
+    },
+    {
+      "name": "toggling off retains accepted work and the current partial row",
+      "pass": true,
+      "actual": {
+        "active": false,
+        "step": 1,
+        "cell": [
+          3,
+          1
+        ],
+        "feedback": "none",
+        "values": [
+          [
+            "2-2",
+            "9"
+          ],
+          [
+            "2-3",
+            "2"
+          ],
+          [
+            "3-2",
+            "3"
+          ]
+        ]
+      },
+      "expected": {
+        "active": false,
+        "step": 1,
+        "cell": [
+          3,
+          1
+        ],
+        "feedback": "none",
+        "values": [
+          [
+            "2-2",
+            "9"
+          ],
+          [
+            "2-3",
+            "2"
+          ],
+          [
+            "3-2",
+            "3"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "toggling back on resumes the same input cell and values",
+      "pass": true,
+      "actual": {
+        "active": true,
+        "step": 1,
+        "cell": [
+          3,
+          1
+        ],
+        "feedback": "none",
+        "values": [
+          [
+            "2-2",
+            "9"
+          ],
+          [
+            "2-3",
+            "2"
+          ],
+          [
+            "3-2",
+            "3"
+          ]
+        ]
+      },
+      "expected": {
+        "active": true,
+        "step": 1,
+        "cell": [
+          3,
+          1
+        ],
+        "feedback": "none",
+        "values": [
+          [
+            "2-2",
+            "9"
+          ],
+          [
+            "2-3",
+            "2"
+          ],
+          [
+            "3-2",
+            "3"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "one native-event batch can traverse all 816÷8 steps including quotient zero",
+      "pass": true,
+      "actual": {
+        "results": [
+          "step-correct",
+          "step-correct",
+          "step-correct",
+          "step-correct",
+          "step-correct",
+          "step-correct",
+          "step-correct",
+          "step-correct",
+          "all-correct",
+          "incomplete"
+        ],
+        "quotient": "102",
+        "product16": "16",
+        "remainder": "0",
+        "step": 8,
+        "saves": [
+          true
+        ]
+      },
+      "expected": {
+        "results": [
+          "step-correct",
+          "step-correct",
+          "step-correct",
+          "step-correct",
+          "step-correct",
+          "step-correct",
+          "step-correct",
+          "step-correct",
+          "all-correct",
+          "incomplete"
+        ],
+        "quotient": "102",
+        "product16": "16",
+        "remainder": "0",
+        "step": 8,
+        "saves": [
+          true
+        ]
+      }
+    },
+    {
+      "name": "quotient and product completion do not submit a remainder problem",
+      "pass": true,
+      "actual": {
+        "answer": "3 あまり 1",
+        "step": 2,
+        "saves": []
+      },
+      "expected": {
+        "answer": "3 あまり 1",
+        "step": 2,
+        "saves": []
+      }
+    },
+    {
+      "name": "the remainder is required before final submission",
+      "pass": true,
+      "actual": {
+        "results": [
+          "step-correct",
+          "step-correct",
+          "all-correct"
+        ],
+        "quotient": "3",
+        "remainder": "1",
+        "saves": [
+          true
+        ]
+      },
+      "expected": {
+        "results": [
+          "step-correct",
+          "step-correct",
+          "all-correct"
+        ],
+        "quotient": "3",
+        "remainder": "1",
+        "saves": [
+          true
+        ]
+      }
+    },
+    {
+      "name": "a new problem reset cancels the old error timer and keeps new input",
+      "pass": true,
+      "actual": {
+        "active": true,
+        "step": 0,
+        "cell": null,
+        "feedback": "none",
+        "values": [
+          [
+            "0-0",
+            "1"
+          ]
+        ]
+      },
+      "expected": {
+        "active": true,
+        "step": 0,
+        "cell": null,
+        "feedback": "none",
+        "values": [
+          [
+            "0-0",
+            "1"
+          ]
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "pass": true
+}

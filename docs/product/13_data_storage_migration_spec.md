@@ -10,6 +10,12 @@
 
 ## 2. 既存テーブル
 
+### 紙テストの問題保持（2026-09-07）
+
+既存プロフィールの `pendingPaperTests` にoptionalな `testSet`（完全な20問のsnapshot）と `mode`（auto/manual）を追加する。教科ごとに最大1件とし、再印刷ではそのsnapshotを正本にする。store/index/schema versionの変更や旧行の書換えは不要。旧行は採点・取消できるが、snapshotがない内容を再生成して同じ用紙と見なさない。
+
+作成・採点・取消は最新のプロフィールを読む `updateProfileAtomically` で `appData` と互換 `profiles` を同時保存する。採点済み・取消済みIDへの再操作は履歴を追加しない。採点では同一snapshotの自動テスト待ちだけを解消し、並行して作られた別の待ち・別設定・SRS・回答ログを上書きしない。旧buildはsnapshotを使用せず再保存で落とす可能性があるため、再印刷の保証にはこの変更を含むbuildを使う。
+
 維持:
 
 - `profiles`
@@ -171,3 +177,17 @@ SRS対象assignmentでは既存 `logs` / MemoryState / weak / 解放・昇格用
 - 初回探索時はrunと `run_started` eventを作成する。`exploreSettings` は設定項目が生まれるまで作らない
 - 既存学習ログは保持
 - バックアップなしの破壊的変更は禁止
+
+## 2026-09-07: Mystic Island additive storage
+
+整数の多段筆算では、新規予約Problemにoptionalの`hissanVersion: 2`を持たせる。Island/Parkの版なしProblemは従来の筆算generatorで読み、保存済み`hissanStep`と`hissanValues`の行・列座標を再解釈しない。新しいProblemだけ多段generatorを使い、商とあまりの`correctAnswer`配列を連結しない。既存テーブル・index・Dexie versionは変更せず、旧planの一括書換えも行わない。表示・入力契約は [06_screen_specs.md](06_screen_specs.md)「多桁の筆算」を参照。
+
+[28_mystic_island_spec.md](28_mystic_island_spec.md) の島モードは Dexie v7 の `islands` / `islandPlans` / `islandEvents` にプロフィール単位で保存する。v6 の学習・探索・遊園地データを変換・削除しない。島の初期化は初回アクセス時に行う。プロフィール削除の同一transactionへ3テーブルを追加する。
+
+区間開始時に通常6問/複雑3問の完全なProblem・支援/筆算状態・学習sourceを予約し、再読込で再生成しない。active profile所有権、plan revision、action receiptを照合し、学習回答と既存writerの記録、最終問題の完了受取権を同一transactionへ保存する。支援・skipは独力確認Dueを残し、支援正解を独力正答に数えない。未受取権は次の区間を始めても保持し、受取をitemとclaim eventへ原子的に変換する。配置・回転・収納は島revisionを使ったCASで保存する。
+
+rollbackはv7 schemaを維持したまま `VITE_ISLAND_ENABLED` を無効化する。schemaのdowngradeやIndexedDB削除をrollback手順にしない。PWAは島の学習中・保存中を保護する。
+
+島の再確認改善では、既存island行にoptionalの算数再確認状態と英語Due巡回位置を加える。旧行は未設定のまま読み込める。算数はskill単位の失敗問題識別と別表現/独力の確認段階を持ち、訂正正解で消さない。状態更新は回答または次区間予約と同一transaction、島revisionのCASとreceipt冪等性に従う。区間のProblemは予約後に差し替えない。新しいtable/index、既存履歴の書換え、schema downgradeは伴わない。
+
+optionalの算数巡回数は新しい算数区間を予約する同一transactionでだけ進め、通常Dueと再確認の交互優先・再確認候補の巡回に使う。英語区間、再読込、報酬受取では進めない。

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#fffaf0" />
+  <title>ぴったり連鎖 — 5と10の数あそび</title>
+</head>
+<body>
+  <main class="pittari" data-visual-candidate-id="pittari-positive-v1" data-delivery="standalone-prototype">
+    <header><h1>ぴったり<span>連鎖</span></h1><button id="end" class="quiet">おわる</button></header>
+    <div class="toolbar"><div class="targets" aria-label="つくる数"><button id="target5" aria-pressed="true">5をつくる</button><button id="target10" aria-pressed="false">10をつくる</button></div><button id="dots" class="quiet" aria-pressed="true">つぶ あり</button></div>
+    <section class="goal"><div><p id="level"></p><h2 id="goal"></h2></div><div class="target-disc"><small>あわせて</small><strong id="target">5</strong></div></section>
+    <section class="playground" aria-label="数のブロック">
+      <div class="stack-label">うえの かずは、あとから おちる</div>
+      <div id="board" class="board"></div>
+      <div class="touch-label">↓ いちばん したの、となりどうし ↓</div>
+      <div id="pause" class="pause" hidden><p>ここで ひとやすみ</p><button id="resume" class="primary">つづきから あそぶ</button></div>
+    </section>
+    <div class="feedback" role="status" aria-live="polite"><span id="chain"></span><p id="message">したの ふたつを えらんでね</p></div>
+    <nav class="actions" aria-label="あそびの操作"><button id="undo">↶ ひとつもどす</button><button id="retry">↻ もういちど</button><button id="next" class="primary">つぎの ばんめん →</button></nav>
+    <details class="grownups"><summary>保護者・制作担当向け</summary><div class="parent-content">
+      <label>盤面 <select id="board-select"></select></label><button id="sound" aria-pressed="false">音 なし</button>
+      <p>5・10の合成と補数を使う、新しい12盤面の試作です。数の選択と、選ぶ場所で変わる連鎖を観察します。</p>
+      <p>手動選択と自動連鎖を区別します。既存の学習履歴・SRSへは書き込みません。ログはこのページを開いている間だけ保持し、再読込すると新しい記録になります。ダウンロードするまで外部へ送信しません。</p>
+      <button id="export">この回の操作ログを保存</button><p id="storage" role="status"></p><small id="identity"></small>
+    </div></details>
+    <p id="storage-warning" class="storage-warning" role="status" hidden></p>
+  </main>
+  <script type="module" src="/src/prototypes/pittari/main.ts"></script>
+</body>
+</html>

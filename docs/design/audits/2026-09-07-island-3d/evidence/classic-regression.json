@@ -1,0 +1,51 @@
+{
+  "sourceRevision": "aa36adad7dcc-island-3d-a427ea0225cf",
+  "sourceHash": "a427ea0225cf302b2fc1eee0036c98856f922f080a79a6c51ef9463d228272b2",
+  "sourceFilesChecked": 564,
+  "sourceMismatches": [],
+  "classicBuild": {
+    "version": "aa36adad7dcc-island-3d-classic-a427ea0225cf:d4c4f628-7e02-4a84-8ad7-55dc89e8f7e4",
+    "revision": "aa36adad7dcc-island-3d-classic-a427ea0225cf",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "legacy"
+    },
+    "island": {
+      "enabled": false,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "artDirection": "moon-garden"
+    }
+  },
+  "classicBuildDirectory": "output/builds/island-3d-classic-regression-a427ea0225cf",
+  "buildFlags": {
+    "VITE_ISLAND_ENABLED": "false",
+    "VITE_BUILD_PLAY_ENABLED": "false",
+    "VITE_PARK_RENDERER": "legacy"
+  },
+  "buildExitCode": 0,
+  "pwa": {
+    "log": "classic-pwa.log",
+    "passed": 4,
+    "failed": []
+  },
+  "smokeConcurrent": {
+    "log": "classic-smoke.log",
+    "passed": 29,
+    "failed": [
+      "FAIL runs Root Pull v2 inline with reduced motion and the numeric keypad: locator.click: Timeout 30000ms exceeded.",
+      "FAIL safely exits and retries from a pending explore problem: Error: a ready pending problem should allow safe run exit"
+    ]
+  },
+  "smokeIsolated": {
+    "log": "classic-smoke-isolated.log",
+    "passed": 31,
+    "failed": []
+  },
+  "sourceOrToolEdits": false,
+  "browserClosed": true,
+  "interpretation": "PWA 4/4 and isolated full smoke 31/31 passed. Initial concurrent smoke 29/31 failed immediately after a new attempt: Root Pull disabled submit and pending-run disabled exit. waitForNewExploreAttempt waits only for changed attempt key and title; Explore keyboard listener also requires persistence readiness, idle save, and idle feedback. This is a plausible test-readiness race, not confirmed without the failed DOM. No blind input retries, fixed sleeps, or test changes were introduced; the initial failure log remains preserved. Concurrent timing is not a formal performance measurement."
+}

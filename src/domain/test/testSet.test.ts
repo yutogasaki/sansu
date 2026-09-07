@@ -1,15 +1,17 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import "fake-indexeddb/auto";
+import { beforeEach, describe, expect, it } from "vitest";
+import { db } from "../../db";
+import { saveProfile } from "../user/repository";
 import { createInitialProfile } from "../user/profile";
 import { ensurePeriodicTestSet } from "./testSet";
 import { getMathSkillFamily, getSkillsForLevel } from "../math/curriculum";
 
-vi.mock("../user/repository", () => ({
-    saveProfile: vi.fn().mockResolvedValue(undefined),
-}));
+
 
 describe("ensurePeriodicTestSet", () => {
-    beforeEach(() => {
-        vi.restoreAllMocks();
+    beforeEach(async () => {
+        await db.appData.clear();
+        await db.profiles.clear();
     });
 
     it("uses level 0 math skills when the profile is on level 0 and spreads early families", async () => {
@@ -18,6 +20,7 @@ describe("ensurePeriodicTestSet", () => {
         profile.mathMaxUnlocked = 0;
         profile.periodicTestSets = {};
 
+        await saveProfile(profile);
         const set = await ensurePeriodicTestSet(profile, "math");
         const level0Skills = new Set(getSkillsForLevel(0));
 
@@ -35,6 +38,7 @@ describe("ensurePeriodicTestSet", () => {
         profile.mathMaxUnlocked = 8;
         profile.periodicTestSets = {};
 
+        await saveProfile(profile);
         const set = await ensurePeriodicTestSet(profile, "math");
         const counts = new Map<string, number>();
         set.problems.forEach(problem => {
@@ -52,6 +56,7 @@ describe("ensurePeriodicTestSet", () => {
         profile.mathMainLevel = 8;
         profile.mathMaxUnlocked = 8;
         profile.periodicTestSets = {};
+        await saveProfile(profile);
         const triggeredSet = await ensurePeriodicTestSet(profile, "math");
 
         profile.mathMainLevel = 9;
@@ -62,9 +67,10 @@ describe("ensurePeriodicTestSet", () => {
         };
         profile.periodicTestSets = { math: triggeredSet };
 
+        await saveProfile(profile);
         const preserved = await ensurePeriodicTestSet(profile, "math");
 
-        expect(preserved).toBe(triggeredSet);
+        expect(preserved).toEqual(triggeredSet);
         expect(preserved.level).toBe(8);
     });
 });

@@ -1,0 +1,24 @@
+{
+  "pass": true,
+  "before": {
+    "version": "development-local:ad77b67d-1032-48ee-ab01-b41d9216f9cf",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "legacy"
+    }
+  },
+  "after": {
+    "version": "development-local:6bdf3b77-8239-4519-8eaf-5d164d1d18b3",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    }
+  },
+  "embeddedAppVersionMatches": true
+}

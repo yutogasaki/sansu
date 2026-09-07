@@ -1,5 +1,5 @@
 {
-  "buildCommand": "VITE_BUILD_PLAY_ENABLED=true VITE_PARK_RENDERER=three npm run build",
+  "buildCommand": "VITE_ISLAND_ENABLED=true VITE_BUILD_PLAY_ENABLED=true VITE_PARK_RENDERER=three npm run build",
   "headers": [
     {
       "source": "/",

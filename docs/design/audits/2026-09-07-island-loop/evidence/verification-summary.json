@@ -1,0 +1,93 @@
+{
+  "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+  "sourceHash": "32cb1f0b89f8f586b7245b54e211b970ee56b54d75b653fc165bee2d2560a848",
+  "functionalPass": true,
+  "core": {
+    "testFiles": 120,
+    "tests": 1299,
+    "pass": true,
+    "report": "verify-core.log"
+  },
+  "checks": [
+    {
+      "name": "learning",
+      "pass": true,
+      "count": 23,
+      "report": "learning/report.json",
+      "sha256": "c4a16dc660d7f7cfa38a5599005b2a650ba7644f1527b4053f69cf022c04479d"
+    },
+    {
+      "name": "critical-path",
+      "pass": true,
+      "count": 16,
+      "report": "critical-path/production-capture-report.json",
+      "sha256": "d68353597ffa936754b9eb2a64c4d5c4d3fbcb583a54effe92f990fe1bcf0574"
+    },
+    {
+      "name": "recovery",
+      "pass": true,
+      "count": 4,
+      "report": "recovery/report.json",
+      "sha256": "492d959137b57a60869b8f27f5b0f3215ac16d76da8e81a0dba800eccd8e0d5b"
+    },
+    {
+      "name": "play",
+      "pass": true,
+      "count": 2,
+      "report": "play/report.json",
+      "sha256": "21af53937b74917166ca55b677a26aa0ab21848dd0d68a3f9a99d9e068bb224a"
+    },
+    {
+      "name": "island-pwa",
+      "pass": true,
+      "count": 4,
+      "report": "pwa/pwa-report.json",
+      "sha256": "7345c6f74c75ce72350bf1c0eb95c48a143255944d80c03287083e3cf092723b"
+    },
+    {
+      "name": "legacy",
+      "pass": true,
+      "count": 11,
+      "report": "regression-summary.json",
+      "target": "http://127.0.0.1:5219/#/island"
+    },
+    {
+      "name": "park",
+      "pass": true,
+      "count": 6,
+      "report": "regression-summary.json",
+      "target": "http://127.0.0.1:5220/#/park"
+    },
+    {
+      "name": "park-pwa",
+      "pass": true,
+      "count": 3,
+      "report": "regression-summary.json",
+      "target": "http://127.0.0.1:5297/#/park"
+    },
+    {
+      "name": "classic-pwa",
+      "pass": true,
+      "count": 4,
+      "report": "regression-summary.json",
+      "target": "http://127.0.0.1:4273/ (fixed classic artifact)"
+    },
+    {
+      "name": "smoke",
+      "pass": true,
+      "count": 31,
+      "report": "smoke-rerun/source-report.json",
+      "initialFailureRetained": "smoke-first-failure"
+    }
+  ],
+  "throughput": {
+    "pass": true,
+    "eligible": true,
+    "runs": 80,
+    "gates": 13,
+    "sourceCorrespondence": "throughput/manifest-comparison.json",
+    "report": "throughput/latest.json"
+  },
+  "threeD": "Previous cabd implementation evidence only; raw whole gate remains false. See interaction-carry-forward.json.",
+  "localVerificationComplete": true
+}

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "../components/ui/Button";
 import { Modal } from "../components/ui/Modal";
@@ -15,15 +15,14 @@ import { Icons } from "../components/icons";
 import { PaperTestScoreModal } from "../components/domain/PaperTestScoreModal";
 import { useNavigate } from "react-router-dom";
 import { UserProfile } from "../domain/types";
-import { getActiveProfile, deleteProfile, getAllProfiles, saveProfile, setActiveProfileId } from "../domain/user/repository";
+import { getActiveProfile, deleteProfile, getAllProfiles, updateProfileAtomically, setActiveProfileId } from "../domain/user/repository";
 import { setSoundEnabled } from "../utils/audio";
-import { Problem } from "../domain/types";
 import { ParentGateModal } from "../components/gate/ParentGateModal";
-import { ensurePeriodicTestSet } from "../domain/test/testSet";
-import { getWord } from "../domain/english/words";
-import { recordPaperTestScore, upsertPendingPaperTest } from "../domain/test/paperTest";
+import { preparePaperTest, savePaperTestScore, cancelPaperTest, type PendingPaperTest } from "../domain/test/paperTestRepository";
+import { PrintableTestPreview } from "../components/domain/PrintableTestPreview";
+import { holdPwaUpdateForCriticalPersistence } from "../pwa";
+import { activateVocabNextLevel, needsVocabNextLevelActivation } from "../hooks/useStudySession.logic";
 import { ScreenScaffold } from "../components/ScreenScaffold";
-import { logInDev } from "../utils/debug";
 import storage from "../utils/storage";
 
 export const Settings: React.FC = () => {
@@ -36,6 +35,14 @@ export const Settings: React.FC = () => {
     const [showParentGuard, setShowParentGuard] = useState(false);
     const [guardCallback, setGuardCallback] = useState<(() => void) | null>(null);
     const [isPrinting, setIsPrinting] = useState(false);
+    const paperBusyRef = useRef(false);
+    const profileIdRef = useRef<string | null>(null);
+    const [paperError, setPaperError] = useState<string | null>(null);
+    const [printPreview, setPrintPreview] = useState<{ paper: PendingPaperTest; profileName: string } | null>(null);
+    const printTriggerRef = useRef<HTMLElement | null>(null);
+    const [cancelTarget, setCancelTarget] = useState<PendingPaperTest | null>(null);
+    const [activationError, setActivationError] = useState(false);
+    const [isActivating, setIsActivating] = useState(false);
 
     // Modals State
     const [renameTarget, setRenameTarget] = useState<UserProfile | null>(null);
@@ -50,6 +57,14 @@ export const Settings: React.FC = () => {
     const toggleSection = (key: string) => setOpenSection(prev => prev === key ? null : key);
 
     const syncProfileState = useCallback((nextProfile: UserProfile | null) => {
+        if (profileIdRef.current !== (nextProfile?.id ?? null)) {
+            setPrintPreview(null);
+            setPendingPaperTest(null);
+            setShowPaperTestModal(false);
+            setCancelTarget(null);
+            setPaperError(null);
+        }
+        profileIdRef.current = nextProfile?.id ?? null;
         setProfile(nextProfile);
 
         if (!nextProfile) {
@@ -66,9 +81,14 @@ export const Settings: React.FC = () => {
     }, []);
 
     const persistProfileUpdate = useCallback(async (nextProfile: UserProfile) => {
-        await saveProfile(nextProfile);
-        syncProfileState(nextProfile);
-    }, [syncProfileState]);
+        if (!profile || profile.id !== nextProfile.id) return;
+        // Apply only this control's changed fields to the latest owned snapshot.
+        // A paper reservation or learning write may finish while Settings is open.
+        const changes = Object.fromEntries(Object.entries(nextProfile)
+            .filter(([key, value]) => value !== profile[key as keyof UserProfile]));
+        const updated = await updateProfileAtomically(nextProfile.id, current => ({ ...current, ...changes }));
+        if (updated && profileIdRef.current === updated.id) syncProfileState(updated);
+    }, [profile, syncProfileState]);
 
     useEffect(() => {
         let cancelled = false;
@@ -90,6 +110,7 @@ export const Settings: React.FC = () => {
 
         return () => {
             cancelled = true;
+            profileIdRef.current = null;
         };
     }, [syncProfileState]);
 
@@ -133,8 +154,8 @@ export const Settings: React.FC = () => {
     const handleRenameSubmit = async () => {
         if (!renameTarget || !newName.trim()) return;
 
-        const updated = { ...renameTarget, name: newName.trim() };
-        await saveProfile(updated);
+        const updated = await updateProfileAtomically(renameTarget.id, current => ({ ...current, name: newName.trim() }));
+        if (!updated) return;
 
         if (profile?.id === updated.id) {
             syncProfileState(updated);
@@ -209,79 +230,37 @@ export const Settings: React.FC = () => {
         }
     };
 
-    const handlePrintError = (error: unknown) => {
-        console.error("[PDF] Error:", error);
-        alert(`PDFの作成に失敗しました。\n\nエラー: ${error instanceof Error ? error.message : String(error)}`);
-    };
-
-    const runPrintJob = async (job: () => Promise<void>) => {
-        if (!profile || isPrinting) return;
-
+    const runPaperJob = async (job: (profileId: string) => Promise<void>) => {
+        const ownerId = profileIdRef.current;
+        if (!ownerId || paperBusyRef.current) return;
+        paperBusyRef.current = true;
         setIsPrinting(true);
-
+        setPaperError(null);
+        const release = holdPwaUpdateForCriticalPersistence();
         try {
-            await job();
+            await job(ownerId);
         } catch (error) {
-            handlePrintError(error);
+            console.error("Paper test operation failed:", error);
+            if (profileIdRef.current === ownerId) {
+                setPaperError(error instanceof Error ? error.message : "保存できませんでした。もう一度お試しください。");
+            }
         } finally {
+            release();
+            paperBusyRef.current = false;
             setIsPrinting(false);
         }
     };
 
-    const handlePrintPDF = async () => {
-        if (!profile) return;
-        const activeProfile = profile;
-
-        await runPrintJob(async () => {
-            logInDev("[PDF] Starting Math PDF generation...");
-
-            const set = await ensurePeriodicTestSet(activeProfile, "math");
-            const problems: Problem[] = set.problems.map((p, i) => ({
-                ...p,
-                id: `pdf-math-${i}`,
-                subject: "math",
-                isReview: false
-            }));
-            logInDev("[PDF] Using test set", set.level, problems.length);
-            if (problems.length === 0) {
-                alert("このレベルには まだ もんだいが ありません");
-                return;
-            }
-
-            const { generateMathPDF } = await import("../utils/pdfGenerator");
-            await generateMathPDF(problems, `さんすう レベル Lv.${set.level}`, activeProfile.name);
-            logInDev("[PDF] Math PDF generation completed!");
-
-            const updated = upsertPendingPaperTest(activeProfile, "math", set.level);
-            await persistProfileUpdate(updated);
-        });
-    };
-
-    const handlePrintVocabPDF = async () => {
-        if (!profile) return;
-        const activeProfile = profile;
-
-        await runPrintJob(async () => {
-            logInDev("[PDF] Starting Vocab PDF generation...");
-
-            const set = await ensurePeriodicTestSet(activeProfile, "vocab");
-            const selected = set.problems
-                .map(p => getWord(p.categoryId))
-                .filter((w): w is NonNullable<typeof w> => !!w);
-            logInDev("[PDF] Using test set", set.level, "words:", selected.length);
-            if (selected.length === 0) {
-                alert("まだ 単語が ありません");
-                return;
-            }
-
-            const { generateVocabPDF } = await import("../utils/pdfGenerator");
-            await generateVocabPDF(selected, `えいご レベル Lv.${set.level}`);
-            logInDev("[PDF] Vocab PDF generation completed!");
-
-            const updated = upsertPendingPaperTest(activeProfile, "vocab", set.level);
-            await persistProfileUpdate(updated);
-        });
-    };
+    const handlePrint = (subject: "math" | "vocab") => runPaperJob(async ownerId => {
+        const result = await preparePaperTest(ownerId, subject);
+        if (profileIdRef.current !== ownerId) return;
+        syncProfileState(result.profile);
+        if (!result.paper.testSet || result.paper.testSet.problems.length !== 20) {
+            setPaperError("以前の紙テストには問題が保存されていません。点数を入力するか、採点待ちを取り消して新しく作成してください。");
+            return;
+        }
+        setPrintPreview({ paper: result.paper, profileName: result.profile.name });
+    });
 
     const getTestStatus = (subject: "math" | "vocab") => {
         const pendingOnline = profile?.periodicTestState?.[subject]?.isPending;
@@ -306,16 +285,33 @@ export const Settings: React.FC = () => {
     };
 
     const handlePaperTestSubmit = async (correctCount: number) => {
-        if (!profile || !pendingPaperTest) return;
-        const updatedProfile = recordPaperTestScore(profile, pendingPaperTest, correctCount);
-        await persistProfileUpdate(updatedProfile);
-        setShowPaperTestModal(false);
-        setPendingPaperTest(null);
+        if (!pendingPaperTest) return;
+        await runPaperJob(async ownerId => {
+            const updated = await savePaperTestScore(ownerId, pendingPaperTest, correctCount);
+            if (!updated) throw new Error("プロフィールが見つかりません。設定を開き直してください。");
+            if (profileIdRef.current !== ownerId) return;
+            syncProfileState(updated);
+            setShowPaperTestModal(false);
+            setPendingPaperTest(null);
+        });
     };
 
     const handlePaperTestDismiss = () => {
+        if (paperBusyRef.current) return;
         setShowPaperTestModal(false);
         setPendingPaperTest(null);
+        setPaperError(null);
+    };
+
+    const handleCancelPaperTest = () => {
+        if (!cancelTarget) return;
+        void runPaperJob(async ownerId => {
+            const updated = await cancelPaperTest(ownerId, cancelTarget.id);
+            if (!updated) throw new Error("プロフィールが見つかりません。設定を開き直してください。");
+            if (profileIdRef.current !== ownerId) return;
+            syncProfileState(updated);
+            setCancelTarget(null);
+        });
     };
 
     const handleTestTimerChange = async (minutes: number) => {
@@ -325,6 +321,22 @@ export const Settings: React.FC = () => {
             periodicTestTimeLimitSeconds: minutes > 0 ? minutes * 60 : undefined,
         };
         await persistProfileUpdate(updated);
+    };
+
+    const handleActivateVocab = async () => {
+        if (!profile || isActivating) return;
+        const expected = { profileId: profile.id, mainLevel: profile.vocabMainLevel };
+        setActivationError(false);
+        setIsActivating(true);
+        try {
+            const updated = await updateProfileAtomically(profile.id, current => activateVocabNextLevel(current, expected));
+            if (!updated) throw new Error("Profile missing");
+            if (profileIdRef.current === updated.id) syncProfileState(updated);
+        } catch {
+            if (profileIdRef.current === expected.profileId) setActivationError(true);
+        } finally {
+            setIsActivating(false);
+        }
     };
 
     const formatPendingPaperMeta = (createdAt: string) => {
@@ -366,6 +378,18 @@ export const Settings: React.FC = () => {
                 onClose={() => setShowParentGuard(false)}
                 onSuccess={handleGuardSuccess}
             />
+            {printPreview?.paper.testSet && <PrintableTestPreview
+                testSet={printPreview.paper.testSet}
+                paperId={printPreview.paper.id}
+                profileName={printPreview.profileName}
+                onClose={() => setPrintPreview(null)}
+                returnFocusTo={printTriggerRef.current}
+            />}
+            <Modal isOpen={!!cancelTarget} onClose={() => { if (!isPrinting) setCancelTarget(null); }} title="採点待ちを取り消しますか？"
+                footer={<Button disabled={isPrinting} onClick={handleCancelPaperTest}>採点待ちを取り消す</Button>}>
+                <p className="text-sm text-slate-600">この用紙の点数入力と再印刷を終了します。学習の記録やレベルは変わりません。</p>
+                {paperError && <p role="alert" className="mt-3 text-sm">{paperError}</p>}
+            </Modal>
             {pendingPaperTest && (
                 <PaperTestScoreModal
                     isOpen={showPaperTestModal}
@@ -373,6 +397,8 @@ export const Settings: React.FC = () => {
                     level={pendingPaperTest.level}
                     onSubmit={handlePaperTestSubmit}
                     onDismiss={handlePaperTestDismiss}
+                    isSaving={isPrinting}
+                    error={paperError}
                 />
             )}
             <Modal
@@ -459,6 +485,12 @@ export const Settings: React.FC = () => {
                         {openSection === "learning" && (
                             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
                                 <div className="space-y-5 px-5 pb-5">
+                                    {profile && needsVocabNextLevelActivation(profile) && <InsetPanel className="space-y-3 p-4">
+                                        <p className="text-sm text-slate-700">英語の次のレベルも、少しずつ練習できます。</p>
+                                        <Button size="sm" className="min-h-11 w-full" disabled={isActivating} onClick={() => { void handleActivateVocab(); }}>英語 Lv.{profile.vocabMainLevel + 1}の練習を始める</Button>
+                                        <p className="text-xs text-slate-500">今のレベルを続けながら、10問のうち最大3問を新しい単語にします。</p>
+                                        {activationError && <p role="alert" className="text-sm text-slate-700">保存できませんでした。もう一度お試しください。</p>}
+                                    </InsetPanel>}
                                     <SurfacePanelHeader title={t("べんきょう する もの", "学習する科目")} />
                                     <SegmentedControl
                                         value={profile?.subjectMode ?? "mix"}
@@ -524,6 +556,8 @@ export const Settings: React.FC = () => {
                             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
                                 <div className="space-y-4 px-5 pb-5">
                                     <SurfacePanelHeader title={t("ていき テスト", "定期テスト（20問）")} description={t("アプリ と かみ で テスト できるよ", "アプリ受験と紙テストをここから開始できます")} />
+                                    {paperError && !showPaperTestModal && !cancelTarget && <p role="alert" className="text-sm text-slate-700">{paperError}</p>}
+                                    {isPrinting && <p role="status" className="text-sm text-slate-600">テストを保存しています…</p>}
                                     <InsetPanel className="space-y-3 px-4 py-4">
                                         <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">{t("せいげん じかん", "制限時間")}</div>
                                         <div className="flex flex-wrap gap-2">
@@ -540,8 +574,8 @@ export const Settings: React.FC = () => {
                                     </InsetPanel>
                                     <div className="grid grid-cols-1 gap-3 land:grid-cols-2">
                                         {([
-                                            { subject: "math" as const, title: t("さんすう", "算数"), level: profile?.mathMainLevel ?? 1, print: handlePrintPDF, startPath: "/study?session=periodic-test&focus_subject=math" },
-                                            { subject: "vocab" as const, title: t("えいご", "英語"), level: profile?.vocabMainLevel ?? 1, print: handlePrintVocabPDF, startPath: "/study?session=periodic-test&focus_subject=vocab" },
+                                            { subject: "math" as const, title: t("さんすう", "算数"), level: profile?.mathMainLevel ?? 1,  startPath: "/study?session=periodic-test&focus_subject=math" },
+                                            { subject: "vocab" as const, title: t("えいご", "英語"), level: profile?.vocabMainLevel ?? 1,  startPath: "/study?session=periodic-test&focus_subject=vocab" },
                                         ]).map(item => {
                                             const status = getTestStatus(item.subject);
                                             const pendingPaper = getPendingPaperTest(item.subject);
@@ -550,14 +584,18 @@ export const Settings: React.FC = () => {
                                                 <InsetPanel key={item.subject} className="space-y-3 px-4 py-4">
                                                     <div className="flex flex-wrap items-start justify-between gap-2">
                                                         <div>
-                                                            <div className="font-bold text-slate-700">{item.title} Lv.{item.level}</div>
+                                                            <div className="font-bold text-slate-700">{item.title} Lv.{pendingPaper?.level ?? item.level}</div>
                                                             {pendingPaper ? <div className="mt-1 text-[11px] text-slate-500">{formatPendingPaperMeta(pendingPaper.createdAt)}</div> : null}
                                                         </div>
                                                         <Badge variant={status.variant}>{status.label}</Badge>
                                                     </div>
                                                     <div className="grid grid-cols-1 gap-2">
                                                         <Button size="sm" className="h-10 w-full" onClick={() => withParentGuard(() => navigate(item.startPath))}>{t("アプリで うける", "アプリ受験")}</Button>
-                                                        <Button size="sm" variant="secondary" className="h-10 w-full text-xs" onClick={() => { if (hasPendingPaper) { handleOpenPaperScoreModal(item.subject); return; } item.print(); }}>{hasPendingPaper ? t("てんすう いれる", "点数入力") : t("かみで うける", "紙テストPDF")}</Button>
+                                                        <Button size="sm" variant="secondary" className="min-h-11 w-full text-xs" disabled={isPrinting} onClick={event => { printTriggerRef.current = event.currentTarget; void handlePrint(item.subject); }}>{hasPendingPaper ? t("おなじ もんだいを いんさつ", "同じ問題を印刷") : t("いんさつ・PDF", "印刷・PDF")}</Button>
+                                                        {hasPendingPaper && <>
+                                                            <Button size="sm" variant="secondary" className="min-h-11 w-full" disabled={isPrinting} onClick={() => handleOpenPaperScoreModal(item.subject)}>{t("てんすう いれる", "点数入力")}</Button>
+                                                            <button type="button" className="min-h-11 text-xs text-slate-600 underline" disabled={isPrinting} onClick={() => setCancelTarget(pendingPaper)}>{t("さいてん まちを とりけす", "採点待ちを取り消す")}</button>
+                                                        </>}
                                                     </div>
                                                 </InsetPanel>
                                             );

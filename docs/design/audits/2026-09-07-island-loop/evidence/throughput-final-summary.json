@@ -1,0 +1,82 @@
+{
+  "pass": true,
+  "eligible": true,
+  "sourceHash": "32cb1f0b89f8f586b7245b54e211b970ee56b54d75b653fc165bee2d2560a848",
+  "runs": 80,
+  "gatesPassed": 13,
+  "gatesTotal": 13,
+  "actualRuntime": {
+    "artDirections": [
+      "moon-garden"
+    ],
+    "worldCandidates": [
+      "mystic-island-procedural-v2"
+    ],
+    "learningCandidates": [
+      "mystic-island-learning-v2"
+    ],
+    "reducedMotion": [
+      true
+    ],
+    "islandEnabled": [
+      true
+    ],
+    "minimumControlWidth": 77.5,
+    "minimumControlHeight": 47.5
+  },
+  "processObservations": [
+    {
+      "at": "2026-09-07T07:28:04.144987+00:00",
+      "automatedProcesses": 5,
+      "unexpectedAutomated": [],
+      "otherHighCpu": [
+        {
+          "pid": 1369,
+          "ppid": 1,
+          "cpu": 78.9,
+          "comm": "/System/Library/PrivateFrameworks/MediaAnalysis.framework/Versions/A/mediaanalysisd"
+        }
+      ]
+    },
+    {
+      "at": "2026-09-07T07:29:46.743404+00:00",
+      "automatedProcesses": 5,
+      "unexpectedAutomated": [],
+      "otherHighCpu": []
+    }
+  ],
+  "methodLimits": [
+    "DEV-only fixed-ten fixture, not production planner/child learning outcome evidence. Actual 577 application/build inputs match final production32cb; runtime keeps its truthful development-local identifier.",
+    "No other automated-browser process observed before/during/after; root assigned exclusive test-browser ownership. Two intermediate process samples are observations rather than continuous system tracing.",
+    "One intermediate sample had OS mediaanalysisd at78.9% CPU; next sample had no other process above60%. Ordinary Google Chrome processes preexisted idle and were not closed. Threshold pass is observed under this environment; do not claim an end-user learning or device-wide performance multiplier."
+  ],
+  "priorRunsAdopted": false,
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 122.38029688677476,
+      "islandMedianProblemsPerMinute": 269.1263398162283,
+      "allCorrectIslandToStudyRatio": 2.1990986021648715,
+      "correctOperableP95Ms": 194.0999999642372,
+      "incorrectRetryP95Ms": 193.5999999642372,
+      "correctSamples": 180,
+      "incorrectSamples": 20,
+      "sectionContinueMedianMs": 83.09999999403954,
+      "rawStudyDurationMedianMs": 4902.75,
+      "rawIslandDurationMedianMs": 2229.449999988079
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 122.30546582168989,
+      "islandMedianProblemsPerMinute": 263.2564794739918,
+      "allCorrectIslandToStudyRatio": 2.1524506505522454,
+      "correctOperableP95Ms": 195.39999997615814,
+      "incorrectRetryP95Ms": 194.80000001192093,
+      "correctSamples": 180,
+      "incorrectSamples": 20,
+      "sectionContinueMedianMs": 97.65000000596046,
+      "rawStudyDurationMedianMs": 4905.75,
+      "rawIslandDurationMedianMs": 2279.1500000059605
+    }
+  ]
+}

@@ -14,6 +14,7 @@ const REPRESENTATION_PROGRESSIONS = {
 export interface MathFollowupCandidate {
     skillId: string;
     priority: number;
+    reason: "remediation" | "progression";
 }
 
 export const getLatestMathAttemptForSkillIds = (
@@ -36,12 +37,12 @@ export const getMathFollowupPlan = (
     currentLevelSkills: string[],
     maxUnlockedLevel: number
 ): MathFollowupCandidate[] => {
-    const weighted = new Map<string, number>();
+    const weighted = new Map<string, { priority: number; reason: MathFollowupCandidate["reason"] }>();
 
-    const addCandidate = (skillId: string, priority: number) => {
+    const addCandidate = (skillId: string, priority: number, reason: MathFollowupCandidate["reason"]) => {
         const level = getLevelForSkill(skillId);
         if (level === null || level > maxUnlockedLevel) return;
-        weighted.set(skillId, Math.max(weighted.get(skillId) || 0, priority));
+        if ((weighted.get(skillId)?.priority ?? 0) < priority) weighted.set(skillId, { priority, reason });
     };
 
     currentLevelSkills.forEach(skillId => {
@@ -54,7 +55,7 @@ export const getMathFollowupPlan = (
 
         if (latestAttempt.result !== "correct") {
             (sourceMetadata.reviewFallbackSkillIds || []).forEach((fallbackId, index) => {
-                addCandidate(fallbackId, 70 - index);
+                addCandidate(fallbackId, 70 - index, "remediation");
             });
             return;
         }
@@ -67,11 +68,11 @@ export const getMathFollowupPlan = (
             const relatedMetadata = getMathSkillMetadata(relatedSkillId);
             const progressionIndex = targetRepresentations.indexOf(relatedMetadata.representation);
             if (progressionIndex === -1) return;
-            addCandidate(relatedSkillId, 65 - progressionIndex * 5);
+            addCandidate(relatedSkillId, 65 - progressionIndex * 5, "progression");
         });
     });
 
     return [...weighted.entries()]
-        .sort((a, b) => b[1] - a[1])
-        .map(([skillId, priority]) => ({ skillId, priority }));
+        .sort((a, b) => b[1].priority - a[1].priority)
+        .map(([skillId, metadata]) => ({ skillId, ...metadata }));
 };

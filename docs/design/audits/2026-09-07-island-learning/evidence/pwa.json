@@ -1,0 +1,70 @@
+{
+  "target": "http://127.0.0.1:5298",
+  "flag": "VITE_ISLAND_ENABLED=true",
+  "hookChecks": [
+    "active learning defers update; user home checkpoint reloads with reserved plan preserved",
+    "critical persistence hold spans navigation and releases deferred update afterwards",
+    "continue pointer protects fresh session; answer receipt survives next user checkpoint",
+    "legacy active Explore run retains launch precedence and Island data"
+  ],
+  "offline": {
+    "revision": "aa36adad7dcc-island-learning-99d08b2a0e4c",
+    "version": "aa36adad7dcc-island-learning-99d08b2a0e4c:9ef27e21-391f-4fa2-8d13-8c330f33c4fc",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-three-v1",
+    "learningCandidate": "mystic-island-learning-v2",
+    "mode": "learning",
+    "renderer": "three",
+    "drawCalls": 73,
+    "expanded": "false",
+    "residentAction": "idle",
+    "residentItemId": "",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": true,
+    "reducedMotion": true,
+    "serviceWorker": "real",
+    "offlineReload": true,
+    "answerPersisted": true,
+    "resumedSamePlan": true,
+    "soundEnabled": false
+  },
+  "pass": true,
+  "runtime": {
+    "revision": "aa36adad7dcc-island-learning-99d08b2a0e4c",
+    "version": "aa36adad7dcc-island-learning-99d08b2a0e4c:9ef27e21-391f-4fa2-8d13-8c330f33c4fc",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-three-v1",
+    "learningCandidate": "mystic-island-learning-v2",
+    "mode": "home",
+    "renderer": "three",
+    "drawCalls": 80,
+    "expanded": "false",
+    "residentAction": "idle",
+    "residentItemId": "",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": false,
+    "reducedMotion": false
+  },
+  "manifest": {
+    "version": "aa36adad7dcc-island-learning-99d08b2a0e4c:9ef27e21-391f-4fa2-8d13-8c330f33c4fc",
+    "revision": "aa36adad7dcc-island-learning-99d08b2a0e4c",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "learningCandidate": "mystic-island-learning-v2"
+    }
+  }
+}

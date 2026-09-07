@@ -1,0 +1,62 @@
+{
+  "diagnostic": true,
+  "note": "One warm pulse per fixture at 768×1024; backend identity must be verified before interpreting as hardware evidence.",
+  "results": [
+    {
+      "fixture": "ordinary",
+      "itemCount": 2,
+      "requestedBackend": "metal",
+      "actualGPU": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "verifiedHardwareMetal": true,
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "drawCalls": 76,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "samples": 38,
+      "peakDrawCalls": 77,
+      "warmRenderIntervalP50": 40.09999996423721,
+      "warmRenderIntervalP95": 42.60000002384186,
+      "correctNextMs": 197.30000001192093
+    },
+    {
+      "fixture": "dense",
+      "itemCount": 50,
+      "requestedBackend": "metal",
+      "actualGPU": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "verifiedHardwareMetal": true,
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "drawCalls": 169,
+      "expanded": "true",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "samples": 39,
+      "peakDrawCalls": 170,
+      "warmRenderIntervalP50": 39.89999997615814,
+      "warmRenderIntervalP95": 42.19999998807907,
+      "correctNextMs": 192.39999997615814
+    }
+  ]
+}

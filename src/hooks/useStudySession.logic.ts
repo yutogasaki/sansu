@@ -1,4 +1,4 @@
-import { SubjectKey, TriggerState, UserProfile, PeriodicTestResult, PeriodicTestSet, PeriodicTestState } from "../domain/types";
+import { SubjectKey, TriggerState, UserProfile, PeriodicTestResult, PeriodicTestSet, PeriodicTestState, Problem } from "../domain/types";
 import { BLOCK_SIZE } from "./blockGenerators";
 import type { SessionKind } from "./blockGenerators";
 import { MAX_MATH_LEVEL, MAX_VOCAB_LEVEL } from "../domain/math/curriculum";
@@ -39,6 +39,71 @@ export const isFixedSessionKind = (sessionKind?: SessionKind | null): boolean =>
 
 export const shouldRecordLearningAttempt = (sessionKind?: SessionKind | null): boolean =>
     sessionKind !== "periodic-test" && sessionKind !== "dev";
+
+export const needsVocabNextLevelActivation = (profile: UserProfile): boolean => {
+    const nextLevel = profile.vocabMainLevel + 1;
+    if (!Number.isInteger(nextLevel) || nextLevel < 2 || nextLevel > MAX_VOCAB_LEVEL
+        || nextLevel > profile.vocabMaxUnlocked) return false;
+    const state = profile.vocabLevels?.find(level => level.level === nextLevel);
+    return state?.unlocked === true && state.enabled === false;
+};
+
+/** Explicit parent action; legacy disabled levels may also be deliberate. */
+export const activateVocabNextLevel = (
+    profile: UserProfile,
+    expected: { profileId: string; mainLevel: number },
+): UserProfile => {
+    if (profile.id !== expected.profileId || profile.vocabMainLevel !== expected.mainLevel
+        || !needsVocabNextLevelActivation(profile)) return profile;
+    return {
+        ...profile,
+        vocabLevels: profile.vocabLevels?.map(level => level.level === profile.vocabMainLevel + 1
+            ? { ...level, enabled: true }
+            : level),
+    };
+};
+
+export const removeStoppedPendingQuestions = (
+    queue: Problem[],
+    answeredProblem: Problem,
+    stoppedIds: string[],
+): Problem[] => {
+    const answeredIndex = queue.findIndex(item => item.id === answeredProblem.id);
+    if (answeredIndex < 0 || stoppedIds.length === 0) return queue;
+    return queue.filter((item, index) => index <= answeredIndex
+        || item.subject !== answeredProblem.subject
+        || !stoppedIds.includes(item.categoryId));
+};
+
+/** Keep a simultaneous promotion's test attached to the level just completed. */
+export const resolvePeriodicTestTriggerProfile = (
+    beforeAttempt: UserProfile | null,
+    afterAttempt: UserProfile,
+    subject: SubjectKey,
+): UserProfile => {
+    if (!beforeAttempt || beforeAttempt.id !== afterAttempt.id) return afterAttempt;
+    if (subject === "math" && afterAttempt.mathMainLevel > beforeAttempt.mathMainLevel) {
+        return {
+            ...afterAttempt,
+            mathMainLevel: beforeAttempt.mathMainLevel,
+            mathMainLevelStartedAt: beforeAttempt.mathMainLevelStartedAt,
+            mathLevels: afterAttempt.mathLevels?.map(level => level.level === beforeAttempt.mathMainLevel
+                ? beforeAttempt.mathLevels?.find(previous => previous.level === level.level) ?? level
+                : level),
+        };
+    }
+    if (subject === "vocab" && afterAttempt.vocabMainLevel > beforeAttempt.vocabMainLevel) {
+        return {
+            ...afterAttempt,
+            vocabMainLevel: beforeAttempt.vocabMainLevel,
+            vocabMainLevelStartedAt: beforeAttempt.vocabMainLevelStartedAt,
+            vocabLevels: afterAttempt.vocabLevels?.map(level => level.level === beforeAttempt.vocabMainLevel
+                ? beforeAttempt.vocabLevels?.find(previous => previous.level === level.level) ?? level
+                : level),
+        };
+    }
+    return afterAttempt;
+};
 
 export const resolveSessionBlockSize = (sessionKind?: SessionKind | null): number => {
     if (sessionKind === "periodic-test" || sessionKind === "check-event") {
@@ -304,7 +369,9 @@ export const resolveProfileProgressionAfterAttempt = async ({
         if (checkVocabUnlockReadiness(updatedProfile)) {
             const nextLevel = Math.min(MAX_VOCAB_LEVEL, updatedProfile.vocabMaxUnlocked + 1);
             const vocabLevels = updatedProfile.vocabLevels
-                ? updatedProfile.vocabLevels.map(level => (level.level <= nextLevel ? { ...level, unlocked: true } : level))
+                ? updatedProfile.vocabLevels.map(level => level.level === nextLevel
+                    ? { ...level, unlocked: true, enabled: true }
+                    : level)
                 : updatedProfile.vocabLevels;
             updatedProfile = { ...updatedProfile, vocabMaxUnlocked: nextLevel, vocabLevels };
         }
@@ -405,7 +472,9 @@ export const applyResolvedProgressionToLatestProfile = ({
             ...nextProfile,
             vocabMaxUnlocked: unlockTarget,
             vocabLevels: nextProfile.vocabLevels?.map(level => (
-                level.level <= unlockTarget ? { ...level, unlocked: true } : level
+                level.level > nextProfile.vocabMaxUnlocked && level.level <= unlockTarget
+                    ? { ...level, unlocked: true, enabled: true }
+                    : level
             )),
         };
     }

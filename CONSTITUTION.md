@@ -5,9 +5,13 @@
 This file defines the highest-priority principles for the `sansu` workspace.
 If documents, implementation, task notes, past logs, or conversational decisions conflict, this file wins.
 
-Sansu / ポッコのふしぎずかん is not only a learning utility. It is a **math game children choose to replay**, where repeated arithmetic practice and retention grow as a consequence of an engaging exploration experience.
+Sansu / ポッコのふしぎずかん is not only a learning utility. It is a **math game children choose to replay**, where repeated arithmetic practice and retention grow as a consequence of engaging gameplay.
 
 ## 1. Product North Star
+
+The current development priority (2026-09-07) is the user-adopted Mystic Island learning game in `docs/product/28_mystic_island_spec.md`: preserve normal problem inputs and rapid consecutive learning while correct answers restore light and short sections grow a freely arranged island. The prior gameplay-first candidate below remains an independent mode, not a constraint on the new island.
+
+The previous development priority (2026-09-06) is gameplay-first within an explicit learning scope: choose the scope, make answering itself a game action, validate replay appeal, then design separate games for other scopes. The first candidate is `ぴったり連鎖`, limited to positive-number composition/complements of 5 and 10. Its independent activity must not claim single-input mastery or update SRS/Due. See `docs/product/27_gameplay_first_pittari_spec.md`. Exploration and build-and-play contracts below govern their existing modes; they do not require this candidate to cover fractions/English, award park parts, or use 3D.
 
 The user-authorized `build-play-v1` MVP also follows `docs/product/22_shared_subject_build_and_play_spec.md`. A fixed companion, exploration, random discovery, eight-question runs, and math as an immediate world action are rules for the existing exploration mode, not universal requirements. The shared game connects reserved learning segments to chosen functional parts; free placement and replay determine the outcome. Assisted completion and independent mastery remain separate. All data-safety, non-shaming, and verification rules apply to both modes.
 

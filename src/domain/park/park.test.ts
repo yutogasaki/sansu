@@ -150,7 +150,7 @@ describe('reserved learning and atomic rewards', () => {
         await d.appData.put({ ...app, activeProfileId: 'other', profiles: { ...app.profiles, other } });
         await openPark('other', d);
         await expect(commitParkLearning('child', plan.id, 0, correctAction(plan), d)).rejects.toBeInstanceOf(ParkConflict);
-        await d.transaction('rw', [...parkTables(d), d.exploreRuns, d.exploreRunEvents, d.exploreDiscoveries], async () => { await deleteProfileOwnedIndexedDbRows(d, 'child'); });
+        await d.transaction('rw', [...parkTables(d), d.exploreRuns, d.exploreRunEvents, d.exploreDiscoveries, d.islands, d.islandPlans, d.islandEvents], async () => { await deleteProfileOwnedIndexedDbRows(d, 'child'); });
         expect(await d.parks.get('child')).toBeUndefined();
         expect(await d.parkPlans.count()).toBe(0);
         expect(await d.parkEvents.count()).toBe(0);
@@ -167,7 +167,7 @@ describe('reserved learning and atomic rewards', () => {
         legacy.close();
         const d = new SansuDatabase(name, options); databases.push(d);
         await d.open();
-        expect(d.verno).toBe(6);
+        expect(d.verno).toBe(7);
         await expect(d.profiles.get(p.id)).resolves.toEqual(p);
         await expect(d.exploreRuns.get('legacy')).resolves.toEqual(run);
         expect(await d.parks.count()).toBe(0);
@@ -214,5 +214,17 @@ describe('full input compatibility, separate from child usability validation', (
             expect(slot.problem.inputType).toBe('choice');
             expect(slot.problem.inputConfig?.choices).toHaveLength(4);
         }
+    });
+    it('keeps legacy Park Due order unless the caller opts into an Island review cursor', () => {
+        const p = { ...profile(), subjectMode: 'vocab' as const, vocabMainLevel: 2, vocabMaxUnlocked: 2 };
+        const memory = ['apple', 'orange'].map((id, index) => ({ id, strength: 2, totalAnswers: 10,
+            correctAnswers: 8, incorrectAnswers: 2, skippedAnswers: 0, isWeak: false,
+            nextReview: index ? '2001-01-01' : '2000-01-01', updatedAt: '2000-01-01' }));
+        const legacy = planParkLearning(p, [], memory, [], 0, 'park-compatibility', Date.now());
+        const rotated = planParkLearning(p, [], memory, [], 0, 'park-compatibility', Date.now(), { vocabDueAfterId: 'apple' });
+        expect(legacy.slots[0].problem.categoryId).toBe('apple');
+        expect(rotated.slots[0].problem.categoryId).toBe('orange');
+        expect(planParkLearning(p, [], memory, [], 0, 'park-compatibility', Date.now(), { vocabDueAfterId: 'gone' })
+            .slots[0].problem.categoryId).toBe('apple');
     });
 });

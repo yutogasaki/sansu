@@ -23,6 +23,14 @@ If the information would still matter after several unrelated tasks, it belongs 
 
 ### 1. Source of Truth
 
+- Current development priority: [Mystic Island](../product/28_mystic_island_spec.md), adopted from the 2026-09-07 user goal pack. Normal learning inputs and rapid consecutive answers power island life, freely placed rewards, and lasting growth.
+
+- Island art direction: `moon-garden`, adopted from the user's 2026-09-07 request for bold color and fantasy. Purple crowns, pink/yellow/blue color blocks, dark outlines and local dots belong in the world; retain readable faces, open ground, and semantic learning colors. Current world candidate is `mystic-island-procedural-v2`; see the [3D audit](../design/audits/2026-09-07-island-3d/README.md) for technique and runtime evidence.
+
+- Parallel QA: preserve an immutable archive of all build inputs before long browser/timing runs; a source hash cannot restore files changed by another task. Include PostCSS/Tailwind and other build settings, then check generated CSS and real input geometry in the isolated copy. Run GPU/CPU-sensitive gates with exclusive browser/build access and retain competing-process observations. Keep failed raw reports unchanged; any supplemental audit must identify the exact build inputs and imported harness files it verified. The [Island loop audit](../design/audits/2026-09-07-island-loop/README.md) records why module-loading, missing-CSS and overlapping-timing runs cannot become final evidence.
+
+- Previous development priority: [ぴったり連鎖](../product/27_gameplay_first_pittari_spec.md). Establish a narrow learning scope and validate answering as gameplay before designing other games. Existing exploration/park contracts below remain mode-specific; their breadth and reward structure are not first-candidate requirements.
+
 - [product/01_app_spec.md](/docs/product/01_app_spec.md) is the parent spec.
 - Child specs under `docs/product/` must follow it.
 - [product/07_ui_design_guideline.md](/docs/product/07_ui_design_guideline.md) is the design-principles doc.

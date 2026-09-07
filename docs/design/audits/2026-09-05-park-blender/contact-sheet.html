@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ちいさな遊園地 — Blender素材の実画面</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:32px;background:#f6f0e6;color:#283b4b;font:15px/1.8 system-ui,sans-serif}main{max-width:1280px;margin:auto}h1{font-size:28px}h2{margin-top:48px;font-size:21px}p{max-width:850px}a{color:#276c68}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px}.source{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}figure{margin:0}img{display:block;width:100%;height:auto;background:#f6f0e6;border-radius:12px;border:1px solid #d8d6ca}figcaption{margin:8px 0 22px;font-size:13px}small{color:#64716a}video{width:min(100%,390px);border-radius:12px}
+</style>
+<main>
+<h1>ちいさな遊園地 — Blenderから実アプリへ</h1>
+<p>人形と6種類の遊具をBlenderで立体化し、同じカメラから書き出した透過素材で組み直した実画面です。<a href="http://127.0.0.1:5187/#/park">アプリを開く</a> · <a href="README.md">検証記録</a></p>
+<p><small>候補 park-resin-blender-v1 / 配信 build-play-v1 / DEV flag=true / revision 4102126-park-resin-088562a6cc48。公開環境への反映は含みません。最終美術承認と独立した子ども観察は未実施。</small></p>
+<h2>見本・立体・本番素材の再合成</h2>
+<div class="grid source">
+<figure><img src="reference.png"><figcaption>生成見本B。作業の色・顔・質感の基準。</figcaption></figure>
+<figure><img src="beauty.png"><figcaption>編集可能な同じBlenderモデル。通路が成立するようゲート下端を開いた。</figcaption></figure>
+<figure><img src="768-c-attached.png"><figcaption>実アプリの分割素材で再合成。390px / 768pxで確認。</figcaption></figure>
+</div>
+<h2>同じ部品を並べ替える</h2>
+<div class="grid">
+<figure><img src="390-a-ready.png"><figcaption>A：すべり台 → トランポリン → 空き。</figcaption></figure>
+<figure><img src="390-b-apex.png"><figcaption>B：ゲートを飛び越す。泡は付かない。</figcaption></figure>
+<figure><img src="390-c-attached.png"><figcaption>C：地上でゲートを通り、泡が付く。</figcaption></figure>
+<figure><img src="390-c-apex.png"><figcaption>C：泡のまま跳ぶ。</figcaption></figure>
+<figure><img src="390-c-pop.png"><figcaption>C：台座に着地して、ぱちん。</figcaption></figure>
+</div>
+<h2>制作・学習・再開も同じ素材で</h2>
+<div class="grid">
+<figure><img src="phone-workshop.png"><figcaption>次の部品を選び、動きを見る。</figcaption></figure>
+<figure><img src="phone-learning.png"><figcaption>学習中は舞台を止める。入力UIは既存のまま。</figcaption></figure>
+<figure><img src="phone-support.png"><figcaption>支援を開き、reload後も同じ問題を続ける。</figcaption></figure>
+<figure><img src="phone-created.png"><figcaption>完成した部品を配置する。</figcaption></figure>
+<figure><img src="phone-hissan-learning.png"><figcaption>筆算も同じ入力・保存契約。</figcaption></figure>
+</div>
+<h2>6位置でも人形を小さくしない</h2>
+<div class="grid">
+<figure><img src="390-six-left.png"><figcaption>左側。3位置と同じ約64pxの人形。</figcaption></figure>
+<figure><img src="390-six-right.png"><figcaption>左右ボタンとスワイプで見渡す。</figcaption></figure>
+<figure><img src="390-six-finish.png"><figcaption>ペイント後のピンクの人形。足元まで画面内に着地。</figcaption></figure>
+<figure><img src="768-c-apex.png"><figcaption>タブレットでも泡と人形全体を表示。</figcaption></figure>
+</div>
+<h2>実画面の再演</h2>
+<p>無音の記録。B/C比較から6位置の最後の着地まで、アプリの再演をそのまま収録。</p>
+<video controls muted playsinline preload="metadata" src="phone-play.webm"></video>
+</main></html>

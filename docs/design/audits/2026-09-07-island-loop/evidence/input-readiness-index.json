@@ -1,0 +1,99 @@
+{
+  "evidenceBoundary": "Isolated DEV React DOM regression probes. These verify input/async boundaries, not production visual quality or learning outcomes. No browser was run when this index was assembled.",
+  "groups": [
+    {
+      "name": "shared-input",
+      "source": "src/components/domain/LearningAnswerForm.tsx",
+      "currentSourceSha256": "4dd839a67bd787d6fbeabf25454bd12e4620aeefe15d93192585748f3cffd0fa",
+      "runs": [
+        {
+          "report": "output/playwright/island-smoothness/readiness-before-snapshot/report.json",
+          "target": "http://127.0.0.1:5198",
+          "passed": 3,
+          "total": 9,
+          "pass": false,
+          "sourceStart": "fd3ff5dfcc64fa1c7445a72fad3d3518cbc3783e9eba55005f6a5b6f1e58d2eb",
+          "sourceEnd": "fd3ff5dfcc64fa1c7445a72fad3d3518cbc3783e9eba55005f6a5b6f1e58d2eb",
+          "sourceStable": true,
+          "matchesCurrentSource": false,
+          "errors": []
+        },
+        {
+          "report": "output/playwright/island-smoothness/readiness-after/report.json",
+          "target": "http://127.0.0.1:5198",
+          "passed": 9,
+          "total": 9,
+          "pass": true,
+          "sourceStart": "4dd839a67bd787d6fbeabf25454bd12e4620aeefe15d93192585748f3cffd0fa",
+          "sourceEnd": "4dd839a67bd787d6fbeabf25454bd12e4620aeefe15d93192585748f3cffd0fa",
+          "sourceStable": true,
+          "matchesCurrentSource": true,
+          "errors": []
+        },
+        {
+          "report": "output/playwright/island-smoothness/readiness-final/report.json",
+          "target": "http://127.0.0.1:5198",
+          "passed": 13,
+          "total": 13,
+          "pass": true,
+          "sourceStart": "4dd839a67bd787d6fbeabf25454bd12e4620aeefe15d93192585748f3cffd0fa",
+          "sourceEnd": "4dd839a67bd787d6fbeabf25454bd12e4620aeefe15d93192585748f3cffd0fa",
+          "sourceStable": true,
+          "matchesCurrentSource": true,
+          "errors": []
+        }
+      ],
+      "helpers": {
+        "tools/learning-answer-readiness-probe.tsx": "e267181977b4b46d9b190d7520e936dfa0236f7bfb4e7332166a0d98f2c37007",
+        "tools/e2e-learning-input-readiness.mjs": "1d2eba685e4f52c7940209e10f2b8fec80e809827e9dffae35f717f43df98aa3"
+      }
+    },
+    {
+      "name": "study-settings",
+      "source": "src/pages/Study.tsx",
+      "currentSourceSha256": "db2c30f87cfd421138f4a865f06b3400fb190a4e6b93e24a16de53d2c002f690",
+      "runs": [
+        {
+          "report": "output/playwright/island-smoothness/study-settings-before-async-queue/report.json",
+          "target": "http://127.0.0.1:5198",
+          "passed": 11,
+          "total": 16,
+          "pass": false,
+          "sourceStart": "e7a0a3d91d096cfec361d3150598db5d45682b0a89e3521ab205838474454cac",
+          "sourceEnd": "e7a0a3d91d096cfec361d3150598db5d45682b0a89e3521ab205838474454cac",
+          "sourceStable": true,
+          "matchesCurrentSource": false,
+          "errors": []
+        },
+        {
+          "report": "output/playwright/island-smoothness/study-settings-after/report.json",
+          "target": "http://127.0.0.1:5198",
+          "passed": 16,
+          "total": 16,
+          "pass": true,
+          "sourceStart": "db2c30f87cfd421138f4a865f06b3400fb190a4e6b93e24a16de53d2c002f690",
+          "sourceEnd": "db2c30f87cfd421138f4a865f06b3400fb190a4e6b93e24a16de53d2c002f690",
+          "sourceStable": true,
+          "matchesCurrentSource": true,
+          "errors": []
+        },
+        {
+          "report": "output/playwright/island-smoothness/study-settings-committed-frame/report.json",
+          "target": "http://127.0.0.1:5198",
+          "passed": 19,
+          "total": 19,
+          "pass": true,
+          "sourceStart": "db2c30f87cfd421138f4a865f06b3400fb190a4e6b93e24a16de53d2c002f690",
+          "sourceEnd": "db2c30f87cfd421138f4a865f06b3400fb190a4e6b93e24a16de53d2c002f690",
+          "sourceStable": true,
+          "matchesCurrentSource": true,
+          "errors": []
+        }
+      ],
+      "helpers": {
+        "tools/study-input-settings-probe.tsx": "fce9a2d3aab366d2eb67b1fd13c145946959aa25d716f3739b9c2e48a5479fe8",
+        "tools/e2e-study-input-settings.mjs": "11b21a4667b7079f8f4c8aa6c9144c1b593a4504d2d1cb34272e4e40d511e94f"
+      }
+    }
+  ]
+}

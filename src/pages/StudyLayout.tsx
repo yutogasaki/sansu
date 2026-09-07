@@ -25,6 +25,7 @@ import { cn } from "../utils/cn";
 type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test" | "dev";
 
 interface StudyLayoutProps {
+    emptyReview?: boolean;
     loading: boolean;
     isFinished: boolean;
     completionPresentation?: "none" | "saving" | "error";
@@ -115,6 +116,7 @@ const ResultMetric: React.FC<ResultMetricProps> = ({ label, value, tone = "defau
 );
 
 export const StudyLayout: React.FC<StudyLayoutProps> = ({
+    emptyReview = false,
     loading,
     isFinished,
     completionPresentation = "none",
@@ -409,9 +411,9 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     if (!currentProblem) {
         return (
             <EmptyState
-                message={t("もんだいが つくれなかった", "問題を作成できませんでした")}
-                actionLabel={t("もういちど", "再試行")}
-                onAction={onContinue}
+                message={emptyReview ? t("きょうの ふくしゅうは ここまで。また あした やろう", "この範囲の復習は今日はここまでです") : t("もんだいが つくれなかった", "問題を作成できませんでした")}
+                actionLabel={emptyReview ? t("きろくへ", "記録へ戻る") : t("もういちど", "再試行")}
+                onAction={emptyReview ? () => onNavigate("/stats") : onContinue}
                 fullScreen
                 className="bg-transparent"
             />
@@ -724,6 +726,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                     userValues={hissanUserValues}
                                     onCellClick={onHissanCellClick || (() => { })}
                                     stepFeedback={hissanStepFeedback}
+                                    disabled={feedback !== 'none'}
                                 />
                             </div>
                         ) : currentProblem.inputType === "number" ? (
@@ -822,6 +825,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             onDelete={onBackspace}
                             onClear={onClear}
                             onEnter={onEnter}
+                            enterLabel={hissanActive && hissanGridData?.writtenLayout && hissanStepIndex < hissanGridData.steps.length - 1 ? 'このだんを たしかめる' : undefined}
                             showDecimal={currentProblem.subject === 'math' && (!hissanActive || hissanCanInputDecimal)}
                             onCursorMove={showCursorButtons ? onCursorMove : undefined}
                             compact={shouldCompactTenKey}

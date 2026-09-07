@@ -1,0 +1,1461 @@
+{
+  "target": "http://127.0.0.1:5198",
+  "flag": "VITE_ISLAND_ENABLED=true",
+  "startedAt": "2026-09-06T23:29:20.005Z",
+  "scenarios": [
+    {
+      "name": "onboarding",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "passed": true,
+      "evidenceScope": "Actual welcome, nickname, preschool grade, math selection and first reserved section; no profile fixture injected."
+    },
+    {
+      "name": "phone-keyboard",
+      "width": 390,
+      "height": 844,
+      "skill": "add_1d_1",
+      "type": "number",
+      "full": true,
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "metrics": {
+        "correctP95Ms": 208.80000001192093,
+        "incorrectP95Ms": 185.5,
+        "correctSamples": 10,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 185.5,
+          "completed": false,
+          "incorrect": true,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 186.5999999642372,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 185.5,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 4,
+          "afterRevision": 5
+        },
+        {
+          "ms": 207.39999997615814,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 5,
+          "afterRevision": 6
+        },
+        {
+          "ms": 194.5999999642372,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 6,
+          "afterRevision": 7
+        },
+        {
+          "ms": 195.69999998807907,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 7,
+          "afterRevision": 8
+        },
+        {
+          "ms": 183.89999997615814,
+          "completed": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 8,
+          "afterRevision": 9
+        },
+        {
+          "ms": 186,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 208.19999998807907,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 208.79999995231628,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 208.80000001192093,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        },
+        {
+          "ms": 183.80000001192093,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 4,
+          "afterRevision": 5
+        },
+        {
+          "ms": 209.39999997615814,
+          "completed": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 5,
+          "afterRevision": 6
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison."
+    },
+    {
+      "name": "phone-touch",
+      "width": 390,
+      "height": 844,
+      "skill": "add_1d_1",
+      "type": "number",
+      "touch": true,
+      "full": true,
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "metrics": {
+        "correctP95Ms": 200.9000000357628,
+        "incorrectP95Ms": 186.70000004768372,
+        "correctSamples": 10,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 186.70000004768372,
+          "completed": false,
+          "incorrect": true,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 186.80000001192093,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 187.5,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 4,
+          "afterRevision": 5
+        },
+        {
+          "ms": 200.9000000357628,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 5,
+          "afterRevision": 6
+        },
+        {
+          "ms": 186.10000002384186,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 6,
+          "afterRevision": 7
+        },
+        {
+          "ms": 186,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 7,
+          "afterRevision": 8
+        },
+        {
+          "ms": 199.29999995231628,
+          "completed": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 8,
+          "afterRevision": 9
+        },
+        {
+          "ms": 185.80000001192093,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 197.5999999642372,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 199.19999998807907,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 199.30000001192093,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        },
+        {
+          "ms": 184.80000001192093,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 4,
+          "afterRevision": 5
+        },
+        {
+          "ms": 198.60000002384186,
+          "completed": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 5,
+          "afterRevision": 6
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison."
+    },
+    {
+      "name": "tablet-fraction",
+      "width": 768,
+      "height": 1024,
+      "skill": "frac_add_same",
+      "type": "multi-number",
+      "complex": true,
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "metrics": {
+        "correctP95Ms": null,
+        "incorrectP95Ms": 187.0999999642372,
+        "correctSamples": 0,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 187.0999999642372,
+          "completed": false,
+          "incorrect": true,
+          "inputType": "multi-number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 186,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "multi-number",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 207.19999998807907,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "multi-number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 207,
+          "completed": true,
+          "incorrect": false,
+          "inputType": "multi-number",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison."
+    },
+    {
+      "name": "phone-hissan",
+      "width": 390,
+      "height": 844,
+      "skill": "add_2d1d_hissan_c",
+      "type": "hissan",
+      "complex": true,
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "metrics": {
+        "correctP95Ms": null,
+        "incorrectP95Ms": 186.19999998807907,
+        "correctSamples": 0,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 186.19999998807907,
+          "completed": false,
+          "incorrect": true,
+          "inputType": "hissan",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 186.89999997615814,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "hissan",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 185.70000004768372,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "hissan",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 184.60000002384186,
+          "completed": true,
+          "incorrect": false,
+          "inputType": "hissan",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison."
+    },
+    {
+      "name": "phone-math-choice",
+      "width": 390,
+      "height": 844,
+      "skill": "compare_2d",
+      "type": "choice",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "metrics": {
+        "correctP95Ms": 218.9000000357628,
+        "incorrectP95Ms": 185.10000002384186,
+        "correctSamples": 2,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 185.10000002384186,
+          "completed": false,
+          "incorrect": true,
+          "inputType": "choice",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 185.69999998807907,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 196,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 192.19999998807907,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        },
+        {
+          "ms": 206.0999999642372,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 4,
+          "afterRevision": 5
+        },
+        {
+          "ms": 218.9000000357628,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 5,
+          "afterRevision": 6
+        },
+        {
+          "ms": 202.9000000357628,
+          "completed": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 6,
+          "afterRevision": 7
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison."
+    },
+    {
+      "name": "tablet-vocabulary",
+      "width": 768,
+      "height": 1024,
+      "skill": "",
+      "subject": "vocab",
+      "type": "choice",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "metrics": {
+        "correctP95Ms": null,
+        "incorrectP95Ms": 183.89999997615814,
+        "correctSamples": 0,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 183.89999997615814,
+          "completed": false,
+          "incorrect": true,
+          "inputType": "choice",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 185.69999998807907,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 201.20000004768372,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 186.10000002384186,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        },
+        {
+          "ms": 199.19999998807907,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 4,
+          "afterRevision": 5
+        },
+        {
+          "ms": 186.10000002384186,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 5,
+          "afterRevision": 6
+        },
+        {
+          "ms": 204.39999997615814,
+          "completed": true,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 6,
+          "afterRevision": 7
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison."
+    },
+    {
+      "name": "tablet-reduced",
+      "width": 768,
+      "height": 1024,
+      "skill": "add_1d_1",
+      "type": "number",
+      "reduced": true,
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "metrics": {
+        "correctP95Ms": 187.9000000357628,
+        "incorrectP95Ms": 185.4000000357628,
+        "correctSamples": 5,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 185.4000000357628,
+          "completed": false,
+          "incorrect": true,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 186.69999998807907,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 187.9000000357628,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 185.30000001192093,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        },
+        {
+          "ms": 187.80000001192093,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 4,
+          "afterRevision": 5
+        },
+        {
+          "ms": 186,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 5,
+          "afterRevision": 6
+        },
+        {
+          "ms": 188.29999995231628,
+          "completed": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 6,
+          "afterRevision": 7
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison."
+    },
+    {
+      "name": "phone-first-learning",
+      "width": 390,
+      "height": 844,
+      "skill": "add_1d_1",
+      "type": "number",
+      "familiar": false,
+      "complex": true,
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "metrics": {
+        "correctP95Ms": 206.5999999642372,
+        "incorrectP95Ms": 186.69999998807907,
+        "correctSamples": 2,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 186.69999998807907,
+          "completed": false,
+          "incorrect": true,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 188.9000000357628,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 206.5999999642372,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 193.89999997615814,
+          "completed": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison."
+    }
+  ],
+  "captures": [
+    {
+      "file": "onboarding-cold-welcome.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "welcome",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "onboarding-created-home.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "home",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "onboarding-first-learning.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "onboarding-first-reward.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-keyboard-cold-welcome.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "welcome",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-keyboard-home.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "home",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-keyboard-learning.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-keyboard-support-resumed.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-keyboard-reward.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-keyboard-second-section-expanded.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-keyboard-place-preview.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "placement",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-keyboard-placed-bench.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "home",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-keyboard-inventory.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "inventory",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-keyboard-next-learning.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-touch-cold-welcome.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "welcome",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-touch-home.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "home",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-touch-learning.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-touch-support-resumed.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-touch-reward.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-touch-second-section-expanded.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-touch-place-preview.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "placement",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-touch-placed-bench.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "home",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-touch-inventory.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "inventory",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-touch-next-learning.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "tablet-fraction-cold-welcome.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "welcome",
+      "renderer": "three",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "tablet-fraction-home.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "home",
+      "renderer": "three",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "tablet-fraction-learning.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "tablet-fraction-reward.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-hissan-cold-welcome.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "welcome",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-hissan-home.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "home",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-hissan-learning.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-hissan-reward.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-math-choice-cold-welcome.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "welcome",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-math-choice-home.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "home",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-math-choice-learning.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-math-choice-reward.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "tablet-vocabulary-cold-welcome.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "welcome",
+      "renderer": "three",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "tablet-vocabulary-home.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "home",
+      "renderer": "three",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "tablet-vocabulary-learning.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "tablet-vocabulary-reward.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "tablet-reduced-cold-welcome.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "welcome",
+      "renderer": "three",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "tablet-reduced-home.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "home",
+      "renderer": "three",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "tablet-reduced-learning.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "tablet-reduced-reward.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    },
+    {
+      "file": "phone-first-learning-cold-welcome.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "welcome",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-first-learning-home.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "home",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-first-learning-learning.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "learning",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    },
+    {
+      "file": "phone-first-learning-reward.png",
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "reward",
+      "renderer": "three",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false
+    }
+  ],
+  "pass": true,
+  "completedAt": "2026-09-06T23:30:20.192Z"
+}

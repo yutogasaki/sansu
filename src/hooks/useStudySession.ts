@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useEffectEvent } from "react";
-import { getActiveProfile, updateProfileAtomically } from "../domain/user/repository";
+import { getActiveProfile, getProfile, updateProfileAtomically } from "../domain/user/repository";
 import {
     getMaintenanceMathSkillIds,
     getRecentAttempts,
@@ -42,6 +42,8 @@ import {
     applyPendingPeriodicTestTrigger,
     applyResolvedProgressionToLatestProfile,
     resolveProfileProgressionAfterAttempt,
+    resolvePeriodicTestTriggerProfile,
+    removeStoppedPendingQuestions,
     resolveSessionCompletionProfileUpdate,
     resolveSessionBlockSize,
     isFixedSessionKind,
@@ -67,6 +69,7 @@ type StudySessionOptions = {
 export const useStudySession = (options: StudySessionOptions = {}) => {
     const [queue, setQueue] = useState<Problem[]>([]);
     const [loading, setLoading] = useState(true);
+    const [generationError, setGenerationError] = useState(false);
 
     const [profileId, setProfileId] = useState<string | null>(null);
     const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -344,9 +347,9 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             }
         } else {
             // Vocab generation
-            const vocabLevel = activeProfile.vocabMainLevel ?? 1;
-            const vocabLevelWeights = buildVocabLevelWeights(vocabLevel);
+            const vocabLevelWeights = buildVocabLevelWeights(activeProfile);
             const weakVocabPool = await getWeakVocabIds(pid);
+            let plusCount = 0;
 
             const buildCooldownIds = (pending: string[]) =>
                 buildVocabCooldownIds(recentAttempts, sessionHistoryRef.current, pending);
@@ -381,9 +384,11 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                     forceReviewBlock: forceVocabReviewBlock,
                     weakVocabPool,
                     currentWeakCount,
+                    plusCount,
                     pendingVocabIds,
                     buildCooldownIds
                 });
+                plusCount = result.newPlusCount;
 
                 const problem: Problem = {
                     ...result.problem,
@@ -460,16 +465,23 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         // New Weakness Review (Plan A)
         if (sessionKind === "weak-review") {
             // Need to fetch context data
-            const weakMathIds = await getWeakMathSkillIds(pid);
-            const maintenanceMathIds = await getMaintenanceMathSkillIds(pid);
-            const mathDue = await getReviewItems(pid, 'math');
-            const vocabDue = await getReviewItems(pid, 'vocab');
+            const [weakMathIds, weakVocabIds, skippedMathIds, skippedVocabIds] = await Promise.all([
+                getWeakMathSkillIds(pid),
+                getWeakVocabIds(pid),
+                getSkippedItemsToday(pid, 'math'),
+                getSkippedItemsToday(pid, 'vocab'),
+            ]);
 
-            return generateWeakReviewBlock(activeProfile, {
+            return generateWeakReviewBlock(options.focusSubject
+                ? { ...activeProfile, subjectMode: options.focusSubject }
+                : activeProfile, {
                 weakMathIds,
-                maintenanceMathIds,
-                mathDue,
-                vocabDue
+                weakVocabIds,
+                skippedMathIds,
+                skippedVocabIds,
+                maintenanceMathIds: [],
+                mathDue: [],
+                vocabDue: [],
             });
         }
 
@@ -510,6 +522,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
         const requestId = ++sessionRequestIdRef.current;
         setLoading(true);
+        setGenerationError(false);
         setQueue([]);
         blockIndexRef.current = 1;
         sessionHistoryRef.current = [];
@@ -527,15 +540,19 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 return;
             }
             errorInDev("[useStudySession] error generating block:", err);
-            // Generate emergency fallback queue
+            setGenerationError(true);
+            // A failed test-range review stays empty for an explicit retry;
+            // a generic fallback would silently change its learning scope.
             const fallbackQueue: Problem[] = [];
-            for (let i = 0; i < BLOCK_SIZE; i++) {
-                fallbackQueue.push({
-                    ...createFallbackProblem('math', 'session init failure'),
-                    id: `${blockIndexRef.current}-fallback-${i}-${Date.now()}`,
-                    subject: 'math',
-                    isReview: false
-                });
+            if (options.sessionKind !== "weak-review") {
+                for (let i = 0; i < BLOCK_SIZE; i++) {
+                    fallbackQueue.push({
+                        ...createFallbackProblem('math', 'session init failure'),
+                        id: `${blockIndexRef.current}-fallback-${i}-${Date.now()}`,
+                        subject: 'math',
+                        isReview: false
+                    });
+                }
             }
             setQueue(fallbackQueue);
         }
@@ -555,6 +572,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
         const sessionRequestId = sessionRequestIdRef.current;
         setLoading(true);
+        setGenerationError(false);
         const nextBlockIndex = blockIndexRef.current + 1;
         blockIndexRef.current = nextBlockIndex;
 
@@ -575,6 +593,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 return;
             }
             errorInDev("[useStudySession] error generating next block:", err);
+            setGenerationError(true);
             // Generate emergency fallback queue
             const fallbackQueue: Problem[] = [];
             for (let i = 0; i < BLOCK_SIZE; i++) {
@@ -608,8 +627,10 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
             const skipped = result === 'skipped';
             const scoredResult = result === 'correct' ? 'correct' : 'incorrect';
+            let beforeAttempt: UserProfile | null;
 
             try {
+                beforeAttempt = await getProfile(profileId);
                 await logAttempt(
                     profileId,
                     problem.subject,
@@ -629,19 +650,27 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
             }
 
             try {
+                if (sessionKind === "weak-review" && skipped) {
+                    const stoppedIds = await getSkippedItemsToday(profileId, problem.subject);
+                    setQueue(previous => removeStoppedPendingQuestions(previous, problem, stoppedIds));
+                }
                 const currentProfile = await getActiveProfile();
                 if (!currentProfile || currentProfile.id !== profileId) return true;
+                // Hydrated memory is required for the next block's unattempted
+                // vocab selection even when no level transition occurred.
+                updateProfile(currentProfile);
                 let triggerCheck: {
                     trigger: Awaited<ReturnType<typeof checkPeriodTestTrigger>>;
                     testSet?: ReturnType<typeof buildPeriodicTestSet>;
                 } | null = null;
                 if (sessionKind === "normal" || sessionKind === "review") {
                     try {
-                        const trigger = await checkPeriodTestTrigger(currentProfile, problem.subject);
+                        const triggerProfile = resolvePeriodicTestTriggerProfile(beforeAttempt, currentProfile, problem.subject);
+                        const trigger = await checkPeriodTestTrigger(triggerProfile, problem.subject);
                         triggerCheck = {
                             trigger,
                             testSet: trigger.isTriggered
-                                ? buildPeriodicTestSet(currentProfile, problem.subject)
+                                ? buildPeriodicTestSet(triggerProfile, problem.subject)
                                 : undefined,
                         };
                     } catch (triggerError) {
@@ -669,7 +698,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                         }),
                     );
                     if (!persistedProgression) return true;
-                    updateProfile(persistedProgression);
+                    updateProfile({ ...persistedProgression, mathSkills: currentProfile.mathSkills, vocabWords: currentProfile.vocabWords });
                 }
 
                 if (triggerCheck) {
@@ -694,7 +723,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                             `[Trigger] ${problem.subject} periodic test triggered!`,
                             triggerCheck.trigger.reason,
                         );
-                        updateProfile(profileWithPendingTest);
+                        updateProfile({ ...profileWithPendingTest, mathSkills: currentProfile.mathSkills, vocabWords: currentProfile.vocabWords });
                     }
                 }
             } catch (err) {
@@ -722,7 +751,9 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     }, [profileId, sessionKey]);
 
 
-    const blockSize = resolveSessionBlockSize(options.sessionKind);
+    const blockSize = options.sessionKind === "weak-review" && queue.length > 0
+        ? queue.length
+        : resolveSessionBlockSize(options.sessionKind);
 
     const completeSession = async (
         sessionStats: {
@@ -761,5 +792,5 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         }
     };
 
-    return { queue, initSession, nextBlock, handleResult, completeSession, loading, blockSize };
+    return { queue, initSession, nextBlock, handleResult, completeSession, loading, generationError, blockSize };
 };

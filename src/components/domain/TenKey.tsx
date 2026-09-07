@@ -15,6 +15,7 @@ interface TenKeyProps {
     enterDisabled?: boolean;
     className?: string;
     minRowHeight?: number;
+    enterLabel?: string;
 }
 
 export const TenKey: React.FC<TenKeyProps> = ({
@@ -29,6 +30,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
     enterDisabled = false,
     className,
     minRowHeight,
+    enterLabel = 'こたえる',
 }) => {
     const baseBtnClass = cn(
         "h-full w-full border border-white/75 bg-white/72 font-bold text-slate-700 shadow-[0_14px_24px_-20px_rgba(15,23,42,0.32)] transition-all active:scale-95 hover:bg-white/84",
@@ -125,7 +127,8 @@ export const TenKey: React.FC<TenKeyProps> = ({
             {/* Enter Key */}
             <Button
                 disabled={disabled || enterDisabled}
-                aria-label="こたえる"
+                aria-label={enterLabel}
+                data-keypad-submit
                 onClick={onEnter}
                 className={cn(
                     "flex h-full w-full flex-col items-center justify-center border border-cyan-200/80 bg-[linear-gradient(135deg,#2BBAA0,#5DC4D2)] text-white shadow-[0_18px_34px_-22px_rgba(34,197,214,0.62)] transition-all active:scale-95 hover:brightness-[1.03] mobile:text-base",
@@ -134,6 +137,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
                 variant="ghost"
             >
                 <Icons.Check className={enterIconClass} strokeWidth={3} />
+                {enterLabel !== 'こたえる' && <span className="text-[10px] leading-none">つぎへ</span>}
             </Button>
         </div>
     );

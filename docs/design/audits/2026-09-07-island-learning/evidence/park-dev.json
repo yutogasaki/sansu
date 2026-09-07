@@ -1,0 +1,64 @@
+{
+  "target": "http://127.0.0.1:5187",
+  "flag": "VITE_BUILD_PLAY_ENABLED=true",
+  "candidate": "park-three-resin-v1",
+  "scenarios": [
+    {
+      "name": "phone",
+      "width": 390,
+      "height": 844,
+      "skill": "add_1d_1",
+      "full": true,
+      "revision": "aa36adad7dcc-island-learning-99d08b2a0e4c-park-regression",
+      "passed": true,
+      "logs": 2
+    },
+    {
+      "name": "tablet-multi",
+      "width": 768,
+      "height": 1024,
+      "skill": "frac_add_same",
+      "revision": "aa36adad7dcc-island-learning-99d08b2a0e4c-park-regression",
+      "passed": true,
+      "logs": 2
+    },
+    {
+      "name": "phone-choice",
+      "width": 390,
+      "height": 844,
+      "skill": "compare_2d",
+      "revision": "aa36adad7dcc-island-learning-99d08b2a0e4c-park-regression",
+      "passed": true,
+      "logs": 2
+    },
+    {
+      "name": "phone-hissan",
+      "width": 390,
+      "height": 844,
+      "skill": "add_2d1d_hissan_c",
+      "revision": "aa36adad7dcc-island-learning-99d08b2a0e4c-park-regression",
+      "passed": true,
+      "logs": 2
+    },
+    {
+      "name": "phone-vocab",
+      "width": 390,
+      "height": 844,
+      "skill": "",
+      "subject": "vocab",
+      "revision": "aa36adad7dcc-island-learning-99d08b2a0e4c-park-regression",
+      "passed": true,
+      "logs": 2
+    },
+    {
+      "name": "tablet-reduced",
+      "width": 768,
+      "height": 1024,
+      "skill": "add_1d_1",
+      "reduced": true,
+      "revision": "aa36adad7dcc-island-learning-99d08b2a0e4c-park-regression",
+      "passed": true,
+      "logs": 2
+    }
+  ]
+}

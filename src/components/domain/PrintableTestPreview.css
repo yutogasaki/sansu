@@ -1,0 +1,157 @@
+.printable-test-preview {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    overflow: auto;
+    overscroll-behavior: contain;
+    background: var(--app-surface-strong);
+    color: var(--color-dark);
+    font-family: var(--font-body);
+}
+
+.printable-test-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: calc(12px + var(--safe-area-top)) max(16px, calc((100vw - 800px) / 2)) 14px;
+    border-bottom: 1px solid var(--app-border);
+    box-shadow: var(--app-shadow-soft);
+}
+
+.printable-test-toolbar-heading,
+.printable-test-toolbar-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.printable-test-toolbar h1 { font-size: 20px; font-weight: 700; }
+.printable-test-toolbar h1:focus { outline: none; }
+.printable-test-toolbar button { gap: 8px; flex-shrink: 0; }
+.printable-test-toolbar-actions { margin-top: 8px; }
+.printable-test-toolbar > p { margin: 10px 0 0; font-size: 12px; line-height: 1.7; }
+.printable-test-mode { display: flex; gap: 6px; border: 0; padding: 0; margin: 0; }
+.printable-test-mode label { position: relative; cursor: pointer; }
+.printable-test-mode input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.printable-test-mode span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 1px solid var(--app-border);
+    border-radius: 12px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+.printable-test-mode input:checked + span { color: var(--brand-ink); border-color: var(--app-accent-strong); background: var(--color-mint-100); font-weight: 700; }
+.printable-test-mode input:focus-visible + span { outline: 2px solid var(--app-accent-strong); outline-offset: 3px; }
+.printable-test-sheets { width: min(800px, calc(100% - 32px)); margin: 24px auto calc(32px + var(--safe-area-bottom)); }
+.printable-test-sheet {
+    padding: 32px;
+    background: white;
+    border: 1px solid var(--app-border-soft);
+    border-radius: 4px;
+    box-shadow: var(--app-shadow-soft);
+}
+.printable-test-sheet + .printable-test-sheet { margin-top: 24px; }
+.printable-test-sheet-header { border-bottom: 2px solid currentColor; padding-bottom: 16px; margin-bottom: 4px; }
+.printable-test-sheet-heading { display: flex; align-items: end; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; }
+.printable-test-brand { margin: 0 0 6px; font-size: 11px; }
+.printable-test-sheet h2 { margin: 0; font-size: 24px; font-weight: 700; line-height: 1.5; }
+.printable-test-level { font-size: 13px; white-space: nowrap; }
+.printable-test-metadata { margin: 12px 0; font-size: 11px; line-height: 1.7; }
+.printable-test-identity { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 14px; }
+.printable-test-identity > span { display: flex; align-items: baseline; gap: 12px; }
+.printable-test-name { min-width: 120px; max-width: 280px; border-bottom: 1px solid currentColor; overflow-wrap: anywhere; }
+.printable-test-date { min-width: 110px; border-bottom: 1px solid currentColor; text-align: right; }
+.printable-test-instruction { margin: 16px 0 0; font-size: 11px; line-height: 1.8; }
+.printable-test-questions, .printable-test-answers { list-style: none; margin: 0; padding: 0; }
+.printable-test-question { display: flex; gap: 16px; padding: 24px 0; border-bottom: 1px solid #aeb6bc; }
+.printable-test-question-body { flex: 1; min-width: 0; }
+.printable-test-number { display: inline-flex; justify-content: center; align-items: center; width: 28px; height: 28px; flex-shrink: 0; border: 1px solid currentColor; border-radius: 50%; font-size: 13px; font-weight: 700; }
+.printable-test-prompt-host { max-width: 100%; overflow-x: auto; padding-bottom: 2px; }
+.printable-test-prompt { font-size: 21px; line-height: 1.7; }
+.printable-test-prompt [data-visual-surface] { box-shadow: none; }
+.printable-test-prompt [data-visual-surface="number-line"] > div:first-child { min-width: max-content; }
+.printable-test-image { display: block; max-width: 100%; max-height: 240px; object-fit: contain; margin: 12px auto; }
+.printable-test-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 20px; margin: 16px 0 0; padding: 0; list-style: none; font-size: 15px; line-height: 1.7; }
+.printable-test-choices li { display: flex; gap: 8px; overflow-wrap: anywhere; }
+.printable-test-choice-mark { font-weight: 700; flex-shrink: 0; }
+.printable-test-fields { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 18px; }
+.printable-test-field { display: flex; align-items: end; gap: 10px; font-size: 13px; }
+.printable-test-blank { display: inline-block; width: 100px; height: 32px; border-bottom: 1px solid currentColor; }
+.printable-test-working { height: 120px; margin-top: 12px; border: 1px solid #aeb6bc; }
+.printable-test-sheet-footer { margin: 20px 0 0; font-size: 12px; text-align: center; }
+.printable-test-answers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; }
+.printable-test-answers li { display: flex; align-items: center; gap: 16px; min-height: 62px; padding: 12px 0; border-bottom: 1px solid #aeb6bc; font-size: 16px; overflow-wrap: anywhere; }
+
+@media screen and (max-width: 600px) {
+    .printable-test-toolbar-actions { flex-wrap: wrap; }
+    .printable-test-mode { flex: 1; }
+    .printable-test-mode label { flex: 1; }
+    .printable-test-mode span { padding-inline: 12px; }
+    .printable-test-toolbar-actions > button { width: 100%; }
+    .printable-test-sheets { width: calc(100% - 20px); margin-top: 16px; }
+    .printable-test-sheet { padding: 18px 14px; }
+    .printable-test-sheet h2 { font-size: 21px; }
+    .printable-test-question { gap: 10px; padding-block: 20px; }
+    .printable-test-choices { column-gap: 12px; }
+    .printable-test-fields { column-gap: 16px; }
+    .printable-test-blank { width: 76px; }
+    .printable-test-answers { grid-template-columns: 1fr; }
+    .printable-test-prompt [data-visual-surface="number-line"] { align-items: stretch; }
+    .printable-test-prompt [data-visual-surface="count-frame"] { padding-inline: 8px; }
+    .printable-test-prompt [data-visual-surface="count-frame"] > div { gap: 4px; }
+}
+
+@page { size: A4 portrait; margin: 12mm; }
+
+@media print {
+    html:has(body.has-printable-test),
+    body.has-printable-test {
+        display: block !important;
+        width: auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+    }
+    body.has-printable-test > :not(.printable-test-preview) { display: none !important; }
+    .printable-test-preview {
+        position: static;
+        width: auto;
+        height: auto;
+        overflow: visible;
+        background: white;
+        color: #202c32;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    .printable-test-toolbar { display: none !important; }
+    .printable-test-sheets { width: auto; margin: 0; }
+    .printable-test-sheet { padding: 0; margin: 0; border: 0; border-radius: 0; box-shadow: none; }
+    .printable-test-sheet + .printable-test-sheet { margin-top: 0; break-before: page; page-break-before: always; }
+    .printable-test-sheet-header { break-inside: avoid; break-after: avoid; page-break-inside: avoid; page-break-after: avoid; padding-bottom: 4mm; }
+    .printable-test-sheet h2 { font-size: 18pt; }
+    .printable-test-brand, .printable-test-metadata, .printable-test-instruction { font-size: 9pt; }
+    .printable-test-question { display: block; position: relative; padding: 5mm 0 5mm 11mm; break-inside: avoid; page-break-inside: avoid; }
+    .printable-test-question > .printable-test-number { position: absolute; left: 0; top: 5mm; }
+    .printable-test-number { width: 7mm; height: 7mm; font-size: 10pt; }
+    .printable-test-prompt-host { overflow: visible; }
+    .printable-test-prompt { font-size: 16pt; }
+    .printable-test-prompt [data-visual-surface="number-line"] { max-width: 100%; }
+    .printable-test-prompt [data-visual-surface="number-line"] > div:first-child { min-width: 0; gap: 2px; }
+    .printable-test-prompt [data-visual-surface="number-line"] [data-visual-value] { min-width: 26px; padding-inline: 2px; }
+    .printable-test-choices { font-size: 11pt; gap: 2mm 6mm; margin-top: 4mm; }
+    .printable-test-fields { margin-top: 4mm; }
+    .printable-test-field { font-size: 10pt; }
+    .printable-test-blank { width: 28mm; height: 9mm; }
+    .printable-test-working { height: 32mm; }
+    .printable-test-answers { display: block; }
+    .printable-test-answers li { min-height: 11mm; padding: 3mm 0; font-size: 12pt; break-inside: avoid; page-break-inside: avoid; }
+    .printable-test-sheet-footer { break-before: avoid; page-break-before: avoid; }
+}

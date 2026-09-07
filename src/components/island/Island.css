@@ -1,0 +1,78 @@
+.island-page {
+    --island-ink: #263145; --island-muted: #4c5c66; --island-paper: #fff9e8; --island-leaf: #245bbd;
+    --park-ink: var(--island-ink); --park-mint: #e7edf8; --park-mint-dark: #245bbd; --park-cream: var(--island-paper);
+    height: 100%; overflow: auto; overscroll-behavior: contain; color: var(--island-ink);
+    background: #fff3d5; font-family: var(--font-sans, 'Noto Sans JP', sans-serif);
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+.island-page button { cursor: pointer; touch-action: manipulation; }
+.island-page button:disabled { opacity: .5; cursor: default; }
+.island-page button:focus-visible { outline: 3px solid #245bbd; outline-offset: 3px; }
+.island-header { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 12px; max-width: 1080px; margin: auto; padding: max(14px, env(safe-area-inset-top)) 22px 4px; }
+.island-brand { display: flex; gap: 10px; align-items: center; }
+.island-brand > svg { color: #245bbd; }
+.island-brand p { font-size: 11px; letter-spacing: .08em; }
+.island-brand h1 { font-size: 19px; font-weight: 750; line-height: 1.5; letter-spacing: .055em; }
+.island-icon-button { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; min-width: 44px; flex-shrink: 0; border-radius: 50%; background: #fff9e8; color: var(--island-ink); border: 1px solid #52607a; }
+.island-text-button { min-height: 44px; padding: 8px 10px; font-size: 12px; font-weight: 600; text-underline-offset: 4px; }
+.island-text-button:hover { text-decoration: underline; }
+.island-home-controls, .island-sheet { max-width: 660px; margin: 0 auto; padding: 4px 24px 12px; position: relative; }
+.island-home-intro { text-align: center; margin-bottom: 21px; }
+.island-eyebrow { font-size: 11px; letter-spacing: .14em; color: var(--island-muted); }
+.island-home-intro h2, .island-sheet h2 { font-size: 22px; font-weight: 750; letter-spacing: .025em; line-height: 1.65; margin-top: 5px; }
+.island-home-intro > p:last-child { font-size: 12px; line-height: 1.9; margin-top: 5px; }
+.island-primary { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 54px; padding: 12px 20px; border-radius: 18px; background: #ffd447; color: #263145; font-size: 16px; font-weight: 750; border: 1px solid #34435d; box-shadow: 0 3px 0 #34435d; }
+.island-primary:active { transform: translateY(2px); box-shadow: 0 1px 0 #34435d; }
+.island-start, .island-continue { width: 100%; }
+.island-home-secondary { display: flex; flex-wrap: wrap; align-items: stretch; justify-content: center; gap: 12px; margin-top: 16px; }
+.island-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px; padding: 6px 14px; border-radius: 14px; border: 1px solid #52607a; background: #fff9e8; font-size: 13px; font-weight: 600; }
+.island-secondary small { display: block; margin-top: 4px; font-size: 10px; color: var(--island-muted); font-weight: 400; }
+.island-footer { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 12px; font-size: 10px; color: var(--island-muted); }
+.island-sheet { padding-top: 12px; padding-bottom: 20px; }
+.island-sheet-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.island-sheet-title h2 { font-size: 21px; }
+.island-reward-choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 16px 0 20px; }
+.island-reward { display: flex; flex-direction: column; align-items: center; padding: 10px 4px 14px; min-width: 0; border: 1px solid #52607a; border-bottom: 3px solid #34435d; background: #fff9e8; border-radius: 18px; }
+.island-reward:hover { background: #fff0b6; border-color: #245bbd; }
+.island-reward strong { font-size: 12px; font-weight: 700; }
+.island-item-picture { height: 72px; width: 100%; max-width: 100px; }
+.island-note { font-size: 11px; line-height: 1.8; color: var(--island-muted); text-align: center; margin-top: 12px; }
+.island-milestone { font-size: 13px; line-height: 1.7; padding: 10px 0; }
+.island-inventory { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; margin-top: 14px; }
+.island-inventory small { margin-top: 5px; font-size: 10px; color: var(--island-muted); }
+.island-play-entry { background: #ffe1ed; }
+.island-play-message { min-height: 42px; font-size: 12px; line-height: 1.8; margin-bottom: 10px; }
+.island-play .island-reward[aria-pressed=true] { outline: 2px solid #245bbd; outline-offset: 2px; background: #fff0b6; }
+.island-play .island-inventory small { font-size: 10px; text-align: center; line-height: 1.5; }
+.island-play-move { display: block; margin: 0 auto 10px; }
+.island-placement-hint { font-size: 12px; line-height: 1.8; margin: 12px 0; }
+.island-placement-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.island-direction-controls { display: flex; gap: 5px; }
+.island-placement-row > .island-primary { flex: 1; white-space: nowrap; }
+.island-placement .island-text-button { display: block; margin: 12px auto 0; }
+.island-home-feedback { font-size: 12px; line-height: 1.7; text-align: center; margin-bottom: 12px; }
+.island-error { display: flex; align-items: center; max-width: 660px; padding: 8px 20px; margin: auto; background: #fff3d9; font-size: 12px; line-height: 1.8; }
+.island-loading { display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: center; min-height: 100%; background: #fff3d5; color: #263145; }
+.island-learning-progress { display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: var(--island-muted); }
+.island-learning-actions { display: flex; align-items: center; justify-content: space-between; min-height: 44px; }
+.island-learning-actions .island-note { margin: auto; }
+@media(min-width:700px) {
+    .island-header { padding-top: 24px; }
+    .island-brand h1 { font-size: 23px; }
+    .island-home-controls, .island-sheet { padding-inline: 32px; }
+    .island-home-intro h2 { font-size: 26px; }
+}
+@media(prefers-reduced-motion:reduce) {
+    .island-page *, .island-page *::before, .island-page *::after { animation:none!important; transition:none!important; }
+    .island-primary:active { transform:none; }
+}
+.island-welcome { display: flex; flex-direction: column; justify-content: center; }
+.island-welcome > * { flex-shrink: 0; }
+.island-welcome > header { text-align: center; padding: 22px 20px 0; }
+.island-welcome h1 { font-size: clamp(32px,6vw,44px); font-weight: 750; letter-spacing: .06em; margin-top: 9px; }
+.island-welcome .island-home-controls { width: 100%; }
+.island-welcome-copy { font-size: 16px; line-height: 1.9; text-align: center; margin: 0 0 22px; }
+.island-onboarding-setup { --park-cream:#fff3d5; padding:0; }
+.island-onboarding-setup .park-onboarding-content { overflow-y:auto; align-items:flex-start; padding-top:20px; }
+.island-onboarding-setup .park-onboarding-grades { grid-template-columns:repeat(2,minmax(0,1fr)); }
+@media(max-height:740px) { .island-welcome { justify-content:flex-start; --island-stage-height:285px; } }

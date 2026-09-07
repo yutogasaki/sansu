@@ -1,0 +1,27 @@
+{
+  "preparedAt": "2026-09-07T02:51:03.095120+00:00",
+  "purpose": "Existing Park regression on the frozen Island learning source; separate flag-off side build, not the final Island delivery.",
+  "dev": "http://127.0.0.1:5187",
+  "production": "http://127.0.0.1:5287",
+  "outDir": "output/builds/island-learning-park-regression-99d08b2a0e4c",
+  "productionMetadata": {
+    "version": "aa36adad7dcc-island-learning-99d08b2a0e4c-park-regression:96c310bc-251b-43f7-bdb3-baee30c706fb",
+    "revision": "aa36adad7dcc-island-learning-99d08b2a0e4c-park-regression",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    },
+    "island": {
+      "enabled": false,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "learningCandidate": "mystic-island-learning-v2"
+    }
+  },
+  "parkCandidate": "park-three-resin-v1",
+  "sourceEdits": false,
+  "finalIsland5298Modified": false,
+  "browserTests": "PASS: DEV 6/6; production PWA checkpoints 3/3"
+}

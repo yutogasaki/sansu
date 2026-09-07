@@ -3,20 +3,22 @@ import { Navigate } from 'react-router-dom';
 import { db } from '../../db';
 import { getActiveProfile } from '../../domain/user/repository';
 import { BUILD_PLAY_ENABLED } from '../../domain/park/feature';
+import { islandEnabled } from '../../domain/island/feature';
 import { Spinner } from '../ui/Spinner';
 
 export function LaunchRoute() {
     const [destination, setDestination] = useState<string>();
+    const islandOn = islandEnabled();
     useEffect(() => {
-        if (!BUILD_PLAY_ENABLED) return;
+        if (!islandOn && !BUILD_PLAY_ENABLED) return;
         let active = true;
         void getActiveProfile().then(async profile => {
             if (!profile) return '/onboarding';
             const oldRun = await db.exploreRuns.where('[profileId+status]').equals([profile.id, 'active']).first();
-            return oldRun ? '/explore' : '/park';
+            return oldRun ? '/explore' : islandOn ? '/island' : '/park';
         }).then(path => { if (active) setDestination(path); }).catch(() => { if (active) setDestination('/explore'); });
         return () => { active = false; };
-    }, []);
-    if (!BUILD_PLAY_ENABLED) return <Navigate to="/explore" replace />;
+    }, [islandOn]);
+    if (!islandOn && !BUILD_PLAY_ENABLED) return <Navigate to="/explore" replace />;
     return destination ? <Navigate to={destination} replace /> : <Spinner fullScreen message="じゅんびちゅう…" />;
 }

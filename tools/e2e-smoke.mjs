@@ -14,6 +14,9 @@ const RAPID_LOOP_CI_BUDGET_MS = 1_500;
 const RAPID_LOOP_CORRECT_PRODUCT_BUDGET_MS = 650;
 const RAPID_LOOP_INCORRECT_PRODUCT_BUDGET_MS = 550;
 const E2E_CAPTURE_DIR = process.env.SANSU_E2E_CAPTURE_DIR;
+const SMOKE_DIAGNOSTIC_DIR = process.env.SANSU_E2E_DIAGNOSTIC_DIR;
+const smokeResults = [];
+let smokeBrowser;
 const WRITE_VISUAL_AUDIT = process.env.SANSU_WRITE_VISUAL_AUDIT === "1";
 const VISUAL_AUDIT_MODE = process.argv.includes("--visual-audit");
 const VISUAL_AUDIT_EXPECTED_REVISION = process.env.SANSU_VISUAL_AUDIT_EXPECTED_REVISION;
@@ -406,6 +409,8 @@ const readExplorePersistenceSnapshot = async (page) => page.evaluate(() => (
 const runScenario = async (name, fn) => {
   const started = Date.now();
   let timeoutId;
+  const priorContexts = new Set(smokeBrowser?.contexts() ?? []);
+  const result = { name, startedAt: new Date().toISOString(), pass: false, pages: [] };
   try {
     await Promise.race([
       fn(),
@@ -415,14 +420,48 @@ const runScenario = async (name, fn) => {
         }, SCENARIO_TIMEOUT_MS);
       }),
     ]);
+    result.pass = true;
     console.log(`PASS ${name} (${Date.now() - started}ms)`);
     return true;
   } catch (err) {
-    console.error(`FAIL ${name}:`, err instanceof Error ? err.stack ?? err.message : err);
+    result.error = err instanceof Error ? err.stack ?? err.message : String(err);
+    console.error(`FAIL ${name}:`, result.error);
     return false;
   } finally {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
+    if (timeoutId) clearTimeout(timeoutId);
+    // A failed scenario must not leave its pages animating behind later cases.
+    for (const context of smokeBrowser?.contexts() ?? []) {
+      if (priorContexts.has(context)) continue;
+      try {
+        for (const page of context.pages()) {
+          const evidence = await page.evaluate(() => ({
+            url: location.href, history: window.__sansuSmokeObservation,
+            world: document.querySelector('.explore-world')?.outerHTML.slice(0, 18000),
+          })).catch(error => ({ diagnosticError: error.message }));
+          if (!result.pass && evidence.world) {
+            evidence.persistence = await Promise.race([
+              readExplorePersistenceSnapshot(page),
+              delay(5000).then(() => ({ diagnosticTimeout: true })),
+            ]).catch(error => ({ diagnosticError: error.message }));
+          }
+          if (evidence.history || !result.pass) result.pages.push(evidence);
+          if (!result.pass && SMOKE_DIAGNOSTIC_DIR) {
+            await fs.mkdir(SMOKE_DIAGNOSTIC_DIR, { recursive: true });
+            const file = `${name.replace(/[^a-zA-Z0-9]+/g, '-').slice(0, 120)}-${result.pages.length}.png`;
+            await page.screenshot({ path: path.join(SMOKE_DIAGNOSTIC_DIR, file) }).catch(() => undefined);
+          }
+        }
+      } finally { await context.close(); }
+    }
+    result.durationMs = Date.now() - started;
+    result.remainingNewContexts = (smokeBrowser?.contexts() ?? []).filter(context => !priorContexts.has(context)).length;
+    smokeResults.push(result);
+    if (SMOKE_DIAGNOSTIC_DIR) {
+      await fs.mkdir(SMOKE_DIAGNOSTIC_DIR, { recursive: true });
+      await fs.writeFile(path.join(SMOKE_DIAGNOSTIC_DIR, 'smoke-report.json'), JSON.stringify({
+        target: activeBaseUrl, harnessHash: createHash('sha256').update(await fs.readFile(new URL(import.meta.url))).digest('hex'),
+        pass: smokeResults.every(item => item.pass), scenarios: smokeResults,
+      }, null, 2));
     }
   }
 };
@@ -507,6 +546,7 @@ const scenarioOnboardingShown = async (browser) => {
   await waitForHash(page, /#\/onboarding/);
   await page.getByRole("button", { name: "はじめる" }).waitFor({ timeout: STEP_TIMEOUT_MS });
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -524,6 +564,7 @@ const scenarioOnboardingToExploreProblem = async (browser, viewport) => {
     await assertExploreProblemViewportFit(page, viewport);
   }
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -542,6 +583,7 @@ const scenarioStudyRoute = async (browser) => {
   await page.getByRole("button", { name: /次へ|つぎへ/ }).click();
   await waitForStudyReady(page);
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -558,6 +600,7 @@ const scenarioReviewRoute = async (browser) => {
   );
   await waitForStudyReady(page);
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -570,6 +613,7 @@ const scenarioSettingsRoute = async (browser) => {
   await navigateHash(page, "/settings", /#\/settings/);
   await page.getByText(/設定|せってい/).first().waitFor({ timeout: STEP_TIMEOUT_MS });
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -603,6 +647,7 @@ const scenarioLegacyAlbumHidden = async (browser) => {
     "legacy fuwafuwa album should stay out of the child-facing records screen until art integration is complete",
   );
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -630,6 +675,7 @@ const scenarioStatsToPeriodicTest = async (browser) => {
     page.getByRole("button", { name: /記録を見る|きろく を みる/ }).click(),
   ]);
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -697,6 +743,7 @@ const scenarioExploreLaunchAndReturn = async (browser, viewport) => {
   await page.getByRole("button", { name: "あそびメニューへ" }).click();
   await waitForHash(page, /#\/battle/);
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -763,6 +810,7 @@ const scenarioRootPullV2Opening = async (browser) => {
     "inline payoff should not add an explanatory continue action",
   );
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -1232,6 +1280,7 @@ const scenarioSnapRootBreakthrough = async (
     assert(await page.getByRole("dialog").count() === 0, "tablet Snap Root payoff should remain inline");
   }
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -1279,6 +1328,7 @@ const scenarioSnapRootTempoBenchmark = async (browser, runCount) => {
         RAPID_LOOP_CORRECT_PRODUCT_BUDGET_MS,
       ));
     }
+    await preserveSmokeObservation(context);
     await context.close();
   }
 
@@ -1326,6 +1376,7 @@ const scenarioExploreStartFailureExit = async (browser) => {
   assert(snapshot.runs.length === 0, `injected start failure should not leave a run; got ${snapshot.runs.length}`);
   assert(snapshot.events.length === 0, `injected start failure should not leave an event; got ${snapshot.events.length}`);
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -1350,8 +1401,12 @@ const scenarioExplorePendingProblemExit = async (browser) => {
   assert(firstAttemptKey, "the pending-problem exit scenario should start from an identified attempt");
   assert(runId, "the pending-problem exit scenario should expose its run");
 
+  const firstProblemId = await page.getByTestId("explore-attempt").getAttribute("data-problem-id");
   await solveExploreNumericProblem(page);
-  await waitForNewExploreAttempt(page, firstAttemptKey);
+  await waitForExploreNumericReady(page, { previousProblemId: firstProblemId, requireExit: true });
+  const firstSaved = await readExplorePersistenceSnapshot(page);
+  const firstReceipts = firstSaved.events.filter(event => event.type === 'problem_answered' && event.attemptKey === firstAttemptKey);
+  assert(firstReceipts.length === 1 && firstReceipts[0].result === 'correct', 'Safe pending exit follows one committed correct answer');
   const pendingProblemId = await page.getByTestId("explore-attempt")
     .getAttribute("data-problem-id");
   const exit = page.getByRole("button", {
@@ -1403,6 +1458,7 @@ const scenarioExplorePendingProblemExit = async (browser) => {
     "pending-problem exit should retain the frozen checkpoint instead of forging a return boundary",
   );
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -1469,9 +1525,140 @@ const getExploreNumericAnswer = async (page) => {
   throw new Error(`expected a numeric addition/subtraction expression; got ${questionText}`);
 };
 
+const armExploreObservation = async (page) => {
+  await page.evaluate(() => {
+    if (window.__sansuSmokeObservation) return;
+    const history = { frames: [], keys: [], gestures: [], inputs: [] };
+    window.__sansuSmokeObservation = history;
+    let previous;
+    const snapshot = (reason) => {
+      const world = document.querySelector('.explore-world');
+      const attempt = document.querySelector('[data-testid="explore-attempt"]');
+      const stage = document.querySelector('.explore-immersive');
+      const output = stage?.querySelector('output');
+      const digit = document.querySelector('button[aria-label="1"]');
+      const submit = document.querySelector('button[aria-label="こたえる"]');
+      const message = stage?.querySelector('.explore-immersive-message');
+      const bounds = message?.getBoundingClientRect();
+      const style = message && getComputedStyle(message);
+      const frame = {
+        attemptKey: attempt?.dataset.attemptKey, problemId: attempt?.dataset.problemId,
+        gateId: attempt?.dataset.gateId, saveState: attempt?.dataset.saveState,
+        persistence: world?.dataset.runPersistence, steps: world?.dataset.runSteps,
+        checkpointRevision: world?.dataset.checkpointRevision, acknowledgedDiscoveryId: world?.dataset.acknowledgedDiscoveryId,
+        phase: stage?.dataset.state, question: stage?.dataset.questionText,
+        output: output?.textContent, outputLabel: output?.getAttribute('aria-label'),
+        keypadDisabled: stage?.querySelector('.explore-immersive-keypad-shell')?.getAttribute('aria-disabled'),
+        digitDisabled: digit?.disabled, submitDisabled: submit?.disabled,
+        energy: Number(document.querySelector('[role="progressbar"][aria-label="ひかり"]')?.getAttribute('aria-valuenow')),
+        message: message?.textContent,
+        messageVisible: Boolean(bounds?.width && bounds?.height && style.display !== 'none'
+          && style.visibility !== 'hidden' && Number(style.opacity) > 0),
+        exitDisabled: document.querySelector('button[aria-label="たんけんを おえて 基地へ帰る"]')?.disabled,
+      };
+      const key = JSON.stringify(frame);
+      if (key !== previous && history.frames.length < 3000) {
+        history.frames.push({ ...frame, at: performance.now(), reason });
+        previous = key;
+      }
+      return frame;
+    };
+    window.__sansuSmokeSnapshot = snapshot;
+    snapshot('armed');
+    const observer = new MutationObserver(() => snapshot('mutation'));
+    observer.observe(document.documentElement, { subtree: true, childList: true, attributes: true, characterData: true });
+    for (const type of ['pointerdown', 'pointerup', 'click']) document.addEventListener(type, event => {
+      const target = event.target instanceof Element ? event.target.closest('button') : null;
+      if (target?.getAttribute('aria-label') !== 'こたえる') return;
+      history.gestures.push({ type, at: performance.now(), targetDisabled: target.disabled,
+        ...snapshot(type) });
+    }, true);
+    document.addEventListener('keydown', event => {
+      history.keys.push({ at: performance.now(), key: event.key, repeat: event.repeat,
+        target: event.target?.tagName, activeElement: document.activeElement?.getAttribute('aria-label'),
+        ...snapshot('keydown') });
+      requestAnimationFrame(() => snapshot('post-key-paint'));
+    }, true);
+  });
+};
+
+const preserveSmokeObservation = async (context) => {
+  if (!SMOKE_DIAGNOSTIC_DIR) return;
+  for (const page of context.pages()) {
+    const history = await page.evaluate(() => window.__sansuSmokeObservation).catch(() => undefined);
+    if (!history) continue;
+    await fs.mkdir(SMOKE_DIAGNOSTIC_DIR, { recursive: true });
+    await fs.writeFile(path.join(SMOKE_DIAGNOSTIC_DIR, `observation-${randomUUID()}.json`), JSON.stringify(history, null, 2));
+  }
+};
+
+const waitForExploreNumericReady = async (page, options = {}) => {
+  await page.waitForFunction(({ previousProblemId, requireExit }) => {
+    const world = document.querySelector('.explore-world');
+    const attempt = document.querySelector('[data-testid="explore-attempt"]');
+    const stage = document.querySelector('.explore-immersive');
+    const digit = document.querySelector('button[aria-label="1"]');
+    const exit = document.querySelector('button[aria-label="たんけんを おえて 基地へ帰る"]');
+    return world?.getAttribute('data-run-persistence') === 'ready'
+      && attempt?.getAttribute('data-save-state') === 'idle'
+      && (!previousProblemId || attempt.dataset.problemId !== previousProblemId)
+      && stage?.getAttribute('data-state') === 'idle'
+      && stage.querySelector('.explore-immersive-keypad-shell')?.getAttribute('aria-disabled') === 'false'
+      && digit instanceof HTMLButtonElement && !digit.disabled
+      && stage.querySelector('output')?.getAttribute('aria-label') === 'こたえ 未入力'
+      && (!requireExit || exit instanceof HTMLButtonElement && !exit.disabled);
+  }, options, { timeout: options.timeout ?? RAPID_LOOP_CI_BUDGET_MS });
+};
+
+const typeExploreNumericOnce = async (page, value) => {
+  await armExploreObservation(page);
+  await waitForExploreNumericReady(page);
+  await page.evaluate(expected => {
+    window.__sansuSmokeObservation.inputs.push({ expected, startedAt: performance.now() });
+  }, String(value));
+  await page.keyboard.type(String(value));
+  const actual = await page.locator('.explore-immersive output').textContent();
+  await page.evaluate(actual => { window.__sansuSmokeObservation.inputs.at(-1).actual = actual; }, actual);
+  assert(actual?.trim() === String(value), `One physical numeric entry must preserve every digit; expected=${value}, actual=${actual}`);
+};
+
+const observeRootTangleMiss = async (page, value) => {
+  await armExploreObservation(page);
+  await waitForExploreNumericReady(page);
+  const before = await page.evaluate(() => ({
+    index: window.__sansuSmokeObservation.frames.length,
+    attemptKey: document.querySelector('[data-testid="explore-attempt"]')?.getAttribute('data-attempt-key'),
+    problemId: document.querySelector('[data-testid="explore-attempt"]')?.getAttribute('data-problem-id'),
+    question: document.querySelector('.explore-immersive')?.getAttribute('data-question-text'),
+    energy: Number(document.querySelector('[role="progressbar"][aria-label="ひかり"]')?.getAttribute('aria-valuenow')),
+  }));
+  await typeExploreNumericOnce(page, value);
+  await page.evaluate(() => window.__sansuSmokeObservation.gestures.push({
+    ...window.__sansuSmokeSnapshot('before-click'), type: 'before-click', at: performance.now(),
+  }));
+  await page.getByRole('button', { name: 'こたえる' }).click();
+  await page.waitForFunction(({ index, problemId, question }) => window.__sansuSmokeObservation.frames.slice(index)
+    .some(frame => frame.problemId === problemId && frame.question === question && frame.phase === 'incorrect'
+      && frame.messageVisible && frame.message?.includes('ねっこは まだ くるん')), before,
+  { timeout: RAPID_LOOP_CI_BUDGET_MS });
+  await waitForExploreNumericReady(page);
+  const saved = await readExplorePersistenceSnapshot(page);
+  const receipts = saved.events.filter(event => event.type === 'problem_answered' && event.attemptKey === before.attemptKey);
+  assert(receipts.length === 1 && receipts[0].result === 'incorrect', 'The observed root miss belongs to one real incorrect receipt');
+  const energy = Number(await page.getByRole('progressbar', { name: 'ひかり' }).getAttribute('aria-valuenow'));
+  assert(energy === before.energy - 1, 'One root miss consumes exactly one light');
+  await page.evaluate(receipt => { window.__sansuSmokeObservation.inputs.at(-1).receipt = receipt; }, receipts[0]);
+  return before;
+};
+
 const solveExploreNumericProblem = async (page) => {
+  await armExploreObservation(page);
+  await waitForExploreNumericReady(page);
+  const problemId = await page.getByTestId("explore-attempt").getAttribute("data-problem-id");
   const answer = await getExploreNumericAnswer(page);
-  await page.keyboard.type(String(answer));
+  assert(await page.getByTestId("explore-attempt").getAttribute("data-problem-id") === problemId,
+    "The answer oracle reads the same ready problem that will receive input");
+  await typeExploreNumericOnce(page, answer);
   await page.getByRole("button", { name: "こたえる" }).click();
   return answer;
 };
@@ -1941,6 +2128,7 @@ const scenarioExploreInterruptionResume = async (browser) => {
       "Q8 reload should not remount the acknowledged Q7 modal",
     );
   } finally {
+    await preserveSmokeObservation(context);
     await context.close();
   }
 };
@@ -1995,6 +2183,7 @@ const scenarioExploreDoubleCommit = async (browser) => {
   assert(energyAfter === energyBefore - 1, `opening dig should consume one light once; got ${energyBefore} -> ${energyAfter}`);
   assert(await countIndexedDbRows(page, "logs") === 1, "double submit should write one formal learning log");
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -2075,6 +2264,7 @@ const scenarioExploreCommitRetry = async (browser) => {
   assert(Number(energyAfter) === Number(before.energy) - 1, `opening-dig retry should consume one light once; got ${before.energy} -> ${energyAfter}`);
   assert(await countIndexedDbRows(page, "logs") === 1, "successful retry should write one formal learning log");
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -2115,6 +2305,7 @@ const scenarioExploreLastLightRescueFinish = async (browser) => {
   assert(await world.getAttribute("data-run-status") === "rescued", "UI should become rescued after finish receipt");
   assert(await world.getAttribute("data-confirmed-find-count") === "1", "final find should confirm after rescued finish receipt");
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -2165,6 +2356,7 @@ const scenarioExploreReturnFinishRetry = async (browser) => {
   assert(await world.getAttribute("data-run-status") === "returned", "UI should become returned after finish receipt");
   assert(await world.getAttribute("data-confirmed-find-count") === "3", "return receipt should confirm all three Makimodon finds once");
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -2459,6 +2651,7 @@ const scenarioLightBridgeVerticalSlice = async (
     `explore should atomically record both misses and clears in learning logs; got ${logsBefore} -> ${logsAfter}`,
   );
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -2615,9 +2808,7 @@ const scenarioRootTangleVerticalSlice = async (
   const energyBeforeMiss = Number(
     await page.getByRole("progressbar", { name: "ひかり" }).getAttribute("aria-valuenow"),
   );
-  await page.keyboard.type(String(correctAnswer + 1));
-  await page.getByRole("button", { name: "こたえる" }).click();
-  await page.getByText(/ねっこは まだ くるん/).waitFor({ timeout: STEP_TIMEOUT_MS });
+  await observeRootTangleMiss(page, correctAnswer + 1);
   assert(
     await rootStage.getAttribute("data-visual-scene-id") === "root-tangle-dew-blocked",
     "an incorrect answer should keep the painted roots physically tangled",
@@ -2657,13 +2848,9 @@ const scenarioRootTangleVerticalSlice = async (
 
   const questionBeforeSecondMiss = await rootStage.getAttribute("data-question-text");
   const secondAnswer = await getExploreNumericAnswer(page);
-  await page.keyboard.type(String(secondAnswer + 1));
-  await page.getByRole("button", { name: "こたえる" }).click();
-  await page.getByText(/ねっこは まだ くるん/).waitFor({ timeout: STEP_TIMEOUT_MS });
-  assert(
-    await rootStage.getAttribute("data-question-text") === questionBeforeSecondMiss,
-    "root tangle should hold the failed equation until its incorrect feedback finishes",
-  );
+  const observedSecondMiss = await observeRootTangleMiss(page, secondAnswer + 1);
+  assert(observedSecondMiss.question === questionBeforeSecondMiss,
+    "root tangle should hold the failed equation through the observed incorrect frame");
   await page.getByText(/しきで のこりを見て、もういちど ためせるよ/)
     .waitFor({ timeout: STEP_TIMEOUT_MS });
   assert(
@@ -2740,6 +2927,7 @@ const scenarioRootTangleVerticalSlice = async (
     `explore should feed every rapid-loop attempt into formal learning; got ${logsBefore} -> ${logsAfter}`,
   );
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -2757,6 +2945,7 @@ const scenarioParentsGateShown = async (browser) => {
   await page.getByRole("button", { name: "やめる" }).click();
   await waitForHash(page, /#\/(settings|onboarding)/);
 
+  await preserveSmokeObservation(context);
   await context.close();
 };
 
@@ -5328,6 +5517,7 @@ const createVisualAuditContactSheet = async (
       sha256: await sha256File(outputPath),
     };
   } finally {
+    await preserveSmokeObservation(context);
     await context.close();
   }
 };
@@ -5972,6 +6162,7 @@ const runVisualAuditViewport = async (
     return { captures, supportingCaptures };
   } finally {
     if (networkProbe) await networkProbe.detach();
+    await preserveSmokeObservation(context);
     await context.close();
   }
 };
@@ -6223,8 +6414,21 @@ const main = async () => {
     startedByScript = session.startedByScript;
 
     browser = await chromium.launch({ headless: true });
+    smokeBrowser = browser;
 
     const results = [];
+    if (process.env.SANSU_E2E_ROOT_TANGLE_LANDSCAPE_ONLY === "1") {
+      results.push(await runScenario("Root tangle landscape event diagnosis", () => scenarioRootTangleVerticalSlice(browser, { width: 1024, height: 768 })));
+      if (!results.every(Boolean)) process.exitCode = 1;
+      return;
+    }
+    if (process.env.SANSU_E2E_READINESS_DIAGNOSTIC_ONLY === "1") {
+      results.push(await runScenario("Root Pull numeric readiness", () => scenarioRootPullV2Opening(browser)));
+      results.push(await runScenario("Pending problem safe exit", () => scenarioExplorePendingProblemExit(browser)));
+      results.push(await runScenario("Root tangle landscape feedback", () => scenarioRootTangleVerticalSlice(browser, { width: 1024, height: 768 })));
+      if (!results.every(Boolean)) process.exitCode = 1;
+      return;
+    }
     const rapidLoopBenchmarkRuns = Number.parseInt(
       process.env.SANSU_RAPID_LOOP_BENCHMARK_RUNS || "0",
       10,

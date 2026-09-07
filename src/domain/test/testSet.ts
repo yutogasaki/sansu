@@ -3,7 +3,7 @@ import { generateMathProblem } from "../math";
 import { generateVocabProblem } from "../english/generator";
 import { getMathSkillFamily, getSkillsForLevel } from "../math/curriculum";
 import { getWordsByLevel } from "../english/words";
-import { saveProfile } from "../user/repository";
+import { updateProfileAtomically } from "../user/repository";
 
 const SAME_ID_LIMIT = 2;
 
@@ -95,27 +95,17 @@ export const ensurePeriodicTestSet = async (
     profile: UserProfile,
     subject: SubjectKey
 ): Promise<PeriodicTestSet> => {
-    const currentLevel = subject === "math" ? (profile.mathMainLevel ?? 1) : (profile.vocabMainLevel ?? 1);
-    const existing = profile.periodicTestSets?.[subject];
-
-    const isPendingAutomaticTest = profile.periodicTestState?.[subject]?.isPending === true;
-    if (
-        existing
-        && existing.problems.length === 20
-        && (existing.level === currentLevel || isPendingAutomaticTest)
-    ) {
-        return existing;
-    }
-
-    const created = buildPeriodicTestSet(profile, subject);
-    const updated: UserProfile = {
-        ...profile,
-        periodicTestSets: {
-            ...(profile.periodicTestSets || {}),
-            [subject]: created
-        }
-    };
-
-    await saveProfile(updated);
-    return created;
+    const updated = await updateProfileAtomically(profile.id, current => {
+        const currentLevel = subject === "math" ? (current.mathMainLevel ?? 1) : (current.vocabMainLevel ?? 1);
+        const existing = current.periodicTestSets?.[subject];
+        const isPendingAutomaticTest = current.periodicTestState?.[subject]?.isPending === true;
+        if (existing?.subject === subject && existing.problems.length === 20
+            && (existing.level === currentLevel || isPendingAutomaticTest)) return current;
+        return {
+            ...current,
+            periodicTestSets: { ...current.periodicTestSets, [subject]: buildPeriodicTestSet(current, subject) },
+        };
+    });
+    if (!updated) throw new Error("プロフィールが見つかりません。学習画面を開き直してください。");
+    return updated.periodicTestSets![subject]!;
 };

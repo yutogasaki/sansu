@@ -639,7 +639,7 @@ describe("blockGenerators utilities", () => {
         const mathQueue = queue.filter(problem => problem.subject === "math");
         const families = mathQueue.slice(0, 2).map(problem => getMathSkillFamily(problem.categoryId));
 
-        expect(mathQueue[0]?.categoryId).toBe("count_dot");
+        expect(mathQueue[0]?.categoryId).toBe("count_5");
         expect(mathQueue[1]?.categoryId).toBe("count_read");
         expect(families[0]).not.toBe(families[1]);
         expect(mathQueue[0]?.isReview).toBe(true);

@@ -1,0 +1,48 @@
+{
+  "target": "https://sansu-seven.vercel.app",
+  "pass": true,
+  "results": [
+    {
+      "path": "/",
+      "status": 200,
+      "cacheControl": "no-cache, no-store, must-revalidate",
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/index.html",
+      "status": 200,
+      "cacheControl": "no-cache, no-store, must-revalidate",
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/sw.js",
+      "status": 200,
+      "cacheControl": "no-cache, no-store, must-revalidate",
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "path": "/version.json",
+      "status": 200,
+      "cacheControl": "no-cache, no-store, must-revalidate",
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/manifest.json",
+      "status": 200,
+      "cacheControl": "no-cache, no-store, must-revalidate",
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/assets/park/three-v1/slide-icon.png",
+      "status": 200,
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "contentType": "image/png"
+    },
+    {
+      "path": "/assets/park/resin-v1/base-6.webp",
+      "status": 200,
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "contentType": "image/webp"
+    }
+  ]
+}

@@ -10,6 +10,8 @@ interface PaperTestScoreModalProps {
     level: number;
     onSubmit: (correctCount: number) => void;
     onDismiss: () => void;
+    isSaving?: boolean;
+    error?: string | null;
 }
 
 const SCORE_OPTIONS = Array.from({ length: 21 }, (_, i) => i);
@@ -19,7 +21,9 @@ export const PaperTestScoreModal: React.FC<PaperTestScoreModalProps> = ({
     subject,
     level,
     onSubmit,
-    onDismiss
+    onDismiss,
+    isSaving = false,
+    error,
 }) => {
     const [selectedScore, setSelectedScore] = useState<number | null>(null);
 
@@ -30,7 +34,7 @@ export const PaperTestScoreModal: React.FC<PaperTestScoreModalProps> = ({
     }, [isOpen, level, subject]);
 
     const handleSubmit = () => {
-        if (selectedScore !== null) {
+        if (selectedScore !== null && !isSaving) {
             onSubmit(selectedScore);
         }
     };
@@ -82,14 +86,16 @@ export const PaperTestScoreModal: React.FC<PaperTestScoreModalProps> = ({
                         </div>
 
                         <div className="px-5 py-5 text-center">
-                            <div className="grid grid-cols-7 gap-2">
+                            <div className="grid grid-cols-7 gap-1">
                                 {SCORE_OPTIONS.map((score) => (
                                     <button
                                         key={score}
                                         type="button"
+                                        disabled={isSaving}
+                                        aria-pressed={selectedScore === score}
                                         onClick={() => setSelectedScore(score)}
                                         className={cn(
-                                            "app-pill flex h-10 w-10 items-center justify-center rounded-[14px] text-sm font-black text-slate-600 transition-all active:scale-[0.98]",
+                                            "app-pill flex min-h-11 w-full items-center justify-center rounded-[14px] text-sm font-black text-slate-600 transition-all active:scale-[0.98]",
                                             selectedScore === score
                                                 ? "border-cyan-100/90 bg-cyan-50/90 text-cyan-700 shadow-[0_14px_24px_-18px_rgba(6,182,212,0.58)]"
                                                 : "hover:bg-white/82 hover:text-slate-800"
@@ -105,17 +111,19 @@ export const PaperTestScoreModal: React.FC<PaperTestScoreModalProps> = ({
                             </p>
 
                             <div className="mt-5 flex flex-col gap-3">
+                                {error && <p role="alert" className="text-sm text-slate-700">{error}</p>}
                                 <Button
                                     onClick={handleSubmit}
-                                    disabled={selectedScore === null}
+                                    disabled={selectedScore === null || isSaving}
                                     size="xl"
                                 >
-                                    とうろく する
+                                    {isSaving ? "ほぞん しています…" : "とうろく する"}
                                 </Button>
                                 <Button
                                     onClick={onDismiss}
                                     variant="secondary"
                                     size="lg"
+                                    disabled={isSaving}
                                 >
                                     あとで やる
                                 </Button>

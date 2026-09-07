@@ -1,0 +1,57 @@
+{
+  "checkedAt": "2026-09-07T06:41:43.245258+00:00",
+  "sourceHash": "32cb1f0b89f8f586b7245b54e211b970ee56b54d75b653fc165bee2d2560a848",
+  "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+  "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+  "filesChecked": 577,
+  "mismatches": [],
+  "buildManifestMatch": true,
+  "captureManifestMatch": true,
+  "pass": true,
+  "learning": {
+    "pass": true,
+    "scenarios": 23,
+    "captures": 139,
+    "sourceStable": true
+  },
+  "criticalPath": {
+    "pass": true,
+    "scenarios": 2,
+    "captures": 16
+  },
+  "pwa": {
+    "pass": true,
+    "checks": [
+      "active learning defers update; user home checkpoint reloads with reserved plan preserved",
+      "critical persistence hold spans navigation and releases deferred update afterwards",
+      "continue pointer protects fresh session; answer receipt survives next user checkpoint",
+      "legacy active Explore run retains launch precedence and Island data"
+    ],
+    "offline": {
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 73,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "serviceWorker": "real",
+      "offlineReload": true,
+      "answerPersisted": true,
+      "resumedSamePlan": true,
+      "soundEnabled": false
+    }
+  },
+  "scope": "Functional verification in one browser at a time. Timings here are diagnostic; formal fixed-ten measurements are separate."
+}

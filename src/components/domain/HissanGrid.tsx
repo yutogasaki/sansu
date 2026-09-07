@@ -1,8 +1,9 @@
 import React from "react";
 import { HissanGridData, HissanStep } from "../../domain/math/hissanTypes";
 import { HissanCellView } from "./HissanCell";
+import { WrittenArithmeticGrid } from './WrittenArithmeticGrid';
 
-interface HissanGridProps {
+export interface HissanGridProps {
     /** グリッドデータ */
     gridData: HissanGridData;
     /** 現在のステップインデックス */
@@ -15,6 +16,7 @@ interface HissanGridProps {
     onCellClick: (rowIndex: number, colIndex: number) => void;
     /** フィードバック状態 */
     stepFeedback?: 'none' | 'correct' | 'incorrect';
+    disabled?: boolean;
 }
 
 /**
@@ -27,8 +29,13 @@ export const HissanGrid: React.FC<HissanGridProps> = ({
     userValues,
     onCellClick,
     stepFeedback = 'none',
+    disabled = false,
 }) => {
     const currentStep: HissanStep | undefined = gridData.steps[currentStepIndex];
+
+    if (gridData.writtenLayout) return <WrittenArithmeticGrid gridData={gridData}
+        currentStepIndex={currentStepIndex} activeCellPos={activeCellPos} userValues={userValues}
+        onCellClick={onCellClick} stepFeedback={stepFeedback} disabled={disabled} />;
 
     return (
         <div className="flex flex-col items-center gap-0.5 p-2">

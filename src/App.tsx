@@ -18,8 +18,10 @@ import { applyThemeForCurrentTime, getMsUntilNextThemeCheck } from "./utils/them
 import { notifyPwaRouteNavigation } from "./pwa";
 import { LaunchRoute } from "./components/park/LaunchRoute";
 import { BUILD_PLAY_AVAILABLE } from "./domain/park/feature";
+import { islandAvailable } from "./domain/island/feature";
 
 const Park = lazy(() => import('./pages/Park'));
+const Island = lazy(() => import('./pages/Island'));
 
 type ProfileResolution = "loading" | "ready" | "missing";
 
@@ -68,6 +70,7 @@ const PwaRouteObserver = () => {
                 "/onboarding",
                 "/study",
                 "/explore",
+                "/island",
                 "/battle/play",
             ].includes(destination)) return;
             navigate(destination);
@@ -220,6 +223,10 @@ function App() {
                         <Route path="/" element={<LaunchRoute />} />
                         <Route path="/park" element={BUILD_PLAY_AVAILABLE ?
                             <PrivateRoute><Suspense fallback={<Spinner fullScreen message="ゆうえんちを じゅんびちゅう…" />}><Park /></Suspense></PrivateRoute>
+                            : <Navigate to="/" replace />
+                        } />
+                        <Route path="/island" element={islandAvailable() ?
+                            <PrivateRoute><Suspense fallback={<Spinner fullScreen message="しまを じゅんびちゅう…" />}><Island /></Suspense></PrivateRoute>
                             : <Navigate to="/" replace />
                         } />
                         <Route path="/study" element={

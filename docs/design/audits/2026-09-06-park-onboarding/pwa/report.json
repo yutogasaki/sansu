@@ -1,0 +1,38 @@
+{
+  "target": "https://sansu-seven.vercel.app",
+  "browser": "145.0.7632.6",
+  "device": "Desktop Chromium / Metal; not physical mobile",
+  "navigations": {
+    "safe": [
+      "https://sansu-seven.vercel.app/?__app-update=1788672711100"
+    ],
+    "protected": [
+      "https://sansu-seven.vercel.app/?__app-update=1788672712080"
+    ]
+  },
+  "errors": [],
+  "before": {
+    "version": "f70d96797f63ff4f8a4ce78c1ea1c9e540529d78:9377751a-b5f6-4ebe-acfc-1e92a84a3df0",
+    "revision": "f70d96797f63ff4f8a4ce78c1ea1c9e540529d78",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    }
+  },
+  "after": {
+    "version": "aa36adad7dcce77956a891e7917d6a29241ed83a:f7cb0312-cee7-484e-8e78-5c192e9a7f39",
+    "revision": "aa36adad7dcce77956a891e7917d6a29241ed83a",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    }
+  },
+  "pickupMs": 1582,
+  "dataPreserved": true,
+  "protectedFormPreserved": true,
+  "pass": true
+}

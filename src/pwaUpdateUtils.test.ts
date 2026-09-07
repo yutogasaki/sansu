@@ -44,6 +44,10 @@ describe('pwaUpdateUtils', () => {
         '#/study?skill=addition',
         '#/explore',
         '#/park',
+        '#/island',
+        '#/island?view=learning',
+        '#/island/',
+        '#/island/learning?section=2',
         '#/explore/',
         '#/battle/play?mode=tug_of_war',
     ])('protects an in-memory session on %s', (hash) => {
@@ -54,6 +58,8 @@ describe('pwaUpdateUtils', () => {
         ['#/onboarding?step=3', '/onboarding'],
         ['#/study?skill=addition', '/study'],
         ['#/explore/run', '/explore'],
+        ['#/island?view=learning', '/island'],
+        ['#/island/learning?section=2', '/island'],
         ['#/battle/play?mode=tug_of_war', '/battle/play'],
     ])('returns a stable session key for %s', (hash, expectedKey) => {
         expect(getUpdateProtectedRouteKey(hash)).toBe(expectedKey)
@@ -72,6 +78,7 @@ describe('pwaUpdateUtils', () => {
         '#/onboarding',
         '#/study',
         '#/explore',
+        '#/island',
         '#/battle/play',
     ])('allows an update before interaction and defers it during %s', (hash) => {
         expect(shouldDeferAppUpdate(hash, false)).toBe(false)
@@ -90,6 +97,8 @@ describe('pwaUpdateUtils', () => {
         '#/stats',
         '#/onboard',
         '#/studying',
+        '#/islands',
+        '#/island-hub',
         '#/battle/player',
     ])('does not protect ordinary navigation on %s', (hash) => {
         expect(isUpdateProtectedHashRoute(hash)).toBe(false)

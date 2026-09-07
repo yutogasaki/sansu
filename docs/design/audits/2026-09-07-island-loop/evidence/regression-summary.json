@@ -1,0 +1,80 @@
+{
+  "pass": false,
+  "phases": [
+    {
+      "name": "legacy",
+      "target": "http://127.0.0.1:5219/#/island",
+      "flags": {
+        "VITE_ISLAND_ENABLED": "true"
+      },
+      "exit": 0,
+      "completedCount": 11,
+      "sourceStable": true,
+      "toolsStable": true,
+      "start": "2026-09-07T06:55:44.367Z",
+      "end": "2026-09-07T06:57:10.307Z"
+    },
+    {
+      "name": "park",
+      "target": "http://127.0.0.1:5220/#/park",
+      "flags": {
+        "VITE_BUILD_PLAY_ENABLED": "true",
+        "VITE_PARK_RENDERER": "three",
+        "candidate": "park-three-resin-v1"
+      },
+      "exit": 0,
+      "completedCount": 6,
+      "sourceStable": true,
+      "toolsStable": true,
+      "start": "2026-09-07T06:57:10.308Z",
+      "end": "2026-09-07T07:01:05.843Z"
+    },
+    {
+      "name": "park-pwa",
+      "target": "http://127.0.0.1:5297/#/park",
+      "flags": {
+        "VITE_ISLAND_ENABLED": "false",
+        "VITE_BUILD_PLAY_ENABLED": "true",
+        "VITE_PARK_RENDERER": "three",
+        "VITE_ISLAND_ART_DIRECTION": "moon-garden"
+      },
+      "exit": 0,
+      "completedCount": 3,
+      "sourceStable": true,
+      "toolsStable": true,
+      "start": "2026-09-07T07:01:05.844Z",
+      "end": "2026-09-07T07:01:21.847Z"
+    },
+    {
+      "name": "classic-pwa",
+      "target": "http://127.0.0.1:4273/ (fixed classic artifact)",
+      "flags": {
+        "VITE_ISLAND_ENABLED": "false",
+        "VITE_BUILD_PLAY_ENABLED": "false",
+        "VITE_PARK_RENDERER": "three",
+        "VITE_ISLAND_ART_DIRECTION": "moon-garden"
+      },
+      "exit": 0,
+      "completedCount": 4,
+      "sourceStable": true,
+      "toolsStable": true,
+      "start": "2026-09-07T07:01:21.848Z",
+      "end": "2026-09-07T07:02:41.544Z"
+    },
+    {
+      "name": "smoke",
+      "target": "http://127.0.0.1:4173/ (isolated classic DEV)",
+      "flags": {
+        "VITE_ISLAND_ENABLED": "false",
+        "VITE_BUILD_PLAY_ENABLED": "false",
+        "VITE_EXPLORE_EXPERIENCE": "classic-v1"
+      },
+      "exit": 1,
+      "completedCount": 28,
+      "sourceStable": true,
+      "toolsStable": true,
+      "start": "2026-09-07T07:02:41.547Z",
+      "end": "2026-09-07T07:04:53.102Z"
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "target": "http://127.0.0.1:5197/prototypes/pittari/",
+  "candidate": "pittari-positive-v1",
+  "delivery": "standalone-prototype",
+  "build": {
+    "revision": "aa36ada-pittari-ecbac36ee395",
+    "candidate": "pittari-positive-v1",
+    "delivery": "standalone-prototype",
+    "bytes": 20201,
+    "sources": [
+      "prototypes/pittari/index.html",
+      "src/prototypes/pittari/main.ts",
+      "src/prototypes/pittari/view.ts",
+      "src/prototypes/pittari/style.css",
+      "src/prototypes/pittari/engine.ts",
+      "src/prototypes/pittari/boards.ts",
+      "src/prototypes/pittari/state.ts"
+    ]
+  },
+  "checks": [
+    "All 12 boards achieved through real button clicks",
+    "Right 1 chain → undo → left 2 chains; short chain is valid",
+    "Reload persists completed move and undo; mid-chain reload resumes whole resolved move",
+    "End/reload/resume and mirrored right advantage",
+    "Wrong sum and nonadjacent selection never clear blocks",
+    "Board change and undo during cascade cancel stale animation",
+    "Four columns require another manual move; JSON separates manual/auto/dots/undo/reload; unrelated storage retained and no IndexedDB created",
+    "320/390/768/1280 widths: no horizontal overflow, tiles ≥48px; reduced-motion flow completes silently",
+    "Unavailable and corrupt storage show notice and allow play",
+    "Bundled HTML opens via file URL, comparison and reload work in Chromium, no external HTTP requests"
+  ],
+  "boards": [
+    {
+      "id": "5-1",
+      "states": 2,
+      "wins": [
+        [
+          0
+        ]
+      ],
+      "manualPairs": [
+        "1+4"
+      ]
+    },
+    {
+      "id": "5-2",
+      "states": 2,
+      "wins": [
+        [
+          0
+        ]
+      ],
+      "manualPairs": [
+        "2+3"
+      ]
+    },
+    {
+      "id": "5-3",
+      "states": 3,
+      "wins": [
+        [
+          0
+        ]
+      ],
+      "manualPairs": [
+        "1+4"
+      ]
+    },
+    {
+      "id": "5-4",
+      "states": 3,
+      "wins": [
+        [
+          1
+        ]
+      ],
+      "manualPairs": [
+        "1+4"
+      ]
+    },
+    {
+      "id": "5-5",
+      "states": 2,
+      "wins": [
+        [
+          0
+        ]
+      ],
+      "manualPairs": [
+        "1+4"
+      ]
+    },
+    {
+      "id": "5-6",
+      "states": 4,
+      "wins": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "manualPairs": [
+        "1+4",
+        "2+3"
+      ]
+    },
+    {
+      "id": "10-1",
+      "states": 2,
+      "wins": [
+        [
+          0
+        ]
+      ],
+      "manualPairs": [
+        "4+6"
+      ]
+    },
+    {
+      "id": "10-2",
+      "states": 2,
+      "wins": [
+        [
+          0
+        ]
+      ],
+      "manualPairs": [
+        "2+8"
+      ]
+    },
+    {
+      "id": "10-3",
+      "states": 3,
+      "wins": [
+        [
+          0
+        ]
+      ],
+      "manualPairs": [
+        "3+7"
+      ]
+    },
+    {
+      "id": "10-4",
+      "states": 3,
+      "wins": [
+        [
+          1
+        ]
+      ],
+      "manualPairs": [
+        "3+7"
+      ]
+    },
+    {
+      "id": "10-5",
+      "states": 3,
+      "wins": [
+        [
+          0
+        ]
+      ],
+      "manualPairs": [
+        "2+8"
+      ]
+    },
+    {
+      "id": "10-6",
+      "states": 4,
+      "wins": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "manualPairs": [
+        "1+9",
+        "5+5"
+      ]
+    }
+  ],
+  "pass": true
+}

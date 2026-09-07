@@ -362,6 +362,8 @@ export interface Problem {
 
     // 筆算モード用: オペランド情報
     hissanOperands?: { a: number; b: number };
+    /** Reserved written layout; absent preserves legacy step/cell coordinates. */
+    hissanVersion?: 2;
 
     // Metadata
     isReview: boolean;
@@ -504,7 +506,9 @@ export interface UserProfile {
         id: string;
         subject: SubjectKey;
         level: number;
-        createdAt: string; // PDF出力日時
+        createdAt: string; // 印刷用テスト作成日時
+        testSet?: PeriodicTestSet; // immutable paper snapshot; absent on legacy entries
+        mode?: 'auto' | 'manual';
     }[];
 
     // Recent Attempts (ring buffer)

@@ -11,6 +11,7 @@ const UPDATE_PROTECTED_HASH_ROUTES = [
     '/study',
     '/explore',
     '/park',
+    '/island',
     '/battle/play',
 ]
 

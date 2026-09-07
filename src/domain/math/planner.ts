@@ -255,6 +255,21 @@ export const planMathProblemSlots = (
     let plusOneCount = Math.max(0, options.plusOneCount ?? 0);
     let retryCount = 0;
     const callerEligibility = options.isSkillEligible ?? (() => true);
+    const dormantIds = new Set([
+        ...(options.retiredSkillIds || []),
+        ...(options.maintenanceSkillIds || []),
+        ...Object.entries(options.profile.mathSkills || {})
+            .filter(([, state]) => state.status === "retired" || state.status === "maintenance")
+            .map(([id]) => id),
+    ]);
+    // Soft repetition limits may relax for a small pool; graduation preference
+    // must not relax just because an active skill was already picked twice.
+    const normalCandidates = (ids: string[], selection: SelectionOptions): string[] => {
+        const active = ids.filter(id => !dormantIds.has(id)
+            && selection.isSkillEligible(id, selection.plannedIndex)
+            && !selection.skippedTodayIds.includes(id));
+        return active.length ? active : ids;
+    };
 
     const getSelectionOptions = (): SelectionOptions => ({
         cooldownIds: options.cooldownIdsForIndex?.(plannedSlots.length)
@@ -320,8 +335,13 @@ export const planMathProblemSlots = (
                 options.profile.recentAttempts,
                 currentLevelSkills,
                 options.profile.mathMaxUnlocked ?? mainLevel,
-            ).map(candidate => candidate.skillId);
-            const followupId = pickOrderedMathSkillId(followups, selection);
+            );
+            const hasActiveCurrent = currentLevelSkills.some(id => !dormantIds.has(id)
+                && selection.isSkillEligible(id, selection.plannedIndex)
+                && !selection.skippedTodayIds.includes(id));
+            const followupIds = followups.filter(candidate => candidate.reason === "remediation"
+                || !hasActiveCurrent || !dormantIds.has(candidate.skillId)).map(candidate => candidate.skillId);
+            const followupId = pickOrderedMathSkillId(followupIds, selection);
             if (followupId) item = createPlanItem(followupId, "followup");
         }
 
@@ -335,7 +355,7 @@ export const planMathProblemSlots = (
             const requestedLevel = wantsPlusOne ? mainLevel + 1 : mainLevel;
             const requestedSkills = getSkillsForLevel(requestedLevel);
             const fallbackSkills = getSkillsForLevel(1);
-            const candidates = requestedSkills.length > 0 ? requestedSkills : fallbackSkills;
+            const candidates = normalCandidates(requestedSkills.length > 0 ? requestedSkills : fallbackSkills, selection);
             let skillId = pickMathSkillId(candidates, selection)
                 || pickLeastUsedMathSkillId(candidates, selection);
             let source: MathProblemPlanSource = wantsPlusOne ? "plus-one" : "main";
@@ -343,7 +363,7 @@ export const planMathProblemSlots = (
             // If +1 is exhausted by block/skip guards, keep the plan useful and
             // truthfully label the main-level fallback.
             if (!skillId && wantsPlusOne) {
-                const mainSkills = getSkillsForLevel(mainLevel);
+                const mainSkills = normalCandidates(getSkillsForLevel(mainLevel), selection);
                 skillId = pickMathSkillId(mainSkills, selection)
                     || pickLeastUsedMathSkillId(mainSkills, selection);
                 source = "main";

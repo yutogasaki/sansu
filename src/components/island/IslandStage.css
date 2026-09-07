@@ -1,0 +1,98 @@
+.island-stage {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    height: var(--island-stage-height, clamp(330px, 99vw, 470px));
+    margin: 0;
+    overflow: hidden;
+    border-radius: 26px;
+    background: #76cdd3;
+}
+
+.island-stage--learning {
+    height: var(--island-stage-height, clamp(220px, 58vw, 270px));
+    border-radius: 20px;
+}
+
+.island-stage__canvas,
+.island-stage__canvas canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.island-stage__canvas[hidden] { display: none; }
+.island-stage--placing .island-stage__canvas { cursor: grab; }
+.island-stage__canvas canvas { touch-action: pan-y; }
+.island-stage--placing .island-stage__canvas canvas { touch-action: none; }
+.island-stage--placing .island-stage__canvas:active { cursor: grabbing; }
+
+.island-stage__caption {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    bottom: 12px;
+    width: max-content;
+    max-width: calc(100% - 24px);
+    padding: 6px 12px;
+    transform: translateX(-50%);
+    border-radius: 20px;
+    background: rgb(243 252 240 / 91%);
+    color: #365a4d;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    pointer-events: none;
+}
+
+.island-stage--learning .island-stage__caption {
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+}
+
+.island-stage__fallback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 18px;
+    color: #365a4d;
+    text-align: center;
+    font-size: 13px;
+}
+
+.island-stage__fallback-land {
+    width: 120px;
+    border-radius: 50%;
+    border-bottom: 10px solid #e1c68e;
+    background: #8ebe65;
+    color: #a65d43;
+    font-size: 64px;
+    line-height: 1.3;
+}
+
+.island-stage__retry {
+    min-height: 44px;
+    padding: 8px 18px;
+    border: 1px solid #859d75;
+    border-radius: 18px;
+    background: #f6efd6;
+    color: #365a4d;
+    font: inherit;
+}
+
+.island-stage__retry:focus-visible { outline: 3px solid #477a68; outline-offset: 3px; }
+
+.island-stage--learning .island-stage__fallback { gap: 6px; font-size: 12px; }
+.island-stage--learning .island-stage__fallback-land { display: none; }
+.island-stage--learning .island-stage__fallback p { margin: 0; }
+
+@media (min-width: 700px) {
+    .island-stage { border-radius: 32px; }
+    .island-stage__caption { font-size: 12px; }
+}

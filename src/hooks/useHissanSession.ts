@@ -1,332 +1,183 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { Problem } from '../domain/types';
-import { HissanGridData, HissanStep, isHissanEligible } from '../domain/math/hissanTypes';
+import { HissanGridData, isHissanEligible } from '../domain/math/hissanTypes';
 import { generateHissanGrid } from '../domain/math/hissanEngine';
+import { generateWrittenArithmeticGrid } from '../domain/math/writtenArithmetic';
 import { useTimeoutScheduler } from './useTimeoutScheduler';
 
-interface UseHissanSessionReturn {
-    /** 筆算モードがアクティブか */
+type StepFeedback = 'none' | 'correct' | 'incorrect';
+type EnterResult = 'step-correct' | 'all-correct' | 'incorrect' | 'incomplete';
+
+interface HissanSessionState {
     isHissanActive: boolean;
-    /** このスキルが筆算対象か */
     isHissanEligibleSkill: boolean;
-    /** このスキルでは筆算を強制するか */
     isForcedHissanSkill: boolean;
-    /** 筆算/暗算トグルを見せてよいか */
-    canToggleHissanMode: boolean;
-    /** 筆算グリッドデータ */
     gridData: HissanGridData | null;
-    /** 現在のステップインデックス */
     currentStepIndex: number;
-    /** アクティブセル位置 */
     activeCellPos: [number, number] | null;
-    /** ユーザー入力値 */
     userValues: Map<string, string>;
-    /** ステップフィードバック */
-    stepFeedback: 'none' | 'correct' | 'incorrect';
-    /** 現在のステップで小数点入力が必要か */
-    canInputDecimal: boolean;
-    /** テンキー入力ハンドラ */
-    handleHissanInput: (val: number | string) => void;
-    /** バックスペースハンドラ */
-    handleHissanBackspace: () => void;
-    /** クリアハンドラ */
-    handleHissanClear: () => void;
-    /** カーソル移動ハンドラ */
-    handleHissanCursorMove: (direction: "left" | "right") => void;
-    /** 確定ハンドラ（ステップ正誤判定） - returns true if final step correct, false otherwise */
-    handleHissanEnter: () => 'step-correct' | 'all-correct' | 'incorrect';
-    /** セルタップハンドラ */
-    handleCellClick: (rowIndex: number, colIndex: number) => void;
-    /** 筆算/暗算トグル */
-    toggleHissanMode: () => void;
-    /** 筆算モードリセット（新問題時） */
-    resetHissan: (problem: Problem | undefined, hissanEnabled: boolean) => void;
+    stepFeedback: StepFeedback;
+    cursorIndex: number;
 }
 
-/**
- * 筆算セッション管理フック
- */
-export const useHissanSession = (): UseHissanSessionReturn => {
-    const [isHissanActive, setIsHissanActive] = useState(false);
-    const [isHissanEligibleSkill, setIsHissanEligibleSkill] = useState(false);
-    const [isForcedHissanSkill, setIsForcedHissanSkill] = useState(false);
-    const [gridData, setGridData] = useState<HissanGridData | null>(null);
-    const [currentStepIndex, setCurrentStepIndex] = useState(0);
-    const [activeCellPos, setActiveCellPos] = useState<[number, number] | null>(null);
-    const [userValues, setUserValues] = useState<Map<string, string>>(new Map());
-    const [stepFeedback, setStepFeedback] = useState<'none' | 'correct' | 'incorrect'>('none');
+const emptySession = (): HissanSessionState => ({
+    isHissanActive: false,
+    isHissanEligibleSkill: false,
+    isForcedHissanSkill: false,
+    gridData: null,
+    currentStepIndex: 0,
+    activeCellPos: null,
+    userValues: new Map(),
+    stepFeedback: 'none',
+    cursorIndex: 0,
+});
+
+const clearCurrentStep = (state: HissanSessionState): HissanSessionState => {
+    const step = state.gridData?.steps[state.currentStepIndex];
+    if (!step) return state;
+    const userValues = new Map(state.userValues);
+    for (const col of step.inputCellIndices) userValues.delete(`${step.rowIndex}-${col}`);
+    return {
+        ...state, userValues, cursorIndex: 0, stepFeedback: 'none',
+        activeCellPos: [step.rowIndex, step.inputCellIndices[0]],
+    };
+};
+
+/** Own pending input synchronously so consecutive native key events cannot reuse a stale cell. */
+export const useHissanSession = () => {
+    const [state, setState] = useState(emptySession);
+    const pending = useRef(state);
     const { scheduleTimeout, clearScheduledTimeouts } = useTimeoutScheduler();
+    const publish = useCallback((next: HissanSessionState) => {
+        pending.current = next;
+        setState(next);
+    }, []);
 
-    // 現在のステップの入力セル一覧（アクティブなセル内でのカーソル位置を管理）
-    const [cursorIndex, setCursorIndex] = useState(0);
-
-    const currentStep: HissanStep | undefined = useMemo(
-        () => gridData?.steps[currentStepIndex],
-        [gridData, currentStepIndex]
-    );
-    const canInputDecimal = useMemo(
-        () => currentStep?.correctValues.includes('.') ?? false,
-        [currentStep]
-    );
-
-    /**
-     * 新問題に切り替わった時のリセット
-     */
     const resetHissan = useCallback((problem: Problem | undefined, hissanEnabled: boolean) => {
         clearScheduledTimeouts();
-        setCurrentStepIndex(0);
-        setActiveCellPos(null);
-        setUserValues(new Map());
-        setStepFeedback('none');
-        setCursorIndex(0);
-
-        if (!problem) {
-            setIsHissanActive(false);
-            setIsHissanEligibleSkill(false);
-            setIsForcedHissanSkill(false);
-            setGridData(null);
-            return;
-        }
-
-        const eligible = problem.subject === 'math' && isHissanEligible(problem.categoryId);
-        const forced = eligible && (problem.categoryId.includes('_hissan') || problem.categoryId.includes('_algorithm'));
-        setIsHissanEligibleSkill(eligible);
-        setIsForcedHissanSkill(forced);
-
-        if (eligible && (forced || hissanEnabled) && problem.questionText) {
-            const explicitAnswer = Array.isArray(problem.correctAnswer)
-                ? problem.correctAnswer.join("")
-                : problem.correctAnswer;
-            const grid = generateHissanGrid(problem.categoryId, problem.questionText, explicitAnswer);
-            if (grid) {
-                setGridData(grid);
-                setCurrentStepIndex(0);
-                setUserValues(new Map());
-                setStepFeedback('none');
-                setCursorIndex(0);
-                setIsHissanActive(true);
-
-                // 最初のステップの最初の入力セルをアクティブにする
-                if (grid.steps.length > 0) {
-                    const firstStep = grid.steps[0];
-                    const firstCellCol = firstStep.inputCellIndices[0];
-                    setActiveCellPos([firstStep.rowIndex, firstCellCol]);
-                }
-                return;
+        const next = emptySession();
+        if (problem?.subject === 'math' && problem.inputType !== 'choice' && problem.questionText) {
+            const eligible = isHissanEligible(problem.categoryId) || ['div_rem_q1', 'div_rem_q2'].includes(problem.categoryId);
+            if (eligible) {
+                // Build while disabled as well: the child can open written work from mental mode.
+                const written = /^(mul|div)_/.test(problem.categoryId)
+                    ? generateWrittenArithmeticGrid(problem.questionText, problem.correctAnswer) : null;
+                next.gridData = written
+                    ?? generateHissanGrid(problem.categoryId, problem.questionText,
+                        Array.isArray(problem.correctAnswer) ? problem.correctAnswer.join('') : problem.correctAnswer);
+                next.isHissanEligibleSkill = Boolean(next.gridData);
+                next.isForcedHissanSkill = Boolean(next.gridData)
+                    && (problem.categoryId.includes('_hissan') || problem.categoryId.includes('_algorithm'));
+                next.isHissanActive = Boolean(next.gridData) && (next.isForcedHissanSkill || hissanEnabled);
+                const firstStep = next.gridData?.steps[0];
+                if (firstStep) next.activeCellPos = [firstStep.rowIndex, firstStep.inputCellIndices[0]];
             }
         }
+        publish(next);
+    }, [clearScheduledTimeouts, publish]);
 
-        setIsHissanActive(false);
-        setGridData(null);
-    }, [clearScheduledTimeouts]);
-
-    /**
-     * テンキー入力
-     */
     const handleHissanInput = useCallback((val: number | string) => {
-        if (!currentStep || !gridData || stepFeedback !== 'none') return;
+        const current = pending.current;
+        const step = current.gridData?.steps[current.currentStepIndex];
+        if (!current.isHissanActive || !step || current.stepFeedback !== 'none' || !current.activeCellPos) return;
+        const col = step.inputCellIndices[current.cursorIndex];
+        const expected = step.correctValues[current.cursorIndex];
+        const value = String(val);
+        if (col === undefined || !expected || !/^[0-9.]$/.test(value)) return;
+        if (expected === '.' ? value !== '.' : !/^[0-9]$/.test(value)) return;
+        const userValues = new Map(current.userValues);
+        userValues.set(`${step.rowIndex}-${col}`, value);
+        const hasNext = current.cursorIndex + 1 < step.inputCellIndices.length;
+        const cursorIndex = hasNext ? current.cursorIndex + 1 : current.cursorIndex;
+        publish({ ...current, userValues, cursorIndex,
+            activeCellPos: hasNext ? [step.rowIndex, step.inputCellIndices[cursorIndex]] : null });
+    }, [publish]);
 
-        const cellCol = currentStep.inputCellIndices[cursorIndex];
-        if (cellCol === undefined) return;
-        const expectedValue = currentStep.correctValues[cursorIndex];
-        const nextValue = String(val);
-
-        if (!expectedValue) return;
-        if (!/^[0-9.]$/.test(nextValue)) return;
-        if (expectedValue === '.' && nextValue !== '.') return;
-        if (expectedValue !== '.' && !/^[0-9]$/.test(nextValue)) return;
-
-        const cellKey = `${currentStep.rowIndex}-${cellCol}`;
-
-        setUserValues(prev => {
-            const next = new Map(prev);
-            next.set(cellKey, nextValue);
-            return next;
-        });
-
-        // 次のセルへ移動
-        const nextCursorIndex = cursorIndex + 1;
-        if (nextCursorIndex < currentStep.inputCellIndices.length) {
-            setCursorIndex(nextCursorIndex);
-            const nextCellCol = currentStep.inputCellIndices[nextCursorIndex];
-            setActiveCellPos([currentStep.rowIndex, nextCellCol]);
-        } else {
-            // 最後のセルまで入力完了 → アクティブセルはそのまま
-            setActiveCellPos(null);
-        }
-    }, [currentStep, gridData, cursorIndex, stepFeedback]);
-
-    /**
-     * バックスペース
-     */
     const handleHissanBackspace = useCallback(() => {
-        if (!currentStep || stepFeedback !== 'none') return;
+        const current = pending.current;
+        const step = current.gridData?.steps[current.currentStepIndex];
+        if (!current.isHissanActive || !step || current.stepFeedback !== 'none') return;
+        let cursorIndex = current.cursorIndex;
+        const key = `${step.rowIndex}-${step.inputCellIndices[cursorIndex]}`;
+        if (!current.userValues.get(key) && cursorIndex > 0) cursorIndex -= 1;
+        const col = step.inputCellIndices[cursorIndex];
+        const userValues = new Map(current.userValues);
+        userValues.delete(`${step.rowIndex}-${col}`);
+        publish({ ...current, userValues, cursorIndex, activeCellPos: [step.rowIndex, col] });
+    }, [publish]);
 
-        // 現在のセルが空なら前のセルに戻る
-        const currentCellCol = currentStep.inputCellIndices[cursorIndex];
-        const currentKey = `${currentStep.rowIndex}-${currentCellCol}`;
-        const currentValue = userValues.get(currentKey);
-
-        if (currentValue && currentValue !== '') {
-            // 現在のセルをクリア
-            setUserValues(prev => {
-                const next = new Map(prev);
-                next.delete(currentKey);
-                return next;
-            });
-        } else if (cursorIndex > 0) {
-            // 前のセルに戻ってクリア
-            const prevIndex = cursorIndex - 1;
-            const prevCellCol = currentStep.inputCellIndices[prevIndex];
-            const prevKey = `${currentStep.rowIndex}-${prevCellCol}`;
-            setUserValues(prev => {
-                const next = new Map(prev);
-                next.delete(prevKey);
-                return next;
-            });
-            setCursorIndex(prevIndex);
-            setActiveCellPos([currentStep.rowIndex, prevCellCol]);
-        }
-    }, [currentStep, cursorIndex, userValues, stepFeedback]);
-
-    /**
-     * クリア（現在ステップの入力をすべて消す）
-     */
     const handleHissanClear = useCallback(() => {
-        if (!currentStep || stepFeedback !== 'none') return;
+        const current = pending.current;
+        if (current.isHissanActive && current.stepFeedback === 'none') publish(clearCurrentStep(current));
+    }, [publish]);
 
-        setUserValues(prev => {
-            const next = new Map(prev);
-            for (const col of currentStep.inputCellIndices) {
-                next.delete(`${currentStep.rowIndex}-${col}`);
-            }
-            return next;
-        });
-        setCursorIndex(0);
-        const firstCellCol = currentStep.inputCellIndices[0];
-        setActiveCellPos([currentStep.rowIndex, firstCellCol]);
-    }, [currentStep, stepFeedback]);
+    const handleHissanCursorMove = useCallback((direction: 'left' | 'right') => {
+        const current = pending.current;
+        const step = current.gridData?.steps[current.currentStepIndex];
+        if (!current.isHissanActive || !step || current.stepFeedback !== 'none') return;
+        const col = step.inputCellIndices[current.cursorIndex];
+        // Input order varies by operation; arrows always follow the visible column direction.
+        const candidates = step.inputCellIndices.filter(c => direction === 'left' ? c < col : c > col);
+        const nextCol = candidates.length ? (direction === 'left' ? Math.max(...candidates) : Math.min(...candidates)) : col;
+        publish({ ...current, cursorIndex: step.inputCellIndices.indexOf(nextCol), activeCellPos: [step.rowIndex, nextCol] });
+    }, [publish]);
 
-    /**
-     * カーソル移動（左右）
-     */
-    const handleHissanCursorMove = useCallback((direction: "left" | "right") => {
-        if (!currentStep || stepFeedback !== 'none') return;
-        const lastIndex = currentStep.inputCellIndices.length - 1;
-        if (lastIndex < 0) return;
-
-        if (direction === "right") {
-            setCursorIndex(prev => {
-                const nextIndex = Math.min(prev + 1, lastIndex);
-                setActiveCellPos([currentStep.rowIndex, currentStep.inputCellIndices[nextIndex]]);
-                return nextIndex;
-            });
-            return;
+    const handleHissanEnter = useCallback((): EnterResult => {
+        const current = pending.current;
+        const grid = current.gridData;
+        const step = grid?.steps[current.currentStepIndex];
+        if (!current.isHissanActive || !grid || !step || current.stepFeedback !== 'none') return 'incomplete';
+        const emptyIndex = step.inputCellIndices.findIndex(col => !current.userValues.get(`${step.rowIndex}-${col}`));
+        if (emptyIndex >= 0) {
+            publish({ ...current, cursorIndex: emptyIndex, activeCellPos: [step.rowIndex, step.inputCellIndices[emptyIndex]] });
+            return 'incomplete';
         }
-
-        setCursorIndex(prev => {
-            const nextIndex = Math.max(prev - 1, 0);
-            setActiveCellPos([currentStep.rowIndex, currentStep.inputCellIndices[nextIndex]]);
-            return nextIndex;
-        });
-    }, [currentStep, stepFeedback]);
-
-    /**
-     * 確定（ステップ正誤判定）
-     */
-    const handleHissanEnter = useCallback((): 'step-correct' | 'all-correct' | 'incorrect' => {
-        if (!currentStep || !gridData) return 'incorrect';
-
-        // 全セルに値が入っているか確認
-        const userAnswers: string[] = [];
-        for (const col of currentStep.inputCellIndices) {
-            const key = `${currentStep.rowIndex}-${col}`;
-            const val = userValues.get(key);
-            if (!val || val === '') {
-                // 未入力セルがある場合 → 最初の空セルにフォーカス
-                const emptyIdx = currentStep.inputCellIndices.findIndex(c => {
-                    const k = `${currentStep.rowIndex}-${c}`;
-                    return !userValues.get(k);
-                });
-                if (emptyIdx >= 0) {
-                    setCursorIndex(emptyIdx);
-                    setActiveCellPos([currentStep.rowIndex, currentStep.inputCellIndices[emptyIdx]]);
-                }
-                return 'incorrect';
-            }
-            userAnswers.push(val);
-        }
-
-        // 正誤判定
-        const isCorrect = currentStep.correctValues.every(
-            (correct, idx) => correct === userAnswers[idx]
-        );
-
-        if (isCorrect) {
-            // 次のステップがあるか？
-            const nextStepIdx = currentStepIndex + 1;
-            if (nextStepIdx < gridData.steps.length) {
-                // 次のステップへ
-                setCurrentStepIndex(nextStepIdx);
-                const nextStep = gridData.steps[nextStepIdx];
-                setCursorIndex(0);
-                setActiveCellPos([nextStep.rowIndex, nextStep.inputCellIndices[0]]);
-                setStepFeedback('none');
-                return 'step-correct';
-            } else {
-                // 全ステップ完了
-                setStepFeedback('correct');
-                setActiveCellPos(null);
-                return 'all-correct';
-            }
-        } else {
-            // 不正解 → クリアして最初から
-            setStepFeedback('incorrect');
+        const correct = step.correctValues.every((value, i) => current.userValues.get(`${step.rowIndex}-${step.inputCellIndices[i]}`) === value);
+        if (!correct) {
+            const failed = { ...current, stepFeedback: 'incorrect' as const };
+            publish(failed);
             scheduleTimeout(() => {
-                setStepFeedback('none');
-                handleHissanClear();
+                // A new problem or a mode switch may already have replaced the failed state.
+                if (pending.current === failed) publish(clearCurrentStep(failed));
             }, 800);
             return 'incorrect';
         }
-    }, [currentStep, gridData, currentStepIndex, userValues, handleHissanClear, scheduleTimeout]);
+        const nextStepIndex = current.currentStepIndex + 1;
+        const nextStep = grid.steps[nextStepIndex];
+        if (nextStep) {
+            publish({ ...current, currentStepIndex: nextStepIndex, cursorIndex: 0,
+                activeCellPos: [nextStep.rowIndex, nextStep.inputCellIndices[0]] });
+            return 'step-correct';
+        }
+        publish({ ...current, stepFeedback: 'correct', activeCellPos: null });
+        return 'all-correct';
+    }, [publish, scheduleTimeout]);
 
-    /**
-     * セルタップ
-     */
     const handleCellClick = useCallback((rowIndex: number, colIndex: number) => {
-        if (!currentStep || stepFeedback !== 'none') return;
+        const current = pending.current;
+        const step = current.gridData?.steps[current.currentStepIndex];
+        if (!current.isHissanActive || !step || current.stepFeedback !== 'none' || rowIndex !== step.rowIndex) return;
+        const cursorIndex = step.inputCellIndices.indexOf(colIndex);
+        if (cursorIndex >= 0) publish({ ...current, cursorIndex, activeCellPos: [rowIndex, colIndex] });
+    }, [publish]);
 
-        // 現在のステップの入力セルのみタップ可能
-        if (rowIndex !== currentStep.rowIndex) return;
-
-        const cellIdx = currentStep.inputCellIndices.indexOf(colIndex);
-        if (cellIdx === -1) return;
-
-        setCursorIndex(cellIdx);
-        setActiveCellPos([rowIndex, colIndex]);
-    }, [currentStep, stepFeedback]);
-
-    /**
-     * 筆算/暗算トグル
-     */
     const toggleHissanMode = useCallback(() => {
-        if (isForcedHissanSkill) return;
-        setIsHissanActive(prev => !prev);
-    }, [isForcedHissanSkill]);
+        const current = pending.current;
+        if (!current.gridData || current.isForcedHissanSkill) return;
+        clearScheduledTimeouts();
+        const next = current.stepFeedback === 'incorrect' ? clearCurrentStep(current) : current;
+        publish({ ...next, isHissanActive: !current.isHissanActive });
+    }, [clearScheduledTimeouts, publish]);
 
-    const canToggleHissanMode = isHissanEligibleSkill && !isForcedHissanSkill;
+    const retryHissanSave = useCallback(() => {
+        const current = pending.current;
+        if (current.stepFeedback === 'correct') publish({ ...current, stepFeedback: 'none' });
+    }, [publish]);
 
     return {
-        isHissanActive,
-        isHissanEligibleSkill,
-        isForcedHissanSkill,
-        canToggleHissanMode,
-        gridData,
-        currentStepIndex,
-        activeCellPos,
-        userValues,
-        stepFeedback,
-        canInputDecimal,
+        ...state,
+        canToggleHissanMode: state.isHissanEligibleSkill && !state.isForcedHissanSkill,
+        canInputDecimal: state.gridData?.steps[state.currentStepIndex]?.correctValues.includes('.') ?? false,
         handleHissanInput,
         handleHissanBackspace,
         handleHissanClear,
@@ -334,6 +185,7 @@ export const useHissanSession = (): UseHissanSessionReturn => {
         handleHissanEnter,
         handleCellClick,
         toggleHissanMode,
+        retryHissanSave,
         resetHissan,
     };
 };

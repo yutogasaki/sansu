@@ -25,6 +25,12 @@ export interface HissanRow {
     type: 'operand' | 'operator' | 'separator' | 'input' | 'result';
     /** ステップインデックス（入力行の場合、どのステップに属するか） */
     stepIndex?: number;
+    /** 新しい筆算面で使う短い行名 */
+    label?: string;
+    /** 固定の途中式を答えより先に見せないための表示開始ステップ */
+    visibleFromStep?: number;
+    /** この行の上に計算線を表示する */
+    lineAbove?: boolean;
 }
 
 /**
@@ -37,10 +43,16 @@ export interface HissanStep {
     description: string;
     /** このステップで入力する行インデックス */
     rowIndex: number;
-    /** このステップで入力するセルのインデックス一覧（右から左） */
+    /** このステップで入力するセルのインデックス一覧（入力順。商は左から） */
     inputCellIndices: number[];
     /** 各セルの正解値 */
     correctValues: string[];
+    /** 新しい筆算面の現在の操作 */
+    phase?: 'multiply' | 'sum' | 'quotient' | 'subtract' | 'bring-down' | 'remainder';
+    /** 現在の一手を示す短文 */
+    hint?: string;
+    /** 現在の計算で参照するセル [行, 列] */
+    focusCells?: [number, number][];
 }
 
 /**
@@ -57,6 +69,16 @@ export interface HissanGridData {
     operation: 'addition' | 'subtraction' | 'multiplication' | 'division';
     /** 最終回答（従来の correctAnswer と同じ値） */
     finalAnswer: string;
+    /** 多段の整数筆算用。省略された既存グリッドの座標・表示は維持する。 */
+    writtenLayout?: {
+        kind: 'multiplication' | 'division';
+        expression: string;
+        /** 割る数はグリッドの左、囲みの外に描画する。 */
+        divisor?: string;
+        dividendRow?: number;
+        quotientRow?: number;
+        dividendStartColumn?: number;
+    };
 }
 
 /**

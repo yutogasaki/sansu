@@ -1,0 +1,66 @@
+{
+  "sourceRoot": "/tmp/sansu-island-loop-fdf5-KADLm7",
+  "files": [
+    {
+      "path": "tools/e2e-island-learning.mjs",
+      "sha256": "3cebd0e2f820990c50cca3df41d97215fd62eaaf106c40af518019c015ea60ef"
+    },
+    {
+      "path": "tools/e2e-island-recovery.mjs",
+      "sha256": "c8f2b3abe54af198aa448c16047416627bacc4508b0717a3e1f6e5276ece8390"
+    },
+    {
+      "path": "tools/e2e-island-play.mjs",
+      "sha256": "202cc4597c7deb273c5277d5f38a9a35ad3396af04a5a41241e6e7f72359d2d5"
+    },
+    {
+      "path": "tools/e2e-island-production-capture.mjs",
+      "sha256": "1f7e7e5f739ea08cf7b8252fa77bc0d4d23ef545377f5468dd8fcc59cb85d4b5"
+    },
+    {
+      "path": "tools/e2e-island-pwa.mjs",
+      "sha256": "4417e0f95ebc91cf3402e1ef5bc6f387a8201b4fc3cf2280fb04ea08a8f47b1f"
+    },
+    {
+      "path": "tools/e2e-island.mjs",
+      "sha256": "982837364efc734d6643adb6490ee15f8469570621cfe7663b836eea1189255d"
+    },
+    {
+      "path": "tools/e2e-island-throughput.mjs",
+      "sha256": "c857fac10306306d719535a0d753d92cc0a9abdace47728ff86296c2bf8bdaae"
+    },
+    {
+      "path": "tools/island-e2e-helpers.mjs",
+      "sha256": "3b4fde257f913888b44bc4aa8fee2586c060c5525634ccf175187a495b0748f4"
+    },
+    {
+      "path": "tools/island-e2e-progression.mjs",
+      "sha256": "a50d63f4e2199675a74475c9fb46949097723446f07eb1540921a62db17c4fcd"
+    },
+    {
+      "path": "tools/island-learning-fixtures.mjs",
+      "sha256": "d8e934855853044355a04a7207b3a980e6f4901760b7f0993dcd67dafec914c7"
+    },
+    {
+      "path": "tools/island-learning-checks.mjs",
+      "sha256": "9b002731177266df8d0e6b00a02017c2df73a61d4adfc52fb8ac683a83da4465"
+    },
+    {
+      "path": "tools/e2e-park.mjs",
+      "sha256": "28bb124e812f4a156664b79f334a3f17ca40ea05ac48fef7c2548f803ee505eb"
+    },
+    {
+      "path": "tools/e2e-park-pwa.mjs",
+      "sha256": "63b9b8fa8ff085bb965bf2ca17337b9adba2d68ea3e6e9f9c57528f4569f03f2"
+    },
+    {
+      "path": "tools/e2e-pwa-update.mjs",
+      "sha256": "6e153edd137d509a23cca3f393c838a957ab8ceb3c8eed9de43016e0219098a9"
+    },
+    {
+      "path": "tools/e2e-smoke.mjs",
+      "sha256": "814ddea6bbec5bf928b535bddeb811c93abcb6aa07c47585b7efae9190d9c623"
+    }
+  ],
+  "note": "Copies for final runs. The earlier cabd 3D execution retains its own raw hash and source observations."
+}

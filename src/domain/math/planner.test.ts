@@ -3,6 +3,7 @@ import { createInitialProfile } from "../user/profile";
 import { createSeededRandom } from "../../utils/random";
 import {
     getAvailableSkills,
+    getSkillsForLevel,
     getLevelForSkill,
     isMathSkillUnlockedForProfile,
 } from "./curriculum";
@@ -16,6 +17,64 @@ const createMathProfile = (mainLevel = 8, maxUnlocked = mainLevel) => {
 };
 
 describe("planMathProblems", () => {
+    it("keeps graduated skills out of normal slots while an active current skill remains", () => {
+        const items = planMathProblems({
+            profile: createMathProfile(8), count: 10,
+            retiredSkillIds: ["add_1d_1_bridge"], maintenanceRate: 0, random: () => 0,
+        });
+        expect(items).toHaveLength(10);
+        expect(items.every(item => item.skillId !== "add_1d_1_bridge")).toBe(true);
+        expect(items.every(item => item.source === "main")).toBe(true);
+    });
+
+    it("keeps the all-graduated range usable without injecting a different-level fallback", () => {
+        const profile = createMathProfile(8);
+        const graduated = ["add_1d_1_bridge", "add_1d_1"];
+        const items = planMathProblems({ profile, count: 10,
+            retiredSkillIds: graduated, maintenanceRate: 0, canAddReview: false, random: () => 0,
+        });
+        expect(items).toHaveLength(10);
+        expect(items.every(item => getLevelForSkill(item.skillId) === 8)).toBe(true);
+        expect(items.every(item => item.source === "main")).toBe(true);
+    });
+
+    it("retains explicit maintenance metadata for graduated skills", () => {
+        const [item] = planMathProblems({ profile: createMathProfile(8), count: 1,
+            retiredSkillIds: ["add_1d_1_bridge"], maintenanceRate: 1, random: () => 0,
+        });
+        expect(item).toMatchObject({ skillId: "add_1d_1_bridge", source: "maintenance", isMaintenanceCheck: true, countsTowardReviewCap: true });
+    });
+
+    it("keeps +1 active skills within the cap and allows final-level consolidation", () => {
+        const nextSkills = getSkillsForLevel(9);
+        const items = planMathProblems({ profile: createMathProfile(8, 9), count: 10,
+            maintenanceSkillIds: [nextSkills[0]], plusOneRate: 1, plusOneLimit: 3,
+            maintenanceRate: 0, random: () => 0,
+        });
+        const next = items.filter(item => item.source === "plus-one");
+        expect(next).toHaveLength(3);
+        expect(next.every(item => item.skillId !== nextSkills[0])).toBe(true);
+        const final = planMathProblems({ profile: createMathProfile(28), count: 10,
+            retiredSkillIds: getSkillsForLevel(28), canAddReview: false, random: () => 0,
+        });
+        expect(final).toHaveLength(10);
+        expect(final.every(item => getLevelForSkill(item.skillId) === 28)).toBe(true);
+    });
+
+    it("excludes graduated automatic progression but retains remediation after an error", () => {
+        const profile = createMathProfile(8);
+        profile.recentAttempts = [{ subject: "math", skillId: "add_1d_1_bridge", result: "correct", timestamp: new Date().toISOString() }];
+        const progressed = planMathProblems({ profile, count: 1,
+            retiredSkillIds: ["add_1d_1"], maintenanceRate: 0, random: () => 0,
+        });
+        expect(progressed[0].skillId).toBe("add_1d_1_bridge");
+        profile.recentAttempts = [{ subject: "math", skillId: "add_1d_1", result: "incorrect", timestamp: new Date().toISOString() }];
+        const helped = planMathProblems({ profile, count: 1,
+            retiredSkillIds: ["add_1d_1_bridge"], maintenanceRate: 0, random: () => 0,
+        });
+        expect(helped[0]).toMatchObject({ skillId: "add_1d_1_bridge", source: "followup" });
+    });
+
     it("fails closed for unknown, locked, and malformed curriculum boundaries", () => {
         const unlocked = createMathProfile(3, 3);
 

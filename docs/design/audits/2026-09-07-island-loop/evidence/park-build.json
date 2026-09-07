@@ -1,0 +1,30 @@
+{
+  "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8-park",
+  "sourceHash": "32cb1f0b89f8f586b7245b54e211b970ee56b54d75b653fc165bee2d2560a848",
+  "flags": {
+    "VITE_ISLAND_ENABLED": "false",
+    "VITE_BUILD_PLAY_ENABLED": "true",
+    "VITE_PARK_RENDERER": "three",
+    "VITE_ISLAND_ART_DIRECTION": "moon-garden"
+  },
+  "outDir": "/Users/yutogasaki/Projects/sansu/output/builds/island-loop/aa36adad7dcc-island-loop-32cb1f0b89f8-park",
+  "version": {
+    "version": "aa36adad7dcc-island-loop-32cb1f0b89f8-park:f903dbee-c45e-424e-b39a-ff29aeadaeda",
+    "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8-park",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    },
+    "island": {
+      "enabled": false,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceStable": true,
+  "inputCount": 577
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useLayoutEffect, useCallback, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { useStudySession } from "../hooks/useStudySession";
@@ -74,7 +74,7 @@ export const Study: React.FC = () => {
         [benchmarkId, devSkill, focusIdsParam, focusSubject, forceReview, sessionKindParam]
     );
 
-    const { queue, nextBlock, handleResult, completeSession, loading, blockSize } = useStudySession({
+    const { queue, initSession, nextBlock, handleResult, completeSession, loading, generationError, blockSize } = useStudySession({
         devSkill,
         focusSubject: focusSubject || undefined,
         focusIds,
@@ -120,6 +120,7 @@ export const Study: React.FC = () => {
     const [englishAutoRead, setEnglishAutoRead] = useState(false);
     const [isEasyText, setIsEasyText] = useState(false);
     const [hissanModeEnabled, setHissanModeEnabled] = useState(false);
+    const [profileSettingsStatus, setProfileSettingsStatus] = useState<"loading" | "ready" | "error">("loading");
     const [isDevSwitcherOpen, setIsDevSwitcherOpen] = useState(false);
 
     const currentProblem = queue[currentIndex];
@@ -152,15 +153,25 @@ export const Study: React.FC = () => {
 
     // Sync Audio Settings & Profile ID
     useEffect(() => {
+        let active = true;
         getActiveProfile().then(profile => {
+            if (!active) return;
             if (profile) {
                 setSoundEnabled(profile.soundEnabled);
                 setEnglishAutoRead(profile.englishAutoRead || false);
                 setIsEasyText(profile.uiTextMode === "easy");
                 setHissanModeEnabled(profile.hissanModeEnabled ?? true);
                 setTestTimeLimitSeconds(profile.periodicTestTimeLimitSeconds);
+                setProfileSettingsStatus("ready");
+            } else {
+                setProfileSettingsStatus("error");
             }
+        }).catch(error => {
+            if (!active) return;
+            logInDev("[Study] error fetching input settings:", error);
+            setProfileSettingsStatus("error");
         });
+        return () => { active = false; };
     }, []);
 
     // Toggle TTS and persist to profile
@@ -180,8 +191,10 @@ export const Study: React.FC = () => {
     };
 
     // Reset inputs when problem changes
-    useEffect(() => {
-        if (!currentProblem) return;
+    useLayoutEffect(() => {
+        // Settings and the queue load independently. Initialize the chosen input
+        // form before its first operable paint, never after a child has typed.
+        if (!currentProblem || profileSettingsStatus !== "ready") return;
         clearPendingUiTimeouts();
         setUserInput("");
         if (currentProblem.inputType === 'multi-number' && currentProblem.inputConfig?.fields) {
@@ -197,7 +210,7 @@ export const Study: React.FC = () => {
 
         // 筆算モードリセット
         resetHissan(currentProblem, hissanModeEnabled);
-    }, [currentProblem, hissanModeEnabled, resetHissan, clearPendingUiTimeouts]);
+    }, [currentProblem, hissanModeEnabled, profileSettingsStatus, resetHissan, clearPendingUiTimeouts]);
 
     useEffect(() => {
         clearPendingUiTimeouts();
@@ -547,6 +560,7 @@ export const Study: React.FC = () => {
                     if (saved) {
                         setCorrectCount(prev => prev + 1);
                     } else {
+                        hissan.retryHissanSave();
                         setFeedback("none");
                         setSaveError(true);
                     }
@@ -556,7 +570,7 @@ export const Study: React.FC = () => {
                 if (saved) scheduleUiTimeout(nextProblem, 500);
             } else if (result === 'step-correct') {
                 playSound("correct");
-            } else {
+            } else if (result === 'incorrect') {
                 playSound("incorrect");
             }
             return;
@@ -661,8 +675,9 @@ export const Study: React.FC = () => {
     });
 
     // PCキーボード操作（仕様 4.2）
-    useEffect(() => {
+    useLayoutEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            if (profileSettingsStatus !== "ready" || loading) return;
             if (completionPresentation !== "none") return;
             if (feedback !== "none") return;
             if (!currentProblem) return;
@@ -693,6 +708,10 @@ export const Study: React.FC = () => {
                 handleClear();
                 e.preventDefault();
             }
+            else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                handleCursorMove(e.key === 'ArrowLeft' ? 'left' : 'right');
+                e.preventDefault();
+            }
             // Enter (決定)
             else if (e.key === 'Enter') {
                 handleSubmit();
@@ -714,11 +733,14 @@ export const Study: React.FC = () => {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [
         completionPresentation,
+        profileSettingsStatus,
+        loading,
         feedback,
         currentProblem,
         handleTenKeyInput,
         handleBackspace,
         handleClear,
+        handleCursorMove,
         handleSkip,
         handleSubmit,
     ]);
@@ -799,10 +821,11 @@ export const Study: React.FC = () => {
     return (
         <>
             <StudyLayout
-                loading={loading}
+                emptyReview={!loading && !generationError && profileSettingsStatus === "ready" && sessionKindParam === "weak-review" && queue.length === 0}
+                loading={loading || profileSettingsStatus === "loading"}
                 isFinished={isFinished}
                 completionPresentation={completionPresentation}
-                currentProblem={currentProblem}
+                currentProblem={profileSettingsStatus === "error" ? undefined : currentProblem}
                 benchmarkId={benchmarkId}
                 currentIndex={currentIndex}
                 blockSize={blockSize}
@@ -819,7 +842,7 @@ export const Study: React.FC = () => {
                 testRemainingSeconds={testRemainingSeconds}
                 onNavigate={handleNavigate}
                 onNext={nextProblem}
-                onContinue={handleContinue}
+                onContinue={generationError ? () => { void initSession(); } : handleContinue}
                 onRetryCompletion={handleRetryFixedSessionCompletion}
                 onSkip={handleSkip}
                 onTenKeyInput={handleTenKeyInput}

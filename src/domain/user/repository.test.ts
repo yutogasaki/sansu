@@ -33,6 +33,9 @@ const mocks = vi.hoisted(() => ({
     parksDelete: vi.fn(),
     parkPlansDelete: vi.fn(),
     parkEventsDelete: vi.fn(),
+    islandsDelete: vi.fn(),
+    islandPlansDelete: vi.fn(),
+    islandEventsDelete: vi.fn(),
     getLocalActiveId: vi.fn(),
     setLocalActiveId: vi.fn(),
     clearLocalActiveId: vi.fn(),
@@ -45,6 +48,9 @@ vi.mock("../../db", () => ({
         parks: { delete: mocks.parksDelete },
         parkPlans: { where: () => ({ equals: () => ({ delete: mocks.parkPlansDelete }) }) },
         parkEvents: { where: () => ({ equals: () => ({ delete: mocks.parkEventsDelete }) }) },
+        islands: { delete: mocks.islandsDelete },
+        islandPlans: { where: () => ({ equals: () => ({ delete: mocks.islandPlansDelete }) }) },
+        islandEvents: { where: () => ({ equals: () => ({ delete: mocks.islandEventsDelete }) }) },
         appData: {
             get: mocks.appDataGet,
             put: mocks.appDataPut,
@@ -338,6 +344,9 @@ describe("getActiveProfile", () => {
         expect(mocks.parksDelete).toHaveBeenCalledWith(removed.id);
         expect(mocks.parkPlansDelete).toHaveBeenCalledOnce();
         expect(mocks.parkEventsDelete).toHaveBeenCalledOnce();
+        expect(mocks.islandsDelete).toHaveBeenCalledWith(removed.id);
+        expect(mocks.islandPlansDelete).toHaveBeenCalledOnce();
+        expect(mocks.islandEventsDelete).toHaveBeenCalledOnce();
         expect(mocks.clearProfileStorageData).toHaveBeenCalledWith(removed.id);
         expect(mocks.setLocalActiveId).toHaveBeenCalledWith(kept.id);
     });

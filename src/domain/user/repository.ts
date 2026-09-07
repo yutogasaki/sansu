@@ -182,6 +182,9 @@ export const deleteProfileOwnedIndexedDbRows = async (
     database.parks.delete(id),
     database.parkPlans.where("profileId").equals(id).delete(),
     database.parkEvents.where("profileId").equals(id).delete(),
+    database.islands.delete(id),
+    database.islandPlans.where("profileId").equals(id).delete(),
+    database.islandEvents.where("profileId").equals(id).delete(),
 ]);
 
 export const deleteProfile = async (id: string) => {
@@ -201,6 +204,9 @@ export const deleteProfile = async (id: string) => {
             db.parks,
             db.parkPlans,
             db.parkEvents,
+            db.islands,
+            db.islandPlans,
+            db.islandEvents,
         ],
         async () => {
             const appData = await getAppData();

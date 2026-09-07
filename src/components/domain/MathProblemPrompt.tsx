@@ -8,7 +8,15 @@ type PromptProblem = Pick<Problem, "questionText" | "questionVisual" | "category
 interface MathProblemPromptProps {
     problem?: PromptProblem | null;
     className?: string;
+    renderItem?: (item: ProblemVisualItem) => React.ReactNode;
 }
+
+// An illustration can change material, never the reserved item's identity or geometry.
+const ItemIllustrationContext = React.createContext<MathProblemPromptProps["renderItem"]>(undefined);
+const ItemIllustration = ({ item }: { item?: ProblemVisualItem }) => {
+    const renderItem = React.useContext(ItemIllustrationContext);
+    return item ? <>{renderItem ? renderItem(item) : item.emoji}</> : null;
+};
 
 const ItemVisualCard: React.FC<{
     group: ProblemVisualGroup;
@@ -16,18 +24,18 @@ const ItemVisualCard: React.FC<{
     const crossedOutCount = group.crossedOutCount || 0;
 
     return (
-        <div className="min-w-[124px] rounded-[24px] border border-white/80 bg-white/72 px-4 py-3 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+        <div data-visual-surface="group" data-visual-group={group.label} data-visual-symbol={group.emoji} data-visual-count={group.count} className="min-w-[124px] rounded-[24px] border border-white/80 bg-white/72 px-4 py-3 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
             <div className="mb-2 text-sm font-black tracking-[0.08em] text-slate-500">
                 {group.label}
             </div>
-            <div className="grid grid-cols-5 justify-items-center gap-2">
+            <div className="grid grid-cols-5 justify-items-center gap-2" style={{ '--visual-group-columns': Math.max(1, Math.min(5, group.count)) } as React.CSSProperties}>
                 {Array.from({ length: group.count }, (_, index) => {
                     const isCrossedOut = index >= group.count - crossedOutCount;
 
                     return (
-                        <span key={`${group.emoji}-${index}`} className="relative text-[clamp(20px,3.6vw,28px)] leading-none">
+                        <span key={`${group.emoji}-${index}`} data-count-item={index} data-crossed-out={isCrossedOut} className="relative text-[clamp(20px,3.6vw,28px)] leading-none">
                             <span className={cn(isCrossedOut && "opacity-25 grayscale")}>
-                                {group.emoji}
+                                <ItemIllustration item={group} />
                             </span>
                             {isCrossedOut && (
                                 <span className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 -rotate-12 rounded-full bg-rose-400/90" />
@@ -49,7 +57,7 @@ const SingleItemsCard: React.FC<{
     const slotCount = style === "frame" ? Math.max(frameSize || group.count, group.count) : group.count;
 
     return (
-        <div className="rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+        <div data-visual-surface="count-frame" data-visual-group={group.label} data-visual-symbol={group.emoji} data-visual-count={group.count} className="rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
             <div
                 className="grid justify-items-center gap-2"
                 style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
@@ -68,7 +76,7 @@ const SingleItemsCard: React.FC<{
                                     : "border border-dashed border-slate-200 bg-white/40 text-transparent"
                             )}
                         >
-                            {group.emoji}
+                            {isFilled ? <ItemIllustration item={group} /> : <span aria-hidden="true">{group.emoji}</span>}
                         </span>
                     );
                 })}
@@ -80,7 +88,7 @@ const SingleItemsCard: React.FC<{
 const NumberCardVisual: React.FC<{
     card: ProblemVisualNumberCard;
 }> = ({ card }) => (
-    <div className="flex w-full max-w-[340px] flex-col items-center gap-4 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+    <div data-visual-surface="number-card" className="flex w-full max-w-[340px] flex-col items-center gap-4 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
         <div className="flex h-24 w-24 items-center justify-center rounded-[28px] border border-cyan-100 bg-cyan-50/90 text-[clamp(42px,7vw,60px)] font-black text-cyan-700 shadow-[0_16px_28px_-22px_rgba(8,145,178,0.4)]">
             {card.value}
         </div>
@@ -96,10 +104,10 @@ const NumberCardVisual: React.FC<{
 const ReferenceChoiceGridCard: React.FC<{
     grid: ProblemVisualReferenceChoice;
 }> = ({ grid }) => (
-    <div className="flex w-full max-w-[360px] flex-col items-center gap-4 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+    <div data-visual-surface="reference-grid" className="flex w-full max-w-[360px] flex-col items-center gap-4 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
         <div className="flex flex-col items-center gap-1">
             <div className="flex h-16 w-16 items-center justify-center rounded-[20px] border border-cyan-100 bg-cyan-50/90 text-[clamp(28px,4vw,38px)] shadow-[0_12px_22px_-18px_rgba(8,145,178,0.36)]">
-                {grid.reference.emoji}
+                <ItemIllustration item={grid.reference} />
             </div>
             <span className="text-xs font-black tracking-[0.08em] text-slate-500">おてほん</span>
         </div>
@@ -112,7 +120,7 @@ const ReferenceChoiceGridCard: React.FC<{
                     key={`${item.emoji}-${index}`}
                     className="flex h-16 w-16 items-center justify-center rounded-[20px] border border-white/80 bg-white/90 text-[clamp(26px,4vw,38px)] shadow-[0_10px_18px_-16px_rgba(15,23,42,0.24)]"
                 >
-                    {item.emoji}
+                    <ItemIllustration item={item} />
                 </div>
             ))}
         </div>
@@ -126,14 +134,14 @@ const BaseTenValueCard: React.FC<{
     const ones = group.value % 10;
 
     return (
-        <div className="min-w-[152px] rounded-[24px] border border-white/80 bg-white/72 px-4 py-3 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+        <div data-visual-surface="base10" data-base10-value={group.value} className="min-w-[152px] rounded-[24px] border border-white/80 bg-white/72 px-4 py-3 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
             <div className="mb-3 text-center text-sm font-black tracking-[0.08em] text-slate-500">
                 {group.label}
             </div>
             <div className="mb-3 flex min-h-12 flex-wrap justify-center gap-2">
                 {Array.from({ length: tens }, (_, index) => (
                     <span
-                        key={`ten-${group.value}-${index}`}
+                        key={`ten-${group.value}-${index}`} data-base10-unit="ten"
                         className="h-12 w-3 rounded-full bg-cyan-300 shadow-[inset_0_-6px_10px_rgba(8,145,178,0.18)]"
                     />
                 ))}
@@ -141,7 +149,7 @@ const BaseTenValueCard: React.FC<{
             <div className="flex min-h-6 flex-wrap justify-center gap-2">
                 {Array.from({ length: ones }, (_, index) => (
                     <span
-                        key={`one-${group.value}-${index}`}
+                        key={`one-${group.value}-${index}`} data-base10-unit="one"
                         className="h-4 w-4 rounded-full bg-amber-300 shadow-[inset_0_-3px_6px_rgba(217,119,6,0.22)]"
                     />
                 ))}
@@ -155,7 +163,7 @@ const BaseTenValueCard: React.FC<{
 };
 
 const BaseTenGuideCard: React.FC = () => (
-    <div className="w-full max-w-[460px] rounded-[20px] border border-cyan-100/90 bg-cyan-50/88 px-4 py-3 text-center shadow-[0_16px_28px_-22px_rgba(8,145,178,0.38)]">
+    <div data-visual-surface="guide" className="w-full max-w-[460px] rounded-[20px] border border-cyan-100/90 bg-cyan-50/88 px-4 py-3 text-center shadow-[0_16px_28px_-22px_rgba(8,145,178,0.38)]">
         <p className="text-sm font-black leading-6 tracking-[0.04em] text-cyan-800">
             ながい ぼう 1ほん は 10、まる 1こ は 1
         </p>
@@ -165,7 +173,7 @@ const BaseTenGuideCard: React.FC = () => (
 const PromptCaption: React.FC<{
     text: string;
 }> = ({ text }) => (
-    <p className="text-sm font-black tracking-[0.08em] text-slate-500">
+    <p data-visual-caption className="text-sm font-black tracking-[0.08em] text-slate-500">
         {text}
     </p>
 );
@@ -173,7 +181,7 @@ const PromptCaption: React.FC<{
 const PromptQuestionCard: React.FC<{
     text: string;
 }> = ({ text }) => (
-    <div className="w-full max-w-[420px] rounded-[20px] border border-cyan-100/90 bg-cyan-50/88 px-4 py-3 text-center shadow-[0_16px_28px_-22px_rgba(8,145,178,0.38)]">
+    <div data-visual-surface="question" className="w-full max-w-[420px] rounded-[20px] border border-cyan-100/90 bg-cyan-50/88 px-4 py-3 text-center shadow-[0_16px_28px_-22px_rgba(8,145,178,0.38)]">
         <p className="text-sm font-black leading-6 tracking-[0.04em] text-cyan-800">
             {text}
         </p>
@@ -183,10 +191,10 @@ const PromptQuestionCard: React.FC<{
 const NumberSequenceCard: React.FC<{
     slots: ProblemVisualSequenceSlot[];
 }> = ({ slots }) => (
-    <div className="flex flex-wrap items-center justify-center gap-2 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+    <div data-visual-surface="sequence" className="flex flex-wrap items-center justify-center gap-2 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
         {slots.map((slot, index) => (
             <React.Fragment key={`slot-${index}`}>
-                <div className={cn(
+                <div data-visual-value={slot.value ?? undefined} data-visual-hidden={slot.value === null} className={cn(
                     "flex h-14 min-w-14 items-center justify-center rounded-full px-4 text-[clamp(24px,4vw,34px)] font-black",
                     slot.value === null
                         ? "border-2 border-dashed border-cyan-300 bg-cyan-50/80 text-cyan-700"
@@ -210,7 +218,7 @@ const NumberLineCard: React.FC<{
     const direction = hasStep && line.step! > 0 ? "right" : "left";
 
     return (
-        <div className="flex w-full max-w-[520px] flex-col items-center gap-3 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+        <div data-visual-surface="number-line" className="flex w-full max-w-[520px] flex-col items-center gap-3 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
             <div className="relative flex w-full items-center justify-between gap-2 px-2">
                 <div className="absolute left-6 right-6 top-1/2 h-1 -translate-y-1/2 rounded-full bg-slate-200" />
                 {values.map((value) => {
@@ -231,7 +239,7 @@ const NumberLineCard: React.FC<{
                                             ? "bg-violet-400"
                                             : "bg-slate-300"
                             )} />
-                            <div className={cn(
+                            <div data-visual-value={value} data-visual-hidden={Boolean(isHidden)} className={cn(
                                 "flex h-10 min-w-10 items-center justify-center rounded-full px-2 text-sm font-black",
                                 isStart
                                     ? "border border-cyan-200 bg-cyan-50 text-cyan-700"
@@ -299,11 +307,11 @@ const OrdinalRowCard: React.FC<{
     items: ProblemVisualItem[];
     showPlaceholder?: boolean;
 }> = ({ items, showPlaceholder = false }) => (
-    <div className="flex flex-wrap items-center justify-center gap-2 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+    <div data-visual-surface="ordinal" className="flex flex-wrap items-center justify-center gap-2 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
         {items.map((item, index) => (
             <React.Fragment key={`${item.emoji}-${index}`}>
                 <div className="flex h-16 w-16 items-center justify-center rounded-[20px] border border-white/80 bg-white/90 text-[clamp(26px,4vw,38px)] shadow-[0_10px_18px_-16px_rgba(15,23,42,0.24)]">
-                    {item.emoji}
+                    <ItemIllustration item={item} />
                 </div>
                 {index < items.length - 1 && (
                     <span className="text-lg font-black text-slate-300">→</span>
@@ -329,7 +337,7 @@ const LengthCompareCard: React.FC<{
 }> = ({ bars, direction = "horizontal" }) => {
     if (direction === "vertical") {
         return (
-            <div className="flex w-full max-w-[420px] items-end justify-center gap-4 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+            <div data-visual-surface="length" className="flex w-full max-w-[420px] items-end justify-center gap-4 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
                 {bars.map((bar, index) => {
                     const tone = LENGTH_TONE_STYLES[bar.tone];
 
@@ -342,7 +350,7 @@ const LengthCompareCard: React.FC<{
                                 />
                             </div>
                             <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/80 bg-white/90 text-[clamp(24px,4vw,32px)] shadow-[0_10px_18px_-16px_rgba(15,23,42,0.24)]">
-                                {bar.emoji}
+                                <ItemIllustration item={bar} />
                             </span>
                         </div>
                     );
@@ -352,14 +360,14 @@ const LengthCompareCard: React.FC<{
     }
 
     return (
-        <div className="flex w-full max-w-[460px] flex-col gap-3 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+        <div data-visual-surface="length" className="flex w-full max-w-[460px] flex-col gap-3 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
             {bars.map((bar, index) => {
                 const tone = LENGTH_TONE_STYLES[bar.tone];
 
                 return (
                     <div key={`${bar.emoji}-${index}`} className="flex items-center gap-3">
                         <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/80 bg-white/90 text-[clamp(24px,4vw,32px)] shadow-[0_10px_18px_-16px_rgba(15,23,42,0.24)]">
-                            {bar.emoji}
+                            <ItemIllustration item={bar} />
                         </span>
                         <div className={cn("flex h-6 flex-1 items-center rounded-full px-1", tone.rail)}>
                             <div
@@ -381,7 +389,7 @@ const BalanceCompareCard: React.FC<{
     const tilt = left && right ? Math.max(-10, Math.min(10, (right.weight - left.weight) * 3.5)) : 0;
 
     return (
-        <div className="flex w-full max-w-[420px] flex-col items-center gap-3 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+        <div data-visual-surface="balance" className="flex w-full max-w-[420px] flex-col items-center gap-3 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
             <div className="relative flex h-36 w-full items-end justify-center">
                 <div className="absolute bottom-3 h-20 w-3 rounded-full bg-slate-300" />
                 <div
@@ -391,11 +399,11 @@ const BalanceCompareCard: React.FC<{
                     <div className="h-1 w-full rounded-full bg-slate-400" />
                     <div className="absolute left-0 top-1/2 flex -translate-y-1/2 -translate-x-1/2 flex-col items-center gap-2">
                         <div className="h-8 w-[82px] rounded-[16px] border border-slate-200 bg-white/90 shadow-[0_10px_18px_-16px_rgba(15,23,42,0.24)]" />
-                        <span className="text-[clamp(24px,4vw,34px)] leading-none">{left?.emoji}</span>
+                        <span className="text-[clamp(24px,4vw,34px)] leading-none"><ItemIllustration item={left} /></span>
                     </div>
                     <div className="absolute right-0 top-1/2 flex -translate-y-1/2 translate-x-1/2 flex-col items-center gap-2">
                         <div className="h-8 w-[82px] rounded-[16px] border border-slate-200 bg-white/90 shadow-[0_10px_18px_-16px_rgba(15,23,42,0.24)]" />
-                        <span className="text-[clamp(24px,4vw,34px)] leading-none">{right?.emoji}</span>
+                        <span className="text-[clamp(24px,4vw,34px)] leading-none"><ItemIllustration item={right} /></span>
                     </div>
                 </div>
                 <div className="absolute bottom-0 h-4 w-40 rounded-full bg-slate-200/90" />
@@ -414,7 +422,7 @@ const PositionSceneCard: React.FC<{
         const targetFront = relation === "まえ";
 
         return (
-            <div className="flex w-full max-w-[320px] justify-center rounded-[24px] border border-white/80 bg-white/72 px-4 py-5 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+            <div data-visual-surface="position" className="flex w-full max-w-[320px] justify-center rounded-[24px] border border-white/80 bg-white/72 px-4 py-5 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
                 <div className="relative h-40 w-48">
                     <div
                         className={cn(
@@ -422,7 +430,7 @@ const PositionSceneCard: React.FC<{
                             targetFront ? "top-5 opacity-55" : "top-10 z-20"
                         )}
                     >
-                        {reference.emoji}
+                        <ItemIllustration item={reference} />
                     </div>
                     <div
                         className={cn(
@@ -430,7 +438,7 @@ const PositionSceneCard: React.FC<{
                             targetFront ? "top-14 z-20" : "top-4 opacity-60"
                         )}
                     >
-                        {target.emoji}
+                        <ItemIllustration item={target} />
                     </div>
                 </div>
             </div>
@@ -440,10 +448,10 @@ const PositionSceneCard: React.FC<{
     const targetInside = relation === "なか";
 
     return (
-        <div className="flex w-full max-w-[320px] justify-center rounded-[24px] border border-white/80 bg-white/72 px-4 py-5 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+        <div data-visual-surface="position" className="flex w-full max-w-[320px] justify-center rounded-[24px] border border-white/80 bg-white/72 px-4 py-5 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
             <div className="relative h-40 w-48">
                 <div className="absolute left-1/2 top-6 flex h-24 w-24 -translate-x-1/2 items-center justify-center rounded-[28px] border-2 border-dashed border-amber-300 bg-amber-50/90 text-[50px] shadow-[0_12px_22px_-18px_rgba(217,119,6,0.22)]">
-                    {reference.emoji}
+                    <ItemIllustration item={reference} />
                 </div>
                 <div
                     className={cn(
@@ -453,7 +461,7 @@ const PositionSceneCard: React.FC<{
                             : "right-2 top-20"
                     )}
                 >
-                    {target.emoji}
+                    <ItemIllustration item={target} />
                 </div>
             </div>
         </div>
@@ -464,10 +472,10 @@ const CategorySortCard: React.FC<{
     target: ProblemVisualItem;
     buckets: ProblemVisualCategoryBucket[];
 }> = ({ target, buckets }) => (
-    <div className="flex w-full max-w-[520px] flex-col items-center gap-4 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+    <div data-visual-surface="categories" className="flex w-full max-w-[520px] flex-col items-center gap-4 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
         <div className="flex flex-col items-center gap-1">
             <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/80 bg-white/90 text-[clamp(28px,4vw,38px)] shadow-[0_10px_18px_-16px_rgba(15,23,42,0.24)]">
-                {target.emoji}
+                <ItemIllustration item={target} />
             </div>
             <span className="text-xs font-black tracking-[0.08em] text-slate-500">どこに はいる？</span>
         </div>
@@ -490,7 +498,7 @@ const CategorySortCard: React.FC<{
                                     key={`${bucket.label}-${item.emoji}-${itemIndex}`}
                                     className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/80 bg-white/80 text-[clamp(20px,3vw,28px)]"
                                 >
-                                    {item.emoji}
+                                    <ItemIllustration item={item} />
                                 </span>
                             ))}
                         </div>
@@ -505,7 +513,7 @@ const ItemGridCard: React.FC<{
     items: ProblemVisualItem[];
     columns?: number;
 }> = ({ items, columns = Math.min(Math.max(items.length, 1), 4) }) => (
-    <div className="rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
+    <div data-visual-surface="item-grid" className="rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]">
         <div
             className="grid justify-items-center gap-3"
             style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
@@ -515,7 +523,7 @@ const ItemGridCard: React.FC<{
                     key={`${item.emoji}-${index}`}
                     className="flex h-16 w-16 items-center justify-center rounded-[20px] border border-white/80 bg-white/90 text-[clamp(26px,4vw,38px)] shadow-[0_10px_18px_-16px_rgba(15,23,42,0.24)]"
                 >
-                    {item.emoji}
+                    <ItemIllustration item={item} />
                 </div>
             ))}
         </div>
@@ -526,7 +534,7 @@ const ItemPairCard: React.FC<{
     items: ProblemVisualPairItem[];
     orientation?: "row" | "column";
 }> = ({ items, orientation = "row" }) => (
-    <div className={cn(
+    <div data-visual-surface="item-pair" className={cn(
         "flex w-full items-center justify-center gap-4 rounded-[24px] border border-white/80 bg-white/72 px-4 py-4 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.28)]",
         orientation === "column" ? "max-w-[220px] flex-col" : "max-w-[420px] flex-wrap"
     )}>
@@ -539,7 +547,7 @@ const ItemPairCard: React.FC<{
                     className="leading-none"
                     style={{ fontSize: `${Math.round((item.scale || 1) * 38)}px` }}
                 >
-                    {item.emoji}
+                    <ItemIllustration item={item} />
                 </span>
                 <span className="text-xs font-black tracking-[0.08em] text-slate-500">{item.label}</span>
             </div>
@@ -547,7 +555,7 @@ const ItemPairCard: React.FC<{
     </div>
 );
 
-export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, className }) => {
+const MathProblemPromptContent: React.FC<MathProblemPromptProps> = ({ problem, className }) => {
     const visual = problem?.questionVisual;
     const showSpatialQuestionCard = problem?.categoryId === "spatial_words"
         && (visual?.kind === "item-pair" || visual?.kind === "position-scene");
@@ -600,7 +608,7 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
                 <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
                     <div className="flex w-full flex-wrap items-center justify-center gap-3">
                         <ItemVisualCard group={left} />
-                        <span className="text-[clamp(34px,6vw,50px)] font-black text-cyan-700">+</span>
+                        <span data-visual-operator="+" className="text-[clamp(34px,6vw,50px)] font-black text-cyan-700">+</span>
                         <ItemVisualCard group={right} />
                     </div>
                     <PromptCaption text={visual.prompt || "あわせて いくつ？"} />
@@ -629,8 +637,8 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
                     <ItemVisualCard group={originalGroup} />
                     {takenAwayGroup ? (
                         <>
-                            <div className="flex flex-col items-center gap-1 rounded-[24px] border border-white/70 bg-white/52 px-4 py-3 text-rose-500 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.2)]">
-                                <span className="text-[clamp(28px,5vw,40px)] font-black">−</span>
+                            <div data-visual-surface="action" className="flex flex-col items-center gap-1 rounded-[24px] border border-white/70 bg-white/52 px-4 py-3 text-rose-500 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.2)]">
+                                <span data-visual-operator="−" className="text-[clamp(28px,5vw,40px)] font-black">−</span>
                                 <span className="text-xs font-black tracking-[0.08em] text-slate-500">{visual.actionLabel || "なくなる"}</span>
                             </div>
                             <ItemVisualCard group={takenAwayGroup} />
@@ -647,8 +655,8 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
             <div className={cn("flex w-full flex-col items-center gap-4 text-center", className)}>
                 <div className="flex w-full flex-wrap items-center justify-center gap-3">
                     <ItemVisualCard group={visual.source} />
-                    <div className="flex flex-col items-center gap-1 rounded-[24px] border border-white/70 bg-white/52 px-4 py-3 text-cyan-700 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.2)]">
-                        <span className="text-[clamp(28px,5vw,40px)] font-black">→</span>
+                    <div data-visual-surface="action" className="flex flex-col items-center gap-1 rounded-[24px] border border-white/70 bg-white/52 px-4 py-3 text-cyan-700 shadow-[0_16px_30px_-22px_rgba(15,23,42,0.2)]">
+                        <span data-visual-operator="→" className="text-[clamp(28px,5vw,40px)] font-black">→</span>
                         <span className="text-xs font-black tracking-[0.08em] text-slate-500">{visual.actionLabel || "おなじに わける"}</span>
                     </div>
                     <ItemVisualCard group={visual.recipients} />
@@ -686,7 +694,7 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
                         <PromptQuestionCard text={problem.questionText} />
                     ) : null}
                     {showBaseTenGuide && <BaseTenGuideCard />}
-                    <div className="flex w-full flex-wrap items-center justify-center gap-3">
+                    <div data-visual-group-row="base10" className="flex w-full flex-wrap items-center justify-center gap-3">
                         <BaseTenValueCard group={left} />
                         <span className="text-[clamp(34px,6vw,50px)] font-black text-slate-400">□</span>
                         <BaseTenValueCard group={right} />
@@ -707,9 +715,9 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
                         <PromptQuestionCard text={problem.questionText} />
                     ) : null}
                     <BaseTenGuideCard />
-                    <div className="flex w-full flex-wrap items-center justify-center gap-3">
+                    <div data-visual-group-row="base10" className="flex w-full flex-wrap items-center justify-center gap-3">
                         <BaseTenValueCard group={left} />
-                        <span className="text-[clamp(34px,6vw,50px)] font-black text-cyan-700">{visual.operator}</span>
+                        <span data-visual-operator={visual.operator} className="text-[clamp(34px,6vw,50px)] font-black text-cyan-700">{visual.operator}</span>
                         <BaseTenValueCard group={right} />
                     </div>
                     <PromptCaption text={visual.prompt || "10の まとまりで かんがえよう"} />
@@ -838,3 +846,10 @@ export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ problem, c
         />
     );
 };
+
+
+export const MathProblemPrompt: React.FC<MathProblemPromptProps> = ({ renderItem, ...props }) => (
+    <ItemIllustrationContext.Provider value={renderItem}>
+        <MathProblemPromptContent {...props} />
+    </ItemIllustrationContext.Provider>
+);

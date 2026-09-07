@@ -1,0 +1,74 @@
+{
+  "syntheticFixture": true,
+  "legality": true,
+  "captures": [
+    {
+      "fixture": "palette",
+      "count": 6,
+      "startupPeakDrawCalls": 193,
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "home",
+      "renderer": "three",
+      "drawCalls": 114,
+      "expanded": "true",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "raycastSelection": "palette-2"
+    },
+    {
+      "fixture": "dense",
+      "count": 50,
+      "startupPeakDrawCalls": 303,
+      "revision": "development-local",
+      "version": "development-local:f2f0c503-0e6b-49e6-a5e0-bbbc9ead570d",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-three-v1",
+      "mode": "home",
+      "renderer": "three",
+      "drawCalls": 169,
+      "expanded": "true",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true
+    }
+  ],
+  "pulses": [
+    {
+      "frames": 23,
+      "peakDrawCalls": 170,
+      "steadyMinDrawCalls": 169,
+      "renderIntervalP95": 93,
+      "correctNextMs": 184.39999997615814
+    },
+    {
+      "frames": 23,
+      "peakDrawCalls": 170,
+      "steadyMinDrawCalls": 169,
+      "renderIntervalP95": 80,
+      "correctNextMs": 185.29999995231628
+    },
+    {
+      "frames": 23,
+      "peakDrawCalls": 170,
+      "steadyMinDrawCalls": 169,
+      "renderIntervalP95": 91.80000001192093,
+      "correctNextMs": 184.89999997615814
+    }
+  ],
+  "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+  "renderIntervalNote": "Diagnostic 3-pulse sample; no throughput parity claim."
+}

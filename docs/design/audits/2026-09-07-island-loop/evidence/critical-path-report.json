@@ -1,0 +1,499 @@
+{
+  "target": "http://127.0.0.1:5299",
+  "flag": "VITE_ISLAND_ENABLED=true",
+  "startedAt": "2026-09-07T06:40:04.917Z",
+  "evidenceScope": "Immutable production critical path at two viewports. Native profile fixture only; every completed set, reward claim and placement is earned or performed through the actual UI.",
+  "scenarios": [
+    {
+      "name": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "touch": true,
+      "completedSets": 1,
+      "answeredThroughUI": 3,
+      "rewardClaimedThroughUI": true,
+      "placedThroughUI": true,
+      "animalActuallyUsedItem": true,
+      "savedPlacementSurvivedReload": true,
+      "nextLearningReady": true,
+      "soundEnabled": false,
+      "samples": [
+        {
+          "ms": 184.19999998807907,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 199,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 198.30000001192093,
+          "completed": true,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "touch": false,
+      "completedSets": 1,
+      "answeredThroughUI": 3,
+      "rewardClaimedThroughUI": true,
+      "placedThroughUI": true,
+      "animalActuallyUsedItem": true,
+      "savedPlacementSurvivedReload": true,
+      "nextLearningReady": true,
+      "soundEnabled": false,
+      "samples": [
+        {
+          "ms": 185.60000002384186,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 202.19999998807907,
+          "completed": false,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 202.10000002384186,
+          "completed": true,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "captures": [
+    {
+      "file": "phone-welcome.png",
+      "sha256": "1a47283106c61e7fe1c6b938cf85557439a978d49af7efcc3eb8f38b7fbb95fa",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "not-applicable",
+      "mode": "welcome",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 0,
+      "learningLogs": 0
+    },
+    {
+      "file": "phone-home.png",
+      "sha256": "87f377fc97f30899bcbe6362da4e6d7566868613beb5f34dc4180d41a24e84e1",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 0,
+      "learningLogs": 0
+    },
+    {
+      "file": "phone-learning.png",
+      "sha256": "e22b99524cf2cb8674a0bead43c1564c66506ecb1ae7a509a9124e4d2ee5321f",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 73,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 0,
+      "learningLogs": 0
+    },
+    {
+      "file": "phone-answer-light.png",
+      "sha256": "06e49973cfdb232c574c95e73d56f6576a7e198e723e96435d3ba91e6945c48a",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 74,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 0,
+      "learningLogs": 1
+    },
+    {
+      "file": "phone-reward.png",
+      "sha256": "d8acd6892cf459dce0faf00a46051f4a8b6166e4e8fea2e19665e17ec9b7f820",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "reward",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 74,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 1,
+      "learningLogs": 3
+    },
+    {
+      "file": "phone-placement.png",
+      "sha256": "efd01a2c526be892a2c240361870d96920e291eb8a4f86d38aab289c638ca84a",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 1,
+      "learningLogs": 3
+    },
+    {
+      "file": "phone-animal-use.png",
+      "sha256": "a9faef7daa143c2c5d7df99e9b64d26614154de2e9e285d7c5efc4966f675c1e",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "[\"island-plan-v1\",\"island-production-art-phone\",0]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 1,
+      "learningLogs": 3
+    },
+    {
+      "file": "phone-next-learning.png",
+      "sha256": "08ddf41e5e61d41895f1c559fbe1e17f5e073edfaf40e3f941ada6efca6bf5f8",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 74,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "[\"island-plan-v1\",\"island-production-art-phone\",0]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 1,
+      "learningLogs": 3
+    },
+    {
+      "file": "tablet-welcome.png",
+      "sha256": "3a625eecc43cce1ef939a383e0b05834b1c1c516aef7bf08d7bcbb7b2f3d9189",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "not-applicable",
+      "mode": "welcome",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 0,
+      "learningLogs": 0
+    },
+    {
+      "file": "tablet-home.png",
+      "sha256": "60213c1b15e81d4270bb252eb6961a8b0b616e54362deaa3440ab2b65160d126",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 0,
+      "learningLogs": 0
+    },
+    {
+      "file": "tablet-learning.png",
+      "sha256": "31adced2f0d7361acef8bcf856a97625d5b063c96719b8c721b2a1e525857df0",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 64,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 0,
+      "learningLogs": 0
+    },
+    {
+      "file": "tablet-answer-light.png",
+      "sha256": "47e7bde70e8d13451719b87b2d9be875a390f23e8d036b08dc90c376eee4daca",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 65,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 0,
+      "learningLogs": 1
+    },
+    {
+      "file": "tablet-reward.png",
+      "sha256": "65da3f041ccc269e7dcc58b41fccd90839a0b0cb09491f9124fff22d7b8b8a5f",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "reward",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 1,
+      "learningLogs": 3
+    },
+    {
+      "file": "tablet-placement.png",
+      "sha256": "d83be335f46840c8c77faed6449674c7810f05cf555899094fe133f89435c1f1",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 1,
+      "learningLogs": 3
+    },
+    {
+      "file": "tablet-animal-use.png",
+      "sha256": "730e427247f092e0933a4e015d8ad5e319df09f6cbc5f076905b6c6b5b865dbc",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "[\"island-plan-v1\",\"island-production-art-tablet\",0]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 1,
+      "learningLogs": 3
+    },
+    {
+      "file": "tablet-next-learning.png",
+      "sha256": "3fd0d176b1d4911bc726c3759a3186c40be87282c7bc11f261a1aadc867d53f8",
+      "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+      "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 65,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "[\"island-plan-v1\",\"island-production-art-tablet\",0]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "completedSets": 1,
+      "learningLogs": 3
+    }
+  ],
+  "pass": true,
+  "manifest": {
+    "version": "aa36adad7dcc-island-loop-32cb1f0b89f8:30761dc1-19db-4feb-9b72-17ce09c7c619",
+    "revision": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "artDirection": "moon-garden"
+    }
+  },
+  "completedAt": "2026-09-07T06:40:18.052Z"
+}

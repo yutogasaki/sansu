@@ -8,7 +8,7 @@
 
 ## Preflight
 
-- 本番 `https://sansu-seven.vercel.app` はGitHub `yutogasaki/sansu` のmainからVercelへ自動配信する。2026-09-06の追加ユーザー依頼により `vercel.json` のbuildCommandは `VITE_BUILD_PLAY_ENABLED=true VITE_PARK_RENDERER=three npm run build`。ローカル汎用buildはflag未指定の既定動作を維持する。
+- 本番 `https://sansu-seven.vercel.app` はGitHub `yutogasaki/sansu` のmainからVercelへ自動配信する。2026-09-07の最新アプリ公開依頼により `vercel.json` のbuildCommandは `VITE_ISLAND_ENABLED=true VITE_BUILD_PLAY_ENABLED=true VITE_PARK_RENDERER=three npm run build`。島を既定起動にし、保存済み旧探索runを優先する。島の公開を戻す場合は `VITE_ISLAND_ENABLED=false` で再配信し、保存データは維持する。ローカル汎用buildはflag未指定の既定動作を維持する。
 - 遊園地の表示だけ戻す場合はbuildCommandのrendererを `legacy` にして再配信する。起動先も戻す場合は `VITE_BUILD_PLAY_ENABLED=false` を指定する。IndexedDBや保存済み作品は削除しない。
 - `npm run lint`
 - `npm run test:run`

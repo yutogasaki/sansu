@@ -1,0 +1,139 @@
+{
+  "from": "aa36adad7dcc-island-3d-a427ea0225cf",
+  "to": "aa36adad7dcc-island-loop-32cb1f0b89f8",
+  "changes": [
+    {
+      "path": ".gitignore",
+      "sha256": "f416f1ee7aaa55fe0cfe853f8a90b0c67a77c822321e1cb9973cfc3a37abeb2f"
+    },
+    {
+      "path": ".nvmrc",
+      "sha256": "f14b4987904bcb5814e4459a057ed4d20f58a633152288a761214dcd28780b56"
+    },
+    {
+      "path": "eslint.config.js",
+      "sha256": "05e3d0b662cfb8b00db5b93a22b9bd4c59f87a7506f183a54bb3a0d5afca2b20"
+    },
+    {
+      "path": "postcss.config.js",
+      "sha256": "ffe8fde94df3d00186c1c193681faee15d4ec037ab39579bfa7c348a5e171caf"
+    },
+    {
+      "path": "src/components/domain/LearningAnswerForm.tsx",
+      "sha256": "4dd839a67bd787d6fbeabf25454bd12e4620aeefe15d93192585748f3cffd0fa"
+    },
+    {
+      "path": "src/components/island/Island.css",
+      "sha256": "0e15a8eaf1c7edfdb6b67b8d454b833303dd42466c2b102e4eb67504f8cd15eb"
+    },
+    {
+      "path": "src/components/island/IslandAnswerForm.css",
+      "sha256": "4126a724850c87677e3291fdca7170be1ea6b357715deeeedc717ed164d22529"
+    },
+    {
+      "path": "src/components/island/IslandAnswerForm.test.tsx",
+      "sha256": "56732fd62549ce7962a13b6bebc3e2fff545f35463013418c580ec9952bf4215"
+    },
+    {
+      "path": "src/components/island/IslandAnswerForm.tsx",
+      "sha256": "e914fbc8a0cef3f027facba8c3cf06c7f3b489d4a17ed38ddc7defb1c83c84fb"
+    },
+    {
+      "path": "src/components/island/IslandItems.tsx",
+      "sha256": "7f831bb69487714bcbd070ace3d8e2eb44330876d59211d76c557c01dfc00723"
+    },
+    {
+      "path": "src/components/island/IslandLearningSupport.tsx",
+      "sha256": "4e22196ea6b6250314283c2880ed872617cb5bf2a193cb05c8815fb744028a06"
+    },
+    {
+      "path": "src/components/island/IslandStage.tsx",
+      "sha256": "3a0acab6da8f4ac6d30b2b48ab28ec3bd2e2197b10471a644571b385d3f30916"
+    },
+    {
+      "path": "src/components/island/learningGuidance.test.ts",
+      "sha256": "10097166ad43b68bf2e2342dc9fa1351f0aceabdbdb0c96bbcab4713ced969a8"
+    },
+    {
+      "path": "src/components/island/learningGuidance.ts",
+      "sha256": "619e3d7ef1bb7f2e23ca6d91eb7f4ea97c91c15dae931dae7928709506374cfe"
+    },
+    {
+      "path": "src/components/island/three/animals.ts",
+      "sha256": "350533ddd26ad2388cdecd65a38f0bf0e6a5f9a413f6e04505b7ff3236a2acf3"
+    },
+    {
+      "path": "src/components/island/three/navigation.test.ts",
+      "sha256": "9886be2becc20045fea12596eec3f3fb81635f320d14b7489cdad926cce8bdb2"
+    },
+    {
+      "path": "src/components/island/three/navigation.ts",
+      "sha256": "58455b6fc1a6066e3c716c55054331e55e0a6d63ef42b824f01568d82aba6749"
+    },
+    {
+      "path": "src/components/island/three/residentInteraction.test.ts",
+      "sha256": "3f863e8b813b672f77e97b720f11ee90be0dbe6920236e90d6725b2f9392599c"
+    },
+    {
+      "path": "src/components/island/three/residentInteraction.ts",
+      "sha256": "b088f06e98c2cb8bdc6ef5dcae51645e60ee2d2dc2cf09388aab42b631697b45"
+    },
+    {
+      "path": "src/components/island/three/residentRig.test.ts",
+      "sha256": "09ff8c4246abc332d6ec05c89e65d44928491bed6b55fa2535f8ec6087081472"
+    },
+    {
+      "path": "src/components/island/three/runtime.ts",
+      "sha256": "1696473c8185c71871134922e98168be3252de01704f2f1cf1ab1e795245fa5e"
+    },
+    {
+      "path": "src/components/island/three/types.ts",
+      "sha256": "0dad5f6f988972b2f48e1f56b43da02d68322558bdb8bd5256044f15681a8c06"
+    },
+    {
+      "path": "src/domain/island/commit.ts",
+      "sha256": "caf3fb4cf807df0b9fc603c3375a188ad1f66f2bc81ae8edd1c89b2be7cc38bf"
+    },
+    {
+      "path": "src/domain/island/learningChecks.test.ts",
+      "sha256": "bc9542694b15686302bbf8497fe2bb91382592329b2e964e8824f47447a7e106"
+    },
+    {
+      "path": "src/domain/island/learningChecks.ts",
+      "sha256": "76665dd70892f0964ee4d784672f6c2afea7e44ffeb582658b4cb9fb127969a3"
+    },
+    {
+      "path": "src/domain/island/learningContinuity.test.ts",
+      "sha256": "cddd9abb3489926c8163ef7e925b0314cb7d0572f1f868145308d1bf4fb71484"
+    },
+    {
+      "path": "src/domain/island/repository.ts",
+      "sha256": "e113de9fafd52fae35747303d07695ae43c4386e08767e148986175b7a4922c2"
+    },
+    {
+      "path": "src/domain/island/types.ts",
+      "sha256": "b49cb512897fcdf0417f267840360e4e4896f26ce3035efd6217bb09ad0a9d8a"
+    },
+    {
+      "path": "src/domain/park/learning.ts",
+      "sha256": "6d191b96eb5837b107faf7b381dc46a0131e4429a06222f007cd593f5f311b52"
+    },
+    {
+      "path": "src/domain/park/park.test.ts",
+      "sha256": "644478a57c591e6d1d7d0b3a2eb4079ce0c30c005149af7a7cd9522dac78b150"
+    },
+    {
+      "path": "src/pages/Island.tsx",
+      "sha256": "21eee127929cb21fea835522a4ed3e45130c85b6b49a69f0a1876b9bf2ec94aa"
+    },
+    {
+      "path": "src/pages/Study.tsx",
+      "sha256": "db2c30f87cfd421138f4a865f06b3400fb190a4e6b93e24a16de53d2c002f690"
+    },
+    {
+      "path": "tailwind.config.js",
+      "sha256": "5230663361532a48fb506256c9037bcf3c760235ffa2fa59b484ed1412916175"
+    }
+  ],
+  "removed": []
+}

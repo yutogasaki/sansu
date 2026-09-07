@@ -40,6 +40,20 @@ Use it to find the right source of truth before editing docs, tasks, runbooks, o
 
 ## Frequently Used Docs
 
+二桁以上の掛け算・割り算は、部分積・商・あまりを一段ずつ扱う共通の筆算面へ改善。[実画面の一覧](design/audits/2026-09-07-written-arithmetic/review.html) と [検証・保存互換性の記録](design/audits/2026-09-07-written-arithmetic/README.md) を参照。
+
+現在の開発優先は [不思議な島の仕様](product/28_mystic_island_spec.md)。通常の学習形式と速い連問を守りながら、光・配置・どうぶつの暮らしで継続を支える。
+
+島は大胆な配色とコード生成3Dの`moon-garden`。現在の入力・学習支援・再確認・どうぶつとの自由な遊びは [実画面レビュー](design/audits/2026-09-07-island-loop/review.html) と [つながりの改善監査](design/audits/2026-09-07-island-loop/README.md) を参照。3D方式の判断と全6家具は [前回の3D監査](design/audits/2026-09-07-island-3d/README.md)、前回完成時の全ループは [比較レポート](design/audits/2026-09-07-island-3d/review.html) に保存している。
+
+問題を解く画面の基盤実装は [島で解く体験の監査](design/audits/2026-09-07-island-learning/README.md)、以前の見た目と回答動画は [学習面のcontact sheet](design/audits/2026-09-07-island-learning/contact-sheet.html) を参照。
+
+初期実装の保存・速度の検証は [不思議な島の実装監査](design/audits/2026-09-07-mystic-island/README.md)、当時の画面の流れは [contact sheet](design/audits/2026-09-07-mystic-island/contact-sheet.html) を参照。
+
+以前の開発優先は [ぴったり連鎖の仕様](product/27_gameplay_first_pittari_spec.md)。学習範囲ごとに解答操作そのものを遊びにし、第一作は5・10の合成／補数に限定して検証する。以下の探索・遊園地資料は既存モードの契約として読む。
+
+新作12盤面の起動方法と実画面・録画・確認範囲は [ぴったり連鎖のローカル受入](design/audits/2026-09-06-pittari/README.md) を参照。
+
 | File | Role | SSOT |
 |---|---|---|
 | [product/01_app_spec.md](/docs/product/01_app_spec.md) | Parent product spec | Yes |
@@ -72,7 +86,11 @@ The repository is transitioning toward an exploration-first math game. [product/
 
 ## Supporting Docs
 
+- [design/park-three-runtime.md](/docs/design/park-three-runtime.md): Three.jsによる組替え可能な遊園地の候補、起動・旧表示への復帰、実画面と録画。
+
 - [product/22_shared_subject_build_and_play_spec.md](/docs/product/22_shared_subject_build_and_play_spec.md): 教科共通の遊園地MVP、学習・保存契約。
+- [design/park-blender-production-brief-draft.md](/docs/design/park-blender-production-brief-draft.md): 遊園地のBlender美術制作指示書たたき台。未確定の提案資料。
+- [design/park-blender-runtime.md](/docs/design/park-blender-runtime.md): v0.2に基づくBlender原本、透過素材、アプリ合成と検証。
 
 | File | Role | SSOT |
 |---|---|---|

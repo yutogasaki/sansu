@@ -2,6 +2,8 @@ import { describe, expect, it, vi } from "vitest";
 import { createInitialProfile } from "../domain/user/profile";
 import {
     applyPendingPeriodicTestTrigger,
+    activateVocabNextLevel,
+    needsVocabNextLevelActivation,
     applyPeriodicTestCompletion,
     applyResolvedProgressionToLatestProfile,
     checkAnswer,
@@ -18,6 +20,35 @@ import {
 } from "./useStudySession.logic";
 
 describe("useStudySession.logic", () => {
+    it("explicitly activates a legacy unlocked vocab next level without promoting or changing other settings", () => {
+        const profile = createInitialProfile("T", 1, 1, 1, "vocab");
+        profile.vocabMaxUnlocked = 2;
+        profile.vocabLevels = profile.vocabLevels?.map(level => level.level === 2
+            ? { ...level, unlocked: true, enabled: false } : level);
+        expect(needsVocabNextLevelActivation(profile)).toBe(true);
+        const updated = activateVocabNextLevel(profile, { profileId: profile.id, mainLevel: 1 });
+        expect(updated).toEqual({ ...profile, vocabLevels: profile.vocabLevels?.map(level => level.level === 2
+            ? { ...level, enabled: true } : level) });
+        expect(profile.vocabLevels?.find(level => level.level === 2)?.enabled).toBe(false);
+        expect(needsVocabNextLevelActivation(updated)).toBe(false);
+        expect(activateVocabNextLevel(updated, { profileId: profile.id, mainLevel: 1 })).toBe(updated);
+    });
+
+    it("does not activate locked, missing, unknown, or stale next-level targets", () => {
+        const profile = createInitialProfile("T", 1, 1, 1, "vocab");
+        expect(needsVocabNextLevelActivation(profile)).toBe(false);
+        expect(activateVocabNextLevel(profile, { profileId: profile.id, mainLevel: 1 })).toBe(profile);
+        profile.vocabMaxUnlocked = 2;
+        expect(needsVocabNextLevelActivation(profile)).toBe(false);
+        profile.vocabLevels = profile.vocabLevels?.map(level => level.level === 2
+            ? { ...level, unlocked: true, enabled: false } : level);
+        expect(activateVocabNextLevel(profile, { profileId: "another-profile", mainLevel: 1 })).toBe(profile);
+        expect(activateVocabNextLevel(profile, { profileId: profile.id, mainLevel: 2 })).toBe(profile);
+        expect(needsVocabNextLevelActivation({ ...profile, vocabLevels: [] })).toBe(false);
+        expect(needsVocabNextLevelActivation({ ...profile, vocabMainLevel: 20, vocabMaxUnlocked: 21,
+            vocabLevels: [{ level: 21, unlocked: true, enabled: false, recentAnswersNonReview: [] }] })).toBe(false);
+    });
+
     it("treats periodic-test, weak-review, and check-event as fixed sessions", () => {
         expect(isFixedSessionKind("periodic-test")).toBe(true);
         expect(isFixedSessionKind("weak-review")).toBe(true);
@@ -187,7 +218,7 @@ describe("useStudySession.logic", () => {
         expect(updated.pendingLevelUpNotification).toBeUndefined();
         expect(updated.vocabLevels?.find(level => level.level === 2)).toEqual(expect.objectContaining({
             unlocked: true,
-            enabled: false,
+            enabled: true,
         }));
     });
 

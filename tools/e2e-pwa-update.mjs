@@ -1,6 +1,8 @@
 import { chromium } from "playwright";
 import { spawn, spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const HOST = "127.0.0.1";
 const PORT_CANDIDATES = [4273, 4274, 4275];
@@ -10,6 +12,8 @@ const STEP_TIMEOUT_MS = 15_000;
 const RECOVERY_PROTECTION_WAIT_MS = 4_500;
 const LOAD_COUNT_KEY = "sansu-pwa-e2e-load-count";
 const HASH_CHANGE_COUNT_KEY = "sansu-pwa-e2e-hashchange-count";
+const PREVIEW_DIR = resolve(process.env.SANSU_PWA_PREVIEW_DIR || "dist");
+const VITE_CLI = fileURLToPath(new URL("bin/vite.js", import.meta.resolve("vite/package.json")));
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -28,21 +32,30 @@ const probeServer = async (url) => {
   }
 };
 
-const waitForServer = async (url) => {
+const waitForServer = async (url, child) => {
+  let startupError;
+  const onError = (error) => { startupError = error; };
+  child.once("error", onError);
   const startedAt = Date.now();
-  while (Date.now() - startedAt < SERVER_TIMEOUT_MS) {
-    if ((await probeServer(url)).expected) return;
-    await delay(250);
+  try {
+    while (Date.now() - startedAt < SERVER_TIMEOUT_MS) {
+      if (startupError) throw startupError;
+      if (child.exitCode !== null || child.signalCode !== null) {
+        throw new Error(`Production preview exited before becoming ready: ${url}`);
+      }
+      if ((await probeServer(url)).expected) return;
+      await delay(250);
+    }
+    throw new Error(`Production preview did not become ready: ${url}`);
+  } finally {
+    child.off("error", onError);
   }
-  throw new Error(`Production preview did not become ready: ${url}`);
 };
 
 const startPreviewServer = (port) => {
   const child = spawn(
-    process.platform === "win32" ? "cmd.exe" : "sh",
-    process.platform === "win32"
-      ? ["/c", `npm run preview -- --host ${HOST} --port ${port} --strictPort`]
-      : ["-c", `npm run preview -- --host ${HOST} --port ${port} --strictPort`],
+    process.execPath,
+    [VITE_CLI, "preview", "--outDir", PREVIEW_DIR, "--host", HOST, "--port", String(port), "--strictPort"],
     { stdio: "pipe", windowsHide: true },
   );
 
@@ -51,13 +64,20 @@ const startPreviewServer = (port) => {
   return child;
 };
 
-const stopPreviewServer = (child) => {
-  if (!child) return;
-  if (process.platform === "win32") {
-    spawnSync("taskkill", ["/pid", String(child.pid), "/t", "/f"], { stdio: "ignore" });
-  } else {
-    child.kill("SIGTERM");
-  }
+const stopPreviewServer = async (child) => {
+  if (!child?.pid || child.exitCode !== null || child.signalCode !== null) return;
+  await new Promise((resolveStopped) => {
+    const forceStop = setTimeout(() => child.kill("SIGKILL"), 2_000);
+    child.once("close", () => {
+      clearTimeout(forceStop);
+      resolveStopped();
+    });
+    if (process.platform === "win32") {
+      spawnSync("taskkill", ["/pid", String(child.pid), "/t", "/f"], { stdio: "ignore" });
+    } else {
+      child.kill("SIGTERM");
+    }
+  });
 };
 
 const startDedicatedPreview = async () => {
@@ -67,10 +87,10 @@ const startDedicatedPreview = async () => {
 
     const server = startPreviewServer(port);
     try {
-      await waitForServer(baseUrl);
+      await waitForServer(baseUrl, server);
       return { baseUrl, server };
     } catch (error) {
-      stopPreviewServer(server);
+      await stopPreviewServer(server);
       throw error;
     }
   }
@@ -287,7 +307,7 @@ const verifySameRouteBattleCheckpoint = async (page, markerRequests) => {
 
 const verifyRealVersionDriftRecovery = async (page, markerRequests) => {
   const currentVersion = JSON.parse(
-    readFileSync("dist/version.json", "utf8"),
+    readFileSync(join(PREVIEW_DIR, "version.json"), "utf8"),
   ).version;
   const nextVersion = `${currentVersion}-next`;
   const markerCountBefore = markerRequests.length;
@@ -359,8 +379,8 @@ const verifyRealVersionDriftRecovery = async (page, markerRequests) => {
 };
 
 const main = async () => {
-  if (!existsSync("dist/index.html")) {
-    throw new Error("dist/index.html is missing. Run npm run build before e2e:pwa-update.");
+  if (!existsSync(join(PREVIEW_DIR, "index.html"))) {
+    throw new Error(`${join(PREVIEW_DIR, "index.html")} is missing. Build this preview directory before e2e:pwa-update.`);
   }
 
   let previewServer;
@@ -425,8 +445,11 @@ const main = async () => {
     console.log("PASS PWA service-worker-controlled version-drift recovery");
     await serviceWorkerContext.close();
   } finally {
-    if (browser) await browser.close();
-    if (previewServer) stopPreviewServer(previewServer);
+    try {
+      if (browser) await browser.close();
+    } finally {
+      await stopPreviewServer(previewServer);
+    }
   }
 };
 
