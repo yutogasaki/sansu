@@ -119,6 +119,10 @@ try {
         const old = beforeLaunch.exploreRuns.find(run => run.runId === oldReady.runId && run.profileId === id && run.status === 'active');
         assertExploreCheckpoint(old, id, oldReady);
         await page.goto(`${base}/#/`);
+        await page.waitForURL('**/#/island'); await waitReady(page);
+        if (await button(page, 'しまへ').isVisible()) { await button(page, 'しまへ').click(); await waitMode(page, 'home'); }
+        await button(page, 'ほかの あそび').click();
+        await page.getByRole('button', { name: /ポッコの たんけん/ }).click();
         await page.waitForURL('**/#/explore');
         const sameReady = await waitForExploreNumericReady(page, { runId: old.runId, problemId: oldReady.problemId, timeout: 15000 });
         const restored = await readNative(page, id);
@@ -128,7 +132,7 @@ try {
         assert.equal(same.runId, old.runId);
         assert.deepEqual(same, old, 'Root launch preserves the complete ready Explore run');
         assert.deepEqual(restored.island, islandBeforeLegacy);
-        report.hookChecks.push('legacy active Explore run retains launch precedence and Island data');
+        report.hookChecks.push('Island home keeps the legacy Explore run for explicit resume and preserves Island data');
         assert.deepEqual(errors, []);
     } finally { await context.close(); }
 

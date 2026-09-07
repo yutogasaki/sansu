@@ -1,0 +1,2062 @@
+{
+  "target": "http://127.0.0.1:5599",
+  "flag": "VITE_ISLAND_ENABLED=true",
+  "hookChecks": [
+    "active learning defers update; user home checkpoint reloads with reserved plan preserved",
+    "critical persistence hold spans navigation and releases deferred update afterwards",
+    "continue pointer protects fresh session; answer receipt survives next user checkpoint",
+    "Island home keeps the legacy Explore run for explicit resume and preserves Island data"
+  ],
+  "offline": {
+    "revision": "14f26b8-home-99e78d87b3c4",
+    "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-procedural-v2",
+    "learningCandidate": "mystic-island-learning-v2",
+    "mode": "learning",
+    "renderer": "three",
+    "artDirection": "moon-garden",
+    "drawCalls": 73,
+    "expanded": "false",
+    "residentAction": "idle",
+    "residentItemId": "",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": true,
+    "reducedMotion": true,
+    "serviceWorker": "real",
+    "offlineReload": true,
+    "answerPersisted": true,
+    "resumedSamePlan": true,
+    "soundEnabled": false
+  },
+  "pass": true,
+  "runtime": {
+    "revision": "14f26b8-home-99e78d87b3c4",
+    "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-procedural-v2",
+    "learningCandidate": "mystic-island-learning-v2",
+    "mode": "home",
+    "renderer": "three",
+    "artDirection": "moon-garden",
+    "drawCalls": 83,
+    "expanded": "false",
+    "residentAction": "idle",
+    "residentItemId": "",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": false,
+    "reducedMotion": false
+  },
+  "manifest": {
+    "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59",
+    "revision": "14f26b8-home-99e78d87b3c4",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "artDirection": "moon-garden"
+    }
+  },
+  "legacy": {
+    "profileId": "island-production-checkpoint",
+    "oldReady": {
+      "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+      "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0",
+      "checkpointRevision": 2
+    },
+    "beforeLaunch": {
+      "islands": [
+        {
+          "profileId": "island-production-checkpoint",
+          "schemaVersion": 1,
+          "revision": 1,
+          "completedSets": 0,
+          "pendingRewards": [],
+          "updatedAt": 1788817216248,
+          "items": [
+            {
+              "id": "starter-flower",
+              "kind": "flower",
+              "position": {
+                "x": 1.5,
+                "z": 0.8
+              },
+              "rotation": 0
+            },
+            {
+              "id": "starter-lantern",
+              "kind": "lantern",
+              "position": {
+                "x": -1,
+                "z": 0.25
+              },
+              "rotation": 0
+            }
+          ],
+          "pendingPlanId": "[\"island-plan-v1\",\"island-production-checkpoint\",0]",
+          "mathReviewTurn": 1
+        }
+      ],
+      "islandPlans": [
+        {
+          "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]",
+          "profileId": "island-production-checkpoint",
+          "schemaVersion": 1,
+          "plannerVersion": "island-learning-v1",
+          "subject": "math",
+          "slots": [
+            {
+              "problem": {
+                "categoryId": "same_or_different",
+                "questionText": "2つは おなじ？ ちがう？",
+                "correctAnswer": "ちがう",
+                "inputType": "choice",
+                "inputConfig": {
+                  "choices": [
+                    {
+                      "label": "おなじ",
+                      "value": "おなじ"
+                    },
+                    {
+                      "label": "ちがう",
+                      "value": "ちがう"
+                    }
+                  ]
+                },
+                "questionVisual": {
+                  "kind": "item-pair",
+                  "prompt": "2つは おなじ？ ちがう？",
+                  "items": [
+                    {
+                      "emoji": "🟢",
+                      "label": "みどり"
+                    },
+                    {
+                      "emoji": "🔴",
+                      "label": "あか"
+                    }
+                  ],
+                  "orientation": "row"
+                },
+                "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:slot-0",
+                "subject": "math",
+                "isReview": false,
+                "isMaintenanceCheck": false
+              },
+              "source": "main",
+              "countsTowardReviewCap": false,
+              "assisted": false,
+              "completed": true
+            },
+            {
+              "problem": {
+                "categoryId": "count_shape",
+                "questionText": "この かたちは なに？",
+                "correctAnswer": "しかく",
+                "inputType": "choice",
+                "inputConfig": {
+                  "choices": [
+                    {
+                      "label": "🟦 しかく",
+                      "value": "しかく"
+                    },
+                    {
+                      "label": "🔴 まる",
+                      "value": "まる"
+                    }
+                  ]
+                },
+                "questionVisual": {
+                  "kind": "reference-choice-grid",
+                  "prompt": "この かたちは なに？",
+                  "grid": {
+                    "reference": {
+                      "emoji": "🟦",
+                      "label": "しかく"
+                    },
+                    "choices": [
+                      {
+                        "emoji": "🟦",
+                        "label": "しかく"
+                      },
+                      {
+                        "emoji": "🔴",
+                        "label": "まる"
+                      }
+                    ],
+                    "columns": 2
+                  }
+                },
+                "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:slot-1",
+                "subject": "math",
+                "isReview": false,
+                "isMaintenanceCheck": false
+              },
+              "source": "main",
+              "countsTowardReviewCap": false,
+              "assisted": false,
+              "completed": false
+            },
+            {
+              "problem": {
+                "categoryId": "pattern_copy",
+                "questionText": "つぎは どれ？",
+                "correctAnswer": "🟡",
+                "inputType": "choice",
+                "inputConfig": {
+                  "choices": [
+                    {
+                      "label": "🔵",
+                      "value": "🔵"
+                    },
+                    {
+                      "label": "🟢",
+                      "value": "🟢"
+                    },
+                    {
+                      "label": "🟡",
+                      "value": "🟡"
+                    }
+                  ]
+                },
+                "questionVisual": {
+                  "kind": "ordinal-row",
+                  "prompt": "つぎは どれ？",
+                  "items": [
+                    {
+                      "emoji": "🟢",
+                      "label": "みどり"
+                    },
+                    {
+                      "emoji": "🟡",
+                      "label": "きいろ"
+                    },
+                    {
+                      "emoji": "🔵",
+                      "label": "あお"
+                    },
+                    {
+                      "emoji": "🟢",
+                      "label": "みどり"
+                    }
+                  ],
+                  "showPlaceholder": true
+                },
+                "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:slot-2",
+                "subject": "math",
+                "isReview": false,
+                "isMaintenanceCheck": false
+              },
+              "source": "main",
+              "countsTowardReviewCap": false,
+              "assisted": false,
+              "completed": false
+            }
+          ],
+          "status": "active",
+          "cursor": 1,
+          "revision": 1,
+          "startedAt": 1788817216248,
+          "rewardId": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:reward",
+          "rewardChoices": [
+            "flower",
+            "bench",
+            "lantern"
+          ]
+        }
+      ],
+      "islandEvents": [
+        {
+          "id": "[\"island-action-v1\",\"island-production-checkpoint\",\"[\\\"island-plan-v1\\\",\\\"island-production-checkpoint\\\",0]\",0]",
+          "profileId": "island-production-checkpoint",
+          "planId": "[\"island-plan-v1\",\"island-production-checkpoint\",0]",
+          "timestamp": 1788817220994,
+          "type": "answer",
+          "action": {
+            "type": "answer",
+            "answer": "ちがう"
+          },
+          "slotIndex": 0,
+          "result": "correct",
+          "learningLogId": 1,
+          "observation": {
+            "version": 1,
+            "problemId": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:slot-0",
+            "revisionBefore": 0,
+            "supportBefore": "unassisted-slot",
+            "answerScope": "whole",
+            "wholeCompleted": true,
+            "adapterVersion": "island-dom-v1",
+            "eventAt": 1788817220958,
+            "presentation": {
+              "id": "3835ba6b-63b4-46cb-8f0d-ac36ca43457b",
+              "documentId": "2b1d4a34-429b-4091-86a0-78b39a32b3c9",
+              "observedAt": 1788817220165,
+              "inputVersion": "island-input-v1",
+              "inputMode": "choice",
+              "referenceVisual": "present"
+            },
+            "elapsedSincePresentationMs": 793.6000000238419,
+            "coverage": "current-presentation",
+            "gaps": []
+          }
+        },
+        {
+          "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:started",
+          "profileId": "island-production-checkpoint",
+          "planId": "[\"island-plan-v1\",\"island-production-checkpoint\",0]",
+          "type": "plan_started",
+          "timestamp": 1788817216248
+        }
+      ],
+      "logs": [
+        {
+          "profileId": "island-production-checkpoint",
+          "subject": "math",
+          "itemId": "same_or_different",
+          "result": "correct",
+          "isReview": false,
+          "timestamp": "2026-09-07T21:40:20.994Z",
+          "id": 1
+        }
+      ],
+      "memoryMath": [
+        {
+          "id": "same_or_different",
+          "strength": 2,
+          "nextReview": "2026-09-10T19:00:00.000Z",
+          "totalAnswers": 1,
+          "correctAnswers": 1,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "lastCorrectAt": "2026-09-07T21:40:20.994Z",
+          "updatedAt": "2026-09-07T21:40:20.994Z",
+          "status": "active",
+          "isWeak": false,
+          "profileId": "island-production-checkpoint"
+        }
+      ],
+      "memoryVocab": [],
+      "exploreRuns": [
+        {
+          "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+          "profileId": "island-production-checkpoint",
+          "seed": "mtrrl6dp-6flhn",
+          "status": "active",
+          "startedAt": 1788817222285,
+          "energyUsed": 0,
+          "problemsAnswered": 0,
+          "correctCount": 0,
+          "incorrectCount": 0,
+          "skippedCount": 0,
+          "discoveries": [],
+          "routeSummary": [],
+          "learningAssignments": {
+            "explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0": {
+              "profileId": "island-production-checkpoint",
+              "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+              "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0",
+              "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0",
+              "categoryId": "explore_rapid_addition",
+              "source": "game-only-fallback",
+              "isReview": false,
+              "isMaintenanceCheck": false,
+              "countsTowardReviewCap": false,
+              "affectsSrs": false,
+              "reservedAt": 1788817222311,
+              "assignmentKey": "[\"explore-learning-assignment-v1\",\"island-production-checkpoint\",\"explore-mtrrl6dp-6flhn-1788817222285\",\"explore-mtrrl6dp-6flhn-1788817222285:node-1-0\",\"explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0\"]"
+            },
+            "explore-mtrrl6dp-6flhn-1788817222285:node-2-0:attempt-0": {
+              "profileId": "island-production-checkpoint",
+              "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+              "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-2-0",
+              "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-2-0:attempt-0",
+              "categoryId": "explore_rapid_addition",
+              "source": "game-only-fallback",
+              "isReview": false,
+              "isMaintenanceCheck": false,
+              "countsTowardReviewCap": false,
+              "affectsSrs": false,
+              "reservedAt": 1788817222311,
+              "assignmentKey": "[\"explore-learning-assignment-v1\",\"island-production-checkpoint\",\"explore-mtrrl6dp-6flhn-1788817222285\",\"explore-mtrrl6dp-6flhn-1788817222285:node-2-0\",\"explore-mtrrl6dp-6flhn-1788817222285:node-2-0:attempt-0\"]"
+            },
+            "explore-mtrrl6dp-6flhn-1788817222285:node-3-0:attempt-0": {
+              "profileId": "island-production-checkpoint",
+              "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+              "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-3-0",
+              "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-3-0:attempt-0",
+              "categoryId": "explore_rapid_addition",
+              "source": "game-only-fallback",
+              "isReview": false,
+              "isMaintenanceCheck": false,
+              "countsTowardReviewCap": false,
+              "affectsSrs": false,
+              "reservedAt": 1788817222311,
+              "assignmentKey": "[\"explore-learning-assignment-v1\",\"island-production-checkpoint\",\"explore-mtrrl6dp-6flhn-1788817222285\",\"explore-mtrrl6dp-6flhn-1788817222285:node-3-0\",\"explore-mtrrl6dp-6flhn-1788817222285:node-3-0:attempt-0\"]"
+            }
+          },
+          "activeCheckpoint": {
+            "schemaVersion": 1,
+            "revision": 2,
+            "openingExperienceId": "snap-root-v1",
+            "state": {
+              "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+              "seed": "mtrrl6dp-6flhn",
+              "status": "active",
+              "startedAt": 1788817222285,
+              "currentNodeId": "start",
+              "energy": 12,
+              "maxEnergy": 12,
+              "combo": 0,
+              "steps": 0,
+              "incorrectAnswers": 0,
+              "nodes": [
+                {
+                  "id": "start",
+                  "depth": 0,
+                  "lane": 0,
+                  "x": 50,
+                  "y": 88,
+                  "kind": "start",
+                  "title": "ひかりの入口",
+                  "hint": "ここから たんけんが はじまる"
+                },
+                {
+                  "id": "node-1-0",
+                  "depth": 1,
+                  "lane": 0,
+                  "x": 28,
+                  "y": 78.7,
+                  "kind": "root",
+                  "title": "根っこの道",
+                  "hint": "ひかる花の かおり"
+                },
+                {
+                  "id": "node-1-1",
+                  "depth": 1,
+                  "lane": 1,
+                  "x": 72,
+                  "y": 78.7,
+                  "kind": "fossil",
+                  "title": "しまもよう岩",
+                  "hint": "むかしの かけらが ありそう"
+                },
+                {
+                  "id": "node-2-0",
+                  "depth": 2,
+                  "lane": 0,
+                  "x": 28,
+                  "y": 69.4,
+                  "kind": "root",
+                  "title": "根っこの道",
+                  "hint": "ひかる花の かおり"
+                },
+                {
+                  "id": "node-2-1",
+                  "depth": 2,
+                  "lane": 1,
+                  "x": 72,
+                  "y": 69.4,
+                  "kind": "crystal",
+                  "title": "きらきら岩",
+                  "hint": "水晶が ありそう"
+                },
+                {
+                  "id": "node-3-0",
+                  "depth": 3,
+                  "lane": 0,
+                  "x": 28,
+                  "y": 60.099999999999994,
+                  "kind": "fossil",
+                  "title": "しまもよう岩",
+                  "hint": "むかしの かけらが ありそう"
+                },
+                {
+                  "id": "node-3-1",
+                  "depth": 3,
+                  "lane": 1,
+                  "x": 72,
+                  "y": 60.099999999999994,
+                  "kind": "crystal",
+                  "title": "きらきら岩",
+                  "hint": "水晶が ありそう"
+                },
+                {
+                  "id": "node-4-0",
+                  "depth": 4,
+                  "lane": 0,
+                  "x": 28,
+                  "y": 50.8,
+                  "kind": "soil",
+                  "title": "やわらかい土",
+                  "hint": "ちいさな おたからの けはい"
+                },
+                {
+                  "id": "node-4-1",
+                  "depth": 4,
+                  "lane": 1,
+                  "x": 72,
+                  "y": 50.8,
+                  "kind": "fossil",
+                  "title": "しまもよう岩",
+                  "hint": "むかしの かけらが ありそう"
+                },
+                {
+                  "id": "node-5-0",
+                  "depth": 5,
+                  "lane": 0,
+                  "x": 50,
+                  "y": 41.5,
+                  "kind": "bridge",
+                  "title": "ちいさな水路",
+                  "hint": "橋の しかけを うごかそう"
+                },
+                {
+                  "id": "node-6-0",
+                  "depth": 6,
+                  "lane": 0,
+                  "x": 18,
+                  "y": 32.199999999999996,
+                  "kind": "fossil",
+                  "title": "しまもよう岩",
+                  "hint": "むかしの かけらが ありそう"
+                },
+                {
+                  "id": "node-6-1",
+                  "depth": 6,
+                  "lane": 1,
+                  "x": 50,
+                  "y": 32.199999999999996,
+                  "kind": "soil",
+                  "title": "やわらかい土",
+                  "hint": "ちいさな おたからの けはい"
+                },
+                {
+                  "id": "node-6-2",
+                  "depth": 6,
+                  "lane": 2,
+                  "x": 82,
+                  "y": 32.199999999999996,
+                  "kind": "root",
+                  "title": "根っこの道",
+                  "hint": "ひかる花の かおり"
+                },
+                {
+                  "id": "node-7-0",
+                  "depth": 7,
+                  "lane": 0,
+                  "x": 50,
+                  "y": 22.89999999999999,
+                  "kind": "root",
+                  "encounterId": "root-tangle",
+                  "title": "根っこの からまり",
+                  "hint": "根の むこうに 花のひかり"
+                },
+                {
+                  "id": "node-8-0",
+                  "depth": 8,
+                  "lane": 0,
+                  "x": 50,
+                  "y": 13.599999999999994,
+                  "kind": "mystery",
+                  "title": "なぞの壁",
+                  "hint": "なにが でるかは おたのしみ"
+                }
+              ],
+              "edges": [
+                {
+                  "id": "edge-start-0",
+                  "from": "start",
+                  "to": "node-1-0"
+                },
+                {
+                  "id": "edge-start-1",
+                  "from": "start",
+                  "to": "node-1-1"
+                },
+                {
+                  "id": "edge-1-0-0",
+                  "from": "node-1-0",
+                  "to": "node-2-0"
+                },
+                {
+                  "id": "edge-1-0-1",
+                  "from": "node-1-0",
+                  "to": "node-2-1"
+                },
+                {
+                  "id": "edge-1-1-0",
+                  "from": "node-1-1",
+                  "to": "node-2-0"
+                },
+                {
+                  "id": "edge-1-1-1",
+                  "from": "node-1-1",
+                  "to": "node-2-1"
+                },
+                {
+                  "id": "edge-2-0-0",
+                  "from": "node-2-0",
+                  "to": "node-3-0"
+                },
+                {
+                  "id": "edge-2-0-1",
+                  "from": "node-2-0",
+                  "to": "node-3-1"
+                },
+                {
+                  "id": "edge-2-1-0",
+                  "from": "node-2-1",
+                  "to": "node-3-0"
+                },
+                {
+                  "id": "edge-2-1-1",
+                  "from": "node-2-1",
+                  "to": "node-3-1"
+                },
+                {
+                  "id": "edge-3-0-0",
+                  "from": "node-3-0",
+                  "to": "node-4-0"
+                },
+                {
+                  "id": "edge-3-0-1",
+                  "from": "node-3-0",
+                  "to": "node-4-1"
+                },
+                {
+                  "id": "edge-3-1-0",
+                  "from": "node-3-1",
+                  "to": "node-4-0"
+                },
+                {
+                  "id": "edge-3-1-1",
+                  "from": "node-3-1",
+                  "to": "node-4-1"
+                },
+                {
+                  "id": "edge-4-0-0",
+                  "from": "node-4-0",
+                  "to": "node-5-0"
+                },
+                {
+                  "id": "edge-4-1-0",
+                  "from": "node-4-1",
+                  "to": "node-5-0"
+                },
+                {
+                  "id": "edge-5-0-0",
+                  "from": "node-5-0",
+                  "to": "node-6-0"
+                },
+                {
+                  "id": "edge-5-0-1",
+                  "from": "node-5-0",
+                  "to": "node-6-1"
+                },
+                {
+                  "id": "edge-5-0-2",
+                  "from": "node-5-0",
+                  "to": "node-6-2"
+                },
+                {
+                  "id": "edge-6-0-0",
+                  "from": "node-6-0",
+                  "to": "node-7-0"
+                },
+                {
+                  "id": "edge-6-1-0",
+                  "from": "node-6-1",
+                  "to": "node-7-0"
+                },
+                {
+                  "id": "edge-6-2-0",
+                  "from": "node-6-2",
+                  "to": "node-7-0"
+                },
+                {
+                  "id": "edge-7-0-0",
+                  "from": "node-7-0",
+                  "to": "node-8-0"
+                }
+              ],
+              "openedNodeIds": [
+                "start"
+              ],
+              "temporaryFinds": [],
+              "confirmedFinds": [],
+              "attempts": [],
+              "committedAttemptKeys": [],
+              "lastEvent": {
+                "type": "node-selected",
+                "nodeId": "node-1-0"
+              },
+              "rescuePending": false,
+              "config": {
+                "maxEnergy": 12,
+                "correctEnergyCost": 1,
+                "incorrectEnergyCost": 1
+              },
+              "profileId": "island-production-checkpoint",
+              "pendingProblem": {
+                "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0",
+                "nodeId": "node-1-0",
+                "actionType": "dig",
+                "attemptCount": 0,
+                "skillId": "explore_rapid_addition",
+                "problemRefreshPending": false,
+                "problem": {
+                  "id": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0",
+                  "subject": "math",
+                  "categoryId": "explore_rapid_addition",
+                  "questionText": "1 + 7 =",
+                  "inputType": "number",
+                  "correctAnswer": "8",
+                  "isReview": false,
+                  "isMaintenanceCheck": false
+                },
+                "learningAssignment": {
+                  "profileId": "island-production-checkpoint",
+                  "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+                  "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0",
+                  "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0",
+                  "categoryId": "explore_rapid_addition",
+                  "source": "game-only-fallback",
+                  "isReview": false,
+                  "isMaintenanceCheck": false,
+                  "countsTowardReviewCap": false,
+                  "affectsSrs": false,
+                  "reservedAt": 1788817222311,
+                  "assignmentKey": "[\"explore-learning-assignment-v1\",\"island-production-checkpoint\",\"explore-mtrrl6dp-6flhn-1788817222285\",\"explore-mtrrl6dp-6flhn-1788817222285:node-1-0\",\"explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0\"]"
+                }
+              }
+            },
+            "updatedAt": 1788817222312
+          },
+          "updatedAt": 1788817222312,
+          "learningSegments": {
+            "0": {
+              "schemaVersion": 1,
+              "segmentId": "[\"explore-learning-segment-v1\",\"explore-mtrrl6dp-6flhn-1788817222285\",0,3]",
+              "segmentKey": "0",
+              "startStep": 0,
+              "endStepExclusive": 3,
+              "plannedFromStep": 0,
+              "plannerVersion": "explore-learning-planner-v3",
+              "generatorVersion": "explore-problem-v1",
+              "seed": "[\"explore-learning-planner-v3\",\"mtrrl6dp-6flhn\",\"[\\\"explore-learning-segment-v1\\\",\\\"explore-mtrrl6dp-6flhn-1788817222285\\\",0,3]\"]",
+              "profileSnapshot": {
+                "mathMainLevel": 1,
+                "mathMaxUnlocked": 1
+              },
+              "plannedAt": 1788817222311,
+              "slots": [
+                {
+                  "step": 0,
+                  "slotIndex": 0,
+                  "sequenceOrdinal": 0,
+                  "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0",
+                  "nodeId": "node-1-0",
+                  "actionType": "dig",
+                  "attemptCount": 0,
+                  "problem": {
+                    "id": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0",
+                    "subject": "math",
+                    "categoryId": "explore_rapid_addition",
+                    "questionText": "1 + 7 =",
+                    "inputType": "number",
+                    "correctAnswer": "8",
+                    "isReview": false,
+                    "isMaintenanceCheck": false
+                  },
+                  "assignment": {
+                    "profileId": "island-production-checkpoint",
+                    "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+                    "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0",
+                    "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0",
+                    "categoryId": "explore_rapid_addition",
+                    "source": "game-only-fallback",
+                    "isReview": false,
+                    "isMaintenanceCheck": false,
+                    "countsTowardReviewCap": false,
+                    "affectsSrs": false,
+                    "reservedAt": 1788817222311,
+                    "assignmentKey": "[\"explore-learning-assignment-v1\",\"island-production-checkpoint\",\"explore-mtrrl6dp-6flhn-1788817222285\",\"explore-mtrrl6dp-6flhn-1788817222285:node-1-0\",\"explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0\"]"
+                  }
+                },
+                {
+                  "step": 1,
+                  "slotIndex": 1,
+                  "sequenceOrdinal": 1,
+                  "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-2-0",
+                  "nodeId": "node-2-0",
+                  "actionType": "dig",
+                  "attemptCount": 0,
+                  "problem": {
+                    "id": "explore-mtrrl6dp-6flhn-1788817222285:node-2-0:attempt-0",
+                    "subject": "math",
+                    "categoryId": "explore_rapid_addition",
+                    "questionText": "4 + 3 =",
+                    "inputType": "number",
+                    "correctAnswer": "7",
+                    "isReview": false,
+                    "isMaintenanceCheck": false
+                  },
+                  "assignment": {
+                    "profileId": "island-production-checkpoint",
+                    "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+                    "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-2-0",
+                    "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-2-0:attempt-0",
+                    "categoryId": "explore_rapid_addition",
+                    "source": "game-only-fallback",
+                    "isReview": false,
+                    "isMaintenanceCheck": false,
+                    "countsTowardReviewCap": false,
+                    "affectsSrs": false,
+                    "reservedAt": 1788817222311,
+                    "assignmentKey": "[\"explore-learning-assignment-v1\",\"island-production-checkpoint\",\"explore-mtrrl6dp-6flhn-1788817222285\",\"explore-mtrrl6dp-6flhn-1788817222285:node-2-0\",\"explore-mtrrl6dp-6flhn-1788817222285:node-2-0:attempt-0\"]"
+                  }
+                },
+                {
+                  "step": 2,
+                  "slotIndex": 2,
+                  "sequenceOrdinal": 2,
+                  "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-3-0",
+                  "nodeId": "node-3-0",
+                  "actionType": "dig",
+                  "attemptCount": 0,
+                  "problem": {
+                    "id": "explore-mtrrl6dp-6flhn-1788817222285:node-3-0:attempt-0",
+                    "subject": "math",
+                    "categoryId": "explore_rapid_addition",
+                    "questionText": "3 + 6 =",
+                    "inputType": "number",
+                    "correctAnswer": "9",
+                    "isReview": false,
+                    "isMaintenanceCheck": false
+                  },
+                  "assignment": {
+                    "profileId": "island-production-checkpoint",
+                    "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+                    "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-3-0",
+                    "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-3-0:attempt-0",
+                    "categoryId": "explore_rapid_addition",
+                    "source": "game-only-fallback",
+                    "isReview": false,
+                    "isMaintenanceCheck": false,
+                    "countsTowardReviewCap": false,
+                    "affectsSrs": false,
+                    "reservedAt": 1788817222311,
+                    "assignmentKey": "[\"explore-learning-assignment-v1\",\"island-production-checkpoint\",\"explore-mtrrl6dp-6flhn-1788817222285\",\"explore-mtrrl6dp-6flhn-1788817222285:node-3-0\",\"explore-mtrrl6dp-6flhn-1788817222285:node-3-0:attempt-0\"]"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "island": {
+        "profileId": "island-production-checkpoint",
+        "schemaVersion": 1,
+        "revision": 1,
+        "completedSets": 0,
+        "pendingRewards": [],
+        "updatedAt": 1788817216248,
+        "items": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "position": {
+              "x": 1.5,
+              "z": 0.8
+            },
+            "rotation": 0
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "position": {
+              "x": -1,
+              "z": 0.25
+            },
+            "rotation": 0
+          }
+        ],
+        "pendingPlanId": "[\"island-plan-v1\",\"island-production-checkpoint\",0]",
+        "mathReviewTurn": 1
+      },
+      "plan": {
+        "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]",
+        "profileId": "island-production-checkpoint",
+        "schemaVersion": 1,
+        "plannerVersion": "island-learning-v1",
+        "subject": "math",
+        "slots": [
+          {
+            "problem": {
+              "categoryId": "same_or_different",
+              "questionText": "2つは おなじ？ ちがう？",
+              "correctAnswer": "ちがう",
+              "inputType": "choice",
+              "inputConfig": {
+                "choices": [
+                  {
+                    "label": "おなじ",
+                    "value": "おなじ"
+                  },
+                  {
+                    "label": "ちがう",
+                    "value": "ちがう"
+                  }
+                ]
+              },
+              "questionVisual": {
+                "kind": "item-pair",
+                "prompt": "2つは おなじ？ ちがう？",
+                "items": [
+                  {
+                    "emoji": "🟢",
+                    "label": "みどり"
+                  },
+                  {
+                    "emoji": "🔴",
+                    "label": "あか"
+                  }
+                ],
+                "orientation": "row"
+              },
+              "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:slot-0",
+              "subject": "math",
+              "isReview": false,
+              "isMaintenanceCheck": false
+            },
+            "source": "main",
+            "countsTowardReviewCap": false,
+            "assisted": false,
+            "completed": true
+          },
+          {
+            "problem": {
+              "categoryId": "count_shape",
+              "questionText": "この かたちは なに？",
+              "correctAnswer": "しかく",
+              "inputType": "choice",
+              "inputConfig": {
+                "choices": [
+                  {
+                    "label": "🟦 しかく",
+                    "value": "しかく"
+                  },
+                  {
+                    "label": "🔴 まる",
+                    "value": "まる"
+                  }
+                ]
+              },
+              "questionVisual": {
+                "kind": "reference-choice-grid",
+                "prompt": "この かたちは なに？",
+                "grid": {
+                  "reference": {
+                    "emoji": "🟦",
+                    "label": "しかく"
+                  },
+                  "choices": [
+                    {
+                      "emoji": "🟦",
+                      "label": "しかく"
+                    },
+                    {
+                      "emoji": "🔴",
+                      "label": "まる"
+                    }
+                  ],
+                  "columns": 2
+                }
+              },
+              "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:slot-1",
+              "subject": "math",
+              "isReview": false,
+              "isMaintenanceCheck": false
+            },
+            "source": "main",
+            "countsTowardReviewCap": false,
+            "assisted": false,
+            "completed": false
+          },
+          {
+            "problem": {
+              "categoryId": "pattern_copy",
+              "questionText": "つぎは どれ？",
+              "correctAnswer": "🟡",
+              "inputType": "choice",
+              "inputConfig": {
+                "choices": [
+                  {
+                    "label": "🔵",
+                    "value": "🔵"
+                  },
+                  {
+                    "label": "🟢",
+                    "value": "🟢"
+                  },
+                  {
+                    "label": "🟡",
+                    "value": "🟡"
+                  }
+                ]
+              },
+              "questionVisual": {
+                "kind": "ordinal-row",
+                "prompt": "つぎは どれ？",
+                "items": [
+                  {
+                    "emoji": "🟢",
+                    "label": "みどり"
+                  },
+                  {
+                    "emoji": "🟡",
+                    "label": "きいろ"
+                  },
+                  {
+                    "emoji": "🔵",
+                    "label": "あお"
+                  },
+                  {
+                    "emoji": "🟢",
+                    "label": "みどり"
+                  }
+                ],
+                "showPlaceholder": true
+              },
+              "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:slot-2",
+              "subject": "math",
+              "isReview": false,
+              "isMaintenanceCheck": false
+            },
+            "source": "main",
+            "countsTowardReviewCap": false,
+            "assisted": false,
+            "completed": false
+          }
+        ],
+        "status": "active",
+        "cursor": 1,
+        "revision": 1,
+        "startedAt": 1788817216248,
+        "rewardId": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:reward",
+        "rewardChoices": [
+          "flower",
+          "bench",
+          "lantern"
+        ]
+      }
+    },
+    "sameReady": {
+      "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+      "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0",
+      "checkpointRevision": 2
+    },
+    "restored": {
+      "islands": [
+        {
+          "profileId": "island-production-checkpoint",
+          "schemaVersion": 1,
+          "revision": 1,
+          "completedSets": 0,
+          "pendingRewards": [],
+          "updatedAt": 1788817216248,
+          "items": [
+            {
+              "id": "starter-flower",
+              "kind": "flower",
+              "position": {
+                "x": 1.5,
+                "z": 0.8
+              },
+              "rotation": 0
+            },
+            {
+              "id": "starter-lantern",
+              "kind": "lantern",
+              "position": {
+                "x": -1,
+                "z": 0.25
+              },
+              "rotation": 0
+            }
+          ],
+          "pendingPlanId": "[\"island-plan-v1\",\"island-production-checkpoint\",0]",
+          "mathReviewTurn": 1
+        }
+      ],
+      "islandPlans": [
+        {
+          "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]",
+          "profileId": "island-production-checkpoint",
+          "schemaVersion": 1,
+          "plannerVersion": "island-learning-v1",
+          "subject": "math",
+          "slots": [
+            {
+              "problem": {
+                "categoryId": "same_or_different",
+                "questionText": "2つは おなじ？ ちがう？",
+                "correctAnswer": "ちがう",
+                "inputType": "choice",
+                "inputConfig": {
+                  "choices": [
+                    {
+                      "label": "おなじ",
+                      "value": "おなじ"
+                    },
+                    {
+                      "label": "ちがう",
+                      "value": "ちがう"
+                    }
+                  ]
+                },
+                "questionVisual": {
+                  "kind": "item-pair",
+                  "prompt": "2つは おなじ？ ちがう？",
+                  "items": [
+                    {
+                      "emoji": "🟢",
+                      "label": "みどり"
+                    },
+                    {
+                      "emoji": "🔴",
+                      "label": "あか"
+                    }
+                  ],
+                  "orientation": "row"
+                },
+                "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:slot-0",
+                "subject": "math",
+                "isReview": false,
+                "isMaintenanceCheck": false
+              },
+              "source": "main",
+              "countsTowardReviewCap": false,
+              "assisted": false,
+              "completed": true
+            },
+            {
+              "problem": {
+                "categoryId": "count_shape",
+                "questionText": "この かたちは なに？",
+                "correctAnswer": "しかく",
+                "inputType": "choice",
+                "inputConfig": {
+                  "choices": [
+                    {
+                      "label": "🟦 しかく",
+                      "value": "しかく"
+                    },
+                    {
+                      "label": "🔴 まる",
+                      "value": "まる"
+                    }
+                  ]
+                },
+                "questionVisual": {
+                  "kind": "reference-choice-grid",
+                  "prompt": "この かたちは なに？",
+                  "grid": {
+                    "reference": {
+                      "emoji": "🟦",
+                      "label": "しかく"
+                    },
+                    "choices": [
+                      {
+                        "emoji": "🟦",
+                        "label": "しかく"
+                      },
+                      {
+                        "emoji": "🔴",
+                        "label": "まる"
+                      }
+                    ],
+                    "columns": 2
+                  }
+                },
+                "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:slot-1",
+                "subject": "math",
+                "isReview": false,
+                "isMaintenanceCheck": false
+              },
+              "source": "main",
+              "countsTowardReviewCap": false,
+              "assisted": false,
+              "completed": false
+            },
+            {
+              "problem": {
+                "categoryId": "pattern_copy",
+                "questionText": "つぎは どれ？",
+                "correctAnswer": "🟡",
+                "inputType": "choice",
+                "inputConfig": {
+                  "choices": [
+                    {
+                      "label": "🔵",
+                      "value": "🔵"
+                    },
+                    {
+                      "label": "🟢",
+                      "value": "🟢"
+                    },
+                    {
+                      "label": "🟡",
+                      "value": "🟡"
+                    }
+                  ]
+                },
+                "questionVisual": {
+                  "kind": "ordinal-row",
+                  "prompt": "つぎは どれ？",
+                  "items": [
+                    {
+                      "emoji": "🟢",
+                      "label": "みどり"
+                    },
+                    {
+                      "emoji": "🟡",
+                      "label": "きいろ"
+                    },
+                    {
+                      "emoji": "🔵",
+                      "label": "あお"
+                    },
+                    {
+                      "emoji": "🟢",
+                      "label": "みどり"
+                    }
+                  ],
+                  "showPlaceholder": true
+                },
+                "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:slot-2",
+                "subject": "math",
+                "isReview": false,
+                "isMaintenanceCheck": false
+              },
+              "source": "main",
+              "countsTowardReviewCap": false,
+              "assisted": false,
+              "completed": false
+            }
+          ],
+          "status": "active",
+          "cursor": 1,
+          "revision": 1,
+          "startedAt": 1788817216248,
+          "rewardId": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:reward",
+          "rewardChoices": [
+            "flower",
+            "bench",
+            "lantern"
+          ]
+        }
+      ],
+      "islandEvents": [
+        {
+          "id": "[\"island-action-v1\",\"island-production-checkpoint\",\"[\\\"island-plan-v1\\\",\\\"island-production-checkpoint\\\",0]\",0]",
+          "profileId": "island-production-checkpoint",
+          "planId": "[\"island-plan-v1\",\"island-production-checkpoint\",0]",
+          "timestamp": 1788817220994,
+          "type": "answer",
+          "action": {
+            "type": "answer",
+            "answer": "ちがう"
+          },
+          "slotIndex": 0,
+          "result": "correct",
+          "learningLogId": 1,
+          "observation": {
+            "version": 1,
+            "problemId": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:slot-0",
+            "revisionBefore": 0,
+            "supportBefore": "unassisted-slot",
+            "answerScope": "whole",
+            "wholeCompleted": true,
+            "adapterVersion": "island-dom-v1",
+            "eventAt": 1788817220958,
+            "presentation": {
+              "id": "3835ba6b-63b4-46cb-8f0d-ac36ca43457b",
+              "documentId": "2b1d4a34-429b-4091-86a0-78b39a32b3c9",
+              "observedAt": 1788817220165,
+              "inputVersion": "island-input-v1",
+              "inputMode": "choice",
+              "referenceVisual": "present"
+            },
+            "elapsedSincePresentationMs": 793.6000000238419,
+            "coverage": "current-presentation",
+            "gaps": []
+          }
+        },
+        {
+          "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:started",
+          "profileId": "island-production-checkpoint",
+          "planId": "[\"island-plan-v1\",\"island-production-checkpoint\",0]",
+          "type": "plan_started",
+          "timestamp": 1788817216248
+        }
+      ],
+      "logs": [
+        {
+          "profileId": "island-production-checkpoint",
+          "subject": "math",
+          "itemId": "same_or_different",
+          "result": "correct",
+          "isReview": false,
+          "timestamp": "2026-09-07T21:40:20.994Z",
+          "id": 1
+        }
+      ],
+      "memoryMath": [
+        {
+          "id": "same_or_different",
+          "strength": 2,
+          "nextReview": "2026-09-10T19:00:00.000Z",
+          "totalAnswers": 1,
+          "correctAnswers": 1,
+          "incorrectAnswers": 0,
+          "skippedAnswers": 0,
+          "lastCorrectAt": "2026-09-07T21:40:20.994Z",
+          "updatedAt": "2026-09-07T21:40:20.994Z",
+          "status": "active",
+          "isWeak": false,
+          "profileId": "island-production-checkpoint"
+        }
+      ],
+      "memoryVocab": [],
+      "exploreRuns": [
+        {
+          "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+          "profileId": "island-production-checkpoint",
+          "seed": "mtrrl6dp-6flhn",
+          "status": "active",
+          "startedAt": 1788817222285,
+          "energyUsed": 0,
+          "problemsAnswered": 0,
+          "correctCount": 0,
+          "incorrectCount": 0,
+          "skippedCount": 0,
+          "discoveries": [],
+          "routeSummary": [],
+          "learningAssignments": {
+            "explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0": {
+              "profileId": "island-production-checkpoint",
+              "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+              "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0",
+              "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0",
+              "categoryId": "explore_rapid_addition",
+              "source": "game-only-fallback",
+              "isReview": false,
+              "isMaintenanceCheck": false,
+              "countsTowardReviewCap": false,
+              "affectsSrs": false,
+              "reservedAt": 1788817222311,
+              "assignmentKey": "[\"explore-learning-assignment-v1\",\"island-production-checkpoint\",\"explore-mtrrl6dp-6flhn-1788817222285\",\"explore-mtrrl6dp-6flhn-1788817222285:node-1-0\",\"explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0\"]"
+            },
+            "explore-mtrrl6dp-6flhn-1788817222285:node-2-0:attempt-0": {
+              "profileId": "island-production-checkpoint",
+              "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+              "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-2-0",
+              "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-2-0:attempt-0",
+              "categoryId": "explore_rapid_addition",
+              "source": "game-only-fallback",
+              "isReview": false,
+              "isMaintenanceCheck": false,
+              "countsTowardReviewCap": false,
+              "affectsSrs": false,
+              "reservedAt": 1788817222311,
+              "assignmentKey": "[\"explore-learning-assignment-v1\",\"island-production-checkpoint\",\"explore-mtrrl6dp-6flhn-1788817222285\",\"explore-mtrrl6dp-6flhn-1788817222285:node-2-0\",\"explore-mtrrl6dp-6flhn-1788817222285:node-2-0:attempt-0\"]"
+            },
+            "explore-mtrrl6dp-6flhn-1788817222285:node-3-0:attempt-0": {
+              "profileId": "island-production-checkpoint",
+              "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+              "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-3-0",
+              "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-3-0:attempt-0",
+              "categoryId": "explore_rapid_addition",
+              "source": "game-only-fallback",
+              "isReview": false,
+              "isMaintenanceCheck": false,
+              "countsTowardReviewCap": false,
+              "affectsSrs": false,
+              "reservedAt": 1788817222311,
+              "assignmentKey": "[\"explore-learning-assignment-v1\",\"island-production-checkpoint\",\"explore-mtrrl6dp-6flhn-1788817222285\",\"explore-mtrrl6dp-6flhn-1788817222285:node-3-0\",\"explore-mtrrl6dp-6flhn-1788817222285:node-3-0:attempt-0\"]"
+            }
+          },
+          "activeCheckpoint": {
+            "schemaVersion": 1,
+            "revision": 2,
+            "openingExperienceId": "snap-root-v1",
+            "state": {
+              "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+              "seed": "mtrrl6dp-6flhn",
+              "status": "active",
+              "startedAt": 1788817222285,
+              "currentNodeId": "start",
+              "energy": 12,
+              "maxEnergy": 12,
+              "combo": 0,
+              "steps": 0,
+              "incorrectAnswers": 0,
+              "nodes": [
+                {
+                  "id": "start",
+                  "depth": 0,
+                  "lane": 0,
+                  "x": 50,
+                  "y": 88,
+                  "kind": "start",
+                  "title": "ひかりの入口",
+                  "hint": "ここから たんけんが はじまる"
+                },
+                {
+                  "id": "node-1-0",
+                  "depth": 1,
+                  "lane": 0,
+                  "x": 28,
+                  "y": 78.7,
+                  "kind": "root",
+                  "title": "根っこの道",
+                  "hint": "ひかる花の かおり"
+                },
+                {
+                  "id": "node-1-1",
+                  "depth": 1,
+                  "lane": 1,
+                  "x": 72,
+                  "y": 78.7,
+                  "kind": "fossil",
+                  "title": "しまもよう岩",
+                  "hint": "むかしの かけらが ありそう"
+                },
+                {
+                  "id": "node-2-0",
+                  "depth": 2,
+                  "lane": 0,
+                  "x": 28,
+                  "y": 69.4,
+                  "kind": "root",
+                  "title": "根っこの道",
+                  "hint": "ひかる花の かおり"
+                },
+                {
+                  "id": "node-2-1",
+                  "depth": 2,
+                  "lane": 1,
+                  "x": 72,
+                  "y": 69.4,
+                  "kind": "crystal",
+                  "title": "きらきら岩",
+                  "hint": "水晶が ありそう"
+                },
+                {
+                  "id": "node-3-0",
+                  "depth": 3,
+                  "lane": 0,
+                  "x": 28,
+                  "y": 60.099999999999994,
+                  "kind": "fossil",
+                  "title": "しまもよう岩",
+                  "hint": "むかしの かけらが ありそう"
+                },
+                {
+                  "id": "node-3-1",
+                  "depth": 3,
+                  "lane": 1,
+                  "x": 72,
+                  "y": 60.099999999999994,
+                  "kind": "crystal",
+                  "title": "きらきら岩",
+                  "hint": "水晶が ありそう"
+                },
+                {
+                  "id": "node-4-0",
+                  "depth": 4,
+                  "lane": 0,
+                  "x": 28,
+                  "y": 50.8,
+                  "kind": "soil",
+                  "title": "やわらかい土",
+                  "hint": "ちいさな おたからの けはい"
+                },
+                {
+                  "id": "node-4-1",
+                  "depth": 4,
+                  "lane": 1,
+                  "x": 72,
+                  "y": 50.8,
+                  "kind": "fossil",
+                  "title": "しまもよう岩",
+                  "hint": "むかしの かけらが ありそう"
+                },
+                {
+                  "id": "node-5-0",
+                  "depth": 5,
+                  "lane": 0,
+                  "x": 50,
+                  "y": 41.5,
+                  "kind": "bridge",
+                  "title": "ちいさな水路",
+                  "hint": "橋の しかけを うごかそう"
+                },
+                {
+                  "id": "node-6-0",
+                  "depth": 6,
+                  "lane": 0,
+                  "x": 18,
+                  "y": 32.199999999999996,
+                  "kind": "fossil",
+                  "title": "しまもよう岩",
+                  "hint": "むかしの かけらが ありそう"
+                },
+                {
+                  "id": "node-6-1",
+                  "depth": 6,
+                  "lane": 1,
+                  "x": 50,
+                  "y": 32.199999999999996,
+                  "kind": "soil",
+                  "title": "やわらかい土",
+                  "hint": "ちいさな おたからの けはい"
+                },
+                {
+                  "id": "node-6-2",
+                  "depth": 6,
+                  "lane": 2,
+                  "x": 82,
+                  "y": 32.199999999999996,
+                  "kind": "root",
+                  "title": "根っこの道",
+                  "hint": "ひかる花の かおり"
+                },
+                {
+                  "id": "node-7-0",
+                  "depth": 7,
+                  "lane": 0,
+                  "x": 50,
+                  "y": 22.89999999999999,
+                  "kind": "root",
+                  "encounterId": "root-tangle",
+                  "title": "根っこの からまり",
+                  "hint": "根の むこうに 花のひかり"
+                },
+                {
+                  "id": "node-8-0",
+                  "depth": 8,
+                  "lane": 0,
+                  "x": 50,
+                  "y": 13.599999999999994,
+                  "kind": "mystery",
+                  "title": "なぞの壁",
+                  "hint": "なにが でるかは おたのしみ"
+                }
+              ],
+              "edges": [
+                {
+                  "id": "edge-start-0",
+                  "from": "start",
+                  "to": "node-1-0"
+                },
+                {
+                  "id": "edge-start-1",
+                  "from": "start",
+                  "to": "node-1-1"
+                },
+                {
+                  "id": "edge-1-0-0",
+                  "from": "node-1-0",
+                  "to": "node-2-0"
+                },
+                {
+                  "id": "edge-1-0-1",
+                  "from": "node-1-0",
+                  "to": "node-2-1"
+                },
+                {
+                  "id": "edge-1-1-0",
+                  "from": "node-1-1",
+                  "to": "node-2-0"
+                },
+                {
+                  "id": "edge-1-1-1",
+                  "from": "node-1-1",
+                  "to": "node-2-1"
+                },
+                {
+                  "id": "edge-2-0-0",
+                  "from": "node-2-0",
+                  "to": "node-3-0"
+                },
+                {
+                  "id": "edge-2-0-1",
+                  "from": "node-2-0",
+                  "to": "node-3-1"
+                },
+                {
+                  "id": "edge-2-1-0",
+                  "from": "node-2-1",
+                  "to": "node-3-0"
+                },
+                {
+                  "id": "edge-2-1-1",
+                  "from": "node-2-1",
+                  "to": "node-3-1"
+                },
+                {
+                  "id": "edge-3-0-0",
+                  "from": "node-3-0",
+                  "to": "node-4-0"
+                },
+                {
+                  "id": "edge-3-0-1",
+                  "from": "node-3-0",
+                  "to": "node-4-1"
+                },
+                {
+                  "id": "edge-3-1-0",
+                  "from": "node-3-1",
+                  "to": "node-4-0"
+                },
+                {
+                  "id": "edge-3-1-1",
+                  "from": "node-3-1",
+                  "to": "node-4-1"
+                },
+                {
+                  "id": "edge-4-0-0",
+                  "from": "node-4-0",
+                  "to": "node-5-0"
+                },
+                {
+                  "id": "edge-4-1-0",
+                  "from": "node-4-1",
+                  "to": "node-5-0"
+                },
+                {
+                  "id": "edge-5-0-0",
+                  "from": "node-5-0",
+                  "to": "node-6-0"
+                },
+                {
+                  "id": "edge-5-0-1",
+                  "from": "node-5-0",
+                  "to": "node-6-1"
+                },
+                {
+                  "id": "edge-5-0-2",
+                  "from": "node-5-0",
+                  "to": "node-6-2"
+                },
+                {
+                  "id": "edge-6-0-0",
+                  "from": "node-6-0",
+                  "to": "node-7-0"
+                },
+                {
+                  "id": "edge-6-1-0",
+                  "from": "node-6-1",
+                  "to": "node-7-0"
+                },
+                {
+                  "id": "edge-6-2-0",
+                  "from": "node-6-2",
+                  "to": "node-7-0"
+                },
+                {
+                  "id": "edge-7-0-0",
+                  "from": "node-7-0",
+                  "to": "node-8-0"
+                }
+              ],
+              "openedNodeIds": [
+                "start"
+              ],
+              "temporaryFinds": [],
+              "confirmedFinds": [],
+              "attempts": [],
+              "committedAttemptKeys": [],
+              "lastEvent": {
+                "type": "node-selected",
+                "nodeId": "node-1-0"
+              },
+              "rescuePending": false,
+              "config": {
+                "maxEnergy": 12,
+                "correctEnergyCost": 1,
+                "incorrectEnergyCost": 1
+              },
+              "profileId": "island-production-checkpoint",
+              "pendingProblem": {
+                "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0",
+                "nodeId": "node-1-0",
+                "actionType": "dig",
+                "attemptCount": 0,
+                "skillId": "explore_rapid_addition",
+                "problemRefreshPending": false,
+                "problem": {
+                  "id": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0",
+                  "subject": "math",
+                  "categoryId": "explore_rapid_addition",
+                  "questionText": "1 + 7 =",
+                  "inputType": "number",
+                  "correctAnswer": "8",
+                  "isReview": false,
+                  "isMaintenanceCheck": false
+                },
+                "learningAssignment": {
+                  "profileId": "island-production-checkpoint",
+                  "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+                  "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0",
+                  "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0",
+                  "categoryId": "explore_rapid_addition",
+                  "source": "game-only-fallback",
+                  "isReview": false,
+                  "isMaintenanceCheck": false,
+                  "countsTowardReviewCap": false,
+                  "affectsSrs": false,
+                  "reservedAt": 1788817222311,
+                  "assignmentKey": "[\"explore-learning-assignment-v1\",\"island-production-checkpoint\",\"explore-mtrrl6dp-6flhn-1788817222285\",\"explore-mtrrl6dp-6flhn-1788817222285:node-1-0\",\"explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0\"]"
+                }
+              }
+            },
+            "updatedAt": 1788817222312
+          },
+          "updatedAt": 1788817222312,
+          "learningSegments": {
+            "0": {
+              "schemaVersion": 1,
+              "segmentId": "[\"explore-learning-segment-v1\",\"explore-mtrrl6dp-6flhn-1788817222285\",0,3]",
+              "segmentKey": "0",
+              "startStep": 0,
+              "endStepExclusive": 3,
+              "plannedFromStep": 0,
+              "plannerVersion": "explore-learning-planner-v3",
+              "generatorVersion": "explore-problem-v1",
+              "seed": "[\"explore-learning-planner-v3\",\"mtrrl6dp-6flhn\",\"[\\\"explore-learning-segment-v1\\\",\\\"explore-mtrrl6dp-6flhn-1788817222285\\\",0,3]\"]",
+              "profileSnapshot": {
+                "mathMainLevel": 1,
+                "mathMaxUnlocked": 1
+              },
+              "plannedAt": 1788817222311,
+              "slots": [
+                {
+                  "step": 0,
+                  "slotIndex": 0,
+                  "sequenceOrdinal": 0,
+                  "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0",
+                  "nodeId": "node-1-0",
+                  "actionType": "dig",
+                  "attemptCount": 0,
+                  "problem": {
+                    "id": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0",
+                    "subject": "math",
+                    "categoryId": "explore_rapid_addition",
+                    "questionText": "1 + 7 =",
+                    "inputType": "number",
+                    "correctAnswer": "8",
+                    "isReview": false,
+                    "isMaintenanceCheck": false
+                  },
+                  "assignment": {
+                    "profileId": "island-production-checkpoint",
+                    "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+                    "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0",
+                    "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0",
+                    "categoryId": "explore_rapid_addition",
+                    "source": "game-only-fallback",
+                    "isReview": false,
+                    "isMaintenanceCheck": false,
+                    "countsTowardReviewCap": false,
+                    "affectsSrs": false,
+                    "reservedAt": 1788817222311,
+                    "assignmentKey": "[\"explore-learning-assignment-v1\",\"island-production-checkpoint\",\"explore-mtrrl6dp-6flhn-1788817222285\",\"explore-mtrrl6dp-6flhn-1788817222285:node-1-0\",\"explore-mtrrl6dp-6flhn-1788817222285:node-1-0:attempt-0\"]"
+                  }
+                },
+                {
+                  "step": 1,
+                  "slotIndex": 1,
+                  "sequenceOrdinal": 1,
+                  "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-2-0",
+                  "nodeId": "node-2-0",
+                  "actionType": "dig",
+                  "attemptCount": 0,
+                  "problem": {
+                    "id": "explore-mtrrl6dp-6flhn-1788817222285:node-2-0:attempt-0",
+                    "subject": "math",
+                    "categoryId": "explore_rapid_addition",
+                    "questionText": "4 + 3 =",
+                    "inputType": "number",
+                    "correctAnswer": "7",
+                    "isReview": false,
+                    "isMaintenanceCheck": false
+                  },
+                  "assignment": {
+                    "profileId": "island-production-checkpoint",
+                    "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+                    "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-2-0",
+                    "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-2-0:attempt-0",
+                    "categoryId": "explore_rapid_addition",
+                    "source": "game-only-fallback",
+                    "isReview": false,
+                    "isMaintenanceCheck": false,
+                    "countsTowardReviewCap": false,
+                    "affectsSrs": false,
+                    "reservedAt": 1788817222311,
+                    "assignmentKey": "[\"explore-learning-assignment-v1\",\"island-production-checkpoint\",\"explore-mtrrl6dp-6flhn-1788817222285\",\"explore-mtrrl6dp-6flhn-1788817222285:node-2-0\",\"explore-mtrrl6dp-6flhn-1788817222285:node-2-0:attempt-0\"]"
+                  }
+                },
+                {
+                  "step": 2,
+                  "slotIndex": 2,
+                  "sequenceOrdinal": 2,
+                  "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-3-0",
+                  "nodeId": "node-3-0",
+                  "actionType": "dig",
+                  "attemptCount": 0,
+                  "problem": {
+                    "id": "explore-mtrrl6dp-6flhn-1788817222285:node-3-0:attempt-0",
+                    "subject": "math",
+                    "categoryId": "explore_rapid_addition",
+                    "questionText": "3 + 6 =",
+                    "inputType": "number",
+                    "correctAnswer": "9",
+                    "isReview": false,
+                    "isMaintenanceCheck": false
+                  },
+                  "assignment": {
+                    "profileId": "island-production-checkpoint",
+                    "runId": "explore-mtrrl6dp-6flhn-1788817222285",
+                    "gateId": "explore-mtrrl6dp-6flhn-1788817222285:node-3-0",
+                    "problemId": "explore-mtrrl6dp-6flhn-1788817222285:node-3-0:attempt-0",
+                    "categoryId": "explore_rapid_addition",
+                    "source": "game-only-fallback",
+                    "isReview": false,
+                    "isMaintenanceCheck": false,
+                    "countsTowardReviewCap": false,
+                    "affectsSrs": false,
+                    "reservedAt": 1788817222311,
+                    "assignmentKey": "[\"explore-learning-assignment-v1\",\"island-production-checkpoint\",\"explore-mtrrl6dp-6flhn-1788817222285\",\"explore-mtrrl6dp-6flhn-1788817222285:node-3-0\",\"explore-mtrrl6dp-6flhn-1788817222285:node-3-0:attempt-0\"]"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "island": {
+        "profileId": "island-production-checkpoint",
+        "schemaVersion": 1,
+        "revision": 1,
+        "completedSets": 0,
+        "pendingRewards": [],
+        "updatedAt": 1788817216248,
+        "items": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "position": {
+              "x": 1.5,
+              "z": 0.8
+            },
+            "rotation": 0
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "position": {
+              "x": -1,
+              "z": 0.25
+            },
+            "rotation": 0
+          }
+        ],
+        "pendingPlanId": "[\"island-plan-v1\",\"island-production-checkpoint\",0]",
+        "mathReviewTurn": 1
+      },
+      "plan": {
+        "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]",
+        "profileId": "island-production-checkpoint",
+        "schemaVersion": 1,
+        "plannerVersion": "island-learning-v1",
+        "subject": "math",
+        "slots": [
+          {
+            "problem": {
+              "categoryId": "same_or_different",
+              "questionText": "2つは おなじ？ ちがう？",
+              "correctAnswer": "ちがう",
+              "inputType": "choice",
+              "inputConfig": {
+                "choices": [
+                  {
+                    "label": "おなじ",
+                    "value": "おなじ"
+                  },
+                  {
+                    "label": "ちがう",
+                    "value": "ちがう"
+                  }
+                ]
+              },
+              "questionVisual": {
+                "kind": "item-pair",
+                "prompt": "2つは おなじ？ ちがう？",
+                "items": [
+                  {
+                    "emoji": "🟢",
+                    "label": "みどり"
+                  },
+                  {
+                    "emoji": "🔴",
+                    "label": "あか"
+                  }
+                ],
+                "orientation": "row"
+              },
+              "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:slot-0",
+              "subject": "math",
+              "isReview": false,
+              "isMaintenanceCheck": false
+            },
+            "source": "main",
+            "countsTowardReviewCap": false,
+            "assisted": false,
+            "completed": true
+          },
+          {
+            "problem": {
+              "categoryId": "count_shape",
+              "questionText": "この かたちは なに？",
+              "correctAnswer": "しかく",
+              "inputType": "choice",
+              "inputConfig": {
+                "choices": [
+                  {
+                    "label": "🟦 しかく",
+                    "value": "しかく"
+                  },
+                  {
+                    "label": "🔴 まる",
+                    "value": "まる"
+                  }
+                ]
+              },
+              "questionVisual": {
+                "kind": "reference-choice-grid",
+                "prompt": "この かたちは なに？",
+                "grid": {
+                  "reference": {
+                    "emoji": "🟦",
+                    "label": "しかく"
+                  },
+                  "choices": [
+                    {
+                      "emoji": "🟦",
+                      "label": "しかく"
+                    },
+                    {
+                      "emoji": "🔴",
+                      "label": "まる"
+                    }
+                  ],
+                  "columns": 2
+                }
+              },
+              "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:slot-1",
+              "subject": "math",
+              "isReview": false,
+              "isMaintenanceCheck": false
+            },
+            "source": "main",
+            "countsTowardReviewCap": false,
+            "assisted": false,
+            "completed": false
+          },
+          {
+            "problem": {
+              "categoryId": "pattern_copy",
+              "questionText": "つぎは どれ？",
+              "correctAnswer": "🟡",
+              "inputType": "choice",
+              "inputConfig": {
+                "choices": [
+                  {
+                    "label": "🔵",
+                    "value": "🔵"
+                  },
+                  {
+                    "label": "🟢",
+                    "value": "🟢"
+                  },
+                  {
+                    "label": "🟡",
+                    "value": "🟡"
+                  }
+                ]
+              },
+              "questionVisual": {
+                "kind": "ordinal-row",
+                "prompt": "つぎは どれ？",
+                "items": [
+                  {
+                    "emoji": "🟢",
+                    "label": "みどり"
+                  },
+                  {
+                    "emoji": "🟡",
+                    "label": "きいろ"
+                  },
+                  {
+                    "emoji": "🔵",
+                    "label": "あお"
+                  },
+                  {
+                    "emoji": "🟢",
+                    "label": "みどり"
+                  }
+                ],
+                "showPlaceholder": true
+              },
+              "id": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:slot-2",
+              "subject": "math",
+              "isReview": false,
+              "isMaintenanceCheck": false
+            },
+            "source": "main",
+            "countsTowardReviewCap": false,
+            "assisted": false,
+            "completed": false
+          }
+        ],
+        "status": "active",
+        "cursor": 1,
+        "revision": 1,
+        "startedAt": 1788817216248,
+        "rewardId": "[\"island-plan-v1\",\"island-production-checkpoint\",0]:reward",
+        "rewardChoices": [
+          "flower",
+          "bench",
+          "lantern"
+        ]
+      }
+    }
+  }
+}

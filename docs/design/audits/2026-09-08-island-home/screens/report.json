@@ -1,0 +1,170 @@
+{
+  "target": "http://127.0.0.1:5599",
+  "pass": true,
+  "scenarios": [
+    {
+      "name": "phone",
+      "runtime": {
+        "revision": "14f26b8-home-99e78d87b3c4",
+        "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 74,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      },
+      "parkPreserved": true,
+      "islandReservationPreserved": true,
+      "nextAnswerSaved": true,
+      "errors": []
+    },
+    {
+      "name": "tablet",
+      "runtime": {
+        "revision": "14f26b8-home-99e78d87b3c4",
+        "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 73,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      },
+      "parkPreserved": true,
+      "islandReservationPreserved": true,
+      "nextAnswerSaved": true,
+      "errors": []
+    }
+  ],
+  "captures": [
+    {
+      "file": "phone-home.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "url": "http://127.0.0.1:5599/#/island",
+      "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59"
+    },
+    {
+      "file": "phone-other-games.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "url": "http://127.0.0.1:5599/#/battle",
+      "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59"
+    },
+    {
+      "file": "phone-saved-park.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "url": "http://127.0.0.1:5599/#/park",
+      "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59"
+    },
+    {
+      "file": "phone-park-reopened.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "url": "http://127.0.0.1:5599/#/park",
+      "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59"
+    },
+    {
+      "file": "phone-island-resumed.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "url": "http://127.0.0.1:5599/#/island",
+      "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59"
+    },
+    {
+      "file": "tablet-home.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "url": "http://127.0.0.1:5599/#/island",
+      "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59"
+    },
+    {
+      "file": "tablet-other-games.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "url": "http://127.0.0.1:5599/#/battle",
+      "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59"
+    },
+    {
+      "file": "tablet-saved-park.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "url": "http://127.0.0.1:5599/#/park",
+      "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59"
+    },
+    {
+      "file": "tablet-park-reopened.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "url": "http://127.0.0.1:5599/#/park",
+      "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59"
+    },
+    {
+      "file": "tablet-island-resumed.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "url": "http://127.0.0.1:5599/#/island",
+      "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59"
+    }
+  ],
+  "scope": "Disposable native profiles; real UI creates and saves Park work and Island learning. Phone/tablet Chromium, not physical devices.",
+  "manifest": {
+    "version": "14f26b8-home-99e78d87b3c4:0c495c53-108a-4973-abdc-c82cf72a1c59",
+    "revision": "14f26b8-home-99e78d87b3c4",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "artDirection": "moon-garden"
+    }
+  }
+}

@@ -14,9 +14,10 @@ export function LaunchRoute() {
         let active = true;
         void getActiveProfile().then(async profile => {
             if (!profile) return '/onboarding';
+            if (islandOn) return '/island';
             const oldRun = await db.exploreRuns.where('[profileId+status]').equals([profile.id, 'active']).first();
-            return oldRun ? '/explore' : islandOn ? '/island' : '/park';
-        }).then(path => { if (active) setDestination(path); }).catch(() => { if (active) setDestination('/explore'); });
+            return oldRun ? '/explore' : '/park';
+        }).then(path => { if (active) setDestination(path); }).catch(() => { if (active) setDestination(islandOn ? '/island' : '/explore'); });
         return () => { active = false; };
     }, [islandOn]);
     if (!islandOn && !BUILD_PLAY_ENABLED) return <Navigate to="/explore" replace />;

@@ -19,6 +19,7 @@ import { ParkAnswerForm } from '../components/park/ParkAnswerForm';
 import { useParkActions } from '../components/park/useParkActions';
 import { reachPwaUpdateCheckpoint } from '../pwa';
 import '../components/park/Park.css';
+import { islandEnabled } from '../domain/island/feature';
 
 type Playback = { id: string; courseId: string; layout: (PartKind | null)[]; index: number; done: boolean };
 
@@ -86,7 +87,10 @@ function ParkSession({ profile }: { profile: UserProfile }) {
         data-build-revision={__BUILD_REVISION__} data-delivery-id="build-play-v1" data-editing={editing && !playing && screen === 'course'}>
         <header className="park-header">
             <div><p>{profile.name}の</p><h1>ちいさな遊園地</h1></div>
-            <button className="park-text-button" disabled={busy} onClick={() => navigate('/settings')}>せってい</button>
+            <nav className="flex shrink-0 flex-col" aria-label="ゆうえんちの メニュー">
+                {islandEnabled() && <button className="park-text-button" disabled={busy} onClick={() => navigate('/island')}>しまへ もどる</button>}
+                <button className="park-text-button" disabled={busy} onClick={() => navigate('/settings')}>せってい</button>
+            </nav>
         </header>
         {error && <div role="alert" className="park-support"><p>{error}</p><button className="park-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
         {message && <p className="park-message" role="status">{message}</p>}

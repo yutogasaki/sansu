@@ -27,7 +27,7 @@
 - 「まなぶ」で、学年 → 科目 → 選んだ科目の到達目安を一面一選択で聞く。どれも明示的な選択を必要とし、未選択を能力や初期進度へ変換しない。名前は学年面の任意入力で、空なら表示用の「プレイヤー」とする。通常の連問・全入力へ追加操作を挟まない。
 - 算数を選んだ場合は親仕様2.4の学年基準・補正・clamp・retired投入を維持する。英語は既存のbeginner=1 / some=4 / confident=7。新規の英語のみでは構造上必要な算数フィールドを非使用の既定値として持つが、算数MemoryStateやretiredを作らず、理解や回答実績と見なさない。
 - 最後の必要な選択後、安定した作成IDでプロフィール・初期MemoryState・active IDの正本を同一transactionで一回だけ保存する。二重タップ・再送・別タブの初回完了で重複プロフィールを作らず、失敗は全体をrollbackして同じ入力から再試行できる。学習ログ、昇格、回答窓へ新しい実績を書かない。保存中はPWA critical-persistence holdを維持し、成功後だけ通常起動へ進む。演出のための固定待ち時間を置かない。
-- 既存プロフィールで `/onboarding` に入った場合は `/` へ戻す。設定のプロフィール追加は明示的な `/onboarding?mode=add` とし、名前必須の従来順序・既存の初期投入を保つ。新しい追加を始めたときだけ作成IDを新しくする。旧active Explore runの起動優先、通常Islandホーム、Study/Parkの学習・遊びは変えない。
+- 既存プロフィールで `/onboarding` に入った場合は `/` へ戻す。設定のプロフィール追加は明示的な `/onboarding?mode=add` とし、名前必須の従来順序・既存の初期投入を保つ。新しい追加を始めたときだけ作成IDを新しくする。通常起動はIslandホームとする。旧active Explore runとStudy/Parkの学習・遊びの保存は維持し、「ほかの あそび」から明示的に再開する。
 - 見た目は既存moon-gardenの木・家・土地・住民の大きさと配色、実際の家具への視線と接地を再利用する。新しい画像や世界のキャラクターを混ぜない。設定面は既存の明るい操作面と44px以上の選択肢、1つの問いだけに絞る。常設の誘い文・説明・名前必須の一画面を削る。
 
 静的なUIテストは実操作の証拠ではない。統合後のphone/tabletで、花とあかりの実タップ、無操作での学習開始、空欄名、全教科分岐、戻る／保存失敗／再送、既存プロフィールと旧探索再開、Settings追加、音off/reduced motion、PWA保存保護を確認する。子どもの自発的再遊びや理解を作者の確認から推定しない。
@@ -42,7 +42,7 @@
 
 Dexieに専用の島・学習予約・イベントを追加する加算migration。active profileの所有権とrevisionを検証し、回答・既存学習ログ・SRS・完了受取権は同一transaction。受取の重複、二重送信、別タブの更新を冪等receiptとCASで防ぐ。途中の区間と未受取報酬、収納・配置はプロフィールごとに再開する。旧データの消去・置換はしない。
 
-delivery ID `mystic-island-v1`、visual candidate `mystic-island-procedural-v2`。DEVでは直接アクセス可能、productionは `VITE_ISLAND_ENABLED=true` で有効。起動時は保存済み旧探索runを優先する。PWAは `/island` の初回入力から保護し、学習の区切りでユーザーが続行・島へ戻る時、必要な保存の完了後だけcheckpointを開く。
+delivery ID `mystic-island-v1`、visual candidate `mystic-island-procedural-v2`。DEVでは直接アクセス可能、productionは `VITE_ISLAND_ENABLED=true` で有効。Island有効時の通常起動は常に島とし、旧探索runを勝手に開始しない。島の「ほかの あそび」に遊園地・旧探索・2人遊びを置く。下部ナビの中央は島、直接練習は補助項目とする。遊園地には保存中disabledの「しまへ もどる」を常設し、作品・予約・進行を消さずに島へ戻れる。直接URLとPWAの同一画面再読込は保持する。PWAは `/island` の初回入力から保護し、学習の区切りでユーザーが続行・島へ戻る時、必要な保存の完了後だけcheckpointを開く。
 
 ## Verification and release gates
 

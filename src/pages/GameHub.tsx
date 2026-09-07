@@ -6,7 +6,8 @@ import { PokkoBaseArt } from "../components/explore/PokkoBaseArt";
 import { Icons } from "../components/icons";
 import { ScreenScaffold } from "../components/ScreenScaffold";
 import { BUILD_PLAY_AVAILABLE } from "../domain/park/feature";
-import { islandAvailable } from "../domain/island/feature";
+import { islandAvailable, islandEnabled } from "../domain/island/feature";
+import { OtherGames } from "../components/island/OtherGames";
 
 const TWO_PLAYER_OPTIONS = [
     {
@@ -34,6 +35,8 @@ const TWO_PLAYER_OPTIONS = [
 export const GameHub: React.FC = () => {
     const navigate = useNavigate();
     const reduceMotion = Boolean(useReducedMotion());
+
+    if (islandEnabled()) return <OtherGames />;
 
     return (
         <div

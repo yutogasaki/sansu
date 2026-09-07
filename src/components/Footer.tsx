@@ -2,6 +2,8 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Icons } from "./icons";
 import { warmUpTTS } from "../utils/tts";
+import { islandEnabled } from "../domain/island/feature";
+import { Leaf } from "lucide-react";
 
 type TabItem = {
     to: string;
@@ -14,14 +16,17 @@ export const Footer: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const currentPath = location.pathname;
+    const islandHome = islandEnabled();
+    const PrimaryIcon = islandHome ? Leaf : Icons.Study;
 
     const leftTabs: TabItem[] = [
-        { to: "/explore", icon: Icons.Explore, label: "たんけん" },
+        islandHome ? { to: "/study", icon: Icons.Study, label: "れんしゅう" }
+            : { to: "/explore", icon: Icons.Explore, label: "たんけん" },
         { to: "/stats", icon: Icons.Stats, label: "きろく" },
     ];
 
     const rightTabs: TabItem[] = [
-        { to: "/battle", icon: Icons.Play, label: "基地" },
+        { to: "/battle", icon: Icons.Play, label: islandHome ? "ほかの あそび" : "基地" },
         { to: "/settings", icon: Icons.Settings, label: "せってい", activePaths: ["/settings", "/parents", "/dev"] },
     ];
 
@@ -67,13 +72,13 @@ export const Footer: React.FC = () => {
             <button
                 className="fab"
                 type="button"
-                aria-label="まなぶ"
+                aria-label={islandHome ? "ふしぎな しま" : "まなぶ"}
                 onClick={() => {
                     warmUpTTS();
-                    navigate("/study");
+                    navigate(islandHome ? "/island" : "/study");
                 }}
             >
-                <Icons.Study
+                <PrimaryIcon
                     width={26}
                     height={26}
                     strokeWidth={2.6}

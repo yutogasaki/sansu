@@ -1,0 +1,338 @@
+
+> pokko-fushigi-zukan-app@0.0.0 verify:release
+> npm run verify:core && npm run e2e:smoke && npm run e2e:pwa-update
+
+
+> pokko-fushigi-zukan-app@0.0.0 verify:core
+> npm run docs:check && npm run lint && npm run typecheck && npm run test:run && npm run build
+
+
+> pokko-fushigi-zukan-app@0.0.0 docs:check
+> node tools/check-docs.mjs
+
+WARN
+- docs/tasks/design-refresh-status.md: 次回棚卸し目安 (2026-05-15) is in the past
+- docs/tasks/backlog.md: 次回棚卸し目安 (2026-05-15) is in the past
+- docs/tasks/ui-fix-tasklist.md: 次回棚卸し目安 (2026-05-15) is in the past
+- docs/tasks/active/2026-03-17-v1-core-stabilization-plan.md: Review By (2026-05-15) is in the past
+- docs/tasks/active/2026-07-19-root-tangle-observation-morph.md: Review By (2026-07-26) is in the past
+- docs/tasks/active/2026-07-21-cold-open-value-loop.md: Review By (2026-07-28) is in the past
+- docs/tasks/active/2026-07-23-whole-app-brand-coherence.md: Review By (2026-07-30) is in the past
+PASS docs:check
+
+> pokko-fushigi-zukan-app@0.0.0 lint
+> eslint .
+
+
+> pokko-fushigi-zukan-app@0.0.0 typecheck
+> tsc -b --pretty false
+
+
+> pokko-fushigi-zukan-app@0.0.0 test:run
+> vitest run
+
+
+ RUN  v2.1.9 /private/tmp/sansu-island-home-release
+
+ ✓ src/domain/math/generators/counting.test.ts (51 tests) 9ms
+ ✓ src/hooks/blockGenerators.test.ts (31 tests) 12ms
+ ✓ src/hooks/useStudySession.logic.test.ts (40 tests) 17ms
+ ✓ src/domain/explore/__tests__/reducer.test.ts (29 tests) 7ms
+ ✓ src/domain/explore/__tests__/g0NumberVessel.test.ts (13 tests) 7ms
+ ✓ src/components/island/three/sharedActivities.test.ts (23 tests) 473ms
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ✓ src/components/island/three/residentRig.test.ts (38 tests) 1113ms
+ ✓ src/domain/math/planner.test.ts (25 tests) 12ms
+ ✓ src/domain/explore/__tests__/persistenceRepository.test.ts (36 tests) 578ms
+ ✓ src/domain/logic.test.ts (25 tests) 10ms
+ ✓ src/domain/explore/__tests__/learningPlannerSegment.test.ts (15 tests) 554ms
+ ✓ src/domain/explore/__tests__/problemAdapter.test.ts (38 tests) 28ms
+ ✓ src/domain/explore/__tests__/g0NumberSuika.test.ts (32 tests) 34ms
+ ✓ src/components/island/IslandAnswerForm.test.tsx (38 tests) 438ms
+   ✓ Island problem semantic presentation > has a curated equivalent for every symbol actually emitted by the current math generators 315ms
+ ✓ src/domain/test/printability.test.ts (22 tests) 12ms
+ ✓ src/components/island/three/sharedActivityController.test.ts (20 tests) 496ms
+ ✓ src/domain/island/learningObservationCommit.test.ts (28 tests) 1098ms
+ ✓ src/domain/explore/__tests__/learningSegmentPersistence.test.ts (7 tests) 136ms
+ ✓ src/domain/explore/__tests__/g0Whitebox.test.ts (13 tests) 14ms
+ ✓ src/domain/user/repository.test.ts (9 tests) 5ms
+ ✓ src/domain/math/numberSenseProgress.test.ts (32 tests) 4ms
+ ✓ src/components/island/three/navigation.test.ts (17 tests) 47ms
+ ✓ src/domain/park/park.test.ts (131 tests) 390ms
+ ✓ src/components/island/three/residentInteraction.test.ts (16 tests) 47ms
+ ✓ src/components/island/three/furnitureClearanceController.test.ts (9 tests) 413ms
+ ✓ src/domain/explore/__tests__/g0ChainShot.test.ts (12 tests) 4ms
+ ✓ src/domain/math/writtenArithmetic.test.ts (36 tests) 95ms
+ ✓ src/components/explore/ExploreProblemPanel.test.tsx (16 tests) 57ms
+ ✓ src/components/island/three/sharedActivityVisuals.test.ts (12 tests) 75ms
+ ✓ src/domain/explore/__tests__/learningSegment.test.ts (20 tests) 5ms
+ ✓ src/domain/island/progressiveSupport.test.ts (13 tests) 388ms
+ ✓ src/domain/island/learningObservation.test.ts (19 tests) 11ms
+ ✓ src/domain/explore/__tests__/wagerRun.test.ts (19 tests) 7ms
+ ✓ src/components/island/three/furniture.test.ts (14 tests) 157ms
+ ✓ src/domain/explore/__tests__/observation.test.ts (11 tests) 5ms
+ ✓ src/domain/island/island.test.ts (16 tests) 3451ms
+   ✓ island frozen learning sets > reserves six familiar or three first-seen questions without learning writes and restores the exact plan 516ms
+   ✓ island frozen learning sets > keeps wrong answers on the same problem and assistance sticky without fabricating mastery 647ms
+   ✓ island frozen learning sets > supports mixed vocabulary sets and applies vocabulary progression only to independent answers 993ms
+   ✓ island frozen learning sets > preserves fraction multi-input and stepwise written arithmetic in complete reserved plans 864ms
+ ✓ src/domain/island/learningContinuity.test.ts (13 tests) 2884ms
+   ✓ island learning continuity > lets the next overdue word appear while the oldest supported word remains Due 375ms
+   ✓ island learning continuity > shares review opportunities across 6-question 'math' sets 439ms
+   ✓ island learning continuity > shares review opportunities across 3-question 'mix' sets 435ms
+   ✓ island learning continuity > does not disguise unselected pending checks as ordinary Due across repeated short sets 582ms
+ ✓ src/domain/explore/__tests__/runCheckpoint.test.ts (7 tests) 6ms
+ ✓ src/domain/park/writtenArithmeticIntegration.test.ts (25 tests) 141ms
+ ✓ src/domain/user/onboarding.test.ts (11 tests) 222ms
+ ✓ src/components/island/three/furnitureClearance.test.ts (9 tests) 259ms
+ ✓ src/domain/learningRepository.test.ts (11 tests) 17ms
+ ✓ src/components/island/useIslandLearningObservation.test.ts (10 tests) 3ms
+ ✓ src/domain/test/trigger.test.ts (8 tests) 6ms
+ ✓ src/pwaUpdateUtils.test.ts (43 tests) 8ms
+ ✓ src/components/island/three/sharedActivityOcclusion.test.ts (9 tests) 10ms
+ ✓ src/components/island/three/worldPalette.test.ts (4 tests) 75ms
+ ✓ src/domain/test/paperTestRepository.test.ts (6 tests) 140ms
+ ✓ src/domain/explore/__tests__/learningPlanner.test.ts (4 tests) 127ms
+ ✓ src/domain/explore/__tests__/discoveryPage.test.ts (9 tests) 6ms
+ ✓ src/components/explore/DiscoveryReveal.test.ts (7 tests) 63ms
+ ✓ src/components/explore/rootPullPresentation.test.ts (10 tests) 2ms
+ ✓ src/domain/math/generators/advanced.test.ts (10 tests) 17ms
+ ✓ src/components/island/IslandLearningSupport.test.tsx (17 tests) 78ms
+ ✓ src/domain/explore/__tests__/encounters.test.ts (7 tests) 3ms
+ ✓ src/domain/explore/__tests__/rapidLoop.test.ts (6 tests) 5ms
+ ✓ src/components/island/three/placementOcclusion.test.ts (8 tests) 138ms
+ ✓ src/domain/explore/__tests__/rapidLoopEligibility.test.ts (27 tests) 6ms
+ ✓ src/pages/Explore.test.ts (9 tests) 5ms
+ ✓ src/components/explore/ExplorePathChoice.test.tsx (5 tests) 36ms
+ ✓ src/components/domain/PrintableTestPreview.test.tsx (6 tests) 65ms
+ ✓ src/domain/math/generators/subtraction.test.ts (10 tests) 7ms
+ ✓ src/components/island/three/geometry.test.ts (8 tests) 1442ms
+   ✓ island sculpted geometry > keeps the static scenery and tree within a bounded mesh and triangle budget 1356ms
+ ✓ src/components/dev/suika/NumberSuikaStage.test.tsx (10 tests) 17ms
+ ✓ src/domain/battle/engine.test.ts (10 tests) 10ms
+ ✓ src/components/ikimono/fuwafuwaDailyConversation.test.ts (4 tests) 4ms
+ ✓ src/domain/math/generators/addition.test.ts (10 tests) 6ms
+ ✓ src/components/island/three/learningReaction.test.ts (12 tests) 4ms
+ ✓ src/components/island/three/sceneFraming.test.ts (5 tests) 351ms
+ ✓ src/components/dev/g0v2/G0MechanicRemixStage.test.tsx (4 tests) 11ms
+ ✓ src/components/dev/g0/G0WhiteboxStage.test.tsx (6 tests) 13ms
+ ✓ src/components/explore/PaintedEncounterLineage.test.tsx (5 tests) 24ms
+ ✓ src/domain/algorithms/srs.test.ts (14 tests) 2ms
+ ✓ src/components/park/sceneGeometry.test.ts (5 tests) 12ms
+ ✓ src/components/park/three/choreography.test.ts (6 tests) 7ms
+ ✓ src/prototypes/pittari/engine.test.ts (18 tests) 7ms
+ ✓ src/domain/math/generators/division.test.ts (5 tests) 19ms
+ ✓ src/components/island/three/residentInterest.test.ts (11 tests) 6ms
+ ✓ src/domain/test/paperTest.test.ts (4 tests) 4ms
+ ✓ src/domain/island/learningChecks.test.ts (14 tests) 6ms
+ ✓ src/components/island/three/placementPreview.test.ts (3 tests) 40ms
+ ✓ src/components/explore/snapRootPresentation.test.ts (5 tests) 2ms
+ ✓ src/utils/pdfGenerator.test.ts (5 tests) 6ms
+ ✓ src/components/explore/RootPullOpeningArt.test.tsx (8 tests) 11ms
+ ✓ src/components/explore/FireflyFlowerEncounterArt.test.tsx (8 tests) 14ms
+ ✓ src/components/ikimono/lifecycle.test.ts (5 tests) 5ms
+ ✓ src/domain/explore/__tests__/generator.test.ts (2 tests) 253ms
+ ✓ src/components/island/learningFeedback.test.ts (6 tests) 3ms
+ ✓ src/components/explore/ReturnSummary.test.tsx (5 tests) 71ms
+ ✓ src/domain/explore/__tests__/openingExperience.test.ts (5 tests) 2ms
+ ✓ src/components/explore/MakimodonEncounterArt.test.tsx (8 tests) 30ms
+ ✓ tools/asset-policy.test.mjs (19 tests) 6ms
+ ✓ src/domain/test/testSet.test.ts (3 tests) 40ms
+ ✓ src/domain/math/generators/fraction.test.ts (6 tests) 2ms
+ ✓ src/domain/math/hissanEngine.test.ts (8 tests) 7ms
+ ✓ src/domain/math/additionProgress.test.ts (9 tests) 2ms
+ ✓ src/components/explore/makimodonPresentation.test.ts (4 tests) 4ms
+ ✓ src/domain/stats/repository.test.ts (1 test) 23ms
+ ✓ src/components/ikimono/fuwafuwaSpeech.test.ts (6 tests) 4ms
+ ✓ src/domain/explore/__tests__/rewardPresentation.test.ts (7 tests) 1ms
+ ✓ src/domain/stats/aggregation.test.ts (3 tests) 3ms
+ ✓ src/components/island/three/sharedActivityContinuity.test.ts (12 tests) 1904ms
+ ✓ src/components/explore/rapidTrailPresentation.test.ts (4 tests) 2ms
+ ✓ src/domain/explore/__tests__/suikaQuantity.test.ts (7 tests) 3ms
+ ✓ src/domain/explore/__tests__/attemptIdentity.test.ts (8 tests) 4ms
+ ✓ src/domain/explore/__tests__/rewards.test.ts (5 tests) 2ms
+ ✓ src/components/domain/WrittenArithmeticGrid.test.tsx (3 tests) 11ms
+ ✓ src/domain/explore/__tests__/g0MechanicMetrics.test.ts (2 tests) 1ms
+ ✓ src/components/ikimono/hitokoto.test.ts (5 tests) 3ms
+ ✓ src/components/ikimono/fuwafuwaAlbumCopy.test.ts (3 tests) 2ms
+ ✓ src/domain/math/subtractionProgress.test.ts (5 tests) 4ms
+ ✓ src/domain/explore/__tests__/runStructure.test.ts (3 tests) 2ms
+ ✓ src/components/island/learningGuidance.test.ts (3 tests) 2ms
+ ✓ src/domain/math/sequenceProgress.test.ts (5 tests) 4ms
+ ✓ src/domain/explore/__tests__/encounterPhase.test.ts (7 tests) 2ms
+ ✓ src/domain/benchmark/coldOpenFixedTen.test.ts (2 tests) 2ms
+ ✓ src/domain/math/comparisonProgress.test.ts (5 tests) 6ms
+ ✓ src/domain/explore/__tests__/replay.test.ts (3 tests) 5ms
+ ✓ src/components/ikimono/fuwafuwaMilestones.test.ts (4 tests) 1ms
+ ✓ src/components/explore/AuthoredEncounterArt.test.tsx (6 tests) 12ms
+ ✓ src/components/explore/ResearchBookStage.test.tsx (3 tests) 22ms
+ ✓ src/components/dev/devStudySelection.test.ts (2 tests) 2ms
+ ✓ src/components/ikimono/sceneText.test.ts (3 tests) 3ms
+ ✓ src/components/ikimono/ikimonoMotion.test.ts (3 tests) 1ms
+ ✓ src/components/ui/modalLayerManager.test.ts (2 tests) 1ms
+ ✓ src/components/gate/arithmeticGate.test.ts (3 tests) 2ms
+ ✓ src/components/explore/PokkoVisualLineage.test.tsx (5 tests) 45ms
+ ✓ src/domain/island/feature.test.ts (6 tests) 2ms
+ ✓ src/components/home/homeMagicEnergy.test.ts (2 tests) 3ms
+ ✓ src/domain/explore/__tests__/fixedTenBenchmark.test.ts (2 tests) 4ms
+ ✓ src/utils/learningDay.test.ts (5 tests) 7ms
+ ✓ src/domain/math/deterministicGeneration.test.ts (2 tests) 25ms
+ ✓ src/components/explore/RootPullDiscoveryReveal.test.tsx (1 test) 13ms
+ ✓ src/components/ikimono/IkimonoArtwork.test.tsx (2 tests) 7ms
+ ✓ src/utils/theme.test.ts (4 tests) 2ms
+ ✓ src/components/explore/PokkoBaseArt.test.tsx (1 test) 6ms
+ ✓ src/domain/math/hissanTypes.test.ts (2 tests) 1ms
+ ✓ src/domain/english/generator.test.ts (1 test) 1ms
+ ✓ src/components/island/IslandWelcome.test.tsx (1 test) 16ms
+ ✓ src/hooks/learningProgression.integration.test.ts (11 tests) 7887ms
+   ✓ learning progression from real generated questions > reaches 70% promotion through generated normal blocks and persisted answers 7348ms
+   ✓ learning progression from real generated questions > holds the old math test range when the persisted 30th answer promotes the main level 460ms
+ ✓ src/components/explore/MakimodonResearchArt.test.tsx (2 tests) 28ms
+ ✓ src/components/explore/exploreAnswerInput.test.ts (3 tests) 1ms
+ ✓ src/components/explore/DiscoveryPageArt.test.tsx (1 test) 8ms
+ ✓ src/components/island/three/sharedActivityFraming.test.ts (23 tests) 12319ms
+   ✓ one side view contains the complete shared delivery > 'flower' fits all quarter-turn chair directions and phone/tablet stage shapes 1258ms
+   ✓ one side view contains the complete shared delivery > 'star' fits all quarter-turn chair directions and phone/tablet stage shapes 808ms
+   ✓ one side view contains the complete shared delivery > 'bubble' fits all quarter-turn chair directions and phone/tablet stage shapes 655ms
+   ✓ one side view contains the complete shared delivery > scores actual held poses for '624 star spectator' across every phase without touching the live rigs 691ms
+   ✓ one side view contains the complete shared delivery > scores actual held poses for '484 star self-occlusion' across every phase without touching the live rigs 525ms
+   ✓ one side view contains the complete shared delivery > scores actual held poses for '484 bubble self-occlusion' across every phase without touching the live rigs 418ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'phone star' scene 597ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'tablet star' scene 638ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'phone flower' scene 331ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'tablet flower' scene 366ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'tablet bubble' scene 357ms
+   ✓ one side view contains the complete shared delivery > selects a legal fixed presentation for cdc5 phone without inventing readability 558ms
+   ✓ one side view contains the complete shared delivery > selects a legal fixed presentation for cdc5 tablet without inventing readability 813ms
+   ✓ one side view contains the complete shared delivery > selects a legal fixed presentation for cdc5 obstructed without inventing readability 1663ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'phone-flower' preserves a legal readable presentation 445ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'phone-bubble' preserves a legal readable presentation 459ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'tablet-flower' preserves a legal readable presentation 382ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'tablet-fox-flower' preserves a legal readable presentation 537ms
+
+ Test Files  144 passed (144)
+      Tests  1676 passed (1676)
+   Start at  06:36:35
+   Duration  12.90s (transform 3.29s, setup 0ms, collect 44.97s, tests 39.39s, environment 15ms, prepare 6.05s)
+
+
+> pokko-fushigi-zukan-app@0.0.0 build
+> tsc -b && vite build && npm run assets:check
+
+vite v7.3.1 building client environment for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 3379 modules transformed.
+Generated an empty chunk: "pdf".
+rendering chunks...
+computing gzip size...
+dist/version.json                             0.38 kB │ gzip:   0.23 kB
+dist/index.html                               1.60 kB │ gzip:   0.72 kB
+dist/assets/NotoSansJP-C_ziqpoc.woff2        13.06 kB
+dist/assets/IslandWelcome-BR6pg2p2.css        2.02 kB │ gzip:   0.71 kB
+dist/assets/Island-QYKHtOSe.css               8.49 kB │ gzip:   2.31 kB
+dist/assets/Island-B58t23wb.css              14.75 kB │ gzip:   3.16 kB
+dist/assets/index-CILXDCvC.css              226.43 kB │ gzip:  38.10 kB
+dist/assets/pdf-l0sNRNKZ.js                   0.00 kB │ gzip:   0.02 kB
+dist/assets/IslandWelcome-C7xNBe-s.js         1.82 kB │ gzip:   0.98 kB
+dist/assets/IslandOnboarding-BgGGi3ZD.js      3.37 kB │ gzip:   1.45 kB
+dist/assets/icons-B8F7WRbJ.js                12.93 kB │ gzip:   5.09 kB
+dist/assets/LearningAnswerForm-DsYH32Mg.js   13.63 kB │ gzip:   5.59 kB
+dist/assets/Park-C0iq47eB.js                 15.49 kB │ gzip:   5.47 kB
+dist/assets/ThreeParkStage-Bhhc-ZpG.js       15.54 kB │ gzip:   6.82 kB
+dist/assets/Island-CaPMPaIp.js               15.57 kB │ gzip:   5.22 kB
+dist/assets/audio-DwtSHwBT.js                36.13 kB │ gzip:   9.75 kB
+dist/assets/react-DcHpdqMy.js                48.53 kB │ gzip:  17.24 kB
+dist/assets/Island-T6-KWCtt.js               48.92 kB │ gzip:  16.68 kB
+dist/assets/data-DHx4MMMe.js                 96.36 kB │ gzip:  32.45 kB
+dist/assets/motion-iLBaTeAD.js              119.65 kB │ gzip:  39.54 kB
+dist/assets/runtime-Diuh6hF3.js             122.10 kB │ gzip:  40.68 kB
+dist/assets/charts-Dqb-tBNT.js              371.57 kB │ gzip: 108.42 kB
+dist/assets/RoundedBoxGeometry-DFOxnxgF.js  569.91 kB │ gzip: 145.20 kB
+dist/assets/index-Bi0MqyeF.js               931.65 kB │ gzip: 260.53 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 3.33s
+
+PWA v1.2.0
+mode      generateSW
+precache  143 entries (3740.57 KiB)
+files generated
+  dist/sw.js
+  dist/workbox-fc21a5da.js
+
+> pokko-fushigi-zukan-app@0.0.0 assets:check
+> node tools/check-asset-budget.mjs
+
+PASS assets:check
+- PWA precache: 143 unique files, 9.57 MiB / 12.00 MiB
+- Explore artwork: 27 production files, 4.92 MiB / 8.00 MiB
+- Production-input contract: docs/design only; absent from public and precache
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:smoke
+> node tools/e2e-smoke.mjs
+
+Starting dev server on http://127.0.0.1:4173...
+
+> pokko-fushigi-zukan-app@0.0.0 dev
+> vite --host 127.0.0.1 --port 4173 --strictPort
+
+6:36:54 AM [vite] (client) Re-optimizing dependencies because vite config has changed
+
+  VITE v7.3.1  ready in 102 ms
+
+  ➜  Local:   http://127.0.0.1:4173/
+Dev server ready on http://127.0.0.1:4173.
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+PASS redirects to onboarding when no profile (884ms)
+PASS completes onboarding, chooses a route, and opens Makimodon (1108ms)
+PASS keeps the classic opening playable with expanded mobile browser chrome (1075ms)
+PASS keeps the direct study route working (1685ms)
+PASS keeps the direct review route working (969ms)
+PASS keeps the direct settings route working (973ms)
+PASS keeps legacy fuwafuwa album out of child records (973ms)
+PASS completes periodic test from stats and opens results (2915ms)
+PASS launches explore immediately and safely returns at a route break (2366ms)
+PASS keeps the 390x800 route boundary fully visible (2345ms)
+PASS runs Root Pull v2 inline with reduced motion and the numeric keypad (2309ms)
+Snap Root measured ms { firstIncorrect: 440, secondIncorrect: 538, correct: [ 143, 122 ] }
+PASS runs the Snap Root breakthrough loop at 390px (4457ms)
+PASS keeps the Snap Root breakthrough loop playable on tablet (2251ms)
+PASS can exit safely after explore start persistence fails (1093ms)
+PASS safely exits and retries from a pending explore problem (1408ms)
+PASS commits one explore answer under rapid double submit (1401ms)
+PASS retries the same explore attempt after a save failure (1308ms)
+PASS resumes fixed-ten explore across retry, route, discovery, and partial-input boundaries (4886ms)
+PASS finishes last-light rescue without blocking on an ordinary clue (1264ms)
+PASS retries voluntary return without early terminal progress (2370ms)
+PASS grows the immersive light bridge from an addition answer (4023ms)
+PASS keeps the light bridge playable on tablet (4031ms)
+6:37:42 AM [vite] (client) hmr update /src/index.css
+6:37:42 AM [vite] (client) hmr update /src/index.css
+PASS keeps the light bridge connected on a landscape tablet (4017ms)
+PASS keeps the light bridge playable on a 1024px portrait tablet (3968ms)
+PASS keeps the light bridge playable on a wide portrait tablet (3961ms)
+PASS opens the root tangle with profile-near subtraction (5077ms)
+PASS keeps the root tangle playable on tablet (5098ms)
+PASS keeps the root tangle playable on a landscape tablet (5250ms)
+PASS keeps the root tangle playable on a 1024px portrait tablet (5139ms)
+PASS keeps the root tangle playable on a wide portrait tablet (5116ms)
+PASS guards /parents route behind parent gate (972ms)
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:pwa-update
+> node tools/e2e-pwa-update.mjs
+
+  ➜  Local:   http://127.0.0.1:4273/
+PASS PWA onboarding safe-router handoff
+PASS PWA protected router recovery handoff
+PASS PWA same-route battle checkpoint
+PASS PWA service-worker-controlled version-drift recovery

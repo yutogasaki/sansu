@@ -6,6 +6,10 @@
 
 > 状態: 探索ピボットの親仕様。2026-07-24時点では `/` を `/explore` へ転送し、説明画面を挟まず探索ランを通常起動面とする。Study共通planner / writerによる最小学習接続、`/battle` を探索優先の「探検基地」へ再編する縦切り、version付きactive checkpointから同じ問題境界へ戻るrun再開、3 / 3 / 2問のimmutable segment予約、全planner sourceの解放上限guardとrapid-loop適格性まで実装済み。ユーザー実機で `classic-v1` がQ1〜Q3の旧マキモドンからQ4以降の別画風へ切り替わることを確認したため、既知のmixed-lineage FAILとしてdefaultから撤去し、production defaultを `snap-root-v1` へ変更する。これは価値ゲート通過の宣言ではなく、既知FAILを配信し続けないためのcontainmentである。cold-openは `dig-pop-carry-bloom-v3`、後続Q4〜Q8は大きな役者と一つの段差オチへ再構成した `firefly-stumble-bloom-painted-v5` を使う。formal Gate Bの未説明5人テストとexact-build監査が終わるまで最終visual承認はHOLDとする。`/study`・2人ゲーム・設定系ルートと既存データは維持し、発見図鑑のrun横断保存は後続とする。
 
+## 島をメインにする公開導線（2026-09-08）
+
+Island有効時は「ふしぎな しま」をホームとする。プロフィールありの `/` は旧探索の途中runがあっても `/island` へ進む。下部ナビの中央も島へ戻る。遊園地・旧探索・2人遊びは島の「ほかの あそび」（`/battle`）にまとめ、遊園地には保存中を除き「しまへ もどる」を常設する。旧作品・途中学習・探索runは保持し、選んだ遊びから再開できる。明示的な `/park` などへの直接アクセスと操作中のPWA更新保護は維持する。Island無効時の起動契約は従来どおり。
+
 ## 目次
 
 - [0. 仕様書体系（親＝神様）](#0-仕様書体系親神様)

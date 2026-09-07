@@ -1,12 +1,14 @@
 # docs/product/12_screen_flow_spec.md — 画面・遷移仕様
 
+> 2026-09-08の公開導線: Island有効時は `/` → `/island` をホームとし、`/battle` は「ほかの あそび」の一覧とする。以下の探索を通常起動とする記述はIsland無効時に適用する。
+
 > 状態: gameplayは **MVP-0/1**、run・回答receipt・終了status保存は **MVP-2a**、Study共通planner / SRS接続は **MVP-2b**。`/` は `/explore` へ転送し、説明CTAを挟まない探索ランを通常起動面とする。`/battle` は探索優先の「探検基地」へ再編し、既存の学習・2人ゲーム・設定ルートは維持する。
 
 ## 1. ルート方針
 
-Island初回では `/onboarding` をプロフィール不要のWelcome → 「まなぶ」 → 明示的な学習設定 → 原子的な保存 → `/` とする。既存プロフィールでの `/onboarding` は `/` へ戻し、設定からの追加だけ `/onboarding?mode=add` を使用する。`/` の旧active探索run優先は変更しない。詳細は [28_mystic_island_spec.md](28_mystic_island_spec.md) の初回導線。2026-09-07に採用・統合し、実画面検証を進める。
+Island初回では `/onboarding` をプロフィール不要のWelcome → 「まなぶ」 → 明示的な学習設定 → 原子的な保存 → `/` とする。既存プロフィールでの `/onboarding` は `/` へ戻し、設定からの追加だけ `/onboarding?mode=add` を使用する。Island有効時の `/` は常に `/island` を開く。旧active探索runは「ほかの あそび」から保存内容を再開する。詳細は [28_mystic_island_spec.md](28_mystic_island_spec.md) の初回導線。2026-09-07に採用・統合し、実画面検証を進める。
 
-`/park` は [22_shared_subject_build_and_play_spec.md](22_shared_subject_build_and_play_spec.md) の作品再演 → 制作選択 → 学習 → 試遊・再編集を全画面表示する。起動flag有効時の `/` は旧active探索を先に復帰し、それがなければ遊園地を開く。未完制作があっても無料再演できる。プロフィールなしはonboardingへ送る。
+`/park` は [22_shared_subject_build_and_play_spec.md](22_shared_subject_build_and_play_spec.md) の作品再演 → 制作選択 → 学習 → 試遊・再編集を全画面表示する。Island無効かつBuildPlay有効時だけ、`/` は旧active探索を先に復帰し、それがなければ遊園地を開く。Island有効時は遊園地を `/battle` の「ほかの あそび」に置き、遊園地のヘッダーから島へ戻れる。未完制作があっても無料再演できる。プロフィールなしはonboardingへ送る。
 
 ### 1.1 現行ルート
 

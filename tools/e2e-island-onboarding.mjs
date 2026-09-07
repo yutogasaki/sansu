@@ -244,7 +244,7 @@ async function compatibility(page, row, created) {
     await record(page, row, 'settings-add-complete');
     // A real old Explore reservation is created by its own UI route, never by a
     // minimal synthetic run. This deliberately separate compatibility journey
-    // then checks the normal root launch's established precedence.
+    // checks Island remains home and the old run resumes by explicit choice.
     await page.goto(`${base}/#/explore`);
     const beforeIdentity = await waitLegacyExploreReady(page), beforeLaunch = await onboardingStores(page);
     row.legacyExploreProbe = { beforeIdentity, beforeLaunch };
@@ -254,14 +254,17 @@ async function compatibility(page, row, created) {
     assert.equal(activeRun.activeCheckpoint.state.profileId, second.id);
     assert.equal(activeRun.activeCheckpoint.state.pendingProblem.problem.id, beforeIdentity.problemId);
     assert.equal(activeRun.activeCheckpoint.revision, beforeIdentity.revision);
-    await page.goto(`${base}/#/`); await page.waitForURL('**/#/explore');
+    await page.goto(`${base}/#/`); await page.waitForURL('**/#/island'); await waitReady(page);
+    await button(page, 'ほかの あそび').click();
+    await page.getByRole('button', { name: /ポッコの たんけん/ }).click();
+    await page.waitForURL('**/#/explore');
     const restoredIdentity = await waitLegacyExploreReady(page, beforeIdentity);
     const restored = await onboardingStores(page);
     Object.assign(row.legacyExploreProbe, { restoredIdentity, restored });
     assert.deepEqual(restored.islands, beforeLaunch.islands); assert.deepEqual(restored.islandPlans, beforeLaunch.islandPlans);
     assert.deepEqual(restored.exploreRuns.rows.find(run => run.runId === activeRun.runId), activeRun);
-    row.legacyExplore = { runId: activeRun.runId, provenance: 'Actual Explore UI generated active checkpoint after real Settings add', launchPrecedence: true };
-    await record(page, row, 'legacy-explore-priority');
+    row.legacyExplore = { runId: activeRun.runId, provenance: 'Actual Explore UI generated active checkpoint after real Settings add', islandHomeWithExplicitResume: true };
+    await record(page, row, 'legacy-explore-explicit-resume');
 }
 
 try {
