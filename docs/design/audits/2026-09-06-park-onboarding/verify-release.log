@@ -1,0 +1,261 @@
+
+> pokko-fushigi-zukan-app@0.0.0 verify:release
+> npm run verify:core && npm run e2e:smoke && npm run e2e:pwa-update
+
+
+> pokko-fushigi-zukan-app@0.0.0 verify:core
+> npm run docs:check && npm run lint && npm run typecheck && npm run test:run && npm run build
+
+
+> pokko-fushigi-zukan-app@0.0.0 docs:check
+> node tools/check-docs.mjs
+
+WARN
+- docs/tasks/design-refresh-status.md: 次回棚卸し目安 (2026-05-15) is in the past
+- docs/tasks/backlog.md: 次回棚卸し目安 (2026-05-15) is in the past
+- docs/tasks/ui-fix-tasklist.md: 次回棚卸し目安 (2026-05-15) is in the past
+- docs/tasks/active/2026-03-17-v1-core-stabilization-plan.md: Review By (2026-05-15) is in the past
+- docs/tasks/active/2026-07-19-root-tangle-observation-morph.md: Review By (2026-07-26) is in the past
+- docs/tasks/active/2026-07-21-cold-open-value-loop.md: Review By (2026-07-28) is in the past
+- docs/tasks/active/2026-07-23-whole-app-brand-coherence.md: Review By (2026-07-30) is in the past
+PASS docs:check
+
+> pokko-fushigi-zukan-app@0.0.0 lint
+> eslint .
+
+
+> pokko-fushigi-zukan-app@0.0.0 typecheck
+> tsc -b --pretty false
+
+
+> pokko-fushigi-zukan-app@0.0.0 test:run
+> vitest run
+
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/domain/explore/__tests__/g0NumberVessel.test.ts (13 tests) 16ms
+ ✓ src/domain/math/generators/counting.test.ts (51 tests) 27ms
+ ✓ src/hooks/useStudySession.logic.test.ts (38 tests) 18ms
+ ✓ src/hooks/blockGenerators.test.ts (31 tests) 24ms
+ ✓ src/domain/explore/__tests__/reducer.test.ts (29 tests) 53ms
+ ✓ src/domain/explore/__tests__/problemAdapter.test.ts (38 tests) 227ms
+ ✓ src/domain/explore/__tests__/g0NumberSuika.test.ts (32 tests) 57ms
+ ✓ src/domain/test/printability.test.ts (22 tests) 8ms
+ ✓ src/domain/explore/__tests__/g0Whitebox.test.ts (13 tests) 13ms
+ ✓ src/domain/math/numberSenseProgress.test.ts (32 tests) 8ms
+ ✓ src/domain/math/planner.test.ts (20 tests) 27ms
+ ✓ src/domain/user/repository.test.ts (9 tests) 10ms
+ ✓ src/domain/explore/__tests__/g0ChainShot.test.ts (12 tests) 8ms
+ ✓ src/domain/explore/__tests__/learningSegment.test.ts (20 tests) 4ms
+ ✓ src/domain/logic.test.ts (25 tests) 38ms
+ ✓ src/domain/explore/__tests__/wagerRun.test.ts (19 tests) 9ms
+ ✓ src/domain/explore/__tests__/observation.test.ts (11 tests) 12ms
+ ✓ src/domain/explore/__tests__/runCheckpoint.test.ts (7 tests) 5ms
+ ✓ src/domain/explore/__tests__/learningSegmentPersistence.test.ts (7 tests) 154ms
+ ✓ src/domain/test/trigger.test.ts (8 tests) 30ms
+ ✓ src/domain/explore/__tests__/persistenceRepository.test.ts (36 tests) 813ms
+ ✓ src/pwaUpdateUtils.test.ts (34 tests) 5ms
+ ✓ src/domain/park/park.test.ts (130 tests) 562ms
+ ✓ src/domain/explore/__tests__/discoveryPage.test.ts (9 tests) 6ms
+ ✓ src/domain/explore/__tests__/learningPlannerSegment.test.ts (15 tests) 975ms
+ ✓ src/components/explore/rootPullPresentation.test.ts (10 tests) 6ms
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ✓ src/domain/learningRepository.test.ts (11 tests) 27ms
+ ✓ src/domain/math/generators/advanced.test.ts (10 tests) 24ms
+ ✓ src/components/explore/ExploreProblemPanel.test.tsx (16 tests) 99ms
+ ✓ src/domain/explore/__tests__/encounters.test.ts (7 tests) 6ms
+ ✓ src/domain/explore/__tests__/rapidLoop.test.ts (6 tests) 10ms
+ ✓ src/domain/explore/__tests__/rapidLoopEligibility.test.ts (27 tests) 10ms
+ ✓ src/domain/math/generators/subtraction.test.ts (10 tests) 5ms
+ ✓ src/domain/battle/engine.test.ts (10 tests) 7ms
+ ✓ src/components/ikimono/fuwafuwaDailyConversation.test.ts (4 tests) 6ms
+ ✓ src/components/dev/suika/NumberSuikaStage.test.tsx (10 tests) 36ms
+ ✓ src/domain/explore/__tests__/learningPlanner.test.ts (4 tests) 202ms
+ ✓ src/domain/math/generators/addition.test.ts (10 tests) 7ms
+ ✓ src/components/dev/g0v2/G0MechanicRemixStage.test.tsx (4 tests) 32ms
+ ✓ src/components/explore/DiscoveryReveal.test.ts (7 tests) 46ms
+ ✓ src/components/park/sceneGeometry.test.ts (5 tests) 47ms
+ ✓ src/components/dev/g0/G0WhiteboxStage.test.tsx (6 tests) 49ms
+ ✓ src/components/park/three/choreography.test.ts (6 tests) 13ms
+ ✓ src/domain/math/generators/division.test.ts (5 tests) 36ms
+ ✓ src/domain/test/paperTest.test.ts (4 tests) 5ms
+ ✓ src/components/explore/snapRootPresentation.test.ts (5 tests) 2ms
+ ✓ src/components/explore/RootPullOpeningArt.test.tsx (8 tests) 16ms
+ ✓ src/utils/pdfGenerator.test.ts (5 tests) 9ms
+ ✓ src/components/explore/ExplorePathChoice.test.tsx (5 tests) 33ms
+ ✓ src/pages/Explore.test.ts (9 tests) 6ms
+ ✓ src/components/explore/FireflyFlowerEncounterArt.test.tsx (8 tests) 25ms
+ ✓ src/components/ikimono/lifecycle.test.ts (5 tests) 9ms
+ ✓ src/domain/algorithms/srs.test.ts (14 tests) 7ms
+ ✓ src/domain/explore/__tests__/openingExperience.test.ts (5 tests) 6ms
+ ✓ tools/asset-policy.test.mjs (19 tests) 13ms
+ ✓ src/components/explore/MakimodonEncounterArt.test.tsx (8 tests) 104ms
+ ✓ src/domain/math/generators/fraction.test.ts (6 tests) 3ms
+ ✓ src/domain/math/hissanEngine.test.ts (8 tests) 3ms
+ ✓ src/components/explore/PaintedEncounterLineage.test.tsx (5 tests) 160ms
+ ✓ src/domain/explore/__tests__/generator.test.ts (2 tests) 640ms
+   ✓ createExploreMap > keeps every generated node reachable across multiple seeds 633ms
+ ✓ src/domain/test/testSet.test.ts (3 tests) 6ms
+ ✓ src/domain/math/additionProgress.test.ts (9 tests) 3ms
+ ✓ src/components/explore/makimodonPresentation.test.ts (4 tests) 5ms
+ ✓ src/components/ikimono/fuwafuwaSpeech.test.ts (6 tests) 7ms
+ ✓ src/components/explore/rapidTrailPresentation.test.ts (4 tests) 6ms
+ ✓ src/domain/explore/__tests__/rewardPresentation.test.ts (7 tests) 32ms
+ ✓ src/domain/explore/__tests__/suikaQuantity.test.ts (7 tests) 7ms
+ ✓ src/domain/explore/__tests__/attemptIdentity.test.ts (8 tests) 2ms
+ ✓ src/domain/explore/__tests__/g0MechanicMetrics.test.ts (2 tests) 1ms
+ ✓ src/domain/stats/repository.test.ts (1 test) 6ms
+ ✓ src/domain/explore/__tests__/rewards.test.ts (5 tests) 2ms
+ ✓ src/components/ikimono/hitokoto.test.ts (5 tests) 4ms
+ ✓ src/components/ikimono/fuwafuwaAlbumCopy.test.ts (3 tests) 2ms
+ ✓ src/domain/math/subtractionProgress.test.ts (5 tests) 2ms
+ ✓ src/domain/explore/__tests__/runStructure.test.ts (3 tests) 2ms
+ ✓ src/domain/math/sequenceProgress.test.ts (5 tests) 3ms
+ ✓ src/domain/explore/__tests__/encounterPhase.test.ts (7 tests) 4ms
+ ✓ src/components/explore/ReturnSummary.test.tsx (5 tests) 107ms
+ ✓ src/domain/explore/__tests__/replay.test.ts (3 tests) 2ms
+ ✓ src/domain/benchmark/coldOpenFixedTen.test.ts (2 tests) 2ms
+ ✓ src/domain/stats/aggregation.test.ts (3 tests) 6ms
+ ✓ src/domain/math/comparisonProgress.test.ts (5 tests) 5ms
+ ✓ src/components/explore/AuthoredEncounterArt.test.tsx (6 tests) 23ms
+ ✓ src/components/ikimono/fuwafuwaMilestones.test.ts (4 tests) 8ms
+ ✓ src/components/dev/devStudySelection.test.ts (2 tests) 5ms
+ ✓ src/components/ikimono/sceneText.test.ts (3 tests) 1ms
+ ✓ src/components/ikimono/ikimonoMotion.test.ts (3 tests) 2ms
+ ✓ src/components/ui/modalLayerManager.test.ts (2 tests) 4ms
+ ✓ src/components/gate/arithmeticGate.test.ts (3 tests) 4ms
+ ✓ src/components/home/homeMagicEnergy.test.ts (2 tests) 1ms
+ ✓ src/components/ikimono/IkimonoArtwork.test.tsx (2 tests) 15ms
+ ✓ src/domain/math/deterministicGeneration.test.ts (2 tests) 28ms
+ ✓ src/components/explore/ResearchBookStage.test.tsx (3 tests) 22ms
+ ✓ src/components/explore/RootPullDiscoveryReveal.test.tsx (1 test) 17ms
+ ✓ src/utils/theme.test.ts (4 tests) 2ms
+ ✓ src/components/explore/PokkoBaseArt.test.tsx (1 test) 6ms
+ ✓ src/domain/math/hissanTypes.test.ts (2 tests) 3ms
+ ✓ src/domain/english/generator.test.ts (1 test) 1ms
+ ✓ src/components/explore/PokkoVisualLineage.test.tsx (5 tests) 33ms
+ ✓ src/utils/learningDay.test.ts (5 tests) 6ms
+ ✓ src/domain/explore/__tests__/fixedTenBenchmark.test.ts (2 tests) 4ms
+ ✓ src/components/explore/MakimodonResearchArt.test.tsx (2 tests) 16ms
+ ✓ src/components/explore/exploreAnswerInput.test.ts (3 tests) 2ms
+ ✓ src/components/explore/DiscoveryPageArt.test.tsx (1 test) 12ms
+
+ Test Files  104 passed (104)
+      Tests  1106 passed (1106)
+   Start at  14:21:21
+   Duration  8.67s (transform 2.78s, setup 0ms, collect 45.77s, tests 5.25s, environment 28ms, prepare 5.83s)
+
+
+> pokko-fushigi-zukan-app@0.0.0 build
+> tsc -b && vite build && npm run assets:check
+
+vite v7.3.1 building client environment for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 3500 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/version.json                           0.20 kB │ gzip:   0.16 kB
+dist/index.html                             1.60 kB │ gzip:   0.72 kB
+dist/assets/NotoSansJP-C_ziqpoc.woff2      13.06 kB
+dist/assets/index-2pR3lbXo.css            213.70 kB │ gzip:  35.65 kB
+dist/assets/icons-CI8T6iNa.js              10.55 kB │ gzip:   4.27 kB
+dist/assets/pdfGenerator-lZ0jjSPp.js       11.75 kB │ gzip:   5.22 kB
+dist/assets/Park-BnEKCHJb.js               26.52 kB │ gzip:   9.29 kB
+dist/assets/audio-DwtSHwBT.js              36.13 kB │ gzip:   9.75 kB
+dist/assets/react-DcHpdqMy.js              48.53 kB │ gzip:  17.24 kB
+dist/assets/data-DHx4MMMe.js               96.36 kB │ gzip:  32.45 kB
+dist/assets/motion-iLBaTeAD.js            119.65 kB │ gzip:  39.54 kB
+dist/assets/charts-Dqb-tBNT.js            371.57 kB │ gzip: 108.42 kB
+dist/assets/ThreeParkStage-BnEQnXY5.js    569.31 kB │ gzip: 147.67 kB
+dist/assets/index-C60moBsZ.js             902.03 kB │ gzip: 251.20 kB
+dist/assets/pdf-D7J7ja7j.js             1,146.59 kB │ gzip: 508.01 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 6.74s
+
+PWA v1.2.0
+mode      generateSW
+precache  134 entries (4597.82 KiB)
+files generated
+  dist/sw.js
+  dist/workbox-1d305bb8.js
+
+> pokko-fushigi-zukan-app@0.0.0 assets:check
+> node tools/check-asset-budget.mjs
+
+PASS assets:check
+- PWA precache: 134 unique files, 10.41 MiB / 12.00 MiB
+- Explore artwork: 27 production files, 4.92 MiB / 8.00 MiB
+- Production-input contract: docs/design only; absent from public and precache
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:smoke
+> node tools/e2e-smoke.mjs
+
+Starting dev server on http://127.0.0.1:4173...
+
+> pokko-fushigi-zukan-app@0.0.0 dev
+> vite --host 127.0.0.1 --port 4173 --strictPort
+
+
+  VITE v7.3.1  ready in 171 ms
+
+  ➜  Local:   http://127.0.0.1:4173/
+Dev server ready on http://127.0.0.1:4173.
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+PASS redirects to onboarding when no profile (1400ms)
+PASS completes onboarding, chooses a route, and opens Makimodon (1257ms)
+PASS keeps the classic opening playable with expanded mobile browser chrome (1216ms)
+PASS keeps the direct study route working (2291ms)
+PASS keeps the direct review route working (1053ms)
+PASS keeps the direct settings route working (1035ms)
+PASS keeps legacy fuwafuwa album out of child records (1029ms)
+PASS completes periodic test from stats and opens results (2581ms)
+PASS launches explore immediately and safely returns at a route break (2337ms)
+PASS keeps the 390x800 route boundary fully visible (2336ms)
+PASS runs Root Pull v2 inline with reduced motion and the numeric keypad (2284ms)
+Snap Root measured ms { firstIncorrect: 441, secondIncorrect: 542, correct: [ 144, 124 ] }
+PASS runs the Snap Root breakthrough loop at 390px (4406ms)
+PASS keeps the Snap Root breakthrough loop playable on tablet (2258ms)
+PASS can exit safely after explore start persistence fails (1028ms)
+PASS safely exits and retries from a pending explore problem (1322ms)
+PASS commits one explore answer under rapid double submit (1503ms)
+PASS retries the same explore attempt after a save failure (1355ms)
+PASS resumes fixed-ten explore across retry, route, discovery, and partial-input boundaries (4817ms)
+PASS finishes last-light rescue without blocking on an ordinary clue (1359ms)
+PASS retries voluntary return without early terminal progress (2376ms)
+PASS grows the immersive light bridge from an addition answer (3999ms)
+PASS keeps the light bridge playable on tablet (4187ms)
+2:22:28 PM [vite] (client) hmr update /src/index.css
+PASS keeps the light bridge connected on a landscape tablet (3987ms)
+PASS keeps the light bridge playable on a 1024px portrait tablet (3866ms)
+PASS keeps the light bridge playable on a wide portrait tablet (4070ms)
+PASS opens the root tangle with profile-near subtraction (5811ms)
+PASS keeps the root tangle playable on tablet (5902ms)
+PASS keeps the root tangle playable on a landscape tablet (5998ms)
+PASS keeps the root tangle playable on a 1024px portrait tablet (5904ms)
+PASS keeps the root tangle playable on a wide portrait tablet (5872ms)
+PASS guards /parents route behind parent gate (994ms)
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:pwa-update
+> node tools/e2e-pwa-update.mjs
+
+
+> pokko-fushigi-zukan-app@0.0.0 preview
+> vite preview --host 127.0.0.1 --port 4273 --strictPort
+
+  ➜  Local:   http://127.0.0.1:4273/
+PASS PWA onboarding safe-router handoff
+PASS PWA protected router recovery handoff
+PASS PWA same-route battle checkpoint
+PASS PWA service-worker-controlled version-drift recovery

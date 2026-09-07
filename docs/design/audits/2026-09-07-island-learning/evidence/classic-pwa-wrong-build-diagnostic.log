@@ -1,0 +1,17 @@
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:pwa-update
+> node tools/e2e-pwa-update.mjs
+
+
+> pokko-fushigi-zukan-app@0.0.0 preview
+> vite preview --host 127.0.0.1 --port 4273 --strictPort
+
+  ➜  Local:   http://127.0.0.1:4273/
+locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('button', { name: 'たんけんを はじめる' }) to be visible[22m
+
+    at verifyOnboardingSafeHandoff (/Users/yutogasaki/Projects/sansu/tools/e2e-pwa-update.mjs:169:58)
+    at async main (/Users/yutogasaki/Projects/sansu/tools/e2e-pwa-update.mjs:389:5) {
+  name: 'TimeoutError'
+}

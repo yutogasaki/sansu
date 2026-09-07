@@ -14,7 +14,6 @@ Keep only short active entries here, and put detailed execution context in `docs
 
 ## Current Queue
 
-- Latest app production release -> docs/tasks/active/2026-09-07-production-release.md
 
 
 - Cold-open Value Loop -> docs/tasks/active/2026-07-21-cold-open-value-loop.md

@@ -15,7 +15,7 @@ Mystic Island, shared written arithmetic, learning and print improvements, exist
 Run release checks, verify Island production critical path, commit and fast-forward main, inspect hosted build and update pickup.
 
 ## Verification
-Local checks PASS; production push and hosted checks pending. Logs in /tmp/sansu-release-check.log and output/playwright/production-release/. Physical iOS/Android testing is unavailable in this desktop session.
+Local checks, main push, Vercel production and hosted old-to-new PWA checks PASS. Logs in /tmp/sansu-release-check.log and output/playwright/production-release/. Physical iOS/Android testing is unavailable in this desktop session.
 
 - Review By: 2026-09-08
 

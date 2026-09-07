@@ -1,0 +1,45 @@
+{
+  "target": "https://sansu-seven.vercel.app",
+  "browser": "145.0.7632.6",
+  "device": "Desktop Chromium / Metal; not physical mobile",
+  "navigations": {
+    "safe": [
+      "https://sansu-seven.vercel.app/?__app-update=83965c75b4cc7a7fdfad37b95e135fd3fdb697c4%3A848b26ae-9031-46a3-bebe-e1ce03f5adc3"
+    ],
+    "protected": [
+      "https://sansu-seven.vercel.app/?__app-update=1788769612319"
+    ]
+  },
+  "errors": [],
+  "before": {
+    "version": "aa36adad7dcce77956a891e7917d6a29241ed83a:f7cb0312-cee7-484e-8e78-5c192e9a7f39",
+    "revision": "aa36adad7dcce77956a891e7917d6a29241ed83a",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    }
+  },
+  "after": {
+    "version": "83965c75b4cc7a7fdfad37b95e135fd3fdb697c4:848b26ae-9031-46a3-bebe-e1ce03f5adc3",
+    "revision": "83965c75b4cc7a7fdfad37b95e135fd3fdb697c4",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "artDirection": "moon-garden"
+    }
+  },
+  "pickupMs": 34955,
+  "dataPreserved": true,
+  "protectedFormPreserved": true,
+  "pass": true
+}

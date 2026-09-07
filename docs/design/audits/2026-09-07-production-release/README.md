@@ -24,4 +24,6 @@ Set `VITE_ISLAND_ENABLED=false` and redeploy the current schema-compatible code 
 
 ## Hosted verification
 
-Pending the authorized main push; final hosted evidence is retained under output/playwright/production-release/.
+Production commit `83965c7` deployed successfully with Island enabled. Real hosted old→new PWA verification PASS: one reload per context, protected onboarding input preserved, IndexedDB/localStorage preserved, existing Park replay works. [Hosted update report](hosted-update-report.json). Physical mobile remains untested.
+
+GitHub CI initially failed only because nine linked historical `.log` files were ignored by Git. They are now explicitly tracked; a clean checkout docs check verifies the published file set. Follow-up documentation commits keep the application code unchanged.

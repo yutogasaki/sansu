@@ -1,0 +1,53 @@
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:smoke
+> node tools/e2e-smoke.mjs
+
+Starting dev server on http://127.0.0.1:4173...
+
+> pokko-fushigi-zukan-app@0.0.0 dev
+> vite --host 127.0.0.1 --port 4173 --strictPort
+
+
+  VITE v7.3.1  ready in 95 ms
+
+  ➜  Local:   http://127.0.0.1:4173/
+Dev server ready on http://127.0.0.1:4173.
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+PASS redirects to onboarding when no profile (1010ms)
+PASS completes onboarding, chooses a route, and opens Makimodon (1148ms)
+PASS keeps the classic opening playable with expanded mobile browser chrome (1060ms)
+PASS keeps the direct study route working (1944ms)
+PASS keeps the direct review route working (955ms)
+PASS keeps the direct settings route working (953ms)
+PASS keeps legacy fuwafuwa album out of child records (1014ms)
+PASS completes periodic test from stats and opens results (2677ms)
+PASS launches explore immediately and safely returns at a route break (2389ms)
+PASS keeps the 390x800 route boundary fully visible (2227ms)
+PASS runs Root Pull v2 inline with reduced motion and the numeric keypad (2177ms)
+Snap Root measured ms { firstIncorrect: 442, secondIncorrect: 534, correct: [ 141, 133 ] }
+PASS runs the Snap Root breakthrough loop at 390px (4314ms)
+PASS keeps the Snap Root breakthrough loop playable on tablet (2199ms)
+PASS can exit safely after explore start persistence fails (992ms)
+PASS safely exits and retries from a pending explore problem (1263ms)
+PASS commits one explore answer under rapid double submit (1365ms)
+PASS retries the same explore attempt after a save failure (1203ms)
+PASS resumes fixed-ten explore across retry, route, discovery, and partial-input boundaries (4624ms)
+PASS finishes last-light rescue without blocking on an ordinary clue (1232ms)
+PASS retries voluntary return without early terminal progress (2290ms)
+PASS grows the immersive light bridge from an addition answer (3884ms)
+PASS keeps the light bridge playable on tablet (3882ms)
+8:27:20 AM [vite] (client) hmr update /src/index.css
+8:27:20 AM [vite] (client) hmr update /src/index.css
+8:27:20 AM [vite] (client) hmr update /src/index.css
+PASS keeps the light bridge connected on a landscape tablet (4002ms)
+PASS keeps the light bridge playable on a 1024px portrait tablet (3922ms)
+8:27:29 AM [vite] (client) hmr update /src/index.css
+PASS keeps the light bridge playable on a wide portrait tablet (3901ms)
+PASS opens the root tangle with profile-near subtraction (5693ms)
+PASS keeps the root tangle playable on tablet (5643ms)
+PASS keeps the root tangle playable on a landscape tablet (5908ms)
+PASS keeps the root tangle playable on a 1024px portrait tablet (5836ms)
+PASS keeps the root tangle playable on a wide portrait tablet (5769ms)
+PASS guards /parents route behind parent gate (938ms)
