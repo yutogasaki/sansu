@@ -6,6 +6,87 @@ export const LEARNING_CANDIDATE = 'mystic-island-learning-v2';
 export const compact = value => String(value ?? '').replace(/\s+/g, '');
 const numericKeys = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0'];
 
+// An independent teaching-color oracle: inspect the real SVG element and computed
+// paint, rather than accepting its echoed data-island-glyph as proof of meaning.
+const teachingShapes = {
+    '●': ['circle', 'circle', 'rgb(53, 71, 57)'],
+    '🔴': ['circle', 'circle', 'rgb(228, 67, 67)'], '🔵': ['circle', 'circle', 'rgb(38, 139, 218)'],
+    '🟡': ['circle', 'circle', 'rgb(244, 206, 57)'], '🟢': ['circle', 'circle', 'rgb(54, 169, 96)'],
+    '🟠': ['circle', 'circle', 'rgb(239, 145, 52)'], '🔺': ['triangle', 'path', 'rgb(228, 67, 67)'],
+    '🟥': ['square', 'rect', 'rgb(228, 67, 67)'], '🟦': ['square', 'rect', 'rgb(38, 139, 218)'],
+    '🟨': ['square', 'rect', 'rgb(244, 206, 57)'], '🟩': ['square', 'rect', 'rgb(54, 169, 96)'],
+    '🟧': ['square', 'rect', 'rgb(239, 145, 52)'], '🟪': ['square', 'rect', 'rgb(148, 85, 184)'],
+    '⬜': ['square', 'rect', 'rgb(255, 255, 255)'],
+};
+
+async function readChoicePresentation(page) {
+    return page.locator('.park-answer').evaluate(root => {
+        const glyphs = surface => [...(surface?.querySelectorAll('[data-island-glyph]') ?? [])].map(node => ({
+            symbol: node.getAttribute('data-island-glyph'), renderer: node.getAttribute('data-glyph-renderer'),
+            label: node.getAttribute('aria-label'),
+            shapes: [...node.querySelectorAll('[data-glyph-shape]')].map(shape => ({
+                name: shape.getAttribute('data-glyph-shape'), element: shape.tagName.toLowerCase(), fill: getComputedStyle(shape).fill,
+            })),
+        }));
+        const visibleMeaning = node => node.nodeType === Node.TEXT_NODE ? node.textContent
+            : node instanceof Element && node.hasAttribute('data-island-glyph') ? node.getAttribute('data-island-glyph')
+                : [...node.childNodes].map(visibleMeaning).join('');
+        return {
+            promptGlyphs: glyphs(root.querySelector('.island-problem-prompt')),
+            caption: root.querySelector('[data-visual-caption]')?.textContent,
+            choices: [...root.querySelectorAll('.park-choices button')].map(node => ({
+                value: node.getAttribute('data-choice-value'), label: visibleMeaning(node),
+                accessibleLabel: node.getAttribute('aria-label'), glyphs: glyphs(node),
+            })),
+        };
+    });
+}
+
+/** Exported for narrow mutation checks; expected content comes only from the frozen Problem. */
+export function assertReferenceChoiceMeaning(problem, rendered) {
+    const visual = problem.questionVisual;
+    assert.equal(visual?.kind, 'reference-choice-grid');
+    const reserved = problem.inputConfig?.choices ?? [];
+    // The schema explicitly separates reference and alternatives. Transfer is safe
+    // only when each answer has the corresponding picture/name in the same order.
+    const transferable = problem.subject === 'math' && problem.inputType === 'choice' && reserved.length > 0
+        && reserved.length === visual.grid.choices.length && reserved.every((choice, index) => {
+            const item = visual.grid.choices[index];
+            const text = String(choice.label).trim().split(/\s+/u).join(' ');
+            return text === item.emoji || text === item.label || text === `${item.emoji} ${item.label}`;
+        });
+    const expectedPrompt = transferable ? [visual.grid.reference] : [visual.grid.reference, ...visual.grid.choices];
+    assert.deepEqual(rendered.promptGlyphs.map(glyph => glyph.symbol), expectedPrompt.map(item => item.emoji),
+        transferable ? 'Only the reference remains in the prompt; answer alternatives must not be duplicated'
+            : 'An unmatched saved grid retains every reference and alternative in its original order');
+    assert.equal(compact(rendered.caption), compact(visual.prompt || 'おなじ ものは？'), 'Reference task wording is preserved');
+    const assertGlyph = (glyph, item, where) => {
+        assert.equal(glyph.symbol, item.emoji, `${where}: exact reserved symbol`);
+        assert.equal(glyph.renderer, 'vector', `${where}: visible vector artwork`);
+        const expected = teachingShapes[item.emoji.replace(/\uFE0F/gu, '')];
+        if (expected) assert.deepEqual(glyph.shapes, [{ name: expected[0], element: expected[1], fill: expected[2] }],
+            `${where}: actual geometric shape and teaching color`);
+    };
+    expectedPrompt.forEach((item, index) => {
+        assertGlyph(rendered.promptGlyphs[index], item, `Prompt ${index + 1}`);
+        assert.equal(rendered.promptGlyphs[index].label, item.label, 'Reference/example accessible identity is preserved');
+    });
+    assert.equal(rendered.choices.length, reserved.length, 'No answer buttons are lost or added');
+    for (const [index, choice] of reserved.entries()) {
+        const actual = rendered.choices[index];
+        assert.equal(actual.value, choice.value, `Choice ${index + 1}: frozen answer value/order`);
+        assert.equal(actual.accessibleLabel, choice.label, `Choice ${index + 1}: original accessible label`);
+        const item = visual.grid.choices[index];
+        const label = transferable && !choice.label.includes(item.emoji) ? `${item.emoji} ${choice.label}` : choice.label;
+        assert.equal(compact(actual.label), compact(label), `Choice ${index + 1}: visible picture and original label`);
+        if (transferable) {
+            assert.equal(actual.glyphs.length, 1, `Choice ${index + 1}: its picture appears exactly once`);
+            assertGlyph(actual.glyphs[0], item, `Choice ${index + 1}`);
+        }
+    }
+    return transferable;
+}
+
 export async function waitLearningReady(page, plan) {
     await page.locator(`.island-page[data-learning-candidate="${LEARNING_CANDIDATE}"]`).waitFor();
     await page.waitForFunction(({ id, revision }) => {
@@ -101,6 +182,9 @@ export async function assertProblemMeaning(page, slot) {
     assert.equal(await page.locator('.park-answer').getAttribute('data-problem-id'), problem.id);
     const visual = problem.questionVisual;
     const prompt = page.locator('.island-problem-prompt');
+    const choicePresentation = problem.inputType === 'choice' || visual?.kind === 'reference-choice-grid'
+        ? await readChoicePresentation(page) : undefined;
+    let transferredReferenceChoices = false;
     if (visual) {
         assert.equal(await prompt.getAttribute('data-problem-visual'), visual.kind);
         const takenAway = visual.kind === 'subtraction-items' ? visual.takenAwayCount ?? visual.group.crossedOutCount ?? 0 : 0;
@@ -126,8 +210,7 @@ export async function assertProblemMeaning(page, slot) {
             assert.equal(await prompt.locator('[data-count-slot="empty"] [data-island-glyph]').count(), 0);
         }
         if (visual.kind === 'reference-choice-grid') {
-            const symbols = await prompt.locator('[data-island-glyph]').evaluateAll(nodes => nodes.map(node => node.getAttribute('data-island-glyph')));
-            assert.deepEqual(symbols, [visual.grid.reference, ...visual.grid.choices].map(item => item.emoji), 'Reference and choice picture order is preserved');
+            transferredReferenceChoices = assertReferenceChoiceMeaning(problem, choicePresentation);
         }
         if (['comparison-base10', 'operation-base10'].includes(visual.kind)) {
             for (let index = 0; index < visual.groups.length; index += 1) {
@@ -152,9 +235,10 @@ export async function assertProblemMeaning(page, slot) {
                 assert.equal(item.text, hidden ? '?' : String(item.value));
             }
         }
-        const literals = await prompt.locator('[data-glyph-renderer="literal"]').allTextContents();
+        const meaningSurface = transferredReferenceChoices ? page.locator('.island-problem-prompt, .park-choices') : prompt;
+        const literals = await meaningSurface.locator('[data-glyph-renderer="literal"]').allTextContents();
         assert.deepEqual(literals, [], 'Selected normal curriculum examples use explicit vector art, not platform emoji');
-        const clipped = await prompt.locator('[data-count-item], [data-count-slot], [data-base10-unit], [data-island-glyph]').evaluateAll(nodes => nodes.flatMap(node => {
+        const clipped = await meaningSurface.locator('[data-count-item], [data-count-slot], [data-base10-unit], [data-island-glyph]').evaluateAll(nodes => nodes.flatMap(node => {
             const rect = node.getBoundingClientRect();
             let visible = rect.width > 0 && rect.height > 0 && rect.left >= -.5 && rect.top >= -.5
                 && rect.right <= innerWidth + .5 && rect.bottom <= innerHeight + .5;
@@ -172,15 +256,13 @@ export async function assertProblemMeaning(page, slot) {
         assert(compact(await page.locator('.park-question').innerText()).replaceAll('/', '').includes(expected), 'Visible question retains operands, word and operator');
     }
     if (problem.inputType === 'choice') {
-        const rendered = await page.locator('.park-choices button').evaluateAll(nodes => {
-            const visibleMeaning = node => node.nodeType === Node.TEXT_NODE ? node.textContent
-                : node instanceof Element && node.hasAttribute('data-island-glyph') ? node.getAttribute('data-island-glyph')
-                    : [...node.childNodes].map(visibleMeaning).join('');
-            return nodes.map(node => ({ value: node.getAttribute('data-choice-value'), label: visibleMeaning(node) }));
-        });
+        const rendered = choicePresentation.choices;
         assert.deepEqual(rendered.map(choice => choice.value), problem.inputConfig.choices.map(choice => choice.value));
         for (let index = 0; index < rendered.length; index += 1) {
-            const expected = problem.inputConfig.choices[index].label;
+            const original = problem.inputConfig.choices[index].label;
+            assert.equal(rendered[index].accessibleLabel, original, 'Answer accessibility retains the reserved label');
+            const item = transferredReferenceChoices ? visual.grid.choices[index] : undefined;
+            const expected = item && !original.includes(item.emoji) ? `${item.emoji} ${original}` : original;
             assert(compact(rendered[index].label) === compact(expected),
                 `Choice ${index + 1} visibly retains the original meaning ${expected}`);
         }
@@ -215,7 +297,7 @@ async function prepareAnswer(page, slot, { wrong, touch }) {
         }
         if (type !== 'hissan') assert.equal((await page.locator('.park-input span').nth(index).innerText()).trim(), String(entered[index]), 'Every intended digit must reach its active field before submit');
     }
-    return { expected, control: button(page, 'こたえる') };
+    return { expected, control: page.locator('.park-answer .park-keypad [data-keypad-submit]') };
 }
 
 /** Timing starts in the real UI event and ends on the exact next saved, operable revision. */

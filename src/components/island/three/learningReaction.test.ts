@@ -1,7 +1,21 @@
 import { describe, expect, it } from 'vitest';
 import { learningBeat, normalizedLearningProgress, reconcileLearningProgress, sampleLearningReaction } from './learningReaction';
+import { sampleResidentInterest } from './residentInterest';
 
 describe('learning reactions run independently from answers', () => {
+    it('shares normalized interest with a 1200ms visit while keeping the original 350+550ms reply', () => {
+        for (const phase of [0, .25, .44, .66, .85, 1]) {
+            const reply = sampleLearningReaction('correct', 350 + phase * 550, false);
+            expect(reply.reply).toBeCloseTo(phase);
+            for (const species of ['otter', 'rabbit', 'fox'] as const) {
+                expect(sampleResidentInterest(species, reply.reply, false)).toEqual(sampleResidentInterest(species, phase, false));
+            }
+            expect(reply.duration).toBe(900);
+        }
+        expect(sampleLearningReaction('correct', 349, false).reply).toBe(0);
+        expect(sampleLearningReaction('correct', 900, false).moving).toBe(false);
+        expect(sampleLearningReaction('correct', 0, true)).toMatchObject({ reply: 1, moving: false, phase: 'settled' });
+    });
     it('delivers light at350ms and settles the grounded response at900ms', () => {
         expect(sampleLearningReaction('correct', 349, false).phase).toBe('travel');
         expect(sampleLearningReaction('correct', 350, false)).toMatchObject({ phase: 'contact', arrived: true, earnedLight: true });

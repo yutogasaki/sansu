@@ -1,0 +1,1305 @@
+{
+  "target": "http://127.0.0.1:5399",
+  "baseline": false,
+  "startedAt": "2026-09-07T09:39:32.012Z",
+  "captures": [
+    {
+      "file": "phone-home.png",
+      "sha256": "7cca36764e52e175cb664b2b39e8ed2b0c14417fa4665f4070e87e2fa5a5a753",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "file": "phone-learning.png",
+      "sha256": "dbde7bcb8f3b8578fef1c1523a7e9904ac0943fe7b1d63ac53dda593ee29bcce",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 73,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.44093996561235993,
+              "right": -0.0020443047426329923,
+              "bottom": -0.5213596779557476,
+              "top": 0.6903248167646165
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.23195556414226232,
+              "right": 0.5756877872362361,
+              "bottom": -0.6890039040468292,
+              "top": 0.596211933800826
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.27778,0.00000,0.00000,0.00000,0.00000,0.53105,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "file": "phone-reward.png",
+      "sha256": "6f2dc9e93641bceb45020e142f2c8684588ffc828e91cce5e52ad41bae276dcf",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "reward",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 74,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "file": "phone-placement.png",
+      "sha256": "0fccfdd78fce7e6deed4ee496a9553b75074368547b9c4621d0be197b2363a4c",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": {
+          "id": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+          "uuid": "d0b95ba1-ae63-4ab2-a4b0-e21e1bc9051d",
+          "position": [
+            0,
+            0.015,
+            1
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": "true"
+      }
+    },
+    {
+      "file": "phone-placement-rotated.png",
+      "sha256": "31312d1b50ad9dc7e3e77815e798cff526937412e760f32a44a125a4cedef9fd",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": {
+          "id": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+          "uuid": "d0b95ba1-ae63-4ab2-a4b0-e21e1bc9051d",
+          "position": [
+            0,
+            0.015,
+            1
+          ],
+          "rotationY": 1.5707963267948966,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": "true"
+      }
+    },
+    {
+      "file": "phone-bench-used.png",
+      "sha256": "12c98f7625e7c51bc7236f228be58ad17aaad442f565e1ce2f475c0e40fa1999",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "file": "phone-play.png",
+      "sha256": "09f07dfe15641e6c17917d1773698519852eae43c99301f2ede68958da98789d",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "file": "phone-lantern-used.png",
+      "sha256": "0e7e1641c0689a01e0426875ce47c1758a581d2f55d76971d413c96982d84773",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "admire",
+      "residentItemId": "starter-lantern",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -0.9999999999999999,
+              0,
+              -0.52
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "file": "phone-return-learning.png",
+      "sha256": "d5e4aa5d77c2fa670fabfc492151f89018432fc6e3465b362c6dac186e918bd2",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 85,
+      "expanded": "false",
+      "residentAction": "admire",
+      "residentItemId": "starter-lantern",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.4609106704256297,
+              "right": -0.01224748365734868,
+              "bottom": -0.748331806694613,
+              "top": 0.2941219819615982
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -0.9999999999999999,
+              0,
+              -0.52
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.4749839716784321,
+              "right": -0.15648337713401117,
+              "bottom": -0.46605446561102226,
+              "top": 0.7778672719870815
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.26050,0.00000,0.00000,0.00000,0.00000,0.49801,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.57617,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "file": "phone-return-next-answer.png",
+      "sha256": "2250f10c7292a5fd13019fb6ccf6d1e8647221be3d825bad141467e006b14070",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "admire",
+      "residentItemId": "starter-lantern",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.4609106704256297,
+              "right": -0.01224748365734868,
+              "bottom": -0.748331806694613,
+              "top": 0.2941219819615982
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -0.9999999999999999,
+              0,
+              -0.52
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.4749839716784321,
+              "right": -0.15648337713401117,
+              "bottom": -0.46605446561102226,
+              "top": 0.7778672719870815
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.26050,0.00000,0.00000,0.00000,0.00000,0.49801,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.57617,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "file": "tablet-home.png",
+      "sha256": "f6c31e645f156d82939aaf2496aae4a30bb03a670bc380e8b4be35fd8a83f9d7",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "file": "tablet-learning.png",
+      "sha256": "a3320dcb82debf434ffbec1d292c0ba80a1f4cb8be663eb57036ddbe4bb9d88b",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 70,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.30102838976581064,
+              "right": -0.0013956407058969699,
+              "bottom": -0.5558040571927454,
+              "top": 0.76288918854157
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.15835536675382772,
+              "right": 0.393020322752774,
+              "bottom": -0.7382536219069372,
+              "top": 0.6604648168163411
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.18964,0.00000,0.00000,0.00000,0.00000,0.57794,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.01160,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "file": "tablet-reward.png",
+      "sha256": "93e678495543e46838dacabe27f4fdce07976e4ec5e7de5fb0204990ea97edae",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "reward",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "file": "tablet-placement.png",
+      "sha256": "5bcafeecae64c413a6a3111b4492745260ad7f82e62b08baea8ba427c1c9e889",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": {
+          "id": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+          "uuid": "192f7a3b-65a7-4e00-89a3-84fff6de4d82",
+          "position": [
+            0,
+            0.015,
+            1
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": "true"
+      }
+    },
+    {
+      "file": "tablet-placement-rotated.png",
+      "sha256": "02c282efe5b6ec89e8c6a0189b67875fd80dedce4d0dd350bfae542d29314d77",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": {
+          "id": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+          "uuid": "192f7a3b-65a7-4e00-89a3-84fff6de4d82",
+          "position": [
+            0,
+            0.015,
+            1
+          ],
+          "rotationY": 1.5707963267948966,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": "true"
+      }
+    },
+    {
+      "file": "tablet-bench-used.png",
+      "sha256": "f6d2e802d354cd4ff6c81b4661d3e754e4c1f98481b7989d73beb8bb52e64af3",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "file": "tablet-play.png",
+      "sha256": "820584d7420eb6c032005f994272108d465abb29304751e5dd71fe1cbbe0bcad",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "file": "tablet-lantern-used.png",
+      "sha256": "5caff718645260f88d66183ee4bb2e7905c900b4928a584141c13ded7d5c8052",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "admire",
+      "residentItemId": "starter-lantern",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -0.9999999999999999,
+              0,
+              -0.52
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "file": "tablet-return-learning.png",
+      "sha256": "f91e533aef349fbbe0dab78cd2d4bed3fd26aa57e0613b8047b5da0aaf234c65",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 85,
+      "expanded": "false",
+      "residentAction": "admire",
+      "residentItemId": "starter-lantern",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.2891282468432833,
+              "right": -0.007682819481746759,
+              "bottom": -0.748331806694613,
+              "top": 0.2941219819615982
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -0.9999999999999999,
+              0,
+              -0.52
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.2979563976751194,
+              "right": -0.09816167729224504,
+              "bottom": -0.46605446561102226,
+              "top": 0.7778672719870815
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.16341,0.00000,0.00000,0.00000,0.00000,0.49801,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.57617,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "file": "tablet-return-next-answer.png",
+      "sha256": "e69d4c1838f50c3905c526371a07c50d3d9e8dbf84f0b8ee78ffd424f2093d10",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "admire",
+      "residentItemId": "starter-lantern",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.2891282468432833,
+              "right": -0.007682819481746759,
+              "bottom": -0.748331806694613,
+              "top": 0.2941219819615982
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -0.9999999999999999,
+              0,
+              -0.52
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.2979563976751194,
+              "right": -0.09816167729224504,
+              "bottom": -0.46605446561102226,
+              "top": 0.7778672719870815
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.16341,0.00000,0.00000,0.00000,0.00000,0.49801,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.57617,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "touch": true,
+      "answers": [
+        {
+          "ms": 185.5,
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 198.89999997615814,
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 199.19999998807907,
+          "beforeRevision": 2,
+          "afterRevision": 3
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "playChoiceBeforeLearningReturn": true,
+      "returnIsSecondary": true,
+      "returnScene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.4609106704256297,
+              "right": -0.01224748365734868,
+              "bottom": -0.748331806694613,
+              "top": 0.2941219819615982
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -0.9999999999999999,
+              0,
+              -0.52
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.4749839716784321,
+              "right": -0.15648337713401117,
+              "bottom": -0.46605446561102226,
+              "top": 0.7778672719870815
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.26050,0.00000,0.00000,0.00000,0.00000,0.49801,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.57617,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    },
+    {
+      "name": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "touch": false,
+      "answers": [
+        {
+          "ms": 184.39999997615814,
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 313.30000001192093,
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 192,
+          "beforeRevision": 2,
+          "afterRevision": 3
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "playChoiceBeforeLearningReturn": true,
+      "returnIsSecondary": true,
+      "returnScene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.2891282468432833,
+              "right": -0.007682819481746759,
+              "bottom": -0.748331806694613,
+              "top": 0.2941219819615982
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -0.9999999999999999,
+              0,
+              -0.52
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.2979563976751194,
+              "right": -0.09816167729224504,
+              "bottom": -0.46605446561102226,
+              "top": 0.7778672719870815
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.16341,0.00000,0.00000,0.00000,0.00000,0.49801,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.57617,-1.00200,1.00000",
+        "previewValid": ""
+      }
+    }
+  ],
+  "pass": true,
+  "scope": "Real UI: one earned gift, placement rotation/cancel, bench sitting, lantern invitation, return to learning. Screens require separate visual review; this is not child observation or complete release verification.",
+  "manifest": {
+    "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+    "revision": "84d3ddf-experience-3535575a1ce3",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "artDirection": "moon-garden"
+    }
+  },
+  "finishedAt": "2026-09-07T09:39:56.713Z"
+}

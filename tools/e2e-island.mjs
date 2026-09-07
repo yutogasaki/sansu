@@ -169,11 +169,10 @@ try {
             await page.waitForURL('**/#/onboarding');
             await waitReady(page);
             await capture(page, 'onboarding-cold-welcome');
-            await button(page, 'はじめる').click();
-            await page.getByPlaceholder('あだ名でOK').fill('あおい');
-            await button(page, '次へ').click();
-            await button(page, '年中さん').click();
-            await page.getByRole('button', { name: /さんすう だけ/ }).click();
+            await button(page, 'まなぶ').click();
+            await page.locator('[data-onboarding-step="grade"] input').fill('あおい');
+            await button(page, '年中').click();
+            await button(page, 'さんすう').click();
             await page.getByRole('button', { name: /数をかぞえる・くらべる/ }).click();
             await page.waitForURL('**/#/island');
             await waitReady(page);
@@ -197,7 +196,7 @@ try {
             assert.equal(state.island.pendingRewards.length, 1);
             await capture(page, 'onboarding-first-reward');
             report.scenarios.push({ name: 'onboarding', ...(await runtimeMetadata(page)), passed: true,
-                evidenceScope: 'Actual welcome, nickname, preschool grade, math selection and first reserved section; no profile fixture injected.' });
+                evidenceScope: 'Actual profile-free Welcome, optional nickname in the grade screen, explicit preschool grade/math/range and first reserved section; no profile fixture injected. Dedicated production onboarding QA verifies play, storage boundaries, all subjects and retry.' });
             console.log('PASS normal Island signup and first reward');
         } catch (error) {
             await page.screenshot({ path: `${out}/onboarding-failure.png`, animations: 'disabled' }).catch(() => undefined);
@@ -250,7 +249,7 @@ try {
                 const originalProblems = state.plan.slots.map(slot => slot.problem);
                 const assistedSkill = state.plan.slots[0].problem.categoryId;
                 const independentCorrectBefore = state.logs.filter(log => log.result === 'correct').length;
-                await activate(button(page, 'いっしょに みる'), scenario.touch);
+                await activate(button(page, 'ヒントを みる'), scenario.touch);
                 await page.locator('.park-support strong').waitFor();
                 await page.reload();
                 await waitReady(page);
@@ -258,6 +257,9 @@ try {
                 state = await readNative(page, profileId);
                 assert.deepEqual(state.plan.slots.map(slot => slot.problem), originalProblems);
                 assert(state.plan.slots[0].assisted, 'Assistance remains sticky after reload');
+                assert.equal(state.plan.slots[0].supportStage, 'hint');
+                assert.equal(await page.locator('.island-support-model, .island-support-example, .island-support-answer').count(), 0,
+                    'Hint retry keeps the answer concealed; explicit model completion has separate QA');
                 await capture(page, `${scenario.name}-support-resumed`);
                 const supported = await answerUI(page, state.plan, { touch: scenario.touch });
                 samples.push({ ...supported, state: undefined });
@@ -268,6 +270,7 @@ try {
                 await page.locator('.park-support strong').waitFor();
                 state = await readNative(page, profileId);
                 assert(state.plan.slots[state.plan.cursor].assisted, 'Skip opens support without abandoning the slot');
+                assert.equal(state.plan.slots[state.plan.cursor].supportStage, 'hint');
                 assert.equal(state.logs.at(-1).result, 'skipped');
             }
             state = await finishSet(page, profileId, samples, scenario.touch);

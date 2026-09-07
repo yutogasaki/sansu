@@ -18,7 +18,7 @@ const enclosedBench = () => {
 
 describe('reachable, replayable island furniture', () => {
     it('gives every visible reachable resident a turn, including the distant fox', () => {
-        const target = bench();
+        const target = bench(0, 0);
         let after = -1;
         const sequence: number[] = [];
         for (let i = 0; i < 6; i++) {
@@ -43,10 +43,27 @@ describe('reachable, replayable island furniture', () => {
     });
 
     it('replays an occupied seat without sending a second resident into it', () => {
-        const target = bench(), candidates = residents();
+        const target = bench(0, 0), candidates = residents();
         candidates[1] = { position: { ...target.position! }, visible: true, itemId: target.id };
         const choice = chooseReachableResident(candidates, target, [target], 4, 1);
         expect(choice?.index).toBe(1); expect(choice?.replay).toBe(true);
+    });
+
+    it('does not send a different resident into a seat blocked by a standing resident', () => {
+        const target = bench(), candidates = residents();
+        // The standing otter is .61 from the seat. It can move onto the seat,
+        // but another resident cannot arrive within its .84 combined footprint.
+        expect(chooseReachableResident(candidates, target, [target], 4, 0)?.index).toBe(0);
+        candidates[0].visible = false;
+        expect(chooseReachableResident(candidates, target, [target], 4, 0)?.index).toBe(1);
+    });
+
+    it('uses a stopped departure only for safe escape and never reports an occupied-seat replay', () => {
+        const previous = bench(0, 1), target = { ...bench(2, 1.5), id: 'next' };
+        const candidates: ResidentCandidate[] = [{ position: { x: .1, z: 1 }, visible: true, itemId: '', departingId: previous.id }];
+        expect(chooseReachableResident(candidates, target, [previous, target], 0)?.replay).toBe(false);
+        expect(chooseReachableResident(candidates, previous, [previous, target], 0)?.replay).toBe(false);
+        expect(chooseReachableResident([{ ...candidates[0], departingId: undefined }], target, [previous, target], 0)).toBeUndefined();
     });
 
     it('returns blocked when no visible resident can reach the object', () => {

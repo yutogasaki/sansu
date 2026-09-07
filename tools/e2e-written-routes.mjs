@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { build } from 'esbuild';
 import { seedLearningProfile } from './island-learning-fixtures.mjs';
+import { waitForPageState } from './async-state-checks.mjs';
 
 const base = process.env.SANSU_WRITTEN_BASE_URL || 'http://127.0.0.1:5201';
 const parkBase = process.env.SANSU_WRITTEN_PARK_BASE_URL || 'http://127.0.0.1:5202';
@@ -11,7 +12,7 @@ const out = process.env.SANSU_WRITTEN_ROUTES_OUTPUT || 'output/playwright/writte
 const filter = process.env.SANSU_WRITTEN_ROUTES_SCENARIO;
 const built = await build({ stdin: { contents: `export { generateWrittenArithmeticGrid } from './src/domain/math/writtenArithmetic.ts'; export { generateHissanGrid } from './src/domain/math/hissanEngine.ts';`, resolveDir: process.cwd() }, bundle: true, platform: 'node', format: 'esm', write: false, logLevel: 'silent' });
 const engine = await import(`data:text/javascript;base64,${Buffer.from(built.outputFiles[0].text).toString('base64')}`);
-const sourcePaths = ['src/hooks/useHissanSession.ts', 'src/pages/Study.tsx', 'src/pages/StudyLayout.tsx', 'src/components/domain/LearningAnswerForm.tsx', 'src/components/domain/WrittenArithmeticGrid.tsx', 'src/components/domain/WrittenArithmeticGrid.css', 'src/domain/math/writtenArithmetic.ts', 'src/domain/park/learning.ts'];
+const sourcePaths = ['src/hooks/useHissanSession.ts', 'src/pages/Study.tsx', 'src/pages/StudyLayout.tsx', 'src/components/domain/LearningAnswerForm.tsx', 'src/components/domain/WrittenArithmeticGrid.tsx', 'src/components/domain/WrittenArithmeticGrid.css', 'src/domain/math/writtenArithmetic.ts', 'src/domain/park/learning.ts', 'tools/e2e-written-routes.mjs', 'tools/async-state-checks.mjs'];
 const snapshot = async () => Promise.all(sourcePaths.map(async path => ({ path, sha256: createHash('sha256').update(await fs.readFile(path)).digest('hex') })));
 await fs.mkdir(out, { recursive: true });
 const report = { target: base, parkTarget: parkBase, startedAt: new Date().toISOString(), evidenceScope: 'Study uses supported focus_subject / focus_ids with actual generators and learning writer. Park uses actual normal planner after native profile/memory setup. Expected arithmetic executes in Node from visible expression. Legacy fixture is separately labeled synthetic saved-plan compatibility.', sourceStart: await snapshot(), scenarios: [], captures: [], pass: false };
@@ -126,11 +127,12 @@ try {
                     row.controls.push({phase:`step-${index+1}`,rows:await controls(page)});
                 } else {
                     await keyBatch(page,['Enter','Enter']);
-                    await page.waitForFunction(async profileId=>{
-                        const request=indexedDB.open('SansuDatabase');const db=await new Promise(r=>request.onsuccess=()=>r(request.result));
-                        const q=db.transaction('logs').objectStore('logs').getAll();const logs=await new Promise(r=>q.onsuccess=()=>r(q.result));db.close();
+                    await waitForPageState(page,async profileId=>{
+                        const request=indexedDB.open('SansuDatabase');const db=await new Promise((resolve,reject)=>{request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error);});
+                        const q=db.transaction('logs').objectStore('logs').getAll();
+                        const logs=await new Promise((resolve,reject)=>{q.onsuccess=()=>resolve(q.result);q.onerror=()=>reject(q.error);}).finally(()=>db.close());
                         return logs.filter(log=>log.profileId===profileId).length===1;
-                    },profileId);
+                    },profileId,{timeout:15000,description:'one final written-answer log'});
                     const after=await read(page,profileId);assert.equal(after.logs.length,1);assert.equal(after.logs[0].result,'correct');
                     if(scenario.route==='park') {assert.equal(after.plan.cursor,1);await page.waitForFunction(id=>document.querySelector('.park-answer')?.getAttribute('data-problem-id')===id,after.plan.slots[1].problem.id);}
                     else {await ensureStep(page,0);assert.equal(await page.locator('[data-study-index]').getAttribute('data-study-index'),'1');assert.equal(await page.getByText('このだんを もういちど',{exact:true}).count(),0);}
@@ -167,12 +169,15 @@ try {
             await button(page,'こたえを けす').click();await keyBatch(page,grid.steps[0].correctValues);
             const lastRow=classicRows.nth(3);for(const [i,col] of grid.steps[0].inputCellIndices.entries()) assert.equal(await lastRow.locator(':scope > div').nth(col).innerText(),grid.steps[0].correctValues[i]);
             await button(page,'こたえる').click();
-            await page.waitForFunction(async id=>{
-                const request=indexedDB.open('SansuDatabase');const db=await new Promise(r=>request.onsuccess=()=>r(request.result));const q=db.transaction('parkPlans').objectStore('parkPlans').get(id);
-                const plan=await new Promise(r=>q.onsuccess=()=>r(q.result));db.close();return plan.cursor===1;
-            },plan.id);
+            await waitForPageState(page,async id=>{
+                const request=indexedDB.open('SansuDatabase');const db=await new Promise((resolve,reject)=>{request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error);});
+                const q=db.transaction('parkPlans').objectStore('parkPlans').get(id);
+                const plan=await new Promise((resolve,reject)=>{q.onsuccess=()=>resolve(q.result);q.onerror=()=>reject(q.error);}).finally(()=>db.close());return plan?.cursor===1;
+            },plan.id,{timeout:15000,description:'legacy written plan cursor 1'});
             const after=await read(page,profileId);assert.equal(after.logs.length,1);assert.equal(after.logs[0].result,'correct');assert.equal(after.plan.slots[0].problem.hissanVersion,undefined);
+            assert.equal(after.plan.id,plan.id);assert.equal(after.plan.cursor,1);
             for(const [i,col] of grid.steps[0].inputCellIndices.entries())assert.equal(after.plan.slots[0].hissanValues[`3-${col}`],grid.steps[0].correctValues[i]);
+            await page.waitForFunction(id=>document.querySelector('.park-answer')?.getAttribute('data-problem-id')===id,after.plan.slots[1].problem.id);
             row.pass=true;console.log('PASS park-tablet-legacy-resume: unchanged four-row coordinates and one final log');
         } catch(error){row.error=error.stack;await page.screenshot({path:`${out}/park-tablet-legacy-failure.png`,animations:'disabled',timeout:5000}).catch(()=>{});console.log(`FAIL legacy resume: ${error.message}`);}
         finally{await context.close();}

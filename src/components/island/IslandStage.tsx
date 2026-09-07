@@ -4,12 +4,14 @@ import type { IslandScene } from './three/runtime';
 import type { IslandStageProps } from './three/types';
 import './IslandStage.css';
 
+const DEFAULT_CAPTION = 'カワウソと ウサギが くらす しま';
+
 export function IslandStage(props: IslandStageProps) {
     const host = useRef<HTMLDivElement>(null);
     const runtime = useRef<IslandScene | null>(null);
     const current = useRef(props);
     const failedPlayId = useRef<string | undefined>(undefined);
-    const [caption, setCaption] = useState('カワウソと ウサギが くらす しま');
+    const [caption, setCaption] = useState(DEFAULT_CAPTION);
     const [failed, setFailed] = useState(false);
     const [attempt, setAttempt] = useState(0);
 
@@ -27,21 +29,34 @@ export function IslandStage(props: IslandStageProps) {
 
     useEffect(() => {
         let disposed = false;
+        let failedThisAttempt = false;
+        const fail = () => {
+            if (disposed) return;
+            failedThisAttempt = true;
+            setCaption('しまが うまく みえないよ');
+            setFailed(true);
+        };
         void import('./three/runtime').then(({ IslandScene: Scene }) => {
             if (disposed || !host.current) return;
             try {
+                setCaption(DEFAULT_CAPTION);
                 const scene = new Scene(host.current, {
                     ground: point => current.current.onGroundPoint?.(point),
                     select: id => current.current.onItemSelect?.(id),
                     playResult: result => current.current.onPlayResult?.(result),
                     placementSuggestion: suggestion => current.current.onPlacementSuggestion?.(suggestion),
-                    caption: setCaption,
-                    failure: () => setFailed(true),
-                });
+                    caption: value => { if (!disposed && !failedThisAttempt) setCaption(value); },
+                    failure: fail,
+                    ready: () => {
+                        if (attempt === 0 || disposed || failedThisAttempt) return;
+                        failedPlayId.current = undefined;
+                        current.current.onRendererRecovered?.();
+                    },
+                }, attempt > 0 ? current.current.playRequest?.id : undefined);
                 runtime.current = scene;
                 scene.update(current.current);
-            } catch { setFailed(true); }
-        }).catch(() => { if (!disposed) setFailed(true); });
+            } catch { fail(); }
+        }).catch(fail);
         return () => { disposed = true; runtime.current?.dispose(); runtime.current = null; };
     }, [attempt]);
 
@@ -52,7 +67,7 @@ export function IslandStage(props: IslandStageProps) {
         {failed && <div className="island-stage__fallback" role="img" aria-label={caption}>
             <span className="island-stage__fallback-land" aria-hidden="true">⌂</span>
             <p>しまが うまく みえないよ。<br />もんだいと もちものは つかえるよ。</p>
-            <button type="button" className="island-stage__retry" onClick={() => { setFailed(false); setAttempt(value => value + 1); }}>もういちど みる</button>
+            <button type="button" className="island-stage__retry" onClick={() => { setCaption('しまを ひらいているよ'); setFailed(false); setAttempt(value => value + 1); }}>もういちど みる</button>
         </div>}
         <figcaption className="island-stage__caption" aria-live="polite" aria-atomic="true">{caption}</figcaption>
     </figure>;

@@ -1,0 +1,73 @@
+{
+  "target": "http://127.0.0.1:5399",
+  "flag": "VITE_ISLAND_ENABLED=true",
+  "hookChecks": [
+    "active learning defers update; user home checkpoint reloads with reserved plan preserved",
+    "critical persistence hold spans navigation and releases deferred update afterwards",
+    "continue pointer protects fresh session; answer receipt survives next user checkpoint",
+    "legacy active Explore run retains launch precedence and Island data"
+  ],
+  "offline": {
+    "revision": "84d3ddf-experience-3535575a1ce3",
+    "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-procedural-v2",
+    "learningCandidate": "mystic-island-learning-v2",
+    "mode": "learning",
+    "renderer": "three",
+    "artDirection": "moon-garden",
+    "drawCalls": 73,
+    "expanded": "false",
+    "residentAction": "idle",
+    "residentItemId": "",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": true,
+    "reducedMotion": true,
+    "serviceWorker": "real",
+    "offlineReload": true,
+    "answerPersisted": true,
+    "resumedSamePlan": true,
+    "soundEnabled": false
+  },
+  "pass": true,
+  "runtime": {
+    "revision": "84d3ddf-experience-3535575a1ce3",
+    "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-procedural-v2",
+    "learningCandidate": "mystic-island-learning-v2",
+    "mode": "home",
+    "renderer": "three",
+    "artDirection": "moon-garden",
+    "drawCalls": 83,
+    "expanded": "false",
+    "residentAction": "idle",
+    "residentItemId": "",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": false,
+    "reducedMotion": false
+  },
+  "manifest": {
+    "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+    "revision": "84d3ddf-experience-3535575a1ce3",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "artDirection": "moon-garden"
+    }
+  }
+}

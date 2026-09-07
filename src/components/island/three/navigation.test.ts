@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { ISLAND_RESERVED_AREAS } from '../../../domain/island/catalog';
-import { planResidentRoute, residentGroundHeight, residentObstacles, residentPointIsClear, type ResidentRoute } from './navigation';
+import { planResidentPointRoute, planResidentRoute, residentGroundHeight, residentObstacles, residentPointIsClear, type ResidentRoute } from './navigation';
 import type { IslandStageItem } from './types';
 
 const bench = (x: number, z: number): IslandStageItem => ({ id: 'seat', kind: 'bench', position: { x, z }, rotation: 0 });
@@ -18,6 +18,46 @@ function inspectPath(route: ResidentRoute | undefined, target: IslandStageItem, 
 }
 
 describe('island resident physical routes', () => {
+    it('routes around the full body of a stationary resident instead of crossing it', () => {
+        const target = bench(1.75, 1.5), occupied = [{ x: 0, z: 1.5 }];
+        const route = planResidentRoute({ x: -2, z: 1.5 }, target, [target], 0, undefined, { occupied });
+        expect(route).toBeDefined(); expect(route!.points.length).toBeGreaterThan(2);
+        for (let i = 1; i < route!.points.length; i++) {
+            const a = route!.points[i - 1], b = route!.points[i];
+            for (let step = 0; step <= 100; step++) {
+                const point = { x: a.x + (b.x - a.x) * step / 100, z: a.z + (b.z - a.z) * step / 100 };
+                expect(Math.hypot(point.x, point.z - 1.5)).toBeGreaterThanOrEqual(.84 - 1e-8);
+            }
+        }
+        expect(occupied).toEqual([{ x: 0, z: 1.5 }]);
+    });
+
+    it('rejects an occupied arrival and a bridge blocked by a stationary resident', () => {
+        const target = bench(6.25, .95), origin = { x: 0, z: 1 };
+        expect(planResidentRoute(origin, target, [target], 2, undefined, { occupied: [target.position!] })).toBeUndefined();
+        expect(planResidentPointRoute(origin, { x: 6.25, z: 1 }, [], 2, { occupied: [{ x: 4.75, z: 0 }] })).toBeUndefined();
+    });
+
+    it('walks to arbitrary safe handoff points with the same bridge and furniture boundaries', () => {
+        const origin = { x: 0, z: 1.5 }, destination = { x: 6.25, z: 1 };
+        const route = planResidentPointRoute(origin, destination, [], 2, { yaw: Math.PI / 2 });
+        expect(route?.points[0]).toEqual(origin); expect(route?.points.at(-1)).toEqual(destination);
+        expect(route?.points).toContainEqual({ x: 4.05, z: 0 }); expect(route?.points).toContainEqual({ x: 5.5, z: 0 });
+        expect(route?.yaw).toBe(Math.PI / 2);
+        expect(planResidentPointRoute(origin, destination, [], 0)).toBeUndefined();
+        expect(planResidentPointRoute(origin, { x: 9, z: 3 }, [], 2)).toBeUndefined();
+        expect(planResidentPointRoute(origin, { x: NaN, z: 1 }, [], 2)).toBeUndefined();
+    });
+
+    it('leaves a source approach but never stands inside that source or the other resident', () => {
+        const source: IslandStageItem = { id: 'source', kind: 'flower', position: { x: 1.5, z: .8 }, rotation: 0 };
+        const origin = { x: 1.5, z: .8 + .77 }, destination = { x: 0, z: 2.2 }, occupied = [{ x: 0, z: 1 }];
+        const route = planResidentPointRoute(origin, destination, [source], 0, { departingId: source.id, occupied });
+        expect(route).toBeDefined();
+        expect(planResidentPointRoute(origin, source.position!, [source], 0, { departingId: source.id })).toBeUndefined();
+        expect(planResidentPointRoute(origin, occupied[0], [source], 0, { departingId: source.id, occupied })).toBeUndefined();
+    });
+
     it('crosses to east furniture along the actual bridge center in both directions', () => {
         const target = bench(6.25, .95);
         const route = inspectPath(planResidentRoute({ x: -.48, z: 1.52 }, target, [target], 2), target, true);
@@ -56,6 +96,41 @@ describe('island resident physical routes', () => {
         const route = planResidentRoute(previous.position!, target, [previous, target], 0, previous.id);
         expect(route).toBeDefined();
         expect(route!.points[0]).toEqual(previous.position);
+    });
+
+    it('does not let a stale departure token exempt furniture that moved away from the origin', () => {
+        const moved = bench(0, 1.5), origin = { x: -2, z: 1.5 }, destination = { x: 2, z: 1.5 };
+        const route = planResidentPointRoute(origin, destination, [moved], 0, { departingId: moved.id });
+        expect(route).toBeDefined(); expect(route!.points.length).toBeGreaterThan(2);
+        const obstacles = residentObstacles([moved], '');
+        for (let i = 1; i < route!.points.length; i++) {
+            const a = route!.points[i - 1], b = route!.points[i];
+            for (let step = 0; step <= 100; step++) expect(residentPointIsClear({
+                x: a.x + (b.x - a.x) * step / 100, z: a.z + (b.z - a.z) * step / 100,
+            }, false, obstacles)).toBe(true);
+        }
+    });
+
+    it('can leave multiple actual furniture overlaps while keeping every arrival and stale ID solid', () => {
+        const origin = { x: 0, z: 1.5 }, destination = { x: 0, z: 2.75 };
+        const items: IslandStageItem[] = [
+            { id: 'left', kind: 'flower', position: { x: -.4, z: 1.5 }, rotation: 0 },
+            { id: 'right', kind: 'flower', position: { x: .4, z: 1.5 }, rotation: 0 },
+            { id: 'moved', kind: 'flower', position: { x: 2, z: 1.5 }, rotation: 0 },
+        ];
+        expect(planResidentPointRoute(origin, destination, items, 0, { departingId: 'left' })).toBeUndefined();
+        const options = { departingIds: ['left', 'right', 'moved', 'removed'], occupied: [{ x: -2, z: 1.5 }] };
+        const route = planResidentPointRoute(origin, destination, items, 0, options)!;
+        expect(route).toBeDefined(); expect(route.points[0]).toEqual(origin); expect(route.points.at(-1)).toEqual(destination);
+        expect(planResidentPointRoute(origin, items[0].position!, items, 0, options)).toBeUndefined();
+        expect(planResidentPointRoute(origin, options.occupied[0], items, 0, options)).toBeUndefined();
+        const across = planResidentPointRoute(origin, { x: 3.25, z: 1.5 }, items, 0, options)!;
+        expect(across).toBeDefined(); expect(across.points.length).toBeGreaterThan(2);
+        inspectPath(across, items[0], false, [items[2]]);
+        const east = planResidentPointRoute(origin, { x: 6.25, z: 1 }, items, 2, options)!;
+        expect(east).toBeDefined(); expect(east.points).toContainEqual({ x: 4.05, z: 0 }); expect(east.points).toContainEqual({ x: 5.5, z: 0 });
+        inspectPath(east, items[0], true, [items[2]]);
+        expect(planResidentPointRoute(origin, { x: 6.25, z: 1 }, items, 2, { ...options, occupied: [{ x: 4.75, z: 0 }] })).toBeUndefined();
     });
 
     it('arrives clear of the departed bench so a later furniture visit remains reachable', () => {

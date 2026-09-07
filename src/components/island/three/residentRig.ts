@@ -81,7 +81,14 @@ export function makeResidentRig(species: ResidentSpecies, m: IslandMaterials) {
         shoulder.position.set(side * (rabbit ? .21 : .27), otter ? .67 : .64, .08);
         shoulder.rotation.z = side * .2;
         body.add(shoulder);
-        ellipsoid(shoulder, fur, [0, -.15, 0], [.095, .19, .105]);
+        const paw = ellipsoid(shoulder, fur, [0, -.15, 0], [.095, .19, .105]);
+        const hand = new THREE.Object3D();
+        hand.name = side < 0 ? 'hand-contact-left' : 'hand-contact-right';
+        // A point on the actual ellipsoid's forward-facing fingertip surface.
+        // It inherits the paw scale and shoulder pose rather than guessing a
+        // world-space holding position independently from the visible body.
+        hand.position.set(0, -Math.sqrt(1 - .25 ** 2), .25);
+        paw.add(hand);
         return shoulder;
     });
     head.position.y = rabbit ? .93 : otter ? 1.01 : .99;
@@ -116,5 +123,6 @@ export function makeResidentRig(species: ResidentSpecies, m: IslandMaterials) {
     seatContact.position.y = residentSeatContactY(species);
     pose.add(seatContact);
     pose.traverse(object => { if (object instanceof THREE.Mesh) object.castShadow = false; });
-    return { pose, body, head, feet, shoulders, seatContact };
+    const handContacts = shoulders.map(shoulder => shoulder.getObjectByName(shoulder.name === 'shoulder-left' ? 'hand-contact-left' : 'hand-contact-right')!);
+    return { pose, body, head, feet, shoulders, handContacts, seatContact };
 }

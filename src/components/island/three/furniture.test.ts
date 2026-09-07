@@ -1,10 +1,11 @@
 import * as THREE from 'three';
 import { describe, expect, it } from 'vitest';
 import { ISLAND_ITEMS } from '../../../domain/island/catalog';
-import { makeFurniture, applyFurnitureLife, applyFurnitureUse, getFurnitureAnchors } from './furniture';
+import { makeFurniture, applyFurnitureInterest, applyFurnitureLife, applyFurnitureUse, getFurnitureAnchors } from './furniture';
 import { getSwingSeatPosition, sampleFurnitureSwing } from './furnitureVisuals';
 import { IslandMaterials, disposeGeometry } from './primitives';
 import type { IslandItemKind } from './types';
+import { sampleResidentInterest } from './residentInterest';
 
 function projectedRadius(group: THREE.Group) {
     group.updateMatrixWorld(true);
@@ -85,13 +86,55 @@ describe('furniture physical contracts', () => {
         };
         expect(lightIntensity(lamp)).toBeGreaterThan(lightIntensity(otherLamp));
         expect(flower.getObjectByName('flower-blooms')!.scale.x).toBeGreaterThan(1);
+        expect(flower.getObjectByName('flower-leaves')!.scale.toArray()).toEqual([1.06, 1, 1.06]);
         expect(fountain.getObjectByName('fountain-water')!.scale.y).toBeGreaterThan(1);
         objects.forEach(object => applyFurnitureLife(object, 0));
         expect(lightIntensity(lamp)).toBe(lightIntensity(otherLamp));
         expect(flower.getObjectByName('flower-blooms')!.scale.toArray()).toEqual([1, 1, 1]);
+        expect(flower.getObjectByName('flower-leaves')!.scale.toArray()).toEqual([1, 1, 1]);
         expect(fountain.getObjectByName('fountain-water')!.scale.toArray()).toEqual([1, 1, 1]);
         applyFurnitureLife(flower, 1, true);
         expect(flower.getObjectByName('flower-blooms')!.rotation.y).toBe(0);
         [...objects, otherLamp].forEach(disposeGeometry); materials.dispose();
+    });
+});
+
+
+describe('ordinary resident interest only touches its actual object', () => {
+    it.each(['flower', 'lantern', 'fountain'] as const)('%s retains anchors, fixed geometry and other instances through one response and exact reset', kind => {
+        const materials = new IslandMaterials(), object = makeFurniture(kind, materials), other = makeFurniture(kind, materials);
+        const fixed = object.getObjectByName('furniture-static')!, anchor = getFurnitureAnchors(kind).look;
+        object.rotation.y = Math.PI / 2; object.position.set(1.25, 0, -.75); object.updateMatrixWorld(true); other.updateMatrixWorld(true);
+        const matrix = fixed.matrixWorld.clone(), origin = object.matrixWorld.clone();
+        const point = object.localToWorld(new THREE.Vector3(anchor.x, anchor.y, anchor.z));
+        const state = (group: THREE.Object3D) => {
+            const values: { transform: number[]; material: number[] }[] = [];
+            group.traverse(part => {
+                if (!(part instanceof THREE.Mesh)) return;
+                const m = part.material as THREE.MeshStandardMaterial;
+                values.push({ transform: part.matrixWorld.elements.slice(), material: [...m.color.toArray(), ...m.emissive.toArray(), m.emissiveIntensity] });
+            });
+            return values;
+        };
+        const original = state(object), unaffected = state(other);
+        const protectedPart = object.getObjectByName(kind === 'flower' ? 'flower-leaves'
+            : kind === 'fountain' ? 'fountain-water' : 'furniture-static')!;
+        const protectedState = state(protectedPart);
+        for (const species of ['otter', 'rabbit', 'fox'] as const) {
+            for (const phase of [0, .25, .44, .6, .85, 1]) {
+                applyFurnitureInterest(object, sampleResidentInterest(species, phase, false).life); object.updateMatrixWorld(true);
+                expect(fixed.matrixWorld.equals(matrix)).toBe(true); expect(object.matrixWorld.equals(origin)).toBe(true);
+                expect(object.localToWorld(new THREE.Vector3(anchor.x, anchor.y, anchor.z)).distanceTo(point)).toBe(0);
+                expect(state(other)).toEqual(unaffected);
+                expect(state(protectedPart), 'An ordinary response preserves every leaf or jet/droplet mesh').toEqual(protectedState);
+                if (phase === .6) expect(state(object)).not.toEqual(original);
+            }
+            expect(state(object)).toEqual(original);
+            applyFurnitureInterest(object, sampleResidentInterest(species, 0, true).life, true);
+            object.updateMatrixWorld(true); expect(state(object)).not.toEqual(original); expect(state(other)).toEqual(unaffected);
+            expect(state(protectedPart)).toEqual(protectedState);
+            applyFurnitureInterest(object, 0); object.updateMatrixWorld(true); expect(state(object)).toEqual(original);
+        }
+        disposeGeometry(object); disposeGeometry(other); materials.dispose();
     });
 });

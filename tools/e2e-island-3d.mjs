@@ -57,6 +57,7 @@ async function installProbe(page) {
                 previewBuildCount: Number(data.previewBuildCount), previewValid: data.previewValid,
                 preview: data.previewState ? JSON.parse(data.previewState) : null,
                 furniture: data.furnitureState ? JSON.parse(data.furnitureState) : [],
+                interest: data.residentInterest ? JSON.parse(data.residentInterest) : null,
                 reactionId: data.reactionId, reactionKind: data.reactionKind, reactionPhase: data.reactionPhase,
                 reactionTarget: data.reactionTarget, completed: Number(data.sectionCompleted),
                 residentAction: data.residentAction, residentItemId: data.residentItemId, usePhase: Number(data.residentUsePhase),
@@ -351,6 +352,51 @@ async function verifyLocalReaction(page, before, result, row, layout) {
     return changed;
 }
 
+function ordinaryMaterialAtRest(object) {
+    assert(object?.visible && object.life, 'Read the actual visible furniture from a rendered frame');
+    assert.deepEqual(object.rootScale, [1, 1, 1]);
+    for (const key of ['bloomScale', 'leafScale', 'waterScaleY', 'rippleScale']) {
+        if (object.life[key] !== undefined) closeTo(object.life[key], 1, `Ordinary ${object.kind} restores ${key}`);
+    }
+    if (object.life.emissive !== undefined) closeTo(object.life.emissive, .65, 'Ordinary light restores its own emission');
+}
+
+async function verifyOrdinaryMaterial(page, item, since, row) {
+    if (!['flower', 'lantern', 'fountain'].includes(item.kind)) return;
+    await page.waitForFunction(({ id, since }) => window.__island3dProbe.rows.some(frame => frame.at >= since
+        && frame.interest?.context === 'visit' && frame.interest.itemId === id
+        && !frame.interest.reduced && frame.interest.phase >= 1), { id: item.id, since });
+    const frames = (await probeRows(page)).filter(frame => frame.at >= since && frame.interest?.context === 'visit'
+        && frame.interest.itemId === item.id && !frame.interest.reduced);
+    assert(frames.length > 1, 'The existing probe observed multiple actual ordinary-use draws');
+    const parts = frames.map(frame => frame.furniture.find(object => object.id === item.id));
+    for (const object of parts) {
+        assert(object?.visible && object.life); assert.deepEqual(object.rootScale, [1, 1, 1]);
+        if (item.kind === 'flower') closeTo(object.life.leafScale, 1, 'Ordinary flower leaves do not expand');
+        if (item.kind === 'fountain') closeTo(object.life.waterScaleY, 1, 'Ordinary fountain jets and droplets do not stretch');
+    }
+    const changedPart = { flower: 'bloomScale', lantern: 'emissive', fountain: 'rippleScale' }[item.kind];
+    const restValue = item.kind === 'lantern' ? .65 : 1;
+    assert(parts.some(object => object.life[changedPart] > restValue + .0001), `Actual ordinary ${item.kind} responds through ${changedPart}`);
+    const settled = frames.find(frame => frame.interest.phase >= 1);
+    ordinaryMaterialAtRest(settled.furniture.find(object => object.id === item.id));
+    row.ordinaryLife.push({ itemId: item.id, kind: item.kind, changedPart, frames, settled,
+        scope: 'Actual rendered bloom/leaf X scale, jet/drop Y scale, ripple X scale and owned emission. Full mesh/material invariants have separate unit coverage.' });
+}
+
+async function verifyOrdinaryClearedForLearning(page, row) {
+    const visit = row.ordinaryLife.at(-1);
+    if (!visit || visit.clearedForLearning) return;
+    await page.waitForFunction(({ id, after }) => {
+        const frame = window.__island3dRead();
+        return frame?.drawCount > after && frame.furniture.some(object => object.id === id)
+            && !(frame.interest?.context === 'visit' && frame.interest.itemId === id);
+    }, { id: visit.itemId, after: visit.settled.drawCount });
+    const frame = await scene(page);
+    ordinaryMaterialAtRest(frame.furniture.find(object => object.id === visit.itemId));
+    visit.clearedForLearning = frame;
+}
+
 async function finishSection(page, profileId, layout, row, inspectLife = false) {
     let state = await readNative(page, profileId), attempts = 0;
     const lifeKinds = new Set();
@@ -382,6 +428,18 @@ async function claimAndPlace(page, profileId, state, kind, label, action, layout
     assert.equal(item.kind, kind); assert.equal(item.position, undefined);
     await waitPreview(page, item.id);
     await chooseReachablePreview(page, state, item, layout, row);
+    await capture(page, `${layout.name}-${kind}-placement`, state);
+    await activate(button(page, 'まわす'), layout.touch);
+    await capture(page, `${layout.name}-${kind}-placement-rotated`, state);
+    assert.deepEqual(await readNative(page, profileId), state, `${kind}: rotation is only a preview`);
+    await activate(button(page, 'いどうを やめる'), layout.touch); await waitMode(page, 'home');
+    assert.deepEqual(await readNative(page, profileId), state, `${kind}: cancel restores saved possessions`);
+    await activate(button(page, 'もちもの'), layout.touch); await waitMode(page, 'inventory');
+    const inventoryIndex = state.island.items.findIndex(existing => existing.id === item.id);
+    await activate(button(page, `${label} ${inventoryIndex + 1}を うごかす`), layout.touch); await waitMode(page, 'placement');
+    await waitPreview(page, item.id);
+    await chooseReachablePreview(page, state, item, layout, row);
+    const visitStart = (await scene(page)).at;
     state = await oneSavedEdit(page, profileId, state, item.id, layout.touch);
     await waitResident(page, item.id, action);
     await rememberResident(page, row, item);
@@ -397,6 +455,7 @@ async function claimAndPlace(page, profileId, state, kind, label, action, layout
             && state.usePhase < .9 && Math.abs(state.furniture.find(object => object.id === item.id)?.swingAngle ?? 0) > .002);
     }
     await capture(page, `${layout.name}-${kind}-earned-use`, state);
+    await verifyOrdinaryMaterial(page, item, visitStart, row);
     row.earned.push({ kind, itemId: item.id, rewardId: reward.id, completedSets: state.island.completedSets, action });
     return { state, item: state.island.items.find(candidate => candidate.id === item.id) };
 }
@@ -447,7 +506,7 @@ try {
         const context = await browser.newContext({ viewport: layout.viewport, hasTouch: layout.touch,
             serviceWorkers: 'block', reducedMotion: 'no-preference' });
         const page = await context.newPage(), cdp = await context.newCDPSession(page);
-        const row = { ...layout, samples: [], life: [], earned: [], load: [], residentOrigins: {}, placementChoices: [], pass: false, errors: [] };
+        const row = { ...layout, samples: [], life: [], ordinaryLife: [], earned: [], load: [], residentOrigins: {}, placementChoices: [], pass: false, errors: [] };
         report.scenarios.push(row); page.setDefaultTimeout(15000);
         page.on('pageerror', error => row.errors.push(error.stack));
         try {
@@ -476,11 +535,14 @@ try {
             row.samples.push(wrong.sample); state = wrong.after;
             await assertReaction(page, wrong.receipt, 'retry', original.plan.cursor);
             assert.equal(state.plan.cursor, original.plan.cursor);
-            await activate(button(page, 'いっしょに みる'), layout.touch);
+            await activate(button(page, 'ヒントを みる'), layout.touch);
             await waitLearningReady(page, { ...state.plan, revision: state.plan.revision + 1 });
             const supported = await readNative(page, profileId);
             assert.equal(supported.plan.cursor, state.plan.cursor); assert.deepEqual(supported.logs, state.logs);
             assert(supported.plan.slots[supported.plan.cursor].assisted);
+            assert.equal(supported.plan.slots[supported.plan.cursor].supportStage, 'hint');
+            assert.equal(await page.locator('.island-support-model, .island-support-example, .island-support-answer').count(), 0,
+                'The neutral support reaction opens a hint, without displaying the full answer');
             const supportReceipt = supported.islandEvents.find(event => !state.islandEvents.some(old => old.id === event.id));
             await assertReaction(page, supportReceipt, 'support', state.plan.cursor);
             const neutral = await scene(page);
@@ -517,6 +579,7 @@ try {
                 ['lantern', 'ほしあかり', 'admire'], ['fountain', 'ふんすい', 'watch'],
             ]) {
                 await activate(button(page, 'ひかりを とどける'), layout.touch); await waitMode(page, 'learning');
+                await verifyOrdinaryClearedForLearning(page, row);
                 state = await finishSection(page, profileId, layout, row);
                 state = (await claimAndPlace(page, profileId, state, kind, label, action, layout, row)).state;
             }
@@ -526,11 +589,34 @@ try {
             assert.equal(expanded.expanded, 'true'); assert.equal(expanded.lighthouse, 'true'); assert.equal(expanded.residents, 3);
             row.load.push(await loadSample(page, cdp, 'six-earned-expanded-island'));
             await capture(page, `${layout.name}-six-earned-expanded-island`, state);
+            await activate(button(page, 'どうぶつと あそぶ'), layout.touch); await waitMode(page, 'play');
+            const playList = page.getByRole('group', { name: 'あそぶ もの' });
+            assert.equal(await playList.getByRole('button').count(), state.island.items.filter(item => item.position).length);
+            const listBox = await playList.boundingBox(), returnBox = await button(page, 'ひかりを とどける').boundingBox();
+            assert(listBox && returnBox && listBox.y + listBox.height <= returnBox.y + 1 && returnBox.y + returnBox.height <= layout.viewport.height,
+                'All earned toys remain in a bounded list with the learning return below and in reach');
+            await playList.getByRole('button').last().scrollIntoViewIfNeeded();
+            await capture(page, `${layout.name}-six-earned-play-list`, state);
+            await activate(button(page, 'ひかりを とどける'), layout.touch); await waitMode(page, 'learning');
+            await verifyOrdinaryClearedForLearning(page, row);
+            assert.deepEqual(row.ordinaryLife.map(visit => visit.kind), ['flower', 'lantern', 'fountain']);
+            assert(row.ordinaryLife.every(visit => visit.clearedForLearning), 'Each actual ordinary response clears on the existing learning return');
+            state = await readNative(page, profileId); await waitLearningReady(page, state.plan); await assertControls(page);
+            const returnFrame = await scene(page);
+            for (const resident of returnFrame.residentStates) {
+                const bounds = resident.frameBounds;
+                assert(bounds && bounds.left >= -1 && bounds.right <= 1 && bounds.bottom >= -1 && bounds.top <= 1,
+                    `Expanded island keeps the complete ${resident.species} in learning: ${JSON.stringify(bounds)}`);
+            }
+            row.expandedLearning = returnFrame;
+            await capture(page, `${layout.name}-six-earned-return-learning`, state);
+            await activate(button(page, 'しまへ'), layout.touch); await waitMode(page, 'home');
             row.offscreen = await offscreenPause(page, profileId, layout);
             const earnedSaved = state.island;
-            await page.reload(); await waitReady(page); await waitMode(page, 'home'); await installProbe(page);
+            await page.reload(); await waitReady(page); await waitMode(page, 'learning'); await installProbe(page);
             state = await readNative(page, profileId);
             assert.deepEqual(state.island, earnedSaved, 'Every earned and placed furniture survives reload');
+            await waitLearningReady(page, state.plan); await assertControls(page);
             await capture(page, `${layout.name}-six-earned-reloaded`, state);
             const allFrames = await probeRows(page);
             assert(allFrames.every(frame => Number.isFinite(frame.cpuMs) && frame.cpuMs >= 0));

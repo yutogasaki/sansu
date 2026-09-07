@@ -7,12 +7,11 @@ import {
     SurfacePanelHeader,
 } from "../components/ui/SurfacePanel";
 import { Header } from "../components/Header";
-import { createInitialProfile } from "../domain/user/profile";
-import { saveProfile, setActiveProfileId } from "../domain/user/repository";
-import { getAvailableSkills, MAX_MATH_LEVEL } from "../domain/math/curriculum";
-import { getNextReviewDate } from "../domain/algorithms/srs";
-import { db } from "../db";
-import { useNavigate } from "react-router-dom";
+import { getActiveProfile } from "../domain/user/repository";
+import { completeOnboardingProfile, onboardingDestination, OnboardingAlreadyCompleted, type OnboardingIntent } from "../domain/user/onboarding";
+import { profileStorage } from "../utils/storage";
+import { holdPwaUpdateForCriticalPersistence } from "../pwa";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useTimeoutScheduler } from "../hooks/useTimeoutScheduler";
 import { logInDev } from "../utils/debug";
 import { cn } from "../utils/cn";
@@ -24,6 +23,7 @@ import { PartIcon } from "../components/park/PartArt";
 import { islandEnabled } from "../domain/island/feature";
 import { Leaf } from "lucide-react";
 const IslandWelcome = lazy(() => import("../components/island/IslandWelcome"));
+const IslandOnboarding = lazy(() => import("../components/island/IslandOnboarding"));
 
 type Step = "welcome" | "name" | "grade" | "subject" | "math-check" | "english-check" | "done";
 type SubjectMode = "mix" | "math" | "vocab";
@@ -35,6 +35,22 @@ type OnboardingSelections = {
 };
 
 export const Onboarding: React.FC = () => {
+    const { search } = useLocation();
+    const [resolution, setResolution] = useState<'first' | 'add' | 'launch' | 'error'>();
+    useEffect(() => {
+        let active = true;
+        void getActiveProfile().then(profile => { if (active) setResolution(onboardingDestination(Boolean(profile), search)); })
+            .catch(() => { if (active) setResolution('error'); });
+        return () => { active = false; };
+    }, [search]);
+    if (!resolution) return <p role="status">じゅんびちゅう…</p>;
+    if (resolution === 'error') return <p role="alert">よみこめなかったよ。よみなおして つづけてね。</p>;
+    if (resolution === 'launch') return <Navigate to="/" replace />;
+    if (resolution === 'first' && islandEnabled()) return <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandOnboarding /></Suspense>;
+    return <LegacyOnboarding key={resolution} intent={resolution === 'add' ? 'add' : 'legacy-first'} />;
+};
+
+const LegacyOnboarding: React.FC<{ intent: OnboardingIntent }> = ({ intent }) => {
     const islandOnboarding = islandEnabled();
     const parkOnboarding = !islandOnboarding && (BUILD_PLAY_ENABLED || (import.meta.env.DEV && threeParkRequested()));
     const worldOnboarding = islandOnboarding || parkOnboarding;
@@ -48,6 +64,7 @@ export const Onboarding: React.FC = () => {
     const [englishExp, setEnglishExp] = useState<EnglishExp | null>(null);
     const isSubmittingRef = useRef(false);
     const isMountedRef = useRef(true);
+    const [completionId] = useState(() => crypto.randomUUID());
     const trimmedName = name.trim();
     const { scheduleTimeout, clearScheduledTimeouts } = useTimeoutScheduler();
 
@@ -92,84 +109,23 @@ export const Onboarding: React.FC = () => {
     };
 
     const handleFinish = useCallback(async ({ mathCheck: selectedMathCheck, englishExp: selectedEnglishExp }: OnboardingSelections) => {
-        // 推定レベルロジック
-        // 少し手前から始めて、自信をつけさせる
-        const safeGrade = grade ?? 0;
-        const baseMap: Record<number, number> = {
-            [-2]: 0,
-            [-1]: 2,
-            0: 8,
-            1: 10,
-            2: 11,
-            3: 13,
-            4: 14,
-            5: 15,
-            6: 16
-        };
-        const baseLevel = baseMap[safeGrade] ?? 8;
-        const adjMap: Record<MathCheck, number> = {
-            q_count: -6,
-            q_add: -3,
-            q_sub: -1,
-            q_col: 1,
-            q_mul: 4
-        };
-        const adjustment = selectedMathCheck ? adjMap[selectedMathCheck] : 0;
-        const mathStartLevel = Math.max(1, Math.min(MAX_MATH_LEVEL, baseLevel + adjustment));
-
-        let vocabStartLevel = 1;
-        if (selectedEnglishExp) {
-            if (selectedEnglishExp === "beginner") vocabStartLevel = 1;
-            if (selectedEnglishExp === "some") vocabStartLevel = 4;
-            if (selectedEnglishExp === "confident") vocabStartLevel = 7;
-        }
-
-        // Create Profile (mix mode default)
-        if (!trimmedName) {
-            throw new Error("Profile name is required");
-        }
-
-        const profile = createInitialProfile(trimmedName, safeGrade, mathStartLevel, vocabStartLevel, subjectMode);
-
-        // Save
-        await saveProfile(profile);
-        await seedRetiredMathSkills(profile.id, mathStartLevel);
-        await setActiveProfileId(profile.id);
-
-        navigate("/", { replace: true });
-
-        // Let the hash fallback survive route unmount so HashRouter still recovers.
-        window.setTimeout(() => {
-            if (window.location.hash === "" || window.location.hash === "#/onboarding") {
-                window.location.hash = "#/";
+        const release = holdPwaUpdateForCriticalPersistence();
+        try {
+            const receipt = await completeOnboardingProfile({ name: trimmedName, grade, subject: subjectMode,
+                mathRange: selectedMathCheck, englishRange: selectedEnglishExp }, completionId, intent);
+            profileStorage.setActiveId(receipt.activeProfileId);
+            if (isMountedRef.current) {
+                navigate("/", { replace: true });
+                // Retain the existing HashRouter recovery after a completed add flow.
+                window.setTimeout(() => {
+                    if (window.location.hash === "" || window.location.hash.split('?')[0] === "#/onboarding") window.location.hash = "#/";
+                }, 100);
             }
-        }, 100);
-    }, [grade, navigate, subjectMode, trimmedName]);
-
-    const seedRetiredMathSkills = async (profileId: string, mathStartLevel: number) => {
-        const skills = getAvailableSkills(mathStartLevel);
-        if (skills.length === 0) return;
-
-        const now = new Date().toISOString();
-        const nextReview = getNextReviewDate(5).toISOString();
-
-        await Promise.all(
-            skills.map((id) =>
-                db.memoryMath.put({
-                    profileId,
-                    id,
-                    strength: 5,
-                    nextReview,
-                    totalAnswers: 0,
-                    correctAnswers: 0,
-                    incorrectAnswers: 0,
-                    skippedAnswers: 0,
-                    updatedAt: now,
-                    status: "retired"
-                })
-            )
-        );
-    };
+        } catch (error) {
+            if (!(error instanceof OnboardingAlreadyCompleted)) throw error;
+            if (isMountedRef.current) navigate("/", { replace: true });
+        } finally { release(); }
+    }, [completionId, grade, intent, navigate, subjectMode, trimmedName]);
 
     const handleSubjectSelect = (mode: SubjectMode) => {
         if (isSubmittingRef.current) return;
@@ -254,7 +210,7 @@ export const Onboarding: React.FC = () => {
     const panelClass = "w-full border-t-[3px] shadow-[0_28px_54px_-38px_rgba(15,23,42,0.34)]";
 
     if (step === "welcome") {
-        if (islandOnboarding) return <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandWelcome onStart={() => setStep("name")} /></Suspense>;
+        if (islandOnboarding) return <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandWelcome onStart={() => setStep("name")} actionLabel="はじめる" /></Suspense>;
         if (parkOnboarding) return <ParkWelcome onStart={() => setStep("name")} />;
         return (
             <div className="brand-onboarding relative flex h-full min-h-0 flex-col items-center justify-center overflow-hidden px-[var(--screen-padding-x)] animate-in fade-in duration-500">

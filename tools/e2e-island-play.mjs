@@ -40,7 +40,13 @@ await fs.mkdir(out, { recursive: true });
 const report = { target: base, flag: 'VITE_ISLAND_ENABLED=true', candidate: ISLAND_CANDIDATE,
     startedAt: new Date().toISOString(), fixtureModuleHash, oracleHash: sha(oracleSource), sourceStart: await sourceSnapshot(),
     scenarios: [], captures: [], pass: false, browserClosed: false,
-    scope: 'Production UI. Fresh native profile/memory setup only; four gifts and fox are earned through actual reserved learning. No synthetic furniture/progress/events, DEV imports, route injection or UI bypass. Replay checks read every IndexedDB store before and after. Pure geometry selects legal coordinates, which are applied with actual direction buttons. Functional evidence only; no child observation or formal throughput claim.' };
+    scope: 'Production UI. Fresh native profile/memory setup only; four gifts and fox are earned through actual reserved learning. The earned bench is turned away from its nearby flowers with actual rotation controls so this harness preserves ordinary single-resident replay; furniture combinations are verified by e2e-island-sharing.mjs. No synthetic furniture/progress/events, DEV imports, route injection or UI bypass. Replay checks read every IndexedDB store before and after. Pure geometry selects legal coordinates, which are applied with actual direction buttons. Functional evidence only; no child observation or formal throughput claim.' };
+report.interestMethod = { humanN: 0, visualReview: 'pending author review of actual images; no child-comprehension claim',
+    sampling: 'MutationObserver of actual data-draw-count commits; consecutive physical frames only, with bounded per-action storage. No runtime imports or animation-clock manipulation in the browser.',
+    poses: 'Rendered head Euler angles, actual handAnchor world positions and resident roots. Feet/seat contact remains an image-review gate; it is not measured by these attributes.',
+    scope: 'Naturally selected flower/lantern visits in the existing four-gift journey, one existing real answer after recovery, then the existing paused-learning replay and its reduced-motion state. Missing species/context matches are listed, never inferred.',
+    excluded: ['No fountain is earned in this four-gift fixture; jet/drop invariance belongs to the six-kind 3d suite.',
+        'No added placement search or forced resident/learning-reply selection.', 'Screenshot metadata brackets capture; it is not an atomic GPU pixel/DOM snapshot.'] };
 const browser = await chromium.launch(process.env.SANSU_ISLAND_BROWSER_GPU === 'metal' ? { args: ['--use-angle=metal'] } : {});
 
 async function scene(page) {
@@ -51,7 +57,11 @@ async function scene(page) {
             species: d.residentSpecies, target: d.residentItemId, action: d.residentAction,
             usePhase: Number(d.residentUsePhase), camera: d.cameraFrame,
             preview: d.previewState ? JSON.parse(d.previewState) : null, previewValid: d.previewValid,
+            shared: d.sharedActivity ? JSON.parse(d.sharedActivity) : null,
             reactionId: d.reactionId, reactionPhase: d.reactionPhase,
+            drawCount: Number(d.drawCount), frameTimestamp: Number(d.frameTimestamp),
+            interest: d.residentInterest ? JSON.parse(d.residentInterest) : null,
+            furniture: d.furnitureState ? JSON.parse(d.furnitureState) : [],
             expanded: d.expanded, lighthouse: d.lighthouse, calls: Number(d.drawCalls) };
     });
 }
@@ -84,6 +94,169 @@ async function capture(page, name, row) {
     assert.equal(metadata.artDirection, report.manifest.island.artDirection);
     const file = `${row.name}-${name}.png`, image = await page.screenshot({ path: `${out}/${file}`, animations: 'disabled' });
     report.captures.push({ file, sha256: sha(image), ...metadata, scene: await scene(page) });
+}
+
+// One bounded observation window on this existing journey. A draw marker is
+// emitted after renderer.render; stale attributes never receive a fresh timestamp.
+async function armInterestFrames(page) {
+    await page.evaluate(() => {
+        window.__islandPlayInterestProbe?.observer.disconnect();
+        const probe = { frames: [], overflow: false, last: '', observer: undefined };
+        const observe = records => {
+            if (!records.some(record => record.target.matches?.('[data-testid="island-stage"]'))) return;
+            const stage = document.querySelector('[data-testid="island-stage"]'), d = stage?.dataset;
+            if (!d || d.renderer !== 'three') return;
+            const key = `${d.drawCount}:${d.frameTimestamp}`;
+            if (key === probe.last) return;
+            probe.last = key;
+            if (probe.frames.length >= 512) { probe.overflow = true; return; }
+            const parsed = key => d[key] ? JSON.parse(d[key]) : null;
+            probe.frames.push({ drawCount: Number(d.drawCount), frameTimestamp: Number(d.frameTimestamp), observedAt: performance.now(),
+                interest: parsed('residentInterest'), residents: parsed('residentStates'), furniture: parsed('furnitureState'),
+                reactionId: d.reactionId, reactionPhase: d.reactionPhase, shared: parsed('sharedActivity') });
+        };
+        probe.observer = new MutationObserver(observe);
+        probe.observer.observe(document.documentElement, { subtree: true, attributes: true, attributeFilter: ['data-draw-count'] });
+        window.__islandPlayInterestProbe = probe;
+    });
+}
+async function takeInterestFrames(page) {
+    return page.evaluate(() => {
+        const probe = window.__islandPlayInterestProbe;
+        probe.observer.disconnect();
+        return { frames: probe.frames, overflow: probe.overflow };
+    });
+}
+const interestItem = item => ['flower', 'lantern'].includes(item.kind);
+const finitePose = interest => [...interest.head, ...interest.hands.left, ...interest.hands.right, ...interest.target].every(Number.isFinite);
+async function interestCapture(page, row, label, expected) {
+    // Take the image before slower metadata reads. Preserve both surrounding
+    // actual frames so a missed short phase stays an explicit visual gap.
+    const before = await scene(page), file = `${row.name}-interest-${label}.png`;
+    const bytes = await page.screenshot({ path: `${out}/${file}`, animations: 'disabled' });
+    const after = await scene(page), metadata = await runtimeMetadata(page);
+    assert.equal(metadata.revision, report.manifest.revision); assert.equal(metadata.version, report.manifest.version);
+    assert.equal(metadata.candidate, report.manifest.island.candidate); assert.equal(metadata.artDirection, 'moon-garden');
+    const matches = frame => expected.context ? frame.interest?.context === expected.context
+        && (!expected.itemId || frame.interest.itemId === expected.itemId)
+        && (!expected.reactionId || frame.reactionId === expected.reactionId)
+        && (expected.reduced ? frame.interest.reduced : !frame.interest.reduced && frame.interest.phase > .05 && frame.interest.phase < .98)
+        : !expected.reactionId || frame.reactionId === expected.reactionId && frame.reactionPhase === expected.phase;
+    const phaseBracketed = matches(before) && matches(after);
+    const entry = { file, sha256: sha(bytes), ...metadata, scene: after, viewportCapture: true,
+        requestedPhase: expected, phaseBracketed, before, after };
+    report.captures.push(entry);
+    if (!phaseBracketed) row.interestEvidence.visualGaps.push({ file, reason: 'The requested live phase did not bracket both sides of the screenshot; inspect actual pixels, do not label this a captured reply.' });
+    return entry;
+}
+async function waitInterestReply(page, expected) {
+    await page.waitForFunction(expected => {
+        const d = document.querySelector('[data-testid="island-stage"]')?.dataset;
+        const interest = d?.residentInterest && JSON.parse(d.residentInterest);
+        return interest?.context === expected.context && (!expected.itemId || interest.itemId === expected.itemId)
+            && (!expected.reactionId || d.reactionId === expected.reactionId)
+            && !interest.reduced && interest.phase >= .2 && interest.phase < .78;
+    }, expected);
+}
+function validateInterestFrames(observation, context, item, reactionId, before) {
+    assert(!observation.overflow, 'The actual draw observation window must not silently truncate');
+    const frames = observation.frames.filter(frame => frame.interest?.context === context
+        && (!item || frame.interest.itemId === item.id) && (!reactionId || frame.reactionId === reactionId));
+    const active = frames.filter(frame => !frame.interest.reduced && frame.interest.phase > 0 && frame.interest.phase < 1);
+    assert(active.length >= 2, 'At least two actual drawn interest frames must exist');
+    assert(frames.every(frame => finitePose(frame.interest)), 'Actual head, hands and target coordinates remain finite');
+    assert(new Set(active.map(frame => JSON.stringify([frame.interest.head, frame.interest.hands]))).size > 1,
+        'The rendered head/hand transforms change; sampler metadata alone is insufficient');
+    for (let index = 1; index < observation.frames.length; index++) {
+        assert(observation.frames[index].drawCount > observation.frames[index - 1].drawCount);
+        assert(observation.frames[index].frameTimestamp > observation.frames[index - 1].frameTimestamp);
+    }
+    if (item) {
+        const roots = frames.map(frame => frame.residents.find(resident => resident.species === frame.interest.species)?.position);
+        assert(roots.every(root => root && JSON.stringify(root) === JSON.stringify(roots[0])), 'The ordinary response does not move its arrived navigation root');
+        for (const frame of frames) {
+            assert.equal(frame.shared, null, 'Ordinary interest never replaces a shared-controller pose');
+            const furniture = frame.furniture.find(model => model.id === item.id);
+            assert(furniture, 'The actual visited furniture is reported in the same draw');
+            assert.deepEqual(furniture.rootScale, [1, 1, 1]);
+            if (item.kind === 'flower') assert.equal(furniture.life.leafScale, 1, 'Ordinary flower interest preserves leaves');
+            for (const previous of before.furniture.filter(model => model.id !== item.id)) {
+                const other = frame.furniture.find(model => model.id === previous.id);
+                if (other) assert.deepEqual(other.life, previous.life, 'Every non-target surface observed in both frames stays unchanged');
+            }
+        }
+        assert(active.some(frame => {
+            const life = frame.furniture.find(model => model.id === item.id).life;
+            return item.kind === 'flower' ? life.bloomScale > 1 : life.emissive > .65;
+        }), 'The permitted local flower/light surface actually responds');
+    }
+    return { species: frames[0].interest.species, context, frames: observation.frames, actualReplyFrames: active.length,
+        observedNonTargetIds: item ? before.furniture.filter(model => model.id !== item.id
+            && frames.some(frame => frame.furniture.some(other => other.id === model.id))).map(model => model.id) : [] };
+}
+async function observedVisit(page, row, island, item, options) {
+    await page.evaluate(() => window.scrollTo(0, 0));
+    const before = await scene(page);
+    await interestCapture(page, row, `${row.interestEvidence.ordinary.length}-visit-before`, {});
+    await armInterestFrames(page);
+    const started = await invite(page, island, item, options);
+    await waitInterestReply(page, { context: 'visit', itemId: item.id });
+    await interestCapture(page, row, `${row.interestEvidence.ordinary.length}-visit-reply`, { context: 'visit', itemId: item.id });
+    const resident = await waitSettled(page, item.id), observation = await takeInterestFrames(page);
+    const settled = await scene(page), material = settled.furniture.find(model => model.id === item.id);
+    assert.equal(settled.interest?.sample.life, 0, 'The ordinary pulse ends within the existing use clock');
+    if (item.kind === 'flower') assert.equal(material.life.bloomScale, 1); else assert.equal(material.life.emissive, .65);
+    await interestCapture(page, row, `${row.interestEvidence.ordinary.length}-visit-settled`, {});
+    row.interestEvidence.ordinary.push({ itemId: item.id, kind: item.kind, before,
+        ...validateInterestFrames(observation, 'visit', item, undefined, before) });
+    return { started, resident };
+}
+async function observedLearningAnswer(page, row, state) {
+    await waitLearningReady(page, state.plan); await assertControls(page);
+    assert.equal((await scene(page)).interest?.context === 'visit', false, 'Entering learning removes the old ordinary-interest layer');
+    await interestCapture(page, row, 'learning-before', {}); await armInterestFrames(page);
+    const result = await attempt(page, state, { touch: row.touch, onCorrectContact: async receipt => {
+        await waitInterestReply(page, { context: 'learning', reactionId: receipt.id });
+        await interestCapture(page, row, 'learning-reply', { context: 'learning', reactionId: receipt.id });
+    } });
+    await page.waitForFunction(id => {
+        const d = document.querySelector('[data-testid="island-stage"]')?.dataset;
+        return d?.reactionId === id && d.reactionPhase === 'settled' && JSON.parse(d.residentInterest || 'null') === null;
+    }, result.receipt.id);
+    const observation = await takeInterestFrames(page);
+    await interestCapture(page, row, 'learning-settled', { reactionId: result.receipt.id, phase: 'settled' });
+    row.interestEvidence.learning.push({ receiptId: result.receipt.id, ...validateInterestFrames(observation, 'learning', undefined, result.receipt.id) });
+    return result;
+}
+async function reducedInterest(page, row) {
+    const before = await scene(page);
+    if (before.interest?.context !== 'visit') {
+        row.interestEvidence.visualGaps.push({ reason: 'The last naturally selected possession has no ordinary flower/light interest; reduced interest was not observed.' }); return;
+    }
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.waitForFunction(() => {
+        const d = document.querySelector('[data-testid="island-stage"]')?.dataset;
+        return d?.residentInterest && JSON.parse(d.residentInterest)?.reduced === true;
+    });
+    const first = await scene(page);
+    assert(finitePose(first.interest));
+    const firstTarget = first.furniture.find(model => model.id === first.interest.itemId);
+    if (firstTarget.kind === 'flower') assert.equal(firstTarget.life.leafScale, 1);
+    await interestCapture(page, row, 'visit-reduced', { context: 'visit', itemId: first.interest.itemId, reduced: true });
+    await page.waitForTimeout(180);
+    const later = await scene(page);
+    assert.deepEqual(later.interest, first.interest, 'Reduced interest remains a static head/hand state');
+    assert.deepEqual(later.furniture, first.furniture, 'Reduced local surfaces do not oscillate');
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.waitForFunction(() => {
+        const d = document.querySelector('[data-testid="island-stage"]')?.dataset, interest = d?.residentInterest && JSON.parse(d.residentInterest);
+        return interest && !interest.reduced && interest.sample.life === 0;
+    });
+    const restored = await scene(page), restoredTarget = restored.furniture.find(model => model.id === first.interest.itemId);
+    if (restoredTarget.kind === 'flower') {
+        assert.equal(restoredTarget.life.bloomScale, 1); assert.equal(restoredTarget.life.leafScale, 1);
+    } else assert.equal(restoredTarget.life.emissive, .65);
+    row.interestEvidence.reduced = { itemId: first.interest.itemId, species: first.interest.species, first, later, restored, observedStaticMs: 180 };
 }
 async function waitSettled(page, itemId) {
     await page.waitForFunction(itemId => {
@@ -118,10 +291,36 @@ async function invite(page, island, item, { touch, keyboard = false, blocked = f
             && d.playStatus === (blocked ? 'blocked' : 'playing');
     }, { previous, blocked, itemId: item.id });
     assert.equal(await control.getAttribute('aria-pressed'), 'true');
-    return scene(page);
+    const actual = await scene(page);
+    assert.equal(actual.shared, null, 'This deliberately nonmatching layout exercises ordinary single-resident play');
+    return actual;
 }
 function candidates(actual) {
-    return actual.residents.map(resident => ({ position: { x: resident.position[0], z: resident.position[2] }, visible: true, itemId: resident.itemId }));
+    return actual.residents.map(resident => ({ position: { x: resident.position[0], z: resident.position[2] }, visible: true,
+        itemId: resident.itemId, departingId: resident.departingId }));
+}
+
+function facesNoFlower(island, bench, rotation) {
+    return island.items.filter(item => item.kind === 'flower' && item.position).every(flower => {
+        const dx = flower.position.x - bench.position.x, dz = flower.position.z - bench.position.z, distance = Math.hypot(dx, dz);
+        return distance > ISLAND_ITEMS.bench.radius + ISLAND_ITEMS.flower.radius + 1.4
+            || (Math.sin(rotation) * dx + Math.cos(rotation) * dz) / distance < .5;
+    });
+}
+async function arrangeSinglePlay(page, profileId, state, row) {
+    const bench = state.island.items.find(item => item.kind === 'bench' && item.position); assert(bench);
+    const turns = [0, 1, 2, 3].find(turn => facesNoFlower(state.island, bench, bench.rotation + turn * Math.PI / 2));
+    assert(turns !== undefined, 'A real quarter-turn can make this bench independent of both nearby flowers');
+    if (turns) {
+        await editFromInventory(page, state.island, bench, row.touch);
+        for (let i = 0; i < turns; i++) await activate(button(page, 'まわす'), row.touch);
+        state = await savePlacement(page, profileId, state, bench.id, row.touch); await waitAllSettled(page);
+    }
+    const saved = state.island.items.find(item => item.id === bench.id);
+    assert(facesNoFlower(state.island, saved, saved.rotation));
+    assert(!state.island.items.some(item => item.position && ['mushroom', 'fountain'].includes(item.kind)));
+    row.singlePlayLayout = { benchId: bench.id, rotation: saved.rotation, turns, reason: 'No saved combination satisfies its distance/facing condition' };
+    return state;
 }
 async function assertSafeResidents(page, island, row, reason) {
     const actual = await scene(page);
@@ -221,7 +420,8 @@ async function canvasInvite(page, item, touch) {
         return d?.playRequestId !== previous && d?.playStatus === 'playing' && d?.selectedItem === id;
     }, { previous: before.requestId, id: item.id });
     assert.equal(await page.locator('.island-page').getAttribute('data-mode'), 'play', 'Canvas play tap does not enter editing');
-    return { x, y, target: item.id, actual: await scene(page) };
+    const actual = await scene(page); assert.equal(actual.shared, null, 'Canvas replay also remains an ordinary furniture visit');
+    return { x, y, target: item.id, actual };
 }
 
 try {
@@ -235,10 +435,15 @@ try {
     for (const layout of layouts) {
         const context = await browser.newContext({ viewport: layout.viewport, hasTouch: layout.touch, serviceWorkers: 'block', reducedMotion: 'no-preference' });
         const page = await context.newPage(); page.setDefaultTimeout(15000);
-        const row = { ...layout, earned: [], answers: [], suggestions: [], plays: [], persistence: [], errors: [], pass: false };
+        const row = { ...layout, earned: [], answers: [], suggestions: [], plays: [], persistence: [], errors: [], pass: false,
+            interestEvidence: { ordinary: [], learning: [], visualGaps: [], visualReview: 'pending',
+                unmeasured: ['Fountain surface/jet/drop effects: no fountain in this existing four-gift journey.',
+                    'Feet/seat contact and species readability require actual image review; no human participants.'] } };
         report.scenarios.push(row); page.on('pageerror', error => row.errors.push(error.stack));
         try {
             await page.goto(`${base}/#/island`); await page.waitForURL('**/#/onboarding');
+            // The initial empty-profile lookup must settle before fixture insertion.
+            await page.locator('[data-onboarding-world="island"][data-mode="welcome"]').waitFor();
             const manifest = await page.evaluate(async () => (await fetch('/version.json', { cache: 'no-store' })).json());
             assert(manifest.island.enabled && !manifest.revision.includes('development'));
             assert.equal(manifest.revision, buildSource.revision);
@@ -249,6 +454,7 @@ try {
             for (const kind of ['bench', 'swing', 'flower', 'lantern']) state = await earnAndPlace(page, profileId, row, kind);
             assert.equal(state.island.completedSets, 4); assert.equal((await scene(page)).residents.length, 3);
             await assertSafeResidents(page, state.island, row, 'Fox first arrival');
+            state = await arrangeSinglePlay(page, profileId, state, row);
             await capture(page, 'four-gifts-home', row);
             const possessions = state.island.items;
             const bench = possessions.find(item => item.kind === 'bench');
@@ -259,10 +465,16 @@ try {
             for (let i = 0; i < 3; i++) {
                 const actual = await scene(page), after = ['otter', 'rabbit', 'fox'].indexOf(actual.species);
                 const options = possessions.filter(item => item.position && !actual.residents.some(resident => resident.itemId === item.id));
-                const target = options.find(item => chooseReachableResident(candidates(actual), item, possessions, 4, after));
-                assert(target, 'At least one unoccupied possession is reachable');
-                const started = await invite(page, state.island, target, { touch: row.touch, keyboard: i === 1 });
-                const resident = await waitSettled(page, target.id);
+                const seen = new Set(row.plays.map(play => play.resident.species));
+                const selected = options.map(item => ({ item, choice: chooseReachableResident(candidates(actual), item, possessions, 4, after) }))
+                    .sort((left, right) => Number(!interestItem(left.item)) - Number(!interestItem(right.item)))
+                    .find(option => option.choice && !seen.has(actual.residents[option.choice.index].species));
+                assert(selected, 'A yet-unobserved resident has an unoccupied reachable possession for its ordinary turn');
+                const target = selected.item;
+                const invitationOptions = { touch: row.touch, keyboard: i === 1 };
+                const { started, resident } = interestItem(target) ? await observedVisit(page, row, state.island, target, invitationOptions)
+                    : { started: await invite(page, state.island, target, invitationOptions), resident: await waitSettled(page, target.id) };
+                assert.equal(resident.species, actual.residents[selected.choice.index].species, 'The actual resident follows the reachable round-robin choice');
                 row.plays.push({ type: i === 1 ? 'keyboard-list' : 'pointer-list', itemId: target.id, requestId: started.requestId, resident });
             }
             assert.deepEqual([...new Set(row.plays.map(play => play.resident.species))].sort(), ['fox', 'otter', 'rabbit'], 'Fair replay turns include the fox');
@@ -347,27 +559,47 @@ try {
 
             await activate(button(page, 'ひかりを とどける'), row.touch); await waitMode(page, 'learning');
             state = await readNative(page, profileId); const planId = state.plan.id;
-            state = (await attempt(page, state, { touch: row.touch })).after;
+            state = (await observedLearningAnswer(page, row, state)).after;
             assert.equal(state.plan.cursor, 1);
             await activate(button(page, 'しまへ'), row.touch); await waitMode(page, 'home');
             const paused = await databaseSnapshot(page); await openPlay(page, row.touch);
             const pausedScene = await scene(page);
-            const resumedPlayItem = state.island.items.find(item => item.position && chooseReachableResident(candidates(pausedScene), item,
+            const resumedPlayItem = [...state.island.items].sort((left, right) => Number(!interestItem(left)) - Number(!interestItem(right)))
+                .find(item => item.position && chooseReachableResident(candidates(pausedScene), item,
                 state.island.items, state.island.completedSets));
             assert(resumedPlayItem, 'At least one placed possession remains playable from the actual resumed scene');
             row.resumedPlayChoice = { itemId: resumedPlayItem.id, priorMovedLampId: recoveredLamp.id,
                 scope: 'Free legal placement may enclose a particular item; resume uses an actually reachable possession, without changing saved furniture.' };
-            await invite(page, state.island, resumedPlayItem, { touch: row.touch }); await waitSettled(page, resumedPlayItem.id);
+            // Observe this existing reachable replay without changing its naturally selected resident.
+            if (interestItem(resumedPlayItem)) await observedVisit(page, row, state.island, resumedPlayItem, { touch: row.touch });
+            else { await invite(page, state.island, resumedPlayItem, { touch: row.touch }); await waitSettled(page, resumedPlayItem.id); }
+            await reducedInterest(page, row);
             await unchanged(page, paused, row, 'Replay while learning is paused preserves the exact reserved plan');
+            const beforeLearning = await scene(page);
             await activate(button(page, 'ひかりを とどける'), row.touch); await waitMode(page, 'learning');
             const resumed = await readNative(page, profileId); assert.equal(resumed.plan.id, planId); assert.equal(resumed.plan.cursor, 1);
             assert.deepEqual(resumed.plan, state.plan, 'Continue from play keeps every question and saved cursor');
+            await page.waitForFunction(drawCount => {
+                const d = document.querySelector('[data-testid="island-stage"]')?.dataset;
+                return Number(d?.drawCount) > drawCount && JSON.parse(d.residentInterest || 'null')?.context !== 'visit';
+            }, beforeLearning.drawCount);
+            row.interestEvidence.learningEntry = { before: beforeLearning, after: await scene(page),
+                ordinaryLayerObservedBeforeEntry: beforeLearning.interest?.context === 'visit' };
             await waitLearningReady(page, resumed.plan); await capture(page, 'next-learning', row);
             const next = await attempt(page, resumed, { touch: row.touch }); assert.equal(next.after.plan.cursor, 2);
             row.nextLearning = { planId, cursor: next.after.plan.cursor, exactlyOneReceipt: true };
+            const species = ['otter', 'rabbit', 'fox'];
+            const ordinary = [...new Set(row.interestEvidence.ordinary.map(entry => entry.species))];
+            const learning = [...new Set(row.interestEvidence.learning.map(entry => entry.species))];
+            row.interestEvidence.coverage = { ordinarySpecies: ordinary, learningSpecies: learning,
+                sameSpeciesContextPairs: species.filter(name => ordinary.includes(name) && learning.includes(name)),
+                unobserved: species.flatMap(name => [!ordinary.includes(name) && `${name}: ordinary interest`,
+                    !learning.includes(name) && `${name}: saved-light reply`].filter(Boolean)),
+                interpretation: 'Observed contexts only. A shared species is available for author comparison; these attributes do not establish visual appeal or silent comprehension.' };
             assert.deepEqual(row.errors, []); row.pass = true;
         } catch (error) {
             row.error = error.stack ?? String(error);
+            row.failureInterestFrames = await takeInterestFrames(page).catch(() => null);
             row.failureScene = await scene(page).catch(() => null);
             if (row.profileId) row.failurePersistence = await readNative(page, row.profileId).catch(() => null);
             await page.screenshot({ path: `${out}/${row.name}-failure.png` }).catch(() => {});

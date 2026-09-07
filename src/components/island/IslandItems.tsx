@@ -100,17 +100,19 @@ export function IslandPlay({ items, disabled, selectedId, message, onSelect, onM
     const placed = items.filter(item => item.position);
     const selected = placed.find(item => item.id === selectedId);
     return <section className="island-sheet island-play" aria-label="どうぶつと あそぶ">
-        <div className="island-sheet-title"><div><p className="island-eyebrow">じぶんの にわで</p><h2>どこで あそぼう？</h2></div>
+        <div className="island-sheet-title"><h2>どこで あそぼう？</h2>
             <button className="island-icon-button" aria-label="あそびを とじる" onClick={onClose} disabled={disabled}><X size={20} /></button></div>
         <p className="island-play-message" role="status">{message ?? (placed.length ? 'しまの ものか、したの えを えらんでね。' : 'もちものから おくと、どうぶつが あそべるよ。')}</p>
-        {selected && <button className="island-text-button island-play-move" disabled={disabled} onClick={() => onMove(selected)}>{ISLAND_ITEMS[selected.kind].name}を うごかす</button>}
         {!placed.length && <button className="island-secondary island-play-move" disabled={disabled} onClick={onInventory}>もちものを ひらく</button>}
-        <button className="island-primary island-continue" disabled={disabled} onClick={onContinue}>ひかりを とどける <ArrowRight size={20} /></button>
-        <div className="island-inventory">{placed.map((item, index) => <button key={item.id} disabled={disabled}
+        <div className="island-inventory island-play-choices" role="group" aria-label="あそぶ もの">{placed.map((item, index) => <button key={item.id} disabled={disabled}
             className="island-reward" aria-pressed={item.id === selectedId}
             aria-label={`${ISLAND_ITEMS[item.kind].name} ${index + 1}で あそぶ`} onClick={() => onSelect(item.id)}>
             <ItemPicture kind={item.kind} /><strong>{ISLAND_ITEMS[item.kind].name}</strong><small>{ISLAND_ITEMS[item.kind].description}</small>
         </button>)}</div>
+        <div className="island-play-actions">
+            {selected && <button className="island-text-button" disabled={disabled} onClick={() => onMove(selected)}>{ISLAND_ITEMS[selected.kind].name}を うごかす</button>}
+            <button className="island-secondary island-play-return" disabled={disabled} onClick={onContinue}>ひかりを とどける <ArrowRight size={18} /></button>
+        </div>
     </section>;
 }
 

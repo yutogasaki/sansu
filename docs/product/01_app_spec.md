@@ -224,6 +224,12 @@
 
 ### 2.4 体験フロー
 
+**Island初回導線（2026-09-07採用）**
+
+Island有効時の初回は、プロフィールなしでWelcomeの花・あかりに触れて遊べる。「まなぶ」で学年・科目・選択した科目の到達目安を明示的に選び、名前は任意とする。最後の選択が揃うまでプロフィール・初期MemoryState・学習予約を作らない。到達目安の計算は以下の確定マッピングを維持する。新規の英語のみ選択では、構造上必要な算数の既定フィールドは非使用の初期値として保持するが、算数MemoryState/retiredや学習実績は投入しない。明示的に算数範囲を選んだ場合だけ従来の初期retiredを投入する。
+
+プロフィール・初期MemoryState・active IDの正本を一つのtransactionで一度だけ保存し、成功後に `/` へ進む。既存プロフィールがある `/onboarding` は `/` へ戻す。設定の追加は `/onboarding?mode=add` として従来の名前必須・初期投入を維持する。詳細と実画面検証待ちは [28_mystic_island_spec.md](28_mystic_island_spec.md) の初回導線を参照。実画面と公開前の回帰確認は継続中。
+
 **初回起動（06_screen_specs.md 参照）**
 ```
 起動 → 初回設定フロー（名前・学年・科目・到達目安） → / → /explore
@@ -809,6 +815,7 @@ UIに露出しない内部用語でも、仕様上の基準として定義する
 * **SkillStats（累積統計）**: `memoryMath` / `memoryVocab` で永続保持する。
 * **AttemptLog（全回答履歴）**: `logs` に保存し、SRS・統計・旧weak状態の復元に使う。
 * **RecentAttempt（直近履歴）**: `UserProfile.recentAttempts` に **直近300件** をリングバッファで保持し、出題クールダウンや直近判定に使う。
+* **Islandの前向きな観測（2026-09-08採用、次段階の実装契約）**: 既存のIsland学習操作eventへ、具体的な予約問題・筆算途中段/全体完了・操作直前の保存済み支援・実際に観測できたDOM表示と要求受理時刻を任意情報として添える。正誤・scopeは保存側の実slotと採点から作り、観測値を採点/SRSの正本にしない。旧行・他経路・未観測はunknownで、独力や定着を推定しない。新table/schema、汎用AttemptLog、SRS・Due・日次・streak・進級・報酬の計算を変えず、観測時計を既存計算へ渡さない。同一要求の再送は最初のaction/観測snapshotを保持し、実保存例外の原子rollbackを維持する。詳細と検証境界は [島仕様の観測契約](28_mystic_island_spec.md#prospective-island-observation) に従う。
 
 ### 7.2 データモデル（TypeScript）
 

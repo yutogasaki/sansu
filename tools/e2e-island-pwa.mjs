@@ -2,6 +2,7 @@ import { chromium } from 'playwright';
 import { promises as fs } from 'node:fs';
 import assert from 'node:assert/strict';
 import { answerUI, button, readNative, runtimeMetadata, seedNative, waitMode, waitReady } from './island-e2e-helpers.mjs';
+import { assertExploreCheckpoint, waitForExploreNumericReady, waitForPageState } from './async-state-checks.mjs';
 
 const base = process.env.SANSU_ISLAND_PRODUCTION_URL || 'http://127.0.0.1:5298';
 const out = process.env.SANSU_ISLAND_OUTPUT || 'output/playwright/island';
@@ -102,19 +103,30 @@ try {
 
         const islandBeforeLegacy = (await readNative(page, id)).island;
         await page.goto(`${base}/#/explore`);
-        await page.waitForFunction(async () => {
+        const readyDeadline = performance.now() + 15000;
+        await waitForPageState(page, async profileId => {
             const request = indexedDB.open('SansuDatabase');
-            return new Promise(resolve => { request.onsuccess = () => {
+            return new Promise((resolve, reject) => { request.onerror = () => reject(request.error); request.onsuccess = () => {
                 const database = request.result;
                 const rows = database.transaction('exploreRuns').objectStore('exploreRuns').getAll();
-                rows.onsuccess = () => { database.close(); resolve(rows.result.some(run => run.status === 'active' && run.activeCheckpoint)); };
+                rows.onerror = () => { database.close(); reject(rows.error); };
+                rows.onsuccess = () => { database.close(); resolve(rows.result.some(run => run.profileId === profileId && run.status === 'active' && run.activeCheckpoint)); };
             }; });
-        });
-        const old = (await readNative(page, id)).exploreRuns.find(run => run.status === 'active');
+        }, id, { timeout: 15000, description: 'this profile saved an active Explore checkpoint' });
+        const oldReady = await waitForExploreNumericReady(page, { timeout: Math.max(1, readyDeadline - performance.now()) });
+        const beforeLaunch = await readNative(page, id);
+        report.legacy = { profileId: id, oldReady, beforeLaunch };
+        const old = beforeLaunch.exploreRuns.find(run => run.runId === oldReady.runId && run.profileId === id && run.status === 'active');
+        assertExploreCheckpoint(old, id, oldReady);
         await page.goto(`${base}/#/`);
         await page.waitForURL('**/#/explore');
+        const sameReady = await waitForExploreNumericReady(page, { runId: old.runId, problemId: oldReady.problemId, timeout: 15000 });
         const restored = await readNative(page, id);
-        assert.equal(restored.exploreRuns.find(run => run.status === 'active').runId, old.runId);
+        report.legacy.sameReady = sameReady; report.legacy.restored = restored;
+        const same = restored.exploreRuns.find(run => run.runId === old.runId && run.profileId === id && run.status === 'active');
+        assertExploreCheckpoint(same, id, sameReady);
+        assert.equal(same.runId, old.runId);
+        assert.deepEqual(same, old, 'Root launch preserves the complete ready Explore run');
         assert.deepEqual(restored.island, islandBeforeLegacy);
         report.hookChecks.push('legacy active Explore run retains launch precedence and Island data');
         assert.deepEqual(errors, []);

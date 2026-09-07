@@ -1,0 +1,5098 @@
+{
+  "createdAt": "2026-09-07T10:01:57.860Z",
+  "target": "http://127.0.0.1:5399/#/island",
+  "revision": "84d3ddf-experience-3535575a1ce3",
+  "captures": [
+    {
+      "file": "screens/before-phone-home.png",
+      "sha256": "87f377fc97f30899bcbe6362da4e6d7566868613beb5f34dc4180d41a24e84e1",
+      "revision": "b9607fa66811f2fd89e643b443ff410f6a83d782",
+      "version": "b9607fa66811f2fd89e643b443ff410f6a83d782:7155d06f-a7ae-4186-8191-a43cbaf2bc2f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/island-experience-before/phone-home.png"
+    },
+    {
+      "file": "screens/after-phone-home.png",
+      "sha256": "7cca36764e52e175cb664b2b39e8ed2b0c14417fa4665f4070e87e2fa5a5a753",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/experience/phone-home.png"
+    },
+    {
+      "file": "screens/before-phone-learning.png",
+      "sha256": "34fbe798bb004d2ec7242076d2a726e9608236e5a30e954e2d795760dcf9bdd0",
+      "revision": "b9607fa66811f2fd89e643b443ff410f6a83d782",
+      "version": "b9607fa66811f2fd89e643b443ff410f6a83d782:7155d06f-a7ae-4186-8191-a43cbaf2bc2f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.27778,0.00000,0.00000,0.00000,0.00000,0.53105,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/island-experience-before/phone-learning.png"
+    },
+    {
+      "file": "screens/after-phone-learning.png",
+      "sha256": "dbde7bcb8f3b8578fef1c1523a7e9904ac0943fe7b1d63ac53dda593ee29bcce",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 73,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.44093996561235993,
+              "right": -0.0020443047426329923,
+              "bottom": -0.5213596779557476,
+              "top": 0.6903248167646165
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.23195556414226232,
+              "right": 0.5756877872362361,
+              "bottom": -0.6890039040468292,
+              "top": 0.596211933800826
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.27778,0.00000,0.00000,0.00000,0.00000,0.53105,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/experience/phone-learning.png"
+    },
+    {
+      "file": "screens/before-phone-placement.png",
+      "sha256": "80f12381a6666759c48007505269cec558b11949656d7f1e78c2fb2ead5d6f73",
+      "revision": "b9607fa66811f2fd89e643b443ff410f6a83d782",
+      "version": "b9607fa66811f2fd89e643b443ff410f6a83d782:7155d06f-a7ae-4186-8191-a43cbaf2bc2f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": {
+          "id": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+          "uuid": "e49e58fb-709f-4cf7-a33e-959a84e2fbcf",
+          "position": [
+            0,
+            0.015,
+            1
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": "true"
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/island-experience-before/phone-placement.png"
+    },
+    {
+      "file": "screens/after-phone-placement.png",
+      "sha256": "0fccfdd78fce7e6deed4ee496a9553b75074368547b9c4621d0be197b2363a4c",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": {
+          "id": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+          "uuid": "d0b95ba1-ae63-4ab2-a4b0-e21e1bc9051d",
+          "position": [
+            0,
+            0.015,
+            1
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": "true"
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/experience/phone-placement.png"
+    },
+    {
+      "file": "screens/before-phone-placement-rotated.png",
+      "sha256": "c96f710ecb08316b79e193d8343e946e18b0463c20d5797bd5aa60159a98cb8d",
+      "revision": "b9607fa66811f2fd89e643b443ff410f6a83d782",
+      "version": "b9607fa66811f2fd89e643b443ff410f6a83d782:7155d06f-a7ae-4186-8191-a43cbaf2bc2f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": {
+          "id": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+          "uuid": "e49e58fb-709f-4cf7-a33e-959a84e2fbcf",
+          "position": [
+            0,
+            0.015,
+            1
+          ],
+          "rotationY": 1.5707963267948966,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": "true"
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/island-experience-before/phone-placement-rotated.png"
+    },
+    {
+      "file": "screens/after-phone-placement-rotated.png",
+      "sha256": "31312d1b50ad9dc7e3e77815e798cff526937412e760f32a44a125a4cedef9fd",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": {
+          "id": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+          "uuid": "d0b95ba1-ae63-4ab2-a4b0-e21e1bc9051d",
+          "position": [
+            0,
+            0.015,
+            1
+          ],
+          "rotationY": 1.5707963267948966,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": "true"
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/experience/phone-placement-rotated.png"
+    },
+    {
+      "file": "screens/before-phone-play.png",
+      "sha256": "898ff80e26262838cddf47d61959ad452d7add8cdcd992e4dc62bbc1d1d727e9",
+      "revision": "b9607fa66811f2fd89e643b443ff410f6a83d782",
+      "version": "b9607fa66811f2fd89e643b443ff410f6a83d782:7155d06f-a7ae-4186-8191-a43cbaf2bc2f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/island-experience-before/phone-play.png"
+    },
+    {
+      "file": "screens/after-phone-play.png",
+      "sha256": "09f07dfe15641e6c17917d1773698519852eae43c99301f2ede68958da98789d",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/experience/phone-play.png"
+    },
+    {
+      "file": "screens/before-phone-return-learning.png",
+      "sha256": "37f63618517b2bc0924613dfabaf14eafde62a8f657a918167b65886cf167447",
+      "revision": "b9607fa66811f2fd89e643b443ff410f6a83d782",
+      "version": "b9607fa66811f2fd89e643b443ff410f6a83d782:7155d06f-a7ae-4186-8191-a43cbaf2bc2f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 74,
+      "expanded": "false",
+      "residentAction": "admire",
+      "residentItemId": "starter-lantern",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -0.9999999999999999,
+              0,
+              -0.52
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.27778,0.00000,0.00000,0.00000,0.00000,0.53105,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/island-experience-before/phone-return-learning.png"
+    },
+    {
+      "file": "screens/after-phone-return-learning.png",
+      "sha256": "d5e4aa5d77c2fa670fabfc492151f89018432fc6e3465b362c6dac186e918bd2",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 85,
+      "expanded": "false",
+      "residentAction": "admire",
+      "residentItemId": "starter-lantern",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-phone\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.4609106704256297,
+              "right": -0.01224748365734868,
+              "bottom": -0.748331806694613,
+              "top": 0.2941219819615982
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -0.9999999999999999,
+              0,
+              -0.52
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.4749839716784321,
+              "right": -0.15648337713401117,
+              "bottom": -0.46605446561102226,
+              "top": 0.7778672719870815
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.26050,0.00000,0.00000,0.00000,0.00000,0.49801,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.57617,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/experience/phone-return-learning.png"
+    },
+    {
+      "file": "screens/before-tablet-home.png",
+      "sha256": "60213c1b15e81d4270bb252eb6961a8b0b616e54362deaa3440ab2b65160d126",
+      "revision": "b9607fa66811f2fd89e643b443ff410f6a83d782",
+      "version": "b9607fa66811f2fd89e643b443ff410f6a83d782:7155d06f-a7ae-4186-8191-a43cbaf2bc2f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/island-experience-before/tablet-home.png"
+    },
+    {
+      "file": "screens/after-tablet-home.png",
+      "sha256": "f6c31e645f156d82939aaf2496aae4a30bb03a670bc380e8b4be35fd8a83f9d7",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/experience/tablet-home.png"
+    },
+    {
+      "file": "screens/before-tablet-learning.png",
+      "sha256": "44d1d3f8ba01b206f8443caa54edd4b8321eee20e776b0c311b613602837d648",
+      "revision": "b9607fa66811f2fd89e643b443ff410f6a83d782",
+      "version": "b9607fa66811f2fd89e643b443ff410f6a83d782:7155d06f-a7ae-4186-8191-a43cbaf2bc2f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 64,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.21053,0.00000,0.00000,0.00000,0.00000,0.64160,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/island-experience-before/tablet-learning.png"
+    },
+    {
+      "file": "screens/after-tablet-learning.png",
+      "sha256": "a3320dcb82debf434ffbec1d292c0ba80a1f4cb8be663eb57036ddbe4bb9d88b",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 70,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.30102838976581064,
+              "right": -0.0013956407058969699,
+              "bottom": -0.5558040571927454,
+              "top": 0.76288918854157
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.15835536675382772,
+              "right": 0.393020322752774,
+              "bottom": -0.7382536219069372,
+              "top": 0.6604648168163411
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.18964,0.00000,0.00000,0.00000,0.00000,0.57794,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.01160,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/experience/tablet-learning.png"
+    },
+    {
+      "file": "screens/before-tablet-placement.png",
+      "sha256": "661aa8b61717e3f3b9bf9fe19859c5d3a883b59157b9253037b3f7b1217d9523",
+      "revision": "b9607fa66811f2fd89e643b443ff410f6a83d782",
+      "version": "b9607fa66811f2fd89e643b443ff410f6a83d782:7155d06f-a7ae-4186-8191-a43cbaf2bc2f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": {
+          "id": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+          "uuid": "0a97b25f-387f-470b-a183-281bf9cec388",
+          "position": [
+            0,
+            0.015,
+            1
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": "true"
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/island-experience-before/tablet-placement.png"
+    },
+    {
+      "file": "screens/after-tablet-placement.png",
+      "sha256": "5bcafeecae64c413a6a3111b4492745260ad7f82e62b08baea8ba427c1c9e889",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": {
+          "id": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+          "uuid": "192f7a3b-65a7-4e00-89a3-84fff6de4d82",
+          "position": [
+            0,
+            0.015,
+            1
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": "true"
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/experience/tablet-placement.png"
+    },
+    {
+      "file": "screens/before-tablet-placement-rotated.png",
+      "sha256": "1f125ddae411cc84e0565e9491845d9a44f1302c1f4a75b6b556f4e6f377857c",
+      "revision": "b9607fa66811f2fd89e643b443ff410f6a83d782",
+      "version": "b9607fa66811f2fd89e643b443ff410f6a83d782:7155d06f-a7ae-4186-8191-a43cbaf2bc2f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": {
+          "id": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+          "uuid": "0a97b25f-387f-470b-a183-281bf9cec388",
+          "position": [
+            0,
+            0.015,
+            1
+          ],
+          "rotationY": 1.5707963267948966,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": "true"
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/island-experience-before/tablet-placement-rotated.png"
+    },
+    {
+      "file": "screens/after-tablet-placement-rotated.png",
+      "sha256": "02c282efe5b6ec89e8c6a0189b67875fd80dedce4d0dd350bfae542d29314d77",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": {
+          "id": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+          "uuid": "192f7a3b-65a7-4e00-89a3-84fff6de4d82",
+          "position": [
+            0,
+            0.015,
+            1
+          ],
+          "rotationY": 1.5707963267948966,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": "true"
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/experience/tablet-placement-rotated.png"
+    },
+    {
+      "file": "screens/before-tablet-play.png",
+      "sha256": "5eff89c9855ac13708462fc991bd9937391cfceb6627833858bfedf246ecee98",
+      "revision": "b9607fa66811f2fd89e643b443ff410f6a83d782",
+      "version": "b9607fa66811f2fd89e643b443ff410f6a83d782:7155d06f-a7ae-4186-8191-a43cbaf2bc2f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/island-experience-before/tablet-play.png"
+    },
+    {
+      "file": "screens/after-tablet-play.png",
+      "sha256": "820584d7420eb6c032005f994272108d465abb29304751e5dd71fe1cbbe0bcad",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/experience/tablet-play.png"
+    },
+    {
+      "file": "screens/before-tablet-return-learning.png",
+      "sha256": "358561855c2ec1127458a0632a747533ef80a3850027ca6b495f4bf06f7ffa96",
+      "revision": "b9607fa66811f2fd89e643b443ff410f6a83d782",
+      "version": "b9607fa66811f2fd89e643b443ff410f6a83d782:7155d06f-a7ae-4186-8191-a43cbaf2bc2f",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 65,
+      "expanded": "false",
+      "residentAction": "admire",
+      "residentItemId": "starter-lantern",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -0.9999999999999999,
+              0,
+              -0.52
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.21053,0.00000,0.00000,0.00000,0.00000,0.64160,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/island-experience-before/tablet-return-learning.png"
+    },
+    {
+      "file": "screens/after-tablet-return-learning.png",
+      "sha256": "f91e533aef349fbbe0dab78cd2d4bed3fd26aa57e0613b8047b5da0aaf234c65",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 85,
+      "expanded": "false",
+      "residentAction": "admire",
+      "residentItemId": "starter-lantern",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"experience-tablet\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.2891282468432833,
+              "right": -0.007682819481746759,
+              "bottom": -0.748331806694613,
+              "top": 0.2941219819615982
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -0.9999999999999999,
+              0,
+              -0.52
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.2979563976751194,
+              "right": -0.09816167729224504,
+              "bottom": -0.46605446561102226,
+              "top": 0.7778672719870815
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.16341,0.00000,0.00000,0.00000,0.00000,0.49801,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.57617,-1.00200,1.00000",
+        "previewValid": ""
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/experience/tablet-return-learning.png"
+    },
+    {
+      "file": "screens/six-items-phone-bench-placement.png",
+      "sha256": "e0583e408c306e2de615954aa2b48b12a96e259debe800f97d1b308174535457",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 8752.299999952316,
+        "drawCount": 114,
+        "cpuMs": 0.8,
+        "calls": 87,
+        "triangles": 84518,
+        "geometries": 92,
+        "textures": 5,
+        "previewBuildCount": 1,
+        "previewValid": "true",
+        "preview": {
+          "id": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",0]:reward:item",
+          "uuid": "1a6fb76a-e139-4892-af42-cf9f26d42e4e",
+          "position": [
+            0,
+            0.015,
+            1
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 0,
+            "life": {
+              "emissive": 0.65
+            }
+          }
+        ],
+        "reactionId": "[\"island-action-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",\"[\\\"island-plan-v1\\\",\\\"a0705f66-7e9e-4227-98ca-4e52ef014b08\\\",0]\",7]",
+        "reactionKind": "correct",
+        "reactionPhase": "contact",
+        "reactionTarget": "tree",
+        "completed": 0,
+        "residentAction": "idle",
+        "residentItemId": "",
+        "usePhase": 0,
+        "residentSpecies": "",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "residentPoint": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "expanded": "false",
+        "lighthouse": "false",
+        "residents": 2
+      },
+      "islandRevision": 6,
+      "completedSets": 1,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/phone-bench-placement.png"
+    },
+    {
+      "file": "screens/six-items-phone-swing-placement.png",
+      "sha256": "4d6ecc3631efa34aba23ec72f26fd4d9c3c08be537ae13390230680e77af045c",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 100,
+      "expanded": "true",
+      "residentAction": "admire",
+      "residentItemId": "starter-lantern",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 8046.600000023842,
+        "drawCount": 149,
+        "cpuMs": 0.6,
+        "calls": 100,
+        "triangles": 98334,
+        "geometries": 105,
+        "textures": 5,
+        "previewBuildCount": 2,
+        "previewValid": "true",
+        "preview": {
+          "id": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",1]:reward:item",
+          "uuid": "9cc13889-15d5-43ee-9050-9170daeb34b4",
+          "position": [
+            -0.5,
+            0.015,
+            2
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 1.5707963267948966,
+            "life": {
+              "emissive": 0.65
+            }
+          }
+        ],
+        "reactionId": "[\"island-action-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",\"[\\\"island-plan-v1\\\",\\\"a0705f66-7e9e-4227-98ca-4e52ef014b08\\\",1]\",5]",
+        "reactionKind": "correct",
+        "reactionPhase": "contact",
+        "reactionTarget": "tree",
+        "completed": 0,
+        "residentAction": "admire",
+        "residentItemId": "starter-lantern",
+        "usePhase": 1,
+        "residentSpecies": "rabbit",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0.25,
+              0.439,
+              0.5
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -1.77,
+              0,
+              0.24999999999999986
+            ],
+            "usePhase": 1
+          }
+        ],
+        "residentPoint": {
+          "x": -1.77,
+          "y": 0,
+          "z": 0.24999999999999986
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.14207,0.00000,0.00000,0.00000,0.00000,0.14354,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.03668,-0.02358,-1.00200,1.00000",
+        "expanded": "true",
+        "lighthouse": "false",
+        "residents": 2
+      },
+      "islandRevision": 13,
+      "completedSets": 2,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/phone-swing-placement.png"
+    },
+    {
+      "file": "screens/six-items-phone-flower-placement.png",
+      "sha256": "e274ce3b64c53408619813002749fc790a7beda00a9907ca8ed3b165cdbf2d9c",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 103,
+      "expanded": "true",
+      "residentAction": "swing",
+      "residentItemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",1]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 17641.900000035763,
+        "drawCount": 299,
+        "cpuMs": 0.6,
+        "calls": 103,
+        "triangles": 104946,
+        "geometries": 108,
+        "textures": 5,
+        "previewBuildCount": 5,
+        "previewValid": "true",
+        "preview": {
+          "id": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",2]:reward:item",
+          "uuid": "ba981dc8-d16f-4d0f-97e5-9ddb3b4a232d",
+          "position": [
+            1,
+            0.015,
+            1.5
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 1.5707963267948966,
+            "life": {
+              "emissive": 0.65
+            }
+          },
+          {
+            "id": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",1]:reward:item",
+            "kind": "swing",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -0.5,
+              0,
+              2
+            ],
+            "rotationY": 0,
+            "life": {},
+            "swingAngle": 0
+          }
+        ],
+        "reactionId": "[\"island-action-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",\"[\\\"island-plan-v1\\\",\\\"a0705f66-7e9e-4227-98ca-4e52ef014b08\\\",2]\",5]",
+        "reactionKind": "correct",
+        "reactionPhase": "contact",
+        "reactionTarget": "tree",
+        "completed": 0,
+        "residentAction": "swing",
+        "residentItemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",1]:reward:item",
+        "usePhase": 1,
+        "residentSpecies": "otter",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",1]:reward:item",
+            "action": "swing",
+            "position": [
+              -0.5,
+              0.439,
+              2
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -1.77,
+              0,
+              0.24999999999999986
+            ],
+            "usePhase": 1
+          }
+        ],
+        "residentPoint": {
+          "x": -0.5,
+          "y": 0.439,
+          "z": 2
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.14207,0.00000,0.00000,0.00000,0.00000,0.14354,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.03668,-0.02358,-1.00200,1.00000",
+        "expanded": "true",
+        "lighthouse": "false",
+        "residents": 2
+      },
+      "islandRevision": 17,
+      "completedSets": 3,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/phone-flower-placement.png"
+    },
+    {
+      "file": "screens/six-items-phone-mushroom-placement.png",
+      "sha256": "2b0b86619f163c0ec1149bca1c51b092f1270473bf5a6912dd176c073080c20e",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 118,
+      "expanded": "true",
+      "residentAction": "sniff",
+      "residentItemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",2]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 25563.5,
+        "drawCount": 464,
+        "cpuMs": 0.7,
+        "calls": 117,
+        "triangles": 113118,
+        "geometries": 123,
+        "textures": 6,
+        "previewBuildCount": 7,
+        "previewValid": "true",
+        "preview": {
+          "id": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",3]:reward:item",
+          "uuid": "4500da27-4092-4e4a-8835-dd469d2bbdab",
+          "position": [
+            -2,
+            0.015,
+            1
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 1.5707963267948966,
+            "life": {
+              "emissive": 0.65
+            }
+          },
+          {
+            "id": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",2]:reward:item",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1,
+              0,
+              1.5
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          }
+        ],
+        "reactionId": "[\"island-action-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",\"[\\\"island-plan-v1\\\",\\\"a0705f66-7e9e-4227-98ca-4e52ef014b08\\\",3]\",5]",
+        "reactionKind": "correct",
+        "reactionPhase": "settled",
+        "reactionTarget": "tree",
+        "completed": 0,
+        "residentAction": "sniff",
+        "residentItemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",2]:reward:item",
+        "usePhase": 1,
+        "residentSpecies": "otter",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",2]:reward:item",
+            "action": "sniff",
+            "position": [
+              1,
+              0,
+              2.27
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -1.77,
+              0,
+              0.24999999999999986
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "fox",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              6.26,
+              0,
+              0.83
+            ],
+            "usePhase": 1
+          }
+        ],
+        "residentPoint": {
+          "x": 1,
+          "y": 0,
+          "z": 2.27
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.14207,0.00000,0.00000,0.00000,0.00000,0.14354,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.03668,-0.02358,-1.00200,1.00000",
+        "expanded": "true",
+        "lighthouse": "false",
+        "residents": 3
+      },
+      "islandRevision": 21,
+      "completedSets": 4,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/phone-mushroom-placement.png"
+    },
+    {
+      "file": "screens/six-items-phone-lantern-placement.png",
+      "sha256": "176d35773591a3d1febe91dca184e8e594e7010e2e89913a66bed6ce01b56097",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 122,
+      "expanded": "true",
+      "residentAction": "rest",
+      "residentItemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",3]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 30391.30000001192,
+        "drawCount": 557,
+        "cpuMs": 0.7,
+        "calls": 122,
+        "triangles": 114538,
+        "geometries": 127,
+        "textures": 6,
+        "previewBuildCount": 9,
+        "previewValid": "true",
+        "preview": {
+          "id": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",4]:reward:item",
+          "uuid": "fb1be909-5c22-44bc-be83-0512ae071b0a",
+          "position": [
+            -0.5,
+            0.015,
+            -0.5
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 1.5707963267948966,
+            "life": {
+              "emissive": 0.65
+            }
+          },
+          {
+            "id": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",3]:reward:item",
+            "kind": "mushroom",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -2,
+              0,
+              1
+            ],
+            "rotationY": 0,
+            "life": {}
+          }
+        ],
+        "reactionId": "[\"island-action-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",\"[\\\"island-plan-v1\\\",\\\"a0705f66-7e9e-4227-98ca-4e52ef014b08\\\",4]\",2]",
+        "reactionKind": "correct",
+        "reactionPhase": "contact",
+        "reactionTarget": "tree",
+        "completed": 0,
+        "residentAction": "rest",
+        "residentItemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",3]:reward:item",
+        "usePhase": 1,
+        "residentSpecies": "rabbit",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",2]:reward:item",
+            "action": "sniff",
+            "position": [
+              1,
+              0,
+              2.27
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",3]:reward:item",
+            "action": "rest",
+            "position": [
+              -2,
+              0.5302,
+              1
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "fox",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              6.26,
+              0,
+              0.83
+            ],
+            "usePhase": 1
+          }
+        ],
+        "residentPoint": {
+          "x": -2,
+          "y": 0.5302,
+          "z": 1
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.14207,0.00000,0.00000,0.00000,0.00000,0.14354,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.03668,-0.02358,-1.00200,1.00000",
+        "expanded": "true",
+        "lighthouse": "false",
+        "residents": 3
+      },
+      "islandRevision": 25,
+      "completedSets": 5,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/phone-lantern-placement.png"
+    },
+    {
+      "file": "screens/six-items-phone-fountain-placement.png",
+      "sha256": "12f7cf7d9c8fb525f0202ebdaae43243e2b1ae6b434a171134c694675fb3c64b",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 131,
+      "expanded": "true",
+      "residentAction": "admire",
+      "residentItemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",4]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 38402.10000002384,
+        "drawCount": 714,
+        "cpuMs": 0.9,
+        "calls": 131,
+        "triangles": 117262,
+        "geometries": 137,
+        "textures": 6,
+        "previewBuildCount": 11,
+        "previewValid": "true",
+        "preview": {
+          "id": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",5]:reward:item",
+          "uuid": "fc5404ae-f985-49e1-ae1a-80223a738ae4",
+          "position": [
+            2,
+            0.015,
+            2.5
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 1.5707963267948966,
+            "life": {
+              "emissive": 0.65
+            }
+          },
+          {
+            "id": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",4]:reward:item",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -0.5,
+              0,
+              -0.5
+            ],
+            "rotationY": 0,
+            "life": {
+              "emissive": 0.65
+            }
+          }
+        ],
+        "reactionId": "[\"island-action-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",\"[\\\"island-plan-v1\\\",\\\"a0705f66-7e9e-4227-98ca-4e52ef014b08\\\",5]\",5]",
+        "reactionKind": "correct",
+        "reactionPhase": "settled",
+        "reactionTarget": "tree",
+        "completed": 0,
+        "residentAction": "admire",
+        "residentItemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",4]:reward:item",
+        "usePhase": 1,
+        "residentSpecies": "rabbit",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",2]:reward:item",
+            "action": "sniff",
+            "position": [
+              1,
+              0,
+              2.27
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",4]:reward:item",
+            "action": "admire",
+            "position": [
+              -0.4999999999999999,
+              0,
+              -1.27
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "fox",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              6.26,
+              0,
+              0.83
+            ],
+            "usePhase": 1
+          }
+        ],
+        "residentPoint": {
+          "x": -0.4999999999999999,
+          "y": 0,
+          "z": -1.27
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.14207,0.00000,0.00000,0.00000,0.00000,0.14354,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.03668,-0.02358,-1.00200,1.00000",
+        "expanded": "true",
+        "lighthouse": "true",
+        "residents": 3
+      },
+      "islandRevision": 29,
+      "completedSets": 6,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/phone-fountain-placement.png"
+    },
+    {
+      "file": "screens/grown-island-phone-six-earned-play-list.png",
+      "sha256": "47b4714ca5a4fb2e6bafdec5d804a65a6f27a3bc9955efb08267b0610c03d7eb",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 129,
+      "expanded": "true",
+      "residentAction": "watch",
+      "residentItemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",5]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 44765.5,
+        "drawCount": 830,
+        "cpuMs": 0.4,
+        "calls": 129,
+        "triangles": 117068,
+        "geometries": 136,
+        "textures": 6,
+        "previewBuildCount": 12,
+        "previewValid": "",
+        "preview": null,
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 1.5707963267948966,
+            "life": {
+              "emissive": 0.65
+            }
+          },
+          {
+            "id": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",5]:reward:item",
+            "kind": "fountain",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              2,
+              0,
+              2.5
+            ],
+            "rotationY": 0,
+            "life": {
+              "waterScaleY": 1,
+              "rippleScale": 1
+            }
+          }
+        ],
+        "reactionId": "",
+        "reactionKind": "",
+        "reactionPhase": "settled",
+        "reactionTarget": "",
+        "completed": 0,
+        "residentAction": "watch",
+        "residentItemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",5]:reward:item",
+        "usePhase": 1,
+        "residentSpecies": "fox",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",2]:reward:item",
+            "action": "sniff",
+            "position": [
+              1,
+              0,
+              2.27
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",4]:reward:item",
+            "action": "admire",
+            "position": [
+              -0.4999999999999999,
+              0,
+              -1.27
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "fox",
+            "itemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",5]:reward:item",
+            "action": "watch",
+            "position": [
+              2,
+              0,
+              1.4
+            ],
+            "usePhase": 1
+          }
+        ],
+        "residentPoint": {
+          "x": 2,
+          "y": 0,
+          "z": 1.4
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.14207,0.00000,0.00000,0.00000,0.00000,0.14354,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.03668,-0.02358,-1.00200,1.00000",
+        "expanded": "true",
+        "lighthouse": "true",
+        "residents": 3
+      },
+      "islandRevision": 30,
+      "completedSets": 6,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/phone-six-earned-play-list.png"
+    },
+    {
+      "file": "screens/grown-island-phone-six-earned-return-learning.png",
+      "sha256": "da349c54e435485608a82e39f3b6b8f51b3ee31c17295667a717b054d3abb793",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 128,
+      "expanded": "true",
+      "residentAction": "watch",
+      "residentItemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",5]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 45002.60000002384,
+        "drawCount": 833,
+        "cpuMs": 0.5,
+        "calls": 128,
+        "triangles": 116364,
+        "geometries": 136,
+        "textures": 6,
+        "previewBuildCount": 12,
+        "previewValid": "",
+        "preview": null,
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 1.5707963267948966,
+            "life": {
+              "emissive": 0.65
+            }
+          },
+          {
+            "id": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",5]:reward:item",
+            "kind": "fountain",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              2,
+              0,
+              2.5
+            ],
+            "rotationY": 0,
+            "life": {
+              "waterScaleY": 1,
+              "rippleScale": 1
+            }
+          }
+        ],
+        "reactionId": "",
+        "reactionKind": "",
+        "reactionPhase": "settled",
+        "reactionTarget": "",
+        "completed": 0,
+        "residentAction": "watch",
+        "residentItemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",5]:reward:item",
+        "usePhase": 1,
+        "residentSpecies": "fox",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",2]:reward:item",
+            "action": "sniff",
+            "position": [
+              1,
+              0,
+              2.27
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.18013474195698065,
+              "right": 0.08160054826664392,
+              "bottom": -0.779915776879865,
+              "top": 0.027361263031954325
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",4]:reward:item",
+            "action": "admire",
+            "position": [
+              -0.4999999999999999,
+              0,
+              -1.27
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.19635634874306349,
+              "right": 0.020991150373005914,
+              "bottom": -0.044910781107049436,
+              "top": 0.8039519318489108
+            }
+          },
+          {
+            "species": "fox",
+            "itemId": "[\"island-plan-v1\",\"a0705f66-7e9e-4227-98ca-4e52ef014b08\",5]:reward:item",
+            "action": "watch",
+            "position": [
+              2,
+              0,
+              1.4
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.0542851069872038,
+              "right": 0.32999857153198614,
+              "bottom": -0.6469494857626836,
+              "top": 0.2113216965240085
+            }
+          }
+        ],
+        "residentPoint": {
+          "x": 2,
+          "y": 0,
+          "z": 1.4
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.17777,0.00000,0.00000,0.00000,0.00000,0.33985,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.21696,-1.00200,1.00000",
+        "expanded": "true",
+        "lighthouse": "true",
+        "residents": 3
+      },
+      "islandRevision": 31,
+      "completedSets": 6,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/phone-six-earned-return-learning.png"
+    },
+    {
+      "file": "screens/six-items-tablet-bench-placement.png",
+      "sha256": "691518979061a3a2f1c92e64f4e2e0e4bac42c7b31d0a34c94bae7eb2df32cd4",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 7859.5,
+        "drawCount": 110,
+        "cpuMs": 0.7,
+        "calls": 87,
+        "triangles": 84518,
+        "geometries": 92,
+        "textures": 5,
+        "previewBuildCount": 1,
+        "previewValid": "true",
+        "preview": {
+          "id": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",0]:reward:item",
+          "uuid": "a842ac1b-ab75-4559-8f05-a205b6ce6e98",
+          "position": [
+            0,
+            0.015,
+            1
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 0,
+            "life": {
+              "emissive": 0.65
+            }
+          }
+        ],
+        "reactionId": "[\"island-action-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",\"[\\\"island-plan-v1\\\",\\\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\\\",0]\",7]",
+        "reactionKind": "correct",
+        "reactionPhase": "contact",
+        "reactionTarget": "tree",
+        "completed": 0,
+        "residentAction": "idle",
+        "residentItemId": "",
+        "usePhase": 0,
+        "residentSpecies": "",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "residentPoint": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "expanded": "false",
+        "lighthouse": "false",
+        "residents": 2
+      },
+      "islandRevision": 6,
+      "completedSets": 1,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/tablet-bench-placement.png"
+    },
+    {
+      "file": "screens/six-items-tablet-swing-placement.png",
+      "sha256": "431601138f07ebf4de3eedfc770bd688fc54c0520a67e5b0414dd6df0373181d",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 100,
+      "expanded": "true",
+      "residentAction": "admire",
+      "residentItemId": "starter-lantern",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 7898.300000011921,
+        "drawCount": 147,
+        "cpuMs": 0.6,
+        "calls": 100,
+        "triangles": 98334,
+        "geometries": 105,
+        "textures": 5,
+        "previewBuildCount": 2,
+        "previewValid": "true",
+        "preview": {
+          "id": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",1]:reward:item",
+          "uuid": "bee3feb1-0969-46cc-b984-21751907fb21",
+          "position": [
+            -0.5,
+            0.015,
+            2
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 1.5707963267948966,
+            "life": {
+              "emissive": 0.65
+            }
+          }
+        ],
+        "reactionId": "[\"island-action-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",\"[\\\"island-plan-v1\\\",\\\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\\\",1]\",5]",
+        "reactionKind": "correct",
+        "reactionPhase": "contact",
+        "reactionTarget": "tree",
+        "completed": 0,
+        "residentAction": "admire",
+        "residentItemId": "starter-lantern",
+        "usePhase": 1,
+        "residentSpecies": "rabbit",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",0]:reward:item",
+            "action": "sit",
+            "position": [
+              0.25,
+              0.439,
+              0.5
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -1.77,
+              0,
+              0.24999999999999986
+            ],
+            "usePhase": 1
+          }
+        ],
+        "residentPoint": {
+          "x": -1.77,
+          "y": 0,
+          "z": 0.24999999999999986
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.14207,0.00000,0.00000,0.00000,0.00000,0.23214,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.03668,-0.03813,-1.00200,1.00000",
+        "expanded": "true",
+        "lighthouse": "false",
+        "residents": 2
+      },
+      "islandRevision": 13,
+      "completedSets": 2,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/tablet-swing-placement.png"
+    },
+    {
+      "file": "screens/six-items-tablet-flower-placement.png",
+      "sha256": "4ee8eebc4a415d429e5ada81f89ab544bb2c00f18b3de35cfc77d50882148de0",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 103,
+      "expanded": "true",
+      "residentAction": "swing",
+      "residentItemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",1]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 16800.19999998808,
+        "drawCount": 285,
+        "cpuMs": 0.6,
+        "calls": 102,
+        "triangles": 104830,
+        "geometries": 108,
+        "textures": 5,
+        "previewBuildCount": 5,
+        "previewValid": "true",
+        "preview": {
+          "id": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",2]:reward:item",
+          "uuid": "adb35099-cd5f-4a2d-9166-86fb65e12042",
+          "position": [
+            1,
+            0.015,
+            1.5
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 1.5707963267948966,
+            "life": {
+              "emissive": 0.65
+            }
+          },
+          {
+            "id": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",1]:reward:item",
+            "kind": "swing",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -0.5,
+              0,
+              2
+            ],
+            "rotationY": 0,
+            "life": {},
+            "swingAngle": 0
+          }
+        ],
+        "reactionId": "[\"island-action-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",\"[\\\"island-plan-v1\\\",\\\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\\\",2]\",5]",
+        "reactionKind": "correct",
+        "reactionPhase": "settled",
+        "reactionTarget": "tree",
+        "completed": 0,
+        "residentAction": "swing",
+        "residentItemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",1]:reward:item",
+        "usePhase": 1,
+        "residentSpecies": "otter",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",1]:reward:item",
+            "action": "swing",
+            "position": [
+              -0.5,
+              0.439,
+              2
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -1.77,
+              0,
+              0.24999999999999986
+            ],
+            "usePhase": 1
+          }
+        ],
+        "residentPoint": {
+          "x": -0.5,
+          "y": 0.439,
+          "z": 2
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.14207,0.00000,0.00000,0.00000,0.00000,0.23214,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.03668,-0.03813,-1.00200,1.00000",
+        "expanded": "true",
+        "lighthouse": "false",
+        "residents": 2
+      },
+      "islandRevision": 17,
+      "completedSets": 3,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/tablet-flower-placement.png"
+    },
+    {
+      "file": "screens/six-items-tablet-mushroom-placement.png",
+      "sha256": "3088f608161fa6b927ecdb2c77e7ffca55daa9f94b5c7870043050eb722d48a5",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 117,
+      "expanded": "true",
+      "residentAction": "sniff",
+      "residentItemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",2]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 22188.5,
+        "drawCount": 396,
+        "cpuMs": 0.6,
+        "calls": 117,
+        "triangles": 113118,
+        "geometries": 123,
+        "textures": 6,
+        "previewBuildCount": 7,
+        "previewValid": "true",
+        "preview": {
+          "id": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",3]:reward:item",
+          "uuid": "d2387cfd-c6f0-44df-8268-7edfae9d50e8",
+          "position": [
+            -2,
+            0.015,
+            1
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 1.5707963267948966,
+            "life": {
+              "emissive": 0.65
+            }
+          },
+          {
+            "id": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",2]:reward:item",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1,
+              0,
+              1.5
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          }
+        ],
+        "reactionId": "[\"island-action-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",\"[\\\"island-plan-v1\\\",\\\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\\\",3]\",5]",
+        "reactionKind": "correct",
+        "reactionPhase": "settled",
+        "reactionTarget": "tree",
+        "completed": 0,
+        "residentAction": "sniff",
+        "residentItemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",2]:reward:item",
+        "usePhase": 1,
+        "residentSpecies": "otter",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",2]:reward:item",
+            "action": "sniff",
+            "position": [
+              1,
+              0,
+              2.27
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "starter-lantern",
+            "action": "admire",
+            "position": [
+              -1.77,
+              0,
+              0.24999999999999986
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "fox",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              6.26,
+              0,
+              0.83
+            ],
+            "usePhase": 1
+          }
+        ],
+        "residentPoint": {
+          "x": 1,
+          "y": 0,
+          "z": 2.27
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.14207,0.00000,0.00000,0.00000,0.00000,0.23214,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.03668,-0.03813,-1.00200,1.00000",
+        "expanded": "true",
+        "lighthouse": "false",
+        "residents": 3
+      },
+      "islandRevision": 21,
+      "completedSets": 4,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/tablet-mushroom-placement.png"
+    },
+    {
+      "file": "screens/six-items-tablet-lantern-placement.png",
+      "sha256": "64b82ef619961f000a36387d33d8e182ce1db6cde5675f667b69a0c382993542",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 121,
+      "expanded": "true",
+      "residentAction": "rest",
+      "residentItemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",3]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 26777.30000001192,
+        "drawCount": 480,
+        "cpuMs": 0.8,
+        "calls": 121,
+        "triangles": 114422,
+        "geometries": 127,
+        "textures": 6,
+        "previewBuildCount": 9,
+        "previewValid": "true",
+        "preview": {
+          "id": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",4]:reward:item",
+          "uuid": "a26dc63b-025c-4a16-ad35-28f531db4035",
+          "position": [
+            -0.5,
+            0.015,
+            -0.5
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 1.5707963267948966,
+            "life": {
+              "emissive": 0.65
+            }
+          },
+          {
+            "id": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",3]:reward:item",
+            "kind": "mushroom",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -2,
+              0,
+              1
+            ],
+            "rotationY": 0,
+            "life": {}
+          }
+        ],
+        "reactionId": "[\"island-action-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",\"[\\\"island-plan-v1\\\",\\\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\\\",4]\",2]",
+        "reactionKind": "correct",
+        "reactionPhase": "settled",
+        "reactionTarget": "tree",
+        "completed": 0,
+        "residentAction": "rest",
+        "residentItemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",3]:reward:item",
+        "usePhase": 1,
+        "residentSpecies": "rabbit",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",2]:reward:item",
+            "action": "sniff",
+            "position": [
+              1,
+              0,
+              2.27
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",3]:reward:item",
+            "action": "rest",
+            "position": [
+              -2,
+              0.5302,
+              1
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "fox",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              6.26,
+              0,
+              0.83
+            ],
+            "usePhase": 1
+          }
+        ],
+        "residentPoint": {
+          "x": -2,
+          "y": 0.5302,
+          "z": 1
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.14207,0.00000,0.00000,0.00000,0.00000,0.23214,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.03668,-0.03813,-1.00200,1.00000",
+        "expanded": "true",
+        "lighthouse": "false",
+        "residents": 3
+      },
+      "islandRevision": 25,
+      "completedSets": 5,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/tablet-lantern-placement.png"
+    },
+    {
+      "file": "screens/six-items-tablet-fountain-placement.png",
+      "sha256": "d61da6c79ac14ec8d4bff1f6d448354f5f86160fde36d2ba339e62fb7864048f",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 131,
+      "expanded": "true",
+      "residentAction": "admire",
+      "residentItemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",4]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 32446.5,
+        "drawCount": 586,
+        "cpuMs": 0.9,
+        "calls": 131,
+        "triangles": 117262,
+        "geometries": 137,
+        "textures": 6,
+        "previewBuildCount": 11,
+        "previewValid": "true",
+        "preview": {
+          "id": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",5]:reward:item",
+          "uuid": "9edbf37e-6a50-44ea-a3da-71bd9436a88f",
+          "position": [
+            2,
+            0.015,
+            2.5
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 1.5707963267948966,
+            "life": {
+              "emissive": 0.65
+            }
+          },
+          {
+            "id": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",4]:reward:item",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -0.5,
+              0,
+              -0.5
+            ],
+            "rotationY": 0,
+            "life": {
+              "emissive": 0.65
+            }
+          }
+        ],
+        "reactionId": "[\"island-action-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",\"[\\\"island-plan-v1\\\",\\\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\\\",5]\",2]",
+        "reactionKind": "correct",
+        "reactionPhase": "settled",
+        "reactionTarget": "tree",
+        "completed": 0,
+        "residentAction": "admire",
+        "residentItemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",4]:reward:item",
+        "usePhase": 1,
+        "residentSpecies": "rabbit",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",2]:reward:item",
+            "action": "sniff",
+            "position": [
+              1,
+              0,
+              2.27
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",4]:reward:item",
+            "action": "admire",
+            "position": [
+              -0.4999999999999999,
+              0,
+              -1.27
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "fox",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              6.26,
+              0,
+              0.83
+            ],
+            "usePhase": 1
+          }
+        ],
+        "residentPoint": {
+          "x": -0.4999999999999999,
+          "y": 0,
+          "z": -1.27
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.14207,0.00000,0.00000,0.00000,0.00000,0.23214,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.03668,-0.03813,-1.00200,1.00000",
+        "expanded": "true",
+        "lighthouse": "true",
+        "residents": 3
+      },
+      "islandRevision": 29,
+      "completedSets": 6,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/tablet-fountain-placement.png"
+    },
+    {
+      "file": "screens/grown-island-tablet-six-earned-play-list.png",
+      "sha256": "91f984a3fed5af17ad4105d5801224468a8feea0d13567007ca3f039db024f51",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 129,
+      "expanded": "true",
+      "residentAction": "watch",
+      "residentItemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",5]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 38731.5,
+        "drawCount": 698,
+        "cpuMs": 0.6,
+        "calls": 129,
+        "triangles": 117068,
+        "geometries": 136,
+        "textures": 6,
+        "previewBuildCount": 12,
+        "previewValid": "",
+        "preview": null,
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 1.5707963267948966,
+            "life": {
+              "emissive": 0.65
+            }
+          },
+          {
+            "id": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",5]:reward:item",
+            "kind": "fountain",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              2,
+              0,
+              2.5
+            ],
+            "rotationY": 0,
+            "life": {
+              "waterScaleY": 1,
+              "rippleScale": 1
+            }
+          }
+        ],
+        "reactionId": "",
+        "reactionKind": "",
+        "reactionPhase": "settled",
+        "reactionTarget": "",
+        "completed": 0,
+        "residentAction": "watch",
+        "residentItemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",5]:reward:item",
+        "usePhase": 1,
+        "residentSpecies": "fox",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",2]:reward:item",
+            "action": "sniff",
+            "position": [
+              1,
+              0,
+              2.27
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",4]:reward:item",
+            "action": "admire",
+            "position": [
+              -0.4999999999999999,
+              0,
+              -1.27
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "fox",
+            "itemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",5]:reward:item",
+            "action": "watch",
+            "position": [
+              2,
+              0,
+              1.4
+            ],
+            "usePhase": 1
+          }
+        ],
+        "residentPoint": {
+          "x": 2,
+          "y": 0,
+          "z": 1.4
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.14207,0.00000,0.00000,0.00000,0.00000,0.23214,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.03668,-0.03813,-1.00200,1.00000",
+        "expanded": "true",
+        "lighthouse": "true",
+        "residents": 3
+      },
+      "islandRevision": 30,
+      "completedSets": 6,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/tablet-six-earned-play-list.png"
+    },
+    {
+      "file": "screens/grown-island-tablet-six-earned-return-learning.png",
+      "sha256": "dbf4490ca37a13907d91bd7cb3c6f2a120dadf5083f3b68d2775663f52b97a00",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 131,
+      "expanded": "true",
+      "residentAction": "watch",
+      "residentItemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",5]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "at": 38960.60000002384,
+        "drawCount": 701,
+        "cpuMs": 0.6,
+        "calls": 131,
+        "triangles": 117116,
+        "geometries": 136,
+        "textures": 6,
+        "previewBuildCount": 12,
+        "previewValid": "",
+        "preview": null,
+        "furniture": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              1.5,
+              0,
+              0.8
+            ],
+            "rotationY": 0,
+            "life": {
+              "bloomScale": 1,
+              "leafScale": 1
+            }
+          },
+          {
+            "id": "starter-lantern",
+            "kind": "lantern",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              -1,
+              0,
+              0.25
+            ],
+            "rotationY": 1.5707963267948966,
+            "life": {
+              "emissive": 0.65
+            }
+          },
+          {
+            "id": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",5]:reward:item",
+            "kind": "fountain",
+            "visible": true,
+            "rootScale": [
+              1,
+              1,
+              1
+            ],
+            "position": [
+              2,
+              0,
+              2.5
+            ],
+            "rotationY": 0,
+            "life": {
+              "waterScaleY": 1,
+              "rippleScale": 1
+            }
+          }
+        ],
+        "reactionId": "",
+        "reactionKind": "",
+        "reactionPhase": "settled",
+        "reactionTarget": "",
+        "completed": 0,
+        "residentAction": "watch",
+        "residentItemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",5]:reward:item",
+        "usePhase": 1,
+        "residentSpecies": "fox",
+        "residentStates": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",2]:reward:item",
+            "action": "sniff",
+            "position": [
+              1,
+              0,
+              2.27
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.11299812627356554,
+              "right": 0.05118784392645633,
+              "bottom": -0.779915776879865,
+              "top": 0.027361263031954325
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",4]:reward:item",
+            "action": "admire",
+            "position": [
+              -0.4999999999999999,
+              0,
+              -1.27
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.12317390442751916,
+              "right": 0.013167702324978436,
+              "bottom": -0.044910781107049436,
+              "top": 0.8039519318489108
+            }
+          },
+          {
+            "species": "fox",
+            "itemId": "[\"island-plan-v1\",\"8dc5e6fd-1dd8-4ca4-820e-41f6b9022471\",5]:reward:item",
+            "action": "watch",
+            "position": [
+              2,
+              0,
+              1.4
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.03405292786651342,
+              "right": 0.20700737598398952,
+              "bottom": -0.6469494857626836,
+              "top": 0.2113216965240085
+            }
+          }
+        ],
+        "residentPoint": {
+          "x": 2,
+          "y": 0,
+          "z": 1.4
+        },
+        "visibility": "visible",
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.11151,0.00000,0.00000,0.00000,0.00000,0.33985,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.21696,-1.00200,1.00000",
+        "expanded": "true",
+        "lighthouse": "true",
+        "residents": 3
+      },
+      "islandRevision": 31,
+      "completedSets": 6,
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/3d/tablet-six-earned-return-learning.png"
+    },
+    {
+      "file": "screens/east-phone-fresh-home.png",
+      "sha256": "7cca36764e52e175cb664b2b39e8ed2b0c14417fa4665f4070e87e2fa5a5a753",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 2422.800000011921,
+        "draw": 3,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "home",
+        "stageBox": {
+          "x": 0,
+          "y": 64.09375,
+          "width": 390,
+          "height": 386.09375
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/phone-fresh-home.png"
+    },
+    {
+      "file": "screens/east-phone-first-earned-reward.png",
+      "sha256": "957d31e3363d0f5331d11b8dbf6cb2b543080c358b3bc46306dcacbd3c40bd38",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "reward",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 74,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 3359.399999976158,
+        "draw": 21,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.44093996561235993,
+              "right": -0.0020443047426329923,
+              "bottom": -0.5213596779557476,
+              "top": 0.6903248167646165
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.23195556414226232,
+              "right": 0.5756877872362361,
+              "bottom": -0.6890039040468292,
+              "top": 0.596211933800826
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.27778,0.00000,0.00000,0.00000,0.00000,0.53105,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "reward",
+        "stageBox": {
+          "x": 0,
+          "y": 64.09375,
+          "width": 390,
+          "height": 386.09375
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/phone-first-earned-reward.png"
+    },
+    {
+      "file": "screens/east-phone-second-earned-reward.png",
+      "sha256": "e6c76bda3456fe84ab46c9cb0999b2ddeacba508627b8c64f3c80e6104bee370",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "reward",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 82,
+      "expanded": "true",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 4933.600000023842,
+        "draw": 47,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.44093996561235993,
+              "right": -0.0020443047426329923,
+              "bottom": -0.5213596779557476,
+              "top": 0.6903248167646165
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.23195556414226232,
+              "right": 0.5756877872362361,
+              "bottom": -0.6890039040468292,
+              "top": 0.596211933800826
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.27778,0.00000,0.00000,0.00000,0.00000,0.53105,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "reward",
+        "stageBox": {
+          "x": 0,
+          "y": 64.09375,
+          "width": 390,
+          "height": 386.09375
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/phone-second-earned-reward.png"
+    },
+    {
+      "file": "screens/east-phone-east-swing-preview.png",
+      "sha256": "17fe80cf491b80e9610554099e0d1818906757d4d8272ba98133c9d498023fca",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 98,
+      "expanded": "true",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 7581.100000023842,
+        "draw": 85,
+        "preview": {
+          "id": "[\"island-plan-v1\",\"east-learning-phone\",1]:reward:item",
+          "uuid": "9bfad6d0-ad29-458b-bd25-3fd33df05a60",
+          "position": [
+            6.25,
+            0.015,
+            1
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.14207,0.00000,0.00000,0.00000,0.00000,0.14354,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.03668,-0.02358,-1.00200,1.00000",
+        "previewValid": "true",
+        "mode": "placement",
+        "stageBox": {
+          "x": 0,
+          "y": 64.09375,
+          "width": 390,
+          "height": 386.09375
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/phone-east-swing-preview.png"
+    },
+    {
+      "file": "screens/east-phone-east-walking-learning.png",
+      "sha256": "06628f121f1530668fdf100d7d58f3acc68ad5056e7e7b765ddcea288d2faab6",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 100,
+      "expanded": "true",
+      "residentAction": "walk",
+      "residentItemId": "[\"island-plan-v1\",\"east-learning-phone\",1]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 7930.399999976158,
+        "draw": 92,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"east-learning-phone\",1]:reward:item",
+            "action": "walk",
+            "position": [
+              0.14412175916659845,
+              0,
+              1.6040110690151455
+            ],
+            "usePhase": 0,
+            "frameBounds": {
+              "left": -0.5437250030157529,
+              "right": -0.27138224163324226,
+              "bottom": -0.3306065849488941,
+              "top": 0.3363685721502424
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.10251525893238869,
+              "right": 0.09962526227832227,
+              "bottom": -0.4220689642798088,
+              "top": 0.33373506535799397
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.16335,0.00000,0.00000,0.00000,0.00000,0.31230,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.23892,-0.01688,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "learning",
+        "stageBox": {
+          "x": 0,
+          "y": 52,
+          "width": 390,
+          "height": 204
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/phone-east-walking-learning.png"
+    },
+    {
+      "file": "screens/east-phone-east-seated-same-learning-frame.png",
+      "sha256": "d2dd273e226735a8394befc82fc86a704afadd2b131424d77b28201e09910c2a",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 100,
+      "expanded": "true",
+      "residentAction": "swing",
+      "residentItemId": "[\"island-plan-v1\",\"east-learning-phone\",1]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 13449.399999976158,
+        "draw": 230,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"east-learning-phone\",1]:reward:item",
+            "action": "swing",
+            "position": [
+              6.25,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.49033717726326,
+              "right": 0.7307489265774835,
+              "bottom": -0.4654961744294748,
+              "top": 0.2292442299260813
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.10251525893238869,
+              "right": 0.09962526227832227,
+              "bottom": -0.4220689642798088,
+              "top": 0.33373506535799397
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.16335,0.00000,0.00000,0.00000,0.00000,0.31230,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.23892,-0.01688,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "learning",
+        "stageBox": {
+          "x": 0,
+          "y": 52,
+          "width": 390,
+          "height": 204
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/phone-east-seated-same-learning-frame.png"
+    },
+    {
+      "file": "screens/east-phone-east-seated-home.png",
+      "sha256": "79ff340b03987d942f3a070eb6b1630d7d4c6872d8c6e940febee6bfd4e754bc",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 100,
+      "expanded": "true",
+      "residentAction": "swing",
+      "residentItemId": "[\"island-plan-v1\",\"east-learning-phone\",1]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 13520.899999976158,
+        "draw": 230,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"east-learning-phone\",1]:reward:item",
+            "action": "swing",
+            "position": [
+              6.25,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.49033717726326,
+              "right": 0.7307489265774835,
+              "bottom": -0.4654961744294748,
+              "top": 0.2292442299260813
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.10251525893238869,
+              "right": 0.09962526227832227,
+              "bottom": -0.4220689642798088,
+              "top": 0.33373506535799397
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.16335,0.00000,0.00000,0.00000,0.00000,0.31230,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.23892,-0.01688,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "home",
+        "stageBox": {
+          "x": 0,
+          "y": 64.09375,
+          "width": 390,
+          "height": 386.09375
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/phone-east-seated-home.png"
+    },
+    {
+      "file": "screens/east-phone-east-seated-return-learning.png",
+      "sha256": "10fcbe9925d3bc8d938b6977a31aecf1b85f5561958a25595aff10e4d682d4e7",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 68,
+      "expanded": "true",
+      "residentAction": "swing",
+      "residentItemId": "[\"island-plan-v1\",\"east-learning-phone\",1]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 13772.699999988079,
+        "draw": 235,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"east-learning-phone\",1]:reward:item",
+            "action": "swing",
+            "position": [
+              6.25,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.44457208467889375,
+              "right": 0.853383067032839,
+              "bottom": -0.7344108219035025,
+              "top": 0.44696865724314516
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.5635508025070259,
+              "right": -0.21981857941305205,
+              "bottom": -0.6605645124247925,
+              "top": 0.6246513254228627
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.27778,0.00000,0.00000,0.00000,0.00000,0.53105,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.79551,0.02844,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "learning",
+        "stageBox": {
+          "x": 0,
+          "y": 52,
+          "width": 390,
+          "height": 204
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/phone-east-seated-return-learning.png"
+    },
+    {
+      "file": "screens/east-phone-east-seated-next-answer.png",
+      "sha256": "eca48ddef2408e71e8aa72c2237917cb752cae325a7a8b1a76a8919a649c7529",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 69,
+      "expanded": "true",
+      "residentAction": "swing",
+      "residentItemId": "[\"island-plan-v1\",\"east-learning-phone\",1]:reward:item",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 14052.100000023842,
+        "draw": 238,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"east-learning-phone\",1]:reward:item",
+            "action": "swing",
+            "position": [
+              6.25,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.44457208467889375,
+              "right": 0.853383067032839,
+              "bottom": -0.7344108219035025,
+              "top": 0.44696865724314516
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.5635508025070259,
+              "right": -0.21981857941305205,
+              "bottom": -0.6605645124247925,
+              "top": 0.6246513254228627
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.27778,0.00000,0.00000,0.00000,0.00000,0.53105,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.79551,0.02844,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "learning",
+        "stageBox": {
+          "x": 0,
+          "y": 52,
+          "width": 390,
+          "height": 204
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/phone-east-seated-next-answer.png"
+    },
+    {
+      "file": "screens/east-tablet-fresh-home.png",
+      "sha256": "f6c31e645f156d82939aaf2496aae4a30bb03a670bc380e8b4be35fd8a83f9d7",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 2292.5,
+        "draw": 3,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "home",
+        "stageBox": {
+          "x": 0,
+          "y": 80.09375,
+          "width": 768,
+          "height": 470
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/tablet-fresh-home.png"
+    },
+    {
+      "file": "screens/east-tablet-first-earned-reward.png",
+      "sha256": "2a1c816b4effef82b2546dd0f55a110ecbe20759c639b52a86f779d34a35b8e9",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "reward",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 3282.899999976158,
+        "draw": 22,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.16097,0.00000,0.00000,0.00000,0.00000,0.26303,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01057,-0.01494,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "reward",
+        "stageBox": {
+          "x": 0,
+          "y": 80.09375,
+          "width": 768,
+          "height": 470
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/tablet-first-earned-reward.png"
+    },
+    {
+      "file": "screens/east-tablet-second-earned-reward.png",
+      "sha256": "77d2db98e17d5e872dba66da91be82874d86ab396231a4dae1a8eded818b23a7",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "reward",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 94,
+      "expanded": "true",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 6126.399999976158,
+        "draw": 77,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.14207,0.00000,0.00000,0.00000,0.00000,0.23214,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.03668,-0.03813,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "reward",
+        "stageBox": {
+          "x": 0,
+          "y": 80.09375,
+          "width": 768,
+          "height": 470
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/tablet-second-earned-reward.png"
+    },
+    {
+      "file": "screens/east-tablet-east-swing-preview.png",
+      "sha256": "fdcfb4b4d56b7281ce291dbfabe38e2fa27cf1c5607fbc72492093f121600deb",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "placement",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 98,
+      "expanded": "true",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 8542.800000011921,
+        "draw": 105,
+        "preview": {
+          "id": "[\"island-plan-v1\",\"east-learning-tablet\",1]:reward:item",
+          "uuid": "50ee1f9c-d0e2-4e1d-b530-65aceab4b101",
+          "position": [
+            6.25,
+            0.015,
+            1
+          ],
+          "rotationY": 0,
+          "sourceVisible": false,
+          "marker": "solid"
+        },
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              0.1,
+              0,
+              1.6
+            ],
+            "usePhase": 1
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.14207,0.00000,0.00000,0.00000,0.00000,0.23214,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.03668,-0.03813,-1.00200,1.00000",
+        "previewValid": "true",
+        "mode": "placement",
+        "stageBox": {
+          "x": 0,
+          "y": 80.09375,
+          "width": 768,
+          "height": 470
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/tablet-east-swing-preview.png"
+    },
+    {
+      "file": "screens/east-tablet-east-walking-learning.png",
+      "sha256": "5363ef21c14f8a57e85ba92e5ef123b42607953999c3eb2a864cf217f3161d68",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 100,
+      "expanded": "true",
+      "residentAction": "walk",
+      "residentItemId": "[\"island-plan-v1\",\"east-learning-tablet\",1]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 10206.899999976158,
+        "draw": 143,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"east-learning-tablet\",1]:reward:item",
+            "action": "walk",
+            "position": [
+              1.9227729143872017,
+              0,
+              1.6185423477488683
+            ],
+            "usePhase": 0,
+            "frameBounds": {
+              "left": -0.030725557973939725,
+              "right": 0.16408895302289864,
+              "bottom": -0.4795685299079291,
+              "top": 0.2530581704094441
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.08556806072890676,
+              "right": 0.21237036378617719,
+              "bottom": -0.4220689642798088,
+              "top": 0.33373506535799397
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.10247,0.00000,0.00000,0.00000,0.00000,0.31230,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.01688,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "learning",
+        "stageBox": {
+          "x": 0,
+          "y": 61,
+          "width": 768,
+          "height": 252
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/tablet-east-walking-learning.png"
+    },
+    {
+      "file": "screens/east-tablet-east-seated-same-learning-frame.png",
+      "sha256": "dd3476f3ae7d714c03ffbbf60b276fb2e7af491d2db53895ac914c953a376d15",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 100,
+      "expanded": "true",
+      "residentAction": "swing",
+      "residentItemId": "[\"island-plan-v1\",\"east-learning-tablet\",1]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 14418.699999988079,
+        "draw": 240,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"east-learning-tablet\",1]:reward:item",
+            "action": "swing",
+            "position": [
+              6.25,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.4574630861917103,
+              "right": 0.6082728462164875,
+              "bottom": -0.4654961744294748,
+              "top": 0.2292442299260813
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.08556806072890676,
+              "right": 0.21237036378617719,
+              "bottom": -0.4220689642798088,
+              "top": 0.33373506535799397
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.10247,0.00000,0.00000,0.00000,0.00000,0.31230,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.01688,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "learning",
+        "stageBox": {
+          "x": 0,
+          "y": 61,
+          "width": 768,
+          "height": 252
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/tablet-east-seated-same-learning-frame.png"
+    },
+    {
+      "file": "screens/east-tablet-east-seated-home.png",
+      "sha256": "c840717728d1f61f46b70ff524fcbde0cbebaa6b2c0ce903816348948e485df5",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 100,
+      "expanded": "true",
+      "residentAction": "swing",
+      "residentItemId": "[\"island-plan-v1\",\"east-learning-tablet\",1]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 14471.399999976158,
+        "draw": 240,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"east-learning-tablet\",1]:reward:item",
+            "action": "swing",
+            "position": [
+              6.25,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.4574630861917103,
+              "right": 0.6082728462164875,
+              "bottom": -0.4654961744294748,
+              "top": 0.2292442299260813
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.08556806072890676,
+              "right": 0.21237036378617719,
+              "bottom": -0.4220689642798088,
+              "top": 0.33373506535799397
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.10247,0.00000,0.00000,0.00000,0.00000,0.31230,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.01688,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "home",
+        "stageBox": {
+          "x": 0,
+          "y": 80.09375,
+          "width": 768,
+          "height": 470
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/tablet-east-seated-home.png"
+    },
+    {
+      "file": "screens/east-tablet-east-seated-return-learning.png",
+      "sha256": "ce827cc6828574ab16c8a7db780d7120c8c1031b7640088f5488334b4c7b8a3d",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 80,
+      "expanded": "true",
+      "residentAction": "swing",
+      "residentItemId": "[\"island-plan-v1\",\"east-learning-tablet\",1]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 14748.300000011921,
+        "draw": 245,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"east-learning-tablet\",1]:reward:item",
+            "action": "swing",
+            "position": [
+              6.25,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.5903974057843933,
+              "right": 0.8683095328690333,
+              "bottom": -0.7238983463636862,
+              "top": 0.5563688161487015
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.09493050377254561,
+              "right": 0.13874069732271166,
+              "bottom": -0.6438707119183924,
+              "top": 0.7489244593044426
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.18883,0.00000,0.00000,0.00000,0.00000,0.57550,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.25262,0.10281,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "learning",
+        "stageBox": {
+          "x": 0,
+          "y": 61,
+          "width": 768,
+          "height": 252
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/tablet-east-seated-return-learning.png"
+    },
+    {
+      "file": "screens/east-tablet-east-seated-next-answer.png",
+      "sha256": "d2b69a27ee90695a21e9eb1f292f19bdd8479299c7f4bc69dc525cf1f0355f4c",
+      "revision": "84d3ddf-experience-3535575a1ce3",
+      "version": "84d3ddf-experience-3535575a1ce3:7dc2ff9e-dc44-4734-a2b8-bdc9f4b1e995",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-procedural-v2",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 81,
+      "expanded": "true",
+      "residentAction": "swing",
+      "residentItemId": "[\"island-plan-v1\",\"east-learning-tablet\",1]:reward:item",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "scene": {
+        "time": 15068.800000011921,
+        "draw": 249,
+        "preview": null,
+        "residents": [
+          {
+            "species": "otter",
+            "itemId": "[\"island-plan-v1\",\"east-learning-tablet\",1]:reward:item",
+            "action": "swing",
+            "position": [
+              6.25,
+              0.439,
+              1
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": 0.5903974057843933,
+              "right": 0.8683095328690333,
+              "bottom": -0.7238983463636862,
+              "top": 0.5563688161487015
+            }
+          },
+          {
+            "species": "rabbit",
+            "itemId": "",
+            "action": "idle",
+            "position": [
+              2.45,
+              0,
+              1.45
+            ],
+            "usePhase": 1,
+            "frameBounds": {
+              "left": -0.09493050377254561,
+              "right": 0.13874069732271166,
+              "bottom": -0.6438707119183924,
+              "top": 0.7489244593044426
+            }
+          }
+        ],
+        "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.18883,0.00000,0.00000,0.00000,0.00000,0.57550,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.25262,0.10281,-1.00200,1.00000",
+        "previewValid": "",
+        "mode": "learning",
+        "stageBox": {
+          "x": 0,
+          "y": 61,
+          "width": 768,
+          "height": 252
+        }
+      },
+      "source": "/Users/yutogasaki/Projects/sansu/output/playwright/84d3ddf-experience-3535575a1ce3/east-learning/tablet-east-seated-next-answer.png"
+    }
+  ],
+  "scope": "Author/runtime evidence. No child observation or physical-device performance claim."
+}

@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
 import { promises as fs } from 'node:fs';
 import assert from 'node:assert/strict';
+import { waitForPageState } from './async-state-checks.mjs';
 
 const base = process.env.SANSU_PARK_BASE_URL || 'http://127.0.0.1:5187';
 const out = process.env.SANSU_PARK_OUTPUT || 'output/playwright/park';
@@ -52,10 +53,15 @@ async function uiAnswer(page, plan, incorrect = false) {
         }
         await page.getByRole('button', { name: 'こたえる', exact: true }).click();
     }
-    await page.waitForFunction(async ({ id, revision }) => {
+    await waitForPageState(page, async ({ id, revision }) => {
         const { db } = await import('/src/db/index.ts');
         return (await db.parkPlans.get(id))?.revision > revision;
-    }, { id: plan.id, revision: plan.revision });
+    }, { id: plan.id, revision: plan.revision }, { timeout: 30000, description: 'this Park answer revision' });
+    const saved = await page.evaluate(async id => {
+        const { db } = await import('/src/db/index.ts');
+        return db.parkPlans.get(id);
+    }, plan.id);
+    assert.equal(saved.revision, plan.revision + 1, 'One UI answer commits exactly one plan revision');
 }
 
 try {
@@ -163,11 +169,14 @@ try {
             await page.getByRole('button', { name: 'ここへ うつす', exact: true }).waitFor();
             assert.equal((await read(page, id)).park.courses[0].slots[0], 'starter-slide');
             await page.getByRole('button', { name: 'ここへ うつす', exact: true }).click();
-            await page.waitForFunction(async id => {
+            await waitForPageState(page, async id => {
                 const { db } = await import('/src/db/index.ts');
                 return (await db.parks.get(id)).courses[1].slots[0] === 'starter-slide';
-            }, id);
-            assert.equal((await read(page, id)).park.courses[0].slots[0], null);
+            }, id, { timeout: 30000, description: 'slide saved in the second course' });
+            const transferred = (await read(page, id)).park;
+            assert.equal(transferred.courses[0].slots[0], null);
+            assert.equal(transferred.courses[1].slots[0], 'starter-slide');
+            await page.getByRole('button', { name: 'ばしょ 1 すべりだい', exact: true }).waitFor();
             for (let i = 0; i < 3; i++) {
                 await page.getByRole('button', { name: '＋ ばしょを ふやす', exact: true }).click();
                 await page.waitForFunction(count => document.querySelectorAll('.park-slot').length === count, i + 4);

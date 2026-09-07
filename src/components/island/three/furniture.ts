@@ -145,21 +145,35 @@ export function makeFurniture(kind: IslandItemKind, m: IslandMaterials) {
     return group;
 }
 
-/** A saved answer moves the living part, never the root, feet, post or basin. */
-export function applyFurnitureLife(group: THREE.Group, amount: number, reduced = false) {
-    const value = Math.max(0, Math.min(1.3, Number.isFinite(amount) ? amount : 0));
-    const blooms = group.getObjectByName('flower-blooms'), leaves = group.getObjectByName('flower-leaves');
+function lifeAmount(amount: number) {
+    return Math.max(0, Math.min(1.3, Number.isFinite(amount) ? amount : 0));
+}
+
+function applySurfaceResponse(group: THREE.Group, value: number, reduced: boolean) {
+    const blooms = group.getObjectByName('flower-blooms');
     if (blooms) { blooms.scale.set(1 + value * .06, 1 + value * .06, 1 + value * .06); blooms.rotation.y = reduced ? 0 : value * .045; }
-    if (leaves) leaves.scale.set(1 + value * .06, 1, 1 + value * .06);
     group.getObjectByName('lantern-light')?.traverse(object => {
         if (object instanceof THREE.Mesh && object.material instanceof THREE.MeshStandardMaterial && object.material.userData.islandOwned) {
             object.material.emissiveIntensity = .65 + value * .6;
         }
     });
-    const water = group.getObjectByName('fountain-water');
-    if (water) water.scale.y = 1 + value * .28;
     const ripple = group.getObjectByName('fountain-ripple');
     if (ripple) ripple.scale.setScalar(1 + value * .3);
+}
+
+/** An ordinary visit responds only through blooms, emitted light and the surface ripple. */
+export function applyFurnitureInterest(group: THREE.Group, amount: number, reduced = false) {
+    applySurfaceResponse(group, lifeAmount(amount), reduced);
+}
+
+/** A saved answer retains its broader living response, including leaves and falling water. */
+export function applyFurnitureLife(group: THREE.Group, amount: number, reduced = false) {
+    const value = lifeAmount(amount);
+    applySurfaceResponse(group, value, reduced);
+    const leaves = group.getObjectByName('flower-leaves');
+    if (leaves) leaves.scale.set(1 + value * .06, 1, 1 + value * .06);
+    const water = group.getObjectByName('fountain-water');
+    if (water) water.scale.y = 1 + value * .28;
 }
 
 export function applyFurnitureUse(group: THREE.Group, phase: number) {

@@ -1,13 +1,22 @@
 import * as THREE from 'three';
 import { IslandMaterials, disposeGeometry, star } from './primitives';
 import { applyTreeLife, getTreeLightAnchor, makeExpansion, makeLighthouse, makeOcean, makeScenery, makeStarTree } from './scenery';
-import { applyFurnitureLife, applyFurnitureUse, getFurnitureAnchors, makeFurniture, makeLightArrival, makeSelection } from './furniture';
+import { applyFurnitureInterest, applyFurnitureLife, applyFurnitureUse, getFurnitureAnchors, makeFurniture, makeLightArrival, makeSelection } from './furniture';
 import { IslandPlacementPreview } from './placementPreview';
+import { IslandPlacementOcclusion } from './placementOcclusion';
+import { boxCorners, fitLearningFrame } from './sceneFraming';
 import { ISLAND_ITEMS } from '../../../domain/island/catalog';
 import { ISLAND_VISUAL_CANDIDATE } from '../../../domain/island/feature';
 import { IslandResident, RESIDENT_NAMES } from './animals';
+import { canShowOrdinaryInterest, isResidentInterestItem, residentInterestVerb, sampleResidentInterest,
+    type ResidentInterestSample } from './residentInterest';
 import { chooseReachableResident, residentNeedsInitialSpawn, savedResidentLayoutChanged, suggestReachablePlacement } from './residentInteraction';
-import { findSafeResidentSpawn } from './navigation';
+import { findSafeResidentSpawn, planResidentRoute } from './navigation';
+import { chooseSharedActivity, sharedActivityDeliveryPlans, type SharedActivityPlan, type SharedActivityReplayPreference } from './sharedActivities';
+import { SharedActivityVisuals } from './sharedActivityVisuals';
+import { SharedActivityController } from './sharedActivityController';
+import { FurnitureClearanceController } from './furnitureClearanceController';
+import { chooseSharedActivityPresentation, fitSharedActivityFrame, type SharedActivityFrame } from './sharedActivityFraming';
 import type { IslandPlacementSuggestion, IslandPlayResult, IslandStageItem, IslandStageState } from './types';
 import { learningBeat, normalizedLearningProgress, reconcileLearningProgress, sampleLearningReaction, type LearningBeat, type LearningProgress,
     type LearningReactionKind, type LearningReactionPhase } from './learningReaction';
@@ -17,6 +26,7 @@ interface RuntimeCallbacks {
     select: (id: string) => void;
     caption: (caption: string) => void;
     failure: () => void;
+    ready?: () => void;
     playResult?: (result: IslandPlayResult) => void;
     placementSuggestion?: (suggestion: IslandPlacementSuggestion) => void;
 }
@@ -35,6 +45,7 @@ export class IslandScene {
     private readonly renderer: THREE.WebGLRenderer;
     private readonly materials = new IslandMaterials();
     private readonly tree: THREE.Group;
+    private readonly scenery: THREE.Group;
     private readonly expansion: THREE.Group;
     private readonly lighthouse: THREE.Group;
     private readonly arrival: THREE.Group;
@@ -43,6 +54,15 @@ export class IslandScene {
     private readonly cycleSeeds: THREE.Mesh[] = [];
     private readonly items = new Map<string, ItemModel>();
     private readonly residents: IslandResident[];
+    private readonly sharedVisuals = new SharedActivityVisuals(this.materials);
+    private readonly sharedActivity: SharedActivityController;
+    private readonly furnitureClearance: FurnitureClearanceController;
+    private clearanceDirty = false;
+    private pendingVisitId?: string;
+    private deferredPlay?: IslandStageState['playRequest'];
+    private sharedCamera?: { pairId: string; startedAt: number; from: SharedActivityFrame; to: SharedActivityFrame };
+    private sharedPresentation?: { pairId: string; attemptedPlans: number; satisfied: boolean;
+        handoffPoint: SharedActivityPlan['handoffPoint']; deliveryRoute: SharedActivityPlan['deliveryRoute']; fallback?: 'ordinary' };
     private readonly residentShadows: THREE.Mesh[] = [];
     private readonly pendingSpawns = new Set<number>();
     private pendingSpawnRetry = false;
@@ -52,6 +72,7 @@ export class IslandScene {
     private readonly motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     private state?: IslandStageState;
     private readonly placementPreview = new IslandPlacementPreview(this.materials);
+    private readonly placementOcclusion = new IslandPlacementOcclusion();
     private previewItem?: IslandStageItem;
     private raycaster = new THREE.Raycaster();
     private frame = 0;
@@ -65,18 +86,24 @@ export class IslandScene {
     private displayedProgress?: LearningProgress;
     private pendingProgress?: LearningProgress;
     private readonly learningFocus = new THREE.Vector3(.8, .55, 1);
+    private learningBounds: THREE.Box3[] = [];
     private readonly lightOrigin = new THREE.Vector3(.1, .22, 3.45);
     private lastFrame = 0;
     private lastResident?: IslandResident;
+    private ordinaryInterest?: { resident: IslandResident; model: ItemModel; target: THREE.Vector3 };
+    private interestObservation?: { context: 'visit' | 'learning'; itemId: string; species: IslandResident['species'];
+        phase: number; reduced: boolean; sample: ResidentInterestSample; target: number[]; head: number[];
+        hands: { left: number[]; right: number[] } };
     private lastChosenResident = -1;
     private lastPlayRequestId?: string;
     private playResult?: IslandPlayResult;
     private consumedSuggestionId?: string;
     private idleStart = -Infinity;
     private pointerStart?: { x: number; y: number; id: number };
-    private liftedResidents?: { item: IslandStageItem; residents: IslandResident[] };
+    private liftedResidents?: { item: IslandStageItem; seated: IslandResident[]; walking: IslandResident[] };
 
-    constructor(private readonly host: HTMLDivElement, private readonly callbacks: RuntimeCallbacks) {
+    constructor(private readonly host: HTMLDivElement, private readonly callbacks: RuntimeCallbacks, consumedPlayRequestId?: string) {
+        this.lastPlayRequestId = consumedPlayRequestId;
         this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'low-power' });
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
         this.renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -102,7 +129,8 @@ export class IslandScene {
         sun.shadow.camera.near = 1; sun.shadow.camera.far = 25;
         sun.shadow.bias = -.0006; sun.shadow.normalBias = .055;
         this.scene.add(sun);
-        this.scene.add(makeOcean(this.materials), makeScenery(this.materials));
+        this.scenery = makeScenery(this.materials);
+        this.scene.add(makeOcean(this.materials), this.scenery);
         this.tree = makeStarTree(this.materials);
         this.expansion = makeExpansion(this.materials);
         this.lighthouse = makeLighthouse(this.materials);
@@ -112,18 +140,21 @@ export class IslandScene {
         this.arrival.visible = false;
         this.selection.visible = false;
         this.scene.add(this.tree, this.expansion, this.lighthouse, this.arrival, this.selection);
-        this.scene.add(this.cycleLights, this.placementPreview.group);
+        this.scene.add(this.cycleLights, this.placementPreview.group, this.sharedVisuals.group);
         for (let i = 0; i < 6; i++) {
             const seed = star(this.cycleLights, this.materials.get('#899b6f'), [0, 0, 0], .065);
             seed.castShadow = false; seed.receiveShadow = false;
             this.cycleSeeds.push(seed);
         }
         this.cycleLights.visible = false;
+        const residentCaption = (caption: string) => { if (!this.sharedActivity?.plan && !this.furnitureClearance?.active) callbacks.caption(caption); };
         this.residents = [
-            new IslandResident('otter', this.materials, [.1, 0, 1.6], callbacks.caption),
-            new IslandResident('rabbit', this.materials, [2.45, 0, 1.45], callbacks.caption),
-            new IslandResident('fox', this.materials, [6.26, 0, .83], callbacks.caption),
+            new IslandResident('otter', this.materials, [.1, 0, 1.6], residentCaption),
+            new IslandResident('rabbit', this.materials, [2.45, 0, 1.45], residentCaption),
+            new IslandResident('fox', this.materials, [6.26, 0, .83], residentCaption),
         ];
+        this.sharedActivity = new SharedActivityController(this.residents, this.sharedVisuals, callbacks.caption);
+        this.furnitureClearance = new FurnitureClearanceController(this.residents, callbacks.caption);
         for (const resident of this.residents) {
             this.scene.add(resident.group);
             const shadow = new THREE.Mesh(new THREE.CircleGeometry(.41, 24), this.shadowMaterial);
@@ -155,6 +186,25 @@ export class IslandScene {
     update(state: IslandStageState) {
         if (this.disposed || this.lost) return;
         const previous = this.state;
+        const layoutChanged = Boolean(previous && savedResidentLayoutChanged(previous.items, state.items));
+        if (state.learning || state.preview || layoutChanged || (previous?.playRequest && !state.playRequest)) this.clearOrdinaryInterest();
+        if (layoutChanged || state.preview) {
+            this.clearanceDirty ||= layoutChanged || this.furnitureClearance.active;
+            this.furnitureClearance.cancel(performance.now());
+        }
+        // A newly saved obstacle invalidates every old route, including routes
+        // belonging to a different item. Editing a preview alone does not.
+        if (layoutChanged) this.residents.forEach(resident => resident.stopWalking(performance.now()));
+        if (state.learning || state.preview || !state.playRequest) this.deferredPlay = undefined;
+        if (state.learning) this.pendingVisitId = undefined;
+        const cancelSharing = state.learning || state.preview || !state.playRequest
+            || (previous && savedResidentLayoutChanged(previous.items, state.items));
+        const restoringWorldFrame = cancelSharing && Boolean(this.sharedCamera);
+        if (cancelSharing) { this.sharedActivity.cancel(performance.now()); this.sharedCamera = undefined; this.sharedPresentation = undefined; }
+        // Keep edit-only material clones through a drag; restore before a saved
+        // item can be removed/disposed, or when the placement sheet closes.
+        if (!state.preview || state.preview.id !== previous?.preview?.id
+            || (previous && savedResidentLayoutChanged(previous.items, state.items))) this.placementOcclusion.restore();
         this.state = state;
         let shadowChanged = !previous || this.expansion.visible !== (state.completedSets >= 2)
             || this.lighthouse.visible !== (state.completedSets >= 6);
@@ -203,7 +253,12 @@ export class IslandScene {
                 group.traverse(child => { child.userData.itemId = item.id; });
                 model = { group, item }; this.items.set(item.id, model); this.scene.add(group);
                 visit = item;
-            } else if (!samePlacement(model.item, item)) { visit = item; shadowChanged = true; }
+            } else if (!samePlacement(model.item, item)) {
+                // Live changes (including another tab) invalidate the old target
+                // even when its id is unchanged. Replaying it would use the old seat.
+                for (const resident of this.residents) if (resident.itemId === item.id) resident.release();
+                visit = item; shadowChanged = true;
+            }
             model.item = item;
             model.group.position.set(item.position!.x, 0, item.position!.z);
             model.group.rotation.y = item.rotation;
@@ -217,13 +272,25 @@ export class IslandScene {
             // Cancel/same-position save restores the seat as well as its resident.
             // Otherwise an idle root would remain inside the reappearing furniture.
             if (restored && samePlacement(lifted.item, restored.item)) {
-                for (const resident of lifted.residents) if (!resident.itemId) {
+                for (const resident of lifted.seated) if (!resident.itemId) {
                     resident.visit(restored.item, performance.now(), true, state.items, state.completedSets);
+                }
+                for (const resident of lifted.walking) if (!resident.itemId) {
+                    const occupied = this.residents.filter(other => other !== resident && other.group.visible).map(other => other.group.position);
+                    const route = planResidentRoute(resident.group.position, restored.item, state.items, state.completedSets,
+                        resident.departingId, { occupied });
+                    if (route) resident.visit(restored.item, performance.now(), this.motion.matches, state.items, state.completedSets, route);
                 }
             }
             this.liftedResidents = undefined;
         }
-        if (visit && previous) this.visitItem(visit);
+        if (visit && previous && !state.learning) this.pendingVisitId = visit.id;
+        if (this.clearanceDirty && !state.preview) {
+            this.clearanceDirty = false;
+            this.furnitureClearance.start(state.items, state.completedSets, performance.now(), this.motion.matches);
+        }
+        if (!state.preview && !state.learning && !this.furnitureClearance.active
+            && (!state.playRequest || state.playRequest.id === this.lastPlayRequestId)) this.finishPendingActivity();
         if (!previous) {
             // Returning to the island restores an inhabited scene immediately.
             const seat = [...placed].reverse().find(item => ['bench', 'mushroom'].includes(item.kind));
@@ -233,7 +300,9 @@ export class IslandScene {
         }
         if (state.preview?.id !== previous?.preview?.id && state.preview) {
             const residents = this.residents.filter(resident => resident.itemId === state.preview!.id);
-            this.liftedResidents = { item: this.items.get(state.preview.id)?.item ?? state.preview, residents };
+            this.liftedResidents = { item: this.items.get(state.preview.id)?.item ?? state.preview,
+                seated: residents.filter(resident => ['sit', 'rest', 'swing'].includes(resident.action)),
+                walking: residents.filter(resident => resident.action === 'walk') };
             residents.forEach(resident => resident.release());
         }
         this.previewItem = state.preview;
@@ -262,7 +331,14 @@ export class IslandScene {
             if (nearby) this.learningFocus.set(.8, .55, 1);
             else this.learningFocus.copy(resident.group.position).add(new THREE.Vector3(.25, .55, -.6));
         }
-        if (!previous || previous.completedSets !== state.completedSets || previous.learning !== state.learning || entering) this.resize();
+        if (state.learning && (entering || layoutChanged)) {
+            // Include future serial departures before the first learning frame.
+            // Answer feedback never has to move the camera or wait for a walk.
+            this.learningBounds = [...this.residents.filter(candidate => candidate.group.visible).map(candidate => candidate.learningFrameBounds()),
+                ...this.furnitureClearance.learningFrameBounds()];
+        }
+        if (!previous || previous.completedSets !== state.completedSets || previous.learning !== state.learning || entering || restoringWorldFrame
+            || (state.learning && layoutChanged)) this.resize();
         const event = state.reaction;
         const freshReaction = previous && event && event.id !== previous.reaction?.id;
         const cycle = reconcileLearningProgress(this.displayedProgress, this.pendingProgress, progress, freshReaction ? event.kind : undefined);
@@ -276,19 +352,11 @@ export class IslandScene {
         const play = state.playRequest;
         if (play && play.id !== this.lastPlayRequestId) {
             this.lastPlayRequestId = play.id;
-            const item = state.items.find(candidate => candidate.id === play.itemId);
-            const reason = state.learning ? 'learning' : state.preview ? 'editing' : !item?.position ? 'not-placed' : undefined;
-            let result: IslandPlayResult;
-            if (reason) result = { requestId: play.id, itemId: play.itemId, status: 'unavailable', reason };
-            else {
-                const resident = this.visitItem(item!);
-                result = resident ? { requestId: play.id, itemId: play.itemId, status: 'playing', resident: resident.species }
-                    : { requestId: play.id, itemId: play.itemId, status: 'blocked', reason: 'unreachable' };
-            }
-            this.playResult = result;
-            if (reason) this.callbacks.caption(reason === 'not-placed' ? 'しまに おいてから、あそぼう'
-                : reason === 'editing' ? 'ばしょを きめたら、あそぼう' : 'しまに もどったら、あそぼう');
-            this.callbacks.playResult?.(result);
+            if (this.furnitureClearance.active && !state.learning && !state.preview) {
+                // A single latest invitation is retained; repeated taps create no queue.
+                this.deferredPlay = play;
+                this.pendingVisitId = undefined;
+            } else this.performPlay(play);
         }
         // Answer/caption changes do not alter shadow-casting geometry. Preserve
         // the cached shadow map while the independent light reaction plays.
@@ -296,22 +364,142 @@ export class IslandScene {
         this.requestFrame();
     }
 
-    private residentCandidates() {
-        return this.residents.map(resident => ({ position: resident.group.position, visible: resident.group.visible, itemId: resident.itemId }));
+    private performPlay(play: NonNullable<IslandStageState['playRequest']>) {
+        const state = this.state;
+        if (!state) return;
+        this.deferredPlay = undefined;
+        this.pendingVisitId = undefined;
+        const item = state.items.find(candidate => candidate.id === play.itemId);
+        const reason = state.learning ? 'learning' : state.preview ? 'editing' : !item?.position ? 'not-placed' : undefined;
+        let result: IslandPlayResult;
+        if (reason) result = { requestId: play.id, itemId: play.itemId, status: 'unavailable', reason };
+        else {
+            const now = performance.now();
+            // Repeated clicks on either member of an active pair continue
+            // its current handoff. A new invitation replaces old movement.
+            const continuingSingle = !this.sharedActivity.plan && this.residents.some(resident => resident.group.visible
+                && resident.itemId === item!.id && resident.action === 'walk');
+            if (!continuingSingle && !this.sharedActivity.continuesFor(item!.id)) {
+                this.clearOrdinaryInterest();
+                const settled = this.sharedActivity.phase === 'settled' ? this.sharedActivity.plan : undefined;
+                const previous: SharedActivityReplayPreference | undefined = settled && {
+                    kind: settled.kind, source: settled.source, seat: settled.seat,
+                    receiver: settled.receiver, carrier: settled.carrier,
+                };
+                this.sharedActivity.cancel(now);
+                this.sharedPresentation = undefined;
+                if (this.sharedCamera) { this.sharedCamera = undefined; this.resize(); }
+                this.residents.forEach(resident => resident.stopWalking(now));
+                const plan = chooseSharedActivity(state.items, this.residentCandidates(), state.completedSets, item!.id,
+                    this.lastChosenResident, previous);
+                // Reduced motion has already reached its outcome when start
+                // returns, so choose its legal staging before any actor moves.
+                const presentation = plan && this.motion.matches ? this.chooseSharedPresentation(plan) : undefined;
+                const selected = this.motion.matches ? presentation?.satisfied ? presentation.plan : undefined : plan;
+                if (selected && this.sharedActivity.start(selected, now, this.motion.matches, state.items, state.completedSets,
+                    presentation?.frame.presentationHands)) {
+                    this.lastChosenResident = selected.carrier;
+                    this.lastResident = this.residents[selected.carrier];
+                    if (presentation) this.installSharedCamera(selected, presentation.frame, now);
+                }
+            }
+            const shared = this.sharedActivity.plan;
+            const resident = shared ? this.residents[shared.carrier] : this.visitItem(item!, this.motion.matches, true);
+            result = resident ? { requestId: play.id, itemId: play.itemId, status: 'playing', resident: resident.species,
+                ...(shared ? { activity: shared.kind, partner: this.residents[shared.receiver].species } : {}) }
+                : { requestId: play.id, itemId: play.itemId, status: 'blocked', reason: 'unreachable' };
+        }
+        this.playResult = result;
+        if (reason) this.callbacks.caption(reason === 'not-placed' ? 'しまに おいてから、あそぼう'
+            : reason === 'editing' ? 'ばしょを きめたら、あそぼう' : 'しまに もどったら、あそぼう');
+        this.callbacks.playResult?.(result);
     }
 
-    private visitItem(item: IslandStageItem, reduced = this.motion.matches) {
+    private finishPendingActivity() {
+        const play = this.deferredPlay;
+        this.deferredPlay = undefined;
+        if (play && this.state?.playRequest?.id === play.id) {
+            this.performPlay(play);
+            return;
+        }
+        const item = this.state?.items.find(candidate => candidate.id === this.pendingVisitId && candidate.position);
+        this.pendingVisitId = undefined;
+        if (item) this.visitItem(item);
+    }
+
+    private residentCandidates() {
+        return this.residents.map(resident => ({ position: resident.group.position, visible: resident.group.visible,
+            itemId: resident.itemId, departingId: resident.departingId }));
+    }
+
+    private visitItem(item: IslandStageItem, reduced = this.motion.matches, continueWalking = false) {
         const items = this.state?.items ?? [], completedSets = this.state?.completedSets ?? 0;
+        const now = performance.now();
+        const walking = continueWalking && !this.sharedActivity.plan && this.residents.find(resident => resident.group.visible
+            && resident.itemId === item.id && resident.action === 'walk');
+        if (walking) {
+            this.lastResident = walking;
+            return walking;
+        }
+        this.clearOrdinaryInterest();
+        this.sharedActivity.cancel(now);
+        if (this.sharedCamera) { this.sharedCamera = undefined; this.resize(); }
+        this.residents.forEach(resident => resident.stopWalking(now));
         const choice = chooseReachableResident(this.residentCandidates(), item, items, completedSets, this.lastChosenResident);
         if (!choice) { this.callbacks.caption('どうぶつが とおれる すきまを あけて みよう'); return undefined; }
-        const resident = this.residents[choice.index], now = performance.now();
+        const resident = this.residents[choice.index];
         const visiting = choice.replay ? resident.replayUse(now, reduced)
             : resident.visit(item, now, reduced, items, completedSets, choice.route);
         if (!visiting) return undefined;
         this.lastChosenResident = choice.index;
         this.lastResident = resident;
+        this.beginOrdinaryInterest(resident, item);
         if (resident.action === 'walk') this.callbacks.caption(`${RESIDENT_NAMES[resident.species]}が あそびに とことこ`);
         return resident;
+    }
+
+    private beginOrdinaryInterest(resident: IslandResident, item: IslandStageItem) {
+        this.clearOrdinaryInterest();
+        const model = this.items.get(item.id);
+        if (!model || !isResidentInterestItem(item.kind) || this.state?.learning || this.state?.preview || this.sharedActivity.plan) return;
+        const anchor = getFurnitureAnchors(item.kind).look;
+        model.group.updateWorldMatrix(true, false);
+        this.ordinaryInterest = { resident, model, target: model.group.localToWorld(new THREE.Vector3(anchor.x, anchor.y, anchor.z)) };
+    }
+
+    private clearOrdinaryInterest() {
+        const interest = this.ordinaryInterest;
+        if (interest) {
+            interest.resident.clearLearningPose();
+            applyFurnitureInterest(interest.model.group, 0);
+        }
+        this.ordinaryInterest = undefined;
+        this.interestObservation = undefined;
+    }
+
+    private observeInterest(context: 'visit' | 'learning', resident: IslandResident, itemId: string,
+        phase: number, sample: ResidentInterestSample, target: THREE.Vector3) {
+        this.interestObservation = { context, itemId, species: resident.species, phase, reduced: this.motion.matches, sample,
+            target: target.toArray(), head: [resident.head.rotation.x, resident.head.rotation.y, resident.head.rotation.z],
+            hands: { left: resident.handAnchor(undefined, 'left').toArray(), right: resident.handAnchor(undefined, 'right').toArray() } };
+    }
+
+    private applyOrdinaryInterest() {
+        const interest = this.ordinaryInterest;
+        if (!interest) return false;
+        const { resident, model, target } = interest;
+        if (this.items.get(model.item.id) !== model || resident.itemId !== model.item.id) { this.clearOrdinaryInterest(); return false; }
+        if (resident.action === 'walk') return false;
+        if (!canShowOrdinaryInterest({ kind: model.item.kind, action: resident.action,
+            visible: resident.group.visible && model.group.visible, learning: Boolean(this.state?.learning), editing: Boolean(this.state?.preview),
+            shared: Boolean(this.sharedActivity.plan), clearing: this.furnitureClearance.active })) {
+            this.clearOrdinaryInterest(); return false;
+        }
+        const sample = sampleResidentInterest(resident.species, resident.usePhase, this.motion.matches);
+        resident.respondToInterest(sample, target);
+        applyFurnitureInterest(model.group, sample.life, this.motion.matches);
+        this.observeInterest('visit', resident, model.item.id, resident.usePhase, sample, target);
+        return Boolean(sample.look || sample.lowPaw || sample.headPitch || sample.headRoll);
     }
 
     private visiblePoint(point: THREE.Vector3, margin = .12) {
@@ -363,6 +551,7 @@ export class IslandScene {
     }
 
     private startReaction(id: string, kind: LearningReactionKind, beat: LearningBeat) {
+        this.clearOrdinaryInterest();
         this.clearReaction();
         const targets = this.lightTargets(), count = this.state?.learningProgress?.completed ?? this.state?.pulse ?? 0;
         const preferred = beat === 'complete' ? 'tree' : count % 3 === 1 ? 'flower' : count % 3 === 2 ? 'lantern' : 'tree';
@@ -408,9 +597,15 @@ export class IslandScene {
         this.camera.lookAt(target); this.camera.updateMatrixWorld(true);
         if (this.state?.learning) {
             const widthInWorld = width < 600 ? 7.2 : 9.5;
-            this.camera.left = -widthInWorld / 2; this.camera.right = widthInWorld / 2;
-            this.camera.top = widthInWorld / aspect / 2; this.camera.bottom = -widthInWorld / aspect / 2;
-            this.camera.updateProjectionMatrix(); this.placeCycleAccent(); this.requestFrame(); return;
+            fitLearningFrame(this.camera, this.learningBounds, aspect, widthInWorld);
+            this.placeCycleAccent(); this.requestFrame(); return;
+        }
+        if (this.sharedCamera && this.sharedActivity.plan) {
+            const frame = this.fitSharedFrame();
+            if (frame) {
+                this.sharedCamera.from = this.sharedCamera.to = frame;
+                this.applySharedFrame(frame); this.requestFrame(); return;
+            }
         }
         const points: THREE.Vector3[] = [];
         for (let i = 0; i < 36; i++) {
@@ -432,6 +627,91 @@ export class IslandScene {
         this.camera.bottom = center.y - fitHeight / 2;
         this.camera.updateProjectionMatrix();
         this.requestFrame();
+    }
+
+    private fitSharedFrame(plan = this.sharedActivity.plan) {
+        const source = plan && this.items.get(plan.source.id), seat = plan && this.items.get(plan.seat.id);
+        if (!plan || !source || !seat) return undefined;
+        return fitSharedActivityFrame(plan, { carrier: this.residents[plan.carrier].group, receiver: this.residents[plan.receiver].group,
+            source: source.group, seat: seat.group, residents: this.residents, completedSets: this.state?.completedSets ?? 0,
+            viewportWidth: Math.max(1, this.host.clientWidth),
+            presentationHands: plan === this.sharedActivity.plan ? this.sharedActivity.presentationHands : undefined,
+            occluders: [this.scenery, this.tree, this.expansion, this.lighthouse,
+                ...this.residents.filter((resident, index) => resident.group.visible && index !== plan.carrier && index !== plan.receiver)
+                    .map(resident => resident.group),
+                ...[...this.items.values()].filter(model => model.item.id !== plan.source.id && model.item.id !== plan.seat.id)
+                    .map(model => model.group)] }, Math.max(1, this.host.clientWidth) / Math.max(1, this.host.clientHeight));
+    }
+
+    private chooseSharedPresentation(plan: SharedActivityPlan) {
+        const first = this.fitSharedFrame(plan);
+        if (!first) return undefined;
+        // Keep an already-readable path without even searching other routes.
+        const plans = first.visibilityDiagnostics?.readabilitySatisfied ? [plan] as [SharedActivityPlan]
+            : sharedActivityDeliveryPlans(plan, this.state?.items ?? [], this.residentCandidates(), this.state?.completedSets ?? 0);
+        const chosen = chooseSharedActivityPresentation(plans, candidate => candidate === plan ? first : this.fitSharedFrame(candidate)!);
+        this.sharedPresentation = { pairId: plan.pairId, attemptedPlans: chosen.attemptedPlans, satisfied: chosen.satisfied,
+            handoffPoint: chosen.plan.handoffPoint, deliveryRoute: chosen.plan.deliveryRoute,
+            ...(!chosen.satisfied ? { fallback: 'ordinary' as const } : {}) };
+        return chosen;
+    }
+
+    private installSharedCamera(plan: SharedActivityPlan, to: SharedActivityFrame, now: number) {
+        this.sharedCamera = { pairId: plan.pairId, startedAt: now, to, from: { position: this.camera.position.clone(),
+            quaternion: this.camera.quaternion.clone(), left: this.camera.left, right: this.camera.right,
+            top: this.camera.top, bottom: this.camera.bottom } };
+    }
+
+    private fallbackSharedToOrdinary(plan: SharedActivityPlan, now: number) {
+        const resident = this.residents[plan.carrier];
+        this.sharedActivity.cancel(now);
+        // The carrier has actually arrived at the source. Resume that ordinary
+        // use in place. A motion-preference change can arrive earlier; in that
+        // case preflight an ordinary visit from everyone's actual stopped roots.
+        const visitor = resident.itemId === plan.source.id && resident.replayUse(now, this.motion.matches)
+            ? resident : this.visitItem(plan.source, this.motion.matches, true);
+        if (visitor) this.beginOrdinaryInterest(visitor, plan.source);
+        const request = this.state?.playRequest;
+        if (request) {
+            this.playResult = visitor
+                ? { requestId: request.id, itemId: request.itemId, status: 'playing', resident: visitor.species }
+                : { requestId: request.id, itemId: request.itemId, status: 'blocked', reason: 'unreachable' };
+            this.callbacks.playResult?.(this.playResult);
+        }
+        if (!visitor) this.callbacks.caption('どうぶつが とおれる すきまを あけて みよう');
+    }
+
+    private applySharedFrame(frame: SharedActivityFrame) {
+        this.camera.position.copy(frame.position); this.camera.quaternion.copy(frame.quaternion);
+        this.camera.left = frame.left; this.camera.right = frame.right; this.camera.top = frame.top; this.camera.bottom = frame.bottom;
+        this.camera.updateMatrixWorld(true); this.camera.updateProjectionMatrix();
+    }
+
+    private updateSharedCamera(now: number) {
+        const plan = this.sharedActivity.plan, phase = this.sharedActivity.phase;
+        if (!plan || !phase || phase === 'receiver-walk' || phase === 'gather-walk') return false;
+        if (!this.sharedCamera) {
+            const chosen = this.chooseSharedPresentation(plan);
+            if (!chosen?.satisfied || !chosen.frame.presentationHands
+                || !this.sharedActivity.setPresentation(chosen.plan, chosen.frame.presentationHands)) {
+                this.fallbackSharedToOrdinary(plan, now);
+                return false;
+            }
+            this.sharedActivity.update(now, this.motion.matches);
+            this.installSharedCamera(chosen.plan, chosen.frame, now);
+        }
+        const camera = this.sharedCamera;
+        if (!camera) return false;
+        const { from, to, startedAt } = camera;
+        const t = this.motion.matches ? 1 : Math.min(1, (now - startedAt) / 350), eased = t * t * (3 - 2 * t);
+        this.camera.position.lerpVectors(from.position, to.position, eased);
+        this.camera.quaternion.slerpQuaternions(from.quaternion, to.quaternion, eased);
+        this.camera.left = THREE.MathUtils.lerp(from.left, to.left, eased);
+        this.camera.right = THREE.MathUtils.lerp(from.right, to.right, eased);
+        this.camera.top = THREE.MathUtils.lerp(from.top, to.top, eased);
+        this.camera.bottom = THREE.MathUtils.lerp(from.bottom, to.bottom, eased);
+        this.camera.updateMatrixWorld(true); this.camera.updateProjectionMatrix();
+        return t < 1;
     }
 
     private pointerDown = (event: PointerEvent) => {
@@ -468,15 +748,29 @@ export class IslandScene {
     };
 
     private contextLost = (event: Event) => {
-        event.preventDefault(); this.lost = true; this.pause();
+        event.preventDefault(); this.sharedActivity.cancel(performance.now()); this.furnitureClearance.cancel(performance.now());
+        this.deferredPlay = undefined; this.lost = true; this.pause();
         this.host.dataset.renderer = 'fallback'; this.callbacks.failure();
     };
     private motionChanged = () => {
-        if (this.motion.matches) for (const resident of this.residents) resident.update(performance.now() + 10000);
+        const ordinary = this.ordinaryInterest;
+        this.clearOrdinaryInterest();
+        if (this.motion.matches) {
+            const now = performance.now(), plan = this.sharedActivity.plan;
+            if (plan && !this.sharedActivity.presentationHands) {
+                const chosen = this.chooseSharedPresentation(plan);
+                const hands = chosen?.frame.presentationHands;
+                if (chosen?.satisfied && hands && (this.sharedActivity.prepareReducedPresentation(chosen.plan, hands)
+                    || this.sharedActivity.setPresentation(chosen.plan, hands))) this.installSharedCamera(chosen.plan, chosen.frame, now);
+                else this.fallbackSharedToOrdinary(plan, now);
+            }
+            for (const resident of this.residents) resident.update(now + 10000);
+        }
+        if (ordinary) this.beginOrdinaryInterest(ordinary.resident, ordinary.model.item);
         this.requestFrame();
     };
     private visibilityChanged = () => { if (document.hidden) this.pause(); else this.requestFrame(); };
-    private pause() { cancelAnimationFrame(this.frame); this.frame = 0; window.clearTimeout(this.idleTimer); }
+    private pause() { this.clearOrdinaryInterest(); cancelAnimationFrame(this.frame); this.frame = 0; window.clearTimeout(this.idleTimer); }
     private requestFrame = () => {
         if (this.disposed || this.lost || document.hidden || !this.onscreen || this.frame) return;
         window.clearTimeout(this.idleTimer);
@@ -490,18 +784,31 @@ export class IslandScene {
         if (now - this.lastFrame < 28) { this.requestFrame(); return; }
         this.lastFrame = now;
         const drawStarted = performance.now();
+        this.interestObservation = undefined;
         let moving = false;
-        for (const [index, resident] of this.residents.entries()) {
+        for (const resident of this.residents) {
             if (!resident.group.visible) continue;
+            resident.clearSharedPose();
             resident.clearLearningPose();
             moving = resident.update(now) || moving;
-            this.residentShadows[index].position.set(resident.group.position.x, .025, resident.group.position.z);
         }
+        const wasClearing = this.furnitureClearance.active;
+        moving = this.furnitureClearance.update(now, this.motion.matches) || moving;
+        if (wasClearing && !this.furnitureClearance.active) {
+            if (!this.state?.learning && !this.state?.preview) this.finishPendingActivity();
+        }
+        // A drained invitation can begin an ordinary walk after the base loop.
+        // Keep drawing it immediately instead of waiting for the idle timer.
+        moving = this.residents.some(resident => resident.group.visible && resident.action === 'walk') || moving;
+        moving = this.sharedActivity.update(now, this.motion.matches) || moving;
+        this.residents.forEach((resident, index) => this.residentShadows[index].position.set(resident.group.position.x, .025, resident.group.position.z));
+        moving = this.updateSharedCamera(now) || moving;
         for (const model of this.items.values()) applyFurnitureUse(model.group, 0);
         for (const resident of this.residents) {
             const model = resident.itemId ? this.items.get(resident.itemId) : undefined;
             if (model && resident.action === 'swing') applyFurnitureUse(model.group, resident.usePhase);
         }
+        const ordinaryInterestActive = this.applyOrdinaryInterest();
         let residentReply = 'none';
         if (this.reaction) {
             const reaction = this.reaction;
@@ -522,28 +829,36 @@ export class IslandScene {
                 reaction.arrived = true;
                 if (this.pendingProgress?.sectionId === this.state?.learningProgress?.sectionId) this.setCycleProgress(this.pendingProgress);
                 this.pendingProgress = undefined;
-                if (reaction.kind === 'correct') this.callbacks.caption(reaction.beat === 'complete' ? 'ひかりが そろった。どうぶつも うれしそう'
-                    : reaction.target.kind === 'flower' ? 'おはなに ひかり。どうぶつが てを ふった'
-                        : reaction.target.kind === 'lantern' ? 'あかりが きらり。どうぶつが てを ふった'
-                            : reaction.target.kind === 'resident' ? 'ひかりが とどいた。どうぶつが てを ふった'
-                                : reaction.target.kind === 'fountain' ? 'みずが きらり。どうぶつが てを ふった' : 'きに ひかり。どうぶつが てを ふった');
+                if (reaction.kind === 'correct') {
+                    const arrival = reaction.beat === 'complete' ? 'ひかりが そろった' : reaction.target.kind === 'flower' ? 'おはなに ひかり'
+                        : reaction.target.kind === 'lantern' ? 'あかりが きらり' : reaction.target.kind === 'fountain' ? 'みずが きらり'
+                            : reaction.target.kind === 'resident' ? 'ひかりが とどいた' : 'きに ひかり';
+                    this.callbacks.caption(reaction.resident ? `${arrival}。${RESIDENT_NAMES[reaction.resident.species]}が ${residentInterestVerb(reaction.resident.species, this.motion.matches)}` : arrival);
+                }
             }
             this.applyLife(sampled.paw);
             if (reaction.resident && (sampled.paw || sampled.look)) {
-                reaction.resident.respondToLearning(reaction.kind, sampled.paw, sampled.look, reaction.target.point);
+                if (reaction.kind === 'correct') {
+                    const interest = sampleResidentInterest(reaction.resident.species, sampled.reply, this.motion.matches);
+                    reaction.resident.respondToInterest(interest, reaction.target.point);
+                    this.observeInterest('learning', reaction.resident, reaction.target.id, sampled.reply, interest, reaction.target.point);
+                } else reaction.resident.respondToLearning(reaction.kind, sampled.paw, sampled.look, reaction.target.point);
                 residentReply = reaction.kind === 'correct' ? 'delight' : 'listen';
             }
             moving = sampled.moving || moving;
         }
-        if (!this.motion.matches && !this.state?.learning) {
+        if (!this.motion.matches && !this.state?.learning && !this.sharedActivity.plan && !ordinaryInterestActive) {
             const idleElapsed = now - this.idleStart;
             if (idleElapsed < 1350 && this.residents[1].action !== 'walk') {
                 this.residents[1].head.rotation.z = Math.sin(idleElapsed / 1350 * Math.PI * 2) * .095;
                 moving = true;
             }
         }
+        this.placementOcclusion.update(this.placementPreview.group,
+            [...this.residents.map(resident => resident.group), ...[...this.items.values()].map(model => model.group)], this.camera, [this.tree]);
         this.renderer.render(this.scene, this.camera);
         this.host.dataset.drawCount = String(++this.drawCount);
+        this.host.dataset.frameTimestamp = String(now);
         this.host.dataset.triangles = String(this.renderer.info.render.triangles);
         this.host.dataset.geometries = String(this.renderer.info.memory.geometries);
         this.host.dataset.textures = String(this.renderer.info.memory.textures);
@@ -557,7 +872,7 @@ export class IslandScene {
             marker: this.state?.previewValid === false ? 'broken' : 'solid',
         } : null);
         const observed = new Set(['starter-flower', 'starter-lantern', this.previewItem?.id,
-            this.reaction?.target.id, this.lastResident?.itemId]);
+            this.reaction?.target.id, this.lastResident?.itemId, this.sharedActivity.plan?.source.id, this.sharedActivity.plan?.seat.id]);
         this.host.dataset.furnitureState = JSON.stringify([...this.items.values()].filter(model => observed.has(model.item.id)).map(({item, group}) => {
             let emissive: number | undefined;
             group.getObjectByName('lantern-light')?.traverse(child => {
@@ -588,10 +903,21 @@ export class IslandScene {
         this.host.dataset.residentZ = String(this.lastResident?.group.position.z ?? '');
         this.host.dataset.residentStates = JSON.stringify(this.residents.filter(resident => resident.group.visible).map(resident => ({
             species: resident.species, itemId: resident.itemId, action: resident.action, position: resident.group.position.toArray(), usePhase: resident.usePhase,
+            departingId: resident.departingId,
+            frameBounds: this.state?.learning ? (() => {
+                const points = boxCorners(new THREE.Box3().setFromObject(resident.group)).map(point => point.project(this.camera));
+                const bounds = new THREE.Box3().setFromPoints(points);
+                return { left: bounds.min.x, right: bounds.max.x, bottom: bounds.min.y, top: bounds.max.y };
+            })() : undefined,
         })));
         this.host.dataset.playRequestId = this.playResult?.requestId ?? '';
         this.host.dataset.playStatus = this.playResult?.status ?? '';
         this.host.dataset.playReason = this.playResult?.reason ?? '';
+        this.host.dataset.sharedActivity = JSON.stringify(this.sharedActivity.snapshot());
+        this.host.dataset.furnitureClearance = JSON.stringify(this.furnitureClearance.snapshot());
+        this.host.dataset.sharedCamera = this.sharedCamera?.pairId ?? '';
+        this.host.dataset.sharedCameraDiagnostics = JSON.stringify(this.sharedCamera?.to.visibilityDiagnostics ?? null);
+        this.host.dataset.sharedPresentation = JSON.stringify(this.sharedPresentation ?? null);
         this.host.dataset.selectedItem = this.selection.visible ? this.state?.selectedId ?? '' : this.previewItem?.id ?? '';
         this.host.dataset.drawCalls = String(this.renderer.info.render.calls);
         this.host.dataset.reactionId = this.reaction?.id ?? '';
@@ -602,11 +928,13 @@ export class IslandScene {
         this.host.dataset.reactionSettledAt = String(this.reaction?.settledAt ?? 0);
         this.host.dataset.reactionReduced = String(this.reaction?.reduced ?? this.motion.matches);
         this.host.dataset.residentReaction = residentReply;
+        this.host.dataset.residentInterest = JSON.stringify(this.interestObservation ?? null);
         this.host.dataset.sectionId = this.displayedProgress?.sectionId ?? '';
         this.host.dataset.sectionCompleted = String(this.displayedProgress?.completed ?? 0);
         this.host.dataset.sectionTotal = String(this.displayedProgress?.total ?? 0);
         this.host.dataset.cameraFrame = [...this.camera.matrixWorld.elements, ...this.camera.projectionMatrix.elements].map(value => value.toFixed(5)).join(',');
         this.host.dataset.frameCpuMs = (performance.now() - drawStarted).toFixed(3);
+        if (this.drawCount === 1) this.callbacks.ready?.();
         if (moving && !this.motion.matches) this.requestFrame();
         else if (!this.motion.matches && !this.state?.learning) {
             this.idleTimer = window.setTimeout(() => { this.idleStart = performance.now(); this.requestFrame(); }, 9000);
@@ -615,6 +943,9 @@ export class IslandScene {
 
     dispose() {
         this.disposed = true; this.pause();
+        this.sharedActivity.cancel(performance.now());
+        this.furnitureClearance.cancel(performance.now());
+        this.deferredPlay = undefined;
         this.observer.disconnect(); this.visibilityObserver.disconnect();
         document.removeEventListener('visibilitychange', this.visibilityChanged);
         this.motion.removeEventListener('change', this.motionChanged);
@@ -623,7 +954,9 @@ export class IslandScene {
         this.renderer.domElement.removeEventListener('pointermove', this.pointerMove);
         this.renderer.domElement.removeEventListener('pointercancel', this.pointerCancel);
         this.renderer.domElement.removeEventListener('webglcontextlost', this.contextLost);
+        this.placementOcclusion.restore();
         this.placementPreview.dispose();
+        this.sharedVisuals.dispose();
         const materials = new Set<THREE.Material>();
         this.scene.traverse(child => {
             if (child instanceof THREE.Mesh) {

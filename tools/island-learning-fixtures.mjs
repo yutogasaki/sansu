@@ -41,13 +41,18 @@ export async function seedLearningProfile(page, scenario) {
     return profile.id;
 }
 
+export function expectedLearningModel(slot) {
+    const problem = slot.problem;
+    return problem.hissanVersion === 2
+        ? domain.generateWrittenArithmeticGrid(problem.questionText, problem.correctAnswer)
+        : domain.generateHissanGrid(problem.categoryId, problem.questionText,
+            Array.isArray(problem.correctAnswer) ? problem.correctAnswer.join('') : problem.correctAnswer);
+}
+
 export function expectedLearningAnswer(slot, inputType) {
     const problem = slot.problem;
     if (inputType === 'hissan') {
-        const grid = problem.hissanVersion === 2
-            ? domain.generateWrittenArithmeticGrid(problem.questionText, problem.correctAnswer)
-            : domain.generateHissanGrid(problem.categoryId, problem.questionText,
-                Array.isArray(problem.correctAnswer) ? problem.correctAnswer.join('') : problem.correctAnswer);
+        const grid = expectedLearningModel(slot);
         if (!grid) throw new Error('The real Hissan form must have a matching pure domain grid');
         const step = grid.steps[slot.hissanStep ?? 0];
         return { values: step.correctValues, final: (slot.hissanStep ?? 0) === grid.steps.length - 1,

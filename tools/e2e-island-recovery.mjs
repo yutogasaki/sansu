@@ -86,11 +86,14 @@ function recordPlan(row, state) {
     if (!row.reservations.some(plan => plan.id === state.plan.id)) row.reservations.push(structuredClone(state.plan));
 }
 async function support(page, row, before) {
-    await activate(button(page, 'いっしょに みる'), row.touch);
+    await activate(button(page, 'ヒントを みる'), row.touch);
     await waitLearningReady(page, { ...before.plan, revision: before.plan.revision + 1 });
     const after = await readNative(page, row.profileId);
     assert.equal(after.plan.cursor, before.plan.cursor);
     assert(current(after).assisted);
+    assert.equal(current(after).supportStage, 'hint');
+    assert.equal(await page.locator('.island-support-model, .island-support-example, .island-support-answer').count(), 0,
+        'Recovery retains its genuine assisted-answer path after a short hint');
     assert.deepEqual(after.plan.slots.map(slot => slot.problem), before.plan.slots.map(slot => slot.problem));
     assert.deepEqual(after.logs, before.logs, 'Support never manufactures a learning answer');
     const events = after.islandEvents.filter(event => !before.islandEvents.some(prior => prior.id === event.id));

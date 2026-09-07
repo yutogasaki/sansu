@@ -143,7 +143,7 @@ export const Settings: React.FC = () => {
     };
 
     const handleCreateProfile = () => {
-        navigate("/onboarding");
+        navigate("/onboarding?mode=add");
     };
 
     const openRenameModal = (target: UserProfile) => {

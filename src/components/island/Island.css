@@ -17,10 +17,9 @@
 .island-text-button { min-height: 44px; padding: 8px 10px; font-size: 12px; font-weight: 600; text-underline-offset: 4px; }
 .island-text-button:hover { text-decoration: underline; }
 .island-home-controls, .island-sheet { max-width: 660px; margin: 0 auto; padding: 4px 24px 12px; position: relative; }
-.island-home-intro { text-align: center; margin-bottom: 21px; }
+.island-home-hint { text-align: center; font-size: 12px; line-height: 1.9; margin: 8px 0 16px; }
 .island-eyebrow { font-size: 11px; letter-spacing: .14em; color: var(--island-muted); }
-.island-home-intro h2, .island-sheet h2 { font-size: 22px; font-weight: 750; letter-spacing: .025em; line-height: 1.65; margin-top: 5px; }
-.island-home-intro > p:last-child { font-size: 12px; line-height: 1.9; margin-top: 5px; }
+.island-sheet h2 { font-size: 22px; font-weight: 750; letter-spacing: .025em; line-height: 1.65; margin-top: 5px; }
 .island-primary { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 54px; padding: 12px 20px; border-radius: 18px; background: #ffd447; color: #263145; font-size: 16px; font-weight: 750; border: 1px solid #34435d; box-shadow: 0 3px 0 #34435d; }
 .island-primary:active { transform: translateY(2px); box-shadow: 0 1px 0 #34435d; }
 .island-start, .island-continue { width: 100%; }
@@ -41,7 +40,10 @@
 .island-inventory { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; margin-top: 14px; }
 .island-inventory small { margin-top: 5px; font-size: 10px; color: var(--island-muted); }
 .island-play-entry { background: #ffe1ed; }
-.island-play-message { min-height: 42px; font-size: 12px; line-height: 1.8; margin-bottom: 10px; }
+.island-play-message { min-height: 24px; font-size: 12px; line-height: 1.8; margin-bottom: 8px; }
+.island-play-choices { max-height: clamp(136px, 25dvh, 258px); overflow-y: auto; overscroll-behavior-y: contain; padding: 4px; margin: 0 -4px; scroll-padding-block: 4px; }
+.island-play-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; }
+.island-play-return { margin-left: auto; }
 .island-play .island-reward[aria-pressed=true] { outline: 2px solid #245bbd; outline-offset: 2px; background: #fff0b6; }
 .island-play .island-inventory small { font-size: 10px; text-align: center; line-height: 1.5; }
 .island-play-move { display: block; margin: 0 auto 10px; }
@@ -60,7 +62,6 @@
     .island-header { padding-top: 24px; }
     .island-brand h1 { font-size: 23px; }
     .island-home-controls, .island-sheet { padding-inline: 32px; }
-    .island-home-intro h2 { font-size: 26px; }
 }
 @media(prefers-reduced-motion:reduce) {
     .island-page *, .island-page *::before, .island-page *::after { animation:none!important; transition:none!important; }

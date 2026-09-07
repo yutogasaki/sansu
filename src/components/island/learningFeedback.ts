@@ -3,20 +3,24 @@ import type { IslandEvent, IslandPlan } from '../../domain/island/types';
 export type IslandReaction = { id: string; kind: 'correct' | 'retry' | 'support' };
 export interface IslandLearningFeedback {
     id: string;
-    kind: 'correct' | 'retry' | 'support' | 'step';
+    kind: 'correct' | 'retry' | 'support' | 'step' | 'supported';
     text: string;
 }
 
-/** A correct Hissan row is saved work, but only the completed problem earns world light. */
+/** World light follows completed questions; the receipt still distinguishes answers from modeled completion. */
 export function islandFeedbackForReceipt(before: Pick<IslandPlan, 'id' | 'cursor'>, after: Pick<IslandPlan, 'id' | 'cursor'>,
     event: Pick<IslandEvent, 'id' | 'planId' | 'slotIndex' | 'type' | 'result'>): {
     feedback: IslandLearningFeedback;
     reaction?: IslandReaction;
 } | undefined {
     if (event.planId !== before.id || after.id !== before.id || event.slotIndex !== before.cursor) return;
-    if (event.type === 'support_opened' || event.type === 'skipped') {
-        return { feedback: { id: event.id, kind: 'support', text: 'いっしょに たしかめよう' }, reaction: { id: event.id, kind: 'support' } };
+    if (event.type === 'support_opened' || event.type === 'skipped' || event.type === 'model_opened') {
+        return { feedback: { id: event.id, kind: 'support', text: '' }, reaction: { id: event.id, kind: 'support' } };
     }
+    if (event.type === 'supported_completed' && event.result === 'supported-completion' && after.cursor === before.cursor + 1) {
+        return { feedback: { id: event.id, kind: 'supported', text: 'つぎの ひかりへ すすもう' }, reaction: { id: event.id, kind: 'correct' } };
+    }
+    if (event.type !== 'answer') return;
     if (event.result === 'incorrect' || event.result === 'assisted-incorrect') {
         return { feedback: { id: event.id, kind: 'retry', text: 'もういちど みてみよう' }, reaction: { id: event.id, kind: 'retry' } };
     }

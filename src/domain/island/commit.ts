@@ -8,6 +8,8 @@ import type { MemoryState } from '../types';
 import { assertIslandPlan, IslandConflict, islandTables, ownedIsland } from './repository';
 import type { IslandEvent, IslandLearningAction } from './types';
 import { updateIslandMathChecks } from './learningChecks';
+import { islandSupportStage } from './learningSupport';
+import { normalizeIslandObservation, islandObservationBinding, islandObservationScope } from './learningObservation';
 
 async function keepIndependentCheckDue(database: SansuDatabase, profileId: string, subject: 'math' | 'vocab', itemId: string, now: number) {
     const table = subject === 'math' ? database.memoryMath : database.memoryVocab;
@@ -28,7 +30,7 @@ async function keepIndependentCheckDue(database: SansuDatabase, profileId: strin
     await database.appData.put({ ...app, profiles: { ...app.profiles, [profileId]: updated } });
 }
 
-export async function commitIslandLearning(profileId: string, planId: string, revision: number, action: IslandLearningAction, database = db) {
+export async function commitIslandLearning(profileId: string, planId: string, revision: number, action: IslandLearningAction, database = db, observation?: unknown) {
     return database.transaction('rw', islandTables(database), async () => {
         const { island } = await ownedIsland(database, profileId);
         const plan = await database.islandPlans.get(planId);
@@ -42,16 +44,40 @@ export async function commitIslandLearning(profileId: string, planId: string, re
         }
         if (plan.revision !== revision || plan.status !== 'active' || island.pendingPlanId !== planId) throw new IslandConflict('Plan changed in another tab');
         const slot = plan.slots[plan.cursor];
+        const supportStage = islandSupportStage(slot);
+        const observationBinding = islandObservationBinding(plan), observationScope = islandObservationScope(slot, action);
+        // Replayed receipts returned above remain idempotent; a fresh revision must
+        // obey the same progression as the UI, including at most one actual skip.
+        if ((action.type === 'support_opened' || action.type === 'skipped') && supportStage
+            || action.type === 'model_opened' && supportStage !== 'hint'
+            || action.type === 'supported_completed' && supportStage !== 'model'
+            || action.type === 'answer' && supportStage === 'model') throw new IslandConflict('Support stage changed');
         const now = Date.now();
+        // Optional metadata is normalized before any write; storage errors below still abort the transaction.
+        const normalizedObservation = normalizeIslandObservation(observation, observationBinding);
         const event: IslandEvent = { id, profileId, planId, timestamp: now, type: action.type, action, slotIndex: plan.cursor };
         let result: 'correct' | 'incorrect' | 'skipped' | undefined;
-        let checkOutcome: 'needs-support' | 'correct-final' | 'partial' = 'partial';
+        let checkOutcome: 'needs-support' | 'correct-final' | 'supported-final' | 'partial' = 'partial';
         if (action.type === 'support_opened' || action.type === 'skipped') {
             checkOutcome = 'needs-support';
             slot.assisted = true;
+            slot.supportStage = 'hint';
             if (action.type === 'skipped') { result = 'skipped'; event.result = 'skipped'; }
+        } else if (action.type === 'model_opened') {
+            slot.supportStage = 'model';
+        } else if (action.type === 'supported_completed') {
+            // This is session progress after viewing a model, never an answer.
+            // In particular, do not grade or fill Hissan cells to manufacture success.
+            event.result = 'supported-completion';
+            observationScope.wholeCompleted = true;
+            checkOutcome = 'supported-final';
+            slot.completed = true;
+            plan.cursor += 1;
         } else {
             const { correct, final, grid } = gradeParkAnswer(slot, action.answer);
+            observationScope.answerScope = grid ? 'hissan-step' : 'whole';
+            if (grid) observationScope.stepIndexBefore = slot.hissanStep ?? 0;
+            observationScope.wholeCompleted = correct && final;
             checkOutcome = !correct ? 'needs-support' : final ? 'correct-final' : 'partial';
             event.result = slot.assisted ? (correct ? 'assisted-correct' : 'assisted-incorrect') : (correct ? 'correct' : 'incorrect');
             if (!slot.assisted && (!correct || final)) result = correct ? 'correct' : 'incorrect';
@@ -84,10 +110,17 @@ export async function commitIslandLearning(profileId: string, planId: string, re
         }
         // Support never manufactures mastery. Keep the independent check after the actual skip write too.
         if (slot.assisted) await keepIndependentCheckDue(database, profileId, plan.subject, slot.problem.categoryId, now);
-        const nextChecks = updateIslandMathChecks(island.pendingMathChecks, slot, checkOutcome, now);
+        // Older assisted v1 plans predate pendingMathChecks. Their model completion
+        // creates the missing follow-up without resetting an existing obligation.
+        const previousChecks = action.type === 'supported_completed' && slot.supportStage === undefined
+            && !island.pendingMathChecks?.some(check => check.skillId === slot.problem.categoryId)
+            ? updateIslandMathChecks(island.pendingMathChecks, slot, 'needs-support', now) : island.pendingMathChecks;
+        const nextChecks = updateIslandMathChecks(previousChecks, slot, checkOutcome, now);
         const checksChanged = JSON.stringify(nextChecks) !== JSON.stringify(island.pendingMathChecks);
         if (checksChanged) island.pendingMathChecks = nextChecks;
         plan.revision += 1;
+        event.observation = { version: 1, problemId: observationBinding.problemId, revisionBefore: observationBinding.revisionBefore,
+            ...observationScope, ...normalizedObservation };
         await database.islandEvents.add(event);
         if (plan.cursor === plan.slots.length && plan.slots.every(candidate => candidate.completed)) {
             plan.status = 'completed';

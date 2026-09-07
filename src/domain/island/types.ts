@@ -1,3 +1,4 @@
+import type { IslandObservationV1 } from './learningObservation';
 import type { SubjectKey } from '../types';
 import type { LearningSlot, ParkLearningAction } from '../park/types';
 
@@ -46,25 +47,33 @@ export interface IslandPlan {
     status: 'active' | 'completed';
     revision: number;
     cursor: number;
-    slots: LearningSlot[];
+    slots: IslandLearningSlot[];
     rewardId: string;
     rewardChoices: IslandItemKind[];
     startedAt: number;
     completedAt?: number;
 }
-export type IslandLearningAction = ParkLearningAction;
+/** Optional v1 extension: old assisted slots have already exposed an answer. */
+export interface IslandLearningSlot extends LearningSlot {
+    supportStage?: 'hint' | 'model';
+}
+export type IslandLearningAction = ParkLearningAction
+    | { type: 'model_opened' }
+    | { type: 'supported_completed' };
 export type IslandEdit =
     | { type: 'place'; itemId: string; position: IslandPosition; rotation: number }
     | { type: 'store'; itemId: string };
 export interface IslandEvent {
+    /** Optional prospective facts; never a grading, SRS or mastery input. */
+    observation?: IslandObservationV1;
     id: string;
     profileId: string;
     planId?: string;
-    type: 'plan_started' | 'plan_completed' | 'answer' | 'support_opened' | 'skipped' | 'reward_claimed' | 'item_edited';
+    type: 'plan_started' | 'plan_completed' | 'answer' | 'support_opened' | 'model_opened' | 'supported_completed' | 'skipped' | 'reward_claimed' | 'item_edited';
     timestamp: number;
     action?: IslandLearningAction | IslandEdit;
     slotIndex?: number;
-    result?: 'correct' | 'incorrect' | 'assisted-correct' | 'assisted-incorrect' | 'skipped';
+    result?: 'correct' | 'incorrect' | 'assisted-correct' | 'assisted-incorrect' | 'skipped' | 'supported-completion';
     learningLogId?: number;
     rewardId?: string;
     itemId?: string;

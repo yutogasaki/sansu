@@ -1,0 +1,2691 @@
+{
+  "evidenceKind": "synthetic current-policy probe; not child learning or retention evidence",
+  "humanParticipants": 0,
+  "actualUserDataAccessed": false,
+  "revision": "84d3ddf-experience2-993febcf1560",
+  "sourceHash": "993febcf1560e337a28969af80c34bbcee1f5e4786e3c103fefe6b205a74de9e",
+  "sourceArchive": "/private/tmp/sansu-84d3ddf-experience2-993febcf1560-inputs",
+  "sourceClosure": [
+    {
+      "path": "src/db/index.ts",
+      "sha256": "33e84fc73802f3feb9473302b51c839794da8d83aa5e7b0b5315110d8d5f5fbb"
+    },
+    {
+      "path": "src/domain/algorithms/srs.ts",
+      "sha256": "5a9e79ffcc9c3402c5ec7750494731aa65107859b3ba5b53ce4e69bc66e7b5a7"
+    },
+    {
+      "path": "src/domain/english/generator.ts",
+      "sha256": "53d9a87ff1f5a2e6c7e1dc6d957dfe1d76ee11f602c5b14ae834bb5f570014b6"
+    },
+    {
+      "path": "src/domain/english/service.ts",
+      "sha256": "afe1c649799211ed8f818027c1ca0809ed09765068404a5bb40cbf29acf48223"
+    },
+    {
+      "path": "src/domain/english/words.ts",
+      "sha256": "56ea9bacd458685e45f56ee91724e9d3f27f38940cfdb44c02edb0035367741e"
+    },
+    {
+      "path": "src/domain/island/catalog.ts",
+      "sha256": "6d7350cf59ce519ed458a35d06d02bb59fa47c1665ce78afc792953563919fc6"
+    },
+    {
+      "path": "src/domain/island/commit.ts",
+      "sha256": "92454cf753e50f52b154a4840c256887ad3bfccb2eaa9d569e0186f71dbf8a46"
+    },
+    {
+      "path": "src/domain/island/learningChecks.ts",
+      "sha256": "1acb98230db0db81b25d7b438617fa51b0372577f6efe09a57a76b537e898b13"
+    },
+    {
+      "path": "src/domain/island/learningSupport.ts",
+      "sha256": "fd23aa8fe952dc168260de1a71191b5df3625fb99c1755e4e8b39be04bf5b2ff"
+    },
+    {
+      "path": "src/domain/island/repository.ts",
+      "sha256": "2ce32824bba5861f650ff837be2f822c62bbbc03f4254b20ee4565f91fb84b8f"
+    },
+    {
+      "path": "src/domain/island/types.ts",
+      "sha256": "97cfccf0626644efa39363498f1f197570e38d50df17537c9ae45c657a610d63"
+    },
+    {
+      "path": "src/domain/learningAttemptWriter.ts",
+      "sha256": "aa67b61fc3f763457a72c0e105546d1b779ab4fd402d96fd87c566a43af2f261"
+    },
+    {
+      "path": "src/domain/learningRepository.ts",
+      "sha256": "e689e76a487c743eecfe5d45f3acef3efc505dfcdcb9902d1eb2ec35232f17aa"
+    },
+    {
+      "path": "src/domain/math/additionProgress.ts",
+      "sha256": "8791640ccd6193fc4d2c5513f59d532ddafbf536a184bc2a0d75499fe7a4171f"
+    },
+    {
+      "path": "src/domain/math/comparisonProgress.ts",
+      "sha256": "815b870b09cbea125f03c47a5f913138de99bc824e9dfacef5642274bb2479a3"
+    },
+    {
+      "path": "src/domain/math/core.ts",
+      "sha256": "41d1ae051da3f8b4446de15e605e8157fbd7bd9973cbd7b229acbcaa672ac062"
+    },
+    {
+      "path": "src/domain/math/curriculum.ts",
+      "sha256": "a683dd29e4a7078cea8128dc2fc05c854b7b8455143b574a7e06d4753fc6d05d"
+    },
+    {
+      "path": "src/domain/math/followups.ts",
+      "sha256": "2c90f507cda7cf3e65edde8fda0ae69110090c54db74f3d2213344273abbde01"
+    },
+    {
+      "path": "src/domain/math/generators/addition.ts",
+      "sha256": "3ed7ee942635a20f779370cb2344975ada50eb351814f5eb679607ac52b37fe4"
+    },
+    {
+      "path": "src/domain/math/generators/advanced.ts",
+      "sha256": "16c13f0f3fddaf8daf69cdc16a225878b66e40bba0b9d7386353513ada8e1ba2"
+    },
+    {
+      "path": "src/domain/math/generators/counting.ts",
+      "sha256": "70f1da7b6019f18d576463cc19c0ecead580693b40001f13491d50d73bc563f7"
+    },
+    {
+      "path": "src/domain/math/generators/decimal.ts",
+      "sha256": "193463ecad15bdb8bd004e933b273980d37751da62d48380f79a2fa9c5ec7778"
+    },
+    {
+      "path": "src/domain/math/generators/division.ts",
+      "sha256": "e0f63b776130cd80e6c41e69254b1dcf8345f105edcdc9b81e55a9e8fa36995f"
+    },
+    {
+      "path": "src/domain/math/generators/fraction.ts",
+      "sha256": "900ccd148808fc424da5e77f31224c886132de28d9661e1c30ddbc2f64e59bb8"
+    },
+    {
+      "path": "src/domain/math/generators/multiplication.ts",
+      "sha256": "05f4704d25e98c49de7de326092c3b5c6a2eae7625756ae79e9386e7d140fa72"
+    },
+    {
+      "path": "src/domain/math/generators/subtraction.ts",
+      "sha256": "0fce6e62b7233419a832e5dcefce07e8c64a9279701b2e23503f19e3ad786ce3"
+    },
+    {
+      "path": "src/domain/math/hissanEngine.ts",
+      "sha256": "d222f57730ec9b7cce8eb521faf1860f083543942b7544d2fed2d321a7ada263"
+    },
+    {
+      "path": "src/domain/math/hissanTypes.ts",
+      "sha256": "b132594e69ceadc927f9f805c3457da4d90f47035db192e2744524460da302c7"
+    },
+    {
+      "path": "src/domain/math/index.ts",
+      "sha256": "5d11aa10e64280f6648f89ea00599050dae41e718d57a49ef1b06a883c2c4061"
+    },
+    {
+      "path": "src/domain/math/numberSenseProgress.ts",
+      "sha256": "33876c63866471ec3f6e481c14fc40edbef7771749ef35782eaac35b5a343f02"
+    },
+    {
+      "path": "src/domain/math/planner.ts",
+      "sha256": "e419402ed5faf93187a7ebcad9f1d972d0b0713c5fdfa3d6c8f3a5c1edc2c182"
+    },
+    {
+      "path": "src/domain/math/problemVisuals.ts",
+      "sha256": "a6591e06be557b024b6312f2d795c58ea7c312157261e828d1b69eeca6c6b07f"
+    },
+    {
+      "path": "src/domain/math/sequenceProgress.ts",
+      "sha256": "280cd94f273e7b31cf0e1f247b63d59b51efe73a2556c683f7f7b20fc170c1cc"
+    },
+    {
+      "path": "src/domain/math/service.ts",
+      "sha256": "ee48cf42304e488dc2014ae103e0781d8558d7ec678ef062f5a9d9bd6db79b63"
+    },
+    {
+      "path": "src/domain/math/subtractionProgress.ts",
+      "sha256": "9578eb2d82c6dbdc088e5312af4832490cffc86e102d0aa99136894d348050fd"
+    },
+    {
+      "path": "src/domain/math/writtenArithmetic.ts",
+      "sha256": "ab447958c7cb1ba1322adf6efe6da401c856ae423583d93edae0bf426081072c"
+    },
+    {
+      "path": "src/domain/park/course.ts",
+      "sha256": "adf6060b7fcfa77cb15286ca31cea2f4408a3382bd893a897deb1027f3894952"
+    },
+    {
+      "path": "src/domain/park/learning.ts",
+      "sha256": "52dced9fa81000ffa6f3e9734502ec3fa8955f9ca76c4a3621a11dc7c687eb3b"
+    },
+    {
+      "path": "src/domain/park/repository.ts",
+      "sha256": "8a4b30505085d2c335da1bd5b814453cf089bcf06502898187f0e44c7b7506cd"
+    },
+    {
+      "path": "src/domain/park/types.ts",
+      "sha256": "504b135c6d4edf0da763cfb601ef489acf895f14ba0758d004e02ed6e26d5651"
+    },
+    {
+      "path": "src/domain/user/profile.ts",
+      "sha256": "317fb9cb1b0eccb1bc0dbef962b5f5aae64445c487691d36e075e123827439f5"
+    },
+    {
+      "path": "src/domain/user/repository.ts",
+      "sha256": "8abd336437914746c090aab32cb420b2e00d3af4e200d62649d9dd2ccd35186e"
+    },
+    {
+      "path": "src/hooks/blockGenerators.ts",
+      "sha256": "97e20a10615e47a651a11d1af624dac16258769f4ed992745c34e2879ca8dc1b"
+    },
+    {
+      "path": "src/hooks/useStudySession.logic.ts",
+      "sha256": "c0bfc8bd6dc37b75905e43f11f8c754612dd4b4071ca7fe22f4bbf725469f170"
+    },
+    {
+      "path": "src/utils/debug.ts",
+      "sha256": "0f65d02339382f6bc5ce15c119d1be88bd69b5a2314232f661b34f8b1adc31bb"
+    },
+    {
+      "path": "src/utils/learningDay.ts",
+      "sha256": "acb67bee4e8dd7f0e4672a76e72e519547d67b0d0f4cc874abaa81d9cc25a292"
+    },
+    {
+      "path": "src/utils/random.ts",
+      "sha256": "402bba39d7cae5cd71b437bd6bcfda29446a833b300800604feb96afc5744597"
+    },
+    {
+      "path": "src/utils/shuffle.ts",
+      "sha256": "783514297e0f3d7387238a349befc00464629429af2b84b9817789d2e1077b0b"
+    },
+    {
+      "path": "src/utils/storage.ts",
+      "sha256": "234a077fd8ed114dcfb3be6def41a41a90648eeaa42dfbbe4bfc3e1b7e201928"
+    }
+  ],
+  "compiledSha256": "e3a0c83f2b44dc9f006bf789ef0ce5a9f783e73c8e41409494a90ebcd2231fb5",
+  "probeSha256": "360456fab1734a87a1357ba0f4655a3ff44c6979f9a0b51500fdc09741d987e1",
+  "canonicalDocuments": [
+    {
+      "originalPath": "/Users/yutogasaki/Projects/sansu/docs/product/01_app_spec.md",
+      "snapshotPath": "/tmp/sansu-srs-policy-probe-993febcf1560/canonical-read/docs/product/01_app_spec.md",
+      "sha256": "4dd43115876a9d2f55a9c3d65961e23483aa1a0bb957b3ce53a6f91746ff90c1"
+    },
+    {
+      "originalPath": "/Users/yutogasaki/Projects/sansu/docs/product/02_math_skills.md",
+      "snapshotPath": "/tmp/sansu-srs-policy-probe-993febcf1560/canonical-read/docs/product/02_math_skills.md",
+      "sha256": "b6346712c4185215b6b2e20a84006343f39a8d4060aa913255b26ba869c0df95"
+    },
+    {
+      "originalPath": "/Users/yutogasaki/Projects/sansu/docs/product/04_math_problems.md",
+      "snapshotPath": "/tmp/sansu-srs-policy-probe-993febcf1560/canonical-read/docs/product/04_math_problems.md",
+      "sha256": "22e4a09bbd942f15754505f8a0a5639518fea320e9f7cd841cb090b485af6c2b"
+    },
+    {
+      "originalPath": "/Users/yutogasaki/Projects/sansu/.agents/skills/sansu-learning-check/SKILL.md",
+      "snapshotPath": "/tmp/sansu-srs-policy-probe-993febcf1560/canonical-read/.agents/skills/sansu-learning-check/SKILL.md",
+      "sha256": "62242eb95950e6ded87bb2564a37a9f4578795d1613c1998ee778daacfc4e7b4"
+    }
+  ],
+  "execution": {
+    "wallStartedAt": "2026-09-07T14:16:35.337Z",
+    "timezone": "Asia/Tokyo",
+    "node": "v22.22.3",
+    "fakeIndexedDb": "6.2.5",
+    "esbuild": "0.27.2",
+    "clockMethod": "Only Date/new Date/Date.now are controlled; timers and IndexedDB transaction scheduling remain native. Every primary writer timestamp equals controlled Date at call time.",
+    "wallFinishedAt": "2026-09-07T14:16:35.764Z"
+  },
+  "cases": [
+    {
+      "name": "four-correct-same-day",
+      "status": "passed",
+      "initialMemory": null,
+      "steps": [
+        {
+          "input": {
+            "timestamp": "2026-09-07T01:00:00.000Z",
+            "controlledDate": "2026-09-07T01:00:00.000Z",
+            "result": "correct",
+            "isReview": false
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": null,
+          "after": {
+            "id": "count_10",
+            "strength": 2,
+            "nextReview": "2026-09-09T19:00:00.000Z",
+            "totalAnswers": 1,
+            "correctAnswers": 1,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-07T01:00:00.000Z",
+            "updatedAt": "2026-09-07T01:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "same-day"
+          },
+          "minutesUntilNextReview": 3960,
+          "wasDue": null,
+          "profile": {
+            "main": 3,
+            "unlocked": 3,
+            "todayCount": 1,
+            "streak": 1,
+            "lastStudyDate": "2026-09-07"
+          }
+        },
+        {
+          "input": {
+            "timestamp": "2026-09-07T01:01:00.000Z",
+            "controlledDate": "2026-09-07T01:01:00.000Z",
+            "result": "correct",
+            "isReview": false
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": {
+            "id": "count_10",
+            "strength": 2,
+            "nextReview": "2026-09-09T19:00:00.000Z",
+            "totalAnswers": 1,
+            "correctAnswers": 1,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-07T01:00:00.000Z",
+            "updatedAt": "2026-09-07T01:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "same-day"
+          },
+          "after": {
+            "id": "count_10",
+            "strength": 3,
+            "nextReview": "2026-09-13T19:00:00.000Z",
+            "totalAnswers": 2,
+            "correctAnswers": 2,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-07T01:01:00.000Z",
+            "updatedAt": "2026-09-07T01:01:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "same-day"
+          },
+          "minutesUntilNextReview": 9719,
+          "wasDue": false,
+          "profile": {
+            "main": 3,
+            "unlocked": 3,
+            "todayCount": 2,
+            "streak": 1,
+            "lastStudyDate": "2026-09-07"
+          }
+        },
+        {
+          "input": {
+            "timestamp": "2026-09-07T01:02:00.000Z",
+            "controlledDate": "2026-09-07T01:02:00.000Z",
+            "result": "correct",
+            "isReview": false
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": {
+            "id": "count_10",
+            "strength": 3,
+            "nextReview": "2026-09-13T19:00:00.000Z",
+            "totalAnswers": 2,
+            "correctAnswers": 2,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-07T01:01:00.000Z",
+            "updatedAt": "2026-09-07T01:01:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "same-day"
+          },
+          "after": {
+            "id": "count_10",
+            "strength": 4,
+            "nextReview": "2026-09-20T19:00:00.000Z",
+            "totalAnswers": 3,
+            "correctAnswers": 3,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-07T01:02:00.000Z",
+            "updatedAt": "2026-09-07T01:02:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "same-day"
+          },
+          "minutesUntilNextReview": 19798,
+          "wasDue": false,
+          "profile": {
+            "main": 3,
+            "unlocked": 3,
+            "todayCount": 3,
+            "streak": 1,
+            "lastStudyDate": "2026-09-07"
+          }
+        },
+        {
+          "input": {
+            "timestamp": "2026-09-07T01:03:00.000Z",
+            "controlledDate": "2026-09-07T01:03:00.000Z",
+            "result": "correct",
+            "isReview": false
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": {
+            "id": "count_10",
+            "strength": 4,
+            "nextReview": "2026-09-20T19:00:00.000Z",
+            "totalAnswers": 3,
+            "correctAnswers": 3,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-07T01:02:00.000Z",
+            "updatedAt": "2026-09-07T01:02:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "same-day"
+          },
+          "after": {
+            "id": "count_10",
+            "strength": 5,
+            "nextReview": "2026-10-06T19:00:00.000Z",
+            "totalAnswers": 4,
+            "correctAnswers": 4,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-07T01:03:00.000Z",
+            "updatedAt": "2026-09-07T01:03:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "same-day"
+          },
+          "minutesUntilNextReview": 42837,
+          "wasDue": false,
+          "profile": {
+            "main": 3,
+            "unlocked": 3,
+            "todayCount": 4,
+            "streak": 1,
+            "lastStudyDate": "2026-09-07"
+          }
+        }
+      ],
+      "elapsedMinutes": 3,
+      "semantics": "Parent 5.1 increments once for every correct answer; elapsed-time evidence is not weighted."
+    },
+    {
+      "name": "four-correct-25-hours-apart",
+      "status": "passed",
+      "initialMemory": null,
+      "steps": [
+        {
+          "input": {
+            "timestamp": "2026-09-07T01:00:00.000Z",
+            "controlledDate": "2026-09-07T01:00:00.000Z",
+            "result": "correct",
+            "isReview": false
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": null,
+          "after": {
+            "id": "count_10",
+            "strength": 2,
+            "nextReview": "2026-09-09T19:00:00.000Z",
+            "totalAnswers": 1,
+            "correctAnswers": 1,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-07T01:00:00.000Z",
+            "updatedAt": "2026-09-07T01:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "25-hours-apart"
+          },
+          "minutesUntilNextReview": 3960,
+          "wasDue": null,
+          "profile": {
+            "main": 3,
+            "unlocked": 3,
+            "todayCount": 1,
+            "streak": 1,
+            "lastStudyDate": "2026-09-07"
+          }
+        },
+        {
+          "input": {
+            "timestamp": "2026-09-08T02:00:00.000Z",
+            "controlledDate": "2026-09-08T02:00:00.000Z",
+            "result": "correct",
+            "isReview": false
+          },
+          "learningDay": "2026-09-07T19:00:00.000Z",
+          "before": {
+            "id": "count_10",
+            "strength": 2,
+            "nextReview": "2026-09-09T19:00:00.000Z",
+            "totalAnswers": 1,
+            "correctAnswers": 1,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-07T01:00:00.000Z",
+            "updatedAt": "2026-09-07T01:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "25-hours-apart"
+          },
+          "after": {
+            "id": "count_10",
+            "strength": 3,
+            "nextReview": "2026-09-14T19:00:00.000Z",
+            "totalAnswers": 2,
+            "correctAnswers": 2,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-08T02:00:00.000Z",
+            "updatedAt": "2026-09-08T02:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "25-hours-apart"
+          },
+          "minutesUntilNextReview": 9660,
+          "wasDue": false,
+          "profile": {
+            "main": 3,
+            "unlocked": 3,
+            "todayCount": 1,
+            "streak": 2,
+            "lastStudyDate": "2026-09-08"
+          }
+        },
+        {
+          "input": {
+            "timestamp": "2026-09-09T03:00:00.000Z",
+            "controlledDate": "2026-09-09T03:00:00.000Z",
+            "result": "correct",
+            "isReview": false
+          },
+          "learningDay": "2026-09-08T19:00:00.000Z",
+          "before": {
+            "id": "count_10",
+            "strength": 3,
+            "nextReview": "2026-09-14T19:00:00.000Z",
+            "totalAnswers": 2,
+            "correctAnswers": 2,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-08T02:00:00.000Z",
+            "updatedAt": "2026-09-08T02:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "25-hours-apart"
+          },
+          "after": {
+            "id": "count_10",
+            "strength": 4,
+            "nextReview": "2026-09-22T19:00:00.000Z",
+            "totalAnswers": 3,
+            "correctAnswers": 3,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-09T03:00:00.000Z",
+            "updatedAt": "2026-09-09T03:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "25-hours-apart"
+          },
+          "minutesUntilNextReview": 19680,
+          "wasDue": false,
+          "profile": {
+            "main": 3,
+            "unlocked": 3,
+            "todayCount": 1,
+            "streak": 3,
+            "lastStudyDate": "2026-09-09"
+          }
+        },
+        {
+          "input": {
+            "timestamp": "2026-09-10T04:00:00.000Z",
+            "controlledDate": "2026-09-10T04:00:00.000Z",
+            "result": "correct",
+            "isReview": false
+          },
+          "learningDay": "2026-09-09T19:00:00.000Z",
+          "before": {
+            "id": "count_10",
+            "strength": 4,
+            "nextReview": "2026-09-22T19:00:00.000Z",
+            "totalAnswers": 3,
+            "correctAnswers": 3,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-09T03:00:00.000Z",
+            "updatedAt": "2026-09-09T03:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "25-hours-apart"
+          },
+          "after": {
+            "id": "count_10",
+            "strength": 5,
+            "nextReview": "2026-10-09T19:00:00.000Z",
+            "totalAnswers": 4,
+            "correctAnswers": 4,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-10T04:00:00.000Z",
+            "updatedAt": "2026-09-10T04:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "25-hours-apart"
+          },
+          "minutesUntilNextReview": 42660,
+          "wasDue": false,
+          "profile": {
+            "main": 3,
+            "unlocked": 3,
+            "todayCount": 1,
+            "streak": 4,
+            "lastStudyDate": "2026-09-10"
+          }
+        }
+      ],
+      "elapsedMinutes": 4500,
+      "semantics": "Parent 5.1 increments once for every correct answer; elapsed-time evidence is not weighted."
+    },
+    {
+      "name": "four-correct-after-actual-due",
+      "status": "passed",
+      "initialMemory": null,
+      "steps": [
+        {
+          "input": {
+            "timestamp": "2026-09-07T01:00:00.000Z",
+            "controlledDate": "2026-09-07T01:00:00.000Z",
+            "result": "correct",
+            "isReview": false
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": null,
+          "after": {
+            "id": "count_10",
+            "strength": 2,
+            "nextReview": "2026-09-09T19:00:00.000Z",
+            "totalAnswers": 1,
+            "correctAnswers": 1,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-07T01:00:00.000Z",
+            "updatedAt": "2026-09-07T01:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "after-actual-due"
+          },
+          "minutesUntilNextReview": 3960,
+          "wasDue": null,
+          "profile": {
+            "main": 3,
+            "unlocked": 3,
+            "todayCount": 1,
+            "streak": 1,
+            "lastStudyDate": "2026-09-07"
+          }
+        },
+        {
+          "input": {
+            "timestamp": "2026-09-09T20:00:00.000Z",
+            "controlledDate": "2026-09-09T20:00:00.000Z",
+            "result": "correct",
+            "isReview": false
+          },
+          "learningDay": "2026-09-09T19:00:00.000Z",
+          "before": {
+            "id": "count_10",
+            "strength": 2,
+            "nextReview": "2026-09-09T19:00:00.000Z",
+            "totalAnswers": 1,
+            "correctAnswers": 1,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-07T01:00:00.000Z",
+            "updatedAt": "2026-09-07T01:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "after-actual-due"
+          },
+          "after": {
+            "id": "count_10",
+            "strength": 3,
+            "nextReview": "2026-09-16T19:00:00.000Z",
+            "totalAnswers": 2,
+            "correctAnswers": 2,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-09T20:00:00.000Z",
+            "updatedAt": "2026-09-09T20:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "after-actual-due"
+          },
+          "minutesUntilNextReview": 10020,
+          "wasDue": true,
+          "profile": {
+            "main": 3,
+            "unlocked": 3,
+            "todayCount": 1,
+            "streak": 1,
+            "lastStudyDate": "2026-09-10"
+          }
+        },
+        {
+          "input": {
+            "timestamp": "2026-09-16T20:00:00.000Z",
+            "controlledDate": "2026-09-16T20:00:00.000Z",
+            "result": "correct",
+            "isReview": false
+          },
+          "learningDay": "2026-09-16T19:00:00.000Z",
+          "before": {
+            "id": "count_10",
+            "strength": 3,
+            "nextReview": "2026-09-16T19:00:00.000Z",
+            "totalAnswers": 2,
+            "correctAnswers": 2,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-09T20:00:00.000Z",
+            "updatedAt": "2026-09-09T20:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "after-actual-due"
+          },
+          "after": {
+            "id": "count_10",
+            "strength": 4,
+            "nextReview": "2026-09-30T19:00:00.000Z",
+            "totalAnswers": 3,
+            "correctAnswers": 3,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-16T20:00:00.000Z",
+            "updatedAt": "2026-09-16T20:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "after-actual-due"
+          },
+          "minutesUntilNextReview": 20100,
+          "wasDue": true,
+          "profile": {
+            "main": 3,
+            "unlocked": 3,
+            "todayCount": 1,
+            "streak": 1,
+            "lastStudyDate": "2026-09-17"
+          }
+        },
+        {
+          "input": {
+            "timestamp": "2026-09-30T20:00:00.000Z",
+            "controlledDate": "2026-09-30T20:00:00.000Z",
+            "result": "correct",
+            "isReview": false
+          },
+          "learningDay": "2026-09-30T19:00:00.000Z",
+          "before": {
+            "id": "count_10",
+            "strength": 4,
+            "nextReview": "2026-09-30T19:00:00.000Z",
+            "totalAnswers": 3,
+            "correctAnswers": 3,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-16T20:00:00.000Z",
+            "updatedAt": "2026-09-16T20:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "after-actual-due"
+          },
+          "after": {
+            "id": "count_10",
+            "strength": 5,
+            "nextReview": "2026-10-30T19:00:00.000Z",
+            "totalAnswers": 4,
+            "correctAnswers": 4,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-30T20:00:00.000Z",
+            "updatedAt": "2026-09-30T20:00:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "after-actual-due"
+          },
+          "minutesUntilNextReview": 43140,
+          "wasDue": true,
+          "profile": {
+            "main": 3,
+            "unlocked": 3,
+            "todayCount": 1,
+            "streak": 1,
+            "lastStudyDate": "2026-10-01"
+          }
+        }
+      ],
+      "elapsedMinutes": 34260,
+      "semantics": "Parent 5.1 increments once for every correct answer; elapsed-time evidence is not weighted."
+    },
+    {
+      "name": "04:00-local-calendar-boundary",
+      "status": "passed",
+      "rows": [
+        {
+          "localInput": "2026-09-07T03:59:00+09:00",
+          "timestamp": "2026-09-06T18:59:00.000Z",
+          "learningDay": "2026-09-05T19:00:00.000Z",
+          "intervals": [
+            {
+              "strength": 1,
+              "nextReview": "2026-09-06T19:00:00.000Z",
+              "minutesUntilNextReview": 1
+            },
+            {
+              "strength": 2,
+              "nextReview": "2026-09-08T19:00:00.000Z",
+              "minutesUntilNextReview": 2881
+            },
+            {
+              "strength": 3,
+              "nextReview": "2026-09-12T19:00:00.000Z",
+              "minutesUntilNextReview": 8641
+            },
+            {
+              "strength": 4,
+              "nextReview": "2026-09-19T19:00:00.000Z",
+              "minutesUntilNextReview": 18721
+            },
+            {
+              "strength": 5,
+              "nextReview": "2026-10-05T19:00:00.000Z",
+              "minutesUntilNextReview": 41761
+            }
+          ],
+          "wrong": {
+            "input": {
+              "timestamp": "2026-09-06T18:59:00.000Z",
+              "controlledDate": "2026-09-06T18:59:00.000Z",
+              "result": "incorrect",
+              "isReview": false
+            },
+            "learningDay": "2026-09-05T19:00:00.000Z",
+            "before": null,
+            "after": {
+              "id": "count_10",
+              "strength": 1,
+              "nextReview": "2026-09-06T19:00:00.000Z",
+              "totalAnswers": 1,
+              "correctAnswers": 0,
+              "incorrectAnswers": 1,
+              "skippedAnswers": 0,
+              "updatedAt": "2026-09-06T18:59:00.000Z",
+              "status": "active",
+              "isWeak": false,
+              "profileId": "boundary-0"
+            },
+            "minutesUntilNextReview": 1,
+            "wasDue": null,
+            "profile": {
+              "main": 3,
+              "unlocked": 3,
+              "todayCount": 1,
+              "streak": 1,
+              "lastStudyDate": "2026-09-06"
+            }
+          }
+        },
+        {
+          "localInput": "2026-09-07T04:00:00+09:00",
+          "timestamp": "2026-09-06T19:00:00.000Z",
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "intervals": [
+            {
+              "strength": 1,
+              "nextReview": "2026-09-07T19:00:00.000Z",
+              "minutesUntilNextReview": 1440
+            },
+            {
+              "strength": 2,
+              "nextReview": "2026-09-09T19:00:00.000Z",
+              "minutesUntilNextReview": 4320
+            },
+            {
+              "strength": 3,
+              "nextReview": "2026-09-13T19:00:00.000Z",
+              "minutesUntilNextReview": 10080
+            },
+            {
+              "strength": 4,
+              "nextReview": "2026-09-20T19:00:00.000Z",
+              "minutesUntilNextReview": 20160
+            },
+            {
+              "strength": 5,
+              "nextReview": "2026-10-06T19:00:00.000Z",
+              "minutesUntilNextReview": 43200
+            }
+          ],
+          "wrong": {
+            "input": {
+              "timestamp": "2026-09-06T19:00:00.000Z",
+              "controlledDate": "2026-09-06T19:00:00.000Z",
+              "result": "incorrect",
+              "isReview": false
+            },
+            "learningDay": "2026-09-06T19:00:00.000Z",
+            "before": null,
+            "after": {
+              "id": "count_10",
+              "strength": 1,
+              "nextReview": "2026-09-07T19:00:00.000Z",
+              "totalAnswers": 1,
+              "correctAnswers": 0,
+              "incorrectAnswers": 1,
+              "skippedAnswers": 0,
+              "updatedAt": "2026-09-06T19:00:00.000Z",
+              "status": "active",
+              "isWeak": false,
+              "profileId": "boundary-1"
+            },
+            "minutesUntilNextReview": 1440,
+            "wasDue": null,
+            "profile": {
+              "main": 3,
+              "unlocked": 3,
+              "todayCount": 1,
+              "streak": 1,
+              "lastStudyDate": "2026-09-07"
+            }
+          }
+        },
+        {
+          "localInput": "2026-09-07T04:01:00+09:00",
+          "timestamp": "2026-09-06T19:01:00.000Z",
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "intervals": [
+            {
+              "strength": 1,
+              "nextReview": "2026-09-07T19:00:00.000Z",
+              "minutesUntilNextReview": 1439
+            },
+            {
+              "strength": 2,
+              "nextReview": "2026-09-09T19:00:00.000Z",
+              "minutesUntilNextReview": 4319
+            },
+            {
+              "strength": 3,
+              "nextReview": "2026-09-13T19:00:00.000Z",
+              "minutesUntilNextReview": 10079
+            },
+            {
+              "strength": 4,
+              "nextReview": "2026-09-20T19:00:00.000Z",
+              "minutesUntilNextReview": 20159
+            },
+            {
+              "strength": 5,
+              "nextReview": "2026-10-06T19:00:00.000Z",
+              "minutesUntilNextReview": 43199
+            }
+          ],
+          "wrong": {
+            "input": {
+              "timestamp": "2026-09-06T19:01:00.000Z",
+              "controlledDate": "2026-09-06T19:01:00.000Z",
+              "result": "incorrect",
+              "isReview": false
+            },
+            "learningDay": "2026-09-06T19:00:00.000Z",
+            "before": null,
+            "after": {
+              "id": "count_10",
+              "strength": 1,
+              "nextReview": "2026-09-07T19:00:00.000Z",
+              "totalAnswers": 1,
+              "correctAnswers": 0,
+              "incorrectAnswers": 1,
+              "skippedAnswers": 0,
+              "updatedAt": "2026-09-06T19:01:00.000Z",
+              "status": "active",
+              "isWeak": false,
+              "profileId": "boundary-2"
+            },
+            "minutesUntilNextReview": 1439,
+            "wasDue": null,
+            "profile": {
+              "main": 3,
+              "unlocked": 3,
+              "todayCount": 1,
+              "streak": 1,
+              "lastStudyDate": "2026-09-07"
+            }
+          }
+        }
+      ],
+      "counters": [
+        {
+          "input": {
+            "timestamp": "2026-09-06T18:59:00.000Z",
+            "controlledDate": "2026-09-06T18:59:00.000Z",
+            "result": "correct",
+            "isReview": false
+          },
+          "learningDay": "2026-09-05T19:00:00.000Z",
+          "before": null,
+          "after": {
+            "id": "count_10",
+            "strength": 2,
+            "nextReview": "2026-09-08T19:00:00.000Z",
+            "totalAnswers": 1,
+            "correctAnswers": 1,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-06T18:59:00.000Z",
+            "updatedAt": "2026-09-06T18:59:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "day-count"
+          },
+          "minutesUntilNextReview": 2881,
+          "wasDue": null,
+          "profile": {
+            "main": 3,
+            "unlocked": 3,
+            "todayCount": 1,
+            "streak": 1,
+            "lastStudyDate": "2026-09-06"
+          }
+        },
+        {
+          "input": {
+            "timestamp": "2026-09-06T19:01:00.000Z",
+            "controlledDate": "2026-09-06T19:01:00.000Z",
+            "result": "correct",
+            "isReview": false
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": {
+            "id": "count_10",
+            "strength": 2,
+            "nextReview": "2026-09-08T19:00:00.000Z",
+            "totalAnswers": 1,
+            "correctAnswers": 1,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-06T18:59:00.000Z",
+            "updatedAt": "2026-09-06T18:59:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "day-count"
+          },
+          "after": {
+            "id": "count_10",
+            "strength": 3,
+            "nextReview": "2026-09-13T19:00:00.000Z",
+            "totalAnswers": 2,
+            "correctAnswers": 2,
+            "incorrectAnswers": 0,
+            "skippedAnswers": 0,
+            "lastCorrectAt": "2026-09-06T19:01:00.000Z",
+            "updatedAt": "2026-09-06T19:01:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "day-count"
+          },
+          "minutesUntilNextReview": 10079,
+          "wasDue": false,
+          "profile": {
+            "main": 3,
+            "unlocked": 3,
+            "todayCount": 1,
+            "streak": 2,
+            "lastStudyDate": "2026-09-07"
+          }
+        }
+      ],
+      "semantics": "Parent 04:00 learning-day boundary plus calendar-day intervals; 1 day is not a minimum of 24 elapsed hours."
+    },
+    {
+      "name": "wrong-then-exact-same-Island-problem-correction",
+      "status": "passed",
+      "planId": "[\"island-plan-v1\",\"same-question\",0]",
+      "reservedSlots": 3,
+      "problem": {
+        "categoryId": "count_which_more",
+        "questionText": "どちらが おおい？",
+        "correctAnswer": "🍐",
+        "inputType": "choice",
+        "inputConfig": {
+          "choices": [
+            {
+              "label": "🍐 なし",
+              "value": "🍐"
+            },
+            {
+              "label": "🍊 みかん",
+              "value": "🍊"
+            }
+          ]
+        },
+        "questionVisual": {
+          "kind": "comparison-items",
+          "prompt": "おおい のは どっち？",
+          "groups": [
+            {
+              "emoji": "🍐",
+              "label": "なし",
+              "count": 5
+            },
+            {
+              "emoji": "🍊",
+              "label": "みかん",
+              "count": 3
+            }
+          ]
+        },
+        "id": "[\"island-plan-v1\",\"same-question\",0]:slot-0",
+        "subject": "math",
+        "isReview": false,
+        "isMaintenanceCheck": false
+      },
+      "before": null,
+      "afterWrong": {
+        "id": "count_which_more",
+        "strength": 1,
+        "nextReview": "2026-09-07T19:00:00.000Z",
+        "totalAnswers": 1,
+        "correctAnswers": 0,
+        "incorrectAnswers": 1,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-09-07T01:00:00.000Z",
+        "status": "active",
+        "isWeak": false,
+        "profileId": "same-question"
+      },
+      "afterCorrection": {
+        "id": "count_which_more",
+        "strength": 2,
+        "nextReview": "2026-09-09T19:00:00.000Z",
+        "totalAnswers": 2,
+        "correctAnswers": 1,
+        "incorrectAnswers": 1,
+        "skippedAnswers": 0,
+        "lastCorrectAt": "2026-09-07T01:01:00.000Z",
+        "updatedAt": "2026-09-07T01:01:00.000Z",
+        "status": "active",
+        "isWeak": false,
+        "profileId": "same-question"
+      },
+      "logs": [
+        {
+          "profileId": "same-question",
+          "subject": "math",
+          "itemId": "count_which_more",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:00:00.000Z",
+          "id": 1
+        },
+        {
+          "profileId": "same-question",
+          "subject": "math",
+          "itemId": "count_which_more",
+          "result": "correct",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:01:00.000Z",
+          "id": 2
+        }
+      ],
+      "events": [
+        {
+          "id": "[\"island-action-v1\",\"same-question\",\"[\\\"island-plan-v1\\\",\\\"same-question\\\",0]\",0]",
+          "profileId": "same-question",
+          "planId": "[\"island-plan-v1\",\"same-question\",0]",
+          "timestamp": 1788742800000,
+          "type": "answer",
+          "action": {
+            "type": "answer",
+            "answer": "__synthetic_wrong__"
+          },
+          "slotIndex": 0,
+          "result": "incorrect",
+          "learningLogId": 1
+        },
+        {
+          "id": "[\"island-action-v1\",\"same-question\",\"[\\\"island-plan-v1\\\",\\\"same-question\\\",0]\",1]",
+          "profileId": "same-question",
+          "planId": "[\"island-plan-v1\",\"same-question\",0]",
+          "timestamp": 1788742860000,
+          "type": "answer",
+          "action": {
+            "type": "answer",
+            "answer": "🍐"
+          },
+          "slotIndex": 0,
+          "result": "correct",
+          "learningLogId": 2
+        }
+      ],
+      "pendingMathChecks": [
+        {
+          "skillId": "count_which_more",
+          "failedProblemId": "[\"island-plan-v1\",\"same-question\",0]:slot-0",
+          "failedQuestionKey": "{\"answer\":\"🍐\",\"skillId\":\"count_which_more\",\"text\":\"どちらが おおい？\",\"visual\":{\"groups\":[{\"count\":5,\"emoji\":\"🍐\",\"label\":\"なし\"},{\"count\":3,\"emoji\":\"🍊\",\"label\":\"みかん\"}],\"kind\":\"comparison-items\",\"prompt\":\"おおい のは どっち？\"}}",
+          "stage": "independent",
+          "createdAt": 1788742800000
+        }
+      ],
+      "semantics": "Real public plan/commit functions with a native generated reserved question, no plan override. An unaided same-question correction increments SRS; the independent-check obligation is reported separately."
+    },
+    {
+      "name": "writer-30-next-level-incorrect-nonreview",
+      "status": "passed",
+      "initial": {
+        "main": 8,
+        "unlocked": 9
+      },
+      "skills": [
+        "add_1d_2_bridge",
+        "add_1d_2"
+      ],
+      "milestones": [
+        {
+          "count": 1,
+          "input": {
+            "timestamp": "2026-09-07T01:01:00.000Z",
+            "controlledDate": "2026-09-07T01:01:00.000Z",
+            "result": "incorrect",
+            "isReview": false
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": null,
+          "after": {
+            "id": "add_1d_2_bridge",
+            "strength": 1,
+            "nextReview": "2026-09-07T19:00:00.000Z",
+            "totalAnswers": 1,
+            "correctAnswers": 0,
+            "incorrectAnswers": 1,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-09-07T01:01:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "writer-incorrect-nonreview"
+          },
+          "minutesUntilNextReview": 1079,
+          "wasDue": null,
+          "profile": {
+            "main": 8,
+            "unlocked": 9,
+            "todayCount": 1,
+            "streak": 1,
+            "lastStudyDate": "2026-09-07"
+          }
+        },
+        {
+          "count": 29,
+          "input": {
+            "timestamp": "2026-09-07T01:29:00.000Z",
+            "controlledDate": "2026-09-07T01:29:00.000Z",
+            "result": "incorrect",
+            "isReview": false
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": {
+            "id": "add_1d_2_bridge",
+            "strength": 1,
+            "nextReview": "2026-09-07T19:00:00.000Z",
+            "totalAnswers": 14,
+            "correctAnswers": 0,
+            "incorrectAnswers": 14,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-09-07T01:27:00.000Z",
+            "status": "active",
+            "isWeak": true,
+            "profileId": "writer-incorrect-nonreview"
+          },
+          "after": {
+            "id": "add_1d_2_bridge",
+            "strength": 1,
+            "nextReview": "2026-09-07T19:00:00.000Z",
+            "totalAnswers": 15,
+            "correctAnswers": 0,
+            "incorrectAnswers": 15,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-09-07T01:29:00.000Z",
+            "status": "active",
+            "isWeak": true,
+            "profileId": "writer-incorrect-nonreview"
+          },
+          "minutesUntilNextReview": 1051,
+          "wasDue": false,
+          "profile": {
+            "main": 8,
+            "unlocked": 9,
+            "todayCount": 29,
+            "streak": 1,
+            "lastStudyDate": "2026-09-07"
+          }
+        },
+        {
+          "count": 30,
+          "input": {
+            "timestamp": "2026-09-07T01:30:00.000Z",
+            "controlledDate": "2026-09-07T01:30:00.000Z",
+            "result": "incorrect",
+            "isReview": false
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": {
+            "id": "add_1d_2",
+            "strength": 1,
+            "nextReview": "2026-09-07T19:00:00.000Z",
+            "totalAnswers": 14,
+            "correctAnswers": 0,
+            "incorrectAnswers": 14,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-09-07T01:28:00.000Z",
+            "status": "active",
+            "isWeak": true,
+            "profileId": "writer-incorrect-nonreview"
+          },
+          "after": {
+            "id": "add_1d_2",
+            "strength": 1,
+            "nextReview": "2026-09-07T19:00:00.000Z",
+            "totalAnswers": 15,
+            "correctAnswers": 0,
+            "incorrectAnswers": 15,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-09-07T01:30:00.000Z",
+            "status": "active",
+            "isWeak": true,
+            "profileId": "writer-incorrect-nonreview"
+          },
+          "minutesUntilNextReview": 1050,
+          "wasDue": false,
+          "profile": {
+            "main": 9,
+            "unlocked": 9,
+            "todayCount": 30,
+            "streak": 1,
+            "lastStudyDate": "2026-09-07"
+          }
+        }
+      ],
+      "final": {
+        "main": 9,
+        "unlocked": 9,
+        "notification": {
+          "subject": "math",
+          "newLevel": 9,
+          "achievedAt": "2026-09-07T01:30:00.000Z"
+        },
+        "targetLevel": {
+          "level": 9,
+          "unlocked": true,
+          "enabled": true,
+          "recentAnswersNonReview": [],
+          "updatedAt": "2026-09-07T01:30:00.000Z"
+        }
+      },
+      "logCounts": {
+        "total": 30,
+        "correct": 0,
+        "incorrect": 30,
+        "skipped": 0,
+        "review": 0
+      },
+      "memories": [
+        {
+          "id": "add_1d_2",
+          "strength": 1,
+          "nextReview": "2026-09-07T19:00:00.000Z",
+          "totalAnswers": 15,
+          "correctAnswers": 0,
+          "incorrectAnswers": 15,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-07T01:30:00.000Z",
+          "status": "active",
+          "isWeak": true,
+          "profileId": "writer-incorrect-nonreview"
+        },
+        {
+          "id": "add_1d_2_bridge",
+          "strength": 1,
+          "nextReview": "2026-09-07T19:00:00.000Z",
+          "totalAnswers": 15,
+          "correctAnswers": 0,
+          "incorrectAnswers": 15,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-07T01:29:00.000Z",
+          "status": "active",
+          "isWeak": true,
+          "profileId": "writer-incorrect-nonreview"
+        }
+      ],
+      "semantics": "Parent 5.2: next-level non-review non-skipped exposure count; no new unlock from incorrects."
+    },
+    {
+      "name": "writer-30-next-level-incorrect-review-control",
+      "status": "passed",
+      "initial": {
+        "main": 8,
+        "unlocked": 9
+      },
+      "skills": [
+        "add_1d_2_bridge",
+        "add_1d_2"
+      ],
+      "milestones": [
+        {
+          "count": 1,
+          "input": {
+            "timestamp": "2026-09-07T01:01:00.000Z",
+            "controlledDate": "2026-09-07T01:01:00.000Z",
+            "result": "incorrect",
+            "isReview": true
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": null,
+          "after": {
+            "id": "add_1d_2_bridge",
+            "strength": 1,
+            "nextReview": "2026-09-07T19:00:00.000Z",
+            "totalAnswers": 1,
+            "correctAnswers": 0,
+            "incorrectAnswers": 1,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-09-07T01:01:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "writer-incorrect-review-control"
+          },
+          "minutesUntilNextReview": 1079,
+          "wasDue": null,
+          "profile": {
+            "main": 8,
+            "unlocked": 9,
+            "todayCount": 1,
+            "streak": 1,
+            "lastStudyDate": "2026-09-07"
+          }
+        },
+        {
+          "count": 29,
+          "input": {
+            "timestamp": "2026-09-07T01:29:00.000Z",
+            "controlledDate": "2026-09-07T01:29:00.000Z",
+            "result": "incorrect",
+            "isReview": true
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": {
+            "id": "add_1d_2_bridge",
+            "strength": 1,
+            "nextReview": "2026-09-07T19:00:00.000Z",
+            "totalAnswers": 14,
+            "correctAnswers": 0,
+            "incorrectAnswers": 14,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-09-07T01:27:00.000Z",
+            "status": "active",
+            "isWeak": true,
+            "profileId": "writer-incorrect-review-control"
+          },
+          "after": {
+            "id": "add_1d_2_bridge",
+            "strength": 1,
+            "nextReview": "2026-09-07T19:00:00.000Z",
+            "totalAnswers": 15,
+            "correctAnswers": 0,
+            "incorrectAnswers": 15,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-09-07T01:29:00.000Z",
+            "status": "active",
+            "isWeak": true,
+            "profileId": "writer-incorrect-review-control"
+          },
+          "minutesUntilNextReview": 1051,
+          "wasDue": false,
+          "profile": {
+            "main": 8,
+            "unlocked": 9,
+            "todayCount": 29,
+            "streak": 1,
+            "lastStudyDate": "2026-09-07"
+          }
+        },
+        {
+          "count": 30,
+          "input": {
+            "timestamp": "2026-09-07T01:30:00.000Z",
+            "controlledDate": "2026-09-07T01:30:00.000Z",
+            "result": "incorrect",
+            "isReview": true
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": {
+            "id": "add_1d_2",
+            "strength": 1,
+            "nextReview": "2026-09-07T19:00:00.000Z",
+            "totalAnswers": 14,
+            "correctAnswers": 0,
+            "incorrectAnswers": 14,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-09-07T01:28:00.000Z",
+            "status": "active",
+            "isWeak": true,
+            "profileId": "writer-incorrect-review-control"
+          },
+          "after": {
+            "id": "add_1d_2",
+            "strength": 1,
+            "nextReview": "2026-09-07T19:00:00.000Z",
+            "totalAnswers": 15,
+            "correctAnswers": 0,
+            "incorrectAnswers": 15,
+            "skippedAnswers": 0,
+            "updatedAt": "2026-09-07T01:30:00.000Z",
+            "status": "active",
+            "isWeak": true,
+            "profileId": "writer-incorrect-review-control"
+          },
+          "minutesUntilNextReview": 1050,
+          "wasDue": false,
+          "profile": {
+            "main": 8,
+            "unlocked": 9,
+            "todayCount": 30,
+            "streak": 1,
+            "lastStudyDate": "2026-09-07"
+          }
+        }
+      ],
+      "final": {
+        "main": 8,
+        "unlocked": 9,
+        "notification": null,
+        "targetLevel": {
+          "level": 9,
+          "unlocked": true,
+          "enabled": false,
+          "recentAnswersNonReview": [],
+          "updatedAt": "2026-09-07T01:00:00.000Z"
+        }
+      },
+      "logCounts": {
+        "total": 30,
+        "correct": 0,
+        "incorrect": 30,
+        "skipped": 0,
+        "review": 30
+      },
+      "memories": [
+        {
+          "id": "add_1d_2",
+          "strength": 1,
+          "nextReview": "2026-09-07T19:00:00.000Z",
+          "totalAnswers": 15,
+          "correctAnswers": 0,
+          "incorrectAnswers": 15,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-07T01:30:00.000Z",
+          "status": "active",
+          "isWeak": true,
+          "profileId": "writer-incorrect-review-control"
+        },
+        {
+          "id": "add_1d_2_bridge",
+          "strength": 1,
+          "nextReview": "2026-09-07T19:00:00.000Z",
+          "totalAnswers": 15,
+          "correctAnswers": 0,
+          "incorrectAnswers": 15,
+          "skippedAnswers": 0,
+          "updatedAt": "2026-09-07T01:29:00.000Z",
+          "status": "active",
+          "isWeak": true,
+          "profileId": "writer-incorrect-review-control"
+        }
+      ],
+      "semantics": "Parent 5.2: next-level non-review non-skipped exposure count; no new unlock from incorrects."
+    },
+    {
+      "name": "writer-30-next-level-skipped-nonreview-control",
+      "status": "passed",
+      "initial": {
+        "main": 8,
+        "unlocked": 9
+      },
+      "skills": [
+        "add_1d_2_bridge",
+        "add_1d_2"
+      ],
+      "milestones": [
+        {
+          "count": 1,
+          "input": {
+            "timestamp": "2026-09-07T01:01:00.000Z",
+            "controlledDate": "2026-09-07T01:01:00.000Z",
+            "result": "skipped",
+            "isReview": false
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": null,
+          "after": {
+            "id": "add_1d_2_bridge",
+            "strength": 1,
+            "nextReview": "2026-09-06T19:00:00.000Z",
+            "totalAnswers": 1,
+            "correctAnswers": 0,
+            "incorrectAnswers": 1,
+            "skippedAnswers": 1,
+            "updatedAt": "2026-09-07T01:01:00.000Z",
+            "status": "active",
+            "isWeak": false,
+            "profileId": "writer-skipped-nonreview-control"
+          },
+          "minutesUntilNextReview": -361,
+          "wasDue": null,
+          "profile": {
+            "main": 8,
+            "unlocked": 9,
+            "todayCount": 1,
+            "streak": 1,
+            "lastStudyDate": "2026-09-07"
+          }
+        },
+        {
+          "count": 29,
+          "input": {
+            "timestamp": "2026-09-07T01:29:00.000Z",
+            "controlledDate": "2026-09-07T01:29:00.000Z",
+            "result": "skipped",
+            "isReview": false
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": {
+            "id": "add_1d_2_bridge",
+            "strength": 1,
+            "nextReview": "2026-09-06T19:00:00.000Z",
+            "totalAnswers": 14,
+            "correctAnswers": 0,
+            "incorrectAnswers": 14,
+            "skippedAnswers": 14,
+            "updatedAt": "2026-09-07T01:27:00.000Z",
+            "status": "active",
+            "isWeak": true,
+            "profileId": "writer-skipped-nonreview-control"
+          },
+          "after": {
+            "id": "add_1d_2_bridge",
+            "strength": 1,
+            "nextReview": "2026-09-06T19:00:00.000Z",
+            "totalAnswers": 15,
+            "correctAnswers": 0,
+            "incorrectAnswers": 15,
+            "skippedAnswers": 15,
+            "updatedAt": "2026-09-07T01:29:00.000Z",
+            "status": "active",
+            "isWeak": true,
+            "profileId": "writer-skipped-nonreview-control"
+          },
+          "minutesUntilNextReview": -389,
+          "wasDue": true,
+          "profile": {
+            "main": 8,
+            "unlocked": 9,
+            "todayCount": 29,
+            "streak": 1,
+            "lastStudyDate": "2026-09-07"
+          }
+        },
+        {
+          "count": 30,
+          "input": {
+            "timestamp": "2026-09-07T01:30:00.000Z",
+            "controlledDate": "2026-09-07T01:30:00.000Z",
+            "result": "skipped",
+            "isReview": false
+          },
+          "learningDay": "2026-09-06T19:00:00.000Z",
+          "before": {
+            "id": "add_1d_2",
+            "strength": 1,
+            "nextReview": "2026-09-06T19:00:00.000Z",
+            "totalAnswers": 14,
+            "correctAnswers": 0,
+            "incorrectAnswers": 14,
+            "skippedAnswers": 14,
+            "updatedAt": "2026-09-07T01:28:00.000Z",
+            "status": "active",
+            "isWeak": true,
+            "profileId": "writer-skipped-nonreview-control"
+          },
+          "after": {
+            "id": "add_1d_2",
+            "strength": 1,
+            "nextReview": "2026-09-06T19:00:00.000Z",
+            "totalAnswers": 15,
+            "correctAnswers": 0,
+            "incorrectAnswers": 15,
+            "skippedAnswers": 15,
+            "updatedAt": "2026-09-07T01:30:00.000Z",
+            "status": "active",
+            "isWeak": true,
+            "profileId": "writer-skipped-nonreview-control"
+          },
+          "minutesUntilNextReview": -390,
+          "wasDue": true,
+          "profile": {
+            "main": 8,
+            "unlocked": 9,
+            "todayCount": 30,
+            "streak": 1,
+            "lastStudyDate": "2026-09-07"
+          }
+        }
+      ],
+      "final": {
+        "main": 8,
+        "unlocked": 9,
+        "notification": null,
+        "targetLevel": {
+          "level": 9,
+          "unlocked": true,
+          "enabled": false,
+          "recentAnswersNonReview": [],
+          "updatedAt": "2026-09-07T01:00:00.000Z"
+        }
+      },
+      "logCounts": {
+        "total": 30,
+        "correct": 0,
+        "incorrect": 0,
+        "skipped": 30,
+        "review": 0
+      },
+      "memories": [
+        {
+          "id": "add_1d_2",
+          "strength": 1,
+          "nextReview": "2026-09-06T19:00:00.000Z",
+          "totalAnswers": 15,
+          "correctAnswers": 0,
+          "incorrectAnswers": 15,
+          "skippedAnswers": 15,
+          "updatedAt": "2026-09-07T01:30:00.000Z",
+          "status": "active",
+          "isWeak": true,
+          "profileId": "writer-skipped-nonreview-control"
+        },
+        {
+          "id": "add_1d_2_bridge",
+          "strength": 1,
+          "nextReview": "2026-09-06T19:00:00.000Z",
+          "totalAnswers": 15,
+          "correctAnswers": 0,
+          "incorrectAnswers": 15,
+          "skippedAnswers": 15,
+          "updatedAt": "2026-09-07T01:29:00.000Z",
+          "status": "active",
+          "isWeak": true,
+          "profileId": "writer-skipped-nonreview-control"
+        }
+      ],
+      "semantics": "Parent 5.2: next-level non-review non-skipped exposure count; no new unlock from incorrects."
+    },
+    {
+      "name": "math-service-30-next-level-incorrect-nonreview",
+      "status": "passed",
+      "fixtureKind": "Direct native fake-IDB historical logs, evaluated by unchanged public service and Study progression resolver",
+      "initial": {
+        "main": 8,
+        "unlocked": 9
+      },
+      "observations": [
+        {
+          "count": 29,
+          "promotionPredicate": false
+        },
+        {
+          "count": 30,
+          "promotionPredicate": true
+        }
+      ],
+      "final": {
+        "main": 9,
+        "unlocked": 9,
+        "notification": {
+          "subject": "math",
+          "newLevel": 9,
+          "achievedAt": "2026-09-07T01:30:00.000Z"
+        }
+      },
+      "memoryRows": 0,
+      "logs": [
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:01:00.000Z",
+          "id": 1
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:02:00.000Z",
+          "id": 2
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:03:00.000Z",
+          "id": 3
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:04:00.000Z",
+          "id": 4
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:05:00.000Z",
+          "id": 5
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:06:00.000Z",
+          "id": 6
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:07:00.000Z",
+          "id": 7
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:08:00.000Z",
+          "id": 8
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:09:00.000Z",
+          "id": 9
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:10:00.000Z",
+          "id": 10
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:11:00.000Z",
+          "id": 11
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:12:00.000Z",
+          "id": 12
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:13:00.000Z",
+          "id": 13
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:14:00.000Z",
+          "id": 14
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:15:00.000Z",
+          "id": 15
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:16:00.000Z",
+          "id": 16
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:17:00.000Z",
+          "id": 17
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:18:00.000Z",
+          "id": 18
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:19:00.000Z",
+          "id": 19
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:20:00.000Z",
+          "id": 20
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:21:00.000Z",
+          "id": 21
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:22:00.000Z",
+          "id": 22
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:23:00.000Z",
+          "id": 23
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:24:00.000Z",
+          "id": 24
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:25:00.000Z",
+          "id": 25
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:26:00.000Z",
+          "id": 26
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:27:00.000Z",
+          "id": 27
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:28:00.000Z",
+          "id": 28
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:29:00.000Z",
+          "id": 29
+        },
+        {
+          "profileId": "service-incorrect-nonreview",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:30:00.000Z",
+          "id": 30
+        }
+      ]
+    },
+    {
+      "name": "math-service-30-next-level-incorrect-review-control",
+      "status": "passed",
+      "fixtureKind": "Direct native fake-IDB historical logs, evaluated by unchanged public service and Study progression resolver",
+      "initial": {
+        "main": 8,
+        "unlocked": 9
+      },
+      "observations": [
+        {
+          "count": 29,
+          "promotionPredicate": false
+        },
+        {
+          "count": 30,
+          "promotionPredicate": false
+        }
+      ],
+      "final": {
+        "main": 8,
+        "unlocked": 9,
+        "notification": null
+      },
+      "memoryRows": 0,
+      "logs": [
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:01:00.000Z",
+          "id": 31
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:02:00.000Z",
+          "id": 32
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:03:00.000Z",
+          "id": 33
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:04:00.000Z",
+          "id": 34
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:05:00.000Z",
+          "id": 35
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:06:00.000Z",
+          "id": 36
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:07:00.000Z",
+          "id": 37
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:08:00.000Z",
+          "id": 38
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:09:00.000Z",
+          "id": 39
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:10:00.000Z",
+          "id": 40
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:11:00.000Z",
+          "id": 41
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:12:00.000Z",
+          "id": 42
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:13:00.000Z",
+          "id": 43
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:14:00.000Z",
+          "id": 44
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:15:00.000Z",
+          "id": 45
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:16:00.000Z",
+          "id": 46
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:17:00.000Z",
+          "id": 47
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:18:00.000Z",
+          "id": 48
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:19:00.000Z",
+          "id": 49
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:20:00.000Z",
+          "id": 50
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:21:00.000Z",
+          "id": 51
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:22:00.000Z",
+          "id": 52
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:23:00.000Z",
+          "id": 53
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:24:00.000Z",
+          "id": 54
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:25:00.000Z",
+          "id": 55
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:26:00.000Z",
+          "id": 56
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:27:00.000Z",
+          "id": 57
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:28:00.000Z",
+          "id": 58
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:29:00.000Z",
+          "id": 59
+        },
+        {
+          "profileId": "service-incorrect-review-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-07T01:30:00.000Z",
+          "id": 60
+        }
+      ]
+    },
+    {
+      "name": "math-service-30-next-level-skipped-nonreview-control",
+      "status": "passed",
+      "fixtureKind": "Direct native fake-IDB historical logs, evaluated by unchanged public service and Study progression resolver",
+      "initial": {
+        "main": 8,
+        "unlocked": 9
+      },
+      "observations": [
+        {
+          "count": 29,
+          "promotionPredicate": false
+        },
+        {
+          "count": 30,
+          "promotionPredicate": false
+        }
+      ],
+      "final": {
+        "main": 8,
+        "unlocked": 9,
+        "notification": null
+      },
+      "memoryRows": 0,
+      "logs": [
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:01:00.000Z",
+          "id": 61
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:02:00.000Z",
+          "id": 62
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:03:00.000Z",
+          "id": 63
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:04:00.000Z",
+          "id": 64
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:05:00.000Z",
+          "id": 65
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:06:00.000Z",
+          "id": 66
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:07:00.000Z",
+          "id": 67
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:08:00.000Z",
+          "id": 68
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:09:00.000Z",
+          "id": 69
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:10:00.000Z",
+          "id": 70
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:11:00.000Z",
+          "id": 71
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:12:00.000Z",
+          "id": 72
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:13:00.000Z",
+          "id": 73
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:14:00.000Z",
+          "id": 74
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:15:00.000Z",
+          "id": 75
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:16:00.000Z",
+          "id": 76
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:17:00.000Z",
+          "id": 77
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:18:00.000Z",
+          "id": 78
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:19:00.000Z",
+          "id": 79
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:20:00.000Z",
+          "id": 80
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:21:00.000Z",
+          "id": 81
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:22:00.000Z",
+          "id": 82
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:23:00.000Z",
+          "id": 83
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:24:00.000Z",
+          "id": 84
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:25:00.000Z",
+          "id": 85
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:26:00.000Z",
+          "id": 86
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:27:00.000Z",
+          "id": 87
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:28:00.000Z",
+          "id": 88
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2_bridge",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:29:00.000Z",
+          "id": 89
+        },
+        {
+          "profileId": "service-skipped-nonreview-control",
+          "subject": "math",
+          "itemId": "add_1d_2",
+          "result": "skipped",
+          "isReview": false,
+          "timestamp": "2026-09-07T01:30:00.000Z",
+          "id": 90
+        }
+      ]
+    },
+    {
+      "name": "legacy-observation-limits",
+      "status": "passed",
+      "fixtureKind": "Deliberately incomplete synthetic legacy memory without historical logs; no recovery/backfill is invoked",
+      "memory": {
+        "profileId": "legacy",
+        "id": "count_10",
+        "strength": 5,
+        "nextReview": "2026-10-07T04:00:00+09:00",
+        "totalAnswers": 4,
+        "correctAnswers": 4,
+        "incorrectAnswers": 0,
+        "skippedAnswers": 0,
+        "updatedAt": "2026-09-07T01:00:00.000Z",
+        "status": "active"
+      },
+      "logs": [],
+      "observedGenericLogKeys": [
+        "id",
+        "isReview",
+        "itemId",
+        "profileId",
+        "result",
+        "skipped",
+        "subject",
+        "timeMs",
+        "timestamp"
+      ],
+      "cannotObserve": [
+        "elapsed intervals for absent historical events",
+        "whether answers were independent retrievals",
+        "which concrete question was answered in a generic log",
+        "prior model/hint exposure when no linked Island event/plan exists"
+      ],
+      "distinction": "The Island correction probe can identify the exact question through plan/slot and linked events. Generic/legacy records alone cannot."
+    }
+  ],
+  "limits": [
+    "Synthetic answers do not measure child comprehension, retrieval independence, retention, or optimal thresholds.",
+    "Generic AttemptLog identifies a skill/word, result and timestamp, not a concrete question, support exposure or retrieval occasion.",
+    "Timestamp spacing can be reconstructed where logs exist; independence and missing older events cannot be inferred or backfilled.",
+    "The current parent specification has no minimum elapsed-time condition for a correct strength increment and no correctness condition for 30 non-review math promotion attempts."
+  ],
+  "status": "passed",
+  "caseCount": 12
+}

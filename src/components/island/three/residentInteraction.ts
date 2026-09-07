@@ -7,6 +7,7 @@ export interface ResidentCandidate {
     position: GroundPoint;
     visible: boolean;
     itemId?: string;
+    departingId?: string;
 }
 export interface ResidentVisitChoice { index: number; route: ResidentRoute; replay: boolean }
 
@@ -38,7 +39,8 @@ export function chooseReachableResident(residents: readonly ResidentCandidate[],
     for (const index of order) {
         const resident = residents[index];
         if (!resident.visible) continue;
-        const route = planResidentRoute(resident.position, target, items, completedSets, resident.itemId);
+        const occupied = residents.filter((other, otherIndex) => otherIndex !== index && other.visible).map(other => other.position);
+        const route = planResidentRoute(resident.position, target, items, completedSets, resident.itemId || resident.departingId, { occupied });
         if (route) return { index, route, replay: occupant === index };
     }
     return undefined;

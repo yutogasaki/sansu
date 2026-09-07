@@ -1,0 +1,389 @@
+{
+  "schema": "sansu-single-child-observer-verification-v2",
+  "createdAt": "2026-09-07T15:35:23.512706+00:00",
+  "status": "PASS_SEMANTICS_AND_BOUNDED_BROWSER",
+  "candidate": "observer-v2-26c43f5dc5e9",
+  "actualParticipants": 0,
+  "humanObservationResults": 0,
+  "dataNature": "Synthetic fixtures only. No learning effect or human usability result was measured.",
+  "scope": "Standalone observation document only; application source, production bundles and application QA tools unchanged by this task.",
+  "sourceFiles": [
+    {
+      "path": "docs/design/audits/2026-09-07-single-child-study/README.md",
+      "sha256": "846a91cbceb7c1cd8ef3ff79960e6e5de4025037916354077b6e101edf0f47cb"
+    },
+    {
+      "path": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "sha256": "26c43f5dc5e963098998ac1dd20d59acd4e9d7e94dfe7a89cb061c05d94bc362"
+    }
+  ],
+  "semantic": {
+    "status": "PASS",
+    "cases": 17,
+    "report": "semantic-check.json",
+    "log": "semantic-check.log"
+  },
+  "browser": {
+    "status": "PASS",
+    "report": "attempt-2/browser-check.json",
+    "log": "attempt-2/browser-check.log",
+    "target": "http://127.0.0.1:55640/observer.html",
+    "version": "145.0.7632.6",
+    "viewports": [
+      {
+        "width": 390,
+        "height": 844
+      },
+      {
+        "width": 768,
+        "height": 1024
+      }
+    ],
+    "browserClosed": true,
+    "serverClosed": true
+  },
+  "priorAttempt": {
+    "status": "FAIL",
+    "report": "browser-check.json",
+    "log": "browser-check.log",
+    "reason": "After earlier successful native UI checks, the final repeated JSON download after reload timed out. No page/console error. Preserved unchanged. Re-run with 1100ms spacing between explicit download clicks passed; browser throttling is a hypothesis, not a proven cause."
+  },
+  "visualReview": {
+    "status": "REVIEWED",
+    "reviewer": "Codex",
+    "evidence": "Actual viewport screenshots from attempt-2, plus identical-source phone captures from the first attempt. No screenshot edit/crop/redraw. Text, control borders, first-result/follow-up separation, correction notice and legacy-original notice are readable; no horizontal page overflow was measured.",
+    "gateLimit": "This is a parent observation form review, not the app art gate or an observation of a real participant."
+  },
+  "captures": [
+    {
+      "file": "attempt-2/phone-empty.png",
+      "sha256": "516e34b9c9f0f94da283fbffde749ac04de05d11cb6bfa81fe9d33cbbd70456d",
+      "sourceSha256": "26c43f5dc5e963098998ac1dd20d59acd4e9d7e94dfe7a89cb061c05d94bc362",
+      "target": "http://127.0.0.1:55640/observer.html",
+      "scenario": "phone",
+      "phase": "empty",
+      "geometry": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scroll": {
+          "x": 0,
+          "y": 0
+        },
+        "documentWidth": 390,
+        "focused": "export"
+      },
+      "fixtureOnly": true
+    },
+    {
+      "file": "attempt-2/phone-two-planned-results.png",
+      "sha256": "21c27027de8beaf164755ce475fd30f4797e65ff980be7ec9636e0495d82427b",
+      "sourceSha256": "26c43f5dc5e963098998ac1dd20d59acd4e9d7e94dfe7a89cb061c05d94bc362",
+      "target": "http://127.0.0.1:55640/observer.html",
+      "scenario": "phone",
+      "phase": "two-planned-results",
+      "geometry": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scroll": {
+          "x": 0,
+          "y": 3332
+        },
+        "documentWidth": 390,
+        "focused": "export"
+      },
+      "fixtureOnly": true
+    },
+    {
+      "file": "attempt-2/phone-correction-reason-missing.png",
+      "sha256": "0f33d0f24af00aca22b3b1339ede2d4f5124acfb5d2515a52310368d0784b16c",
+      "sourceSha256": "26c43f5dc5e963098998ac1dd20d59acd4e9d7e94dfe7a89cb061c05d94bc362",
+      "target": "http://127.0.0.1:55640/observer.html",
+      "scenario": "phone",
+      "phase": "correction-reason-missing",
+      "geometry": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scroll": {
+          "x": 0,
+          "y": 4159
+        },
+        "documentWidth": 390,
+        "focused": "export"
+      },
+      "fixtureOnly": true
+    },
+    {
+      "file": "attempt-2/phone-correction-reason-recorded.png",
+      "sha256": "d972127b580443476485975a0404dbdb8e34a64dc7c955e8536b5c9129092294",
+      "sourceSha256": "26c43f5dc5e963098998ac1dd20d59acd4e9d7e94dfe7a89cb061c05d94bc362",
+      "target": "http://127.0.0.1:55640/observer.html",
+      "scenario": "phone",
+      "phase": "correction-reason-recorded",
+      "geometry": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scroll": {
+          "x": 0,
+          "y": 4159
+        },
+        "documentWidth": 390,
+        "focused": "baseline-2-prompt"
+      },
+      "fixtureOnly": true
+    },
+    {
+      "file": "attempt-2/phone-legacy-original-preserved.png",
+      "sha256": "3660f23bfcf8a9ade871f02e24339b438e0e75183a68caaf29b1787b803e5beb",
+      "sourceSha256": "26c43f5dc5e963098998ac1dd20d59acd4e9d7e94dfe7a89cb061c05d94bc362",
+      "target": "http://127.0.0.1:55640/observer.html",
+      "scenario": "phone",
+      "phase": "legacy-original-preserved",
+      "geometry": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scroll": {
+          "x": 0,
+          "y": 1589
+        },
+        "documentWidth": 390,
+        "focused": "export-original"
+      },
+      "fixtureOnly": true
+    },
+    {
+      "file": "attempt-2/tablet-empty.png",
+      "sha256": "d04df61664a75cd18d1b4cf900ebb3db8c49d69d407cec4439022941c35aef95",
+      "sourceSha256": "26c43f5dc5e963098998ac1dd20d59acd4e9d7e94dfe7a89cb061c05d94bc362",
+      "target": "http://127.0.0.1:55640/observer.html",
+      "scenario": "tablet",
+      "phase": "empty",
+      "geometry": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "scroll": {
+          "x": 0,
+          "y": 0
+        },
+        "documentWidth": 768,
+        "focused": "export"
+      },
+      "fixtureOnly": true
+    },
+    {
+      "file": "attempt-2/tablet-two-planned-results.png",
+      "sha256": "d8c911de1cbc588ebc57bb57fa8be1a0a3ed3a31d3b4a4d0efc01969f9d92384",
+      "sourceSha256": "26c43f5dc5e963098998ac1dd20d59acd4e9d7e94dfe7a89cb061c05d94bc362",
+      "target": "http://127.0.0.1:55640/observer.html",
+      "scenario": "tablet",
+      "phase": "two-planned-results",
+      "geometry": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "scroll": {
+          "x": 0,
+          "y": 2077
+        },
+        "documentWidth": 768,
+        "focused": "export"
+      },
+      "fixtureOnly": true
+    },
+    {
+      "file": "attempt-2/tablet-correction-reason-missing.png",
+      "sha256": "e01b8a2863f4cce421cbde14457e004c03ff7f0c4ab6d8a20e47d4ec6104f35e",
+      "sourceSha256": "26c43f5dc5e963098998ac1dd20d59acd4e9d7e94dfe7a89cb061c05d94bc362",
+      "target": "http://127.0.0.1:55640/observer.html",
+      "scenario": "tablet",
+      "phase": "correction-reason-missing",
+      "geometry": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "scroll": {
+          "x": 0,
+          "y": 2593
+        },
+        "documentWidth": 768,
+        "focused": "export"
+      },
+      "fixtureOnly": true
+    },
+    {
+      "file": "attempt-2/tablet-correction-reason-recorded.png",
+      "sha256": "227ab18a776de073c7486250156930414741a2db85dd6b948e573f9df91146d8",
+      "sourceSha256": "26c43f5dc5e963098998ac1dd20d59acd4e9d7e94dfe7a89cb061c05d94bc362",
+      "target": "http://127.0.0.1:55640/observer.html",
+      "scenario": "tablet",
+      "phase": "correction-reason-recorded",
+      "geometry": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "scroll": {
+          "x": 0,
+          "y": 2593
+        },
+        "documentWidth": 768,
+        "focused": "baseline-2-prompt"
+      },
+      "fixtureOnly": true
+    },
+    {
+      "file": "attempt-2/tablet-legacy-original-preserved.png",
+      "sha256": "9869d03571704697c99fae97bcc12490f7dd4bce31445c76e3a5140094c0b5ef",
+      "sourceSha256": "26c43f5dc5e963098998ac1dd20d59acd4e9d7e94dfe7a89cb061c05d94bc362",
+      "target": "http://127.0.0.1:55640/observer.html",
+      "scenario": "tablet",
+      "phase": "legacy-original-preserved",
+      "geometry": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "scroll": {
+          "x": 0,
+          "y": 617
+        },
+        "documentWidth": 768,
+        "focused": "export-original"
+      },
+      "fixtureOnly": true
+    }
+  ],
+  "checks": {
+    "docsCheck": {
+      "status": "PASS",
+      "command": "npm run docs:check",
+      "log": "docs-check.log"
+    }
+  },
+  "testScripts": [
+    {
+      "path": "/tmp/single-child-observer-v2-check.mjs",
+      "sha256": "324e35586afa11e3ae2908570a058e6b4aeac811ffc9e72711ed306c57743879",
+      "location": "temporary, not repository source"
+    },
+    {
+      "path": "/tmp/single-child-observer-v2-browser-attempt-1.mjs",
+      "sha256": "b1ff3fff8f4258794b047f52487e4f9884e361b27349547250d3bd6b4615209f",
+      "location": "temporary, not repository source"
+    },
+    {
+      "path": "/tmp/single-child-observer-v2-browser.mjs",
+      "sha256": "f8c2e110ee3c23255c725c9a188e8c55857a6dabb89db4e8543d86e4d37d0f46",
+      "location": "temporary, not repository source"
+    }
+  ],
+  "evidenceFiles": [
+    {
+      "path": "attempt-2/browser-check.json",
+      "sha256": "5f7f49680fe68524df8079265e18a7978de05e6602f2ab3d3758182ccd124409"
+    },
+    {
+      "path": "attempt-2/browser-check.log",
+      "sha256": "a321ad49569354256f63bb9bcdc16c0fa1dc993422d178b1842a355987941d84"
+    },
+    {
+      "path": "attempt-2/phone-correction-reason-missing.png",
+      "sha256": "0f33d0f24af00aca22b3b1339ede2d4f5124acfb5d2515a52310368d0784b16c"
+    },
+    {
+      "path": "attempt-2/phone-correction-reason-recorded.png",
+      "sha256": "d972127b580443476485975a0404dbdb8e34a64dc7c955e8536b5c9129092294"
+    },
+    {
+      "path": "attempt-2/phone-empty.png",
+      "sha256": "516e34b9c9f0f94da283fbffde749ac04de05d11cb6bfa81fe9d33cbbd70456d"
+    },
+    {
+      "path": "attempt-2/phone-legacy-original-preserved.png",
+      "sha256": "3660f23bfcf8a9ade871f02e24339b438e0e75183a68caaf29b1787b803e5beb"
+    },
+    {
+      "path": "attempt-2/phone-two-planned-results.png",
+      "sha256": "21c27027de8beaf164755ce475fd30f4797e65ff980be7ec9636e0495d82427b"
+    },
+    {
+      "path": "attempt-2/tablet-correction-reason-missing.png",
+      "sha256": "e01b8a2863f4cce421cbde14457e004c03ff7f0c4ab6d8a20e47d4ec6104f35e"
+    },
+    {
+      "path": "attempt-2/tablet-correction-reason-recorded.png",
+      "sha256": "227ab18a776de073c7486250156930414741a2db85dd6b948e573f9df91146d8"
+    },
+    {
+      "path": "attempt-2/tablet-empty.png",
+      "sha256": "d04df61664a75cd18d1b4cf900ebb3db8c49d69d407cec4439022941c35aef95"
+    },
+    {
+      "path": "attempt-2/tablet-legacy-original-preserved.png",
+      "sha256": "9869d03571704697c99fae97bcc12490f7dd4bce31445c76e3a5140094c0b5ef"
+    },
+    {
+      "path": "attempt-2/tablet-two-planned-results.png",
+      "sha256": "d8c911de1cbc588ebc57bb57fa8be1a0a3ed3a31d3b4a4d0efc01969f9d92384"
+    },
+    {
+      "path": "browser-check.json",
+      "sha256": "191b2d22f6e41d3296f8f97c864eb815e1e846270f778775bce5d806e469e7f3"
+    },
+    {
+      "path": "browser-check.log",
+      "sha256": "34f6d466daaf9e21269185b22c327cb48b47ea958ea107b6a2acf0e88d164511"
+    },
+    {
+      "path": "phone-correction-reason-missing.png",
+      "sha256": "0f33d0f24af00aca22b3b1339ede2d4f5124acfb5d2515a52310368d0784b16c"
+    },
+    {
+      "path": "phone-correction-reason-recorded.png",
+      "sha256": "de824a708d7096b6aee2d9ba007e7fe2a34dcc5d1391bc7c902b5c04d6fe1e4a"
+    },
+    {
+      "path": "phone-empty.png",
+      "sha256": "516e34b9c9f0f94da283fbffde749ac04de05d11cb6bfa81fe9d33cbbd70456d"
+    },
+    {
+      "path": "phone-legacy-original-preserved.png",
+      "sha256": "3660f23bfcf8a9ade871f02e24339b438e0e75183a68caaf29b1787b803e5beb"
+    },
+    {
+      "path": "phone-two-planned-results.png",
+      "sha256": "21c27027de8beaf164755ce475fd30f4797e65ff980be7ec9636e0495d82427b"
+    },
+    {
+      "path": "semantic-check.json",
+      "sha256": "71f62ec85634ea4b49481489563eb80929e23c034aedf5d4c2a8f813ed2f1b13"
+    },
+    {
+      "path": "semantic-check.log",
+      "sha256": "d2354be239f4c583231ce4afcd7f852ad5a56e5a738885e3b9c9a4fff8727dc7"
+    },
+    {
+      "path": "docs-check.log",
+      "sha256": "4dd49f491dce406bf29b2e64fab9b52981bf092051a84dadabbf55954fa51d05"
+    }
+  ],
+  "limits": [
+    "Safari, actual phone/tablet devices, screen readers and print output were not tested.",
+    "Browser main-flow check covers the 2-question plan; the 4-question, support categories and datetime boundaries were exercised by actual-script Node semantic cases.",
+    "Observer claims and correction reasons are recorded, not independently authenticated.",
+    "Participants, age and scope remain unanswered; no synthetic data changes the actual N=0 finding."
+  ]
+}

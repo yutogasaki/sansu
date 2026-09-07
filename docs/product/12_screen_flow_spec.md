@@ -4,6 +4,8 @@
 
 ## 1. ルート方針
 
+Island初回では `/onboarding` をプロフィール不要のWelcome → 「まなぶ」 → 明示的な学習設定 → 原子的な保存 → `/` とする。既存プロフィールでの `/onboarding` は `/` へ戻し、設定からの追加だけ `/onboarding?mode=add` を使用する。`/` の旧active探索run優先は変更しない。詳細は [28_mystic_island_spec.md](28_mystic_island_spec.md) の初回導線。2026-09-07に採用・統合し、実画面検証を進める。
+
 `/park` は [22_shared_subject_build_and_play_spec.md](22_shared_subject_build_and_play_spec.md) の作品再演 → 制作選択 → 学習 → 試遊・再編集を全画面表示する。起動flag有効時の `/` は旧active探索を先に復帰し、それがなければ遊園地を開く。未完制作があっても無料再演できる。プロフィールなしはonboardingへ送る。
 
 ### 1.1 現行ルート

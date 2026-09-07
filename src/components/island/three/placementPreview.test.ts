@@ -1,9 +1,27 @@
 import { describe, expect, it } from 'vitest';
 import * as THREE from 'three';
-import { IslandPlacementPreview } from './placementPreview';
-import { IslandMaterials } from './primitives';
+import { IslandPlacementPreview, makePlacementMarker } from './placementPreview';
+import { disposeGeometry, IslandMaterials } from './primitives';
 
 describe('Island placement preview lifetime', () => {
+    it('keeps the footprint and front direction visible through occluders in both validity states', () => {
+        for (const valid of [true, false]) {
+            const marker = makePlacementMarker(.7, valid);
+            marker.traverse(child => {
+                if (!(child instanceof THREE.Mesh)) return;
+                expect((child.material as THREE.MeshBasicMaterial).depthTest).toBe(false);
+                expect((child.material as THREE.MeshBasicMaterial).depthWrite).toBe(false);
+                expect(child.renderOrder).toBe(3);
+            });
+            const initial = new THREE.Box3().setFromObject(marker, true);
+            expect(initial.max.z).toBeCloseTo(.93, 6); expect(initial.min.z).toBeGreaterThanOrEqual(-.751);
+            marker.rotation.y = Math.PI / 2;
+            const rotated = new THREE.Box3().setFromObject(marker, true);
+            expect(rotated.max.x).toBeCloseTo(.93, 6);
+            disposeGeometry(marker);
+        }
+    });
+
     it('reuses one set of geometry while moving, rotating and changing validity', () => {
         const materials = new IslandMaterials(), preview = new IslandPlacementPreview(materials);
         const item = { id: 'bench-one', kind: 'bench' as const, rotation: 0, position: { x: 0, z: 1 } };

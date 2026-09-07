@@ -39,6 +39,7 @@ const report = {
     git: { revision: git(['rev-parse', 'HEAD']), dirty: Boolean(git(['status', '--porcelain'])) },
     sourceSnapshotStart: await sourceFingerprint(),
     method: {
+        setup: 'Wait for the empty-profile Island welcome to commit before inserting each disposable profile; retain the same document for fixture hooks and navigate only after that lookup has resolved.',
         input: 'physical-keyboard digits and Enter, identical answers and ordinary actions in both lanes',
         order: 'Study/Island alternates by repetition and scenario within each viewport',
         timing: 'Browser performance.now; answer delay begins at actual Enter keydown. Total includes typing, automated observation overhead, and the real section-continue keyboard action.',
@@ -174,6 +175,8 @@ async function runLane(browser, lane, scenario, repetition, layout) {
     page.on('pageerror', error => errors.push(error.stack));
     try {
         await page.goto(`${base}/#/onboarding`, { waitUntil: 'domcontentloaded' });
+        // Resolve the empty-profile onboarding lookup before inserting the disposable fixture.
+        await page.locator('[data-onboarding-world="island"][data-mode="welcome"]').waitFor();
         const profileId = await seedDev(page, { name: `Benchmark ${lane} ${repetition}`, skill: 'add_1d_1' });
         let firstPlan;
         let metadata;

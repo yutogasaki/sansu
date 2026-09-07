@@ -108,6 +108,48 @@ describe('Island problem semantic presentation', () => {
         expect(splitIslandLabel('🍎  🍎\n🧑🏽‍🚀')).toEqual([{ kind: 'glyph', value: '🍎' }, { kind: 'text', value: '  ' }, { kind: 'glyph', value: '🍎' }, { kind: 'text', value: '\n' }, { kind: 'glyph', value: '🧑🏽‍🚀' }]);
     });
 
+    it.each(['count_shape', 'count_color', 'count_pair'])('shows %s options once on the answer buttons while retaining the reference', skillId => {
+        const problem = { ...base, ...generateMathProblem(skillId, { random: createSeededRandom(`island-options:${skillId}`) }) };
+        const before = JSON.stringify(problem);
+        const visual = problem.questionVisual;
+        if (visual?.kind !== 'reference-choice-grid') throw new Error('Expected a reference choice fixture');
+        const prompt = renderToStaticMarkup(<IslandProblemPrompt problem={problem} />);
+        const answer = renderToStaticMarkup(<IslandAnswerForm slot={slot(problem)} disabled={false} onAnswer={noop} />);
+        const shared = renderToStaticMarkup(<MathProblemPrompt problem={problem} renderItem={item => <IslandGlyph symbol={item.emoji} label={item.label} />} />);
+        expect(glyphs(prompt)).toEqual([visual.grid.reference.emoji]);
+        expect(prompt).toContain(visual.prompt);
+        expect(glyphs(answer)).toEqual([visual.grid.reference.emoji, ...visual.grid.choices.map(item => item.emoji)]);
+        expect(glyphs(shared)).toEqual([visual.grid.reference.emoji, ...visual.grid.choices.map(item => item.emoji)]);
+        expect([...answer.matchAll(/data-choice-value="([^"]*)"/g)].map(match => match[1])).toEqual(problem.inputConfig!.choices!.map(choice => choice.value));
+        for (const choice of problem.inputConfig!.choices!) expect(answer).toContain(`aria-label="${choice.label}"`);
+        expect(JSON.stringify(problem)).toBe(before);
+    });
+
+    it('retains sequence order, placeholders, and odd-one-out quantities even when objects also appear on the buttons', () => {
+        const choices = { choices: [{ label: orange.emoji, value: orange.emoji }, { label: apple.emoji, value: apple.emoji }] };
+        const sequence: Problem = { ...base, inputType: 'choice', inputConfig: choices,
+            questionVisual: { kind: 'ordinal-row', items: [orange, apple, orange, apple], showPlaceholder: true, prompt: 'つぎは どれ？' } };
+        const sequenceHtml = renderToStaticMarkup(<IslandAnswerForm slot={slot(sequence)} disabled={false} onAnswer={noop} />);
+        expect(glyphs(sequenceHtml)).toEqual(['🍊', '🍎', '🍊', '🍎', '🍊', '🍎']);
+        expect(sequenceHtml).toContain('data-visual-surface="ordinal"');
+        expect(sequenceHtml).toContain('つぎは どれ？');
+        expect(sequenceHtml).toContain('>?</');
+        const oddOneOut: Problem = { ...sequence, questionVisual: { kind: 'item-grid', items: [apple, apple, orange, apple], columns: 4, prompt: 'なかまはずれ は？' } };
+        const oddHtml = renderToStaticMarkup(<IslandAnswerForm slot={slot(oddOneOut)} disabled={false} onAnswer={noop} />);
+        expect(glyphs(oddHtml)).toEqual(['🍎', '🍎', '🍊', '🍎', '🍊', '🍎']);
+        expect(oddHtml).toContain('grid-template-columns:repeat(4, minmax(0, 1fr))');
+    });
+
+    it('keeps an unfamiliar saved reference grid complete when its illustrations do not match the answer set', () => {
+        const problem: Problem = { ...base, inputType: 'choice',
+            questionVisual: { kind: 'reference-choice-grid', grid: { reference: apple, choices: [orange, apple], columns: 2 } },
+            inputConfig: { choices: [{ label: 'ひだり', value: 'left' }, { label: 'みぎ', value: 'right' }] } };
+        const html = renderToStaticMarkup(<IslandAnswerForm slot={slot(problem)} disabled={false} onAnswer={noop} />);
+        expect(glyphs(html)).toEqual(['🍎', '🍊', '🍎']);
+        expect(html).toContain('data-choice-value="left"');
+        expect(html).toContain('data-choice-value="right"');
+    });
+
     it('does not add object clues or answer-derived illustrations to words and symbolic arithmetic', () => {
         const vocab: Problem = { ...base, subject: 'vocab', questionText: 'apple', correctAnswer: 'apple', displayAnswer: 'りんご', inputType: 'choice', inputConfig: { choices: [{ label: 'りんご', value: 'apple' }, { label: 'はな', value: 'flower' }] } };
         const html = renderToStaticMarkup(<IslandAnswerForm slot={slot(vocab)} disabled={false} onAnswer={noop} />);
@@ -197,7 +239,7 @@ describe('shared answer input compatibility', () => {
 
     it('keeps forced Hissan and persisted support on the same input surface', () => {
         const problem = { ...base, categoryId: 'add_2d1d_hissan_nc', questionText: '23 + 4 =', correctAnswer: '27' };
-        const current = { ...slot(problem), assisted: true, hissanStep: 0, hissanValues: {} };
+        const current = { ...slot(problem), assisted: true, supportStage: 'hint' as const, hissanStep: 0, hissanValues: {} };
         const html = renderToStaticMarkup(<IslandAnswerForm slot={current} disabled={false} onAnswer={noop} />);
         expect(html).toContain('data-input-type="hissan"');
         expect(html).toContain('class="park-support" role="note"');

@@ -19,7 +19,7 @@ export function mathCheckQuestionKey(problem: Problem): string {
 export function updateIslandMathChecks(
     previous: readonly IslandMathCheck[] | undefined,
     slot: LearningSlot,
-    outcome: 'needs-support' | 'correct-final' | 'partial',
+    outcome: 'needs-support' | 'correct-final' | 'supported-final' | 'partial',
     now: number,
 ): IslandMathCheck[] | undefined {
     if (slot.problem.subject !== 'math' || outcome === 'partial') return previous ? [...previous] : undefined;
@@ -35,7 +35,7 @@ export function updateIslandMathChecks(
     }
     if (!previous) return undefined;
     return previous.flatMap(check => {
-        if (!slot.assisted && check.skillId === skillId && check.failedProblemId !== slot.problem.id
+        if (outcome === 'correct-final' && !slot.assisted && check.skillId === skillId && check.failedProblemId !== slot.problem.id
             && check.failedQuestionKey !== mathCheckQuestionKey(slot.problem)) return [];
         // A completed bridge can be guided. It never clears the original independent check.
         if (check.stage === 'bridge' && getMathSkillMetadata(check.skillId).reviewFallbackSkillIds?.includes(skillId)) {

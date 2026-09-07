@@ -45,7 +45,10 @@ const sourcePaths = ['src/pages/Island.tsx', 'src/components/island/IslandLearni
     'src/components/island/IslandLearningSupport.tsx', 'src/components/island/learningGuidance.ts',
     'src/components/island/IslandStage.tsx', 'src/components/island/IslandStage.css', 'src/components/island/three/runtime.ts',
     'src/components/island/three/learningReaction.ts', 'src/components/island/learningFeedback.ts',
-    'src/domain/math/hissanEngine.ts', 'src/domain/math/curriculum.ts', 'src/domain/user/profile.ts', 'src/domain/english/words.ts'];
+    'src/domain/math/hissanEngine.ts', 'src/domain/math/curriculum.ts', 'src/domain/user/profile.ts', 'src/domain/english/words.ts',
+    'src/domain/island/types.ts', 'src/domain/island/learningSupport.ts', 'src/domain/island/commit.ts',
+    'src/domain/island/repository.ts', 'src/domain/island/learningChecks.ts',
+    'tools/e2e-island-learning.mjs', 'tools/island-learning-fixtures.mjs', 'tools/island-learning-checks.mjs'];
 const sourceSnapshot = async () => Promise.all(sourcePaths.map(async path => ({ path, sha256: createHash('sha256').update(await fs.readFile(path)).digest('hex') })));
 const report = { target: base, startedAt: new Date().toISOString(), candidate: LEARNING_CANDIDATE,
     flag: 'VITE_ISLAND_ENABLED=true', production, fixtureModuleHash, sourceStart: await sourceSnapshot(), scenarios: [], captures: [], pass: false,
@@ -73,12 +76,16 @@ async function capture(page, name, state, allowScroll = false) {
 
 async function openSupport(page, before, touch, skipped = false) {
     const plan = before.plan;
-    await activate(button(page, skipped ? 'わからない' : 'いっしょに みる'), touch);
+    await activate(button(page, skipped ? 'わからない' : 'ヒントを みる'), touch);
     await waitLearningReady(page, { ...plan, revision: plan.revision + 1 });
     const after = await readNative(page, plan.profileId);
     assert.equal(after.plan.revision, plan.revision + 1);
     assert.equal(after.plan.cursor, plan.cursor);
     assert(after.plan.slots[plan.cursor].assisted);
+    assert.equal(after.plan.slots[plan.cursor].supportStage, 'hint');
+    assert.equal(await page.locator('.island-answer-stage').getAttribute('data-support-stage'), 'hint');
+    assert.equal(await page.locator('.island-support-example, .island-support-answer, .island-support-model').count(), 0,
+        'A first hint does not expose the answer or full worked model');
     assert.deepEqual(after.plan.slots.map(slot => slot.problem), plan.slots.map(slot => slot.problem));
     if (!skipped) assert.deepEqual(after.logs, before.logs, 'Opening support does not fabricate a learning answer');
     const receipts = after.islandEvents.filter(event => !before.islandEvents.some(previous => previous.id === event.id));
@@ -198,7 +205,9 @@ try {
                 state = support.after;
                 if (scenario.workedExample) {
                     assert.equal(state.plan.slots[0].problem.questionText, '2 + 9 =');
-                    assert.equal(await page.locator('.island-support-example').innerText(), '2 + 8 = 10 → 10 + 1 = 11');
+                    assert((await page.locator('.island-learning-support').innerText()).includes('9を 8と 1に わけて'),
+                        'The hint gives the short method without the worked answer');
+                    assert.equal(await page.locator('.island-support-example').count(), 0);
                 }
                 row.reactions.push(await assertReaction(page, support.receipt, 'support', state.plan.cursor, { reduced: scenario.reduced }));
                 assert.equal((await sceneState(page)).cameraFrame, initialScene.cameraFrame, 'Opening support keeps the same learning camera');
@@ -210,6 +219,7 @@ try {
                 state = await readNative(page, profileId);
                 await waitLearningReady(page, state.plan);
                 assert.deepEqual(state.plan, saved, 'Support and reserved work survive reload');
+                assert.equal(state.plan.slots[state.plan.cursor].supportStage, 'hint');
                 await page.locator('.park-support strong').waitFor();
                 await page.waitForFunction(id => document.querySelector('[data-testid="island-stage"]')?.getAttribute('data-section-id') === id, saved.id);
                 assert.equal((await sceneState(page)).reactionId, '', 'Reload initializes saved progress without a fabricated success');

@@ -5,6 +5,7 @@ import { ParkConflict } from '../park/repository';
 import { getLevelForSkill } from '../math/curriculum';
 import { ENGLISH_WORDS } from '../english/words';
 import { getIslandMathRemediationSkillIds } from './learningChecks';
+import { hasValidIslandSupportState } from './learningSupport';
 import { createIsland, islandRewardChoices, isValidIslandPlacement } from './catalog';
 import { ISLAND_ITEM_KINDS, type IslandEdit, type IslandItemKind, type IslandPlan, type IslandRecord } from './types';
 
@@ -38,7 +39,8 @@ export function assertIslandPlan(plan: IslandPlan, profileId: string) {
     if (plan.profileId !== profileId || plan.schemaVersion !== 1 || plan.plannerVersion !== 'island-learning-v1'
         || !Number.isInteger(plan.revision) || plan.revision < 0 || !Number.isInteger(plan.cursor)
         || !Array.isArray(plan.slots) || plan.slots.length === 0 || plan.cursor < 0 || plan.cursor > plan.slots.length
-        || plan.slots.some((slot, index) => slot.problem.subject !== plan.subject || slot.completed !== (index < plan.cursor))
+        || plan.slots.some((slot, index) => slot.problem.subject !== plan.subject || slot.completed !== (index < plan.cursor)
+            || !hasValidIslandSupportState(slot))
         || (plan.status === 'active' ? plan.cursor === plan.slots.length : plan.status !== 'completed' || plan.cursor !== plan.slots.length)) {
         throw new IslandConflict('Invalid learning plan');
     }

@@ -41,7 +41,7 @@ export function sampleLearningReaction(kind: LearningReactionKind, elapsed: numb
     const strength = beat === 'complete' ? 1.3 : beat === 'halfway' ? 1.15 : 1;
     const envelope = phase === 'contact' ? Math.sin(reply * Math.PI) : 0;
     return {
-        phase, duration, arrived: reduced || elapsed >= travel,
+        phase, duration, reply, arrived: reduced || elapsed >= travel,
         travel: reduced ? 1 : Math.max(0, Math.min(1, elapsed / LIGHT_TRAVEL_MS)),
         paw: kind === 'correct' ? (reduced ? .48 : envelope * strength) : 0,
         look: reduced ? .34 : kind === 'correct' ? envelope : Math.sin(reply * Math.PI),

@@ -1,0 +1,82 @@
+import { afterEach, describe, expect, it } from 'vitest';
+import * as THREE from 'three';
+import { IslandResident } from './animals';
+import { boxCorners, fitLearningFrame } from './sceneFraming';
+import { disposeGeometry, IslandMaterials } from './primitives';
+import type { ResidentSpecies } from './residentRig';
+import type { IslandStageItem } from './types';
+
+const materials: IslandMaterials[] = [], actors: IslandResident[] = [];
+function actor(species: ResidentSpecies, position: [number, number, number]) {
+    const material = new IslandMaterials(); materials.push(material);
+    const resident = new IslandResident(species, material, position, () => undefined); actors.push(resident);
+    return resident;
+}
+function camera() {
+    const result = new THREE.OrthographicCamera(-7, 7, 5, -5, .1, 100);
+    const focus = new THREE.Vector3(.8, .55, 1);
+    result.position.copy(focus).add(new THREE.Vector3(4.7, 8.8, 13.5)); result.lookAt(focus); result.updateMatrixWorld(true);
+    return result;
+}
+function expectVisible(resident: IslandResident, view: THREE.Camera) {
+    for (const point of boxCorners(new THREE.Box3().setFromObject(resident.group, true))) {
+        point.project(view);
+        expect(Math.abs(point.x)).toBeLessThan(.96);
+        expect(Math.abs(point.y)).toBeLessThan(.94);
+    }
+}
+afterEach(() => {
+    actors.splice(0).forEach(resident => disposeGeometry(resident.group));
+    materials.splice(0).forEach(material => material.dispose());
+});
+
+describe('frozen learning frame after free play', () => {
+    it.each([[390, 136], [390, 112], [768, 252]])('fits standing, bench and lantern residents at %sx%s without moving their roots', (width, height) => {
+        const otter = actor('otter', [.1, 0, 1.6]), rabbit = actor('rabbit', [2.45, 0, 1.45]);
+        const bench: IslandStageItem = { id: 'bench', kind: 'bench', position: { x: 0, z: 1 }, rotation: Math.PI / 2 };
+        const lantern: IslandStageItem = { id: 'lantern', kind: 'lantern', position: { x: -.65, z: .4 }, rotation: 0 };
+        for (const settled of [false, true]) {
+            if (settled) {
+                expect(otter.visit(bench, 0, true, [bench, lantern], 0)).toBe(true);
+                expect(rabbit.visit(lantern, 0, true, [bench, lantern], 0)).toBe(true);
+            }
+            const roots = [otter.group.position.clone(), rabbit.group.position.clone()], view = camera();
+            fitLearningFrame(view, [otter.learningFrameBounds(), rabbit.learningFrameBounds()], width / height, width < 600 ? 7.2 : 9.5);
+            for (const resident of [otter, rabbit]) {
+                expectVisible(resident, view);
+                for (const kind of ['correct', 'retry', 'support'] as const) {
+                    resident.respondToLearning(kind, 1, 1, new THREE.Vector3(1.6, .8, -.5));
+                    expectVisible(resident, view); resident.clearLearningPose();
+                }
+            }
+            expect([otter.group.position.toArray(), rabbit.group.position.toArray()]).toEqual(roots.map(root => root.toArray()));
+        }
+    });
+
+    it('keeps the same camera while an already-started route reaches the east island and plays', () => {
+        const rabbit = actor('rabbit', [2.45, 0, 1.45]), fox = actor('fox', [6.26, 0, .83]);
+        const swing: IslandStageItem = { id: 'swing', kind: 'swing', position: { x: 6.25, z: .95 }, rotation: Math.PI / 2 };
+        expect(rabbit.visit(swing, 0, false, [swing], 4)).toBe(true);
+        rabbit.update(250);
+        const view = camera();
+        fitLearningFrame(view, [rabbit.learningFrameBounds(), fox.learningFrameBounds()], 768 / 252, 9.5);
+        const frame = [...view.matrixWorld.elements, ...view.projectionMatrix.elements];
+        for (let now = 250; now <= 8200; now += 50) {
+            rabbit.update(now); rabbit.respondToLearning('correct', 1, 1, new THREE.Vector3(6.98, .35, .82));
+            expectVisible(rabbit, view); expectVisible(fox, view); rabbit.clearLearningPose();
+        }
+        expect([...view.matrixWorld.elements, ...view.projectionMatrix.elements]).toEqual(frame);
+        expect(rabbit.action).toBe('swing');
+        expect(rabbit.group.position.x).toBe(swing.position!.x);
+    });
+
+    it('protects the ears through a seat-release transition without changing resident state', () => {
+        const rabbit = actor('rabbit', [0, 0, 1.6]);
+        const mushroom: IslandStageItem = { id: 'mushroom', kind: 'mushroom', position: { x: 0, z: 1 }, rotation: 0 };
+        expect(rabbit.visit(mushroom, 0, false, [mushroom], 0)).toBe(true); rabbit.update(2500); rabbit.release(2500);
+        const view = camera();
+        fitLearningFrame(view, [rabbit.learningFrameBounds()], 390 / 136, 7.2);
+        for (let now = 2500; now <= 2720; now += 20) { rabbit.update(now); expectVisible(rabbit, view); }
+        expect(rabbit.group.position.toArray()).toEqual([0, 0, 1]);
+    });
+});

@@ -112,10 +112,13 @@ try {
             await page.keyboard.press('Enter');
             assert.equal((await readNative(page, id)).plan.revision, state.plan.revision, 'Incomplete Enter does not submit');
             if (scenario.support) {
-                await button(page, 'いっしょに みる').click();
+                await button(page, 'ヒントを みる').click();
                 await page.waitForFunction(revision => Number(document.querySelector('[data-island-plan-revision]')?.getAttribute('data-island-plan-revision')) > revision, state.plan.revision);
                 state = await readNative(page, id); await waitLearningReady(page, state.plan);
                 assert(state.plan.slots[0].assisted);
+                assert.equal(state.plan.slots[0].supportStage, 'hint');
+                assert.equal(await page.locator('.island-support-model, .island-support-example, .island-support-answer').count(), 0,
+                    'The existing written-input scenarios remain hint-assisted row submissions; models have a separate full-grid journey');
             }
             const total = expectedLearningAnswer(state.plan.slots[0], 'hissan').totalSteps;
             for (let index = 0; index < total; index++) {

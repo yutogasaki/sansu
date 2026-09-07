@@ -8,7 +8,7 @@ import type { IslandStageItem } from './types';
 export function makePlacementMarker(radius: number, valid: boolean) {
     const group = new THREE.Group();
     const material = new THREE.MeshBasicMaterial({ color: valid ? '#fff3be' : '#946643',
-        transparent: true, opacity: .95, depthWrite: false, side: THREE.DoubleSide });
+        transparent: true, opacity: .95, depthWrite: false, depthTest: false, side: THREE.DoubleSide });
     material.userData.islandOwned = true;
     const segments = valid ? 1 : 8;
     for (let i = 0; i < segments; i++) {
@@ -18,8 +18,18 @@ export function makePlacementMarker(radius: number, valid: boolean) {
         geometry.rotateX(-Math.PI / 2);
         mesh(group, geometry, material, [0, .025, 0]);
     }
+    // A pointed front makes rotation legible even for round furniture. It follows
+    // local +Z, the same front used by seats and saved rotations.
+    const front = new THREE.Shape();
+    front.moveTo(-.105, radius + .075); front.lineTo(.105, radius + .075);
+    front.lineTo(0, radius + .23); front.closePath();
+    const direction = new THREE.ShapeGeometry(front);
+    direction.rotateX(Math.PI / 2);
+    mesh(group, direction, material, [0, .03, 0]);
     batch(group);
-    group.traverse(child => { if (child instanceof THREE.Mesh) child.castShadow = child.receiveShadow = false; });
+    group.traverse(child => { if (child instanceof THREE.Mesh) {
+        child.castShadow = child.receiveShadow = false; child.renderOrder = 3;
+    } });
     return group;
 }
 
@@ -48,13 +58,14 @@ export class IslandPlacementPreview {
                     if (!material) {
                         material = source.userData.islandOwned ? source : source.clone();
                         material.userData.islandOwned = true;
-                        material.transparent = true; material.opacity = .84; material.depthWrite = false;
+                        material.transparent = true; material.opacity = .94; material.depthWrite = true;
                         clones.set(source, material);
                     }
                     return material;
                 };
                 child.material = Array.isArray(child.material) ? child.material.map(ghost) : ghost(child.material);
                 child.castShadow = false;
+                child.renderOrder = 2;
             });
             const radius = ISLAND_ITEMS[item.kind].radius;
             this.validMarker = makePlacementMarker(radius, true);

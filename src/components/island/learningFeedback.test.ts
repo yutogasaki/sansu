@@ -18,6 +18,15 @@ describe('Island saved answer presentation', () => {
         expect(result?.reaction).toEqual({ id: event.id, kind: 'correct' });
     });
 
+    it('gives supported session completion its own feedback without labelling it a correct answer', () => {
+        const receipt = { ...event, type: 'supported_completed' as const, result: 'supported-completion' as const };
+        const response = islandFeedbackForReceipt(before, { ...before, cursor: 2 }, receipt);
+        expect(response?.feedback).toEqual({ id: event.id, kind: 'supported', text: 'つぎの ひかりへ すすもう' });
+        expect(response?.reaction).toEqual({ id: event.id, kind: 'correct' });
+        expect(islandFeedbackForReceipt(before, before, receipt)).toBeUndefined();
+        expect(islandFeedbackForReceipt(before, { ...before, cursor: 2 }, { ...receipt, result: 'correct' })).toBeUndefined();
+    });
+
     it('uses a retry cue for both independent and assisted wrong answers', () => {
         for (const result of ['incorrect', 'assisted-incorrect'] as const) {
             const response = islandFeedbackForReceipt(before, before, { ...event, result });
@@ -27,7 +36,7 @@ describe('Island saved answer presentation', () => {
     });
 
     it('does not award success light for opening help or skipping', () => {
-        for (const type of ['support_opened', 'skipped'] as const) {
+        for (const type of ['support_opened', 'skipped', 'model_opened'] as const) {
             expect(islandFeedbackForReceipt(before, before, { ...event, type, result: undefined })?.reaction?.kind).toBe('support');
         }
     });

@@ -4,7 +4,10 @@ import type { IslandStageItem } from './types';
 export interface GroundPoint { x: number; z: number }
 interface Obstacle extends GroundPoint { radius: number }
 export interface ResidentRoute { points: GroundPoint[]; yaw: number }
-const FOOTPRINT = .42;
+export interface ResidentRouteOptions { occupied?: readonly GroundPoint[] }
+export interface ResidentPointRouteOptions extends ResidentRouteOptions { departingId?: string; departingIds?: readonly string[]; yaw?: number }
+export const RESIDENT_FOOTPRINT = .42;
+const FOOTPRINT = RESIDENT_FOOTPRINT;
 const STEP = .25;
 const distance = (a: GroundPoint, b: GroundPoint) => Math.hypot(a.x - b.x, a.z - b.z);
 const onEllipse = (point: GroundPoint, land: typeof ISLAND_MAIN_LAND) =>
@@ -22,7 +25,7 @@ export function residentGroundHeight(point: GroundPoint, expanded: boolean) {
     return .19 + Math.sin((point.x - 4) / 1.44 * Math.PI) * .15;
 }
 
-export function residentObstacles(items: IslandStageItem[], targetId: string, departingId?: string): Obstacle[] {
+export function residentObstacles(items: readonly IslandStageItem[], targetId: string, departingId?: string): Obstacle[] {
     // The bridge is reserved against furnishing; it is deliberately walkable.
     return [
         ...ISLAND_RESERVED_AREAS.filter(area => !(area.x > 4 && area.x < 5.5)),
@@ -36,7 +39,7 @@ export function residentPointIsClear(point: GroundPoint, expanded: boolean, obst
 
 /** Initial scene placement only. Saved possessions are never moved to make room.
  * A blocked spawn uses the nearest clear quarter-grid point on its own island. */
-export function findSafeResidentSpawn(origin: GroundPoint, items: IslandStageItem[], completedSets: number,
+export function findSafeResidentSpawn(origin: GroundPoint, items: readonly IslandStageItem[], completedSets: number,
     occupied: readonly GroundPoint[] = []): GroundPoint | undefined {
     const land = origin.x > 4.6 ? ISLAND_EAST_LAND : ISLAND_MAIN_LAND;
     if (land === ISLAND_EAST_LAND && completedSets < 2) return undefined;
@@ -109,16 +112,58 @@ function segmentRoute(start: GroundPoint, end: GroundPoint, expanded: boolean, o
     return undefined;
 }
 
-export function planResidentRoute(origin: GroundPoint, target: IslandStageItem, items: IslandStageItem[], completedSets: number, departingId?: string): ResidentRoute | undefined {
+function occupiedObstacles(occupied: readonly GroundPoint[] = []): Obstacle[] {
+    return occupied.map(point => ({ ...point, radius: FOOTPRINT }));
+}
+
+/** A departure token only frees the furniture the origin actually overlaps.
+ * Moving/storing that saved item cannot exempt its new location from collision. */
+function departureAt(origin: GroundPoint, items: readonly IslandStageItem[], departingId?: string) {
+    const item = items.find(candidate => candidate.id === departingId);
+    return item?.position && distance(origin, item.position) <= ISLAND_ITEMS[item.kind].radius + FOOTPRINT + 1e-8 ? item.id : undefined;
+}
+
+function connectGroundRoute(origin: GroundPoint, end: GroundPoint, expanded: boolean, obstacles: Obstacle[]) {
+    const crossing = expanded && (origin.x > 4.6) !== (end.x > 4.6);
+    const bridge: GroundPoint[] = origin.x > 4.6 ? [{ x: 5.5, z: 0 }, { x: 4.05, z: 0 }] : [{ x: 4.05, z: 0 }, { x: 5.5, z: 0 }];
+    const stops = [origin, ...(crossing ? bridge : []), end], points: GroundPoint[] = [];
+    for (let i = 0; i < stops.length - 1; i++) {
+        const route = segmentRoute(stops[i], stops[i + 1], expanded, obstacles);
+        if (!route) return undefined;
+        points.push(...(i ? route.slice(1) : route));
+    }
+    return points;
+}
+
+export function planResidentPointRoute(origin: GroundPoint, destination: GroundPoint, items: readonly IslandStageItem[], completedSets: number,
+    options: ResidentPointRouteOptions = {}): ResidentRoute | undefined {
+    if (![origin.x, origin.z, destination.x, destination.z].every(Number.isFinite)
+        || (options.yaw !== undefined && !Number.isFinite(options.yaw))) return undefined;
+    const expanded = completedSets >= 2, occupied = occupiedObstacles(options.occupied);
+    const departingIds = new Set([options.departingId, ...(options.departingIds ?? [])]
+        .map(id => departureAt(origin, items, id)).filter((id): id is string => Boolean(id)));
+    const obstacles = [...residentObstacles(items.filter(item => !departingIds.has(item.id)), ''), ...occupied];
+    // A departing seat may be crossed only to leave it, never to choose a new
+    // standing point within its footprint or another resident's body.
+    const arrivalObstacles = [...residentObstacles(items, ''), ...occupied];
+    if (!residentPointIsClear(origin, expanded, obstacles) || !residentPointIsClear(destination, expanded, arrivalObstacles)) return undefined;
+    const points = connectGroundRoute(origin, destination, expanded, obstacles);
+    return points ? { points, yaw: options.yaw ?? Math.atan2(destination.x - origin.x, destination.z - origin.z) } : undefined;
+}
+
+export function planResidentRoute(origin: GroundPoint, target: IslandStageItem, items: readonly IslandStageItem[], completedSets: number,
+    departingId?: string, options: ResidentRouteOptions = {}): ResidentRoute | undefined {
     if (!target.position) return undefined;
-    const expanded = completedSets >= 2, obstacles = residentObstacles(items, target.id, departingId);
+    const expanded = completedSets >= 2, occupied = occupiedObstacles(options.occupied);
+    departingId = departureAt(origin, items, departingId);
+    const obstacles = [...residentObstacles(items, target.id, departingId), ...occupied];
     // A newly moved object can cover a standing resident. Every path segment
     // checks its start too, so no route can leave this point without clipping.
     // Reject once instead of rebuilding the same failed grid for every approach.
     if (!residentPointIsClear(origin, expanded, obstacles)) return undefined;
     // Leaving an occupied seat may cross its footprint. The new resting point must
     // still clear that seat, or the next visit would start inside an obstacle.
-    const arrivalObstacles = departingId && departingId !== target.id ? residentObstacles(items, target.id) : obstacles;
+    const arrivalObstacles = departingId && departingId !== target.id ? [...residentObstacles(items, target.id), ...occupied] : obstacles;
     const seated = ['bench', 'swing', 'mushroom'].includes(target.kind);
     const reach = target.kind === 'fountain' ? 1.1 : .77;
     const directions = seated ? [target.rotation] : [target.rotation, target.rotation + Math.PI, target.rotation + Math.PI / 2,
@@ -126,17 +171,8 @@ export function planResidentRoute(origin: GroundPoint, target: IslandStageItem, 
     for (const angle of directions) {
         const end = seated ? target.position : { x: target.position.x + Math.sin(angle) * reach, z: target.position.z + Math.cos(angle) * reach };
         if (!residentPointIsClear(end, expanded, arrivalObstacles)) continue;
-        const crossing = expanded && (origin.x > 4.6) !== (end.x > 4.6);
-        const bridge: GroundPoint[] = origin.x > 4.6 ? [{ x: 5.5, z: 0 }, { x: 4.05, z: 0 }] : [{ x: 4.05, z: 0 }, { x: 5.5, z: 0 }];
-        const stops = [origin, ...(crossing ? bridge : []), end];
-        const points: GroundPoint[] = [];
-        let reachable = true;
-        for (let i = 0; i < stops.length - 1; i++) {
-            const route = segmentRoute(stops[i], stops[i + 1], expanded, obstacles);
-            if (!route) { reachable = false; break; }
-            points.push(...(i ? route.slice(1) : route));
-        }
-        if (reachable) return { points, yaw: seated ? target.rotation : angle + Math.PI };
+        const points = connectGroundRoute(origin, end, expanded, obstacles);
+        if (points) return { points, yaw: seated ? target.rotation : angle + Math.PI };
     }
     return undefined;
 }

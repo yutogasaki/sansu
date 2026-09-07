@@ -1,0 +1,89 @@
+{
+  "date": "2026-09-07",
+  "target": "http://127.0.0.1:5399/#/island",
+  "revision": "b9607fa66811f2fd89e643b443ff410f6a83d782",
+  "version": "b9607fa66811f2fd89e643b443ff410f6a83d782:7155d06f-a7ae-4186-8191-a43cbaf2bc2f",
+  "delivery": "mystic-island-v1",
+  "worldCandidate": "mystic-island-procedural-v2",
+  "learningCandidate": "mystic-island-learning-v2",
+  "artDirection": "moon-garden",
+  "islandEnabled": true,
+  "reviewedCheckout": "84d3ddf",
+  "appSourceMatchesCheckout": true,
+  "cache": "Fresh dedicated browser session at start; service worker controlled at final tablet capture. Offline/update not retested in this review.",
+  "scope": "Desktop Chromium, responsive viewports, keyboard and pointer. Created disposable review profile through onboarding UI, completed one real three-question plan with incorrect/support/correction, claimed bench, rotated and placed it, requested lantern play, then started next learning. Not independent child observation or physical phone/tablet testing.",
+  "screens": [
+    {
+      "file": "screens/phone-home.png",
+      "sha256": "49356467f6f6e086791e77a22f4ff6e749e2edc8d16a33ad2a1bc05b8976f41f",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "screens/phone-learning.png",
+      "sha256": "2204721092b61b3624e64a63651ea8161a69b8bb5f61bbcd79bad1b3f348dd57",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "screens/phone-placement.png",
+      "sha256": "fd1654544b21880b532ba641f214490e3569de8621539cacdc1781e8b8320726",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "screens/phone-play.png",
+      "sha256": "5215a1d262b7432a105c1c3242c79790ce718a80b605f3d080c03d5386262329",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "screens/phone-reward.png",
+      "sha256": "93bcb8879434746936a9c2e0ff8c53d6a1891a7806be0c5b75c478a66c75d28d",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "screens/phone-support.png",
+      "sha256": "a2777dc7f039b70b6267095c8d373f2faa8637be965a88f8ebb0ab54defe6f81",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "screens/phone-welcome.png",
+      "sha256": "537be53470158c0cdeda99853937895cb7fec5ab9a3698cff8f2b9fdb647aed4",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "screens/tablet-next-learning.png",
+      "sha256": "032b3fbb1bc7edb9d1653212e9affa0e06d1b6ce8ea3c319b76a3a8691fba008",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "file": "screens/tablet-play.png",
+      "sha256": "52d3118c0616296d7598b2bab04f38f12b8873f87c58f18d8abf28d0d4fdfdef",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      }
+    }
+  ]
+}

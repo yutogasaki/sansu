@@ -7,6 +7,8 @@ import { getActiveProfile } from '../domain/user/repository';
 import type { UserProfile } from '../domain/types';
 import { assertIslandPlan, claimIslandReward, openIsland, saveIslandEdit, startIslandPlan } from '../domain/island/repository';
 import { parkHissanGrid } from '../domain/park/learning';
+import { islandObservationBinding } from '../domain/island/learningObservation';
+import { useIslandLearningObservation, type IslandLearningRequest } from '../components/island/useIslandLearningObservation';
 import { commitIslandLearning } from '../domain/island/commit';
 import { findAvailablePosition, ISLAND_ITEMS, isValidIslandPlacement } from '../domain/island/catalog';
 import { ISLAND_DELIVERY_ID, ISLAND_VISUAL_CANDIDATE, ISLAND_LEARNING_CANDIDATE } from '../domain/island/feature';
@@ -22,6 +24,18 @@ import '../components/park/Park.css';
 import '../components/island/Island.css';
 
 type Screen = 'home' | 'learning' | 'reward' | 'inventory' | 'placement' | 'play';
+const RENDERER_RECOVERY_HINT = '「もういちど みる」で、しまを ひらこう。';
+
+function sharingHint(items: IslandItem[], selectedId: string) {
+    const selected = items.find(item => item.id === selectedId);
+    if (!selected) return undefined;
+    const pair = [
+        { kinds: ['flower', 'bench'], hint: 'ベンチの まえに おはなを おくと…？' },
+        { kinds: ['lantern', 'mushroom'], hint: 'きのこの いすの まえに あかりを おくと…？' },
+        { kinds: ['fountain', 'swing'], hint: 'ブランコの まえに ふんすいを おくと…？' },
+    ].find(pair => pair.kinds.includes(selected.kind) && pair.kinds.every(kind => items.some(item => item.kind === kind)));
+    return pair?.hint;
+}
 
 function IslandSession({ profile }: { profile: UserProfile }) {
     const navigate = useNavigate();
@@ -40,6 +54,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const [feedback, setFeedback] = useState('');
     const [loadError, setLoadError] = useState(false);
     const { busy, error, run } = useIslandActions();
+    const observation = useIslandLearningObservation();
     useEffect(() => {
         let mounted = true;
         const release = holdPwaUpdateForCriticalPersistence();
@@ -67,8 +82,13 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     };
     const answer = async (action: IslandLearningAction) => {
         if (!plan || screen !== 'learning') return;
-        const receipt = await run(() => commitIslandLearning(profile.id, plan.id, plan.revision, action), 180);
+        let request: IslandLearningRequest | undefined;
+        const receipt = await run(() => {
+            request = observation.request(islandObservationBinding(plan), action);
+            return commitIslandLearning(profile.id, plan.id, plan.revision, request.action, db, request.observation);
+        }, 180);
         if (!receipt) return;
+        observation.succeeded(request);
         setPlan(receipt.plan); setSnapshot(receipt.island);
         const response = islandFeedbackForReceipt(plan, receipt.plan, receipt.event);
         setLearningFeedback(response?.feedback);
@@ -115,9 +135,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     if (loadError) return <div className="island-loading" role="alert">しまを ひらけなかったよ。<button className="island-primary" onClick={() => window.location.reload()}>もういちど ひらく</button></div>;
     if (!island) return <div className="island-loading" role="status">しまを ひらいているよ…</div>;
     const valid = Boolean(preview?.position && isValidIslandPlacement(island, preview.id, preview.position, preview.rotation));
-    const homeTitle = island.completedSets === 0 ? 'ひかりを とどけよう' : island.completedSets < 2 ? 'むこうの にわまで、あとすこし'
-        : island.completedSets < 4 ? 'あたらしい ともだちが くるよ' : island.completedSets < 6 ? 'うみを てらす あかりを' : 'どうぶつと ひとやすみ';
-    const homeHint = island.completedSets === 0 ? 'ひとつ とくと、しまが ふわっと めをさます。' : island.completedSets < 2 ? 'もうひとくぎりで、はしが つながるよ。'
+    const homeHint = island.completedSets === 0 ? 'ひとくぎり とくと、しまに おく ものを えらべるよ。' : island.completedSets < 2 ? 'もうひとくぎりで、はしが つながるよ。'
         : island.completedSets < 4 ? `あと ${4 - island.completedSets} くぎりで、キツネが あそびに くるよ。`
             : island.completedSets < 6 ? `あと ${6 - island.completedSets} くぎりで、とうだいに あかりが ともるよ。` : 'おいた ものを えらんで、いっしょに あそぼう。';
     return <main className="island-page" data-game-id="mystic-island-v1" data-mode={screen} data-complex={Boolean(learning && complex)}
@@ -139,11 +157,13 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 setPlacementSuggestionId(undefined);
             }}
             playRequest={screen === 'play' ? playRequest : undefined}
+            onRendererRecovered={() => setPlayMessage(message => message === RENDERER_RECOVERY_HINT ? undefined : message)}
             onPlayResult={result => {
                 if (result.requestId !== playRequest?.id) return;
                 setPlayMessage(result.status === 'blocked' ? 'どうぶつが とおれる すきまを あけて みよう。'
-                    : result.status === 'unavailable' ? (result.reason === 'renderer' ? '「もういちど みる」で、しまを ひらこう。' : 'もちものから しまに おいて、あそぼう。')
-                        : 'ほかの ばしょも えらべるよ。');
+                    : result.status === 'unavailable' ? (result.reason === 'renderer' ? RENDERER_RECOVERY_HINT : 'もちものから しまに おいて、あそぼう。')
+                        : result.activity ? (result.activity === 'flower' ? 'おはなを おすそわけ。' : result.activity === 'star' ? 'ほしの ひかりを おすそわけ。' : 'みずたまを おすそわけ。')
+                            : sharingHint(island.items, result.itemId) ?? 'ほかの ばしょも えらべるよ。');
             }}
             onGroundPoint={screen === 'placement' && !busy ? point => { setPlacementSuggestionId(undefined); setPreview(previous => {
                 if (!previous) return previous;
@@ -154,7 +174,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 if (screen === 'play') play(id);
                 else { const item = island.items.find(candidate => candidate.id === id); if (item) select(item); }
             } : undefined} />
-        {learning && plan ? <IslandLearningPanel plan={plan} busy={busy} feedback={learningFeedback} onAction={action => void answer(action)} />
+        {learning && plan ? <IslandLearningPanel plan={plan} observation={observation} busy={busy} feedback={learningFeedback} onAction={action => void answer(action)} />
             : screen === 'reward' && island.pendingRewards.length ? <IslandRewards island={island} disabled={busy} onChoose={(id, kind) => void claim(id, kind)} onContinue={() => void begin()} onClose={home} />
             : screen === 'play' ? <IslandPlay items={island.items} disabled={busy} selectedId={playRequest?.itemId} message={playMessage}
                 onSelect={play} onMove={select} onInventory={() => setScreen('inventory')} onContinue={() => void begin()} onClose={home} />
@@ -162,8 +182,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 : screen === 'placement' && preview ? <IslandPlacement item={preview} valid={valid} disabled={busy}
                     onPoint={point => { setPlacementSuggestionId(undefined); setPreview({ ...preview, position: point }); }} onRotate={() => { setPlacementSuggestionId(undefined); setPreview({ ...preview, rotation: preview.rotation + Math.PI / 2 }); }}
                     onSave={() => void place()} onStore={() => void place(true)} onCancel={home} /> : <section className="island-home-controls">
-                    <div className="island-home-intro"><p className="island-eyebrow">{island.completedSets === 0 ? 'きょうは、なにが ふえるかな' : 'すこしずつ、じぶんの しまに'}</p>
-                        <h2>{homeTitle}</h2><p>{homeHint}</p></div>
+                    <p className="island-home-hint">{homeHint}</p>
                     {feedback && <p className="island-home-feedback" role="status">{feedback}</p>}
                     <button className="island-primary island-start" disabled={busy} onClick={() => void begin()}>{island.pendingPlanId ? 'つづきから とく' : 'ひかりを とどける'}<ArrowRight size={22} /></button>
                     <div className="island-home-secondary"><button className="island-secondary island-play-entry" disabled={busy} onClick={() => {

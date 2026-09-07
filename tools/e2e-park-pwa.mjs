@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
 import { promises as fs } from 'node:fs';
 import assert from 'node:assert/strict';
+import { assertExploreCheckpoint, waitForExploreNumericReady, waitForPageState } from './async-state-checks.mjs';
 
 // Run against a production preview built with VITE_BUILD_PLAY_ENABLED=true.
 const base = process.env.SANSU_PARK_PRODUCTION_URL || 'http://127.0.0.1:5287';
@@ -81,23 +82,35 @@ try {
     assert.deepEqual((await stored()).plans, before.plans);
     console.log('PASS production park persistence hold spans navigation');
     await page.goto(`${base}/#/explore`);
-    await page.waitForFunction(async () => {
+    const profileId = 'park-production-test', readyDeadline = performance.now() + 30000;
+    await waitForPageState(page, async profileId => {
         const request = indexedDB.open('SansuDatabase');
-        return new Promise(resolve => { request.onsuccess = () => {
+        return new Promise((resolve, reject) => { request.onerror = () => reject(request.error); request.onsuccess = () => {
             const d = request.result;
             const get = d.transaction('exploreRuns').objectStore('exploreRuns').getAll();
-            get.onsuccess = () => { d.close(); resolve(get.result.some(r => r.status === 'active' && r.activeCheckpoint)); };
+            get.onerror = () => { d.close(); reject(get.error); };
+            get.onsuccess = () => { d.close(); resolve(get.result.some(r => r.profileId === profileId && r.status === 'active' && r.activeCheckpoint)); };
         }; });
-    });
-    const old = (await stored()).runs.find(r => r.status === 'active');
+    }, profileId, { timeout: 30000, description: 'this profile saved an active Explore checkpoint' });
+    const oldReady = await waitForExploreNumericReady(page, { timeout: Math.max(1, readyDeadline - performance.now()) });
+    const beforeLaunch = await stored();
+    const legacy = { profileId, oldReady, beforeLaunch };
+    await fs.writeFile('output/playwright/park/production-legacy-before.json', JSON.stringify(legacy, null, 2));
+    const old = beforeLaunch.runs.find(r => r.runId === oldReady.runId && r.profileId === profileId && r.status === 'active');
+    assertExploreCheckpoint(old, profileId, oldReady);
     await page.goto(`${base}/#/`);
     await page.waitForURL('**/#/explore');
-    const same = (await stored()).runs.find(r => r.status === 'active');
+    const sameReady = await waitForExploreNumericReady(page, { runId: old.runId, problemId: oldReady.problemId, timeout: 30000 });
+    const restored = await stored();
+    legacy.sameReady = sameReady; legacy.restored = restored;
+    const same = restored.runs.find(r => r.runId === old.runId && r.profileId === profileId && r.status === 'active');
+    assertExploreCheckpoint(same, profileId, sameReady);
     assert.equal(same.runId, old.runId);
-    assert.deepEqual((await stored()).plans, before.plans);
+    assert.deepEqual(same, old, 'Root launch preserves the complete ready Explore run');
+    assert.deepEqual(restored.plans, before.plans);
     assert.deepEqual(errors, []);
     await fs.writeFile('output/playwright/park/production-report.json', JSON.stringify({ target: base, revision,
-        flag: 'VITE_BUILD_PLAY_ENABLED=true', candidate,
+        flag: 'VITE_BUILD_PLAY_ENABLED=true', candidate, legacy,
         passed: ['pending learning checkpoint', 'critical persistence navigation hold', 'old active run precedence'] }, null, 2));
     console.log('PASS production old run remains the launch priority');
 } finally { await context.close(); await browser.close(); }
