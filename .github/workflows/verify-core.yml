@@ -3,6 +3,9 @@ name: Verify Core
 on:
   pull_request:
     paths:
+      - "docs/**"
+      - ".agents/**"
+      - "CONSTITUTION.md"
       - "src/**"
       - "public/**"
       - "tools/**"
@@ -19,6 +22,9 @@ on:
     branches:
       - main
     paths:
+      - "docs/**"
+      - ".agents/**"
+      - "CONSTITUTION.md"
       - "src/**"
       - "public/**"
       - "tools/**"
