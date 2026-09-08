@@ -1,10 +1,17 @@
 import { MemoryState, SkillStatus } from "../types";
-import { parseISO, addDays } from "date-fns";
+import { parseISO } from "date-fns";
 import { getLearningDayStart } from "../../utils/learningDay";
+import { isReviewDue } from '../learning/reviewPolicy';
 
 // 仕様 5.1: strength → 次回出題間隔
 // strength 1: 1日後, 2: 3日後, 3: 7日後, 4: 14日後, 5: 30日後
 const INTERVALS = [0, 1, 3, 7, 14, 30]; // Index 1..5
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+export interface MemoryAttemptEvidence {
+    independence: 'independent' | 'assisted' | 'unknown';
+    wholeProblem?: boolean;
+}
 
 const normalizeStrength = (strength: number): number => Number.isFinite(strength)
     ? Math.max(1, Math.min(Math.floor(strength), 5))
@@ -16,55 +23,87 @@ const parseTimestamp = (value: string | undefined): number => typeof value === "
 
 export const getNextReviewDate = (strength: number, now: Date = new Date()): Date => {
     const days = INTERVALS[normalizeStrength(strength)];
-    return addDays(getLearningDayStart(now), days);
+    return new Date(now.getTime() + days * DAY_MS);
 };
+
+/** Support can require a check without manufacturing an answer or removing graduation. */
+export const beginRelearning = (current: MemoryState, now: Date = new Date()): MemoryState => ({
+    ...current,
+    strength: 1,
+    needsRelearning: true,
+    relearningStartedAt: now.toISOString(),
+    nextReview: parseTimestamp(current.nextReview) <= now.getTime() ? current.nextReview : now.toISOString(),
+    updatedAt: now.toISOString(),
+});
 
 export const updateMemoryState = (
     current: MemoryState,
     isCorrect: boolean,
     isSkipped: boolean = false,
     now: Date = new Date(),
+    evidence?: MemoryAttemptEvidence,
 ): MemoryState => {
     const correct = isCorrect && !isSkipped;
+    // Only omitted evidence retains the old direct-call contract. A new writer
+    // must explicitly identify unknown/assisted or incomplete observations.
+    const independent = correct && (!evidence
+        || evidence.independence === 'independent' && evidence.wholeProblem !== false);
     const strength = normalizeStrength(current.strength);
     const learningDayStart = getLearningDayStart(now);
     const nextReviewAt = parseTimestamp(current.nextReview);
-    const lastCorrectAt = parseTimestamp(current.lastCorrectAt);
+    const lastIndependentAt = parseTimestamp(current.lastIndependentCorrectAt
+        ?? (!evidence ? current.lastCorrectAt : undefined));
     const lastAttemptAt = parseTimestamp(current.updatedAt);
-    // 仕様 5.1 / 29: 期限に達した別学習日の想起だけで間隔を伸ばす。
-    // 当日の誤答・スキップからのやり直しは、古い正解日時で昇格させない。
+    const elapsed = (timestamp: number) => Number.isFinite(timestamp)
+        && now.getTime() - timestamp >= DAY_MS;
+    // 仕様34: a learning-day boundary alone is not one elapsed day.
     const canAdvance = nextReviewAt <= now.getTime()
-        && lastCorrectAt < learningDayStart.getTime()
-        && lastAttemptAt < learningDayStart.getTime();
-    const newStrength = correct
-        ? Math.min(strength + (canAdvance ? 1 : 0), 5)
-        : 1;
+        && elapsed(lastIndependentAt) && elapsed(lastAttemptAt)
+        && lastIndependentAt < learningDayStart.getTime();
+    const canFinishRelearning = nextReviewAt <= now.getTime()
+        && elapsed(parseTimestamp(current.relearningStartedAt)) && elapsed(lastAttemptAt);
+
+    let next = { ...current, strength };
+    if (!correct) {
+        next = beginRelearning(next, now);
+        next.nextReview = isSkipped
+            ? learningDayStart.toISOString()
+            : getNextReviewDate(1, now).toISOString();
+    } else if (evidence?.independence === 'assisted') {
+        // A correction remains a raw success, but cannot postpone its check.
+        next = beginRelearning(next, now);
+    } else if (independent) {
+        next.strength = current.needsRelearning
+            ? canFinishRelearning ? Math.min(strength + 1, 2) : 1
+            : Math.min(strength + (canAdvance ? 1 : 0), 5);
+        if (current.needsRelearning && canFinishRelearning) {
+            next.needsRelearning = false;
+            next.relearningStartedAt = undefined;
+        } else if (current.needsRelearning && !Number.isFinite(parseTimestamp(current.relearningStartedAt))) {
+            // A legacy/incomplete obligation establishes a baseline now; it
+            // must not become either immediate mastery or permanent relearning.
+            next.relearningStartedAt = now.toISOString();
+        }
+        // Existing future reservations stay immutable during early practice.
+        next.nextReview = nextReviewAt > now.getTime()
+            ? current.nextReview
+            : getNextReviewDate(next.strength, now).toISOString();
+    }
 
     const timestamp = now.toISOString();
-    // 期限前の練習は既存予約を保持し、期限到来済みの再正解は再予約する。
-    const nextReview = isSkipped
-        ? learningDayStart.toISOString()
-        : correct && nextReviewAt > now.getTime()
-            ? current.nextReview
-            : getNextReviewDate(newStrength, now).toISOString();
-
     return {
-        ...current,
-        strength: newStrength,
-        nextReview,
+        ...next,
         totalAnswers: current.totalAnswers + 1,
         correctAnswers: current.correctAnswers + (correct ? 1 : 0),
         incorrectAnswers: current.incorrectAnswers + (correct ? 0 : 1),
         skippedAnswers: (current.skippedAnswers || 0) + (isSkipped ? 1 : 0),
         lastCorrectAt: correct ? timestamp : current.lastCorrectAt,
+        lastIndependentCorrectAt: independent ? timestamp : current.lastIndependentCorrectAt,
         updatedAt: timestamp
     };
 };
 
-export const isDue = (item: MemoryState): boolean => {
-    const due = parseISO(item.nextReview);
-    return due.getTime() <= new Date().getTime();
-};
+export const isDue = (item: MemoryState): boolean => isReviewDue(item);
 
 /**
  * ウィルソンスコア区間の下限値を返す。
@@ -92,6 +131,11 @@ export const updateSkillStatus = (
     isMaintenanceCheck?: boolean // 維持確認として出題されたか
 ): SkillStatus | undefined => {
     if (!state.status) return undefined;
+
+    // Dated relearning no longer revokes graduation, including immediately
+    // after recovery while the old failures are still in the recent window.
+    if (state.needsRelearning || (state.status === 'retired' || state.status === 'maintenance')
+        && Number.isFinite(parseTimestamp(state.lastIndependentCorrectAt))) return state.status;
 
     if (state.status === 'active') {
         // 同日の反復だけで卒業せず、日を空けた想起の実績も必要とする。

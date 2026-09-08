@@ -1,5 +1,5 @@
 import { db, type SansuDatabase } from '../../db';
-import { getLearningDayStart } from '../../utils/learningDay';
+import { beginRelearning } from '../algorithms/srs';
 import { writeLearningAttemptInTransaction } from '../learningAttemptWriter';
 import { checkEnglishLevelProgression, checkVocabUnlockReadiness } from '../english/service';
 import { resolveProfileProgressionAfterAttempt } from '../../hooks/useStudySession.logic';
@@ -12,6 +12,7 @@ import { updateIslandMathChecks } from './learningChecks';
 import { islandSupportStage } from './learningSupport';
 import { normalizeIslandObservation, islandObservationBinding, islandObservationScope } from './learningObservation';
 import { growIslandAfterCompletedSet } from './growth';
+import { earnIslandCustomizationStars } from './customization';
 
 async function keepIndependentCheckDue(database: SansuDatabase, profileId: string, subject: 'math' | 'vocab', itemId: string, now: number) {
     const table = subject === 'math' ? database.memoryMath : database.memoryVocab;
@@ -20,11 +21,13 @@ async function keepIndependentCheckDue(database: SansuDatabase, profileId: strin
     if (!app || !profile) throw new IslandConflict('Profile changed');
     const field = subject === 'math' ? 'mathSkills' : 'vocabWords';
     const existing = await table.get([profileId, itemId]) ?? profile[field][itemId];
-    const due = getLearningDayStart(new Date(now)).toISOString();
     const memory: MemoryState = {
-        ...(existing ?? { id: itemId, strength: 1, totalAnswers: 0, correctAnswers: 0, incorrectAnswers: 0, skippedAnswers: 0 }),
-        profileId, nextReview: existing && existing.nextReview < due ? existing.nextReview : due,
-        updatedAt: new Date(now).toISOString(), ...(subject === 'math' ? { status: 'active' as const } : {}),
+        ...beginRelearning(existing ?? {
+            id: itemId, strength: 1, totalAnswers: 0, correctAnswers: 0, incorrectAnswers: 0, skippedAnswers: 0,
+            nextReview: new Date(now).toISOString(), updatedAt: new Date(now).toISOString(),
+            ...(subject === 'math' ? { status: 'active' as const } : {}),
+        }, new Date(now)),
+        profileId,
     };
     await table.put(memory);
     const updated = { ...profile, [field]: { ...profile[field], [itemId]: memory } };
@@ -148,6 +151,7 @@ export async function commitIslandLearning(profileId: string, planId: string, re
                 island.pendingRewards.push({ id: plan.rewardId, planId, choices: [...plan.rewardChoices], earnedAt: now });
             }
             island.pendingPlanId = undefined;
+            island.customization = earnIslandCustomizationStars(island);
             island.completedSets += 1;
             if (plan.growthTarget) island = growIslandAfterCompletedSet(island, plan.growthTarget, now);
             await database.islandEvents.add({ id: `${planId}:completed`, profileId, planId, type: 'plan_completed', timestamp: now,

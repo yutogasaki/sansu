@@ -19,6 +19,7 @@ export interface IslandPlayResult {
 }
 export interface IslandPlacementSuggestion { itemId: string; position: { x: number; z: number } }
 export interface IslandStageState {
+    cosmetics?: IslandCosmetics;
     items: IslandStageItem[];
     completedSets: number;
     pulse: number;
@@ -45,3 +46,4 @@ export interface IslandStageProps extends IslandStageState {
     onDiscovery?: (id: string, itemId: string) => void;
 }
 import type { IslandGrowthState, IslandHabitatId } from '../../../domain/island/types';
+import type { IslandCosmetics } from '../../../domain/island/customization';

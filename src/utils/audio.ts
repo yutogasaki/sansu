@@ -6,6 +6,7 @@ export type SoundType =
     | "correct"
     | "incorrect"
     | "tap"
+    | "step"
     | "level_up"
     | "start"
     | "clear";
@@ -20,6 +21,7 @@ const SE_ASSETS: Record<SoundType, string> = {
     correct: resolveAppAssetPath("/sounds/correct.mp3"),
     incorrect: resolveAppAssetPath("/sounds/incorrect.mp3"),
     tap: resolveAppAssetPath("/sounds/tap.mp3"),
+    step: resolveAppAssetPath("/sounds/step.mp3"),
     level_up: resolveAppAssetPath("/sounds/level_up.mp3"),
     start: resolveAppAssetPath("/sounds/start.mp3"),
     clear: resolveAppAssetPath("/sounds/clear.mp3")
@@ -32,6 +34,7 @@ const BGM_ASSETS: Record<BgmType, string> = {
 
 // Cache for Howl instances
 const seInstances: Partial<Record<SoundType, Howl>> = {};
+const seVolume = (type: SoundType) => type === 'tap' ? 0.24 : type === 'incorrect' ? 0.38 : 0.55;
 let currentBgm: Howl | null = null;
 let currentBgmType: BgmType | null = null;
 
@@ -51,7 +54,7 @@ export const loadSounds = () => {
         if (!seInstances[key as SoundType]) {
             seInstances[key as SoundType] = new Howl({
                 src: [src],
-                volume: 0.6,
+                volume: seVolume(key as SoundType),
                 preload: true
             });
         }
@@ -65,7 +68,7 @@ export const playSound = (type: SoundType) => {
     if (!seInstances[type]) {
         seInstances[type] = new Howl({
             src: [SE_ASSETS[type]],
-            volume: type === 'tap' ? 0.3 : 0.6
+            volume: seVolume(type)
         });
     }
 

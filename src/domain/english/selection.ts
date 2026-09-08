@@ -1,5 +1,6 @@
 import type { UserProfile } from '../types';
 import type { RandomSource } from '../../utils/random';
+import { independentCorrectCount } from '../learning/independentProgress';
 import { ENGLISH_WORDS } from './words';
 
 export function isVocabLevelEnabled(profile: UserProfile, level: number): boolean {
@@ -35,7 +36,7 @@ export function pickVocabWordId(
     const recent = new Set([...(options.cooldownIds ?? []), ...(options.recentIds ?? [])]);
     const cooled = pool.filter(id => !recent.has(id));
     if (cooled.length > 0) pool = cooled;
-    const unmet = memory ? pool.filter(id => !(memory[id]?.correctAnswers > 0)) : [];
+    const unmet = memory ? pool.filter(id => independentCorrectCount(memory[id]) === 0) : [];
     if (unmet.length > 0) pool = unmet;
     return pool[Math.floor((options.random ?? Math.random)() * pool.length)];
 }

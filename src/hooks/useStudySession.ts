@@ -11,9 +11,12 @@ import {
     logAttempt
 } from "../domain/learningRepository";
 import { generateMathProblem } from "../domain/math";
+import { prepareStudyBlockPresentation } from '../domain/math/studyPresentation';
 import { generateVocabProblem } from "../domain/english/generator";
 import { Problem, SubjectKey, UserProfile } from "../domain/types";
 import type { LearningEvidenceContext } from '../domain/learning/types';
+import { db } from '../db';
+import { readRuntimeMathUnitPractice } from '../domain/learning/runtimeUnitPractice';
 import { getAvailableSkills } from "../domain/math/curriculum";
 import { checkLevelProgression, checkMathMainPromotion } from "../domain/math/service";
 import { checkVocabMainPromotion, checkVocabUnlockReadiness } from "../domain/english/service";
@@ -285,6 +288,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
 
         if (subject === 'math') {
             const mathDue = await getReviewItems(pid, 'math');
+            const unitPractice = await readRuntimeMathUnitPractice(db, activeProfile, new Date().toISOString());
             const weakMathIds = await getWeakMathSkillIds(pid);
             const maintenanceMathIds = await getMaintenanceMathSkillIds(pid);
             const retiredMathIds = await getRetiredMathSkillIds(pid);
@@ -315,6 +319,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                 const result = generateSingleMathProblem({
                     profile: activeProfile,
                     mathDue,
+                    unitPractice,
                     weakMathPool,
                     maintenanceMathIds,
                     retiredMathIds,
@@ -378,11 +383,13 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                     vocabLevelWeights,
                     options: generatorOptions,
                     canAddReview: canAddSessionReview(
-                        sessionHistoryRef.current,
+                        sessionHistoryRef.current.filter(item => item.subject === 'vocab'),
                         pendingMeta,
                         activeProfile.dailyGoal,
                     ),
                     forceReviewBlock: forceVocabReviewBlock,
+                    blockSize,
+                    currentReviewCount: pendingMeta.filter(item => item.countsTowardReviewCap).length,
                     weakVocabPool,
                     currentWeakCount,
                     plusCount,
@@ -424,7 +431,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
     // ============================================================
     // Main Block Generation Entry Point
     // ============================================================
-    const generateBlock = async (pid: string, activeProfile: UserProfile, blockIndex: number): Promise<Problem[]> => {
+    const generateRawBlock = async (pid: string, activeProfile: UserProfile, blockIndex: number): Promise<Problem[]> => {
         const sessionKind = options.sessionKind || "normal";
         const blockSize = resolveSessionBlockSize(sessionKind);
 
@@ -513,6 +520,13 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         }));
         return generateNormalBlock(pid, activeProfile, blockIndex, blockSize, mappedAttempts);
     };
+
+    const generateBlock = async (pid: string, activeProfile: UserProfile, blockIndex: number): Promise<Problem[]> =>
+        prepareStudyBlockPresentation(
+            await generateRawBlock(pid, activeProfile, blockIndex),
+            activeProfile.hissanModeEnabled ?? true,
+            options.sessionKind === 'periodic-test' || options.benchmarkId === COLD_OPEN_FIXED_TEN_ID,
+        );
 
     // ============================================================
     // Session Management

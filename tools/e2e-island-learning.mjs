@@ -204,9 +204,16 @@ try {
                 const support = await openSupport(page, state, scenario.touch);
                 state = support.after;
                 if (scenario.workedExample) {
-                    assert.equal(state.plan.slots[0].problem.questionText, '2 + 9 =');
-                    assert((await page.locator('.island-learning-support').innerText()).includes('9を 8と 1に わけて'),
-                        'The hint gives the short method without the worked answer');
+                    // Keep the real planner's reservation; a past PRNG sample is not the contract.
+                    const problem = state.plan.slots[0].problem;
+                    const operands = problem.questionText.match(/^(\d+) \+ (\d+) =$/);
+                    assert(operands, 'This scenario reserves ordinary addition');
+                    const a = Number(operands[1]), b = Number(operands[2]);
+                    assert.equal(String(a + b), problem.correctAnswer);
+                    const hint = await page.locator('.island-learning-support').innerText();
+                    const method = a % 10 + b > 10 ? `${b}を ${10 - a % 10}と ${b - (10 - a % 10)}に わけて`
+                        : `${a}から ${b}こ すすんで`;
+                    assert(hint.includes(method), 'The hint must explain the actual reserved operands');
                     assert.equal(await page.locator('.island-support-example').count(), 0);
                 }
                 row.reactions.push(await assertReaction(page, support.receipt, 'support', state.plan.cursor, { reduced: scenario.reduced }));
@@ -293,15 +300,14 @@ try {
                     row.samples.push(result.sample);
                     state = result.after;
                 }
-                await waitMode(page, 'reward');
-                assert.equal(state.island.completedSets, 1);
-                assert.equal(state.island.pendingRewards.length, 1);
-                await capture(page, `${scenario.name}-reward`, state);
-                await button(page, 'つづけて とく').click();
                 await waitMode(page, 'learning');
+                assert.equal(state.island.completedSets, 1);
+                assert.equal(state.island.pendingRewards.length, 0, 'New growth reservations never require gift acceptance');
+                assert.notEqual(state.plan.id, introductoryPlanId, 'The next real reservation opens without a continuation tap');
+                assert.equal(state.islandPlans.find(plan => plan.id === introductoryPlanId).status, 'completed');
                 state = await readNative(page, profileId);
                 await waitLearningReady(page, state.plan);
-                assert.equal(state.island.pendingRewards.length, 1);
+                assert.equal(state.island.pendingRewards.length, 0);
                 row.controls.push({ state: 'next-section', controls: await assertControls(page) });
                 await capture(page, `${scenario.name}-next-section`, state);
             }

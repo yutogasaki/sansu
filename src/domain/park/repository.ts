@@ -2,6 +2,7 @@ import { db, type SansuDatabase } from '../../db';
 import { getLearningAttemptTransactionTables } from '../learningAttemptWriter';
 import { assertPark, courseLayout, createPark, editPark } from './course';
 import { planParkLearning } from './learning';
+import { readRuntimeMathUnitPractice } from '../learning/runtimeUnitPractice';
 import { PART_KINDS, type ParkEdit, type ParkEvent, type ParkRecord, type PartKind } from './types';
 
 export class ParkConflict extends Error {}
@@ -60,7 +61,8 @@ export async function startParkPlan(profileId: string, partKind: PartKind, datab
         ]);
         const now = Date.now();
         const mergeMemory = (legacy: typeof profile.mathSkills, rows: typeof math) => Object.values({ ...legacy, ...Object.fromEntries(rows.map(m => [m.id, m])) });
-        const learning = planParkLearning(profile, mergeMemory(profile.mathSkills, math), mergeMemory(profile.vocabWords, vocab), logs, park.completedPlans, id, now);
+        const mathUnitPractice = await readRuntimeMathUnitPractice(database, profile, new Date(now).toISOString());
+        const learning = planParkLearning(profile, mergeMemory(profile.mathSkills, math), mergeMemory(profile.vocabWords, vocab), logs, park.completedPlans, id, now, { mathUnitPractice });
         const plan = {
             id, profileId, schemaVersion: 1 as const, plannerVersion: 'park-learning-v1' as const,
             ...learning, partKind, rewardId: `${id}:part`, status: 'active' as const,

@@ -1,7 +1,8 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { AttemptLog } from "../db";
 import type { MemoryState } from "./types";
 import { getLearningDayStart } from "../utils/learningDay";
+import { updateMemoryState, updateSkillStatus } from './algorithms/srs';
 
 const mocks = vi.hoisted(() => ({
     mathItems: [] as MemoryState[],
@@ -29,10 +30,10 @@ vi.mock("../db", () => {
             where: vi.fn((index: string) => {
                 if (index === "[profileId+nextReview]") {
                     return {
-                        between: vi.fn(() => ({
+                        between: vi.fn(([profileId, from]: [string, string], [, to]: [string, string]) => ({
                             toArray: async () => [
                                 ...(subject === "math" ? mocks.mathDueItems : mocks.vocabDueItems),
-                            ],
+                            ].filter(item => item.profileId === profileId && item.nextReview >= from && item.nextReview <= to),
                         })),
                     };
                 }
@@ -79,6 +80,7 @@ vi.mock("./user/repository", () => ({
 
 import {
     getReviewItems,
+    getMaintenanceMathSkillIds,
     getBatchWeakStatus,
     getSkippedItemsToday,
     getWeakMathSkillIds,
@@ -122,6 +124,8 @@ beforeEach(() => {
     });
 });
 
+afterEach(() => vi.useRealTimers());
+
 describe("getReviewItems", () => {
     it("excludes retired and maintenance math skills from normal Due", async () => {
         mocks.mathDueItems = [
@@ -142,6 +146,38 @@ describe("getReviewItems", () => {
         await expect(getReviewItems("p1", "vocab")).resolves.toEqual([
             expect.objectContaining({ id: "word" }),
         ]);
+    });
+
+    it('returns a failed graduated skill to normal Due at its deadline without revoking graduation', async () => {
+        const failedAt = new Date(2026, 8, 8, 12);
+        vi.useFakeTimers();
+        vi.setSystemTime(failedAt);
+        const failed = updateMemoryState({ ...memory('graduated', 'retired'), strength: 5 },
+            false, false, failedAt, { independence: 'independent' });
+        failed.status = updateSkillStatus(failed, [false, ...Array(9).fill(true)], true);
+        mocks.mathDueItems = [failed, memory('healthy-retired', 'retired'), memory('healthy-maintenance', 'maintenance')];
+        expect(failed).toMatchObject({ status: 'retired', strength: 1, needsRelearning: true });
+        await expect(getReviewItems('p1', 'math')).resolves.toEqual([]);
+        vi.setSystemTime(new Date(failed.nextReview));
+        await expect(getReviewItems('p1', 'math')).resolves.toEqual([failed]);
+    });
+
+    it('includes maintenance relearning in Due and removes it from the undated maintenance pool', async () => {
+        const due = { ...memory('recovering', 'maintenance'), needsRelearning: true };
+        const healthy = memory('healthy', 'maintenance');
+        mocks.mathItems = [due, healthy];
+        mocks.mathDueItems = [due, healthy];
+        await expect(getReviewItems('p1', 'math')).resolves.toEqual([due]);
+        await expect(getMaintenanceMathSkillIds('p1')).resolves.toEqual(['healthy']);
+    });
+
+    it('keeps newly confirmed graduation on its 3/7/14/30-day deadlines after relearning ends', async () => {
+        const confirmed = { ...memory('confirmed', 'retired'), strength: 5,
+            needsRelearning: false, lastIndependentCorrectAt: '2026-06-01T12:00:00.000Z' };
+        mocks.mathDueItems = [confirmed, memory('old-placement', 'retired')];
+        await expect(getReviewItems('p1', 'math')).resolves.toEqual([confirmed]);
+        mocks.mathItems = [{ ...confirmed, status: 'maintenance' }, memory('old-placement', 'maintenance')];
+        await expect(getMaintenanceMathSkillIds('p1')).resolves.toEqual(['old-placement']);
     });
 });
 

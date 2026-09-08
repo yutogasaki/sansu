@@ -8,7 +8,7 @@ export async function verifyIslandProgression(browser, base, capture, { producti
     const answer = async (page, state) => production ? (await attempt(page, state)).after : (await answerUI(page, state.plan)).state;
     const results = [];
     for (const viewport of [{ width: 390, height: 844 }, { width: 768, height: 1024 }]) {
-        const context = await browser.newContext({ viewport });
+        const context = await browser.newContext({ viewport, ...(viewport.width === 768 ? { reducedMotion: 'reduce' } : {}) });
         const page = await context.newPage();
         const milestones = [], errors = [];
         page.on('pageerror', error => errors.push(error.message));
@@ -48,14 +48,43 @@ export async function verifyIslandProgression(browser, base, capture, { producti
                     assert(current); assert.deepEqual(current.position, old.position); assert.equal(current.rotation, old.rotation);
                 }
                 assert.deepEqual(state.island.growth.memories[0], initialMemory, 'Historical snapshot never changes during later growth');
-                if ([1, 2, 3, 6, 12, 18, 24].includes(sequence)) {
+                assert.deepEqual(state.island.growth.memories.map(memory => memory.completedSets), [0, 6, 12, 18, 24].filter(set => set <= sequence),
+                    'Only initial, maturity and land expansion add album records');
+                const expansionLevel = sequence >= 12 ? 2 : sequence >= 6 ? 1 : 0;
+                assert.equal(state.island.growth.expansionLevel, expansionLevel, 'One mature place opens east; two open west');
+                assert.equal(state.island.items.length, sequence >= 12 ? 7 : sequence >= 6 ? 5 : 3);
+                const major = [6, 12, 18, 24].includes(sequence);
+                const notice = page.locator('[data-growth-milestone]').filter({ hasText: /なった|できた|つながった/ });
+                if (major) {
+                    await notice.waitFor();
+                    assert.equal(await notice.getAttribute('data-growth-milestone'), reservationId);
+                    assert.equal(await notice.getByRole('button').count(), 0, 'Major change has no confirmation action');
+                    if (sequence === 6 || sequence === 12) assert.match(await notice.innerText(), /しまが 大きく ひろがったよ/);
+                    const panelBefore = await page.locator('.island-learning').boundingBox();
+                    await capture(page, `${prefix}-${sequence}-major-learning`);
+                    assert.deepEqual(await page.locator('.island-learning').boundingBox(), panelBefore, 'Milestone overlay leaves input geometry stable');
+                } else assert.equal(await page.locator(`[data-growth-milestone='${reservationId}']`).count(), 0, 'Small steps do not replay the major announcement');
+                if ([1, 2, 3, 5, 6, 11, 12, 18, 24].includes(sequence)) {
                     await button(page, 'しまへ').click(); await waitMode(page, 'home');
                     await capture(page, `${prefix}-${sequence}-sections`);
+                    const preview = page.locator('[data-island-expansion-preview]');
+                    if (sequence === 5 || sequence === 11) {
+                        assert.equal(await preview.getAttribute('data-island-expansion-preview'), sequence === 5 ? 'east' : 'west');
+                        assert.match(await preview.innerText(), /しまが ひろがるよ/);
+                    } else assert.equal(await preview.count(), 0, 'Expansion is previewed only one section before a maturity that opens land');
+                    if (major) {
+                        await page.locator('.island-growth-return').click(); await waitMode(page, 'album');
+                        const habitat = sequence === 6 || sequence === 12 ? 'all' : sequence === 18 ? 'grove' : 'village';
+                        assert.equal(await page.locator('.island-album-compare').getAttribute('data-comparison-habitat'), habitat);
+                        await page.locator('[data-memory-current] [data-renderer="three"]').waitFor();
+                        await capture(page, `${prefix}-${sequence}-major-comparison`);
+                        await button(page, 'アルバムを とじる').click(); await waitMode(page, 'home');
+                    }
                     const stage = page.locator('[data-renderer="three"]');
-                    assert.equal(await stage.getAttribute('data-expanded'), String(sequence >= 2));
+                    assert.equal(await stage.getAttribute('data-expanded'), String(sequence >= 6));
                     assert.equal(await stage.getAttribute('data-west-expanded'), String(sequence >= 12));
                     milestones.push({ completedSets: sequence, progress: state.island.growth.progress,
-                        itemCount: state.island.items.length, ...(await runtimeMetadata(page)) });
+                        expansionLevel, itemCount: state.island.items.length, ...(await runtimeMetadata(page)) });
                     if (sequence !== 24) {
                         await page.locator('.island-start').click(); await waitMode(page, 'learning');
                         state = await readNative(page, profileId);
@@ -104,10 +133,13 @@ export async function verifyIslandProgression(browser, base, capture, { producti
                     `Both equal-scale actual scenes fit the viewport: ${JSON.stringify(bounds)}`);
             };
             await compare('garden');
+            assert.equal(await page.locator('.island-album-timeline button').count(), 2, 'Garden timeline shows baseline and its maturity only');
+            assert.match(await page.locator('.island-album-timeline').innerText(), /おはなが いっぱいに なった/);
             await capture(page, `${prefix}-album-before-after`);
             for (const [habitat, label] of [['waterside', 'みずべ'], ['grove', '木かげ'], ['village', 'いえ'], ['all', 'しまぜんぶ']]) {
                 await page.getByRole('group', { name: 'みくらべる ばしょ' }).getByRole('button', { name: label, exact: true }).click();
                 await compare(habitat); await capture(page, `${prefix}-album-${habitat}`);
+                assert.equal(await page.locator('.island-album-timeline button').count(), habitat === 'all' ? 5 : 2);
             }
             await button(page, 'みつけた くらし').click();
             const discovered = page.locator('[data-discovery-id]').first();
@@ -152,6 +184,18 @@ export async function verifyIslandProgression(browser, base, capture, { producti
             await page.reload(); await waitReady(page); await waitMode(page, 'learning');
             assert.deepEqual((await readNative(page, profileId)).island.items, edited.island.items);
             await capture(page, `${prefix}-customized-learning-resumed`);
+            // The expanded shoreline is usable land, not only a larger drawing.
+            await button(page, 'しまへ').click(); await waitMode(page, 'home');
+            await button(page, 'もちもの').click(); await waitMode(page, 'inventory');
+            await page.getByRole('button', { name: /^ひかる おはな \d+を うごかす$/ }).click();
+            await waitMode(page, 'placement');
+            for (let step = 0; step < 32; step++) await button(page, 'みぎへ').click();
+            await button(page, 'ここに おく').click(); await waitMode(page, 'home');
+            const expandedPlacement = await readNative(page, profileId);
+            assert.deepEqual(expandedPlacement.island.items.find(item => item.id === 'starter-flower').position, { x: 9.25, z: .8 });
+            await button(page, 'ひがし').click(); await capture(page, `${prefix}-expanded-land-placement`);
+            await page.reload(); await waitReady(page);
+            assert.deepEqual((await readNative(page, profileId)).island.items, expandedPlacement.island.items);
             assert.deepEqual(errors, []);
             results.push({ viewport, milestones, discoveries: state.island.growth.discoveries, passed: true });
             console.log(`PASS ${prefix}: 25 real UI sections, all four mature habitats, stable7items, autonomous discovery, 3D history and replay`);

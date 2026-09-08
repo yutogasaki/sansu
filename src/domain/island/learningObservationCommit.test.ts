@@ -31,6 +31,7 @@ async function setup(problem = arithmetic) {
     // Public planner and native fake IDB are used first; a fixed one-question
     // fixture isolates actual row/final/growth writes without random questions.
     plan.slots = [{ problem: structuredClone(problem), assisted: false, completed: false, source: 'due', countsTowardReviewCap: true }];
+    plan.introducedItemIds = [problem.categoryId];
     await d.islandPlans.put(plan);
     return { d, plan };
 }

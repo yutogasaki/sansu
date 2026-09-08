@@ -1,6 +1,7 @@
 import type { AttemptLog } from '../db';
 import { MAX_MATH_LEVEL, MAX_VOCAB_LEVEL } from './math/curriculum';
 import type { SubjectKey, UserProfile } from './types';
+import { hasKnownWholeAttempt, isIndependentCorrect } from './learning/independentProgress';
 
 /** Only the adjacent, enabled learning range can become the new main level. */
 export function getNextPromotionLevel(profile: UserProfile, subject: SubjectKey): number | null {
@@ -20,6 +21,15 @@ export function getNextPromotionLevel(profile: UserProfile, subject: SubjectKey)
 
 /** Exposure alone cannot advance a learner; skips still count in recent accuracy. */
 export function hasMathPromotionEvidence(logs: readonly AttemptLog[]): boolean {
+    const normal = logs.filter(log => !log.isReview && hasKnownWholeAttempt(log));
+    if (normal.filter(log => log.result !== 'skipped' && !log.skipped).length < 30) return false;
+    const recent = [...normal].sort((a, b) => a.timestamp.localeCompare(b.timestamp)
+        || (a.id ?? 0) - (b.id ?? 0)).slice(-20);
+    return recent.length === 20 && recent.filter(isIndependentCorrect).length >= 17;
+}
+
+/** Historical comparison only. Runtime advancement must use verified evidence. */
+export function hasLegacyMathPromotionEvidence(logs: readonly AttemptLog[]): boolean {
     const normal = logs.filter(log => !log.isReview);
     if (normal.filter(log => log.result !== 'skipped' && !log.skipped).length < 30) return false;
     const recent = [...normal].sort((a, b) => a.timestamp.localeCompare(b.timestamp)

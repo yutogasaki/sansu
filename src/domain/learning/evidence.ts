@@ -19,7 +19,10 @@ export interface LearningEvidenceRecord {
 export const MATH_PILOT_POLICY = {
     distinctIndependentProblems: 3,
     delayedAfterMs: 24 * 60 * 60 * 1000,
+    reviewIntervalsDays: [1, 3, 7, 14, 30],
 } as const;
+
+export type LearningFreshness = 'unconfirmed' | 'fresh' | 'due';
 
 export interface LearningFacetEvidence {
     representation: LearningRepresentation;
@@ -30,16 +33,26 @@ export interface LearningFacetEvidence {
     ready: boolean;
     retained: boolean;
     lastAttemptAt: string;
+    historicalIndependentProblemCount: number;
+    lastDelayedConfirmationAt: string | null;
+    nextCheckAt: string | null;
+    reviewStage: number;
+    freshness: LearningFreshness;
+    needsRecheck: boolean;
 }
 
 interface FacetAccumulator {
     representation: LearningRepresentation;
     variant: string;
     keys: Set<string>;
+    historicalKeys: Set<string>;
     attempts: number;
     delayed: number;
-    previousAttempt: number | null;
     lastAttemptAt: string;
+    lastDelayedConfirmationAt: string | null;
+    nextCheckAt: number | null;
+    reviewStage: number;
+    needsRecheck: boolean;
 }
 
 export interface MathUnitPilotEvaluation {
@@ -52,9 +65,22 @@ export interface MathUnitPilotEvaluation {
     unconfirmedPrerequisites: string[];
     facets: LearningFacetEvidence[];
     unknownAttempts: number;
+    lastUnknownAt: string | null;
+    uncertainty: boolean;
+    lastContactAt: string | null;
+    nextCheckAt: string | null;
+    freshness: LearningFreshness;
+    needsRecheck: boolean;
 }
 
-/** Read-only comparison. This function never accepts MemoryState as proof. */
+export const getMathUnitRequiredVariants = (unitId: string): readonly string[] =>
+    unitId === 'math.subtract-two-two' ? ['no-regroup', 'regroup'] : ['default'];
+
+const intervalMs = (stage: number) => MATH_PILOT_POLICY.reviewIntervalsDays[stage - 1]
+    * MATH_PILOT_POLICY.delayedAfterMs;
+const iso = (time: number | null) => time === null ? null : new Date(time).toISOString();
+
+/** Pure evidence projection. No inferred MemoryState mastery or recall probability. */
 export const evaluateMathLevel11Pilot = (
     records: readonly LearningEvidenceRecord[],
     profileId: string,
@@ -65,6 +91,9 @@ export const evaluateMathLevel11Pilot = (
     const units = MATH_LV11_UNIT_IDS.map((id) => getLearningUnit(id)!);
     const accumulators = new Map<string, Map<string, FacetAccumulator>>(units.map((unit) => [unit.id, new Map()]));
     const unknown = new Map<string, number>();
+    const lastUnknown = new Map<string, number>();
+    const lastIndependent = new Map<string, number>();
+    const lastContact = new Map<string, number>();
     const seen = new Set<number | string>();
     let ignoredRecords = 0;
     let duplicateRecords = 0;
@@ -93,39 +122,54 @@ export const evaluateMathLevel11Pilot = (
             problem: barrier.problem, assistance: 'assisted', completion: 'whole-problem',
         } : record.learningEvidence, 'math', record.itemId);
         const time = Date.parse(record.timestamp);
-        if (!context || (isBarrier && !['support-opened', 'error-correction', 'skipped'].includes(barrier?.reason ?? ''))) {
+        const previousContact = lastContact.get(mapping.unitId);
+        lastContact.set(mapping.unitId, time);
+        if (!context || context.assistance === 'unknown' || context.problem.variant === 'unknown'
+            || (isBarrier && !['support-opened', 'error-correction', 'skipped'].includes(barrier?.reason ?? ''))) {
             unknown.set(mapping.unitId, (unknown.get(mapping.unitId) ?? 0) + 1);
-            // The attempted form is unknown. Do not keep a stale confirmed state
-            // across a later attempt whose assistance/form cannot be determined.
-            facets.forEach((facet) => {
-                facet.keys.clear(); facet.attempts = 0; facet.delayed = 0;
-                facet.previousAttempt = time; facet.lastAttemptAt = record.timestamp;
-            });
+            // Keep known historical evidence; separately request an identifiable
+            // independent check before using this unit for progression again.
+            lastUnknown.set(mapping.unitId, time);
             continue;
         }
         const problem = context.problem;
         const key = `${problem.representation}:${problem.variant}`;
         const facet: FacetAccumulator = facets.get(key) ?? {
             representation: problem.representation, variant: problem.variant,
-            keys: new Set(), attempts: 0, delayed: 0, previousAttempt: null, lastAttemptAt: record.timestamp,
+            keys: new Set(), historicalKeys: new Set(), attempts: 0, delayed: 0,
+            lastAttemptAt: record.timestamp, lastDelayedConfirmationAt: null,
+            nextCheckAt: null, reviewStage: 1, needsRecheck: false,
         };
         const independent = !isBarrier && record.result === 'correct'
             && record.skipped !== true && context.assistance === 'independent';
         if (independent) {
-            if (facet.keys.size > 0 && facet.previousAttempt !== null
-                && time - facet.previousAttempt >= MATH_PILOT_POLICY.delayedAfterMs) facet.delayed += 1;
+            const hadIndependentEvidence = facet.keys.size > 0;
             facet.keys.add(problem.problemKey);
+            facet.historicalKeys.add(problem.problemKey);
             facet.attempts += 1;
+            lastIndependent.set(mapping.unitId, time);
+            const delayed = hadIndependentEvidence
+                && facet.keys.size >= MATH_PILOT_POLICY.distinctIndependentProblems
+                && previousContact !== undefined
+                && time - previousContact >= MATH_PILOT_POLICY.delayedAfterMs;
+            if (delayed) {
+                facet.delayed += 1;
+                facet.lastDelayedConfirmationAt = record.timestamp;
+            }
+            if (facet.nextCheckAt === null) facet.nextCheckAt = time + intervalMs(1);
+            else if (delayed && time >= facet.nextCheckAt) {
+                facet.reviewStage = Math.min(facet.reviewStage + 1, MATH_PILOT_POLICY.reviewIntervalsDays.length);
+                facet.nextCheckAt = time + intervalMs(facet.reviewStage);
+                facet.needsRecheck = false;
+            }
         } else {
-            // Help/errors in this concept invalidate confidence across its
-            // methods, while the immutable raw history remains available.
-            facets.forEach((other) => {
-                other.keys.clear(); other.attempts = 0; other.delayed = 0;
-                other.previousAttempt = time; other.lastAttemptAt = record.timestamp;
-            });
-            facet.keys.clear(); facet.attempts = 0; facet.delayed = 0;
+            // Reconfirm only the observed method/variant. Its past delayed
+            // successes and evidence for other methods remain historical facts.
+            facet.keys.clear(); facet.attempts = 0;
+            facet.needsRecheck = true;
+            facet.reviewStage = 1;
+            facet.nextCheckAt = time + intervalMs(1);
         }
-        facet.previousAttempt = time;
         facet.lastAttemptAt = record.timestamp;
         facets.set(key, facet);
     }
@@ -138,15 +182,29 @@ export const evaluateMathLevel11Pilot = (
             independentAttemptCount: facet.attempts,
             delayedConfirmationCount: facet.delayed,
             ready: facet.keys.size >= MATH_PILOT_POLICY.distinctIndependentProblems,
-            retained: facet.keys.size >= MATH_PILOT_POLICY.distinctIndependentProblems && facet.delayed > 0,
+            retained: facet.lastDelayedConfirmationAt !== null,
             lastAttemptAt: facet.lastAttemptAt,
+            historicalIndependentProblemCount: facet.historicalKeys.size,
+            lastDelayedConfirmationAt: facet.lastDelayedConfirmationAt,
+            nextCheckAt: iso(facet.nextCheckAt),
+            reviewStage: facet.reviewStage,
+            freshness: facet.keys.size < MATH_PILOT_POLICY.distinctIndependentProblems || facet.needsRecheck
+                ? 'unconfirmed' : facet.nextCheckAt !== null && facet.nextCheckAt <= asOfTime ? 'due' : 'fresh',
+            needsRecheck: facet.needsRecheck,
         })).sort((a, b) => `${a.representation}:${a.variant}`.localeCompare(`${b.representation}:${b.variant}`));
-        const requiredVariants = unit.id === 'math.subtract-two-two' ? ['no-regroup', 'regroup'] : ['default'];
+        const requiredVariants = getMathUnitRequiredVariants(unit.id);
         const completedMethods = (field: 'ready' | 'retained'): LearningRepresentation[] =>
             (['symbol', 'algorithm'] as const).filter((method) => requiredVariants.every((variant) =>
                 facets.some((facet) => facet.representation === method && facet.variant === variant && facet[field])));
         const readyMethods = completedMethods('ready');
         const retainedMethods = completedMethods('retained');
+        const unknownAt = lastUnknown.get(unit.id) ?? null;
+        const uncertainty = unknownAt !== null && (lastIndependent.get(unit.id) ?? -Infinity) <= unknownAt;
+        const freshMethod = readyMethods.some(method => requiredVariants.every(variant => facets.some(facet =>
+            facet.representation === method && facet.variant === variant && facet.freshness === 'fresh')));
+        const dueMethod = readyMethods.some(method => requiredVariants.every(variant => facets.some(facet =>
+            facet.representation === method && facet.variant === variant && facet.freshness !== 'unconfirmed')));
+        const deadlines = facets.flatMap(facet => facet.nextCheckAt ? [Date.parse(facet.nextCheckAt)] : []);
         return {
             unitId: unit.id, label: unit.label,
             readiness: readyMethods.length > 0 ? 'ready' : 'unconfirmed',
@@ -156,6 +214,11 @@ export const evaluateMathLevel11Pilot = (
             // It does not infer prerequisite mastery from successful later units.
             unconfirmedPrerequisites: [...unit.prerequisites],
             facets, unknownAttempts: unknown.get(unit.id) ?? 0,
+            lastUnknownAt: iso(unknownAt), uncertainty,
+            lastContactAt: iso(lastContact.get(unit.id) ?? null),
+            nextCheckAt: iso(deadlines.length ? Math.min(...deadlines) : null),
+            freshness: uncertainty ? 'unconfirmed' : freshMethod ? 'fresh' : dueMethod ? 'due' : 'unconfirmed',
+            needsRecheck: uncertainty || facets.some(facet => facet.needsRecheck),
         };
     });
     for (const unit of evaluations) {
@@ -163,7 +226,7 @@ export const evaluateMathLevel11Pilot = (
             !evaluations.some((candidate) => candidate.unitId === id && candidate.readiness === 'ready'));
     }
     return {
-        mode: 'shadow' as const,
+        mode: 'evidence-projection' as const,
         profileId,
         asOf,
         policy: MATH_PILOT_POLICY,

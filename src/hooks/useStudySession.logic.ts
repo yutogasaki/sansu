@@ -343,7 +343,7 @@ export const resolveProfileProgressionAfterAttempt = async ({
                     ? ensureMainEnabled(
                         updatedProfile.mathLevels.map(level =>
                             level.level === nextMain
-                                ? { ...level, enabled: true, recentAnswersNonReview: [] }
+                                ? { ...level, enabled: true, recentAnswersNonReview: [], recentIndependentAnswersNonReview: [] }
                                 : level
                         ),
                         nextMain
@@ -386,7 +386,7 @@ export const resolveProfileProgressionAfterAttempt = async ({
                 ? ensureMainEnabled(
                     updatedProfile.vocabLevels.map(level =>
                         level.level === nextMain
-                            ? { ...level, enabled: true, recentAnswersNonReview: [] }
+                            ? { ...level, enabled: true, recentAnswersNonReview: [], recentIndependentAnswersNonReview: [] }
                             : level
                     ),
                     nextMain
@@ -456,7 +456,7 @@ export const applyResolvedProgressionToLatestProfile = ({
                     ? ensureMainEnabled(
                         nextProfile.mathLevels.map(level => (
                             level.level === promotionTarget
-                                ? { ...level, enabled: true, recentAnswersNonReview: [] }
+                                ? { ...level, enabled: true, recentAnswersNonReview: [], recentIndependentAnswersNonReview: [] }
                                 : level
                         )),
                         promotionTarget,
@@ -499,7 +499,7 @@ export const applyResolvedProgressionToLatestProfile = ({
                 ? ensureMainEnabled(
                     nextProfile.vocabLevels.map(level => (
                         level.level === promotionTarget
-                            ? { ...level, enabled: true, recentAnswersNonReview: [] }
+                            ? { ...level, enabled: true, recentAnswersNonReview: [], recentIndependentAnswersNonReview: [] }
                             : level
                     )),
                     promotionTarget,

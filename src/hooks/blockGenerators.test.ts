@@ -287,7 +287,7 @@ describe("blockGenerators utilities", () => {
             plusLimit: 0,
         });
 
-        expect(result.isReview).toBe(false);
+        expect(result.isReview).toBe(true);
         expect(result.isMaintenanceCheck).toBe(true);
         expect(result.countsTowardReviewCap).toBe(true);
         expect(result.source).toBe("maintenance");
@@ -342,7 +342,7 @@ describe("blockGenerators utilities", () => {
             plusLimit: 0,
         });
 
-        expect(result.isReview).toBe(false);
+        expect(result.isReview).toBe(true);
         expect(result.countsTowardReviewCap).toBe(true);
         expect(result.source).toBe("weak");
         expect(result.problem.categoryId).toBe("count_read");
@@ -562,11 +562,21 @@ describe("blockGenerators utilities", () => {
     });
 
     it("forces vocab Due review in vocab-only and mix modes", () => {
-        const recent = Array.from({ length: 10 }, () => ({ isReview: false }));
+        const recent = Array.from({ length: 10 }, () => ({ subject: 'vocab' as const, isReview: false }));
         expect(shouldForceVocabReviewBlock("vocab", 1, recent)).toBe(true);
         expect(shouldForceVocabReviewBlock("mix", 1, recent)).toBe(true);
         expect(shouldForceVocabReviewBlock("math", 1, recent)).toBe(false);
         expect(shouldForceVocabReviewBlock("vocab", 0, recent)).toBe(false);
+    });
+
+    it("uses only the recent vocabulary history for the vocabulary review ratio", () => {
+        const mathReviews = Array.from({ length: 40 }, () => ({ subject: 'math' as const, isReview: true }));
+        const vocabNormal = Array.from({ length: 20 }, () => ({ subject: 'vocab' as const, isReview: false }));
+        const vocabReviews = Array.from({ length: 20 }, () => ({ subject: 'vocab' as const, isReview: true }));
+        expect(shouldForceVocabReviewBlock('mix', 1, mathReviews)).toBe(true);
+        expect(shouldForceVocabReviewBlock('mix', 1, [...mathReviews, ...vocabNormal])).toBe(true);
+        expect(shouldForceVocabReviewBlock('mix', 1, [...mathReviews, ...vocabReviews, ...vocabNormal])).toBe(false);
+        expect(shouldForceVocabReviewBlock('vocab', 1, [...vocabNormal, ...vocabNormal, ...vocabReviews])).toBe(true);
     });
 
     it("generateLevelBlock alternates subjects in mix mode", () => {

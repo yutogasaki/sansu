@@ -1,6 +1,8 @@
 import {
     assignmentsMatch,
     createExploreLearningAssignment,
+    expectedExploreAssignmentReview,
+    hasValidExploreEvidenceAssistance,
 } from "./learningAssignment";
 import {
     createExploreLearningSegmentId,
@@ -73,7 +75,8 @@ const hasValidAssignmentPolicy = (assignment: ExploreLearningAssignment): boolea
         || assignment.source === "maintenance"
         || assignment.source === "weak";
     return assignment.affectsSrs !== isGameOnly
-        && assignment.isReview === (assignment.source === "due")
+        && assignment.isReview === expectedExploreAssignmentReview(assignment)
+        && hasValidExploreEvidenceAssistance(assignment)
         && assignment.isMaintenanceCheck === (assignment.source === "maintenance")
         && assignment.countsTowardReviewCap === countsTowardReviewCap
         && Number.isFinite(assignment.reservedAt)
@@ -100,6 +103,7 @@ const slotIntegrityError = (
         reservedAt: slot.assignment.reservedAt,
         reservedProblem: slot.assignment.reservedProblem,
         reservedEncounterId: slot.assignment.reservedEncounterId,
+        learningEvidenceAssistance: slot.assignment.learningEvidenceAssistance,
     });
     const storedAssignment = run.learningAssignments?.[slot.problem.id];
     const knownNode = run.activeCheckpoint?.state.nodes.find((node) => node.id === slot.nodeId);

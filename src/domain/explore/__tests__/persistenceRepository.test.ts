@@ -848,6 +848,25 @@ describe("exploration persistence repository", () => {
         await expect(testDatabase.memoryMath.count()).resolves.toBe(0);
     });
 
+    it.each(['weak', 'maintenance'] as const)('accepts new %s review policy while preserving the legacy frozen label', async source => {
+        const testDatabase = await openVersion5Database(`review-contract-${source}`);
+        await testDatabase.profiles.add(profile('profile-1'));
+        const repository = createExplorePersistenceRepository(testDatabase);
+        await repository.startExploreRun({ runId: 'run-1', profileId: 'profile-1', seed: 'seed', startedAt: 100 });
+        const legacy = { ...reserveInput('run-1', 'profile-1', 'gate-1', 'old', undefined, source),
+            isReview: false, countsTowardReviewCap: true };
+        await expect(reserveAssignment(repository, legacy)).resolves.toMatchObject({ isReview: false });
+        const modern = { ...legacy, gateId: 'gate-2', problemId: 'new', isReview: true,
+            learningEvidenceAssistance: 'independent' as const };
+        await expect(reserveAssignment(repository, modern)).resolves.toMatchObject({ isReview: true });
+        await expect(reserveAssignment(repository, { ...legacy, isReview: true, learningEvidenceAssistance: 'independent' }))
+            .rejects.toBeInstanceOf(ExplorePersistenceConflictError);
+        // A marker alone does not supply a saved whole-problem checkpoint.
+        await repository.commitExploreAttempt(commitInput('run-1', 'profile-1', 'gate-2', 'new'));
+        expect((await testDatabase.logs.toArray())[0].learningEvidence).toBeUndefined();
+        expect((await testDatabase.memoryMath.toArray())[0].independentCorrectAnswers).toBe(0);
+    });
+
     it("rejects a conflicting reservation and keeps the original assignment", async () => {
         const testDatabase = await openVersion5Database("assignment-reservation-conflict");
         await testDatabase.profiles.add(profile("profile-1"));

@@ -76,7 +76,8 @@ describe('one side view contains the complete shared delivery', () => {
                     const beforeRoots = [carrier.group.position.toArray(), receiver.group.position.toArray(), source.position.toArray(), seat.position.toArray()];
                     // Property insertion order must not determine which object
                     // supplies the carrier sweep or the recipient envelope.
-                    const frame = fitSharedActivityFrame(plan, { source, seat, receiver: receiver.group, carrier: carrier.group }, viewport.width / viewport.height);
+                    const frame = fitSharedActivityFrame(plan, { source, seat, receiver: receiver.group, carrier: carrier.group,
+                        viewportWidth: viewport.width }, viewport.width / viewport.height);
                     const view = camera(frame), frozen = [...view.matrixWorld.elements, ...view.projectionMatrix.elements];
                     expect([carrier.group.position.toArray(), receiver.group.position.toArray(), source.position.toArray(), seat.position.toArray()]).toEqual(beforeRoots);
                     for (const object of [carrier.group, receiver.group, source, seat]) visible(object, view);

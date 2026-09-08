@@ -97,11 +97,9 @@ try {
             assertIslandSectionGrowth(firstBefore, firstFailedNext, firstBefore.plan);
             assert.equal(firstFailedNext.island.items.length, 3);
             assert(firstFailedNext.island.items.some(item => item.id === 'living-bench' && item.position));
-            assert.equal(firstFailedNext.island.growth.memories.length, 2);
+            assert.equal(firstFailedNext.island.growth.memories.length, 1);
             assert.deepEqual(firstFailedNext.island.growth.memories[0], firstBefore.island.growth.memories[0]);
-            assert.equal(firstFailedNext.island.growth.memories[1].kind, 'upgrade');
-            assert.equal(firstFailedNext.island.growth.memories[1].habitatId, 'garden');
-            assert.equal(firstFailedNext.island.growth.memories[1].level, 1);
+            assert.equal(firstFailedNext.island.growth.progress.garden, 1, 'Small growth survives without adding a major album record');
             assert.equal(firstFailedNext.logs.length, firstBefore.logs.length + 1);
             const firstAnswer = firstFailedNext.islandEvents.filter(event => event.type === 'answer'
                 && !firstBefore.islandEvents.some(old => old.id === event.id));

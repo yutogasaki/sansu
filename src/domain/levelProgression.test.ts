@@ -12,10 +12,19 @@ import type { MemoryState, SubjectKey } from './types';
 import { applyResolvedProgressionToLatestProfile } from '../hooks/useStudySession.logic';
 import { getLearningAttemptTransactionTables, writeLearningAttemptInTransaction } from './learningAttemptWriter';
 import { getLearningDayStart, toLocaleDateKey } from '../utils/learningDay';
+import { generateMathProblem } from './math';
+import { generateVocabProblem } from './english/generator';
+import { learningEvidenceForProblem } from './learning/attemptContext';
+
+const evidence = (subject: SubjectKey, itemId: string) => learningEvidenceForProblem({
+    ...(subject === 'math' ? generateMathProblem(itemId) : generateVocabProblem(itemId)),
+    id: 'verified-attempt', subject, isReview: false,
+}, 'independent');
 
 const attempt = (result: AttemptLog['result'], index: number, isReview = false): AttemptLog => ({
     id: index, profileId: 'p', subject: 'math', itemId: 'count_100', result, isReview,
     timestamp: new Date(2026, 8, 8, 10, index).toISOString(),
+    learningEvidence: evidence('math', 'count_100'),
 });
 const history = (correctInLast20: number) => [
     ...Array.from({ length: 10 }, (_, i) => attempt('correct', i)),
@@ -76,11 +85,11 @@ describe('evidence required for level progression', () => {
         profile.mathMaxUnlocked = 3;
         profile.mathLevels = profile.mathLevels?.map(level => level.level === 3 ? { ...level, unlocked: true, enabled: true } : level);
         await saveProfile(profile);
-        for (let i = 0; i < 30; i++) await logAttempt(profile.id, 'math', 'count_10', 'incorrect');
+        for (let i = 0; i < 30; i++) await logAttempt(profile.id, 'math', 'count_10', 'incorrect', false, false, false, undefined, evidence('math', 'count_10'));
         let stored = (await getProfile(profile.id))!;
         expect(stored.mathMainLevel).toBe(2);
         expect(await checkMathMainPromotion(stored, 3)).toBe(false);
-        for (let i = 0; i < 17; i++) await logAttempt(profile.id, 'math', 'count_10', 'correct');
+        for (let i = 0; i < 17; i++) await logAttempt(profile.id, 'math', 'count_10', 'correct', false, false, false, undefined, evidence('math', 'count_10'));
         stored = (await getProfile(profile.id))!;
         expect(stored.mathMainLevel).toBe(3);
         expect(await checkMathMainPromotion(profile, 3)).toBe(true);
@@ -99,12 +108,14 @@ describe('evidence required for level progression', () => {
         const threshold = Math.ceil(words.length * 0.7);
         const memory: Record<string, MemoryState> = Object.fromEntries(words.slice(0, threshold).map(word => [word.id, {
             id: word.id, strength: 1, nextReview: new Date().toISOString(), updatedAt: new Date().toISOString(),
-            totalAnswers: 10, correctAnswers: 0, incorrectAnswers: 10, skippedAnswers: 10,
+            totalAnswers: 10, correctAnswers: 0, independentCorrectAnswers: 0, incorrectAnswers: 10, skippedAnswers: 10,
         }]));
         expect(await checkEnglishLevelProgression(profile, memory)).toBe(false);
-        Object.values(memory).slice(0, -1).forEach(item => { item.correctAnswers = 1; });
-        expect(await checkEnglishLevelProgression(profile, memory)).toBe(false);
         Object.values(memory).forEach(item => { item.correctAnswers = 1; });
+        expect(await checkEnglishLevelProgression(profile, memory)).toBe(false);
+        Object.values(memory).slice(0, -1).forEach(item => { item.independentCorrectAnswers = 1; });
+        expect(await checkEnglishLevelProgression(profile, memory)).toBe(false);
+        Object.values(memory).forEach(item => { item.independentCorrectAnswers = 1; });
         expect(await checkEnglishLevelProgression(profile, memory)).toBe(true);
         await db.memoryVocab.bulkPut(Object.values(memory).map(item => ({ ...item, profileId: profile.id })));
         expect(await checkEnglishLevelProgression(profile)).toBe(true);
@@ -119,6 +130,7 @@ describe('evidence required for level progression', () => {
             writeLearningAttemptInTransaction(db, {
                 profileId: profile.id, subject: 'vocab', itemId: 'apple', result: 'correct',
                 isReview: false, isMaintenanceCheck: false, timestamp: date.toISOString(),
+                learningEvidence: evidence('vocab', 'apple'),
             }));
         const firstDay = new Date(2026, 0, 10, 20);
         const first = await write(firstDay);
@@ -129,8 +141,10 @@ describe('evidence required for level progression', () => {
         expect(repeat.memory.nextReview).toBe(first.memory.nextReview);
         expect(repeat.profile?.todayCount).toBe(2);
         const nextDay = await write(new Date(2026, 0, 11, 4));
-        expect(nextDay.memory.strength).toBe(2);
+        expect(nextDay.memory.strength).toBe(1);
         expect(nextDay.profile?.todayCount).toBe(1);
         expect(nextDay.profile?.streak).toBe(2);
+        const spaced = await write(new Date(2026, 0, 12, 4));
+        expect(spaced.memory.strength).toBe(2);
     });
 });

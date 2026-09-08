@@ -1,4 +1,5 @@
-import { ISLAND_EAST_LAND, ISLAND_ITEMS, ISLAND_MAIN_LAND, ISLAND_WEST_LAND } from '../../../domain/island/catalog';
+import type { IslandLandAccess } from '../../../domain/island/catalog';
+import { getIslandLandBounds, ISLAND_ITEMS } from '../../../domain/island/catalog';
 import { planResidentPointRoute, RESIDENT_FOOTPRINT, residentObstacles, residentPointIsClear,
     type GroundPoint, type ResidentRoute } from './navigation';
 import type { IslandStageItem } from './types';
@@ -41,21 +42,21 @@ function leavesFurniture(route: ResidentRoute, items: PlacedItem[]) {
 /** Saved-layout reconciliation only. The caller decides when to run these
  * ordinary walks; a preview never enters this pure planner. */
 export function planFurnitureClearance(items: readonly IslandStageItem[], residents: readonly FurnitureClearanceResident[],
-    completedSets: number): FurnitureClearancePlan {
+    landAccess: IslandLandAccess): FurnitureClearancePlan {
     const placed = items.filter((item): item is PlacedItem => Boolean(item.position));
     const positions = residents.map(resident => ({ x: resident.position.x, z: resident.position.z }));
     const pending = residents.flatMap((resident, index) => resident.visible
         && placed.some(item => item.id !== resident.itemId && overlaps(positions[index], item)) ? [index] : []);
     const plan: FurnitureClearancePlan = { moves: [], blocked: [] };
     if (!pending.length) return plan;
-    const expanded = completedSets >= 2;
+    const bounds = getIslandLandBounds(landAccess);
     const obstacles = residentObstacles(items, '');
     const grid: GroundPoint[] = [];
-    for (let ix = Math.ceil((completedSets >= 12 ? ISLAND_WEST_LAND.x - ISLAND_WEST_LAND.radiusX : ISLAND_MAIN_LAND.x - ISLAND_MAIN_LAND.radiusX) / STEP);
-        ix <= Math.floor((expanded ? ISLAND_EAST_LAND.x + ISLAND_EAST_LAND.radiusX : ISLAND_MAIN_LAND.radiusX) / STEP); ix++) {
-        for (let iz = Math.ceil(-ISLAND_MAIN_LAND.radiusZ / STEP); iz <= Math.floor(ISLAND_MAIN_LAND.radiusZ / STEP); iz++) {
+    for (let ix = Math.ceil(bounds.minX / STEP);
+        ix <= Math.floor(bounds.maxX / STEP); ix++) {
+        for (let iz = Math.ceil(bounds.minZ / STEP); iz <= Math.floor(bounds.maxZ / STEP); iz++) {
             const point = { x: ix * STEP, z: iz * STEP };
-            if (residentPointIsClear(point, completedSets, obstacles)
+            if (residentPointIsClear(point, landAccess, obstacles)
                 && placed.every(item => distance(point, item.position) >= radius(item) + MARGIN)) grid.push(point);
         }
     }
@@ -66,7 +67,7 @@ export function planFurnitureClearance(items: readonly IslandStageItem[], reside
         const departingIds = new Set(departing.map(item => item.id));
         const blockers = [...residentObstacles(items.filter(item => !departingIds.has(item.id)), ''),
             ...occupied.map(point => ({ ...point, radius: RESIDENT_FOOTPRINT }))];
-        if (!residentPointIsClear(origin, completedSets, blockers)) return undefined;
+        if (!residentPointIsClear(origin, landAccess, blockers)) return undefined;
         const collision = departing.filter(item => item.id !== residents[index].itemId && overlaps(origin, item))
             .sort((a, b) => (radius(b) - distance(origin, b.position)) - (radius(a) - distance(origin, a.position))
                 || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))[0];
@@ -81,7 +82,7 @@ export function planFurnitureClearance(items: readonly IslandStageItem[], reside
                 return { point, score: d + .9 * longitudinal / Math.max(EPSILON, d), d };
             }).sort((a, b) => a.score - b.score || a.d - b.d || a.point.x - b.point.x || a.point.z - b.point.z);
         for (const { point } of candidates) {
-            const route = planResidentPointRoute(origin, point, items, completedSets, { occupied,
+            const route = planResidentPointRoute(origin, point, items, landAccess, { occupied,
                 departingIds: departing.map(item => item.id),
                 yaw: Math.atan2(collision.position.x - point.x, collision.position.z - point.z) });
             if (route && leavesFurniture(route, departing)) return route;

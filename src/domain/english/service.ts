@@ -3,6 +3,7 @@ import { ENGLISH_WORDS } from "./words";
 import { db } from "../../db";
 import { MAX_VOCAB_LEVEL } from "../math/curriculum";
 import { getNextPromotionLevel } from '../levelProgression';
+import { independentCorrectCount } from '../learning/independentProgress';
 
 /**
  * DBから対象profileId + wordIdsのvocab MemoryStateをバッチ取得
@@ -59,7 +60,7 @@ export const checkEnglishLevelProgression = async (
     let unlockedCount = 0;
     for (const id of wordIds) {
         const memory = getMemory(id);
-        if (memory && Number.isFinite(memory.correctAnswers) && memory.correctAnswers > 0) {
+        if (independentCorrectCount(memory) > 0) {
             unlockedCount++;
         }
     }
@@ -72,7 +73,7 @@ export const checkEnglishLevelProgression = async (
 // 仕様 5.2: 英語レベル解放判定（非復習20問で85%以上）
 export const checkVocabUnlockReadiness = (profile: UserProfile): boolean => {
     const levelState = profile.vocabLevels?.find(l => l.level === profile.vocabMainLevel);
-    const recent = levelState?.recentAnswersNonReview || [];
+    const recent = levelState?.recentIndependentAnswersNonReview || [];
     if (recent.length < 20) return false;
     const correctCount = recent.filter(Boolean).length;
     const accuracy = correctCount / recent.length;

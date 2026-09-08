@@ -1,3 +1,4 @@
+import type { IslandLandAccess } from '../../../domain/island/catalog';
 import { ISLAND_ITEMS } from '../../../domain/island/catalog';
 import { planResidentPointRoute, planResidentRoute, type GroundPoint, type ResidentRoute } from './navigation';
 import type { IslandStageItem } from './types';
@@ -97,7 +98,7 @@ function seatHandoffPoints(seat: ActivityPair['seat']): GroundPoint[] {
  * candidates can change, each with a real delivery preflight from the same
  * source approach around the receiver's seat and every visible third resident. */
 export function sharedActivityDeliveryPlans(plan: SharedActivityPlan, items: readonly IslandStageItem[],
-    residents: readonly SharedActivityResident[], completedSets: number): [SharedActivityPlan, ...SharedActivityPlan[]] {
+    residents: readonly SharedActivityResident[], landAccess: IslandLandAccess): [SharedActivityPlan, ...SharedActivityPlan[]] {
     const plans: [SharedActivityPlan, ...SharedActivityPlan[]] = [plan];
     if (!placed(plan.source) || !placed(plan.seat)) return plans;
     const gatherPoint = plan.gatherRoute.points[plan.gatherRoute.points.length - 1];
@@ -107,7 +108,7 @@ export function sharedActivityDeliveryPlans(plan: SharedActivityPlan, items: rea
         && index !== plan.carrier && index !== plan.receiver).map(resident => resident.position)];
     for (const handoffPoint of seatHandoffPoints(plan.seat)) {
         if (distance(handoffPoint, plan.handoffPoint) < 1e-8) continue;
-        const deliveryRoute = planResidentPointRoute(gatherPoint, handoffPoint, items, completedSets, {
+        const deliveryRoute = planResidentPointRoute(gatherPoint, handoffPoint, items, landAccess, {
             departingId: plan.source.id, occupied,
             yaw: Math.atan2(receiverPoint.x - handoffPoint.x, receiverPoint.z - handoffPoint.z),
         });
@@ -120,7 +121,7 @@ export function sharedActivityDeliveryPlans(plan: SharedActivityPlan, items: rea
  * three sequential routes succeed. Search is limited to the selected item's
  * matching partners, ordered resident pairs, and three handoff points. */
 export function chooseSharedActivity(items: readonly IslandStageItem[], residents: readonly SharedActivityResident[],
-    completedSets: number, selectedId: string, afterIndex = -1,
+    landAccess: IslandLandAccess, selectedId: string, afterIndex = -1,
     previous?: SharedActivityReplayPreference): SharedActivityPlan | undefined {
     const count = residents.length;
     if (count < 2) return undefined;
@@ -143,18 +144,18 @@ export function chooseSharedActivity(items: readonly IslandStageItem[], resident
     for (const { pair, receiver, carrier } of candidates) {
         const third = roundRobin.filter(index => index !== receiver && index !== carrier)
             .map(index => residents[index].position);
-        const receiverRoute = planResidentRoute(residents[receiver].position, pair.seat, savedItems, completedSets,
+        const receiverRoute = planResidentRoute(residents[receiver].position, pair.seat, savedItems, landAccess,
                 residents[receiver].itemId || residents[receiver].departingId, { occupied: [residents[carrier].position, ...third] });
         if (!receiverRoute) continue;
         const receiverPoint = receiverRoute.points[receiverRoute.points.length - 1];
         const occupied = [receiverPoint, ...third];
-        const gatherRoute = planResidentRoute(residents[carrier].position, pair.source, savedItems, completedSets,
+        const gatherRoute = planResidentRoute(residents[carrier].position, pair.source, savedItems, landAccess,
                 residents[carrier].itemId || residents[carrier].departingId, { occupied });
         if (!gatherRoute) continue;
         const gatherPoint = gatherRoute.points[gatherRoute.points.length - 1];
         for (const handoffPoint of seatHandoffPoints(pair.seat)
             .sort((a, b) => distance(a, pair.source.position) - distance(b, pair.source.position))) {
-            const deliveryRoute = planResidentPointRoute(gatherPoint, handoffPoint, savedItems, completedSets, {
+            const deliveryRoute = planResidentPointRoute(gatherPoint, handoffPoint, savedItems, landAccess, {
                 departingId: pair.source.id, occupied,
                 yaw: Math.atan2(receiverPoint.x - handoffPoint.x, receiverPoint.z - handoffPoint.z),
             });

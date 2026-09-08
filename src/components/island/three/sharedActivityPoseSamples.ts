@@ -1,3 +1,4 @@
+import type { IslandLandAccess } from '../../../domain/island/catalog';
 import * as THREE from 'three';
 import { IslandResident } from './animals';
 import { disposeGeometry, IslandMaterials } from './primitives';
@@ -96,7 +97,7 @@ function routeProgress(plan: SharedActivityPlan, position: THREE.Vector3) {
 /** Replay the existing controller on an isolated pair of real rigs. No live
  * actor, route, furniture, or saved record is modified. Geometry is shared by
  * all four hand options until the caller has finished scoring and disposes it. */
-export function sampleSharedActivityPoses(plan: SharedActivityPlan, residents: readonly IslandResident[], completedSets: number,
+export function sampleSharedActivityPoses(plan: SharedActivityPlan, residents: readonly IslandResident[], landAccess: IslandLandAccess,
     fixedHands?: SharedActivityHands) {
     const actualCarrier = residents[plan.carrier], actualReceiver = residents[plan.receiver];
     if (!actualCarrier || !actualReceiver) return undefined;
@@ -125,9 +126,9 @@ export function sampleSharedActivityPoses(plan: SharedActivityPlan, residents: r
             controller.cancel(0);
             // Install legitimate source/seat targets, then let the controller
             // perform its exact preflighted routes and normal phase transitions.
-            carrier.visit(plan.source, 0, true, items, completedSets, plan.gatherRoute);
-            receiver.visit(plan.seat, 0, true, items, completedSets, plan.receiverRoute);
-            controller.start(plan, 0, false, items, completedSets, selected);
+            carrier.visit(plan.source, 0, true, items, landAccess, plan.gatherRoute);
+            receiver.visit(plan.seat, 0, true, items, landAccess, plan.receiverRoute);
+            controller.start(plan, 0, false, items, landAccess, selected);
             // Initial walking is outside the scored pickup→payoff interval.
             // Finish those exact preflighted routes before sampling that interval.
             proxies.forEach(resident => resident.update(20000)); controller.update(20000, false);
@@ -186,7 +187,7 @@ export function sampleSharedActivityPoses(plan: SharedActivityPlan, residents: r
             }
             // The same fixed view must also contain/see the real reduced-motion
             // outcome, including its persistent 1.25× bubble after normal popping.
-            controller.start(plan, 40000, true, items, completedSets, selected);
+            controller.start(plan, 40000, true, items, landAccess, selected);
             retain('settled', 1, true);
             options.push({ hands: selected, samples });
         }

@@ -201,8 +201,19 @@ describe('island learning continuity', () => {
         await d.memoryMath.update(['child', due], { nextReview: '2001-01-01' });
         const firstReviews = [];
         const reviewSelections: { skillId: string; source: string }[][] = [];
+        let englishSections = 0;
         for (let turn = 0; turn < 3; turn++) {
             let plan = await startIslandPlan('child', d);
+            // Adaptive mix may repeat a needed subject. English sections must
+            // not move the independent math review cursor, whichever order is chosen.
+            while (plan.subject === 'vocab') {
+                englishSections += 1;
+                expect(englishSections).toBeLessThanOrEqual(4);
+                const mathTurnBefore = (await d.islands.get('child'))?.mathReviewTurn;
+                await finish(d, plan);
+                expect((await d.islands.get('child'))?.mathReviewTurn).toBe(mathTurnBefore);
+                plan = await startIslandPlan('child', d);
+            }
             expect(plan.subject).toBe('math'); expect(plan.slots).toHaveLength(count);
             firstReviews.push({ skillId: plan.slots[0].problem.categoryId, source: plan.slots[0].source });
             reviewSelections.push(plan.slots.filter(slot => slot.countsTowardReviewCap)
@@ -221,13 +232,8 @@ describe('island learning continuity', () => {
                 plan = (await commitIslandLearning('child', plan.id, plan.revision, correctAction(plan), d)).plan;
             }
             expect((await d.islands.get('child'))?.mathReviewTurn).toBe(mathTurn);
-            if (subject === 'mix' && turn < 2) {
-                const vocab = await startIslandPlan('child', d);
-                expect(vocab.subject).toBe('vocab');
-                await finish(d, vocab);
-                expect((await d.islands.get('child'))?.mathReviewTurn).toBe(mathTurn);
-            }
         }
+        if (subject === 'mix') expect(englishSections).toBeGreaterThan(0);
         expect(reviewSelections.slice(0, 2).flat()).toContainEqual({ skillId: due, source: 'due' });
         // Six slots can already serve ordinary Due in the first set. Its guided
         // completion then creates a pending check, so it enters that rotation.

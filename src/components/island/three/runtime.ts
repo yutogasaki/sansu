@@ -1,14 +1,16 @@
 import * as THREE from 'three';
 import { IslandMaterials, disposeGeometry, star } from './primitives';
-import { applyTreeLife, getTreeLightAnchor, makeExpansion, makeLighthouse, makeOcean, makeScenery, makeStarTree } from './scenery';
-import { makeWestExpansion } from './westScenery';
-import { applyFurnitureGrowth, applySceneryGrowth, IslandNatureVisuals } from './growthVisuals';
+import { applyTreeLife, getTreeLightAnchor, ISLAND_SHORE_RIM } from './scenery';
+import { shoreContour } from './geometry';
+import { applyFurnitureGrowth, IslandNatureVisuals } from './growthVisuals';
+import { DEFAULT_ISLAND_COSMETICS, ISLAND_CUSTOMIZATION_CANDIDATE, IslandCosmeticScenery, sameIslandCosmetics } from './cosmeticScenery';
 import { canRunLivingActivities, canStartGrownSharing, livingCandidates, livingVisitHasSetting, livingVisitsForItem, sharedLivingDiscovery, type LivingVisit } from './livingActivities';
 import { applyFurnitureInterest, applyFurnitureLife, applyFurnitureUse, getFurnitureAnchors, makeFurniture, makeLightArrival, makeSelection } from './furniture';
 import { IslandPlacementPreview } from './placementPreview';
 import { IslandPlacementOcclusion } from './placementOcclusion';
 import { boxCorners, fitLearningFrame } from './sceneFraming';
-import { ISLAND_ITEMS } from '../../../domain/island/catalog';
+import { getIslandLandAccess, getIslandLands, ISLAND_EAST_LAND, ISLAND_ITEMS, ISLAND_WEST_LAND } from '../../../domain/island/catalog';
+import { getIslandExpansionLevel } from '../../../domain/island/expansion';
 import { ISLAND_VISUAL_CANDIDATE } from '../../../domain/island/feature';
 import { IslandResident, RESIDENT_NAMES } from './animals';
 import { canShowOrdinaryInterest, isResidentInterestItem, residentInterestVerb, sampleResidentInterest,
@@ -51,12 +53,13 @@ export function fitIslandComparisonCamera(camera: THREE.OrthographicCamera,
     const frames = {
         garden: { target: [.6, .6, .95], width: 3.8, height: 3.4 },
         waterside: { target: [4.9, .65, 1.15], width: 5.8, height: 4.4 },
-        grove: { target: [-6.4, 1.1, -.15], width: 5.3, height: 4.8 },
-        village: { target: [-2.5, 1.1, -1.1], width: 4.3, height: 4.1 },
-        all: { target: [0, 1, -.03], width: 18, height: 10.3 },
+        grove: { target: [-6.4, 1.3, -.15], width: 5.3, height: 5.3 },
+        village: { target: [-2.5, 1.25, -1.1], width: 4.3, height: 4.5 },
+        all: { target: [0, 1, -.03], width: (ISLAND_EAST_LAND.x + ISLAND_EAST_LAND.radiusX
+            - ISLAND_WEST_LAND.x + ISLAND_WEST_LAND.radiusX) * 1.18, height: 10.3 },
     };
     const frame = frames[habitat], target = new THREE.Vector3(...frame.target);
-    camera.position.copy(target).add(new THREE.Vector3(4.7, 8.8, 13.5));
+    camera.position.copy(target).add(new THREE.Vector3(habitat === 'garden' ? -4.7 : 4.7, 8.8, 13.5));
     camera.lookAt(target); camera.updateMatrixWorld(true);
     const height = Math.max(frame.height, frame.width / aspect);
     camera.left = -height * aspect / 2; camera.right = height * aspect / 2;
@@ -69,13 +72,13 @@ export class IslandScene {
     private readonly camera = new THREE.OrthographicCamera(-7, 7, 5, -5, .1, 100);
     private readonly renderer: THREE.WebGLRenderer;
     private readonly materials = new IslandMaterials();
-    private readonly tree: THREE.Group;
-    private readonly scenery: THREE.Group;
-    private readonly expansion: THREE.Group;
-    private readonly westExpansion: THREE.Group;
-    private readonly sceneryGrowth = new THREE.Group();
+    private world!: IslandCosmeticScenery;
+    private tree!: THREE.Group;
+    private scenery!: THREE.Group;
+    private expansion!: THREE.Group;
+    private westExpansion!: THREE.Group;
     private readonly nature = new IslandNatureVisuals(this.materials);
-    private readonly lighthouse: THREE.Group;
+    private lighthouse!: THREE.Group;
     private readonly arrival: THREE.Group;
     private readonly selection = makeSelection();
     private readonly cycleLights = new THREE.Group();
@@ -100,6 +103,7 @@ export class IslandScene {
     private readonly visibilityObserver: IntersectionObserver;
     private readonly motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     private state?: IslandStageState;
+    private get landAccess() { return getIslandLandAccess(this.state ?? { completedSets: 0 }); }
     private readonly placementPreview = new IslandPlacementPreview(this.materials);
     private readonly placementOcclusion = new IslandPlacementOcclusion();
     private previewItem?: IslandStageItem;
@@ -167,19 +171,14 @@ export class IslandScene {
         sun.shadow.camera.near = 1; sun.shadow.camera.far = 25;
         sun.shadow.bias = -.0006; sun.shadow.normalBias = .055;
         this.scene.add(sun);
-        this.scenery = makeScenery(this.materials);
-        this.scene.add(makeOcean(this.materials), this.scenery);
-        this.tree = makeStarTree(this.materials);
-        this.expansion = makeExpansion(this.materials);
-        this.westExpansion = makeWestExpansion(this.materials);
-        this.lighthouse = makeLighthouse(this.materials);
+        this.installCosmeticScenery(new IslandCosmeticScenery());
         this.arrival = makeLightArrival(this.materials);
         this.expansion.visible = false;
         this.westExpansion.visible = false;
         this.lighthouse.visible = false;
         this.arrival.visible = false;
         this.selection.visible = false;
-        this.scene.add(this.tree, this.expansion, this.westExpansion, this.lighthouse, this.arrival, this.selection, this.sceneryGrowth, this.nature.group);
+        this.scene.add(this.arrival, this.selection, this.nature.group);
         this.scene.add(this.cycleLights, this.placementPreview.group, this.sharedVisuals.group);
         for (let i = 0; i < 6; i++) {
             const seed = star(this.cycleLights, this.materials.get('#899b6f'), [0, 0, 0], .065);
@@ -226,9 +225,29 @@ export class IslandScene {
         this.resize();
     }
 
+    private installCosmeticScenery(world: IslandCosmeticScenery) {
+        this.world = world;
+        this.tree = world.tree; this.scenery = world.scenery;
+        this.expansion = world.expansion; this.westExpansion = world.westExpansion;
+        this.lighthouse = world.lighthouse;
+        this.scene.add(world.group);
+        this.scene.background = new THREE.Color(world.materials.color('#76cdd3'));
+    }
+
     update(state: IslandStageState) {
         if (this.disposed || this.lost) return;
         const previous = this.state;
+        const cosmeticsChanged = !sameIslandCosmetics(this.world.cosmetics, state.cosmetics);
+        if (cosmeticsChanged) {
+            // Restore any temporary cloned materials before the old scenery dies.
+            // Actors and their routes, items and controllers retain their identity.
+            this.placementOcclusion.restore();
+            this.clearReaction();
+            const nextWorld = new IslandCosmeticScenery(state.cosmetics ?? DEFAULT_ISLAND_COSMETICS);
+            const oldWorld = this.world;
+            this.installCosmeticScenery(nextWorld);
+            oldWorld.dispose();
+        }
         if (!previous) this.nextLivingAt = performance.now() + 1500;
         const layoutChanged = Boolean(previous && savedResidentLayoutChanged(previous.items, state.items));
         if (state.learning || state.preview || state.readOnly || layoutChanged
@@ -252,23 +271,25 @@ export class IslandScene {
         if (!state.preview || state.preview.id !== previous?.preview?.id
             || (previous && savedResidentLayoutChanged(previous.items, state.items))) this.placementOcclusion.restore();
         this.state = state;
-        let shadowChanged = !previous || this.expansion.visible !== (state.completedSets >= 2)
-            || this.lighthouse.visible !== (state.completedSets >= 6) || this.westExpansion.visible !== (state.completedSets >= 12);
-        this.expansion.visible = state.completedSets >= 2;
-        this.westExpansion.visible = state.completedSets >= 12;
-        shadowChanged = applySceneryGrowth(this.sceneryGrowth, state, this.materials,
-            { main: this.tree, west: this.westExpansion.getObjectByName('western-grove-tree') as THREE.Group | undefined }) || shadowChanged;
-        this.residents[2].group.visible = state.completedSets >= 4 && !this.pendingSpawns.has(2);
+        const expansionLevel = getIslandExpansionLevel(state), eastOpen = expansionLevel >= 1;
+        const landChanged = !previous || getIslandExpansionLevel(previous) !== expansionLevel;
+        const foxAvailable = eastOpen && state.completedSets >= 4, lighthouseAvailable = eastOpen && state.completedSets >= 6;
+        let shadowChanged = !previous || landChanged || cosmeticsChanged || this.lighthouse.visible !== lighthouseAvailable;
+        this.expansion.visible = eastOpen;
+        this.westExpansion.visible = expansionLevel >= 2;
+        shadowChanged = this.world.updateGrowth(state) || shadowChanged;
+        this.residents[2].group.visible = foxAvailable && !this.pendingSpawns.has(2);
         this.residentShadows[2].visible = this.residents[2].group.visible;
-        this.lighthouse.visible = state.completedSets >= 6;
+        this.lighthouse.visible = lighthouseAvailable;
         if (previous && this.pendingSpawns.size && savedResidentLayoutChanged(previous.items, state.items)) this.pendingSpawnRetry = true;
         // A live saved record may arrive before its placement sheet closes.
         const savedLayoutChanged = this.pendingSpawnRetry && !state.preview;
         this.residents.forEach((resident, index) => {
-            if ((index === 2 && state.completedSets < 4) || !residentNeedsInitialSpawn(resident.species, state.completedSets,
-                previous?.completedSets, this.pendingSpawns.has(index), savedLayoutChanged)) return;
+            if ((index === 2 && !foxAvailable) || !residentNeedsInitialSpawn(resident.species, state.completedSets,
+                previous?.completedSets, this.pendingSpawns.has(index), savedLayoutChanged,
+                Boolean(previous && getIslandExpansionLevel(previous) === 0 && eastOpen))) return;
             const occupied = this.residents.filter(other => other !== resident && other.group.visible).map(other => other.group.position);
-            const spawn = findSafeResidentSpawn(resident.group.position, state.items, state.completedSets, occupied);
+            const spawn = findSafeResidentSpawn(resident.group.position, state.items, this.landAccess, occupied);
             if (spawn) {
                 this.pendingSpawns.delete(index);
                 resident.group.position.set(spawn.x, 0, spawn.z);
@@ -324,13 +345,13 @@ export class IslandScene {
             // Otherwise an idle root would remain inside the reappearing furniture.
             if (restored && samePlacement(lifted.item, restored.item)) {
                 for (const resident of lifted.seated) if (!resident.itemId) {
-                    resident.visit(restored.item, performance.now(), true, state.items, state.completedSets);
+                    resident.visit(restored.item, performance.now(), true, state.items, this.landAccess);
                 }
                 for (const resident of lifted.walking) if (!resident.itemId) {
                     const occupied = this.residents.filter(other => other !== resident && other.group.visible).map(other => other.group.position);
-                    const route = planResidentRoute(resident.group.position, restored.item, state.items, state.completedSets,
+                    const route = planResidentRoute(resident.group.position, restored.item, state.items, this.landAccess,
                         resident.departingId, { occupied });
-                    if (route) resident.visit(restored.item, performance.now(), this.motion.matches, state.items, state.completedSets, route);
+                    if (route) resident.visit(restored.item, performance.now(), this.motion.matches, state.items, this.landAccess, route);
                 }
             }
             this.liftedResidents = undefined;
@@ -338,7 +359,7 @@ export class IslandScene {
         if (visit && previous && !state.learning && !state.readOnly && !state.growth) this.pendingVisitId = visit.id;
         if (this.clearanceDirty && !state.preview) {
             this.clearanceDirty = false;
-            this.furnitureClearance.start(state.items, state.completedSets, performance.now(), this.motion.matches);
+            this.furnitureClearance.start(state.items, this.landAccess, performance.now(), this.motion.matches);
         }
         if (!state.preview && !state.learning && !this.furnitureClearance.active
             && (!state.playRequest || state.playRequest.id === this.lastPlayRequestId)) this.finishPendingActivity();
@@ -395,7 +416,7 @@ export class IslandScene {
             this.learningBounds = [...this.residents.filter(candidate => candidate.group.visible).map(candidate => candidate.learningFrameBounds()),
                 ...this.furnitureClearance.learningFrameBounds()];
         }
-        if (!previous || previous.completedSets !== state.completedSets || previous.learning !== state.learning || previous.districtFocus !== state.districtFocus
+        if (!previous || landChanged || previous.completedSets !== state.completedSets || previous.learning !== state.learning || previous.districtFocus !== state.districtFocus
             || previous.comparisonHabitat !== state.comparisonHabitat || entering || restoringWorldFrame
             || (state.learning && layoutChanged)) this.resize();
         const event = state.reaction;
@@ -452,14 +473,14 @@ export class IslandScene {
                 this.sharedPresentation = undefined;
                 if (this.sharedCamera) { this.sharedCamera = undefined; this.resize(); }
                 this.residents.forEach(resident => resident.stopWalking(now));
-                const possible = !requestedVisit || requestedVisit.shared ? chooseSharedActivity(state.items, this.residentCandidates(), state.completedSets, item!.id,
+                const possible = !requestedVisit || requestedVisit.shared ? chooseSharedActivity(state.items, this.residentCandidates(), this.landAccess, item!.id,
                     this.lastChosenResident, previous) : undefined;
                 const plan = possible && canStartGrownSharing(state, possible) ? possible : undefined;
                 // Reduced motion has already reached its outcome when start
                 // returns, so choose its legal staging before any actor moves.
                 const presentation = plan && this.motion.matches ? this.chooseSharedPresentation(plan) : undefined;
                 const selected = this.motion.matches ? presentation?.satisfied ? presentation.plan : undefined : plan;
-                if (selected && this.sharedActivity.start(selected, now, this.motion.matches, state.items, state.completedSets,
+                if (selected && this.sharedActivity.start(selected, now, this.motion.matches, state.items, this.landAccess,
                     presentation?.frame.presentationHands)) {
                     this.lastChosenResident = selected.carrier;
                     this.lastResident = this.residents[selected.carrier];
@@ -498,7 +519,7 @@ export class IslandScene {
         const points = [{ x: -2.45, z: -.04 }, { x: -3.32, z: -.2 }];
         for (const point of points.slice(0, wanted)) {
             const chosen = this.residents.filter(resident => resident.group.visible && !choices.some(choice => choice.resident === resident))
-                .map(resident => ({ resident, route: planResidentPointRoute(resident.group.position, point, state.items, state.completedSets,
+                .map(resident => ({ resident, route: planResidentPointRoute(resident.group.position, point, state.items, this.landAccess,
                     { departingId: resident.itemId || resident.departingId,
                         occupied: [...this.residents.filter(other => other !== resident && other.group.visible
                             && !choices.some(choice => choice.resident === other)).map(other => other.group.position),
@@ -509,7 +530,7 @@ export class IslandScene {
         }
         const now = performance.now();
         const first = choices[0];
-        first?.resident.walkToPoint(first.route, now, this.motion.matches, state.completedSets);
+        first?.resident.walkToPoint(first.route, now, this.motion.matches, this.landAccess);
         this.homePending = choices[1];
         this.livingResidents = choices.map(choice => choice.resident);
         this.livingHomeVisit = true;
@@ -537,7 +558,7 @@ export class IslandScene {
                 this.cancelLivingActivity(now); this.nextLivingAt = now + 6500; return false;
             }
             if (this.homePending && this.livingResidents[0]?.action !== 'walk') {
-                this.homePending.resident.walkToPoint(this.homePending.route, now, this.motion.matches, state.completedSets);
+                this.homePending.resident.walkToPoint(this.homePending.route, now, this.motion.matches, this.landAccess);
                 this.homePending = undefined;
             }
             const arrived = this.sharedActivity.plan ? ['enjoy', 'settled'].includes(this.sharedActivity.phase ?? '')
@@ -622,7 +643,7 @@ export class IslandScene {
     }
 
     private visitItem(item: IslandStageItem, reduced = this.motion.matches, continueWalking = false) {
-        const items = this.state?.items ?? [], completedSets = this.state?.completedSets ?? 0;
+        const items = this.state?.items ?? [], landAccess = this.landAccess;
         const now = performance.now();
         const walking = continueWalking && !this.sharedActivity.plan && this.residents.find(resident => resident.group.visible
             && resident.itemId === item.id && resident.action === 'walk');
@@ -634,11 +655,11 @@ export class IslandScene {
         this.sharedActivity.cancel(now);
         if (this.sharedCamera) { this.sharedCamera = undefined; this.resize(); }
         this.residents.forEach(resident => resident.stopWalking(now));
-        const choice = chooseReachableResident(this.residentCandidates(), item, items, completedSets, this.lastChosenResident);
+        const choice = chooseReachableResident(this.residentCandidates(), item, items, landAccess, this.lastChosenResident);
         if (!choice) { this.callbacks.caption('どうぶつが とおれる すきまを あけて みよう'); return undefined; }
         const resident = this.residents[choice.index];
         const visiting = choice.replay ? resident.replayUse(now, reduced)
-            : resident.visit(item, now, reduced, items, completedSets, choice.route);
+            : resident.visit(item, now, reduced, items, landAccess, choice.route);
         if (!visiting) return undefined;
         this.lastChosenResident = choice.index;
         this.lastResident = resident;
@@ -799,7 +820,7 @@ export class IslandScene {
         }
         const expanded = this.expansion.visible, western = this.westExpansion.visible;
         const district = this.state?.districtFocus ?? 'all';
-        const districtX = district === 'east' && expanded ? 5.45 : district === 'west' && western ? -6.2 : district === 'home' ? 0 : western ? 0 : expanded ? 1.3 : -.08;
+        const districtX = district === 'east' && expanded ? ISLAND_EAST_LAND.x - .5 : district === 'west' && western ? ISLAND_WEST_LAND.x : district === 'home' ? 0 : western ? 0 : expanded ? 1.3 : -.08;
         const target = this.state?.learning ? this.learningFocus.clone() : new THREE.Vector3(districtX, .85, -.03);
         if (this.state?.learning && height < 130) target.y -= .18;
         this.camera.position.copy(target).add(new THREE.Vector3(4.7, 8.8, 13.5));
@@ -817,25 +838,25 @@ export class IslandScene {
             }
         }
         if (district !== 'all') {
-            const widthInWorld = district === 'home' ? 9.9 : district === 'east' ? 7.6 : 5.8;
-            const fitHeight = Math.max(district === 'home' ? 7.2 : 5.7, widthInWorld / aspect);
+            const land = district === 'east' ? ISLAND_EAST_LAND : ISLAND_WEST_LAND;
+            const widthInWorld = district === 'home' ? 9.9 : land.radiusX * 2.6;
+            const fitHeight = Math.max(district === 'home' ? 7.2 : land.radiusZ * 2.2, widthInWorld / aspect);
             this.camera.left = -fitHeight * aspect / 2; this.camera.right = fitHeight * aspect / 2;
             this.camera.top = fitHeight / 2; this.camera.bottom = -fitHeight / 2;
             this.camera.updateProjectionMatrix(); this.requestFrame(); return;
         }
         const points: THREE.Vector3[] = [];
-        for (let i = 0; i < 36; i++) {
-            const a = i / 36 * Math.PI * 2;
-            points.push(new THREE.Vector3(Math.cos(a) * 5.1, -.7, Math.sin(a) * 3.83));
-            if (expanded) points.push(new THREE.Vector3(6.2 + Math.cos(a) * 2.05, -.7, Math.sin(a) * 2.48));
-            if (western) points.push(new THREE.Vector3(-6.2 + Math.cos(a) * 2.05, -.7, Math.sin(a) * 2.48));
+        const lands = getIslandLands(this.landAccess);
+        for (let i = 0; i < ISLAND_SHORE_RIM.segments; i++) {
+            const a = i / ISLAND_SHORE_RIM.segments * Math.PI * 2, rim = shoreContour(a) + ISLAND_SHORE_RIM.offset;
+            for (const land of lands) points.push(new THREE.Vector3(land.x + Math.cos(a) * land.radiusX * rim,
+                ISLAND_SHORE_RIM.height + Math.sin(a * 4 + .2) * ISLAND_SHORE_RIM.ripple,
+                land.z + Math.sin(a) * land.radiusZ * rim));
         }
         points.push(new THREE.Vector3(-3.1, 2.75, -2), new THREE.Vector3(1.3, 4.8, -1.65),
             new THREE.Vector3(-1.4, 0, 4.45), new THREE.Vector3(3.46, 3.3, -1.65));
         if (western) points.push(new THREE.Vector3(-6.7, 3.2, -1.2));
-        for (const model of this.items.values()) {
-            points.push(new THREE.Vector3(model.group.position.x, model.item.kind === 'swing' ? 1.9 : 1.3, model.group.position.z));
-        }
+        for (const model of this.items.values()) points.push(...boxCorners(new THREE.Box3().setFromObject(model.group, true)));
         const bounds = new THREE.Box3().setFromPoints(points.map(point => point.applyMatrix4(this.camera.matrixWorldInverse)));
         const center = bounds.getCenter(new THREE.Vector3()), size = bounds.getSize(new THREE.Vector3());
         const fitHeight = Math.max(size.y, size.x / aspect) * 1.09;
@@ -851,7 +872,7 @@ export class IslandScene {
         const source = plan && this.items.get(plan.source.id), seat = plan && this.items.get(plan.seat.id);
         if (!plan || !source || !seat) return undefined;
         return fitSharedActivityFrame(plan, { carrier: this.residents[plan.carrier].group, receiver: this.residents[plan.receiver].group,
-            source: source.group, seat: seat.group, residents: this.residents, completedSets: this.state?.completedSets ?? 0,
+            source: source.group, seat: seat.group, residents: this.residents, completedSets: this.state?.completedSets ?? 0, landAccess: this.landAccess,
             viewportWidth: Math.max(1, this.host.clientWidth),
             presentationHands: plan === this.sharedActivity.plan ? this.sharedActivity.presentationHands : undefined,
             occluders: [this.scenery, this.tree, this.expansion, this.lighthouse,
@@ -866,7 +887,7 @@ export class IslandScene {
         if (!first) return undefined;
         // Keep an already-readable path without even searching other routes.
         const plans = first.visibilityDiagnostics?.readabilitySatisfied ? [plan] as [SharedActivityPlan]
-            : sharedActivityDeliveryPlans(plan, this.state?.items ?? [], this.residentCandidates(), this.state?.completedSets ?? 0);
+            : sharedActivityDeliveryPlans(plan, this.state?.items ?? [], this.residentCandidates(), this.landAccess);
         const chosen = chooseSharedActivityPresentation(plans, candidate => candidate === plan ? first : this.fitSharedFrame(candidate)!);
         this.sharedPresentation = { pairId: plan.pairId, attemptedPlans: chosen.attemptedPlans, satisfied: chosen.satisfied,
             handoffPoint: chosen.plan.handoffPoint, deliveryRoute: chosen.plan.deliveryRoute,
@@ -1087,6 +1108,8 @@ export class IslandScene {
         this.renderer.render(this.scene, this.camera);
         this.recordRenderedDiscoveries();
         this.host.dataset.drawCount = String(++this.drawCount);
+        this.host.dataset.residentCandidate = this.residents[0].pose.userData.visualCandidate ?? 'original-animals-v1';
+        this.renderer.domElement.dataset.residentCandidate = this.host.dataset.residentCandidate;
         this.host.dataset.frameTimestamp = String(now);
         this.host.dataset.triangles = String(this.renderer.info.render.triangles);
         this.host.dataset.geometries = String(this.renderer.info.memory.geometries);
@@ -1122,6 +1145,12 @@ export class IslandScene {
         this.host.dataset.residentUsePhase = String(this.lastResident?.usePhase ?? 0);
         this.host.dataset.renderer = 'three';
         this.host.dataset.artDirection = this.materials.artDirection;
+        const cosmetics = this.world.cosmetics;
+        for (const element of [this.host, this.renderer.domElement]) {
+            element.dataset.islandTheme = cosmetics.themeId;
+            element.dataset.islandAccent = cosmetics.accentId ?? 'none';
+            element.dataset.customizationCandidate = ISLAND_CUSTOMIZATION_CANDIDATE;
+        }
         this.host.dataset.expanded = String(this.expansion.visible);
         this.host.dataset.westExpanded = String(this.westExpansion.visible);
         this.host.dataset.districtFocus = this.state?.districtFocus ?? 'all';
@@ -1198,6 +1227,7 @@ export class IslandScene {
         this.placementPreview.dispose();
         this.sharedVisuals.dispose();
         this.nature.dispose();
+        this.world.dispose();
         const materials = new Set<THREE.Material>();
         this.scene.traverse(child => {
             if (child instanceof THREE.Mesh) {

@@ -240,13 +240,13 @@ describe("planMathProblems", () => {
 
         expect(maintenance).toMatchObject({
             source: "maintenance",
-            isReview: false,
+            isReview: true,
             isMaintenanceCheck: true,
             countsTowardReviewCap: true,
         });
         expect(weak).toMatchObject({
             source: "weak",
-            isReview: false,
+            isReview: true,
             isMaintenanceCheck: false,
             countsTowardReviewCap: true,
         });

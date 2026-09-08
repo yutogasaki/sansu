@@ -1,0 +1,185 @@
+[
+  {
+    "name": "discovery-navigation",
+    "command": [
+      "node",
+      "tools/e2e-island-discovery-navigation.mjs"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-161632",
+    "env": {
+      "SANSU_ISLAND_DISCOVERY_NAVIGATION_OUTPUT": "/Users/yutogasaki/Projects/sansu/output/island-customization/customization-20260908-86209d824907/discovery-navigation"
+    },
+    "startedAt": "2026-09-08T07:18:16.080413+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T07:18:56.202241+00:00"
+  },
+  {
+    "name": "customization",
+    "command": [
+      "node",
+      "tools/e2e-island-customization.mjs"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-161632",
+    "env": {
+      "SANSU_CUSTOMIZATION_OUTPUT": "/Users/yutogasaki/Projects/sansu/output/island-customization/customization-20260908-86209d824907/customization"
+    },
+    "startedAt": "2026-09-08T07:18:56.202544+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T07:20:12.937966+00:00"
+  },
+  {
+    "name": "catalog",
+    "command": [
+      "node",
+      "output/island-customization/capture-catalog-final.mjs"
+    ],
+    "cwd": "/Users/yutogasaki/Projects/sansu",
+    "env": {
+      "SANSU_CATALOG_OUTPUT": "/Users/yutogasaki/Projects/sansu/output/island-customization/customization-20260908-86209d824907/catalog"
+    },
+    "startedAt": "2026-09-08T07:20:12.938317+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T07:20:49.558034+00:00"
+  },
+  {
+    "name": "living",
+    "command": [
+      "npm",
+      "run",
+      "e2e:island-living"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-161632",
+    "env": {
+      "SANSU_ISLAND_OUTPUT": "/Users/yutogasaki/Projects/sansu/output/island-customization/customization-20260908-86209d824907/living"
+    },
+    "startedAt": "2026-09-08T07:20:49.558458+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T07:25:24.504760+00:00"
+  },
+  {
+    "name": "island",
+    "command": [
+      "npm",
+      "run",
+      "e2e:island"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-161632",
+    "env": {
+      "SANSU_ISLAND_OUTPUT": "/Users/yutogasaki/Projects/sansu/output/island-customization/customization-20260908-86209d824907/island"
+    },
+    "startedAt": "2026-09-08T07:25:24.505168+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T07:32:19.308378+00:00"
+  },
+  {
+    "name": "island-pwa",
+    "command": [
+      "npm",
+      "run",
+      "e2e:island-pwa"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-161632",
+    "env": {
+      "SANSU_ISLAND_OUTPUT": "/Users/yutogasaki/Projects/sansu/output/island-customization/customization-20260908-86209d824907/island-pwa"
+    },
+    "startedAt": "2026-09-08T07:32:19.308793+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T07:32:53.555776+00:00"
+  },
+  {
+    "name": "learning",
+    "command": [
+      "node",
+      "tools/e2e-island-learning.mjs"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-161632",
+    "env": {
+      "SANSU_ISLAND_LEARNING_OUTPUT": "/Users/yutogasaki/Projects/sansu/output/island-customization/customization-20260908-86209d824907/learning"
+    },
+    "startedAt": "2026-09-08T07:32:53.556156+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T07:34:47.399695+00:00"
+  },
+  {
+    "name": "feedback",
+    "command": [
+      "node",
+      "tools/e2e-island-feedback.mjs"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-161632",
+    "env": {
+      "SANSU_FEEDBACK_OUTPUT": "/Users/yutogasaki/Projects/sansu/output/island-customization/customization-20260908-86209d824907/feedback",
+      "SANSU_AUDIO_NATIVE_SPEECH": "1"
+    },
+    "startedAt": "2026-09-08T07:34:47.400113+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T07:35:48.897971+00:00"
+  },
+  {
+    "name": "smoke",
+    "command": [
+      "npm",
+      "run",
+      "e2e:smoke"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-161632",
+    "env": {
+      "VITE_ISLAND_ENABLED": "false",
+      "VITE_BUILD_PLAY_ENABLED": "false",
+      "SANSU_E2E_DIAGNOSTIC_DIR": "/Users/yutogasaki/Projects/sansu/output/island-customization/customization-20260908-86209d824907/smoke"
+    },
+    "startedAt": "2026-09-08T07:35:48.898437+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T07:37:15.777965+00:00"
+  },
+  {
+    "name": "classic-build",
+    "command": [
+      "node",
+      "node_modules/vite/bin/vite.js",
+      "build",
+      "--outDir",
+      "dist-classic"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-161632",
+    "env": {
+      "VITE_ISLAND_ENABLED": "false",
+      "VITE_BUILD_PLAY_ENABLED": "false"
+    },
+    "startedAt": "2026-09-08T07:37:15.778398+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T07:37:20.757235+00:00"
+  },
+  {
+    "name": "classic-pwa",
+    "command": [
+      "npm",
+      "run",
+      "e2e:pwa-update"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-161632",
+    "env": {
+      "VITE_ISLAND_ENABLED": "false",
+      "VITE_BUILD_PLAY_ENABLED": "false",
+      "SANSU_PWA_PREVIEW_DIR": "/tmp/sansu-customization-20260908-161632/dist-classic"
+    },
+    "startedAt": "2026-09-08T07:37:20.757682+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T07:38:40.763918+00:00"
+  },
+  {
+    "name": "throughput",
+    "command": [
+      "npm",
+      "run",
+      "benchmark:island-fixed-ten"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-161632",
+    "env": {
+      "SANSU_ISLAND_THROUGHPUT_OUTPUT": "/Users/yutogasaki/Projects/sansu/output/island-customization/customization-20260908-86209d824907/throughput.json"
+    },
+    "startedAt": "2026-09-08T07:38:40.764391+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T07:46:15.250500+00:00"
+  }
+]

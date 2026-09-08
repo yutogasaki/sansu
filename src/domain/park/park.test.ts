@@ -122,7 +122,7 @@ describe('reserved learning and atomic rewards', () => {
         expect(await d.logs.toArray()).toEqual([expect.objectContaining({ result: 'incorrect' })]);
         for (const memory of await d.memoryMath.toArray()) {
             expect(memory.correctAnswers).toBe(0);
-            expect(memory.nextReview <= getLearningDayStart().toISOString()).toBe(true);
+            expect(Date.parse(memory.nextReview)).toBeLessThanOrEqual(Date.now());
         }
         expect((await d.parks.get('child'))?.parts).toHaveLength(3);
     });
@@ -176,7 +176,7 @@ describe('reserved learning and atomic rewards', () => {
         const d = await setup();
         const app = (await d.appData.get('app'))!;
         const p = { ...app.profiles.child, subjectMode: 'vocab' as const,
-            vocabLevels: [{ level: 1, unlocked: true, enabled: true, recentAnswersNonReview: Array(19).fill(true) }] };
+            vocabLevels: [{ level: 1, unlocked: true, enabled: true, recentIndependentAnswersNonReview: Array(19).fill(true) }] };
         await d.profiles.put(p);
         await d.appData.put({ ...app, profiles: { child: p } });
         let plan = await startParkPlan('child', 'bubble', d);

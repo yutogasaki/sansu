@@ -255,6 +255,7 @@ const reservePlan = async (
         reservedAt: Date.now(),
         reservedProblem: plan.problem,
         reservedEncounterId: plan.encounterId,
+        ...(selection.affectsSrs ? { learningEvidenceAssistance: gate.attemptCount === 0 ? 'independent' as const : 'assisted' as const } : {}),
     }, {
         signal: options.signal,
         expectedCheckpointRevision: options.expectedCheckpointRevision,
@@ -428,6 +429,7 @@ const createSegmentAssignment = (
         countsTowardReviewCap: selection.countsTowardReviewCap,
         affectsSrs: selection.affectsSrs,
         reservedAt,
+        ...(selection.affectsSrs ? { learningEvidenceAssistance: gate.attemptCount === 0 ? 'independent' as const : 'assisted' as const } : {}),
     });
 };
 

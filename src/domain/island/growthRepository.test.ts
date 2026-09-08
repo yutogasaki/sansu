@@ -74,7 +74,9 @@ describe('owned atomic living island persistence', () => {
     });
 
     it('aborts growth, snapshot, answer, profile and completion together then saves each once on retry', async () => {
-        const d = await setup(), plan = await beforeFinal(d, await startIslandPlan('child', d));
+        const d = await setup();
+        for (let set = 0; set < 5; set++) await finish(d, await startIslandPlan('child', d));
+        const plan = await beforeFinal(d, await startIslandPlan('child', d));
         const before = await snapshot(d);
         const fail = (_key: unknown, event: IslandEvent) => { if (event.type === 'plan_completed') throw new Error('disk full'); };
         d.islandEvents.hook('creating', fail);
@@ -82,8 +84,28 @@ describe('owned atomic living island persistence', () => {
         d.islandEvents.hook('creating').unsubscribe(fail);
         expect(await snapshot(d)).toEqual(before);
         await finish(d, plan);
-        expect((await d.islands.get('child'))?.growth?.progress.garden).toBe(1);
+        expect((await d.islands.get('child'))?.growth?.progress.garden).toBe(6);
         expect((await d.islands.get('child'))?.growth?.memories).toHaveLength(2);
+        expect((await d.islands.get('child'))?.growth?.memories[1]).toMatchObject({ kind: 'upgrade', expansionLevel: 1 });
+    });
+
+    it('resumes an old waterside reservation before any habitat matured and keeps its earned eastern land', async () => {
+        const d = await setup(), island = (await d.islands.get('child'))!;
+        island.completedSets = 2;
+        delete island.growth!.expansionLevel;
+        delete island.growth!.memories[0].expansionLevel;
+        island.growth!.focus = 'waterside';
+        island.growth!.progress.garden = 2;
+        await d.islands.put(island);
+        const plan = await startIslandPlan('child', d);
+        expect(plan.growthTarget).toBe('waterside');
+        const before = structuredClone(plan), memories = structuredClone(island.growth!.memories);
+        d.close(); await d.open();
+        expect(await startIslandPlan('child', d)).toEqual(before);
+        await finish(d, plan);
+        const grown = (await d.islands.get('child'))!;
+        expect(grown.growth).toMatchObject({ expansionLevel: 1, progress: { garden: 2, waterside: 1 } });
+        expect(grown.growth!.memories).toEqual(memories);
     });
 
     it('rejects a new reservation with missing growth state or a locked target instead of repairing it during an answer', async () => {

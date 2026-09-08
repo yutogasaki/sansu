@@ -31,6 +31,7 @@ async function setup(problem = arithmetic) {
     // existing planner suites still exercise the real three/six-slot workload.
     plan.slots = [{ problem: structuredClone(problem), assisted: false, completed: false,
         source: 'due', countsTowardReviewCap: true }];
+    plan.introducedItemIds = [problem.categoryId];
     await d.islandPlans.put(plan);
     return { d, plan };
 }
@@ -101,7 +102,7 @@ describe('Island progressive support persistence', () => {
         expect(await d.logs.count()).toBe(0);
         expect(await d.islandEvents.where('type').equals('answer').count()).toBe(0);
         const memory = await (subject === 'math' ? d.memoryMath : d.memoryVocab).get(['child', problem.categoryId]);
-        expect(memory).toMatchObject({ strength: 4, totalAnswers: 10, correctAnswers: 10, incorrectAnswers: 0, skippedAnswers: 0, nextReview: '2000-01-01' });
+        expect(memory).toMatchObject({ strength: 1, needsRelearning: true, totalAnswers: 10, correctAnswers: 10, incorrectAnswers: 0, skippedAnswers: 0, nextReview: '2000-01-01' });
         const profileAfter = await d.profiles.get('child');
         expect(profileAfter?.mathMainLevel).toBe(profileBefore?.mathMainLevel);
         expect(profileAfter?.vocabMainLevel).toBe(profileBefore?.vocabMainLevel);

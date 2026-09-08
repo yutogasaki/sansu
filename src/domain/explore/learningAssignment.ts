@@ -40,7 +40,18 @@ export const assignmentsMatch = (
     && left.isMaintenanceCheck === right.isMaintenanceCheck
     && left.countsTowardReviewCap === right.countsTowardReviewCap
     && left.affectsSrs === right.affectsSrs
+    && left.learningEvidenceAssistance === right.learningEvidenceAssistance
     && left.reservedEncounterId === right.reservedEncounterId
     && JSON.stringify(left.reservedProblem ?? null)
         === JSON.stringify(right.reservedProblem ?? null)
 );
+
+/** Preserve the review label of legacy frozen reservations. */
+export const expectedExploreAssignmentReview = (assignment: ExploreLearningAssignment): boolean =>
+    assignment.source === 'due' || (assignment.learningEvidenceAssistance !== undefined
+        && (assignment.source === 'weak' || assignment.source === 'maintenance'));
+
+export const hasValidExploreEvidenceAssistance = (assignment: ExploreLearningAssignment): boolean =>
+    assignment.learningEvidenceAssistance === undefined
+    || assignment.learningEvidenceAssistance === 'independent'
+    || assignment.learningEvidenceAssistance === 'assisted';

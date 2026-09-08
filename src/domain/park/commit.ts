@@ -1,5 +1,5 @@
 import { db, type SansuDatabase } from '../../db';
-import { getLearningDayStart } from '../../utils/learningDay';
+import { beginRelearning } from '../algorithms/srs';
 import { writeLearningAttemptInTransaction } from '../learningAttemptWriter';
 import type { MemoryState } from '../types';
 import { checkEnglishLevelProgression, checkVocabUnlockReadiness } from '../english/service';
@@ -17,12 +17,13 @@ async function keepIndependentCheckDue(database: SansuDatabase, profileId: strin
     if (!app || !profile) throw new ParkConflict('Profile changed');
     const field = subject === 'math' ? 'mathSkills' : 'vocabWords';
     const existing = await table.get([profileId, itemId]) ?? profile[field][itemId];
-    const due = getLearningDayStart(new Date(now)).toISOString();
     const memory: MemoryState = {
-        ...(existing ?? { id: itemId, strength: 1, totalAnswers: 0, correctAnswers: 0, incorrectAnswers: 0, skippedAnswers: 0 }),
-        profileId, nextReview: existing && existing.nextReview < due ? existing.nextReview : due,
-        updatedAt: new Date(now).toISOString(),
-        ...(subject === 'math' ? { status: 'active' as const } : {}),
+        ...beginRelearning(existing ?? {
+            id: itemId, strength: 1, totalAnswers: 0, correctAnswers: 0, incorrectAnswers: 0, skippedAnswers: 0,
+            nextReview: new Date(now).toISOString(), updatedAt: new Date(now).toISOString(),
+            ...(subject === 'math' ? { status: 'active' as const } : {}),
+        }, new Date(now)),
+        profileId,
     };
     await table.put(memory);
     const updated = { ...profile, [field]: { ...profile[field], [itemId]: memory } };

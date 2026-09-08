@@ -16,7 +16,10 @@ import {
 import {
     assignmentsMatch,
     createExploreLearningAssignment,
+    expectedExploreAssignmentReview,
+    hasValidExploreEvidenceAssistance,
 } from "./learningAssignment";
+import { resolveExploreLearningEvidence } from './learningEvidence';
 import {
     createExploreLearningSegmentId,
     getExploreLearningSegmentWindow,
@@ -351,7 +354,8 @@ const assertLearningAssignmentPolicy = (assignment: ExploreLearningAssignment) =
         || assignment.source === "weak";
     if (
         assignment.affectsSrs === isGameOnly
-        || assignment.isReview !== (assignment.source === "due")
+        || assignment.isReview !== expectedExploreAssignmentReview(assignment)
+        || !hasValidExploreEvidenceAssistance(assignment)
         || assignment.isMaintenanceCheck !== (assignment.source === "maintenance")
         || assignment.countsTowardReviewCap !== countsTowardReviewCap
         || !Number.isFinite(assignment.reservedAt)
@@ -443,6 +447,7 @@ const assertLearningSegmentMatchesBoundary = (
             reservedAt: slot.assignment.reservedAt,
             reservedProblem: slot.assignment.reservedProblem,
             reservedEncounterId: slot.assignment.reservedEncounterId,
+            learningEvidenceAssistance: slot.assignment.learningEvidenceAssistance,
         });
         if (
             !projected
@@ -759,6 +764,7 @@ export const createExplorePersistenceRepository = (
             }
 
             const assignment = createExploreLearningAssignment(input);
+            assertLearningAssignmentPolicy(assignment);
             const existing = run.learningAssignments?.[input.problemId];
             if (existing) {
                 if (!assignmentsMatch(existing, assignment)) {
@@ -977,6 +983,7 @@ export const createExplorePersistenceRepository = (
                             isMaintenanceCheck: assignment.isMaintenanceCheck,
                             timestamp: new Date(input.committedAt).toISOString(),
                             timeMs: input.timeMs,
+                            learningEvidence: resolveExploreLearningEvidence(assignment, input, checkpoint),
                         })
                         : undefined;
 

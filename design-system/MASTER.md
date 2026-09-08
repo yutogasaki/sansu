@@ -47,6 +47,8 @@ If a design rule changes, update the SSOT docs first and then refresh this file.
 
 ### Living Island Override
 
+Optional theme/ornament previews and star exchanges follow specification 35. Use one real island canvas and compact controls, keeping the preview visible when selecting. World cosmetics never tint semantic learning content, interrupt ordinary questions, or rewrite historical island appearances. The base moon-garden remains available.
+
 The adopted `docs/product/30_living_island_growth_spec.md` governs the current Island flow alongside specification 28. Reuse the existing `moon-garden` 3D world and Island semantic colors; learning grows a few persistent habitats and their uses. New sections, including the first, continue into the next question without reward selection. Legacy reserved gifts remain available.
 
 - Home: one main learning action, a compact current growing-place indicator, and optional habitat selection. Show a changed next destination separately from the frozen active reservation. Mature habitats stop offering upgrades.

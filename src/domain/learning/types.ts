@@ -38,7 +38,7 @@ export interface LearningProblemContext {
     problemKey: string;
 }
 
-/** Whole-problem evidence only. It never changes existing SRS or promotion. */
+/** Validated whole-problem evidence; specification 34 uses it for new progress. */
 export interface LearningEvidenceContext {
     problem: LearningProblemContext;
     assistance: 'independent' | 'assisted' | 'unknown';

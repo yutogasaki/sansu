@@ -4,10 +4,11 @@ import { evaluateMathLevel11Pilot } from './evidence';
 import type { LearningEvidenceRecord } from './evidence';
 import { LEARNING_CATALOG_VERSION } from './types';
 import type { Problem } from '../types';
-import { hasMathPromotionEvidence } from '../levelProgression';
+import { hasLegacyMathPromotionEvidence } from '../levelProgression';
+import { getMathLevel11Practice } from './unitPractice';
 
 const PROFILE = 'synthetic-pilot';
-const AS_OF = '2026-09-11T12:00:00.000Z';
+const AS_OF = '2026-09-12T12:00:00.000Z';
 
 /** Authored equations make the comparison reproducible without changing production RNG. */
 const attempt = (skill: string, a: number, b: number, index: number, day = 8): LearningEvidenceRecord => {
@@ -38,7 +39,9 @@ export const createMathPilotScenarios = () => {
     ];
     const balanced = groups.flatMap(([skill, a, b], group) => Array.from({ length: 3 }, (_, i) =>
         attempt(skill, a + i * 10, b, group * 3 + i)));
-    const delayed = [...balanced, ...groups.map(([skill, a, b], i) => attempt(skill, a, b, i, 10))];
+    // Both subtraction variants belong to one concept: check the second on a
+    // different day, rather than counting immediate related practice as recall.
+    const delayed = [...balanced, ...groups.map(([skill, a, b], i) => attempt(skill, a, b, i, i === 7 ? 11 : 10))];
     const support = balanced.map((record): LearningEvidenceRecord => ({
         ...record, learningEvidence: { ...record.learningEvidence!, assistance: 'assisted' },
     }));
@@ -49,7 +52,7 @@ export const createMathPilotScenarios = () => {
     });
     const laterBarrier: LearningEvidenceRecord = {
         id: 'support-after-retention', profileId: PROFILE, subject: 'math', itemId: 'sub_2d2d',
-        timestamp: '2026-09-11T10:00:00.000Z', result: 'barrier',
+        timestamp: '2026-09-12T10:00:00.000Z', result: 'barrier',
         learningEvidenceBarrier: { problem: delayed[delayed.length - 1].learningEvidence!.problem, reason: 'support-opened' },
     };
     return [
@@ -58,7 +61,7 @@ export const createMathPilotScenarios = () => {
         { name: '支援付きで全単元', description: '支援で完了した記録は独力の証拠へ変換しない。', records: support },
         { name: '全単元を同日に独力確認', description: '7単元・必要な8種類を各3問確認。定着はまだ未確認。', records: balanced },
         { name: '全単元を後日再確認', description: '24時間以上を空けて独力で再確認した合成データ。実参加者の成果ではない。', records: delayed },
-        { name: '定着確認後に支援', description: 'その後つまずいた単元は独力確認を再収集する。', records: [...delayed, laterBarrier] },
+        { name: '定着確認後に支援', description: '過去の確認を保持し、支援を使った表現と型だけを再確認する。', records: [...delayed, laterBarrier] },
         { name: '文脈のない旧記録', description: '旧正解数・卒業済み状態から新しい単元達成を作らない。', records: oldLogs },
     ];
 };
@@ -77,17 +80,19 @@ export const buildLearningPilotReport = () => ({
     scenarios: createMathPilotScenarios().map(({ name, description, records }) => ({
         name, description,
         evaluation: {
-            legacyLevel11Evidence: hasMathPromotionEvidence(records.filter((record) => record.result !== 'barrier')
+            legacyLevel11Evidence: hasLegacyMathPromotionEvidence(records.filter((record) => record.result !== 'barrier')
                 .map((record, index) => ({ ...record, id: index, result: record.result as 'correct' | 'incorrect' | 'skipped' }))),
             ...evaluateMathLevel11Pilot(records, PROFILE, AS_OF),
         },
+        practice: getMathLevel11Practice(evaluateMathLevel11Pilot(records, PROFILE, AS_OF)),
     })),
     limitations: [
-        '試作の比較判定です。通常の出題・SRS・レベル・保護者設定は変更しません。',
+        'このレポート自体は読み取り専用です。Lv11の必要な型の確認と選択は仕様34に従います。',
         'シナリオは合成データであり、子どもの学力向上・自発的再遊びの実測ではありません。',
         '3種類の独力正解と24時間以上の間隔は初期の比較条件です。最適値とは断定していません。',
         '単元の実績と前提の確認は別です。未実装の前提を満たしたことにはしません。',
         '英語は綴りが表示された訳語選択の対応です。聞く・話す・書く能力を認定しません。',
         'mathUnitsには教材未実装のplanned単元を含みます。表現欄は出題の形式であり、頭の中の解法を推定しません。',
+        '過去の遅延確認は現在の想起確率ではありません。現在の期限・再確認・未知の文脈を別に確認します。',
     ],
 });

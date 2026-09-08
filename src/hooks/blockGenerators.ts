@@ -12,7 +12,9 @@ import {
     type MathProblemPlanSource,
 } from "../domain/math/planner";
 import { getWordsByLevel, ENGLISH_WORDS } from "../domain/english/words";
-import { getEligibleVocabWords, isVocabLevelEnabled, pickVocabDueId, pickVocabWordId } from "../domain/english/selection";
+import { getEligibleVocabWords, isVocabLevelEnabled, pickVocabDueId, pickVocabWordId, vocabPlusOneLimit } from "../domain/english/selection";
+import { resolveReviewBudget } from "../domain/learning/reviewBudget";
+import type { MathLevel11Practice } from "../domain/learning/unitPractice";
 import { errorInDev, warnInDev } from "../utils/debug";
 import type { RandomSource } from "../utils/random";
 
@@ -269,6 +271,7 @@ export const markPicked = (id: string, blockCounts: Map<string, number>): void =
 
 export interface MathGeneratorContext {
     profile: UserProfile;
+    unitPractice?: MathLevel11Practice;
     mathDue: { id: string }[];
     weakMathPool: string[];
     maintenanceMathIds: string[];
@@ -292,6 +295,7 @@ export const generateSingleMathProblem = (
 } => {
     const {
         profile,
+        unitPractice,
         mathDue,
         weakMathPool,
         maintenanceMathIds,
@@ -306,6 +310,7 @@ export const generateSingleMathProblem = (
 
     const [planItem] = planMathProblems({
         profile,
+        unitPractice,
         count: 1,
         dueSkillIds: mathDue.map(item => item.id),
         weakSkillIds: weakMathPool,
@@ -330,7 +335,9 @@ export const generateSingleMathProblem = (
 
     if (!planItem) throw new Error('No math assignment available');
     const selected = planItem;
-    const problem = generateMathProblem(selected.skillId, { profile, random });
+    const problem = generateMathProblem(selected.skillId, {
+        profile, random, preferredLearningVariant: selected.preferredVariant,
+    });
 
     return {
         problem,
@@ -355,6 +362,8 @@ export interface VocabGeneratorContext {
     forceReviewBlock: boolean;
     weakVocabPool: string[];
     currentWeakCount: number;
+    blockSize?: number;
+    currentReviewCount?: number;
     plusCount?: number;
     plusLimit?: number;
     pendingVocabIds: string[];
@@ -387,12 +396,23 @@ export const generateSingleVocabProblem = (
 ): ProblemGenerationResult & { newPlusCount: number } => {
     const {
         profile, options, vocabDue, weakVocabPool, currentWeakCount,
-        canAddReview, forceReviewBlock, vocabLevelWeights,
+        canAddReview, vocabLevelWeights,
         plusCount = 0, plusLimit = Math.floor(BLOCK_SIZE * 0.3),
+        blockSize = BLOCK_SIZE, currentReviewCount = currentWeakCount,
         pendingVocabIds, buildCooldownIds, random = Math.random,
     } = ctx;
     const eligible = getEligibleVocabWords(profile, options.skippedTodayIds);
     const allowed = new Set(eligible.map(word => word.id));
+    const dueIds = [...new Set(vocabDue.map(item => item.id))].filter(id => allowed.has(id));
+    const reviewBudget = resolveReviewBudget({ count: blockSize, dueCount: dueIds.length });
+    const weakLimit = Math.max(1, Math.floor(blockSize * WEAK_INJECTION_CAP));
+    const totalReviewLimit = Math.min(
+        blockSize > 1 ? blockSize - 1 : blockSize,
+        Math.max(reviewBudget.reviewLimit, weakLimit),
+    );
+    const priorMainCount = pendingVocabIds.length - currentReviewCount - plusCount;
+    const mustLeaveMain = blockSize > 1 && priorMainCount <= 0 && pendingVocabIds.length >= blockSize - 1;
+    const effectivePlusLimit = reviewBudget.suppressPlusOne ? 0 : Math.min(plusLimit, vocabPlusOneLimit(blockSize));
     const selectionOptions = {
         ...options,
         recentIds: [...options.recentIds, ...pendingVocabIds],
@@ -401,12 +421,16 @@ export const generateSingleVocabProblem = (
     let wordId: string | undefined;
     let isReview = false;
     let newPlusCount = plusCount;
-    if (forceReviewBlock && canAddReview) {
-        wordId = pickVocabDueId(vocabDue.map(item => item.id).filter(id => allowed.has(id)), selectionOptions);
+    if (!mustLeaveMain && canAddReview && currentReviewCount < reviewBudget.reviewLimit) {
+        // The pending block has not reached persistence yet. A Due item must
+        // not consume another review slot while its first answer is pending.
+        wordId = pickVocabDueId(dueIds.filter(id => !pendingVocabIds.includes(id)), selectionOptions);
         isReview = Boolean(wordId);
     }
-    if (!wordId && canAddReview && currentWeakCount < Math.max(1, Math.floor(BLOCK_SIZE * WEAK_INJECTION_CAP))) {
-        const weak = weakVocabPool.filter(id => allowed.has(id) && (options.blockCounts.get(id) ?? 0) < SAME_ID_LIMIT);
+    if (!wordId && !mustLeaveMain && canAddReview
+        && currentReviewCount < totalReviewLimit && currentWeakCount < weakLimit) {
+        const weak = weakVocabPool.filter(id => allowed.has(id)
+            && !pendingVocabIds.includes(id) && (options.blockCounts.get(id) ?? 0) < SAME_ID_LIMIT);
         if (weak.length > 0 && random() < WEAK_INJECTION_CAP) {
             wordId = pickVocabWordId(weak, selectionOptions);
             isReview = Boolean(wordId);
@@ -416,7 +440,7 @@ export const generateSingleVocabProblem = (
         const eligibleWeights = vocabLevelWeights.filter(({ level, weight }) =>
             Number.isFinite(weight) && weight > 0 && isVocabLevelEnabled(profile, level)
             && level <= profile.vocabMainLevel + 1
-            && (level <= profile.vocabMainLevel || plusCount < plusLimit)
+            && (level <= profile.vocabMainLevel || (!mustLeaveMain && plusCount < effectivePlusLimit))
             && eligible.some(word => word.level === level)
         );
         // Exhaust every eligible weighted level below the per-ID ceiling
@@ -659,10 +683,10 @@ export const canAddSessionReview = (
 export const shouldForceVocabReviewBlock = (
     subjectMode: UserProfile["subjectMode"],
     vocabDueCount: number,
-    recentAttempts: { isReview: boolean }[],
+    recentAttempts: { subject: SubjectKey; isReview: boolean }[],
 ): boolean => subjectMode !== "math"
     && vocabDueCount > 0
-    && calculateRecentReviewRatio(recentAttempts) < REVIEW_BLOCK_THRESHOLD;
+    && calculateRecentReviewRatio(recentAttempts.filter(item => item.subject === 'vocab').slice(0, REVIEW_BLOCK_CHECK_WINDOW)) < REVIEW_BLOCK_THRESHOLD;
 
 /**
  * Calculate recent review ratio from attempts

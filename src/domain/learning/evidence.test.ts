@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { evaluateMathLevel11Pilot, reservedEventsToEvidenceRecords } from './evidence';
 import type { LearningEvidenceRecord } from './evidence';
 import { buildLearningPilotReport, createMathPilotScenarios } from './pilotReport';
+import { createLearningProblemContext } from './context';
+import type { Problem } from '../types';
 
 const profile = 'synthetic-pilot';
 const asOf = '2026-09-12T12:00:00.000Z';
@@ -49,15 +51,21 @@ describe('Lv11 concept evidence pilot', () => {
         expect(evaluate([...base, late]).units[0].retention).toBe('confirmed');
     });
 
-    it('invalidates stale confidence after a support barrier and requires fresh independent coverage', () => {
+    it('preserves past confirmation while requiring fresh coverage only for the supported variant', () => {
         const records = scenarios()[5].records;
         const result = evaluate(records);
-        expect(result.allUnitsRetained).toBe(false);
+        expect(result.allUnitsRetained).toBe(true);
         expect(result.units.filter((unit) => unit.readiness === 'ready')).toHaveLength(6);
         const corrected = { ...scenarios()[4].records[0], id: 'one-correction',
             itemId: 'sub_2d2d', learningEvidence: scenarios()[4].records[23].learningEvidence,
-            timestamp: '2026-09-11T10:00:01.000Z' };
+            timestamp: '2026-09-12T10:00:01.000Z' };
         expect(evaluate([...records, corrected]).units.find((unit) => unit.unitId === 'math.subtract-two-two')?.readiness).toBe('unconfirmed');
+        const subtraction = result.units.find(unit => unit.unitId === 'math.subtract-two-two')!;
+        expect(subtraction).toMatchObject({ retention: 'confirmed', needsRecheck: true });
+        expect(subtraction.facets.find(facet => facet.variant === 'no-regroup'))
+            .toMatchObject({ ready: true, retained: true, needsRecheck: false });
+        expect(subtraction.facets.find(facet => facet.variant === 'regroup'))
+            .toMatchObject({ ready: false, retained: true, needsRecheck: true, delayedConfirmationCount: 1 });
     });
 
     it('requires both borrowing cases and refuses unknown variants', () => {
@@ -101,5 +109,103 @@ describe('Lv11 concept evidence pilot', () => {
         const before = JSON.stringify(records);
         evaluate(records.reverse());
         expect(JSON.stringify(records.reverse())).toBe(before);
+    });
+
+    it('keeps the historical confirmation after 30 days but marks the current check overdue', () => {
+        const records = scenarios()[4].records;
+        const later = evaluateMathLevel11Pilot(records, profile, '2026-10-12T12:00:00.000Z');
+        expect(later.allUnitsRetained).toBe(true);
+        expect(later.units.every(unit => unit.freshness === 'due')).toBe(true);
+        expect(later.units[0].facets[0]).toMatchObject({
+            lastDelayedConfirmationAt: '2026-09-10T10:00:00.000Z',
+            nextCheckAt: '2026-09-13T10:00:00.000Z', reviewStage: 2, retained: true,
+        });
+    });
+
+    it('uses the last contact across representations for delayed confirmation', () => {
+        const records = scenarios()[0].records.slice(0, 3);
+        const bridge: Problem = { id: 'bridge', subject: 'math', categoryId: 'add_2d1d_nc_bridge',
+            questionText: '21 + 3 =', correctAnswer: '24', inputType: 'number', isReview: false };
+        const contact: LearningEvidenceRecord = {
+            id: 'bridge-contact', profileId: profile, subject: 'math', itemId: bridge.categoryId,
+            result: 'correct', timestamp: '2026-09-10T09:59:00.000Z',
+            learningEvidence: { problem: createLearningProblemContext('math', bridge)!,
+                assistance: 'independent', completion: 'whole-problem' },
+        };
+        const later = { ...records[0], id: 'later-symbol', timestamp: '2026-09-10T10:00:00.000Z' };
+        const unit = evaluate([...records, contact, later]).units[0];
+        expect(unit.retention).toBe('unconfirmed');
+        expect(unit.facets.find(facet => facet.representation === 'symbol')?.delayedConfirmationCount).toBe(0);
+    });
+
+    it('does not clear known methods for unknown context and resolves uncertainty with identifiable independent evidence', () => {
+        const records = scenarios()[4].records;
+        const unknown: LearningEvidenceRecord = { ...records[0], id: 'unknown', learningEvidence: undefined,
+            timestamp: '2026-09-12T10:00:00.000Z' };
+        const before = evaluate([...records, unknown]).units[0];
+        expect(before).toMatchObject({ readiness: 'ready', retention: 'confirmed', uncertainty: true,
+            freshness: 'unconfirmed', unknownAttempts: 1 });
+        expect(before.facets[0].independentProblemCount).toBe(3);
+        const known = { ...records[0], id: 'known', timestamp: '2026-09-12T10:01:00.000Z' };
+        expect(evaluate([...records, unknown, known]).units[0]).toMatchObject({ uncertainty: false,
+            retention: 'confirmed', lastUnknownAt: '2026-09-12T10:00:00.000Z' });
+    });
+
+    it('does not grow the interval or postpone the existing deadline on early spaced practice', () => {
+        const records = scenarios()[4].records.filter(record => record.itemId === 'add_2d1d_nc');
+        const early = { ...records[0], id: 'early', timestamp: '2026-09-11T10:00:00.000Z' };
+        const earlyFacet = evaluate([...records, early]).units[0].facets[0];
+        expect(earlyFacet).toMatchObject({ reviewStage: 2, nextCheckAt: '2026-09-13T10:00:00.000Z' });
+        const due = { ...records[0], id: 'due', timestamp: '2026-09-13T10:00:00.000Z' };
+        const dueFacet = evaluateMathLevel11Pilot([...records, early, due], profile, '2026-09-13T12:00:00.000Z').units[0].facets[0];
+        expect(dueFacet).toMatchObject({ reviewStage: 3, nextCheckAt: '2026-09-20T10:00:00.000Z' });
+    });
+
+    it('keeps same-day recovery awaiting delayed recheck and resumes at the three-day stage', () => {
+        const records = scenarios()[4].records.filter(record => record.itemId === 'add_2d1d_nc');
+        const failure: LearningEvidenceRecord = { ...records[0], id: 'failure', result: 'incorrect',
+            timestamp: '2026-09-12T10:00:00.000Z' };
+        const recovery = records.slice(0, 3).map((record, index) => ({ ...record, id: `recovery-${index}`,
+            timestamp: `2026-09-12T11:00:0${index}.000Z` }));
+        const history = [...records, failure, ...recovery];
+        const recovered = evaluate(history).units[0];
+        expect(recovered).toMatchObject({ readiness: 'ready', retention: 'confirmed', needsRecheck: true,
+            freshness: 'unconfirmed', nextCheckAt: '2026-09-13T10:00:00.000Z' });
+        const delayed = { ...records[0], id: 'recovered-later', timestamp: '2026-09-13T11:01:00.000Z' };
+        const later = evaluateMathLevel11Pilot([...history, delayed], profile, delayed.timestamp).units[0];
+        expect(later).toMatchObject({ needsRecheck: false, freshness: 'fresh' });
+        expect(later.facets[0]).toMatchObject({ reviewStage: 2, nextCheckAt: '2026-09-16T11:01:00.000Z' });
+    });
+
+    it('uses the full 1/3/7/14/30-day schedule and caps later confirmations at 30 days', () => {
+        const history = scenarios()[0].records.slice(0, 3);
+        const checkpoints = [
+            ['2026-09-09T10:01:00.000Z', 2, '2026-09-12T10:01:00.000Z'],
+            ['2026-09-12T10:01:00.000Z', 3, '2026-09-19T10:01:00.000Z'],
+            ['2026-09-19T10:01:00.000Z', 4, '2026-10-03T10:01:00.000Z'],
+            ['2026-10-03T10:01:00.000Z', 5, '2026-11-02T10:01:00.000Z'],
+            ['2026-11-02T10:01:00.000Z', 5, '2026-12-02T10:01:00.000Z'],
+        ] as const;
+        for (const [timestamp, reviewStage, nextCheckAt] of checkpoints) {
+            history.push({ ...history[0], id: `check-${timestamp}`, timestamp });
+            expect(evaluateMathLevel11Pilot(history, profile, timestamp).units[0].facets[0])
+                .toMatchObject({ reviewStage, nextCheckAt, freshness: 'fresh' });
+        }
+    });
+
+    it('does not erase a different method when one method fails', () => {
+        const records = scenarios()[0].records.slice(0, 3);
+        const algorithms = records.map((record, index) => {
+            const content = JSON.parse(record.learningEvidence!.problem.problemKey);
+            const problem: Problem = { id: `algorithm-${index}`, subject: 'math', categoryId: 'add_2d1d_hissan_nc',
+                questionText: content.question, correctAnswer: content.answer, inputType: 'hissan', isReview: false };
+            return { ...record, id: problem.id, itemId: problem.categoryId,
+                learningEvidence: { ...record.learningEvidence!, problem: createLearningProblemContext('math', problem)! } };
+        });
+        const failure: LearningEvidenceRecord = { ...records[0], id: 'symbol-fail', result: 'incorrect',
+            timestamp: '2026-09-11T10:00:00.000Z' };
+        const unit = evaluate([...records, ...algorithms, failure]).units[0];
+        expect(unit.readyMethods).toEqual(['algorithm']);
+        expect(unit.facets.find(facet => facet.representation === 'algorithm')?.independentProblemCount).toBe(3);
     });
 });

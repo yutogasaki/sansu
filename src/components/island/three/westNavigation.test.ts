@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ISLAND_RESERVED_AREAS } from '../../../domain/island/catalog';
+import { getIslandLandAccess, ISLAND_RESERVED_AREAS } from '../../../domain/island/catalog';
 import { findSafeResidentSpawn, planResidentPointRoute, planResidentRoute, residentGroundHeight,
     residentGroundIsSafe, residentObstacles, residentPointIsClear, type ResidentRoute } from './navigation';
 import type { IslandStageItem } from './types';
@@ -22,14 +22,58 @@ function inspect(route: ResidentRoute | undefined, items: IslandStageItem[], tar
 }
 
 describe('western island growth and physical routes', () => {
+    it('uses earned habitat chapters for new islands while retaining land from old saved sections', () => {
+        const closed = getIslandLandAccess({ completedSets: 12, growth: { expansionLevel: 0 } });
+        const eastern = getIslandLandAccess({ completedSets: 12, growth: { expansionLevel: 1 } });
+        const western = getIslandLandAccess({ completedSets: 6, growth: { expansionLevel: 2 } });
+        for (const sign of [1, -1]) {
+            const point = { x: sign * 6.2, z: .8 };
+            expect(residentGroundIsSafe(point, closed)).toBe(false);
+            expect(findSafeResidentSpawn(point, [], closed)).toBeUndefined();
+            expect(planResidentPointRoute({ x: 0, z: 1 }, point, [], closed)).toBeUndefined();
+            expect(residentGroundIsSafe(point, eastern)).toBe(sign > 0);
+            expect(planResidentPointRoute({ x: 0, z: 1 }, point, [], western)).toBeDefined();
+            expect(residentGroundHeight({ x: sign * 4.75, z: 0 }, western)).toBeGreaterThan(0);
+            expect(residentGroundHeight({ x: sign * 4.75, z: 0 }, closed)).toBe(0);
+        }
+        expect(residentGroundIsSafe({ x: 6.2, z: .8 }, getIslandLandAccess({ completedSets: 2 }))).toBe(true);
+        expect(residentGroundIsSafe({ x: -6.2, z: .8 }, getIslandLandAccess({ completedSets: 12 }))).toBe(true);
+    });
+
     it('opens the western shore at the saved twelfth section, keeping legacy boolean callers eastern-only', () => {
         expect(residentGroundIsSafe({ x: -6.2, z: 0 }, 11)).toBe(false);
         expect(residentGroundIsSafe({ x: -6.2, z: 0 }, true)).toBe(false);
         expect(residentGroundIsSafe({ x: -6.2, z: 0 }, 12)).toBe(true);
         expect(residentGroundIsSafe({ x: -4.75, z: 0 }, 12)).toBe(true);
         expect(residentGroundIsSafe({ x: -4.55, z: .1 }, 12)).toBe(false);
-        expect(residentGroundIsSafe({ x: -8.5, z: 0 }, 12)).toBe(false);
+        expect(residentGroundIsSafe({ x: -8.5, z: 0 }, 12)).toBe(true);
+        expect(residentGroundIsSafe({ x: -10, z: 0 }, 12)).toBe(false);
         expect(residentGroundIsSafe({ x: 6.2, z: 0 }, true)).toBe(true);
+    });
+
+    it.each([[2, 1], [12, -1]])('keeps old walking ground and reaches new outer furniture over the original bridge at section %s', (completedSets, sign) => {
+        for (let sample = 0; sample < 72; sample++) {
+            const angle = sample / 72 * Math.PI * 2;
+            const point = { x: sign * 6.2 + Math.cos(angle) * 1.48 * .999, z: Math.sin(angle) * 1.88 * .999 };
+            expect(residentGroundIsSafe(point, completedSets)).toBe(true);
+        }
+        const outer: IslandStageItem = { ...seat, position: { x: sign * 9, z: 1 } };
+        const route = inspect(planResidentRoute({ x: 0, z: 1 }, outer, [outer], completedSets), [outer], outer.id);
+        expect(route.points).toContainEqual({ x: sign * 4.05, z: 0 });
+        expect(route.points).toContainEqual({ x: sign * 5.5, z: 0 });
+        expect(route.points.at(-1)).toEqual(outer.position);
+        expect(planResidentRoute({ x: 0, z: 1 }, outer, [outer], completedSets - 1)).toBeUndefined();
+    });
+
+    it.each([1, -1])('finds a detour entirely on the new outer ground on side %s', sign => {
+        const items: IslandStageItem[] = Array.from({ length: 6 }, (_, i) => ({
+            id: `fence-${i}`, kind: 'flower', rotation: 0, position: { x: sign * 8, z: -2.5 + i },
+        }));
+        items.push({ id: 'obstacle', kind: 'flower', rotation: 0, position: { x: sign * 8.9, z: 0 } });
+        const origin = { x: sign * 9, z: -1 }, destination = { x: sign * 9, z: 1 };
+        const route = inspect(planResidentPointRoute(origin, destination, items, 12), items);
+        expect(route.points.length).toBeGreaterThan(2);
+        expect(route.points.every(point => point.x * sign > 8)).toBe(true);
     });
 
     it('walks across the western bridge to a real seat without crossing scenery', () => {

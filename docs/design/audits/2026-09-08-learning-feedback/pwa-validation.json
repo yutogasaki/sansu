@@ -1,0 +1,31 @@
+[
+  {
+    "name": "classic-pwa",
+    "started": "2026-09-08T13:22:41.272419",
+    "command": [
+      "npm",
+      "run",
+      "e2e:pwa-update"
+    ],
+    "env": {
+      "SANSU_PWA_PREVIEW_DIR": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-feedback-20260908-4pelco33/dist-classic"
+    },
+    "exitCode": 0,
+    "finished": "2026-09-08T13:23:02.199474"
+  },
+  {
+    "name": "island-pwa",
+    "started": "2026-09-08T13:23:02.199913",
+    "command": [
+      "npm",
+      "run",
+      "e2e:island-pwa"
+    ],
+    "env": {
+      "SANSU_ISLAND_PRODUCTION_URL": "http://127.0.0.1:5574",
+      "SANSU_ISLAND_OUTPUT": "/Users/yutogasaki/Projects/sansu/output/playwright/learning-feedback-final-v3/island-pwa"
+    },
+    "exitCode": 0,
+    "finished": "2026-09-08T13:23:29.127279"
+  }
+]

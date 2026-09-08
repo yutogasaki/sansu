@@ -21,7 +21,7 @@ describe('Island saved answer presentation', () => {
     it('gives supported session completion its own feedback without labelling it a correct answer', () => {
         const receipt = { ...event, type: 'supported_completed' as const, result: 'supported-completion' as const };
         const response = islandFeedbackForReceipt(before, { ...before, cursor: 2 }, receipt);
-        expect(response?.feedback).toEqual({ id: event.id, kind: 'supported', text: 'つぎの ひかりへ すすもう' });
+        expect(response?.feedback).toEqual({ id: event.id, kind: 'supported', text: 'ひかりを とどけたよ' });
         expect(response?.reaction).toEqual({ id: event.id, kind: 'correct' });
         expect(islandFeedbackForReceipt(before, before, receipt)).toBeUndefined();
         expect(islandFeedbackForReceipt(before, { ...before, cursor: 2 }, { ...receipt, result: 'correct' })).toBeUndefined();
@@ -31,7 +31,7 @@ describe('Island saved answer presentation', () => {
         for (const result of ['incorrect', 'assisted-incorrect'] as const) {
             const response = islandFeedbackForReceipt(before, before, { ...event, result });
             expect(response?.reaction?.kind).toBe('retry');
-            expect(response?.feedback.text).toBe('もういちど みてみよう');
+            expect(response?.feedback.text).toBe('もういちど');
         }
     });
 

@@ -1,3 +1,4 @@
+import type { IslandLandAccess } from '../../../domain/island/catalog';
 import * as THREE from 'three';
 import type { IslandResident } from './animals';
 import { planFurnitureClearance, type FurnitureClearancePlan } from './furnitureClearance';
@@ -11,7 +12,7 @@ interface ClearanceJob {
     current?: ClearanceMove;
     completed: number[];
     blocked: number[];
-    completedSets: number;
+    landAccess: IslandLandAccess;
     startedAt: number;
     reduced: boolean;
     stopped: boolean;
@@ -29,10 +30,10 @@ export class FurnitureClearanceController {
     get active() { return Boolean(this.job && !this.job.stopped && (this.job.current || this.job.cursor < this.job.moves.length)); }
     get blocked() { return this.job ? [...this.job.blocked] : []; }
 
-    start(items: IslandStageItem[], completedSets: number, now: number, reduced: boolean) {
+    start(items: IslandStageItem[], landAccess: IslandLandAccess, now: number, reduced: boolean) {
         const candidates = () => this.residents.map(resident => ({ position: resident.group.position, visible: resident.group.visible,
             itemId: resident.itemId, departingId: resident.departingId }));
-        let plan = planFurnitureClearance(items, candidates(), completedSets);
+        let plan = planFurnitureClearance(items, candidates(), landAccess);
         this.cancel(now);
         // A harmless saved change must not interrupt an ordinary resumed visit.
         if (!plan.moves.length && !plan.blocked.length) return false;
@@ -40,11 +41,11 @@ export class FurnitureClearanceController {
         // not leave an older actor continuing across the planned escape path.
         if (plan.moves.length) {
             for (const resident of this.residents) resident.stopWalking(now);
-            plan = planFurnitureClearance(items, candidates(), completedSets);
+            plan = planFurnitureClearance(items, candidates(), landAccess);
         }
         if (!plan.moves.length && !plan.blocked.length) return false;
         this.job = { moves: plan.moves, cursor: 0, current: undefined, completed: [], blocked: [...plan.blocked],
-            completedSets, startedAt: now, reduced, stopped: false };
+            landAccess, startedAt: now, reduced, stopped: false };
         if (plan.moves.length) this.caption('すこし よけるね');
         return this.update(now, reduced);
     }
@@ -75,7 +76,7 @@ export class FurnitureClearanceController {
             const move = job.moves[job.cursor], resident = this.residents[move.index];
             const start = move.route.points[0];
             if (!start || Math.hypot(resident.group.position.x - start.x, resident.group.position.z - start.z) > AT_POINT_TOLERANCE
-                || !resident.walkToPoint(move.route, now, reduced, job.completedSets)) {
+                || !resident.walkToPoint(move.route, now, reduced, job.landAccess)) {
                 this.stopInvalidJob(move.index); return false;
             }
             job.current = move;
@@ -118,7 +119,7 @@ export class FurnitureClearanceController {
             const low = Math.min(-.08, current.min.y - root.y - .2), high = current.max.y - root.y + .2;
             const swept = current.clone().expandByScalar(.2);
             for (const point of move.route.points) {
-                const ground = residentGroundHeight(point, job.completedSets >= 2);
+                const ground = residentGroundHeight(point, job.landAccess);
                 swept.expandByPoint(new THREE.Vector3(point.x - radius, ground + low, point.z - radius));
                 swept.expandByPoint(new THREE.Vector3(point.x + radius, ground + high, point.z + radius));
             }

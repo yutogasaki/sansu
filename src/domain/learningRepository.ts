@@ -3,6 +3,7 @@ import { SubjectKey } from "./types";
 import { differenceInCalendarDays, parseISO } from "date-fns";
 import { getLearningDayStart } from "../utils/learningDay";
 import type { LearningEvidenceContext } from './learning/types';
+import { isNormalReviewEligible } from './learning/reviewPolicy';
 import {
     getLearningAttemptTransactionTables,
     writeLearningAttemptInTransaction,
@@ -50,10 +51,10 @@ export const getReviewItems = async (profileId: string, subject: SubjectKey) => 
     const capOverdue = (days: number) => Math.max(0, Math.min(days, 7));
     const learningDayStart = getLearningDayStart();
 
-    // 算数の retired / maintenance は通常 Due ではなく、専用の
-    // maintenance 抽選経路だけで扱う。status がない旧データは active 相当。
+    // Only old placement assumptions remain in undated maintenance sampling.
+    // Independent evidence or relearning gives graduation a normal deadline.
     const reviewItems = subject === 'math'
-        ? items.filter(item => item.status !== 'retired' && item.status !== 'maintenance')
+        ? items.filter(isNormalReviewEligible)
         : items;
 
     return reviewItems.sort((a, b) => {
@@ -316,7 +317,7 @@ export const getMaintenanceMathSkillIds = async (profileId: string): Promise<str
     const items = await db.memoryMath
         .where('profileId')
         .equals(profileId)
-        .filter(item => item.status === 'maintenance')
+        .filter(item => item.status === 'maintenance' && !isNormalReviewEligible(item))
         .toArray();
     return items.map(item => item.id);
 };

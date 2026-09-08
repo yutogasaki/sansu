@@ -1,45 +1,75 @@
-/**
- * Text-to-Speech utility for Pokko no Fushigi Zukan (English)
- */
+export interface EnglishSpeechCallbacks {
+    onStart?: () => void;
+    onEnd?: () => void;
+    onError?: (error: SpeechSynthesisErrorCode | 'unsupported' | 'timeout') => void;
+}
 
-let ttsWarmedUp = false;
+let current: SpeechSynthesisUtterance | undefined;
+let startTimeout: ReturnType<typeof setTimeout> | undefined;
 
-/**
- * Warm up the SpeechSynthesis API with a silent utterance.
- * Call this on a user interaction (e.g. page navigation tap) so that
- * subsequent programmatic speak() calls are not blocked by the browser.
- */
-export const warmUpTTS = () => {
-    if (ttsWarmedUp || !window.speechSynthesis) return;
-    const silentUtterance = new SpeechSynthesisUtterance("");
-    silentUtterance.volume = 0;
-    window.speechSynthesis.speak(silentUtterance);
-    ttsWarmedUp = true;
+/** Request the voice list early. An empty utterance cannot grant autoplay permission. */
+export const warmUpTTS = () => { window.speechSynthesis?.getVoices(); };
+
+export const stopEnglishSpeech = () => {
+    const speaking = current;
+    current = undefined;
+    clearTimeout(startTimeout);
+    startTimeout = undefined;
+    if (speaking) window.speechSynthesis?.cancel();
 };
 
-export const speakEnglish = (text: string) => {
-    if (!window.speechSynthesis) {
-        console.warn("TTS not supported");
-        return;
+/** Manual callers invoke this directly in the click, preserving browser activation. */
+export const speakEnglish = (text: string, callbacks: EnglishSpeechCallbacks = {}): (() => void) => {
+    stopEnglishSpeech();
+    const synth = window.speechSynthesis;
+    if (!synth || typeof SpeechSynthesisUtterance === 'undefined') {
+        callbacks.onError?.('unsupported');
+        return () => {};
     }
-
-    // Cancel any ongoing speech
-    window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "en-US"; // Default to US English
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
-
-    // Optional: Try to find a better voice (e.g. Google US English, Samantha)
-    const voices = window.speechSynthesis.getVoices();
-    const preferredVoice = voices.find(v =>
-        (v.name.includes("Google") && v.lang.includes("en-US")) ||
-        v.name.includes("Samantha")
-    );
-    if (preferredVoice) {
-        utterance.voice = preferredVoice;
+    if (!text.trim()) return () => {};
+    const utterance = new SpeechSynthesisUtterance(text.trim());
+    utterance.lang = 'en-US';
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+    // Prefer installed English voices so supported devices also work offline.
+    const english = synth.getVoices().filter(voice => /^en[-_]/i.test(voice.lang));
+    const voice = english.find(voice => voice.localService && voice.name === 'Samantha')
+        ?? english.find(voice => voice.localService && voice.default)
+        ?? english.find(voice => voice.localService && /^en[-_]US$/i.test(voice.lang))
+        ?? english.find(voice => voice.localService)
+        ?? english.find(voice => /^en[-_]US$/i.test(voice.lang)) ?? english[0];
+    if (voice) { utterance.voice = voice; utterance.lang = voice.lang; }
+    current = utterance;
+    const stop = () => { if (current === utterance) stopEnglishSpeech(); };
+    utterance.onstart = () => {
+        if (current !== utterance) return;
+        clearTimeout(startTimeout);
+        callbacks.onStart?.();
+    };
+    utterance.onend = () => {
+        if (current !== utterance) return;
+        current = undefined;
+        clearTimeout(startTimeout);
+        callbacks.onEnd?.();
+    };
+    utterance.onerror = event => {
+        if (current !== utterance) return;
+        current = undefined;
+        clearTimeout(startTimeout);
+        callbacks.onError?.(event.error);
+    };
+    startTimeout = setTimeout(() => {
+        if (current !== utterance) return;
+        stop();
+        callbacks.onError?.('timeout');
+    }, 3000);
+    try {
+        if (synth.paused) synth.resume();
+        synth.speak(utterance);
+    } catch {
+        stop();
+        callbacks.onError?.('synthesis-failed');
     }
-
-    window.speechSynthesis.speak(utterance);
+    return stop;
 };

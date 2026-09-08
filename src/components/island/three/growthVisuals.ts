@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { batch, box, curve, cylinder, disposeGeometry, ellipsoid, IslandMaterials, pole, star } from './primitives';
 import { makeFlowers } from './furniture';
 import { applyTreeGrowth } from './scenery';
+import { getIslandExpansionLevel } from '../../../domain/island/expansion';
 import type { IslandStageItem, IslandStageState } from './types';
 
 export function growthAppearance(item: IslandStageItem) {
@@ -20,6 +21,17 @@ function leaves(group: THREE.Group, m: IslandMaterials, x: number, y: number, z:
 
 function smallFlowers(group: THREE.Group, m: IslandMaterials, x: number, y: number, z: number, size: number) {
     const flowers = makeFlowers(m, 2); flowers.position.set(x, y, z); flowers.scale.setScalar(size); group.add(flowers);
+}
+
+function blossom(group: THREE.Group, m: IslandMaterials, x: number, y: number, z: number, radius: number, color: string) {
+    for (let i = 0; i < 7; i++) {
+        const angle = i * Math.PI * 2 / 7;
+        const petal = ellipsoid(group, m.get(color),
+            [x + Math.cos(angle) * radius * .53, y, z + Math.sin(angle) * radius * .53],
+            [radius * .47, radius * .22, radius * .32], 12);
+        petal.rotation.y = -angle;
+    }
+    ellipsoid(group, m.get('#d99635'), [x, y + radius * .19, z], [radius * .3, radius * .2, radius * .3], 12);
 }
 
 /** Additional detail lives inside the saved footprint. Seats, roots, poles and
@@ -41,10 +53,10 @@ export function applyFurnitureGrowth(group: THREE.Group, item: IslandStageItem, 
     detail.userData.level = level; group.add(detail);
     const leaf = m.get('#5f9251'), pale = m.get('#efcf94'), pink = m.get('#f39482');
     if (item.kind === 'flower') {
-        const height = [.26, .52, .79, 1.08][level];
+        const height = [.26, .64, 1.02, 1.43][level];
         group.userData.growthFlowerHeight = height;
         leaves(detail, m, 0, .04, 0, 4, level >= 2 ? .16 : .11);
-        pole(detail, leaf, [0, .04, 0], [0, height, 0], level >= 2 ? .028 : .022);
+        pole(detail, leaf, [0, .04, 0], [0, height, 0], level >= 2 ? .036 : .025);
         if (level === 0) {
             ellipsoid(detail, pink, [0, height, 0], [.065, .09, .065], 12);
         }
@@ -54,23 +66,19 @@ export function applyFurnitureGrowth(group: THREE.Group, item: IslandStageItem, 
                 blade.rotation.z = side * .4;
             }
             const bloom = new THREE.Group(); bloom.name = 'growth-blooms'; bloom.position.y = height; detail.add(bloom);
-            const count = level === 3 ? 8 : 5, orbit = [.0, .067, .102, .132][level], petal = [.0, .085, .12, .157][level];
-            for (let i = 0; i < count; i++) {
-                const a = i * Math.PI * 2 / count;
-                const petalShape = ellipsoid(bloom, m.get(level === 1 ? '#f39482' : '#fff0c0'),
-                    [Math.cos(a) * orbit, Math.sin(a * 2) * .012, Math.sin(a) * orbit], [petal, .043, petal * .55], 14);
-                petalShape.rotation.y = -a;
-            }
-            ellipsoid(bloom, m.get('#d99635'), [0, .035, 0], [.058 + level * .017, .037, .058 + level * .017], 14);
-            if (level === 3) for (let i = 0; i < 8; i++) {
-                const a = i * Math.PI / 4;
-                ellipsoid(bloom, pale, [Math.cos(a) * .135, .06, Math.sin(a) * .135], [.073, .027, .046], 12).rotation.y = -a;
+            blossom(bloom, m, 0, 0, 0, [.0, .17, .235, .3][level], level === 1 ? '#f39482' : '#fff0c0');
+            if (level >= 2) {
+                const branches = level === 3
+                    ? [[-.19, .93, -.02], [.18, 1.08, .05], [-.11, .57, .15], [.13, .72, -.15]]
+                    : [[-.17, .64, .025]];
+                for (const [x, y, z] of branches) {
+                    curve(detail, leaf, [[0, .15, 0], [x * .45, y * .6, z * .55], [x, y, z]], .025);
+                    blossom(bloom, m, x, y - height, z, level === 3 ? .125 : .11, '#f39482');
+                    const blade = ellipsoid(detail, m.get('#76a85b'), [x * .7, y * .55, z], [.13, .047, .065], 12);
+                    blade.rotation.z = x < 0 ? -.5 : .5;
+                }
             }
             batch(bloom, m.painted);
-        }
-        if (level >= 2) {
-            pole(detail, leaf, [0, height * .35, 0], [-.14, height * .68, -.04], .018);
-            ellipsoid(detail, pink, [-.14, height * .7, -.04], [.06, .08, .06], 12);
         }
     } else if (item.kind === 'bench') {
         if (level >= 1) {
@@ -79,12 +87,15 @@ export function applyFurnitureGrowth(group: THREE.Group, item: IslandStageItem, 
         }
         if (level >= 2) {
             // An embroidered back cloth leaves the physical seat completely clear.
-            box(detail, m.get('#e4b275'), [0, .82, -.169], [.36, .26, .018]);
-            star(detail, pale, [0, .84, -.15], .068);
+            box(detail, m.get('#e4b275'), [0, .82, -.169], [.83, .29, .018]);
+            star(detail, pale, [0, .84, -.15], .105);
+            curve(detail, leaf, [[-.54, .85, -.24], [-.48, 1.3, -.24], [0, 1.58, -.24], [.48, 1.3, -.24], [.54, .85, -.24]], .033);
         }
         if (level >= 3) {
-            smallFlowers(detail, m, -.46, .9, -.19, .38);
-            smallFlowers(detail, m, .46, .9, -.19, .36);
+            for (const [x, y] of [[-.44, 1.25], [-.25, 1.49], [0, 1.61], [.25, 1.49], [.44, 1.25]]) {
+                ellipsoid(detail, m.get('#76a84d'), [x, y, -.24], [.12, .13, .1], 12);
+                blossom(detail, m, x, y + .04, -.21, .09, x === 0 ? '#fff0c0' : '#f39482');
+            }
         }
     } else if (item.kind === 'lantern') {
         if (level >= 1) {
@@ -105,12 +116,18 @@ export function applyFurnitureGrowth(group: THREE.Group, item: IslandStageItem, 
             leaves(detail, m, x, .74, .08, 3, .043);
         }
         if (level >= 2) {
-            curve(detail, leaf, [[-.6, 1.65, 0], [0, 1.62, 0], [.6, 1.65, 0]], .025);
-            for (const x of [-.5, .5]) smallFlowers(detail, m, x, 1.62, 0, .34);
+            curve(detail, leaf, [[-.64, 1.52, 0], [-.5, 1.93, 0], [0, 2.09, 0], [.5, 1.93, 0], [.64, 1.52, 0]], .055);
+            for (const x of [-.5, .5]) leaves(detail, m, x, 1.78, 0, 4, .11);
         }
-        if (level >= 3) for (const x of [-.22, 0, .22]) {
-            pole(detail, pale, [x, 1.59, -.025], [x, 1.37, -.025], .012);
-            star(detail, pale, [x, 1.35, -.025], .052);
+        if (level >= 3) {
+            for (const [x, y] of [[-.54, 1.91], [-.3, 2.11], [0, 2.18], [.3, 2.11], [.54, 1.91]]) {
+                ellipsoid(detail, m.get('#76a84d'), [x, y, 0], [.21, .18, .22], 12);
+                blossom(detail, m, x, y + .13, .07, .13, x === 0 ? '#fff0c0' : '#f39482');
+            }
+            for (const x of [-.28, 0, .28]) {
+                pole(detail, pale, [x, 2.02, -.025], [x, 1.79, -.025], .013);
+                star(detail, pale, [x, 1.74, -.025], .073);
+            }
         }
     } else if (item.kind === 'mushroom') {
         if (level >= 1) for (const x of [-.36, .36]) leaves(detail, m, x, .035, -.08, 4, .075);
@@ -123,8 +140,20 @@ export function applyFurnitureGrowth(group: THREE.Group, item: IslandStageItem, 
             curve(detail, leaf, [[-.41, .035, -.24], [0, .06, -.48], [.4, .045, -.24]], .025);
         }
     } else if (item.kind === 'fountain') {
-        if (level >= 1) for (const [x, z] of [[-.32, .22], [.35, -.18]]) {
-            const lily = ellipsoid(detail, leaf, [x, .31, z], [.11, .008, .075], 12); lily.rotation.y = x * 3;
+        if (level >= 1) {
+            const water = m.surface('#b3efde', .2, .04, true), height = [0, .91, 1.25, 1.64][level];
+            curve(detail, water, [[0, .63, 0], [.04, height * .81, 0], [0, height, 0]], .055);
+            ellipsoid(detail, water, [0, height, 0], [.085, .12, .085], 12);
+            const count = level === 3 ? 6 : level === 2 ? 4 : 2;
+            for (let i = 0; i < count; i++) {
+                const a = i * Math.PI * 2 / count, x = Math.cos(a), z = Math.sin(a), reach = .33 + level * .035;
+                curve(detail, water, [[0, height - .1, 0], [x * reach * .6, height - .05, z * reach * .6],
+                    [x * reach, .48, z * reach]], .022 + level * .004);
+            }
+            for (const [x, z] of [[-.32, .22], [.35, -.18], ...(level === 3 ? [[-.24, -.31], [.3, .28]] : [])]) {
+                const lily = ellipsoid(detail, leaf, [x, .323, z], [level >= 2 ? .18 : .13, .013, level >= 2 ? .13 : .085], 12);
+                lily.rotation.y = x * 3;
+            }
         }
         if (level >= 2) {
             for (const [x, z] of [[-.35, -.24], [-.4, -.17], [-.28, -.34]]) {
@@ -137,6 +166,8 @@ export function applyFurnitureGrowth(group: THREE.Group, item: IslandStageItem, 
             const ring = new THREE.Mesh(new THREE.TorusGeometry(.45, .011, 5, 32), m.get('#c0eee1'));
             ring.rotation.x = -Math.PI / 2; ring.position.y = .314; detail.add(ring);
             ellipsoid(detail, m.get('#f5be69'), [.1, .3, .34], [.075, .018, .029], 10);
+            blossom(detail, m, -.3, .36, .2, .13, '#f39482');
+            blossom(detail, m, .32, .36, -.2, .12, '#fff0c0');
         }
     }
     // Intermediate earned sections leave small permanent buds, with no extra possessions.
@@ -164,7 +195,8 @@ export function applySceneryGrowth(group: THREE.Group, state: IslandStageState, 
     const treeLevel = habitatAppearance(state, 'grove'), houseLevel = habitatAppearance(state, 'village');
     if (trees?.main) applyTreeGrowth(trees.main, state.growth ? treeLevel : undefined);
     if (trees?.west) applyTreeGrowth(trees.west, state.growth ? treeLevel : undefined);
-    const key = `${Boolean(state.growth)}:${treeLevel}:${houseLevel}:${state.completedSets >= 12}`;
+    const western = getIslandExpansionLevel(state) >= 2;
+    const key = `${Boolean(state.growth)}:${treeLevel}:${houseLevel}:${western}`;
     if (group.userData.growthVisualKey === key) return false;
     group.userData.growthVisualKey = key;
     for (const child of [...group.children]) { child.removeFromParent(); disposeGeometry(child); }
@@ -192,32 +224,37 @@ export function applySceneryGrowth(group: THREE.Group, state: IslandStageState, 
             cylinder(house, m.get('#ba7b49'), [x, .18, .72], .13, .25, .16);
             smallFlowers(house, m, x, .31, .72, .47);
         }
-        const canopy = box(house, m.get('#e8c47e'), [-.15, 1.2, .92], [1.32, .08, .48]); canopy.rotation.x = -.14;
+        const canopyHeight = [0, 1.2, 1.46, 1.75][houseLevel];
+        const canopy = box(house, m.get(houseLevel === 3 ? '#dc7c62' : '#e8c47e'), [-.1, canopyHeight, .97],
+            [[0, 0, 0], [1.32, .08, .48], [1.75, .12, .6], [2.15, .14, .8]][houseLevel] as [number, number, number]);
+        canopy.rotation.x = -.14;
+        if (houseLevel === 3) for (const x of [-.92, -.51, -.1, .31, .72]) {
+            box(house, m.get('#f39482'), [x, 1.735, 1.32], [.21, .18, .095]);
+        }
     }
     if (houseLevel >= 2) {
         // A shallow porch and awning enrich the existing foundation, without new obstacles.
         box(house, m.get('#e4b275'), [0, .045, .78], [1.35, .08, .29]);
-        const awning = box(house, m.get('#f4d794'), [-.1, 1.46, .97], [1.75, .12, .6]); awning.rotation.x = -.18;
-        for (const x of [-.5, .42]) pole(house, m.get('#ba7b49'), [x, .08, .94], [x, 1.42, .94], .046);
+        for (const x of [-.5, .42]) pole(house, m.get('#ba7b49'), [x, .08, .94], [x, houseLevel === 3 ? 1.71 : 1.42, .94], .046);
     }
     if (houseLevel >= 3) {
         // One attached roof room and a broad veranda make the same cottage
-        // visibly mature. Keep the original patchwork roof exposed; the small
-        // dormer extends its pink/yellow paint instead of replacing the roof.
-        box(house, m.get('#f7e8c6'), [.4, 2.05, .62], [.6, .68, .56]);
-        const roofLeft = box(house, m.get('#f39482'), [.22, 2.45, .65], [.45, .085, .73]); roofLeft.rotation.z = .45;
-        const roofRight = box(house, m.get('#dc7c62'), [.6, 2.45, .65], [.45, .085, .73]); roofRight.rotation.z = -.45;
-        box(house, m.get('#e4b275'), [.4, 2.13, .912], [.38, .4, .025]);
-        box(house, m.get('#80b5b5'), [.4, 2.13, .93], [.26, .29, .018]);
-        box(house, m.get('#efcf94'), [.4, 2.13, .946], [.035, .29, .017]);
-        box(house, m.get('#efcf94'), [.4, 2.13, .946], [.26, .035, .017]);
-        curve(house, m.get('#b49b64'), [[-.75, 1.32, 1.08], [-.15, 1.23, 1.08], [.45, 1.32, 1.08]], .018);
-        for (const x of [-.5, -.15, .2]) star(house, m.get('#ffe093', true), [x, 1.23, 1.1], .054);
+        // visibly mature. The tall front dormer adds a new roof silhouette;
+        // the original broad patchwork planes remain exposed behind it.
+        box(house, m.get('#f7e8c6'), [.38, 2.37, .62], [.94, 1.02, .68]);
+        const roofLeft = box(house, m.get('#f39482'), [.08, 2.95, .65], [.69, .1, .87]); roofLeft.rotation.z = .45;
+        const roofRight = box(house, m.get('#dc7c62'), [.68, 2.95, .65], [.69, .1, .87]); roofRight.rotation.z = -.45;
+        box(house, m.get('#e4b275'), [.38, 2.43, .976], [.63, .63, .025]);
+        box(house, m.get('#80b5b5'), [.38, 2.43, .995], [.48, .48, .018]);
+        box(house, m.get('#efcf94'), [.38, 2.43, 1.01], [.045, .48, .017]);
+        box(house, m.get('#efcf94'), [.38, 2.43, 1.01], [.48, .045, .017]);
+        curve(house, m.get('#b49b64'), [[-.81, 1.66, 1.34], [-.1, 1.51, 1.34], [.61, 1.66, 1.34]], .023);
+        for (const x of [-.56, -.1, .36]) star(house, m.get('#ffe093', true), [x, 1.5, 1.36], .087);
         leaves(house, m, -.79, .82, .81, 5, .14);
-        leaves(house, m, .5, 1.38, .88, 4, .1);
+        leaves(house, m, .62, 1.62, .96, 4, .14);
     }
     batch(tree, m.painted); batch(house, m.painted);
-    if (state.completedSets >= 12) {
+    if (western) {
         const westTree = tree.clone(true); westTree.name = 'grown-west-tree';
         westTree.position.set(-6.7, 0, -1.2); westTree.scale.setScalar(.65); group.add(westTree);
     }

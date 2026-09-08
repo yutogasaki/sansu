@@ -37,8 +37,9 @@ const resolveBuildMetadata = (mode: string) => {
     const island = {
         enabled: env.VITE_ISLAND_ENABLED === 'true',
         delivery: 'mystic-island-v1',
-        candidate: 'mystic-island-living-v3',
+        candidate: 'mystic-island-living-v5',
         learningCandidate: 'mystic-island-learning-v2',
+        residentCandidate: 'patchwork-otter-v1',
         artDirection: ['festival', 'moon-garden', 'prism'].includes(env.VITE_ISLAND_ART_DIRECTION)
             ? env.VITE_ISLAND_ART_DIRECTION : 'moon-garden',
     }

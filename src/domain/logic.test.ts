@@ -108,7 +108,7 @@ describe('Manual Level Consistency (syncLevelState)', () => {
 });
 
 describe('English Level Progression', () => {
-    it('should promote level if 70% of the enabled next-level words were answered correctly', async () => {
+    it('should promote level if 70% of the enabled next-level words were independently answered correctly', async () => {
         // Mock profile with level 1 words attempted
         const profile = createInitialProfile("Test", 1, 1, 1, 'vocab');
         profile.vocabMaxUnlocked = 2;
@@ -122,11 +122,21 @@ describe('English Level Progression', () => {
         const memoryOverride: Record<string, MemoryState> = {};
         for (let i = 0; i < targetCount; i++) {
             const word = level1Words[i];
-            memoryOverride[word.id] = { ...mockState(word.id, 1), totalAnswers: 1 };
+            memoryOverride[word.id] = { ...mockState(word.id, 1), totalAnswers: 1, correctAnswers: 1, independentCorrectAnswers: 1 };
         }
 
         const shouldLevelUp = await checkEnglishLevelProgression(profile, memoryOverride);
         expect(shouldLevelUp).toBe(true);
+    });
+
+    it('does not infer independent vocabulary coverage from legacy or assisted raw successes', async () => {
+        const profile = syncLevelState(createInitialProfile('Test', 1, 1, 1, 'vocab'), 'vocab', 2);
+        profile.vocabMainLevel = 1;
+        const memoryOverride = Object.fromEntries(ENGLISH_WORDS.filter(word => word.level === 2)
+            .map(word => [word.id, mockState(word.id, 1)]));
+        expect(await checkEnglishLevelProgression(profile, memoryOverride)).toBe(false);
+        for (const memory of Object.values(memoryOverride)) memory.independentCorrectAnswers = 0;
+        expect(await checkEnglishLevelProgression(profile, memoryOverride)).toBe(false);
     });
 
     it('should NOT promote level if < 70% of words attempted', async () => {

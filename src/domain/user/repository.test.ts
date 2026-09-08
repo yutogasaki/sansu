@@ -256,7 +256,7 @@ describe("getActiveProfile", () => {
         expect(mocks.memoryMathEquals).toHaveBeenCalledWith(expected.id);
     });
 
-    it("passes canonical attempt counts into math problem generation", async () => {
+    it("passes canonical independent success counts into math problem generation", async () => {
         const staleMath = memory("count_5", "valid", 0, "active");
         const expected = {
             ...profile("valid"),
@@ -265,11 +265,12 @@ describe("getActiveProfile", () => {
         };
         mocks.storedAppData = appData([expected], expected.id);
         mocks.memoryMathToArray.mockResolvedValue([
-            memory("count_5", expected.id, 3, "active"),
+            { ...memory("count_5", expected.id, 8, "active"), independentCorrectAnswers: 3 },
         ]);
 
         const hydrated = await getProfile(expected.id);
         expect(hydrated).not.toBeNull();
+        expect(hydrated?.mathSkills.count_5).toMatchObject({ correctAnswers: 8, independentCorrectAnswers: 3 });
 
         const problem = generateMathProblem("count_5", { profile: hydrated! });
         expect(problem.correctAnswer).toBe("4");

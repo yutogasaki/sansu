@@ -15,6 +15,8 @@
 
 | 話題 | 正本 | 補助文書 | 更新するタイミング |
 |---|---|---|---|
+| 島のポイント・テーマ・飾りの交換 | [product/35_island_customization_spec.md](/docs/product/35_island_customization_spec.md) | [product/30_living_island_growth_spec.md](/docs/product/30_living_island_growth_spec.md), [product/28_mystic_island_spec.md](/docs/product/28_mystic_island_spec.md) | 獲得・選択交換・目標・実景プレビュー・所持と外見の保存が変わるとき |
+| 独力進行・再学習・実時間復習・単元別出題 | [product/34_learning_reinforcement_spec.md](/docs/product/34_learning_reinforcement_spec.md) | [product/29_learning_progression_spec.md](/docs/product/29_learning_progression_spec.md), [product/31_learning_units_spec.md](/docs/product/31_learning_units_spec.md) | 独力証拠の集計、卒業後の期限、単元coverage、復習予算が変わるとき |
 | 学習単元・習得証拠と比較試作 | [product/31_learning_units_spec.md](/docs/product/31_learning_units_spec.md) | [product/32_math_unit_catalog.md](/docs/product/32_math_unit_catalog.md), [product/33_english_unit_catalog.md](/docs/product/33_english_unit_catalog.md) | 単元の境界、前提、表現別の証拠、新旧判定の比較範囲が変わるとき |
 | 不思議な島・連問と暮らし | [product/28_mystic_island_spec.md](/docs/product/28_mystic_island_spec.md) | [product/01_app_spec.md](/docs/product/01_app_spec.md) | 島のループ、配置、報酬、学習区間、保存・導入が変わるとき |
 | 育つ島・アップグレードと発見 | [product/30_living_island_growth_spec.md](/docs/product/30_living_island_growth_spec.md) | [product/28_mystic_island_spec.md](/docs/product/28_mystic_island_spec.md), [product/01_app_spec.md](/docs/product/01_app_spec.md) | 自動成長、有限の所有物、任意編集、暮らし、拡張、履歴・発見、旧予約との互換性が変わるとき |

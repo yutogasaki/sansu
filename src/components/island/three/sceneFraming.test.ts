@@ -5,6 +5,11 @@ import { boxCorners, fitLearningFrame } from './sceneFraming';
 import { disposeGeometry, IslandMaterials } from './primitives';
 import type { ResidentSpecies } from './residentRig';
 import type { IslandStageItem } from './types';
+import { fitIslandComparisonCamera, IslandScene } from './runtime';
+import { applyTreeGrowth, makeExpansion, makeScenery } from './scenery';
+import { makeWestExpansion } from './westScenery';
+import { createIsland } from '../../../domain/island/catalog';
+import { getIslandExpansionLevel } from '../../../domain/island/expansion';
 
 const materials: IslandMaterials[] = [], actors: IslandResident[] = [];
 function actor(species: ResidentSpecies, position: [number, number, number]) {
@@ -31,6 +36,64 @@ afterEach(() => {
 });
 
 describe('frozen learning frame after free play', () => {
+    it.each([[342, 185], [345, 320]])('keeps the full mature grove crown inside the comparison at %sx%s', (width, height) => {
+        const material = new IslandMaterials(), grove = makeWestExpansion(material);
+        try {
+            const tree = grove.getObjectByName('western-grove-tree') as THREE.Group;
+            applyTreeGrowth(tree, 3); grove.updateMatrixWorld(true);
+            const view = camera(); fitIslandComparisonCamera(view, 'grove', width / height);
+            const bounds = new THREE.Box3();
+            tree.traverse(child => {
+                if (!(child instanceof THREE.Mesh)) return;
+                const vertices = child.geometry.getAttribute('position');
+                for (let index = 0; index < vertices.count; index++) bounds.expandByPoint(
+                    new THREE.Vector3().fromBufferAttribute(vertices, index).applyMatrix4(child.matrixWorld).project(view));
+            });
+            expect(bounds.max.y).toBeLessThan(.96);
+            expect(bounds.min.y).toBeGreaterThan(-.96);
+            expect(Math.max(Math.abs(bounds.min.x), Math.abs(bounds.max.x))).toBeLessThan(.96);
+        } finally { disposeGeometry(grove); material.dispose(); }
+    });
+
+    it.each([[390, 190], [768, 400]].flatMap(([width, height]) =>
+        ([0, 1, 2, undefined] as const).map(expansionLevel => ({ width, height, expansionLevel }))))(
+        'contains earned shores in matching album cameras and the home view at $width×$height, chapter $expansionLevel', ({ width, height, expansionLevel }) => {
+        const material = new IslandMaterials();
+        const island = createIsland('scene-framing', 0);
+        const state = { ...island, completedSets: 24, growth: { ...island.growth!, expansionLevel }, learning: false, districtFocus: 'all' };
+        const level = getIslandExpansionLevel(state);
+        const objects = [makeScenery(material), ...(level >= 1 ? [makeExpansion(material)] : []),
+            ...(level >= 2 ? [makeWestExpansion(material)] : [])];
+        try {
+            const before = camera(), after = camera(), view = camera();
+            fitIslandComparisonCamera(before, 'all', width / height);
+            fitIslandComparisonCamera(after, 'all', width / height);
+            expect(after.matrixWorld.toArray()).toEqual(before.matrixWorld.toArray());
+            expect(after.projectionMatrix.toArray()).toEqual(before.projectionMatrix.toArray());
+            const scene = Object.create(IslandScene.prototype) as { resize(): void };
+            Object.assign(scene, { camera: view, host: { clientWidth: width, clientHeight: height },
+                renderer: { setSize: () => undefined }, expansion: { visible: level >= 1 }, westExpansion: { visible: level >= 2 },
+                state, items: new Map(), requestFrame: () => undefined });
+            scene.resize();
+            for (const object of objects) {
+                object.updateMatrixWorld(true);
+                const projectedBounds = [after, view].map(lens => ({ lens, bounds: new THREE.Box3() }));
+                object.traverse(child => {
+                    if (!(child instanceof THREE.Mesh)) return;
+                    const vertices = child.geometry.getAttribute('position');
+                    for (let index = 0; index < vertices.count; index++) {
+                        const point = new THREE.Vector3().fromBufferAttribute(vertices, index).applyMatrix4(child.matrixWorld);
+                        for (const { lens, bounds } of projectedBounds) bounds.expandByPoint(point.clone().project(lens));
+                    }
+                });
+                for (const { bounds } of projectedBounds) {
+                    expect(Math.max(Math.abs(bounds.min.x), Math.abs(bounds.max.x)), `${object.name} horizontal at ${width}×${height}`).toBeLessThan(1);
+                    expect(Math.max(Math.abs(bounds.min.y), Math.abs(bounds.max.y)), `${object.name} vertical at ${width}×${height}`).toBeLessThan(1);
+                }
+            }
+        } finally { objects.forEach(disposeGeometry); material.dispose(); }
+    });
+
     it.each([[390, 136], [390, 112], [768, 252]])('fits standing, bench and lantern residents at %sx%s without moving their roots', (width, height) => {
         const otter = actor('otter', [.1, 0, 1.6]), rabbit = actor('rabbit', [2.45, 0, 1.45]);
         const bench: IslandStageItem = { id: 'bench', kind: 'bench', position: { x: 0, z: 1 }, rotation: Math.PI / 2 };

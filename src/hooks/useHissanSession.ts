@@ -1,8 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { Problem } from '../domain/types';
-import { HissanGridData, isHissanEligible } from '../domain/math/hissanTypes';
-import { generateHissanGrid } from '../domain/math/hissanEngine';
-import { generateWrittenArithmeticGrid } from '../domain/math/writtenArithmetic';
+import { HissanGridData } from '../domain/math/hissanTypes';
+import { resolveStudyHissanPresentation } from '../domain/math/studyPresentation';
 import { useTimeoutScheduler } from './useTimeoutScheduler';
 
 type StepFeedback = 'none' | 'correct' | 'incorrect';
@@ -56,23 +55,10 @@ export const useHissanSession = () => {
     const resetHissan = useCallback((problem: Problem | undefined, hissanEnabled: boolean) => {
         clearScheduledTimeouts();
         const next = emptySession();
-        if (problem?.subject === 'math' && problem.inputType !== 'choice' && problem.questionText) {
-            const eligible = isHissanEligible(problem.categoryId) || ['div_rem_q1', 'div_rem_q2'].includes(problem.categoryId);
-            if (eligible) {
-                // Build while disabled as well: the child can open written work from mental mode.
-                const written = /^(mul|div)_/.test(problem.categoryId)
-                    ? generateWrittenArithmeticGrid(problem.questionText, problem.correctAnswer) : null;
-                next.gridData = written
-                    ?? generateHissanGrid(problem.categoryId, problem.questionText,
-                        Array.isArray(problem.correctAnswer) ? problem.correctAnswer.join('') : problem.correctAnswer);
-                next.isHissanEligibleSkill = Boolean(next.gridData);
-                next.isForcedHissanSkill = Boolean(next.gridData)
-                    && (problem.categoryId.includes('_hissan') || problem.categoryId.includes('_algorithm'));
-                next.isHissanActive = Boolean(next.gridData) && (next.isForcedHissanSkill || hissanEnabled);
-                const firstStep = next.gridData?.steps[0];
-                if (firstStep) next.activeCellPos = [firstStep.rowIndex, firstStep.inputCellIndices[0]];
-            }
-        }
+        // Build while disabled too, so the child can open written work later.
+        Object.assign(next, resolveStudyHissanPresentation(problem, hissanEnabled));
+        const firstStep = next.gridData?.steps[0];
+        if (firstStep) next.activeCellPos = [firstStep.rowIndex, firstStep.inputCellIndices[0]];
         publish(next);
     }, [clearScheduledTimeouts, publish]);
 

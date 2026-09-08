@@ -43,6 +43,8 @@ export interface ExploreLearningAssignment {
     /** Retry plans keep their exact generated Problem here; base plans live in learningSegments. */
     reservedProblem?: Problem;
     reservedEncounterId?: ExploreEncounterId;
+    /** New reservations record known support provenance; absence stays legacy/unknown. */
+    learningEvidenceAssistance?: 'independent' | 'assisted';
 }
 
 export interface ExploreLearningProfileSnapshotBoundary {
@@ -202,6 +204,7 @@ export interface ReserveExploreLearningAssignmentInput {
     reservedAt: number;
     reservedProblem?: Problem;
     reservedEncounterId?: ExploreEncounterId;
+    learningEvidenceAssistance?: 'independent' | 'assisted';
 }
 
 export interface ReserveExploreLearningSegmentInput {

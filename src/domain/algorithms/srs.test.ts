@@ -1,13 +1,13 @@
-import { differenceInCalendarDays } from "date-fns";
 import { getLearningDayStart } from "../../utils/learningDay";
-import { getNextReviewDate, updateMemoryState, updateSkillStatus, wilsonLower } from "./srs";
+import { beginRelearning, getNextReviewDate, updateMemoryState, updateSkillStatus, wilsonLower } from "./srs";
 import { MemoryState } from "../types";
 
 describe("srs", () => {
     const now = new Date(2026, 8, 8, 12);
     const yesterday = new Date(2026, 8, 7, 12).toISOString();
     const today = getLearningDayStart(now).toISOString();
-    const tomorrow = new Date(2026, 8, 9, 4).toISOString();
+    const tomorrow = new Date(2026, 8, 9, 12).toISOString();
+    const dayMs = 24 * 60 * 60 * 1000;
     const memory = (overrides: Partial<MemoryState> = {}): MemoryState => ({
         id: "test",
         strength: 3,
@@ -22,18 +22,17 @@ describe("srs", () => {
     });
 
     it.each([[1, 1], [2, 3], [3, 7], [4, 14], [5, 30]])(
-        "schedules strength %i after %i learning days",
+        "schedules strength %i after exactly %i elapsed 24-hour days",
         (strength, days) => {
             const next = getNextReviewDate(strength, now);
-            expect(differenceInCalendarDays(next, getLearningDayStart(now))).toBe(days);
-            expect(next.getHours()).toBe(4);
+            expect(next.getTime() - now.getTime()).toBe(days * dayMs);
         },
     );
 
     it("increases a due item's strength by only one after a spaced correct answer", () => {
         const result = updateMemoryState(memory({ nextReview: "2026-01-01" }), true, false, now);
         expect(result.strength).toBe(4);
-        expect(result.nextReview).toBe(new Date(2026, 8, 22, 4).toISOString());
+        expect(result.nextReview).toBe(new Date(2026, 8, 22, 12).toISOString());
         expect(result.totalAnswers).toBe(11);
         expect(result.correctAnswers).toBe(8);
         expect(result.incorrectAnswers).toBe(3);
@@ -44,7 +43,7 @@ describe("srs", () => {
     it("caps strength at 5", () => {
         const result = updateMemoryState(memory({ strength: 5 }), true, false, now);
         expect(result.strength).toBe(5);
-        expect(result.nextReview).toBe(new Date(2026, 9, 8, 4).toISOString());
+        expect(result.nextReview).toBe(new Date(2026, 9, 8, 12).toISOString());
     });
 
     it("keeps the first correct answer at strength 1 even after earlier failed attempts", () => {
@@ -84,10 +83,10 @@ describe("srs", () => {
             updatedAt: new Date(2026, 8, 8, 5).toISOString(),
         }), true, false, now);
         expect(result.strength).toBe(3);
-        expect(result.nextReview).toBe(new Date(2026, 8, 15, 4).toISOString());
+        expect(result.nextReview).toBe(new Date(2026, 8, 15, 12).toISOString());
     });
 
-    it("uses the local 04:00 boundary for advancing rather than calendar midnight", () => {
+    it("does not treat crossing 04:00 within a minute as a spaced success", () => {
         const previous = memory({
             strength: 1,
             nextReview: new Date(2026, 8, 8, 4).toISOString(),
@@ -99,8 +98,8 @@ describe("srs", () => {
         expect(beforeBoundary.nextReview).toBe(previous.nextReview);
 
         const afterBoundary = updateMemoryState(beforeBoundary, true, false, new Date(2026, 8, 8, 4));
-        expect(afterBoundary.strength).toBe(2);
-        expect(afterBoundary.nextReview).toBe(new Date(2026, 8, 11, 4).toISOString());
+        expect(afterBoundary.strength).toBe(1);
+        expect(afterBoundary.nextReview).toBe(new Date(2026, 8, 9, 4).toISOString());
     });
 
     it.each([1, 2, 3, 4, 5])("resets incorrect answers from strength %i to 1 for tomorrow", (strength) => {
@@ -138,13 +137,13 @@ describe("srs", () => {
         const skipped = updateMemoryState(memory(), false, true, now);
         const corrected = updateMemoryState(skipped, true, false, new Date(2026, 8, 8, 12, 1));
         expect(corrected.strength).toBe(1);
-        expect(corrected.nextReview).toBe(tomorrow);
+        expect(corrected.nextReview).toBe(new Date(2026, 8, 9, 12, 1).toISOString());
         expect(corrected.skippedAnswers).toBe(1);
         expect(corrected.correctAnswers).toBe(8);
 
-        const remembered = updateMemoryState(corrected, true, false, new Date(2026, 8, 9, 12));
+        const remembered = updateMemoryState(corrected, true, false, new Date(2026, 8, 9, 12, 1));
         expect(remembered.strength).toBe(2);
-        expect(remembered.nextReview).toBe(new Date(2026, 8, 12, 4).toISOString());
+        expect(remembered.nextReview).toBe(new Date(2026, 8, 12, 12, 1).toISOString());
     });
 
     it.each([undefined, "", "not-a-date", "2026-09-09T12:00:00"])(
@@ -152,14 +151,14 @@ describe("srs", () => {
         (lastCorrectAt) => {
             const result = updateMemoryState(memory({ lastCorrectAt }), true, false, now);
             expect(result.strength).toBe(3);
-            expect(result.nextReview).toBe(new Date(2026, 8, 15, 4).toISOString());
+            expect(result.nextReview).toBe(new Date(2026, 8, 15, 12).toISOString());
         },
     );
 
     it("repairs invalid review dates without advancing strength", () => {
         const result = updateMemoryState(memory({ nextReview: "not-a-date" }), true, false, now);
         expect(result.strength).toBe(3);
-        expect(result.nextReview).toBe(new Date(2026, 8, 15, 4).toISOString());
+        expect(result.nextReview).toBe(new Date(2026, 8, 15, 12).toISOString());
     });
 
     it("does not infer recovery timing from a legacy invalid attempt timestamp", () => {
@@ -192,7 +191,9 @@ describe("srs", () => {
         expect(state).toMatchObject({ strength: 1, totalAnswers: 30, status: "active", nextReview: tomorrow });
 
         for (const expectedStrength of [2, 3, 4]) {
-            state = updateMemoryState(state, true, false, new Date(state.nextReview));
+            state = updateMemoryState(state, true, false, new Date(Math.max(
+                Date.parse(state.nextReview), Date.parse(state.updatedAt) + dayMs,
+            )));
             state.status = updateSkillStatus(state, recent);
             expect(state.strength).toBe(expectedStrength);
             expect(state.status).toBe(expectedStrength === 4 ? "retired" : "active");
@@ -217,6 +218,110 @@ describe("srs", () => {
     it("preserves an existing retired status when old records lack spaced strength", () => {
         expect(updateSkillStatus(memory({ strength: 1, status: "retired" }), Array(10).fill(true)))
             .toBe("retired");
+    });
+
+    it("requires 24 hours after the most recent contact before a due item advances", () => {
+        const previous = memory({ lastIndependentCorrectAt: yesterday });
+        const justBefore = new Date(now.getTime() - 1);
+        expect(updateMemoryState(previous, true, false, justBefore, { independence: 'independent' }).strength).toBe(3);
+        expect(updateMemoryState(previous, true, false, now, { independence: 'independent' }).strength).toBe(4);
+        expect(updateMemoryState({ ...previous, updatedAt: new Date(now.getTime() - 1000).toISOString() },
+            true, false, now, { independence: 'independent' }).strength).toBe(3);
+    });
+
+    it.each([
+        { independence: 'unknown' as const },
+        { independence: 'independent' as const, wholeProblem: false },
+    ])("does not turn %j into independent recall or extend an existing deadline", (evidence) => {
+        const previous = memory({ lastIndependentCorrectAt: yesterday, independentCorrectAnswers: 4 });
+        const result = updateMemoryState(previous, true, false, now, evidence);
+        expect(result).toMatchObject({
+            strength: 3, nextReview: previous.nextReview,
+            correctAnswers: 8, totalAnswers: 11, independentCorrectAnswers: 4,
+            lastIndependentCorrectAt: yesterday, lastCorrectAt: now.toISOString(),
+        });
+    });
+
+    it("never borrows a legacy raw correct timestamp for explicitly independent new evidence", () => {
+        const result = updateMemoryState(memory(), true, false, now, { independence: 'independent' });
+        expect(result.strength).toBe(3);
+        expect(result.lastIndependentCorrectAt).toBe(now.toISOString());
+    });
+
+    it("records an assisted correction as a raw success while keeping relearning due", () => {
+        const previous = memory({ strength: 5, status: 'retired', lastIndependentCorrectAt: yesterday });
+        const result = updateMemoryState(previous, true, false, now, { independence: 'assisted' });
+        expect(result).toMatchObject({
+            strength: 1, status: 'retired', needsRelearning: true,
+            relearningStartedAt: now.toISOString(), nextReview: previous.nextReview,
+            totalAnswers: 11, correctAnswers: 8, incorrectAnswers: 3,
+            lastIndependentCorrectAt: yesterday, lastCorrectAt: now.toISOString(),
+        });
+        expect(updateSkillStatus(result, Array(10).fill(true), true)).toBe('retired');
+    });
+
+    it.each(['retired', 'maintenance'] as const)("keeps %s graduation while failure creates a dated relearning obligation", (status) => {
+        const failed = updateMemoryState(memory({ strength: 5, status }), false, false, now);
+        expect(failed).toMatchObject({ strength: 1, status, needsRelearning: true, nextReview: tomorrow });
+        expect(updateSkillStatus(failed, [false, false, ...Array(8).fill(true)], true)).toBe(status);
+    });
+
+    it("does not manufacture answers when support opens or move an existing overdue check later", () => {
+        const previous = memory({ strength: 5, status: 'retired', independentCorrectAnswers: 5 });
+        const result = beginRelearning(previous, now);
+        expect(result).toMatchObject({
+            status: 'retired', strength: 1, needsRelearning: true,
+            nextReview: previous.nextReview, updatedAt: now.toISOString(), relearningStartedAt: now.toISOString(),
+            totalAnswers: 10, correctAnswers: 7, incorrectAnswers: 3, skippedAnswers: 0,
+            independentCorrectAnswers: 5, lastCorrectAt: yesterday,
+        });
+        expect(beginRelearning(memory({ nextReview: 'not-a-date' }), now).nextReview).toBe(now.toISOString());
+        expect(beginRelearning(memory({ nextReview: tomorrow }), now).nextReview).toBe(now.toISOString());
+    });
+
+    it("requires a delayed independent check after same-day recovery and restarts at no more than strength 2", () => {
+        const support = beginRelearning(memory({ strength: 5, status: 'retired' }), now);
+        const firstRecoveryAt = new Date(now.getTime() + 60_000);
+        const recovery = updateMemoryState(support, true, false, firstRecoveryAt, { independence: 'independent' });
+        expect(recovery).toMatchObject({ strength: 1, status: 'retired', needsRelearning: true });
+        expect(Date.parse(recovery.nextReview) - firstRecoveryAt.getTime()).toBe(dayMs);
+        const tooSoon = updateMemoryState(recovery, true, false, new Date(firstRecoveryAt.getTime() + dayMs - 1),
+            { independence: 'independent' });
+        expect(tooSoon.needsRelearning).toBe(true);
+        expect(tooSoon.strength).toBe(1);
+        const delayed = updateMemoryState(recovery, true, false, new Date(recovery.nextReview), { independence: 'independent' });
+        expect(delayed).toMatchObject({ strength: 2, status: 'retired', needsRelearning: false });
+        expect(delayed.relearningStartedAt).toBeUndefined();
+        expect(Date.parse(delayed.nextReview) - Date.parse(recovery.nextReview)).toBe(3 * dayMs);
+    });
+
+    it("does not finish relearning from unknown evidence or invalid contact dates", () => {
+        const previous = memory({ strength: 5, needsRelearning: true, relearningStartedAt: yesterday });
+        expect(updateMemoryState(previous, true, false, now, { independence: 'unknown' }).needsRelearning).toBe(true);
+        const invalid = updateMemoryState({ ...previous, relearningStartedAt: 'invalid' }, true, false, now,
+            { independence: 'independent' });
+        expect(invalid).toMatchObject({ strength: 1, needsRelearning: true, relearningStartedAt: now.toISOString() });
+        expect(updateMemoryState(invalid, true, false, new Date(invalid.nextReview), { independence: 'independent' }))
+            .toMatchObject({ strength: 2, needsRelearning: false });
+    });
+
+    it('keeps full elapsed intervals across 04:00 and daylight-saving transitions', () => {
+        for (const origin of [new Date(2026, 8, 8, 3, 59), new Date('2026-03-08T01:59:00-08:00'),
+            new Date('2026-11-01T01:59:00-07:00')]) {
+            expect(getNextReviewDate(1, origin).getTime() - origin.getTime()).toBe(dayMs);
+            expect(getNextReviewDate(5, origin).getTime() - origin.getTime()).toBe(30 * dayMs);
+        }
+    });
+
+    it("never releases a pending relearning obligation through retirement", () => {
+        expect(updateSkillStatus(memory({ strength: 5, totalAnswers: 50, status: 'active', needsRelearning: true }),
+            Array(10).fill(true))).toBe('active');
+    });
+
+    it.each(['retired', 'maintenance'] as const)('preserves %s after recovery even while earlier failures remain recent', status => {
+        const recovered = memory({ status, strength: 2, needsRelearning: false,
+            lastIndependentCorrectAt: now.toISOString() });
+        expect(updateSkillStatus(recovered, [true, false, false, false, false], true)).toBe(status);
     });
 });
 

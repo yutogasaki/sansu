@@ -109,6 +109,12 @@ const main = async () => {
   }
 
   const precacheSet = new Set(precacheUrls);
+  for (const name of ['tap', 'step', 'correct', 'incorrect', 'start', 'clear', 'level_up']) {
+    const url = `sounds/${name}.mp3`;
+    const file = publicFiles.find(candidate => candidate.relativePath === url);
+    if (!file || (await stat(file.absolutePath)).size < 128) errors.push(`${url}: playable SE is missing or empty`);
+    if (!precacheSet.has(url)) errors.push(`${url}: SE is missing from offline precache`);
+  }
   const parkManifest = JSON.parse(await readFile(path.join(ROOT, 'src/components/park/artManifest.json'), 'utf8'));
   for (const sprite of Object.values(parkManifest.sprites)) {
     const url = `assets/park/resin-v1/${sprite.file}`;

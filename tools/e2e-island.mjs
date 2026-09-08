@@ -45,9 +45,11 @@ async function verifyOwnedLoop(page, profileId, state, samples, touch, prefix) {
     assert.deepEqual(state.plan, reserved, 'Reload preserves the automatically reserved section');
     state = await finishSet(page, profileId, samples, touch);
     assert.equal(state.island.completedSets, firstCompleted + 1);
-    await page.locator('[data-renderer="three"][data-expanded="true"]').waitFor();
+    assert.equal(state.island.growth.expansionLevel, 0);
+    assert.equal(state.island.items.length, 3);
+    await page.locator('[data-renderer="three"][data-expanded="false"]').waitFor();
     await activate(button(page, 'しまへ'), touch); await waitMode(page, 'home');
-    await capture(page, `${prefix}-second-section-expanded`);
+    await capture(page, `${prefix}-second-section-growing`);
     const bench = state.island.items.find(item => item.id === 'living-bench');
     assert(bench?.position, 'A usable bench is placed automatically');
     await activate(button(page, 'もちもの'), touch); await waitMode(page, 'inventory');

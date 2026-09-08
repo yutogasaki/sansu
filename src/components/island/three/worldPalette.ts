@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
 export type IslandArtDirection = 'festival' | 'moon-garden' | 'prism';
+export type IslandWorldAppearance = IslandArtDirection | 'starry' | 'candy' | 'crystal';
 export const ISLAND_ART_DIRECTIONS: IslandArtDirection[] = ['festival', 'moon-garden', 'prism'];
 
 export function currentIslandArtDirection(): IslandArtDirection {
@@ -16,14 +17,20 @@ const palettes = {
         leafAccent: '#ffcc40', roof: '#ffd447', trim: '#f75aa4', wood: '#e79b50', ink: '#292341', stone: '#9580ca', sand: '#ffc58e' },
     prism: { sea: '#23bfd5', deep: '#227bcb', grass: '#a0d64c', leaf: '#2d9bbb', leafLight: '#47d2ad',
         leafAccent: '#f968ac', roof: '#e9549b', trim: '#ffbc37', wood: '#ee9551', ink: '#292341', stone: '#b59bd5', sand: '#ffe29a' },
+    starry: { sea: '#303f9d', deep: '#1c256d', grass: '#6755cb', leaf: '#414cc3', leafLight: '#9464e5',
+        leafAccent: '#ffd340', roof: '#303eaa', trim: '#ffcb4f', wood: '#c88e40', ink: '#292c58', stone: '#9690de', sand: '#ffdc8a' },
+    candy: { sea: '#ef8cb8', deep: '#c866a9', grass: '#41cbaa', leaf: '#ec427f', leafLight: '#ff82b8',
+        leafAccent: '#ffdc66', roof: '#e93078', trim: '#fff0b8', wood: '#c99146', ink: '#772847', stone: '#c886ca', sand: '#eab461' },
+    crystal: { sea: '#2bcacb', deep: '#266dad', grass: '#73cfc9', leaf: '#11a9c2', leafLight: '#91ddd9',
+        leafAccent: '#8750df', roof: '#eae1ff', trim: '#9856e6', wood: '#558aaa', ink: '#3d4d83', stone: '#919bce', sand: '#dfd5f4' },
 } as const;
 
 /** Curated world paint keys. Fur, eyes, facial features and learning diagrams are not recolored. */
-export function islandWorldColor(source: string, direction: IslandArtDirection) {
+export function islandWorldColor(source: string, direction: IslandWorldAppearance) {
     const p = palettes[direction];
     const groups: [string[], string][] = [
         [['#76cdd3', '#78d5d5'], p.sea], [['#43a9c5'], p.deep],
-        [['#72ab50'], p.grass], [['#76d3c9'], '#75e9da'],
+        [['#72ab50'], p.grass], [['#76d3c9'], direction === 'starry' ? '#8994ed' : direction === 'candy' ? '#ffdab9' : direction === 'crystal' ? '#b1f1ed' : '#75e9da'],
         [['#4e8843', '#649c46', '#67994a', '#5e9d63'], p.leaf],
         [['#76a84d', '#77a854', '#7caf4b', '#75ae66'], p.leafLight],
         [['#86b557'], p.leafAccent], [['#77ab4d'], direction === 'festival' ? '#15b6ad' : p.leaf],
@@ -43,7 +50,7 @@ export function islandWorldColor(source: string, direction: IslandArtDirection) 
 }
 
 /** Three small repeatable paint surfaces, generated once without raster/model downloads. */
-export function makeWorldPattern(source: string, direction: IslandArtDirection): THREE.DataTexture | undefined {
+export function makeWorldPattern(source: string, direction: IslandWorldAppearance): THREE.DataTexture | undefined {
     const pattern = source === '#c24f3e' ? 'patchwork' : source === '#86b557' || source === '#dc795d' ? 'dots' : undefined;
     if (!pattern) return;
     const p = palettes[direction], size = 128;
@@ -53,7 +60,17 @@ export function makeWorldPattern(source: string, direction: IslandArtDirection):
     for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
         const u = (x + .5) / size, v = (y + .5) / size;
         let color = base;
-        if (pattern === 'dots') {
+        if (direction === 'starry' && pattern === 'patchwork') {
+            const px = u * 4 % 1 - .5, py = v * 4 % 1 - .5;
+            if ((Math.abs(px) < .035 && Math.abs(py) < .16) || (Math.abs(py) < .035 && Math.abs(px) < .16)) color = gold;
+            if (Math.abs(v - .3 - u * .35) < .009) color = aqua;
+        } else if (direction === 'candy' && pattern === 'patchwork') {
+            if ((u + v) * 5 % 1 < .3) color = gold;
+            if ((u + v) * 5 % 1 > .87) color = ink;
+        } else if (direction === 'crystal' && pattern === 'patchwork') {
+            if ((u * 3 + v * 2) % 1 < .5) color = aqua;
+            if (Math.abs((u * 3 - v * 2 + 3) % 1 - .5) < .027) color = gold;
+        } else if (pattern === 'dots') {
             const row = Math.floor(v * 3), px = ((u * 3 + row % 2 * .5) % 1) - .5, py = v * 3 % 1 - .5;
             if (Math.hypot(px, py) < .19) color = source === '#dc795d' ? ink : gold;
         } else {

@@ -1,0 +1,61 @@
+{
+  "target": "http://127.0.0.1:5470",
+  "flag": "VITE_ISLAND_ENABLED=true",
+  "hookChecks": [
+    "active learning defers update; user home checkpoint reloads with reserved plan preserved",
+    "critical persistence hold spans navigation and releases deferred update afterwards",
+    "continue pointer protects fresh session; answer receipt survives next user checkpoint",
+    "first automatic growth defers update; growth, auto placement and next reservation survive user checkpoint",
+    "automatic next section keeps update deferred; final answer, garden growth, east habitat and next reservation survive the voluntary checkpoint",
+    "Island home keeps the legacy Explore run for explicit resume and preserves Island data",
+    "legacy Island reservation and reward screen defer update; new reservation migrates once and keeps the unclaimed old gift"
+  ],
+  "offline": {
+    "revision": "9300ea0-subjects-880a65a8d2ec",
+    "version": "9300ea0-subjects-880a65a8d2ec:235da1f6-a3f5-4859-b206-85bff2b8e8f8",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-living-v4",
+    "learningCandidate": "mystic-island-learning-v2",
+    "mode": "learning",
+    "renderer": "three",
+    "artDirection": "moon-garden",
+    "drawCalls": 74,
+    "expanded": "false",
+    "residentAction": "idle",
+    "residentItemId": "",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": true,
+    "reducedMotion": true,
+    "serviceWorker": "real",
+    "offlineReload": true,
+    "answerPersisted": true,
+    "automaticGrowthPersisted": true,
+    "resumedSamePlan": true,
+    "soundEnabled": false
+  },
+  "runtime": {
+    "revision": "9300ea0-subjects-880a65a8d2ec",
+    "version": "9300ea0-subjects-880a65a8d2ec:235da1f6-a3f5-4859-b206-85bff2b8e8f8",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-living-v4",
+    "learningCandidate": "mystic-island-learning-v2",
+    "mode": "home",
+    "renderer": "three",
+    "artDirection": "moon-garden",
+    "drawCalls": 81,
+    "expanded": "false",
+    "residentAction": "idle",
+    "residentItemId": "",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": false,
+    "reducedMotion": false
+  },
+  "pass": true,
+  "rawFile": "island-pwa-report.json.gz"
+}

@@ -1,0 +1,95 @@
+{
+  "target": "http://127.0.0.1:5574",
+  "method": "Native disposable English profile, real service worker/offline reload, cached sound decoding and actual device speech events.",
+  "pass": true,
+  "runtime": {
+    "revision": "9300ea0-feedback-d41177df441c",
+    "version": "9300ea0-feedback-d41177df441c:89372285-8058-4d4a-8c24-ad0b76e243c0",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-living-v3",
+    "learningCandidate": "mystic-island-learning-v2",
+    "mode": "learning",
+    "renderer": "three",
+    "artDirection": "moon-garden",
+    "drawCalls": 71,
+    "expanded": "false",
+    "residentAction": "idle",
+    "residentItemId": "",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": true,
+    "reducedMotion": false
+  },
+  "assets": {
+    "controller": "http://127.0.0.1:5574/sw.js",
+    "online": false,
+    "rows": [
+      {
+        "name": "tap",
+        "size": 1611,
+        "status": 200,
+        "duration": 0.07501133786848073,
+        "peak": 0.4750777781009674
+      },
+      {
+        "name": "step",
+        "size": 3178,
+        "status": 200,
+        "duration": 0.2,
+        "peak": 0.6838608980178833
+      },
+      {
+        "name": "correct",
+        "size": 5373,
+        "status": 200,
+        "duration": 0.38,
+        "peak": 0.6829894185066223
+      },
+      {
+        "name": "incorrect",
+        "size": 3492,
+        "status": 200,
+        "duration": 0.22,
+        "peak": 0.47503432631492615
+      },
+      {
+        "name": "clear",
+        "size": 7880,
+        "status": 200,
+        "duration": 0.58,
+        "peak": 0.6840091943740845
+      },
+      {
+        "name": "start",
+        "size": 5373,
+        "status": 200,
+        "duration": 0.38,
+        "peak": 0.6838074922561646
+      },
+      {
+        "name": "level_up",
+        "size": 9134,
+        "status": 200,
+        "duration": 0.7,
+        "peak": 0.683954656124115
+      }
+    ]
+  },
+  "speech": [
+    {
+      "text": "bad",
+      "voice": "Samantha",
+      "local": true,
+      "events": [
+        {
+          "name": "start"
+        },
+        {
+          "name": "end"
+        }
+      ]
+    }
+  ]
+}

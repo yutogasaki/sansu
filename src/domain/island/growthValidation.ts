@@ -1,7 +1,9 @@
 import { ISLAND_DISCOVERIES, isIslandHabitatId } from './growth';
+import { hasValidIslandCosmetics } from './customization';
 import { ISLAND_HABITAT_IDS, ISLAND_ITEM_KINDS, type IslandItem, type IslandRecord } from './types';
 
 const level = (value: unknown): value is number => Number.isInteger(value) && Number(value) >= 0 && Number(value) <= 3;
+const validExpansion = (value: unknown) => value === undefined || Number.isInteger(value) && Number(value) >= 0 && Number(value) <= 2;
 export function hasValidGrowthItemFields(item: IslandItem) {
     return (item.habitatId === undefined || isIslandHabitatId(item.habitatId))
         && (item.growthLevel === undefined || level(item.growthLevel))
@@ -18,7 +20,7 @@ const validProgress = (progress: unknown): progress is Record<string, number> =>
 export function hasValidIslandGrowth(island: IslandRecord) {
     const growth = island.growth;
     if (growth === undefined) return true;
-    if (!growth || growth.version !== 1 || !validProgress(growth.progress) || !isIslandHabitatId(growth.focus)
+    if (!growth || growth.version !== 1 || !validExpansion(growth.expansionLevel) || !validProgress(growth.progress) || !isIslandHabitatId(growth.focus)
         || ISLAND_HABITAT_IDS.reduce((sum, id) => sum + growth.progress[id], 0) > island.completedSets
         || !Array.isArray(growth.memories) || !Array.isArray(growth.discoveries)
         || growth.memories.length > 15 || growth.discoveries.length > ISLAND_DISCOVERIES.length) return false;
@@ -26,6 +28,8 @@ export function hasValidIslandGrowth(island: IslandRecord) {
         || !['initial', 'upgrade', 'expansion'].includes(memory.kind)
         || !Number.isFinite(memory.capturedAt) || memory.capturedAt < 0
         || !Number.isInteger(memory.completedSets) || memory.completedSets < 0 || memory.completedSets > island.completedSets
+        || !validExpansion(memory.expansionLevel)
+        || (memory.cosmetics !== undefined && !hasValidIslandCosmetics(memory.cosmetics))
         || !validProgress(memory.progress) || !isIslandHabitatId(memory.focus)
         || (memory.habitatId !== undefined && !isIslandHabitatId(memory.habitatId))
         || (memory.level !== undefined && !level(memory.level))

@@ -2,11 +2,12 @@ import { ISLAND_VISUAL_CANDIDATE } from '../../domain/island/feature';
 import { useEffect, useRef, useState } from 'react';
 import type { IslandScene } from './three/runtime';
 import type { IslandStageProps } from './three/types';
+import type { ReactNode } from 'react';
 import './IslandStage.css';
 
 const DEFAULT_CAPTION = 'カワウソと ウサギが くらす しま';
 
-export function IslandStage(props: IslandStageProps) {
+export function IslandStage(props: IslandStageProps & { milestoneNotice?: ReactNode }) {
     const host = useRef<HTMLDivElement>(null);
     const runtime = useRef<IslandScene | null>(null);
     const current = useRef(props);
@@ -62,7 +63,9 @@ export function IslandStage(props: IslandStageProps) {
     }, [attempt]);
 
     return <figure className={`island-stage${props.learning ? ' island-stage--learning' : ''}${props.preview ? ' island-stage--placing' : ''}`}
-        data-art-candidate={ISLAND_VISUAL_CANDIDATE} data-visual-candidate={ISLAND_VISUAL_CANDIDATE}>
+        data-art-candidate={ISLAND_VISUAL_CANDIDATE} data-visual-candidate={ISLAND_VISUAL_CANDIDATE}
+        data-island-theme={props.cosmetics?.themeId ?? 'moon-garden'} data-island-accent={props.cosmetics?.accentId ?? 'none'}
+        data-customization-candidate="island-cosmetics-v1">
         <div className="island-stage__canvas" ref={host} role="img" aria-label={caption}
             data-testid="island-stage" data-renderer={failed ? 'fallback' : 'loading'} hidden={failed} />
         {failed && <div className="island-stage__fallback" role="img" aria-label={caption}>
@@ -70,6 +73,7 @@ export function IslandStage(props: IslandStageProps) {
             <p>しまが うまく みえないよ。<br />もんだいと もちものは つかえるよ。</p>
             <button type="button" className="island-stage__retry" onClick={() => { setCaption('しまを ひらいているよ'); setFailed(false); setAttempt(value => value + 1); }}>もういちど みる</button>
         </div>}
+        {!failed && props.milestoneNotice}
         <figcaption className={`island-stage__caption${caption === DEFAULT_CAPTION ? ' island-stage__caption--quiet' : ''}`} aria-live="polite" aria-atomic="true">{caption}</figcaption>
     </figure>;
 }

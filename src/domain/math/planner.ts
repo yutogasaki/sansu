@@ -6,6 +6,8 @@ import {
     isMathSkillUnlockedForProfile,
 } from "./curriculum";
 import { getMathFollowupPlan } from "./followups";
+import { MATH_UNIT_PRACTICE_ORDER, type MathLevel11Practice } from '../learning/unitPractice';
+import { isNormalReviewEligible } from '../learning/reviewPolicy';
 
 export type MathProblemPlanSource =
     | "retry"
@@ -22,6 +24,7 @@ export interface MathProblemPlanItem {
     isReview: boolean;
     isMaintenanceCheck: boolean;
     countsTowardReviewCap: boolean;
+    preferredVariant?: string;
 }
 
 export type MathProblemPlanSlot = MathProblemPlanItem | undefined;
@@ -35,10 +38,13 @@ type ReviewAdmission =
 
 export interface MathProblemPlanOptions {
     profile: UserProfile;
+    unitPractice?: MathLevel11Practice;
     /** Exploration uses the three-question default; Study passes its block size. */
     count?: number;
     /** Ordered by learning priority, normally most overdue first. */
     dueSkillIds?: readonly string[];
+    /** One main-level practice slot may continue newly introduced Island content. */
+    practiceSkillIds?: readonly string[];
     weakSkillIds?: readonly string[];
     maintenanceSkillIds?: readonly string[];
     retiredSkillIds?: readonly string[];
@@ -229,7 +235,7 @@ const createPlanItem = (
 ): MathProblemPlanItem => ({
     skillId,
     source,
-    isReview: source === "due",
+    isReview: source === "due" || source === 'maintenance' || source === 'weak',
     isMaintenanceCheck: source === "maintenance",
     countsTowardReviewCap:
         source === "due" || source === "maintenance" || source === "weak",
@@ -242,6 +248,18 @@ const isReviewAllowed = (
 ): boolean => typeof admission === "function"
     ? admission(planned, plannedSlots)
     : admission ?? true;
+
+/** Coverage preferences stay inside the caller's range, stop and repetition guards. */
+const pickUnitPractice = (practice: MathLevel11Practice | undefined, candidates: readonly string[], selection: SelectionOptions) => {
+    if (!practice) return undefined;
+    const choices = practice.priorities.flatMap(unit => {
+        const ids = unit.preferredItemIds.filter(id => candidates.includes(id));
+        const skillId = pickOrderedId(ids, selection);
+        return skillId ? [{ unit, skillId, count: unit.itemIds.reduce((sum, id) => sum + (selection.blockCounts.get(id) ?? 0), 0) }] : [];
+    }).sort((a, b) => a.count - b.count
+        || MATH_UNIT_PRACTICE_ORDER[a.unit.priority] - MATH_UNIT_PRACTICE_ORDER[b.unit.priority]);
+    return choices[0]?.skillId;
+};
 
 /**
  * Produces a position-preserving skill plan. Undefined slots let a surface
@@ -279,6 +297,7 @@ export const planMathProblemSlots = (
     let weakCount = Math.max(0, options.currentWeakCount ?? 0);
     let plusOneCount = Math.max(0, options.plusOneCount ?? 0);
     let retryCount = 0;
+    let continuedPractice = false;
     const callerEligibility = options.isSkillEligible ?? (() => true);
     const dormantIds = new Set([
         ...(options.retiredSkillIds || []),
@@ -336,7 +355,7 @@ export const planMathProblemSlots = (
             const maintenancePool = [
                 ...(options.maintenanceSkillIds || []),
                 ...(options.retiredSkillIds || []),
-            ];
+            ].filter(id => !options.profile.mathSkills?.[id] || !isNormalReviewEligible(options.profile.mathSkills[id]));
             if (maintenancePool.length > 0 && random() < maintenanceRate) {
                 const maintenanceId = pickMathSkillId(maintenancePool, selection);
                 if (maintenanceId) {
@@ -353,6 +372,18 @@ export const planMathProblemSlots = (
             if (weakId) item = createPlanItem(weakId, "weak");
         }
 
+        if (!item && !continuedPractice && options.practiceSkillIds?.length) {
+            const mainSkills = getSkillsForLevel(options.profile.mathMainLevel ?? 1);
+            const practiceId = pickOrderedId(options.practiceSkillIds.filter(id => mainSkills.includes(id) && !dormantIds.has(id)), selection);
+            // Existing error remediation still has priority over a practice preference.
+            const remediation = getMathFollowupPlan(options.profile.recentAttempts, mainSkills,
+                options.profile.mathMaxUnlocked ?? 1).filter(candidate => candidate.reason === 'remediation');
+            if (practiceId && !pickOrderedId(remediation.map(candidate => candidate.skillId), selection)) {
+                item = createPlanItem(practiceId, 'main');
+                continuedPractice = true;
+            }
+        }
+
         if (!item) {
             const mainLevel = options.profile.mathMainLevel ?? 1;
             const currentLevelSkills = getSkillsForLevel(mainLevel);
@@ -365,7 +396,7 @@ export const planMathProblemSlots = (
                 && selection.isSkillEligible(id, selection.plannedIndex)
                 && !selection.skippedTodayIds.includes(id));
             const followupIds = followups.filter(candidate => candidate.reason === "remediation"
-                || !hasActiveCurrent || !dormantIds.has(candidate.skillId)).map(candidate => candidate.skillId);
+                || (!(mainLevel === 11 && options.unitPractice) && (!hasActiveCurrent || !dormantIds.has(candidate.skillId)))).map(candidate => candidate.skillId);
             const followupId = pickOrderedMathSkillId(followupIds, selection);
             if (followupId) item = createPlanItem(followupId, "followup");
         }
@@ -381,7 +412,8 @@ export const planMathProblemSlots = (
             const requestedSkills = getSkillsForLevel(requestedLevel);
             const fallbackSkills = getSkillsForLevel(1);
             const candidates = normalCandidates(requestedSkills.length > 0 ? requestedSkills : fallbackSkills, selection);
-            let skillId = pickMathSkillId(candidates, selection, options.profile)
+            let skillId = (requestedLevel === 11 ? pickUnitPractice(options.unitPractice, candidates, selection) : undefined)
+                || pickMathSkillId(candidates, selection, options.profile)
                 || pickLeastUsedMathSkillId(candidates, selection, options.profile);
             let source: MathProblemPlanSource = wantsPlusOne ? "plus-one" : "main";
 
@@ -389,7 +421,8 @@ export const planMathProblemSlots = (
             // truthfully label the main-level fallback.
             if (!skillId && wantsPlusOne) {
                 const mainSkills = normalCandidates(getSkillsForLevel(mainLevel), selection);
-                skillId = pickMathSkillId(mainSkills, selection, options.profile)
+                skillId = (mainLevel === 11 ? pickUnitPractice(options.unitPractice, mainSkills, selection) : undefined)
+                    || pickMathSkillId(mainSkills, selection, options.profile)
                     || pickLeastUsedMathSkillId(mainSkills, selection, options.profile);
                 source = "main";
             }
@@ -399,6 +432,11 @@ export const planMathProblemSlots = (
 
         plannedSlots.push(item);
         if (!item) continue;
+        const preference = options.unitPractice?.priorities.find(unit => unit.itemIds.includes(item.skillId));
+        if (preference?.preferredVariants.length) {
+            const count = preference.itemIds.reduce((sum, id) => sum + (blockCounts.get(id) ?? 0), 0);
+            item.preferredVariant = preference.preferredVariants[count % preference.preferredVariants.length];
+        }
         plannedItems.push(item);
         blockCounts.set(item.skillId, (blockCounts.get(item.skillId) || 0) + 1);
         if (item.source === "weak") weakCount += 1;

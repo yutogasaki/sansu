@@ -8,9 +8,9 @@ import { getLevelForSkill, getSkillsForLevel } from '../math/curriculum';
 import { ENGLISH_WORDS } from '../english/words';
 import { parkHissanGrid } from '../park/learning';
 import { createPark } from '../park/course';
-import { getLearningDayStart } from '../../utils/learningDay';
 import type { MemoryState, UserProfile } from '../types';
-import { createIsland, findAvailablePosition, ISLAND_ITEMS, isValidIslandPlacement } from './catalog';
+import { createIsland, findAvailablePosition, ISLAND_EAST_LAND, ISLAND_ITEMS, ISLAND_MAIN_LAND,
+    ISLAND_RESERVED_AREAS, ISLAND_WEST_LAND, isValidIslandPlacement } from './catalog';
 import { claimIslandReward, IslandConflict, islandTables, openIsland, saveIslandEdit, startIslandPlan } from './repository';
 import { commitIslandLearning } from './commit';
 import type { IslandPlan } from './types';
@@ -106,7 +106,7 @@ describe('island frozen learning sets', () => {
         const assistedMemory = await d.memoryMath.get(['child', original.categoryId]);
         expect(assistedMemory?.strength).toBe(afterWrong?.strength);
         expect(assistedMemory?.correctAnswers).toBe(afterWrong?.correctAnswers);
-        expect(assistedMemory?.nextReview <= getLearningDayStart().toISOString()).toBe(true);
+        expect(Date.parse(assistedMemory!.nextReview)).toBeLessThanOrEqual(Date.now());
         expect(await d.logs.toArray()).toEqual([expect.objectContaining({ result: 'incorrect' })]);
         expect(await d.islandEvents.where('type').equals('answer').last()).toMatchObject({ result: 'assisted-correct' });
     });
@@ -129,7 +129,8 @@ describe('island frozen learning sets', () => {
     });
 
     it('supports mixed vocabulary sets and applies vocabulary progression only to independent answers', async () => {
-        const p = { ...profile('child', 1, 'mix'), vocabLevels: [{ level: 1, unlocked: true, enabled: true, recentAnswersNonReview: Array(19).fill(true) }] };
+        const p = { ...profile('child', 1, 'mix'), vocabLevels: [{ level: 1, unlocked: true, enabled: true,
+            recentAnswersNonReview: Array(19).fill(true), recentIndependentAnswersNonReview: Array(19).fill(true) }] };
         const d = await setup(p, true);
         const math = await startIslandPlan('child', d);
         expect(math.subject).toBe('math');
@@ -270,6 +271,45 @@ describe('legacy frozen-plan atomic completion and deferred rewards', () => {
 });
 
 describe('free placement and ownership', () => {
+    it('opens substantial outer land without invalidating any position from the earlier shore', () => {
+        const island = createIsland('shore-compatibility', 0);
+        // Existing saves predate habitat-earned chapters and retain their old shores.
+        delete island.growth!.expansionLevel;
+        for (const [land, completedSets, sign] of [[ISLAND_EAST_LAND, 2, 1], [ISLAND_WEST_LAND, 12, -1]] as const) {
+            expect(land.radiusX * land.radiusZ / (ISLAND_MAIN_LAND.radiusX * ISLAND_MAIN_LAND.radiusZ)).toBeGreaterThan(.58);
+            expect(land.x - sign * land.radiusX).toBeCloseTo(sign * 4.3);
+            for (const [kind, { radius }] of Object.entries(ISLAND_ITEMS)) {
+                const item = { ...island.items[0], kind: kind as keyof typeof ISLAND_ITEMS };
+                const layout = { ...island, completedSets, items: [item] };
+                for (let sample = 0; sample < 72; sample++) {
+                    const angle = sample / 72 * Math.PI * 2;
+                    const position = { x: sign * 6.2 + Math.cos(angle) * (1.9 - radius) * .999,
+                        z: Math.sin(angle) * (2.3 - radius) * .999 };
+                    if (ISLAND_RESERVED_AREAS.some(area => Math.hypot(position.x - area.x, position.z - area.z) < radius + area.radius)) continue;
+                    expect(isValidIslandPlacement(layout, item.id, position), `${kind}: ${JSON.stringify(position)}`).toBe(true);
+                }
+                const outer = { x: sign * 9, z: 1 };
+                expect(isValidIslandPlacement(layout, item.id, outer)).toBe(true);
+                expect(isValidIslandPlacement({ ...layout, completedSets: completedSets - 1 }, item.id, outer)).toBe(false);
+            }
+        }
+    });
+
+    it.each([[2, 1], [12, -1]])('finds new outer ground when the previous area is full at section %s', (completedSets, sign) => {
+        const island = { ...createIsland('outer-placement', 0), completedSets };
+        delete island.growth!.expansionLevel;
+        // Deliberately dense legacy possessions block the old search range.
+        for (let x = sign > 0 ? -4.5 : -8; x <= (sign > 0 ? 8 : 10); x += .5) {
+            for (let z = -3.5; z <= 3.5; z += .5) island.items.push({ id: `${x}:${z}`, kind: 'flower', rotation: 0, position: { x, z } });
+        }
+        const before = structuredClone(island), item = island.items[0];
+        const position = findAvailablePosition(island, item.kind, item.id);
+        expect(position).toBeDefined();
+        expect(position!.x * sign).toBeGreaterThan(8);
+        expect(isValidIslandPlacement(island, item.id, position!)).toBe(true);
+        expect(island).toEqual(before);
+    });
+
     it('supports moving, rotating, storing and restoring a unique item without adding any learning', async () => {
         const d = await setup();
         let island = (await d.islands.get('child'))!;
@@ -296,10 +336,11 @@ describe('free placement and ownership', () => {
         for (const position of [{ x: NaN, z: 0 }, { x: 0, z: 4 }, { x: -2.6, z: -1.65 }, { x: 1.6, z: -1.6 }, island.items[1].position!, { x: 6.2, z: 0 }]) {
             expect(isValidIslandPlacement(island, item.id, position)).toBe(false);
         }
-        expect(isValidIslandPlacement({ ...island, completedSets: 2 }, item.id, { x: 6.2, z: 0 })).toBe(true);
+        const expanded = { ...island, growth: { ...island.growth!, expansionLevel: 1 as const } };
+        expect(isValidIslandPlacement(expanded, item.id, { x: 6.2, z: 0 })).toBe(true);
         for (const completedSets of [2, 4, 6]) {
-            expect(isValidIslandPlacement({ ...island, completedSets }, item.id, { x: 6.35, z: -1.16 })).toBe(false);
-            expect(isValidIslandPlacement({ ...island, completedSets }, item.id, { x: 4.75, z: 0 })).toBe(false);
+            expect(isValidIslandPlacement({ ...expanded, completedSets }, item.id, { x: 6.35, z: -1.16 })).toBe(false);
+            expect(isValidIslandPlacement({ ...expanded, completedSets }, item.id, { x: 4.75, z: 0 })).toBe(false);
         }
         for (const kind of Object.keys(ISLAND_ITEMS) as (keyof typeof ISLAND_ITEMS)[]) expect(findAvailablePosition(island, kind)).toBeDefined();
     });

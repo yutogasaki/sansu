@@ -1,0 +1,4 @@
+.island-star-receipt { position:absolute; z-index:2; right:15px; bottom:39px; display:inline-flex; align-items:center; gap:5px; padding:7px 10px; border:1px solid var(--island-ink); border-radius:15px; background:var(--island-paper); color:var(--island-ink); font-size:16px; font-weight:750; line-height:1.2; pointer-events:none; animation:island-star-arrive 280ms ease-out both; }
+.island-star-receipt > svg { fill:#ffd447; }
+@keyframes island-star-arrive { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+@media(prefers-reduced-motion:reduce) { .island-star-receipt { animation:none; } }

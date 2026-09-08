@@ -1,0 +1,1067 @@
+{
+  "target": "http://127.0.0.1:5360",
+  "manifestPath": "/tmp/sansu-customization-20260908-161632/build-source.json",
+  "output": "/Users/yutogasaki/Projects/sansu/output/island-customization/customization-20260908-86209d824907/catalog",
+  "startedAt": "2026-09-08T07:20:13.093Z",
+  "humanN": 0,
+  "synthetic": true,
+  "fixture": "Native local profile with zero completed sets, zero stars, and every catalog item explicitly owned.",
+  "scope": "Fourteen same-camera catalog images, using real gallery equip controls. Not learning-earned rewards or evidence of child motivation.",
+  "captures": [
+    {
+      "file": "phone-default-none.png",
+      "sha256": "284c89445a0068fe4409062e13cd00ac952ef659c430c0a6b640adba5fb86ae4",
+      "synthetic": true,
+      "look": {
+        "name": "default-none",
+        "theme": "moon-garden",
+        "accent": null
+      },
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 79,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "theme": "moon-garden",
+      "accent": "none",
+      "cosmeticsCandidate": "island-cosmetics-v1",
+      "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.15386,0.00000,0.00000,0.00000,0.00000,0.23718,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00027,-0.01418,-1.00200,1.00000",
+      "district": "all",
+      "readOnly": "true",
+      "geometries": 79,
+      "textures": 7,
+      "rect": {
+        "x": 0,
+        "y": 64.09375,
+        "width": 390,
+        "height": 253.1875,
+        "top": 64.09375,
+        "right": 390,
+        "bottom": 317.28125,
+        "left": 0
+      },
+      "canvasIdentity": "one-catalog-scene",
+      "rootX": 0,
+      "rootScrollLeft": 0,
+      "windowScrollX": 0,
+      "savedCosmetics": {
+        "themeId": "moon-garden",
+        "accentId": null
+      },
+      "invariantSHA256": "b585dbdd896ffd0fa49424deab53b1b0bb059500646c29e1d4726e85e696ec15"
+    },
+    {
+      "file": "phone-default-star-lanterns.png",
+      "sha256": "f4b7fd09f2447e39b2d0a5b7c105e35bd797d440d43de3febc3311767996c4a4",
+      "synthetic": true,
+      "look": {
+        "name": "default-star-lanterns",
+        "theme": "moon-garden",
+        "accent": "star-lanterns"
+      },
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 81,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "theme": "moon-garden",
+      "accent": "star-lanterns",
+      "cosmeticsCandidate": "island-cosmetics-v1",
+      "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.15386,0.00000,0.00000,0.00000,0.00000,0.23718,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00027,-0.01418,-1.00200,1.00000",
+      "district": "all",
+      "readOnly": "true",
+      "geometries": 81,
+      "textures": 7,
+      "rect": {
+        "x": 0,
+        "y": 64.09375,
+        "width": 390,
+        "height": 253.1875,
+        "top": 64.09375,
+        "right": 390,
+        "bottom": 317.28125,
+        "left": 0
+      },
+      "canvasIdentity": "one-catalog-scene",
+      "rootX": 0,
+      "rootScrollLeft": 0,
+      "windowScrollX": 0,
+      "savedCosmetics": {
+        "themeId": "moon-garden",
+        "accentId": "star-lanterns"
+      },
+      "invariantSHA256": "b585dbdd896ffd0fa49424deab53b1b0bb059500646c29e1d4726e85e696ec15"
+    },
+    {
+      "file": "phone-default-candy-flags.png",
+      "sha256": "6212528e34f14a9aec12d72fd275d2159939771d56676ee3f6dd69af08a170e1",
+      "synthetic": true,
+      "look": {
+        "name": "default-candy-flags",
+        "theme": "moon-garden",
+        "accent": "candy-flags"
+      },
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "theme": "moon-garden",
+      "accent": "candy-flags",
+      "cosmeticsCandidate": "island-cosmetics-v1",
+      "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.15386,0.00000,0.00000,0.00000,0.00000,0.23718,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00027,-0.01418,-1.00200,1.00000",
+      "district": "all",
+      "readOnly": "true",
+      "geometries": 86,
+      "textures": 7,
+      "rect": {
+        "x": 0,
+        "y": 64.09375,
+        "width": 390,
+        "height": 253.1875,
+        "top": 64.09375,
+        "right": 390,
+        "bottom": 317.28125,
+        "left": 0
+      },
+      "canvasIdentity": "one-catalog-scene",
+      "rootX": 0,
+      "rootScrollLeft": 0,
+      "windowScrollX": 0,
+      "savedCosmetics": {
+        "themeId": "moon-garden",
+        "accentId": "candy-flags"
+      },
+      "invariantSHA256": "b585dbdd896ffd0fa49424deab53b1b0bb059500646c29e1d4726e85e696ec15"
+    },
+    {
+      "file": "phone-default-crystal-charms.png",
+      "sha256": "6414914402ed238584c08dc5a17fa1ddd85d7ece7ccf1b786c4879601939549d",
+      "synthetic": true,
+      "look": {
+        "name": "default-crystal-charms",
+        "theme": "moon-garden",
+        "accent": "crystal-charms"
+      },
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "theme": "moon-garden",
+      "accent": "crystal-charms",
+      "cosmeticsCandidate": "island-cosmetics-v1",
+      "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.15386,0.00000,0.00000,0.00000,0.00000,0.23718,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00027,-0.01418,-1.00200,1.00000",
+      "district": "all",
+      "readOnly": "true",
+      "geometries": 83,
+      "textures": 7,
+      "rect": {
+        "x": 0,
+        "y": 64.09375,
+        "width": 390,
+        "height": 253.1875,
+        "top": 64.09375,
+        "right": 390,
+        "bottom": 317.28125,
+        "left": 0
+      },
+      "canvasIdentity": "one-catalog-scene",
+      "rootX": 0,
+      "rootScrollLeft": 0,
+      "windowScrollX": 0,
+      "savedCosmetics": {
+        "themeId": "moon-garden",
+        "accentId": "crystal-charms"
+      },
+      "invariantSHA256": "b585dbdd896ffd0fa49424deab53b1b0bb059500646c29e1d4726e85e696ec15"
+    },
+    {
+      "file": "phone-starry-matching-accent.png",
+      "sha256": "1c79bcd734c0d38c6e00e1799d86034ec9fd4e0e15ddb497cd37b416cc9d4425",
+      "synthetic": true,
+      "look": {
+        "name": "starry-matching-accent",
+        "theme": "starry",
+        "accent": "star-lanterns"
+      },
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 79,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "theme": "starry",
+      "accent": "star-lanterns",
+      "cosmeticsCandidate": "island-cosmetics-v1",
+      "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.15386,0.00000,0.00000,0.00000,0.00000,0.23718,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00027,-0.01418,-1.00200,1.00000",
+      "district": "all",
+      "readOnly": "true",
+      "geometries": 79,
+      "textures": 6,
+      "rect": {
+        "x": 0,
+        "y": 64.09375,
+        "width": 390,
+        "height": 253.1875,
+        "top": 64.09375,
+        "right": 390,
+        "bottom": 317.28125,
+        "left": 0
+      },
+      "canvasIdentity": "one-catalog-scene",
+      "rootX": 0,
+      "rootScrollLeft": 0,
+      "windowScrollX": 0,
+      "savedCosmetics": {
+        "themeId": "starry",
+        "accentId": "star-lanterns"
+      },
+      "invariantSHA256": "b585dbdd896ffd0fa49424deab53b1b0bb059500646c29e1d4726e85e696ec15"
+    },
+    {
+      "file": "phone-candy-matching-accent.png",
+      "sha256": "6be003e9e0aa86c67c752b8c086247ba3e1aeeef911612fa06dbe7579819576e",
+      "synthetic": true,
+      "look": {
+        "name": "candy-matching-accent",
+        "theme": "candy",
+        "accent": "candy-flags"
+      },
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 92,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "theme": "candy",
+      "accent": "candy-flags",
+      "cosmeticsCandidate": "island-cosmetics-v1",
+      "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.15386,0.00000,0.00000,0.00000,0.00000,0.23718,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00027,-0.01418,-1.00200,1.00000",
+      "district": "all",
+      "readOnly": "true",
+      "geometries": 92,
+      "textures": 6,
+      "rect": {
+        "x": 0,
+        "y": 64.09375,
+        "width": 390,
+        "height": 253.1875,
+        "top": 64.09375,
+        "right": 390,
+        "bottom": 317.28125,
+        "left": 0
+      },
+      "canvasIdentity": "one-catalog-scene",
+      "rootX": 0,
+      "rootScrollLeft": 0,
+      "windowScrollX": 0,
+      "savedCosmetics": {
+        "themeId": "candy",
+        "accentId": "candy-flags"
+      },
+      "invariantSHA256": "b585dbdd896ffd0fa49424deab53b1b0bb059500646c29e1d4726e85e696ec15"
+    },
+    {
+      "file": "phone-crystal-matching-accent.png",
+      "sha256": "0663c306f8ea164bd88cfccedef1bbfa64121ab1a0a1ea1413cc313901b5fe3c",
+      "synthetic": true,
+      "look": {
+        "name": "crystal-matching-accent",
+        "theme": "crystal",
+        "accent": "crystal-charms"
+      },
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "theme": "crystal",
+      "accent": "crystal-charms",
+      "cosmeticsCandidate": "island-cosmetics-v1",
+      "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.15386,0.00000,0.00000,0.00000,0.00000,0.23718,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00027,-0.01418,-1.00200,1.00000",
+      "district": "all",
+      "readOnly": "true",
+      "geometries": 86,
+      "textures": 6,
+      "rect": {
+        "x": 0,
+        "y": 64.09375,
+        "width": 390,
+        "height": 253.1875,
+        "top": 64.09375,
+        "right": 390,
+        "bottom": 317.28125,
+        "left": 0
+      },
+      "canvasIdentity": "one-catalog-scene",
+      "rootX": 0,
+      "rootScrollLeft": 0,
+      "windowScrollX": 0,
+      "savedCosmetics": {
+        "themeId": "crystal",
+        "accentId": "crystal-charms"
+      },
+      "invariantSHA256": "b585dbdd896ffd0fa49424deab53b1b0bb059500646c29e1d4726e85e696ec15"
+    },
+    {
+      "file": "tablet-default-none.png",
+      "sha256": "b95d199b8601e5eef87abf14cc71fc64a592cbcc945d2c16753f29d30ec11dda",
+      "synthetic": true,
+      "look": {
+        "name": "default-none",
+        "theme": "moon-garden",
+        "accent": null
+      },
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 79,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "theme": "moon-garden",
+      "accent": "none",
+      "cosmeticsCandidate": "island-cosmetics-v1",
+      "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.09481,0.00000,0.00000,0.00000,0.00000,0.23718,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00016,-0.01418,-1.00200,1.00000",
+      "district": "all",
+      "readOnly": "true",
+      "geometries": 79,
+      "textures": 7,
+      "rect": {
+        "x": 0,
+        "y": 80.09375,
+        "width": 768,
+        "height": 307.1875,
+        "top": 80.09375,
+        "right": 768,
+        "bottom": 387.28125,
+        "left": 0
+      },
+      "canvasIdentity": "one-catalog-scene",
+      "rootX": 0,
+      "rootScrollLeft": 0,
+      "windowScrollX": 0,
+      "savedCosmetics": {
+        "themeId": "moon-garden",
+        "accentId": null
+      },
+      "invariantSHA256": "336b36bd232480ee2686dacea21562fcd2ab463992316c2237ba3e8626526608"
+    },
+    {
+      "file": "tablet-default-star-lanterns.png",
+      "sha256": "c8e2aee93ec09dc3d20188e97ab6a6f0261744258e627f1674d22cdea3dca17e",
+      "synthetic": true,
+      "look": {
+        "name": "default-star-lanterns",
+        "theme": "moon-garden",
+        "accent": "star-lanterns"
+      },
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 81,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "theme": "moon-garden",
+      "accent": "star-lanterns",
+      "cosmeticsCandidate": "island-cosmetics-v1",
+      "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.09481,0.00000,0.00000,0.00000,0.00000,0.23718,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00016,-0.01418,-1.00200,1.00000",
+      "district": "all",
+      "readOnly": "true",
+      "geometries": 81,
+      "textures": 7,
+      "rect": {
+        "x": 0,
+        "y": 80.09375,
+        "width": 768,
+        "height": 307.1875,
+        "top": 80.09375,
+        "right": 768,
+        "bottom": 387.28125,
+        "left": 0
+      },
+      "canvasIdentity": "one-catalog-scene",
+      "rootX": 0,
+      "rootScrollLeft": 0,
+      "windowScrollX": 0,
+      "savedCosmetics": {
+        "themeId": "moon-garden",
+        "accentId": "star-lanterns"
+      },
+      "invariantSHA256": "336b36bd232480ee2686dacea21562fcd2ab463992316c2237ba3e8626526608"
+    },
+    {
+      "file": "tablet-default-candy-flags.png",
+      "sha256": "7d68ff37eeb4862d9fb3bcf7efb111b78a623aab4f19cd2de3f3ddebbe079673",
+      "synthetic": true,
+      "look": {
+        "name": "default-candy-flags",
+        "theme": "moon-garden",
+        "accent": "candy-flags"
+      },
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "theme": "moon-garden",
+      "accent": "candy-flags",
+      "cosmeticsCandidate": "island-cosmetics-v1",
+      "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.09481,0.00000,0.00000,0.00000,0.00000,0.23718,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00016,-0.01418,-1.00200,1.00000",
+      "district": "all",
+      "readOnly": "true",
+      "geometries": 86,
+      "textures": 7,
+      "rect": {
+        "x": 0,
+        "y": 80.09375,
+        "width": 768,
+        "height": 307.1875,
+        "top": 80.09375,
+        "right": 768,
+        "bottom": 387.28125,
+        "left": 0
+      },
+      "canvasIdentity": "one-catalog-scene",
+      "rootX": 0,
+      "rootScrollLeft": 0,
+      "windowScrollX": 0,
+      "savedCosmetics": {
+        "themeId": "moon-garden",
+        "accentId": "candy-flags"
+      },
+      "invariantSHA256": "336b36bd232480ee2686dacea21562fcd2ab463992316c2237ba3e8626526608"
+    },
+    {
+      "file": "tablet-default-crystal-charms.png",
+      "sha256": "948acf069ce6ef33c753be16039745287ace45f9c34bcf724c400c42fa9368c0",
+      "synthetic": true,
+      "look": {
+        "name": "default-crystal-charms",
+        "theme": "moon-garden",
+        "accent": "crystal-charms"
+      },
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "theme": "moon-garden",
+      "accent": "crystal-charms",
+      "cosmeticsCandidate": "island-cosmetics-v1",
+      "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.09481,0.00000,0.00000,0.00000,0.00000,0.23718,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00016,-0.01418,-1.00200,1.00000",
+      "district": "all",
+      "readOnly": "true",
+      "geometries": 83,
+      "textures": 7,
+      "rect": {
+        "x": 0,
+        "y": 80.09375,
+        "width": 768,
+        "height": 307.1875,
+        "top": 80.09375,
+        "right": 768,
+        "bottom": 387.28125,
+        "left": 0
+      },
+      "canvasIdentity": "one-catalog-scene",
+      "rootX": 0,
+      "rootScrollLeft": 0,
+      "windowScrollX": 0,
+      "savedCosmetics": {
+        "themeId": "moon-garden",
+        "accentId": "crystal-charms"
+      },
+      "invariantSHA256": "336b36bd232480ee2686dacea21562fcd2ab463992316c2237ba3e8626526608"
+    },
+    {
+      "file": "tablet-starry-matching-accent.png",
+      "sha256": "02b4c6e510864707a265b403498508f8d6b6965c65f1bba31522d028f1db94f3",
+      "synthetic": true,
+      "look": {
+        "name": "starry-matching-accent",
+        "theme": "starry",
+        "accent": "star-lanterns"
+      },
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 79,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "theme": "starry",
+      "accent": "star-lanterns",
+      "cosmeticsCandidate": "island-cosmetics-v1",
+      "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.09481,0.00000,0.00000,0.00000,0.00000,0.23718,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00016,-0.01418,-1.00200,1.00000",
+      "district": "all",
+      "readOnly": "true",
+      "geometries": 79,
+      "textures": 6,
+      "rect": {
+        "x": 0,
+        "y": 80.09375,
+        "width": 768,
+        "height": 307.1875,
+        "top": 80.09375,
+        "right": 768,
+        "bottom": 387.28125,
+        "left": 0
+      },
+      "canvasIdentity": "one-catalog-scene",
+      "rootX": 0,
+      "rootScrollLeft": 0,
+      "windowScrollX": 0,
+      "savedCosmetics": {
+        "themeId": "starry",
+        "accentId": "star-lanterns"
+      },
+      "invariantSHA256": "336b36bd232480ee2686dacea21562fcd2ab463992316c2237ba3e8626526608"
+    },
+    {
+      "file": "tablet-candy-matching-accent.png",
+      "sha256": "360fcf31d2f569205e703371efbaa81d331f597a175932dc5afc3e3de9add11a",
+      "synthetic": true,
+      "look": {
+        "name": "candy-matching-accent",
+        "theme": "candy",
+        "accent": "candy-flags"
+      },
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 92,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "theme": "candy",
+      "accent": "candy-flags",
+      "cosmeticsCandidate": "island-cosmetics-v1",
+      "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.09481,0.00000,0.00000,0.00000,0.00000,0.23718,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00016,-0.01418,-1.00200,1.00000",
+      "district": "all",
+      "readOnly": "true",
+      "geometries": 92,
+      "textures": 6,
+      "rect": {
+        "x": 0,
+        "y": 80.09375,
+        "width": 768,
+        "height": 307.1875,
+        "top": 80.09375,
+        "right": 768,
+        "bottom": 387.28125,
+        "left": 0
+      },
+      "canvasIdentity": "one-catalog-scene",
+      "rootX": 0,
+      "rootScrollLeft": 0,
+      "windowScrollX": 0,
+      "savedCosmetics": {
+        "themeId": "candy",
+        "accentId": "candy-flags"
+      },
+      "invariantSHA256": "336b36bd232480ee2686dacea21562fcd2ab463992316c2237ba3e8626526608"
+    },
+    {
+      "file": "tablet-crystal-matching-accent.png",
+      "sha256": "47a9b00c1bbd62cf558f0a59418510be8fa63f4d13a13a08dfcbba81197df53d",
+      "synthetic": true,
+      "look": {
+        "name": "crystal-matching-accent",
+        "theme": "crystal",
+        "accent": "crystal-charms"
+      },
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "customization",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "theme": "crystal",
+      "accent": "crystal-charms",
+      "cosmeticsCandidate": "island-cosmetics-v1",
+      "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.09481,0.00000,0.00000,0.00000,0.00000,0.23718,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00016,-0.01418,-1.00200,1.00000",
+      "district": "all",
+      "readOnly": "true",
+      "geometries": 86,
+      "textures": 6,
+      "rect": {
+        "x": 0,
+        "y": 80.09375,
+        "width": 768,
+        "height": 307.1875,
+        "top": 80.09375,
+        "right": 768,
+        "bottom": 387.28125,
+        "left": 0
+      },
+      "canvasIdentity": "one-catalog-scene",
+      "rootX": 0,
+      "rootScrollLeft": 0,
+      "windowScrollX": 0,
+      "savedCosmetics": {
+        "themeId": "crystal",
+        "accentId": "crystal-charms"
+      },
+      "invariantSHA256": "336b36bd232480ee2686dacea21562fcd2ab463992316c2237ba3e8626526608"
+    }
+  ],
+  "layouts": [
+    {
+      "name": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "synthetic": true,
+      "completedSetsFixture": 0,
+      "pointsFixture": 0,
+      "allOwnershipGrantedByFixture": true,
+      "captures": [
+        "phone-default-none.png",
+        "phone-default-star-lanterns.png",
+        "phone-default-candy-flags.png",
+        "phone-default-crystal-charms.png",
+        "phone-starry-matching-accent.png",
+        "phone-candy-matching-accent.png",
+        "phone-crystal-matching-accent.png"
+      ],
+      "stableResources": [
+        {
+          "look": "default-none",
+          "first": {
+            "geometries": 79,
+            "textures": 7
+          },
+          "returned": {
+            "geometries": 79,
+            "textures": 7
+          }
+        },
+        {
+          "look": "default-star-lanterns",
+          "first": {
+            "geometries": 81,
+            "textures": 7
+          },
+          "returned": {
+            "geometries": 81,
+            "textures": 7
+          }
+        },
+        {
+          "look": "default-candy-flags",
+          "first": {
+            "geometries": 86,
+            "textures": 7
+          },
+          "returned": {
+            "geometries": 86,
+            "textures": 7
+          }
+        },
+        {
+          "look": "default-crystal-charms",
+          "first": {
+            "geometries": 83,
+            "textures": 7
+          },
+          "returned": {
+            "geometries": 83,
+            "textures": 7
+          }
+        },
+        {
+          "look": "starry-matching-accent",
+          "first": {
+            "geometries": 79,
+            "textures": 6
+          },
+          "returned": {
+            "geometries": 79,
+            "textures": 6
+          }
+        },
+        {
+          "look": "candy-matching-accent",
+          "first": {
+            "geometries": 92,
+            "textures": 6
+          },
+          "returned": {
+            "geometries": 92,
+            "textures": 6
+          }
+        },
+        {
+          "look": "crystal-matching-accent",
+          "first": {
+            "geometries": 86,
+            "textures": 6
+          },
+          "returned": {
+            "geometries": 86,
+            "textures": 6
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "invariantBeforeSHA256": "b585dbdd896ffd0fa49424deab53b1b0bb059500646c29e1d4726e85e696ec15",
+      "invariantAfterSHA256": "b585dbdd896ffd0fa49424deab53b1b0bb059500646c29e1d4726e85e696ec15",
+      "databaseOwnershipAndLearningUnchanged": true,
+      "equipReceipts": 20
+    },
+    {
+      "name": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "synthetic": true,
+      "completedSetsFixture": 0,
+      "pointsFixture": 0,
+      "allOwnershipGrantedByFixture": true,
+      "captures": [
+        "tablet-default-none.png",
+        "tablet-default-star-lanterns.png",
+        "tablet-default-candy-flags.png",
+        "tablet-default-crystal-charms.png",
+        "tablet-starry-matching-accent.png",
+        "tablet-candy-matching-accent.png",
+        "tablet-crystal-matching-accent.png"
+      ],
+      "stableResources": [
+        {
+          "look": "default-none",
+          "first": {
+            "geometries": 79,
+            "textures": 7
+          },
+          "returned": {
+            "geometries": 79,
+            "textures": 7
+          }
+        },
+        {
+          "look": "default-star-lanterns",
+          "first": {
+            "geometries": 81,
+            "textures": 7
+          },
+          "returned": {
+            "geometries": 81,
+            "textures": 7
+          }
+        },
+        {
+          "look": "default-candy-flags",
+          "first": {
+            "geometries": 86,
+            "textures": 7
+          },
+          "returned": {
+            "geometries": 86,
+            "textures": 7
+          }
+        },
+        {
+          "look": "default-crystal-charms",
+          "first": {
+            "geometries": 83,
+            "textures": 7
+          },
+          "returned": {
+            "geometries": 83,
+            "textures": 7
+          }
+        },
+        {
+          "look": "starry-matching-accent",
+          "first": {
+            "geometries": 79,
+            "textures": 6
+          },
+          "returned": {
+            "geometries": 79,
+            "textures": 6
+          }
+        },
+        {
+          "look": "candy-matching-accent",
+          "first": {
+            "geometries": 92,
+            "textures": 6
+          },
+          "returned": {
+            "geometries": 92,
+            "textures": 6
+          }
+        },
+        {
+          "look": "crystal-matching-accent",
+          "first": {
+            "geometries": 86,
+            "textures": 6
+          },
+          "returned": {
+            "geometries": 86,
+            "textures": 6
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "invariantBeforeSHA256": "336b36bd232480ee2686dacea21562fcd2ab463992316c2237ba3e8626526608",
+      "invariantAfterSHA256": "336b36bd232480ee2686dacea21562fcd2ab463992316c2237ba3e8626526608",
+      "databaseOwnershipAndLearningUnchanged": true,
+      "equipReceipts": 20
+    }
+  ],
+  "errors": [],
+  "pass": true,
+  "sourceHash": "86209d82490788b82c17689fb380e0d8a7a675a0374b96093eafc246d5935116",
+  "version": {
+    "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+    "revision": "customization-20260908-86209d824907",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceStart": {
+    "frozen": {
+      "hash": "07c37e49637675ad83247b020140e7fcd7ad5baac8f4d16a8fff81f614c5c58f",
+      "mismatches": []
+    },
+    "workspace": {
+      "hash": "07c37e49637675ad83247b020140e7fcd7ad5baac8f4d16a8fff81f614c5c58f",
+      "mismatches": []
+    }
+  },
+  "evidenceStart": [
+    {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-customization/capture-catalog-final.mjs",
+      "sha256": "767e32db1cceb04e5ddf3c3c180d4d7eacabf80aa137d538fcf758f341a8db9d"
+    },
+    {
+      "path": "/Users/yutogasaki/Projects/sansu/tools/island-e2e-helpers.mjs",
+      "sha256": "725962b376292c970c128e914c0316c4107875dab1b9ad6a80aa9e3372dbd3c1"
+    },
+    {
+      "path": "/tmp/sansu-customization-20260908-161632/build-source.json",
+      "sha256": "336aae71be7165a9ad9044601c7fffb52e779092940cd91e31277b20551d087f"
+    }
+  ],
+  "scriptSHA256": "767e32db1cceb04e5ddf3c3c180d4d7eacabf80aa137d538fcf758f341a8db9d",
+  "sourceEnd": {
+    "frozen": {
+      "hash": "07c37e49637675ad83247b020140e7fcd7ad5baac8f4d16a8fff81f614c5c58f",
+      "mismatches": []
+    },
+    "workspace": {
+      "hash": "07c37e49637675ad83247b020140e7fcd7ad5baac8f4d16a8fff81f614c5c58f",
+      "mismatches": []
+    }
+  },
+  "sourceUnchanged": true,
+  "evidenceEnd": [
+    {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-customization/capture-catalog-final.mjs",
+      "sha256": "767e32db1cceb04e5ddf3c3c180d4d7eacabf80aa137d538fcf758f341a8db9d"
+    },
+    {
+      "path": "/Users/yutogasaki/Projects/sansu/tools/island-e2e-helpers.mjs",
+      "sha256": "725962b376292c970c128e914c0316c4107875dab1b9ad6a80aa9e3372dbd3c1"
+    },
+    {
+      "path": "/tmp/sansu-customization-20260908-161632/build-source.json",
+      "sha256": "336aae71be7165a9ad9044601c7fffb52e779092940cd91e31277b20551d087f"
+    }
+  ],
+  "evidenceUnchanged": true,
+  "finishedAt": "2026-09-08T07:20:49.552Z"
+}

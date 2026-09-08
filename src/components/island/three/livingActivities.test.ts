@@ -51,6 +51,8 @@ describe('living island opportunities', () => {
             position: { x: -5.8, z: 1.3 }, rotation: 0 };
         const resting = livingVisitsForItem(mushroom).find(visit => visit.discoveryId === 'shade-rest')!;
         expect(livingVisitHasSetting(state, resting)).toBe(true);
+        expect(livingVisitHasSetting({ ...state, growth: { ...state.growth!, expansionLevel: 1 } }, resting)).toBe(false);
+        expect(livingVisitHasSetting({ ...state, completedSets: 6, growth: { ...state.growth!, expansionLevel: 2 } }, resting)).toBe(true);
         expect(livingVisitHasSetting(state, { ...resting, item: { ...mushroom, position: { x: 6.5, z: .5 } } })).toBe(false);
     });
 });

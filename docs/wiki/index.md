@@ -7,6 +7,15 @@ Wiki docs support the source of truth; they do not replace product specs, runboo
 
 ## Current Docs
 
+- [reward-customization-benchmark.md](reward-customization-benchmark.md)
+  追加12作品のポイント交換・島スキン・収集・自己表現の比較。欲しくなる8つの入口、報酬16種類、実操作で比較する24項目
+
+- [learning-strengthening-analysis.md](learning-strengthening-analysis.md)
+  忘却・復習・レベル分けの現実装監査、決定的診断、一次研究と未採用の改善案
+
+- [game-experience-benchmark.md](game-experience-benchmark.md)
+  7作品の機能・気持ちよさ・デザイン・成長・運を比較する104項目の調査。採用済み仕様とは分離した候補集
+
 - [memory.md](/docs/wiki/memory.md)
   Durable project memory and source-of-truth relationships
 - [glossary.md](/docs/wiki/glossary.md)

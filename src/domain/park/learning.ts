@@ -1,6 +1,5 @@
 import type { AttemptLog } from '../../db';
 import { createSeededRandom } from '../../utils/random';
-import { getLearningDayStart } from '../../utils/learningDay';
 import { generateMathProblem, planMathProblemSlots } from '../math';
 import { getMathSkillMetadata } from '../math/curriculum';
 import { generateHissanGrid } from '../math/hissanEngine';
@@ -8,10 +7,12 @@ import { isHissanEligible } from '../math/hissanTypes';
 import { generateWrittenArithmeticGrid } from '../math/writtenArithmetic';
 import { generateVocabProblem } from '../english/generator';
 import { planVocabProblemSlots } from '../english/planner';
-import { resolveWeakState } from '../learningRepository';
-import type { MemoryState, Problem, UserProfile } from '../types';
+import type { MemoryState, Problem, SubjectKey, UserProfile } from '../types';
+import { parkLearningHistory } from './learningHistory';
 import type { LearningSlot, ParkPlan } from './types';
 import { createLearningProblemContext } from '../learning/context';
+import type { MathLevel11Practice } from '../learning/unitPractice';
+import { isNormalReviewEligible } from '../learning/reviewPolicy';
 
 export function parkHissanGrid(problem: Problem) {
     if (problem.subject !== 'math' || !problem.questionText || problem.inputType === 'choice') return null;
@@ -44,31 +45,17 @@ export function planParkLearning(
     planId: string,
     now: number,
     workload: { standardCount?: number; complexCount?: number; mathRemediationSkillIds?: readonly string[];
-        mathPendingReviewSkillIds?: readonly string[]; mathDueFirst?: boolean; vocabDueAfterId?: string } = {},
+        mathPendingReviewSkillIds?: readonly string[]; mathDueFirst?: boolean; vocabDueAfterId?: string;
+        subject?: SubjectKey; practiceItemIds?: readonly string[]; mathUnitPractice?: MathLevel11Practice } = {},
 ): Pick<ParkPlan, 'subject' | 'slots'> {
     const standardCount = workload.standardCount ?? 3;
     const complexCount = workload.complexCount ?? 2;
     if (!Number.isInteger(standardCount) || standardCount < 1 || !Number.isInteger(complexCount) || complexCount < 1 || complexCount > standardCount) {
         throw new Error('Invalid learning workload');
     }
-    const subject = profile.subjectMode === 'mix' ? (sequence % 2 === 0 ? 'math' : 'vocab') : profile.subjectMode;
+    const subject = profile.subjectMode === 'mix' ? workload.subject ?? (sequence % 2 === 0 ? 'math' : 'vocab') : profile.subjectMode;
     const memory = subject === 'math' ? mathMemory : vocabMemory;
-    const itemLogs = logs.filter(l => l.subject === subject).sort((a, b) => a.timestamp.localeCompare(b.timestamp));
-    const dayStart = getLearningDayStart(new Date(now)).toISOString();
-    const grouped = new Map<string, AttemptLog[]>();
-    for (const log of itemLogs) {
-        const list = grouped.get(log.itemId) ?? [];
-        list.push(log);
-        grouped.set(log.itemId, list);
-    }
-    const skipped = [...grouped].filter(([, list]) => {
-        const recent = list.filter(l => l.timestamp >= dayStart).slice(-3);
-        return recent.length === 3 && recent.every(l => l.result === 'skipped');
-    }).map(([id]) => id);
-    const due = memory.filter(m => m.nextReview <= new Date(now).toISOString()
-        && (subject !== 'math' || (m.status !== 'retired' && m.status !== 'maintenance')))
-        .sort((a, b) => a.nextReview.localeCompare(b.nextReview)).map(m => m.id);
-    const weak = memory.filter(m => m.isWeak ?? resolveWeakState((grouped.get(m.id) ?? []).map(l => l.result))).map(m => m.id);
+    const { itemLogs, skipped, due, weak } = parkLearningHistory(subject, memory, logs, now);
     const random = createSeededRandom(planId);
     let slots: LearningSlot[];
     if (subject === 'math') {
@@ -82,16 +69,19 @@ export function planParkLearning(
         const planned = planMathProblemSlots({
             // Island's pending rechecks use the same review admission and unlock guards as Due.
             profile: hydrated, count: standardCount, dueSkillIds: [...new Set(reviewOrder)], weakSkillIds: weak,
-            maintenanceSkillIds: memory.filter(m => m.status === 'maintenance').map(m => m.id),
-            retiredSkillIds: memory.filter(m => m.status === 'retired').map(m => m.id),
+            maintenanceSkillIds: memory.filter(m => m.status === 'maintenance' && !isNormalReviewEligible(m)).map(m => m.id),
+            retiredSkillIds: memory.filter(m => m.status === 'retired' && !isNormalReviewEligible(m)).map(m => m.id),
             skippedTodayIds: skipped, cooldownIds: itemLogs.slice(-5).map(l => l.itemId),
+            practiceSkillIds: workload.practiceItemIds,
+            unitPractice: workload.mathUnitPractice,
             canAddReview: (items) => items.filter(i => i.countsTowardReviewCap).length < Math.max(1, Math.floor((items.length + 1) * 0.6)),
             random,
         });
         slots = planned.map((selection, i) => {
             if (!selection) throw new Error('No learning assignment available');
             const problem: Problem = {
-                ...generateMathProblem(selection.skillId, { profile: hydrated, random: createSeededRandom(`${planId}:${i}:${selection.skillId}`) }),
+                ...generateMathProblem(selection.skillId, { profile: hydrated, random: createSeededRandom(`${planId}:${i}:${selection.skillId}`),
+                    preferredLearningVariant: selection.preferredVariant }),
                 id: `${planId}:slot-${i}`, subject, isReview: selection.isReview,
                 isMaintenanceCheck: selection.isMaintenanceCheck,
             };
@@ -119,6 +109,7 @@ export function planParkLearning(
             profile: hydrated, count: standardCount, shortestCount: complexCount,
             dueIds: due, dueAfterId: workload.vocabDueAfterId, weakIds: weak,
             skippedIds: skipped, cooldownIds: itemLogs.slice(-10).map(log => log.itemId), random,
+            practiceWordIds: workload.practiceItemIds,
         });
         slots = planned.map((selection, index) => ({
             problem: {

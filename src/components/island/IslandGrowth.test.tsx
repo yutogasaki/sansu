@@ -41,14 +41,39 @@ describe('living island choices', () => {
         expect(markup).toContain('すがたを かえても、あそびは そのまま');
     });
 
-    it('exposes land views from completed learning, and stops promising growth after the chapter', () => {
-        const before = renderToStaticMarkup(<IslandDistricts completedSets={11} value="all" disabled={false} onChange={noop} />);
-        const after = renderToStaticMarkup(<IslandDistricts completedSets={12} value="west" disabled={false} onChange={noop} />);
+    it('preserves old land views and stops promising growth after the chapter', () => {
+        const before = renderToStaticMarkup(<IslandDistricts island={{ completedSets: 11 }} value="all" disabled={false} onChange={noop} />);
+        const after = renderToStaticMarkup(<IslandDistricts island={{ completedSets: 12 }} value="west" disabled={false} onChange={noop} />);
         expect(before).not.toContain('にし');
         expect(after).toContain('にし');
         const mature = { ...island, growth: { ...island.growth!, progress: { garden: 6, waterside: 6, grove: 6, village: 6 } } };
         const summary = renderToStaticMarkup(<IslandGrowthSummary island={mature} disabled={false} onChoose={noop} />);
         expect(summary).toContain('みんなの いばしょが 育ったよ');
         expect(summary).not.toContain('<button');
+    });
+
+    it('does not expose new districts merely because many sections were completed', () => {
+        const current: IslandRecord = { ...island, completedSets: 12, growth: { ...island.growth!, expansionLevel: 0 } };
+        const before = renderToStaticMarkup(<IslandDistricts island={current} value="all" disabled={false} onChange={noop} />);
+        expect(before).not.toContain('ひがし');
+        expect(before).not.toContain('にし');
+        current.growth!.expansionLevel = 1;
+        const expanded = renderToStaticMarkup(<IslandDistricts island={current} value="all" disabled={false} onChange={noop} />);
+        expect(expanded).toContain('ひがし');
+        expect(expanded).not.toContain('にし');
+    });
+
+    it('shows the next island expansion only near the frozen place’s completion', () => {
+        const current: IslandRecord = { ...island, completedSets: 7, growth: { ...island.growth!, expansionLevel: 0,
+            focus: 'village', progress: { garden: 5, village: 2, waterside: 0, grove: 0 } } };
+        const summary = renderToStaticMarkup(<IslandGrowthSummary island={current} plan={plan} disabled={false} onChoose={noop} />);
+        expect(summary).toContain('data-island-expansion-preview="east"');
+        expect(summary).not.toContain('つぎは');
+        const choices = renderToStaticMarkup(<IslandGrowthChoices island={current} plan={plan} disabled={false} onSelect={noop} onClose={noop} />);
+        const house = choices.match(/<strong>いえの まわり<\/strong>([\s\S]*?)<\/span>/)?.[1];
+        expect(house).toBeDefined();
+        expect(house).not.toContain('ひがしへ');
+        const legacy = renderToStaticMarkup(<IslandGrowthSummary island={current} plan={{ ...plan, growthTarget: undefined }} disabled={false} onChoose={noop} />);
+        expect(legacy).not.toContain('data-island-expansion-preview');
     });
 });

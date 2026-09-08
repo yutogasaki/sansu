@@ -1,17 +1,20 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { holdPwaUpdateForCriticalPersistence } from '../../pwa';
 
+export type IslandActionKind = 'interaction' | 'discovery';
+
 /** Synchronous lock prevents double taps before React commits disabled controls. */
 export function useIslandActions() {
     const lock = useRef(false);
     const mounted = useRef(false);
-    const [busy, setBusy] = useState(false);
+    const [busyKind, setBusyKind] = useState<IslandActionKind>();
     const [error, setError] = useState<string>();
     useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
-    const run = useCallback(async <T,>(action: () => Promise<T>, minimumMs = 0): Promise<T | undefined> => {
+    const run = useCallback(async <T,>(action: () => Promise<T>, minimumMs = 0,
+        kind: IslandActionKind = 'interaction'): Promise<T | undefined> => {
         if (lock.current) return;
         lock.current = true;
-        setBusy(true);
+        setBusyKind(kind);
         setError(undefined);
         const release = holdPwaUpdateForCriticalPersistence();
         const start = performance.now();
@@ -26,8 +29,8 @@ export function useIslandActions() {
         } finally {
             release();
             lock.current = false;
-            if (mounted.current) setBusy(false);
+            if (mounted.current) setBusyKind(undefined);
         }
     }, []);
-    return { run, busy, error };
+    return { run, busy: busyKind !== undefined, busyKind, error };
 }

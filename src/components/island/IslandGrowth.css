@@ -3,6 +3,7 @@
 .island-growth-summary > div { flex:1; }
 .island-growth-summary p { font-size:12px; font-weight:600; }
 .island-growth-summary small { display:block; font-size:10px; color:var(--island-muted); margin-top:5px; }
+.island-growth-summary .island-growth-preview, .island-growth-place .island-growth-preview { color:var(--island-leaf); font-weight:600; }
 .island-growth-summary .island-text-button { color:var(--island-leaf); }
 .island-growth-steps { display:flex; gap:4px; align-items:center; margin-top:7px; width:max-content; }
 .island-growth-steps i { display:block; width:17px; height:5px; border-radius:4px; border:1px solid var(--island-muted); }
@@ -37,7 +38,7 @@
 .island-album-scene .island-stage { --island-stage-height:clamp(148px,22dvh,185px); border-radius:20px; }
 .island-album-scene > p { font-size:10px; color:var(--island-muted); margin-top:4px; }
 .island-album-timeline { display:flex; gap:8px; overflow-x:auto; padding:4px 3px 7px; margin:0 -3px 4px; }
-.island-album-timeline button { flex-shrink:0; min-height:48px; border:1px solid var(--island-muted); border-radius:14px; padding:8px 12px; background:var(--island-paper); font-size:11px; }
+.island-album-timeline button { flex-shrink:0; min-height:48px; max-width:min(260px,70vw); white-space:normal; line-height:1.5; border:1px solid var(--island-muted); border-radius:14px; padding:8px 12px; background:var(--island-paper); font-size:11px; }
 .island-album-timeline button[aria-pressed=true] { color:var(--island-leaf); outline:2px solid var(--island-leaf); outline-offset:1px; }
 .island-discovery-list { display:grid; gap:12px; }
 .island-discovery { border-bottom:1px solid var(--app-border); padding:6px 0 14px; display:flex; align-items:center; gap:14px; }

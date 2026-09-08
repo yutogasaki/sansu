@@ -1,3 +1,4 @@
+import type { IslandLandAccess } from '../../../domain/island/catalog';
 import * as THREE from 'three';
 import { IslandMaterials } from './primitives';
 import type { IslandStageItem } from './types';
@@ -50,7 +51,7 @@ export class IslandResident {
     private pointWalk = false;
     private path: THREE.Vector3[] = [];
     private distances: number[] = [];
-    private expanded = 0;
+    private expanded: IslandLandAccess = 0;
     private reduced = false;
     private standing?: { startedAt: number; y: number; yaw: number; position: THREE.Vector3; tilt: number;
         bodyY: number; feet: THREE.Vector3[] };
@@ -92,12 +93,12 @@ export class IslandResident {
         return bounds;
     }
 
-    visit(item: IslandStageItem, now: number, reduced: boolean, items: IslandStageItem[], completedSets: number, plannedRoute?: ResidentRoute) {
+    visit(item: IslandStageItem, now: number, reduced: boolean, items: IslandStageItem[], landAccess: IslandLandAccess, plannedRoute?: ResidentRoute) {
         if (!item.position) return false;
-        const route = plannedRoute ?? planResidentRoute(this.group.position, item, items, completedSets, this.itemId || this.departingId);
+        const route = plannedRoute ?? planResidentRoute(this.group.position, item, items, landAccess, this.itemId || this.departingId);
         if (!route) return false;
         this.clearSharedPose(); this.clearLearningPose();
-        this.expanded = completedSets;
+        this.expanded = landAccess;
         this.reduced = reduced;
         this.standing = undefined;
         this.rememberDeparture();
@@ -113,11 +114,11 @@ export class IslandResident {
 
     /** Walk a preflighted shared-activity path using the ordinary feet and deck
      * height. It has no furniture ownership or furniture arrival caption. */
-    walkToPoint(route: ResidentRoute, now: number, reduced: boolean, completedSets: number) {
+    walkToPoint(route: ResidentRoute, now: number, reduced: boolean, landAccess: IslandLandAccess) {
         if (route.points.length < 2 || !Number.isFinite(route.yaw)
             || route.points.some(point => !Number.isFinite(point.x) || !Number.isFinite(point.z))) return false;
         this.clearSharedPose(); this.clearLearningPose();
-        this.expanded = completedSets; this.reduced = reduced; this.standing = undefined;
+        this.expanded = landAccess; this.reduced = reduced; this.standing = undefined;
         this.rememberDeparture();
         this.target = undefined; this.pointWalk = true; this.itemId = '';
         this.departingId = undefined;

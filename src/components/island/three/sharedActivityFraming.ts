@@ -1,3 +1,4 @@
+import type { IslandLandAccess } from '../../../domain/island/catalog';
 import * as THREE from 'three';
 import { residentGroundHeight } from './navigation';
 import { boxCorners } from './sceneFraming';
@@ -18,6 +19,7 @@ export interface SharedActivityFrameObjects {
     occluders?: readonly THREE.Object3D[];
     residents?: readonly IslandResident[];
     completedSets?: number;
+    landAccess?: IslandLandAccess;
     viewportWidth?: number;
     /** A resize keeps the physical paws selected at gather entry. */
     presentationHands?: SharedActivityHands;
@@ -181,7 +183,7 @@ function poseVisibility(camera: THREE.OrthographicCamera, samples: SharedActivit
  * no subsequent hand, foot, or prop sample moves the camera. */
 export function fitSharedActivityFrame(plan: SharedActivityPlan, objects: SharedActivityFrameObjects,
     aspect: number): SharedActivityFrame {
-    const sampled = objects.residents && sampleSharedActivityPoses(plan, objects.residents, objects.completedSets ?? 6, objects.presentationHands);
+    const sampled = objects.residents && sampleSharedActivityPoses(plan, objects.residents, objects.landAccess ?? objects.completedSets ?? 6, objects.presentationHands);
     try {
         const boxes = [objects.carrier, objects.receiver, objects.source, objects.seat]
             .map(object => { object.updateWorldMatrix(true, true); return new THREE.Box3().setFromObject(object, true); });
@@ -197,7 +199,7 @@ export function fitSharedActivityFrame(plan: SharedActivityPlan, objects: Shared
             const low = carrierBounds.min.y - carrierRoot.y - HAND_AND_PROP_ROOM;
             const high = carrierBounds.max.y - carrierRoot.y + HAND_AND_PROP_ROOM;
             for (const point of [...plan.deliveryRoute.points, plan.handoffPoint]) {
-                const ground = residentGroundHeight(point, (objects.completedSets ?? 6) >= 2);
+                const ground = residentGroundHeight(point, objects.landAccess ?? objects.completedSets ?? 6);
                 boxes.push(new THREE.Box3(new THREE.Vector3(point.x - radius, ground + low, point.z - radius),
                     new THREE.Vector3(point.x + radius, ground + high, point.z + radius)));
             }

@@ -13,6 +13,7 @@ import { Icons } from "../components/icons";
 import { Button } from "../components/ui/Button";
 import { InsetPanel, SurfacePanel, SurfacePanelHeader } from "../components/ui/SurfacePanel";
 import { Problem } from "../domain/types";
+import { hasStudySingleNumberInput } from '../domain/math/studyPresentation';
 import { LayoutDebugOverlay } from "../components/LayoutDebugOverlay";
 import { MathRenderer } from "../components/domain/MathRenderer";
 import { MathProblemPrompt } from "../components/domain/MathProblemPrompt";
@@ -729,7 +730,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                     disabled={feedback !== 'none'}
                                 />
                             </div>
-                        ) : currentProblem.inputType === "number" ? (
+                        ) : hasStudySingleNumberInput(currentProblem) ? (
                             <div className={cn(
                                 "w-full min-h-0 flex flex-1 items-center justify-center gap-6 mobile:gap-3",
                                 isFractionPrompt
@@ -819,7 +820,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                         }`}
                 >
                     {/* TenKey / Inputs */}
-                    {(currentProblem.inputType === "number" || currentProblem.inputType === "multi-number" || hissanActive) && (
+                    {(hasStudySingleNumberInput(currentProblem) || currentProblem.inputType === "multi-number" || hissanActive) && (
                         <TenKey
                             onInput={onTenKeyInput}
                             onDelete={onBackspace}

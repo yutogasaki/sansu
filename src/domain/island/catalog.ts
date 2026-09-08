@@ -1,5 +1,6 @@
 import type { IslandItemKind, IslandPosition, IslandRecord } from './types';
 import { initializeIslandGrowth } from './growth';
+import { getIslandExpansionLevel, type IslandExpansionLevel } from './expansion';
 
 export const ISLAND_ITEMS: Record<IslandItemKind, { name: string; description: string; radius: number }> = {
     bench: { name: 'ベンチ', description: 'どうぶつが ひとやすみ', radius: .65 },
@@ -11,8 +12,10 @@ export const ISLAND_ITEMS: Record<IslandItemKind, { name: string; description: s
 };
 
 export const ISLAND_MAIN_LAND = { x: 0, z: 0, radiusX: 4.8, radiusZ: 3.6 };
-export const ISLAND_EAST_LAND = { x: 6.2, z: 0, radiusX: 1.9, radiusZ: 2.3 };
-export const ISLAND_WEST_LAND = { x: -6.2, z: 0, radiusX: 1.9, radiusZ: 2.3 };
+// Grow outward from the existing inner banks at ±4.3. Every earlier shore,
+// saved possession and bridge landing remains inside the enlarged district.
+export const ISLAND_EAST_LAND = { x: 7.3, z: 0, radiusX: 3, radiusZ: 3.4 };
+export const ISLAND_WEST_LAND = { x: -7.3, z: 0, radiusX: 3, radiusZ: 3.4 };
 export const ISLAND_RESERVED_AREAS = [
     { x: -2.6, z: -1.65, radius: 1.15 },
     { x: 1.6, z: -1.6, radius: .85 },
@@ -33,17 +36,51 @@ export function islandRewardChoices(sequence: number): IslandItemKind[] {
     return [...choices[sequence % choices.length]];
 }
 
-function fitsLand(position: IslandPosition, radius: number, completedSets: number) {
-    const lands = [ISLAND_MAIN_LAND, ...(completedSets >= 2 ? [ISLAND_EAST_LAND] : []),
-        ...(completedSets >= 12 ? [ISLAND_WEST_LAND] : [])];
-    return lands.some(land => ((position.x - land.x) / (land.radiusX - radius)) ** 2
+/** Numeric/boolean inputs preserve legacy callers. Runtime callers explicitly
+ * carry earned land access independently of the real learning section count. */
+export type IslandLandAccess = number | boolean | { expansionLevel: IslandExpansionLevel };
+export function getIslandLandAccess(state: Parameters<typeof getIslandExpansionLevel>[0]) {
+    return { expansionLevel: getIslandExpansionLevel(state) };
+}
+
+export function getIslandLandLevel(access: IslandLandAccess): IslandExpansionLevel {
+    return typeof access === 'object' ? access.expansionLevel
+        : getIslandExpansionLevel({ completedSets: typeof access === 'boolean' ? access ? 2 : 0 : access });
+}
+
+export function getIslandLands(access: IslandLandAccess) {
+    const level = getIslandLandLevel(access);
+    return [ISLAND_MAIN_LAND, ...(level >= 1 ? [ISLAND_EAST_LAND] : []), ...(level >= 2 ? [ISLAND_WEST_LAND] : [])];
+}
+
+export function getIslandLandBounds(access: IslandLandAccess) {
+    const lands = getIslandLands(access);
+    return {
+        minX: Math.min(...lands.map(land => land.x - land.radiusX)),
+        maxX: Math.max(...lands.map(land => land.x + land.radiusX)),
+        minZ: Math.min(...lands.map(land => land.z - land.radiusZ)),
+        maxZ: Math.max(...lands.map(land => land.z + land.radiusZ)),
+    };
+}
+
+/** Both automatic placement and reachable advice search every unlocked shore. */
+export function islandPlacementCandidates(access: IslandLandAccess): IslandPosition[] {
+    const bounds = getIslandLandBounds(access), candidates: IslandPosition[] = [], step = .5;
+    for (let iz = Math.floor(bounds.maxZ / step); iz >= Math.ceil(bounds.minZ / step); iz--) {
+        for (let ix = Math.ceil(bounds.minX / step); ix <= Math.floor(bounds.maxX / step); ix++) candidates.push({ x: ix * step, z: iz * step });
+    }
+    return candidates;
+}
+
+function fitsLand(position: IslandPosition, radius: number, access: IslandLandAccess) {
+    return getIslandLands(access).some(land => ((position.x - land.x) / (land.radiusX - radius)) ** 2
         + ((position.z - land.z) / (land.radiusZ - radius)) ** 2 <= 1);
 }
 
 function canPlaceKind(island: IslandRecord, kind: IslandItemKind, position: IslandPosition, itemId?: string) {
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z)) return false;
     const radius = ISLAND_ITEMS[kind]?.radius;
-    if (!radius || !fitsLand(position, radius, island.completedSets)) return false;
+    if (!radius || !fitsLand(position, radius, getIslandLandAccess(island))) return false;
     if (ISLAND_RESERVED_AREAS.some(area => Math.hypot(position.x - area.x, position.z - area.z) < radius + area.radius)) return false;
     return island.items.every(item => item.id === itemId || !item.position
         || Math.hypot(item.position.x - position.x, item.position.z - position.z) >= radius + ISLAND_ITEMS[item.kind].radius + .08);
@@ -56,10 +93,7 @@ export function isValidIslandPlacement(island: IslandRecord, itemId: string, pos
 
 /** A deterministic suggestion only; the user remains free to choose any clear land. */
 export function findAvailablePosition(island: IslandRecord, kind: IslandItemKind, itemId?: string): IslandPosition | undefined {
-    const candidates: IslandPosition[] = [];
-    for (let z = 2.5; z >= -3; z -= .5) {
-        for (let x = island.completedSets >= 12 ? -7.5 : -4; x <= (island.completedSets >= 2 ? 7.5 : 4); x += .5) candidates.push({ x, z });
-    }
+    const candidates = islandPlacementCandidates(getIslandLandAccess(island));
     candidates.sort((a, b) => Math.hypot(a.x, a.z - 1) - Math.hypot(b.x, b.z - 1));
     return candidates.find(position => canPlaceKind(island, kind, position, itemId));
 }

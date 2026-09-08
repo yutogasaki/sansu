@@ -1,0 +1,98 @@
+[
+  {
+    "name": "island-pwa",
+    "command": [
+      "npm",
+      "run",
+      "e2e:island-pwa"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-153622",
+    "env": {
+      "SANSU_ISLAND_OUTPUT": "/Users/yutogasaki/Projects/sansu/output/island-customization/customization-20260908-0b59b5b48c67/island-pwa"
+    },
+    "startedAt": "2026-09-08T06:53:40.096077+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T06:54:14.416456+00:00"
+  },
+  {
+    "name": "learning",
+    "command": [
+      "node",
+      "tools/e2e-island-learning.mjs"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-153622",
+    "env": {
+      "SANSU_ISLAND_LEARNING_OUTPUT": "/Users/yutogasaki/Projects/sansu/output/island-customization/customization-20260908-0b59b5b48c67/learning"
+    },
+    "startedAt": "2026-09-08T06:54:14.416728+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T06:56:09.659845+00:00"
+  },
+  {
+    "name": "feedback",
+    "command": [
+      "node",
+      "tools/e2e-island-feedback.mjs"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-153622",
+    "env": {
+      "SANSU_FEEDBACK_OUTPUT": "/Users/yutogasaki/Projects/sansu/output/island-customization/customization-20260908-0b59b5b48c67/feedback",
+      "SANSU_AUDIO_NATIVE_SPEECH": "1"
+    },
+    "startedAt": "2026-09-08T06:56:09.660158+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T06:57:11.178607+00:00"
+  },
+  {
+    "name": "smoke",
+    "command": [
+      "npm",
+      "run",
+      "e2e:smoke"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-153622",
+    "env": {
+      "VITE_ISLAND_ENABLED": "false",
+      "VITE_BUILD_PLAY_ENABLED": "false",
+      "SANSU_E2E_DIAGNOSTIC_DIR": "/Users/yutogasaki/Projects/sansu/output/island-customization/customization-20260908-0b59b5b48c67/smoke"
+    },
+    "startedAt": "2026-09-08T06:57:11.180579+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T06:58:40.616271+00:00"
+  },
+  {
+    "name": "classic-build",
+    "command": [
+      "node",
+      "node_modules/vite/bin/vite.js",
+      "build",
+      "--outDir",
+      "dist-classic"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-153622",
+    "env": {
+      "VITE_ISLAND_ENABLED": "false",
+      "VITE_BUILD_PLAY_ENABLED": "false"
+    },
+    "startedAt": "2026-09-08T06:58:40.616693+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T06:58:45.548027+00:00"
+  },
+  {
+    "name": "classic-pwa",
+    "command": [
+      "npm",
+      "run",
+      "e2e:pwa-update"
+    ],
+    "cwd": "/tmp/sansu-customization-20260908-153622",
+    "env": {
+      "VITE_ISLAND_ENABLED": "false",
+      "VITE_BUILD_PLAY_ENABLED": "false",
+      "SANSU_PWA_PREVIEW_DIR": "/tmp/sansu-customization-20260908-153622/dist-classic"
+    },
+    "startedAt": "2026-09-08T06:58:45.548446+00:00",
+    "exitCode": 0,
+    "finishedAt": "2026-09-08T07:00:05.548979+00:00"
+  }
+]

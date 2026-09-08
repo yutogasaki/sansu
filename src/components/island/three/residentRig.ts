@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import { IslandMaterials, batch, curve, ellipsoid, mesh } from './primitives';
+import { IslandMaterials, batch, curve, ellipsoid } from './primitives';
+import { applyFabricPanel, RESIDENT_VISUAL_CANDIDATE, type FabricPanel } from './residentFabric';
 
 export type ResidentSpecies = 'otter' | 'rabbit' | 'fox';
 export const RESIDENT_SCALE = 1.22;
@@ -43,33 +44,29 @@ export function turnResidentToward(current: number, target: number, elapsedMs: n
 }
 
 function makeOtterTail(parent: THREE.Group, material: THREE.Material) {
-    const length = .52;
-    const geometry = new THREE.LatheGeometry([
-        new THREE.Vector2(0, 0), new THREE.Vector2(.10, .025), new THREE.Vector2(.12, .12),
-        new THREE.Vector2(.105, .25), new THREE.Vector2(.07, .38), new THREE.Vector2(.025, .49), new THREE.Vector2(0, length),
-    ], 12);
-    geometry.rotateX(-Math.PI / 2);
-    const points = geometry.attributes.position;
-    for (let i = 0; i < points.count; i++) {
-        const t = Math.max(0, -points.getZ(i) / length);
-        points.setY(i, points.getY(i) * .7 - t * t * .07);
-    }
-    geometry.computeVertexNormals();
-    mesh(parent, geometry, material, [0, .22, -.21]);
+    return ellipsoid(parent, material, [0, .245, -.28], [.105, .105, .105]);
 }
 
-/** Keep the established faces, palette and rabbit silhouette. Articulated pieces
- * stay separate; the torso, face and tapered otter tail still batch by material. */
+/** One cloth otter lives beside the established rabbit and fox. Articulated
+ * pieces and all navigation/seat/hand proportions retain their shared contract. */
 export function makeResidentRig(species: ResidentSpecies, m: IslandMaterials) {
     const pose = new THREE.Group(), body = new THREE.Group(), head = new THREE.Group();
     pose.name = 'resident-pose'; body.name = 'resident-body'; head.name = 'resident-head';
     pose.add(body); body.add(head);
     const rabbit = species === 'rabbit', otter = species === 'otter', fox = species === 'fox';
+    const cloth = (object: THREE.Mesh, panel: FabricPanel) => {
+        if (!otter) return object;
+        if (object.geometry instanceof THREE.SphereGeometry) {
+            object.geometry.dispose(); object.geometry = new THREE.SphereGeometry(1, 32, 24);
+        }
+        return applyFabricPanel(object, panel, m.residentFabric());
+    };
+    if (otter) pose.userData.visualCandidate = RESIDENT_VISUAL_CANDIDATE;
     const fur = m.get(rabbit ? '#f3ead4' : fox ? '#d99753' : '#b38154');
     const cream = m.get('#fff0d4'), dark = m.get('#493e32');
-    ellipsoid(body, fur, [0, proportions[species].bodyY, 0], rabbit ? [.245, .34, .22] : otter ? [.305, .4, .255] : [.33, .37, .265]);
-    ellipsoid(body, cream, [0, otter ? .5 : .47, otter ? .215 : .21], rabbit ? [.16, .22, .055] : otter ? [.21, .28, .067] : [.23, .25, .067]);
-    if (otter) makeOtterTail(body, fur);
+    cloth(ellipsoid(body, fur, [0, proportions[species].bodyY, 0], rabbit ? [.245, .34, .22] : otter ? [.305, .4, .255] : [.33, .37, .265]), 'body');
+    if (!otter) ellipsoid(body, cream, [0, .47, .21], rabbit ? [.16, .22, .055] : [.23, .25, .067]);
+    if (otter) cloth(makeOtterTail(body, fur), 'cream');
     else {
         const tail = ellipsoid(body, fur, [0, .19, -.31], rabbit ? [.12, .12, .12] : [.2, .105, .6]);
         tail.rotation.x = -.2;
@@ -81,7 +78,7 @@ export function makeResidentRig(species: ResidentSpecies, m: IslandMaterials) {
         shoulder.position.set(side * (rabbit ? .21 : .27), otter ? .67 : .64, .08);
         shoulder.rotation.z = side * .2;
         body.add(shoulder);
-        const paw = ellipsoid(shoulder, fur, [0, -.15, 0], [.095, .19, .105]);
+        const paw = cloth(ellipsoid(shoulder, fur, [0, -.15, 0], [.095, .19, .105]), side < 0 ? 'tealDots' : 'roseDots');
         const hand = new THREE.Object3D();
         hand.name = side < 0 ? 'hand-contact-left' : 'hand-contact-right';
         // A point on the actual ellipsoid's forward-facing fingertip surface.
@@ -92,32 +89,37 @@ export function makeResidentRig(species: ResidentSpecies, m: IslandMaterials) {
         return shoulder;
     });
     head.position.y = rabbit ? .93 : otter ? 1.01 : .99;
-    ellipsoid(head, fur, [0, 0, 0], rabbit ? [.29, .27, .255] : otter ? [.365, .295, .30] : [.37, .31, .295]);
+    cloth(ellipsoid(head, fur, [0, 0, 0], rabbit ? [.29, .27, .255] : otter ? [.365, .295, .30] : [.37, .31, .295]), 'head');
     for (const side of [-1, 1]) {
         const earX = rabbit ? .135 : otter ? .285 : .275;
         const earY = rabbit ? .4 : otter ? .20 : .235;
-        const ear = ellipsoid(head, fur, [side * earX, earY, -.02],
-            rabbit ? [.079, .34, .079] : otter ? [.105, .105, .072] : [.12, .13, .077]);
+        const ear = cloth(ellipsoid(head, fur, [side * earX, earY, -.02],
+            rabbit ? [.079, .34, .079] : otter ? [.105, .105, .072] : [.12, .13, .077]), side < 0 ? 'navyDots' : 'roseDots');
         ear.rotation.z = -side * (rabbit ? .14 : .2);
-        const inner = ellipsoid(head, m.get(rabbit ? '#dba596' : '#d6a679'),
+        const inner = cloth(ellipsoid(head, m.get(rabbit ? '#dba596' : '#d6a679'),
             [side * earX, earY + (rabbit ? .02 : .015), rabbit ? .052 : .048],
-            rabbit ? [.038, .245, .028] : otter ? [.058, .057, .023] : [.068, .074, .025]);
+            rabbit ? [.038, .245, .028] : otter ? [.058, .057, .023] : [.068, .074, .025]), side < 0 ? 'cream' : 'sole');
         inner.rotation.z = ear.rotation.z;
-        ellipsoid(head, cream, [side * .085, -.085, rabbit ? .221 : otter ? .277 : .263],
-            rabbit ? [.106, .074, .047] : otter ? [.15, .082, .067] : [.145, .104, .065]);
-        ellipsoid(head, dark, [side * (rabbit ? .108 : .15), .047, rabbit ? .241 : .27], [.028, .043, .024], 10);
+        cloth(ellipsoid(head, cream, [side * .085, -.085, rabbit ? .221 : otter ? .277 : .263],
+            rabbit ? [.106, .074, .047] : otter ? [.15, .082, .067] : [.145, .104, .065]), 'cream');
+        ellipsoid(head, otter ? m.surface('#272433', .25) : dark, [side * (rabbit ? .108 : .15), .047, rabbit ? .241 : .27], [.028, .043, .024], 10);
         ellipsoid(head, cream, [side * (rabbit ? .105 : .147), .059, rabbit ? .263 : .292], [.009, .012, .006], 8);
     }
-    ellipsoid(head, m.get(rabbit ? '#ba836d' : '#51453b'), [0, -.052, rabbit ? .283 : otter ? .354 : .341],
+    ellipsoid(head, otter ? m.surface('#302731', .36) : m.get(rabbit ? '#ba836d' : '#51453b'), [0, -.052, rabbit ? .283 : otter ? .354 : .341],
         rabbit ? [.042, .031, .022] : [.058, .043, .03]);
-    curve(head, dark, [[-.063, -.122, rabbit ? .264 : .317], [0, -.14, rabbit ? .28 : .332], [.062, -.12, rabbit ? .264 : .317]], .01);
+    if (otter) {
+        curve(head, dark, [[0, -.085, .360], [0, -.108, .351], [0, -.13, .337]], .006);
+        for (const side of [-1, 1]) curve(head, dark, [[0, -.13, .337], [side * .04, -.147, .332], [side * .075, -.126, .342]], .007);
+    } else curve(head, dark, [[-.063, -.122, rabbit ? .264 : .317], [0, -.14, rabbit ? .28 : .332], [.062, -.12, rabbit ? .264 : .317]], .01);
     batch(head);
-    const feet = [-1, 1].map(side => ellipsoid(pose, fur, [side * .16, residentFootY(species), .12],
-        rabbit ? [.125, .105, .205] : [.15, .11, .195]));
-    const scarf = new THREE.Group(), scarfMaterial = m.get(rabbit ? '#9faebf' : '#6baba0');
-    ellipsoid(scarf, scarfMaterial, [0, rabbit ? .725 : .735, .04], [.24, .055, .22]);
-    ellipsoid(scarf, scarfMaterial, [.09, .635, .252], [.07, .13, .027]);
-    body.add(batch(scarf));
+    const feet = [-1, 1].map(side => cloth(ellipsoid(pose, fur, [side * .16, residentFootY(species), .12],
+        rabbit ? [.125, .105, .205] : [.15, .11, .195]), side < 0 ? 'tealDots' : 'sole'));
+    if (!otter) {
+        const scarf = new THREE.Group(), scarfMaterial = m.get(rabbit ? '#9faebf' : '#6baba0');
+        ellipsoid(scarf, scarfMaterial, [0, rabbit ? .725 : .735, .04], [.24, .055, .22]);
+        ellipsoid(scarf, scarfMaterial, [.09, .635, .252], [.07, .13, .027]);
+        body.add(batch(scarf));
+    }
     const seatContact = new THREE.Object3D();
     seatContact.name = 'resident-seat-contact';
     seatContact.position.y = residentSeatContactY(species);

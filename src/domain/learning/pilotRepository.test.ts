@@ -63,6 +63,9 @@ describe('read-only persisted Lv11 pilot', () => {
         const plan = mode === 'park' ? await startParkPlan('child', 'bubble', d) : await startIslandPlan('child', d);
         plan.slots = [{ problem: problem(), assisted: false, completed: false, source: 'due', countsTowardReviewCap: true,
             learningEvidenceAssistance: 'independent' }];
+        // This diagnostic replaces the reserved items, so its introduction
+        // snapshot must describe the replacement too.
+        if (mode === 'island') (plan as IslandPlan).introducedItemIds = [SUBJECT_ITEM];
         if (mode === 'park') await d.parkPlans.put(plan as ParkPlan); else await d.islandPlans.put(plan as IslandPlan);
         vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date('2026-09-11T10:00:00.000Z'));
         const receipt = mode === 'park'
@@ -74,8 +77,9 @@ describe('read-only persisted Lv11 pilot', () => {
         // Historical reads must exclude the later persisted numeric event.
         expect(unit(await readMathLevel11Pilot(d, 'child', BEFORE_SUPPORT)).retention).toBe('confirmed');
         const afterSupport = unit(await readMathLevel11Pilot(d, 'child', AFTER_SUPPORT));
-        expect(afterSupport).toMatchObject({ readiness: 'unconfirmed', retention: 'unconfirmed', unknownAttempts: 0 });
-        expect(afterSupport.facets[0]).toMatchObject({ independentProblemCount: 0, delayedConfirmationCount: 0,
+        expect(afterSupport).toMatchObject({ readiness: 'unconfirmed', retention: 'confirmed', unknownAttempts: 0, needsRecheck: true });
+        expect(afterSupport.facets[0]).toMatchObject({ independentProblemCount: 0, delayedConfirmationCount: 1,
+            historicalIndependentProblemCount: 3, lastDelayedConfirmationAt: '2026-09-10T10:00:00.000Z',
             lastAttemptAt: '2026-09-11T10:00:00.000Z' });
         expect(await snapshot(d)).toEqual(beforeRead);
         expect(await d.logs.count()).toBe(4);
@@ -89,7 +93,7 @@ describe('read-only persisted Lv11 pilot', () => {
         if (mode === 'park') await d.parkEvents.add(event); else await d.islandEvents.add(event);
         const beforeRead = await snapshot(d);
         expect(unit(await readMathLevel11Pilot(d, 'child', AFTER_SUPPORT)))
-            .toMatchObject({ readiness: 'unconfirmed', retention: 'unconfirmed', unknownAttempts: 0 });
+            .toMatchObject({ readiness: 'unconfirmed', retention: 'confirmed', unknownAttempts: 0, needsRecheck: true });
         expect(await snapshot(d)).toEqual(beforeRead);
     });
 
@@ -120,6 +124,7 @@ describe('read-only persisted Lv11 pilot', () => {
         const beforeRead = await snapshot(d);
         const report = await readMathLevel11Pilot(d, 'child', AFTER_SUPPORT);
         expect(report.legacyLevel11Evidence).toBe(true);
+        expect(report.practice.coverageReady).toBe(false);
         expect(unit(report)).toMatchObject({ readiness: 'unconfirmed', retention: 'unconfirmed', unknownAttempts: 30, facets: [] });
         expect(await snapshot(d)).toEqual(beforeRead);
     });

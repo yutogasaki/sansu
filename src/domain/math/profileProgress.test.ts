@@ -28,17 +28,24 @@ describe("profile-backed math progression", () => {
     });
 
     it.each([Number.NaN, Infinity, -1, 1.5, Number.MAX_SAFE_INTEGER + 1])(
-        "treats malformed correctAnswers %s as an introductory sequence",
-        correctAnswers => {
-            const profile = createMathProgressProfile("add_tiny", correctAnswers);
+        "treats malformed independentCorrectAnswers %s as an introductory sequence",
+        independentCorrectAnswers => {
+            const profile = createMathProgressProfile("add_tiny", 12, { independentCorrectAnswers });
             expect(getMathSkillProgress("add_tiny", { profile })).toBe(0);
             expect(generateMathProblem("add_tiny", { profile }).correctAnswer).toBe("2");
         },
     );
 
-    it("safely restarts an old memory row with a missing correctAnswers field", () => {
+    it("keeps legacy raw successes without independent evidence at the introduction", () => {
         const profile = createMathProgressProfile("add_tiny", 12);
-        Reflect.deleteProperty(profile.mathSkills.add_tiny, "correctAnswers");
+        Reflect.deleteProperty(profile.mathSkills.add_tiny, "independentCorrectAnswers");
+        expect(profile.mathSkills.add_tiny.correctAnswers).toBe(12);
+        expect(getMathSkillProgress("add_tiny", { profile })).toBe(0);
+        expect(generateMathProblem("add_tiny", { profile }).correctAnswer).toBe("2");
+    });
+
+    it("keeps assisted or corrected raw successes separate from independent progression", () => {
+        const profile = createMathProgressProfile("add_tiny", 12, { independentCorrectAnswers: 0 });
         expect(getMathSkillProgress("add_tiny", { profile })).toBe(0);
         expect(generateMathProblem("add_tiny", { profile }).correctAnswer).toBe("2");
     });
@@ -58,7 +65,7 @@ describe("profile-backed math progression", () => {
         ["count_read", 8], ["count_next_10", 3], ["count_fill", 20], ["compare_2d", 20],
         ["add_tiny", 3], ["add_1d_2_bridge", 12], ["add_1d_2", 12],
         ["sub_tiny", 4], ["sub_1d1d_nc", 8], ["sub_1d1d_c_bridge", 8],
-    ] as const)("%s advances with %s correct answers despite intervening errors", (skillId, correctAnswers) => {
+    ] as const)("%s advances with %s independent correct answers despite intervening errors", (skillId, correctAnswers) => {
         const generate = (correct: number, failed = 0) => generateMathProblem(skillId, {
             profile: createMathProgressProfile(skillId, correct, {
                 totalAnswers: correct + failed * 2,

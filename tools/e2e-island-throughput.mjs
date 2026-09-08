@@ -87,6 +87,7 @@ async function installIslandFixture(page, profileId) {
     return page.evaluate(async ({ profileId, fixture, initialCompletedSets, setup }) => {
         const { db } = await import('/src/db/index.ts');
         const { createColdOpenFixedTenProblem } = await import('/src/domain/benchmark/coldOpenFixedTen.ts');
+        const { createLearningProblemContext } = await import('/src/domain/learning/context.ts');
         const { openIsland, startIslandPlan } = await import('/src/domain/island/repository.ts');
         window.__islandFixturePlans = [];
         db.islandPlans.hook('creating', (_key, plan) => {
@@ -94,10 +95,18 @@ async function installIslandFixture(page, profileId) {
             if (plan.cursor !== 0 || plan.revision !== 0 || plan.slots.length !== 6) throw new Error('Fixture must replace a new real six-question reservation only');
             const sequence = window.__islandFixturePlans.length;
             if (sequence > 1) throw new Error('Only two isolated fixture sets may be reserved');
-            plan.slots = Array.from({ length: 6 }, (_, index) => ({
-                problem: createColdOpenFixedTenProblem((sequence * 6 + index) % 10, `${plan.id}:slot-${index}`),
-                source: 'main', countsTowardReviewCap: false, assisted: false, completed: false,
-            }));
+            plan.slots = Array.from({ length: 6 }, (_, index) => {
+                const problem = createColdOpenFixedTenProblem((sequence * 6 + index) % 10, `${plan.id}:slot-${index}`);
+                if (!problem) throw new Error('Missing fixed-ten fixture problem');
+                return {
+                    problem: { ...problem, learningContext: createLearningProblemContext('math', problem) },
+                    source: 'main', countsTowardReviewCap: false, assisted: false,
+                    learningEvidenceAssistance: 'independent', completed: false,
+                };
+            });
+            // The synthetic familiar profile has already learned this fixture
+            // item. Metadata from the replaced production slots cannot survive.
+            plan.introducedItemIds = [];
             window.__islandFixturePlans.push({ fixture, originalWorkload: 6, plan: structuredClone(plan) });
         });
         const opened = await openIsland(profileId);
@@ -404,7 +413,7 @@ function summarize() {
         phoneAndTablet: layouts.length === 2,
         noBrowserErrors: report.runs.every(run => run.errors.length === 0),
         oneRenderedBuildAndCandidate: report.runtime.revisions.length === 1 && report.runtime.versions.length === 1
-            && report.runtime.candidates.length === 1 && report.runtime.candidates[0] === 'mystic-island-living-v3'
+            && report.runtime.candidates.length === 1 && report.runtime.candidates[0] === 'mystic-island-living-v5'
             && report.runtime.learningCandidates.length === 1 && report.runtime.learningCandidates[0] === 'mystic-island-learning-v2',
         sourceFilesUnchangedDuringBenchmark: report.sourceSnapshotStart.hash === report.sourceSnapshotEnd.hash,
     };

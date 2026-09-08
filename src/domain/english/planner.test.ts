@@ -25,7 +25,7 @@ describe('vocabulary learning selection', () => {
     it('revisits failed and skipped words until independent success in both main and plus-one lanes', () => {
         const p = profile();
         for (const level of [1, 2]) {
-            for (const word of getWordsByLevel(level)) p.vocabWords[word.id] = { ...createDefaultMemoryState(word.id, 'vocab', false), correctAnswers: 5, totalAnswers: 5 };
+            for (const word of getWordsByLevel(level)) p.vocabWords[word.id] = { ...createDefaultMemoryState(word.id, 'vocab', false), correctAnswers: 5, independentCorrectAnswers: 5, totalAnswers: 5 };
         }
         for (const id of ['apple', 'orange_lv2']) p.vocabWords[id] = { ...createDefaultMemoryState(id, 'vocab', false), correctAnswers: 0, incorrectAnswers: 4, skippedAnswers: 3, totalAnswers: 7 };
         const slots = planVocabProblemSlots({ profile: p, count: 3, random: () => 0 });
@@ -36,8 +36,17 @@ describe('vocabulary learning selection', () => {
 
     it('does not inherit old-ID mastery for later same-spelling items', () => {
         const p = profile();
-        p.vocabWords.orange = { ...createDefaultMemoryState('orange', 'vocab', false), correctAnswers: 20, totalAnswers: 20 };
+        p.vocabWords.orange = { ...createDefaultMemoryState('orange', 'vocab', false), correctAnswers: 20, independentCorrectAnswers: 20, totalAnswers: 20 };
         expect(pickVocabWordId(['orange', 'orange_lv2'], { random: () => 0 }, p.vocabWords)).toBe('orange_lv2');
+    });
+
+    it('does not infer independent success from legacy or assisted raw successes', () => {
+        const p = profile();
+        p.vocabWords.apple = { ...createDefaultMemoryState('apple', 'vocab', false), correctAnswers: 5, independentCorrectAnswers: 1 };
+        for (const independentCorrectAnswers of [undefined, 0, 0.5, Number.NaN, Number.POSITIVE_INFINITY, Number.MAX_SAFE_INTEGER + 1]) {
+            p.vocabWords.banana = { ...createDefaultMemoryState('banana', 'vocab', false), correctAnswers: 20, independentCorrectAnswers };
+            expect(pickVocabWordId(['apple', 'banana'], { random: () => 0 }, p.vocabWords)).toBe('banana');
+        }
     });
 
     it('rotates weak items away from recent prompts and marks them review', () => {
@@ -52,6 +61,34 @@ describe('vocabulary learning selection', () => {
         expect(planVocabProblemSlots(base)[0].wordId).toBe('apple');
         expect(planVocabProblemSlots({ ...base, dueAfterId: 'apple' })[0].wordId).toBe('banana');
         expect(planVocabProblemSlots({ ...base, dueAfterId: 'banana' })[0].wordId).toBe('apple');
+    });
+
+    it('expands backlog review while preserving a safe three-question prefix and Due rotation', () => {
+        const dueIds = getWordsByLevel(1).slice(0, 8).map(word => word.id);
+        const slots = planVocabProblemSlots({
+            profile: profile(), count: 6, shortestCount: 3, dueIds,
+            dueAfterId: dueIds[0], random: () => 0,
+        });
+        const review = slots.filter(slot => slot.source === 'due');
+        expect(review.map(slot => slot.wordId)).toEqual(dueIds.slice(1, 4));
+        expect(slots.slice(0, 3).filter(slot => slot.isReview)).toHaveLength(1);
+        expect(slots.slice(0, 3).filter(slot => slot.source === 'main')).toHaveLength(2);
+        expect(slots.filter(slot => slot.source === 'main')).toHaveLength(3);
+        expect(slots.some(slot => slot.source === 'plus-one')).toBe(false);
+        expect(new Set(review.map(slot => slot.wordId)).size).toBe(review.length);
+        expect(Math.max(...slots.map(slot => slots.filter(other => other.wordId === slot.wordId).length))).toBeLessThanOrEqual(2);
+    });
+
+    it('counts unique eligible Due items for backlog and keeps main in short sections', () => {
+        const p = profile();
+        p.vocabLevels = p.vocabLevels?.map(level => level.level === 2 ? { ...level, enabled: false } : level);
+        const slots = planVocabProblemSlots({
+            profile: p, count: 6, dueIds: ['apple', 'apple', 'banana', 'head', 'gone', 'orange'],
+            skippedIds: ['orange'], random: () => 0,
+        });
+        expect(slots.filter(slot => slot.source === 'due')).toHaveLength(1);
+        const short = planVocabProblemSlots({ profile: profile(), count: 2, dueIds: ['apple'], random: () => 0 });
+        expect(short.map(slot => slot.source)).toEqual(['due', 'main']);
     });
 
     it.each([1, 2, 3, 6])('caps challenge questions even under constant challenge selection (%s questions)', count => {

@@ -1,0 +1,32 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/components/island/three/residentFabric.test.ts (3 tests) 2346ms
+   ✓ one cloth resident in the shared island > keeps atlas UVs through body/head batching and every articulated hand/foot 2218ms
+ ✓ src/components/island/three/residentRig.test.ts (38 tests) 3099ms
+   ✓ resident local rig and furniture contact > bench supports each resident at the real surface through all rotations 454ms
+   ✓ resident local rig and furniture contact > mushroom supports each resident at the real surface through all rotations 311ms
+   ✓ resident interest stays a removable layer on the real rig > otter keeps real feet, root, seat and shoulder joints on rotated ordinary objects 566ms
+ ✓ src/components/island/three/sharedActivityFraming.test.ts (23 tests) 11566ms
+   ✓ one side view contains the complete shared delivery > 'flower' fits all quarter-turn chair directions and phone/tablet stage shapes 1493ms
+   ✓ one side view contains the complete shared delivery > 'star' fits all quarter-turn chair directions and phone/tablet stage shapes 823ms
+   ✓ one side view contains the complete shared delivery > 'bubble' fits all quarter-turn chair directions and phone/tablet stage shapes 897ms
+   ✓ one side view contains the complete shared delivery > scores actual held poses for '624 star spectator' across every phase without touching the live rigs 462ms
+   ✓ one side view contains the complete shared delivery > scores actual held poses for '484 star self-occlusion' across every phase without touching the live rigs 334ms
+   ✓ one side view contains the complete shared delivery > scores actual held poses for '484 bubble self-occlusion' across every phase without touching the live rigs 609ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'phone star' scene 430ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'tablet star' scene 362ms
+   ✓ one side view contains the complete shared delivery > selects a legal fixed presentation for cdc5 phone without inventing readability 328ms
+   ✓ one side view contains the complete shared delivery > selects a legal fixed presentation for cdc5 tablet without inventing readability 429ms
+   ✓ one side view contains the complete shared delivery > selects a legal fixed presentation for cdc5 obstructed without inventing readability 1614ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'phone-flower' preserves a legal readable presentation 389ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'phone-bubble' preserves a legal readable presentation 371ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'tablet-flower' preserves a legal readable presentation 318ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'tablet-bubble' preserves a legal readable presentation 396ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'tablet-fox-flower' preserves a legal readable presentation 736ms
+
+ Test Files  3 passed (3)
+      Tests  64 passed (64)
+   Start at  13:59:30
+   Duration  12.16s (transform 407ms, setup 0ms, collect 765ms, tests 17.01s, environment 0ms, prepare 166ms)
+

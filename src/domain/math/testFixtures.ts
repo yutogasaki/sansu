@@ -11,6 +11,7 @@ export const createMathProgressProfile = (
         ...createDefaultMemoryState(skillId, "math", false),
         totalAnswers: correctAnswers,
         correctAnswers,
+        independentCorrectAnswers: correctAnswers,
         incorrectAnswers: 0,
         ...overrides,
     };

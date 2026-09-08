@@ -40,11 +40,19 @@ Use it to find the right source of truth before editing docs, tasks, runbooks, o
 
 ## Frequently Used Docs
 
-教材の単元対応と算数Lv11の比較試作は[学習単元と習得証拠](product/31_learning_units_spec.md)を参照。
+学習の蓄積でほしを貯め、実際の島でテーマ/飾りを試して選択交換する契約は[島のきせかえ](product/35_island_customization_spec.md)。通常の連問と自動成長を維持し、目標・着せ替えはホームの任意操作とする。
+
+島での算数・英語は[教科の切り替え](product/28_mystic_island_spec.md#教科の切り替え)を参照。固定交互から、初見の短い継続・必要な復習・任意の「つぎも」に合わせた3〜6問の区間へ変更する。
+
+独力正解、実時間の復習、卒業後の再確認とLv11の単元別出題・進行は[学習強化](product/34_learning_reinforcement_spec.md)を参照。教材の単元対応は[学習単元と習得証拠](product/31_learning_units_spec.md)。
 
 全教材の対応表は[算数の単元カタログ](product/32_math_unit_catalog.md)と[英語の単元カタログ](product/33_english_unit_catalog.md)。`npm run learning:report`で検索できるHTMLと比較JSONを生成できる。
 
 学習で同じ場所が自動で育ち、住民の暮らし・任意編集・発見とアルバムへつながる最新契約は[育つ島の仕様](product/30_living_island_growth_spec.md)。
+
+大きな土地拡張、成熟時の案内、節目に絞る成長記録は[変更後の実画面](design/audits/2026-09-08-island-milestones/review.html)と[検証記録](design/audits/2026-09-08-island-milestones/README.md)を参照。
+
+花壇や家を育てきることを島全体の拡張条件にした最新変更は[完成前後の実画面](design/audits/2026-09-08-island-chapter-upgrades/review.html)と[検証記録](design/audits/2026-09-08-island-chapter-upgrades/README.md)を参照。
 
 算数・英語の初回難度、独力正解による昇格、意味別の英単語ID、日を空けた復習は [学習曲線と段階進行](product/29_learning_progression_spec.md) を参照。
 
@@ -57,6 +65,8 @@ Use it to find the right source of truth before editing docs, tasks, runbooks, o
 現在の開発優先は [不思議な島の仕様](product/28_mystic_island_spec.md)。通常の学習形式と速い連問を守りながら、光・配置・どうぶつの暮らしで継続を支える。
 
 島は大胆な配色とコード生成3Dの`moon-garden`。現在の入力・学習支援・再確認・どうぶつとの自由な遊びは [実画面レビュー](design/audits/2026-09-07-island-loop/review.html) と [つながりの改善監査](design/audits/2026-09-07-island-loop/README.md) を参照。3D方式の判断と全6家具は [前回の3D監査](design/audits/2026-09-07-island-3d/README.md)、前回完成時の全ループは [比較レポート](design/audits/2026-09-07-island-3d/review.html) に保存している。
+
+問題を解く画面の音・○／×・英語の読み上げは [実画面と音の試聴](design/audits/2026-09-08-learning-feedback/review.html) と [検証記録](design/audits/2026-09-08-learning-feedback/README.md) を参照。
 
 問題を解く画面の基盤実装は [島で解く体験の監査](design/audits/2026-09-07-island-learning/README.md)、以前の見た目と回答動画は [学習面のcontact sheet](design/audits/2026-09-07-island-learning/contact-sheet.html) を参照。
 

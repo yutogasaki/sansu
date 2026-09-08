@@ -2,6 +2,9 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { IslandRecord } from '../../domain/island/types';
 import type { IslandStageProps } from './three/types';
+import { createIsland } from '../../domain/island/catalog';
+import { getIslandGrowthTarget, growIslandAfterCompletedSet } from '../../domain/island/growth';
+import { getIslandCustomization } from '../../domain/island/customization';
 
 const stages = vi.hoisted(() => [] as IslandStageProps[]);
 vi.mock('./IslandStage', () => ({ default: (props: IslandStageProps) => { stages.push(props); return <figure data-read-only={props.readOnly} />; } }));
@@ -42,5 +45,44 @@ describe('immutable growth album', () => {
         expect(markup).toContain('しまぜんぶ');
         expect(markup).toContain('disabled="">みずべ'); expect(markup).toContain('disabled="">木かげ');
         expect(stages.every(stage => stage.comparisonHabitat === 'garden')).toBe(true);
+    });
+
+    it('keeps legacy and newly captured cosmetics separate from the currently equipped appearance', () => {
+        const island = createIsland('p', 0);
+        const initial = island.growth!.memories[0];
+        delete initial.cosmetics;
+        island.customization = { ...getIslandCustomization(island), themeId: 'candy', accentId: 'star-lanterns',
+            ownedItemIds: ['moon-garden', 'candy', 'star-lanterns'] };
+        const render = () => renderToStaticMarkup(<IslandAlbum island={island} disabled={false} onTry={noop} onPlace={noop} onClose={noop} />);
+        const noop = () => undefined;
+        render();
+        expect(stages[0].cosmetics).toEqual({ themeId: 'moon-garden', accentId: null });
+        expect(stages[1].cosmetics).toEqual({ themeId: 'candy', accentId: 'star-lanterns' });
+        initial.cosmetics = { themeId: 'crystal', accentId: 'crystal-charms' };
+        const before = structuredClone(island);
+        stages.length = 0;
+        render();
+        expect(stages[0].cosmetics).toEqual({ themeId: 'crystal', accentId: 'crystal-charms' });
+        expect(stages[1].cosmetics).toEqual({ themeId: 'candy', accentId: 'star-lanterns' });
+        expect(island).toEqual(before);
+    });
+
+    it('opens the requested milestone place at its baseline and displays only that place history', () => {
+        let island = createIsland('p', 0);
+        for (let completedSets = 1; completedSets <= 24; completedSets++) {
+            island = growIslandAfterCompletedSet({ ...island, completedSets }, getIslandGrowthTarget(island), completedSets);
+        }
+        const before = structuredClone(island);
+        const markup = renderToStaticMarkup(<IslandAlbum island={island} disabled={false} initialComparison="waterside"
+            onTry={() => undefined} onPlace={() => undefined} onClose={() => undefined} />);
+        expect(stages[0]).toMatchObject({ completedSets: 6, comparisonHabitat: 'waterside', growth: { expansionLevel: 1, progress: { waterside: 0 } } });
+        expect(stages[1]).toMatchObject({ completedSets: 24, comparisonHabitat: 'waterside', growth: { progress: { waterside: 6 } } });
+        const timeline = markup.match(/class="island-album-timeline"[\s\S]*?<\/div>/)?.[0];
+        expect(timeline?.match(/<button/g)).toHaveLength(2);
+        expect(timeline).toContain('ひがしへ はしが つながった');
+        expect(timeline).toContain('みずべが にぎやかに なった');
+        expect(timeline).not.toContain('おはなが いっぱいに なった');
+        expect(timeline).not.toContain('にしへ はしが つながった');
+        expect(island).toEqual(before);
     });
 });

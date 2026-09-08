@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 
-export const ISLAND_CANDIDATE = 'mystic-island-living-v3';
+export const ISLAND_CANDIDATE = 'mystic-island-living-v5';
 export const button = (page, name) => page.getByRole('button', { name, exact: true });
 export const activate = (locator, touch = false) => touch ? locator.tap() : locator.click();
 
@@ -17,12 +17,12 @@ export async function seedDev(page, { skill = 'add_1d_1', subject = 'math', fami
         await saveProfile(profile);
         await setActiveProfileId(profile.id);
         const memory = id => ({ profileId: profile.id, id, strength: 2, nextReview: id === skill ? '2000-01-01' : '2099-01-01',
-            updatedAt: '2000-01-01', totalAnswers: 20, correctAnswers: 18, incorrectAnswers: 2, skippedAnswers: 0 });
+            updatedAt: '2000-01-01', totalAnswers: 20, correctAnswers: 18, independentCorrectAnswers: 18, incorrectAnswers: 2, skippedAnswers: 0 });
         if (familiar) {
             await db.memoryMath.bulkPut(Object.keys(MATH_GENERATORS).filter(id => getLevelForSkill(id) <= profile.mathMaxUnlocked)
                 .map(id => ({ ...memory(id), status: getLevelForSkill(id) < profile.mathMainLevel ? 'retired' : 'active' })));
             await db.memoryVocab.bulkPut(ENGLISH_WORDS.filter(word => word.level <= profile.vocabMaxUnlocked).map(word => memory(word.id)));
-        } else if (skill) await db.memoryMath.put({ ...memory(skill), totalAnswers: 0, correctAnswers: 0, incorrectAnswers: 0, status: 'active' });
+        } else if (skill) await db.memoryMath.put({ ...memory(skill), totalAnswers: 0, correctAnswers: 0, independentCorrectAnswers: 0, incorrectAnswers: 0, status: 'active' });
         return profile.id;
     }, { skill, subject, familiar, name });
 }

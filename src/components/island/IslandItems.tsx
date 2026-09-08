@@ -1,5 +1,6 @@
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Check, RotateCw, X } from 'lucide-react';
 import { ISLAND_ITEMS } from '../../domain/island/catalog';
+import { getIslandExpansionLevel } from '../../domain/island/expansion';
 import { getIslandItemAppearanceLevel, getIslandItemGrowthLevel } from '../../domain/island/growth';
 import type { IslandItem, IslandItemKind, IslandRecord, IslandPosition } from '../../domain/island/types';
 
@@ -74,9 +75,9 @@ export function IslandRewards({ island, intro = false, disabled, onChoose, onCon
             <button className="island-icon-button" aria-label="しまへ もどる" onClick={onClose} disabled={disabled}><X size={20} /></button></div>
         {reward && <div className="island-reward-choices">{reward.choices.map(kind => <button className="island-reward" key={kind}
             disabled={disabled} onClick={() => onChoose(reward.id, kind)}><ItemPicture kind={kind} /><strong>{ISLAND_ITEMS[kind].name}</strong></button>)}</div>}
-        {island.completedSets === 2 && <p className="island-milestone">はしが つながった！ あたらしい にわにも おけるよ。</p>}
-        {island.completedSets === 4 && <p className="island-milestone">キツネが あそびに きたよ。いっしょに すごそう。</p>}
-        {island.completedSets === 6 && <p className="island-milestone">とうだいに あかりが ともったよ！</p>}
+        {getIslandExpansionLevel(island) >= 1 && island.completedSets === 2 && <p className="island-milestone">はしが つながった！ あたらしい にわにも おけるよ。</p>}
+        {getIslandExpansionLevel(island) >= 1 && island.completedSets === 4 && <p className="island-milestone">キツネが あそびに きたよ。いっしょに すごそう。</p>}
+        {getIslandExpansionLevel(island) >= 1 && island.completedSets === 6 && <p className="island-milestone">とうだいに あかりが ともったよ！</p>}
         <button className="island-primary island-continue" disabled={disabled} onClick={onContinue}>つづけて とく <ArrowRight size={20} /></button>
         <p className="island-note">おくりものは あとで えらんでも いいよ{island.pendingRewards.length > 1 ? `（${island.pendingRewards.length}こ）` : ''}</p>
     </section>;

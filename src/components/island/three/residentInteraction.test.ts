@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createIsland, isValidIslandPlacement } from '../../../domain/island/catalog';
+import { createIsland, getIslandLandAccess, isValidIslandPlacement } from '../../../domain/island/catalog';
 import { findSafeResidentSpawn, planResidentRoute, residentObstacles, residentPointIsClear } from './navigation';
 import { chooseReachableResident, residentNeedsInitialSpawn, savedResidentLayoutChanged, suggestReachablePlacement, type ResidentCandidate } from './residentInteraction';
 import type { IslandStageItem } from './types';
@@ -133,6 +133,22 @@ describe('safe initial resident placement', () => {
         expect(point).toBeDefined(); expect(point).not.toEqual(origin); expect(point.x).toBeGreaterThan(4.6);
         expect(residentPointIsClear(point, true, residentObstacles(items, ''))).toBe(true);
         expect(findSafeResidentSpawn(origin, items, 0)).toBeUndefined();
+    });
+
+    it('waits for eastern land and retries a late fox arrival without moving saved possessions', () => {
+        const origin = residents()[2].position;
+        const items: IslandStageItem[] = [{ id: 'fox-flower', kind: 'flower', position: { ...origin }, rotation: 0 }];
+        const before = structuredClone(items);
+        const closed = getIslandLandAccess({ completedSets: 9, growth: { expansionLevel: 0 } });
+        expect(findSafeResidentSpawn(origin, items, closed)).toBeUndefined();
+        expect(residentNeedsInitialSpawn('fox', 10, 9, false, false, true)).toBe(true);
+        expect(residentNeedsInitialSpawn('otter', 10, 9, false, false, true)).toBe(false);
+        const opened = getIslandLandAccess({ completedSets: 10, growth: { expansionLevel: 1 } });
+        const position = findSafeResidentSpawn(origin, items, opened)!;
+        expect(position).toBeDefined();
+        expect(position.x).toBeGreaterThan(4.6);
+        expect(residentPointIsClear(position, opened, residentObstacles(items, ''))).toBe(true);
+        expect(items).toEqual(before);
     });
 
     it('does not place a relocated resident on another resident', () => {

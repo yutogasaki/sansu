@@ -57,7 +57,14 @@ describe('Island staged assistance presentation', () => {
         const before = JSON.stringify(current);
         const rendered = renderToStaticMarkup(<IslandAnswerForm slot={current} disabled={false} onAnswer={noop} />);
         expect(rendered).toContain('data-support-stage="model"');
-        const buttons = [...rendered.matchAll(/<button\b[^>]*>/g)].map(match => match[0]);
+        const allButtons = [...rendered.matchAll(/<button\b[^>]*>/g)].map(match => match[0]);
+        // Listening to the visible word is available during a model; answer input stays locked.
+        const speech = allButtons.find(button => button.includes('aria-label="えいごを きく"'));
+        if (problem.subject === 'vocab') {
+            expect(speech).toBeDefined();
+            expect(speech).not.toContain('disabled=""');
+        } else expect(speech).toBeUndefined();
+        const buttons = allButtons.filter(button => !button.includes('aria-label="えいごを きく"'));
         expect(buttons.length).toBeGreaterThan(0);
         expect(buttons.every(button => button.includes('disabled=""'))).toBe(true);
         expect(JSON.stringify(current)).toBe(before);

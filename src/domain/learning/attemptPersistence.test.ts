@@ -42,7 +42,10 @@ async function setup(mode: Mode, problem = arithmetic()) {
     const plan = mode === 'park' ? await startParkPlan('child', 'bubble', d) : await startIslandPlan('child', d);
     plan.slots = [{ problem, assisted: false, completed: false, source: 'due', countsTowardReviewCap: true,
         learningEvidenceAssistance: 'independent' }];
-    if (mode === 'park') await d.parkPlans.put(plan as ParkPlan); else await d.islandPlans.put(plan as IslandPlan);
+    if (mode === 'park') await d.parkPlans.put(plan as ParkPlan); else {
+        (plan as IslandPlan).introducedItemIds = [problem.categoryId];
+        await d.islandPlans.put(plan as IslandPlan);
+    }
     return { d, plan };
 }
 const act = (mode: Mode, d: SansuDatabase, plan: ParkPlan | IslandPlan, action: ParkLearningAction) => mode === 'park'

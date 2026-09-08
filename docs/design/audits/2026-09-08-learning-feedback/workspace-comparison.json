@@ -1,0 +1,42 @@
+{
+  "scope": "Exact final ownership comparison; shared Island page/panel include separately owned milestone and subject-selection additions, reviewed without replacing them.",
+  "matches": [
+    "src/utils/audio.ts",
+    "src/utils/tts.ts",
+    "src/utils/tts.test.ts",
+    "src/components/domain/LearningAnswerForm.tsx",
+    "src/components/island/IslandAnswerFeedback.tsx",
+    "src/components/island/IslandSpeechControl.tsx",
+    "src/components/island/useIslandSpeech.ts",
+    "src/components/island/IslandLearningPanel.css",
+    "src/components/island/IslandAnswerForm.tsx",
+    "src/components/island/IslandAnswerForm.css",
+    "src/components/island/IslandProblemPrompt.tsx",
+    "src/components/island/learningFeedback.ts",
+    "src/components/island/learningFeedback.test.ts",
+    "src/components/island/IslandLearningSupport.test.tsx",
+    "tools/check-asset-budget.mjs",
+    "tools/generate-sounds.py",
+    "tools/e2e-island-feedback.mjs",
+    "tools/e2e-island-learning.mjs",
+    "public/sounds/tap.mp3",
+    "public/sounds/step.mp3",
+    "public/sounds/correct.mp3",
+    "public/sounds/incorrect.mp3",
+    "public/sounds/clear.mp3",
+    "public/sounds/start.mp3",
+    "public/sounds/level_up.mp3"
+  ],
+  "sharedDifferences": [
+    {
+      "path": "src/components/island/IslandLearningPanel.tsx",
+      "root": "28c587737a016cdc55b8cb61449cf0ec75ff99f31f0bb7aae13bcc54de412201",
+      "qa": "c09ad713492bcd8424730ba4d55008a4255839e145a4e4be5309d5547522abd8"
+    },
+    {
+      "path": "src/pages/Island.tsx",
+      "root": "dc599b4a4e0657980e35c2316a2dfdfbbee8461ad4b90b691a55126444c1a823",
+      "qa": "773218330d1fa2116825e6233be0d5c3035fceb2653e88bc189fdbbb4605d6e1"
+    }
+  ]
+}

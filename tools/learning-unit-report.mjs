@@ -155,15 +155,23 @@ export function buildLearningReportHtml(report) {
         const units = Array.isArray(evaluation.units) ? evaluation.units : [];
         const readyCount = units.filter(unit => unit.readiness === 'ready').length;
         const retainedCount = units.filter(unit => unit.retention === 'confirmed').length;
+        const dueCount = units.filter(unit => unit.freshness === 'due').length;
+        const recheckCount = units.filter(unit => unit.needsRecheck).length;
+        const freshnessLabels = { unconfirmed: '現在の確認が必要', fresh: '確認期限内', due: '確認期限が到来' };
+        const formatTime = value => value ? escapeHtml(value) : '未設定';
         const summary = units.length ? `<p class="scenario-result">旧レベルの集計条件: ${evaluation.legacyLevel11Evidence ? '充足' : '未充足'}<br>
-            単元の理解確認: <strong>${readyCount} / ${units.length}</strong> · 定着確認: <strong>${retainedCount} / ${units.length}</strong></p>` : '';
+            3別問の独力証拠: <strong>${readyCount} / ${units.length}</strong> · 過去の遅延確認実績: <strong>${retainedCount} / ${units.length}</strong><br>
+            現在: 期限到来 <strong>${dueCount}</strong>単元 · 要再確認 <strong>${recheckCount}</strong>単元<br>
+            Lv11必要型の確認: ${scenario.practice?.coverageReady ? '充足' : '未充足'} · 評価時点: ${formatTime(evaluation.asOf)}</p>` : '';
         const unitTable = units.length ? `<details><summary>${units.length}単元の評価を見る</summary><div class="table-wrap"><table class="scenario-table">
-            <thead><tr><th scope="col">単元</th><th scope="col">理解</th><th scope="col">定着</th><th scope="col">前提未確認</th></tr></thead>
+            <thead><tr><th scope="col">単元</th><th scope="col">3別問の証拠</th><th scope="col">過去の遅延確認</th><th scope="col">現在の確認状況</th><th scope="col">次回確認期限（UTC）</th><th scope="col">前提未確認</th></tr></thead>
             <tbody>${units.map(unit => `<tr><td>${escapeHtml(unit.label)}</td><td>${unit.readiness === 'ready' ? '確認済み' : '未確認'}</td>
-                <td>${unit.retention === 'confirmed' ? '確認済み' : '未確認'}</td><td>${escapeHtml(unit.unconfirmedPrerequisites?.length ?? 0)}件</td></tr>`).join('')}</tbody>
+                <td>${unit.retention === 'confirmed' ? '実績あり' : '実績未確認'}</td>
+                <td>${freshnessLabels[unit.freshness] ?? '現在の確認が必要'}${unit.needsRecheck ? '<span class="subline">失敗・支援・未知文脈から要再確認</span>' : ''}${unit.uncertainty ? '<span class="subline">文脈不明の記録あり</span>' : ''}</td>
+                <td>${formatTime(unit.nextCheckAt)}</td><td>${escapeHtml(unit.unconfirmedPrerequisites?.length ?? 0)}件</td></tr>`).join('')}</tbody>
         </table></div></details>` : '';
         return `<article class="scenario"><h3>${index + 1}. ${escapeHtml(scenario.name)}</h3><p>${escapeHtml(scenario.description)}</p>
-            ${summary}${unitTable}<details><summary>証拠・条件の全データを見る</summary><pre>${escapeHtml(JSON.stringify(scenario.evaluation, null, 2))}</pre></details></article>`;
+            ${summary}${unitTable}<details><summary>証拠・条件・選択順の全データを見る</summary><pre>${escapeHtml(JSON.stringify({ evaluation: scenario.evaluation, practice: scenario.practice }, null, 2))}</pre></details></article>`;
     }).join('');
 
     return `<!doctype html>
@@ -177,9 +185,9 @@ export function buildLearningReportHtml(report) {
 .scenario-result{background:#edf3ef;padding:10px 12px;border-radius:6px}.scenario details+details{margin-top:9px}.scenario-table{min-width:0;table-layout:auto;font-size:12px}.scenario-table th{width:auto!important}.scenario-table th,.scenario-table td{padding:8px}
 </style></head><body><main>
 <header><div class="eyebrow">SANSU · 学習設計の検証</div><h1>学習単元の比較レポート</h1>
-<p class="intro">既存の教材を概念・語義ごとの単元へ対応させ、算数Lv11の習得証拠を比較する試作です。単元、表現・方法、問題の型を分けて確認できます。</p>
+<p class="intro">既存の教材を概念・語義ごとの単元へ対応させ、算数Lv11の習得証拠を比較します。単元、表現・方法、問題の型と、過去の実績・現在の確認期限を分けて確認できます。</p>
 <p class="muted">カタログ版: ${escapeHtml(report.catalogVersion)} · 生成: ${escapeHtml(new Date().toISOString())}</p></header>
-<aside class="notice"><p><strong>比較用の仮判定です。</strong> 通常の出題選択・SRS・解放・昇格は変更しません。シナリオは人工的に作った回答例で、実際の子どもの学習結果ではありません。</p></aside>
+<aside class="notice"><p><strong>合成データを使った読み取り専用の診断です。</strong> このレポートは学習記録を変更しません。現在のアプリが使うLv11の確認条件を、人工的な回答例で比較します。過去の遅延確認実績は現在の想起確率を表しません。</p></aside>
 <div class="metrics">${metrics.map(([label, value]) => `<div class="metric"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value.toLocaleString('ja-JP'))}</strong></div>`).join('')}</div>
 ${validation}
 <section class="section" aria-labelledby="catalog-title"><h2 id="catalog-title">全教材の対応表</h2>

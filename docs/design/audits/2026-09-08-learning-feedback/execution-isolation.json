@@ -1,0 +1,1109 @@
+{
+  "method": "Wait for ten seconds without other E2E, build, lint or test runners; census every five seconds during each run. Idle preview servers and user browser tabs are not CPU test jobs.",
+  "runs": [
+    {
+      "name": "smoke-serial",
+      "started": "2026-09-08T13:26:56.278811",
+      "preflightOtherJobs": [],
+      "samples": [
+        {
+          "at": "2026-09-08T13:26:56.362888",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:27:01.402220",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:27:06.506515",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:27:11.556186",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:27:16.610343",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:27:21.668670",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:27:26.711251",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:27:31.754605",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:27:36.829455",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:27:41.871432",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:27:46.911461",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:27:51.972830",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:27:57.026817",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:28:02.141002",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:28:07.238595",
+          "otherJobs": [
+            {
+              "pid": 33523,
+              "command": "node /private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-subjects-final-e386qosz/node_modules/.bin/eslint ."
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:28:12.304219",
+          "otherJobs": [
+            {
+              "pid": 33523,
+              "command": "node /private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-subjects-final-e386qosz/node_modules/.bin/eslint ."
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:28:17.345388",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:28:22.526457",
+          "otherJobs": [
+            {
+              "pid": 33692,
+              "command": "node (vitest)"
+            },
+            {
+              "pid": 33700,
+              "command": "node (vitest 1)"
+            },
+            {
+              "pid": 33701,
+              "command": "node (vitest 2)"
+            },
+            {
+              "pid": 33702,
+              "command": "node (vitest 3)"
+            },
+            {
+              "pid": 33703,
+              "command": "node (vitest 4)"
+            },
+            {
+              "pid": 33704,
+              "command": "node (vitest 5)"
+            },
+            {
+              "pid": 33705,
+              "command": "node (vitest 6)"
+            },
+            {
+              "pid": 33706,
+              "command": "node (vitest 7)"
+            },
+            {
+              "pid": 33707,
+              "command": "node (vitest 8)"
+            },
+            {
+              "pid": 33736,
+              "command": "node (vitest 9)"
+            }
+          ]
+        }
+      ],
+      "exitCode": 0,
+      "finished": "2026-09-08T13:28:27.529044",
+      "exclusive": false
+    },
+    {
+      "name": "throughput",
+      "started": "2026-09-08T13:29:02.983237",
+      "preflightOtherJobs": [],
+      "samples": [
+        {
+          "at": "2026-09-08T13:29:03.093963",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:29:08.146512",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:29:13.189275",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:29:18.227562",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:29:23.277536",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:29:28.319995",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:29:33.384502",
+          "otherJobs": []
+        },
+        {
+          "at": "2026-09-08T13:29:38.432800",
+          "otherJobs": [
+            {
+              "pid": 34977,
+              "command": "node tools/e2e-island-subjects.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:29:43.490004",
+          "otherJobs": [
+            {
+              "pid": 34977,
+              "command": "node tools/e2e-island-subjects.mjs"
+            },
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:29:48.555682",
+          "otherJobs": [
+            {
+              "pid": 34977,
+              "command": "node tools/e2e-island-subjects.mjs"
+            },
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:29:53.615102",
+          "otherJobs": [
+            {
+              "pid": 34977,
+              "command": "node tools/e2e-island-subjects.mjs"
+            },
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:29:58.687954",
+          "otherJobs": [
+            {
+              "pid": 34977,
+              "command": "node tools/e2e-island-subjects.mjs"
+            },
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:30:03.745125",
+          "otherJobs": [
+            {
+              "pid": 34977,
+              "command": "node tools/e2e-island-subjects.mjs"
+            },
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:30:08.825973",
+          "otherJobs": [
+            {
+              "pid": 34977,
+              "command": "node tools/e2e-island-subjects.mjs"
+            },
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            },
+            {
+              "pid": 35239,
+              "command": "node tools/e2e-island-pwa.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:30:13.888128",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            },
+            {
+              "pid": 35239,
+              "command": "node tools/e2e-island-pwa.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:30:18.951073",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            },
+            {
+              "pid": 35239,
+              "command": "node tools/e2e-island-pwa.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:30:24.011230",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            },
+            {
+              "pid": 35239,
+              "command": "node tools/e2e-island-pwa.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:30:29.072737",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            },
+            {
+              "pid": 35239,
+              "command": "node tools/e2e-island-pwa.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:30:34.141677",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            },
+            {
+              "pid": 35239,
+              "command": "node tools/e2e-island-pwa.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:30:39.197675",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:30:44.252908",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:30:49.308134",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:30:54.357140",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:30:59.411648",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:31:04.465082",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:31:09.514138",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:31:14.564878",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:31:19.620970",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:31:24.674083",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:31:29.717183",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:31:34.764989",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:31:39.810608",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 35211,
+              "command": "node tools/e2e-island.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:31:44.856880",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:31:49.909517",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:31:54.961684",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:32:00.000186",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:32:05.051391",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:32:10.105829",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:32:15.155975",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:32:20.197242",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:32:25.247712",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:32:30.290996",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:32:35.334085",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:32:40.382283",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:32:45.488286",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:32:50.527811",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:32:55.600457",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:33:00.656807",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:33:05.704982",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 36935,
+              "command": "node (vitest)"
+            },
+            {
+              "pid": 36938,
+              "command": "node (vitest 1)"
+            },
+            {
+              "pid": 36939,
+              "command": "node (vitest 2)"
+            },
+            {
+              "pid": 36941,
+              "command": "node (vitest 4)"
+            },
+            {
+              "pid": 36942,
+              "command": "node (vitest 5)"
+            },
+            {
+              "pid": 36943,
+              "command": "node (vitest 6)"
+            },
+            {
+              "pid": 36944,
+              "command": "node (vitest 7)"
+            },
+            {
+              "pid": 36945,
+              "command": "node (vitest 8)"
+            },
+            {
+              "pid": 36946,
+              "command": "node (vitest 9)"
+            },
+            {
+              "pid": 37051,
+              "command": "node (vitest 3)"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:33:10.751853",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:33:15.797353",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:33:20.846000",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:33:25.897129",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:33:30.963203",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:33:36.013278",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:33:41.068188",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:33:46.114462",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:33:51.164872",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:33:56.225838",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:34:01.268189",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:34:06.330523",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:34:11.382148",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:34:16.427034",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:34:21.466549",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:34:26.534927",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:34:31.580858",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:34:36.630458",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:34:41.672277",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:34:46.718710",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:34:51.761555",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:34:56.886457",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:35:01.938017",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:35:07.009699",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:35:12.055916",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:35:17.112296",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            },
+            {
+              "pid": 38066,
+              "command": "node (vitest)"
+            },
+            {
+              "pid": 38078,
+              "command": "node (vitest 2)"
+            },
+            {
+              "pid": 38081,
+              "command": "node (vitest 5)"
+            },
+            {
+              "pid": 38082,
+              "command": "node (vitest 6)"
+            },
+            {
+              "pid": 38083,
+              "command": "node (vitest 7)"
+            },
+            {
+              "pid": 38084,
+              "command": "node (vitest 8)"
+            },
+            {
+              "pid": 38085,
+              "command": "node (vitest 9)"
+            },
+            {
+              "pid": 38095,
+              "command": "node (vitest 4)"
+            },
+            {
+              "pid": 38239,
+              "command": "node (vitest 1)"
+            },
+            {
+              "pid": 38241,
+              "command": "node (vitest 3)"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:35:22.161654",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:35:27.208916",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:35:32.282087",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:35:37.338563",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:35:42.398894",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:35:47.458338",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:35:52.503853",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:35:57.545839",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:36:02.593500",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:36:07.634438",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:36:12.683626",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:36:17.722156",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        },
+        {
+          "at": "2026-09-08T13:36:22.799396",
+          "otherJobs": [
+            {
+              "pid": 35003,
+              "command": "node tools/e2e-island-throughput.mjs"
+            }
+          ]
+        }
+      ],
+      "exitCode": 0,
+      "finished": "2026-09-08T13:36:27.799902",
+      "exclusive": false
+    }
+  ]
+}

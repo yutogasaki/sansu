@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { recordIslandDiscovery } from '../../domain/island/growthRepository';
 import type { IslandRecord } from '../../domain/island/types';
+import type { IslandActionKind } from './useIslandActions';
 
 interface ObservedDiscovery { id: string; itemId: string; failures: number; retryAt: number }
 
@@ -42,10 +43,11 @@ export function createIslandDiscoveryQueue(save: (id: string, itemId: string) =>
  * observing nor saving opens a panel or changes the learning reservation. */
 export function useIslandDiscoveries({ profileId, island, enabled, busy, run, onSaved }: {
     profileId: string; island?: IslandRecord; enabled: boolean; busy: boolean;
-    run: <T>(action: () => Promise<T>, minimumMs?: number) => Promise<T | undefined>;
+    run: <T>(action: () => Promise<T>, minimumMs?: number, kind?: IslandActionKind) => Promise<T | undefined>;
     onSaved: (island: IslandRecord) => void;
 }) {
-    const [queue] = useState(() => createIslandDiscoveryQueue((id, itemId) => run(() => recordIslandDiscovery(profileId, id, itemId)), onSaved));
+    const [queue] = useState(() => createIslandDiscoveryQueue((id, itemId) =>
+        run(() => recordIslandDiscovery(profileId, id, itemId), 0, 'discovery'), onSaved));
     const capture = useCallback((id: string, itemId: string) => {
         if (!enabled || island?.growth?.discoveries.some(entry => entry.id === id)) return;
         queue.observe(id, itemId);

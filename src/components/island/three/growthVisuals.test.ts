@@ -76,8 +76,8 @@ describe('same-place growth geometry', () => {
             expect(new THREE.Box3().setFromObject(structure).equals(structureBounds)).toBe(true);
             expect(tree.position.equals(root)).toBe(true); expect(getTreeLightAnchor(tree).equals(anchor)).toBe(true);
         }
-        expect(widths[3] / widths[0]).toBeGreaterThan(1.7);
-        expect(heights[3] / heights[0]).toBeGreaterThan(1.2);
+        expect(widths[3] / widths[0]).toBeGreaterThan(2.2);
+        expect(heights[3] / heights[0]).toBeGreaterThan(1.3);
         expect(widths.every((width, i) => i === 0 || width > widths[i - 1])).toBe(true);
         applyTreeGrowth(tree); expect(tree.getObjectByName('tree-canopy')!.scale.toArray()).toEqual([1, 1, 1]);
         disposeGeometry(tree); materials.dispose();
@@ -96,7 +96,36 @@ describe('same-place growth geometry', () => {
         }
         expect(heights[2] / heights[0]).toBeGreaterThan(1.8);
         expect(widths[2] / widths[0]).toBeGreaterThan(1.7);
+        // Maturity must fill a substantial vertical area with flowers: one
+        // enlarged head above an otherwise bare stem cannot satisfy this.
+        const matureFlowers = new THREE.Box3().setFromObject(flower.getObjectByName('growth-blooms')!);
+        expect(matureFlowers.max.y - matureFlowers.min.y).toBeGreaterThan(.85);
+        expect(matureFlowers.max.x - matureFlowers.min.x).toBeGreaterThan(.55);
         disposeGeometry(flower); materials.dispose();
+    });
+
+    it.each([
+        ['bench', 1.65], ['swing', 2.3], ['fountain', 1.7],
+    ] as const)('gives mature %s a substantial upper silhouette and keeps the seated space open', (kind, minimumHeight) => {
+        const materials = new IslandMaterials(), furniture = makeFurniture(kind, materials);
+        const item: IslandStageItem = { id: kind, kind, rotation: 0, growthLevel: 3 };
+        applyFurnitureGrowth(furniture, { ...item, appearanceLevel: 0 }, materials);
+        const before = new THREE.Box3().setFromObject(furniture);
+        applyFurnitureGrowth(furniture, item, materials);
+        const mature = new THREE.Box3().setFromObject(furniture);
+        expect(mature.max.y).toBeGreaterThan(minimumHeight);
+        expect(mature.max.y - before.max.y).toBeGreaterThan(.6);
+        const seat = getFurnitureAnchors(kind).seat;
+        if (seat) {
+            // New flowers and overhead arches must not fill the actor's central
+            // seated space, even though they change the furniture's outline.
+            const start = new THREE.Vector3(seat.x, seat.y + .05, seat.z);
+            const ray = new THREE.Raycaster(start, new THREE.Vector3(0, 1, 0), 0, .85);
+            expect(ray.intersectObject(furniture.getObjectByName('growth-details')!, true)).toHaveLength(0);
+        }
+        applyFurnitureGrowth(furniture, { ...item, appearanceLevel: 0 }, materials);
+        expect(new THREE.Box3().setFromObject(furniture).equals(before)).toBe(true);
+        disposeGeometry(furniture); materials.dispose();
     });
 
     it('adds earned intermediate buds and preserves legacy geometry', () => {
@@ -122,6 +151,20 @@ describe('same-place growth geometry', () => {
         expect(count).toBeGreaterThan(0);
         applySceneryGrowth(scenery, { ...state, items: [{ id: 'home', kind: 'lantern', rotation: 0, habitatId: 'village', growthLevel: 3, appearanceLevel: 0 }] }, materials);
         expect(scenery.getObjectByName('grown-house')!.children.length).toBe(0);
+        disposeGeometry(scenery); materials.dispose();
+    });
+
+    it('reveals western growth only with earned land and still restores legacy western memories', () => {
+        const materials = new IslandMaterials(), scenery = new THREE.Group();
+        const state: IslandStageState = { items: [], completedSets: 24, pulse: 0, learning: false,
+            growth: { version: 1, expansionLevel: 0, progress: { garden: 6, waterside: 6, grove: 6, village: 6 },
+                focus: 'village', memories: [], discoveries: [] } };
+        for (const expansionLevel of [0, 1, 2, undefined] as const) {
+            applySceneryGrowth(scenery, { ...state, growth: { ...state.growth!, expansionLevel } }, materials);
+            expect(Boolean(scenery.getObjectByName('grown-west-tree'))).toBe(expansionLevel === 2 || expansionLevel === undefined);
+            expect(scenery.getObjectByName('grown-tree')?.position.toArray()).toEqual([1.6, 0, -1.6]);
+            expect(scenery.getObjectByName('grown-house')?.position.toArray()).toEqual([-2.6, 0, -1.65]);
+        }
         disposeGeometry(scenery); materials.dispose();
     });
 
@@ -159,6 +202,9 @@ describe('same-place growth geometry', () => {
         applySceneryGrowth(scenery, state, materials);
         const house = scenery.getObjectByName('grown-house')!;
         house.updateWorldMatrix(true, true);
+        const matureBounds = new THREE.Box3().setFromObject(house);
+        expect(matureBounds.max.y).toBeGreaterThan(3);
+        expect(matureBounds.max.x - matureBounds.min.x).toBeGreaterThan(2.1);
         // Growth must not cover the large original roof planes with a new skin.
         for (const x of [-.65, .8]) {
             const start = house.localToWorld(new THREE.Vector3(x, 3.5, -.4));

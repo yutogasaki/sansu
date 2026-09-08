@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createIsland, isValidIslandPlacement } from '../../../domain/island/catalog';
+import { createIsland, getIslandLandAccess, isValidIslandPlacement } from '../../../domain/island/catalog';
 import { getIslandGrowthTarget, growIslandAfterCompletedSet } from '../../../domain/island/growth';
 import { findSafeResidentSpawn } from './navigation';
 import { chooseReachableResident } from './residentInteraction';
@@ -11,9 +11,10 @@ describe('automatically grown places support real resident life', () => {
         for (let section = 1; section <= 24; section++) {
             const target = getIslandGrowthTarget(island);
             island = growIslandAfterCompletedSet({ ...island, completedSets: section }, target, section + 1);
+            const access = getIslandLandAccess(island);
             const positions: { x: number; z: number }[] = [];
-            for (const origin of [{ x: .1, z: 1.6 }, { x: 2.45, z: 1.45 }, ...(section >= 4 ? [{ x: 6.26, z: .83 }] : [])]) {
-                const position = findSafeResidentSpawn(origin, island.items, section, positions);
+            for (const origin of [{ x: .1, z: 1.6 }, { x: 2.45, z: 1.45 }, ...(access.expansionLevel >= 1 && section >= 4 ? [{ x: 6.26, z: .83 }] : [])]) {
+                const position = findSafeResidentSpawn(origin, island.items, access, positions);
                 expect(position, `A resident needs a safe initial position at section ${section}`).toBeDefined();
                 positions.push(position!);
             }
@@ -21,7 +22,7 @@ describe('automatically grown places support real resident life', () => {
             for (const item of island.items) {
                 expect(item.position, `Automatic ${item.id} placement at section ${section}`).toBeDefined();
                 expect(isValidIslandPlacement(island, item.id, item.position!, item.rotation)).toBe(true);
-                expect(chooseReachableResident(residents, item, island.items, section), `${item.id} must be usable at section ${section}`).toBeDefined();
+                expect(chooseReachableResident(residents, item, island.items, access), `${item.id} must be usable at section ${section}`).toBeDefined();
             }
         }
         expect(island.items).toHaveLength(7);
@@ -32,13 +33,14 @@ describe('automatically grown places support real resident life', () => {
         for (let section = 1; section <= 24; section++) {
             island = growIslandAfterCompletedSet({ ...island, completedSets: section }, getIslandGrowthTarget(island), section + 1);
         }
+        const access = getIslandLandAccess(island);
         const positions: { x: number; z: number }[] = [];
         for (const origin of [{ x: .1, z: 1.6 }, { x: 2.45, z: 1.45 }, { x: 6.26, z: .83 }]) {
-            positions.push(findSafeResidentSpawn(origin, island.items, 24, positions)!);
+            positions.push(findSafeResidentSpawn(origin, island.items, access, positions)!);
         }
         const residents = positions.map(position => ({ position, visible: true }));
         for (const [id, kind] of [['starter-flower', 'flower'], ['living-fountain', 'bubble'], ['living-grove-lantern', 'star']]) {
-            const plan = chooseSharedActivity(island.items, residents, 24, id);
+            const plan = chooseSharedActivity(island.items, residents, access, id);
             expect(plan, `The automatic ${kind} pair must have three real routes`).toBeDefined();
             expect(plan!.kind).toBe(kind);
         }

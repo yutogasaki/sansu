@@ -4,6 +4,9 @@ import { db } from "../db";
 import { getWordsByLevel } from "../domain/english/words";
 import { checkVocabMainPromotion, checkVocabUnlockReadiness } from "../domain/english/service";
 import { getSkillsForLevel } from "../domain/math/curriculum";
+import { generateMathProblem } from '../domain/math';
+import { learningEvidenceForProblem as mathLearningEvidence } from '../domain/learning/attemptContext';
+import { createLearningProblemContext } from "../domain/learning/context";
 import { getSkippedItemsToday, logAttempt } from "../domain/learningRepository";
 import { checkPeriodTestTrigger } from "../domain/test/trigger";
 import { buildPeriodicTestSet } from "../domain/test/testSet";
@@ -26,7 +29,7 @@ import {
 
 const memory = (id: string, strength = 1): MemoryState => ({
     id, strength, nextReview: new Date().toISOString(), totalAnswers: 1,
-    correctAnswers: 1, incorrectAnswers: 0, skippedAnswers: 0,
+    correctAnswers: 1, independentCorrectAnswers: 1, incorrectAnswers: 0, skippedAnswers: 0,
     updatedAt: new Date().toISOString(),
 });
 
@@ -97,7 +100,7 @@ describe("learning progression from real generated questions", () => {
         const profile = createInitialProfile("T", 1, 1, 2, "vocab");
         profile.vocabLevels = profile.vocabLevels?.map(level => ({ ...level,
             enabled: level.level === 1 ? false : level.enabled,
-            recentAnswersNonReview: level.level === 2 ? Array(20).fill(true) : [],
+            recentIndependentAnswersNonReview: level.level === 2 ? Array(20).fill(true) : [],
         }));
         const resolved = await resolveVocabProgression(profile);
         const merged = applyResolvedProgressionToLatestProfile({
@@ -111,7 +114,7 @@ describe("learning progression from real generated questions", () => {
         vi.spyOn(Math, "random").mockReturnValue(0);
         let profile = createInitialProfile("T", 1, 1, 1, "vocab");
         profile.vocabLevels = profile.vocabLevels?.map(level => level.level === 1
-            ? { ...level, recentAnswersNonReview: Array(20).fill(true) } : level);
+            ? { ...level, recentIndependentAnswersNonReview: Array(20).fill(true) } : level);
         profile = await resolveVocabProgression(profile);
         expect(profile.vocabLevels?.find(level => level.level === 2)?.enabled).toBe(true);
         await saveProfile(profile);
@@ -121,11 +124,15 @@ describe("learning progression from real generated questions", () => {
             const questions = normalVocabBlock(profile);
             expect(questions.filter(item => item.isPlusOne)).toHaveLength(3);
             for (const item of questions) {
-                await logAttempt(profile.id, "vocab", item.problem.categoryId, "correct");
+                const problem = createLearningProblemContext('vocab', item.problem);
+                expect(problem).toBeDefined();
+                await logAttempt(profile.id, "vocab", item.problem.categoryId, "correct", false, false, false, 1000, {
+                    problem: problem!, completion: 'whole-problem', assistance: 'independent',
+                });
                 const hydrated = await getProfile(profile.id);
                 profile = await resolveVocabProgression(hydrated!);
                 await saveProfile(profile);
-                const reached = [...targetIds].filter(id => profile.vocabWords[id]?.totalAnswers > 0).length;
+                const reached = [...targetIds].filter(id => (profile.vocabWords[id]?.independentCorrectAnswers ?? 0) > 0).length;
                 expect(profile.vocabMainLevel).toBe(reached >= threshold ? 2 : 1);
                 if (profile.vocabMainLevel === 2) break;
             }
@@ -134,6 +141,22 @@ describe("learning progression from real generated questions", () => {
         expect(profile.pendingLevelUpNotification?.newLevel).toBe(2);
     }, 15000);
 
+    it('keeps unknown vocabulary answers out of the independent unlock window', async () => {
+        const profile = createInitialProfile('T', 1, 1, 1, 'vocab');
+        profile.vocabLevels = profile.vocabLevels?.map(level => level.level === 1
+            ? { ...level, recentAnswersNonReview: Array(20).fill(true) } : level);
+        expect(checkVocabUnlockReadiness(profile)).toBe(false);
+        await saveProfile(profile);
+        for (let index = 0; index < 20; index += 1) {
+            await logAttempt(profile.id, 'vocab', 'apple', 'correct');
+        }
+        const hydrated = (await getProfile(profile.id))!;
+        expect(hydrated.vocabWords.apple.correctAnswers).toBe(20);
+        expect(hydrated.vocabWords.apple.independentCorrectAnswers ?? 0).toBe(0);
+        expect(checkVocabUnlockReadiness(hydrated)).toBe(false);
+        expect((await resolveVocabProgression(hydrated)).vocabMaxUnlocked).toBe(1);
+    });
+
     it("holds the old math test range when the persisted 30th answer promotes the main level", async () => {
         const profile = createInitialProfile("T", 1, 7, 1, "math");
         profile.mathMaxUnlocked = 9;
@@ -141,10 +164,12 @@ describe("learning progression from real generated questions", () => {
         profile.mathLevels = profile.mathLevels?.map(level => level.level === 9 ? { ...level, unlocked: true, enabled: true } : level);
         await saveProfile(profile);
         const skill = getSkillsForLevel(9)[0];
-        for (let i = 0; i < 29; i++) await logAttempt(profile.id, "math", skill, "correct");
+        const answer = () => logAttempt(profile.id, 'math', skill, 'correct', false, false, false, undefined,
+            mathLearningEvidence({ ...generateMathProblem(skill, { profile }), subject: 'math' }, 'independent'));
+        for (let i = 0; i < 29; i++) await answer();
         const before = await getProfile(profile.id);
         expect(before?.mathMainLevel).toBe(8);
-        await logAttempt(profile.id, "math", skill, "correct");
+        await answer();
         const after = (await getProfile(profile.id))!;
         expect(after.mathMainLevel).toBe(9);
         const triggerProfile = resolvePeriodicTestTriggerProfile(before, after, "math");

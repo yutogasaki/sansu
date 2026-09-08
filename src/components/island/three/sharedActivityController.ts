@@ -1,3 +1,4 @@
+import type { IslandLandAccess } from '../../../domain/island/catalog';
 import * as THREE from 'three';
 import { getFurnitureAnchors } from './furnitureVisuals';
 import type { IslandResident } from './animals';
@@ -19,7 +20,7 @@ const OBJECT_NAMES = { flower: 'おはな', star: 'ほしの ひかり', bubble:
  * frame; cancellation preserves actual ground positions and legitimate seats. */
 export class SharedActivityController {
     private current?: { plan: SharedActivityPlan; phase: Phase; startedAt: number; activityStartedAt: number; reduced: boolean;
-        items: IslandStageItem[]; completedSets: number; hands: SharedActivityHands; presentationChosen: boolean; lastUpdatedAt: number };
+        items: IslandStageItem[]; landAccess: IslandLandAccess; hands: SharedActivityHands; presentationChosen: boolean; lastUpdatedAt: number };
     private readonly source = new THREE.Vector3();
     private readonly carrierHand = new THREE.Vector3();
     private readonly receiverHand = new THREE.Vector3();
@@ -70,16 +71,16 @@ export class SharedActivityController {
         return this.active && (this.plan?.source.id === itemId || this.plan?.seat.id === itemId);
     }
 
-    start(plan: SharedActivityPlan, now: number, reduced: boolean, items: IslandStageItem[], completedSets: number,
+    start(plan: SharedActivityPlan, now: number, reduced: boolean, items: IslandStageItem[], landAccess: IslandLandAccess,
         hands?: SharedActivityHands) {
         this.cancel(now);
         // Preflight assumed everyone else stayed at these actual positions.
         this.residents.forEach(resident => resident.stopWalking(now));
-        this.current = { plan, phase: 'receiver-walk', startedAt: now, activityStartedAt: now, reduced, items, completedSets,
+        this.current = { plan, phase: 'receiver-walk', startedAt: now, activityStartedAt: now, reduced, items, landAccess,
             hands: { ...(hands ?? { carrier: 'right', receiver: 'left' }) }, presentationChosen: Boolean(hands), lastUpdatedAt: now };
         const receiver = this.residents[plan.receiver];
         if (receiver.itemId !== plan.seat.id || receiver.action === 'walk') {
-            if (!receiver.visit(plan.seat, now, reduced, items, completedSets, plan.receiverRoute)) {
+            if (!receiver.visit(plan.seat, now, reduced, items, landAccess, plan.receiverRoute)) {
                 this.cancel(now); return false;
             }
         }
@@ -113,7 +114,7 @@ export class SharedActivityController {
         const current = this.current;
         if (!current) return false;
         current.lastUpdatedAt = now;
-        const { plan, items, completedSets, hands } = current;
+        const { plan, items, landAccess, hands } = current;
         const carrier = this.residents[plan.carrier], receiver = this.residents[plan.receiver];
         current.reduced = reduced;
         // Reduced motion finishes the same already-preflighted route decisions,
@@ -124,13 +125,13 @@ export class SharedActivityController {
                 (phase === 'receiver-walk' ? receiver : carrier).update(now + 20000);
             }
             if (phase === 'receiver-walk' && receiver.action !== 'walk') {
-                if (!carrier.visit(plan.source, now, reduced, items, completedSets, plan.gatherRoute)) { this.cancel(now); return false; }
+                if (!carrier.visit(plan.source, now, reduced, items, landAccess, plan.gatherRoute)) { this.cancel(now); return false; }
                 current.phase = 'gather-walk'; current.startedAt = now;
             } else if (phase === 'gather-walk' && carrier.action !== 'walk') {
                 current.phase = 'gather'; current.startedAt = now;
                 this.caption(`${OBJECT_NAMES[plan.kind]}を そっと てに`);
             } else if (phase === 'gather' && (reduced || now - current.startedAt >= SHARED_ACTIVITY_TIMING.gather)) {
-                if (!carrier.walkToPoint(plan.deliveryRoute, now, reduced, completedSets)) { this.cancel(now); return false; }
+                if (!carrier.walkToPoint(plan.deliveryRoute, now, reduced, landAccess)) { this.cancel(now); return false; }
                 current.phase = 'carry'; current.startedAt = now;
                 this.caption(`${OBJECT_NAMES[plan.kind]}を ともだちへ`);
             } else if (phase === 'carry' && carrier.action !== 'walk') {

@@ -3,6 +3,7 @@ import { getSkillsForLevel } from "./curriculum";
 import { getProfile } from "../user/repository";
 import { UserProfile } from "../types";
 import { getNextPromotionLevel, hasMathPromotionEvidence } from '../levelProgression';
+import { readMathLevel11Pilot } from '../learning/pilotRepository';
 
 // Check if user should level up from currentLevel
 // 仕様 5.2: 「復習以外」の直近20問で正答率85%以上
@@ -13,13 +14,14 @@ export const checkLevelProgression = async (profileId: string, currentMainLevel:
     const levelState = profile.mathLevels.find(l => l.level === currentMainLevel);
     if (!levelState) return false;
 
-    const recent = levelState.recentAnswersNonReview || [];
+    const recent = levelState.recentIndependentAnswersNonReview || [];
     if (recent.length < 20) return false;
 
     const correctCount = recent.filter(Boolean).length;
     const accuracy = correctCount / recent.length;
 
-    return accuracy >= 0.85;
+    return accuracy >= 0.85 && (currentMainLevel !== 11
+        || (await readMathLevel11Pilot(db, profileId)).practice.coverageReady);
 };
 
 export const checkMathMainPromotion = async (
@@ -39,5 +41,6 @@ export const checkMathMainPromotion = async (
         )
         .toArray();
 
-    return hasMathPromotionEvidence(logs);
+    return hasMathPromotionEvidence(logs) && (targetLevel !== 11
+        || (await readMathLevel11Pilot(db, profile.id)).practice.coverageReady);
 };

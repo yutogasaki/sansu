@@ -10,6 +10,7 @@ export interface LearningAnswerFormProps {
     slot: LearningSlot;
     disabled: boolean;
     onAnswer: (answer: string | string[]) => void;
+    onInteraction?: () => void;
     renderPrompt?: (problem: Problem) => ReactNode;
     renderChoiceLabel?: (choice: ChoiceOption, problem: Problem) => ReactNode;
     renderSupportAnswer?: (answer: string, problem: Problem) => ReactNode;
@@ -19,7 +20,7 @@ export interface LearningAnswerFormProps {
 }
 
 // Presentation may change; the frozen slot and its input/submit contract do not.
-export function LearningAnswerForm({ slot, disabled, onAnswer, renderPrompt, renderChoiceLabel, renderSupportAnswer, renderSupport, resetCursorOnClear = false, className }: LearningAnswerFormProps) {
+export function LearningAnswerForm({ slot, disabled, onAnswer, onInteraction, renderPrompt, renderChoiceLabel, renderSupportAnswer, renderSupport, resetCursorOnClear = false, className }: LearningAnswerFormProps) {
     const problem = slot.problem;
     const grid = useMemo(() => parkHissanGrid(problem), [problem]);
     const step = grid?.steps[slot.hissanStep ?? 0];
@@ -31,14 +32,17 @@ export function LearningAnswerForm({ slot, disabled, onAnswer, renderPrompt, ren
     // value and cursor together so the next event never uses a stale field/value.
     const updateInput = (update: (current: typeof inputState) => typeof inputState) => {
         const next = update(pendingInput.current);
+        if (next.active === pendingInput.current.active && next.values.every((value, index) => value === pendingInput.current.values[index])) return;
         pendingInput.current = next;
         setInputState(next);
+        onInteraction?.();
     };
     const setActive = (index: number) => updateInput(current => ({ ...current, active: index }));
     const canSubmit = values.every(v => v.length > 0);
     const submit = () => {
         const current = pendingInput.current.values;
         if (disabled || !current.every(value => value.length > 0)) return;
+        onInteraction?.();
         onAnswer(step || problem.inputType === 'multi-number' ? current : current[0]);
     };
     const input = (value: number | string) => {
@@ -108,7 +112,7 @@ export function LearningAnswerForm({ slot, disabled, onAnswer, renderPrompt, ren
         {problem.inputType === 'choice' ? <div className="park-choices">
             {problem.inputConfig?.choices?.map(choice => <button key={choice.value} className="park-button" disabled={disabled} data-choice-value={choice.value}
                 aria-label={renderChoiceLabel ? choice.label : undefined}
-                onClick={() => onAnswer(choice.value)}>{renderChoiceLabel ? renderChoiceLabel(choice, problem) : choice.label}</button>)}
+                onClick={() => { if (!disabled) { onInteraction?.(); onAnswer(choice.value); } }}>{renderChoiceLabel ? renderChoiceLabel(choice, problem) : choice.label}</button>)}
         </div> : <>
             {!grid && <div className="park-inputs">
                 {values.map((value, i) => <button key={i} className="park-input" aria-label={problem.inputConfig?.fields?.[i]?.label ?? 'こたえ'}

@@ -1,0 +1,292 @@
+{
+  "target": "http://127.0.0.1:5358",
+  "manifestPath": "/tmp/sansu-customization-20260908-153622/build-source.json",
+  "sourceHash": "0b59b5b48c67e197f01be4c4b4e927bb920af2ab04c4e2f1d2fa2aeaa4c73f10",
+  "sourceStart": "eaeb1a2e908982743cef4d3ae1d9320344c080143a72dbe7b3e3977a8868647e",
+  "qaStart": [
+    {
+      "path": "tools/e2e-island-discovery-navigation.mjs",
+      "sha256": "3ede55d5ba22a8d0aae9e91e077e45ad01b7c3708a0b922418e5b172b9f1bd27"
+    },
+    {
+      "path": "tools/island-e2e-helpers.mjs",
+      "sha256": "725962b376292c970c128e914c0316c4107875dab1b9ad6a80aa9e3372dbd3c1"
+    },
+    {
+      "path": "tools/island-learning-checks.mjs",
+      "sha256": "fb9b9bec972ffa8909dc691164979939d21769a3b7826d29e610ce73dbc57007"
+    },
+    {
+      "path": "tools/island-learning-fixtures.mjs",
+      "sha256": "6dda4730b390b5b062cf8fd3de8376da8c917ff29b3844ae2e6e5f8f56656f87"
+    }
+  ],
+  "startedAt": "2026-09-08T07:16:31.200Z",
+  "humanN": 0,
+  "diagnosticOnly": true,
+  "timingEvidenceEligible": false,
+  "applicationDataInjected": false,
+  "pass": false,
+  "scope": "Real empty-profile setup, six normal learning sections without returning home, and the first naturally observed discovery. Only its real native completion callback is delayed. Read-only album navigation must remain available while learning/exchange/editing stay locked. A second callback hold begins at the actual learning-resume click and confirms comparison stays locked for that interaction. Native records, problems, profile, growth and discovery are never fabricated. Not normal speed or child motivation evidence.",
+  "captures": [
+    {
+      "file": "phone-01-six-real-sections.png",
+      "sha256": "329dc1b1b92f773deed74503a22da62f5fb3d376e3aa77caf3924e0e1f281d7d",
+      "revision": "customization-20260908-0b59b5b48c67",
+      "version": "customization-20260908-0b59b5b48c67:111dc89c-195d-4082-b3e4-ef9f0b4b3c01",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 120,
+      "expanded": "true",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "false",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.18319,0.00000,0.00000,0.00000,0.00000,0.35022,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.25313,0.00000,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": false,
+        "marked": 0,
+        "held": false,
+        "released": false,
+        "hits": 0,
+        "installedAt": 1788851791621,
+        "events": []
+      },
+      "startProbe": null
+    },
+    {
+      "file": "phone-failure.png",
+      "sha256": "d95185bc818142f983f31ea9077fedbf02bc73d0a810030872d0b4d7cd071103",
+      "revision": "customization-20260908-0b59b5b48c67",
+      "version": "customization-20260908-0b59b5b48c67:111dc89c-195d-4082-b3e4-ef9f0b4b3c01",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 118,
+      "expanded": "true",
+      "residentAction": "sniff",
+      "residentItemId": "starter-flower",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "false",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.11218,0.00000,0.00000,0.00000,0.00000,0.11335,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.12887,0.02301,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": true,
+        "released": false,
+        "hits": 1,
+        "installedAt": 1788851791621,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851801786,
+            "monotonic": 10176.799999952316
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851805562,
+            "monotonic": 13952.799999952316,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"473bdfe3-4485-4ddb-a2f6-0db245927a50\",\"flower-scent\"]",
+              "profileId": "473bdfe3-4485-4ddb-a2f6-0db245927a50",
+              "type": "discovery_observed",
+              "timestamp": 1788851805561,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851805601,
+            "monotonic": 13992.399999976158,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"473bdfe3-4485-4ddb-a2f6-0db245927a50\",\"flower-scent\"]",
+              "profileId": "473bdfe3-4485-4ddb-a2f6-0db245927a50",
+              "type": "discovery_observed",
+              "timestamp": 1788851805561,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          }
+        ],
+        "armedAt": 1788851801786,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"473bdfe3-4485-4ddb-a2f6-0db245927a50\",\"flower-scent\"]",
+          "profileId": "473bdfe3-4485-4ddb-a2f6-0db245927a50",
+          "type": "discovery_observed",
+          "timestamp": 1788851805561,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851805601
+      },
+      "startProbe": null
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "explicitCompletionDelayDiagnostic": true,
+      "pass": false,
+      "errors": [],
+      "beforeLearningSHA256": "6f077fe3715995c31e2ba9b94ed07217b38e0b27f5784f235b449b67f11846a9",
+      "actualDiscovery": {
+        "id": "[\"island-discovery-v1\",\"473bdfe3-4485-4ddb-a2f6-0db245927a50\",\"flower-scent\"]",
+        "profileId": "473bdfe3-4485-4ddb-a2f6-0db245927a50",
+        "type": "discovery_observed",
+        "timestamp": 1788851805561,
+        "itemId": "starter-flower",
+        "discoveryId": "flower-scent"
+      },
+      "failure": {
+        "message": "Milestone comparison remains readable during a background save\n\nfalse !== true\n",
+        "stack": "AssertionError [ERR_ASSERTION]: Milestone comparison remains readable during a background save\n\nfalse !== true\n\n    at assertHomeBoundary (file:///private/tmp/sansu-customization-20260908-153622/tools/e2e-island-discovery-navigation.mjs:159:12)\n    at async file:///private/tmp/sansu-customization-20260908-153622/tools/e2e-island-discovery-navigation.mjs:236:72"
+      },
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": true,
+        "released": false,
+        "hits": 1,
+        "installedAt": 1788851791621,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851801786,
+            "monotonic": 10176.799999952316
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851805562,
+            "monotonic": 13952.799999952316,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"473bdfe3-4485-4ddb-a2f6-0db245927a50\",\"flower-scent\"]",
+              "profileId": "473bdfe3-4485-4ddb-a2f6-0db245927a50",
+              "type": "discovery_observed",
+              "timestamp": 1788851805561,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851805601,
+            "monotonic": 13992.399999976158,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"473bdfe3-4485-4ddb-a2f6-0db245927a50\",\"flower-scent\"]",
+              "profileId": "473bdfe3-4485-4ddb-a2f6-0db245927a50",
+              "type": "discovery_observed",
+              "timestamp": 1788851805561,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          }
+        ],
+        "armedAt": 1788851801786,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"473bdfe3-4485-4ddb-a2f6-0db245927a50\",\"flower-scent\"]",
+          "profileId": "473bdfe3-4485-4ddb-a2f6-0db245927a50",
+          "type": "discovery_observed",
+          "timestamp": 1788851805561,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851805601
+      },
+      "startProbe": null
+    }
+  ],
+  "errors": [
+    {
+      "message": "Milestone comparison remains readable during a background save\n\nfalse !== true\n",
+      "stack": "AssertionError [ERR_ASSERTION]: Milestone comparison remains readable during a background save\n\nfalse !== true\n\n    at assertHomeBoundary (file:///private/tmp/sansu-customization-20260908-153622/tools/e2e-island-discovery-navigation.mjs:159:12)\n    at async file:///private/tmp/sansu-customization-20260908-153622/tools/e2e-island-discovery-navigation.mjs:236:72"
+    }
+  ],
+  "version": {
+    "version": "customization-20260908-0b59b5b48c67:111dc89c-195d-4082-b3e4-ef9f0b4b3c01",
+    "revision": "customization-20260908-0b59b5b48c67",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "interactionLockSourceBoundary": {
+    "defaultInteractionKindPresent": false,
+    "synchronousLockRemains": true,
+    "discoveryQueueExplicitKindPresent": false,
+    "albumTryAndPlaceRetainBusyDisabled": true,
+    "actionsSHA256": "f9de3efb6a5f474d813d21d0cb617702b282f191a99db8f4dbe8546feeca240e",
+    "discoveryQueueSHA256": "f5563572935108281698eb26c3fdebbcec74f0a21322b275b835311aa59321c4",
+    "albumSHA256": "afc10340870fed65c9b8f49a66472e5b213ac62719646ae1199596b7a498016b",
+    "islandPageSHA256": "3fe22f4964eb264a4721fae097d5dd7e5931fe28b0289a51a4d8829bce7eb068"
+  },
+  "browserClosed": true,
+  "sourceEnd": "eaeb1a2e908982743cef4d3ae1d9320344c080143a72dbe7b3e3977a8868647e",
+  "qaEnd": [
+    {
+      "path": "tools/e2e-island-discovery-navigation.mjs",
+      "sha256": "3ede55d5ba22a8d0aae9e91e077e45ad01b7c3708a0b922418e5b172b9f1bd27"
+    },
+    {
+      "path": "tools/island-e2e-helpers.mjs",
+      "sha256": "725962b376292c970c128e914c0316c4107875dab1b9ad6a80aa9e3372dbd3c1"
+    },
+    {
+      "path": "tools/island-learning-checks.mjs",
+      "sha256": "fb9b9bec972ffa8909dc691164979939d21769a3b7826d29e610ce73dbc57007"
+    },
+    {
+      "path": "tools/island-learning-fixtures.mjs",
+      "sha256": "6dda4730b390b5b062cf8fd3de8376da8c917ff29b3844ae2e6e5f8f56656f87"
+    }
+  ],
+  "sourceUnchanged": true,
+  "completedAt": "2026-09-08T07:16:46.473Z"
+}

@@ -1,10 +1,13 @@
 import { Problem, UserProfile } from "../types";
 import type { RandomSource } from "../../utils/random";
 import { createLearningProblemContext } from '../learning/context';
+import { independentCorrectCount } from '../learning/independentProgress';
 
 export interface MathGeneratorContext {
     profile?: UserProfile;
     random?: RandomSource;
+    /** A new reservation may target a missing conceptual variant. */
+    preferredLearningVariant?: string;
 }
 
 export type GeneratorFn = (context?: MathGeneratorContext) => Omit<Problem, 'id' | 'subject' | 'isReview'>;
@@ -16,12 +19,7 @@ export const getMathSkillProgress = (
 ): number | undefined => {
     // A profile-free generation is also used for broad-range content inspection.
     if (!context?.profile) return undefined;
-    const correctAnswers = context.profile.mathSkills?.[skillId]?.correctAnswers;
-    return typeof correctAnswers === "number"
-        && Number.isSafeInteger(correctAnswers)
-        && correctAnswers >= 0
-        ? correctAnswers
-        : 0;
+    return independentCorrectCount(context.profile.mathSkills?.[skillId]);
 };
 
 export const randomInt = (

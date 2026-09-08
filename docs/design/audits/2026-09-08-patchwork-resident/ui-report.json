@@ -1,0 +1,1338 @@
+{
+  "target": "http://127.0.0.1:5318",
+  "manifest": {
+    "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+    "revision": "patchwork-20260908-2732124deadc",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "legacy"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceHash": "72f4317d13b847dca88cfd63e5f0daf3aea68eeb7fbdf262b3e4447caf156f59",
+  "startedAt": "2026-09-08T04:55:58.918Z",
+  "scope": "Empty database and actual onboarding, answers, earned bench, furniture play, learning return, reload and explicit WebGL-loss diagnostic. No island/learning fixtures or renderer pose injection. Author evidence; human N=0.",
+  "qaStart": [
+    {
+      "path": "tools/e2e-island-patchwork.mjs",
+      "sha256": "708040f718df53fb7ec6515e0e0f0e1822178eb0649604045595baa09a86caa3"
+    },
+    {
+      "path": "tools/island-e2e-helpers.mjs",
+      "sha256": "1f206dc002a6e3f2425b16e3e62ccefb6900fd3062a756e7d0531ad7fdbaa42f"
+    },
+    {
+      "path": "tools/island-learning-checks.mjs",
+      "sha256": "fb9b9bec972ffa8909dc691164979939d21769a3b7826d29e610ce73dbc57007"
+    },
+    {
+      "path": "tools/island-learning-fixtures.mjs",
+      "sha256": "6dda4730b390b5b062cf8fd3de8376da8c917ff29b3844ae2e6e5f8f56656f87"
+    }
+  ],
+  "captures": [
+    {
+      "file": "phone-01-welcome.png",
+      "sha256": "0b571b81a4a7c36eb3d1e0093ec670b2083df73ac19e2923f9145a9f993abc9e",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "not-applicable",
+      "mode": "welcome",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 79,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            0.1,
+            0,
+            1.6
+          ],
+          "usePhase": 1
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1
+        }
+      ],
+      "textures": 7,
+      "geometries": 79,
+      "calls": 79,
+      "triangles": 87660,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18191,0.00000,0.00000,0.00000,0.00000,0.18379,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01195,-0.04272,-1.00200,1.00000",
+      "status": ""
+    },
+    {
+      "file": "phone-02-learning.png",
+      "sha256": "be571b80e371b221de83f8949386eff3e04041d2f80c452e5b0d45e523d5dc8b",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 69,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            0.1,
+            0,
+            1.6
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": -0.6356024618906562,
+            "right": -0.23939154724764952,
+            "bottom": -0.5239552822474995,
+            "top": 0.5912943013076019
+          }
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": 0.03005554865031759,
+            "right": 0.3737877717442914,
+            "bottom": -0.6775135120306819,
+            "top": 0.6077023258169733
+          }
+        }
+      ],
+      "textures": 6,
+      "geometries": 82,
+      "calls": 69,
+      "triangles": 83056,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.27778,0.00000,0.00000,0.00000,0.00000,0.53105,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+      "status": ""
+    },
+    {
+      "file": "phone-03-retry.png",
+      "sha256": "0f1cc8e91d8ee9acd7ae71f93e6e841a1a87af7244aef118bcf9155979d8b568",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 69,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            0.1,
+            0,
+            1.6
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": -0.6356024618906562,
+            "right": -0.23939154724764952,
+            "bottom": -0.5239552822474995,
+            "top": 0.5912943013076019
+          }
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": 0.03005554865031759,
+            "right": 0.3737877717442914,
+            "bottom": -0.6775135120306819,
+            "top": 0.6077023258169733
+          }
+        }
+      ],
+      "textures": 6,
+      "geometries": 82,
+      "calls": 69,
+      "triangles": 83056,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.27778,0.00000,0.00000,0.00000,0.00000,0.53105,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+      "status": ""
+    },
+    {
+      "file": "phone-04-next-section.png",
+      "sha256": "f2e035ebabc66b10e104111b2e80599a1709df0a7110f46729f90d38726b2db5",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 73,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "",
+          "action": "walk",
+          "position": [
+            -0.7900810691874708,
+            0,
+            1.9236658433408984
+          ],
+          "usePhase": 0,
+          "frameBounds": {
+            "left": -0.7330969932736829,
+            "right": -0.3340597932994118,
+            "bottom": -0.570441973093193,
+            "top": 0.5625681241566669
+          }
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": 0.19483013327220292,
+            "right": 0.5365227461677305,
+            "bottom": -0.7053610098303158,
+            "top": 0.5722287192211271
+          }
+        }
+      ],
+      "textures": 6,
+      "geometries": 86,
+      "calls": 73,
+      "triangles": 91100,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.27613,0.00000,0.00000,0.00000,0.00000,0.52789,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.16495,-0.03187,-1.00200,1.00000",
+      "status": ""
+    },
+    {
+      "file": "phone-05-home.png",
+      "sha256": "eb917c06730be37f713a35ea99a60025b34d4089d6e8810364d62d31b5f1ef48",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 82,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            -1,
+            0,
+            2
+          ],
+          "usePhase": 1
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1
+        }
+      ],
+      "textures": 7,
+      "geometries": 86,
+      "calls": 82,
+      "triangles": 95588,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18191,0.00000,0.00000,0.00000,0.00000,0.18379,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01195,-0.04272,-1.00200,1.00000",
+      "status": ""
+    },
+    {
+      "file": "phone-06-walking.png",
+      "sha256": "ec0b5c102e54ba73da930b30f777903e162b66798a589f4bedaa6655ac8b76c8",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "walk",
+      "residentItemId": "living-bench",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "living-bench",
+          "action": "walk",
+          "position": [
+            -0.4396669961304749,
+            0,
+            1.3774077734783055
+          ],
+          "usePhase": 0
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1
+        }
+      ],
+      "textures": 7,
+      "geometries": 87,
+      "calls": 84,
+      "triangles": 95748,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18191,0.00000,0.00000,0.00000,0.00000,0.18379,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01195,-0.04272,-1.00200,1.00000",
+      "status": "playing"
+    },
+    {
+      "file": "phone-07-seated.png",
+      "sha256": "5656c23b5458843c0f5402b6723e0ac2e8a4dde6f37bdb45534123c5746e251c",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "living-bench",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "living-bench",
+          "action": "sit",
+          "position": [
+            -0.1,
+            0.439,
+            1
+          ],
+          "usePhase": 1
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1
+        }
+      ],
+      "textures": 7,
+      "geometries": 87,
+      "calls": 84,
+      "triangles": 95748,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18191,0.00000,0.00000,0.00000,0.00000,0.18379,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01195,-0.04272,-1.00200,1.00000",
+      "status": "playing"
+    },
+    {
+      "file": "phone-08-seated-learning.png",
+      "sha256": "52691521b666cb9e5ca825c0fc486192c25c52a86a1f9eaed5031d3c8d5e7af4",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 77,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "living-bench",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "living-bench",
+          "action": "sit",
+          "position": [
+            -0.1,
+            0.439,
+            1
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": -0.5667748069719265,
+            "right": -0.20817750666915588,
+            "bottom": -0.2616568315163453,
+            "top": 0.7321267901690302
+          }
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": 0.02746052626840681,
+            "right": 0.3415146083079372,
+            "bottom": -0.7283107577173137,
+            "top": 0.4459384195777769
+          }
+        }
+      ],
+      "textures": 7,
+      "geometries": 87,
+      "calls": 77,
+      "triangles": 92688,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.25379,0.00000,0.00000,0.00000,0.00000,0.48519,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.10929,-1.00200,1.00000",
+      "status": "playing"
+    },
+    {
+      "file": "phone-09-reload.png",
+      "sha256": "9c4dee0d9f5bcf33c73fdbebe299695e33531fc7baf6d2b15222382ec9f9dfa7",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 72,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            0.5,
+            0,
+            2
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": -0.5672013016854931,
+            "right": -0.1709903870424863,
+            "bottom": -0.6657350345823326,
+            "top": 0.44951454897276877
+          }
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": 0.03005554865031759,
+            "right": 0.3737877717442914,
+            "bottom": -0.6775135120306819,
+            "top": 0.6077023258169733
+          }
+        }
+      ],
+      "textures": 6,
+      "geometries": 85,
+      "calls": 72,
+      "triangles": 90984,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.27778,0.00000,0.00000,0.00000,0.00000,0.53105,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+      "status": ""
+    },
+    {
+      "file": "phone-10-restored.png",
+      "sha256": "9c4dee0d9f5bcf33c73fdbebe299695e33531fc7baf6d2b15222382ec9f9dfa7",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 72,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            0.5,
+            0,
+            2
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": -0.5672013016854931,
+            "right": -0.1709903870424863,
+            "bottom": -0.6657350345823326,
+            "top": 0.44951454897276877
+          }
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": 0.03005554865031759,
+            "right": 0.3737877717442914,
+            "bottom": -0.6775135120306819,
+            "top": 0.6077023258169733
+          }
+        }
+      ],
+      "textures": 6,
+      "geometries": 85,
+      "calls": 72,
+      "triangles": 90984,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.27778,0.00000,0.00000,0.00000,0.00000,0.53105,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+      "status": ""
+    },
+    {
+      "file": "tablet-01-welcome.png",
+      "sha256": "a55518f0fd8288ecae87a1278328522ef94aa7076011f62bc63212095af9a680",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "not-applicable",
+      "mode": "welcome",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 79,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            0.1,
+            0,
+            1.6
+          ],
+          "usePhase": 1
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1
+        }
+      ],
+      "textures": 7,
+      "geometries": 79,
+      "calls": 79,
+      "triangles": 87660,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18191,0.00000,0.00000,0.00000,0.00000,0.16643,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01195,-0.03868,-1.00200,1.00000",
+      "status": ""
+    },
+    {
+      "file": "tablet-02-learning.png",
+      "sha256": "d3cff85ae4d1992ae3b74aa732315841166251138e61f750e6afe6436b35d6e1",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 62,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            0.1,
+            0,
+            1.6
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": -0.4384496472289465,
+            "right": -0.16513645829518556,
+            "bottom": -0.5326384034091495,
+            "top": 0.6937625054123875
+          }
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": 0.020732840876363998,
+            "right": 0.2578453144631972,
+            "bottom": -0.7015010107932272,
+            "top": 0.7118058353243462
+          }
+        }
+      ],
+      "textures": 6,
+      "geometries": 82,
+      "calls": 62,
+      "triangles": 81652,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.19162,0.00000,0.00000,0.00000,0.00000,0.58397,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.04354,-1.00200,1.00000",
+      "status": ""
+    },
+    {
+      "file": "tablet-03-retry.png",
+      "sha256": "9b9710372ce4c60523a6d357952a5793598a241f19bee921d50010e390a4023c",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 62,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            0.1,
+            0,
+            1.6
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": -0.4384496472289465,
+            "right": -0.16513645829518556,
+            "bottom": -0.5326384034091495,
+            "top": 0.6937625054123875
+          }
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": 0.020732840876363998,
+            "right": 0.2578453144631972,
+            "bottom": -0.7015010107932272,
+            "top": 0.7200754244159869
+          }
+        }
+      ],
+      "textures": 6,
+      "geometries": 82,
+      "calls": 62,
+      "triangles": 81652,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.19162,0.00000,0.00000,0.00000,0.00000,0.58397,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.04354,-1.00200,1.00000",
+      "status": ""
+    },
+    {
+      "file": "tablet-04-next-section.png",
+      "sha256": "02e5b0d00dea2289bd0a7222aaec9415fc388417461dcdc2747ee782d0d6553b",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 66,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            -1,
+            0,
+            2
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": -0.6723686080503141,
+            "right": -0.3726590608075172,
+            "bottom": -0.5627271236432516,
+            "top": 0.7110843164320856
+          }
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": 0.020265203458125595,
+            "right": 0.2572365363374117,
+            "bottom": -0.7037966107755559,
+            "top": 0.7386853502743096
+          }
+        }
+      ],
+      "textures": 6,
+      "geometries": 86,
+      "calls": 66,
+      "triangles": 89696,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.19116,0.00000,0.00000,0.00000,0.00000,0.58259,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.04140,-1.00200,1.00000",
+      "status": ""
+    },
+    {
+      "file": "tablet-05-home.png",
+      "sha256": "930d1d48208d261fcfbd78260f2835cd48a51d1c25a2f9884957b540577f76ec",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 66,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            -1,
+            0,
+            2
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": -0.6723686080503141,
+            "right": -0.3726590608075172,
+            "bottom": -0.5627271236432516,
+            "top": 0.7110843164320856
+          }
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": 0.020265203458125595,
+            "right": 0.2572365363374117,
+            "bottom": -0.7037966107755559,
+            "top": 0.7386853502743096
+          }
+        }
+      ],
+      "textures": 6,
+      "geometries": 86,
+      "calls": 66,
+      "triangles": 89696,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.19116,0.00000,0.00000,0.00000,0.00000,0.58259,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.04140,-1.00200,1.00000",
+      "status": ""
+    },
+    {
+      "file": "tablet-07-seated.png",
+      "sha256": "aa56d0674de086d2db26b28722b546eaae674b092398678e77223eec362219ad",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "play",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "living-bench",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "living-bench",
+          "action": "sit",
+          "position": [
+            -0.1,
+            0.439,
+            1
+          ],
+          "usePhase": 1
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1
+        }
+      ],
+      "textures": 7,
+      "geometries": 87,
+      "calls": 84,
+      "triangles": 95748,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.15193,0.00000,0.00000,0.00000,0.00000,0.24826,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00998,-0.05771,-1.00200,1.00000",
+      "status": "playing"
+    },
+    {
+      "file": "tablet-08-seated-learning.png",
+      "sha256": "9aa7551a8dcfbd0837c5d18e3e10efbb2ed8458530a271d27c5c066e69bbc09c",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 77,
+      "expanded": "false",
+      "residentAction": "sit",
+      "residentItemId": "living-bench",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "living-bench",
+          "action": "sit",
+          "position": [
+            -0.1,
+            0.439,
+            1
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": -0.3558068433170919,
+            "right": -0.13068855670086987,
+            "bottom": -0.26120200767816476,
+            "top": 0.7333370274638082
+          }
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": 0.017239021648807806,
+            "right": 0.21439420601265186,
+            "bottom": -0.7282106556190915,
+            "top": 0.4469311139974776
+          }
+        }
+      ],
+      "textures": 7,
+      "geometries": 87,
+      "calls": 77,
+      "triangles": 92688,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.15933,0.00000,0.00000,0.00000,0.00000,0.48556,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.10872,-1.00200,1.00000",
+      "status": "playing"
+    },
+    {
+      "file": "tablet-09-reload.png",
+      "sha256": "ffa56218e7f5dc211790bd6d8b6397e296bc6f578893b8be65c2e0c64eda2142",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 65,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            0.5,
+            0,
+            2
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": -0.39126533571323097,
+            "right": -0.11795214677946998,
+            "bottom": -0.6885486316485137,
+            "top": 0.5378522771730233
+          }
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": 0.020732840876363998,
+            "right": 0.2578453144631972,
+            "bottom": -0.7015010107932272,
+            "top": 0.7118058353243462
+          }
+        }
+      ],
+      "textures": 6,
+      "geometries": 85,
+      "calls": 65,
+      "triangles": 89580,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.19162,0.00000,0.00000,0.00000,0.00000,0.58397,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.04354,-1.00200,1.00000",
+      "status": ""
+    },
+    {
+      "file": "tablet-10-restored.png",
+      "sha256": "ffa56218e7f5dc211790bd6d8b6397e296bc6f578893b8be65c2e0c64eda2142",
+      "revision": "patchwork-20260908-2732124deadc",
+      "version": "patchwork-20260908-2732124deadc:43b6b6e3-8795-4d27-9176-c92d72d6d180",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v4",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 65,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "residentCandidate": "patchwork-otter-v1",
+      "canvasCandidate": "patchwork-otter-v1",
+      "residents": [
+        {
+          "species": "otter",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            0.5,
+            0,
+            2
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": -0.39126533571323097,
+            "right": -0.11795214677946998,
+            "bottom": -0.6885486316485137,
+            "top": 0.5378522771730233
+          }
+        },
+        {
+          "species": "rabbit",
+          "itemId": "",
+          "action": "idle",
+          "position": [
+            2.45,
+            0,
+            1.45
+          ],
+          "usePhase": 1,
+          "frameBounds": {
+            "left": 0.020732840876363998,
+            "right": 0.2578453144631972,
+            "bottom": -0.7015010107932272,
+            "top": 0.7118058353243462
+          }
+        }
+      ],
+      "textures": 6,
+      "geometries": 85,
+      "calls": 65,
+      "triangles": 89580,
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.19162,0.00000,0.00000,0.00000,0.00000,0.58397,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.04354,-1.00200,1.00000",
+      "status": ""
+    }
+  ],
+  "scenarios": [
+    {
+      "layout": {
+        "name": "phone",
+        "width": 390,
+        "height": 844,
+        "touch": true
+      },
+      "checks": [
+        "same rendered resident identity in all views",
+        "wrong/correct and zero-action section continuation",
+        "earned bench, otter sit and replay",
+        "unchanged learning reservation during play",
+        "learning crop contains all residents",
+        "reload and explicit WebGL recovery preserve plan and restore fabric",
+        "two cached fabric textures do not multiply on replay"
+      ],
+      "errors": [],
+      "poses": [
+        {
+          "residentCandidate": "patchwork-otter-v1",
+          "canvasCandidate": "patchwork-otter-v1",
+          "residents": [
+            {
+              "species": "otter",
+              "itemId": "living-bench",
+              "action": "sit",
+              "position": [
+                -0.1,
+                0.439,
+                1
+              ],
+              "usePhase": 1
+            },
+            {
+              "species": "rabbit",
+              "itemId": "",
+              "action": "idle",
+              "position": [
+                2.45,
+                0,
+                1.45
+              ],
+              "usePhase": 1
+            }
+          ],
+          "textures": 7,
+          "geometries": 87,
+          "calls": 84,
+          "triangles": 95748,
+          "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18191,0.00000,0.00000,0.00000,0.00000,0.18379,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01195,-0.04272,-1.00200,1.00000",
+          "status": "playing"
+        }
+      ]
+    },
+    {
+      "layout": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024,
+        "touch": false
+      },
+      "checks": [
+        "same rendered resident identity in all views",
+        "wrong/correct and zero-action section continuation",
+        "earned bench, otter sit and replay",
+        "unchanged learning reservation during play",
+        "learning crop contains all residents",
+        "reload and explicit WebGL recovery preserve plan and restore fabric",
+        "two cached fabric textures do not multiply on replay"
+      ],
+      "errors": [],
+      "poses": [
+        {
+          "residentCandidate": "patchwork-otter-v1",
+          "canvasCandidate": "patchwork-otter-v1",
+          "residents": [
+            {
+              "species": "otter",
+              "itemId": "living-bench",
+              "action": "sit",
+              "position": [
+                -0.1,
+                0.439,
+                1
+              ],
+              "usePhase": 1
+            },
+            {
+              "species": "rabbit",
+              "itemId": "",
+              "action": "idle",
+              "position": [
+                2.45,
+                0,
+                1.45
+              ],
+              "usePhase": 1
+            }
+          ],
+          "textures": 7,
+          "geometries": 87,
+          "calls": 84,
+          "triangles": 95748,
+          "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.15193,0.00000,0.00000,0.00000,0.00000,0.24826,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00998,-0.05771,-1.00200,1.00000",
+          "status": "playing"
+        }
+      ]
+    }
+  ],
+  "pass": true,
+  "completedAt": "2026-09-08T04:56:24.495Z"
+}

@@ -1,8 +1,13 @@
 import * as THREE from 'three';
+import { ISLAND_EAST_LAND } from '../../../domain/island/catalog';
 import { IslandMaterials, batch, box, curve, cylinder, ellipsoid, mesh, pole, star } from './primitives';
 import { makeFlowers, makeFurniture } from './furniture';
 import { cottageRoofGeometry, islandGroundGeometry, loftGeometry, organicEllipsoidGeometry,
     roundedBoxGeometry, shoreContour, steppingStoneGeometry, type Size3 } from './geometry';
+import { addHouseThemeTrim, addObservatoryRoof, addThemeCanopy } from './themeMotifs';
+
+/** The outer water rim belongs to the island silhouette, including its small height ripple. */
+export const ISLAND_SHORE_RIM = { offset: .17, height: -.821, ripple: .023, segments: 64 } as const;
 
 function rounded(parent: THREE.Object3D, material: THREE.Material, position: [number, number, number], size: Size3, radius = .035) {
     return mesh(parent, roundedBoxGeometry(size, radius), material, position);
@@ -13,12 +18,12 @@ function land(m: IslandMaterials, x: number, z: number, rx: number, rz: number) 
     group.position.set(x, 0, z);
     // All changes are outside the saved ellipse. No placed object loses its level ground.
     const ring = (rings: [number, number, number][], color: string, roughness: number) => {
-        const positions: number[] = [], indices: number[] = [], segments = 64;
+        const positions: number[] = [], indices: number[] = [], segments = ISLAND_SHORE_RIM.segments;
         for (const [offset, y, beachWidth] of rings) for (let i = 0; i <= segments; i++) {
             const a = i / segments * Math.PI * 2;
             const beach = Math.pow(.5 + .5 * Math.sin(a - .4), 2);
             const r = shoreContour(a) + offset + beach * beachWidth;
-            const height = y + (y < -.12 ? Math.sin(a * 4 + .2) * .023 : 0);
+            const height = y + (y < -.12 ? Math.sin(a * 4 + .2) * ISLAND_SHORE_RIM.ripple : 0);
             positions.push(Math.cos(a) * rx * r, height, Math.sin(a) * rz * r);
         }
         for (let row = 0; row < rings.length - 1; row++) for (let i = 0; i < segments; i++) {
@@ -36,7 +41,7 @@ function land(m: IslandMaterials, x: number, z: number, rx: number, rz: number) 
     const grass = m.surface('#72ab50', .98).clone();
     grass.vertexColors = true; grass.userData.islandOwned = true;
     mesh(group, islandGroundGeometry(rx, rz), grass);
-    ring([[.17, -.821, 0], [.074, -.819, 0]], '#76d3c9', .9);
+    ring([[ISLAND_SHORE_RIM.offset, ISLAND_SHORE_RIM.height, 0], [.074, -.819, 0]], '#76d3c9', .9);
     return group;
 }
 
@@ -51,8 +56,11 @@ function cottage(m: IslandMaterials) {
     const wall = m.surface('#f7e8c6', .91), trim = m.surface('#dfb37b', .84), wood = m.surface('#ba7b49', .84);
     rounded(group, m.surface('#c0bc9f', .96), [0, .08, 0], [1.97, .16, 1.7], .055);
     rounded(group, wall, [0, .77, 0], [1.8, 1.4, 1.45], .065);
+    const observatory = m.artDirection === 'starry';
     const gable = new THREE.Shape();
     gable.moveTo(-.9, 0); gable.lineTo(0, .8); gable.lineTo(.9, 0); gable.closePath();
+    if (observatory) addObservatoryRoof(group, m);
+    else {
     mesh(group, new THREE.ExtrudeGeometry(gable, { depth: 1.45, bevelEnabled: false }), wall, [0, 1.46, -.725]);
     mesh(group, cottageRoofGeometry(), m.surface('#c24f3e', .76));
     // Fewer, connected broad seams leave room for the roof's color and silhouette.
@@ -67,6 +75,7 @@ function cottage(m: IslandMaterials) {
     pole(group, m.surface('#ed9967', .76), [0, 2.35, -.98], [0, 2.35, .99], .048);
     rounded(group, m.surface('#b4aaa0', .95), [-.48, 2.27, -.4], [.29, .68, .32], .035);
     rounded(group, m.surface('#d2c8b9', .95), [-.48, 2.62, -.4], [.4, .12, .41], .025);
+    }
     const door = new THREE.Shape();
     door.moveTo(-.28, 0); door.lineTo(.28, 0); door.lineTo(.28, .69);
     door.absarc(0, .69, .28, 0, Math.PI, false); door.closePath();
@@ -85,6 +94,7 @@ function cottage(m: IslandMaterials) {
     rounded(group, wood, [.99, .49, -.1], [.18, .12, .68], .025);
     const flowerbox = makeFlowers(m, 2); flowerbox.scale.setScalar(.48); flowerbox.position.set(1.02, .55, -.1); group.add(flowerbox);
     const lamp = makeFurniture('lantern', m); lamp.scale.setScalar(.53); lamp.position.set(.64, .56, .87); group.add(lamp);
+    addHouseThemeTrim(group, m);
     return group;
 }
 
@@ -118,7 +128,7 @@ export function applyTreeGrowth(group: THREE.Group, level?: number) {
     const life = treeLives.get(group);
     if (!life) return false;
     const scale = level === undefined ? [1, 1, 1] : [
-        [.72, .72, .72], [.9, .87, .9], [1.1, 1.04, 1.1], [1.3, 1.22, 1.3],
+        [.64, .66, .64], [.9, .87, .9], [1.17, 1.1, 1.17], [1.5, 1.38, 1.5],
     ][Math.max(0, Math.min(3, Math.floor(level)))];
     if (life.crown.scale.x === scale[0] && life.crown.scale.y === scale[1] && life.crown.scale.z === scale[2]) return false;
     life.crown.scale.set(scale[0], scale[1], scale[2]);
@@ -168,7 +178,7 @@ export function makeStarTree(m: IslandMaterials) {
         { at: [.52, 2.96, .58], size: [.87, .73, .74], color: '#77ab4d' },
     ];
     const crown = new THREE.Group(); crown.name = 'tree-canopy'; crown.position.y = 2.2;
-    clumps.forEach(({ at, size, color }, i) => {
+    if (!addThemeCanopy(crown, m)) clumps.forEach(({ at, size, color }, i) => {
         const clump = mesh(crown, organicEllipsoidGeometry(size, i * .9), m.surface(color, .91), [at[0], at[1] - 2.2, at[2]]);
         clump.name = `tree-crown-${i}`;
     });
@@ -222,8 +232,13 @@ export function makeScenery(m: IslandMaterials) {
     bush(group, m, 2.97, -2.16, .7);
     bush(group, m, 3.61, -.93, .44);
     for (const [i, [x, z, scale]] of [[-2.25, -.55, .7], [-2.16, -.03, .6], [-1.97, .45, .65], [-1.79, .94, .56], [-1.47, 1.39, .57], [-1.21, 1.9, .49], [-1.1, 2.37, .6]].entries()) {
-        const stone = mesh(group, steppingStoneGeometry(scale * .45, i * 1.4), m.surface('#e5d3a2', .95), [x, 0, z]);
+        const biscuit = m.artDirection === 'candy';
+        const stone = mesh(group, biscuit ? roundedBoxGeometry([scale * .79, .042, scale * .61], .06) : steppingStoneGeometry(scale * .45, i * 1.4),
+            m.surface('#e5d3a2', .95), [x, 0, z]);
         stone.rotation.y = Math.sin(i * 1.7) * .38;
+        if (biscuit) for (const dx of [-.09, .09]) for (const dz of [-.075, .075]) {
+            ellipsoid(group, m.get('#b88c63'), [x + dx, .026, z + dz], [.016, .005, .016], 8);
+        }
     }
     for (const [x, z, scale] of [[-3, .55, .7], [-3.7, -.1, .48], [-3.34, .12, .53], [2.59, -2.33, .34]]) {
         const flowers = makeFlowers(m, 2); flowers.position.set(x, .008, z); flowers.scale.setScalar(scale * 1.1); group.add(flowers);
@@ -246,7 +261,7 @@ export function makeScenery(m: IslandMaterials) {
 
 export function makeExpansion(m: IslandMaterials) {
     const group = new THREE.Group();
-    group.add(land(m, 6.2, 0, 1.9, 2.3));
+    group.add(land(m, ISLAND_EAST_LAND.x, ISLAND_EAST_LAND.z, ISLAND_EAST_LAND.radiusX, ISLAND_EAST_LAND.radiusZ));
     const wood = m.surface('#d6a76e', .86);
     for (let i = 0; i < 9; i++) {
         const x = 4 + i * .18, y = .14 + Math.sin(i / 8 * Math.PI) * .15;
@@ -297,7 +312,9 @@ export function makeOcean(m: IslandMaterials) {
     }
     geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
     // Clear shallow water retains its blue material color; opaque land shadows stop at the shore.
-    const sea = mesh(group, geometry, new THREE.MeshBasicMaterial({ vertexColors: true, toneMapped: false }), [0, -.86, 0]);
+    const seaMaterial = new THREE.MeshBasicMaterial({ vertexColors: true, toneMapped: false });
+    seaMaterial.userData.islandOwned = true;
+    const sea = mesh(group, geometry, seaMaterial, [0, -.86, 0]);
     sea.castShadow = false;
     sea.receiveShadow = false;
     for (const [x, z, width] of [[-4.8, 3.2, .55], [1.8, 4.4, .66], [-5.5, -.4, .44], [4.7, 2.8, .5], [2.6, -4.7, .59], [-2.6, 4.65, .43], [7.1, 3.2, .4], [-4.4, -3.1, .5]]) {

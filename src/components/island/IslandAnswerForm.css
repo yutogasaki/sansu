@@ -33,6 +33,16 @@
     font-size: 12px; line-height: 1.7; padding: 6px 12px; color: #263145;
 }
 .island-problem-prompt { width: 100%; max-width: 100%; text-align: center; }
+.island-spoken-word { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px 12px; }
+.island-spoken-word .island-prompt-content { max-width: 100%; overflow-wrap: anywhere; }
+.island-speech-control { display: flex; align-items: center; flex-direction: column; position: relative; }
+.island-speech-button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 110px; min-height: 44px; padding: 5px 9px; border: 1px solid var(--island-leaf); border-bottom-width: 3px; border-radius: 12px; background: #eef2fb; color: #204f9e; font-size: 12px; font-weight: 650; }
+.island-speech-button:active:not(:disabled) { background: #dae5fa; }
+.island-speech-button:focus-visible { outline: 3px solid var(--island-leaf); outline-offset: 3px; }
+.island-speech-button[data-speech-status=speaking] { background: #dae5fa; }
+.island-speech-button:disabled { opacity: .55; }
+.island-speech-message { max-width: 200px; color: #694932; font-size: 11px; line-height: 1.5; }
+.island-speech-message:empty { display: none; }
 .island-learning-support { line-height: 1.55; }
 .island-answer-stage[data-support-stage=model] > .island-answer > :not(.park-support) { display: none; }
 .island-answer .island-support-model .written-arithmetic .written-history { max-height: none; overflow: visible; }

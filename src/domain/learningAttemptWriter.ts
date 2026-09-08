@@ -12,6 +12,8 @@ import type { MemoryState, SubjectKey, UserProfile } from "./types";
 import { getNextPromotionLevel, hasMathPromotionEvidence } from './levelProgression';
 import type { LearningEvidenceContext } from './learning/types';
 import { validateLearningEvidenceContext } from './learning/context';
+import { hasKnownWholeAttempt, independentCorrectCount, isIndependentCorrect } from './learning/independentProgress';
+import { readMathLevel11Pilot } from './learning/pilotRepository';
 
 const APP_DATA_ID = "app";
 
@@ -123,10 +125,11 @@ const resolveMathProgression = async (
         const levelState = updated.mathLevels?.find(
             (level) => level.level === updated.mathMainLevel,
         );
-        const recent = levelState?.recentAnswersNonReview || [];
+        const recent = levelState?.recentIndependentAnswersNonReview || [];
         if (
             recent.length >= 20
             && recent.filter(Boolean).length / recent.length >= 0.85
+            && (updated.mathMainLevel !== 11 || (await readMathLevel11Pilot(database, updated.id, nowIso)).practice.coverageReady)
         ) {
             const nextLevel = Math.min(MAX_MATH_LEVEL, updated.mathMaxUnlocked + 1);
             updated = {
@@ -151,7 +154,8 @@ const resolveMathProgression = async (
                     && !log.isReview
                 ))
                 .toArray();
-            if (hasMathPromotionEvidence(attempts)) {
+            if (hasMathPromotionEvidence(attempts)
+                && (nextMainLevel !== 11 || (await readMathLevel11Pilot(database, updated.id, nowIso)).practice.coverageReady)) {
                 const nextLevels = updated.mathLevels?.map((level) => (
                     level.level === nextMainLevel
                         ? {
@@ -159,6 +163,7 @@ const resolveMathProgression = async (
                             unlocked: true,
                             enabled: true,
                             recentAnswersNonReview: [],
+                            recentIndependentAnswersNonReview: [],
                             updatedAt: nowIso,
                         }
                         : level
@@ -188,8 +193,8 @@ const resolveMathProgression = async (
 
 /**
  * Writes one learning attempt using the caller's active Dexie transaction.
- * Callers must include logs, memoryMath, memoryVocab, profiles and appData in
- * that transaction. This lets Explore combine the learning write with its
+ * Callers must use getLearningAttemptTransactionTables, including the event
+ * tables needed for unit evidence, in that transaction. This lets Explore combine the learning write with its
  * unique attempt event and run aggregate without nesting transactions.
  */
 export const writeLearningAttemptInTransaction = async (
@@ -221,25 +226,33 @@ export const writeLearningAttemptInTransaction = async (
     const logId = await database.logs.add(log);
     const table = input.subject === "math" ? database.memoryMath : database.memoryVocab;
     const existing = await table.get([input.profileId, input.itemId]);
+    const independent = isIndependentCorrect(log);
+    const knownWhole = hasKnownWholeAttempt(log);
+    // Existing explicit evidence can be counted; raw legacy successes cannot.
+    const previousIndependentCount = existing?.independentCorrectAnswers === undefined
+        ? await database.logs.where('[profileId+subject]').equals([input.profileId, input.subject])
+            .filter(previous => previous.id !== logId && previous.itemId === input.itemId && isIndependentCorrect(previous)).count()
+        : independentCorrectCount(existing);
+    const memoryEvidence = {
+        independence: learningEvidence?.assistance ?? 'unknown',
+        wholeProblem: learningEvidence?.completion === 'whole-problem',
+    } as const;
     let newState: MemoryState;
 
     if (existing) {
-        newState = updateMemoryState(existing, scoredResult === "correct", skipped, new Date(input.timestamp));
+        newState = updateMemoryState(existing, scoredResult === "correct", skipped, new Date(input.timestamp), memoryEvidence);
         newState = {
             ...newState,
             updatedAt: input.timestamp,
-            lastCorrectAt: scoredResult === "correct" && !skipped
-                ? input.timestamp
-                : newState.lastCorrectAt,
             isWeak: resolveWeakStateAfterAttempt(
                 existing.isWeak,
                 [skipped ? "skipped" : scoredResult, ...recentItemLogs.map((item) => item.result)],
             ),
         };
-        if (input.subject === "math") {
+        if (input.subject === "math" && (independent || scoredResult !== 'correct' || skipped)) {
             const recentResults = [
-                scoredResult === "correct" && !skipped,
-                ...recentItemLogs.map((item) => item.result === "correct"),
+                independent,
+                ...recentItemLogs.map(isIndependentCorrect),
             ];
             const status = updateSkillStatus(
                 newState,
@@ -260,11 +273,15 @@ export const writeLearningAttemptInTransaction = async (
             incorrectAnswers: correct ? 0 : 1,
             skippedAnswers: skipped ? 1 : 0,
             lastCorrectAt: correct ? input.timestamp : undefined,
+            lastIndependentCorrectAt: independent ? input.timestamp : undefined,
+            ...(!independent ? { needsRelearning: true, relearningStartedAt: input.timestamp } : {}),
             updatedAt: input.timestamp,
             status: input.subject === "math" ? "active" : undefined,
             isWeak: false,
         };
     }
+
+    newState.independentCorrectAnswers = previousIndependentCount + (independent ? 1 : 0);
 
     const dbMemory = { ...newState, profileId: input.profileId };
     await table.put(dbMemory);
@@ -285,6 +302,9 @@ export const writeLearningAttemptInTransaction = async (
                                 ...(item.recentAnswersNonReview || []),
                                 scoredResult === "correct" && !skipped,
                             ].slice(-20),
+                            recentIndependentAnswersNonReview: knownWhole ? [
+                                ...(item.recentIndependentAnswersNonReview || []), independent,
+                            ].slice(-20) : item.recentIndependentAnswersNonReview,
                             updatedAt: input.timestamp,
                         }
                         : item),
@@ -299,6 +319,9 @@ export const writeLearningAttemptInTransaction = async (
                                 ...(item.recentAnswersNonReview || []),
                                 scoredResult === "correct" && !skipped,
                             ].slice(-20),
+                            recentIndependentAnswersNonReview: knownWhole ? [
+                                ...(item.recentIndependentAnswersNonReview || []), independent,
+                            ].slice(-20) : item.recentIndependentAnswersNonReview,
                             updatedAt: input.timestamp,
                         }
                         : item),
@@ -358,4 +381,6 @@ export const getLearningAttemptTransactionTables = (database: SansuDatabase) => 
     database.memoryVocab,
     database.appData,
     database.profiles,
+    database.parkEvents,
+    database.islandEvents,
 ] as const;

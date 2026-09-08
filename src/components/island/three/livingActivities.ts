@@ -1,5 +1,6 @@
 import type { IslandStageItem, IslandStageState } from './types';
 import type { SharedActivityPlan } from './sharedActivities';
+import { getIslandExpansionLevel } from '../../../domain/island/expansion';
 
 export type LivingNature = 'butterfly' | 'boat';
 export interface LivingVisit { item: IslandStageItem; discoveryId: string; nature?: LivingNature; shared?: boolean }
@@ -47,7 +48,7 @@ export function livingVisitHasSetting(state: IslandStageState, visit: LivingVisi
         const dx = item.position.x - position.x, dz = item.position.z - position.z, distance = Math.hypot(dx, dz);
         return distance <= 2.9 && (Math.sin(visit.item.rotation) * dx + Math.cos(visit.item.rotation) * dz) / Math.max(.01, distance) >= .5;
     });
-    if (visit.discoveryId === 'shade-rest') return [{ x: 1.6, z: -1.6 }, ...(state.completedSets >= 12 ? [{ x: -6.7, z: -1.2 }] : [])]
+    if (visit.discoveryId === 'shade-rest') return [{ x: 1.6, z: -1.6 }, ...(getIslandExpansionLevel(state) >= 2 ? [{ x: -6.7, z: -1.2 }] : [])]
         .some(tree => Math.hypot(position.x - tree.x, position.z - tree.z) <= 2.8);
     return true;
 }

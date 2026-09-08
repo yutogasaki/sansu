@@ -1,12 +1,14 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { currentIslandArtDirection, islandWorldColor, makeWorldPattern } from './worldPalette';
+import { currentIslandArtDirection, islandWorldColor, makeWorldPattern, type IslandWorldAppearance } from './worldPalette';
+import { createResidentFabric } from './residentFabric';
 
 // A small, material-specific palette. World geometry never contains UI text.
 export class IslandMaterials {
-    readonly artDirection = currentIslandArtDirection();
+    constructor(readonly artDirection: IslandWorldAppearance = currentIslandArtDirection()) {}
     private readonly colors = new Map<string, THREE.MeshStandardMaterial>();
     private readonly patterns = new Map<string, THREE.DataTexture>();
+    private cloth?: ReturnType<typeof createResidentFabric>;
     readonly painted = new THREE.MeshStandardMaterial({ color: '#ffffff', vertexColors: true, roughness: .87, metalness: 0 });
     get(color: string, glow = false) {
         return this.surface(color, .87, 0, glow);
@@ -29,10 +31,12 @@ export class IslandMaterials {
         return material;
     }
     color(source: string) { return islandWorldColor(source, this.artDirection); }
+    residentFabric() { return (this.cloth ??= createResidentFabric()).material; }
     dispose() {
         for (const material of this.colors.values()) material.dispose();
         for (const texture of this.patterns.values()) texture.dispose();
         this.painted.dispose();
+        this.cloth?.dispose();
     }
 }
 

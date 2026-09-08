@@ -56,7 +56,7 @@ function validateBuild() {
     assert(version.version.startsWith(`${version.revision}:`));
     assert.equal(version.island?.enabled, true); assert.equal(version.park?.enabled, true); assert.equal(version.park?.renderer, 'three');
     assert.equal(version.island.delivery, 'mystic-island-v1');
-    assert.equal(version.island.candidate, 'mystic-island-living-v3');
+    assert.equal(version.island.candidate, 'mystic-island-living-v5');
     assert.equal(version.island.learningCandidate, 'mystic-island-learning-v2');
     assert.equal(version.island.artDirection, 'moon-garden');
     report.buildSource = { revision: buildSource.revision, sourceHash: buildSource.sourceHash,

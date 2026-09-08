@@ -1,13 +1,15 @@
 import { findAvailablePosition, isValidIslandPlacement } from './catalog';
+import { getIslandExpansionLevel, type IslandExpansionLevel } from './expansion';
+import { getIslandCosmetics } from './customization';
 import { ISLAND_HABITAT_IDS, type IslandGrowthMemory, type IslandGrowthState, type IslandHabitatId,
     type IslandItem, type IslandItemKind, type IslandRecord } from './types';
 
 export const ISLAND_GROWTH_THRESHOLDS = [1, 3, 6] as const;
-export const ISLAND_HABITATS: readonly { id: IslandHabitatId; name: string; description: string; unlockAt: number }[] = [
-    { id: 'garden', name: 'にわ', description: 'おはなが 育つと、ちょうや ともだちが やってくる', unlockAt: 0 },
-    { id: 'waterside', name: 'みずべ', description: 'みずたまと 葉っぱの ふねで いっしょに あそぶ', unlockAt: 2 },
-    { id: 'grove', name: '木かげ', description: '大きな 木かげで ひとやすみ', unlockAt: 12 },
-    { id: 'village', name: 'いえの まわり', description: 'あかりの そばへ ともだちが あそびにくる', unlockAt: 0 },
+export const ISLAND_HABITATS: readonly { id: IslandHabitatId; name: string; description: string; unlockExpansionLevel: IslandExpansionLevel }[] = [
+    { id: 'garden', name: 'にわ', description: 'おはなが 育つと、ちょうや ともだちが やってくる', unlockExpansionLevel: 0 },
+    { id: 'waterside', name: 'みずべ', description: 'みずたまと 葉っぱの ふねで いっしょに あそぶ', unlockExpansionLevel: 1 },
+    { id: 'grove', name: '木かげ', description: '大きな 木かげで ひとやすみ', unlockExpansionLevel: 2 },
+    { id: 'village', name: 'いえの まわり', description: 'あかりの そばへ ともだちが あそびにくる', unlockExpansionLevel: 0 },
 ];
 export const ISLAND_DISCOVERIES: readonly { id: string; name: string; description: string; habitatId: IslandHabitatId;
     minLevel: number; kinds: readonly IslandItemKind[] }[] = [
@@ -38,8 +40,8 @@ export function getIslandItemGrowthLevel(item: Pick<IslandItem, 'growthLevel'>) 
 export function getIslandItemAppearanceLevel(item: Pick<IslandItem, 'growthLevel' | 'appearanceLevel'>) {
     return Math.min(getIslandItemGrowthLevel(item), Math.max(0, Math.floor(item.appearanceLevel ?? getIslandItemGrowthLevel(item))));
 }
-export function isIslandHabitatUnlocked(island: Pick<IslandRecord, 'completedSets'>, habitatId: IslandHabitatId) {
-    return island.completedSets >= (ISLAND_HABITATS.find(habitat => habitat.id === habitatId)?.unlockAt ?? Infinity);
+export function isIslandHabitatUnlocked(island: Pick<IslandRecord, 'completedSets' | 'growth'>, habitatId: IslandHabitatId) {
+    return getIslandExpansionLevel(island) >= (ISLAND_HABITATS.find(habitat => habitat.id === habitatId)?.unlockExpansionLevel ?? Infinity);
 }
 export function isIslandGrowthComplete(island: Pick<IslandRecord, 'growth'>) {
     return ISLAND_HABITAT_IDS.every(id => (island.growth?.progress[id] ?? 0) >= 6);
@@ -50,6 +52,23 @@ export function getIslandGrowthTarget(island: Pick<IslandRecord, 'growth' | 'com
     return canGrow(focus) ? focus : ISLAND_HABITAT_IDS.find(canGrow) ?? focus;
 }
 
+export const ISLAND_MATURITY_TITLES: Record<IslandHabitatId, string> = {
+    garden: 'おはなが いっぱいに なった',
+    waterside: 'みずべが にぎやかに なった',
+    grove: '大きな 木かげが できた',
+    village: 'おうちに テラスが できた',
+};
+export interface IslandGrowthMilestone { habitats: IslandHabitatId[]; expansion?: 'east' | 'west' }
+type MilestoneState = { completedSets: number; growth?: Pick<IslandGrowthState, 'progress' | 'expansionLevel'> };
+
+/** Major world changes only. Small growth still persists after every section. */
+export function getIslandGrowthMilestone(before: MilestoneState, after: MilestoneState): IslandGrowthMilestone | undefined {
+    const habitats = ISLAND_HABITAT_IDS.filter(id => (before.growth?.progress[id] ?? 0) < 6 && (after.growth?.progress[id] ?? 0) >= 6);
+    const beforeLevel = getIslandExpansionLevel(before), afterLevel = getIslandExpansionLevel(after);
+    const expansion = afterLevel > beforeLevel ? afterLevel === 2 ? 'west' : 'east' : undefined;
+    return habitats.length || expansion ? { habitats, ...(expansion ? { expansion } : {}) } : undefined;
+}
+
 function snapshot(island: IslandRecord, kind: IslandGrowthMemory['kind'], now: number,
     habitatId?: IslandHabitatId): IslandGrowthMemory {
     const growth = island.growth!;
@@ -57,8 +76,9 @@ function snapshot(island: IslandRecord, kind: IslandGrowthMemory['kind'], now: n
         id: kind === 'initial' ? 'island-growth-initial' : `island-growth-${kind}-${island.completedSets}`,
         kind, capturedAt: now, completedSets: island.completedSets, habitatId,
         ...(habitatId ? { level: getIslandHabitatLevel(island, habitatId) } : {}),
-        progress: { ...growth.progress }, focus: growth.focus,
+        expansionLevel: getIslandExpansionLevel(island), progress: { ...growth.progress }, focus: growth.focus,
         items: island.items.map(item => ({ ...item, ...(item.position ? { position: { ...item.position } } : {}) })),
+        cosmetics: getIslandCosmetics(island),
     };
 }
 
@@ -66,7 +86,8 @@ function snapshot(island: IslandRecord, kind: IslandGrowthMemory['kind'], now: n
 export function initializeIslandGrowth(island: IslandRecord, now: number): IslandRecord {
     if (island.growth) return island;
     const growth: IslandGrowthState = {
-        version: 1, progress: { garden: 0, waterside: 0, grove: 0, village: 0 }, focus: 'garden', memories: [], discoveries: [],
+        version: 1, expansionLevel: getIslandExpansionLevel(island),
+        progress: { garden: 0, waterside: 0, grove: 0, village: 0 }, focus: 'garden', memories: [], discoveries: [],
     };
     const initialized = { ...island, growth, items: island.items.map(item => ({ ...item })) };
     // Existing possessions gain metadata without changing their position, direction or storage status.
@@ -79,15 +100,15 @@ export function initializeIslandGrowth(island: IslandRecord, now: number): Islan
 }
 
 /** One stable instance per kind. Existing items of that kind win, even when stored. */
-type ManagedItem = IslandItem & { habitatId: IslandHabitatId; addAt: number; reuseKind?: boolean };
+type ManagedItem = IslandItem & { habitatId: IslandHabitatId; addAt: number; minExpansionLevel?: IslandExpansionLevel; reuseKind?: boolean };
 const MANAGED_ITEMS: readonly ManagedItem[] = [
     { id: 'starter-flower', kind: 'flower', habitatId: 'garden', position: { x: 1.5, z: .8 }, rotation: 0, addAt: 0 },
     { id: 'starter-lantern', kind: 'lantern', habitatId: 'village', position: { x: -1, z: .25 }, rotation: 0, addAt: 0 },
     { id: 'living-bench', kind: 'bench', habitatId: 'garden', position: { x: -.1, z: 1 }, rotation: Math.atan2(1.6, -.2), addAt: 1 },
-    { id: 'living-fountain', kind: 'fountain', habitatId: 'waterside', position: { x: 3.4, z: 1.3 }, rotation: 0, addAt: 2 },
-    { id: 'living-swing', kind: 'swing', habitatId: 'waterside', position: { x: 6.2, z: 1.15 }, rotation: Math.atan2(-2.8, .15), addAt: 2 },
-    { id: 'living-mushroom', kind: 'mushroom', habitatId: 'grove', position: { x: -5.8, z: 1.3 }, rotation: Math.atan2(-1.1, -1.1), addAt: 12 },
-    { id: 'living-grove-lantern', kind: 'lantern', habitatId: 'grove', position: { x: -6.9, z: .2 }, rotation: 0, addAt: 12, reuseKind: false },
+    { id: 'living-fountain', kind: 'fountain', habitatId: 'waterside', position: { x: 3.4, z: 1.3 }, rotation: 0, addAt: 0, minExpansionLevel: 1 },
+    { id: 'living-swing', kind: 'swing', habitatId: 'waterside', position: { x: 6.2, z: 1.15 }, rotation: Math.atan2(-2.8, .15), addAt: 0, minExpansionLevel: 1 },
+    { id: 'living-mushroom', kind: 'mushroom', habitatId: 'grove', position: { x: -5.8, z: 1.3 }, rotation: Math.atan2(-1.1, -1.1), addAt: 0, minExpansionLevel: 2 },
+    { id: 'living-grove-lantern', kind: 'lantern', habitatId: 'grove', position: { x: -6.9, z: .2 }, rotation: 0, addAt: 0, minExpansionLevel: 2, reuseKind: false },
 ];
 
 function managedItem(items: IslandItem[], definition: ManagedItem) {
@@ -105,7 +126,7 @@ function syncManagedItems(island: IslandRecord) {
             item.growthLevel = growthLevel;
             continue;
         }
-        if (updated.completedSets < definition.addAt) continue;
+        if (updated.completedSets < definition.addAt || getIslandExpansionLevel(updated) < (definition.minExpansionLevel ?? 0)) continue;
         const added: IslandItem = { id: definition.id, kind: definition.kind, habitatId: definition.habitatId,
             rotation: definition.rotation, growthLevel };
         updated.items.push(added);
@@ -119,18 +140,25 @@ function syncManagedItems(island: IslandRecord) {
 
 /** Pure completion transform. The transaction caller owns exactly-once completion and set count. */
 export function growIslandAfterCompletedSet(island: IslandRecord, target: IslandHabitatId, now: number): IslandRecord {
-    const initialized = initializeIslandGrowth(island, now);
-    const oldLevel = getIslandHabitatLevel(initialized, target);
+    // The caller has already counted this completion. Freeze only land earned
+    // before it, including when an old record has no explicit expansion level.
+    const before = initializeIslandGrowth({ ...island, completedSets: island.completedSets - 1 }, now);
+    const initialized = { ...before, completedSets: island.completedSets };
     let updated: IslandRecord = {
         ...initialized,
         growth: { ...initialized.growth!, progress: { ...initialized.growth!.progress,
             [target]: Math.min(6, initialized.growth!.progress[target] + 1) },
         memories: [...initialized.growth!.memories], discoveries: [...initialized.growth!.discoveries] },
     };
+    const maturePlaces = ISLAND_HABITAT_IDS.filter(id => updated.growth!.progress[id] >= 6).length;
+    updated.growth!.expansionLevel = Math.max(getIslandExpansionLevel(before), Math.min(2, maturePlaces)) as IslandExpansionLevel;
     updated = syncManagedItems(updated);
     updated.growth!.focus = getIslandGrowthTarget(updated);
-    if (getIslandHabitatLevel(updated, target) > oldLevel) updated.growth!.memories.push(snapshot(updated, 'upgrade', now, target));
-    else if ([2, 12].includes(updated.completedSets)) updated.growth!.memories.push(snapshot(updated, 'expansion', now));
+    // The transaction has already advanced completedSets. Keep one immutable
+    // snapshot when maturity and new land arrive together; old snapshots stay intact.
+    const milestone = getIslandGrowthMilestone(before, updated);
+    if (milestone?.habitats.length) updated.growth!.memories.push(snapshot(updated, 'upgrade', now, target));
+    else if (milestone?.expansion) updated.growth!.memories.push(snapshot(updated, 'expansion', now));
     return updated;
 }
 

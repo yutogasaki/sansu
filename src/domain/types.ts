@@ -57,6 +57,7 @@ export interface LevelState {
     unlocked: boolean;
     enabled: boolean;
     recentAnswersNonReview: boolean[];
+    recentIndependentAnswersNonReview?: boolean[];
     updatedAt?: string;
 }
 
@@ -77,6 +78,10 @@ interface BaseMemoryState {
     correctAnswers: number;
     incorrectAnswers: number;
     skippedAnswers: number;
+    independentCorrectAnswers?: number;
+    lastIndependentCorrectAt?: string;
+    needsRelearning?: boolean;
+    relearningStartedAt?: string;
 
     lastCorrectAt?: string; // ISO Timestamp
     updatedAt: string;
@@ -109,6 +114,10 @@ export interface MemoryState {
     correctAnswers: number;
     incorrectAnswers: number;
     skippedAnswers: number;
+    independentCorrectAnswers?: number;
+    lastIndependentCorrectAt?: string;
+    needsRelearning?: boolean;
+    relearningStartedAt?: string;
 
     lastCorrectAt?: string;
     updatedAt: string;
@@ -366,6 +375,8 @@ export interface Problem {
     hissanOperands?: { a: number; b: number };
     /** Reserved written layout; absent preserves legacy step/cell coordinates. */
     hissanVersion?: 2;
+    /** New Study reservations freeze the initial input mode; old problems keep legacy behavior. */
+    studyPresentation?: { version: 1; hissan: boolean };
 
     // Metadata
     isReview: boolean;

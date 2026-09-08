@@ -1,6 +1,7 @@
 import { db, type SansuDatabase } from '../../db';
 import { getLearningAttemptTransactionTables } from '../learningAttemptWriter';
 import { planParkLearning } from '../park/learning';
+import { readRuntimeMathUnitPractice } from '../learning/runtimeUnitPractice';
 import { ParkConflict } from '../park/repository';
 import { getLevelForSkill } from '../math/curriculum';
 import { ENGLISH_WORDS } from '../english/words';
@@ -9,6 +10,8 @@ import { hasValidIslandSupportState } from './learningSupport';
 import { createIsland, islandRewardChoices, isValidIslandPlacement } from './catalog';
 import { getIslandGrowthTarget, initializeIslandGrowth, isIslandHabitatId, isIslandHabitatUnlocked } from './growth';
 import { hasValidGrowthItemFields, hasValidIslandGrowth } from './growthValidation';
+import { selectIslandSubject } from './subjectSelection';
+import { hasValidIslandCustomization } from './customization';
 import { ISLAND_ITEM_KINDS, type IslandEdit, type IslandItemKind, type IslandPlan, type IslandRecord } from './types';
 
 export class IslandConflict extends ParkConflict {}
@@ -36,7 +39,10 @@ export function assertIsland(island: IslandRecord) {
                 || !['bridge', 'independent'].includes(check.stage) || !Number.isFinite(check.createdAt) || check.createdAt < 0)))
         || (island.mathReviewTurn !== undefined && (!Number.isSafeInteger(island.mathReviewTurn) || island.mathReviewTurn < 0))
         || (island.vocabDueCursor !== undefined && !ENGLISH_WORDS.some(word => word.id === island.vocabDueCursor))
-        || !hasValidIslandGrowth(island)) throw new IslandConflict('Invalid island');
+        || (island.nextSubjectChoice !== undefined && (!island.nextSubjectChoice
+            || typeof island.nextSubjectChoice.afterPlanId !== 'string' || !island.nextSubjectChoice.afterPlanId
+            || !['math', 'vocab'].includes(island.nextSubjectChoice.subject)))
+        || !hasValidIslandGrowth(island) || !hasValidIslandCustomization(island)) throw new IslandConflict('Invalid island');
 }
 
 export function assertIslandPlan(plan: IslandPlan, profileId: string) {
@@ -44,6 +50,8 @@ export function assertIslandPlan(plan: IslandPlan, profileId: string) {
         || !Number.isInteger(plan.revision) || plan.revision < 0 || !Number.isInteger(plan.cursor)
         || (plan.growthTarget !== undefined && !isIslandHabitatId(plan.growthTarget))
         || !Array.isArray(plan.slots) || plan.slots.length === 0 || plan.cursor < 0 || plan.cursor > plan.slots.length
+        || (plan.introducedItemIds !== undefined && (!Array.isArray(plan.introducedItemIds)
+            || plan.introducedItemIds.some(id => typeof id !== 'string' || !plan.slots.some(slot => slot.problem.categoryId === id))))
         || plan.slots.some((slot, index) => slot.problem.subject !== plan.subject || slot.completed !== (index < plan.cursor)
             || !hasValidIslandSupportState(slot))
         || (plan.status === 'active' ? plan.cursor === plan.slots.length : plan.status !== 'completed' || plan.cursor !== plan.slots.length)) {
@@ -96,12 +104,20 @@ export async function startIslandPlan(profileId: string, database = db): Promise
         ]);
         const merge = (legacy: typeof profile.mathSkills, rows: typeof math) => Object.values({ ...legacy, ...Object.fromEntries(rows.map(memory => [memory.id, memory])) });
         const now = Date.now();
+        const mergedMath = merge(profile.mathSkills, math), mergedVocab = merge(profile.vocabWords, vocab);
+        const previousPlans = await database.islandPlans.bulkGet([1, 2].filter(offset => island.completedSets >= offset)
+            .map(offset => JSON.stringify(['island-plan-v1', profileId, island.completedSets - offset])));
+        const subjectSelection = selectIslandSubject({ profile, island, math: mergedMath, vocab: mergedVocab, logs, previousPlans, now });
+        const mathUnitPractice = subjectSelection.subject === 'math'
+            ? await readRuntimeMathUnitPractice(database, profile, new Date(now).toISOString()) : undefined;
         const growingIsland = initializeIslandGrowth(island, now);
         const mathReviewTurn = island.mathReviewTurn ?? 0;
         const remediation = getIslandMathRemediationSkillIds(island.pendingMathChecks, profile);
         const selectedRemediation = remediation.length ? [remediation[Math.floor(mathReviewTurn / 2) % remediation.length]] : [];
-        const learning = planParkLearning(profile, merge(profile.mathSkills, math), merge(profile.vocabWords, vocab), logs,
+        const learning = planParkLearning(profile, mergedMath, mergedVocab, logs,
             island.completedSets, id, now, { standardCount: island.completedSets === 0 ? 3 : 6, complexCount: 3,
+                ...subjectSelection,
+                mathUnitPractice,
                 mathRemediationSkillIds: selectedRemediation, mathDueFirst: mathReviewTurn % 2 === 1,
                 mathPendingReviewSkillIds: [...(island.pendingMathChecks ?? []).map(check => check.skillId), ...remediation],
                 vocabDueAfterId: island.vocabDueCursor });
@@ -110,11 +126,13 @@ export async function startIslandPlan(profileId: string, database = db): Promise
             status: 'active', cursor: 0, revision: 0, startedAt: now,
             rewardId: `${id}:reward`, rewardChoices: islandRewardChoices(island.completedSets),
             growthTarget: getIslandGrowthTarget(growingIsland),
+            introducedItemIds: [...new Set(learning.slots.filter(slot => !(learning.subject === 'math' ? mergedMath : mergedVocab)
+                .some(state => state.id === slot.problem.categoryId && state.totalAnswers > 0)).map(slot => slot.problem.categoryId))],
         };
         await database.islandPlans.add(plan);
-        await database.islands.put({ ...growingIsland, pendingPlanId: id, revision: island.revision + 1, updatedAt: now,
+        await database.islands.put({ ...growingIsland, pendingPlanId: id, nextSubjectChoice: undefined, revision: island.revision + 1, updatedAt: now,
             ...(learning.subject === 'math' ? { mathReviewTurn: mathReviewTurn + 1 } : {}),
-            ...(learning.subject === 'vocab' ? { vocabDueCursor: learning.slots.find(slot => slot.source === 'due')?.problem.categoryId } : {}) });
+            ...(learning.subject === 'vocab' ? { vocabDueCursor: learning.slots.filter(slot => slot.source === 'due').slice(-1)[0]?.problem.categoryId ?? island.vocabDueCursor } : {}) });
         await database.islandEvents.add({ id: `${id}:started`, profileId, planId: id, type: 'plan_started', timestamp: now });
         return plan;
     });

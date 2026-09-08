@@ -1,0 +1,18 @@
+.island-workbench .island-subject-choice {
+    min-height: 44px;
+    min-width: 100px;
+    padding: 4px 7px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    border: 1px solid var(--island-muted);
+    border-radius: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+.island-subject-choice > span, .island-subject-choice > small { display: flex; align-items: center; gap: 4px; }
+.island-subject-choice > small { font-size: 12px; font-weight: 500; line-height: 1.2; }
+.island-subject-choice[aria-pressed=true] { background: var(--park-mint); border-color: var(--island-leaf); }
+.island-subject-choice[aria-pressed=true] small svg { color: var(--island-leaf); }
+.island-subject-choice:focus-visible { outline: 3px solid var(--island-leaf); outline-offset: 3px; }
+.island-subject-choice:disabled { cursor: default; opacity: .6; }

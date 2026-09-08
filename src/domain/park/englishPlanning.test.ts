@@ -6,7 +6,7 @@ import { planParkLearning } from './learning';
 
 const now = new Date(2026, 8, 8, 12).getTime();
 const profile = () => ({ ...syncLevelState(createInitialProfile('T', 1, 1, 1, 'vocab'), 'vocab', 2), vocabMainLevel: 1 });
-const memory = (id: string, correctAnswers = 5) => ({ id, strength: 2, totalAnswers: 5, correctAnswers,
+const memory = (id: string, correctAnswers = 5) => ({ id, strength: 2, totalAnswers: 5, correctAnswers, independentCorrectAnswers: correctAnswers,
     incorrectAnswers: 5 - correctAnswers, skippedAnswers: 0, nextReview: '2099-01-01', updatedAt: '2026-01-01', isWeak: false });
 
 describe('Park and Island English reservations', () => {

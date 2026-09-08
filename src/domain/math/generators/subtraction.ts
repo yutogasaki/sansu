@@ -102,6 +102,20 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 7: 2桁-2桁
     "sub_2d2d": (context) => {
+        if (context?.preferredLearningVariant === 'regroup') {
+            const tens = randomInt(2, 9, context.random);
+            const ones = randomInt(0, 8, context.random);
+            const a = tens * 10 + ones;
+            const b = randomInt(1, tens - 1, context.random) * 10 + randomInt(ones + 1, 9, context.random);
+            return createProblem("sub_2d2d", `${a} - ${b} =`, (a - b).toString(), "number");
+        }
+        if (context?.preferredLearningVariant === 'no-regroup') {
+            const tens = randomInt(1, 9, context.random);
+            const ones = randomInt(0, 9, context.random);
+            const a = tens * 10 + ones;
+            const b = randomInt(1, tens, context.random) * 10 + randomInt(0, ones, context.random);
+            return createProblem("sub_2d2d", `${a} - ${b} =`, (a - b).toString(), "number");
+        }
         const a = randomInt(10, 99, context?.random);
         const b = randomInt(10, a, context?.random);
         return createProblem("sub_2d2d", `${a} - ${b} =`, (a - b).toString(), "number");

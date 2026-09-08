@@ -1,4 +1,5 @@
 import type { ChoiceOption, Problem, ProblemVisualItem } from '../../domain/types';
+import type { ReactNode } from 'react';
 import { MathProblemPrompt } from '../domain/MathProblemPrompt';
 import { IslandGlyph } from './IslandGlyph';
 import { splitIslandLabel } from './islandGlyphs';
@@ -6,7 +7,7 @@ import { islandReferenceChoices } from './islandReferenceChoices';
 
 const renderItem = (item: ProblemVisualItem) => <IslandGlyph symbol={item.emoji} label={item.label} />;
 
-export function IslandProblemPrompt({ problem }: { problem: Problem }) {
+export function IslandProblemPrompt({ problem, speechControl }: { problem: Problem; speechControl?: ReactNode }) {
     const reference = islandReferenceChoices(problem) && problem.questionVisual?.kind === 'reference-choice-grid'
         ? problem.questionVisual : undefined;
     return <div className="island-problem-prompt" data-problem-visual={problem.questionVisual?.kind ?? 'symbolic'} data-subject={problem.subject}>
@@ -21,6 +22,8 @@ export function IslandProblemPrompt({ problem }: { problem: Problem }) {
                 <span>おてほん</span>
             </div>
             <p data-visual-caption>{reference.prompt || 'おなじ ものは？'}</p>
+        </div> : problem.subject === 'vocab' ? <div className="island-spoken-word">
+            <MathProblemPrompt problem={problem} className="island-prompt-content" renderItem={renderItem} />{speechControl}
         </div> : <MathProblemPrompt problem={problem} className="island-prompt-content" renderItem={renderItem} />}
     </div>;
 }

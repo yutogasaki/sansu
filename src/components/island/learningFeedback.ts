@@ -18,18 +18,18 @@ export function islandFeedbackForReceipt(before: Pick<IslandPlan, 'id' | 'cursor
         return { feedback: { id: event.id, kind: 'support', text: '' }, reaction: { id: event.id, kind: 'support' } };
     }
     if (event.type === 'supported_completed' && event.result === 'supported-completion' && after.cursor === before.cursor + 1) {
-        return { feedback: { id: event.id, kind: 'supported', text: 'つぎの ひかりへ すすもう' }, reaction: { id: event.id, kind: 'correct' } };
+        return { feedback: { id: event.id, kind: 'supported', text: 'ひかりを とどけたよ' }, reaction: { id: event.id, kind: 'correct' } };
     }
     if (event.type !== 'answer') return;
     if (event.result === 'incorrect' || event.result === 'assisted-incorrect') {
-        return { feedback: { id: event.id, kind: 'retry', text: 'もういちど みてみよう' }, reaction: { id: event.id, kind: 'retry' } };
+        return { feedback: { id: event.id, kind: 'retry', text: 'もういちど' }, reaction: { id: event.id, kind: 'retry' } };
     }
     if (event.result === 'correct' || event.result === 'assisted-correct') {
         if (after.cursor === before.cursor + 1) {
-            return { feedback: { id: event.id, kind: 'correct', text: 'しまに ひかりが もどったよ' }, reaction: { id: event.id, kind: 'correct' } };
+            return { feedback: { id: event.id, kind: 'correct', text: 'せいかい' }, reaction: { id: event.id, kind: 'correct' } };
         }
         if (after.cursor === before.cursor) {
-            return { feedback: { id: event.id, kind: 'step', text: 'ひとだん できたよ。つぎへ すすもう' } };
+            return { feedback: { id: event.id, kind: 'step', text: 'このだんは せいかい' } };
         }
     }
 }

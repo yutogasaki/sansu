@@ -1,0 +1,19 @@
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:island-living
+> node tools/e2e-island-living.mjs
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('.island-page[data-mode="album"]') to be visible[22m
+
+    at waitMode (/private/tmp/sansu-customization-20260908-153622/tools/island-e2e-helpers.mjs:66:61)
+    at verifyIslandProgression (/private/tmp/sansu-customization-20260908-153622/tools/island-e2e-progression.mjs:76:84)
+    at async file:///private/tmp/sansu-customization-20260908-153622/tools/e2e-island-living.mjs:29:22 {
+  name: 'TimeoutError'
+}
+
+Node.js v22.22.3

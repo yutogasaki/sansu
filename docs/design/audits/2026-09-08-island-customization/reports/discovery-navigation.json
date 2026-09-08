@@ -1,0 +1,1962 @@
+{
+  "target": "http://127.0.0.1:5360",
+  "manifestPath": "/tmp/sansu-customization-20260908-161632/build-source.json",
+  "sourceHash": "86209d82490788b82c17689fb380e0d8a7a675a0374b96093eafc246d5935116",
+  "sourceStart": "d3575ec60fd0543b51890d9fce2292284ba1c26fcf6fe648e38d3da9fbae4466",
+  "qaStart": [
+    {
+      "path": "tools/e2e-island-discovery-navigation.mjs",
+      "sha256": "3ede55d5ba22a8d0aae9e91e077e45ad01b7c3708a0b922418e5b172b9f1bd27"
+    },
+    {
+      "path": "tools/island-e2e-helpers.mjs",
+      "sha256": "725962b376292c970c128e914c0316c4107875dab1b9ad6a80aa9e3372dbd3c1"
+    },
+    {
+      "path": "tools/island-learning-checks.mjs",
+      "sha256": "fb9b9bec972ffa8909dc691164979939d21769a3b7826d29e610ce73dbc57007"
+    },
+    {
+      "path": "tools/island-learning-fixtures.mjs",
+      "sha256": "6dda4730b390b5b062cf8fd3de8376da8c917ff29b3844ae2e6e5f8f56656f87"
+    }
+  ],
+  "startedAt": "2026-09-08T07:18:16.320Z",
+  "humanN": 0,
+  "diagnosticOnly": true,
+  "timingEvidenceEligible": false,
+  "applicationDataInjected": false,
+  "pass": true,
+  "scope": "Real empty-profile setup, six normal learning sections without returning home, and the first naturally observed discovery. Only its real native completion callback is delayed. Read-only album navigation must remain available while learning/exchange/editing stay locked. A second callback hold begins at the actual learning-resume click and confirms comparison stays locked for that interaction. Native records, problems, profile, growth and discovery are never fabricated. Not normal speed or child motivation evidence.",
+  "captures": [
+    {
+      "file": "phone-01-six-real-sections.png",
+      "sha256": "cd7b01fead588a3e43a034325fad7d612e06c27cb7188bd4f378898a6a101bf5",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 123,
+      "expanded": "true",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "false",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.18319,0.00000,0.00000,0.00000,0.00000,0.35022,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.25313,0.00000,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": false,
+        "marked": 0,
+        "held": false,
+        "released": false,
+        "hits": 0,
+        "installedAt": 1788851896743,
+        "events": []
+      },
+      "startProbe": null
+    },
+    {
+      "file": "phone-02-background-held-home.png",
+      "sha256": "f255cbc4fbb909ef6270e1ee8fa690b3576d42796929df9ef84b6112bbf95d5d",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 118,
+      "expanded": "true",
+      "residentAction": "sniff",
+      "residentItemId": "starter-flower",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "false",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.11218,0.00000,0.00000,0.00000,0.00000,0.11335,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.12887,0.02301,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": true,
+        "released": false,
+        "hits": 1,
+        "installedAt": 1788851896743,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851907384,
+            "monotonic": 10652.899999976158
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851911384,
+            "monotonic": 14653.100000023842,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851911384,
+            "monotonic": 14653.300000011921,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          }
+        ],
+        "armedAt": 1788851907384,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+          "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+          "type": "discovery_observed",
+          "timestamp": 1788851911346,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851911384
+      },
+      "startProbe": null
+    },
+    {
+      "file": "phone-03-held-milestone-album.png",
+      "sha256": "389280d71c76105d328cfc47a0481b27cffb5ecaf8a7e83cb57133455ab9e4c1",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "album",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 79,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "true",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.80000,13.47000,1.00000,0.08228,0.00000,0.00000,0.00000,0.00000,0.15210,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+          "renderer": "three"
+        },
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "true",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.80000,13.47000,1.00000,0.08228,0.00000,0.00000,0.00000,0.00000,0.15210,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": true,
+        "released": false,
+        "hits": 1,
+        "installedAt": 1788851896743,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851907384,
+            "monotonic": 10652.899999976158
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851911384,
+            "monotonic": 14653.100000023842,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851911384,
+            "monotonic": 14653.300000011921,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          }
+        ],
+        "armedAt": 1788851907384,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+          "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+          "type": "discovery_observed",
+          "timestamp": 1788851911346,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851911384
+      },
+      "startProbe": null
+    },
+    {
+      "file": "phone-04-held-ordinary-album.png",
+      "sha256": "faa5f1be4b0b5752e40b34edfccc62d8bbbee6d96ebccfb35b60aeb8830e7730",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "album",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 62,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "true",
+          "cameraFrame": "0.94440,0.00000,0.32879,0.00000,0.17236,0.85157,-0.49509,0.00000,-0.27999,0.52424,0.80423,0.00000,-4.10000,9.40000,14.45000,1.00000,0.31820,0.00000,0.00000,0.00000,0.00000,0.58824,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+          "renderer": "three"
+        },
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "true",
+          "cameraFrame": "0.94440,0.00000,0.32879,0.00000,0.17236,0.85157,-0.49509,0.00000,-0.27999,0.52424,0.80423,0.00000,-4.10000,9.40000,14.45000,1.00000,0.31820,0.00000,0.00000,0.00000,0.00000,0.58824,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": true,
+        "released": false,
+        "hits": 1,
+        "installedAt": 1788851896743,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851907384,
+            "monotonic": 10652.899999976158
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851911384,
+            "monotonic": 14653.100000023842,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851911384,
+            "monotonic": 14653.300000011921,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          }
+        ],
+        "armedAt": 1788851907384,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+          "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+          "type": "discovery_observed",
+          "timestamp": 1788851911346,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851911384
+      },
+      "startProbe": null
+    },
+    {
+      "file": "phone-05-held-returned-home.png",
+      "sha256": "c2a82790a6b054ae25dbdc4a5ad0b358b657502b00d7804eef0710e121155210",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 118,
+      "expanded": "true",
+      "residentAction": "sit",
+      "residentItemId": "living-bench",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "false",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.11218,0.00000,0.00000,0.00000,0.00000,0.11335,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.12887,0.02301,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": true,
+        "released": false,
+        "hits": 1,
+        "installedAt": 1788851896743,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851907384,
+            "monotonic": 10652.899999976158
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851911384,
+            "monotonic": 14653.100000023842,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851911384,
+            "monotonic": 14653.300000011921,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          }
+        ],
+        "armedAt": 1788851907384,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+          "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+          "type": "discovery_observed",
+          "timestamp": 1788851911346,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851911384
+      },
+      "startProbe": null
+    },
+    {
+      "file": "phone-06-released.png",
+      "sha256": "52bb62b56c767115e84db41d3f2e3ba9fd5d7ecaa513e46d21293f199c98bdfe",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 118,
+      "expanded": "true",
+      "residentAction": "sit",
+      "residentItemId": "living-bench",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "false",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.11218,0.00000,0.00000,0.00000,0.00000,0.11335,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.12887,0.02301,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": false,
+        "released": true,
+        "hits": 1,
+        "installedAt": 1788851896743,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851907384,
+            "monotonic": 10652.899999976158
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851911384,
+            "monotonic": 14653.100000023842,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851911384,
+            "monotonic": 14653.300000011921,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "real-completion-callback-release",
+            "at": 1788851917751,
+            "monotonic": 21020.19999998808
+          }
+        ],
+        "armedAt": 1788851907384,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+          "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+          "type": "discovery_observed",
+          "timestamp": 1788851911346,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851911384,
+        "releasedAt": 1788851917751
+      },
+      "startProbe": null
+    },
+    {
+      "file": "phone-07-manual-start-held.png",
+      "sha256": "aff321b04475206aef6e86c647dd2a5a734cc104104e907c778768e44e1cafa8",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 118,
+      "expanded": "true",
+      "residentAction": "sit",
+      "residentItemId": "living-bench",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "false",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.11218,0.00000,0.00000,0.00000,0.00000,0.11335,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.12887,0.02301,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": false,
+        "released": true,
+        "hits": 1,
+        "installedAt": 1788851896743,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851907384,
+            "monotonic": 10652.899999976158
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851911384,
+            "monotonic": 14653.100000023842,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851911384,
+            "monotonic": 14653.300000011921,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "real-completion-callback-release",
+            "at": 1788851917751,
+            "monotonic": 21020.19999998808
+          }
+        ],
+        "armedAt": 1788851907384,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+          "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+          "type": "discovery_observed",
+          "timestamp": 1788851911346,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851911384,
+        "releasedAt": 1788851917751
+      },
+      "startProbe": {
+        "armed": true,
+        "hits": 1,
+        "held": true,
+        "released": false,
+        "installedAt": 1788851917843,
+        "events": [
+          {
+            "type": "armed-at-real-start-click",
+            "at": 1788851917870,
+            "monotonic": 21139.80000001192
+          },
+          {
+            "type": "real-resume-transaction-selected",
+            "at": 1788851917871,
+            "monotonic": 21140.600000023842
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851917921,
+            "monotonic": 21190.69999998808
+          }
+        ],
+        "trustedStartClick": true,
+        "storeNames": [
+          "appData",
+          "islandEvents",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "memoryVocab",
+          "parkEvents",
+          "profiles"
+        ],
+        "transactionMode": "readwrite",
+        "nativeCompletedAt": 1788851917921
+      }
+    },
+    {
+      "file": "phone-08-real-answer-resumed.png",
+      "sha256": "d16950fde101e4da72f12c911362fdf0c4fa4d719495b13de65ba5a2d248fbf2",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 114,
+      "expanded": "true",
+      "residentAction": "sit",
+      "residentItemId": "living-bench",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "false",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,8.10000,9.35000,14.80000,1.00000,0.20635,0.00000,0.00000,0.00000,0.00000,0.39448,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.06253,-0.15386,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": false,
+        "released": true,
+        "hits": 1,
+        "installedAt": 1788851896743,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851907384,
+            "monotonic": 10652.899999976158
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851911384,
+            "monotonic": 14653.100000023842,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851911384,
+            "monotonic": 14653.300000011921,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "real-completion-callback-release",
+            "at": 1788851917751,
+            "monotonic": 21020.19999998808
+          }
+        ],
+        "armedAt": 1788851907384,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+          "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+          "type": "discovery_observed",
+          "timestamp": 1788851911346,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851911384,
+        "releasedAt": 1788851917751
+      },
+      "startProbe": {
+        "armed": true,
+        "hits": 1,
+        "held": false,
+        "released": true,
+        "installedAt": 1788851917843,
+        "events": [
+          {
+            "type": "armed-at-real-start-click",
+            "at": 1788851917870,
+            "monotonic": 21139.80000001192
+          },
+          {
+            "type": "real-resume-transaction-selected",
+            "at": 1788851917871,
+            "monotonic": 21140.600000023842
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851917921,
+            "monotonic": 21190.69999998808
+          },
+          {
+            "type": "real-completion-callback-release",
+            "at": 1788851917977,
+            "monotonic": 21246.69999998808
+          }
+        ],
+        "trustedStartClick": true,
+        "storeNames": [
+          "appData",
+          "islandEvents",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "memoryVocab",
+          "parkEvents",
+          "profiles"
+        ],
+        "transactionMode": "readwrite",
+        "nativeCompletedAt": 1788851917921,
+        "releasedAt": 1788851917977
+      }
+    },
+    {
+      "file": "tablet-01-six-real-sections.png",
+      "sha256": "a19de3aceb797a327c7f45ede2b60b6971edf14d144d71022236e57bab983ae5",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 102,
+      "expanded": "true",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "false",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.35000,14.30000,1.00000,0.16509,0.00000,0.00000,0.00000,0.00000,0.50313,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.13918,0.18787,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": false,
+        "marked": 0,
+        "held": false,
+        "released": false,
+        "hits": 0,
+        "installedAt": 1788851918506,
+        "events": []
+      },
+      "startProbe": null
+    },
+    {
+      "file": "tablet-02-background-held-home.png",
+      "sha256": "3d70836b9053a815175aa40f8eea95e4933e566abac586b4d60943e8b7b8ac0f",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 118,
+      "expanded": "true",
+      "residentAction": "sniff",
+      "residentItemId": "starter-flower",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "false",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.11218,0.00000,0.00000,0.00000,0.00000,0.18331,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.12887,0.03722,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": true,
+        "released": false,
+        "hits": 1,
+        "installedAt": 1788851918506,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851927268,
+            "monotonic": 8765.800000011921
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851929745,
+            "monotonic": 11242.399999976158,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851929745,
+            "monotonic": 11242.599999964237,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          }
+        ],
+        "armedAt": 1788851927268,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+          "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+          "type": "discovery_observed",
+          "timestamp": 1788851929744,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851929745
+      },
+      "startProbe": null
+    },
+    {
+      "file": "tablet-03-held-milestone-album.png",
+      "sha256": "69a16e72a302d117b078c0ccc242ea891e200af47c22b23f0b480197d704c26f",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "album",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 79,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "true",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.80000,13.47000,1.00000,0.08228,0.00000,0.00000,0.00000,0.00000,0.08871,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+          "renderer": "three"
+        },
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "true",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.80000,13.47000,1.00000,0.08228,0.00000,0.00000,0.00000,0.00000,0.08871,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": true,
+        "released": false,
+        "hits": 1,
+        "installedAt": 1788851918506,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851927268,
+            "monotonic": 8765.800000011921
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851929745,
+            "monotonic": 11242.399999976158,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851929745,
+            "monotonic": 11242.599999964237,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          }
+        ],
+        "armedAt": 1788851927268,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+          "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+          "type": "discovery_observed",
+          "timestamp": 1788851929744,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851929745
+      },
+      "startProbe": null
+    },
+    {
+      "file": "tablet-04-held-ordinary-album.png",
+      "sha256": "18d90576955d54e4686f5aa49e97aa0174c354d844adf92cdcbba330285a0dcc",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "album",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 47,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "true",
+          "cameraFrame": "0.94440,0.00000,0.32879,0.00000,0.17236,0.85157,-0.49509,0.00000,-0.27999,0.52424,0.80423,0.00000,-4.10000,9.40000,14.45000,1.00000,0.52632,0.00000,0.00000,0.00000,0.00000,0.56743,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+          "renderer": "three"
+        },
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "true",
+          "cameraFrame": "0.94440,0.00000,0.32879,0.00000,0.17236,0.85157,-0.49509,0.00000,-0.27999,0.52424,0.80423,0.00000,-4.10000,9.40000,14.45000,1.00000,0.52632,0.00000,0.00000,0.00000,0.00000,0.56743,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": true,
+        "released": false,
+        "hits": 1,
+        "installedAt": 1788851918506,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851927268,
+            "monotonic": 8765.800000011921
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851929745,
+            "monotonic": 11242.399999976158,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851929745,
+            "monotonic": 11242.599999964237,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          }
+        ],
+        "armedAt": 1788851927268,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+          "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+          "type": "discovery_observed",
+          "timestamp": 1788851929744,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851929745
+      },
+      "startProbe": null
+    },
+    {
+      "file": "tablet-05-held-returned-home.png",
+      "sha256": "720b957d67fc72c23a688661af65ca3dad64aa7830475d9164bb6dd6f92fee2b",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 118,
+      "expanded": "true",
+      "residentAction": "sit",
+      "residentItemId": "living-bench",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "false",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.11218,0.00000,0.00000,0.00000,0.00000,0.18331,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.12887,0.03722,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": true,
+        "released": false,
+        "hits": 1,
+        "installedAt": 1788851918506,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851927268,
+            "monotonic": 8765.800000011921
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851929745,
+            "monotonic": 11242.399999976158,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851929745,
+            "monotonic": 11242.599999964237,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          }
+        ],
+        "armedAt": 1788851927268,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+          "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+          "type": "discovery_observed",
+          "timestamp": 1788851929744,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851929745
+      },
+      "startProbe": null
+    },
+    {
+      "file": "tablet-06-released.png",
+      "sha256": "3d29f594b5c9576f506b8e5ad282eae9eb6ad720c4cf1ca6cf9fc23388b09541",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 118,
+      "expanded": "true",
+      "residentAction": "sit",
+      "residentItemId": "living-bench",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "false",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.11218,0.00000,0.00000,0.00000,0.00000,0.18331,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.12887,0.03722,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": false,
+        "released": true,
+        "hits": 1,
+        "installedAt": 1788851918506,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851927268,
+            "monotonic": 8765.800000011921
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851929745,
+            "monotonic": 11242.399999976158,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851929745,
+            "monotonic": 11242.599999964237,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "real-completion-callback-release",
+            "at": 1788851935504,
+            "monotonic": 17001.599999964237
+          }
+        ],
+        "armedAt": 1788851927268,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+          "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+          "type": "discovery_observed",
+          "timestamp": 1788851929744,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851929745,
+        "releasedAt": 1788851935504
+      },
+      "startProbe": null
+    },
+    {
+      "file": "tablet-07-manual-start-held.png",
+      "sha256": "8cf45ba85d9914afe3eea53d4a6f1068074075df2ae59f7d94a565feef0c63be",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 118,
+      "expanded": "true",
+      "residentAction": "sit",
+      "residentItemId": "living-bench",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "false",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.11218,0.00000,0.00000,0.00000,0.00000,0.18331,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.12887,0.03722,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": false,
+        "released": true,
+        "hits": 1,
+        "installedAt": 1788851918506,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851927268,
+            "monotonic": 8765.800000011921
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851929745,
+            "monotonic": 11242.399999976158,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851929745,
+            "monotonic": 11242.599999964237,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "real-completion-callback-release",
+            "at": 1788851935504,
+            "monotonic": 17001.599999964237
+          }
+        ],
+        "armedAt": 1788851927268,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+          "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+          "type": "discovery_observed",
+          "timestamp": 1788851929744,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851929745,
+        "releasedAt": 1788851935504
+      },
+      "startProbe": {
+        "armed": true,
+        "hits": 1,
+        "held": true,
+        "released": false,
+        "installedAt": 1788851935607,
+        "events": [
+          {
+            "type": "armed-at-real-start-click",
+            "at": 1788851935623,
+            "monotonic": 17121
+          },
+          {
+            "type": "real-resume-transaction-selected",
+            "at": 1788851935624,
+            "monotonic": 17121.899999976158
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851935680,
+            "monotonic": 17177.599999964237
+          }
+        ],
+        "trustedStartClick": true,
+        "storeNames": [
+          "appData",
+          "islandEvents",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "memoryVocab",
+          "parkEvents",
+          "profiles"
+        ],
+        "transactionMode": "readwrite",
+        "nativeCompletedAt": 1788851935680
+      }
+    },
+    {
+      "file": "tablet-08-real-answer-resumed.png",
+      "sha256": "563bbe8b78845e2d42f142dc537872a30fceaab3702adc53874360c4f144b81e",
+      "revision": "customization-20260908-86209d824907",
+      "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 114,
+      "expanded": "true",
+      "residentAction": "sit",
+      "residentItemId": "living-bench",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-v1",
+          "readOnly": "false",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,8.10000,9.35000,14.80000,1.00000,0.15764,0.00000,0.00000,0.00000,0.00000,0.48044,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,-0.37477,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": false,
+        "released": true,
+        "hits": 1,
+        "installedAt": 1788851918506,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851927268,
+            "monotonic": 8765.800000011921
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851929745,
+            "monotonic": 11242.399999976158,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851929745,
+            "monotonic": 11242.599999964237,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "real-completion-callback-release",
+            "at": 1788851935504,
+            "monotonic": 17001.599999964237
+          }
+        ],
+        "armedAt": 1788851927268,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+          "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+          "type": "discovery_observed",
+          "timestamp": 1788851929744,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851929745,
+        "releasedAt": 1788851935504
+      },
+      "startProbe": {
+        "armed": true,
+        "hits": 1,
+        "held": false,
+        "released": true,
+        "installedAt": 1788851935607,
+        "events": [
+          {
+            "type": "armed-at-real-start-click",
+            "at": 1788851935623,
+            "monotonic": 17121
+          },
+          {
+            "type": "real-resume-transaction-selected",
+            "at": 1788851935624,
+            "monotonic": 17121.899999976158
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851935680,
+            "monotonic": 17177.599999964237
+          },
+          {
+            "type": "real-completion-callback-release",
+            "at": 1788851935743,
+            "monotonic": 17240.899999976158
+          }
+        ],
+        "trustedStartClick": true,
+        "storeNames": [
+          "appData",
+          "islandEvents",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "memoryVocab",
+          "parkEvents",
+          "profiles"
+        ],
+        "transactionMode": "readwrite",
+        "nativeCompletedAt": 1788851935680,
+        "releasedAt": 1788851935743
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "explicitCompletionDelayDiagnostic": true,
+      "pass": true,
+      "errors": [],
+      "beforeLearningSHA256": "cb2baf7add6e6a32b9aea4d53be755eab0d7aca3f01210bfd7ace906fef5b250",
+      "actualDiscovery": {
+        "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+        "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+        "type": "discovery_observed",
+        "timestamp": 1788851911346,
+        "itemId": "starter-flower",
+        "discoveryId": "flower-scent"
+      },
+      "controlsHeld": [
+        {
+          "label": "つづきから とく",
+          "disabled": true
+        },
+        {
+          "label": "きせかえ",
+          "disabled": true
+        },
+        {
+          "label": "もちもの",
+          "disabled": true
+        },
+        {
+          "label": "どうぶつと あそぶ",
+          "disabled": true
+        }
+      ],
+      "milestoneAlbum": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "readOnly": "true"
+        },
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "readOnly": "true"
+        }
+      ],
+      "ordinaryAlbum": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "readOnly": "true"
+        },
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "readOnly": "true"
+        }
+      ],
+      "discoveredActionsWhileHeld": [],
+      "discoveryActionsPresentWhileHeld": 0,
+      "afterReleaseLearningSHA256": "cb2baf7add6e6a32b9aea4d53be755eab0d7aca3f01210bfd7ace906fef5b250",
+      "singleDiscoveryReceipt": true,
+      "starsAfterRelease": 60,
+      "controlsDuringManualStart": [
+        {
+          "label": "しまが 大きく ひろがったよ\nおはなが いっぱいに なった\nひがしへ はしが つながったよ\nあのころと みくらべる",
+          "disabled": true
+        },
+        {
+          "label": "アルバム",
+          "disabled": true
+        },
+        {
+          "label": "つづきから とく",
+          "disabled": true
+        },
+        {
+          "label": "きせかえ",
+          "disabled": true
+        },
+        {
+          "label": "もちもの",
+          "disabled": true
+        },
+        {
+          "label": "どうぶつと あそぶ",
+          "disabled": true
+        }
+      ],
+      "startProbe": {
+        "armed": true,
+        "hits": 1,
+        "held": false,
+        "released": true,
+        "installedAt": 1788851917843,
+        "events": [
+          {
+            "type": "armed-at-real-start-click",
+            "at": 1788851917870,
+            "monotonic": 21139.80000001192
+          },
+          {
+            "type": "real-resume-transaction-selected",
+            "at": 1788851917871,
+            "monotonic": 21140.600000023842
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851917921,
+            "monotonic": 21190.69999998808
+          },
+          {
+            "type": "real-completion-callback-release",
+            "at": 1788851917977,
+            "monotonic": 21246.69999998808
+          }
+        ],
+        "trustedStartClick": true,
+        "storeNames": [
+          "appData",
+          "islandEvents",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "memoryVocab",
+          "parkEvents",
+          "profiles"
+        ],
+        "transactionMode": "readwrite",
+        "nativeCompletedAt": 1788851917921,
+        "releasedAt": 1788851917977
+      },
+      "resumedQuestionCompleted": true,
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": false,
+        "released": true,
+        "hits": 1,
+        "installedAt": 1788851896743,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851907384,
+            "monotonic": 10652.899999976158
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851911384,
+            "monotonic": 14653.100000023842,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851911384,
+            "monotonic": 14653.300000011921,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+              "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+              "type": "discovery_observed",
+              "timestamp": 1788851911346,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "real-completion-callback-release",
+            "at": 1788851917751,
+            "monotonic": 21020.19999998808
+          }
+        ],
+        "armedAt": 1788851907384,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"78ff9dec-e411-4abe-8dab-9a06c756c54c\",\"flower-scent\"]",
+          "profileId": "78ff9dec-e411-4abe-8dab-9a06c756c54c",
+          "type": "discovery_observed",
+          "timestamp": 1788851911346,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851911384,
+        "releasedAt": 1788851917751
+      }
+    },
+    {
+      "name": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "explicitCompletionDelayDiagnostic": true,
+      "pass": true,
+      "errors": [],
+      "beforeLearningSHA256": "484c7473f1cd7604b10267a4465dfe60f79075af6618670ae6c41fe3a11d0e4b",
+      "actualDiscovery": {
+        "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+        "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+        "type": "discovery_observed",
+        "timestamp": 1788851929744,
+        "itemId": "starter-flower",
+        "discoveryId": "flower-scent"
+      },
+      "controlsHeld": [
+        {
+          "label": "つづきから とく",
+          "disabled": true
+        },
+        {
+          "label": "きせかえ",
+          "disabled": true
+        },
+        {
+          "label": "もちもの",
+          "disabled": true
+        },
+        {
+          "label": "どうぶつと あそぶ",
+          "disabled": true
+        }
+      ],
+      "milestoneAlbum": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "readOnly": "true"
+        },
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "readOnly": "true"
+        }
+      ],
+      "ordinaryAlbum": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "readOnly": "true"
+        },
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "readOnly": "true"
+        }
+      ],
+      "discoveredActionsWhileHeld": [],
+      "discoveryActionsPresentWhileHeld": 0,
+      "afterReleaseLearningSHA256": "484c7473f1cd7604b10267a4465dfe60f79075af6618670ae6c41fe3a11d0e4b",
+      "singleDiscoveryReceipt": true,
+      "starsAfterRelease": 60,
+      "controlsDuringManualStart": [
+        {
+          "label": "しまが 大きく ひろがったよ\nおはなが いっぱいに なった\nひがしへ はしが つながったよ\nあのころと みくらべる",
+          "disabled": true
+        },
+        {
+          "label": "アルバム",
+          "disabled": true
+        },
+        {
+          "label": "つづきから とく",
+          "disabled": true
+        },
+        {
+          "label": "きせかえ",
+          "disabled": true
+        },
+        {
+          "label": "もちもの",
+          "disabled": true
+        },
+        {
+          "label": "どうぶつと あそぶ",
+          "disabled": true
+        }
+      ],
+      "startProbe": {
+        "armed": true,
+        "hits": 1,
+        "held": false,
+        "released": true,
+        "installedAt": 1788851935607,
+        "events": [
+          {
+            "type": "armed-at-real-start-click",
+            "at": 1788851935623,
+            "monotonic": 17121
+          },
+          {
+            "type": "real-resume-transaction-selected",
+            "at": 1788851935624,
+            "monotonic": 17121.899999976158
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851935680,
+            "monotonic": 17177.599999964237
+          },
+          {
+            "type": "real-completion-callback-release",
+            "at": 1788851935743,
+            "monotonic": 17240.899999976158
+          }
+        ],
+        "trustedStartClick": true,
+        "storeNames": [
+          "appData",
+          "islandEvents",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "memoryVocab",
+          "parkEvents",
+          "profiles"
+        ],
+        "transactionMode": "readwrite",
+        "nativeCompletedAt": 1788851935680,
+        "releasedAt": 1788851935743
+      },
+      "resumedQuestionCompleted": true,
+      "probe": {
+        "armed": true,
+        "marked": 1,
+        "held": false,
+        "released": true,
+        "hits": 1,
+        "installedAt": 1788851918506,
+        "events": [
+          {
+            "type": "armed-before-first-home",
+            "at": 1788851927268,
+            "monotonic": 8765.800000011921
+          },
+          {
+            "type": "real-discovery-add",
+            "at": 1788851929745,
+            "monotonic": 11242.399999976158,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "native-complete-callback-held",
+            "at": 1788851929745,
+            "monotonic": 11242.599999964237,
+            "actualEvent": {
+              "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+              "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+              "type": "discovery_observed",
+              "timestamp": 1788851929744,
+              "itemId": "starter-flower",
+              "discoveryId": "flower-scent"
+            }
+          },
+          {
+            "type": "real-completion-callback-release",
+            "at": 1788851935504,
+            "monotonic": 17001.599999964237
+          }
+        ],
+        "armedAt": 1788851927268,
+        "actualEvent": {
+          "id": "[\"island-discovery-v1\",\"507f80d5-f277-4fd9-92b9-fde2606906b0\",\"flower-scent\"]",
+          "profileId": "507f80d5-f277-4fd9-92b9-fde2606906b0",
+          "type": "discovery_observed",
+          "timestamp": 1788851929744,
+          "itemId": "starter-flower",
+          "discoveryId": "flower-scent"
+        },
+        "nativeCompletedAt": 1788851929745,
+        "releasedAt": 1788851935504
+      }
+    }
+  ],
+  "errors": [],
+  "version": {
+    "version": "customization-20260908-86209d824907:efd6f644-4c0a-45d3-8bd2-8ea12c697c52",
+    "revision": "customization-20260908-86209d824907",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "interactionLockSourceBoundary": {
+    "defaultInteractionKindPresent": true,
+    "synchronousLockRemains": true,
+    "discoveryQueueExplicitKindPresent": true,
+    "albumTryAndPlaceRetainBusyDisabled": true,
+    "actionsSHA256": "a8ccb015bd99930f680b5dd82dd85e2ffb85d3ba3f1d66b241a02ac7a2903c88",
+    "discoveryQueueSHA256": "ebc23af6a052e436d99c8fa49c3f3d478cbd9017011ef477acc046bc2c49222d",
+    "albumSHA256": "64e834d0de0945a664a17719cc014c5048b503ae26420a51228e9978059dcc91",
+    "islandPageSHA256": "a10d3e1afaafc9fcd271e2b42be5b19248e6e4b6cc17c6b9aad5a6e09ce89093"
+  },
+  "browserClosed": true,
+  "sourceEnd": "d3575ec60fd0543b51890d9fce2292284ba1c26fcf6fe648e38d3da9fbae4466",
+  "qaEnd": [
+    {
+      "path": "tools/e2e-island-discovery-navigation.mjs",
+      "sha256": "3ede55d5ba22a8d0aae9e91e077e45ad01b7c3708a0b922418e5b172b9f1bd27"
+    },
+    {
+      "path": "tools/island-e2e-helpers.mjs",
+      "sha256": "725962b376292c970c128e914c0316c4107875dab1b9ad6a80aa9e3372dbd3c1"
+    },
+    {
+      "path": "tools/island-learning-checks.mjs",
+      "sha256": "fb9b9bec972ffa8909dc691164979939d21769a3b7826d29e610ce73dbc57007"
+    },
+    {
+      "path": "tools/island-learning-fixtures.mjs",
+      "sha256": "6dda4730b390b5b062cf8fd3de8376da8c917ff29b3844ae2e6e5f8f56656f87"
+    }
+  ],
+  "sourceUnchanged": true,
+  "completedAt": "2026-09-08T07:18:56.196Z"
+}

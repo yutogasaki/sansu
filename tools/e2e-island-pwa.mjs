@@ -157,7 +157,9 @@ try {
         assert.equal(continuous.island.completedSets, 2);
         assert.deepEqual(continuous.island.pendingRewards, []);
         assert.equal(continuous.island.growth.progress.garden, 2);
-        assert(continuous.island.items.some(item => item.kind === 'fountain' && item.position));
+        assert.equal(continuous.island.growth.expansionLevel, 0);
+        assert.equal(continuous.island.items.length, 3);
+        assert.deepEqual(continuous.island.growth.memories.map(memory => memory.completedSets), [0]);
         assert.equal(continuous.plan.cursor, 0);
         assert.equal(continuous.plan.revision, 0);
         assert.notEqual(continuous.plan.id, normalPlanId);
@@ -170,8 +172,40 @@ try {
         assert.deepEqual(boundaryRestored.plan, continuous.plan);
         assert.deepEqual(boundaryRestored.island, continuous.island);
         assert.deepEqual(boundaryRestored.logs, continuous.logs);
-        report.hookChecks.push('automatic next section keeps update deferred; final answer, garden growth, east habitat and next reservation survive the voluntary checkpoint');
+        report.hookChecks.push('ordinary second section keeps update deferred; minor growth, unchanged land and album, and next reservation survive the voluntary checkpoint');
         report.automaticBoundary = { before: boundaryBefore, saved: continuous, restored: boundaryRestored };
+
+        // The first real maturity is now the land-expansion checkpoint.
+        continuous = boundaryRestored;
+        for (let step = 0; continuous.island.completedSets < 5; step++) {
+            assert(step < 210, 'Five real sections must finish');
+            continuous = (await answerUI(page, continuous.plan, { dev: false })).state;
+        }
+        assert.equal(continuous.island.growth.expansionLevel, 0);
+        const matureBefore = continuous, maturePlanId = continuous.plan.id;
+        const matureMarker = 'island-maturity-expansion-protected';
+        await noReloadWhile(page, matureMarker, async () => {
+            await dispatch(page, 'sansu:pwa-e2e-reload', { version: matureMarker });
+            for (let step = 0; continuous.plan?.id === maturePlanId; step++) {
+                assert(step < 70, 'The first mature section must finish');
+                continuous = (await answerUI(page, continuous.plan, { dev: false })).state;
+            }
+        });
+        assert.equal(continuous.island.completedSets, 6);
+        assert.equal(continuous.island.growth.progress.garden, 6);
+        assert.equal(continuous.island.growth.expansionLevel, 1);
+        assert.deepEqual(continuous.island.growth.memories.map(memory => memory.completedSets), [0, 6]);
+        assert.equal(continuous.island.items.length, 5);
+        assert(continuous.island.items.some(item => item.kind === 'swing' && item.position));
+        const matureNavigation = markerRequest(page, matureMarker), matureLoaded = page.waitForEvent('domcontentloaded');
+        await button(page, 'しまへ').click();
+        await matureNavigation; await matureLoaded; await waitReady(page); await waitMode(page, 'learning');
+        const matureRestored = await readNative(page, id);
+        assert.deepEqual(matureRestored.plan, continuous.plan);
+        assert.deepEqual(matureRestored.island, continuous.island);
+        assert.deepEqual(matureRestored.logs, continuous.logs);
+        report.hookChecks.push('first maturity defers update; east expansion, combined album record, stable items and next reservation survive the voluntary checkpoint');
+        report.matureBoundary = { before: matureBefore, saved: continuous, restored: matureRestored };
 
         const islandBeforeLegacy = (await readNative(page, id)).island;
         await page.goto(`${base}/#/explore`);
