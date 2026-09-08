@@ -8,7 +8,7 @@
 
 このセッションの7作品104項目と追加12作品の分析全体を、学習を阻害せず自発的に遊び・学びたくなる島へつなぐ。仕様35のきせかえは一部分。18観点、12の気持ちよさ、10デザイン、8成長、8欲求、16報酬、24比較項目を対応表で追跡し、採用項目を仕様化・実装・実画面検証する。
 
-2026-09-09追加: [仕様42](../../product/42_island_learning_keepsakes_spec.md)の閉じた家内、実アルバム／掲示板／学習の棚と、島のpinch・pan・zoomを[固定23のチェックポイント](../../design/audits/2026-09-09-island-home-checkpoint.md)へ記録した。固定23は `workshop-20260909-ecdb5041e7c4`（1068入力）、実配信guard・292 suites/3232 tests・型/lint/build/assets/docs・Island PWA8保護経路が合格。家のDEV実画像、実物タップ、戻り先2経路は両幅で確認し、明示fixtureと実獲得を区別した。21準備版、22配信revision不一致FAIL、23初回camera/写真QAのFAILは保持。同app23＋修正QA overlayの実獲得／写真は両幅各25実回答・5区間、展示/収納/reload/実PNG/同予約保持まで合格。カメラ23-03も真正新規2経路＋明示成熟fixture2経路の計4経路が合格。Island core補助QA、保存地点後の正式80runは同チェックポイントへ追記し、Goalを継続する。source A-v6 art parity HOLD、Human N=0、Full Goal Activeを維持し、この保存地点を全体完了・公開としない。
+2026-09-09追加: [仕様42](../../product/42_island_learning_keepsakes_spec.md)の閉じた家内、実アルバム／掲示板／学習の棚と、島のpinch・pan・zoomを[固定23のチェックポイント](../../design/audits/2026-09-09-island-home-checkpoint.md)へ記録した。固定23は `workshop-20260909-ecdb5041e7c4`（1068入力）、実配信guard・292 suites/3232 tests・型/lint/build/assets/docs・Island PWA8保護経路が合格。家のDEV実画像、実物タップ、戻り先2経路は両幅で確認し、明示fixtureと実獲得を区別した。21準備版、22配信revision不一致FAIL、23初回camera/写真QAのFAILは保持。同app23＋修正QA overlayの実獲得／写真は両幅各25実回答・5区間、展示/収納/reload/実PNG/同予約保持まで合格。カメラ23-03も真正新規2経路＋明示成熟fixture2経路の計4経路が合格。Island core補助QA10経路と、保存地点後の正式80runも同チェックポイントへ合格を追記した。Goalを継続する。source A-v6 art parity HOLD、Human N=0、Full Goal Activeを維持し、この保存地点を全体完了・公開としない。
 
 ## Docs To Touch
 

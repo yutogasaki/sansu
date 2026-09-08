@@ -8,6 +8,7 @@ import { addHouseThemeTrim, addObservatoryRoof, addThemeCanopy } from './themeMo
 import type { IslandAppearanceSlotId } from '../../../domain/island/appearance';
 import { ScenerySlotBuild } from './appearanceParts';
 import { appearanceFamily } from './appearanceMotifs';
+import { createIslandWaterSurfaceMaterial } from './waterSurface';
 import { ISLAND_MAIN_TERRAIN_STONES, ISLAND_TERRAIN_SEGMENTS, terrainContour, terrainEdgePoint, terrainRocks,
     type IslandTerrainProfile, type TerrainEdge } from './terrainProfile';
 
@@ -82,12 +83,12 @@ function land(m: IslandMaterials, x: number, z: number, rx: number, rz: number, 
     for (let i = 0; i < positions.count; i++) {
         const row = Math.floor(i / (ISLAND_TERRAIN_SEGMENTS + 1));
         const color = oceanColor(m, (x + positions.getX(i)) * sign, (z + positions.getZ(i)) * sign);
-        color.lerp(near, [0, .44, .88][row]); waterColors.push(color.r, color.g, color.b);
+        color.lerp(near, [0, .28, .58][row]); waterColors.push(color.r, color.g, color.b);
     }
     water.geometry.setAttribute('color', new THREE.Float32BufferAttribute(waterColors, 3));
     const retired = water.material as THREE.Material;
-    water.material = new THREE.MeshBasicMaterial({ vertexColors: true, toneMapped: false });
-    water.material.userData.islandOwned = true; retired.dispose();
+    water.material = createIslandWaterSurfaceMaterial();
+    retired.dispose();
     water.castShadow = false; water.receiveShadow = false;
     return build.finish(false);
 }
@@ -419,8 +420,7 @@ export function makeOcean(m: IslandMaterials) {
     }
     geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
     // Clear shallow water retains its blue material color; opaque land shadows stop at the shore.
-    const seaMaterial = new THREE.MeshBasicMaterial({ vertexColors: true, toneMapped: false });
-    seaMaterial.userData.islandOwned = true;
+    const seaMaterial = createIslandWaterSurfaceMaterial();
     const sea = mesh(group, geometry, seaMaterial, [0, -.86, 0]);
     sea.castShadow = false;
     sea.receiveShadow = false;

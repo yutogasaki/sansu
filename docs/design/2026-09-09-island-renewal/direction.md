@@ -25,3 +25,17 @@ source比較はAを採用。島へ入りたい9、住民への愛着8、素材9�
 生成画像は指定より世界部分が縦に長く、UI文字/ロゴも採用ブランドと一致しないため、そのまま画面実装や承認済みbenchmarkには使わない。新地形を実rendererに入れ、実phone/tablet cropのready/payoffで比較する。影/素材も生成結果とruntimeを同一と主張しない。現在は方向選定・ローカルprototype、公開判定HOLD。独立した子どもの理解/再遊び N=0。
 
 runtime candidate: `mystic-island-shore-garden-v6`。既存表示物、解放済み床、自由配置、撮影済みPNG、保存された家具と成長を保持し、新地形rendererで過去と現在を同じ倍率で比べる。保存時点の画像そのものを再生成しない。
+
+次の限定改善 `island-water-surface-v1` は、海と既存の sea/shelf/wet 面に同じ世界座標の静かな濃淡を加え、浅瀬の連続した明るいシアンを抑える。所有テーマの頂点色・不透明度・地形・歩行床・配置は維持し、時間変化、発光、反射、追加textureは使わない。固定23の実画面を前比較にし、同じphone/tablet構図で実WebGLのコンパイルと描画を確認してから評価する。source Aとの造形・素材の一致や公開判定は、この実装だけでPASSにしない。
+
+## 水面の局所改善・固定24
+
+runtime candidateは `mystic-island-shore-garden-v7`、固定24は `workshop-20260909-a285ab860033`（1070 inputs）。海と既存浅瀬の素材だけへ静止した濃淡・微弱で途切れた水紋を加え、明るいcyanの連続縁を弱めた。geometry、歩ける床、保存位置、本人のpalette/所有、住民/家/家具は保持。追加texture・時間uniformは使わない。
+
+[実比較と集計](water-v7/verification.json)は固定23/5407と固定24/5409、両flag有効の同じ明示3土地fixtureを用いる。全4行PASS、同じcamera、描画回数152のまま、全store不変、console/page error 0。これは実獲得・通常planner・子どもの観察を示すfixtureではない。型/lint/build/assetsと293 suites/3234 testsが合格。正式80runとPWA回帰の既存合格は固定23へ帰属し、24へ転用しない。
+
+| phone・前 | phone・後 | tablet近景・前 | tablet近景・後 |
+| --- | --- | --- | --- |
+| ![固定23の海](water-v7/phone-before-overview.png) | ![固定24の水面](water-v7/phone-after-overview.png) | ![固定23の岸](water-v7/tablet-before-near.png) | ![固定24の岸](water-v7/tablet-after-near.png) |
+
+水としての読みやすさが増し、岸の強い縁が弱まった局所改善として採用。source Aとの造形/素材全体の差は残り、art parity HOLD・Human N=0・Full Goal Activeを維持する。
