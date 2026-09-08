@@ -12,7 +12,7 @@ B/Cは同じ設定画面・同じ水玉配置へ配色だけを一時CSSで重�
 - phone390×844通常motion/touch、tablet768×1024 reduced motion、計26画面。実planner予約と回答から、設定・記録・帰島・reload・通常/明示練習を往復し、問題・cursor・支援・報酬・ログの保持を確認。ナビ44px/hit・横溢れ・初回画面の背景もPASS。
 - lint、build内TypeScript検査、194ファイル/2,232 tests、build/assets PASS。precache10.22MiB/12MiB。SVGは既存CSS内に埋め込み、追加の画像通信/animation/hit layerなし。
 - [入力810ファイル](source-manifest.json)を撮影後も照合し変更0。[担当3ファイル](merged-source.json)は共有workspaceと一致。他作業の島/学習ファイルを上書きしない。
-- 共有workspaceのdocs:check結果は[docs-check.log](docs-check.log)に保存。担当外taskの必須節に未達がある場合は全体PASSへ読み替えない。前回の共有workspaceの型エラー、速度測定の未達を今回の背景変更だけで解消したとはしない。
+- 共有workspaceのdocs:check結果はdocs-check.log（`docs-check.log`）に保存。担当外taskの必須節に未達がある場合は全体PASSへ読み替えない。前回の共有workspaceの型エラー、速度測定の未達を今回の背景変更だけで解消したとはしない。
 
 ## 別判定
 

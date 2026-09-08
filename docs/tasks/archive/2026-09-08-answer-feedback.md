@@ -24,7 +24,7 @@
 - 全unit testは208ファイル / 2,348件PASS。対象diffの空白検査PASS。lintは既存の `IslandMilestone.tsx` のFast Refresh警告1件のみ。
 - 実画面の魅力: 作者目視で36pxの丸・20pxの文字を以前より読み取りやすくした。phone/tabletの全キーと次問を維持。子どもの再遊び意欲は未検証。
 - 無音時の理解・安全: ○と文字を残し、誤答表現は維持。reduced motionで動きを止める8ケースのE2EはPASS。実参加者の理解は未評価。
-- Runtime: DEV `development-local:ad0e361f-25cf-480f-aacb-60df875c3f07`、delivery `mystic-island-v1`、visual `mystic-island-living-v5`、learning `mystic-island-learning-v2`、service workerなし。[実画面の比較](../../../output/playwright/island-feedback-after-20260908/review.html)。公開build・固定10問速度の新しい証拠にはしない。
+- Runtime: DEV `development-local:ad0e361f-25cf-480f-aacb-60df875c3f07`、delivery `mystic-island-v1`、visual `mystic-island-living-v5`、learning `mystic-island-learning-v2`、service workerなし。実画面の比較（`../../../output/playwright/island-feedback-after-20260908/review.html`）。公開build・固定10問速度の新しい証拠にはしない。
 - 音ボタンの追加後は固定コピーでlint/typecheck/2,240テスト/build/assetsがPASS。共有workspaceのdocs:checkと対象lintもPASS。共有DEV・固定productionのphone/tabletで各10チェック、固定productionの既存音声8ケース、smoke31、classic PWA4、Island PWA8+実SW offlineがPASS。[音ボタンの実画面と検証](../../design/audits/2026-09-08-island-sound-control/README.md)。
 - 島の成長は両viewportで実25区間を確認。通常入力の初回速度未達は保持し、Mac Metalで残り10ケースがPASS。正式固定10問もMac Metalで80run/15gate/eligible PASS、正解P95 193.0/193.3ms、追加操作0。既定headlessの速度未達や同時負荷は監査記録で区別した。
 

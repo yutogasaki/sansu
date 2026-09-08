@@ -30,14 +30,14 @@
 ## 検証
 
 - lint/typecheck/build/assets PASS。lintは過去の生成済み `dist-island/` のみ除外し、app/QA sourceのルールは変更していない。PWA precache 10.23MiB / 12MiB。SVGはprecache対象CSS内に入る。
-- 全194ファイル・2,232 unit/integration tests PASS（[tests.log](tests.log)）。既存assert/timeoutを保持し、並列数2で実行。この全件検査後、一覧比較で初回設定がdata-modeを持たず背景の適用外と判明し、共通CSSのセレクタを1つ追加。動作コードを変えず、v2でbuildと全26画面の検査を再実行した（この比較ページの画像はv1のまま）。その後、大きいパステル版もファンタジー不足としてユーザーが方向修正した。
+- 全194ファイル・2,232 unit/integration tests PASS（tests.log（`tests.log`））。既存assert/timeoutを保持し、並列数2で実行。この全件検査後、一覧比較で初回設定がdata-modeを持たず背景の適用外と判明し、共通CSSのセレクタを1つ追加。動作コードを変えず、v2でbuildと全26画面の検査を再実行した（この比較ページの画像はv1のまま）。その後、大きいパステル版もファンタジー不足としてユーザーが方向修正した。
 - Production UIは初回、島、学習、設定の開閉、記録、通常練習への復帰、明示復習/テスト、他ゲーム、reloadを確認。実予約の問題・cursor・支援・報酬・ログを往復で照合しPASS。捨てられるnativeプロフィールfixtureを使い、実児童の参加とは区別。
 - 最初の仮撮影では前回DEVの5370が終了しておりconnection refused。新しいproduction preview5374を起動して撮影。コードやassertの緩和は不要だった。
 - 以前の[速度未達](../2026-09-08-pokomoko-world/throughput-report.json)は残存し、今回は固定10問を再実行していない。画面の模様変更を根拠に公開速度の合格を主張しない。
 
 ## 統合先の検査範囲
 
-固定コピーのdocs/typecheckはPASS。共有workspaceの再検査では、別作業の `sharedJobController.ts` に未使用import2件とMesh/SpotLightの型比較1件があり、typecheckがFAIL（[log](integrated-typecheck.log)）。また同時に作成された `docs/tasks/active/2026-09-08-pwa-update.md` のReview By/Docs To Touch不足でdocs:checkがFAIL（[log](integrated-docs.log)）。担当外ファイルは上書きせず、この候補の合格と共有workspace全体の状態を分ける。
+固定コピーのdocs/typecheckはPASS。共有workspaceの再検査では、別作業の `sharedJobController.ts` に未使用import2件とMesh/SpotLightの型比較1件があり、typecheckがFAIL（log（`integrated-typecheck.log`））。また同時に作成された `docs/tasks/active/2026-09-08-pwa-update.md` のReview By/Docs To Touch不足でdocs:checkがFAIL（log（`integrated-docs.log`））。担当外ファイルは上書きせず、この候補の合格と共有workspace全体の状態を分ける。
 
 ## 配布
 

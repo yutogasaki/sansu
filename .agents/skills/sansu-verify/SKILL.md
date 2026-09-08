@@ -57,3 +57,4 @@ description: Run and interpret Sansu's required verification flow after substant
 - Fix one meaningful problem at a time
 - Prefer `typecheck/lint -> build -> test -> e2e`
 - If docs or process changed, include `npm run docs:check`
+- References to gitignored local evidence (such as `output/` and generated logs) keep their label and path as plain text/inline code; use Markdown links for tracked, durable artifacts. Before pushing evidence-doc changes, also run `node tools/check-docs.mjs` in a temporary copy outside the watched repository containing only `git ls-files` paths copied from current working contents, without the ignored output tree. A local-only link can otherwise pass here and fail in CI.

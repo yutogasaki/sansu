@@ -40,7 +40,7 @@ Use it to find the right source of truth before editing docs, tasks, runbooks, o
 
 ## Frequently Used Docs
 
-本人の学習成果を暮らしている家の一角へ飾る[賞状とトロフィー42](product/42_island_learning_keepsakes_spec.md)。島の実家の玄関から同じSceneの家内へ入り、賞状3点/トロフィー13点を無料で展示・収納する。「いえ」は実アルバム/かざりと記憶にもつながり、お知らせ0件はその事実を表示し、実際のおくりものがある場合だけ受取へつなぐ。[固定23 app＋QA修正版の限定実画面検証](../output/island-experience/keepsakes-23-02/report.json)は、両幅で実5区間による最初の賞状/トロフィー、実写真、保存保持と同予約復帰を確認した。正式速度検証は待機中、art parity HOLD、子どもの意欲はHuman N=0で未検証、元Goalは進行中。
+本人の学習成果を暮らしている家の一角へ飾る[賞状とトロフィー42](product/42_island_learning_keepsakes_spec.md)。島の実家の玄関から同じSceneの家内へ入り、賞状3点/トロフィー13点を無料で展示・収納する。「いえ」は実アルバム/かざりと記憶にもつながり、お知らせ0件はその事実を表示し、実際のおくりものがある場合だけ受取へつなぐ。固定23 app＋QA修正版の限定実画面検証（`../output/island-experience/keepsakes-23-02/report.json`）は、両幅で実5区間による最初の賞状/トロフィー、実写真、保存保持と同予約復帰を確認した。正式速度検証は待機中、art parity HOLD、子どもの意欲はHuman N=0で未検証、元Goalは進行中。
 
 身支度、観察から得る記念品、無料の朝夕・季節の採用契約は[身支度と小さなコレクション41](product/41_island_expression_collection_spec.md)。取得と装備、所有と全景snapshotを分け、無料の衣装・音へ戻す操作と旧写真を保持する。
 
