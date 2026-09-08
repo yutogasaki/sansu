@@ -50,7 +50,7 @@ export class IslandResident {
     private pointWalk = false;
     private path: THREE.Vector3[] = [];
     private distances: number[] = [];
-    private expanded = false;
+    private expanded = 0;
     private reduced = false;
     private standing?: { startedAt: number; y: number; yaw: number; position: THREE.Vector3; tilt: number;
         bodyY: number; feet: THREE.Vector3[] };
@@ -97,7 +97,7 @@ export class IslandResident {
         const route = plannedRoute ?? planResidentRoute(this.group.position, item, items, completedSets, this.itemId || this.departingId);
         if (!route) return false;
         this.clearSharedPose(); this.clearLearningPose();
-        this.expanded = completedSets >= 2;
+        this.expanded = completedSets;
         this.reduced = reduced;
         this.standing = undefined;
         this.rememberDeparture();
@@ -117,7 +117,7 @@ export class IslandResident {
         if (route.points.length < 2 || !Number.isFinite(route.yaw)
             || route.points.some(point => !Number.isFinite(point.x) || !Number.isFinite(point.z))) return false;
         this.clearSharedPose(); this.clearLearningPose();
-        this.expanded = completedSets >= 2; this.reduced = reduced; this.standing = undefined;
+        this.expanded = completedSets; this.reduced = reduced; this.standing = undefined;
         this.rememberDeparture();
         this.target = undefined; this.pointWalk = true; this.itemId = '';
         this.departingId = undefined;

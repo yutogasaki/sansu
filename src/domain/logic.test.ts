@@ -25,10 +25,10 @@ const mockState = (id: string, strength: number, status?: SkillStatus): MemorySt
 
 describe('SRS Algorithm', () => {
     describe('updateMemoryState', () => {
-        it('should increase strength on correct answer', () => {
+        it('keeps legacy strength without evidence of a previous-day correct answer', () => {
             const initial = mockState('1', 1);
             const next = updateMemoryState(initial, true);
-            expect(next.strength).toBe(2);
+            expect(next.strength).toBe(1);
         });
 
         it('should reset strength to 1 on incorrect answer', () => {
@@ -39,9 +39,9 @@ describe('SRS Algorithm', () => {
     });
 
     describe('updateSkillStatus (Math)', () => {
-        it('should retire active skill if enough correct answers', () => {
-            // 30 answers, recent 90% correct
-            const state = { ...mockState('1', 1, 'active'), totalAnswers: 35 };
+        it('should retire active skill after enough correct answers and spaced recall', () => {
+            // 30 answers, recent 90% correct, strength 4 from spaced review
+            const state = { ...mockState('1', 4, 'active'), totalAnswers: 35 };
             const recent = [true, true, true, true, true, true, true, true, true, false];
             const next = updateSkillStatus(state, recent);
             expect(next).toBe('retired');
@@ -108,13 +108,14 @@ describe('Manual Level Consistency (syncLevelState)', () => {
 });
 
 describe('English Level Progression', () => {
-    it('should promote level if 70% of words attempted', async () => {
+    it('should promote level if 70% of the enabled next-level words were answered correctly', async () => {
         // Mock profile with level 1 words attempted
         const profile = createInitialProfile("Test", 1, 1, 1, 'vocab');
-        profile.vocabMaxUnlocked = 1;
+        profile.vocabMaxUnlocked = 2;
+        profile.vocabLevels = profile.vocabLevels?.map(level => level.level === 2 ? { ...level, unlocked: true, enabled: true } : level);
 
         // Count words in Level 1
-        const level1Words = ENGLISH_WORDS.filter(w => w.level === 1);
+        const level1Words = ENGLISH_WORDS.filter(w => w.level === 2);
         const targetCount = Math.ceil(level1Words.length * 0.75); // 75% > 70%
 
         // Build memory override (テスト用: DBの代わりにMapを渡す)

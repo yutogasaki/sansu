@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 
-export const ISLAND_CANDIDATE = 'mystic-island-procedural-v2';
+export const ISLAND_CANDIDATE = 'mystic-island-living-v3';
 export const button = (page, name) => page.getByRole('button', { name, exact: true });
 export const activate = (locator, touch = false) => touch ? locator.tap() : locator.click();
 
@@ -92,6 +92,9 @@ export async function runtimeMetadata(page) {
 }
 
 export async function answerUI(page, plan, { incorrect = false, touch = false, dev = true } = {}) {
+    const before = await readNative(page, plan.profileId);
+    assert.equal(before.plan?.id, plan.id); assert.equal(before.plan.revision, plan.revision);
+    const expectedNextPlanId = JSON.stringify(['island-plan-v1', plan.profileId, before.island.completedSets + 1]);
     const slot = plan.slots[plan.cursor];
     const answer = dev ? await page.evaluate(async slot => {
         const { parkHissanGrid } = await import('/src/domain/park/learning.ts');
@@ -114,36 +117,79 @@ export async function answerUI(page, plan, { incorrect = false, touch = false, d
                 else await page.keyboard.type(digit);
             }
         }
-        submit = button(page, 'こたえる');
+        submit = page.locator('.park-answer .park-keypad [data-keypad-submit]');
     }
     // Start in the actual submit event, excluding Playwright transport and typing time.
-    await page.evaluate(({ revision }) => {
+    await page.evaluate(({ planId, revision, expectedNextPlanId, allowNext, allowReward }) => {
         window.__islandAnswerTiming = undefined;
         document.addEventListener('click', () => {
             const started = performance.now();
             const tick = () => {
                 const learning = document.querySelector('[data-island-plan-revision]');
-                const form = document.querySelector('.park-answer');
-                const ready = form?.querySelector('.park-choices button:not(:disabled), .park-keypad button[aria-label="1"]:not(:disabled)');
-                const completed = document.querySelector('.island-page')?.getAttribute('data-mode') === 'reward';
-                if ((learning && Number(learning.getAttribute('data-island-plan-revision')) > revision && ready) || completed) {
-                    window.__islandAnswerTiming = { ms: performance.now() - started, completed };
+                const ready = learning?.getAttribute('data-input-ready') === 'true';
+                const completed = allowReward && document.querySelector('.island-page')?.getAttribute('data-mode') === 'reward';
+                const autoContinued = allowNext && ready && learning.getAttribute('data-island-plan-id') === expectedNextPlanId
+                    && Number(learning.getAttribute('data-island-plan-revision')) === 0
+                    && learning.querySelector('.island-light-trail')?.getAttribute('aria-label')?.startsWith('1もんめ、');
+                if ((ready && learning.getAttribute('data-island-plan-id') === planId
+                    && Number(learning.getAttribute('data-island-plan-revision')) === revision + 1) || autoContinued || completed) {
+                    window.__islandAnswerTiming = { ms: performance.now() - started, completed, autoContinued: Boolean(autoContinued) };
                 } else requestAnimationFrame(tick);
             };
             requestAnimationFrame(tick);
         }, { capture: true, once: true });
-    }, { revision: plan.revision });
+    }, { planId: plan.id, revision: plan.revision, expectedNextPlanId,
+        allowNext: !incorrect && plan.cursor === plan.slots.length - 1 && (before.island.completedSets > 0 || Boolean(plan.growthTarget)),
+        allowReward: !incorrect && plan.cursor === plan.slots.length - 1
+            && !plan.growthTarget && plan.id === JSON.stringify(['island-plan-v1', plan.profileId, 0]) });
     await activate(submit, touch);
     await page.waitForFunction(() => Boolean(window.__islandAnswerTiming), undefined, { timeout: 10000 });
     const timing = await page.evaluate(() => window.__islandAnswerTiming);
     const next = await readNative(page, plan.profileId);
     const saved = next.islandPlans.find(candidate => candidate.id === plan.id);
-    assert(saved.revision > plan.revision, 'UI submit must persist a new revision');
+    assert.equal(saved.revision, plan.revision + 1, 'One UI submit persists exactly one revision');
+    assert.deepEqual(saved.slots.map(slot => slot.problem), plan.slots.map(slot => slot.problem));
+    const events = next.islandEvents.filter(event => event.type === 'answer' && !before.islandEvents.some(old => old.id === event.id));
+    assert.equal(events.length, 1); assert.equal(events[0].id, JSON.stringify(['island-action-v1', plan.profileId, plan.id, plan.revision]));
+    if (timing.autoContinued) {
+        assert.equal(saved.status, 'completed'); assert.equal(saved.cursor, saved.slots.length);
+        assert.equal(next.island.completedSets, before.island.completedSets + 1);
+        assert.equal(next.plan.id, expectedNextPlanId); assert.equal(next.island.pendingPlanId, expectedNextPlanId);
+        assert.equal(next.plan.status, 'active'); assert.equal(next.plan.cursor, 0); assert.equal(next.plan.revision, 0);
+        assertIslandSectionGrowth(before, next, plan);
+        const added = next.islandEvents.filter(event => !before.islandEvents.some(old => old.id === event.id));
+        assert.equal(added.filter(event => event.type === 'plan_completed' && event.planId === plan.id).length, 1);
+        assert.equal(added.filter(event => event.type === 'plan_started' && event.planId === expectedNextPlanId).length, 1);
+    }
     if (incorrect) {
         assert.equal(saved.cursor, plan.cursor);
         assert.deepEqual(saved.slots[plan.cursor].problem, slot.problem);
     }
     return { ...timing, incorrect, inputType, beforeRevision: plan.revision, afterRevision: saved.revision, state: next };
+}
+
+/** Check the actual saved plan's contract: legacy choices remain owned; new
+ * sections mature a place once without manufacturing another gift. */
+export function assertIslandSectionGrowth(before, after, plan = before.plan) {
+    assert.deepEqual(after.island.pendingRewards.slice(0, before.island.pendingRewards.length), before.island.pendingRewards);
+    if (!plan.growthTarget) {
+        assert.equal(after.island.pendingRewards.length, before.island.pendingRewards.length + 1);
+        assert.equal(after.island.pendingRewards.at(-1).planId, plan.id);
+        return;
+    }
+    assert.deepEqual(after.island.pendingRewards, before.island.pendingRewards, 'Automatic growth adds no unclaimed furniture');
+    assert(before.island.growth && after.island.growth, 'A new growth reservation has persistent growth state');
+    for (const habitat of ['garden', 'waterside', 'grove', 'village']) {
+        assert.equal(after.island.growth.progress[habitat],
+            Math.min(6, before.island.growth.progress[habitat] + Number(habitat === plan.growthTarget)),
+            'Only the place frozen in this reservation earns one section');
+    }
+    for (const item of before.island.items) {
+        const current = after.island.items.find(candidate => candidate.id === item.id);
+        assert(current, 'Growth keeps every owned identity');
+        assert.deepEqual(current.position, item.position, 'Growth respects moved and stored objects');
+        assert.equal(current.rotation, item.rotation);
+    }
 }
 
 export async function assertKeypad(page, requireViewport = true) {

@@ -1,5 +1,6 @@
 import { Problem, UserProfile } from "../types";
 import type { RandomSource } from "../../utils/random";
+import { createLearningProblemContext } from '../learning/context';
 
 export interface MathGeneratorContext {
     profile?: UserProfile;
@@ -7,6 +8,21 @@ export interface MathGeneratorContext {
 }
 
 export type GeneratorFn = (context?: MathGeneratorContext) => Omit<Problem, 'id' | 'subject' | 'isReview'>;
+
+/** Only independently correct answers advance a learner's introductory sequence. */
+export const getMathSkillProgress = (
+    skillId: string,
+    context?: MathGeneratorContext,
+): number | undefined => {
+    // A profile-free generation is also used for broad-range content inspection.
+    if (!context?.profile) return undefined;
+    const correctAnswers = context.profile.mathSkills?.[skillId]?.correctAnswers;
+    return typeof correctAnswers === "number"
+        && Number.isSafeInteger(correctAnswers)
+        && correctAnswers >= 0
+        ? correctAnswers
+        : 0;
+};
 
 export const randomInt = (
     min: number,
@@ -28,7 +44,7 @@ export const createProblem = (
     inputConfig?: Problem["inputConfig"],
     displayConfig?: Partial<Pick<Problem, "questionImage" | "questionVisual" | "displayAnswer" | "hissanOperands">>
 ): Omit<Problem, 'id' | 'subject' | 'isReview'> => {
-    return {
+    const problem = {
         categoryId: skillId,
         questionText: question,
         correctAnswer: answer,
@@ -36,4 +52,5 @@ export const createProblem = (
         inputConfig,
         ...displayConfig
     };
+    return { ...problem, learningContext: createLearningProblemContext('math', problem) };
 };

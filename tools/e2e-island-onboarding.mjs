@@ -5,7 +5,7 @@ import { build } from 'esbuild';
 import assert from 'node:assert/strict';
 import { activate, button, ISLAND_CANDIDATE, readNative, waitMode, waitReady } from './island-e2e-helpers.mjs';
 import { attempt, waitLearningReady } from './island-learning-checks.mjs';
-import { armOnboardingObservation, assertProfileFree, installOnboardingFault, ONBOARDING_CANDIDATE,
+import { armOnboardingObservation, assertFirstReservation, assertProfileFree, installOnboardingFault, ONBOARDING_CANDIDATE,
     onboardingControls, onboardingStores, untouchedStep, welcomePlay } from './island-onboarding-checks.mjs';
 
 const base = process.env.SANSU_ISLAND_PRODUCTION_URL, buildSourcePath = process.env.SANSU_ISLAND_BUILD_SOURCE;
@@ -89,8 +89,8 @@ function assertCreated(stores, scenario, count = 1) {
         for (const field of ['totalAnswers', 'correctAnswers', 'incorrectAnswers', 'skippedAnswers']) assert.equal(memory[field], 0);
     }
     assert.equal(stores.memoryVocab.rows.filter(row => row.profileId === profile.id).length, 0);
-    assert.equal(stores.logs.rows.length, 0);
-    if (count === 1) { assert.equal(stores.islandPlans.rows.length, 0); assert.equal(stores.islandEvents.rows.length, 0); }
+    assert.equal(stores.logs.rows.filter(row => row.profileId === profile.id).length, 0,
+        'The newly created profile has no learning logs of its own');
     return profile;
 }
 
@@ -138,6 +138,7 @@ async function completion(page, row, label, baseline) {
         await page.waitForFunction(() => Boolean(window.__releaseOnboardingCompletion));
         const committed = heldStores = await onboardingStores(page);
         row.heldProfile = assertCreated(committed, row).id;
+        assert.equal(committed.islandPlans.rows.length, 0); assert.equal(committed.islandEvents.rows.length, 0);
         for (const [name, store] of Object.entries(committed)) if (!['profiles', 'appData', 'memoryMath'].includes(name)) {
             assert.deepEqual(store, baseline[name], `Native profile commit leaves unrelated ${name} unchanged`);
         }
@@ -178,7 +179,10 @@ async function completion(page, row, label, baseline) {
             committedStoresSHA: sha(JSON.stringify(committed)), reloadedStoresUnchanged: true });
         await page.goto(`${base}/#/`);
     }
-    await page.waitForURL('**/#/island'); await waitReady(page); await waitMode(page, 'home');
+    await page.waitForURL('**/#/island'); await waitReady(page);
+    // The held-completion diagnostic intentionally left onboarding before its
+    // promise resolved. It must stay cancelled and return through ordinary home.
+    await waitMode(page, row.fault === 'hold-completion' ? 'home' : 'learning');
     const created = await onboardingStores(page), profile = assertCreated(created, row);
     if (row.fault === 'abort-once') assert.equal(profile.id, row.faultEvidence.profileId, 'Retry reuses the same stable completion identity');
     if (row.fault === 'hold-completion') {
@@ -198,7 +202,14 @@ async function completion(page, row, label, baseline) {
     assert.equal(await page.evaluate(() => localStorage.getItem('sansu_active_profile')), profile.id);
     assert.equal(created.islands.rows.length, 1); assert.equal(created.islands.rows[0].profileId, profile.id);
     assert.equal(created.islands.rows[0].completedSets, 0); assert.deepEqual(created.islands.rows[0].pendingRewards, []);
-    await record(page, row, 'created-home');
+    if (row.fault === 'hold-completion') {
+        assert.equal(created.islandPlans.rows.length, 0); assert.equal(created.islandEvents.rows.length, 0);
+        await record(page, row, 'cancelled-setup-root-home');
+    } else {
+        const plan = assertFirstReservation(created, profile.id);
+        await waitLearningReady(page, plan);
+        await record(page, row, 'created-first-learning');
+    }
     row.profileId = profile.id;
     return created;
 }
@@ -302,7 +313,16 @@ try {
                 const finalClicks = row.setupObservation.clicks.filter(click => click.label === finalLabel);
                 assert(finalClicks.length >= 1 && finalClicks.every(click => click.trusted));
                 row.finalSelectionClicks = finalClicks;
-                assert(row.setupObservation.routes.some(route => route.hash === '#/' && route.at >= finalClicks[0].at), 'The setup returns through normal root launch after the actual final selection');
+                assert(row.setupObservation.routes.some(route => {
+                    const [path, query] = route.hash.split('?'), params = new URLSearchParams(query);
+                    return path === '#/island' && params.get('start') === 'learn' && params.get('profile') === row.profileId
+                        && route.at >= finalClicks[0].at;
+                }),
+                    'The actual final selection requests the first learning reservation directly');
+                assert(row.setupObservation.routes.some(route => route.hash === '#/island' && route.at >= finalClicks[0].at),
+                    'The successful real reservation consumes the start request');
+                assert(row.setupObservation.clicks.filter(click => click.at >= finalClicks[0].at).every(click => click.label === finalLabel),
+                    'No home start gesture is needed between the final selection and first operable problem');
             }
             if (row.soundOff) {
                 await page.goto(`${base}/#/settings`);
@@ -310,22 +330,53 @@ try {
                 const sound = page.getByText('サウンド', { exact: true }).locator('../..');
                 await sound.getByRole('button', { name: 'ON', exact: true }).click();
                 await sound.getByRole('button', { name: 'OFF', exact: true }).waitFor();
-                await page.goto(`${base}/#/`); await waitReady(page); await waitMode(page, 'home');
+                await page.goto(`${base}/#/`); await waitReady(page); await waitMode(page, 'learning');
                 assert.equal((await onboardingStores(page)).profiles.rows.find(profile => profile.id === row.profileId).soundEnabled, false);
-                row.soundOffEvidence = 'Actual Settings sound toggle persisted before the first reservation';
+                row.soundOffEvidence = 'Actual Settings sound toggle persisted after automatic reservation and before the first answer';
             }
-            await activate(button(page, 'ひかりを とどける'), row.touch); await waitMode(page, 'learning');
+            if (row.fault === 'hold-completion') {
+                await activate(page.locator('.island-start'), row.touch); await waitMode(page, 'learning');
+            }
             let state = await readNative(page, row.profileId); await waitLearningReady(page, state.plan);
-            assert([3, 6].includes(state.plan.slots.length)); assert.equal(state.plan.cursor, 0); assert.equal(state.logs.length, 0);
+            assertFirstReservation(await onboardingStores(page), row.profileId);
+            assert.equal(state.plan.slots.length, 3); assert.equal(state.plan.cursor, 0); assert.equal(state.logs.length, 0);
             for (const slot of state.plan.slots) if (row.subject !== 'mix') assert.equal(slot.problem.subject, row.subject);
             row.firstReservation = state.plan;
             await record(page, row, 'first-real-plan');
+            const firstGrowthBefore = state;
+            const firstFlowStart = await page.evaluate(() => {
+                const at = performance.now();
+                window.__onboardingObservation.modes.push({ at, mode: document.querySelector('.island-page').dataset.mode });
+                return at;
+            });
             if (row.subject === 'vocab') {
                 const answered = await attempt(page, state, { touch: row.touch }); state = answered.after;
                 assert.equal(answered.receipt.result, 'correct'); assert.equal(state.plan.cursor, 1);
                 row.firstActualAnswer = { receipt: answered.receipt, sample: answered.sample };
                 await record(page, row, 'first-answer-next-input');
             }
+            const growthAnswers = [];
+            for (let count = 0; count < 48 && state.plan?.id === row.firstReservation.id; count += 1) {
+                const answered = await attempt(page, state, { touch: row.touch }); state = answered.after;
+                growthAnswers.push({ receipt: answered.receipt, sample: answered.sample });
+            }
+            await waitMode(page, 'learning'); await waitLearningReady(page, state.plan);
+            assert.notEqual(state.plan.id, row.firstReservation.id);
+            assert.equal(state.plan.cursor, 0); assert.equal(state.plan.revision, 0);
+            assert.equal(state.island.completedSets, 1); assert.equal(state.island.growth.progress.garden, 1);
+            assert.deepEqual(state.island.pendingRewards, [], 'First growth needs neither claim nor placement');
+            assert(state.island.items.some(item => item.kind === 'bench' && item.position));
+            assert.equal(state.islandEvents.filter(event => event.type === 'plan_completed' && event.planId === row.firstReservation.id).length, 1);
+            assert.deepEqual(state.island.growth.memories[0], firstGrowthBefore.island.growth.memories[0], 'First growth preserves the initial snapshot');
+            const firstFlow = await page.evaluate(start => ({
+                modes: window.__onboardingObservation.modes.filter(entry => entry.at >= start),
+                clicks: window.__onboardingObservation.clicks.filter(entry => entry.at >= start),
+            }), firstFlowStart);
+            assert(firstFlow.modes.every(entry => entry.mode === 'learning'), 'The first automatic upgrade never presents reward, placement or home');
+            assert(firstFlow.clicks.every(entry => entry.answer), 'Only answer controls advance the introductory section');
+            row.firstAutomaticGrowth = { before: firstGrowthBefore, after: state, answers: growthAnswers, flow: firstFlow,
+                extraContinuationActions: 0, automaticRewardScreens: 0 };
+            await record(page, row, 'first-growth-next-reservation');
             if (row.compatibility) await compatibility(page, row, await onboardingStores(page));
             assert.deepEqual(errors, []); row.pass = true;
         } catch (error) {

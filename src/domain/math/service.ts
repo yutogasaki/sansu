@@ -2,6 +2,7 @@ import { db } from "../../db";
 import { getSkillsForLevel } from "./curriculum";
 import { getProfile } from "../user/repository";
 import { UserProfile } from "../types";
+import { getNextPromotionLevel, hasMathPromotionEvidence } from '../levelProgression';
 
 // Check if user should level up from currentLevel
 // 仕様 5.2: 「復習以外」の直近20問で正答率85%以上
@@ -25,6 +26,7 @@ export const checkMathMainPromotion = async (
     profile: UserProfile,
     targetLevel: number
 ): Promise<boolean> => {
+    if (targetLevel !== getNextPromotionLevel(profile, 'math')) return false;
     const skills = getSkillsForLevel(targetLevel);
     if (skills.length === 0) return false;
 
@@ -33,10 +35,9 @@ export const checkMathMainPromotion = async (
         .equals([profile.id, 'math'])
         .filter(log =>
             skills.includes(log.itemId) &&
-            !log.isReview &&
-            log.result !== 'skipped'
+            !log.isReview
         )
         .toArray();
 
-    return logs.length >= 30;
+    return hasMathPromotionEvidence(logs);
 };

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { activate, button, readNative } from './island-e2e-helpers.mjs';
+import { activate, assertIslandSectionGrowth, button, readNative } from './island-e2e-helpers.mjs';
 import { expectedLearningAnswer } from './island-learning-fixtures.mjs';
 
 export const LEARNING_CANDIDATE = 'mystic-island-learning-v2';
@@ -127,10 +127,16 @@ export async function assertReaction(page, receipt, kind, completed, { reduced =
 export async function assertControls(page, { allowScroll = false } = {}) {
     const choices = page.locator('.park-choices button');
     const isChoice = await choices.count() > 0;
+    const written = await page.locator('.park-answer [data-written-operation]').count() > 0;
     const controls = isChoice ? await choices.all() : [
-        ...numericKeys, 'こたえを けす', 'ひとつ もどす', 'しょうすうてん', 'こたえる',
+        ...numericKeys, 'こたえを けす', 'ひとつ もどす', ...(written ? [] : ['しょうすうてん']),
     ].map(name => page.locator('.park-keypad').getByRole('button', { name, exact: true }));
     if (!isChoice) {
+        const submit = page.locator('.park-keypad [data-keypad-submit]');
+        assert.equal(await submit.count(), 1, 'Numeric and written input expose exactly one real submit control');
+        if (written) assert.equal(await page.locator('.park-keypad').getByRole('button', { name: 'しょうすうてん', exact: true }).count(), 0,
+            'Written arithmetic omits the decimal key by its input contract');
+        controls.push(submit);
         controls.push(...await page.locator('.park-keypad button[aria-label^="カーソルを"]').all());
         controls.push(...await page.locator('.park-input').all());
     }
@@ -145,11 +151,12 @@ export async function assertControls(page, { allowScroll = false } = {}) {
             return { name: element.getAttribute('aria-label') || element.textContent.trim(), x: rect.x, y: rect.y,
                 width: rect.width, height: rect.height, inViewport: rect.x >= -.5 && rect.y >= -.5
                     && rect.right <= innerWidth + .5 && rect.bottom <= innerHeight + .5,
-                hit: hit === element || element.contains(hit), disabled: element.disabled };
+                hit: hit === element || element.contains(hit), disabled: element.disabled,
+                submit: element.hasAttribute('data-keypad-submit') };
         });
         assert(geometry.width >= 43.5 && geometry.height >= 43.5, `Minimum touch size: ${JSON.stringify(geometry)}`);
         assert(geometry.inViewport, `Input must be reachable in the viewport: ${JSON.stringify(geometry)}`);
-        if (geometry.disabled) assert.equal(geometry.name, 'こたえる', 'Only the empty-answer submit may be disabled in a ready state');
+        if (geometry.disabled) assert.equal(geometry.submit, true, 'Only the empty-answer submit may be disabled in a ready state');
         else assert(geometry.hit, `A visual layer must not intercept the actual input: ${JSON.stringify(geometry)}`);
         result.push(geometry);
     }
@@ -300,7 +307,68 @@ async function prepareAnswer(page, slot, { wrong, touch }) {
     return { expected, control: page.locator('.park-answer .park-keypad [data-keypad-submit]') };
 }
 
-/** Timing starts in the real UI event and ends on the exact next saved, operable revision. */
+/** The expected route is derived from the old reservation, not the observed UI. */
+export function expectedLearningTransition(before, completesProblem) {
+    const plan = before.plan;
+    const completesSection = completesProblem && plan.cursor + 1 === plan.slots.length;
+    const introductory = !plan.growthTarget && plan.id === JSON.stringify(['island-plan-v1', plan.profileId, 0]);
+    return { completesSection, terminal: completesSection && introductory,
+        nextPlanId: completesSection && !introductory
+            ? JSON.stringify(['island-plan-v1', plan.profileId, before.island.completedSets + 1]) : undefined };
+}
+
+/** Verify the same submitted reservation and the separately persisted next reservation. */
+export function assertSavedLearningTransition(before, after, saved, timing, completesProblem) {
+    const expected = expectedLearningTransition(before, completesProblem);
+    const events = after.islandEvents.filter(event => !before.islandEvents.some(prior => prior.id === event.id));
+    assert.equal(timing.terminal, expected.terminal, 'Only a saved legacy introductory reservation opens its earned reward automatically');
+    assert.equal(Boolean(timing.autoContinued), Boolean(expected.nextPlanId));
+    assert.equal(saved.status, expected.completesSection ? 'completed' : 'active');
+    assert.equal(after.island.completedSets, before.island.completedSets + Number(expected.completesSection));
+    const newRewards = after.island.pendingRewards.filter(reward => !before.island.pendingRewards.some(prior => prior.id === reward.id));
+    for (const reward of before.island.pendingRewards) assert.deepEqual(after.island.pendingRewards.find(item => item.id === reward.id), reward,
+        'Continuing never claims or changes a previously earned gift');
+    assert.equal(newRewards.length, Number(expected.completesSection && !before.plan.growthTarget));
+    const completionEvents = events.filter(event => event.type === 'plan_completed');
+    assert.equal(completionEvents.length, Number(expected.completesSection));
+    if (expected.completesSection) {
+        assert(saved.slots.every(slot => slot.completed));
+        assert.equal(saved.cursor, saved.slots.length);
+        assertIslandSectionGrowth(before, after);
+        if (!before.plan.growthTarget) {
+            assert.equal(newRewards[0].id, before.plan.rewardId);
+            assert.equal(newRewards[0].planId, before.plan.id);
+            assert.deepEqual(newRewards[0].choices, before.plan.rewardChoices);
+        }
+        assert.equal(completionEvents[0].id, `${before.plan.id}:completed`);
+        if (before.plan.growthTarget) {
+            assert.equal(completionEvents[0].habitatId, before.plan.growthTarget);
+            assert.equal(completionEvents[0].rewardId, undefined);
+        } else assert.equal(completionEvents[0].rewardId, before.plan.rewardId);
+    }
+    const starts = events.filter(event => event.type === 'plan_started');
+    assert.equal(starts.length, Number(Boolean(expected.nextPlanId)), 'A normal final answer creates exactly one next reservation');
+    if (expected.nextPlanId) {
+        const next = after.plan;
+        assert(next, 'The saved pending reservation exists');
+        assert.equal(next.id, expected.nextPlanId);
+        assert.equal(after.island.pendingPlanId, next.id);
+        assert.equal(next.profileId, before.plan.profileId);
+        assert.equal(next.status, 'active'); assert.equal(next.cursor, 0); assert.equal(next.revision, 0);
+        assert(next.slots.length > 0 && next.slots.every(slot => !slot.completed));
+        assert.equal(starts[0].planId, next.id);
+        assert.equal(timing.planId, next.id); assert.equal(timing.revision, 0);
+    } else if (expected.terminal) {
+        assert.equal(after.plan, undefined); assert.equal(after.island.pendingPlanId, undefined);
+    } else {
+        assert.deepEqual(after.plan, saved);
+        assert.equal(after.island.pendingPlanId, saved.id);
+        assert.equal(timing.planId, saved.id); assert.equal(timing.revision, saved.revision);
+    }
+    return expected;
+}
+
+/** Timing starts in the real UI event and includes the separately saved next-section input. */
 export async function attempt(page, before, { wrong = false, touch = false, double = false, keyboardDouble = false, onOperable, onCorrectContact } = {}) {
     const plan = before.plan;
     const slot = plan.slots[plan.cursor];
@@ -309,7 +377,9 @@ export async function attempt(page, before, { wrong = false, touch = false, doub
     const choiceIndex = prepared.choice ? slot.problem.inputConfig.choices.indexOf(prepared.choice) : -1;
     const submit = choiceIndex >= 0 ? page.locator('.park-choices button').nth(choiceIndex) : prepared.control;
     assert(!keyboardDouble || choiceIndex < 0, 'Physical Enter double-submit is exercised on numeric input');
-    await page.evaluate(({ id, revision, keyboardDouble }) => {
+    const completed = !wrong && prepared.expected.final;
+    const expectedTransition = expectedLearningTransition(before, completed);
+    await page.evaluate(({ id, revision, keyboardDouble, expectedTransition }) => {
         window.__islandFocusedTiming = undefined;
         const eventType = keyboardDouble ? 'keydown' : 'click';
         const onSubmit = event => {
@@ -318,19 +388,21 @@ export async function attempt(page, before, { wrong = false, touch = false, doub
             const started = performance.now();
             const tick = () => {
                 const root = document.querySelector('[data-island-plan-id]');
-                const terminal = document.querySelector('.island-page')?.getAttribute('data-mode') === 'reward';
-                const ready = root?.getAttribute('data-island-plan-id') === id
-                    && Number(root.getAttribute('data-island-plan-revision')) === revision + 1
-                    && root.getAttribute('data-input-ready') === 'true';
-                if (terminal || ready) window.__islandFocusedTiming = { ms: performance.now() - started, terminal, endedAt: performance.now() };
+                const terminal = expectedTransition.terminal && document.querySelector('.island-page')?.getAttribute('data-mode') === 'reward';
+                const planId = root?.getAttribute('data-island-plan-id');
+                const nextRevision = Number(root?.getAttribute('data-island-plan-revision'));
+                const autoContinued = Boolean(expectedTransition.nextPlanId && planId === expectedTransition.nextPlanId && nextRevision === 0);
+                const ready = root?.getAttribute('data-input-ready') === 'true'
+                    && (autoContinued || (!expectedTransition.completesSection && planId === id && nextRevision === revision + 1));
+                if (terminal || ready) window.__islandFocusedTiming = { ms: performance.now() - started, terminal,
+                    autoContinued, planId, revision: nextRevision, endedAt: performance.now() };
                 else requestAnimationFrame(tick);
             };
             requestAnimationFrame(tick);
         };
         document.addEventListener(eventType, onSubmit, true);
-    }, { id: plan.id, revision: plan.revision, keyboardDouble });
+    }, { id: plan.id, revision: plan.revision, keyboardDouble, expectedTransition });
     const expectedReceipt = { id: JSON.stringify(['island-action-v1', plan.profileId, plan.id, plan.revision]) };
-    const completed = !wrong && prepared.expected.final;
     let contactObservation;
     if (completed && onCorrectContact) {
         // Arm before the real gesture. These are actual renderer-written attributes,
@@ -390,6 +462,7 @@ export async function attempt(page, before, { wrong = false, touch = false, doub
     assert.equal(receipts.length, 1, 'Even a double submit persists one answer receipt');
     assert.equal(receipts[0].id, JSON.stringify(['island-action-v1', plan.profileId, plan.id, plan.revision]));
     assert.equal(saved.cursor, plan.cursor + Number(completed), 'Only a completed correct problem advances one slot');
+    assertSavedLearningTransition(before, after, saved, timing, completed);
     if (prepared.expected.step) {
         const savedSlot = saved.slots[plan.cursor];
         assert.equal(savedSlot.hissanStep ?? 0, (slot.hissanStep ?? 0) + Number(!wrong));

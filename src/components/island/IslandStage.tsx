@@ -45,6 +45,7 @@ export function IslandStage(props: IslandStageProps) {
                     select: id => current.current.onItemSelect?.(id),
                     playResult: result => current.current.onPlayResult?.(result),
                     placementSuggestion: suggestion => current.current.onPlacementSuggestion?.(suggestion),
+                    discovery: (id, itemId) => current.current.onDiscovery?.(id, itemId),
                     caption: value => { if (!disposed && !failedThisAttempt) setCaption(value); },
                     failure: fail,
                     ready: () => {
@@ -69,7 +70,7 @@ export function IslandStage(props: IslandStageProps) {
             <p>しまが うまく みえないよ。<br />もんだいと もちものは つかえるよ。</p>
             <button type="button" className="island-stage__retry" onClick={() => { setCaption('しまを ひらいているよ'); setFailed(false); setAttempt(value => value + 1); }}>もういちど みる</button>
         </div>}
-        <figcaption className="island-stage__caption" aria-live="polite" aria-atomic="true">{caption}</figcaption>
+        <figcaption className={`island-stage__caption${caption === DEFAULT_CAPTION ? ' island-stage__caption--quiet' : ''}`} aria-live="polite" aria-atomic="true">{caption}</figcaption>
     </figure>;
 }
 

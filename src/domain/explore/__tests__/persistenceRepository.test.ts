@@ -453,7 +453,7 @@ describe("exploration persistence repository", () => {
         ])).resolves.toEqual(expect.objectContaining({
             profileId: expectedProfile.id,
             id: "add_1d_1_bridge",
-            strength: 2,
+            strength: 1,
             totalAnswers: 1,
             correctAnswers: 1,
             incorrectAnswers: 0,
@@ -466,7 +466,7 @@ describe("exploration persistence repository", () => {
         expect(storedProfile).toEqual(expect.objectContaining({
             streak: 1,
             todayCount: 1,
-            lastStudyDate: toLocaleDateKey(getLearningDayStart()),
+            lastStudyDate: toLocaleDateKey(getLearningDayStart(new Date(200))),
             recentAttempts: [expect.objectContaining({
                 id: receipt.learningLogId?.toString(),
                 subject: "math",

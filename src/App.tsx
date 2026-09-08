@@ -18,12 +18,19 @@ import { applyThemeForCurrentTime, getMsUntilNextThemeCheck } from "./utils/them
 import { notifyPwaRouteNavigation } from "./pwa";
 import { LaunchRoute } from "./components/park/LaunchRoute";
 import { BUILD_PLAY_AVAILABLE } from "./domain/park/feature";
-import { islandAvailable } from "./domain/island/feature";
+import { islandAvailable, islandEnabled } from "./domain/island/feature";
+import { islandStudyDestination } from "./domain/island/studyRoute";
 
 const Park = lazy(() => import('./pages/Park'));
 const Island = lazy(() => import('./pages/Island'));
 
 type ProfileResolution = "loading" | "ready" | "missing";
+
+const StudyRoute = () => {
+    const location = useLocation();
+    const destination = islandStudyDestination(location.search, islandEnabled());
+    return destination ? <Navigate to={destination} replace /> : <Study />;
+};
 
 const G0WhiteboxLab = (
     import.meta.env.DEV || import.meta.env.MODE === "test"
@@ -69,6 +76,7 @@ const PwaRouteObserver = () => {
             if (!destination || ![
                 "/onboarding",
                 "/study",
+                "/stats",
                 "/explore",
                 "/island",
                 "/battle/play",
@@ -231,7 +239,7 @@ function App() {
                         } />
                         <Route path="/study" element={
                             <PrivateRoute>
-                                <Study />
+                                <StudyRoute />
                             </PrivateRoute>
                         } />
                         <Route path="/explore" element={

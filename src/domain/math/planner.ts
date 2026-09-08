@@ -119,6 +119,7 @@ const pickOrderedId = (
 const pickMathSkillId = (
     candidates: readonly string[],
     options: SelectionOptions,
+    profile?: UserProfile,
 ): string | undefined => {
     const eligible = getEligible(candidates, options);
     if (eligible.length === 0) return undefined;
@@ -127,7 +128,9 @@ const pickMathSkillId = (
         !options.recentIds.includes(skillId)
         && !options.cooldownIds.includes(skillId)
     );
-    const cooldownPool = cooled.length > 0 ? cooled : eligible;
+    const cooldownPool = prioritizeLearning(
+        cooled.length > 0 ? cooled : eligible, options, profile,
+    );
     const recentFamilies = options.recentIds.map(getMathSkillFamily);
     const recentFamilyWindow = new Set(recentFamilies.slice(-2));
     const lastFamily = recentFamilies[recentFamilies.length - 1];
@@ -145,6 +148,25 @@ const pickMathSkillId = (
         differentFromLast.length > 0 ? differentFromLast : cooldownPool,
         options.random,
     );
+};
+
+const prioritizeLearning = (
+    candidates: readonly string[],
+    options: SelectionOptions,
+    profile?: UserProfile,
+): readonly string[] => {
+    if (!profile || candidates.length === 0) return candidates;
+    const unseen = candidates.filter(id => !profile.mathSkills?.[id]);
+    const introduced = unseen.length > 0 ? unseen : candidates;
+    const strength = (id: string) => {
+        const value = profile.mathSkills?.[id]?.strength;
+        return typeof value === "number" && Number.isFinite(value) && value >= 0
+            ? value : 0;
+    };
+    const minimumStrength = Math.min(...introduced.map(strength));
+    const lowStrength = introduced.filter(id => strength(id) === minimumStrength);
+    const minimumCount = Math.min(...lowStrength.map(id => options.blockCounts.get(id) || 0));
+    return lowStrength.filter(id => (options.blockCounts.get(id) || 0) === minimumCount);
 };
 
 const pickOrderedMathSkillId = (
@@ -169,6 +191,7 @@ const pickOrderedMathSkillId = (
 const pickLeastUsedMathSkillId = (
     candidates: readonly string[],
     options: SelectionOptions,
+    profile?: UserProfile,
 ): string | undefined => {
     const allowed = candidates.filter(
         skillId => options.isSkillEligible(skillId, options.plannedIndex)
@@ -186,7 +209,9 @@ const pickLeastUsedMathSkillId = (
         !options.recentIds.includes(skillId)
         && !options.cooldownIds.includes(skillId)
     );
-    const cooldownPool = cooled.length > 0 ? cooled : leastUsed;
+    const cooldownPool = prioritizeLearning(
+        cooled.length > 0 ? cooled : leastUsed, options, profile,
+    );
     const recentFamilies = new Set(options.recentIds.slice(-2).map(getMathSkillFamily));
     const familyCooled = cooldownPool.filter(
         skillId => !recentFamilies.has(getMathSkillFamily(skillId)),
@@ -356,16 +381,16 @@ export const planMathProblemSlots = (
             const requestedSkills = getSkillsForLevel(requestedLevel);
             const fallbackSkills = getSkillsForLevel(1);
             const candidates = normalCandidates(requestedSkills.length > 0 ? requestedSkills : fallbackSkills, selection);
-            let skillId = pickMathSkillId(candidates, selection)
-                || pickLeastUsedMathSkillId(candidates, selection);
+            let skillId = pickMathSkillId(candidates, selection, options.profile)
+                || pickLeastUsedMathSkillId(candidates, selection, options.profile);
             let source: MathProblemPlanSource = wantsPlusOne ? "plus-one" : "main";
 
             // If +1 is exhausted by block/skip guards, keep the plan useful and
             // truthfully label the main-level fallback.
             if (!skillId && wantsPlusOne) {
                 const mainSkills = normalCandidates(getSkillsForLevel(mainLevel), selection);
-                skillId = pickMathSkillId(mainSkills, selection)
-                    || pickLeastUsedMathSkillId(mainSkills, selection);
+                skillId = pickMathSkillId(mainSkills, selection, options.profile)
+                    || pickLeastUsedMathSkillId(mainSkills, selection, options.profile);
                 source = "main";
             }
 

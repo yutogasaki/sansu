@@ -2,6 +2,7 @@ import { SubjectKey, TriggerState, UserProfile, PeriodicTestResult, PeriodicTest
 import { BLOCK_SIZE } from "./blockGenerators";
 import type { SessionKind } from "./blockGenerators";
 import { MAX_MATH_LEVEL, MAX_VOCAB_LEVEL } from "../domain/math/curriculum";
+import { getNextPromotionLevel } from '../domain/levelProgression';
 
 type SessionStats = {
     correct: number;
@@ -328,14 +329,14 @@ export const resolveProfileProgressionAfterAttempt = async ({
             if (canUnlock) {
                 const nextLevel = Math.min(MAX_MATH_LEVEL, updatedProfile.mathMaxUnlocked + 1);
                 const mathLevels = updatedProfile.mathLevels
-                    ? updatedProfile.mathLevels.map(level => (level.level <= nextLevel ? { ...level, unlocked: true } : level))
+                    ? updatedProfile.mathLevels.map(level => (level.level === nextLevel ? { ...level, unlocked: true, enabled: true } : level))
                     : updatedProfile.mathLevels;
                 updatedProfile = { ...updatedProfile, mathMaxUnlocked: nextLevel, mathLevels };
             }
         }
 
-        if (updatedProfile.mathMaxUnlocked > updatedProfile.mathMainLevel) {
-            const nextMain = updatedProfile.mathMaxUnlocked;
+        const nextMain = getNextPromotionLevel(updatedProfile, 'math');
+        if (nextMain !== null) {
             const canPromote = await checkMathPromotion(updatedProfile, nextMain);
             if (canPromote) {
                 const mathLevels = updatedProfile.mathLevels
@@ -377,8 +378,8 @@ export const resolveProfileProgressionAfterAttempt = async ({
         }
     }
 
-    if (updatedProfile.vocabMaxUnlocked > updatedProfile.vocabMainLevel) {
-        const nextMain = updatedProfile.vocabMaxUnlocked;
+    const nextMain = getNextPromotionLevel(updatedProfile, 'vocab');
+    if (nextMain !== null) {
         const canPromote = await checkVocabPromotion(updatedProfile);
         if (canPromote) {
             const vocabLevels = updatedProfile.vocabLevels
@@ -421,6 +422,10 @@ export const applyResolvedProgressionToLatestProfile = ({
 }): UserProfile => {
     let nextProfile = latestProfile;
 
+    // An async answer check cannot undo a main-level change made in Settings.
+    const mainKey = subject === 'math' ? 'mathMainLevel' : 'vocabMainLevel';
+    if (latestProfile[mainKey] !== baseProfile[mainKey]) return latestProfile;
+
     if (subject === "math") {
         const unlockTarget = resolvedProfile.mathMaxUnlocked > baseProfile.mathMaxUnlocked
             ? resolvedProfile.mathMaxUnlocked
@@ -430,7 +435,8 @@ export const applyResolvedProgressionToLatestProfile = ({
                 ...nextProfile,
                 mathMaxUnlocked: unlockTarget,
                 mathLevels: nextProfile.mathLevels?.map(level => (
-                    level.level <= unlockTarget ? { ...level, unlocked: true } : level
+                    level.level > nextProfile.mathMaxUnlocked && level.level <= unlockTarget
+                        ? { ...level, unlocked: true, enabled: true } : level
                 )),
             };
         }
@@ -440,8 +446,7 @@ export const applyResolvedProgressionToLatestProfile = ({
             : null;
         if (
             promotionTarget !== null
-            && promotionTarget > nextProfile.mathMainLevel
-            && promotionTarget <= nextProfile.mathMaxUnlocked
+            && promotionTarget === getNextPromotionLevel(nextProfile, 'math')
         ) {
             nextProfile = {
                 ...nextProfile,
@@ -484,8 +489,7 @@ export const applyResolvedProgressionToLatestProfile = ({
         : null;
     if (
         promotionTarget !== null
-        && promotionTarget > nextProfile.vocabMainLevel
-        && promotionTarget <= nextProfile.vocabMaxUnlocked
+        && promotionTarget === getNextPromotionLevel(nextProfile, 'vocab')
     ) {
         nextProfile = {
             ...nextProfile,

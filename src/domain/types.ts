@@ -2,6 +2,8 @@
 // Core Type Definitions
 // ============================================================
 
+import type { LearningProblemContext } from './learning/types';
+
 export type SubjectKey = 'math' | 'vocab';
 export type SkillStatus = 'active' | 'maintenance' | 'retired';
 export type InputType = 'number' | 'multi-number' | 'choice' | 'hissan';
@@ -368,6 +370,8 @@ export interface Problem {
     // Metadata
     isReview: boolean;
     isMaintenanceCheck?: boolean; // 仕様 5.4: 維持確認として出題されたか
+    /** Generated once for a new question; never backfilled on reservation resume. */
+    learningContext?: LearningProblemContext;
 }
 
 // ============================================================

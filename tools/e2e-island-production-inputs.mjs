@@ -82,12 +82,14 @@ try {
             const id = await seed(page, scenario);
             await page.goto(`${base}/#/island`);
             await waitReady(page);
-            await activate(button(page, 'ひかりを とどける'), scenario.touch);
+            await activate(page.locator('.island-start'), scenario.touch);
             await waitMode(page, 'learning');
             const before = await readNative(page, id);
             assert.equal(before.plan.slots[0].problem.categoryId, scenario.skill);
             assert.equal(await page.locator('.park-answer').getAttribute('data-input-type'), scenario.type);
-            assert.equal(before.plan.slots.length, scenario.type === 'number' ? 6 : 3);
+            assert.equal(before.island.completedSets, 0);
+            assert.equal(before.plan.id, JSON.stringify(['island-plan-v1', id, 0]));
+            assert.equal(before.plan.slots.length, 3, 'A new island reserves three real introductory problems for every input form');
             assert.equal(before.logs.length, 0);
             await assertKeypad(page, scenario.type === 'number');
             await capture(page, `${scenario.name}-learning.png`, manifest, scenario.type !== 'number');

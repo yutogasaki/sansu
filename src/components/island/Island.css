@@ -17,7 +17,7 @@
 .island-text-button { min-height: 44px; padding: 8px 10px; font-size: 12px; font-weight: 600; text-underline-offset: 4px; }
 .island-text-button:hover { text-decoration: underline; }
 .island-home-controls, .island-sheet { max-width: 660px; margin: 0 auto; padding: 4px 24px 12px; position: relative; }
-.island-home-hint { text-align: center; font-size: 12px; line-height: 1.9; margin: 8px 0 16px; }
+.island-page[data-mode=home] .island-home-controls { padding-top: 20px; }
 .island-eyebrow { font-size: 11px; letter-spacing: .14em; color: var(--island-muted); }
 .island-sheet h2 { font-size: 22px; font-weight: 750; letter-spacing: .025em; line-height: 1.65; margin-top: 5px; }
 .island-primary { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 54px; padding: 12px 20px; border-radius: 18px; background: #ffd447; color: #263145; font-size: 16px; font-weight: 750; border: 1px solid #34435d; box-shadow: 0 3px 0 #34435d; }
@@ -26,7 +26,7 @@
 .island-home-secondary { display: flex; flex-wrap: wrap; align-items: stretch; justify-content: center; gap: 12px; margin-top: 16px; }
 .island-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px; padding: 6px 14px; border-radius: 14px; border: 1px solid #52607a; background: #fff9e8; font-size: 13px; font-weight: 600; }
 .island-secondary small { display: block; margin-top: 4px; font-size: 10px; color: var(--island-muted); font-weight: 400; }
-.island-footer { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 12px; font-size: 10px; color: var(--island-muted); }
+.island-footer { display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 12px; font-size: 10px; color: var(--island-muted); }
 .island-sheet { padding-top: 12px; padding-bottom: 20px; }
 .island-sheet-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
 .island-sheet-title h2 { font-size: 21px; }
@@ -58,6 +58,9 @@
 .island-learning-progress { display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: var(--island-muted); }
 .island-learning-actions { display: flex; align-items: center; justify-content: space-between; min-height: 44px; }
 .island-learning-actions .island-note { margin: auto; }
+.island-learning-return { display: flex; align-items: center; gap: 5px; }
+.island-learning-gifts { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--island-muted); }
+.island-learning-retry { display: grid; justify-items: center; gap: 18px; font-size: 13px; line-height: 1.8; }
 @media(min-width:700px) {
     .island-header { padding-top: 24px; }
     .island-brand h1 { font-size: 23px; }

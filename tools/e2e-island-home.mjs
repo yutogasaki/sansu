@@ -29,7 +29,7 @@ try {
             const id = await seedNative(page, `island-home-${name}`);
             await page.goto(`${base}/#/`); await waitReady(page); await waitMode(page, 'home');
             assert.equal(new URL(page.url()).hash, '#/island');
-            await button(page, 'ひかりを とどける').click(); await waitMode(page, 'learning');
+            await page.locator('.island-start').click(); await waitMode(page, 'learning');
             await button(page, 'しまへ').click(); await waitMode(page, 'home');
             const reserved = await readNative(page, id);
             assert(reserved.plan);
@@ -56,7 +56,8 @@ try {
             assert.deepEqual((await onboardingStores(page)).parks, saved.parks);
             await capture('park-reopened');
             await button(page, 'せってい').click();
-            await button(page, 'ふしぎな しま').click(); await waitReady(page); await waitMode(page, 'learning');
+            await page.getByRole('navigation', { name: 'メインメニュー', exact: true }).getByRole('button', { name: 'しま', exact: true }).click();
+            await waitReady(page); await waitMode(page, 'learning');
             const before = await readNative(page, id);
             assert.deepEqual(before.plan, reserved.plan);
             assert.deepEqual(before.logs, reserved.logs);

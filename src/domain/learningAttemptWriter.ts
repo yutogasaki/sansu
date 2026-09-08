@@ -9,6 +9,9 @@ import {
     MAX_MATH_LEVEL,
 } from "./math/curriculum";
 import type { MemoryState, SubjectKey, UserProfile } from "./types";
+import { getNextPromotionLevel, hasMathPromotionEvidence } from './levelProgression';
+import type { LearningEvidenceContext } from './learning/types';
+import { validateLearningEvidenceContext } from './learning/context';
 
 const APP_DATA_ID = "app";
 
@@ -23,6 +26,7 @@ export interface LearningAttemptWriteInput {
     isMaintenanceCheck: boolean;
     timestamp: string;
     timeMs?: number;
+    learningEvidence?: LearningEvidenceContext;
 }
 
 export interface LearningAttemptWriteReceipt {
@@ -31,9 +35,9 @@ export interface LearningAttemptWriteReceipt {
     profile: UserProfile | null;
 }
 
-export const getInitialNextReviewIso = (strength: number, skipped: boolean): string => {
-    if (skipped) return getLearningDayStart().toISOString();
-    return getNextReviewDate(strength).toISOString();
+export const getInitialNextReviewIso = (strength: number, skipped: boolean, now: Date = new Date()): string => {
+    if (skipped) return getLearningDayStart(now).toISOString();
+    return getNextReviewDate(strength, now).toISOString();
 };
 
 export const resolveWeakStateAfterAttempt = (
@@ -129,26 +133,25 @@ const resolveMathProgression = async (
                 ...updated,
                 mathMaxUnlocked: nextLevel,
                 mathLevels: updated.mathLevels?.map((level) => (
-                    level.level <= nextLevel ? { ...level, unlocked: true } : level
+                    level.level === nextLevel ? { ...level, unlocked: true, enabled: true } : level
                 )),
             };
         }
     }
 
-    if (updated.mathMaxUnlocked > updated.mathMainLevel) {
-        const nextMainLevel = updated.mathMaxUnlocked;
+    const nextMainLevel = getNextPromotionLevel(updated, 'math');
+    if (nextMainLevel !== null) {
         const targetSkills = getSkillsForLevel(nextMainLevel);
         if (targetSkills.length > 0) {
-            const completed = await database.logs
+            const attempts = await database.logs
                 .where("[profileId+subject]")
                 .equals([updated.id, "math"])
                 .filter((log) => (
                     targetSkills.includes(log.itemId)
                     && !log.isReview
-                    && log.result !== "skipped"
                 ))
-                .count();
-            if (completed >= 30) {
+                .toArray();
+            if (hasMathPromotionEvidence(attempts)) {
                 const nextLevels = updated.mathLevels?.map((level) => (
                     level.level === nextMainLevel
                         ? {
@@ -213,13 +216,15 @@ export const writeLearningAttemptInTransaction = async (
         timestamp: input.timestamp,
         timeMs: input.timeMs,
     };
+    const learningEvidence = validateLearningEvidenceContext(input.learningEvidence, input.subject, input.itemId);
+    if (learningEvidence) log.learningEvidence = learningEvidence;
     const logId = await database.logs.add(log);
     const table = input.subject === "math" ? database.memoryMath : database.memoryVocab;
     const existing = await table.get([input.profileId, input.itemId]);
     let newState: MemoryState;
 
     if (existing) {
-        newState = updateMemoryState(existing, scoredResult === "correct", skipped);
+        newState = updateMemoryState(existing, scoredResult === "correct", skipped, new Date(input.timestamp));
         newState = {
             ...newState,
             updatedAt: input.timestamp,
@@ -245,11 +250,11 @@ export const writeLearningAttemptInTransaction = async (
         }
     } else {
         const correct = scoredResult === "correct" && !skipped;
-        const strength = correct ? 2 : 1;
+        const strength = 1;
         newState = {
             id: input.itemId,
             strength,
-            nextReview: getInitialNextReviewIso(strength, skipped),
+            nextReview: getInitialNextReviewIso(strength, skipped, new Date(input.timestamp)),
             totalAnswers: 1,
             correctAnswers: correct ? 1 : 0,
             incorrectAnswers: correct ? 0 : 1,
@@ -301,7 +306,7 @@ export const writeLearningAttemptInTransaction = async (
             }
         }
 
-        const dayStart = getLearningDayStart();
+        const dayStart = getLearningDayStart(new Date(input.timestamp));
         const todayKey = toLocaleDateKey(dayStart);
         const yesterdayKey = toLocaleDateKey(addDays(dayStart, -1));
         const isSameDay = profile.lastStudyDate === todayKey;

@@ -2,6 +2,7 @@ import { MemoryState, UserProfile } from "../types";
 import { ENGLISH_WORDS } from "./words";
 import { db } from "../../db";
 import { MAX_VOCAB_LEVEL } from "../math/curriculum";
+import { getNextPromotionLevel } from '../levelProgression';
 
 /**
  * DBから対象profileId + wordIdsのvocab MemoryStateをバッチ取得
@@ -27,16 +28,17 @@ const getVocabMemoryFromDB = async (
 };
 
 // 仕様 5.2: 英語レベル解放判定
-// 最大解放レベル内の単語の 70% を「1回でも解いた（totalAnswers > 0）」ら昇格
+// 有効なメイン+1の70%以上の語に独力正解があれば昇格。
 // memoryOverride: テスト用。指定時はDBではなくこのMapを参照する
 export const checkEnglishLevelProgression = async (
     profile: UserProfile,
     memoryOverride?: Record<string, MemoryState>
 ): Promise<boolean> => {
-    const currentMax = profile.vocabMaxUnlocked;
+    const targetLevel = getNextPromotionLevel(profile, 'vocab');
+    if (targetLevel === null) return false;
 
     // 1. Get words for current max level
-    const targetWords = ENGLISH_WORDS.filter(w => w.level === currentMax);
+    const targetWords = ENGLISH_WORDS.filter(w => w.level === targetLevel);
     if (targetWords.length === 0) return false;
 
     const wordIds = targetWords.map(w => w.id);
@@ -53,11 +55,11 @@ export const checkEnglishLevelProgression = async (
         getMemory = (id: string) => memoryMap.get(id);
     }
 
-    // 3. Count unlocked words (totalAnswers > 0)
+    // Wrong answers and skips are participation, not successful recall.
     let unlockedCount = 0;
     for (const id of wordIds) {
         const memory = getMemory(id);
-        if (memory && memory.totalAnswers > 0) {
+        if (memory && Number.isFinite(memory.correctAnswers) && memory.correctAnswers > 0) {
             unlockedCount++;
         }
     }

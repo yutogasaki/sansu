@@ -7,10 +7,11 @@ import { generateHissanGrid } from '../math/hissanEngine';
 import { isHissanEligible } from '../math/hissanTypes';
 import { generateWrittenArithmeticGrid } from '../math/writtenArithmetic';
 import { generateVocabProblem } from '../english/generator';
-import { ENGLISH_WORDS } from '../english/words';
+import { planVocabProblemSlots } from '../english/planner';
 import { resolveWeakState } from '../learningRepository';
 import type { MemoryState, Problem, UserProfile } from '../types';
 import type { LearningSlot, ParkPlan } from './types';
+import { createLearningProblemContext } from '../learning/context';
 
 export function parkHissanGrid(problem: Problem) {
     if (problem.subject !== 'math' || !problem.questionText || problem.inputType === 'choice') return null;
@@ -106,34 +107,31 @@ export function planParkLearning(
                     problem.inputType = 'hissan';
                 }
             }
+            // This is new-plan construction. Saved reservations are never re-enriched.
+            problem.learningContext = createLearningProblemContext('math', problem);
             return { problem, source: selection.source === 'due' && remediation.has(selection.skillId) ? 'remediation' : selection.source,
-                countsTowardReviewCap: selection.countsTowardReviewCap, assisted: false, completed: false };
+                countsTowardReviewCap: selection.countsTowardReviewCap, assisted: false, completed: false,
+                learningEvidenceAssistance: 'independent' };
         });
     } else {
-        const eligible = ENGLISH_WORDS.filter(w => w.level <= profile.vocabMaxUnlocked && !skipped.includes(w.id));
-        const weakSet = new Set(weak);
-        const main = eligible.filter(w => w.level === profile.vocabMainLevel);
-        const plusOne = eligible.filter(w => w.level === profile.vocabMainLevel + 1);
-        const eligibleDue = due.filter(id => eligible.some(word => word.id === id));
-        const cursor = workload.vocabDueAfterId ? eligibleDue.indexOf(workload.vocabDueAfterId) : -1;
-        const orderedDue = cursor < 0 ? eligibleDue : [...eligibleDue.slice(cursor + 1), ...eligibleDue.slice(0, cursor + 1)];
-        const used = new Set<string>();
-        let reviewCount = 0;
-        slots = Array.from({ length: standardCount }, (_, i) => {
-            const review = i === 0 ? eligible.find(word => word.id === orderedDue[0]) : undefined;
-            const weakWord = !review && reviewCount === 0 && random() < .3 ? eligible.find(w => weakSet.has(w.id) && !used.has(w.id)) : undefined;
-            const requested = plusOne.length && random() < .3 ? plusOne : main;
-            const pool = requested.filter(w => !used.has(w.id));
-            const word = review ?? weakWord ?? pool[Math.floor(random() * pool.length)];
-            if (!word) throw new Error('No vocabulary assignment available');
-            used.add(word.id);
-            if (review || weakWord) reviewCount += 1;
-            return {
-                problem: { ...generateVocabProblem(word.id, { kanjiMode: profile.kanjiMode }), id: `${planId}:slot-${i}`, subject, isReview: Boolean(review) },
-                source: review ? 'due' : weakWord ? 'weak' : word.level > profile.vocabMainLevel ? 'plus-one' : 'main',
-                countsTowardReviewCap: Boolean(review || weakWord), assisted: false, completed: false,
-            };
+        const hydrated = { ...profile, vocabWords: { ...profile.vocabWords, ...Object.fromEntries(vocabMemory.map(m => [m.id, m])) } };
+        const planned = planVocabProblemSlots({
+            profile: hydrated, count: standardCount, shortestCount: complexCount,
+            dueIds: due, dueAfterId: workload.vocabDueAfterId, weakIds: weak,
+            skippedIds: skipped, cooldownIds: itemLogs.slice(-10).map(log => log.itemId), random,
         });
+        slots = planned.map((selection, index) => ({
+            problem: {
+                ...generateVocabProblem(selection.wordId, {
+                    kanjiMode: profile.kanjiMode,
+                    cooldownIds: itemLogs.slice(-10).map(log => log.itemId),
+                    random: createSeededRandom(`${planId}:${index}:${selection.wordId}`),
+                }),
+                id: `${planId}:slot-${index}`, subject, isReview: selection.isReview,
+            },
+            source: selection.source, countsTowardReviewCap: selection.countsTowardReviewCap,
+            assisted: false, completed: false, learningEvidenceAssistance: 'independent',
+        }));
     }
     // Reserve a fixed workload before showing a question. Complex/new content gets a shorter section.
     const longForm = slots.some(s => s.problem.inputType === 'multi-number' || parkHissanGrid(s.problem)

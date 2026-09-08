@@ -1,4 +1,4 @@
-import { GeneratorFn, createProblem, randomChoice } from "../core";
+import { GeneratorFn, createProblem, getMathSkillProgress, randomChoice } from "../core";
 import type { RandomSource } from "../../../utils/random";
 import { shuffleArray } from "../../../utils/shuffle";
 import {
@@ -193,9 +193,6 @@ const SORT_ATTRIBUTE_SETS = [
     },
 ];
 
-const getAttemptCount = (totalAnswers?: number): number | undefined =>
-    (typeof totalAnswers === "number" ? totalAnswers : undefined);
-
 const renderChoiceItems = (emoji: string, count: number): string =>
     Array.from({ length: count }, () => emoji).join(" ");
 
@@ -221,8 +218,8 @@ const buildNumberChoices = (
 export const generators: Record<string, GeneratorFn> = {
     // Level 0: 5まで数える
     "count_5": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_5?.totalAnswers);
-        const n = selectCount5Target(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("count_5", context);
+        const n = selectCount5Target(progress, context?.random);
         const visual = buildSingleCountVisual(n, {
             prompt: "いくつ ある？",
             questionText: "いくつ ある？",
@@ -237,8 +234,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: ドットを数える（1-10）
     "count_dot": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_dot?.totalAnswers);
-        const n = selectDotCountTarget(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("count_dot", context);
+        const n = selectDotCountTarget(progress, context?.random);
         const visual = buildDotCountVisual(n);
         return createProblem("count_dot", visual.questionText, n.toString(), "choice", buildNumberChoices(n, 1, 10, undefined, context?.random), {
             questionVisual: visual.questionVisual
@@ -246,8 +243,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: どっちが多い？
     "count_which_more": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_which_more?.totalAnswers);
-        const { left: a, right: b } = selectWhichMorePattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("count_which_more", context);
+        const { left: a, right: b } = selectWhichMorePattern(progress, context?.random);
         const visual = buildWhichMoreVisual(a, b, context?.random);
         const left = visual.questionVisual.kind === "comparison-items" ? visual.questionVisual.groups[0] : undefined;
         const right = visual.questionVisual.kind === "comparison-items" ? visual.questionVisual.groups[1] : undefined;
@@ -262,8 +259,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: 1つおおい
     "one_more": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.one_more?.totalAnswers);
-        const count = selectOneMoreCount(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("one_more", context);
+        const count = selectOneMoreCount(progress, context?.random);
         const visual = buildNumberLineVisual(
             count,
             1,
@@ -284,8 +281,8 @@ export const generators: Record<string, GeneratorFn> = {
             { n: 7, reading: "なな" }, { n: 8, reading: "はち" }, { n: 9, reading: "きゅう" },
             { n: 10, reading: "じゅう" },
         ];
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_read?.totalAnswers);
-        const pattern = selectCountReadPattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("count_read", context);
+        const pattern = selectCountReadPattern(progress, context?.random);
         const target = NUMS.find(item => item.n === pattern.target) || NUMS[0];
         const choices = shuffleArray(
             pattern.options
@@ -307,8 +304,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: ならべよう（小さい順）
     "count_order": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_order?.totalAnswers);
-        const { values: nums } = selectCountOrderPattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("count_order", context);
+        const { values: nums } = selectCountOrderPattern(progress, context?.random);
         const sorted = [...nums].sort((a, b) => a - b);
         const shuffled = shuffleArray(nums, context?.random);
         const visual = buildStaticNumberLineVisual(shuffled, "いちばん ちいさい かずは？", "いちばん ちいさい かずは？");
@@ -318,8 +315,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: なんばんめ？
     "ordinal_small": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.ordinal_small?.totalAnswers);
-        const pattern = selectOrdinalPattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("ordinal_small", context);
+        const pattern = selectOrdinalPattern(progress, context?.random);
         const items = shuffleArray(ORDINAL_EMOJIS, context?.random).slice(0, pattern.length);
         const visual = buildOrdinalVisual(items, pattern.prompt);
         const answer = items[pattern.targetIndex];
@@ -332,8 +329,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: くりかえしのつづき
     "pattern_copy": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.pattern_copy?.totalAnswers);
-        const pattern = selectPatternCopyPattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("pattern_copy", context);
+        const pattern = selectPatternCopyPattern(progress, context?.random);
         const uniqueCount = Math.max(...pattern.visible, pattern.answerIndex) + 1;
         const palette = shuffleArray(PATTERN_ITEMS, context?.random).slice(0, uniqueCount);
         const items = pattern.visible.map(index => palette[index] || PATTERN_ITEMS[0]);
@@ -349,8 +346,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: ながさくらべ
     "length_compare": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.length_compare?.totalAnswers);
-        const pattern = selectLengthComparePattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("length_compare", context);
+        const pattern = selectLengthComparePattern(progress, context?.random);
         const palette = shuffleArray(LENGTH_COMPARE_ITEMS, context?.random).slice(0, 2);
         const left = palette[0] || LENGTH_COMPARE_ITEMS[0];
         const right = palette[1] || LENGTH_COMPARE_ITEMS[1];
@@ -371,8 +368,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: たかさくらべ
     "height_compare": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.height_compare?.totalAnswers);
-        const pattern = selectHeightComparePattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("height_compare", context);
+        const pattern = selectHeightComparePattern(progress, context?.random);
         const palette = shuffleArray(HEIGHT_COMPARE_ITEMS, context?.random).slice(0, 2);
         const left = palette[0] || HEIGHT_COMPARE_ITEMS[0];
         const right = palette[1] || HEIGHT_COMPARE_ITEMS[1];
@@ -393,8 +390,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: おもさくらべ
     "weight_compare": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.weight_compare?.totalAnswers);
-        const pattern = selectWeightComparePattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("weight_compare", context);
+        const pattern = selectWeightComparePattern(progress, context?.random);
         const items = shuffleArray(WEIGHT_COMPARE_ITEMS, context?.random).slice(0, 2);
         const left = items[0] || WEIGHT_COMPARE_ITEMS[0];
         const right = items[1] || WEIGHT_COMPARE_ITEMS[1];
@@ -415,8 +412,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: 1たい1たいおう
     "one_to_one_match": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.one_to_one_match?.totalAnswers);
-        const count = selectOneToOneCount(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("one_to_one_match", context);
+        const count = selectOneToOneCount(progress, context?.random);
         const visual = buildOneToOneMatchVisual(count, context?.random);
 
         return createProblem("one_to_one_match", visual.questionText, count.toString(), "choice", buildNumberChoices(count, 1, 5, undefined, context?.random), {
@@ -425,8 +422,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: なかまでわける
     "sort_by_attribute": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.sort_by_attribute?.totalAnswers);
-        const pattern = selectSortByAttributePattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("sort_by_attribute", context);
+        const pattern = selectSortByAttributePattern(progress, context?.random);
         const scenario = SORT_ATTRIBUTE_SETS[pattern.setIndex] || SORT_ATTRIBUTE_SETS[0];
         const targetBucket = scenario.buckets[pattern.targetBucket] || scenario.buckets[0];
         const target = shuffleArray(targetBucket.items, context?.random)[0] || targetBucket.items[0];
@@ -440,8 +437,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: おおきい・ちいさい
     "big_small_compare": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.big_small_compare?.totalAnswers);
-        const pattern = selectBigSmallPattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("big_small_compare", context);
+        const pattern = selectBigSmallPattern(progress, context?.random);
         const items = shuffleArray(VISUAL_COMPARE_ITEMS, context?.random).slice(0, 2);
         const left = items[0] || VISUAL_COMPARE_ITEMS[0];
         const right = items[1] || VISUAL_COMPARE_ITEMS[1];
@@ -462,8 +459,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: おなじ？ちがう？
     "same_or_different": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.same_or_different?.totalAnswers);
-        const pattern = selectSameOrDifferentPattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("same_or_different", context);
+        const pattern = selectSameOrDifferentPattern(progress, context?.random);
         const items = shuffleArray(VISUAL_COMPARE_ITEMS, context?.random).slice(0, 2);
         const left = items[0] || VISUAL_COMPARE_ITEMS[0];
         const right = pattern.isSame ? left : (items[1] || VISUAL_COMPARE_ITEMS[1]);
@@ -480,8 +477,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: ばしょのことば
     "spatial_words": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.spatial_words?.totalAnswers);
-        const pattern = selectSpatialWordsPattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("spatial_words", context);
+        const pattern = selectSpatialWordsPattern(progress, context?.random);
         if (pattern.mode === "pair") {
             const items = shuffleArray(ORDINAL_EMOJIS, context?.random).slice(0, 2);
             const target = items[pattern.targetIndex || 0] || items[0] || ORDINAL_EMOJIS[0];
@@ -566,8 +563,8 @@ export const generators: Record<string, GeneratorFn> = {
             { emoji: "🔺", name: "さんかく" },
             { emoji: "🟦", name: "しかく" },
         ];
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_shape?.totalAnswers);
-        const pattern = selectShapeRecognitionPattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("count_shape", context);
+        const pattern = selectShapeRecognitionPattern(progress, context?.random);
         const target = SHAPES.find(shape => shape.name === pattern.target) || SHAPES[0];
         const choices = shuffleArray(
             pattern.options
@@ -595,8 +592,8 @@ export const generators: Record<string, GeneratorFn> = {
             { emoji: "🟨", name: "きいろ" }, { emoji: "🟩", name: "みどり" },
             { emoji: "🟧", name: "オレンジ" }, { emoji: "🟪", name: "むらさき" },
         ];
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_color?.totalAnswers);
-        const pattern = selectColorRecognitionPattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("count_color", context);
+        const pattern = selectColorRecognitionPattern(progress, context?.random);
         const target = COLORS.find(color => color.name === pattern.target) || COLORS[0];
         const choices = shuffleArray(
             pattern.options
@@ -619,8 +616,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: ペアをみつける（同じもの探し）
     "count_pair": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_pair?.totalAnswers);
-        const pattern = selectPairRecognitionPattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("count_pair", context);
+        const pattern = selectPairRecognitionPattern(progress, context?.random);
         const target = pattern.target;
         const choices = shuffleArray(pattern.options, context?.random);
         const visual = buildReferenceChoiceGridVisual(
@@ -638,8 +635,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: おなじ数のまとまりを見つける
     "same_count_match": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.same_count_match?.totalAnswers);
-        const { target, options } = selectSameCountMatchPattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("same_count_match", context);
+        const { target, options } = selectSameCountMatchPattern(progress, context?.random);
         const emojiPool = shuffleArray(MATCH_EMOJIS, context?.random).slice(0, 4);
         const targetEmoji = emojiPool[0] || "🍎";
         const choiceEmojis = emojiPool.slice(1);
@@ -662,8 +659,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: 5になるにはあといくつ？
     "compose_5": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.compose_5?.totalAnswers);
-        const filled = selectComposeFilledCount("compose_5", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("compose_5", context);
+        const filled = selectComposeFilledCount("compose_5", progress, context?.random);
         const visual = buildSingleCountVisual(filled, {
             prompt: "5になるには あといくつ？",
             questionText: "5になるには あといくつ？",
@@ -679,8 +676,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 0: かんたんなたし算（1+1〜3+3）
     "add_tiny": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.add_tiny?.totalAnswers);
-        const [a, b] = selectAdditionPair("add_tiny", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("add_tiny", context);
+        const [a, b] = selectAdditionPair("add_tiny", progress, context?.random);
         const visual = buildAdditionVisual(a, b, context?.random);
         return createProblem("add_tiny", visual.questionText, (a + b).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -688,8 +685,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 1: 数を数える（1-10）
     "count_10": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_10?.totalAnswers);
-        const n = selectCount10Target(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("count_10", context);
+        const n = selectCount10Target(progress, context?.random);
         const visual = buildSingleCountVisual(n, {
             prompt: "いくつ ある？",
             questionText: "いくつ ある？",
@@ -704,8 +701,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 1: つぎのかず（1-9）
     "count_next_10": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_next_10?.totalAnswers);
-        const n = selectCountNext10Target(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("count_next_10", context);
+        const n = selectCountNext10Target(progress, context?.random);
         const visual = buildNextNumberVisual(n);
         return createProblem("count_next_10", visual.questionText, (n + 1).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -713,8 +710,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 1: ゆびたしざん（絵つき、合計5まで）
     "add_finger": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.add_finger?.totalAnswers);
-        const [a, b] = selectAdditionPair("add_finger", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("add_finger", context);
+        const [a, b] = selectAdditionPair("add_finger", progress, context?.random);
         const visual = buildAdditionVisual(a, b, context?.random);
         return createProblem("add_finger", visual.questionText, (a + b).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -722,8 +719,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 1: まえのかず（逆に数える、2-10）
     "count_back": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_back?.totalAnswers);
-        const n = selectCountBackTarget(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("count_back", context);
+        const n = selectCountBackTarget(progress, context?.random);
         const visual = buildPreviousNumberVisual(n);
         return createProblem("count_back", visual.questionText, (n - 1).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -731,8 +728,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 1: 2つおおい
     "two_more": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.two_more?.totalAnswers);
-        const count = selectTwoMoreCount(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("two_more", context);
+        const count = selectTwoMoreCount(progress, context?.random);
         const visual = buildNumberLineVisual(
             count,
             2,
@@ -747,8 +744,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 1: 1つすくない
     "one_less": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.one_less?.totalAnswers);
-        const count = selectOneLessCount(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("one_less", context);
+        const count = selectOneLessCount(progress, context?.random);
         const visual = buildNumberLineVisual(
             count,
             -1,
@@ -763,8 +760,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 1: 0のかんかく
     "zero_concept": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.zero_concept?.totalAnswers);
-        const count = selectZeroConceptCount(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("zero_concept", context);
+        const count = selectZeroConceptCount(progress, context?.random);
         const visual = buildZeroConceptVisual(count, context?.random);
 
         return createProblem("zero_concept", visual.questionText, "0", "choice", buildNumberChoices(0, 0, 5, undefined, context?.random), {
@@ -773,8 +770,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 1: からっぽ かな？
     "which_is_empty": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.which_is_empty?.totalAnswers);
-        const count = selectWhichIsEmptyCount(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("which_is_empty", context);
+        const count = selectWhichIsEmptyCount(progress, context?.random);
         const visual = buildSingleCountVisual(count, {
             prompt: "からっぽ かな？",
             questionText: "からっぽ かな？",
@@ -795,8 +792,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 1: おなじにわける
     "share_equal": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.share_equal?.totalAnswers);
-        const { total, groups } = selectShareEqualPattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("share_equal", context);
+        const { total, groups } = selectShareEqualPattern(progress, context?.random);
         const visual = buildSharingVisual(total, groups, context?.random);
         const answer = total / groups;
         return createProblem("share_equal", visual.questionText, answer.toString(), "choice", buildNumberChoices(answer, 1, 5, undefined, context?.random), {
@@ -805,8 +802,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 2: 数を数える（1-50）
     "count_50": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_50?.totalAnswers);
-        const n = selectCount50Target(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("count_50", context);
+        const n = selectCount50Target(progress, context?.random);
         const visual = buildNextNumberVisual(n);
         return createProblem("count_50", visual.questionText, (n + 1).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -814,8 +811,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 2: つぎのかず（1-20）
     "count_next_20": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_next_20?.totalAnswers);
-        const n = selectCountNext20Target(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("count_next_20", context);
+        const n = selectCountNext20Target(progress, context?.random);
         const visual = buildNextNumberVisual(n);
         return createProblem("count_next_20", visual.questionText, (n + 1).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -823,8 +820,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 2: 5までのたし算
     "add_5": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.add_5?.totalAnswers);
-        const [a, b] = selectAdditionPair("add_5", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("add_5", context);
+        const [a, b] = selectAdditionPair("add_5", progress, context?.random);
         const visual = buildAdditionVisual(a, b, context?.random);
         return createProblem("add_5", visual.questionText, (a + b).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -832,8 +829,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 2: 10になるにはあといくつ？
     "compose_10": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.compose_10?.totalAnswers);
-        const filled = selectComposeFilledCount("compose_10", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("compose_10", context);
+        const filled = selectComposeFilledCount("compose_10", progress, context?.random);
         const visual = buildSingleCountVisual(filled, {
             prompt: "10になるには あといくつ？",
             questionText: "10になるには あといくつ？",
@@ -849,8 +846,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 2: 2つすくない
     "two_less": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.two_less?.totalAnswers);
-        const count = selectTwoLessCount(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("two_less", context);
+        const count = selectTwoLessCount(progress, context?.random);
         const visual = buildNumberLineVisual(
             count,
             -2,
@@ -865,8 +862,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 2: かんたんなひき算（答えが正になる、5以下）
     "sub_tiny": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.sub_tiny?.totalAnswers);
-        const [a, b] = selectSubtractionPair("sub_tiny", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("sub_tiny", context);
+        const [a, b] = selectSubtractionPair("sub_tiny", progress, context?.random);
         const visual = buildSubtractionVisual(a, b, context?.random);
         return createProblem("sub_tiny", visual.questionText, (a - b).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -874,8 +871,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 3: 数を数える（1-100）
     "count_100": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_100?.totalAnswers);
-        const n = selectCount100Target(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("count_100", context);
+        const n = selectCount100Target(progress, context?.random);
         const visual = buildNextNumberVisual(n);
         return createProblem("count_100", visual.questionText, (n + 1).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -883,8 +880,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 3: 数の順番
     "count_fill": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.count_fill?.totalAnswers);
-        const { start, missingIndex } = selectCountFillPattern(totalAnswers, context?.random);
+        const progress = getMathSkillProgress("count_fill", context);
+        const { start, missingIndex } = selectCountFillPattern(progress, context?.random);
         const seq = [0, 1, 2, 3, 4].map(i => start + i);
         const ans = seq[missingIndex];
         const visual = buildSequenceFillVisual(seq, missingIndex);
@@ -894,8 +891,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 3: 大小比較（1桁）
     "compare_1d": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.compare_1d?.totalAnswers);
-        const [a, b] = selectComparisonPair("compare_1d", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("compare_1d", context);
+        const [a, b] = selectComparisonPair("compare_1d", progress, context?.random);
         const visual = buildStaticNumberLineVisual([a, b], "□ に はいる きごうは？", `${a} □ ${b}`);
         return createProblem("compare_1d", visual.questionText, a > b ? ">" : "<", "choice", {
             choices: [{ label: ">", value: ">" }, { label: "=", value: "=" }, { label: "<", value: "<" }]
@@ -905,8 +902,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 3: 大小比較（2桁）
     "compare_2d": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.compare_2d?.totalAnswers);
-        const [a, b] = selectComparisonPair("compare_2d", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("compare_2d", context);
+        const [a, b] = selectComparisonPair("compare_2d", progress, context?.random);
         const usesNumberLine = Math.floor(a / 10) === Math.floor(b / 10);
         const visual = usesNumberLine
             ? buildStaticNumberLineVisual([a, b], "□ に はいる きごうは？", `${a} □ ${b}`)

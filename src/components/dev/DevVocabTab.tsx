@@ -110,7 +110,7 @@ export const DevVocabTab: React.FC<DevVocabTabProps> = ({ memoryStates, onUpdate
                                     >
                                         <span className="flex items-center">
                                             <span className={`w-2 h-2 rounded-full mr-2 ${isLearned ? "bg-green-500" : "bg-slate-300"}`} />
-                                            <span className="font-medium">{word.id}</span>
+                                            <span className="font-medium">{word.surface ?? word.id}</span>
                                             <span className="ml-2 text-slate-500">
                                                 {word.japaneseKanji || word.japanese}
                                             </span>

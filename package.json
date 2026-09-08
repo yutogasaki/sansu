@@ -16,6 +16,7 @@
         "build:pittari": "node tools/build-pittari.mjs",
         "e2e:pittari": "node tools/e2e-pittari.mjs",
         "docs:check": "node tools/check-docs.mjs",
+        "learning:report": "node tools/learning-unit-report.mjs",
         "typecheck": "tsc -b --pretty false",
         "assets:check": "node tools/check-asset-budget.mjs",
         "build": "tsc -b && vite build && npm run assets:check",
@@ -33,7 +34,8 @@
         "e2e:visual-audit": "node tools/e2e-smoke.mjs --visual-audit",
         "e2e:visual-audit:local": "node tools/run-local-visual-audit.mjs",
         "e2e:pwa-update": "node tools/e2e-pwa-update.mjs",
-        "benchmark:fixed-ten": "node tools/e2e-fixed-ten-throughput.mjs"
+        "benchmark:fixed-ten": "node tools/e2e-fixed-ten-throughput.mjs",
+        "e2e:island-living": "node tools/e2e-island-living.mjs"
     },
     "dependencies": {
         "@pdf-lib/fontkit": "^1.1.1",

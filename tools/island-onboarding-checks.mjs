@@ -26,9 +26,35 @@ export function assertProfileFree(stores) {
     }
 }
 
+export function assertFirstReservation(stores, profileId) {
+    assert.equal(stores.islands.rows.length, 1);
+    const island = stores.islands.rows[0], planId = JSON.stringify(['island-plan-v1', profileId, 0]);
+    assert.equal(island.profileId, profileId); assert.equal(island.completedSets, 0);
+    assert.deepEqual(island.pendingRewards, []); assert.equal(island.pendingPlanId, planId);
+    assert.equal(island.growth.version, 1); assert.equal(island.growth.focus, 'garden');
+    assert.deepEqual(island.growth.progress, { garden: 0, waterside: 0, grove: 0, village: 0 });
+    assert.deepEqual(island.growth.discoveries, [], 'Opening a new island does not claim unseen animal behavior');
+    assert.equal(island.growth.memories.length, 1); assert.equal(island.growth.memories[0].kind, 'initial');
+    assert.deepEqual(island.growth.memories[0].items, island.items);
+    assert.equal(stores.islandPlans.rows.length, 1);
+    const plan = stores.islandPlans.rows[0];
+    assert.equal(plan.id, planId); assert.equal(plan.profileId, profileId);
+    assert.equal(plan.schemaVersion, 1); assert.equal(plan.plannerVersion, 'island-learning-v1');
+    assert.equal(plan.status, 'active'); assert.equal(plan.cursor, 0); assert.equal(plan.revision, 0);
+    assert.equal(plan.growthTarget, 'garden', 'New first reservations opt into automatic garden growth');
+    assert.equal(plan.slots.length, 3, 'Final setup opens exactly three real introductory problems');
+    assert(plan.slots.every(slot => !slot.completed && !slot.assisted && slot.problem.subject === plan.subject));
+    assert.equal(stores.islandEvents.rows.length, 1);
+    const event = stores.islandEvents.rows[0];
+    assert.equal(event.id, `${planId}:started`); assert.equal(event.type, 'plan_started');
+    assert.equal(event.profileId, profileId); assert.equal(event.planId, planId);
+    assert.equal(stores.logs.rows.length, 0, 'Reserving the first section is not an answer');
+    return plan;
+}
+
 export async function armOnboardingObservation(page) {
     await page.addInitScript(() => {
-        window.__onboardingObservation = { clicks: [], frames: [], routes: [], timeOrigin: performance.timeOrigin };
+        window.__onboardingObservation = { clicks: [], frames: [], routes: [], modes: [], timeOrigin: performance.timeOrigin };
         const observation = window.__onboardingObservation;
         const scene = () => {
             const stage = document.querySelector('[data-testid="island-stage"]'), d = stage?.dataset;
@@ -41,6 +67,7 @@ export async function armOnboardingObservation(page) {
         document.addEventListener('click', event => {
             const target = event.target.closest?.('button');
             observation.clicks.push({ at: performance.now(), trusted: event.isTrusted, label: target?.textContent.trim(),
+                answer: Boolean(event.target.closest?.('.park-answer')),
                 x: event.clientX, y: event.clientY, step: document.querySelector('[data-onboarding-step]')?.dataset.onboardingStep,
                 hash: location.hash, scene: scene() });
         }, true);
@@ -57,10 +84,15 @@ export async function armOnboardingObservation(page) {
             };
         }
         new MutationObserver(records => {
-            if (!records.some(record => record.attributeName === 'data-draw-count')) return;
-            const current = scene();
-            if (current) observation.frames.push(current);
-        }).observe(document, { subtree: true, attributes: true, attributeFilter: ['data-draw-count'] });
+            for (const record of records) if (record.attributeName === 'data-mode' && record.target.matches?.('.island-page')) {
+                observation.modes.push({ at: performance.now(), mode: record.oldValue });
+                observation.modes.push({ at: performance.now(), mode: record.target.dataset.mode });
+            }
+            if (records.some(record => record.attributeName === 'data-draw-count')) {
+                const current = scene();
+                if (current) observation.frames.push(current);
+            }
+        }).observe(document, { subtree: true, attributes: true, attributeOldValue: true, attributeFilter: ['data-draw-count', 'data-mode'] });
     });
 }
 

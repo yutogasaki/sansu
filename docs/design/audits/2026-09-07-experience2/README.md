@@ -2,6 +2,16 @@
 
 現行の固定候補は `84d3ddf-experience2-3ddcac1103f0`。共有遊びの頭・胴体を各姿勢で確認する画角修正を625 app入力で固定し、core 145ファイル・1694テスト、docs/lint/typecheck/build/assetsがPASS。原QAは58入力。今回の[公開検証](../2026-09-08-production-release/README.md)で実UI、clean共通回帰、Island PWA/実offlineと正式速度80 runがPASS。clean treeの実数は144ファイル・1676テストで、上記の以前の記録とは区別する。子どもN=0。問題が出た配置での顔の読み取りを、機能テストだけで合格にしない。
 
+3ddの一般共有遊びは両幅・88画面がPASS。基本6場面のgather/share/enjoy18画像で、出所・受渡し・結果を作者確認した。別の `known-fox` は1回の実準備訪問で既知の家具配置・役割・第三住民位置を再現し、1経路/38画面がPASS。問題だったウサギの顔は樹冠から見えるようになり、実gather/share/enjoy画像で確認できた。原QAを保ち、追加QAは625 app入力と同じ配信versionを参照する別manifestで58 QA入力を照合した。
+
+この既知配置の最初のgather描画はCPU465.3ms、重なったlongtaskは501ms。実clickから最初のgather観測までは1553msで、歩行も含む。単発のローカルChromium診断であり、純粋な画角計算時間・実機性能・正式回答速度とは区別する。顔の遮蔽は解消したが、この開始時の長い処理はサクサク感の残課題。
+
+再開時に公開検証のmanifestと3ddの全625入力・production versionの一致を確認した。公開検証のIsland正式80 runは再利用し、実DEV version末尾 `f37cbdcc-b029-410e-aee8-312102bf0043` をproductionのversionと区別する。正答後の入力可能P95はphone193.8ms / tablet194.1ms、誤答後の再入力は194.2 / 193.5ms。全正答の処理量はStudy比2.120 / 2.088、全gateとevidence.eligibleがtrue。自動キーによる固定問題測定であり、人の学習速度ではない。
+
+3dd追加回帰はIsland DEV11、Park DEV6、Parkの更新checkpoint3項目と実SW offline、共通筆算13経路、smoke31、classic更新4項目がPASS。Park/classicは同じ625 app入力から対応flagで別buildを作り、Island配布artifactへ混ぜない。各runnerの実行前後で625 app入力・58 QA入力が一致。production targetは対応するversionを開始/終了に照合した。DEVのversion.jsonは生成されないため、DEVの結果には実際のDOM識別と実行対象を使い、productionの識別を補作しない。classic正式40 runもPASS/evidence.eligible=true。独立したclean検証repoの同一commitと実起動したDEV対象を照合し、元の閾値と操作列を維持した。
+
+この確認後、ユーザーが「通常の3問区切りの操作が学習を妨げる」「最初は報酬を密にし、通常は強弱をつける」と指摘した。[更新後の作業目標](../../../tasks/active/2026-09-07-experience-improvements.md)では通常の区間跨ぎも追加0操作を要求する。旧Island正式80 runの継続操作1回は記録どおり保持し、新しい基準のPASSとしない。別途進行しているホーム/起動導線の変更も、固定3ddの実測へ合算しない。
+
 ## 直前の5d7候補
 
 `84d3ddf-experience2-5d7be27ceacb` は、前向きな学習観測、住民ごとの短いしぐさと対象だけの素材反応、初回実描画後の復旧案内修正を625 app入力で固定した比較候補。core145ファイル・1687テストがPASSしたが、下記の顔の遮蔽で視覚HOLDだった。以下の結果は新しい3dd候補へ転記しない。

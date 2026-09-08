@@ -1,0 +1,51 @@
+.island-growth-summary { display:flex; align-items:center; gap:10px; margin:0 0 12px; color:var(--island-ink); }
+.island-growth-summary > svg { color:var(--island-leaf); flex-shrink:0; }
+.island-growth-summary > div { flex:1; }
+.island-growth-summary p { font-size:12px; font-weight:600; }
+.island-growth-summary small { display:block; font-size:10px; color:var(--island-muted); margin-top:5px; }
+.island-growth-summary .island-text-button { color:var(--island-leaf); }
+.island-growth-steps { display:flex; gap:4px; align-items:center; margin-top:7px; width:max-content; }
+.island-growth-steps i { display:block; width:17px; height:5px; border-radius:4px; border:1px solid var(--island-muted); }
+.island-growth-steps i[data-grown=true] { background:var(--island-leaf); border-color:var(--island-leaf); }
+.island-growth-steps i[data-milestone=true] { height:9px; }
+.island-growth-place-list { display:grid; grid-template-columns:1fr; gap:10px; margin-top:14px; }
+.island-growth-place { display:flex; gap:14px; align-items:center; text-align:left; min-height:86px; padding:13px 16px; background:var(--island-paper); border:1px solid var(--island-muted); border-radius:18px; }
+.island-growth-place[aria-pressed=true] { outline:2px solid var(--island-leaf); outline-offset:1px; }
+.island-growth-place > svg { flex-shrink:0; color:var(--island-leaf); }
+.island-growth-place > span { flex:1; }
+.island-growth-place strong { font-size:14px; }
+.island-growth-place small { display:block; font-size:11px; line-height:1.7; margin-top:3px; color:var(--island-muted); }
+.island-districts { display:flex; align-items:center; justify-content:center; gap:5px; max-width:660px; margin:3px auto 0; padding:0 18px; }
+.island-districts button { min-height:44px; padding:7px 13px; color:var(--island-muted); font-size:11px; border-radius:14px; }
+.island-districts button[aria-pressed=true] { background:var(--island-paper); color:var(--island-leaf); box-shadow:inset 0 0 0 1px var(--island-leaf); font-weight:700; }
+.island-appearance { margin-top:14px; border:0; padding:0; }
+.island-appearance legend { font-size:12px; font-weight:600; }
+.island-appearance > div { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.island-appearance button { min-height:44px; padding:6px 11px; border:1px solid var(--island-muted); border-radius:13px; background:var(--island-paper); font-size:11px; }
+.island-appearance button[aria-pressed=true] { color:var(--island-leaf); outline:2px solid var(--island-leaf); outline-offset:1px; }
+.island-appearance p { color:var(--island-muted); font-size:10px; margin-top:8px; }
+.island-album { max-width:1050px; padding-top:10px; }
+.island-album-tabs { display:flex; gap:9px; margin:8px 0 10px; }
+.island-album-tabs button { flex:1; }
+.island-album-tabs button[aria-pressed=true] { color:var(--island-leaf); outline:2px solid var(--island-leaf); outline-offset:1px; }
+.island-album-habitats { display:flex; align-items:center; justify-content:space-between; gap:4px; margin-bottom:8px; }
+.island-album-habitats button { min-width:44px; min-height:44px; padding:6px 9px; border-radius:13px; font-size:11px; color:var(--island-muted); }
+.island-album-habitats button[aria-pressed=true] { background:var(--island-paper); color:var(--island-leaf); box-shadow:inset 0 0 0 1px var(--island-leaf); font-weight:700; }
+.island-album-compare { display:grid; gap:9px; }
+.island-album-scene { min-width:0; }
+.island-album-scene h3 { font-size:13px; font-weight:700; margin-bottom:5px; }
+.island-album-scene .island-stage { --island-stage-height:clamp(148px,22dvh,185px); border-radius:20px; }
+.island-album-scene > p { font-size:10px; color:var(--island-muted); margin-top:4px; }
+.island-album-timeline { display:flex; gap:8px; overflow-x:auto; padding:4px 3px 7px; margin:0 -3px 4px; }
+.island-album-timeline button { flex-shrink:0; min-height:48px; border:1px solid var(--island-muted); border-radius:14px; padding:8px 12px; background:var(--island-paper); font-size:11px; }
+.island-album-timeline button[aria-pressed=true] { color:var(--island-leaf); outline:2px solid var(--island-leaf); outline-offset:1px; }
+.island-discovery-list { display:grid; gap:12px; }
+.island-discovery { border-bottom:1px solid var(--app-border); padding:6px 0 14px; display:flex; align-items:center; gap:14px; }
+.island-discovery > svg { flex-shrink:0; color:var(--island-leaf); }
+.island-discovery > div { flex:1; }
+.island-discovery h3 { font-size:13px; font-weight:700; }
+.island-discovery p { color:var(--island-muted); font-size:11px; line-height:1.8; margin-top:5px; }
+.island-discovery button { min-width:70px; }
+.island-album-empty { display:flex; flex-direction:column; align-items:center; gap:12px; padding:30px 12px; font-size:13px; line-height:1.8; text-align:center; }
+.island-album-empty > svg { color:var(--island-leaf); }
+@media(min-width:700px) { .island-album-compare { grid-template-columns:1fr 1fr; gap:14px; } .island-album-scene .island-stage { --island-stage-height:320px; } .island-album-habitats { justify-content:flex-start; gap:10px; } .island-growth-place-list { grid-template-columns:1fr 1fr; } }

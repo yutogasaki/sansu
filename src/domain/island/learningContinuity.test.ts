@@ -145,6 +145,9 @@ describe('island learning continuity', () => {
         await d.memoryVocab.update(['child', 'apple'], { nextReview: '2000-01-01' });
         await d.memoryVocab.update(['child', 'orange'], { nextReview: '2001-01-01' });
         let plan = await startIslandPlan('child', d);
+        // This case also covers retaining the old deferred gift during Due rotation.
+        delete plan.growthTarget;
+        await d.islandPlans.put(plan);
         expect(plan.slots[0].problem.categoryId).toBe('apple');
         plan = (await commitIslandLearning('child', plan.id, plan.revision, { type: 'support_opened' }, d)).plan;
         plan = (await commitIslandLearning('child', plan.id, plan.revision, correctAction(plan), d)).plan;
@@ -189,7 +192,9 @@ describe('island learning continuity', () => {
     ])('shares review opportunities across $count-question $subject sets', async ({ subject, level, count, due }) => {
         const d = await setup(subject, level), island = (await d.islands.get('child'))!;
         const protectedSkills = ['count_5', 'count_dot', due];
-        await d.islands.put({ ...island, pendingMathChecks: protectedSkills.slice(0, 2).map(skillId => ({
+        // An existing island past its introduction exercises the normal 6/3
+        // workload. Its optional legacy review cursor still begins at zero.
+        await d.islands.put({ ...island, completedSets: 2, pendingMathChecks: protectedSkills.slice(0, 2).map(skillId => ({
             skillId, failedProblemId: `old-${skillId}`, failedQuestionKey: `old-${skillId}`, stage: 'independent', createdAt: 1,
         })) });
         for (const id of protectedSkills.slice(0, 2)) await d.memoryMath.update(['child', id], { nextReview: '2000-01-01' });

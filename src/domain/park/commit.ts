@@ -4,7 +4,8 @@ import { writeLearningAttemptInTransaction } from '../learningAttemptWriter';
 import type { MemoryState } from '../types';
 import { checkEnglishLevelProgression, checkVocabUnlockReadiness } from '../english/service';
 import { resolveProfileProgressionAfterAttempt } from '../../hooks/useStudySession.logic';
-import { gradeParkAnswer } from './learning';
+import { gradeParkAnswer, parkHissanGrid } from './learning';
+import { learningBarrierForProblem, learningEvidenceForProblem } from '../learning/attemptContext';
 import { ownedPark, parkTables, ParkConflict } from './repository';
 import type { ParkEvent, ParkLearningAction } from './types';
 
@@ -50,14 +51,24 @@ export async function commitParkLearning(
             id: eventId, profileId, planId, timestamp: now, type: action.type, action, slotIndex: plan.cursor,
         };
         let result: 'correct' | 'incorrect' | 'skipped' | undefined;
+        const assistanceBefore = slot.assisted ? 'assisted' : slot.learningEvidenceAssistance ?? 'unknown';
+        let wholeProblem = false;
         if (action.type === 'support_opened') {
+            event.learningEvidenceBarrier = learningBarrierForProblem(slot.problem, 'support-opened');
             slot.assisted = true;
+            slot.learningEvidenceAssistance = 'assisted';
             await keepIndependentCheckDue(database, profileId, plan.subject, slot.problem.categoryId, now);
         } else if (action.type === 'skipped') {
+            wholeProblem = !parkHissanGrid(slot.problem);
+            event.learningEvidenceBarrier = learningBarrierForProblem(slot.problem, 'skipped');
+            slot.learningEvidenceAssistance = 'assisted';
             result = 'skipped';
             event.result = 'skipped';
         } else {
             const { correct, final, grid } = gradeParkAnswer(slot, action.answer);
+            wholeProblem = !grid || (correct && final);
+            if (!correct) slot.learningEvidenceAssistance = 'assisted';
+            if (!correct && grid) event.learningEvidenceBarrier = learningBarrierForProblem(slot.problem, 'error-correction');
             event.result = slot.assisted ? (correct ? 'assisted-correct' : 'assisted-incorrect') : (correct ? 'correct' : 'incorrect');
             if (!slot.assisted && (!correct || final)) result = correct ? 'correct' : 'incorrect';
             if (correct && grid) {
@@ -71,12 +82,16 @@ export async function commitParkLearning(
                 plan.cursor += 1;
                 if (slot.assisted) await keepIndependentCheckDue(database, profileId, plan.subject, slot.problem.categoryId, now);
             }
+            if (slot.assisted && wholeProblem) {
+                event.learningEvidence = learningEvidenceForProblem(slot.problem, 'assisted');
+            }
         }
         if (result) {
             const receipt = await writeLearningAttemptInTransaction(database, {
                 profileId, subject: plan.subject, itemId: slot.problem.categoryId, result,
                 isReview: slot.problem.isReview, isMaintenanceCheck: Boolean(slot.problem.isMaintenanceCheck),
                 timestamp: new Date(now).toISOString(),
+                learningEvidence: learningEvidenceForProblem(slot.problem, assistanceBefore, wholeProblem),
             });
             event.learningLogId = receipt.logId;
             if (plan.subject === 'vocab' && receipt.profile) {

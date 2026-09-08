@@ -220,13 +220,15 @@ async function save(page, row, state, id) {
     return after;
 }
 async function earnBench(page, row) {
-    await activate(button(page, 'ひかりを とどける'), row.touch); await waitMode(page, 'learning');
+    await activate(page.locator('.island-start'), row.touch); await waitMode(page, 'learning');
     let state = await readNative(page, row.profileId), guard = 0;
     await waitLearningReady(page, state.plan);
-    while (state.plan) {
+    const reservationId = state.plan.id;
+    while (state.plan?.id === reservationId) {
         assert(++guard <= 12); const answered = await attempt(page, state, { touch: row.touch });
         row.answers.push(answered.sample); state = answered.after;
     }
+    assert.equal(state.islandPlans.find(plan => plan.id === reservationId)?.status, 'completed');
     await waitMode(page, 'reward'); assert.equal(state.island.completedSets, 1);
     const reward = state.island.pendingRewards[0]; assert(reward.choices.includes('bench'));
     await activate(button(page, ISLAND_ITEMS.bench.name), row.touch); await waitMode(page, 'placement');
@@ -623,23 +625,30 @@ async function learningDuringClearance(page, row) {
         await activate(button(page, 'あそびを とじる'), row.touch); await waitMode(page, 'home');
     }
     const beforeReservation = await databaseSnapshot(page), beforeState = await readNative(page, row.profileId);
-    await activate(button(page, 'ひかりを とどける'), row.touch); await waitMode(page, 'learning');
+    await activate(page.locator('.island-start'), row.touch); await waitMode(page, 'learning');
     const reserved = await readNative(page, row.profileId); await waitLearningReady(page, reserved.plan);
     const afterReservation = await databaseSnapshot(page);
     for (const name of Object.keys(beforeReservation)) if (!['islands', 'islandPlans', 'islandEvents'].includes(name)) assert.deepEqual(afterReservation[name], beforeReservation[name]);
     const reservationEvents = reserved.islandEvents.filter(event => !beforeState.islandEvents.some(prior => prior.id === event.id));
-    assert.equal(reservationEvents.length, 1); assert.equal(reservationEvents[0].type, 'plan_started');
-    assert.equal(reserved.island.revision, beforeState.island.revision + 1);
-    assert.equal(reserved.islandPlans.length, beforeState.islandPlans.length + 1);
+    if (beforeState.plan) {
+        assert.deepEqual(afterReservation, beforeReservation, 'Resuming an automatic or paused reservation changes no record or key');
+        assert.deepEqual(reserved.plan, beforeState.plan);
+        assert.equal(reservationEvents.length, 0);
+    } else {
+        assert.equal(reservationEvents.length, 1); assert.equal(reservationEvents[0].type, 'plan_started');
+        assert.equal(reserved.island.revision, beforeState.island.revision + 1);
+        assert.equal(reserved.islandPlans.length, beforeState.islandPlans.length + 1);
+    }
     for (const plan of beforeState.islandPlans) assert.deepEqual(reserved.islandPlans.find(next => next.id === plan.id), plan);
     for (const event of beforeState.islandEvents) assert.deepEqual(reserved.islandEvents.find(next => next.id === event.id), event);
     assert.equal(reserved.plan.cursor, 0); assert.equal(reserved.plan.revision, 0);
     assert.deepEqual(reserved.island.items, beforeState.island.items);
     await activate(button(page, 'しまへ'), row.touch); await waitMode(page, 'home');
     await unchanged(page, afterReservation, row, 'Pausing the explicitly reserved learning plan');
+    const resumeLabel = await page.locator('.island-start').innerText();
     const fixture = await prepareClearance(page, row, true, 'clearance-learning');
-    await armControlClicks(page, [{ name: 'つづきから とく', tag: 'clearance-learning-entry' }]);
-    let episode = await commitClearance(page, row, fixture, () => activate(button(page, 'つづきから とく'), row.touch));
+    await armControlClicks(page, [{ name: resumeLabel, tag: 'clearance-learning-entry' }]);
+    let episode = await commitClearance(page, row, fixture, () => activate(page.locator('.island-start'), row.touch));
     await waitMode(page, 'learning'); await waitLearningReady(page, reserved.plan);
     await page.waitForFunction(() => {
         const probe = window.__islandInterruptionProbe, clicked = probe.events['clearance-learning-entry'];
@@ -681,7 +690,7 @@ async function learningDuringClearance(page, row) {
     learning.forEach(frame => { completeBody(frame); assert.equal(frame.camera, camera, 'The learning camera remains fixed through both serial paths and the next answer'); });
     for (const species of episode.intended) assert(learning.some(frame => residentAt(frame, species).action === 'walk'), `${species} really walks within the fixed learning frame`);
     row.learningClearance = { reservation: { event: reservationEvents[0], planId: reserved.plan.id, cursor: 0,
-        changedStores: ['islands', 'islandPlans', 'islandEvents'] }, position: episode.position, plan: episode.plan,
+        reused: Boolean(beforeState.plan), changedStores: beforeState.plan ? [] : ['islands', 'islandPlans', 'islandEvents'] }, position: episode.position, plan: episode.plan,
         clicked, ready, completed: await scene(page), answer: { receipt: answered.receipt, sample: answered.sample, changedStores,
             unchangedFurniture: true, cursor: answered.after.plan.cursor }, learningFrames: learning.length, trace };
 }

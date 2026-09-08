@@ -1,4 +1,5 @@
 import type { Problem, SubjectKey } from '../types';
+import type { LearningEvidenceBarrier, LearningEvidenceContext } from '../learning/types';
 
 export const PART_KINDS = ['slide', 'trampoline', 'bubble', 'mat', 'bell', 'paint'] as const;
 export type PartKind = typeof PART_KINDS[number];
@@ -20,6 +21,8 @@ export interface LearningSlot {
     source: string;
     countsTowardReviewCap: boolean;
     assisted: boolean;
+    /** Separate from SRS support policy; error correction is sticky for unit evidence. */
+    learningEvidenceAssistance?: 'independent' | 'assisted' | 'unknown';
     completed: boolean;
     hissanStep?: number;
     hissanValues?: Record<string, string>;
@@ -55,6 +58,9 @@ export interface ParkEvent {
     slotIndex?: number;
     result?: 'correct' | 'incorrect' | 'assisted-correct' | 'assisted-incorrect' | 'skipped';
     learningLogId?: number;
+    /** Assisted whole answers have no SRS log; preserve their unit-evidence barrier here. */
+    learningEvidence?: LearningEvidenceContext;
+    learningEvidenceBarrier?: LearningEvidenceBarrier;
     rewardId?: string;
     layout?: (PartKind | null)[];
 }

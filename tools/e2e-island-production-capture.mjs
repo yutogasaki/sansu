@@ -62,15 +62,17 @@ try {
             assert.equal(state.island.completedSets, 0);
             assert.equal(state.logs.length, 0);
             await capture(page, `${scenario.name}-home`, manifest, state);
-            await activate(button(page, 'ひかりを とどける'), scenario.touch);
+            await activate(page.locator('.island-start'), scenario.touch);
             await waitMode(page, 'learning');
             await assertKeypad(page);
             state = await readNative(page, profileId);
             const reservedPlan = state.plan;
             assert(reservedPlan);
+            assert.equal(reservedPlan.id, JSON.stringify(['island-plan-v1', profileId, 0]));
+            assert.equal(reservedPlan.slots.length, 3);
             await capture(page, `${scenario.name}-learning`, manifest, state);
             const samples = [];
-            while (state.plan) {
+            while (state.plan?.id === reservedPlan.id) {
                 assert(samples.length < 24, 'The first real learning section must terminate');
                 const { state: next, ...sample } = await answerUI(page, state.plan, { dev: false, touch: scenario.touch });
                 state = next;
@@ -106,7 +108,7 @@ try {
             await page.reload();
             await waitReady(page);
             assert.deepEqual((await readNative(page, profileId)).island.items.find(item => item.id === claimed.id), placed);
-            await activate(button(page, 'ひかりを とどける'), scenario.touch);
+            await activate(page.locator('.island-start'), scenario.touch);
             await waitMode(page, 'learning');
             state = await readNative(page, profileId);
             assert(state.plan && state.plan.id !== reservedPlan.id);

@@ -13,6 +13,7 @@ import {
 import { generateMathProblem } from "../domain/math";
 import { generateVocabProblem } from "../domain/english/generator";
 import { Problem, SubjectKey, UserProfile } from "../domain/types";
+import type { LearningEvidenceContext } from '../domain/learning/types';
 import { getAvailableSkills } from "../domain/math/curriculum";
 import { checkLevelProgression, checkMathMainPromotion } from "../domain/math/service";
 import { checkVocabMainPromotion, checkVocabUnlockReadiness } from "../domain/english/service";
@@ -619,6 +620,7 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
         problem: Problem,
         result: 'correct' | 'incorrect' | 'skipped',
         timeMs?: number,
+        learningEvidence?: LearningEvidenceContext,
     ): Promise<boolean> => {
         const processResult = async (): Promise<boolean> => {
             const sessionKind = options.sessionKind || "normal";
@@ -639,7 +641,8 @@ export const useStudySession = (options: StudySessionOptions = {}) => {
                     skipped,
                     problem.isReview,
                     problem.isMaintenanceCheck || false,
-                    timeMs
+                    timeMs,
+                    learningEvidence,
                 );
             } catch (err) {
                 errorInDev(

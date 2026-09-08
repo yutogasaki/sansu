@@ -12,6 +12,7 @@ import {
     type MathProblemPlanSource,
 } from "../domain/math/planner";
 import { getWordsByLevel, ENGLISH_WORDS } from "../domain/english/words";
+import { getEligibleVocabWords, isVocabLevelEnabled, pickVocabDueId, pickVocabWordId } from "../domain/english/selection";
 import { errorInDev, warnInDev } from "../utils/debug";
 import type { RandomSource } from "../utils/random";
 
@@ -327,18 +328,9 @@ export const generateSingleMathProblem = (
         random,
     });
 
-    const selected = planItem || {
-        skillId: "count_10",
-        source: "main" as const,
-        isReview: false,
-        isMaintenanceCheck: false,
-        countsTowardReviewCap: false,
-    };
-    const problem = safeGenerateProblem(
-        () => generateMathProblem(selected.skillId, { profile, random }),
-        () => generateMathProblem("count_10", { profile, random }),
-        `math ${selected.source}: ${selected.skillId}`,
-    );
+    if (!planItem) throw new Error('No math assignment available');
+    const selected = planItem;
+    const problem = generateMathProblem(selected.skillId, { profile, random });
 
     return {
         problem,
@@ -367,16 +359,17 @@ export interface VocabGeneratorContext {
     plusLimit?: number;
     pendingVocabIds: string[];
     buildCooldownIds: (pending: string[]) => string[];
+    random?: RandomSource;
 }
 
 /**
  * Pick a weighted vocab level based on profile settings
  */
-export const pickWeightedLevel = (weights: { level: number; weight: number }[]): number => {
+export const pickWeightedLevel = (weights: { level: number; weight: number }[], random: RandomSource = Math.random): number => {
     if (weights.length === 0) return 1;
 
     const totalWeight = weights.reduce((sum, w) => sum + w.weight, 0);
-    let r = Math.random() * totalWeight;
+    let r = random() * totalWeight;
 
     for (const w of weights) {
         r -= w.weight;
@@ -393,111 +386,61 @@ export const generateSingleVocabProblem = (
     ctx: VocabGeneratorContext
 ): ProblemGenerationResult & { newPlusCount: number } => {
     const {
-        vocabDue,
-        vocabLevelWeights,
-        options,
-        canAddReview,
-        forceReviewBlock,
-        weakVocabPool,
-        currentWeakCount,
-        plusCount = 0,
-        plusLimit = Math.floor(BLOCK_SIZE * 0.3),
-        pendingVocabIds,
-        buildCooldownIds
+        profile, options, vocabDue, weakVocabPool, currentWeakCount,
+        canAddReview, forceReviewBlock, vocabLevelWeights,
+        plusCount = 0, plusLimit = Math.floor(BLOCK_SIZE * 0.3),
+        pendingVocabIds, buildCooldownIds, random = Math.random,
     } = ctx;
-
-    let problem: Omit<Problem, 'id' | 'subject' | 'isReview'> | undefined;
+    const eligible = getEligibleVocabWords(profile, options.skippedTodayIds);
+    const allowed = new Set(eligible.map(word => word.id));
+    const selectionOptions = {
+        ...options,
+        recentIds: [...options.recentIds, ...pendingVocabIds],
+        random,
+    };
+    let wordId: string | undefined;
     let isReview = false;
-    let countsTowardReviewCap = false;
     let newPlusCount = plusCount;
-
-    // Priority 1: Forced review block
-    if (forceReviewBlock && vocabDue.length > 0 && canAddReview) {
-        const dueId = pickOrderedId(vocabDue.map(v => v.id), options);
-        if (dueId) {
-            isReview = true;
-            countsTowardReviewCap = true;
-            problem = safeGenerateProblem(
-                () => generateVocabProblem(dueId, {
-                    cooldownIds: buildCooldownIds(pendingVocabIds),
-                    kanjiMode: ctx.profile.kanjiMode
-                }),
-                () => {
-                    // Try first due item as fallback
-                    if (vocabDue.length > 0) {
-                        return generateVocabProblem(vocabDue[0].id, {
-                            cooldownIds: buildCooldownIds(pendingVocabIds),
-                            kanjiMode: ctx.profile.kanjiMode
-                        });
-                    }
-                    throw new Error('No vocab due items');
-                },
-                `vocab review: ${dueId}`
-            );
+    if (forceReviewBlock && canAddReview) {
+        wordId = pickVocabDueId(vocabDue.map(item => item.id).filter(id => allowed.has(id)), selectionOptions);
+        isReview = Boolean(wordId);
+    }
+    if (!wordId && canAddReview && currentWeakCount < Math.max(1, Math.floor(BLOCK_SIZE * WEAK_INJECTION_CAP))) {
+        const weak = weakVocabPool.filter(id => allowed.has(id) && (options.blockCounts.get(id) ?? 0) < SAME_ID_LIMIT);
+        if (weak.length > 0 && random() < WEAK_INJECTION_CAP) {
+            wordId = pickVocabWordId(weak, selectionOptions);
+            isReview = Boolean(wordId);
         }
     }
-
-    // Priority 2: Weak vocab injection. It is review-like for progression and
-    // shares the global review/weak/Due cap.
-    if (!problem && canAddReview) {
-        const weakLimit = Math.max(1, Math.floor(BLOCK_SIZE * WEAK_INJECTION_CAP));
-        const useWeak = weakVocabPool.length > 0
-            && currentWeakCount < weakLimit
-            && Math.random() < WEAK_INJECTION_CAP;
-        if (useWeak) {
-            const weakId = pickId(weakVocabPool, options);
-            if (weakId) {
-                countsTowardReviewCap = true;
-                problem = safeGenerateProblem(
-                    () => generateVocabProblem(weakId, {
-                        cooldownIds: buildCooldownIds(pendingVocabIds),
-                        kanjiMode: ctx.profile.kanjiMode
-                    }),
-                    () => createFallbackProblem('vocab', `vocab weak: ${weakId}`),
-                    `vocab weak: ${weakId}`
-                );
-            }
-        }
-    }
-
-    // Priority 3: Normal level-based generation
-    if (!problem) {
-        const mainLevel = ctx.profile.vocabMainLevel;
-        // Keep the per-block +1 ceiling independent of Due/weak selection.
-        // A completely stopped level must not force an unrelated fallback.
-        const eligibleWeights = vocabLevelWeights.filter(({ level }) =>
-            (level <= mainLevel || plusCount < plusLimit)
-            && getWordsByLevel(level).some(word => !options.skippedTodayIds.includes(word.id))
+    if (!wordId) {
+        const eligibleWeights = vocabLevelWeights.filter(({ level, weight }) =>
+            Number.isFinite(weight) && weight > 0 && isVocabLevelEnabled(profile, level)
+            && level <= profile.vocabMainLevel + 1
+            && (level <= profile.vocabMainLevel || plusCount < plusLimit)
+            && eligible.some(word => word.level === level)
         );
-        const level = pickWeightedLevel(eligibleWeights);
-        const wordIds = eligibleWeights.length > 0 ? getWordsByLevel(level).map(w => w.id) : [];
-        const unattemptedIds = level === mainLevel + 1
-            ? wordIds.filter(id => !(ctx.profile.vocabWords[id]?.totalAnswers > 0)
-                && !pendingVocabIds.includes(id))
-            : [];
-        const wordId = pickId(unattemptedIds, options)
-            || pickId(wordIds, options)
-            || pickLeastUsedId(wordIds, options);
-
-        if (wordId) {
-            problem = safeGenerateProblem(
-                () => generateVocabProblem(wordId, {
-                    cooldownIds: buildCooldownIds(pendingVocabIds),
-                    kanjiMode: ctx.profile.kanjiMode
-                }),
-                () => createFallbackProblem('vocab', `vocab level ${level}`),
-                `vocab normal: ${wordId}`
-            );
-            if (level === mainLevel + 1) newPlusCount++;
-        }
+        // Exhaust every eligible weighted level below the per-ID ceiling
+        // before a sparse chosen level may reuse an item for a third time.
+        const belowLimit = (id: string) => (options.blockCounts.get(id) ?? 0) < SAME_ID_LIMIT;
+        const availableWeights = eligibleWeights.filter(({ level }) =>
+            eligible.some(word => word.level === level && belowLimit(word.id)));
+        const level = pickWeightedLevel(availableWeights, random);
+        const candidates = availableWeights.length > 0
+            ? eligible.filter(word => word.level === level && belowLimit(word.id)).map(word => word.id) : [];
+        wordId = pickVocabWordId(candidates, selectionOptions,
+            level === profile.vocabMainLevel || level === profile.vocabMainLevel + 1 ? profile.vocabWords : undefined);
+        const mainRange = eligible.filter(word => word.level <= profile.vocabMainLevel).map(word => word.id);
+        // A depleted or malformed weight list can only fall back into the
+        // enabled main range. Day stops and the challenge ceiling still hold.
+        wordId ??= pickVocabWordId(mainRange.filter(belowLimit), selectionOptions, profile.vocabWords);
+        wordId ??= pickVocabWordId(mainRange, selectionOptions, profile.vocabWords);
+        if (wordId && eligible.some(word => word.id === wordId && word.level === profile.vocabMainLevel + 1)) newPlusCount += 1;
     }
-
-    // Final fallback
-    if (!problem) {
-        problem = createFallbackProblem('vocab', 'all vocab generation paths failed');
-    }
-
-    return { problem, isReview, isMaintenanceCheck: false, countsTowardReviewCap, newPlusCount };
+    if (!wordId) throw new Error('No vocabulary assignment available');
+    const problem = generateVocabProblem(wordId, {
+        cooldownIds: buildCooldownIds(pendingVocabIds), kanjiMode: profile.kanjiMode, random,
+    });
+    return { problem, isReview, isMaintenanceCheck: false, countsTowardReviewCap: isReview, newPlusCount };
 };
 
 // ============================================================
@@ -808,11 +751,7 @@ export const buildMathCooldownIds = (
  */
 export const buildVocabLevelWeights = (profile: UserProfile): { level: number; weight: number }[] => {
     const vocabLevel = profile.vocabMainLevel;
-    const isEnabled = (level: number) => {
-        const state = profile.vocabLevels?.find(item => item.level === level);
-        return level >= 1 && level <= profile.vocabMaxUnlocked
-            && (!state || (state.unlocked && state.enabled));
-    };
+    const isEnabled = (level: number) => isVocabLevelEnabled(profile, level);
     const base = [
         { level: vocabLevel, weight: 0.5 },
         { level: vocabLevel - 1, weight: 0.25 },
@@ -824,6 +763,6 @@ export const buildVocabLevelWeights = (profile: UserProfile): { level: number; w
     const baseWeight = base.reduce((sum, item) => sum + item.weight, 0);
     return [
         { level: plusLevel, weight: 0.3 },
-        ...base.map(item => ({ ...item, weight: item.weight / baseWeight * 0.7 })),
+        ...base.map(item => ({ ...item, weight: baseWeight > 0 ? item.weight / baseWeight * 0.7 : 0 })),
     ];
 };

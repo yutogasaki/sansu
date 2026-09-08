@@ -230,7 +230,7 @@ describe("useStudySession.logic", () => {
                 return {
                     ...level,
                     unlocked: true,
-                    enabled: false,
+                    enabled: true,
                     recentAnswersNonReview: [true, false, true],
                 };
             }

@@ -1,4 +1,4 @@
-import { GeneratorFn, createProblem, randomInt } from "../core";
+import { GeneratorFn, createProblem, getMathSkillProgress, randomInt } from "../core";
 import type { RandomSource } from "../../../utils/random";
 import { selectAdditionPair } from "../additionProgress";
 import {
@@ -7,9 +7,6 @@ import {
     buildAdditionMentalNumberLineVisual,
     buildAdditionVisual
 } from "../problemVisuals";
-
-const getAttemptCount = (totalAnswers?: number): number | undefined =>
-    (typeof totalAnswers === "number" ? totalAnswers : undefined);
 
 const pickTwoDigitPlusOneWithoutCarry = (random: RandomSource = Math.random): [number, number] => {
     let a, b;
@@ -26,8 +23,8 @@ const pickTwoDigitPlusOneWithCarry = (random: RandomSource = Math.random): [numb
 export const generators: Record<string, GeneratorFn> = {
     // Level 4: 絵と式を行き来しながら 1+1 からはじめる
     "add_1d_1_bridge": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.add_1d_1_bridge?.totalAnswers);
-        const [a, b] = selectAdditionPair("add_1d_1", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("add_1d_1_bridge", context);
+        const [a, b] = selectAdditionPair("add_1d_1", progress, context?.random);
         const visual = buildAdditionVisual(a, b, context?.random);
 
         return createProblem(
@@ -41,8 +38,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 4: 1+1 からはじめる段階式の1桁足し算
     "add_1d_1": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.add_1d_1?.totalAnswers);
-        const [a, b] = selectAdditionPair("add_1d_1", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("add_1d_1", context);
+        const [a, b] = selectAdditionPair("add_1d_1", progress, context?.random);
 
         return createProblem(
             "add_1d_1",
@@ -53,8 +50,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 5: 10づくりの前に 絵と式を往復する
     "add_1d_2_bridge": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.add_1d_2_bridge?.totalAnswers);
-        const [a, b] = selectAdditionPair("add_1d_2", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("add_1d_2_bridge", context);
+        const [a, b] = selectAdditionPair("add_1d_2", progress, context?.random);
         const visual = buildAdditionVisual(a, b, context?.random);
 
         return createProblem(
@@ -68,8 +65,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 5: 繰り上がりなし → 10づくり → 繰り上がりあり
     "add_1d_2": (context) => {
-        const totalAnswers = getAttemptCount(context?.profile?.mathSkills?.add_1d_2?.totalAnswers);
-        const [a, b] = selectAdditionPair("add_1d_2", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("add_1d_2", context);
+        const [a, b] = selectAdditionPair("add_1d_2", progress, context?.random);
 
         return createProblem(
             "add_1d_2",

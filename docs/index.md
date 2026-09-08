@@ -40,6 +40,18 @@ Use it to find the right source of truth before editing docs, tasks, runbooks, o
 
 ## Frequently Used Docs
 
+教材の単元対応と算数Lv11の比較試作は[学習単元と習得証拠](product/31_learning_units_spec.md)を参照。
+
+全教材の対応表は[算数の単元カタログ](product/32_math_unit_catalog.md)と[英語の単元カタログ](product/33_english_unit_catalog.md)。`npm run learning:report`で検索できるHTMLと比較JSONを生成できる。
+
+学習で同じ場所が自動で育ち、住民の暮らし・任意編集・発見とアルバムへつながる最新契約は[育つ島の仕様](product/30_living_island_growth_spec.md)。
+
+算数・英語の初回難度、独力正解による昇格、意味別の英単語ID、日を空けた復習は [学習曲線と段階進行](product/29_learning_progression_spec.md) を参照。
+
+島を中心に設定・記録・通常練習を揃えた変更は [変更前後の実画面](design/audits/2026-09-08-island-shell/review.html) と [検証記録](design/audits/2026-09-08-island-shell/README.md) を参照。
+
+初回設定後の直接開始・初回3問・通常の連続学習は [画面比較](design/audits/2026-09-08-learning-rhythm/contact-sheet.html) と [検証・測定記録](design/audits/2026-09-08-learning-rhythm/README.md) を参照。
+
 二桁以上の掛け算・割り算は、部分積・商・あまりを一段ずつ扱う共通の筆算面へ改善。[実画面の一覧](design/audits/2026-09-07-written-arithmetic/review.html) と [検証・保存互換性の記録](design/audits/2026-09-07-written-arithmetic/README.md) を参照。
 
 現在の開発優先は [不思議な島の仕様](product/28_mystic_island_spec.md)。通常の学習形式と速い連問を守りながら、光・配置・どうぶつの暮らしで継続を支える。

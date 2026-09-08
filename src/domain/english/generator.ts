@@ -1,10 +1,14 @@
-import { Problem } from "../types";
+import type { Problem } from "../types";
 import { ENGLISH_WORDS } from "./words";
+import type { EnglishWord } from "./types";
 import { shuffleArray } from "../../utils/shuffle";
+import type { RandomSource } from "../../utils/random";
+import { createLearningProblemContext } from '../learning/context';
 
 type VocabGeneratorOptions = {
     cooldownIds?: string[];
     kanjiMode?: boolean;
+    random?: RandomSource;
 };
 
 export const generateVocabProblem = (
@@ -13,67 +17,42 @@ export const generateVocabProblem = (
 ): Omit<Problem, 'id' | 'subject' | 'isReview'> => {
     const target = ENGLISH_WORDS.find(w => w.id === targetWordId);
     if (!target) throw new Error(`Word not found: ${targetWordId}`);
-
-    const cooldownSet = new Set(options.cooldownIds || []);
-    const useKanji = options.kanjiMode === true;
-
-    const filterCandidates = (words: typeof ENGLISH_WORDS) => {
-        return words.filter(w =>
-            w.id !== target.id &&
-            w.japanese !== target.japanese &&
-            !cooldownSet.has(w.id)
-        );
-    };
-    const filterWithoutCooldown = (words: typeof ENGLISH_WORDS) => {
-        return words.filter(w =>
-            w.id !== target.id &&
-            w.japanese !== target.japanese
-        );
-    };
-
-    // 1. Select Distractors (3 words)
-    // Strategy: Same level first, then adjacent levels
-    let pool = filterCandidates(ENGLISH_WORDS.filter(w => w.level === target.level));
-
-    if (pool.length < 3) {
-        const adjacent = ENGLISH_WORDS.filter(w => w.level === target.level - 1 || w.level === target.level + 1);
-        pool = filterCandidates([...pool, ...adjacent]);
-    }
-
-    if (pool.length < 3) {
-        pool = filterCandidates(ENGLISH_WORDS);
-    }
-
-    // Last resort: allow cooldown items if still not enough
-    if (pool.length < 3) {
-        pool = filterWithoutCooldown(ENGLISH_WORDS);
-    }
-
-    // Shuffle pool and pick 3
-    const shuffledPool = shuffleArray(pool);
-    const distractors = shuffledPool.slice(0, 3);
-
-    // Helper to get display label based on mode
-    const getLabel = (w: typeof ENGLISH_WORDS[0]) => {
-        if (useKanji && w.japaneseKanji) {
-            return w.japaneseKanji; // 漢字モードかつ漢字データがあれば漢字
+    const random = options.random ?? Math.random;
+    const cooldown = new Set(options.cooldownIds ?? []);
+    const label = (word: EnglishWord) => options.kanjiMode && word.japaneseKanji
+        ? word.japaneseKanji : word.japanese;
+    const labels = new Set([label(target)]);
+    const ids = new Set([target.id]);
+    const distractors: EnglishWord[] = [];
+    // Exhaust each locality tier before widening it; count unique rendered
+    // labels, not rows. Even the last cooldown relaxation cannot create aliases.
+    const tiers = [
+        ENGLISH_WORDS.filter(w => w.level === target.level && !cooldown.has(w.id)),
+        ENGLISH_WORDS.filter(w => Math.abs(w.level - target.level) === 1 && !cooldown.has(w.id)),
+        ENGLISH_WORDS.filter(w => !cooldown.has(w.id)),
+        ENGLISH_WORDS,
+    ];
+    for (const tier of tiers) {
+        for (const word of shuffleArray(tier, random)) {
+            if (ids.has(word.id) || labels.has(label(word))
+                || (word.surface ?? word.id) === (target.surface ?? target.id)) continue;
+            distractors.push(word);
+            ids.add(word.id);
+            labels.add(label(word));
+            if (distractors.length === 3) break;
         }
-        return w.japanese; // それ以外はひらがな
-    };
-
-    // Create 4 choices
-    const choices = shuffleArray(
-        [target, ...distractors].map(w => ({ label: getLabel(w), value: w.id }))
-    );
-
-    return {
+        if (distractors.length === 3) break;
+    }
+    if (distractors.length !== 3) throw new Error(`Insufficient distinct choices for ${targetWordId}`);
+    const problem: Omit<Problem, 'id' | 'subject' | 'isReview'> = {
         categoryId: target.id,
-        questionText: target.id, // id自体が英単語（例: "apple"）
+        questionText: target.surface ?? target.id,
         inputType: "choice",
         inputConfig: {
-            choices: choices
+            choices: shuffleArray([target, ...distractors].map(w => ({ label: label(w), value: w.id })), random),
         },
         correctAnswer: target.id,
-        displayAnswer: getLabel(target) // 正解表示用（これがないとIDが表示されてしまう）
+        displayAnswer: label(target),
     };
+    return { ...problem, learningContext: createLearningProblemContext('vocab', problem) };
 };

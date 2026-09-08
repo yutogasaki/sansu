@@ -1,6 +1,8 @@
 # 家具を組み合わせた住民の遊び
 
-現行候補は `84d3ddf-experience2-3ddcac1103f0`。頭/胴体の各姿勢の最小可視判定を追加し、625 app入力・58 QA入力を固定。core145 files/1694 tests、docs/lint/typecheck/build/assetsがPASS。実target5399、version `84d3ddf-experience2-3ddcac1103f0:3ee728b8-f6c5-4668-a583-a1d589ef39ab`。新候補の実画面/回帰/正式速度は検証中。
+現行候補は `84d3ddf-experience2-3ddcac1103f0`。頭/胴体の各姿勢の最小可視判定を追加し、625 app入力・58 QA入力を固定。core145 files/1694 tests、docs/lint/typecheck/build/assetsがPASS。実target5399、version `84d3ddf-experience2-3ddcac1103f0:3ee728b8-f6c5-4668-a583-a1d589ef39ab`。一般共有遊びの両画面幅・88画面と、既知のキツネ向け配置を自然な準備訪問で再現した1経路・38画面がPASS。作者が取出し・受渡し・受取後の実画像で、樹冠に隠れていたウサギの顔が見えることを確認した。
+
+学習・支援・初回・更新・対応flag回帰とIsland正式80 runはPASS。公開検証は同じ625入力と実versionを照合したうえで参照し、clean test数144/1676と以前の145/1694を区別する。詳細は [統合監査](../2026-09-07-experience2/README.md) と [公開検証](../2026-09-08-production-release/README.md)。既知配置の最初のgather描画CPU465.3ms・重なるlongtask501msは未解消で、回答の速度PASSとは別の残課題。子どもの自発的な再遊びと無説明理解はN=0のまま。
 
 直前候補 `84d3ddf-experience2-5d7be27ceacb` は625 app入力、core 145 files / 1687 testsがPASS。住民interest・前向き観測・復旧案内を統合し、共有遊び2画面幅/88画像と通常学習・支援・初回・中断・再確認・東土地・Island PWAが機能PASS。復旧字幕の残留も8実画像で解消を確認した。一方、tabletのキツネ向け花pickupでは紫樹冠が運び手の顔を隠すため、作者の視覚判定はHOLD。画角を次候補で修正する。actual targetは5399、version `84d3ddf-experience2-5d7be27ceacb:5e42f036-dbb1-4c32-8e36-d225c1c75cd8`、Island flag/candidate/artは従来どおり。下記b155の共有画像や速度は比較用であり、新候補の成功を意味しない。
 

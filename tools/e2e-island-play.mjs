@@ -373,16 +373,26 @@ async function savePlacement(page, profileId, before, itemId, touch) {
 async function finishSection(page, profileId, row) {
     const mode = await page.locator('.island-page').getAttribute('data-mode');
     assert(['home', 'play'].includes(mode));
-    await activate(button(page, 'ひかりを とどける'), row.touch); await waitMode(page, 'learning');
+    await activate(mode === 'home' ? page.locator('.island-start') : button(page, 'ひかりを とどける'), row.touch); await waitMode(page, 'learning');
     let state = await readNative(page, profileId), guard = 0;
     await waitLearningReady(page, state.plan); await assertControls(page);
-    const set = state.island.completedSets;
-    while (state.plan) {
+    const set = state.island.completedSets, reservationId = state.plan.id;
+    while (state.plan?.id === reservationId) {
         assert(++guard <= 12, 'A section completes with its actual reserved problems');
         const result = await attempt(page, state, { touch: row.touch });
         state = result.after; row.answers.push(result.sample);
     }
-    await waitMode(page, 'reward'); assert.equal(state.island.completedSets, set + 1);
+    assert.equal(state.islandPlans.find(plan => plan.id === reservationId)?.status, 'completed');
+    assert.equal(state.island.completedSets, set + 1);
+    if (set > 0) {
+        assert.equal(state.plan?.id, JSON.stringify(['island-plan-v1', profileId, set + 1]));
+        assert.equal(state.plan.cursor, 0); assert.equal(state.plan.revision, 0);
+        await waitMode(page, 'learning');
+        await activate(button(page, 'しまへ'), row.touch); await waitMode(page, 'home');
+        await activate(page.getByRole('button', { name: /^おくりものを えらぶ/ }), row.touch);
+        assert.deepEqual(await readNative(page, profileId), state, 'Opening earned gifts preserves the automatically reserved next section');
+    }
+    await waitMode(page, 'reward');
     return state;
 }
 async function earnAndPlace(page, profileId, row, kind) {
@@ -534,7 +544,8 @@ try {
 
             await activate(button(page, 'あそびを とじる'), row.touch); await waitMode(page, 'home');
             const beforeReload = await databaseSnapshot(page);
-            await page.reload(); await waitReady(page); await waitMode(page, 'home');
+            await page.reload(); await waitReady(page); await waitMode(page, 'learning');
+            await activate(button(page, 'しまへ'), row.touch); await waitMode(page, 'home');
             await unchanged(page, beforeReload, row, 'Reload preserves all earned items, edits and learning records');
             assert.equal((await scene(page)).requestId, '', 'Transient play requests do not replay after reload');
             await assertSafeResidents(page, state.island, row, 'Reload with edited furniture');

@@ -1,10 +1,5 @@
-export interface EnglishWord {
-    id: string;
-    level: number;
-    japanese: string;
-    japaneseKanji?: string;
-    category: string;
-}
+import type { EnglishWord } from "./types";
+export type { EnglishWord } from "./types";
 
 export const ENGLISH_WORDS: EnglishWord[] = [
     {
@@ -661,7 +656,8 @@ export const ENGLISH_WORDS: EnglishWord[] = [
         "category": "色"
     },
     {
-        "id": "orange",
+        "id": "orange_lv2",
+        "surface": "orange",
         "level": 2,
         "japanese": "オレンジいろ",
         "category": "色"
@@ -3269,14 +3265,16 @@ export const ENGLISH_WORDS: EnglishWord[] = [
         "category": "動詞"
     },
     {
-        "id": "please",
+        "id": "please_lv8",
+        "surface": "please",
         "level": 8,
         "japanese": "よろこばせる",
         "japaneseKanji": "喜ばせる",
         "category": "動詞"
     },
     {
-        "id": "thank",
+        "id": "thank_lv8",
+        "surface": "thank",
         "level": 8,
         "japanese": "かんしゃする",
         "japaneseKanji": "感謝する",
@@ -3694,7 +3692,8 @@ export const ENGLISH_WORDS: EnglishWord[] = [
         "category": "副詞"
     },
     {
-        "id": "hard",
+        "id": "hard_lv9",
+        "surface": "hard",
         "level": 9,
         "japanese": "いっしょうけんめい",
         "japaneseKanji": "一生懸命",
@@ -3732,7 +3731,8 @@ export const ENGLISH_WORDS: EnglishWord[] = [
         "category": "形容詞"
     },
     {
-        "id": "clean",
+        "id": "clean_lv10",
+        "surface": "clean",
         "level": 10,
         "japanese": "きれい",
         "japaneseKanji": "綺麗",
@@ -3948,7 +3948,8 @@ export const ENGLISH_WORDS: EnglishWord[] = [
         "category": "形容詞"
     },
     {
-        "id": "own",
+        "id": "own_lv10",
+        "surface": "own",
         "level": 10,
         "japanese": "じぶんの",
         "japaneseKanji": "自分の",
@@ -4458,7 +4459,8 @@ export const ENGLISH_WORDS: EnglishWord[] = [
         "category": "接続"
     },
     {
-        "id": "so",
+        "id": "so_lv11",
+        "surface": "so",
         "level": 11,
         "japanese": "だから",
         "category": "接続"
@@ -4518,7 +4520,8 @@ export const ENGLISH_WORDS: EnglishWord[] = [
         "category": "接続"
     },
     {
-        "id": "way",
+        "id": "way_lv12",
+        "surface": "way",
         "level": 12,
         "japanese": "ほうほう",
         "japaneseKanji": "方法",
@@ -4865,7 +4868,7 @@ export const ENGLISH_WORDS: EnglishWord[] = [
     {
         "id": "positive",
         "level": 12,
-        "japanese": "ぜんむきな",
+        "japanese": "まえむきな",
         "japaneseKanji": "前向きな",
         "category": "形容詞"
     },
@@ -5660,7 +5663,7 @@ export const ENGLISH_WORDS: EnglishWord[] = [
     {
         "id": "local",
         "level": 14,
-        "japanese": "ちもとの",
+        "japanese": "じもとの",
         "japaneseKanji": "地元の",
         "category": "形容詞"
     },
@@ -5903,7 +5906,8 @@ export const ENGLISH_WORDS: EnglishWord[] = [
         "category": "名詞"
     },
     {
-        "id": "cause",
+        "id": "cause_lv15",
+        "surface": "cause",
         "level": 15,
         "japanese": "げんいん",
         "japaneseKanji": "原因",
@@ -6233,7 +6237,8 @@ export const ENGLISH_WORDS: EnglishWord[] = [
         "category": "社会問題"
     },
     {
-        "id": "right",
+        "id": "right_lv16",
+        "surface": "right",
         "level": 16,
         "japanese": "けんり",
         "japaneseKanji": "権利",
@@ -7295,7 +7300,8 @@ export const ENGLISH_WORDS: EnglishWord[] = [
         "category": "形容詞"
     },
     {
-        "id": "properly",
+        "id": "properly_lv18",
+        "surface": "properly",
         "level": 18,
         "japanese": "てきせつに",
         "japaneseKanji": "適切に",

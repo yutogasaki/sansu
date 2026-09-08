@@ -119,7 +119,15 @@ try {
                         const question = page.locator(`[data-study-index="${index}"][data-feedback="none"]`);
                         await question.waitFor();
                         const text = await question.getAttribute('data-question-text');
-                        const word = domain.ENGLISH_WORDS.find(word => word.id === text);
+                        // Display spelling may be shared by different stable IDs
+                        // (orange fruit / orange_lv2 color). The generator excludes
+                        // same-spelling distractors, so the rendered answer disambiguates.
+                        const words = [];
+                        for (const candidate of domain.ENGLISH_WORDS.filter(word => (word.surface ?? word.id) === text)) {
+                            if (await question.getByRole('button', { name: candidate.japanese, exact: true }).count()) words.push(candidate);
+                        }
+                        assert.equal(words.length, 1, 'Displayed spelling and answer identify one vocabulary item');
+                        const word = words[0];
                         assert(word && [1, 2].includes(word.level), 'Normal study draws from the current or enabled next English level');
                         observedWords.push({ id: word.id, level: word.level });
                         if (index === 0 || (word.level === 2 && !row.nextLevelCapture)) {

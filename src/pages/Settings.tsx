@@ -443,7 +443,7 @@ export const Settings: React.FC = () => {
                 </div>
             </Modal>
 
-            <div className="mx-auto w-full max-w-[22rem] space-y-3 pb-2">
+            <div className="island-utility-content mx-auto w-full max-w-[22rem] space-y-3 pb-2">
                 {/* ── プロフィール ── */}
                 <SurfacePanel className="overflow-hidden rounded-[28px] p-0">
                     {accordionHeader("profile", t("プロフィール", "プロフィール"), `${profile?.name || "ゲスト"} · ${GRADES[profile?.grade ?? 1] || "???"}`)}

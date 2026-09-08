@@ -45,9 +45,21 @@ If a design rule changes, update the SSOT docs first and then refresh this file.
 - Archive: paper becomes the main material, with one large result and unequal smaller causal vignettes
 - Peaks heighten at most three axes among color, form, scale, expression, material, density, and motion; ordinary live frames remain appealing before success
 
+### Living Island Override
+
+The adopted `docs/product/30_living_island_growth_spec.md` governs the current Island flow alongside specification 28. Reuse the existing `moon-garden` 3D world and Island semantic colors; learning grows a few persistent habitats and their uses. New sections, including the first, continue into the next question without reward selection. Legacy reserved gifts remain available.
+
+- Home: one main learning action, a compact current growing-place indicator, and optional habitat selection. Show a changed next destination separately from the frozen active reservation. Mature habitats stop offering upgrades.
+- Living world: autonomous resident use on home/free play, one prominent event at a time. Home object selection opens the existing move/rotate/store controls. Earned earlier appearances remain selectable without removing unlocked play.
+- Views: all, garden, and unlocked east/west districts are optional viewing choices. Learning holds its camera and full input layout; do not introduce district navigation or autonomous visits between questions.
+- Album: render the immutable past placement, habitat progress and land beside the current scene with the same 3D renderer; both panes are read-only. List only observed discoveries. “ためす” returns to that actual activity, while stored targets offer “おく”. Never open the album automatically during learning.
+- Controls: use shared Island paper/ink/blue/yellow roles, visible focus, at least 44px targets, and concise Japanese. Preserve sound-off/reduced-motion comprehension. Apply separate visual-appeal, silent-comprehension/safety and runtime-integrity gates to the rendered flow.
+
 ## Color System
 
 Use existing tokens first.
+
+When Island delivery is enabled, shared utility/study screens follow the Island exception in `docs/product/07_ui_design_guideline.md` and `28_mystic_island_spec.md`: cream canvas/paper, dark blue outlines, blue controls, yellow primary action, and the same island mark. `src/components/island/IslandShell.css` scopes these semantic token overrides; the classic values below belong to the legacy delivery.
 
 ### Base Background
 

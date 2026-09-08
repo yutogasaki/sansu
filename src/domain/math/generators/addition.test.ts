@@ -1,11 +1,12 @@
 import { describe, expect, it } from "vitest";
+import { createMathProgressProfile } from "../testFixtures";
 import { generators } from "./addition";
 
 describe("addition generators", () => {
     it("add_1d_1_bridge starts from 1 + 1 with visual support", () => {
         const problem = generators.add_1d_1_bridge({
-            profile: { mathSkills: { add_1d_1_bridge: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("add_1d_1_bridge", 0),
+        });
 
         expect(problem.questionText).toBe("1 + 1 =");
         expect(problem.correctAnswer).toBe("2");
@@ -18,8 +19,8 @@ describe("addition generators", () => {
 
     it("add_1d_1 starts from 1 + 1 as a numeric expression", () => {
         const problem = generators.add_1d_1({
-            profile: { mathSkills: { add_1d_1: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("add_1d_1", 0),
+        });
 
         expect(problem.questionText).toBe("1 + 1 =");
         expect(problem.correctAnswer).toBe("2");
@@ -28,8 +29,8 @@ describe("addition generators", () => {
 
     it("add_1d_2_bridge keeps the make-ten progression with visual support", () => {
         const problem = generators.add_1d_2_bridge({
-            profile: { mathSkills: { add_1d_2_bridge: { totalAnswers: 12 } } },
-        } as any);
+            profile: createMathProgressProfile("add_1d_2_bridge", 12),
+        });
 
         expect(problem.questionText).toBe("1 + 9 =");
         expect(problem.correctAnswer).toBe("10");
@@ -42,8 +43,8 @@ describe("addition generators", () => {
 
     it("add_1d_2 keeps the make-ten progression as a numeric expression", () => {
         const problem = generators.add_1d_2({
-            profile: { mathSkills: { add_1d_2: { totalAnswers: 12 } } },
-        } as any);
+            profile: createMathProgressProfile("add_1d_2", 12),
+        });
 
         expect(problem.questionText).toBe("1 + 9 =");
         expect(problem.correctAnswer).toBe("10");
@@ -51,7 +52,7 @@ describe("addition generators", () => {
     });
 
     it("add_2d1d_nc_bridge shows a base-10 visual without carry", () => {
-        const problem = generators.add_2d1d_nc_bridge({} as any);
+        const problem = generators.add_2d1d_nc_bridge({});
 
         expect(problem.questionVisual?.kind).toBe("operation-base10");
         if (problem.questionVisual?.kind === "operation-base10") {
@@ -62,7 +63,7 @@ describe("addition generators", () => {
     });
 
     it("add_2d1d_mental_nc shows a number line for mental jumps", () => {
-        const problem = generators.add_2d1d_mental_nc({} as any);
+        const problem = generators.add_2d1d_mental_nc({});
 
         expect(problem.questionVisual?.kind).toBe("number-line");
         if (problem.questionVisual?.kind === "number-line") {
@@ -72,14 +73,14 @@ describe("addition generators", () => {
     });
 
     it("add_2d1d_hissan_nc keeps the same arithmetic as a plain expression", () => {
-        const problem = generators.add_2d1d_hissan_nc({} as any);
+        const problem = generators.add_2d1d_hissan_nc({});
 
         expect(problem.questionText).toMatch(/^\d+ \+ \d+ =$/);
         expect(problem.questionVisual).toBeUndefined();
     });
 
     it("add_2d1d_c_bridge shows a base-10 visual with carry", () => {
-        const problem = generators.add_2d1d_c_bridge({} as any);
+        const problem = generators.add_2d1d_c_bridge({});
 
         expect(problem.questionVisual?.kind).toBe("operation-base10");
         if (problem.questionVisual?.kind === "operation-base10") {
@@ -91,7 +92,7 @@ describe("addition generators", () => {
     });
 
     it("add_2d1d_make10 highlights the make-ten waypoint on a number line", () => {
-        const problem = generators.add_2d1d_make10({} as any);
+        const problem = generators.add_2d1d_make10({});
 
         expect(problem.questionVisual?.kind).toBe("number-line");
         if (problem.questionVisual?.kind === "number-line") {
@@ -102,7 +103,7 @@ describe("addition generators", () => {
     });
 
     it("add_2d1d_hissan_c keeps the carry case as a plain expression", () => {
-        const problem = generators.add_2d1d_hissan_c({} as any);
+        const problem = generators.add_2d1d_hissan_c({});
 
         expect(problem.questionText).toMatch(/^\d+ \+ \d+ =$/);
         expect(problem.questionVisual).toBeUndefined();

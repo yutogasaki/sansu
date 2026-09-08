@@ -8,6 +8,7 @@ import {
     isMathSkillUnlockedForProfile,
 } from "./curriculum";
 import { planMathProblemSlots, planMathProblems } from "./planner";
+import { createDefaultMemoryState } from "../types";
 
 const createMathProfile = (mainLevel = 8, maxUnlocked = mainLevel) => {
     const profile = createInitialProfile("Planner", 1, mainLevel, 1, "math");
@@ -17,6 +18,86 @@ const createMathProfile = (mainLevel = 8, maxUnlocked = mainLevel) => {
 };
 
 describe("planMathProblems", () => {
+    it("introduces unseen skills before practiced skills in the current level", () => {
+        const profile = createMathProfile(11);
+        const unseen = "sub_2d2d";
+        for (const skillId of getSkillsForLevel(11).filter(id => id !== unseen)) {
+            profile.mathSkills[skillId] = createDefaultMemoryState(skillId, "math", true);
+        }
+        const [item] = planMathProblems({ profile, count: 1, random: () => 0 });
+        expect(item).toMatchObject({ skillId: unseen, source: "main" });
+    });
+
+    it("prioritizes lower strength after introduction while preserving cooldown and diversity", () => {
+        const profile = createMathProfile(11);
+        const skillIds = getSkillsForLevel(11);
+        for (const skillId of skillIds) {
+            profile.mathSkills[skillId] = {
+                ...createDefaultMemoryState(skillId, "math", true), strength: 5,
+            };
+        }
+        const weakest = skillIds[skillIds.length - 1];
+        profile.mathSkills[weakest].strength = 1;
+        const plan = planMathProblems({ profile, count: 6, random: () => 0 });
+        expect(plan[0]?.skillId).toBe(weakest);
+        expect(new Set(plan.map(item => item.skillId)).size).toBe(6);
+        const [cooled] = planMathProblems({ profile, count: 1, cooldownIds: [weakest], random: () => 0 });
+        expect(cooled.skillId).not.toBe(weakest);
+    });
+
+    it("prioritizes unseen +1 skills without exceeding its existing cap", () => {
+        const profile = createMathProfile(10, 11);
+        const nextSkills = getSkillsForLevel(11);
+        for (const skillId of nextSkills.slice(0, -1)) {
+            profile.mathSkills[skillId] = createDefaultMemoryState(skillId, "math", true);
+        }
+        const plan = planMathProblems({ profile, count: 6, plusOneRate: 1, random: () => 0 });
+        expect(plan[0]).toMatchObject({ skillId: nextSkills[nextSkills.length - 1], source: "plus-one" });
+        expect(plan.filter(item => item.source === "plus-one")).toHaveLength(1);
+    });
+
+    it("covers the eligible current range before relaxing the per-skill cap", () => {
+        const profile = createMathProfile(0);
+        profile.mathSkills = {};
+        const skillIds = getSkillsForLevel(0);
+        const plan = planMathProblems({ profile, count: 13, random: () => 0 });
+        expect(plan).toHaveLength(13);
+        expect(new Set(plan.slice(0, 5).map(item => item.skillId)).size).toBe(5);
+        const counts = skillIds.map(id => plan.filter(item => item.skillId === id).length);
+        expect(Math.max(...counts) - Math.min(...counts)).toBeLessThanOrEqual(1);
+        expect(plan.slice(0, 10).every(item => plan.slice(0, 10).filter(other => other.skillId === item.skillId).length <= 2)).toBe(true);
+    });
+
+    it.each([
+        { source: "retry", options: { retrySkillIds: ["count_10"] } },
+        { source: "due", options: { dueSkillIds: ["count_10"] } },
+        { source: "maintenance", options: { maintenanceSkillIds: ["count_10"], maintenanceRate: 1 } },
+        { source: "retired", options: { retiredSkillIds: ["count_10"], maintenanceRate: 1 } },
+        { source: "weak", options: { weakSkillIds: ["count_10"], weakRate: 1 } },
+    ])("respects explicitly disabled levels for $source", ({ options }) => {
+        const profile = createMathProfile(8);
+        profile.mathLevels = profile.mathLevels?.map(state => state.level === 3
+            ? { ...state, enabled: false } : state);
+        const plan = planMathProblems({ profile, count: 1, random: () => 0, ...options });
+        expect(plan[0]?.source).toBe("main");
+        expect(plan[0]?.skillId).not.toBe("count_10");
+    });
+
+    it("keeps disabled main, +1, and representation followups outside the plan", () => {
+        const profile = createMathProfile(8, 9);
+        profile.mathLevels = profile.mathLevels?.map(state => state.level === 9
+            ? { ...state, enabled: false } : state);
+        profile.recentAttempts = [{ subject: "math", skillId: "add_1d_2", result: "incorrect", timestamp: "2026-09-08T00:00:00.000Z" }];
+        const plan = planMathProblems({ profile, count: 3, plusOneRate: 1, random: () => 0 });
+        expect(plan).toHaveLength(3);
+        expect(plan.every(item => item.source === "main" && getLevelForSkill(item.skillId) === 8)).toBe(true);
+        profile.mathLevels = profile.mathLevels?.map(state => state.level === 8
+            ? { ...state, enabled: false } : state);
+        expect(planMathProblems({ profile, count: 3, plusOneRate: 1, random: () => 0 })).toEqual([]);
+        delete profile.mathLevels;
+        expect(planMathProblems({ profile, count: 3, plusOneRate: 1, random: () => 0 })).toHaveLength(3);
+    });
+
     it("keeps graduated skills out of normal slots while an active current skill remains", () => {
         const items = planMathProblems({
             profile: createMathProfile(8), count: 10,

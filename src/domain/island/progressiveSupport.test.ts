@@ -27,7 +27,7 @@ async function setup(problem = arithmetic) {
     await (problem.subject === 'math' ? d.memoryMath : d.memoryVocab).put(baselineMemory(problem.categoryId));
     await openIsland('child', d);
     const plan = await startIslandPlan('child', d);
-    // A one-slot frozen fixture isolates the final receipt/reward boundary. The
+    // A one-slot frozen fixture isolates the final receipt/growth boundary. The
     // existing planner suites still exercise the real three/six-slot workload.
     plan.slots = [{ problem: structuredClone(problem), assisted: false, completed: false,
         source: 'due', countsTowardReviewCap: true }];
@@ -95,7 +95,8 @@ describe('Island progressive support persistence', () => {
         expect(result.event.learningLogId).toBeUndefined();
         expect(result.plan).toMatchObject({ status: 'completed', cursor: 1 });
         expect(result.island).toMatchObject({ completedSets: 1, pendingPlanId: undefined });
-        expect(result.island.pendingRewards).toHaveLength(1);
+        expect(result.island.pendingRewards).toHaveLength(0);
+        expect(result.island.growth?.progress.garden).toBe(1);
         expect(result.plan.slots[0].problem).toEqual(problem);
         expect(await d.logs.count()).toBe(0);
         expect(await d.islandEvents.where('type').equals('answer').count()).toBe(0);
@@ -127,7 +128,7 @@ describe('Island progressive support persistence', () => {
         expect((await d.memoryMath.get(['child', arithmetic.categoryId]))?.skippedAnswers).toBe(1);
     });
 
-    it('serializes concurrent supported completions to one receipt/reward without an answer or log', async () => {
+    it('serializes concurrent supported completions to one receipt/growth without an answer or log', async () => {
         const { d, plan } = await setup();
         const shown = await model(d, plan);
         const second = new SansuDatabase(d.name, options);
@@ -138,12 +139,13 @@ describe('Island progressive support persistence', () => {
             expect(await act(d, shown, { type: 'supported_completed' })).toEqual(one);
             expect(await d.islandEvents.where('type').equals('supported_completed').count()).toBe(1);
             expect(await d.islandEvents.where('type').equals('plan_completed').count()).toBe(1);
-            expect((await d.islands.get('child'))?.pendingRewards).toHaveLength(1);
+            expect((await d.islands.get('child'))?.pendingRewards).toHaveLength(0);
+        expect((await d.islands.get('child'))?.growth?.progress.garden).toBe(1);
             expect(await d.logs.count()).toBe(0);
         } finally { second.close(); }
     });
 
-    it('rolls back completion, receipt, Due, profile and reward together when the final event fails', async () => {
+    it('rolls back completion, receipt, Due, profile and growth together when the final event fails', async () => {
         const { d, plan } = await setup();
         const shown = await model(d, plan);
         const before = await snapshot(d);

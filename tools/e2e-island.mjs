@@ -8,8 +8,10 @@ const base = process.env.SANSU_ISLAND_BASE_URL || 'http://127.0.0.1:5198';
 const out = process.env.SANSU_ISLAND_OUTPUT || 'output/playwright/island';
 await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch(process.env.SANSU_ISLAND_BROWSER_GPU === 'metal' ? { args: ['--use-angle=metal'] } : {});
-const report = { target: base, flag: 'VITE_ISLAND_ENABLED=true', startedAt: new Date().toISOString(), scenarios: [], captures: [], pass: false };
+const report = { target: base, flag: 'VITE_ISLAND_ENABLED=true', startedAt: new Date().toISOString(), growthCoveredSeparately: process.env.SANSU_ISLAND_SKIP_GROWTH === '1', scenarios: [], captures: [], pass: false };
 const capture = async (page, name) => {
+    // Home/district resizing is animated outside CSS; let the real camera settle.
+    await page.waitForTimeout(850);
     await page.screenshot({ path: `${out}/${name}.png`, animations: 'disabled' });
     report.captures.push({ file: `${name}.png`, ...(await runtimeMetadata(page)) });
 };
@@ -17,115 +19,84 @@ const capture = async (page, name) => {
 async function finishSet(page, profileId, samples, touch) {
     let count = 0;
     let state = await readNative(page, profileId);
-    while (state.plan) {
+    const planId = state.plan.id, completedSets = state.island.completedSets;
+    while (state.plan?.id === planId) {
         assert(++count < 70, 'Learning section must terminate');
         const { state: next, ...sample } = await answerUI(page, state.plan, { touch });
         samples.push(sample);
         state = next;
     }
-    await waitMode(page, 'reward');
+    assert.equal(state.islandPlans.find(plan => plan.id === planId)?.status, 'completed');
+    assert.equal(state.island.completedSets, completedSets + 1);
+    assert(state.plan, 'Every newly reserved section continues automatically, including the first');
+    assert.equal(state.plan.id, JSON.stringify(['island-plan-v1', profileId, completedSets + 1]));
+    assert.equal(state.plan.cursor, 0); assert.equal(state.plan.revision, 0);
+    await waitMode(page, 'learning');
+    assert.equal(state.island.pendingRewards.length, 0, 'Growth never requires gift collection');
     return state;
 }
 
 async function verifyOwnedLoop(page, profileId, state, samples, touch, prefix) {
-    const firstRewardId = state.island.pendingRewards[0].id;
     const firstCompleted = state.island.completedSets;
-    await activate(button(page, 'つづけて とく'), touch);
-    await waitMode(page, 'learning');
-    state = await readNative(page, profileId);
-    assert(state.plan, 'Continue reserves the next real learning section');
-    assert.equal(state.island.pendingRewards[0].id, firstRewardId, 'Deferring retains the earned choice');
     const reserved = state.plan;
-    await activate(button(page, 'しまへ'), touch);
-    await waitMode(page, 'home');
-    await page.reload();
-    await waitReady(page);
+    await activate(button(page, 'しまへ'), touch); await waitMode(page, 'home');
+    await page.reload(); await waitReady(page); await waitMode(page, 'learning');
     state = await readNative(page, profileId);
-    assert.deepEqual(state.plan, reserved, 'Reload preserves the reserved section');
-    assert.equal(state.island.pendingRewards[0].id, firstRewardId);
-    await waitMode(page, 'learning');
+    assert.deepEqual(state.plan, reserved, 'Reload preserves the automatically reserved section');
     state = await finishSet(page, profileId, samples, touch);
     assert.equal(state.island.completedSets, firstCompleted + 1);
-    assert.equal(state.island.pendingRewards.length, 2);
     await page.locator('[data-renderer="three"][data-expanded="true"]').waitFor();
+    await activate(button(page, 'しまへ'), touch); await waitMode(page, 'home');
     await capture(page, `${prefix}-second-section-expanded`);
-    await button(page, 'ベンチ').waitFor();
-    await activate(button(page, 'ベンチ'), touch);
-    await waitMode(page, 'placement');
-    const claimed = (await readNative(page, profileId)).island.items.find(item => item.id === `${firstRewardId}:item`);
-    assert.equal(claimed.kind, 'bench');
-    await capture(page, `${prefix}-place-preview`);
-    await activate(button(page, 'まわす'), touch);
-    await activate(button(page, 'ここに おく'), touch);
-    await waitMode(page, 'home');
-    state = await readNative(page, profileId);
-    const placed = state.island.items.find(item => item.id === claimed.id);
-    assert(placed.position, 'Claimed bench must be placed');
-    assert.equal(placed.rotation, Math.PI / 2);
-    await page.waitForFunction(id => {
-        const stage = document.querySelector('[data-renderer="three"]');
-        return stage?.getAttribute('data-resident-item-id') === id && stage.getAttribute('data-resident-action') === 'sit';
-    }, claimed.id, { timeout: 15000 });
-    await capture(page, `${prefix}-placed-bench`);
-    await page.reload();
-    await waitReady(page);
-    assert.deepEqual((await readNative(page, profileId)).island.items.find(item => item.id === claimed.id), placed);
-    await activate(button(page, 'もちもの'), touch);
-    await waitMode(page, 'inventory');
+    const bench = state.island.items.find(item => item.id === 'living-bench');
+    assert(bench?.position, 'A usable bench is placed automatically');
+    await activate(button(page, 'もちもの'), touch); await waitMode(page, 'inventory');
     await capture(page, `${prefix}-inventory`);
     await activate(page.getByRole('button', { name: /^ベンチ \d+を うごかす$/ }), touch);
     await waitMode(page, 'placement');
-    // Touch reaches the actual canvas raycast; keyboard reaches the accessible direction controls.
-    if (touch) {
-        const canvas = page.locator('[data-renderer="three"] canvas');
-        const box = await canvas.boundingBox();
-        assert(box);
-        await canvas.tap({ position: { x: box.width * .52, y: box.height * .62 } });
-    } else {
-        await button(page, 'ひだりへ').focus();
-        await page.keyboard.press('Enter');
-    }
-    if (!(await button(page, 'ここに おく').isEnabled())) {
-        await activate(button(page, 'みぎへ'), touch);
-        await activate(button(page, 'てまえへ'), touch);
-    }
-    await activate(button(page, 'ここに おく'), touch);
-    await waitMode(page, 'home');
+    await activate(button(page, 'はじめの すがた'), touch);
+    await page.locator('.island-appearance button[aria-pressed="true"]').filter({ hasText: 'はじめの すがた' }).waitFor();
+    await capture(page, `${prefix}-previous-appearance`);
+    await activate(button(page, 'まわす'), touch);
+    await activate(button(page, 'みぎへ'), touch);
+    assert(await button(page, 'ここに おく').isEnabled());
+    await activate(button(page, 'ここに おく'), touch); await waitMode(page, 'home');
     state = await readNative(page, profileId);
-    const moved = state.island.items.find(item => item.id === claimed.id);
-    assert.notDeepEqual(moved.position, placed.position, 'Moving changes the saved position');
+    const moved = state.island.items.find(item => item.id === bench.id);
+    assert.deepEqual(moved.position, { x: bench.position.x + .25, z: bench.position.z });
+    assert.equal(moved.rotation, bench.rotation + Math.PI / 2);
+    assert.equal(moved.appearanceLevel, 0); assert.equal(moved.growthLevel, bench.growthLevel);
+    await page.reload(); await waitReady(page); await waitMode(page, 'learning');
+    assert.deepEqual((await readNative(page, profileId)).island.items.find(item => item.id === bench.id), moved);
+    await activate(button(page, 'しまへ'), touch); await waitMode(page, 'home');
     await activate(button(page, 'もちもの'), touch);
     await activate(page.getByRole('button', { name: /^ベンチ \d+を うごかす$/ }), touch);
     await waitMode(page, 'placement');
-    await activate(button(page, 'いまは しまっておく'), touch);
-    await waitMode(page, 'home');
-    await page.reload();
-    await waitReady(page);
+    await activate(button(page, 'いまは しまっておく'), touch); await waitMode(page, 'home');
+    await activate(page.locator('.island-start'), touch); await waitMode(page, 'learning');
+    state = await finishSet(page, profileId, samples, touch);
+    const stored = state.island.items.find(item => item.id === bench.id);
+    assert.equal(stored.position, undefined, 'A further upgrade honors deliberate storage');
+    assert.equal(stored.appearanceLevel, 0, 'A further upgrade honors the chosen appearance');
+    assert.equal(stored.growthLevel, 2, 'Storage and appearance do not discard earned growth');
+    await page.reload(); await waitReady(page);
     state = await readNative(page, profileId);
-    assert.equal(state.island.items.find(item => item.id === claimed.id).position, undefined);
-    assert.equal(state.island.pendingRewards.length, 1, 'Unclaimed second gift survives placement and storage');
     const previousIsland = state.island;
     const otherId = await seedDev(page, { skill: 'count_10', name: 'みなと' });
-    await page.reload();
-    await waitReady(page);
+    await page.reload(); await waitReady(page);
     const other = await readNative(page, otherId);
-    assert.equal(other.island.completedSets, 0);
-    assert.equal(other.island.items.length, 2);
-    assert.equal(other.logs.length, 0);
+    assert.equal(other.island.completedSets, 0); assert.equal(other.island.items.length, 2); assert.equal(other.logs.length, 0);
     assert.deepEqual((await readNative(page, profileId)).island, previousIsland);
     await page.evaluate(async id => {
         const { setActiveProfileId } = await import('/src/domain/user/repository.ts');
         await setActiveProfileId(id);
     }, profileId);
-    await page.reload();
-    await waitReady(page);
-    await activate(button(page, 'ひかりを とどける'), touch);
-    await waitMode(page, 'learning');
+    await page.reload(); await waitReady(page); await waitMode(page, 'learning');
     await capture(page, `${prefix}-next-learning`);
 }
 
 try {
-    if (!process.env.SANSU_ISLAND_SCENARIO || process.env.SANSU_ISLAND_SCENARIO === 'east-and-growth') {
+    if (process.env.SANSU_ISLAND_SKIP_GROWTH !== '1' && (!process.env.SANSU_ISLAND_SCENARIO || process.env.SANSU_ISLAND_SCENARIO === 'east-and-growth')) {
         report.scenarios.push(await verifyIslandProgression(browser, base, capture));
     }
     if (!process.env.SANSU_ISLAND_SCENARIO || process.env.SANSU_ISLAND_SCENARIO === 'renderer-recovery') {
@@ -137,7 +108,7 @@ try {
             const id = await seedDev(page);
             await page.goto(`${base}/#/island`);
             await waitReady(page);
-            await button(page, 'ひかりを とどける').click();
+            await page.locator('.island-start').click();
             await waitMode(page, 'learning');
             const before = await readNative(page, id);
             const lost = await page.locator('[data-renderer="three"] canvas').evaluate(canvas => {
@@ -188,16 +159,17 @@ try {
             assert.equal(profile.name, 'あおい');
             assert.equal(profile.grade, -1);
             assert.equal(profile.subjectMode, 'math');
-            await capture(page, 'onboarding-created-home');
-            await button(page, 'ひかりを とどける').click();
             await waitMode(page, 'learning');
+            assert.equal(initial.plan.id, JSON.stringify(['island-plan-v1', profileId, 0]));
+            assert.equal(initial.plan.slots.length, 3);
+            assert.equal(initial.plan.cursor, 0); assert.equal(initial.plan.revision, 0);
             await capture(page, 'onboarding-first-learning');
             const state = await finishSet(page, profileId, [], false);
-            assert.equal(state.island.pendingRewards.length, 1);
-            await capture(page, 'onboarding-first-reward');
+            assert.equal(state.island.pendingRewards.length, 0);
+            await capture(page, 'onboarding-first-growth');
             report.scenarios.push({ name: 'onboarding', ...(await runtimeMetadata(page)), passed: true,
                 evidenceScope: 'Actual profile-free Welcome, optional nickname in the grade screen, explicit preschool grade/math/range and first reserved section; no profile fixture injected. Dedicated production onboarding QA verifies play, storage boundaries, all subjects and retry.' });
-            console.log('PASS normal Island signup and first reward');
+            console.log('PASS normal Island signup and first automatic growth');
         } catch (error) {
             await page.screenshot({ path: `${out}/onboarding-failure.png`, animations: 'disabled' }).catch(() => undefined);
             throw error;
@@ -234,10 +206,11 @@ try {
             assert.equal(await page.locator('[data-renderer="three"]').getAttribute('data-expanded'), 'false');
             assert.equal((await readNative(page, profileId)).logs.length, 0, 'Visiting Island must not count learning');
             await capture(page, `${scenario.name}-home`);
-            await activate(button(page, 'ひかりを とどける'), scenario.touch);
+            await activate(page.locator('.island-start'), scenario.touch);
             await waitMode(page, 'learning');
             let state = await readNative(page, profileId);
-            assert.equal(state.plan.slots.length, scenario.complex ? 3 : 6, 'Workload is reserved before answering');
+            assert.equal(state.island.completedSets, 0);
+            assert.equal(state.plan.slots.length, 3, 'A new island reserves three real introductory problems before answering');
             if (scenario.skill) assert.equal(state.plan.slots[0].problem.categoryId, scenario.skill, 'The real planner respects Due');
             assert.equal(await page.locator('.park-answer').getAttribute('data-input-type'), scenario.type);
             await assertKeypad(page, !scenario.complex);
@@ -275,10 +248,10 @@ try {
             }
             state = await finishSet(page, profileId, samples, scenario.touch);
             assert.equal(state.island.completedSets, 1);
-            assert.equal(state.island.pendingRewards.length, 1);
+            assert.equal(state.island.pendingRewards.length, 0);
             assert.equal(state.islandEvents.filter(event => event.type === 'plan_completed').length, 1);
             assert.equal(await page.locator('[data-renderer="three"]').getAttribute('data-expanded'), 'false');
-            await capture(page, `${scenario.name}-reward`);
+            await capture(page, `${scenario.name}-first-growth`);
             if (scenario.full) await verifyOwnedLoop(page, profileId, state, samples, scenario.touch, scenario.name);
             const ordinaryCorrect = samples.filter(sample => !sample.incorrect && !sample.completed && sample.inputType === 'number').map(sample => sample.ms);
             const wrongTimes = samples.filter(sample => sample.incorrect).map(sample => sample.ms);

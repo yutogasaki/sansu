@@ -1,0 +1,79 @@
+{
+  "pass": true,
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "evidence": {
+    "eligible": true,
+    "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 125.86928874932204,
+      "islandMedianProblemsPerMinute": 280.59792382572823,
+      "allCorrectIslandToStudyRatio": 2.229280284443012,
+      "correctOperableP95Ms": 194.4000000357628,
+      "incorrectRetryP95Ms": 195.10000002384186,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 187.55000001192093,
+      "automaticSectionTransitionSamples": 10,
+      "rawStudyDurationMedianMs": 4766.850000023842,
+      "rawIslandDurationMedianMs": 2138.2999999821186
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 125.74268863031993,
+      "islandMedianProblemsPerMinute": 273.6664474918955,
+      "allCorrectIslandToStudyRatio": 2.176400476821896,
+      "correctOperableP95Ms": 195.30000001192093,
+      "incorrectRetryP95Ms": 195,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 191.10000002384186,
+      "automaticSectionTransitionSamples": 10,
+      "rawStudyDurationMedianMs": 4771.6500000059605,
+      "rawIslandDurationMedianMs": 2192.4500000178814
+    }
+  ],
+  "runtime": {
+    "revisions": [
+      "island-shell-local-20260908"
+    ],
+    "versions": [
+      "island-shell-local-20260908:8242ff7e-2d7d-4d8b-8d58-eb6c97d20d33"
+    ],
+    "candidates": [
+      "mystic-island-procedural-v2"
+    ],
+    "learningCandidates": [
+      "mystic-island-learning-v2"
+    ],
+    "deliveryIds": [
+      "mystic-island-v1"
+    ],
+    "flag": "VITE_ISLAND_ENABLED=true",
+    "evidenceSource": "Actual rendered Island data attributes on the shared Vite target; Study fixture runs against the same server."
+  },
+  "humanAudit": {
+    "releaseTimingVerdict": "DIAGNOSTIC",
+    "reason": "Another task ran e2e-island-learning/support concurrently for part of the measurement. All 80 lanes completed and script gates passed, but exclusive browser/CPU conditions were not met. Do not use this run to certify formal release timing parity.",
+    "rawReportSha256": "d483c8077636d5ec459a167e7e4741fa99a75dbd996069f5c00015dc4cdf72bf"
+  }
+}

@@ -1,4 +1,4 @@
-import { ISLAND_EAST_LAND, ISLAND_ITEMS, ISLAND_MAIN_LAND } from '../../../domain/island/catalog';
+import { ISLAND_EAST_LAND, ISLAND_ITEMS, ISLAND_MAIN_LAND, ISLAND_WEST_LAND } from '../../../domain/island/catalog';
 import { planResidentPointRoute, RESIDENT_FOOTPRINT, residentObstacles, residentPointIsClear,
     type GroundPoint, type ResidentRoute } from './navigation';
 import type { IslandStageItem } from './types';
@@ -51,11 +51,11 @@ export function planFurnitureClearance(items: readonly IslandStageItem[], reside
     const expanded = completedSets >= 2;
     const obstacles = residentObstacles(items, '');
     const grid: GroundPoint[] = [];
-    for (let ix = Math.ceil((ISLAND_MAIN_LAND.x - ISLAND_MAIN_LAND.radiusX) / STEP);
+    for (let ix = Math.ceil((completedSets >= 12 ? ISLAND_WEST_LAND.x - ISLAND_WEST_LAND.radiusX : ISLAND_MAIN_LAND.x - ISLAND_MAIN_LAND.radiusX) / STEP);
         ix <= Math.floor((expanded ? ISLAND_EAST_LAND.x + ISLAND_EAST_LAND.radiusX : ISLAND_MAIN_LAND.radiusX) / STEP); ix++) {
         for (let iz = Math.ceil(-ISLAND_MAIN_LAND.radiusZ / STEP); iz <= Math.floor(ISLAND_MAIN_LAND.radiusZ / STEP); iz++) {
             const point = { x: ix * STEP, z: iz * STEP };
-            if (residentPointIsClear(point, expanded, obstacles)
+            if (residentPointIsClear(point, completedSets, obstacles)
                 && placed.every(item => distance(point, item.position) >= radius(item) + MARGIN)) grid.push(point);
         }
     }
@@ -66,7 +66,7 @@ export function planFurnitureClearance(items: readonly IslandStageItem[], reside
         const departingIds = new Set(departing.map(item => item.id));
         const blockers = [...residentObstacles(items.filter(item => !departingIds.has(item.id)), ''),
             ...occupied.map(point => ({ ...point, radius: RESIDENT_FOOTPRINT }))];
-        if (!residentPointIsClear(origin, expanded, blockers)) return undefined;
+        if (!residentPointIsClear(origin, completedSets, blockers)) return undefined;
         const collision = departing.filter(item => item.id !== residents[index].itemId && overlaps(origin, item))
             .sort((a, b) => (radius(b) - distance(origin, b.position)) - (radius(a) - distance(origin, a.position))
                 || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))[0];

@@ -1,5 +1,6 @@
 import Dexie, { type DexieOptions, type Table } from 'dexie';
 import type { UserProfile, MemoryState, AppData } from '../domain/types';
+import type { LearningEvidenceContext } from '../domain/learning/types';
 import type { ParkRecord, ParkPlan, ParkEvent } from '../domain/park/types';
 import type { IslandRecord, IslandPlan, IslandEvent } from '../domain/island/types';
 import type {
@@ -21,6 +22,7 @@ export interface AttemptLog {
     isReview?: boolean;
     timestamp: string; // ISO
     timeMs?: number; // 回答にかかった時間（ミリ秒）
+    learningEvidence?: LearningEvidenceContext;
 }
 
 export const SANSU_V4_STORES = {

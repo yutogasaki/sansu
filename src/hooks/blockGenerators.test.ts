@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { createInitialProfile } from "../domain/user/profile";
+import { createInitialProfile, syncLevelState } from "../domain/user/profile";
 import {
     buildMathCooldownIds,
     buildVocabCooldownIds,
@@ -349,9 +349,7 @@ describe("blockGenerators utilities", () => {
     });
 
     it("generateSingleMathProblem uses bridge follow-up after a symbolic miss", () => {
-        const profile = createInitialProfile("T", 1, 0, 1, "math");
-        profile.mathMainLevel = 9;
-        profile.mathMaxUnlocked = 9;
+        const profile = syncLevelState(createInitialProfile("T", 1, 0, 1, "math"), "math", 9);
         profile.recentAttempts = [
             {
                 id: "attempt-symbol-miss",
@@ -386,9 +384,7 @@ describe("blockGenerators utilities", () => {
     });
 
     it("generateSingleMathProblem uses bridge follow-up after a concrete success", () => {
-        const profile = createInitialProfile("T", 1, 0, 1, "math");
-        profile.mathMainLevel = 8;
-        profile.mathMaxUnlocked = 8;
+        const profile = syncLevelState(createInitialProfile("T", 1, 0, 1, "math"), "math", 8);
         profile.recentAttempts = [
             {
                 id: "attempt-concrete-success",
@@ -422,9 +418,7 @@ describe("blockGenerators utilities", () => {
     });
 
     it("generateSingleMathProblem uses mental follow-up after a base-ten bridge success", () => {
-        const profile = createInitialProfile("T", 1, 0, 1, "math");
-        profile.mathMainLevel = 11;
-        profile.mathMaxUnlocked = 11;
+        const profile = syncLevelState(createInitialProfile("T", 1, 0, 1, "math"), "math", 11);
         profile.recentAttempts = [
             {
                 id: "attempt-bridge-success-2d",
@@ -458,9 +452,7 @@ describe("blockGenerators utilities", () => {
     });
 
     it("generateSingleMathProblem uses hissan follow-up after a mental success", () => {
-        const profile = createInitialProfile("T", 1, 0, 1, "math");
-        profile.mathMainLevel = 11;
-        profile.mathMaxUnlocked = 11;
+        const profile = syncLevelState(createInitialProfile("T", 1, 0, 1, "math"), "math", 11);
         profile.recentAttempts = [
             {
                 id: "attempt-mental-success-2d",
@@ -565,7 +557,7 @@ describe("blockGenerators utilities", () => {
         });
 
         expect(result.problem.categoryId).toBe("apple");
-        expect(result.isReview).toBe(false);
+        expect(result.isReview).toBe(true);
         expect(result.countsTowardReviewCap).toBe(true);
     });
 

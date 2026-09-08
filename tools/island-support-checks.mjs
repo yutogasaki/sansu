@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { activate, button, readNative } from './island-e2e-helpers.mjs';
 import { expectedLearningAnswer, expectedLearningModel } from './island-learning-fixtures.mjs';
-import { waitLearningReady } from './island-learning-checks.mjs';
+import { assertSavedLearningTransition, expectedLearningTransition, waitLearningReady } from './island-learning-checks.mjs';
 
 export async function readSupportStores(page) {
     return page.evaluate(async () => {
@@ -68,7 +68,8 @@ export async function enterSupportDraft(page, state, touch) {
 export async function supportAction(page, before, label, type, touch, { double = false } = {}) {
     const plan = before.plan;
     await waitLearningReady(page, plan);
-    await page.evaluate(({ label, id, revision, type }) => {
+    const expectedTransition = expectedLearningTransition(before, type === 'supported_completed');
+    await page.evaluate(({ label, id, revision, type, expectedTransition }) => {
         window.__islandSupportTiming = undefined;
         const onClick = event => {
             const target = event.target.closest?.('button');
@@ -78,17 +79,20 @@ export async function supportAction(page, before, label, type, touch, { double =
                 x: event.clientX, y: event.clientY, timeOrigin: performance.timeOrigin };
             const tick = () => {
                 const root = document.querySelector('[data-island-plan-id]');
-                const terminal = document.querySelector('.island-page')?.dataset.mode === 'reward';
-                const ready = root?.dataset.islandPlanId === id && Number(root.dataset.islandPlanRevision) === revision + 1
+                const terminal = expectedTransition.terminal && document.querySelector('.island-page')?.dataset.mode === 'reward';
+                const planId = root?.dataset.islandPlanId, nextRevision = Number(root?.dataset.islandPlanRevision);
+                const autoContinued = Boolean(expectedTransition.nextPlanId && planId === expectedTransition.nextPlanId && nextRevision === 0);
+                const ready = (autoContinued || (!expectedTransition.completesSection && planId === id && nextRevision === revision + 1))
                     && root.dataset.inputReady === 'true' && (type !== 'supported_completed'
                         || document.querySelector('.park-choices button:not(:disabled), .park-keypad button[aria-label="1"]:not(:disabled)'));
-                if (terminal || ready) window.__islandSupportTiming = { native, ms: performance.now() - started, terminal };
+                if (terminal || ready) window.__islandSupportTiming = { native, ms: performance.now() - started, terminal,
+                    autoContinued, planId, revision: nextRevision };
                 else requestAnimationFrame(tick);
             };
             requestAnimationFrame(tick);
         };
         document.addEventListener('click', onClick, true);
-    }, { label, id: plan.id, revision: plan.revision, type });
+    }, { label, id: plan.id, revision: plan.revision, type, expectedTransition });
     const control = button(page, label);
     if (double) await control.dblclick({ delay: 0 }); else await activate(control, touch);
     await page.waitForFunction(() => Boolean(window.__islandSupportTiming));
@@ -102,6 +106,7 @@ export async function supportAction(page, before, label, type, touch, { double =
     assert(receipt && events.filter(event => event.type === type).length === 1);
     assert.equal(receipt.id, JSON.stringify(['island-action-v1', plan.profileId, plan.id, plan.revision]));
     assert.deepEqual(receipt.action, { type });
+    assertSavedLearningTransition(before, after, saved, timing, type === 'supported_completed');
     assert.deepEqual(saved.slots[plan.cursor].hissanValues, plan.slots[plan.cursor].hissanValues, 'Models never write solved Hissan cells');
     assert.equal(saved.slots[plan.cursor].hissanStep, plan.slots[plan.cursor].hissanStep);
     if (type === 'skipped') {

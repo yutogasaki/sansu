@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Gift, Leaf, PackageOpen, PawPrint, Settings2 } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ArrowRight, BookOpen, Gift, Leaf, PackageOpen, PawPrint, Settings2 } from 'lucide-react';
 import { db } from '../db';
 import { getActiveProfile } from '../domain/user/repository';
 import type { UserProfile } from '../domain/types';
@@ -9,21 +9,25 @@ import { assertIslandPlan, claimIslandReward, openIsland, saveIslandEdit, startI
 import { parkHissanGrid } from '../domain/park/learning';
 import { islandObservationBinding } from '../domain/island/learningObservation';
 import { useIslandLearningObservation, type IslandLearningRequest } from '../components/island/useIslandLearningObservation';
-import { commitIslandLearning } from '../domain/island/commit';
+import { commitIslandLearningSession, isFirstIslandPlan } from '../domain/island/learningSession';
 import { findAvailablePosition, ISLAND_ITEMS, isValidIslandPlacement } from '../domain/island/catalog';
 import { ISLAND_DELIVERY_ID, ISLAND_VISUAL_CANDIDATE, ISLAND_LEARNING_CANDIDATE } from '../domain/island/feature';
-import type { IslandItem, IslandItemKind, IslandLearningAction, IslandPlan, IslandRecord } from '../domain/island/types';
+import type { IslandHabitatId, IslandItem, IslandItemKind, IslandLearningAction, IslandPlan, IslandRecord } from '../domain/island/types';
+import { selectIslandGrowthTarget, setIslandItemAppearance } from '../domain/island/growthRepository';
 import { holdPwaUpdateForCriticalPersistence, reachPwaUpdateCheckpoint } from '../pwa';
 import { playSound } from '../utils/audio';
 import IslandStage from '../components/island/IslandStage';
 import { IslandInventory, IslandPlacement, IslandPlay, IslandRewards } from '../components/island/IslandItems';
 import { useIslandActions } from '../components/island/useIslandActions';
+import { useIslandDiscoveries } from '../components/island/useIslandDiscoveries';
+import { IslandDistricts, IslandGrowthChoices, IslandGrowthSummary, type IslandDistrict } from '../components/island/IslandGrowth';
+import { IslandAlbum } from '../components/island/IslandAlbum';
 import { IslandLearningPanel } from '../components/island/IslandLearningPanel';
 import { islandFeedbackForReceipt, type IslandLearningFeedback, type IslandReaction } from '../components/island/learningFeedback';
 import '../components/park/Park.css';
 import '../components/island/Island.css';
 
-type Screen = 'home' | 'learning' | 'reward' | 'inventory' | 'placement' | 'play';
+type Screen = 'home' | 'learning' | 'reward' | 'inventory' | 'placement' | 'play' | 'growth' | 'album';
 const RENDERER_RECOVERY_HINT = '「もういちど みる」で、しまを ひらこう。';
 
 function sharingHint(items: IslandItem[], selectedId: string) {
@@ -39,6 +43,18 @@ function sharingHint(items: IslandItem[], selectedId: string) {
 
 function IslandSession({ profile }: { profile: UserProfile }) {
     const navigate = useNavigate();
+    const location = useLocation();
+    const [entry] = useState(() => {
+        const query = new URLSearchParams(location.search);
+        const requested = query.get('start') === 'learn';
+        const target = query.get('profile');
+        query.delete('start'); query.delete('profile');
+        return { requested, start: requested && (!target || target === profile.id),
+            cleanUrl: `${location.pathname}${query.size ? `?${query}` : ''}${location.hash}` };
+    });
+    const entryCleared = useRef(false);
+    const [opening, setOpening] = useState(true);
+    const [nextPlanError, setNextPlanError] = useState(false);
     const [snapshot, setSnapshot] = useState<IslandRecord>();
     const live = useLiveQuery(() => db.islands.get(profile.id), [profile.id]);
     const island = live && (!snapshot || live.revision >= snapshot.revision) ? live : snapshot;
@@ -46,14 +62,16 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const [screen, setScreen] = useState<Screen>('home');
     const [preview, setPreview] = useState<IslandItem>();
     const [placementSuggestionId, setPlacementSuggestionId] = useState<string>();
-    const [playRequest, setPlayRequest] = useState<{ id: string; itemId: string }>();
+    const [playRequest, setPlayRequest] = useState<{ id: string; itemId: string; discoveryId?: string }>();
+    const [district, setDistrict] = useState<IslandDistrict>('all');
     const [playMessage, setPlayMessage] = useState<string>();
     const [pulse, setPulse] = useState(0);
-    const [reaction, setReaction] = useState<IslandReaction>();
+    const [reaction, setReaction] = useState<IslandReaction & { growthTarget?: IslandHabitatId }>();
     const [learningFeedback, setLearningFeedback] = useState<IslandLearningFeedback>();
     const [feedback, setFeedback] = useState('');
     const [loadError, setLoadError] = useState(false);
     const { busy, error, run } = useIslandActions();
+    const discoveries = useIslandDiscoveries({ profileId: profile.id, island, enabled: screen === 'home' || screen === 'play', busy, run, onSaved: setSnapshot });
     const observation = useIslandLearningObservation();
     useEffect(() => {
         let mounted = true;
@@ -64,40 +82,67 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             if (!mounted) return;
             if (opened.pendingPlanId && (!pending || pending.profileId !== profile.id || pending.status !== 'active')) throw new Error('Pending learning unavailable');
             if (pending) assertIslandPlan(pending, profile.id);
+            let reserved = pending;
+            if (entry.start && !reserved) {
+                try { reserved = await startIslandPlan(profile.id); }
+                catch { if (mounted) setNextPlanError(true); }
+            }
+            if (!mounted) return;
             setSnapshot(opened);
-            setPlan(pending);
-            if (pending) setScreen('learning');
-        })().catch(() => { if (mounted) setLoadError(true); }).finally(release);
+            setPlan(reserved);
+            if (reserved || entry.start) setScreen('learning');
+            if (entry.requested && (reserved || !entry.start)) {
+                entryCleared.current = true;
+                navigate(entry.cleanUrl, { replace: true });
+            }
+        })().catch(() => { if (mounted) setLoadError(true); }).finally(() => {
+            release();
+            if (mounted) setOpening(false);
+        });
         return () => { mounted = false; };
-    }, [profile.id]);
+    }, [profile.id, entry, navigate]);
+
+    const clearEntry = () => {
+        if (!entry.requested || entryCleared.current) return;
+        entryCleared.current = true;
+        navigate(entry.cleanUrl, { replace: true });
+    };
 
     const begin = async () => {
         const reserved = await run(() => startIslandPlan(profile.id));
         if (!reserved || reachPwaUpdateCheckpoint('island-learning', { protectNextSession: true })) return;
+        clearEntry(); setNextPlanError(false);
         setPlan(reserved); setPreview(undefined); setFeedback(''); setLearningFeedback(undefined); setReaction(undefined); setScreen('learning');
     };
     const home = () => {
         if (busy || reachPwaUpdateCheckpoint('island-home', { protectNextSession: true })) return;
+        clearEntry(); setNextPlanError(false);
+        discoveries.revisit();
         setPreview(undefined); setFeedback(''); setLearningFeedback(undefined); setReaction(undefined); setScreen('home');
     };
     const answer = async (action: IslandLearningAction) => {
         if (!plan || screen !== 'learning') return;
         let request: IslandLearningRequest | undefined;
-        const receipt = await run(() => {
+        const result = await run(() => {
             request = observation.request(islandObservationBinding(plan), action);
-            return commitIslandLearning(profile.id, plan.id, plan.revision, request.action, db, request.observation);
+            return commitIslandLearningSession(profile.id, plan.id, plan.revision, request.action, db, request.observation);
         }, 180);
-        if (!receipt) return;
+        if (!result) return;
+        const { receipt, nextPlan, latestIsland } = result;
         observation.succeeded(request);
-        setPlan(receipt.plan); setSnapshot(receipt.island);
+        setPlan(nextPlan ?? receipt.plan); setSnapshot(latestIsland ?? receipt.island);
+        setNextPlanError(Boolean(result.nextPlanError));
         const response = islandFeedbackForReceipt(plan, receipt.plan, receipt.event);
         setLearningFeedback(response?.feedback);
-        setReaction(response?.reaction);
+        setReaction(response?.reaction ? { ...response.reaction, growthTarget: plan.growthTarget } : undefined);
         if (response?.reaction?.kind === 'correct') {
             setPulse(value => value + 1);
             if (profile.soundEnabled) playSound('correct');
         }
-        if (receipt.plan.status === 'completed') setScreen('reward');
+        if (receipt.plan.status === 'completed' && !nextPlan) {
+            if (isFirstIslandPlan(receipt.plan) && !receipt.plan.growthTarget) setScreen('reward');
+            else setNextPlanError(true);
+        }
     };
     const select = (item: IslandItem, current = island) => {
         if (!current || busy) return;
@@ -109,6 +154,20 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         if (busy || screen !== 'play') return;
         setPlayMessage(undefined);
         setPlayRequest({ id: crypto.randomUUID(), itemId });
+    };
+    const chooseGrowth = async (habitatId: IslandHabitatId) => {
+        if (!island) return;
+        const updated = await run(() => selectIslandGrowthTarget(profile.id, island.revision, habitatId));
+        if (!updated) return;
+        setSnapshot(updated); setScreen('home');
+    };
+    const appearance = async (level: number) => {
+        if (!island || !preview) return;
+        const updated = await run(() => setIslandItemAppearance(profile.id, island.revision, preview.id, level));
+        if (!updated) return;
+        setSnapshot(updated);
+        const item = updated.items.find(candidate => candidate.id === preview.id);
+        if (item) setPreview(previous => previous ? { ...previous, appearanceLevel: item.appearanceLevel } : previous);
     };
     const claim = async (rewardId: string, kind: IslandItemKind) => {
         if (!island) return;
@@ -128,26 +187,29 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         setFeedback(store ? 'もちものに とっておくよ' : `${ISLAND_ITEMS[preview.kind].name}を おいたよ`);
     };
     const slot = plan?.slots[plan.cursor];
-    const learning = screen === 'learning' && Boolean(slot);
+    const learning = screen === 'learning';
     // Reserve one crop for the entire section, including later diagrams and their help.
     const complex = Boolean(plan?.slots.some(candidate => candidate.problem.inputType === 'multi-number'
         || candidate.problem.questionVisual?.kind === 'operation-base10' || parkHissanGrid(candidate.problem)));
     if (loadError) return <div className="island-loading" role="alert">しまを ひらけなかったよ。<button className="island-primary" onClick={() => window.location.reload()}>もういちど ひらく</button></div>;
-    if (!island) return <div className="island-loading" role="status">しまを ひらいているよ…</div>;
+    if (opening || !island) return <div className="island-loading" role="status">しまを ひらいているよ…</div>;
     const valid = Boolean(preview?.position && isValidIslandPlacement(island, preview.id, preview.position, preview.rotation));
-    const homeHint = island.completedSets === 0 ? 'ひとくぎり とくと、しまに おく ものを えらべるよ。' : island.completedSets < 2 ? 'もうひとくぎりで、はしが つながるよ。'
-        : island.completedSets < 4 ? `あと ${4 - island.completedSets} くぎりで、キツネが あそびに くるよ。`
-            : island.completedSets < 6 ? `あと ${6 - island.completedSets} くぎりで、とうだいに あかりが ともるよ。` : 'おいた ものを えらんで、いっしょに あそぼう。';
     return <main className="island-page" data-game-id="mystic-island-v1" data-mode={screen} data-complex={Boolean(learning && complex)}
         data-visual-candidate-id={ISLAND_VISUAL_CANDIDATE} data-delivery-id={ISLAND_DELIVERY_ID}
         data-learning-candidate={ISLAND_LEARNING_CANDIDATE}
+        data-island-revision={island.revision} data-discovery-count={island.growth?.discoveries.length ?? 0}
         data-build-revision={__BUILD_REVISION__} data-build-version={__APP_VERSION__} data-busy={busy}>
         <header className="island-header"><div className="island-brand"><Leaf size={20} /><div><p>{profile.name}の</p><h1>ふしぎな しま</h1></div></div>
-            {learning ? <button className="island-text-button island-learning-pause" disabled={busy} onClick={home}>しまへ</button>
+            {learning ? <div className="island-learning-return">
+                {island.pendingRewards.length > 0 && <span className="island-learning-gifts" aria-label={`おくりもの ${island.pendingRewards.length}こ`}><Gift size={15} aria-hidden="true" />{island.pendingRewards.length}</span>}
+                <button className="island-text-button island-learning-pause" disabled={busy} onClick={home}>しまへ</button></div>
                 : <button className="island-icon-button" aria-label="せってい" disabled={busy} onClick={() => navigate('/settings')}><Settings2 size={20} /></button>}
         </header>
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
-        <IslandStage items={island.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
+        {screen !== 'album' && <IslandStage items={island.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
+            growth={island.growth} growthTarget={plan?.status === 'active' ? plan.growthTarget : undefined}
+            districtFocus={learning ? 'all' : district} readOnly={screen === 'growth' || screen === 'inventory' || screen === 'reward'}
+            onDiscovery={discoveries.capture}
             reaction={reaction} learningProgress={(learning || screen === 'reward') && plan
                 ? { sectionId: plan.id, completed: plan.cursor, total: plan.slots.length } : undefined}
             preview={preview} previewValid={valid} selectedId={screen === 'play' ? playRequest?.itemId : preview?.id}
@@ -173,24 +235,34 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             onItemSelect={!learning && !busy ? id => {
                 if (screen === 'play') play(id);
                 else { const item = island.items.find(candidate => candidate.id === id); if (item) select(item); }
-            } : undefined} />
-        {learning && plan ? <IslandLearningPanel plan={plan} observation={observation} busy={busy} feedback={learningFeedback} onAction={action => void answer(action)} />
-            : screen === 'reward' && island.pendingRewards.length ? <IslandRewards island={island} disabled={busy} onChoose={(id, kind) => void claim(id, kind)} onContinue={() => void begin()} onClose={home} />
+            } : undefined} />}
+        {(screen === 'home' || screen === 'play' || screen === 'placement') && <IslandDistricts completedSets={island.completedSets} value={district} disabled={busy} onChange={setDistrict} />}
+        {learning && nextPlanError ? <section className="island-sheet island-learning-retry">
+            <p role="status">{plan?.status === 'completed' ? 'ここまで といたぶんは のこっているよ。' : 'まだ もんだいを ひらけなかったよ。'}</p>
+            <button className="island-primary" disabled={busy} onClick={() => void begin()}>つづきの もんだいを ひらく</button>
+        </section>
+            : learning && plan && slot ? <IslandLearningPanel plan={plan} intro={isFirstIslandPlan(plan)} observation={observation} busy={busy} feedback={learningFeedback} onAction={action => void answer(action)} />
+            : screen === 'reward' && island.pendingRewards.length ? <IslandRewards island={island} intro={island.completedSets === 1 && Boolean(plan && isFirstIslandPlan(plan))} disabled={busy} onChoose={(id, kind) => void claim(id, kind)} onContinue={() => void begin()} onClose={home} />
             : screen === 'play' ? <IslandPlay items={island.items} disabled={busy} selectedId={playRequest?.itemId} message={playMessage}
                 onSelect={play} onMove={select} onInventory={() => setScreen('inventory')} onContinue={() => void begin()} onClose={home} />
             : screen === 'inventory' ? <IslandInventory items={island.items} disabled={busy} onSelect={select} onClose={home} />
+                : screen === 'growth' ? <IslandGrowthChoices island={island} plan={plan} disabled={busy} onSelect={id => void chooseGrowth(id)} onClose={home} />
+                : screen === 'album' ? <IslandAlbum island={island} disabled={busy} onClose={home}
+                    onPlace={id => { const item = island.items.find(candidate => candidate.id === id); if (item) select(item); }}
+                    onTry={(itemId, discoveryId) => { setPreview(undefined); setPlayMessage(undefined); setDistrict('all'); setScreen('play'); setPlayRequest({ id: crypto.randomUUID(), itemId, discoveryId }); }} />
                 : screen === 'placement' && preview ? <IslandPlacement item={preview} valid={valid} disabled={busy}
                     onPoint={point => { setPlacementSuggestionId(undefined); setPreview({ ...preview, position: point }); }} onRotate={() => { setPlacementSuggestionId(undefined); setPreview({ ...preview, rotation: preview.rotation + Math.PI / 2 }); }}
-                    onSave={() => void place()} onStore={() => void place(true)} onCancel={home} /> : <section className="island-home-controls">
-                    <p className="island-home-hint">{homeHint}</p>
+                    onSave={() => void place()} onStore={() => void place(true)} onCancel={home} onAppearance={level => void appearance(level)} /> : <section className="island-home-controls">
                     {feedback && <p className="island-home-feedback" role="status">{feedback}</p>}
-                    <button className="island-primary island-start" disabled={busy} onClick={() => void begin()}>{island.pendingPlanId ? 'つづきから とく' : 'ひかりを とどける'}<ArrowRight size={22} /></button>
+                    <IslandGrowthSummary island={island} plan={plan} disabled={busy} onChoose={() => setScreen('growth')} />
+                    <button className="island-primary island-start" disabled={busy} onClick={() => void begin()}>{island.pendingPlanId ? 'つづきから とく' : 'まなぶ'}<ArrowRight size={22} /></button>
                     <div className="island-home-secondary"><button className="island-secondary island-play-entry" disabled={busy} onClick={() => {
                         setPlayRequest(undefined); setPlayMessage(undefined); setReaction(undefined); setPreview(undefined); setScreen('play');
                     }}><PawPrint size={20} />どうぶつと あそぶ</button>
                         {island.pendingRewards.length > 0 && <button className="island-secondary" disabled={busy} onClick={() => setScreen('reward')}><Gift size={20} /><span>おくりものを えらぶ<small>{island.pendingRewards.length}こ とどいているよ</small></span></button>}
-                        <button className="island-secondary" disabled={busy} onClick={() => setScreen('inventory')}><PackageOpen size={20} />もちもの</button></div>
-                    <footer className="island-footer"><span>しまは じどうで のこるよ</span><button className="island-text-button" disabled={busy} onClick={() => navigate('/battle')}>ほかの あそび</button></footer>
+                        <button className="island-secondary" disabled={busy} onClick={() => setScreen('inventory')}><PackageOpen size={20} />もちもの</button>
+                        <button className="island-secondary" disabled={busy} onClick={() => setScreen('album')}><BookOpen size={20} />アルバム</button></div>
+                    <footer className="island-footer"><button className="island-text-button" disabled={busy} onClick={() => navigate('/battle')}>ほかの あそび</button></footer>
                 </section>}
     </main>;
 }

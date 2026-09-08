@@ -1,4 +1,4 @@
-import { GeneratorFn, createProblem, randomInt } from "../core";
+import { GeneratorFn, createProblem, getMathSkillProgress, randomInt } from "../core";
 import type { RandomSource } from "../../../utils/random";
 import { selectSubtractionPair } from "../subtractionProgress";
 import {
@@ -26,8 +26,8 @@ const pickTwoDigitMinusOneWithBorrow = (random: RandomSource = Math.random): [nu
 export const generators: Record<string, GeneratorFn> = {
     // Level 6: 絵と式を結びつける 1桁引き算（繰下なし）
     "sub_1d1d_nc_bridge": (context) => {
-        const totalAnswers = context?.profile?.mathSkills?.sub_1d1d_nc_bridge?.totalAnswers;
-        const [a, b] = selectSubtractionPair("sub_1d1d_nc", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("sub_1d1d_nc_bridge", context);
+        const [a, b] = selectSubtractionPair("sub_1d1d_nc", progress, context?.random);
         const visual = buildSubtractionVisual(a, b, context?.random);
         return createProblem("sub_1d1d_nc_bridge", `${a} - ${b} =`, (a - b).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -35,14 +35,14 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 6: 1桁-1桁（繰下なし）
     "sub_1d1d_nc": (context) => {
-        const totalAnswers = context?.profile?.mathSkills?.sub_1d1d_nc?.totalAnswers;
-        const [a, b] = selectSubtractionPair("sub_1d1d_nc", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("sub_1d1d_nc", context);
+        const [a, b] = selectSubtractionPair("sub_1d1d_nc", progress, context?.random);
         return createProblem("sub_1d1d_nc", `${a} - ${b} =`, (a - b).toString(), "number");
     },
     // Level 6: 絵と式を結びつける 1桁引き算（繰下あり）
     "sub_1d1d_c_bridge": (context) => {
-        const totalAnswers = context?.profile?.mathSkills?.sub_1d1d_c_bridge?.totalAnswers;
-        const [a, b] = selectSubtractionPair("sub_1d1d_c", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("sub_1d1d_c_bridge", context);
+        const [a, b] = selectSubtractionPair("sub_1d1d_c", progress, context?.random);
         const visual = buildSubtractionVisual(a, b, context?.random);
         return createProblem("sub_1d1d_c_bridge", `${a} - ${b} =`, (a - b).toString(), "number", undefined, {
             questionVisual: visual.questionVisual
@@ -50,8 +50,8 @@ export const generators: Record<string, GeneratorFn> = {
     },
     // Level 6: 1桁-1桁（繰下あり）
     "sub_1d1d_c": (context) => {
-        const totalAnswers = context?.profile?.mathSkills?.sub_1d1d_c?.totalAnswers;
-        const [a, b] = selectSubtractionPair("sub_1d1d_c", totalAnswers, context?.random);
+        const progress = getMathSkillProgress("sub_1d1d_c", context);
+        const [a, b] = selectSubtractionPair("sub_1d1d_c", progress, context?.random);
         return createProblem("sub_1d1d_c", `${a} - ${b} =`, (a - b).toString(), "number");
     },
     // Level 7: 2桁-1桁（繰下なし）

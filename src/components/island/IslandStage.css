@@ -46,7 +46,8 @@
     pointer-events: none;
 }
 
-.island-stage--learning .island-stage__caption {
+.island-stage--learning .island-stage__caption,
+.island-stage__caption--quiet {
     width: 1px;
     height: 1px;
     padding: 0;

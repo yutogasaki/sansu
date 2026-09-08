@@ -1,0 +1,192 @@
+/* Island utility surfaces share the world palette without competing with play. */
+.island-shell {
+    --island-shell-canvas: #fff3d5;
+    --island-shell-paper: #fff9e8;
+    --island-shell-ink: #263145;
+    --island-shell-blue: #245bbd;
+    --island-shell-yellow: #ffd447;
+    --island-shell-muted: #627087;
+    --island-shell-edge: #52607a;
+    --color-dark: var(--island-shell-ink);
+    --brand-ink: var(--island-shell-ink);
+    --brand-paper: var(--island-shell-paper);
+    --brand-paper-edge: var(--island-shell-edge);
+    --app-accent: var(--island-shell-blue);
+    --app-accent-strong: #194a9f;
+    --app-surface: var(--island-shell-paper);
+    --app-surface-strong: var(--island-shell-paper);
+    --app-surface-soft: #f5f1ed;
+    --app-border: #a6a6a5;
+    --app-border-soft: #d3d2ca;
+    --app-shadow-soft: 0 2px 0 rgb(38 49 69 / 6%);
+    --app-shadow: 0 3px 0 rgb(38 49 69 / 8%);
+    --app-shadow-strong: 0 10px 28px rgb(38 49 69 / 13%);
+    --app-glow: 0 0 0 2px #e7edf8;
+    --glass-bg: var(--app-surface);
+    --glass-bg-heavy: var(--app-surface-strong);
+    --glass-bg-light: var(--app-surface-soft);
+    --card-bg: var(--app-surface-strong);
+    --card-shadow: var(--app-shadow);
+    --toolbar-bg: var(--island-shell-paper);
+    --toolbar-shadow: none;
+    color: var(--island-shell-ink);
+    background: var(--island-shell-canvas);
+}
+
+body.app-mode-island-shell,
+body.app-mode-island-shell #root {
+    background: #fff3d5;
+}
+
+body.app-mode-island-shell .app-container {
+    max-width: 760px;
+    box-shadow: none;
+}
+
+.island-shell .brand-utility-screen,
+.island-shell .brand-study-screen {
+    color: var(--island-shell-ink);
+    background: var(--island-shell-canvas);
+}
+
+.island-shell .card-surface {
+    border-radius: 22px;
+    border: 1px solid var(--island-shell-edge);
+    background: var(--island-shell-paper);
+    box-shadow: var(--card-shadow);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.island-shell .island-utility-content { max-width: 600px; }
+
+.island-shell .app-button--primary {
+    color: var(--island-shell-ink);
+    background: var(--island-shell-yellow);
+    border: 1px solid var(--island-shell-edge);
+    box-shadow: 0 3px 0 var(--island-shell-ink);
+}
+
+.island-shell .app-button--secondary {
+    color: var(--island-shell-ink);
+    background: var(--island-shell-paper);
+    border: 1px solid var(--island-shell-edge);
+    box-shadow: none;
+}
+
+.island-shell-header {
+    gap: 12px;
+    padding-top: calc(var(--safe-area-top) + 20px);
+    padding-bottom: 18px;
+}
+
+.island-shell-header h1 {
+    font-size: 24px;
+    font-weight: 750;
+    line-height: 1.5;
+    letter-spacing: .035em;
+}
+
+.island-shell-mark {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--island-shell-edge);
+    border-radius: 15px;
+    color: var(--island-shell-blue);
+    background: #e7edf8;
+}
+
+.island-shell-eyebrow {
+    color: var(--island-shell-muted);
+    font-size: 11px;
+    line-height: 1.5;
+    letter-spacing: .08em;
+}
+
+.island-shell-back {
+    border: 1px solid var(--island-shell-edge);
+    color: var(--island-shell-ink);
+    background: var(--island-shell-paper);
+    box-shadow: none;
+}
+
+.island-shell-nav {
+    position: relative;
+    z-index: 50;
+    display: grid;
+    flex-shrink: 0;
+    grid-template-columns: 1fr minmax(100px, 1.15fr) 1fr;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: calc(84px + var(--safe-area-bottom));
+    padding: 9px max(20px, env(safe-area-inset-right)) calc(11px + var(--safe-area-bottom)) max(20px, env(safe-area-inset-left));
+    border-top: 1px solid #d3d2ca;
+    color: var(--island-shell-muted);
+    background: var(--island-shell-paper);
+}
+
+.island-shell-tab {
+    display: flex;
+    min-height: 60px;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 5px 8px;
+    border: 1px solid transparent;
+    border-radius: 16px;
+    cursor: pointer;
+    touch-action: manipulation;
+    color: inherit;
+    background: transparent;
+    font-size: 12px;
+    font-weight: 650;
+    line-height: 1.5;
+    transition: background-color 150ms ease;
+}
+
+.island-shell-tab[aria-current="page"] {
+    color: var(--island-shell-blue);
+    background: #e7edf8;
+}
+
+.island-shell-tab--home,
+.island-shell-tab--home[aria-current="page"] {
+    color: var(--island-shell-ink);
+    background: var(--island-shell-yellow);
+    border-color: var(--island-shell-edge);
+    box-shadow: 0 3px 0 var(--island-shell-ink);
+}
+
+.island-shell-tab--home {
+    font-size: 14px;
+    font-weight: 750;
+}
+
+.island-shell-tab--home:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 var(--island-shell-ink);
+}
+
+.island-shell button:focus-visible,
+.island-shell a:focus-visible {
+    outline: 3px solid var(--island-shell-blue);
+    outline-offset: 3px;
+}
+
+@media (min-width: 700px) {
+    .island-shell { --screen-padding-x: 32px; }
+    .island-shell-header { padding-top: calc(var(--safe-area-top) + 28px); }
+    .island-shell-nav { padding-inline: 32px; gap: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .island-shell-tab { transition: none; }
+    .island-shell-tab--home:active { transform: none; }
+}

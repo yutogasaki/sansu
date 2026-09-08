@@ -184,7 +184,7 @@ export const ParentsPage: React.FC = () => {
                                     const word = vocabWordMap.get(id);
                                     return (
                                         <Badge key={id} variant="warning" className="text-sm">
-                                            {id}
+                                            {word?.surface ?? id}
                                             <span className="ml-1 text-[11px] text-amber-700/80">({word?.japanese || '?'})</span>
                                         </Badge>
                                     );
@@ -214,7 +214,7 @@ export const ParentsPage: React.FC = () => {
                                                 {new Date(log.timestamp).toLocaleString('ja-JP')}
                                             </div>
                                             <div className="mt-1 font-bold text-slate-700">
-                                                {log.subject === 'math' ? 'さんすう' : 'えいご'} / {log.skillId}
+                                                {log.subject === 'math' ? 'さんすう' : 'えいご'} / {log.subject === 'vocab' ? (vocabWordMap.get(log.skillId)?.surface ?? log.skillId) : log.skillId}
                                             </div>
                                         </div>
                                         <Badge variant={badge.variant} className={badge.className}>

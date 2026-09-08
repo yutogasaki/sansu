@@ -46,14 +46,25 @@ const finish = async (database: SansuDatabase, plan: IslandPlan) => {
     while (current.status === 'active') current = (await commitIslandLearning(current.profileId, current.id, current.revision, correctAction(current), database)).plan;
     return current;
 };
+// Explicit old-plan compatibility: only reservations without the new marker issue gifts.
+async function startLegacyGiftPlan(d: SansuDatabase) {
+    const plan = await startIslandPlan('child', d);
+    delete plan.growthTarget;
+    await d.islandPlans.put(plan);
+    return plan;
+}
 afterEach(async () => {
     for (const database of databases.splice(0)) { database.close(); await database.delete(); }
 });
 
 describe('island frozen learning sets', () => {
-    it('reserves six familiar or three first-seen questions without learning writes and restores the exact plan', async () => {
+    it('reserves three introductory questions, then six familiar questions, and restores the exact plan', async () => {
         const known = await setup(profile(), true);
         const fresh = await setup();
+        const introduction = await startIslandPlan('child', known);
+        expect(introduction.slots).toHaveLength(3);
+        expect(await known.logs.count()).toBe(0);
+        await finish(known, introduction);
         expect((await startIslandPlan('child', known)).slots).toHaveLength(6);
         const before = await fresh.appData.get('app');
         const first = await startIslandPlan('child', fresh);
@@ -100,7 +111,7 @@ describe('island frozen learning sets', () => {
         expect(await d.islandEvents.where('type').equals('answer').last()).toMatchObject({ result: 'assisted-correct' });
     });
 
-    it('records a real skip then opens persisted support on the same slot, preserving its later reward', async () => {
+    it('records a real skip then opens persisted support on the same slot, preserving its later growth', async () => {
         const d = await setup();
         let plan = await startIslandPlan('child', d);
         const original = plan.slots[0].problem;
@@ -112,7 +123,8 @@ describe('island frozen learning sets', () => {
         plan = (await commitIslandLearning('child', plan.id, plan.revision, correctAction(plan), d)).plan;
         expect(await d.logs.toArray()).toEqual([expect.objectContaining({ result: 'skipped', itemId: original.categoryId })]);
         await finish(d, plan);
-        expect((await d.islands.get('child'))?.pendingRewards).toHaveLength(1);
+        expect((await d.islands.get('child'))?.pendingRewards).toHaveLength(0);
+        expect((await d.islands.get('child'))?.growth?.progress.garden).toBe(1);
         expect((await d.memoryMath.get(['child', original.categoryId]))?.skippedAnswers).toBe(1);
     });
 
@@ -164,10 +176,10 @@ describe('island frozen learning sets', () => {
     });
 });
 
-describe('atomic completion and deferred rewards', () => {
+describe('legacy frozen-plan atomic completion and deferred rewards', () => {
     it('serializes final answers across tabs and gives one entitlement with exactly one final log', async () => {
         const d = await setup();
-        let plan = await startIslandPlan('child', d);
+        let plan = await startLegacyGiftPlan(d);
         while (plan.cursor < plan.slots.length - 1) plan = (await commitIslandLearning('child', plan.id, plan.revision, correctAction(plan), d)).plan;
         const second = new SansuDatabase(d.name, options);
         await second.open();
@@ -186,7 +198,7 @@ describe('atomic completion and deferred rewards', () => {
 
     it('rolls back the last answer, learning, cursor and entitlement if its completion event fails', async () => {
         const d = await setup();
-        let plan = await startIslandPlan('child', d);
+        let plan = await startLegacyGiftPlan(d);
         while (plan.cursor < plan.slots.length - 1) plan = (await commitIslandLearning('child', plan.id, plan.revision, correctAction(plan), d)).plan;
         const snapshot = async () => ({ island: await d.islands.get('child'), profile: await d.appData.get('app'), logs: await d.logs.toArray(), memory: await d.memoryMath.toArray(), events: await d.islandEvents.toArray() });
         const before = await snapshot();
@@ -202,10 +214,10 @@ describe('atomic completion and deferred rewards', () => {
 
     it('lets new sets continue with rewards deferred and persists exactly one selected object across retries', async () => {
         const d = await setup();
-        await finish(d, await startIslandPlan('child', d));
+        await finish(d, await startLegacyGiftPlan(d));
         const firstIsland = (await d.islands.get('child'))!;
         const reward = firstIsland.pendingRewards[0];
-        const next = await startIslandPlan('child', d);
+        const next = await startLegacyGiftPlan(d);
         expect(next.id).not.toBe(reward.planId);
         expect((await d.islands.get('child'))?.pendingRewards[0]).toEqual(reward);
         await expect(claimIslandReward('child', firstIsland.revision, reward.id, reward.choices[0], d)).rejects.toBeInstanceOf(IslandConflict);
@@ -226,7 +238,7 @@ describe('atomic completion and deferred rewards', () => {
 
     it('rolls back a reward claim when its receipt fails, retaining the saved choices', async () => {
         const d = await setup();
-        await finish(d, await startIslandPlan('child', d));
+        await finish(d, await startLegacyGiftPlan(d));
         const island = (await d.islands.get('child'))!;
         const reward = island.pendingRewards[0];
         const fail = (_key: unknown, event: { type: string }) => { if (event.type === 'reward_claimed') throw new Error('claim write failed'); };
@@ -239,7 +251,7 @@ describe('atomic completion and deferred rewards', () => {
 
     it('resolves simultaneous different reward choices to one object and rejects the losing choice', async () => {
         const d = await setup();
-        await finish(d, await startIslandPlan('child', d));
+        await finish(d, await startLegacyGiftPlan(d));
         const island = (await d.islands.get('child'))!;
         const reward = island.pendingRewards[0];
         const second = new SansuDatabase(d.name, options);

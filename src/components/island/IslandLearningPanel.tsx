@@ -17,8 +17,9 @@ function LightSeed({ filled, current }: { filled: boolean; current: boolean }) {
 }
 
 /** Help preserves the current draft; saved answers and new slots reset it. */
-export function IslandLearningPanel({ plan, busy, feedback, onAction, observation }: {
+export function IslandLearningPanel({ plan, intro = false, busy, feedback, onAction, observation }: {
     plan: IslandPlan;
+    intro?: boolean;
     busy: boolean;
     feedback?: IslandLearningFeedback;
     onAction: (action: IslandLearningAction) => void;
@@ -40,6 +41,7 @@ export function IslandLearningPanel({ plan, busy, feedback, onAction, observatio
     const answerReceiptId = feedback && ['correct', 'retry', 'step'].includes(feedback.kind) ? feedback.id : undefined;
     return <section ref={section} className="island-learning island-workbench" aria-label="しまへ ひかりを とどけよう"
         data-learning-candidate={ISLAND_LEARNING_CANDIDATE}
+        data-intro={intro}
         data-island-plan-id={plan.id} data-island-plan-revision={plan.revision} data-input-ready={!busy}
         data-learning-feedback={feedback?.kind ?? 'ready'} data-learning-reaction-id={feedback?.id ?? ''}>
         <div className="island-learning-progress">

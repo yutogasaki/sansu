@@ -399,8 +399,8 @@ async function verifyOrdinaryClearedForLearning(page, row) {
 
 async function finishSection(page, profileId, layout, row, inspectLife = false) {
     let state = await readNative(page, profileId), attempts = 0;
-    const lifeKinds = new Set();
-    while (state.plan) {
+    const lifeKinds = new Set(), reservationId = state.plan.id, previousSets = state.island.completedSets;
+    while (state.plan?.id === reservationId) {
         assert(attempts++ < 40, 'The actual reserved section terminates');
         await assertProblemMeaning(page, state.plan.slots[state.plan.cursor]);
         const before = state, result = await attempt(page, before, { touch: layout.touch });
@@ -410,6 +410,16 @@ async function finishSection(page, profileId, layout, row, inspectLife = false) 
             if (result.saved.cursor === 1 && await page.locator('.park-input span').count()) row.parallelInput = await typeDuringCue(page, result.receipt);
             for (const kind of await verifyLocalReaction(page, before, result, row, layout)) lifeKinds.add(kind);
         }
+    }
+    assert.equal(state.islandPlans.find(plan => plan.id === reservationId)?.status, 'completed');
+    assert.equal(state.island.completedSets, previousSets + 1);
+    if (previousSets > 0) {
+        assert.equal(state.plan?.id, JSON.stringify(['island-plan-v1', profileId, previousSets + 1]));
+        assert.equal(state.plan.cursor, 0); assert.equal(state.plan.revision, 0);
+        await waitMode(page, 'learning');
+        await activate(button(page, 'しまへ'), layout.touch); await waitMode(page, 'home');
+        await activate(page.getByRole('button', { name: /^おくりものを えらぶ/ }), layout.touch);
+        assert.deepEqual(await readNative(page, profileId), state, 'Collecting the earned object leaves the automatic next reservation intact');
     }
     await waitMode(page, 'reward');
     if (inspectLife) {
@@ -528,7 +538,7 @@ try {
             assert.equal(state.logs.length, 0); assert.equal(state.island.completedSets, 0);
             await capture(page, `${layout.name}-home`, state);
             row.load.push(await loadSample(page, cdp, 'initial-home'));
-            await activate(button(page, 'ひかりを とどける'), layout.touch); await waitMode(page, 'learning');
+            await activate(page.locator('.island-start'), layout.touch); await waitMode(page, 'learning');
             state = await readNative(page, profileId); await waitLearningReady(page, state.plan); await assertControls(page);
             const original = state;
             const wrong = await attempt(page, state, { wrong: true, touch: layout.touch });
@@ -555,7 +565,7 @@ try {
             assert.equal(state.island.completedSets, 1);
             const bench = await claimAndPlace(page, profileId, state, 'bench', 'ベンチ', 'sit', layout, row);
             state = await exercisePlacement(page, cdp, profileId, layout, row, bench.item);
-            await activate(button(page, 'ひかりを とどける'), layout.touch); await waitMode(page, 'learning');
+            await activate(page.locator('.island-start'), layout.touch); await waitMode(page, 'learning');
             state = await finishSection(page, profileId, layout, row);
             assert.equal(state.island.completedSets, 2);
             state = (await claimAndPlace(page, profileId, state, 'swing', 'ブランコ', 'swing', layout, row)).state;
@@ -578,7 +588,7 @@ try {
                 ['flower', 'ひかる おはな', 'sniff'], ['mushroom', 'きのこの いす', 'rest'],
                 ['lantern', 'ほしあかり', 'admire'], ['fountain', 'ふんすい', 'watch'],
             ]) {
-                await activate(button(page, 'ひかりを とどける'), layout.touch); await waitMode(page, 'learning');
+                await activate(page.locator('.island-start'), layout.touch); await waitMode(page, 'learning');
                 await verifyOrdinaryClearedForLearning(page, row);
                 state = await finishSection(page, profileId, layout, row);
                 state = (await claimAndPlace(page, profileId, state, kind, label, action, layout, row)).state;

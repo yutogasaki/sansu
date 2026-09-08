@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Icons } from "./icons";
 import { warmUpTTS } from "../utils/tts";
 import { islandEnabled } from "../domain/island/feature";
-import { Leaf } from "lucide-react";
+import { IslandMark } from "./island/IslandMark";
 
 type TabItem = {
     to: string;
@@ -17,16 +17,49 @@ export const Footer: React.FC = () => {
     const navigate = useNavigate();
     const currentPath = location.pathname;
     const islandHome = islandEnabled();
-    const PrimaryIcon = islandHome ? Leaf : Icons.Study;
+
+    if (islandHome) {
+        const tabs: TabItem[] = [
+            { to: "/stats", icon: Icons.Stats, label: "きろく" },
+            { to: "/island", icon: IslandMark, label: "しま", activePaths: ["/", "/island"] },
+            { to: "/settings", icon: Icons.Settings, label: "せってい", activePaths: ["/settings", "/parents", "/dev"] },
+        ];
+
+        return (
+            <nav className="island-shell-nav" aria-label="メインメニュー">
+                {tabs.map(item => {
+                    const active = (item.activePaths ?? [item.to]).some(path => currentPath === path
+                        || (path !== "/" && currentPath.startsWith(`${path}/`)));
+                    const primary = item.to === "/island";
+                    return (
+                        <button
+                            key={item.to}
+                            type="button"
+                            className={`island-shell-tab${primary ? " island-shell-tab--home" : ""}`}
+                            aria-label={item.label}
+                            aria-current={active ? "page" : undefined}
+                            onClick={() => {
+                                if (item.to === currentPath) return;
+                                if (primary) warmUpTTS();
+                                navigate(item.to);
+                            }}
+                        >
+                            <item.icon width={24} height={24} strokeWidth={active ? 2.5 : 2} aria-hidden="true" />
+                            <span>{item.label}</span>
+                        </button>
+                    );
+                })}
+            </nav>
+        );
+    }
 
     const leftTabs: TabItem[] = [
-        islandHome ? { to: "/study", icon: Icons.Study, label: "れんしゅう" }
-            : { to: "/explore", icon: Icons.Explore, label: "たんけん" },
+        { to: "/explore", icon: Icons.Explore, label: "たんけん" },
         { to: "/stats", icon: Icons.Stats, label: "きろく" },
     ];
 
     const rightTabs: TabItem[] = [
-        { to: "/battle", icon: Icons.Play, label: islandHome ? "ほかの あそび" : "基地" },
+        { to: "/battle", icon: Icons.Play, label: "基地" },
         { to: "/settings", icon: Icons.Settings, label: "せってい", activePaths: ["/settings", "/parents", "/dev"] },
     ];
 
@@ -72,13 +105,13 @@ export const Footer: React.FC = () => {
             <button
                 className="fab"
                 type="button"
-                aria-label={islandHome ? "ふしぎな しま" : "まなぶ"}
+                aria-label="まなぶ"
                 onClick={() => {
                     warmUpTTS();
-                    navigate(islandHome ? "/island" : "/study");
+                    navigate("/study");
                 }}
             >
-                <PrimaryIcon
+                <Icons.Study
                     width={26}
                     height={26}
                     strokeWidth={2.6}

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { createMathProgressProfile } from "../testFixtures";
 import { generators } from "./counting";
 
 describe("counting generators visuals", () => {
@@ -27,8 +28,8 @@ describe("counting generators visuals", () => {
 
     it("count_5 starts from one item and uses a 5-frame visual", () => {
         const problem = generators.count_5({
-            profile: { mathSkills: { count_5: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("count_5", 0),
+        });
 
         expect(problem.questionVisual?.kind).toBe("single-items");
         expect(problem.correctAnswer).toBe("1");
@@ -40,8 +41,8 @@ describe("counting generators visuals", () => {
 
     it("count_dot starts from small dot counts", () => {
         const problem = generators.count_dot({
-            profile: { mathSkills: { count_dot: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("count_dot", 0),
+        });
 
         expect(problem.questionVisual?.kind).toBe("single-items");
         expect(problem.correctAnswer).toBe("1");
@@ -53,8 +54,8 @@ describe("counting generators visuals", () => {
 
     it("count_read uses a number-card visual and starts from small numerals", () => {
         const problem = generators.count_read({
-            profile: { mathSkills: { count_read: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("count_read", 0),
+        });
 
         expect(problem.questionVisual?.kind).toBe("number-card");
         expect(problem.inputType).toBe("choice");
@@ -69,8 +70,8 @@ describe("counting generators visuals", () => {
 
     it("count_read later expands to 10-frame support", () => {
         const problem = generators.count_read({
-            profile: { mathSkills: { count_read: { totalAnswers: 8 } } },
-        } as any);
+            profile: createMathProgressProfile("count_read", 8),
+        });
 
         expect(problem.questionVisual?.kind).toBe("number-card");
 
@@ -83,8 +84,8 @@ describe("counting generators visuals", () => {
 
     it("count_10 starts from 6 and uses a single-items ten-frame visual", () => {
         const problem = generators.count_10({
-            profile: { mathSkills: { count_10: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("count_10", 0),
+        });
         expect(problem.questionVisual?.kind).toBe("single-items");
         expect(problem.correctAnswer).toBe("6");
         if (problem.questionVisual?.kind === "single-items") {
@@ -96,8 +97,8 @@ describe("counting generators visuals", () => {
 
     it("count_which_more starts with large visual gaps and no numeric hints", () => {
         const problem = generators.count_which_more({
-            profile: { mathSkills: { count_which_more: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("count_which_more", 0),
+        });
         expect(problem.questionVisual?.kind).toBe("comparison-items");
         expect(problem.inputConfig?.choices?.every(choice => !/\d/.test(choice.label))).toBe(true);
         if (problem.questionVisual?.kind === "comparison-items") {
@@ -126,8 +127,8 @@ describe("counting generators visuals", () => {
 
     it("count_order starts with wide gaps on a number-line visual", () => {
         const problem = generators.count_order({
-            profile: { mathSkills: { count_order: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("count_order", 0),
+        });
         expect(problem.questionVisual?.kind).toBe("number-line");
         if (problem.questionVisual?.kind === "number-line") {
             expect(problem.questionVisual.line.highlightValues).toHaveLength(3);
@@ -203,8 +204,8 @@ describe("counting generators visuals", () => {
 
     it("spatial_words starts with an oriented item-pair visual", () => {
         const problem = generators.spatial_words({
-            profile: { mathSkills: { spatial_words: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("spatial_words", 0),
+        });
         expect(problem.questionVisual?.kind).toBe("item-pair");
         expect(problem.inputType).toBe("choice");
         expect(problem.questionText).toContain("どこ？");
@@ -215,11 +216,11 @@ describe("counting generators visuals", () => {
 
     it("spatial_words later uses front/back and inside/outside scenes", () => {
         const frontBack = generators.spatial_words({
-            profile: { mathSkills: { spatial_words: { totalAnswers: 4 } } },
-        } as any);
+            profile: createMathProgressProfile("spatial_words", 4),
+        });
         const insideOutside = generators.spatial_words({
-            profile: { mathSkills: { spatial_words: { totalAnswers: 6 } } },
-        } as any);
+            profile: createMathProgressProfile("spatial_words", 6),
+        });
 
         expect(frontBack.questionVisual?.kind).toBe("position-scene");
         expect(insideOutside.questionVisual?.kind).toBe("position-scene");
@@ -271,8 +272,8 @@ describe("counting generators visuals", () => {
 
     it("add_tiny starts from 1+1 with an addition visual", () => {
         const problem = generators.add_tiny({
-            profile: { mathSkills: { add_tiny: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("add_tiny", 0),
+        });
 
         expect(problem.questionVisual?.kind).toBe("addition-items");
         expect(problem.correctAnswer).toBe("2");
@@ -293,8 +294,8 @@ describe("counting generators visuals", () => {
 
     it("add_finger starts with make-5 combinations", () => {
         const problem = generators.add_finger({
-            profile: { mathSkills: { add_finger: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("add_finger", 0),
+        });
 
         expect(problem.questionVisual?.kind).toBe("addition-items");
         expect(problem.correctAnswer).toBe("5");
@@ -314,8 +315,8 @@ describe("counting generators visuals", () => {
 
     it("add_5 starts from easier 5-pairs before larger totals", () => {
         const problem = generators.add_5({
-            profile: { mathSkills: { add_5: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("add_5", 0),
+        });
 
         expect(problem.questionVisual?.kind).toBe("addition-items");
         expect(problem.correctAnswer).toBe("6");
@@ -327,8 +328,8 @@ describe("counting generators visuals", () => {
 
     it("sub_tiny starts from taking away 1 with a subtraction visual", () => {
         const problem = generators.sub_tiny({
-            profile: { mathSkills: { sub_tiny: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("sub_tiny", 0),
+        });
 
         expect(problem.questionVisual?.kind).toBe("subtraction-items");
         expect(problem.correctAnswer).toBe("1");
@@ -361,11 +362,11 @@ describe("counting generators visuals", () => {
 
     it("count_next_10 and count_back start from easy fixed targets on number lines", () => {
         const next = generators.count_next_10({
-            profile: { mathSkills: { count_next_10: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("count_next_10", 0),
+        });
         const back = generators.count_back({
-            profile: { mathSkills: { count_back: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("count_back", 0),
+        });
 
         expect(next.questionVisual?.kind).toBe("number-line");
         expect(back.questionVisual?.kind).toBe("number-line");
@@ -385,14 +386,14 @@ describe("counting generators visuals", () => {
 
     it("count_50, count_next_20, and count_100 start from bridged ranges on number-line visuals", () => {
         const count50 = generators.count_50({
-            profile: { mathSkills: { count_50: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("count_50", 0),
+        });
         const next20 = generators.count_next_20({
-            profile: { mathSkills: { count_next_20: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("count_next_20", 0),
+        });
         const count100 = generators.count_100({
-            profile: { mathSkills: { count_100: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("count_100", 0),
+        });
 
         expect(count50.questionVisual?.kind).toBe("number-line");
         expect(next20.questionVisual?.kind).toBe("number-line");
@@ -415,8 +416,8 @@ describe("counting generators visuals", () => {
 
     it("compare_2d starts with a base-10 visual for distant tens", () => {
         const problem = generators.compare_2d({
-            profile: { mathSkills: { compare_2d: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("compare_2d", 0),
+        });
 
         expect(problem.questionVisual?.kind).toBe("comparison-base10");
         expect(problem.inputType).toBe("choice");
@@ -427,8 +428,8 @@ describe("counting generators visuals", () => {
 
     it("compare_2d later uses a number-line visual for same-tens comparisons", () => {
         const problem = generators.compare_2d({
-            profile: { mathSkills: { compare_2d: { totalAnswers: 20 } } },
-        } as any);
+            profile: createMathProgressProfile("compare_2d", 20),
+        });
 
         expect(problem.questionVisual?.kind).toBe("number-line");
         if (problem.questionVisual?.kind === "number-line") {
@@ -474,11 +475,11 @@ describe("counting generators visuals", () => {
 
     it("count_shape and count_color use reference choice grids", () => {
         const shape = generators.count_shape({
-            profile: { mathSkills: { count_shape: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("count_shape", 0),
+        });
         const color = generators.count_color({
-            profile: { mathSkills: { count_color: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("count_color", 0),
+        });
 
         expect(shape.questionVisual?.kind).toBe("reference-choice-grid");
         expect(color.questionVisual?.kind).toBe("reference-choice-grid");
@@ -494,11 +495,11 @@ describe("counting generators visuals", () => {
 
     it("count_pair uses a reference choice grid and expands to three choices later", () => {
         const early = generators.count_pair({
-            profile: { mathSkills: { count_pair: { totalAnswers: 0 } } },
-        } as any);
+            profile: createMathProgressProfile("count_pair", 0),
+        });
         const later = generators.count_pair({
-            profile: { mathSkills: { count_pair: { totalAnswers: 4 } } },
-        } as any);
+            profile: createMathProgressProfile("count_pair", 4),
+        });
 
         expect(early.questionVisual?.kind).toBe("reference-choice-grid");
         expect(later.questionVisual?.kind).toBe("reference-choice-grid");

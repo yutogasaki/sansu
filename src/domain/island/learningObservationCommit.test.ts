@@ -29,7 +29,7 @@ async function setup(problem = arithmetic) {
     await openIsland('child', d);
     const plan = await startIslandPlan('child', d);
     // Public planner and native fake IDB are used first; a fixed one-question
-    // fixture isolates actual row/final/reward writes without random questions.
+    // fixture isolates actual row/final/growth writes without random questions.
     plan.slots = [{ problem: structuredClone(problem), assisted: false, completed: false, source: 'due', countsTowardReviewCap: true }];
     await d.islandPlans.put(plan);
     return { d, plan };
@@ -105,7 +105,8 @@ describe('Island observation preserves the existing transaction and clocks', () 
         }
         expect(plan.slots[0].hissanValues).toEqual(savedCells);
         expect((await d.logs.toArray()).map(log => log.result)).toEqual(['skipped']);
-        expect((await d.islands.get('child'))?.pendingRewards).toHaveLength(1);
+        expect((await d.islands.get('child'))?.pendingRewards).toHaveLength(0);
+        expect((await d.islands.get('child'))?.growth?.progress.garden).toBe(1);
     });
 
     it.each([undefined, false, { version: 77 }, { version: 1, adapterVersion: 'island-dom-v1', eventAt: NaN },
@@ -149,7 +150,7 @@ describe('Island observation preserves the existing transaction and clocks', () 
         expect(await snapshot(d)).toEqual(before);
     });
 
-    it('serializes two real database connections to one envelope, answer, reward and progression write', async () => {
+    it('serializes two real database connections to one envelope, answer, growth and progression write', async () => {
         const { d, plan } = await setup();
         const connection = new SansuDatabase(d.name, options); await connection.open();
         try {
@@ -159,7 +160,8 @@ describe('Island observation preserves the existing transaction and clocks', () 
             expect(await d.islandEvents.where('type').equals('answer').count()).toBe(1);
             expect(await d.logs.count()).toBe(1);
             expect((await d.memoryMath.get(['child', arithmetic.categoryId]))?.correctAnswers).toBe(11);
-            expect((await d.islands.get('child'))?.pendingRewards).toHaveLength(1);
+            expect((await d.islands.get('child'))?.pendingRewards).toHaveLength(0);
+        expect((await d.islands.get('child'))?.growth?.progress.garden).toBe(1);
         } finally { connection.close(); }
     });
 

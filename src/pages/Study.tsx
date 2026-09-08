@@ -22,6 +22,7 @@ import { DevStudySwitcher } from "../components/dev/DevStudySwitcher";
 import { getDevStudyAdjacentSelection, getDevStudySelectionSummary } from "../components/dev/devStudySelection";
 import { reachPwaUpdateCheckpoint } from "../pwa";
 import { COLD_OPEN_FIXED_TEN_ID } from "../domain/benchmark/coldOpenFixedTen";
+import { studyLearningEvidence } from '../domain/learning/attemptContext';
 
 type FixedSessionStats = {
     correct: number;
@@ -100,6 +101,8 @@ export const Study: React.FC = () => {
 
     // 問題表示時刻を記録（回答時間計測用）
     const problemShownAtRef = React.useRef<number>(Date.now());
+    const learningAssistanceRef = React.useRef<'independent' | 'assisted'>('independent');
+    const learningRepresentationChangedRef = React.useRef(false);
     // UI State for Block Transition
     const [isFinished, setIsFinished] = useState(false);
 
@@ -124,6 +127,11 @@ export const Study: React.FC = () => {
     const [isDevSwitcherOpen, setIsDevSwitcherOpen] = useState(false);
 
     const currentProblem = queue[currentIndex];
+
+    useEffect(() => {
+        learningAssistanceRef.current = 'independent';
+        learningRepresentationChangedRef.current = false;
+    }, [currentProblem?.id]);
 
     // Hissan Session
     const hissan = useHissanSession();
@@ -556,7 +564,8 @@ export const Study: React.FC = () => {
                 playSound("correct");
                 let saved = false;
                 try {
-                    saved = await handleResult(currentProblem, 'correct', timeMs);
+                    saved = await handleResult(currentProblem, 'correct', timeMs,
+                        studyLearningEvidence(currentProblem, learningAssistanceRef.current, true, learningRepresentationChangedRef.current));
                     if (saved) {
                         setCorrectCount(prev => prev + 1);
                     } else {
@@ -571,6 +580,7 @@ export const Study: React.FC = () => {
             } else if (result === 'step-correct') {
                 playSound("correct");
             } else if (result === 'incorrect') {
+                learningAssistanceRef.current = 'assisted';
                 playSound("incorrect");
             }
             return;
@@ -592,7 +602,8 @@ export const Study: React.FC = () => {
             playSound("correct");
             let saved = false;
             try {
-                saved = await handleResult(currentProblem, 'correct', timeMs);
+                saved = await handleResult(currentProblem, 'correct', timeMs,
+                    studyLearningEvidence(currentProblem, learningAssistanceRef.current, false, learningRepresentationChangedRef.current));
                 if (saved) {
                     setCorrectCount(prev => prev + 1);
                 } else {
@@ -610,7 +621,9 @@ export const Study: React.FC = () => {
             setFeedback("incorrect");
             playSound("incorrect");
             try {
-                const saved = await handleResult(currentProblem, 'incorrect', timeMs);
+                const evidence = studyLearningEvidence(currentProblem, learningAssistanceRef.current, false, learningRepresentationChangedRef.current);
+                learningAssistanceRef.current = 'assisted';
+                const saved = await handleResult(currentProblem, 'incorrect', timeMs, evidence);
                 if (saved) {
                     setShowCorrection(true);
                 } else {
@@ -653,7 +666,10 @@ export const Study: React.FC = () => {
         playSound("incorrect");
 
         try {
-            const saved = await handleResult(currentProblem, 'skipped');
+            const evidence = hissan.isHissanActive ? undefined
+                : studyLearningEvidence(currentProblem, learningAssistanceRef.current, false, learningRepresentationChangedRef.current);
+            learningAssistanceRef.current = 'assisted';
+            const saved = await handleResult(currentProblem, 'skipped', undefined, evidence);
             if (saved) {
                 setShowCorrection(true);
             } else {
@@ -665,7 +681,7 @@ export const Study: React.FC = () => {
         }
 
         // Auto-advance removed. User must click Next.
-    }, [completionPresentation, feedback, currentProblem, handleResult]);
+    }, [completionPresentation, feedback, currentProblem, handleResult, hissan.isHissanActive]);
 
     // 左スワイプでスキップ
     const swipeHandlers = useSwipeable({
@@ -872,7 +888,10 @@ export const Study: React.FC = () => {
                 hissanStepFeedback={hissan.stepFeedback}
                 hissanCanInputDecimal={hissan.canInputDecimal}
                 onHissanCellClick={hissan.handleCellClick}
-                onHissanToggle={hissan.canToggleHissanMode ? hissan.toggleHissanMode : undefined}
+                onHissanToggle={hissan.canToggleHissanMode ? () => {
+                    learningRepresentationChangedRef.current = true;
+                    hissan.toggleHissanMode();
+                } : undefined}
             />
             {isDevSession && focusSubject && (
                 <DevStudySwitcher

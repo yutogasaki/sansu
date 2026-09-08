@@ -1,0 +1,2953 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Learning rhythm critical path and approved visual comparison",
+  "sourceReports": [
+    {
+      "path": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/report.json",
+      "sha256": "12b56f45400f24c62a9e6e8e0f9441a7772b82944519c7bbbea7d00cde7c6b2a",
+      "pass": true,
+      "sourceStable": true,
+      "browserClosed": true
+    },
+    {
+      "path": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sha256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "pass": true,
+      "sourceStable": true,
+      "browserClosed": true
+    },
+    {
+      "path": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/production-capture-report.json",
+      "sha256": "b72d9809f49e2869beb5d9fcb51c98c5d8623ab8bc0302d08dd07de6d3bb3ae7",
+      "pass": true,
+      "missingReportMetadata": [
+        "sourceStable",
+        "browserClosed",
+        "humanN"
+      ]
+    }
+  ],
+  "benchmarkInventory": {
+    "path": "docs/design/audits/2026-09-08-production-release/images.json",
+    "sha256": "bebcb2a2b8da1abd227d4041f45b28c00a1f89e4055be089a89e9d9ab323c9fa"
+  },
+  "counts": {
+    "currentRhythm": 14,
+    "approvedComparisonOnly": 4,
+    "total": 41,
+    "currentOnboarding": 15,
+    "currentRewardPlacementReturn": 8
+  },
+  "humanN": 0,
+  "deviceScope": "Chromium viewport scenarios; not physical devices",
+  "runtimeReportMetadata": {
+    "target": "http://127.0.0.1:5430",
+    "buildSource": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/build-source.json",
+      "manifestSHA": "ef1c012bab46238b691fa7094cadab8782a24ff04274cee46d928be813aba1bf",
+      "sourceHash": "eb5f5a06103d3427535e647fad1e84329a3d9e25531645ec9a5e608caac4e611",
+      "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+      "flags": {
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_BUILD_PLAY_ENABLED": "true",
+        "VITE_PARK_RENDERER": "three",
+        "VITE_ISLAND_ART_DIRECTION": "moon-garden"
+      }
+    },
+    "manifest": {
+      "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+      "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": true,
+        "renderer": "three"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "artDirection": "moon-garden"
+      }
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "145.0.7632.6"
+    },
+    "execution": {
+      "kind": "full-rhythm",
+      "requestedCases": [
+        "phone-math",
+        "tablet-written"
+      ]
+    },
+    "startedAt": "2026-09-07T22:18:12.495Z",
+    "finishedAt": "2026-09-07T22:18:37.404Z",
+    "flag": "VITE_ISLAND_ENABLED=true"
+  },
+  "pendingEvidence": [],
+  "claimsBoundary": [
+    "Functional PASS is copied only from the source report.",
+    "Still screenshots do not independently prove zero-action transitions or timing; the source report records those assertions.",
+    "No child comprehension, appeal GO, SRS effectiveness or retention conclusion; human N=0.",
+    "Approved benchmarks are visual comparisons from an older revision, not current-candidate evidence.",
+    "Onboarding and rhythm sections come from separate runs and profiles on the same exact build. Their screenshots are not one continuous child/session path. Onboarding captures lack per-capture viewport and learningCandidate; those missing values remain unknown.",
+    "The reward/placement/return section is another native-profile-fixture run. Its three earned answers and first reward must not be presented as the continuation of the rhythm or real-onboarding profiles. Its raw report has no standalone profileId, sourceStable, browserClosed or humanN fields; absence is retained."
+  ],
+  "scenarios": [
+    {
+      "name": "phone-math",
+      "pass": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "profileId": "1a21618f-fb42-42ed-934f-b8e4c4b192c3",
+      "explicitSetup": {
+        "grade": "小学 1 年生",
+        "range": "足し算まで",
+        "blankName": true
+      },
+      "ordinaryReservedCount": 6,
+      "extraContinuationActions": 0,
+      "automaticRewardScreens": 0
+    },
+    {
+      "name": "tablet-written",
+      "pass": true,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "profileId": "c842765d-b924-4a78-890c-4edaaab00978",
+      "explicitSetup": {
+        "grade": "小学 3 年生",
+        "range": "筆算（2けたのたし算・ひき算）",
+        "blankName": true
+      },
+      "ordinaryReservedCount": 3,
+      "extraContinuationActions": 0,
+      "automaticRewardScreens": 0
+    }
+  ],
+  "captures": [
+    {
+      "kind": "current-onboarding",
+      "scenario": "phone-math",
+      "phase": "cold-welcome",
+      "file": "screens/onboarding--phone-math-cold-welcome.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/phone-math-cold-welcome.png",
+      "expectedSHA256": "41a591b288b10d3d7fbb9e7a5ef77f759c3d5860d27b1921e3fd2c626e3cfa63",
+      "copiedSHA256": "41a591b288b10d3d7fbb9e7a5ef77f759c3d5860d27b1921e3fd2c626e3cfa63",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sourceReportSHA256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "metadata": {
+        "file": "phone-math-cold-welcome.png",
+        "sha256": "41a591b288b10d3d7fbb9e7a5ef77f759c3d5860d27b1921e3fd2c626e3cfa63",
+        "fullPage": false,
+        "url": "http://127.0.0.1:5430/#/onboarding",
+        "mode": "welcome",
+        "candidate": "mystic-island-procedural-v2",
+        "onboardingCandidate": "island-touch-first-v1",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "delivery": "mystic-island-v1",
+        "stage": {
+          "testid": "island-stage",
+          "renderer": "three",
+          "drawCount": "3",
+          "frameTimestamp": "1490.4",
+          "triangles": "79304",
+          "geometries": "83",
+          "textures": "5",
+          "previewBuildCount": "0",
+          "previewValid": "",
+          "previewState": "null",
+          "furnitureState": "[{\"id\":\"starter-flower\",\"kind\":\"flower\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[1.5,0,0.8],\"rotationY\":0,\"life\":{\"bloomScale\":1,\"leafScale\":1}},{\"id\":\"starter-lantern\",\"kind\":\"lantern\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[-1,0,0.25],\"rotationY\":0,\"life\":{\"emissive\":0.65}}]",
+          "residentUsePhase": "0",
+          "artDirection": "moon-garden",
+          "expanded": "false",
+          "residents": "2",
+          "lighthouse": "false",
+          "residentAction": "idle",
+          "residentSpecies": "",
+          "residentItemId": "",
+          "residentTarget": "",
+          "residentX": "",
+          "residentY": "",
+          "residentZ": "",
+          "residentStates": "[{\"species\":\"otter\",\"itemId\":\"\",\"action\":\"idle\",\"position\":[0.1,0,1.6],\"usePhase\":1},{\"species\":\"rabbit\",\"itemId\":\"\",\"action\":\"idle\",\"position\":[2.45,0,1.45],\"usePhase\":1}]",
+          "playRequestId": "",
+          "playStatus": "",
+          "playReason": "",
+          "sharedActivity": "null",
+          "furnitureClearance": "null",
+          "sharedCamera": "",
+          "sharedCameraDiagnostics": "null",
+          "sharedPresentation": "null",
+          "selectedItem": "",
+          "drawCalls": "83",
+          "reactionId": "",
+          "reactionKind": "",
+          "reactionPhase": "settled",
+          "reactionTarget": "",
+          "reactionStartedAt": "0",
+          "reactionSettledAt": "0",
+          "reactionReduced": "false",
+          "residentReaction": "none",
+          "residentInterest": "null",
+          "sectionId": "",
+          "sectionCompleted": "0",
+          "sectionTotal": "0",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+          "frameCpuMs": "1.000"
+        },
+        "sourceHash": "228121fe00ee46180d6618f5e4ade912656af65386c5bcd77317512548575827",
+        "actualBuild": {
+          "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+          "revision": "0ea5c56-learning-rhythm-eb5f5a06103d"
+        },
+        "storesSHA": "ffb57b03f0c349db5998795346b0f23ac583ef7817a54df020de5803dffa39db"
+      },
+      "missingCaptureMetadata": [
+        "learningCandidate",
+        "viewport"
+      ],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "scenarioLevelMetadata": {
+        "name": "phone-math",
+        "width": 390,
+        "height": 844,
+        "profileId": "cc3686ff-d1ba-469c-8720-37050046ff44",
+        "subject": "math",
+        "gradeLabel": "年中",
+        "math": "数をかぞえる・くらべる",
+        "nameInput": ""
+      },
+      "metadataScope": "Raw capture fields are retained verbatim. Capture viewport and learningCandidate are absent; scenario dimensions and separately attached actualBuild are displayed with their original scope, never substituted into missing capture fields.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "current-onboarding",
+      "scenario": "phone-math",
+      "phase": "starter-flower",
+      "file": "screens/onboarding--phone-math-starter-flower.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/phone-math-starter-flower.png",
+      "expectedSHA256": "36dcb1232a2aaf0b8406f1c6acadd18a40d488918eeb069a2a7a8195ef5ed45e",
+      "copiedSHA256": "36dcb1232a2aaf0b8406f1c6acadd18a40d488918eeb069a2a7a8195ef5ed45e",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sourceReportSHA256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "metadata": {
+        "file": "phone-math-starter-flower.png",
+        "sha256": "36dcb1232a2aaf0b8406f1c6acadd18a40d488918eeb069a2a7a8195ef5ed45e",
+        "fullPage": false,
+        "url": "http://127.0.0.1:5430/#/onboarding",
+        "mode": "welcome",
+        "candidate": "mystic-island-procedural-v2",
+        "onboardingCandidate": "island-touch-first-v1",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "delivery": "mystic-island-v1",
+        "stage": {
+          "testid": "island-stage",
+          "renderer": "three",
+          "drawCount": "63",
+          "frameTimestamp": "3983.2",
+          "triangles": "79304",
+          "geometries": "83",
+          "textures": "5",
+          "previewBuildCount": "0",
+          "previewValid": "",
+          "previewState": "null",
+          "furnitureState": "[{\"id\":\"starter-flower\",\"kind\":\"flower\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[1.5,0,0.8],\"rotationY\":0,\"life\":{\"bloomScale\":1,\"leafScale\":1}},{\"id\":\"starter-lantern\",\"kind\":\"lantern\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[-1,0,0.25],\"rotationY\":0,\"life\":{\"emissive\":0.65}}]",
+          "residentUsePhase": "1",
+          "artDirection": "moon-garden",
+          "expanded": "false",
+          "residents": "2",
+          "lighthouse": "false",
+          "residentAction": "sniff",
+          "residentSpecies": "otter",
+          "residentItemId": "starter-flower",
+          "residentTarget": "starter-flower",
+          "residentX": "1.5",
+          "residentY": "0",
+          "residentZ": "1.57",
+          "residentStates": "[{\"species\":\"otter\",\"itemId\":\"starter-flower\",\"action\":\"sniff\",\"position\":[1.5,0,1.57],\"usePhase\":1},{\"species\":\"rabbit\",\"itemId\":\"\",\"action\":\"idle\",\"position\":[2.45,0,1.45],\"usePhase\":1}]",
+          "playRequestId": "9cd76d7f-7150-44d6-9369-23fa9b610751",
+          "playStatus": "playing",
+          "playReason": "",
+          "sharedActivity": "null",
+          "furnitureClearance": "null",
+          "sharedCamera": "",
+          "sharedCameraDiagnostics": "null",
+          "sharedPresentation": "null",
+          "selectedItem": "",
+          "drawCalls": "83",
+          "reactionId": "",
+          "reactionKind": "",
+          "reactionPhase": "settled",
+          "reactionTarget": "",
+          "reactionStartedAt": "0",
+          "reactionSettledAt": "0",
+          "reactionReduced": "false",
+          "residentReaction": "none",
+          "residentInterest": "{\"context\":\"visit\",\"itemId\":\"starter-flower\",\"species\":\"otter\",\"phase\":1,\"reduced\":false,\"sample\":{\"headPitch\":0,\"headRoll\":0,\"look\":0,\"lowPaw\":0,\"life\":0},\"target\":[1.5,0.46,0.8],\"head\":[0.41,0,-1.1021821192326179e-17],\"hands\":{\"left\":[1.9103457099401615,0.40799205137583117,1.4114505867628333],\"right\":[1.0896542900598385,0.40799205137583117,1.4114505867628329]}}",
+          "sectionId": "",
+          "sectionCompleted": "0",
+          "sectionTotal": "0",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+          "frameCpuMs": "0.500"
+        },
+        "sourceHash": "228121fe00ee46180d6618f5e4ade912656af65386c5bcd77317512548575827",
+        "actualBuild": {
+          "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+          "revision": "0ea5c56-learning-rhythm-eb5f5a06103d"
+        },
+        "storesSHA": "ffb57b03f0c349db5998795346b0f23ac583ef7817a54df020de5803dffa39db"
+      },
+      "missingCaptureMetadata": [
+        "learningCandidate",
+        "viewport"
+      ],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "scenarioLevelMetadata": {
+        "name": "phone-math",
+        "width": 390,
+        "height": 844,
+        "profileId": "cc3686ff-d1ba-469c-8720-37050046ff44",
+        "subject": "math",
+        "gradeLabel": "年中",
+        "math": "数をかぞえる・くらべる",
+        "nameInput": ""
+      },
+      "metadataScope": "Raw capture fields are retained verbatim. Capture viewport and learningCandidate are absent; scenario dimensions and separately attached actualBuild are displayed with their original scope, never substituted into missing capture fields.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "current-onboarding",
+      "scenario": "phone-math",
+      "phase": "starter-lantern",
+      "file": "screens/onboarding--phone-math-starter-lantern.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/phone-math-starter-lantern.png",
+      "expectedSHA256": "cae956cb4bff3b6509bb04dc053fa623f9b107a7a5b55e1b9bcbabda6473dda0",
+      "copiedSHA256": "cae956cb4bff3b6509bb04dc053fa623f9b107a7a5b55e1b9bcbabda6473dda0",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sourceReportSHA256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "metadata": {
+        "file": "phone-math-starter-lantern.png",
+        "sha256": "cae956cb4bff3b6509bb04dc053fa623f9b107a7a5b55e1b9bcbabda6473dda0",
+        "fullPage": false,
+        "url": "http://127.0.0.1:5430/#/onboarding",
+        "mode": "welcome",
+        "candidate": "mystic-island-procedural-v2",
+        "onboardingCandidate": "island-touch-first-v1",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "delivery": "mystic-island-v1",
+        "stage": {
+          "testid": "island-stage",
+          "renderer": "three",
+          "drawCount": "167",
+          "frameTimestamp": "8118.5",
+          "triangles": "79304",
+          "geometries": "83",
+          "textures": "5",
+          "previewBuildCount": "0",
+          "previewValid": "",
+          "previewState": "null",
+          "furnitureState": "[{\"id\":\"starter-flower\",\"kind\":\"flower\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[1.5,0,0.8],\"rotationY\":0,\"life\":{\"bloomScale\":1,\"leafScale\":1}},{\"id\":\"starter-lantern\",\"kind\":\"lantern\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[-1,0,0.25],\"rotationY\":0,\"life\":{\"emissive\":0.65}}]",
+          "residentUsePhase": "1",
+          "artDirection": "moon-garden",
+          "expanded": "false",
+          "residents": "2",
+          "lighthouse": "false",
+          "residentAction": "admire",
+          "residentSpecies": "rabbit",
+          "residentItemId": "starter-lantern",
+          "residentTarget": "starter-lantern",
+          "residentX": "-1",
+          "residentY": "0",
+          "residentZ": "1.02",
+          "residentStates": "[{\"species\":\"otter\",\"itemId\":\"starter-flower\",\"action\":\"sniff\",\"position\":[1.5,0,1.57],\"usePhase\":1},{\"species\":\"rabbit\",\"itemId\":\"starter-lantern\",\"action\":\"admire\",\"position\":[-1,0,1.02],\"usePhase\":1}]",
+          "playRequestId": "000b959a-bb46-4975-8001-8098b00e9196",
+          "playStatus": "playing",
+          "playReason": "",
+          "sharedActivity": "null",
+          "furnitureClearance": "null",
+          "sharedCamera": "",
+          "sharedCameraDiagnostics": "null",
+          "sharedPresentation": "null",
+          "selectedItem": "",
+          "drawCalls": "83",
+          "reactionId": "",
+          "reactionKind": "",
+          "reactionPhase": "settled",
+          "reactionTarget": "",
+          "reactionStartedAt": "0",
+          "reactionSettledAt": "0",
+          "reactionReduced": "false",
+          "residentReaction": "none",
+          "residentInterest": "{\"context\":\"visit\",\"itemId\":\"starter-lantern\",\"species\":\"rabbit\",\"phase\":1,\"reduced\":false,\"sample\":{\"headPitch\":0,\"headRoll\":0,\"look\":0,\"lowPaw\":0,\"life\":0},\"target\":[-0.88,0.91,0.25],\"head\":[0.28060492097025375,-0.15460054543120094,-1.1021821192326179e-17],\"hands\":{\"left\":[-0.6628542900598385,0.38148227635085036,0.890375],\"right\":[-1.3371457099401614,0.38148227635085036,0.890375]}}",
+          "sectionId": "",
+          "sectionCompleted": "0",
+          "sectionTotal": "0",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.18681,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.01061,-1.00200,1.00000",
+          "frameCpuMs": "0.800"
+        },
+        "sourceHash": "228121fe00ee46180d6618f5e4ade912656af65386c5bcd77317512548575827",
+        "actualBuild": {
+          "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+          "revision": "0ea5c56-learning-rhythm-eb5f5a06103d"
+        },
+        "storesSHA": "ffb57b03f0c349db5998795346b0f23ac583ef7817a54df020de5803dffa39db"
+      },
+      "missingCaptureMetadata": [
+        "learningCandidate",
+        "viewport"
+      ],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "scenarioLevelMetadata": {
+        "name": "phone-math",
+        "width": 390,
+        "height": 844,
+        "profileId": "cc3686ff-d1ba-469c-8720-37050046ff44",
+        "subject": "math",
+        "gradeLabel": "年中",
+        "math": "数をかぞえる・くらべる",
+        "nameInput": ""
+      },
+      "metadataScope": "Raw capture fields are retained verbatim. Capture viewport and learningCandidate are absent; scenario dimensions and separately attached actualBuild are displayed with their original scope, never substituted into missing capture fields.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "current-onboarding",
+      "scenario": "phone-math",
+      "phase": "grade",
+      "file": "screens/onboarding--phone-math-grade.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/phone-math-grade.png",
+      "expectedSHA256": "5559ab1aef1cec85bb306957ca2b071a974a16b4ac42629efdd7fde8a6bfe340",
+      "copiedSHA256": "5559ab1aef1cec85bb306957ca2b071a974a16b4ac42629efdd7fde8a6bfe340",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sourceReportSHA256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "metadata": {
+        "file": "phone-math-grade.png",
+        "sha256": "5559ab1aef1cec85bb306957ca2b071a974a16b4ac42629efdd7fde8a6bfe340",
+        "fullPage": false,
+        "url": "http://127.0.0.1:5430/#/onboarding",
+        "step": "grade",
+        "onboardingCandidate": "island-touch-first-v1",
+        "stage": null,
+        "sourceHash": "228121fe00ee46180d6618f5e4ade912656af65386c5bcd77317512548575827",
+        "actualBuild": {
+          "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+          "revision": "0ea5c56-learning-rhythm-eb5f5a06103d"
+        },
+        "storesSHA": "ffb57b03f0c349db5998795346b0f23ac583ef7817a54df020de5803dffa39db"
+      },
+      "missingCaptureMetadata": [
+        "revision",
+        "version",
+        "delivery",
+        "candidate",
+        "learningCandidate",
+        "viewport"
+      ],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "scenarioLevelMetadata": {
+        "name": "phone-math",
+        "width": 390,
+        "height": 844,
+        "profileId": "cc3686ff-d1ba-469c-8720-37050046ff44",
+        "subject": "math",
+        "gradeLabel": "年中",
+        "math": "数をかぞえる・くらべる",
+        "nameInput": ""
+      },
+      "metadataScope": "Raw capture fields are retained verbatim. Capture viewport and learningCandidate are absent; scenario dimensions and separately attached actualBuild are displayed with their original scope, never substituted into missing capture fields.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "current-onboarding",
+      "scenario": "phone-math",
+      "phase": "subject",
+      "file": "screens/onboarding--phone-math-subject.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/phone-math-subject.png",
+      "expectedSHA256": "b6fa9b0b52c1ef9f6b15ca30283f5804c93d3b54ede95e1b2f3893c155662685",
+      "copiedSHA256": "b6fa9b0b52c1ef9f6b15ca30283f5804c93d3b54ede95e1b2f3893c155662685",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sourceReportSHA256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "metadata": {
+        "file": "phone-math-subject.png",
+        "sha256": "b6fa9b0b52c1ef9f6b15ca30283f5804c93d3b54ede95e1b2f3893c155662685",
+        "fullPage": false,
+        "url": "http://127.0.0.1:5430/#/onboarding",
+        "step": "subject",
+        "onboardingCandidate": "island-touch-first-v1",
+        "stage": null,
+        "sourceHash": "228121fe00ee46180d6618f5e4ade912656af65386c5bcd77317512548575827",
+        "actualBuild": {
+          "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+          "revision": "0ea5c56-learning-rhythm-eb5f5a06103d"
+        },
+        "storesSHA": "ffb57b03f0c349db5998795346b0f23ac583ef7817a54df020de5803dffa39db"
+      },
+      "missingCaptureMetadata": [
+        "revision",
+        "version",
+        "delivery",
+        "candidate",
+        "learningCandidate",
+        "viewport"
+      ],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "scenarioLevelMetadata": {
+        "name": "phone-math",
+        "width": 390,
+        "height": 844,
+        "profileId": "cc3686ff-d1ba-469c-8720-37050046ff44",
+        "subject": "math",
+        "gradeLabel": "年中",
+        "math": "数をかぞえる・くらべる",
+        "nameInput": ""
+      },
+      "metadataScope": "Raw capture fields are retained verbatim. Capture viewport and learningCandidate are absent; scenario dimensions and separately attached actualBuild are displayed with their original scope, never substituted into missing capture fields.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "current-onboarding",
+      "scenario": "phone-math",
+      "phase": "math-range",
+      "file": "screens/onboarding--phone-math-math-range.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/phone-math-math-range.png",
+      "expectedSHA256": "e697f04f5408a3f3ba7d23d16cfae324e0059b012ce8e3b6aaec5cad0d8c1eae",
+      "copiedSHA256": "e697f04f5408a3f3ba7d23d16cfae324e0059b012ce8e3b6aaec5cad0d8c1eae",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sourceReportSHA256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "metadata": {
+        "file": "phone-math-math-range.png",
+        "sha256": "e697f04f5408a3f3ba7d23d16cfae324e0059b012ce8e3b6aaec5cad0d8c1eae",
+        "fullPage": false,
+        "url": "http://127.0.0.1:5430/#/onboarding",
+        "step": "math",
+        "onboardingCandidate": "island-touch-first-v1",
+        "stage": null,
+        "sourceHash": "228121fe00ee46180d6618f5e4ade912656af65386c5bcd77317512548575827",
+        "actualBuild": {
+          "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+          "revision": "0ea5c56-learning-rhythm-eb5f5a06103d"
+        },
+        "storesSHA": "ffb57b03f0c349db5998795346b0f23ac583ef7817a54df020de5803dffa39db"
+      },
+      "missingCaptureMetadata": [
+        "revision",
+        "version",
+        "delivery",
+        "candidate",
+        "learningCandidate",
+        "viewport"
+      ],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "scenarioLevelMetadata": {
+        "name": "phone-math",
+        "width": 390,
+        "height": 844,
+        "profileId": "cc3686ff-d1ba-469c-8720-37050046ff44",
+        "subject": "math",
+        "gradeLabel": "年中",
+        "math": "数をかぞえる・くらべる",
+        "nameInput": ""
+      },
+      "metadataScope": "Raw capture fields are retained verbatim. Capture viewport and learningCandidate are absent; scenario dimensions and separately attached actualBuild are displayed with their original scope, never substituted into missing capture fields.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "current-onboarding",
+      "scenario": "phone-math",
+      "phase": "created-first-learning",
+      "file": "screens/onboarding--phone-math-created-first-learning.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/phone-math-created-first-learning.png",
+      "expectedSHA256": "edd0962e0e40579ffb61a904f5f6cc90207db9060f05b60a886e9caa10571ed1",
+      "copiedSHA256": "edd0962e0e40579ffb61a904f5f6cc90207db9060f05b60a886e9caa10571ed1",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sourceReportSHA256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "metadata": {
+        "file": "phone-math-created-first-learning.png",
+        "sha256": "edd0962e0e40579ffb61a904f5f6cc90207db9060f05b60a886e9caa10571ed1",
+        "fullPage": false,
+        "url": "http://127.0.0.1:5430/#/island",
+        "mode": "learning",
+        "candidate": "mystic-island-procedural-v2",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "delivery": "mystic-island-v1",
+        "stage": {
+          "testid": "island-stage",
+          "renderer": "three",
+          "drawCount": "3",
+          "frameTimestamp": "10679.8",
+          "triangles": "74700",
+          "geometries": "86",
+          "textures": "4",
+          "previewBuildCount": "0",
+          "previewValid": "",
+          "previewState": "null",
+          "furnitureState": "[{\"id\":\"starter-flower\",\"kind\":\"flower\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[1.5,0,0.8],\"rotationY\":0,\"life\":{\"bloomScale\":1,\"leafScale\":1}},{\"id\":\"starter-lantern\",\"kind\":\"lantern\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[-1,0,0.25],\"rotationY\":0,\"life\":{\"emissive\":0.65}}]",
+          "residentUsePhase": "0",
+          "artDirection": "moon-garden",
+          "expanded": "false",
+          "residents": "2",
+          "lighthouse": "false",
+          "residentAction": "idle",
+          "residentSpecies": "",
+          "residentItemId": "",
+          "residentTarget": "",
+          "residentX": "",
+          "residentY": "",
+          "residentZ": "",
+          "residentStates": "[{\"species\":\"otter\",\"itemId\":\"\",\"action\":\"idle\",\"position\":[0.1,0,1.6],\"usePhase\":1,\"frameBounds\":{\"left\":-0.44093996561235993,\"right\":-0.0020443047426329923,\"bottom\":-0.5213596779557476,\"top\":0.6903248167646165}},{\"species\":\"rabbit\",\"itemId\":\"\",\"action\":\"idle\",\"position\":[2.45,0,1.45],\"usePhase\":1,\"frameBounds\":{\"left\":0.23195556414226232,\"right\":0.5756877872362361,\"bottom\":-0.6890039040468292,\"top\":0.596211933800826}}]",
+          "playRequestId": "",
+          "playStatus": "",
+          "playReason": "",
+          "sharedActivity": "null",
+          "furnitureClearance": "null",
+          "sharedCamera": "",
+          "sharedCameraDiagnostics": "null",
+          "sharedPresentation": "null",
+          "selectedItem": "",
+          "drawCalls": "73",
+          "reactionId": "",
+          "reactionKind": "",
+          "reactionPhase": "settled",
+          "reactionTarget": "",
+          "reactionStartedAt": "0",
+          "reactionSettledAt": "0",
+          "reactionReduced": "false",
+          "residentReaction": "none",
+          "residentInterest": "null",
+          "sectionId": "[\"island-plan-v1\",\"cc3686ff-d1ba-469c-8720-37050046ff44\",0]",
+          "sectionCompleted": "0",
+          "sectionTotal": "3",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.27778,0.00000,0.00000,0.00000,0.00000,0.53105,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+          "frameCpuMs": "1.000"
+        },
+        "sourceHash": "228121fe00ee46180d6618f5e4ade912656af65386c5bcd77317512548575827",
+        "actualBuild": {
+          "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+          "revision": "0ea5c56-learning-rhythm-eb5f5a06103d"
+        },
+        "storesSHA": "94b288721a50daabda7f31bb1f0176777b7443fd7502b36b34c686b72093cc98"
+      },
+      "missingCaptureMetadata": [
+        "learningCandidate",
+        "viewport"
+      ],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "scenarioLevelMetadata": {
+        "name": "phone-math",
+        "width": 390,
+        "height": 844,
+        "profileId": "cc3686ff-d1ba-469c-8720-37050046ff44",
+        "subject": "math",
+        "gradeLabel": "年中",
+        "math": "数をかぞえる・くらべる",
+        "nameInput": ""
+      },
+      "metadataScope": "Raw capture fields are retained verbatim. Capture viewport and learningCandidate are absent; scenario dimensions and separately attached actualBuild are displayed with their original scope, never substituted into missing capture fields.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "current-onboarding",
+      "scenario": "tablet-mix",
+      "phase": "cold-welcome",
+      "file": "screens/onboarding--tablet-mix-cold-welcome.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/tablet-mix-cold-welcome.png",
+      "expectedSHA256": "aa10014b272ab7e205e64876373c105ec0a74d8f6eeadc169ea324736968091f",
+      "copiedSHA256": "aa10014b272ab7e205e64876373c105ec0a74d8f6eeadc169ea324736968091f",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sourceReportSHA256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "metadata": {
+        "file": "tablet-mix-cold-welcome.png",
+        "sha256": "aa10014b272ab7e205e64876373c105ec0a74d8f6eeadc169ea324736968091f",
+        "fullPage": false,
+        "url": "http://127.0.0.1:5430/#/onboarding",
+        "mode": "welcome",
+        "candidate": "mystic-island-procedural-v2",
+        "onboardingCandidate": "island-touch-first-v1",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "delivery": "mystic-island-v1",
+        "stage": {
+          "testid": "island-stage",
+          "renderer": "three",
+          "drawCount": "3",
+          "frameTimestamp": "1308.3",
+          "triangles": "79304",
+          "geometries": "83",
+          "textures": "5",
+          "previewBuildCount": "0",
+          "previewValid": "",
+          "previewState": "null",
+          "furnitureState": "[{\"id\":\"starter-flower\",\"kind\":\"flower\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[1.5,0,0.8],\"rotationY\":0,\"life\":{\"bloomScale\":1,\"leafScale\":1}},{\"id\":\"starter-lantern\",\"kind\":\"lantern\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[-1,0,0.25],\"rotationY\":0,\"life\":{\"emissive\":0.65}}]",
+          "residentUsePhase": "0",
+          "artDirection": "moon-garden",
+          "expanded": "false",
+          "residents": "2",
+          "lighthouse": "false",
+          "residentAction": "idle",
+          "residentSpecies": "",
+          "residentItemId": "",
+          "residentTarget": "",
+          "residentX": "",
+          "residentY": "",
+          "residentZ": "",
+          "residentStates": "[{\"species\":\"otter\",\"itemId\":\"\",\"action\":\"idle\",\"position\":[0.1,0,1.6],\"usePhase\":1},{\"species\":\"rabbit\",\"itemId\":\"\",\"action\":\"idle\",\"position\":[2.45,0,1.45],\"usePhase\":1}]",
+          "playRequestId": "",
+          "playStatus": "",
+          "playReason": "",
+          "sharedActivity": "null",
+          "furnitureClearance": "null",
+          "sharedCamera": "",
+          "sharedCameraDiagnostics": "null",
+          "sharedPresentation": "null",
+          "selectedItem": "",
+          "drawCalls": "83",
+          "reactionId": "",
+          "reactionKind": "",
+          "reactionPhase": "settled",
+          "reactionTarget": "",
+          "reactionStartedAt": "0",
+          "reactionSettledAt": "0",
+          "reactionReduced": "false",
+          "residentReaction": "none",
+          "residentInterest": "null",
+          "sectionId": "",
+          "sectionCompleted": "0",
+          "sectionTotal": "0",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.16916,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.00961,-1.00200,1.00000",
+          "frameCpuMs": "1.400"
+        },
+        "sourceHash": "228121fe00ee46180d6618f5e4ade912656af65386c5bcd77317512548575827",
+        "actualBuild": {
+          "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+          "revision": "0ea5c56-learning-rhythm-eb5f5a06103d"
+        },
+        "storesSHA": "ffb57b03f0c349db5998795346b0f23ac583ef7817a54df020de5803dffa39db"
+      },
+      "missingCaptureMetadata": [
+        "learningCandidate",
+        "viewport"
+      ],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "scenarioLevelMetadata": {
+        "name": "tablet-mix",
+        "width": 768,
+        "height": 1024,
+        "profileId": "1588a15d-d1ab-4a9b-a1ac-c589cc4cb0ed",
+        "subject": "mix",
+        "gradeLabel": "小学 3 年生",
+        "math": "筆算（2けたのたし算・ひき算）",
+        "english": "すこし",
+        "nameInput": "あおい"
+      },
+      "metadataScope": "Raw capture fields are retained verbatim. Capture viewport and learningCandidate are absent; scenario dimensions and separately attached actualBuild are displayed with their original scope, never substituted into missing capture fields.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "current-onboarding",
+      "scenario": "tablet-mix",
+      "phase": "starter-flower",
+      "file": "screens/onboarding--tablet-mix-starter-flower.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/tablet-mix-starter-flower.png",
+      "expectedSHA256": "df573eede697585aef82bcd59cdea1bbfe3f0e9b36b021d3d810494e959d80f0",
+      "copiedSHA256": "df573eede697585aef82bcd59cdea1bbfe3f0e9b36b021d3d810494e959d80f0",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sourceReportSHA256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "metadata": {
+        "file": "tablet-mix-starter-flower.png",
+        "sha256": "df573eede697585aef82bcd59cdea1bbfe3f0e9b36b021d3d810494e959d80f0",
+        "fullPage": false,
+        "url": "http://127.0.0.1:5430/#/onboarding",
+        "mode": "welcome",
+        "candidate": "mystic-island-procedural-v2",
+        "onboardingCandidate": "island-touch-first-v1",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "delivery": "mystic-island-v1",
+        "stage": {
+          "testid": "island-stage",
+          "renderer": "three",
+          "drawCount": "62",
+          "frameTimestamp": "3761.1",
+          "triangles": "79304",
+          "geometries": "83",
+          "textures": "5",
+          "previewBuildCount": "0",
+          "previewValid": "",
+          "previewState": "null",
+          "furnitureState": "[{\"id\":\"starter-flower\",\"kind\":\"flower\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[1.5,0,0.8],\"rotationY\":0,\"life\":{\"bloomScale\":1,\"leafScale\":1}},{\"id\":\"starter-lantern\",\"kind\":\"lantern\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[-1,0,0.25],\"rotationY\":0,\"life\":{\"emissive\":0.65}}]",
+          "residentUsePhase": "1",
+          "artDirection": "moon-garden",
+          "expanded": "false",
+          "residents": "2",
+          "lighthouse": "false",
+          "residentAction": "sniff",
+          "residentSpecies": "otter",
+          "residentItemId": "starter-flower",
+          "residentTarget": "starter-flower",
+          "residentX": "1.5",
+          "residentY": "0",
+          "residentZ": "1.57",
+          "residentStates": "[{\"species\":\"otter\",\"itemId\":\"starter-flower\",\"action\":\"sniff\",\"position\":[1.5,0,1.57],\"usePhase\":1},{\"species\":\"rabbit\",\"itemId\":\"\",\"action\":\"idle\",\"position\":[2.45,0,1.45],\"usePhase\":1}]",
+          "playRequestId": "b4a7713e-e57e-4d70-9acd-627c69ba8e43",
+          "playStatus": "playing",
+          "playReason": "",
+          "sharedActivity": "null",
+          "furnitureClearance": "null",
+          "sharedCamera": "",
+          "sharedCameraDiagnostics": "null",
+          "sharedPresentation": "null",
+          "selectedItem": "",
+          "drawCalls": "83",
+          "reactionId": "",
+          "reactionKind": "",
+          "reactionPhase": "settled",
+          "reactionTarget": "",
+          "reactionStartedAt": "0",
+          "reactionSettledAt": "0",
+          "reactionReduced": "false",
+          "residentReaction": "none",
+          "residentInterest": "{\"context\":\"visit\",\"itemId\":\"starter-flower\",\"species\":\"otter\",\"phase\":1,\"reduced\":false,\"sample\":{\"headPitch\":0,\"headRoll\":0,\"look\":0,\"lowPaw\":0,\"life\":0},\"target\":[1.5,0.46,0.8],\"head\":[0.41,0,-1.1021821192326179e-17],\"hands\":{\"left\":[1.9103457099401615,0.40799205137583117,1.4114505867628333],\"right\":[1.0896542900598385,0.40799205137583117,1.4114505867628329]}}",
+          "sectionId": "",
+          "sectionCompleted": "0",
+          "sectionTotal": "0",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.16916,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.00961,-1.00200,1.00000",
+          "frameCpuMs": "0.700"
+        },
+        "sourceHash": "228121fe00ee46180d6618f5e4ade912656af65386c5bcd77317512548575827",
+        "actualBuild": {
+          "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+          "revision": "0ea5c56-learning-rhythm-eb5f5a06103d"
+        },
+        "storesSHA": "ffb57b03f0c349db5998795346b0f23ac583ef7817a54df020de5803dffa39db"
+      },
+      "missingCaptureMetadata": [
+        "learningCandidate",
+        "viewport"
+      ],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "scenarioLevelMetadata": {
+        "name": "tablet-mix",
+        "width": 768,
+        "height": 1024,
+        "profileId": "1588a15d-d1ab-4a9b-a1ac-c589cc4cb0ed",
+        "subject": "mix",
+        "gradeLabel": "小学 3 年生",
+        "math": "筆算（2けたのたし算・ひき算）",
+        "english": "すこし",
+        "nameInput": "あおい"
+      },
+      "metadataScope": "Raw capture fields are retained verbatim. Capture viewport and learningCandidate are absent; scenario dimensions and separately attached actualBuild are displayed with their original scope, never substituted into missing capture fields.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "current-onboarding",
+      "scenario": "tablet-mix",
+      "phase": "starter-lantern",
+      "file": "screens/onboarding--tablet-mix-starter-lantern.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/tablet-mix-starter-lantern.png",
+      "expectedSHA256": "ca3ad404f3602af034e5171e569e1313169d70ea71a68d5b73415e5dea1bffa0",
+      "copiedSHA256": "ca3ad404f3602af034e5171e569e1313169d70ea71a68d5b73415e5dea1bffa0",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sourceReportSHA256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "metadata": {
+        "file": "tablet-mix-starter-lantern.png",
+        "sha256": "ca3ad404f3602af034e5171e569e1313169d70ea71a68d5b73415e5dea1bffa0",
+        "fullPage": false,
+        "url": "http://127.0.0.1:5430/#/onboarding",
+        "mode": "welcome",
+        "candidate": "mystic-island-procedural-v2",
+        "onboardingCandidate": "island-touch-first-v1",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "delivery": "mystic-island-v1",
+        "stage": {
+          "testid": "island-stage",
+          "renderer": "three",
+          "drawCount": "167",
+          "frameTimestamp": "7883.7",
+          "triangles": "79304",
+          "geometries": "83",
+          "textures": "5",
+          "previewBuildCount": "0",
+          "previewValid": "",
+          "previewState": "null",
+          "furnitureState": "[{\"id\":\"starter-flower\",\"kind\":\"flower\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[1.5,0,0.8],\"rotationY\":0,\"life\":{\"bloomScale\":1,\"leafScale\":1}},{\"id\":\"starter-lantern\",\"kind\":\"lantern\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[-1,0,0.25],\"rotationY\":0,\"life\":{\"emissive\":0.65}}]",
+          "residentUsePhase": "1",
+          "artDirection": "moon-garden",
+          "expanded": "false",
+          "residents": "2",
+          "lighthouse": "false",
+          "residentAction": "admire",
+          "residentSpecies": "rabbit",
+          "residentItemId": "starter-lantern",
+          "residentTarget": "starter-lantern",
+          "residentX": "-1",
+          "residentY": "0",
+          "residentZ": "1.02",
+          "residentStates": "[{\"species\":\"otter\",\"itemId\":\"starter-flower\",\"action\":\"sniff\",\"position\":[1.5,0,1.57],\"usePhase\":1},{\"species\":\"rabbit\",\"itemId\":\"starter-lantern\",\"action\":\"admire\",\"position\":[-1,0,1.02],\"usePhase\":1}]",
+          "playRequestId": "05f40b7c-970d-4d10-a3a9-6652b5ed57f2",
+          "playStatus": "playing",
+          "playReason": "",
+          "sharedActivity": "null",
+          "furnitureClearance": "null",
+          "sharedCamera": "",
+          "sharedCameraDiagnostics": "null",
+          "sharedPresentation": "null",
+          "selectedItem": "",
+          "drawCalls": "83",
+          "reactionId": "",
+          "reactionKind": "",
+          "reactionPhase": "settled",
+          "reactionTarget": "",
+          "reactionStartedAt": "0",
+          "reactionSettledAt": "0",
+          "reactionReduced": "false",
+          "residentReaction": "none",
+          "residentInterest": "{\"context\":\"visit\",\"itemId\":\"starter-lantern\",\"species\":\"rabbit\",\"phase\":1,\"reduced\":false,\"sample\":{\"headPitch\":0,\"headRoll\":0,\"look\":0,\"lowPaw\":0,\"life\":0},\"target\":[-0.88,0.91,0.25],\"head\":[0.28060492097025375,-0.15460054543120094,-1.1021821192326179e-17],\"hands\":{\"left\":[-0.6628542900598385,0.38148227635085036,0.890375],\"right\":[-1.3371457099401614,0.38148227635085036,0.890375]}}",
+          "sectionId": "",
+          "sectionCompleted": "0",
+          "sectionTotal": "0",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.18489,0.00000,0.00000,0.00000,0.00000,0.16916,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01215,-0.00961,-1.00200,1.00000",
+          "frameCpuMs": "0.500"
+        },
+        "sourceHash": "228121fe00ee46180d6618f5e4ade912656af65386c5bcd77317512548575827",
+        "actualBuild": {
+          "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+          "revision": "0ea5c56-learning-rhythm-eb5f5a06103d"
+        },
+        "storesSHA": "ffb57b03f0c349db5998795346b0f23ac583ef7817a54df020de5803dffa39db"
+      },
+      "missingCaptureMetadata": [
+        "learningCandidate",
+        "viewport"
+      ],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "scenarioLevelMetadata": {
+        "name": "tablet-mix",
+        "width": 768,
+        "height": 1024,
+        "profileId": "1588a15d-d1ab-4a9b-a1ac-c589cc4cb0ed",
+        "subject": "mix",
+        "gradeLabel": "小学 3 年生",
+        "math": "筆算（2けたのたし算・ひき算）",
+        "english": "すこし",
+        "nameInput": "あおい"
+      },
+      "metadataScope": "Raw capture fields are retained verbatim. Capture viewport and learningCandidate are absent; scenario dimensions and separately attached actualBuild are displayed with their original scope, never substituted into missing capture fields.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "current-onboarding",
+      "scenario": "tablet-mix",
+      "phase": "grade",
+      "file": "screens/onboarding--tablet-mix-grade.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/tablet-mix-grade.png",
+      "expectedSHA256": "f1dbedd94141503993dcba833aaae0a0d660438659666ba8393698a949303ef6",
+      "copiedSHA256": "f1dbedd94141503993dcba833aaae0a0d660438659666ba8393698a949303ef6",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sourceReportSHA256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "metadata": {
+        "file": "tablet-mix-grade.png",
+        "sha256": "f1dbedd94141503993dcba833aaae0a0d660438659666ba8393698a949303ef6",
+        "fullPage": false,
+        "url": "http://127.0.0.1:5430/#/onboarding",
+        "step": "grade",
+        "onboardingCandidate": "island-touch-first-v1",
+        "stage": null,
+        "sourceHash": "228121fe00ee46180d6618f5e4ade912656af65386c5bcd77317512548575827",
+        "actualBuild": {
+          "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+          "revision": "0ea5c56-learning-rhythm-eb5f5a06103d"
+        },
+        "storesSHA": "ffb57b03f0c349db5998795346b0f23ac583ef7817a54df020de5803dffa39db"
+      },
+      "missingCaptureMetadata": [
+        "revision",
+        "version",
+        "delivery",
+        "candidate",
+        "learningCandidate",
+        "viewport"
+      ],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "scenarioLevelMetadata": {
+        "name": "tablet-mix",
+        "width": 768,
+        "height": 1024,
+        "profileId": "1588a15d-d1ab-4a9b-a1ac-c589cc4cb0ed",
+        "subject": "mix",
+        "gradeLabel": "小学 3 年生",
+        "math": "筆算（2けたのたし算・ひき算）",
+        "english": "すこし",
+        "nameInput": "あおい"
+      },
+      "metadataScope": "Raw capture fields are retained verbatim. Capture viewport and learningCandidate are absent; scenario dimensions and separately attached actualBuild are displayed with their original scope, never substituted into missing capture fields.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "current-onboarding",
+      "scenario": "tablet-mix",
+      "phase": "subject",
+      "file": "screens/onboarding--tablet-mix-subject.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/tablet-mix-subject.png",
+      "expectedSHA256": "b8022c9585839db82c7fe4beba8b04debd6c5a19b4c436297697a0e36d92c036",
+      "copiedSHA256": "b8022c9585839db82c7fe4beba8b04debd6c5a19b4c436297697a0e36d92c036",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sourceReportSHA256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "metadata": {
+        "file": "tablet-mix-subject.png",
+        "sha256": "b8022c9585839db82c7fe4beba8b04debd6c5a19b4c436297697a0e36d92c036",
+        "fullPage": false,
+        "url": "http://127.0.0.1:5430/#/onboarding",
+        "step": "subject",
+        "onboardingCandidate": "island-touch-first-v1",
+        "stage": null,
+        "sourceHash": "228121fe00ee46180d6618f5e4ade912656af65386c5bcd77317512548575827",
+        "actualBuild": {
+          "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+          "revision": "0ea5c56-learning-rhythm-eb5f5a06103d"
+        },
+        "storesSHA": "ffb57b03f0c349db5998795346b0f23ac583ef7817a54df020de5803dffa39db"
+      },
+      "missingCaptureMetadata": [
+        "revision",
+        "version",
+        "delivery",
+        "candidate",
+        "learningCandidate",
+        "viewport"
+      ],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "scenarioLevelMetadata": {
+        "name": "tablet-mix",
+        "width": 768,
+        "height": 1024,
+        "profileId": "1588a15d-d1ab-4a9b-a1ac-c589cc4cb0ed",
+        "subject": "mix",
+        "gradeLabel": "小学 3 年生",
+        "math": "筆算（2けたのたし算・ひき算）",
+        "english": "すこし",
+        "nameInput": "あおい"
+      },
+      "metadataScope": "Raw capture fields are retained verbatim. Capture viewport and learningCandidate are absent; scenario dimensions and separately attached actualBuild are displayed with their original scope, never substituted into missing capture fields.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "current-onboarding",
+      "scenario": "tablet-mix",
+      "phase": "math-range",
+      "file": "screens/onboarding--tablet-mix-math-range.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/tablet-mix-math-range.png",
+      "expectedSHA256": "f6b30ff24a944f8c13062605771f661518d623c0de2652852be5f5dcb0dce2e4",
+      "copiedSHA256": "f6b30ff24a944f8c13062605771f661518d623c0de2652852be5f5dcb0dce2e4",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sourceReportSHA256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "metadata": {
+        "file": "tablet-mix-math-range.png",
+        "sha256": "f6b30ff24a944f8c13062605771f661518d623c0de2652852be5f5dcb0dce2e4",
+        "fullPage": false,
+        "url": "http://127.0.0.1:5430/#/onboarding",
+        "step": "math",
+        "onboardingCandidate": "island-touch-first-v1",
+        "stage": null,
+        "sourceHash": "228121fe00ee46180d6618f5e4ade912656af65386c5bcd77317512548575827",
+        "actualBuild": {
+          "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+          "revision": "0ea5c56-learning-rhythm-eb5f5a06103d"
+        },
+        "storesSHA": "ffb57b03f0c349db5998795346b0f23ac583ef7817a54df020de5803dffa39db"
+      },
+      "missingCaptureMetadata": [
+        "revision",
+        "version",
+        "delivery",
+        "candidate",
+        "learningCandidate",
+        "viewport"
+      ],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "scenarioLevelMetadata": {
+        "name": "tablet-mix",
+        "width": 768,
+        "height": 1024,
+        "profileId": "1588a15d-d1ab-4a9b-a1ac-c589cc4cb0ed",
+        "subject": "mix",
+        "gradeLabel": "小学 3 年生",
+        "math": "筆算（2けたのたし算・ひき算）",
+        "english": "すこし",
+        "nameInput": "あおい"
+      },
+      "metadataScope": "Raw capture fields are retained verbatim. Capture viewport and learningCandidate are absent; scenario dimensions and separately attached actualBuild are displayed with their original scope, never substituted into missing capture fields.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "current-onboarding",
+      "scenario": "tablet-mix",
+      "phase": "english-range",
+      "file": "screens/onboarding--tablet-mix-english-range.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/tablet-mix-english-range.png",
+      "expectedSHA256": "a060a6699488374d5202c6a3c70f1802414087154f7b57778b65df60be6e999a",
+      "copiedSHA256": "a060a6699488374d5202c6a3c70f1802414087154f7b57778b65df60be6e999a",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sourceReportSHA256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "metadata": {
+        "file": "tablet-mix-english-range.png",
+        "sha256": "a060a6699488374d5202c6a3c70f1802414087154f7b57778b65df60be6e999a",
+        "fullPage": false,
+        "url": "http://127.0.0.1:5430/#/onboarding",
+        "step": "english",
+        "onboardingCandidate": "island-touch-first-v1",
+        "stage": null,
+        "sourceHash": "228121fe00ee46180d6618f5e4ade912656af65386c5bcd77317512548575827",
+        "actualBuild": {
+          "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+          "revision": "0ea5c56-learning-rhythm-eb5f5a06103d"
+        },
+        "storesSHA": "ffb57b03f0c349db5998795346b0f23ac583ef7817a54df020de5803dffa39db"
+      },
+      "missingCaptureMetadata": [
+        "revision",
+        "version",
+        "delivery",
+        "candidate",
+        "learningCandidate",
+        "viewport"
+      ],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "scenarioLevelMetadata": {
+        "name": "tablet-mix",
+        "width": 768,
+        "height": 1024,
+        "profileId": "1588a15d-d1ab-4a9b-a1ac-c589cc4cb0ed",
+        "subject": "mix",
+        "gradeLabel": "小学 3 年生",
+        "math": "筆算（2けたのたし算・ひき算）",
+        "english": "すこし",
+        "nameInput": "あおい"
+      },
+      "metadataScope": "Raw capture fields are retained verbatim. Capture viewport and learningCandidate are absent; scenario dimensions and separately attached actualBuild are displayed with their original scope, never substituted into missing capture fields.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "current-onboarding",
+      "scenario": "tablet-mix",
+      "phase": "created-first-learning",
+      "file": "screens/onboarding--tablet-mix-created-first-learning.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/tablet-mix-created-first-learning.png",
+      "expectedSHA256": "0f0a3fabc897bb36fb91ab0896d5e63277683d54fbdc17e0fd794f760cd00829",
+      "copiedSHA256": "0f0a3fabc897bb36fb91ab0896d5e63277683d54fbdc17e0fd794f760cd00829",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/onboarding/report.json",
+      "sourceReportSHA256": "cf482d9a25b925ef4aa0f64a1d8f5f452df29e705c01bbf4eb7d75905e4ffd1c",
+      "metadata": {
+        "file": "tablet-mix-created-first-learning.png",
+        "sha256": "0f0a3fabc897bb36fb91ab0896d5e63277683d54fbdc17e0fd794f760cd00829",
+        "fullPage": false,
+        "url": "http://127.0.0.1:5430/#/island",
+        "mode": "learning",
+        "candidate": "mystic-island-procedural-v2",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "delivery": "mystic-island-v1",
+        "stage": {
+          "testid": "island-stage",
+          "renderer": "three",
+          "drawCount": "3",
+          "frameTimestamp": "10136.3",
+          "triangles": "74652",
+          "geometries": "86",
+          "textures": "4",
+          "previewBuildCount": "0",
+          "previewValid": "",
+          "previewState": "null",
+          "furnitureState": "[{\"id\":\"starter-flower\",\"kind\":\"flower\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[1.5,0,0.8],\"rotationY\":0,\"life\":{\"bloomScale\":1,\"leafScale\":1}},{\"id\":\"starter-lantern\",\"kind\":\"lantern\",\"visible\":true,\"rootScale\":[1,1,1],\"position\":[-1,0,0.25],\"rotationY\":0,\"life\":{\"emissive\":0.65}}]",
+          "residentUsePhase": "0",
+          "artDirection": "moon-garden",
+          "expanded": "false",
+          "residents": "2",
+          "lighthouse": "false",
+          "residentAction": "idle",
+          "residentSpecies": "",
+          "residentItemId": "",
+          "residentTarget": "",
+          "residentX": "",
+          "residentY": "",
+          "residentZ": "",
+          "residentStates": "[{\"species\":\"otter\",\"itemId\":\"\",\"action\":\"idle\",\"position\":[0.1,0,1.6],\"usePhase\":1,\"frameBounds\":{\"left\":-0.24560632647445996,\"right\":-0.0011386905637712314,\"bottom\":-0.5339991601725659,\"top\":0.7329600795710887}},{\"species\":\"rabbit\",\"itemId\":\"\",\"action\":\"idle\",\"position\":[2.45,0,1.45],\"usePhase\":1,\"frameBounds\":{\"left\":0.1292007040803722,\"right\":0.32066170827346546,\"bottom\":-0.7092909974134047,\"top\":0.634553945656331}}]",
+          "playRequestId": "",
+          "playStatus": "",
+          "playReason": "",
+          "sharedActivity": "null",
+          "furnitureClearance": "null",
+          "sharedCamera": "",
+          "sharedCameraDiagnostics": "null",
+          "sharedPresentation": "null",
+          "selectedItem": "",
+          "drawCalls": "72",
+          "reactionId": "",
+          "reactionKind": "",
+          "reactionPhase": "settled",
+          "reactionTarget": "",
+          "reactionStartedAt": "0",
+          "reactionSettledAt": "0",
+          "reactionReduced": "false",
+          "residentReaction": "none",
+          "residentInterest": "null",
+          "sectionId": "[\"island-plan-v1\",\"1588a15d-d1ab-4a9b-a1ac-c589cc4cb0ed\",0]",
+          "sectionCompleted": "0",
+          "sectionTotal": "3",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,5.50000,9.35000,14.50000,1.00000,0.15472,0.00000,0.00000,0.00000,0.00000,0.55527,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.01114,-1.00200,1.00000",
+          "frameCpuMs": "0.700"
+        },
+        "sourceHash": "228121fe00ee46180d6618f5e4ade912656af65386c5bcd77317512548575827",
+        "actualBuild": {
+          "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+          "revision": "0ea5c56-learning-rhythm-eb5f5a06103d"
+        },
+        "storesSHA": "270cf8f2a6a9236c8fbd57448de527d55ddbd92e1a0fa1b0d27c14edde614c93"
+      },
+      "missingCaptureMetadata": [
+        "learningCandidate",
+        "viewport"
+      ],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "scenarioLevelMetadata": {
+        "name": "tablet-mix",
+        "width": 768,
+        "height": 1024,
+        "profileId": "1588a15d-d1ab-4a9b-a1ac-c589cc4cb0ed",
+        "subject": "mix",
+        "gradeLabel": "小学 3 年生",
+        "math": "筆算（2けたのたし算・ひき算）",
+        "english": "すこし",
+        "nameInput": "あおい"
+      },
+      "metadataScope": "Raw capture fields are retained verbatim. Capture viewport and learningCandidate are absent; scenario dimensions and separately attached actualBuild are displayed with their original scope, never substituted into missing capture fields.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "current-rhythm",
+      "scenario": "phone-math",
+      "phase": "intro-first-ready",
+      "file": "screens/phone-math-intro-first-ready.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/phone-math-intro-first-ready.png",
+      "expectedSHA256": "6283053b8dc48d846ce713af845c0f89b2c8e66eb57f613875649d971e5dca06",
+      "copiedSHA256": "6283053b8dc48d846ce713af845c0f89b2c8e66eb57f613875649d971e5dca06",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/report.json",
+      "sourceReportSHA256": "12b56f45400f24c62a9e6e8e0f9441a7772b82944519c7bbbea7d00cde7c6b2a",
+      "metadata": {
+        "file": "phone-math-intro-first-ready.png",
+        "sha256": "6283053b8dc48d846ce713af845c0f89b2c8e66eb57f613875649d971e5dca06",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 73,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "input": [
+          {
+            "id": "[\"island-plan-v1\",\"1a21618f-fb42-42ed-934f-b8e4c4b192c3\",0]",
+            "revision": "0",
+            "intro": "true",
+            "ready": "true",
+            "count": "1もんめ、ぜんぶで3もん"
+          }
+        ],
+        "sourceHash": "eb5f5a06103d3427535e647fad1e84329a3d9e25531645ec9a5e608caac4e611"
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "browser": {
+          "name": "chromium",
+          "version": "145.0.7632.6"
+        },
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "metadataScope": "Capture fields are copied verbatim. Target/browser/flag/humanN are separately identified report-level facts, not added to raw capture metadata.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "current-rhythm",
+      "scenario": "phone-math",
+      "phase": "intro-reward",
+      "file": "screens/phone-math-intro-reward.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/phone-math-intro-reward.png",
+      "expectedSHA256": "9f99774fc688e814ae0f3fccae560fcad2d340cdaaf7bb619bd746b2cc69924f",
+      "copiedSHA256": "9f99774fc688e814ae0f3fccae560fcad2d340cdaaf7bb619bd746b2cc69924f",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/report.json",
+      "sourceReportSHA256": "12b56f45400f24c62a9e6e8e0f9441a7772b82944519c7bbbea7d00cde7c6b2a",
+      "metadata": {
+        "file": "phone-math-intro-reward.png",
+        "sha256": "9f99774fc688e814ae0f3fccae560fcad2d340cdaaf7bb619bd746b2cc69924f",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "reward",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 84,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "input": [],
+        "sourceHash": "eb5f5a06103d3427535e647fad1e84329a3d9e25531645ec9a5e608caac4e611"
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "browser": {
+          "name": "chromium",
+          "version": "145.0.7632.6"
+        },
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "metadataScope": "Capture fields are copied verbatim. Target/browser/flag/humanN are separately identified report-level facts, not added to raw capture metadata.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "current-rhythm",
+      "scenario": "phone-math",
+      "phase": "normal-first-ready",
+      "file": "screens/phone-math-normal-first-ready.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/phone-math-normal-first-ready.png",
+      "expectedSHA256": "97fe9adcea9f4360805936a26de139221b0a51e68563bcfde192ebd134952b94",
+      "copiedSHA256": "97fe9adcea9f4360805936a26de139221b0a51e68563bcfde192ebd134952b94",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/report.json",
+      "sourceReportSHA256": "12b56f45400f24c62a9e6e8e0f9441a7772b82944519c7bbbea7d00cde7c6b2a",
+      "metadata": {
+        "file": "phone-math-normal-first-ready.png",
+        "sha256": "97fe9adcea9f4360805936a26de139221b0a51e68563bcfde192ebd134952b94",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 76,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "input": [
+          {
+            "id": "[\"island-plan-v1\",\"1a21618f-fb42-42ed-934f-b8e4c4b192c3\",1]",
+            "revision": "0",
+            "intro": "false",
+            "ready": "true",
+            "count": "1もんめ、ぜんぶで6もん"
+          }
+        ],
+        "sourceHash": "eb5f5a06103d3427535e647fad1e84329a3d9e25531645ec9a5e608caac4e611"
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "browser": {
+          "name": "chromium",
+          "version": "145.0.7632.6"
+        },
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "metadataScope": "Capture fields are copied verbatim. Target/browser/flag/humanN are separately identified report-level facts, not added to raw capture metadata.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "current-rhythm",
+      "scenario": "phone-math",
+      "phase": "normal-next-plan-ready",
+      "file": "screens/phone-math-normal-next-plan-ready.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/phone-math-normal-next-plan-ready.png",
+      "expectedSHA256": "7adffe1e7a7cd8d1739123052e100b5cc45e7581f9375ab4fcbd237eb764e903",
+      "copiedSHA256": "7adffe1e7a7cd8d1739123052e100b5cc45e7581f9375ab4fcbd237eb764e903",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/report.json",
+      "sourceReportSHA256": "12b56f45400f24c62a9e6e8e0f9441a7772b82944519c7bbbea7d00cde7c6b2a",
+      "metadata": {
+        "file": "phone-math-normal-next-plan-ready.png",
+        "sha256": "7adffe1e7a7cd8d1739123052e100b5cc45e7581f9375ab4fcbd237eb764e903",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 85,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "input": [
+          {
+            "id": "[\"island-plan-v1\",\"1a21618f-fb42-42ed-934f-b8e4c4b192c3\",2]",
+            "revision": "0",
+            "intro": "false",
+            "ready": "true",
+            "count": "1もんめ、ぜんぶで6もん"
+          }
+        ],
+        "sourceHash": "eb5f5a06103d3427535e647fad1e84329a3d9e25531645ec9a5e608caac4e611"
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "browser": {
+          "name": "chromium",
+          "version": "145.0.7632.6"
+        },
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "metadataScope": "Capture fields are copied verbatim. Target/browser/flag/humanN are separately identified report-level facts, not added to raw capture metadata.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "current-rhythm",
+      "scenario": "phone-math",
+      "phase": "voluntary-home",
+      "file": "screens/phone-math-voluntary-home.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/phone-math-voluntary-home.png",
+      "expectedSHA256": "99fa4c7be7b4144097092b9d42d1558ab618c755fcd1b15662bee02a303f8595",
+      "copiedSHA256": "99fa4c7be7b4144097092b9d42d1558ab618c755fcd1b15662bee02a303f8595",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/report.json",
+      "sourceReportSHA256": "12b56f45400f24c62a9e6e8e0f9441a7772b82944519c7bbbea7d00cde7c6b2a",
+      "metadata": {
+        "file": "phone-math-voluntary-home.png",
+        "sha256": "99fa4c7be7b4144097092b9d42d1558ab618c755fcd1b15662bee02a303f8595",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 94,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "input": [],
+        "sourceHash": "eb5f5a06103d3427535e647fad1e84329a3d9e25531645ec9a5e608caac4e611"
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "browser": {
+          "name": "chromium",
+          "version": "145.0.7632.6"
+        },
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "metadataScope": "Capture fields are copied verbatim. Target/browser/flag/humanN are separately identified report-level facts, not added to raw capture metadata.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "current-rhythm",
+      "scenario": "phone-math",
+      "phase": "deferred-rewards",
+      "file": "screens/phone-math-deferred-rewards.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/phone-math-deferred-rewards.png",
+      "expectedSHA256": "9ea0ef5eabce64378cebb298ea61e010801f1863dceeb166f218f6b653d2429a",
+      "copiedSHA256": "9ea0ef5eabce64378cebb298ea61e010801f1863dceeb166f218f6b653d2429a",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/report.json",
+      "sourceReportSHA256": "12b56f45400f24c62a9e6e8e0f9441a7772b82944519c7bbbea7d00cde7c6b2a",
+      "metadata": {
+        "file": "phone-math-deferred-rewards.png",
+        "sha256": "9ea0ef5eabce64378cebb298ea61e010801f1863dceeb166f218f6b653d2429a",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "reward",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 94,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "input": [],
+        "sourceHash": "eb5f5a06103d3427535e647fad1e84329a3d9e25531645ec9a5e608caac4e611"
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "browser": {
+          "name": "chromium",
+          "version": "145.0.7632.6"
+        },
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "metadataScope": "Capture fields are copied verbatim. Target/browser/flag/humanN are separately identified report-level facts, not added to raw capture metadata.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "current-rhythm",
+      "scenario": "phone-math",
+      "phase": "reloaded-pending-learning",
+      "file": "screens/phone-math-reloaded-pending-learning.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/phone-math-reloaded-pending-learning.png",
+      "expectedSHA256": "92d3c86466ff0aad231b6e6ca879a96a918208b5428f973bd9b36a5473406aec",
+      "copiedSHA256": "92d3c86466ff0aad231b6e6ca879a96a918208b5428f973bd9b36a5473406aec",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/report.json",
+      "sourceReportSHA256": "12b56f45400f24c62a9e6e8e0f9441a7772b82944519c7bbbea7d00cde7c6b2a",
+      "metadata": {
+        "file": "phone-math-reloaded-pending-learning.png",
+        "sha256": "92d3c86466ff0aad231b6e6ca879a96a918208b5428f973bd9b36a5473406aec",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 84,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "input": [
+          {
+            "id": "[\"island-plan-v1\",\"1a21618f-fb42-42ed-934f-b8e4c4b192c3\",2]",
+            "revision": "1",
+            "intro": "false",
+            "ready": "true",
+            "count": "2もんめ、ぜんぶで6もん"
+          }
+        ],
+        "sourceHash": "eb5f5a06103d3427535e647fad1e84329a3d9e25531645ec9a5e608caac4e611"
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "browser": {
+          "name": "chromium",
+          "version": "145.0.7632.6"
+        },
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "metadataScope": "Capture fields are copied verbatim. Target/browser/flag/humanN are separately identified report-level facts, not added to raw capture metadata.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "current-rhythm",
+      "scenario": "tablet-written",
+      "phase": "intro-first-ready",
+      "file": "screens/tablet-written-intro-first-ready.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/tablet-written-intro-first-ready.png",
+      "expectedSHA256": "a0c34707352e59c8e6e6708e244bb64fb5b5ba47f130368446ba6338e7e0fc2a",
+      "copiedSHA256": "a0c34707352e59c8e6e6708e244bb64fb5b5ba47f130368446ba6338e7e0fc2a",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/report.json",
+      "sourceReportSHA256": "12b56f45400f24c62a9e6e8e0f9441a7772b82944519c7bbbea7d00cde7c6b2a",
+      "metadata": {
+        "file": "tablet-written-intro-first-ready.png",
+        "sha256": "a0c34707352e59c8e6e6708e244bb64fb5b5ba47f130368446ba6338e7e0fc2a",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 72,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "input": [
+          {
+            "id": "[\"island-plan-v1\",\"c842765d-b924-4a78-890c-4edaaab00978\",0]",
+            "revision": "0",
+            "intro": "true",
+            "ready": "true",
+            "count": "1もんめ、ぜんぶで3もん"
+          }
+        ],
+        "sourceHash": "eb5f5a06103d3427535e647fad1e84329a3d9e25531645ec9a5e608caac4e611"
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "browser": {
+          "name": "chromium",
+          "version": "145.0.7632.6"
+        },
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "metadataScope": "Capture fields are copied verbatim. Target/browser/flag/humanN are separately identified report-level facts, not added to raw capture metadata.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "current-rhythm",
+      "scenario": "tablet-written",
+      "phase": "intro-reward",
+      "file": "screens/tablet-written-intro-reward.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/tablet-written-intro-reward.png",
+      "expectedSHA256": "defbcb622262104586a74202e75e63c204a538ba8a944197c6adf16b4e08de68",
+      "copiedSHA256": "defbcb622262104586a74202e75e63c204a538ba8a944197c6adf16b4e08de68",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/report.json",
+      "sourceReportSHA256": "12b56f45400f24c62a9e6e8e0f9441a7772b82944519c7bbbea7d00cde7c6b2a",
+      "metadata": {
+        "file": "tablet-written-intro-reward.png",
+        "sha256": "defbcb622262104586a74202e75e63c204a538ba8a944197c6adf16b4e08de68",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "reward",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 84,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "input": [],
+        "sourceHash": "eb5f5a06103d3427535e647fad1e84329a3d9e25531645ec9a5e608caac4e611"
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "browser": {
+          "name": "chromium",
+          "version": "145.0.7632.6"
+        },
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "metadataScope": "Capture fields are copied verbatim. Target/browser/flag/humanN are separately identified report-level facts, not added to raw capture metadata.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "current-rhythm",
+      "scenario": "tablet-written",
+      "phase": "normal-first-ready",
+      "file": "screens/tablet-written-normal-first-ready.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/tablet-written-normal-first-ready.png",
+      "expectedSHA256": "1ddbf31be71b3aab6e25578cfed67e18142c7ec00bfa5a20a9daa9e9ce7550cc",
+      "copiedSHA256": "1ddbf31be71b3aab6e25578cfed67e18142c7ec00bfa5a20a9daa9e9ce7550cc",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/report.json",
+      "sourceReportSHA256": "12b56f45400f24c62a9e6e8e0f9441a7772b82944519c7bbbea7d00cde7c6b2a",
+      "metadata": {
+        "file": "tablet-written-normal-first-ready.png",
+        "sha256": "1ddbf31be71b3aab6e25578cfed67e18142c7ec00bfa5a20a9daa9e9ce7550cc",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 72,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "input": [
+          {
+            "id": "[\"island-plan-v1\",\"c842765d-b924-4a78-890c-4edaaab00978\",1]",
+            "revision": "0",
+            "intro": "false",
+            "ready": "true",
+            "count": "1もんめ、ぜんぶで3もん"
+          }
+        ],
+        "sourceHash": "eb5f5a06103d3427535e647fad1e84329a3d9e25531645ec9a5e608caac4e611"
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "browser": {
+          "name": "chromium",
+          "version": "145.0.7632.6"
+        },
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "metadataScope": "Capture fields are copied verbatim. Target/browser/flag/humanN are separately identified report-level facts, not added to raw capture metadata.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "current-rhythm",
+      "scenario": "tablet-written",
+      "phase": "normal-next-plan-ready",
+      "file": "screens/tablet-written-normal-next-plan-ready.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/tablet-written-normal-next-plan-ready.png",
+      "expectedSHA256": "7d94182e5d56b5b9b888c2532d660f886b1ffd69d0e51e3a5e6b49deec391dfe",
+      "copiedSHA256": "7d94182e5d56b5b9b888c2532d660f886b1ffd69d0e51e3a5e6b49deec391dfe",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/report.json",
+      "sourceReportSHA256": "12b56f45400f24c62a9e6e8e0f9441a7772b82944519c7bbbea7d00cde7c6b2a",
+      "metadata": {
+        "file": "tablet-written-normal-next-plan-ready.png",
+        "sha256": "7d94182e5d56b5b9b888c2532d660f886b1ffd69d0e51e3a5e6b49deec391dfe",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 84,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "input": [
+          {
+            "id": "[\"island-plan-v1\",\"c842765d-b924-4a78-890c-4edaaab00978\",2]",
+            "revision": "0",
+            "intro": "false",
+            "ready": "true",
+            "count": "1もんめ、ぜんぶで3もん"
+          }
+        ],
+        "sourceHash": "eb5f5a06103d3427535e647fad1e84329a3d9e25531645ec9a5e608caac4e611"
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "browser": {
+          "name": "chromium",
+          "version": "145.0.7632.6"
+        },
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "metadataScope": "Capture fields are copied verbatim. Target/browser/flag/humanN are separately identified report-level facts, not added to raw capture metadata.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "current-rhythm",
+      "scenario": "tablet-written",
+      "phase": "voluntary-home",
+      "file": "screens/tablet-written-voluntary-home.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/tablet-written-voluntary-home.png",
+      "expectedSHA256": "6dd8232be92f8b78f25e0e65c166f32d705ccfe954b38d5d90dedeeb0968aa24",
+      "copiedSHA256": "6dd8232be92f8b78f25e0e65c166f32d705ccfe954b38d5d90dedeeb0968aa24",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/report.json",
+      "sourceReportSHA256": "12b56f45400f24c62a9e6e8e0f9441a7772b82944519c7bbbea7d00cde7c6b2a",
+      "metadata": {
+        "file": "tablet-written-voluntary-home.png",
+        "sha256": "6dd8232be92f8b78f25e0e65c166f32d705ccfe954b38d5d90dedeeb0968aa24",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 94,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "input": [],
+        "sourceHash": "eb5f5a06103d3427535e647fad1e84329a3d9e25531645ec9a5e608caac4e611"
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "browser": {
+          "name": "chromium",
+          "version": "145.0.7632.6"
+        },
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "metadataScope": "Capture fields are copied verbatim. Target/browser/flag/humanN are separately identified report-level facts, not added to raw capture metadata.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "current-rhythm",
+      "scenario": "tablet-written",
+      "phase": "deferred-rewards",
+      "file": "screens/tablet-written-deferred-rewards.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/tablet-written-deferred-rewards.png",
+      "expectedSHA256": "7f605651a3c635143f006658d2b66c96665ec1b0305175518408fff37ad8cc48",
+      "copiedSHA256": "7f605651a3c635143f006658d2b66c96665ec1b0305175518408fff37ad8cc48",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/report.json",
+      "sourceReportSHA256": "12b56f45400f24c62a9e6e8e0f9441a7772b82944519c7bbbea7d00cde7c6b2a",
+      "metadata": {
+        "file": "tablet-written-deferred-rewards.png",
+        "sha256": "7f605651a3c635143f006658d2b66c96665ec1b0305175518408fff37ad8cc48",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "reward",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 94,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "input": [],
+        "sourceHash": "eb5f5a06103d3427535e647fad1e84329a3d9e25531645ec9a5e608caac4e611"
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "browser": {
+          "name": "chromium",
+          "version": "145.0.7632.6"
+        },
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "metadataScope": "Capture fields are copied verbatim. Target/browser/flag/humanN are separately identified report-level facts, not added to raw capture metadata.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "current-rhythm",
+      "scenario": "tablet-written",
+      "phase": "reloaded-pending-learning",
+      "file": "screens/tablet-written-reloaded-pending-learning.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/tablet-written-reloaded-pending-learning.png",
+      "expectedSHA256": "60982a157ec1602f9b7040e5ca84199e9f1b4fbf4a78a3b9b18fc136c88ed359",
+      "copiedSHA256": "60982a157ec1602f9b7040e5ca84199e9f1b4fbf4a78a3b9b18fc136c88ed359",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/rhythm/report.json",
+      "sourceReportSHA256": "12b56f45400f24c62a9e6e8e0f9441a7772b82944519c7bbbea7d00cde7c6b2a",
+      "metadata": {
+        "file": "tablet-written-reloaded-pending-learning.png",
+        "sha256": "60982a157ec1602f9b7040e5ca84199e9f1b4fbf4a78a3b9b18fc136c88ed359",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 83,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "input": [
+          {
+            "id": "[\"island-plan-v1\",\"c842765d-b924-4a78-890c-4edaaab00978\",2]",
+            "revision": "1",
+            "intro": "false",
+            "ready": "true",
+            "count": "2もんめ、ぜんぶで3もん"
+          }
+        ],
+        "sourceHash": "eb5f5a06103d3427535e647fad1e84329a3d9e25531645ec9a5e608caac4e611"
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "browser": {
+          "name": "chromium",
+          "version": "145.0.7632.6"
+        },
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "humanN": 0
+      },
+      "metadataScope": "Capture fields are copied verbatim. Target/browser/flag/humanN are separately identified report-level facts, not added to raw capture metadata.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "approved-comparison-only",
+      "file": "screens/benchmark--island-loop-final-critical-path--phone-home--87f377fc97f3.png",
+      "sourceFile": "docs/design/audits/2026-09-08-production-release/benchmark/island-loop-final-critical-path--phone-home--87f377fc97f3.png",
+      "expectedSHA256": "87f377fc97f30899bcbe6362da4e6d7566868613beb5f34dc4180d41a24e84e1",
+      "copiedSHA256": "87f377fc97f30899bcbe6362da4e6d7566868613beb5f34dc4180d41a24e84e1",
+      "byteIdentical": true,
+      "sourceManifest": "docs/design/audits/2026-09-08-production-release/images.json",
+      "sourceManifestSHA256": "bebcb2a2b8da1abd227d4041f45b28c00a1f89e4055be089a89e9d9ab323c9fa",
+      "sourceEntry": {
+        "file": "benchmark/island-loop-final-critical-path--phone-home--87f377fc97f3.png",
+        "sha256": "87f377fc97f30899bcbe6362da4e6d7566868613beb5f34dc4180d41a24e84e1",
+        "label": "承認済み配色・構図の比較 / 旧revision aa36adad7dcc-island-loop-32cb1f0b89f8"
+      },
+      "metadata": {},
+      "missingCaptureMetadata": [
+        "target",
+        "revision",
+        "version",
+        "delivery",
+        "candidate",
+        "learningCandidate",
+        "viewport",
+        "artDirection",
+        "renderer",
+        "mode"
+      ],
+      "metadataScope": "This source is an image inventory, not a capture report. Its descriptive label is retained; missing runtime metadata is not reconstructed.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "approved-comparison-only",
+      "file": "screens/benchmark--island-loop-final-critical-path--phone-learning--e22b99524cf2.png",
+      "sourceFile": "docs/design/audits/2026-09-08-production-release/benchmark/island-loop-final-critical-path--phone-learning--e22b99524cf2.png",
+      "expectedSHA256": "e22b99524cf2cb8674a0bead43c1564c66506ecb1ae7a509a9124e4d2ee5321f",
+      "copiedSHA256": "e22b99524cf2cb8674a0bead43c1564c66506ecb1ae7a509a9124e4d2ee5321f",
+      "byteIdentical": true,
+      "sourceManifest": "docs/design/audits/2026-09-08-production-release/images.json",
+      "sourceManifestSHA256": "bebcb2a2b8da1abd227d4041f45b28c00a1f89e4055be089a89e9d9ab323c9fa",
+      "sourceEntry": {
+        "file": "benchmark/island-loop-final-critical-path--phone-learning--e22b99524cf2.png",
+        "sha256": "e22b99524cf2cb8674a0bead43c1564c66506ecb1ae7a509a9124e4d2ee5321f",
+        "label": "承認済み配色・構図の比較 / 旧revision aa36adad7dcc-island-loop-32cb1f0b89f8"
+      },
+      "metadata": {},
+      "missingCaptureMetadata": [
+        "target",
+        "revision",
+        "version",
+        "delivery",
+        "candidate",
+        "learningCandidate",
+        "viewport",
+        "artDirection",
+        "renderer",
+        "mode"
+      ],
+      "metadataScope": "This source is an image inventory, not a capture report. Its descriptive label is retained; missing runtime metadata is not reconstructed.",
+      "imageDimensions": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "kind": "approved-comparison-only",
+      "file": "screens/benchmark--island-loop-final-critical-path--tablet-home--60213c1b15e8.png",
+      "sourceFile": "docs/design/audits/2026-09-08-production-release/benchmark/island-loop-final-critical-path--tablet-home--60213c1b15e8.png",
+      "expectedSHA256": "60213c1b15e81d4270bb252eb6961a8b0b616e54362deaa3440ab2b65160d126",
+      "copiedSHA256": "60213c1b15e81d4270bb252eb6961a8b0b616e54362deaa3440ab2b65160d126",
+      "byteIdentical": true,
+      "sourceManifest": "docs/design/audits/2026-09-08-production-release/images.json",
+      "sourceManifestSHA256": "bebcb2a2b8da1abd227d4041f45b28c00a1f89e4055be089a89e9d9ab323c9fa",
+      "sourceEntry": {
+        "file": "benchmark/island-loop-final-critical-path--tablet-home--60213c1b15e8.png",
+        "sha256": "60213c1b15e81d4270bb252eb6961a8b0b616e54362deaa3440ab2b65160d126",
+        "label": "承認済み配色・構図の比較 / 旧revision aa36adad7dcc-island-loop-32cb1f0b89f8"
+      },
+      "metadata": {},
+      "missingCaptureMetadata": [
+        "target",
+        "revision",
+        "version",
+        "delivery",
+        "candidate",
+        "learningCandidate",
+        "viewport",
+        "artDirection",
+        "renderer",
+        "mode"
+      ],
+      "metadataScope": "This source is an image inventory, not a capture report. Its descriptive label is retained; missing runtime metadata is not reconstructed.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "approved-comparison-only",
+      "file": "screens/benchmark--island-loop-final-critical-path--tablet-learning--31adced2f0d7.png",
+      "sourceFile": "docs/design/audits/2026-09-08-production-release/benchmark/island-loop-final-critical-path--tablet-learning--31adced2f0d7.png",
+      "expectedSHA256": "31adced2f0d7361acef8bcf856a97625d5b063c96719b8c721b2a1e525857df0",
+      "copiedSHA256": "31adced2f0d7361acef8bcf856a97625d5b063c96719b8c721b2a1e525857df0",
+      "byteIdentical": true,
+      "sourceManifest": "docs/design/audits/2026-09-08-production-release/images.json",
+      "sourceManifestSHA256": "bebcb2a2b8da1abd227d4041f45b28c00a1f89e4055be089a89e9d9ab323c9fa",
+      "sourceEntry": {
+        "file": "benchmark/island-loop-final-critical-path--tablet-learning--31adced2f0d7.png",
+        "sha256": "31adced2f0d7361acef8bcf856a97625d5b063c96719b8c721b2a1e525857df0",
+        "label": "承認済み配色・構図の比較 / 旧revision aa36adad7dcc-island-loop-32cb1f0b89f8"
+      },
+      "metadata": {},
+      "missingCaptureMetadata": [
+        "target",
+        "revision",
+        "version",
+        "delivery",
+        "candidate",
+        "learningCandidate",
+        "viewport",
+        "artDirection",
+        "renderer",
+        "mode"
+      ],
+      "metadataScope": "This source is an image inventory, not a capture report. Its descriptive label is retained; missing runtime metadata is not reconstructed.",
+      "imageDimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "kind": "current-reward-placement-return",
+      "scenario": "phone",
+      "phase": "reward",
+      "file": "screens/critical-path--phone-reward.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/phone-reward.png",
+      "expectedSHA256": "f70086109ca38e80c04c73d7895c379a6038a53d6a47f051432fb8ca537c33e0",
+      "copiedSHA256": "f70086109ca38e80c04c73d7895c379a6038a53d6a47f051432fb8ca537c33e0",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/production-capture-report.json",
+      "sourceReportSHA256": "b72d9809f49e2869beb5d9fcb51c98c5d8623ab8bc0302d08dd07de6d3bb3ae7",
+      "metadata": {
+        "file": "phone-reward.png",
+        "sha256": "f70086109ca38e80c04c73d7895c379a6038a53d6a47f051432fb8ca537c33e0",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "reward",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 74,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "completedSets": 1,
+        "learningLogs": 3
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "evidenceScope": "Immutable production critical path at two viewports. Native profile fixture only; every completed set, reward claim and placement is earned or performed through the actual UI."
+      },
+      "scenarioLevelMetadata": {
+        "name": "phone",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "touch": true,
+        "completedSets": 1,
+        "answeredThroughUI": 3,
+        "rewardClaimedThroughUI": true,
+        "placedThroughUI": true,
+        "animalActuallyUsedItem": true,
+        "savedPlacementSurvivedReload": true,
+        "nextLearningReady": true,
+        "soundEnabled": false,
+        "pass": true
+      },
+      "metadataScope": "Separate production-capture run with its native profile fixture. No dedicated profileId field is present in this source report; raw residentItemId remains verbatim and is not promoted to a reconstructed profile field."
+    },
+    {
+      "kind": "current-reward-placement-return",
+      "scenario": "phone",
+      "phase": "placement",
+      "file": "screens/critical-path--phone-placement.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/phone-placement.png",
+      "expectedSHA256": "462dfe934691a2dad65654a04596d408e2705382e6494a8993b5e608b097544a",
+      "copiedSHA256": "462dfe934691a2dad65654a04596d408e2705382e6494a8993b5e608b097544a",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/production-capture-report.json",
+      "sourceReportSHA256": "b72d9809f49e2869beb5d9fcb51c98c5d8623ab8bc0302d08dd07de6d3bb3ae7",
+      "metadata": {
+        "file": "phone-placement.png",
+        "sha256": "462dfe934691a2dad65654a04596d408e2705382e6494a8993b5e608b097544a",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "placement",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 87,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "completedSets": 1,
+        "learningLogs": 3
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "evidenceScope": "Immutable production critical path at two viewports. Native profile fixture only; every completed set, reward claim and placement is earned or performed through the actual UI."
+      },
+      "scenarioLevelMetadata": {
+        "name": "phone",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "touch": true,
+        "completedSets": 1,
+        "answeredThroughUI": 3,
+        "rewardClaimedThroughUI": true,
+        "placedThroughUI": true,
+        "animalActuallyUsedItem": true,
+        "savedPlacementSurvivedReload": true,
+        "nextLearningReady": true,
+        "soundEnabled": false,
+        "pass": true
+      },
+      "metadataScope": "Separate production-capture run with its native profile fixture. No dedicated profileId field is present in this source report; raw residentItemId remains verbatim and is not promoted to a reconstructed profile field."
+    },
+    {
+      "kind": "current-reward-placement-return",
+      "scenario": "phone",
+      "phase": "animal-use",
+      "file": "screens/critical-path--phone-animal-use.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/phone-animal-use.png",
+      "expectedSHA256": "59eb4ea8c8d8b7bd218be0f8c36a7cfef17c1e296462fcfdc483806b7e463186",
+      "copiedSHA256": "59eb4ea8c8d8b7bd218be0f8c36a7cfef17c1e296462fcfdc483806b7e463186",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/production-capture-report.json",
+      "sourceReportSHA256": "b72d9809f49e2869beb5d9fcb51c98c5d8623ab8bc0302d08dd07de6d3bb3ae7",
+      "metadata": {
+        "file": "phone-animal-use.png",
+        "sha256": "59eb4ea8c8d8b7bd218be0f8c36a7cfef17c1e296462fcfdc483806b7e463186",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 84,
+        "expanded": "false",
+        "residentAction": "sit",
+        "residentItemId": "[\"island-plan-v1\",\"island-production-art-phone\",0]:reward:item",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "completedSets": 1,
+        "learningLogs": 3
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "evidenceScope": "Immutable production critical path at two viewports. Native profile fixture only; every completed set, reward claim and placement is earned or performed through the actual UI."
+      },
+      "scenarioLevelMetadata": {
+        "name": "phone",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "touch": true,
+        "completedSets": 1,
+        "answeredThroughUI": 3,
+        "rewardClaimedThroughUI": true,
+        "placedThroughUI": true,
+        "animalActuallyUsedItem": true,
+        "savedPlacementSurvivedReload": true,
+        "nextLearningReady": true,
+        "soundEnabled": false,
+        "pass": true
+      },
+      "metadataScope": "Separate production-capture run with its native profile fixture. No dedicated profileId field is present in this source report; raw residentItemId remains verbatim and is not promoted to a reconstructed profile field."
+    },
+    {
+      "kind": "current-reward-placement-return",
+      "scenario": "phone",
+      "phase": "next-learning",
+      "file": "screens/critical-path--phone-next-learning.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/phone-next-learning.png",
+      "expectedSHA256": "303f58c7f326f79481219696845fe22c667ea60f379b863dfd2c1bea1ce796f2",
+      "copiedSHA256": "303f58c7f326f79481219696845fe22c667ea60f379b863dfd2c1bea1ce796f2",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/production-capture-report.json",
+      "sourceReportSHA256": "b72d9809f49e2869beb5d9fcb51c98c5d8623ab8bc0302d08dd07de6d3bb3ae7",
+      "metadata": {
+        "file": "phone-next-learning.png",
+        "sha256": "303f58c7f326f79481219696845fe22c667ea60f379b863dfd2c1bea1ce796f2",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 81,
+        "expanded": "false",
+        "residentAction": "sit",
+        "residentItemId": "[\"island-plan-v1\",\"island-production-art-phone\",0]:reward:item",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "completedSets": 1,
+        "learningLogs": 3
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "evidenceScope": "Immutable production critical path at two viewports. Native profile fixture only; every completed set, reward claim and placement is earned or performed through the actual UI."
+      },
+      "scenarioLevelMetadata": {
+        "name": "phone",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "touch": true,
+        "completedSets": 1,
+        "answeredThroughUI": 3,
+        "rewardClaimedThroughUI": true,
+        "placedThroughUI": true,
+        "animalActuallyUsedItem": true,
+        "savedPlacementSurvivedReload": true,
+        "nextLearningReady": true,
+        "soundEnabled": false,
+        "pass": true
+      },
+      "metadataScope": "Separate production-capture run with its native profile fixture. No dedicated profileId field is present in this source report; raw residentItemId remains verbatim and is not promoted to a reconstructed profile field."
+    },
+    {
+      "kind": "current-reward-placement-return",
+      "scenario": "tablet",
+      "phase": "reward",
+      "file": "screens/critical-path--tablet-reward.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/tablet-reward.png",
+      "expectedSHA256": "9e2add46f86047ae175eda892ac91957ab9ce2225796b38f7ece1c5a50c8ac76",
+      "copiedSHA256": "9e2add46f86047ae175eda892ac91957ab9ce2225796b38f7ece1c5a50c8ac76",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/production-capture-report.json",
+      "sourceReportSHA256": "b72d9809f49e2869beb5d9fcb51c98c5d8623ab8bc0302d08dd07de6d3bb3ae7",
+      "metadata": {
+        "file": "tablet-reward.png",
+        "sha256": "9e2add46f86047ae175eda892ac91957ab9ce2225796b38f7ece1c5a50c8ac76",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "reward",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 84,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "completedSets": 1,
+        "learningLogs": 3
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "evidenceScope": "Immutable production critical path at two viewports. Native profile fixture only; every completed set, reward claim and placement is earned or performed through the actual UI."
+      },
+      "scenarioLevelMetadata": {
+        "name": "tablet",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "touch": false,
+        "completedSets": 1,
+        "answeredThroughUI": 3,
+        "rewardClaimedThroughUI": true,
+        "placedThroughUI": true,
+        "animalActuallyUsedItem": true,
+        "savedPlacementSurvivedReload": true,
+        "nextLearningReady": true,
+        "soundEnabled": false,
+        "pass": true
+      },
+      "metadataScope": "Separate production-capture run with its native profile fixture. No dedicated profileId field is present in this source report; raw residentItemId remains verbatim and is not promoted to a reconstructed profile field."
+    },
+    {
+      "kind": "current-reward-placement-return",
+      "scenario": "tablet",
+      "phase": "placement",
+      "file": "screens/critical-path--tablet-placement.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/tablet-placement.png",
+      "expectedSHA256": "3d3621875960f79865147e326102a06fb55b3b90b7d9151c2b56ad5ad20b790b",
+      "copiedSHA256": "3d3621875960f79865147e326102a06fb55b3b90b7d9151c2b56ad5ad20b790b",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/production-capture-report.json",
+      "sourceReportSHA256": "b72d9809f49e2869beb5d9fcb51c98c5d8623ab8bc0302d08dd07de6d3bb3ae7",
+      "metadata": {
+        "file": "tablet-placement.png",
+        "sha256": "3d3621875960f79865147e326102a06fb55b3b90b7d9151c2b56ad5ad20b790b",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "placement",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 87,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "completedSets": 1,
+        "learningLogs": 3
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "evidenceScope": "Immutable production critical path at two viewports. Native profile fixture only; every completed set, reward claim and placement is earned or performed through the actual UI."
+      },
+      "scenarioLevelMetadata": {
+        "name": "tablet",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "touch": false,
+        "completedSets": 1,
+        "answeredThroughUI": 3,
+        "rewardClaimedThroughUI": true,
+        "placedThroughUI": true,
+        "animalActuallyUsedItem": true,
+        "savedPlacementSurvivedReload": true,
+        "nextLearningReady": true,
+        "soundEnabled": false,
+        "pass": true
+      },
+      "metadataScope": "Separate production-capture run with its native profile fixture. No dedicated profileId field is present in this source report; raw residentItemId remains verbatim and is not promoted to a reconstructed profile field."
+    },
+    {
+      "kind": "current-reward-placement-return",
+      "scenario": "tablet",
+      "phase": "animal-use",
+      "file": "screens/critical-path--tablet-animal-use.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/tablet-animal-use.png",
+      "expectedSHA256": "63efab6cd3c3c0b4e7406ac58baf8d9565bfd173d5bbdcf18ce4c5290ea46bdf",
+      "copiedSHA256": "63efab6cd3c3c0b4e7406ac58baf8d9565bfd173d5bbdcf18ce4c5290ea46bdf",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/production-capture-report.json",
+      "sourceReportSHA256": "b72d9809f49e2869beb5d9fcb51c98c5d8623ab8bc0302d08dd07de6d3bb3ae7",
+      "metadata": {
+        "file": "tablet-animal-use.png",
+        "sha256": "63efab6cd3c3c0b4e7406ac58baf8d9565bfd173d5bbdcf18ce4c5290ea46bdf",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 84,
+        "expanded": "false",
+        "residentAction": "sit",
+        "residentItemId": "[\"island-plan-v1\",\"island-production-art-tablet\",0]:reward:item",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "completedSets": 1,
+        "learningLogs": 3
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "evidenceScope": "Immutable production critical path at two viewports. Native profile fixture only; every completed set, reward claim and placement is earned or performed through the actual UI."
+      },
+      "scenarioLevelMetadata": {
+        "name": "tablet",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "touch": false,
+        "completedSets": 1,
+        "answeredThroughUI": 3,
+        "rewardClaimedThroughUI": true,
+        "placedThroughUI": true,
+        "animalActuallyUsedItem": true,
+        "savedPlacementSurvivedReload": true,
+        "nextLearningReady": true,
+        "soundEnabled": false,
+        "pass": true
+      },
+      "metadataScope": "Separate production-capture run with its native profile fixture. No dedicated profileId field is present in this source report; raw residentItemId remains verbatim and is not promoted to a reconstructed profile field."
+    },
+    {
+      "kind": "current-reward-placement-return",
+      "scenario": "tablet",
+      "phase": "next-learning",
+      "file": "screens/critical-path--tablet-next-learning.png",
+      "sourceFile": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/tablet-next-learning.png",
+      "expectedSHA256": "4fc799ee3fc798a60e3cdcdafb353535cdd0e9695befae5700ac65033074be7e",
+      "copiedSHA256": "4fc799ee3fc798a60e3cdcdafb353535cdd0e9695befae5700ac65033074be7e",
+      "byteIdentical": true,
+      "sourceReport": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/critical-path/production-capture-report.json",
+      "sourceReportSHA256": "b72d9809f49e2869beb5d9fcb51c98c5d8623ab8bc0302d08dd07de6d3bb3ae7",
+      "metadata": {
+        "file": "tablet-next-learning.png",
+        "sha256": "4fc799ee3fc798a60e3cdcdafb353535cdd0e9695befae5700ac65033074be7e",
+        "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+        "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 81,
+        "expanded": "false",
+        "residentAction": "sit",
+        "residentItemId": "[\"island-plan-v1\",\"island-production-art-tablet\",0]:reward:item",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "completedSets": 1,
+        "learningLogs": 3
+      },
+      "missingCaptureMetadata": [],
+      "reportLevelMetadata": {
+        "target": "http://127.0.0.1:5430",
+        "flag": "VITE_ISLAND_ENABLED=true",
+        "evidenceScope": "Immutable production critical path at two viewports. Native profile fixture only; every completed set, reward claim and placement is earned or performed through the actual UI."
+      },
+      "scenarioLevelMetadata": {
+        "name": "tablet",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "touch": false,
+        "completedSets": 1,
+        "answeredThroughUI": 3,
+        "rewardClaimedThroughUI": true,
+        "placedThroughUI": true,
+        "animalActuallyUsedItem": true,
+        "savedPlacementSurvivedReload": true,
+        "nextLearningReady": true,
+        "soundEnabled": false,
+        "pass": true
+      },
+      "metadataScope": "Separate production-capture run with its native profile fixture. No dedicated profileId field is present in this source report; raw residentItemId remains verbatim and is not promoted to a reconstructed profile field."
+    }
+  ],
+  "onboardingScenarios": [
+    {
+      "identity": {
+        "name": "phone-math",
+        "width": 390,
+        "height": 844,
+        "profileId": "cc3686ff-d1ba-469c-8720-37050046ff44",
+        "subject": "math",
+        "gradeLabel": "年中",
+        "math": "数をかぞえる・くらべる",
+        "nameInput": ""
+      },
+      "pass": true,
+      "selectedFiles": [
+        "screens/onboarding--phone-math-cold-welcome.png",
+        "screens/onboarding--phone-math-starter-flower.png",
+        "screens/onboarding--phone-math-starter-lantern.png",
+        "screens/onboarding--phone-math-grade.png",
+        "screens/onboarding--phone-math-subject.png",
+        "screens/onboarding--phone-math-math-range.png",
+        "screens/onboarding--phone-math-created-first-learning.png"
+      ],
+      "excludedLaterCases": [
+        "Settings add-profile",
+        "legacy Explore compatibility"
+      ],
+      "selection": "Launch, optional Welcome play, explicit setup, and created-first-learning only. Duplicate first-real-plan image excluded."
+    },
+    {
+      "identity": {
+        "name": "tablet-mix",
+        "width": 768,
+        "height": 1024,
+        "profileId": "1588a15d-d1ab-4a9b-a1ac-c589cc4cb0ed",
+        "subject": "mix",
+        "gradeLabel": "小学 3 年生",
+        "math": "筆算（2けたのたし算・ひき算）",
+        "english": "すこし",
+        "nameInput": "あおい"
+      },
+      "pass": true,
+      "selectedFiles": [
+        "screens/onboarding--tablet-mix-cold-welcome.png",
+        "screens/onboarding--tablet-mix-starter-flower.png",
+        "screens/onboarding--tablet-mix-starter-lantern.png",
+        "screens/onboarding--tablet-mix-grade.png",
+        "screens/onboarding--tablet-mix-subject.png",
+        "screens/onboarding--tablet-mix-math-range.png",
+        "screens/onboarding--tablet-mix-english-range.png",
+        "screens/onboarding--tablet-mix-created-first-learning.png"
+      ],
+      "excludedLaterCases": [
+        "Settings add-profile",
+        "legacy Explore compatibility"
+      ],
+      "selection": "Launch, optional Welcome play, explicit setup, and created-first-learning only. Duplicate first-real-plan image excluded."
+    }
+  ],
+  "onboardingReportMetadata": {
+    "target": "http://127.0.0.1:5430",
+    "manifest": {
+      "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+      "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": true,
+        "renderer": "three"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "artDirection": "moon-garden"
+      }
+    },
+    "startedAt": "2026-09-07T22:22:09.223Z",
+    "completedAt": "2026-09-07T22:22:51.717Z",
+    "flag": "VITE_ISLAND_ENABLED=true",
+    "diagnostic": false
+  },
+  "captureSelection": {
+    "onboardingAvailable": 49,
+    "onboardingSelected": 15,
+    "omittedOnboardingFiles": [
+      "phone-math-first-real-plan.png",
+      "phone-math-settings-add-name.png",
+      "phone-math-settings-add-complete.png",
+      "phone-math-legacy-explore-explicit-resume.png",
+      "tablet-mix-first-real-plan.png",
+      "phone-vocab-no-play-cold-welcome.png",
+      "phone-vocab-no-play-grade.png",
+      "phone-vocab-no-play-subject.png",
+      "phone-vocab-no-play-english-range.png",
+      "phone-vocab-no-play-created-first-learning.png",
+      "phone-vocab-no-play-first-real-plan.png",
+      "phone-vocab-no-play-first-answer-next-input.png",
+      "tablet-reduced-math-cold-welcome.png",
+      "tablet-reduced-math-starter-flower.png",
+      "tablet-reduced-math-starter-lantern.png",
+      "tablet-reduced-math-grade.png",
+      "tablet-reduced-math-subject.png",
+      "tablet-reduced-math-math-range.png",
+      "tablet-reduced-math-created-first-learning.png",
+      "tablet-reduced-math-first-real-plan.png",
+      "phone-save-abort-retry-cold-welcome.png",
+      "phone-save-abort-retry-grade.png",
+      "phone-save-abort-retry-subject.png",
+      "phone-save-abort-retry-math-range.png",
+      "phone-save-abort-retry-save-failed-rolled-back.png",
+      "phone-save-abort-retry-created-first-learning.png",
+      "phone-save-abort-retry-first-real-plan.png",
+      "tablet-save-pwa-hold-cold-welcome.png",
+      "tablet-save-pwa-hold-grade.png",
+      "tablet-save-pwa-hold-subject.png",
+      "tablet-save-pwa-hold-math-range.png",
+      "tablet-save-pwa-hold-native-commit-promise-held.png",
+      "tablet-save-pwa-hold-cancelled-setup-root-home.png",
+      "tablet-save-pwa-hold-first-real-plan.png"
+    ],
+    "reason": "Select the two primary normal-motion launch/setup paths. Keep duplicate first-plan captures, other subject/reduced scenarios, fault diagnostics, Settings add-profile and legacy Explore outside this contact sheet; original report retains all 49."
+  },
+  "criticalPathReportMetadata": {
+    "target": "http://127.0.0.1:5430",
+    "flag": "VITE_ISLAND_ENABLED=true",
+    "manifest": {
+      "version": "0ea5c56-learning-rhythm-eb5f5a06103d:10ddbbd7-5b85-414d-a3e4-cab5a7167c8f",
+      "revision": "0ea5c56-learning-rhythm-eb5f5a06103d",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": true,
+        "renderer": "three"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-procedural-v2",
+        "learningCandidate": "mystic-island-learning-v2",
+        "artDirection": "moon-garden"
+      }
+    },
+    "evidenceScope": "Immutable production critical path at two viewports. Native profile fixture only; every completed set, reward claim and placement is earned or performed through the actual UI.",
+    "startedAt": "2026-09-07T22:51:46.466Z",
+    "completedAt": "2026-09-07T22:52:01.861Z"
+  },
+  "criticalPathScenarios": [
+    {
+      "name": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "touch": true,
+      "completedSets": 1,
+      "answeredThroughUI": 3,
+      "rewardClaimedThroughUI": true,
+      "placedThroughUI": true,
+      "animalActuallyUsedItem": true,
+      "savedPlacementSurvivedReload": true,
+      "nextLearningReady": true,
+      "soundEnabled": false,
+      "pass": true
+    },
+    {
+      "name": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "touch": false,
+      "completedSets": 1,
+      "answeredThroughUI": 3,
+      "rewardClaimedThroughUI": true,
+      "placedThroughUI": true,
+      "animalActuallyUsedItem": true,
+      "savedPlacementSurvivedReload": true,
+      "nextLearningReady": true,
+      "soundEnabled": false,
+      "pass": true
+    }
+  ],
+  "criticalPathSelection": {
+    "available": 16,
+    "selected": 8,
+    "omittedFiles": [
+      "phone-welcome.png",
+      "phone-home.png",
+      "phone-learning.png",
+      "phone-answer-light.png",
+      "tablet-welcome.png",
+      "tablet-home.png",
+      "tablet-learning.png",
+      "tablet-answer-light.png"
+    ],
+    "reason": "Only reward selection, placement preview, real animal use and next-learning. Launch, home and earlier answers are outside this supplementary path."
+  },
+  "relatedVisualFinding": {
+    "scope": "Read-only one-pair author image comparison; not new runtime or child evidence",
+    "oldImage": "output/playwright/84d3ddf-experience2-3ddcac1103f0/3d/phone-six-earned-return-learning.png",
+    "newImage": "output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/3d/phone-six-earned-return-learning.png",
+    "finding": "The rabbit lower body/seat is obscured by foreground swing/lantern in both images. This pair indicates an existing dense-furniture readability limitation, without observed new clipping or answer-surface intrusion. Full wording is owned by the audit README; these images are not added to this sheet."
+  }
+}

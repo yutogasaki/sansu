@@ -7,9 +7,20 @@ import { chromium } from 'playwright';
 import { button, percentile, readNative, runtimeMetadata, seedDev, waitMode, waitReady } from './island-e2e-helpers.mjs';
 
 const FIXTURE = 'cold-open-fixed-ten-v1';
+const ISLAND_SETUP = 'normal-existing-island-v1';
+const INITIAL_COMPLETED_SETS = 1;
 const base = process.env.SANSU_ISLAND_BASE_URL || 'http://127.0.0.1:5198';
 const output = resolve(process.env.SANSU_ISLAND_THROUGHPUT_OUTPUT || 'output/playwright/island-throughput/latest.json');
 const repetitions = Math.max(1, Number.parseInt(process.env.SANSU_ISLAND_THROUGHPUT_REPETITIONS || '10', 10) || 10);
+const buildSourcePath = process.env.SANSU_ISLAND_BUILD_SOURCE;
+assert(buildSourcePath, 'Bind the benchmark to its frozen application build-source manifest');
+const buildSourceBytes = await readFile(buildSourcePath);
+const buildSource = JSON.parse(buildSourceBytes);
+const sha = value => createHash('sha256').update(value).digest('hex');
+const baselinePath = process.env.SANSU_ISLAND_THROUGHPUT_BASELINE;
+const baselineBytes = baselinePath ? await readFile(baselinePath) : undefined;
+const baseline = baselineBytes ? JSON.parse(baselineBytes) : undefined;
+await assert.rejects(readFile(output), { code: 'ENOENT' }, 'Use a fresh report path; never overwrite a prior run');
 const layouts = [{ name: 'phone', width: 390, height: 844 }, { name: 'tablet', width: 768, height: 1024 }]
     .filter(layout => !process.env.SANSU_ISLAND_THROUGHPUT_LAYOUT || layout.name === process.env.SANSU_ISLAND_THROUGHPUT_LAYOUT);
 assert(layouts.length, 'Layout filter must select phone or tablet');
@@ -28,13 +39,22 @@ async function sourceFingerprint() {
         return (await Promise.all(entries.map(entry => entry.isDirectory() ? collect(join(directory, entry.name))
             : /\.(ts|tsx|css)$/.test(entry.name) ? [join(directory, entry.name)] : []))).flat();
     };
-    const paths = [...await collect('src'), 'vite.config.ts', 'postcss.config.js', 'tailwind.config.js',
-        '.gitignore', '.nvmrc', 'package.json', 'package-lock.json', 'tools/e2e-island-throughput.mjs'].sort();
+    const paths = [...new Set([...buildSource.files.map(file => file.path), ...await collect('src'),
+        'vite.config.ts', 'postcss.config.js', 'tailwind.config.js', '.gitignore', '.nvmrc', 'package.json', 'package-lock.json',
+        'tools/e2e-island-throughput.mjs', 'tools/island-e2e-helpers.mjs'])].sort();
     const files = await Promise.all(paths.map(async path => ({ path, hash: createHash('sha256').update(await readFile(path)).digest('hex') })));
     return { hash: createHash('sha256').update(JSON.stringify(files)).digest('hex'), files };
 }
 const report = {
     fixtureId: FIXTURE, fixtureHash: createHash('sha256').update(JSON.stringify({ questions, answers })).digest('hex'),
+    islandSetup: { id: ISLAND_SETUP, initialCompletedSets: INITIAL_COMPLETED_SETS, synthetic: true,
+        scope: 'A disposable existing-island fixture, not a real first-time child or an observed completed introduction. No fabricated answer logs or completed-plan receipts.' },
+    buildSource: { path: resolve(buildSourcePath), manifestSHA: sha(buildSourceBytes), sourceHash: buildSource.sourceHash,
+        revision: buildSource.revision, flags: buildSource.flags },
+    runner: { cwd: process.cwd(), command: process.argv },
+    baseline: baseline ? { path: resolve(baselinePath), sha256: sha(baselineBytes), pass: baseline.pass,
+        evidence: baseline.evidence, runtime: baseline.runtime, comparisons: baseline.comparisons,
+        comparisonBoundary: 'Earlier reports include one explicit continuation after Q6. This run measures automatic continuation including Q6 in operable latency. Preserve both methods; an old PASS does not meet the new gate.' } : undefined,
     target: base, startedAt: new Date().toISOString(), repetitions, layouts,
     git: { revision: git(['rev-parse', 'HEAD']), dirty: Boolean(git(['status', '--porcelain'])) },
     sourceSnapshotStart: await sourceFingerprint(),
@@ -42,16 +62,19 @@ const report = {
         setup: 'Wait for the empty-profile Island welcome to commit before inserting each disposable profile; retain the same document for fixture hooks and navigate only after that lookup has resolved.',
         input: 'physical-keyboard digits and Enter, identical answers and ordinary actions in both lanes',
         order: 'Study/Island alternates by repetition and scenario within each viewport',
-        timing: 'Browser performance.now; answer delay begins at actual Enter keydown. Total includes typing, automated observation overhead, and the real section-continue keyboard action.',
-        fixtureScope: 'Isolated disposable browser profiles only. Island creates real six-slot plans, with a test-only Dexie creating hook replacing newly created slots before display; existing reservations are never changed.',
+        timing: 'Browser performance.now; answer delay begins at actual Enter keydown. Total includes typing and automated observation overhead. Q6 ends only when the exact next plan is operable; no continuation action is performed.',
+        fixtureScope: 'Isolated disposable browser profiles only. Before timing, one explicitly synthetic existing-island completion bypasses the introduction. Island creates real six-slot plans, with a test-only Dexie creating hook replacing newly created slots before display; existing reservations are never changed.',
         plannerTruth: 'Not production planner evidence. All fixed slots are explicit test-fixture main assignments with no review or maintenance flags.',
         learningDifference: 'Island records the real atomic writer and reward receipts in its disposable profile. Study uses its existing nonrecording DEV fixture. Neither lane reads or changes a real user profile.',
-        islandTail: 'Six slots in each of two saved sets; only the first four slots of set two are answered. Two repeated fixture tail slots remain pending and unsubmitted.',
+        islandTail: 'Six slots in each of two newly saved sets, after the declared synthetic existing-island baseline. Only the first four slots of the second new set are answered. Two repeated fixture tail slots remain pending and unsubmitted.',
         missDifference: 'Island retries and corrects Q4/Q8 on the same saved Problem. Study retains its correction panel and explicit next action. Only all-correct throughput is compared for the >=1.0 gate.',
         rendering: 'Both lanes use reduced-motion and sound off. Before timed input, every initial Island keypad control must fit and preserve a 44px target; active digit/edit keys must receive a center hit, while empty submit must remain disabled. Normal-motion, touch and full-input fidelity are separate Island E2E gates.',
     },
-    runs: [], comparisons: [], gates: {}, evidence: {}, pass: false,
+    runs: [], comparisons: [], gates: {}, evidence: {}, pass: false, browserClosed: false,
 };
+report.buildSourceMismatches = buildSource.files.filter(file =>
+    report.sourceSnapshotStart.files.find(actual => actual.path === file.path)?.hash !== file.sha256);
+assert.deepEqual(report.buildSourceMismatches, [], 'Every frozen application input must match before measurement');
 
 async function learningSnapshot(page) {
     return page.evaluate(async () => {
@@ -61,7 +84,7 @@ async function learningSnapshot(page) {
 }
 
 async function installIslandFixture(page, profileId) {
-    return page.evaluate(async ({ profileId, fixture }) => {
+    return page.evaluate(async ({ profileId, fixture, initialCompletedSets, setup }) => {
         const { db } = await import('/src/db/index.ts');
         const { createColdOpenFixedTenProblem } = await import('/src/domain/benchmark/coldOpenFixedTen.ts');
         const { openIsland, startIslandPlan } = await import('/src/domain/island/repository.ts');
@@ -77,9 +100,12 @@ async function installIslandFixture(page, profileId) {
             }));
             window.__islandFixturePlans.push({ fixture, originalWorkload: 6, plan: structuredClone(plan) });
         });
-        await openIsland(profileId);
+        const opened = await openIsland(profileId);
+        if (opened.pendingPlanId || opened.completedSets || opened.pendingRewards.length) throw new Error('Normal fixture must start in a fresh disposable island');
+        await db.islands.put({ ...opened, completedSets: initialCompletedSets });
+        window.__islandFixtureSetup = { id: setup, synthetic: true, before: opened, after: await db.islands.get(profileId) };
         return startIslandPlan(profileId);
-    }, { profileId, fixture: FIXTURE });
+    }, { profileId, fixture: FIXTURE, initialCompletedSets: INITIAL_COMPLETED_SETS, setup: ISLAND_SETUP });
 }
 
 async function waitStudy(page, index) {
@@ -119,6 +145,8 @@ async function armAnswer(page, lane, index, wrong) {
         const root = document.querySelector(lane === 'island' ? '[data-island-plan-revision]' : `[data-benchmark-id="${fixture}"]`);
         const revision = Number(root?.getAttribute('data-island-plan-revision'));
         const planId = root?.getAttribute('data-island-plan-id');
+        const boundary = lane === 'island' && index === 5 && !wrong;
+        const expectedNextPlanId = boundary ? JSON.stringify(['island-plan-v1', JSON.parse(planId)[1], JSON.parse(planId)[2] + 1]) : undefined;
         const input = lane === 'island' ? document.querySelector('.park-input span') : document.querySelector('.app-glass.font-mono');
         if (!input || !['', '□'].includes(input.textContent.trim())) throw new Error('Input leaked from the previous answer');
         const onKey = event => {
@@ -135,9 +163,12 @@ async function armAnswer(page, lane, index, wrong) {
                 let terminal = false;
                 if (lane === 'island') {
                     terminal = document.querySelector('.island-page')?.getAttribute('data-mode') === 'reward';
-                    ready = terminal || (current?.getAttribute('data-island-plan-id') === planId
-                        && Number(current.getAttribute('data-island-plan-revision')) === revision + 1
-                        && current.getAttribute('data-input-ready') === 'true');
+                    ready = !terminal && current?.getAttribute('data-input-ready') === 'true' && (boundary
+                        ? current.getAttribute('data-island-plan-id') === expectedNextPlanId
+                            && Number(current.getAttribute('data-island-plan-revision')) === 0
+                            && current.querySelector('.island-light-trail')?.getAttribute('aria-label')?.startsWith('1もんめ、')
+                        : current.getAttribute('data-island-plan-id') === planId
+                            && Number(current.getAttribute('data-island-plan-revision')) === revision + 1);
                 } else {
                     terminal = current?.getAttribute('data-benchmark-complete') === 'true';
                     ready = wrong ? current?.getAttribute('data-feedback') === 'incorrect' && [...document.querySelectorAll('button')].some(button => /^(次へ|つぎへ)/.test(button.textContent.trim()))
@@ -147,7 +178,9 @@ async function armAnswer(page, lane, index, wrong) {
                 const nextInput = lane === 'island' ? document.querySelector('.park-input span') : document.querySelector('.app-glass.font-mono');
                 const empty = terminal || (lane === 'study' && wrong) || ['', '□'].includes(nextInput?.textContent.trim());
                 window.__islandThroughputSample = { question: index + 1, wrong, ms: performance.now() - started, terminal, inputEmpty: empty,
-                    revision, planId, endedAt: performance.now() };
+                    revision, planId, boundary, expectedNextPlanId,
+                    nextPlanId: current?.getAttribute('data-island-plan-id'), nextRevision: Number(current?.getAttribute('data-island-plan-revision')),
+                    endedAt: performance.now() };
                 if (index === 9 && !wrong) window.__islandThroughputEnded = performance.now();
             };
             requestAnimationFrame(tick);
@@ -198,6 +231,19 @@ async function runLane(browser, lane, scenario, repetition, layout) {
             }));
         }
         const controls = await assertLayout(page, lane);
+        if (lane === 'island') await page.evaluate(() => {
+            const probe = window.__islandNormalFlow = { modes: [], actions: [], overflow: false };
+            const save = (key, value) => { if (probe[key].length < 256) probe[key].push(value); else probe.overflow = true; };
+            const root = document.querySelector('.island-page');
+            save('modes', root.dataset.mode);
+            const observer = new MutationObserver(records => {
+                for (const record of records) if (record.attributeName === 'data-mode') save('modes', record.oldValue);
+                save('modes', root.dataset.mode);
+            });
+            observer.observe(root, { attributes: true, attributeFilter: ['data-mode'], attributeOldValue: true });
+            document.addEventListener('click', event => { if (event.isTrusted) save('actions', { type: 'click', text: event.target.textContent }); }, true);
+            document.addEventListener('keydown', event => { if (event.isTrusted) save('actions', { type: 'keydown', key: event.key }); }, true);
+        });
         const before = await learningSnapshot(page);
         const samples = [];
         const interruptions = [];
@@ -237,13 +283,6 @@ async function runLane(browser, lane, scenario, repetition, layout) {
                 snapshots.push({ afterWrongQuestion: index + 1, planId: current.id, revision: current.revision, cursor: current.cursor, problem: current.slots[current.cursor].problem });
             }
             samples.push(await submit(page, lane, index));
-            if (lane === 'island' && index === 5) {
-                const start = await page.evaluate(() => performance.now());
-                await button(page, 'つづけて とく').focus();
-                await page.keyboard.press('Enter');
-                await waitMode(page, 'learning');
-                interruptions.push({ afterQuestion: 6, kind: 'defer-reward-and-continue', ms: await page.evaluate(start => performance.now() - start, start), inputAction: 'focus + Enter' });
-            }
         }
         const timing = await page.evaluate(() => ({ start: window.__islandThroughputStarted, end: window.__islandThroughputEnded }));
         assert(Number.isFinite(timing.start) && Number.isFinite(timing.end) && timing.end > timing.start, 'Browser timing must have measured start and end');
@@ -251,6 +290,10 @@ async function runLane(browser, lane, scenario, repetition, layout) {
         let persistence;
         if (lane === 'island') {
             const state = await readNative(page, profileId);
+            const normalFlow = await page.evaluate(() => window.__islandNormalFlow);
+            assert(!normalFlow.overflow, 'Normal flow observation must not truncate');
+            assert(normalFlow.modes.every(mode => mode === 'learning'), 'No automatic reward, home or other mode may interrupt normal answers');
+            assert(normalFlow.actions.every(action => action.type === 'keydown' && /^[0-9]$|^Enter$/.test(action.key)), 'Only answer digits and Enter are permitted in the timed normal flow');
             const actionEvents = state.islandEvents.filter(event => event.type === 'answer');
             const expectedAttempts = scenario === 'all-correct' ? 10 : 12;
             assert.equal(actionEvents.length, expectedAttempts, 'Exactly one persisted event per keyboard answer');
@@ -259,9 +302,12 @@ async function runLane(browser, lane, scenario, repetition, layout) {
             assert.equal(new Set(actionEvents.map(event => event.learningLogId)).size, expectedAttempts);
             assert(actionEvents.every(event => state.logs.some(log => log.id === event.learningLogId)), 'Every answer receipt must identify its learning log');
             assert.equal(state.logs.filter(log => log.result === 'correct').length, 10);
-            assert.equal(state.island.completedSets, 1);
-            assert.equal(state.island.pendingRewards.length, 1, 'The first section reward remains deferred');
-            assert.equal(state.island.items.length, 2, 'Deferring does not fabricate a selected item');
+            assert.equal(normalFlow.actions.filter(action => action.key === 'Enter').length, expectedAttempts);
+            assert.equal(state.island.completedSets, INITIAL_COMPLETED_SETS + 1);
+            assert.equal(state.island.pendingRewards.length, 0, 'The section grows its place without a deferred gift');
+            assert(firstPlan.growthTarget, 'The benchmark exercises the current automatic growth contract');
+            assert.equal(state.island.growth.progress[firstPlan.growthTarget], 1, 'Exactly one real section grows the reserved place');
+            assert.equal(new Set(state.island.items.map(item => item.id)).size, state.island.items.length);
             assert.equal(state.plan.cursor, 4, 'The second real six-question section remains pending after Q10');
             assert.equal(state.plan.slots.length, 6);
             assert.equal(state.islandPlans.length, 2);
@@ -272,7 +318,14 @@ async function runLane(browser, lane, scenario, repetition, layout) {
                 const saved = state.islandPlans.find(plan => plan.id === entry.plan.id);
                 assert.deepEqual(saved.slots.map(slot => slot.problem), entry.plan.slots.map(slot => slot.problem), 'Full reserved Problems remain byte-for-byte stable throughout the run');
             }
-            persistence = { expectedAttempts, uniqueEvents: actionEvents.length, uniqueLearningLogs: state.logs.length, completedSets: 1, deferredRewards: 1,
+            const starts = state.islandEvents.filter(event => event.type === 'plan_started');
+            const completions = state.islandEvents.filter(event => event.type === 'plan_completed');
+            assert.equal(starts.length, 2); assert.equal(completions.length, 1);
+            assert.equal(completions[0].planId, firstPlan.id);
+            persistence = { expectedAttempts, uniqueEvents: actionEvents.length, uniqueLearningLogs: state.logs.length,
+                initialCompletedSets: INITIAL_COMPLETED_SETS, completedSets: state.island.completedSets, realCompletedSets: 1, deferredRewards: 0,
+                growthTarget: firstPlan.growthTarget, growth: state.island.growth,
+                setup: await page.evaluate(() => window.__islandFixtureSetup), normalFlow,
                 pendingPlanId: state.plan.id, pendingCursor: state.plan.cursor, reservations, events: state.islandEvents, logs: state.logs, wrongSnapshots: snapshots };
         } else {
             assert.deepEqual(after, before, 'Study DEV fixture must not change learning data');
@@ -318,6 +371,8 @@ function summarize() {
         const island = select('island');
         const correct = report.runs.filter(run => run.layout === layout.name && run.lane === 'island').flatMap(run => run.samples.filter(sample => !sample.wrong && !sample.terminal).map(sample => sample.ms));
         const incorrect = select('island', 'miss-at-q4-q8').flatMap(run => run.samples.filter(sample => sample.wrong).map(sample => sample.ms));
+        const boundaries = report.runs.filter(run => run.layout === layout.name && run.lane === 'island')
+            .flatMap(run => run.samples.filter(sample => sample.boundary && !sample.wrong).map(sample => sample.ms));
         const studyRate = median(study.map(run => run.completedProblemsPerMinute));
         const islandRate = median(island.map(run => run.completedProblemsPerMinute));
         report.comparisons.push({ layout: layout.name,
@@ -325,7 +380,9 @@ function summarize() {
             allCorrectIslandToStudyRatio: islandRate / studyRate,
             correctOperableP95Ms: percentile(correct, .95), incorrectRetryP95Ms: percentile(incorrect, .95),
             correctSamples: correct.length, incorrectSamples: incorrect.length,
-            sectionContinueMedianMs: median(island.flatMap(run => run.interruptions.map(interruption => interruption.ms))),
+            automaticSectionTransitionMedianMs: median(island.flatMap(run => run.samples.filter(sample => sample.boundary).map(sample => sample.ms))),
+            automaticSectionTransitionSamples: island.flatMap(run => run.samples.filter(sample => sample.boundary)).length,
+            sectionBoundaryP95Ms: percentile(boundaries, .95), sectionBoundarySamples: boundaries.length,
             rawStudyDurationMedianMs: median(study.map(run => run.durationMs)), rawIslandDurationMedianMs: median(island.map(run => run.durationMs)),
         });
     }
@@ -334,8 +391,11 @@ function summarize() {
         allCorrectIslandThroughputNotBelowStudy: report.comparisons.every(comparison => comparison.allCorrectIslandToStudyRatio >= 1),
         correctP95AtMost650Ms: report.comparisons.every(comparison => comparison.correctOperableP95Ms <= 650),
         incorrectP95AtMost550Ms: report.comparisons.every(comparison => comparison.incorrectRetryP95Ms <= 550),
+        sectionBoundaryP95AtMost650Ms: report.comparisons.every(comparison => comparison.sectionBoundarySamples >= 20 && comparison.sectionBoundaryP95Ms <= 650),
         twentySameQuestionIncorrectSamplesPerLayout: report.comparisons.every(comparison => comparison.incorrectSamples >= 20),
-        noExtraOrdinaryQuestionActions: report.runs.filter(run => run.lane === 'island').every(run => run.interruptions.length === 1 && run.interruptions[0].afterQuestion === 6),
+        noExtraOrdinaryQuestionActions: report.runs.filter(run => run.lane === 'island').every(run => run.interruptions.length === 0),
+        automaticSectionBoundaryIncluded: report.runs.filter(run => run.lane === 'island').every(run =>
+            run.samples.filter(sample => sample.boundary && !sample.terminal && sample.nextPlanId === sample.expectedNextPlanId && sample.nextRevision === 0).length === 1),
         emptyInputAfterEveryTransition: report.runs.every(run => run.samples.every(sample => sample.inputEmpty)),
         initialIslandControlsUsable: report.runs.filter(run => run.lane === 'island')
             .every(run => run.controls.length === 13 && run.controls.every(control => control.box.width >= 44 && control.box.height >= 44
@@ -344,7 +404,7 @@ function summarize() {
         phoneAndTablet: layouts.length === 2,
         noBrowserErrors: report.runs.every(run => run.errors.length === 0),
         oneRenderedBuildAndCandidate: report.runtime.revisions.length === 1 && report.runtime.versions.length === 1
-            && report.runtime.candidates.length === 1 && report.runtime.candidates[0] === 'mystic-island-procedural-v2'
+            && report.runtime.candidates.length === 1 && report.runtime.candidates[0] === 'mystic-island-living-v3'
             && report.runtime.learningCandidates.length === 1 && report.runtime.learningCandidates[0] === 'mystic-island-learning-v2',
         sourceFilesUnchangedDuringBenchmark: report.sourceSnapshotStart.hash === report.sourceSnapshotEnd.hash,
     };
@@ -374,12 +434,14 @@ try {
     report.error = error.stack;
     process.exitCode = 1;
 } finally {
-    report.sourceSnapshotEnd = await sourceFingerprint();
-    if (!report.error) summarize();
+    await browser.close(); report.browserClosed = true;
+    try {
+        report.sourceSnapshotEnd = await sourceFingerprint();
+        if (!report.error) summarize();
+    } catch (error) { report.error = [report.error, error.stack].filter(Boolean).join('\n'); report.pass = false; process.exitCode = 1; }
     report.finishedAt = new Date().toISOString();
     await mkdir(dirname(output), { recursive: true });
     await writeFile(output, `${JSON.stringify(report, null, 2)}\n`);
-    await browser.close();
     console.log(JSON.stringify({ output, comparisons: report.comparisons, gates: report.gates, evidence: report.evidence, pass: report.pass, error: report.error }, null, 2));
     if (repetitions >= 10 && layouts.length === 2 && !report.pass) process.exitCode = 1;
 }

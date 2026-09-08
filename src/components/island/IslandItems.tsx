@@ -1,5 +1,6 @@
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Check, RotateCw, X } from 'lucide-react';
 import { ISLAND_ITEMS } from '../../domain/island/catalog';
+import { getIslandItemAppearanceLevel, getIslandItemGrowthLevel } from '../../domain/island/growth';
 import type { IslandItem, IslandItemKind, IslandRecord, IslandPosition } from '../../domain/island/types';
 
 /** Small object illustrations for choosing possessions; the living world stays in the 3D stage. */
@@ -63,13 +64,13 @@ export function ItemPicture({ kind }: { kind: IslandItemKind }) {
     </svg>;
 }
 
-export function IslandRewards({ island, disabled, onChoose, onContinue, onClose }: {
-    island: IslandRecord; disabled: boolean; onChoose: (rewardId: string, kind: IslandItemKind) => void;
+export function IslandRewards({ island, intro = false, disabled, onChoose, onContinue, onClose }: {
+    island: IslandRecord; intro?: boolean; disabled: boolean; onChoose: (rewardId: string, kind: IslandItemKind) => void;
     onContinue: () => void; onClose: () => void;
 }) {
     const reward = island.pendingRewards[0];
-    return <section className="island-sheet island-rewards" aria-label="しまへの おくりもの">
-        <div className="island-sheet-title"><div><p className="island-eyebrow">しまへの おくりもの</p><h2>どれを むかえる？</h2></div>
+    return <section className="island-sheet island-rewards" aria-label="しまへの おくりもの" data-intro={intro}>
+        <div className="island-sheet-title"><div><p className="island-eyebrow">{intro ? 'はじめての おくりもの' : 'しまへの おくりもの'}</p><h2>どれを むかえる？</h2></div>
             <button className="island-icon-button" aria-label="しまへ もどる" onClick={onClose} disabled={disabled}><X size={20} /></button></div>
         {reward && <div className="island-reward-choices">{reward.choices.map(kind => <button className="island-reward" key={kind}
             disabled={disabled} onClick={() => onChoose(reward.id, kind)}><ItemPicture kind={kind} /><strong>{ISLAND_ITEMS[kind].name}</strong></button>)}</div>}
@@ -89,7 +90,8 @@ export function IslandInventory({ items, disabled, onSelect, onClose }: {
             <button className="island-icon-button" aria-label="もちものを とじる" onClick={onClose}><X size={20} /></button></div>
         <div className="island-inventory">{items.map((item, index) => <button key={item.id} disabled={disabled} className="island-reward"
             aria-label={`${ISLAND_ITEMS[item.kind].name} ${index + 1}を うごかす`} onClick={() => onSelect(item)}>
-            <ItemPicture kind={item.kind} /><strong>{ISLAND_ITEMS[item.kind].name}</strong><small>{item.position ? 'しまに ある' : 'しまって ある'}</small></button>)}</div>
+            <ItemPicture kind={item.kind} /><strong>{ISLAND_ITEMS[item.kind].name}</strong><small>{item.position ? 'しまに ある' : item.autoPlacementBlocked ? 'おく ばしょを えらべるよ' : 'しまって ある'}</small>
+            {item.autoPlacementBlocked && <small>しまが いっぱい。すきな ばしょへ。</small>}</button>)}</div>
     </section>;
 }
 
@@ -116,9 +118,9 @@ export function IslandPlay({ items, disabled, selectedId, message, onSelect, onM
     </section>;
 }
 
-export function IslandPlacement({ item, valid, disabled, onPoint, onRotate, onSave, onStore, onCancel }: {
+export function IslandPlacement({ item, valid, disabled, onPoint, onRotate, onSave, onStore, onCancel, onAppearance }: {
     item: IslandItem; valid: boolean; disabled: boolean; onPoint: (point: IslandPosition) => void;
-    onRotate: () => void; onSave: () => void; onStore: () => void; onCancel: () => void;
+    onRotate: () => void; onSave: () => void; onStore: () => void; onCancel: () => void; onAppearance?: (level: number) => void;
 }) {
     const point = item.position ?? { x: 0, z: 1 };
     const move = (x: number, z: number) => onPoint({ x: point.x + x, z: point.z + z });
@@ -133,6 +135,12 @@ export function IslandPlacement({ item, valid, disabled, onPoint, onRotate, onSa
             <button className="island-icon-button" aria-label="みぎへ" disabled={disabled} onClick={() => move(.25, 0)}><ArrowRight /></button>
             <button className="island-icon-button" aria-label="まわす" disabled={disabled} onClick={onRotate}><RotateCw size={20} /></button>
         </div><button className="island-primary" disabled={disabled || !valid} onClick={onSave}><Check size={20} />ここに おく</button></div>
+        {item.habitatId && onAppearance && <fieldset className="island-appearance"><legend>すきな すがた</legend>
+            <div>{Array.from({ length: getIslandItemGrowthLevel(item) + 1 }, (_, level) => <button key={level} disabled={disabled}
+                aria-pressed={level === getIslandItemAppearanceLevel(item)} onClick={() => onAppearance(level)}>
+                {level === 0 ? 'はじめの すがた' : `${level}ばんめの すがた`}</button>)}</div>
+            <p>すがたを かえても、あそびは そのまま。</p>
+        </fieldset>}
         <button className="island-text-button" disabled={disabled} onClick={onStore}>いまは しまっておく</button>
     </section>;
 }

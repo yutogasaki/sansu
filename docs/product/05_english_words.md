@@ -1,6 +1,6 @@
 # 05 英単語リスト
 
-全20レベル、各レベル60語（合計1200語）の単語リスト。
+全20レベル、合計1184学習項目の既存単語リスト。各レベルの内訳はLv.2・8・16が59項目、Lv.20が47項目、それ以外は60項目。内容を追加せず実数を示す。
 
 ---
 
@@ -19,6 +19,26 @@
 選択肢生成ルールやメタ情報は [03_english_skills.md](./03_english_skills.md) を参照。
 
 ---
+
+## 学習項目の識別
+
+表のEnglishは画面に表示する綴り。同じ綴りを複数の意味・レベルで扱うため、学習記録では別の安定IDを使う。初出のID・既存記録は維持し、後続IDには旧記録をコピーしない。`properly`の同義の再登場もレベル別項目として分離する。計1184項目、異なる綴りは1173。
+
+語義ごとの単元対応と棚卸しAPIは [33_english_unit_catalog.md](33_english_unit_catalog.md) に定義する。単元化によって既存項目を統合したり、聞く・話す・書く能力の習得を推定したりしない。
+
+| 表示語 | 初出ID（レベル） | 後続ID（レベル） |
+|---|---|---|
+| orange | orange（1） | orange_lv2（2） |
+| please | please（1） | please_lv8（8） |
+| thank | thank（1） | thank_lv8（8） |
+| hard | hard（5） | hard_lv9（9） |
+| right | right（5） | right_lv16（16） |
+| so | so（5） | so_lv11（11） |
+| clean | clean（6） | clean_lv10（10） |
+| way | way（7） | way_lv12（12） |
+| own | own（7） | own_lv10（10） |
+| cause | cause（14） | cause_lv15（15） |
+| properly | properly（15） | properly_lv18（18） |
 
 ## Lv.1〜5（超基本）
 
@@ -87,7 +107,7 @@
 | like | すき | 動詞 |
 | want | ほしい | 動詞 |
 
-### Lv.2（60語）身体、家族、色
+### Lv.2（59語）身体、家族、色
 
 | English | Japanese | Category |
 |---|---|---|
@@ -480,7 +500,7 @@
 | back | うしろに | 副詞 |
 | when | いつ | 疑問詞 |
 
-### Lv.8（60語）学習、感情、行事
+### Lv.8（59語）学習、感情、行事
 
 | English | Japanese | Category |
 |---|---|---|
@@ -798,7 +818,7 @@
 | proper | てきせつな | 形容詞 |
 | appropriate | ふさわしい | 形容詞 |
 | reasonable | ごうりてきな | 形容詞 |
-| positive | ぜんむきな | 形容詞 |
+| positive | まえむきな | 形容詞 |
 | negative | ひていてきな | 形容詞 |
 | as | 〜として | 接続 |
 | than | 〜より | 接続 |
@@ -924,7 +944,7 @@
 | official | こうしきの | 形容詞 |
 | professional | プロの | 形容詞 |
 | personal | こじんてきな | 形容詞 |
-| local | ちもとの | 形容詞 |
+| local | じもとの | 形容詞 |
 | global | せかいてきな | 形容詞 |
 | familiar | おなじみの | 形容詞 |
 | similar | にている | 形容詞 |
@@ -1008,7 +1028,7 @@
 
 ## Lv.16〜20（発展）
 
-### Lv.16（60語）抽象概念、社会問題
+### Lv.16（59語）抽象概念、社会問題
 
 | English | Japanese | Category |
 |---|---|---|
@@ -1267,7 +1287,7 @@
 | circumstance | じょうきょう | 名詞 |
 | evidence | しょうこ | 名詞 |
 
-### Lv.20（60語）動詞・形容詞・副詞（発展）
+### Lv.20（47語）動詞・形容詞・副詞（発展）
 
 | English | Japanese | Category |
 |---|---|---|
@@ -1318,4 +1338,3 @@
 | as far as | 〜するかぎりでは | その他 |
 | at most | おおくても | その他 |
 | yearly | まいとし | その他 |
-

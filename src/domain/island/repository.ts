@@ -7,6 +7,8 @@ import { ENGLISH_WORDS } from '../english/words';
 import { getIslandMathRemediationSkillIds } from './learningChecks';
 import { hasValidIslandSupportState } from './learningSupport';
 import { createIsland, islandRewardChoices, isValidIslandPlacement } from './catalog';
+import { getIslandGrowthTarget, initializeIslandGrowth, isIslandHabitatId, isIslandHabitatUnlocked } from './growth';
+import { hasValidGrowthItemFields, hasValidIslandGrowth } from './growthValidation';
 import { ISLAND_ITEM_KINDS, type IslandEdit, type IslandItemKind, type IslandPlan, type IslandRecord } from './types';
 
 export class IslandConflict extends ParkConflict {}
@@ -21,6 +23,7 @@ export function assertIsland(island: IslandRecord) {
         || new Set(island.items.map(item => item.id)).size !== island.items.length
         || new Set(island.pendingRewards.map(reward => reward.id)).size !== island.pendingRewards.length
         || island.items.some(item => !ISLAND_ITEM_KINDS.includes(item.kind) || !Number.isFinite(item.rotation)
+            || !hasValidGrowthItemFields(item)
             || (item.position && (!Number.isFinite(item.position.x) || !Number.isFinite(item.position.z))))
         || island.pendingRewards.some(reward => reward.choices.length !== 3 || new Set(reward.choices).size !== 3
             || reward.choices.some(kind => !ISLAND_ITEM_KINDS.includes(kind)))
@@ -32,17 +35,25 @@ export function assertIsland(island: IslandRecord) {
                 || !check.failedQuestionKey || typeof check.failedQuestionKey !== 'string'
                 || !['bridge', 'independent'].includes(check.stage) || !Number.isFinite(check.createdAt) || check.createdAt < 0)))
         || (island.mathReviewTurn !== undefined && (!Number.isSafeInteger(island.mathReviewTurn) || island.mathReviewTurn < 0))
-        || (island.vocabDueCursor !== undefined && !ENGLISH_WORDS.some(word => word.id === island.vocabDueCursor))) throw new IslandConflict('Invalid island');
+        || (island.vocabDueCursor !== undefined && !ENGLISH_WORDS.some(word => word.id === island.vocabDueCursor))
+        || !hasValidIslandGrowth(island)) throw new IslandConflict('Invalid island');
 }
 
 export function assertIslandPlan(plan: IslandPlan, profileId: string) {
     if (plan.profileId !== profileId || plan.schemaVersion !== 1 || plan.plannerVersion !== 'island-learning-v1'
         || !Number.isInteger(plan.revision) || plan.revision < 0 || !Number.isInteger(plan.cursor)
+        || (plan.growthTarget !== undefined && !isIslandHabitatId(plan.growthTarget))
         || !Array.isArray(plan.slots) || plan.slots.length === 0 || plan.cursor < 0 || plan.cursor > plan.slots.length
         || plan.slots.some((slot, index) => slot.problem.subject !== plan.subject || slot.completed !== (index < plan.cursor)
             || !hasValidIslandSupportState(slot))
         || (plan.status === 'active' ? plan.cursor === plan.slots.length : plan.status !== 'completed' || plan.cursor !== plan.slots.length)) {
         throw new IslandConflict('Invalid learning plan');
+    }
+}
+
+export function assertIslandPlanGrowth(plan: IslandPlan, island: IslandRecord) {
+    if (plan.growthTarget && (!island.growth || !isIslandHabitatUnlocked(island, plan.growthTarget))) {
+        throw new IslandConflict('Reserved growth place unavailable');
     }
 }
 
@@ -74,6 +85,7 @@ export async function startIslandPlan(profileId: string, database = db): Promise
             const pending = await database.islandPlans.get(island.pendingPlanId);
             if (!pending || pending.status !== 'active') throw new IslandConflict('Pending plan missing');
             assertIslandPlan(pending, profileId);
+            assertIslandPlanGrowth(pending, island);
             return pending;
         }
         const id = JSON.stringify(['island-plan-v1', profileId, island.completedSets]);
@@ -84,11 +96,12 @@ export async function startIslandPlan(profileId: string, database = db): Promise
         ]);
         const merge = (legacy: typeof profile.mathSkills, rows: typeof math) => Object.values({ ...legacy, ...Object.fromEntries(rows.map(memory => [memory.id, memory])) });
         const now = Date.now();
+        const growingIsland = initializeIslandGrowth(island, now);
         const mathReviewTurn = island.mathReviewTurn ?? 0;
         const remediation = getIslandMathRemediationSkillIds(island.pendingMathChecks, profile);
         const selectedRemediation = remediation.length ? [remediation[Math.floor(mathReviewTurn / 2) % remediation.length]] : [];
         const learning = planParkLearning(profile, merge(profile.mathSkills, math), merge(profile.vocabWords, vocab), logs,
-            island.completedSets, id, now, { standardCount: 6, complexCount: 3,
+            island.completedSets, id, now, { standardCount: island.completedSets === 0 ? 3 : 6, complexCount: 3,
                 mathRemediationSkillIds: selectedRemediation, mathDueFirst: mathReviewTurn % 2 === 1,
                 mathPendingReviewSkillIds: [...(island.pendingMathChecks ?? []).map(check => check.skillId), ...remediation],
                 vocabDueAfterId: island.vocabDueCursor });
@@ -96,9 +109,10 @@ export async function startIslandPlan(profileId: string, database = db): Promise
             id, profileId, schemaVersion: 1, plannerVersion: 'island-learning-v1', ...learning,
             status: 'active', cursor: 0, revision: 0, startedAt: now,
             rewardId: `${id}:reward`, rewardChoices: islandRewardChoices(island.completedSets),
+            growthTarget: getIslandGrowthTarget(growingIsland),
         };
         await database.islandPlans.add(plan);
-        await database.islands.put({ ...island, pendingPlanId: id, revision: island.revision + 1, updatedAt: now,
+        await database.islands.put({ ...growingIsland, pendingPlanId: id, revision: island.revision + 1, updatedAt: now,
             ...(learning.subject === 'math' ? { mathReviewTurn: mathReviewTurn + 1 } : {}),
             ...(learning.subject === 'vocab' ? { vocabDueCursor: learning.slots.find(slot => slot.source === 'due')?.problem.categoryId } : {}) });
         await database.islandEvents.add({ id: `${id}:started`, profileId, planId: id, type: 'plan_started', timestamp: now });
@@ -148,8 +162,9 @@ export async function saveIslandEdit(profileId: string, revision: number, edit: 
         const updated: IslandRecord = {
             ...island, revision: island.revision + 1, updatedAt: now,
             items: island.items.map(item => item.id !== edit.itemId ? item : edit.type === 'store'
-                ? { ...item, position: undefined }
-                : { ...item, position: { ...edit.position }, rotation: ((edit.rotation % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2) }),
+                ? { ...item, position: undefined, autoPlacementBlocked: undefined }
+                : { ...item, position: { ...edit.position }, autoPlacementBlocked: undefined,
+                    rotation: ((edit.rotation % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2) }),
         };
         await database.islands.put(updated);
         await database.islandEvents.add({ id, profileId, type: 'item_edited', timestamp: now, itemId: edit.itemId, action: edit });

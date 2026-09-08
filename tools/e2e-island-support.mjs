@@ -103,11 +103,11 @@ try {
             if (report.manifest) assert.deepEqual(manifest, report.manifest); else report.manifest = manifest;
             const id = await seedLearningProfile(page, scenario);
             await page.goto(`${base}/#/island`); await waitReady(page);
-            await activate(button(page, 'ひかりを とどける'), scenario.touch); await waitMode(page, 'learning');
+            await activate(page.locator('.island-start'), scenario.touch); await waitMode(page, 'learning');
             let state = await readNative(page, id); await waitLearningReady(page, state.plan);
             assert.equal(await page.locator('.park-answer').getAttribute('data-input-type'), scenario.type);
             if (scenario.skill) assert.equal(state.plan.slots[0].problem.categoryId, scenario.skill);
-            assert([3, 6].includes(state.plan.slots.length));
+            assert.equal(state.island.completedSets, 0); assert.equal(state.plan.slots.length, 3);
             row.planId = state.plan.id; row.reservedWorkload = state.plan.slots.length;
             row.readyControls = scenario.partial ? await assertWrittenSupportControls(page) : await assertControls(page);
             if (scenario.partial) {
@@ -163,7 +163,7 @@ try {
             assert.deepEqual(result.saved.slots[0].hissanValues, row.savedPartialCells);
             await capture(page, `${scenario.name}-supported-next-input`, state);
             let steps = 0;
-            while (state.plan) {
+            while (state.plan?.id === row.planId) {
                 assert(++steps <= 80, 'The normal fixed reservation finishes in its actual bounded steps');
                 state = state.plan.slots[state.plan.cursor].problem.hissanVersion === 2
                     ? (await answerWrittenRow(page, state, scenario.touch)).after

@@ -277,7 +277,7 @@ export const getLevelForSkill = (skillId: string): number | null => {
  */
 export const isMathSkillUnlockedForProfile = (
     skillId: string,
-    profile: Pick<UserProfile, "mathMaxUnlocked">,
+    profile: Pick<UserProfile, "mathMaxUnlocked" | "mathLevels">,
 ): boolean => {
     if (
         !Number.isSafeInteger(profile.mathMaxUnlocked)
@@ -288,7 +288,11 @@ export const isMathSkillUnlockedForProfile = (
     }
 
     const level = getLevelForSkill(skillId);
-    return level !== null && level <= profile.mathMaxUnlocked;
+    if (level === null || level > profile.mathMaxUnlocked) return false;
+    const state = profile.mathLevels?.find(candidate => candidate.level === level);
+    // Legacy profiles (including missing preschool Lv0 entries) retain access;
+    // an explicit parent setting must hold for every planner source.
+    return state?.unlocked !== false && state?.enabled !== false;
 };
 
 export const getMathSkillFamily = (skillId: string): string => {

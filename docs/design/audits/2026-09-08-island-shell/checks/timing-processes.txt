@@ -1,0 +1,5 @@
+ 9390  9376       02:43 node tools/e2e-island-throughput.mjs
+ 9921  9726       00:52 /Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python /tmp/sansu-fixed-suite.py --manifest /Users/yutogasaki/Projects/sansu/output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/build-source.json --out /Users/yutogasaki/Projects/sansu/output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/learning --target http://127.0.0.1:5430 --env SANSU_ISLAND_PRODUCTION_URL=http://127.0.0.1:5430 --env SANSU_ISLAND_BUILD_SOURCE=/Users/yutogasaki/Projects/sansu/output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/build-source.json --env SANSU_ISLAND_LEARNING_OUTPUT=/Users/yutogasaki/Projects/sansu/output/playwright/0ea5c56-learning-rhythm-eb5f5a06103d/learning -- node tools/e2e-island-learning.mjs
+ 9922  9921       00:52 node tools/e2e-island-learning.mjs
+10237 66404       00:00 /bin/zsh -c ps -axo pid,ppid,etime,command | rg 'node .*e2e-' > docs/design/audits/2026-09-08-island-shell/checks/timing-processes.txt
+10239 10237       00:00 rg node .*e2e-

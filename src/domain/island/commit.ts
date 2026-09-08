@@ -3,13 +3,15 @@ import { getLearningDayStart } from '../../utils/learningDay';
 import { writeLearningAttemptInTransaction } from '../learningAttemptWriter';
 import { checkEnglishLevelProgression, checkVocabUnlockReadiness } from '../english/service';
 import { resolveProfileProgressionAfterAttempt } from '../../hooks/useStudySession.logic';
-import { gradeParkAnswer } from '../park/learning';
+import { gradeParkAnswer, parkHissanGrid } from '../park/learning';
+import { learningBarrierForProblem, learningEvidenceForProblem } from '../learning/attemptContext';
 import type { MemoryState } from '../types';
-import { assertIslandPlan, IslandConflict, islandTables, ownedIsland } from './repository';
+import { assertIslandPlan, assertIslandPlanGrowth, IslandConflict, islandTables, ownedIsland } from './repository';
 import type { IslandEvent, IslandLearningAction } from './types';
 import { updateIslandMathChecks } from './learningChecks';
 import { islandSupportStage } from './learningSupport';
 import { normalizeIslandObservation, islandObservationBinding, islandObservationScope } from './learningObservation';
+import { growIslandAfterCompletedSet } from './growth';
 
 async function keepIndependentCheckDue(database: SansuDatabase, profileId: string, subject: 'math' | 'vocab', itemId: string, now: number) {
     const table = subject === 'math' ? database.memoryMath : database.memoryVocab;
@@ -32,10 +34,11 @@ async function keepIndependentCheckDue(database: SansuDatabase, profileId: strin
 
 export async function commitIslandLearning(profileId: string, planId: string, revision: number, action: IslandLearningAction, database = db, observation?: unknown) {
     return database.transaction('rw', islandTables(database), async () => {
-        const { island } = await ownedIsland(database, profileId);
+        let { island } = await ownedIsland(database, profileId);
         const plan = await database.islandPlans.get(planId);
         if (!plan) throw new IslandConflict('Plan missing');
         assertIslandPlan(plan, profileId);
+        assertIslandPlanGrowth(plan, island);
         const id = JSON.stringify(['island-action-v1', profileId, planId, revision]);
         const existing = await database.islandEvents.get(id);
         if (existing) {
@@ -57,24 +60,35 @@ export async function commitIslandLearning(profileId: string, planId: string, re
         const normalizedObservation = normalizeIslandObservation(observation, observationBinding);
         const event: IslandEvent = { id, profileId, planId, timestamp: now, type: action.type, action, slotIndex: plan.cursor };
         let result: 'correct' | 'incorrect' | 'skipped' | undefined;
+        const assistanceBefore = slot.assisted ? 'assisted' : slot.learningEvidenceAssistance ?? 'unknown';
+        let wholeProblem = false;
         let checkOutcome: 'needs-support' | 'correct-final' | 'supported-final' | 'partial' = 'partial';
         if (action.type === 'support_opened' || action.type === 'skipped') {
+            event.learningEvidenceBarrier = learningBarrierForProblem(slot.problem, action.type === 'skipped' ? 'skipped' : 'support-opened');
             checkOutcome = 'needs-support';
             slot.assisted = true;
+            slot.learningEvidenceAssistance = 'assisted';
             slot.supportStage = 'hint';
-            if (action.type === 'skipped') { result = 'skipped'; event.result = 'skipped'; }
+            if (action.type === 'skipped') {
+                wholeProblem = !parkHissanGrid(slot.problem);
+                result = 'skipped'; event.result = 'skipped';
+            }
         } else if (action.type === 'model_opened') {
             slot.supportStage = 'model';
         } else if (action.type === 'supported_completed') {
             // This is session progress after viewing a model, never an answer.
             // In particular, do not grade or fill Hissan cells to manufacture success.
             event.result = 'supported-completion';
+            event.learningEvidence = learningEvidenceForProblem(slot.problem, 'assisted');
             observationScope.wholeCompleted = true;
             checkOutcome = 'supported-final';
             slot.completed = true;
             plan.cursor += 1;
         } else {
             const { correct, final, grid } = gradeParkAnswer(slot, action.answer);
+            wholeProblem = !grid || (correct && final);
+            if (!correct) slot.learningEvidenceAssistance = 'assisted';
+            if (!correct && grid) event.learningEvidenceBarrier = learningBarrierForProblem(slot.problem, 'error-correction');
             observationScope.answerScope = grid ? 'hissan-step' : 'whole';
             if (grid) observationScope.stepIndexBefore = slot.hissanStep ?? 0;
             observationScope.wholeCompleted = correct && final;
@@ -88,11 +102,15 @@ export async function commitIslandLearning(profileId: string, planId: string, re
                 slot.hissanStep = (slot.hissanStep ?? 0) + 1;
             }
             if (correct && final) { slot.completed = true; plan.cursor += 1; }
+            if (slot.assisted && wholeProblem) {
+                event.learningEvidence = learningEvidenceForProblem(slot.problem, 'assisted');
+            }
         }
         if (result) {
             const receipt = await writeLearningAttemptInTransaction(database, {
                 profileId, subject: plan.subject, itemId: slot.problem.categoryId, result,
                 isReview: slot.problem.isReview, isMaintenanceCheck: Boolean(slot.problem.isMaintenanceCheck), timestamp: new Date(now).toISOString(),
+                learningEvidence: learningEvidenceForProblem(slot.problem, assistanceBefore, wholeProblem),
             });
             event.learningLogId = receipt.logId;
             if (plan.subject === 'vocab' && receipt.profile) {
@@ -125,11 +143,15 @@ export async function commitIslandLearning(profileId: string, planId: string, re
         if (plan.cursor === plan.slots.length && plan.slots.every(candidate => candidate.completed)) {
             plan.status = 'completed';
             plan.completedAt = now;
-            if (island.pendingRewards.some(reward => reward.id === plan.rewardId)) throw new IslandConflict('Reward already exists without completion');
-            island.pendingRewards.push({ id: plan.rewardId, planId, choices: [...plan.rewardChoices], earnedAt: now });
+            if (!plan.growthTarget) {
+                if (island.pendingRewards.some(reward => reward.id === plan.rewardId)) throw new IslandConflict('Reward already exists without completion');
+                island.pendingRewards.push({ id: plan.rewardId, planId, choices: [...plan.rewardChoices], earnedAt: now });
+            }
             island.pendingPlanId = undefined;
             island.completedSets += 1;
-            await database.islandEvents.add({ id: `${planId}:completed`, profileId, planId, type: 'plan_completed', timestamp: now, rewardId: plan.rewardId });
+            if (plan.growthTarget) island = growIslandAfterCompletedSet(island, plan.growthTarget, now);
+            await database.islandEvents.add({ id: `${planId}:completed`, profileId, planId, type: 'plan_completed', timestamp: now,
+                ...(plan.growthTarget ? { habitatId: plan.growthTarget } : { rewardId: plan.rewardId }) });
         }
         if (checksChanged || plan.status === 'completed') {
             island.revision += 1;

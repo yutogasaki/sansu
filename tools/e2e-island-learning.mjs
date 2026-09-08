@@ -47,7 +47,7 @@ const sourcePaths = ['src/pages/Island.tsx', 'src/components/island/IslandLearni
     'src/components/island/three/learningReaction.ts', 'src/components/island/learningFeedback.ts',
     'src/domain/math/hissanEngine.ts', 'src/domain/math/curriculum.ts', 'src/domain/user/profile.ts', 'src/domain/english/words.ts',
     'src/domain/island/types.ts', 'src/domain/island/learningSupport.ts', 'src/domain/island/commit.ts',
-    'src/domain/island/repository.ts', 'src/domain/island/learningChecks.ts',
+    'src/domain/island/repository.ts', 'src/domain/island/learningChecks.ts', 'src/domain/island/learningSession.ts',
     'tools/e2e-island-learning.mjs', 'tools/island-learning-fixtures.mjs', 'tools/island-learning-checks.mjs'];
 const sourceSnapshot = async () => Promise.all(sourcePaths.map(async path => ({ path, sha256: createHash('sha256').update(await fs.readFile(path)).digest('hex') })));
 const report = { target: base, startedAt: new Date().toISOString(), candidate: LEARNING_CANDIDATE,
@@ -126,16 +126,16 @@ try {
             const profileId = await seedLearningProfile(page, scenario);
             await page.goto(`${base}/#/island`);
             await waitReady(page);
-            await activate(button(page, 'ひかりを とどける'), scenario.touch);
+            await activate(page.locator('.island-start'), scenario.touch);
             await waitMode(page, 'learning');
             let state = await readNative(page, profileId);
             await waitLearningReady(page, state.plan);
             assert.equal(await page.locator('.park-answer').getAttribute('data-input-type'), scenario.type);
             if (scenario.skill) assert.equal(state.plan.slots[0].problem.categoryId, scenario.skill);
             if (scenario.visual) assert.equal(state.plan.slots[0].problem.questionVisual?.kind, scenario.visual);
-            assert([3, 6].includes(state.plan.slots.length), 'Normal planner reserves a bounded three- or six-problem section');
-            if (['hissan', 'multi-number'].includes(scenario.type)) assert.equal(state.plan.slots.length, 3);
-            if (scenario.full || scenario.subject === 'vocab') assert.equal(state.plan.slots.length, 6);
+            assert.equal(state.island.completedSets, 0);
+            assert.equal(state.plan.id, JSON.stringify(['island-plan-v1', profileId, 0]));
+            assert.equal(state.plan.slots.length, 3, 'Every new island begins with three real planner problems, including familiar numeric and vocabulary profiles');
             row.reservedWorkload = state.plan.slots.length;
             assert.equal(state.logs.length, 0);
             await page.waitForFunction(id => document.querySelector('[data-testid="island-stage"]')?.getAttribute('data-section-id') === id, state.plan.id);
@@ -284,7 +284,8 @@ try {
                 row.controls.push({ state: 'skipped-to-support', controls: await assertControls(page) });
                 await capture(page, `${scenario.name}-skipped-to-support`, state);
                 let count = 0;
-                while (state.plan) {
+                const introductoryPlanId = state.plan.id;
+                while (state.plan?.id === introductoryPlanId) {
                     assert(++count < 30, 'The actual learning section must finish');
                     row.semantics.push(await assertProblemMeaning(page, state.plan.slots[state.plan.cursor]));
                     row.controls.push({ state: `ordinary-${state.plan.cursor}`, controls: await assertControls(page) });

@@ -29,7 +29,7 @@ export default function IslandOnboarding() {
         try {
             const receipt = await completeOnboardingProfile(chosen, completionId, 'first');
             profileStorage.setActiveId(receipt.activeProfileId);
-            if (mounted.current) navigate('/', { replace: true });
+            if (mounted.current) navigate(`/island?start=learn&profile=${encodeURIComponent(receipt.activeProfileId)}`, { replace: true });
         } catch (failure) {
             if (!mounted.current) return;
             if (failure instanceof OnboardingAlreadyCompleted) navigate('/', { replace: true });

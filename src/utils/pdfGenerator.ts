@@ -559,7 +559,7 @@ const drawVocabPage = (
         page.drawText(`(${startIdx + idx + 1})`, { x: colX, y, size: 12, font, color: rgb(0.3, 0.3, 0.3) });
 
         // Question: English (Large) - Layout Adjusted: Space
-        const qText = word.id;
+        const qText = word.surface ?? word.id;
         page.drawText(qText, { x: colX + 35, y, size: 18, font, color: rgb(0, 0, 0) });
 
         // Answer Line (Right aligned) - Adjusted 170 -> 130 to be closer

@@ -195,6 +195,9 @@ describe('full input compatibility, separate from child usability validation', (
         const p = profile();
         const level = getLevelForSkill(skill)!;
         p.mathMainLevel = level; p.mathMaxUnlocked = level;
+        p.mathLevels = p.mathLevels?.map(state => ({
+            ...state, unlocked: state.level <= level, enabled: state.level <= level,
+        }));
         const problem = { ...generateMathProblem(skill, { profile: p }), id: skill, subject: 'math' as const, isReview: false };
         const slot: LearningSlot = { problem, source: 'due', assisted: false, completed: false, countsTowardReviewCap: true };
         const grid = parkHissanGrid(problem);
@@ -216,7 +219,8 @@ describe('full input compatibility, separate from child usability validation', (
         }
     });
     it('keeps legacy Park Due order unless the caller opts into an Island review cursor', () => {
-        const p = { ...profile(), subjectMode: 'vocab' as const, vocabMainLevel: 2, vocabMaxUnlocked: 2 };
+        const p = { ...profile(), subjectMode: 'vocab' as const, vocabMainLevel: 2, vocabMaxUnlocked: 2,
+            vocabLevels: profile().vocabLevels?.map(level => level.level <= 2 ? { ...level, unlocked: true, enabled: true } : level) };
         const memory = ['apple', 'orange'].map((id, index) => ({ id, strength: 2, totalAnswers: 10,
             correctAnswers: 8, incorrectAnswers: 2, skippedAnswers: 0, isWeak: false,
             nextReview: index ? '2001-01-01' : '2000-01-01', updatedAt: '2000-01-01' }));

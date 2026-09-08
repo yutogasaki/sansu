@@ -93,6 +93,7 @@ interface TreeLife {
     pendants: THREE.Group[];
     leaves: THREE.Group[];
     anchor: THREE.Vector3;
+    crown: THREE.Group;
 }
 const treeLives = new WeakMap<THREE.Group, TreeLife>();
 
@@ -109,6 +110,19 @@ export function applyTreeLife(group: THREE.Group, amount: number, reduced = fals
 /** A local-space anchor, independent of world position and the reaction's leaf motion. */
 export function getTreeLightAnchor(group: THREE.Group): THREE.Vector3 {
     return treeLives.get(group)?.anchor.clone() ?? new THREE.Vector3(0, 1.05, .31);
+}
+
+/** Maturity changes the actual outer canopy. The rooted structure and light
+ * anchor retain their exact transforms at every appearance, including legacy. */
+export function applyTreeGrowth(group: THREE.Group, level?: number) {
+    const life = treeLives.get(group);
+    if (!life) return false;
+    const scale = level === undefined ? [1, 1, 1] : [
+        [.72, .72, .72], [.9, .87, .9], [1.1, 1.04, 1.1], [1.3, 1.22, 1.3],
+    ][Math.max(0, Math.min(3, Math.floor(level)))];
+    if (life.crown.scale.x === scale[0] && life.crown.scale.y === scale[1] && life.crown.scale.z === scale[2]) return false;
+    life.crown.scale.set(scale[0], scale[1], scale[2]);
+    return true;
 }
 
 export function makeStarTree(m: IslandMaterials) {
@@ -153,11 +167,13 @@ export function makeStarTree(m: IslandMaterials) {
         { at: [-.65, 3.16, .4], size: [.94, .65, .78], color: '#67994a' },
         { at: [.52, 2.96, .58], size: [.87, .73, .74], color: '#77ab4d' },
     ];
+    const crown = new THREE.Group(); crown.name = 'tree-canopy'; crown.position.y = 2.2;
     clumps.forEach(({ at, size, color }, i) => {
-        const crown = mesh(structure, organicEllipsoidGeometry(size, i * .9), m.surface(color, .91), at);
-        crown.name = `tree-crown-${i}`;
+        const clump = mesh(crown, organicEllipsoidGeometry(size, i * .9), m.surface(color, .91), [at[0], at[1] - 2.2, at[2]]);
+        clump.name = `tree-crown-${i}`;
     });
     batch(structure);
+    batch(crown); group.add(crown);
     const glow = m.surface('#ffe093', .55, 0, true).clone();
     glow.userData.islandOwned = true;
     const pendants: THREE.Group[] = [], leaves: THREE.Group[] = [];
@@ -179,7 +195,7 @@ export function makeStarTree(m: IslandMaterials) {
         spiral.push([x, y, z]);
     }
     curve(group, glow, spiral, .025);
-    treeLives.set(group, { glow, pendants, leaves, anchor: new THREE.Vector3(.025, 1.05, .281) });
+    treeLives.set(group, { glow, pendants, leaves, crown, anchor: new THREE.Vector3(.025, 1.05, .281) });
     applyTreeLife(group, 0);
     return group;
 }

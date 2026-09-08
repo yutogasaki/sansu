@@ -15,7 +15,9 @@
 
 | 話題 | 正本 | 補助文書 | 更新するタイミング |
 |---|---|---|---|
+| 学習単元・習得証拠と比較試作 | [product/31_learning_units_spec.md](/docs/product/31_learning_units_spec.md) | [product/32_math_unit_catalog.md](/docs/product/32_math_unit_catalog.md), [product/33_english_unit_catalog.md](/docs/product/33_english_unit_catalog.md) | 単元の境界、前提、表現別の証拠、新旧判定の比較範囲が変わるとき |
 | 不思議な島・連問と暮らし | [product/28_mystic_island_spec.md](/docs/product/28_mystic_island_spec.md) | [product/01_app_spec.md](/docs/product/01_app_spec.md) | 島のループ、配置、報酬、学習区間、保存・導入が変わるとき |
+| 育つ島・アップグレードと発見 | [product/30_living_island_growth_spec.md](/docs/product/30_living_island_growth_spec.md) | [product/28_mystic_island_spec.md](/docs/product/28_mystic_island_spec.md), [product/01_app_spec.md](/docs/product/01_app_spec.md) | 自動成長、有限の所有物、任意編集、暮らし、拡張、履歴・発見、旧予約との互換性が変わるとき |
 | プロダクトの挙動と約束 | [product/01_app_spec.md](/docs/product/01_app_spec.md) | `docs/product/` 配下の子仕様 | ユーザー向け挙動、ルール、画面の役割が変わるとき |
 | 範囲限定の解答中ゲーム・ぴったり連鎖 | [product/27_gameplay_first_pittari_spec.md](/docs/product/27_gameplay_first_pittari_spec.md) | [product/01_app_spec.md](/docs/product/01_app_spec.md) | 対象範囲、数を選ぶ一手、連鎖、観察・学習評価の境界が変わるとき |
 | 教科共通の制作・試遊ゲーム | [product/22_shared_subject_build_and_play_spec.md](/docs/product/22_shared_subject_build_and_play_spec.md) | [product/01_app_spec.md](/docs/product/01_app_spec.md), [product/13_data_storage_migration_spec.md](/docs/product/13_data_storage_migration_spec.md) | `/park`、部品・配置、短い学習区間、支援、再演、保存、導入flagが変わるとき |

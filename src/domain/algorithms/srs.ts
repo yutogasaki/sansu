@@ -6,37 +6,58 @@ import { getLearningDayStart } from "../../utils/learningDay";
 // strength 1: 1日後, 2: 3日後, 3: 7日後, 4: 14日後, 5: 30日後
 const INTERVALS = [0, 1, 3, 7, 14, 30]; // Index 1..5
 
-export const getNextReviewDate = (strength: number): Date => {
-    const days = INTERVALS[Math.min(strength, 5)] || 1;
-    return addDays(getLearningDayStart(), days);
+const normalizeStrength = (strength: number): number => Number.isFinite(strength)
+    ? Math.max(1, Math.min(Math.floor(strength), 5))
+    : 1;
+
+const parseTimestamp = (value: string | undefined): number => typeof value === "string"
+    ? parseISO(value).getTime()
+    : Number.NaN;
+
+export const getNextReviewDate = (strength: number, now: Date = new Date()): Date => {
+    const days = INTERVALS[normalizeStrength(strength)];
+    return addDays(getLearningDayStart(now), days);
 };
 
 export const updateMemoryState = (
     current: MemoryState,
     isCorrect: boolean,
-    isSkipped: boolean = false
+    isSkipped: boolean = false,
+    now: Date = new Date(),
 ): MemoryState => {
-    // 仕様 5.1: 正解は1段階上げ、不正解／スキップは strength 1 に戻す。
-    const newStrength = isCorrect && !isSkipped
-        ? Math.min(current.strength + 1, 5)
+    const correct = isCorrect && !isSkipped;
+    const strength = normalizeStrength(current.strength);
+    const learningDayStart = getLearningDayStart(now);
+    const nextReviewAt = parseTimestamp(current.nextReview);
+    const lastCorrectAt = parseTimestamp(current.lastCorrectAt);
+    const lastAttemptAt = parseTimestamp(current.updatedAt);
+    // 仕様 5.1 / 29: 期限に達した別学習日の想起だけで間隔を伸ばす。
+    // 当日の誤答・スキップからのやり直しは、古い正解日時で昇格させない。
+    const canAdvance = nextReviewAt <= now.getTime()
+        && lastCorrectAt < learningDayStart.getTime()
+        && lastAttemptAt < learningDayStart.getTime();
+    const newStrength = correct
+        ? Math.min(strength + (canAdvance ? 1 : 0), 5)
         : 1;
 
-    const now = new Date().toISOString();
-
+    const timestamp = now.toISOString();
+    // 期限前の練習は既存予約を保持し、期限到来済みの再正解は再予約する。
     const nextReview = isSkipped
-        ? getLearningDayStart().toISOString()
-        : getNextReviewDate(newStrength).toISOString();
+        ? learningDayStart.toISOString()
+        : correct && nextReviewAt > now.getTime()
+            ? current.nextReview
+            : getNextReviewDate(newStrength, now).toISOString();
 
     return {
         ...current,
         strength: newStrength,
         nextReview,
         totalAnswers: current.totalAnswers + 1,
-        correctAnswers: current.correctAnswers + (isCorrect && !isSkipped ? 1 : 0),
-        incorrectAnswers: current.incorrectAnswers + (isCorrect && !isSkipped ? 0 : 1),
+        correctAnswers: current.correctAnswers + (correct ? 1 : 0),
+        incorrectAnswers: current.incorrectAnswers + (correct ? 0 : 1),
         skippedAnswers: (current.skippedAnswers || 0) + (isSkipped ? 1 : 0),
-        lastCorrectAt: isCorrect && !isSkipped ? now : current.lastCorrectAt,
-        updatedAt: now
+        lastCorrectAt: correct ? timestamp : current.lastCorrectAt,
+        updatedAt: timestamp
     };
 };
 
@@ -62,7 +83,7 @@ export const wilsonLower = (correct: number, total: number, z: number = 1.0): nu
 };
 
 // 仕様 5.4: 算数 status 遷移
-// active → retired: 30問以上 & 直近90%以上
+// active → retired: 30問以上 & 直近90%以上 & strength 4以上
 // retired → maintenance: 維持確認出題時
 // maintenance → active: 失敗が続く場合（直近5回で60%未満）
 export const updateSkillStatus = (
@@ -73,8 +94,9 @@ export const updateSkillStatus = (
     if (!state.status) return undefined;
 
     if (state.status === 'active') {
-        // 仕様 5.4: 30問以上 & 直近10問で90%以上でretired
-        if (state.totalAnswers >= 30 && recentResults && recentResults.length >= 10) {
+        // 同日の反復だけで卒業せず、日を空けた想起の実績も必要とする。
+        if (state.totalAnswers >= 30 && normalizeStrength(state.strength) >= 4
+            && recentResults && recentResults.length >= 10) {
             const recent10 = recentResults.slice(0, 10);
             const accuracy = recent10.filter(r => r).length / recent10.length;
 

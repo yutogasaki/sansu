@@ -125,10 +125,20 @@ async function reload(page, row, before, label) {
     return after;
 }
 async function nextSection(page, row, before) {
-    await waitMode(page, 'reward');
-    await activate(button(page, 'つづけて とく'), row.touch); await waitMode(page, 'learning');
+    if (before.plan) {
+        assert(before.island.completedSets >= 2, 'Only ordinary completed sections continue automatically');
+        await waitMode(page, 'learning');
+        await waitLearningReady(page, before.plan);
+    } else {
+        assert.equal(before.island.completedSets, 1, 'Only the introductory gift waits for an explicit continue');
+        await waitMode(page, 'reward');
+        await activate(button(page, 'つづけて とく'), row.touch); await waitMode(page, 'learning');
+    }
     const after = await readNative(page, row.profileId);
     await waitLearningReady(page, after.plan); recordPlan(row, after);
+    assert.equal(after.plan.id, JSON.stringify(['island-plan-v1', row.profileId, before.island.completedSets]));
+    assert.equal(after.plan.cursor, 0); assert.equal(after.plan.revision, 0);
+    if (before.plan) assert.deepEqual(after, before, 'Observing the automatically opened next section adds no action or persistence');
     assert.deepEqual(after.island.pendingRewards, before.island.pendingRewards, 'Continuing defers the actual earned rewards');
     assert.deepEqual(after.island.items, before.island.items);
     return after;
@@ -148,7 +158,7 @@ async function mathRecovery(page, row, initial) {
     let sawBridge = false;
     // Complete this already frozen section. If it naturally contains the original
     // skill again, request real support so the next-section recheck stays observable.
-    while (state.plan) {
+    while (state.plan?.id === initial.plan.id) {
         const slot = current(state);
         if (slot.problem.categoryId === skill && !slot.assisted) state = await support(page, row, state);
         if (bridgeSkills.includes(slot.problem.categoryId)) sawBridge = true;
@@ -159,7 +169,8 @@ async function mathRecovery(page, row, initial) {
     let independent;
     for (let section = 0; section < 12 && !independent; section++) {
         state = await nextSection(page, row, state);
-        while (state.plan && !independent) {
+        const reservationId = state.plan.id;
+        while (state.plan?.id === reservationId && !independent) {
             const slot = current(state), check = pending(state, skill);
             assert(check, 'The recheck persists until a genuinely different original problem is completed independently');
             if (bridgeSkills.includes(slot.problem.categoryId)) {
@@ -178,7 +189,7 @@ async function mathRecovery(page, row, initial) {
             } else {
                 assert(pending(state, skill));
                 if (slot.problem.categoryId === skill) row.sameContentChecks.push({ problem: slot.problem,
-                    persisted: pending(state, skill), didComplete: !state.plan || state.plan.cursor > before.plan.cursor });
+                    persisted: pending(state, skill), didComplete: state.islandPlans.find(plan => plan.id === before.plan.id).cursor > before.plan.cursor });
             }
         }
     }
@@ -194,13 +205,14 @@ async function vocabRecovery(page, row, initial) {
     const dueIds = ['apple', 'orange'], baseline = initial.memoryVocab.filter(memory => dueIds.includes(memory.id));
     row.extraDueWordSupports = [];
     for (let section = 0; section < 3; section++) {
+        const reservationId = state.plan.id;
         const expected = section % 2 === 0 ? 'apple' : 'orange';
         assert.equal(current(state).problem.categoryId, expected); assert.equal(current(state).source, 'due');
         row.dueSequence.push(expected);
         state = await support(page, row, state);
         await capture(page, row, `due-${section + 1}-${expected}-supported`, state);
         if (section === 1) state = await reload(page, row, state, 'second-due-supported-reloaded');
-        while (state.plan) {
+        while (state.plan?.id === reservationId) {
             // A protected Due word can also occur in a later main slot. Keep
             // this guided-only scenario true through real UI support, rather
             // than mistaking a legitimate independent answer for a writer bug.
@@ -227,7 +239,16 @@ async function vocabRecovery(page, row, initial) {
         }
         assert.equal(state.logs.filter(log => dueIds.includes(log.itemId)).length, 0);
         assert.equal(state.island.mathReviewTurn, undefined, 'English does not advance the math review turn');
-        assert.equal(state.island.vocabDueCursor, expected);
+        assert.equal(state.islandPlans.find(plan => plan.id === reservationId).status, 'completed');
+        // Reservation, rather than completion, rotates the Due cursor. Ordinary
+        // completion now already includes the next real reservation transaction.
+        const reservedDue = state.plan ? dueIds[(section + 1) % 2] : expected;
+        assert.equal(state.island.vocabDueCursor, reservedDue);
+        if (state.plan) {
+            assert.equal(state.plan.id, JSON.stringify(['island-plan-v1', row.profileId, section + 1]));
+            assert.equal(state.plan.cursor, 0); assert.equal(state.plan.revision, 0);
+            assert.equal(current(state).problem.categoryId, reservedDue); assert.equal(current(state).source, 'due');
+        }
         if (section < 2) state = await nextSection(page, row, state);
     }
     assert.deepEqual(row.dueSequence, ['apple', 'orange', 'apple']);
@@ -256,8 +277,9 @@ try {
             const empty = await readNative(page, row.profileId);
             assert.equal(empty.islands.length, 0); assert.equal(empty.islandPlans.length, 0); assert.equal(empty.logs.length, 0);
             await page.goto(`${base}/#/island`); await waitReady(page);
-            await activate(button(page, 'ひかりを とどける'), row.touch); await waitMode(page, 'learning');
+            await activate(page.locator('.island-start'), row.touch); await waitMode(page, 'learning');
             let state = await readNative(page, row.profileId); await waitLearningReady(page, state.plan); recordPlan(row, state);
+            assert.equal(state.island.completedSets, 0); assert.equal(state.plan.slots.length, 3);
             row.initialControls = await assertControls(page); row.initialMeaning = await assertProblemMeaning(page, current(state));
             row.initialPersistence = state; await capture(page, row, 'initial-reservation', state);
             state = scenario.subject === 'math' ? await mathRecovery(page, row, state) : await vocabRecovery(page, row, state);

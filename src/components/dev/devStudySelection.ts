@@ -66,7 +66,7 @@ export const getDevStudyLevelItems = (
 
     return getWordsByLevel(level).map(word => ({
         id: word.id,
-        label: word.id,
+        label: word.surface ?? word.id,
         helper: word.japaneseKanji || word.japanese,
     }));
 };
@@ -114,7 +114,7 @@ export const getDevStudySelectionSummary = (
     return {
         subjectLabel: "英語",
         levelLabel: `Lv.${word.level}`,
-        itemLabel: `${word.id} / ${word.japaneseKanji || word.japanese}`,
+        itemLabel: `${word.surface ?? word.id} / ${word.japaneseKanji || word.japanese}`,
         positionLabel: skillIndex >= 0 ? `${skillIndex + 1}/${items.length}` : "?/?",
     };
 };

@@ -2,6 +2,7 @@ import { db, AttemptLog } from "../db";
 import { SubjectKey } from "./types";
 import { differenceInCalendarDays, parseISO } from "date-fns";
 import { getLearningDayStart } from "../utils/learningDay";
+import type { LearningEvidenceContext } from './learning/types';
 import {
     getLearningAttemptTransactionTables,
     writeLearningAttemptInTransaction,
@@ -17,7 +18,8 @@ export const logAttempt = async (
     skipped: boolean = false,
     isReview: boolean = false,
     isMaintenanceCheck: boolean = false, // 維持確認として出題されたか
-    timeMs?: number // 回答にかかった時間（ミリ秒）
+    timeMs?: number, // 回答にかかった時間（ミリ秒）
+    learningEvidence?: LearningEvidenceContext,
 ) => db.transaction(
     "rw",
     getLearningAttemptTransactionTables(db),
@@ -32,6 +34,7 @@ export const logAttempt = async (
         isMaintenanceCheck,
         timestamp: new Date().toISOString(),
         timeMs,
+        learningEvidence,
     }),
 );
 

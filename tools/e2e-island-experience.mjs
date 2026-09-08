@@ -57,16 +57,18 @@ try {
             await page.goto(`${target}/#/island`);
             await waitReady(page); await waitMode(page, 'home');
             await capture(page, 'home', row);
-            await activate(button(page, 'ひかりを とどける'), row.touch);
+            await activate(page.locator('.island-start'), row.touch);
             await waitMode(page, 'learning'); await assertKeypad(page);
             await capture(page, 'learning', row);
             let state = await readNative(page, id);
-            while (state.plan) {
+            const reservationId = state.plan.id;
+            while (state.plan?.id === reservationId) {
                 assert(row.answers.length < 12);
                 const answer = await answerUI(page, state.plan, { dev: false, touch: row.touch });
                 state = answer.state;
                 row.answers.push({ ms: answer.ms, beforeRevision: answer.beforeRevision, afterRevision: answer.afterRevision });
             }
+            assert.equal(state.islandPlans.find(plan => plan.id === reservationId)?.status, 'completed');
             await waitMode(page, 'reward');
             const rewardId = state.island.pendingRewards[0].id;
             await capture(page, 'reward', row);

@@ -1,0 +1,45 @@
+{
+  "version": "0ea5c5635b96-home-copy-working-tree:e4237a18-c0f8-4c5a-9705-97f341e29cef",
+  "revision": "0ea5c5635b96-home-copy-working-tree",
+  "delivery": "snap-root-v1",
+  "visualLineage": "pokko-field-v1",
+  "park": {
+    "enabled": false,
+    "renderer": "legacy"
+  },
+  "island": {
+    "enabled": true,
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-procedural-v2",
+    "learningCandidate": "mystic-island-learning-v2",
+    "artDirection": "moon-garden"
+  },
+  "target": "http://127.0.0.1:5314/#/island",
+  "date": "2026-09-08",
+  "sourceArchive": "output/playwright/island-copy/source.tar",
+  "sourceSHA256": "71d5511335eb71ba7db6938a443feb7c7424fcd196cddf76c5d80785bc213951",
+  "scope": "Local production preview; copy/content only; not a release certification",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844,
+      "reducedMotion": false
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "reducedMotion": true
+    }
+  ],
+  "cache": "Fresh browser first launch; same-build reload under service worker; two-build update and offline not checked",
+  "checks": {
+    "docs": true,
+    "lint": true,
+    "typecheck": true,
+    "unitFiles": 147,
+    "unitTests": 1720,
+    "build": true,
+    "assets": true,
+    "browserConsoleErrors": 0
+  }
+}

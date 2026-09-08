@@ -152,6 +152,8 @@ function lifeAmount(amount: number) {
 function applySurfaceResponse(group: THREE.Group, value: number, reduced: boolean) {
     const blooms = group.getObjectByName('flower-blooms');
     if (blooms) { blooms.scale.set(1 + value * .06, 1 + value * .06, 1 + value * .06); blooms.rotation.y = reduced ? 0 : value * .045; }
+    const matureBloom = group.getObjectByName('growth-blooms');
+    if (matureBloom) { matureBloom.scale.setScalar(1 + value * .06); matureBloom.rotation.y = reduced ? 0 : value * .045; }
     group.getObjectByName('lantern-light')?.traverse(object => {
         if (object instanceof THREE.Mesh && object.material instanceof THREE.MeshStandardMaterial && object.material.userData.islandOwned) {
             object.material.emissiveIntensity = .65 + value * .6;

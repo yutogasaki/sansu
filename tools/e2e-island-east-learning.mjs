@@ -119,7 +119,8 @@ async function learningReady(page) {
 async function finishSection(page, id, row, sequence) {
     let state = await readNative(page, id), attempts = 0;
     assert(state.plan && state.island.completedSets === sequence - 1);
-    while (state.plan) {
+    const reservationId = state.plan.id;
+    while (state.plan?.id === reservationId) {
         assert(++attempts <= 30, 'Native learning section must terminate');
         const slot = state.plan.slots[state.plan.cursor];
         const answer = await answerUI(page, state.plan, { dev: false, touch: row.touch });
@@ -127,6 +128,15 @@ async function finishSection(page, id, row, sequence) {
             problemId: slot.problem.id, inputType: answer.inputType, ms: answer.ms,
             beforeRevision: answer.beforeRevision, afterRevision: answer.afterRevision });
         state = answer.state;
+    }
+    assert.equal(state.islandPlans.find(plan => plan.id === reservationId)?.status, 'completed');
+    if (sequence > 1) {
+        assert.equal(state.plan?.id, JSON.stringify(['island-plan-v1', id, sequence]));
+        assert.equal(state.plan.cursor, 0); assert.equal(state.plan.revision, 0);
+        await waitMode(page, 'learning');
+        await activate(button(page, 'しまへ'), row.touch); await waitMode(page, 'home');
+        await activate(page.getByRole('button', { name: /^おくりものを えらぶ/ }), row.touch);
+        assert.deepEqual(await readNative(page, id), state, 'Voluntary reward collection preserves the next reserved section');
     }
     await waitMode(page, 'reward');
     assert.equal(state.island.completedSets, sequence, 'Growth must follow actual saved answers');
@@ -191,14 +201,14 @@ try {
             assert.equal(state.island.completedSets, 0); assert.equal(state.logs.length, 0); assert.equal(state.island.items.length, 2);
             await capture(page, row, 'fresh-home');
 
-            await activate(button(page, 'ひかりを とどける'), row.touch); await learningReady(page); await assertKeypad(page);
+            await activate(page.locator('.island-start'), row.touch); await learningReady(page); await assertKeypad(page);
             state = await finishSection(page, id, row, 1);
             await capture(page, row, 'first-earned-reward');
             await activate(button(page, 'ベンチ'), row.touch); await waitMode(page, 'placement');
             await activate(button(page, 'いまは しまっておく'), row.touch); await waitMode(page, 'home');
             state = await readNative(page, id);
             assert(state.island.items.some(item => item.kind === 'bench' && !item.position));
-            await activate(button(page, 'ひかりを とどける'), row.touch); await learningReady(page);
+            await activate(page.locator('.island-start'), row.touch); await learningReady(page);
             state = await finishSection(page, id, row, 2);
             await page.locator('[data-renderer="three"][data-expanded="true"]').waitFor();
             await capture(page, row, 'second-earned-reward');
@@ -222,7 +232,7 @@ try {
             state = await readNative(page, id);
             assert.deepEqual(state.island.items.find(item => item.id === itemId).position, east);
             assert.equal(state.island.completedSets, 2);
-            await activate(button(page, 'ひかりを とどける'), row.touch); await learningReady(page);
+            await activate(page.locator('.island-start'), row.touch); await learningReady(page);
             row.walkingEntry = await scene(page); assertFrame(row.walkingEntry, 'mid-route learning entry');
             assert(row.walkingEntry.residents.some(resident => resident.itemId === itemId && resident.action === 'walk'),
                 'Learning actually begins while the east-bound resident is still walking');
@@ -246,7 +256,7 @@ try {
             row.seatedHome = await capture(page, row, 'east-seated-home');
             assert(row.seatedHome.residents.some(resident => resident.itemId === itemId && resident.position[0] > 5 && resident.action === 'swing'));
             const reserved = await readNative(page, id);
-            await activate(button(page, 'つづきから とく'), row.touch); await learningReady(page); await assertKeypad(page);
+            await activate(page.locator('.island-start'), row.touch); await learningReady(page); await assertKeypad(page);
             row.seatedEntry = await capture(page, row, 'east-seated-return-learning'); assertFrame(row.seatedEntry, 'seated learning return');
             assert.deepEqual((await readNative(page, id)).plan, reserved.plan, 'Return resumes the same real pending learning plan');
             await markTrace(page, 'seated-learning');

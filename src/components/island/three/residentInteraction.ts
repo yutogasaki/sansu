@@ -53,7 +53,7 @@ export function suggestReachablePlacement(island: Pick<IslandRecord, 'items' | '
     if (!residents.some(resident => resident.visible)) return undefined;
     const preferred = item.position ?? { x: 0, z: 1 };
     const candidates: GroundPoint[] = [];
-    for (let z = 2.5; z >= -3; z -= .5) for (let x = -4; x <= (island.completedSets >= 2 ? 7.5 : 4); x += .5) {
+    for (let z = 2.5; z >= -3; z -= .5) for (let x = island.completedSets >= 12 ? -7.5 : -4; x <= (island.completedSets >= 2 ? 7.5 : 4); x += .5) {
         candidates.push({ x, z });
     }
     candidates.sort((a, b) => Math.hypot(a.x - preferred.x, a.z - preferred.z) - Math.hypot(b.x - preferred.x, b.z - preferred.z));

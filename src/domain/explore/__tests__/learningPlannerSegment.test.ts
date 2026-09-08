@@ -36,10 +36,13 @@ interface RoutedRunFixture {
     revision: number;
 }
 
-const createProfile = (): UserProfile => {
-    const profile = createInitialProfile("Segment planner", 1, 7, 1, "math");
-    profile.mathMainLevel = 8;
-    profile.mathMaxUnlocked = 8;
+const createProfile = (mainLevel = 8, maxUnlocked = mainLevel): UserProfile => {
+    const profile = createInitialProfile("Segment planner", 1, mainLevel - 1, 1, "math");
+    profile.mathMainLevel = mainLevel;
+    profile.mathMaxUnlocked = maxUnlocked;
+    profile.mathLevels = profile.mathLevels?.map(state => ({
+        ...state, unlocked: state.level <= maxUnlocked, enabled: state.level <= maxUnlocked,
+    }));
     profile.dailyGoal = 20;
     return profile;
 };
@@ -212,9 +215,7 @@ describe("Explore immutable learning-segment planner integration", () => {
     });
 
     it("fills a rapid-ineligible segment with a separate game-only identity without consuming Due", async () => {
-        const profile = createProfile();
-        profile.mathMainLevel = 28;
-        profile.mathMaxUnlocked = 28;
+        const profile = createProfile(28);
         await persistProfile(profile);
         await addDueSkills(profile.id, ["large_number_unit"]);
         const profileBefore = structuredClone(
@@ -420,8 +421,7 @@ describe("Explore immutable learning-segment planner integration", () => {
     });
 
     it("does not let future Q2/Q3 assignments cool down Q1's representation retry", async () => {
-        const profile = createProfile();
-        profile.mathMaxUnlocked = 9;
+        const profile = createProfile(8, 9);
         await persistProfile(profile);
         // The Q1 Due target is one level above main. The remaining level-8
         // slots therefore reserve both add_1d_1 representations, including
@@ -480,9 +480,7 @@ describe("Explore immutable learning-segment planner integration", () => {
     });
 
     it("uses a separate rapid-safe game-only identity when a new retry has no eligible learning candidate", async () => {
-        const profile = createProfile();
-        profile.mathMainLevel = 25;
-        profile.mathMaxUnlocked = 25;
+        const profile = createProfile(25);
         await persistProfile(profile);
         const fixture = await startRoutedRun(profile, "retry-rapid-safe-fallback");
         const gate = fixture.state.pendingProblem;
@@ -616,9 +614,8 @@ describe("Explore immutable learning-segment planner integration", () => {
     });
 
     it("checkpoints and resumes a full-reserved retry selected from the main source", async () => {
-        const profile = createProfile();
-        profile.mathMainLevel = 13;
-        profile.mathMaxUnlocked = 13;
+        const attemptTime = Date.now();
+        const profile = createProfile(13);
         await persistProfile(profile);
         const fixture = await startRoutedRun(profile, "retry-main-source-checkpoint");
         const initial = await reserveOpeningSegment(profile, fixture);
@@ -641,7 +638,7 @@ describe("Explore immutable learning-segment planner integration", () => {
                     categoryId: initial.problem.categoryId,
                 },
                 result: "incorrect",
-                committedAt: 140 + attemptNumber,
+                committedAt: attemptTime + attemptNumber,
                 expectedCheckpointRevision: checkpointRevision,
             });
             if (receipt.checkpointRevision === undefined) {
@@ -679,7 +676,7 @@ describe("Explore immutable learning-segment planner integration", () => {
             expectedRevision: checkpointRevision,
             state: displayed,
             openingExperienceId: DEFAULT_EXPLORE_OPENING_EXPERIENCE_ID,
-            savedAt: 143,
+            savedAt: attemptTime + 3,
         });
         const resumed = await getResumableExploreRun(profile.id);
 
@@ -894,9 +891,7 @@ describe("Explore immutable learning-segment planner integration", () => {
     });
 
     it("restores a saved v2 segment byte-for-byte without retroactively rejecting its current Problem", async () => {
-        const profile = createProfile();
-        profile.mathMainLevel = 25;
-        profile.mathMaxUnlocked = 25;
+        const profile = createProfile(25);
         await persistProfile(profile);
         const fixture = await startRoutedRun(profile, "legacy-v2-rapid-policy-boundary");
         const gate = fixture.state.pendingProblem;

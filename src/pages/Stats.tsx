@@ -167,7 +167,7 @@ const formatDate = (iso?: string) => {
 const getLabel = (id: string, subject: SubjectType): string => {
     if (subject === "math") return MATH_SKILL_LABELS[id] || id;
     const word = getWord(id);
-    return word?.id || id;
+    return word?.surface ?? word?.id ?? id;
 };
 
 const loadSectionState = (): SectionState => {
@@ -423,7 +423,7 @@ export const Stats: React.FC = () => {
             rightAction={closeAction}
             contentClassName="px-6 pt-2"
         >
-            <div className="mx-auto w-full max-w-[22rem] space-y-8 pb-2">
+            <div className="island-utility-content mx-auto w-full max-w-[22rem] space-y-8 pb-2">
                 {sections.summary && (
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader

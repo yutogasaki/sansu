@@ -56,7 +56,7 @@ function validateBuild() {
     assert(version.version.startsWith(`${version.revision}:`));
     assert.equal(version.island?.enabled, true); assert.equal(version.park?.enabled, true); assert.equal(version.park?.renderer, 'three');
     assert.equal(version.island.delivery, 'mystic-island-v1');
-    assert.equal(version.island.candidate, 'mystic-island-procedural-v2');
+    assert.equal(version.island.candidate, 'mystic-island-living-v3');
     assert.equal(version.island.learningCandidate, 'mystic-island-learning-v2');
     assert.equal(version.island.artDirection, 'moon-garden');
     report.buildSource = { revision: buildSource.revision, sourceHash: buildSource.sourceHash,
@@ -263,9 +263,10 @@ try {
             assert.equal(row.fixtureStores.logs.length, 0); assert.equal(row.fixtureStores.islands.length, 0);
             await page.goto(`${target}/#/island`); await helpers.waitReady(page); await identity(page);
             const lowerBound = await page.evaluate(() => Date.now());
-            await helpers.activate(helpers.button(page, 'ひかりを とどける'), scenario.touch); await helpers.waitMode(page, 'learning');
+            await helpers.activate(page.locator('.island-start'), scenario.touch); await helpers.waitMode(page, 'learning');
             let state = await helpers.readNative(page, profileId); await learning.waitLearningReady(page, state.plan);
-            assert([3, 6].includes(state.plan.slots.length)); assert.equal(state.plan.slots[0].problem.categoryId, scenario.skill);
+            assert.equal(state.island.completedSets, 0); assert.equal(state.plan.slots.length, 3);
+            assert.equal(state.plan.slots[0].problem.categoryId, scenario.skill);
             assert.equal((await dom(page)).inputMode, scenario.type);
             row.reservedPlan = structuredClone(state.plan); newPresentation(row, lowerBound, false);
             observeDOM(row, await dom(page), state.plan); await capture(page, row, 'initial');

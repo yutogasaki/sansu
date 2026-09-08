@@ -12,11 +12,16 @@ const out = process.env.SANSU_ISLAND_SHARING_OUTPUT || 'output/playwright/island
 const buildSourcePath = process.env.SANSU_ISLAND_BUILD_SOURCE || 'output/playwright/island-sharing/build-source.json';
 const filter = process.env.SANSU_ISLAND_SHARING_SCENARIO;
 const combinationFilter = process.env.SANSU_ISLAND_SHARING_COMBINATION;
+const diagnosticCase = process.env.SANSU_ISLAND_SHARING_CASE;
+assert(!diagnosticCase || diagnosticCase === 'tablet-known-fox', 'Case must be tablet-known-fox');
+const knownTabletFox = diagnosticCase === 'tablet-known-fox';
+assert(!knownTabletFox || !combinationFilter && (!filter || filter === 'tablet'),
+    'The known tablet case uses all three existing staging combinations and the tablet viewport');
 assert(!combinationFilter || ['flower', 'star', 'bubble'].includes(combinationFilter), 'Combination must be flower, star or bubble');
 const layouts = [
     { name: 'phone', viewport: { width: 390, height: 844 }, touch: true },
     { name: 'tablet', viewport: { width: 768, height: 1024 }, touch: false },
-].filter(layout => !filter || layout.name === filter);
+].filter(layout => (!filter || layout.name === filter) && (!knownTabletFox || layout.name === 'tablet'));
 assert(layouts.length, 'Scenario must be phone or tablet');
 const sha = value => createHash('sha256').update(value).digest('hex');
 const compiled = await build({ stdin: { contents: `
@@ -45,6 +50,17 @@ const report = { target: base, flag: 'VITE_ISLAND_ENABLED=true', candidate: ISLA
         fullCombinationCoverage: !combinationFilter, foxTransfer: !combinationFilter, motionAndRecovery: !combinationFilter || combinationFilter === 'bubble',
         earlyWalkMotionPreference: !combinationFilter || combinationFilter === 'star' },
     scope: 'Production UI in isolated native profile/memory fixtures. Six gifts and the fox are earned through actual reserved learning. All storage, placement and quarter-turn rotation use visible controls. A separate placement sequence gives the fox a real ordinary seat visit followed by a complete recorded transfer; role preference is preserved. Node geometry validates UI layouts; no browser module imports, furniture/progress/route injection or synthetic learning receipts. MutationObserver records actual rendered sharing/hand/mesh and resident datasets after each draw update, with browser video. The focused camera is fixed from carry through settled. All-store DB comparison covers free play and cancellation with an existing paused learning reservation. This is functional and author-review evidence, not child observation, real-device performance or a formal throughput benchmark.' };
+if (knownTabletFox) {
+    report.diagnostic = true;
+    report.coverage = { viewports: ['tablet'], combinations: ['flower', 'star', 'bubble'], fullCombinationCoverage: false,
+        stagingCombinationCoverage: true, foxTransfer: true, knownLayoutCase: diagnosticCase,
+        motionAndRecovery: false, earlyWalkMotionPreference: true };
+    report.knownCaseMethod = {
+        name: diagnosticCase, referenceRevision: '84d3ddf-experience2-5d7be27ceacb',
+        scope: 'Separate known-layout diagnostic after the existing three staging combinations. Normal full-suite selection is unchanged. The exact stage must be reached by at most two natural UI preparation visits; another legal layout cannot pass this case.',
+        timing: 'Trusted native click to the first actual gather draw observation includes routing, walking, computation and rendering. rAF timestamp and bounded longtask entries are separate observations, not pure fit time or a formal performance pass.',
+        excluded: ['No old camera, hand, route, actor or learning-state injection.', 'No automatic art or child-comprehension pass; actual screenshots require author review.'] };
+}
 const browser = await chromium.launch(process.env.SANSU_ISLAND_BROWSER_GPU === 'metal' ? { args: ['--use-angle=metal'] } : {});
 const screenshotSessions = new WeakMap(), captureIdentities = new WeakMap();
 const phases = ['receiver-walk', 'gather-walk', 'gather', 'carry', 'share', 'enjoy', 'settled'];
@@ -125,6 +141,86 @@ const scene = page => page.evaluate(() => window.__islandSharingProbe.read());
 const actors = actual => actual.residents.map(resident => ({ visible: true, itemId: resident.itemId, departingId: resident.departingId,
     position: { x: resident.position[0], z: resident.position[2] } }));
 const afterIndex = actual => ['otter', 'rabbit', 'fox'].indexOf(actual.species);
+const knownFoxStage = { sourcePosition: { x: 2.5, z: 1.25 }, seatPosition: { x: .5, z: 1.5 }, rotation: Math.PI / 2,
+    carrier: 1, receiver: 2, thirdPosition: { x: 2.5, z: 2.02 }, gatherPosition: { x: 2.5, z: .48 }, tolerance: 1e-6 };
+const sameKnownPoint = (a, b) => Boolean(a && b && Math.hypot(a.x - b.x, a.z - b.z) <= knownFoxStage.tolerance);
+function matchesKnownFoxActors(residents, shared) {
+    return shared?.carrier === knownFoxStage.carrier && shared.receiver === knownFoxStage.receiver
+        && sameKnownPoint(residents[0]?.position, knownFoxStage.thirdPosition)
+        && sameKnownPoint(residents[1]?.position, knownFoxStage.gatherPosition)
+        && sameKnownPoint(residents[2]?.position, knownFoxStage.seatPosition);
+}
+function assertKnownFoxStage(actual, island, setup, shared) {
+    const source = island.items.find(item => item.id === setup.sourceId), seat = island.items.find(item => item.id === setup.seatId);
+    assert.equal(source?.kind, 'flower'); assert.equal(seat?.kind, 'bench');
+    assert(sameKnownPoint(source.position, knownFoxStage.sourcePosition));
+    assert(sameKnownPoint(seat.position, knownFoxStage.seatPosition));
+    const angleError = (a, b) => Math.abs(Math.atan2(Math.sin(a - b), Math.cos(a - b)));
+    assert(angleError(source.rotation, 0) <= knownFoxStage.tolerance);
+    assert(angleError(seat.rotation, knownFoxStage.rotation) <= knownFoxStage.tolerance);
+    assert.equal(island.items.filter(item => item.position).length, 2, 'Only the actual flower and bench remain placed');
+    assert.deepEqual(actual.residents.map(resident => resident.species), ['otter', 'rabbit', 'fox']);
+    assert(matchesKnownFoxActors(actors(actual), shared), 'The exact known source/seat roles and third-resident root must be reproduced');
+    assert(Math.abs(actual.residents[0].position[1]) <= knownFoxStage.tolerance);
+    assert(Math.abs(actual.residents[1].position[1]) <= knownFoxStage.tolerance);
+}
+async function armKnownFoxTiming(control) {
+    await control.evaluate(element => {
+        window.__islandKnownFoxTiming?.stop();
+        const probe = { armedAt: performance.now(), timeOrigin: performance.timeOrigin, events: [], longTasks: [],
+            eventOverflow: false, longTaskOverflow: false, observerSupported: false, stopped: false };
+        const appendTasks = entries => {
+            for (const entry of entries) {
+                if (probe.longTasks.length >= 128) { probe.longTaskOverflow = true; continue; }
+                probe.longTasks.push({ startTime: entry.startTime, duration: entry.duration, name: entry.name });
+            }
+        };
+        const record = event => {
+            if (!event.composedPath().includes(element)) return;
+            if (probe.events.length >= 8) { probe.eventOverflow = true; return; }
+            probe.events.push({ type: event.type, at: performance.now(), eventTimestamp: event.timeStamp, trusted: event.isTrusted });
+        };
+        document.addEventListener('pointerup', record, true); document.addEventListener('click', record, true);
+        let observer;
+        try {
+            if (PerformanceObserver.supportedEntryTypes.includes('longtask')) {
+                observer = new PerformanceObserver(list => appendTasks(list.getEntries()));
+                observer.observe({ type: 'longtask', buffered: false }); probe.observerSupported = true;
+            }
+        } catch (error) { probe.observerError = String(error); }
+        probe.stop = () => {
+            if (probe.stopped) return;
+            if (observer) { appendTasks(observer.takeRecords()); observer.disconnect(); }
+            document.removeEventListener('pointerup', record, true); document.removeEventListener('click', record, true);
+            probe.stopped = true; probe.stoppedAt = performance.now();
+        };
+        window.__islandKnownFoxTiming = probe;
+    });
+}
+async function takeKnownFoxTiming(page, episode) {
+    return page.evaluate(episode => {
+        const probe = window.__islandKnownFoxTiming;
+        if (!probe) return null;
+        probe.stop();
+        const click = probe.events.find(event => event.type === 'click' && event.trusted);
+        const first = window.__islandSharingProbe.rows.find(frame => frame.shared?.phase === 'gather'
+            && (!episode || frame.shared.activityStartedAt === episode) && (!click || frame.at >= click.at));
+        const intervalTasks = click && first ? probe.longTasks.filter(task => task.startTime < first.at
+            && task.startTime + task.duration > click.at) : [];
+        return { armedAt: probe.armedAt, stoppedAt: probe.stoppedAt, timeOrigin: probe.timeOrigin,
+            events: probe.events, eventOverflow: probe.eventOverflow, observerSupported: probe.observerSupported,
+            observerError: probe.observerError, longTaskOverflow: probe.longTaskOverflow, longTasks: probe.longTasks,
+            firstGather: first ? { observedAt: first.at, drawCount: first.drawCount, frameTimestamp: first.frameTimestamp,
+                frameCpuMs: first.frameCpuMs, activityStartedAt: first.shared.activityStartedAt } : null,
+            nativeClickToFirstGatherObservationMs: click && first ? first.at - click.at : null,
+            nativeClickToFirstGatherRafTimestampMs: click && first && Number.isFinite(first.frameTimestamp) ? first.frameTimestamp - click.at : null,
+            longTasksOverlappingClickToGather: intervalTasks,
+            maximumObservedLongTaskDurationMs: intervalTasks.length ? Math.max(...intervalTasks.map(task => task.duration)) : null,
+            sumLongTaskOverlapMs: click && first && probe.observerSupported ? intervalTasks.reduce((sum, task) => sum
+                + Math.max(0, Math.min(first.at, task.startTime + task.duration) - Math.max(click.at, task.startTime)), 0) : null,
+            interpretation: 'Observation only. Click-to-gather includes walking and the first rendered frame. Longtask entries do not measure all work or isolate camera fitting. No performance threshold or pass is assigned.' };
+    }, episode);
+}
 function observedReplayPreference(actual, island, selectedId) {
     const settled = actual.shared;
     if (settled?.phase !== 'settled' || ![settled.sourceId, settled.seatId].includes(selectedId)) return undefined;
@@ -271,15 +367,24 @@ async function storePlaced(page, row) {
 }
 async function earnAll(page, row) {
     for (const kind of ['bench', 'swing', 'flower', 'mushroom', 'lantern', 'fountain']) {
-        await activate(button(page, 'ひかりを とどける'), row.touch); await waitMode(page, 'learning');
+        await activate(page.locator('.island-start'), row.touch); await waitMode(page, 'learning');
         let state = await readNative(page, row.profileId), guard = 0;
         await waitLearningReady(page, state.plan); await assertControls(page);
-        const previousSets = state.island.completedSets;
-        while (state.plan) {
+        const previousSets = state.island.completedSets, reservationId = state.plan.id;
+        while (state.plan?.id === reservationId) {
             assert(++guard <= 12); const result = await attempt(page, state, { touch: row.touch });
             row.answers.push(result.sample); state = result.after;
         }
-        await waitMode(page, 'reward'); assert.equal(state.island.completedSets, previousSets + 1);
+        assert.equal(state.islandPlans.find(plan => plan.id === reservationId)?.status, 'completed');
+        assert.equal(state.island.completedSets, previousSets + 1);
+        if (previousSets > 0) {
+            assert.equal(state.plan?.id, JSON.stringify(['island-plan-v1', row.profileId, previousSets + 1]));
+            assert.equal(state.plan.cursor, 0); assert.equal(state.plan.revision, 0);
+            await waitMode(page, 'learning'); await home(page, row.touch);
+            await activate(page.getByRole('button', { name: /^おくりものを えらぶ/ }), row.touch);
+            assert.deepEqual(await readNative(page, row.profileId), state, 'Earned-gift navigation keeps the automatic next reservation and all saved rows');
+        }
+        await waitMode(page, 'reward');
         const reward = state.island.pendingRewards[0]; assert(reward.choices.includes(kind));
         await activate(button(page, ISLAND_ITEMS[kind].name), row.touch); await waitMode(page, 'placement');
         const itemId = `${reward.id}:item`;
@@ -291,9 +396,9 @@ async function earnAll(page, row) {
     const state = await readNative(page, row.profileId); assert.equal(state.island.completedSets, 6);
     assert.equal((await scene(page)).residents.length, 3);
     await capture(page, row, 'six-gifts-earned');
-    // Later learning cancellation resumes this exact reservation, so it can be
+    // Later learning cancellation resumes the automatically saved reservation, so it can be
     // included in the same all-store no-write assertion as ordinary free play.
-    await activate(button(page, 'ひかりを とどける'), row.touch); await waitMode(page, 'learning');
+    await activate(page.locator('.island-start'), row.touch); await waitMode(page, 'learning');
     const paused = await readNative(page, row.profileId); await waitLearningReady(page, paused.plan);
     row.pausedPlan = { id: paused.plan.id, cursor: paused.plan.cursor };
     await home(page, row.touch);
@@ -663,14 +768,17 @@ async function combination(page, row, kind, sourceKind, seatKind, cancellation) 
     return state;
 }
 
-function findUiPairSetup(state, actual, sourceId, seatId, requiredSeatSpecies) {
+function findUiPairSetup(state, actual, sourceId, seatId, requiredSeatSpecies, knownLayout = false) {
     assert(state.island.items.every(item => !item.position), 'Setup starts with genuinely stored possessions');
     const source = state.island.items.find(item => item.id === sourceId), seat = state.island.items.find(item => item.id === seatId);
     const original = actors(actual), desiredSeat = actual.residents.findIndex(resident => resident.species === requiredSeatSpecies);
     if (requiredSeatSpecies) assert(desiredSeat >= 0, 'The requested resident is actually present');
-    const sources = [{ x: 2.5, z: 1.25 }, { x: -2, z: 1.5 }], seats = [{ x: .5, z: 1.5 }, { x: .25, z: .25 }];
-    for (let z = .25; z <= 2.25; z += .5) for (let x = -2.5; x <= 3; x += .5) sources.push({ x, z });
-    for (let z = .25; z <= 2.25; z += .5) for (let x = -2.25; x <= 2.75; x += .5) seats.push({ x, z });
+    const sources = knownLayout ? [knownFoxStage.sourcePosition] : [{ x: 2.5, z: 1.25 }, { x: -2, z: 1.5 }];
+    const seats = knownLayout ? [knownFoxStage.seatPosition] : [{ x: .5, z: 1.5 }, { x: .25, z: .25 }];
+    if (!knownLayout) {
+        for (let z = .25; z <= 2.25; z += .5) for (let x = -2.5; x <= 3; x += .5) sources.push({ x, z });
+        for (let z = .25; z <= 2.25; z += .5) for (let x = -2.25; x <= 2.75; x += .5) seats.push({ x, z });
+    }
     const clearResidents = (position, kind, residents) => residents.every(resident => Math.hypot(position.x - resident.position.x,
         position.z - resident.position.z) >= ISLAND_ITEMS[kind].radius + .42);
     // Finite, read-only Node search predicts the two ordinary placement visits.
@@ -680,10 +788,10 @@ function findUiPairSetup(state, actual, sourceId, seatId, requiredSeatSpecies) {
         const placedSource = { ...source, position: sourcePosition, rotation: 0 };
         const firstItems = state.island.items.map(item => item.id === sourceId ? placedSource : item);
         const sourceChoice = chooseReachableResident(original, placedSource, firstItems, state.island.completedSets, afterIndex(actual));
-        if (!sourceChoice) continue;
+        if (!sourceChoice || knownLayout && sourceChoice.index !== knownFoxStage.carrier) continue;
         const gathered = original.map((resident, index) => index === sourceChoice.index
             ? { ...resident, position: sourceChoice.route.points.at(-1), itemId: sourceId, departingId: undefined } : resident);
-        for (const seatPosition of seats) for (const rotation of [Math.PI / 2, Math.PI * 1.5, 0, Math.PI]) {
+        for (const seatPosition of seats) for (const rotation of knownLayout ? [knownFoxStage.rotation] : [Math.PI / 2, Math.PI * 1.5, 0, Math.PI]) {
             if (!isValidIslandPlacement({ ...state.island, items: firstItems }, seatId, seatPosition, rotation)
                 || !clearResidents(seatPosition, seat.kind, gathered)) continue;
             const placedSeat = { ...seat, position: seatPosition, rotation };
@@ -693,13 +801,16 @@ function findUiPairSetup(state, actual, sourceId, seatId, requiredSeatSpecies) {
             const seated = gathered.map((resident, index) => index === seatChoice.index
                 ? { ...resident, position: seatChoice.route.points.at(-1), itemId: seatId, departingId: undefined } : resident);
             const shared = chooseSharedActivity(items, seated, state.island.completedSets, sourceId, seatChoice.index);
+            if (knownLayout && (!matchesKnownFoxActors(seated, shared)
+                || !sameKnownPoint(shared.gatherRoute?.points.at(-1), knownFoxStage.gatherPosition))) continue;
             if (shared) return { sourceId, seatId, sourcePosition, seatPosition, rotation, sourceResident: sourceChoice.index,
                 seatResident: seatChoice.index, pairId: shared.pairId, expectedReceiver: shared.receiver, expectedCarrier: shared.carrier };
         }
     }
 }
-function chooseUiPairSetup(state, actual, sourceId, seatId, requiredSeatSpecies) {
-    const direct = findUiPairSetup(state, actual, sourceId, seatId, requiredSeatSpecies);
+function chooseUiPairSetup(state, actual, sourceId, seatId, requiredSeatSpecies, knownLayout = false) {
+    if (knownLayout) assert.deepEqual(actual.residents.map(resident => resident.species), ['otter', 'rabbit', 'fox']);
+    const direct = findUiPairSetup(state, actual, sourceId, seatId, requiredSeatSpecies, knownLayout);
     if (direct) return direct;
     // A settled replay can leave any resident as the last ordinary visitor.
     // Keep direct and one-visit setups first; only then try two real placement
@@ -735,14 +846,15 @@ function chooseUiPairSetup(state, actual, sourceId, seatId, requiredSeatSpecies)
     };
     const firstVisits = preparations(actual);
     for (const first of firstVisits) {
-        const next = findUiPairSetup(state, first.actual, sourceId, seatId, requiredSeatSpecies);
+        const next = findUiPairSetup(state, first.actual, sourceId, seatId, requiredSeatSpecies, knownLayout);
         if (next) return { ...next, preparations: [first.preparation] };
     }
     for (const first of firstVisits) for (const second of preparations(first.actual)) {
-        const next = findUiPairSetup(state, second.actual, sourceId, seatId, requiredSeatSpecies);
+        const next = findUiPairSetup(state, second.actual, sourceId, seatId, requiredSeatSpecies, knownLayout);
         if (next) return { ...next, preparations: [first.preparation, second.preparation] };
     }
     const source = state.island.items.find(item => item.id === sourceId), seat = state.island.items.find(item => item.id === seatId);
+    if (knownLayout) assert.fail('Known tablet-fox stage is not reproducible from these actual roots within two UI preparations; an alternate layout cannot pass');
     assert.fail(`No legal UI placement sequence found within two preparatory visits gives ${requiredSeatSpecies ?? 'available residents'} this ${source.kind}/${seat.kind} pair`);
 }
 async function applyUiPairSetup(page, row, setup) {
@@ -798,30 +910,51 @@ async function applyUiPairSetup(page, row, setup) {
     assert(plan && plan.pairId === setup.pairId, 'Observed post-placement actors have all three shared routes');
     return state;
 }
-async function foxTransfer(page, row) {
+async function foxTransfer(page, row, knownLayout = false) {
     let state = await storePlaced(page, row);
     const sourceId = row.earned.find(item => item.kind === 'flower').itemId, seatId = row.earned.find(item => item.kind === 'bench').itemId;
-    const setup = chooseUiPairSetup(state, await scene(page), sourceId, seatId, 'fox');
+    const setupScene = await scene(page);
+    if (knownLayout) row.knownLayout = { name: diagnosticCase, requestedStage: knownFoxStage, reproduced: false,
+        status: 'preflight', before: setupScene, afterResident: afterIndex(setupScene), maximumPreparatoryVisits: 2 };
+    const setup = chooseUiPairSetup(state, setupScene, sourceId, seatId, 'fox', knownLayout);
     row.foxSetup = setup;
     state = await applyUiPairSetup(page, row, setup);
     const actual = await scene(page), prediction = chooseSharedActivity(state.island.items, actors(actual), 6, sourceId, afterIndex(actual));
     assert(prediction && prediction.pairId === setup.pairId, 'Fox capture uses the actual post-placement delivery preflight');
+    if (knownLayout) {
+        assertKnownFoxStage(actual, state.island, setup, prediction);
+        row.knownLayout.status = 'placed'; row.knownLayout.actualReady = actual;
+    }
     const legalPlans = sharedActivityDeliveryPlans(prediction, state.island.items, actors(actual), 6);
-    await openPlay(page, row.touch); await capture(page, row, 'fox-flower-ready');
+    const capturePrefix = knownLayout ? 'known-fox' : 'fox-flower';
+    await openPlay(page, row.touch); await capture(page, row, `${capturePrefix}-ready`);
     const before = await databaseSnapshot(page);
     await page.evaluate(() => window.__islandSharingProbe.reset());
+    if (knownLayout) await armKnownFoxTiming(playControl(page, state.island, sourceId));
     const started = await invite(page, row, state.island, sourceId), shared = started.shared;
     assert.equal(started.residents[shared?.receiver]?.species, 'fox', 'The unlocked fox receives the actual transfer');
     assert.equal(shared.pairId, prediction.pairId); assert.equal(shared.carrier, prediction.carrier); assert.equal(shared.receiver, prediction.receiver);
     const episode = shared.activityStartedAt;
-    await gatherCapture(page, row, 'fox-flower-gather');
-    const selected = capturedDelivery(row, 'fox-flower', legalPlans);
-    await transferCaptures(page, row, 'fox-flower', selected);
-    const trace = await validateTrace(page, row, 'fox-flower', state.island.items.find(item => item.id === sourceId), episode, legalPlans, state.island.items);
+    await gatherCapture(page, row, `${capturePrefix}-gather`);
+    if (knownLayout) {
+        const captured = report.captures.at(-1);
+        assertKnownFoxStage(captured.scene, state.island, setup, captured.scene.shared);
+        assertKnownFoxStage(captured.afterCapture, state.island, setup, captured.afterCapture.shared);
+        row.knownLayout.timing = await takeKnownFoxTiming(page, episode);
+        assert(row.knownLayout.timing?.events.some(event => event.type === 'click' && event.trusted)
+            && row.knownLayout.timing.firstGather, 'Known-case timing observes the actual native click and first drawn gather');
+        row.knownLayout.status = 'gather-captured'; row.knownLayout.reproduced = true;
+        row.knownLayout.gatherCapture = captured.file;
+        row.knownLayout.authorReview = 'pending actual image comparison; technical visibility is not an art pass';
+    }
+    const selected = capturedDelivery(row, capturePrefix, legalPlans);
+    await transferCaptures(page, row, capturePrefix, selected);
+    const trace = await validateTrace(page, row, capturePrefix, state.island.items.find(item => item.id === sourceId), episode, legalPlans, state.island.items);
     assert(trace.actorSpecies.includes('fox'), 'Fox participation is measured across the complete physical transfer');
     await unchanged(page, before, row, 'Fox receives a full flower transfer without any saved reward or learning changes');
     row.foxTransfer = { setup, episode, preflight: { receiver: prediction.receiver, carrier: prediction.carrier,
         receiverRoute: prediction.receiverRoute, gatherRoute: prediction.gatherRoute, deliveryRoute: prediction.deliveryRoute }, trace };
+    if (knownLayout) { row.knownLayout.status = 'transfer-complete'; return state; }
     // Restore a real bubble pair for the independent reduced-motion/recovery
     // gate, choosing clear land around these now-moved residents through UI.
     state = await storePlaced(page, row);
@@ -924,13 +1057,15 @@ try {
                 if (!combinationFilter || combinationFilter === args[0]) state = await combination(page, row, ...args);
             }
             if (!combinationFilter) {
-                state = await foxTransfer(page, row);
+                state = await foxTransfer(page, row, knownTabletFox);
                 assert(row.foxTransfer.trace.actorSpecies.includes('fox'), 'The genuinely unlocked fox participates in a recorded transfer');
             }
-            if (!combinationFilter || combinationFilter === 'bubble') await reducedAndRecovery(page, row, state);
+            if (!knownTabletFox && (!combinationFilter || combinationFilter === 'bubble')) await reducedAndRecovery(page, row, state);
             assert.deepEqual(row.errors, []); row.pass = true;
         } catch (error) {
             row.error = error.stack ?? String(error); row.failureScene = await scene(page).catch(() => null);
+            if (knownTabletFox && row.knownLayout && !row.knownLayout.timing)
+                row.knownLayout.timing = await takeKnownFoxTiming(page).catch(() => null);
             await page.screenshot({ path: `${out}/${row.name}-failure.png` }).catch(() => {});
             const trace = await page.evaluate(() => window.__islandSharingProbe?.rows ?? []).catch(() => []);
             await fs.writeFile(`${out}/${row.name}-failure-trace.json`, JSON.stringify(trace));
