@@ -6,7 +6,7 @@ import { dirname, resolve } from "node:path";
 
 const HOST = "127.0.0.1";
 const PORT_CANDIDATES = [4173, 4174, 4175, 4176];
-const APP_TITLE_MARKER = "<title>ポッコのふしぎずかん</title>";
+const APP_TITLE_MARKER = "<title>ぽこもこ</title>";
 const FIXTURE_ID = "cold-open-fixed-ten-v1";
 const EXPECTED_EXPLORE_INTERRUPTION_SEQUENCE = [
   { afterQuestion: 3, kind: "route-choice" },

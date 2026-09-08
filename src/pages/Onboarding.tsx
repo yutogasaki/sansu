@@ -217,7 +217,7 @@ const LegacyOnboarding: React.FC<{ intent: OnboardingIntent }> = ({ intent }) =>
                 <SurfacePanel className={cn(panelClass, "brand-onboarding__panel relative z-10 max-w-md space-y-5 text-center")}>
                     <img
                         src="/icons/icon-512.png"
-                        alt="黄色い葉帽子の探検相棒"
+                        alt="パッチワークのくま"
                         className="brand-onboarding__mark mx-auto"
                     />
                     <Badge variant="primary" className="mx-auto border-[var(--brand-ink)] bg-[var(--brand-cream)] text-[var(--brand-ink)]">
@@ -228,7 +228,7 @@ const LegacyOnboarding: React.FC<{ intent: OnboardingIntent }> = ({ intent }) =>
                             className="text-[2.35rem] font-black leading-[1.06] tracking-[-0.055em] text-[var(--brand-ink)]"
                             style={{ fontFamily: "var(--font-heading)" }}
                         >
-                            ポッコの<br />ふしぎずかん
+                            ぽこもこ
                         </h1>
                         <p className="text-sm font-black leading-7 text-[var(--brand-ink)]/75">
                             ポッコと ふしぎを みつけよう

@@ -27,7 +27,7 @@ const PROVENANCE_ENV_NAME = "SANSU_VISUAL_AUDIT_BUILD_PROVENANCE_PATH";
 const TARGET_ATTESTATION_FILE = "sansu-visual-audit-target.json";
 const PREVIEW_START_TIMEOUT_MS = 30_000;
 const CHILD_STOP_TIMEOUT_MS = 5_000;
-const APP_TITLE_MARKER = "<title>ポッコのふしぎずかん</title>";
+const APP_TITLE_MARKER = "<title>ぽこもこ</title>";
 const NPM_EXECUTABLE = process.platform === "win32" ? "npm.cmd" : "npm";
 
 const KNOWN_LEGACY_EVIDENCE_FILES = new Set([
