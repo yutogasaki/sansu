@@ -1,0 +1,85 @@
+{
+  "scope": "Automated keyboard fixed-ten comparison, synthetic existing-island fixture; not child behaviour or production planner evidence.",
+  "target": "http://127.0.0.1:5408",
+  "buildSource": {
+    "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-23/build-source.json",
+    "manifestSHA": "c09270dbdb26b0811bfed0eb139a5169249076475b9c963281e484ca23ec649c",
+    "sourceHash": "ecdb5041e7c437d1977ab334b8ba2c9222355ec444a0689ca9b8d184350caf46",
+    "revision": "workshop-20260909-ecdb5041e7c4",
+    "flags": {
+      "VITE_ISLAND_ENABLED": "true",
+      "VITE_BUILD_PLAY_ENABLED": "true"
+    }
+  },
+  "fixtureId": "cold-open-fixed-ten-v1",
+  "fixtureHash": "959267b8827be99953db083012013bbbb47101ce88950d4829930220f1acaee3",
+  "runs": 80,
+  "repetitions": 10,
+  "startedAt": "2026-09-08T23:14:03.035Z",
+  "finishedAt": "2026-09-08T23:21:37.314Z",
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 124.97530338928313,
+      "islandMedianProblemsPerMinute": 299.9629187152328,
+      "allCorrectIslandToStudyRatio": 2.4001775597286144,
+      "correctOperableP95Ms": 197.29999995231628,
+      "incorrectRetryP95Ms": 195.5,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 191.69999998807907,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 194.30000001192093,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4800.949999988079,
+      "rawIslandDurationMedianMs": 2000.2500000298023
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 125.07853934415792,
+      "islandMedianProblemsPerMinute": 298.8572152018389,
+      "allCorrectIslandToStudyRatio": 2.3893564537040444,
+      "correctOperableP95Ms": 197.69999998807907,
+      "incorrectRetryP95Ms": 194.5,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 192.64999997615814,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 196.5,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4797.000000029802,
+      "rawIslandDurationMedianMs": 2007.6500000059605
+    }
+  ],
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "evidence": {
+    "eligible": true,
+    "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "pass": true,
+  "browserClosed": true,
+  "rawLocalReport": "output/island-experience/throughput-23-02/report.json",
+  "rawReportSHA256": "ace5fad504b62cb8c0b99b25b900e3870cd7a6757ad15390e8f4a18182c518e0",
+  "priorFailedRun": {
+    "path": "output/island-experience/throughput-23-01/report.json",
+    "reason": "Caller used production preview for a DEV-fixture benchmark; dynamic source import failed before any timing sample. Original report retained."
+  }
+}

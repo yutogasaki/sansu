@@ -2,6 +2,8 @@
 
 Status: **Checkpoint / Full Goal Active**。この文書は途中の保存地点であり、全Goal完了・公開承認を示さない。分析全体の範囲と残差は[親タスク](../../tasks/active/2026-09-08-island-experience.md)と[対応表](../../tasks/active/2026-09-08-island-experience-coverage.md)を正とする。
 
+mainには実装 `fcd1da1`、クリーンcheckoutでの文書参照修正 `7c45f98` をpush済み。後者の [Verify Core](https://github.com/yutogasaki/sansu/actions/runs/34290005123) と [Docs Check](https://github.com/yutogasaki/sansu/actions/runs/34290005161) はPASS。初回CIのローカルoutputリンク失敗は判定を緩めず、元label/pathを残す文書表記修正と追跡ファイルだけの事前検査で解消した。
+
 ## 本人の意図と現在の契約
 
 ユーザーの「家がオープンじゃなくて、家に入れるなかで記念室じゃなくて家の中でいろいろ見れるのがいい」「家には大事なものや重要なお知らせとかがある感じ」を[仕様42](../../product/42_island_learning_keepsakes_spec.md)へ反映した。
@@ -29,7 +31,7 @@ Status: **Checkpoint / Full Goal Active**。この文書は途中の保存地点
 | Island core補助QA | core-island-23-04（`../../../output/island-experience/core-island-23-04/report.json`）は **10経路PASS**（実WebGL復旧・onboarding・8入力モード）、ブラウザ終了。23-03は実WebGL復旧とonboardingが通過した後、学習中に隠されたworldの可視待ちで停止。QA-only修正で可視Threeの検査を実「しまへ」の後へ移した。appは不変。DEV optional growthは省略し、旧20の実成長や23の成熟fixtureと混同しない。 |
 | 固定23のPWA | pwa-23-01（`../../../output/island-experience/pwa-23-01/pwa-report.json`）は8保護経路と実SW offline回答／reload／同予約復帰 PASS。source照合（`../../../output/island-experience/pwa-23-01/source-verification.json`）で1068入力の前後一致。 |
 | 既存classic保護 | smoke31 / classic PWA4（`../../../output/playwright/island-renewal/commit-checks/summary.json`）、実2build更新2経路（`../../../output/playwright/island-renewal/integration-classic-pwa-two-build.log`） PASS。これらは先行するclassic flagsの別target。固定23 Island PWAや家の実獲得へ転用しない。DEV smoke途中のoutput-copyによるreloadも元summaryに保持。 |
-| 正式fixed-ten | **23は未実施**。全browser終了後、この保存地点の後のGoal継続（post-push）で80runを行う。先行固定20の80run PASS（`../../../output/island-experience/throughput-20-01/report.json`）は20だけの証拠。機能確認後の保存地点と、以後の速度検証・全Goal継続を分ける。 |
+| 正式fixed-ten | [固定23の集計](2026-09-09-island-home-checkpoint/throughput-summary.json)は **80 runs PASS / evidence.eligible=true**。固定23の専用DEV5408、交互10反復、phone/tablet。正答operable P95は197.3 / 197.7ms、誤答retryは195.5 / 194.5ms、区間境界は194.3 / 196.5ms。連問追加0操作・fixture/receipt・source不変を確認。自動keyboardのsynthetic固定問題であり、通常plannerや子どもの速度の証拠ではない。初回23-01はDEV用fixtureをproduction previewへ向けて最初のsource importで停止、計測0。元FAILを保持し、正しい固定DEVの23-02で完走した。 |
 
 snapshot21は準備版。22のgenuine QAは実配信が `development-local` でmanifestと異なり起動前に停止した元FAIL（`../../../output/island-experience/keepsakes-22-01/report.json`）を保持する。23の新結果で21/22や23-01の失敗を上書きしない。
 
@@ -61,6 +63,6 @@ keepsakes-23-02（`../../../output/island-experience/keepsakes-23-02/report.json
 
 - **基本の実表示／作者確認:** 家としての囲い、生活道具、展示と近景は上の実画像で確認。source A-v6との強いart parityは **HOLD**。自動テストの成功で視覚の基準を置き換えない。
 - **無説明理解・自発的再遊び・子どもの安全:** **Human N=0**。独立した利用者観察の合格を主張しない。
-- **runtime／保存:** 上表のtarget別合格のみ。残る23の正式80runを追記する。旧景色互換・音など分析全体の残差は親タスクを保持する。
+- **runtime／保存:** 上表のtarget別合格のみ。固定23の正式80runも上表に集計した。旧景色互換・音など分析全体の残差は親タスクを保持する。
 
 機能の保存地点を作っても **Full GoalはActive**。この文書だけで全分析の消化・公開・完了へ進めない。
