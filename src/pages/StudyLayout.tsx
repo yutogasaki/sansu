@@ -14,6 +14,7 @@ import { Button } from "../components/ui/Button";
 import { InsetPanel, SurfacePanel, SurfacePanelHeader } from "../components/ui/SurfacePanel";
 import { Problem } from "../domain/types";
 import { hasStudySingleNumberInput } from '../domain/math/studyPresentation';
+import { canConfirmNumberFields, isSingleDigitMathInput } from '../domain/math/answerCompletion';
 import { LayoutDebugOverlay } from "../components/LayoutDebugOverlay";
 import { MathRenderer } from "../components/domain/MathRenderer";
 import { MathProblemPrompt } from "../components/domain/MathProblemPrompt";
@@ -90,6 +91,7 @@ interface StudyLayoutProps {
     hissanActiveCellPos?: [number, number] | null;
     hissanUserValues?: Map<string, string>;
     hissanStepFeedback?: 'none' | 'correct' | 'incorrect';
+    hissanCorrecting?: boolean;
     hissanCanInputDecimal?: boolean;
     onHissanCellClick?: (rowIndex: number, colIndex: number) => void;
     onHissanToggle?: () => void;
@@ -166,6 +168,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     hissanActiveCellPos = null,
     hissanUserValues = new Map(),
     hissanStepFeedback = 'none',
+    hissanCorrecting = false,
     hissanCanInputDecimal = false,
     onHissanCellClick,
     onHissanToggle,
@@ -427,6 +430,10 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
         currentProblem.categoryId.startsWith("frac_") ||
         (currentProblem.questionText?.length ?? 0) >= 14;
     const showCursorButtons = currentProblem.inputType === "multi-number" || hissanActive;
+    const automaticAnswer = hissanActive || isSingleDigitMathInput(currentProblem);
+    const confirmReady = !automaticAnswer
+        ? canConfirmNumberFields(currentProblem.inputType === 'multi-number' ? userInputs : [userInput])
+        : saveError;
     const timerBadgeClass = cn(
         "app-pill inline-flex items-center rounded-full px-3 py-1 text-sm font-black tracking-[0.08em]",
         showTestTimer && testRemainingSeconds <= 60
@@ -727,6 +734,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                     userValues={hissanUserValues}
                                     onCellClick={onHissanCellClick || (() => { })}
                                     stepFeedback={hissanStepFeedback}
+                                    correcting={hissanCorrecting}
                                     disabled={feedback !== 'none'}
                                 />
                             </div>
@@ -826,8 +834,12 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             onDelete={onBackspace}
                             onClear={onClear}
                             onEnter={onEnter}
+                            confirmationMode={automaticAnswer && !saveError ? 'automatic' : 'manual'}
+                            enterDisabled={!confirmReady}
+                            disabled={feedback !== 'none' || hissanStepFeedback !== 'none'}
                             enterLabel={hissanActive && hissanGridData?.writtenLayout && hissanStepIndex < hissanGridData.steps.length - 1 ? 'このだんを たしかめる' : undefined}
-                            showDecimal={currentProblem.subject === 'math' && (!hissanActive || hissanCanInputDecimal)}
+                            writtenInput={hissanActive}
+                            showDecimal={currentProblem.subject === 'math' && !isSingleDigitMathInput(currentProblem) && (!hissanActive || hissanCanInputDecimal)}
                             onCursorMove={showCursorButtons ? onCursorMove : undefined}
                             compact={shouldCompactTenKey}
                         />

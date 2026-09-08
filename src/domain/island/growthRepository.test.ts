@@ -8,6 +8,7 @@ import { commitIslandLearningSession } from './learningSession';
 import { IslandConflict, openIsland, saveIslandEdit, startIslandPlan } from './repository';
 import { recordIslandDiscovery, selectIslandGrowthTarget, setIslandItemAppearance } from './growthRepository';
 import { getIslandGrowthTarget, growIslandAfterCompletedSet } from './growth';
+import { islandGrowthStep } from './pacing';
 import type { IslandEvent, IslandPlan } from './types';
 
 const databases: SansuDatabase[] = [];
@@ -39,6 +40,30 @@ const snapshot = async (d: SansuDatabase) => Object.fromEntries(await Promise.al
 afterEach(async () => { for (const d of databases.splice(0)) { d.close(); await d.delete(); } });
 
 describe('owned atomic living island persistence', () => {
+    it('rolls back partial growth with the final answer, then retains it through reload, focus changes and receipt replay', async () => {
+        const d = await setup();
+        await finish(d, await startIslandPlan('child', d));
+        let plan = await startIslandPlan('child', d);
+        plan.slots = plan.slots.slice(0, 3);
+        await d.islandPlans.put(plan);
+        plan = await beforeFinal(d, plan);
+        const before = await snapshot(d), action = correctAction(plan);
+        const fail = (_key: unknown, event: IslandEvent) => { if (event.type === 'plan_completed') throw new Error('partial save failed'); };
+        d.islandEvents.hook('creating', fail);
+        await expect(commitIslandLearning('child', plan.id, plan.revision, action, d)).rejects.toThrow('partial save failed');
+        d.islandEvents.hook('creating').unsubscribe(fail);
+        expect(await snapshot(d)).toEqual(before);
+        await commitIslandLearning('child', plan.id, plan.revision, action, d);
+        let island = (await d.islands.get('child'))!;
+        expect(islandGrowthStep(island, 'garden')).toMatchObject({ progress: 1, pending: 3, remaining: 3 });
+        island = await selectIslandGrowthTarget('child', island.revision, 'village', d);
+        d.close(); await d.open();
+        await commitIslandLearning('child', plan.id, plan.revision, action, d);
+        expect(await d.islands.get('child')).toEqual(island);
+        expect((await startIslandPlan('child', d)).growthTarget).toBe('village');
+        expect((await d.islands.get('child'))?.growth?.pendingAnswers?.garden).toBe(3);
+    });
+
     it('freezes a target while an optional focus selection applies only to the next reservation', async () => {
         const d = await setup();
         const plan = await startIslandPlan('child', d), original = structuredClone(plan);
@@ -75,8 +100,14 @@ describe('owned atomic living island persistence', () => {
 
     it('aborts growth, snapshot, answer, profile and completion together then saves each once on retry', async () => {
         const d = await setup();
-        for (let set = 0; set < 5; set++) await finish(d, await startIslandPlan('child', d));
-        const plan = await beforeFinal(d, await startIslandPlan('child', d));
+        let reserved = await startIslandPlan('child', d);
+        for (let set = 0; ; set++) {
+            expect(set).toBeLessThan(22);
+            const step = islandGrowthStep((await d.islands.get('child'))!, 'garden');
+            if (step.progress === 5 && step.remaining <= reserved.slots.length) break;
+            await finish(d, reserved); reserved = await startIslandPlan('child', d);
+        }
+        const plan = await beforeFinal(d, reserved);
         const before = await snapshot(d);
         const fail = (_key: unknown, event: IslandEvent) => { if (event.type === 'plan_completed') throw new Error('disk full'); };
         d.islandEvents.hook('creating', fail);
@@ -128,6 +159,7 @@ describe('owned atomic living island persistence', () => {
     it('keeps an old frozen gift reservation unchanged, then migrates only when reserving new learning', async () => {
         const d = await setup(), legacy = await startIslandPlan('child', d);
         delete legacy.growthTarget;
+        delete legacy.rewardPacing;
         await d.islandPlans.put(legacy);
         const island = (await d.islands.get('child'))!;
         delete island.growth;
@@ -180,7 +212,10 @@ describe('owned atomic living island persistence', () => {
         island = await setIslandItemAppearance('child', revision, 'starter-flower', 0, d);
         expect(await setIslandItemAppearance('child', revision, 'starter-flower', 0, d)).toEqual(island);
         island = await saveIslandEdit('child', island.revision, { type: 'store', itemId: 'starter-flower' }, d);
-        for (let set = 0; set < 2; set++) await finish(d, await startIslandPlan('child', d));
+        for (let set = 0; (await d.islands.get('child'))!.growth!.progress.garden < 3; set++) {
+            expect(set).toBeLessThan(6);
+            await finish(d, await startIslandPlan('child', d));
+        }
         d.close(); await d.open();
         island = await openIsland('child', d);
         expect(island.items.find(item => item.id === 'starter-flower')).toMatchObject({ appearanceLevel: 0, growthLevel: 2, position: undefined });

@@ -8,7 +8,8 @@ import {
 } from "../components/ui/SurfacePanel";
 import { Header } from "../components/Header";
 import { getActiveProfile } from "../domain/user/repository";
-import { completeOnboardingProfile, onboardingDestination, OnboardingAlreadyCompleted, type OnboardingIntent } from "../domain/user/onboarding";
+import { completeOnboardingProfile, onboardingDestination, OnboardingAlreadyCompleted, ONBOARDING_MATH_RANGES,
+    type OnboardingIntent, type OnboardingMathRange } from "../domain/user/onboarding";
 import { profileStorage } from "../utils/storage";
 import { holdPwaUpdateForCriticalPersistence } from "../pwa";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -28,7 +29,7 @@ const IslandOnboarding = lazy(() => import("../components/island/IslandOnboardin
 type Step = "welcome" | "name" | "grade" | "subject" | "math-check" | "english-check" | "done";
 type SubjectMode = "mix" | "math" | "vocab";
 type EnglishExp = "beginner" | "some" | "confident";
-type MathCheck = "q_count" | "q_add" | "q_sub" | "q_col" | "q_mul";
+type MathCheck = OnboardingMathRange;
 type OnboardingSelections = {
     mathCheck: MathCheck | null;
     englishExp: EnglishExp | null;
@@ -207,7 +208,7 @@ const LegacyOnboarding: React.FC<{ intent: OnboardingIntent }> = ({ intent }) =>
                         : step === "english-check"
                             ? "えいご どれくらい？"
                             : "かんりょう";
-    const panelClass = "w-full border-t-[3px] shadow-[0_28px_54px_-38px_rgba(15,23,42,0.34)]";
+    const panelClass = "my-auto w-full shrink-0 border-t-[3px] shadow-[0_28px_54px_-38px_rgba(15,23,42,0.34)]";
 
     if (step === "welcome") {
         if (islandOnboarding) return <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandWelcome onStart={() => setStep("name")} actionLabel="はじめる" /></Suspense>;
@@ -228,7 +229,7 @@ const LegacyOnboarding: React.FC<{ intent: OnboardingIntent }> = ({ intent }) =>
                             className="text-[2.35rem] font-black leading-[1.06] tracking-[-0.055em] text-[var(--brand-ink)]"
                             style={{ fontFamily: "var(--font-heading)" }}
                         >
-                            ぽこもこ
+                            ぽこもこと<br />不思議な島
                         </h1>
                         <p className="text-sm font-black leading-7 text-[var(--brand-ink)]/75">
                             ポッコと ふしぎを みつけよう
@@ -260,7 +261,7 @@ const LegacyOnboarding: React.FC<{ intent: OnboardingIntent }> = ({ intent }) =>
                 onBack={goBack}
             />}
 
-            <div className={cn("relative z-10 flex flex-1 items-center justify-center px-[var(--screen-padding-x)] pb-[var(--screen-bottom-padding)]", worldOnboarding && "park-onboarding-content")}>
+            <div className={cn("relative z-10 flex min-h-0 flex-1 items-start justify-center overflow-y-auto px-[var(--screen-padding-x)] pt-5 pb-[var(--screen-bottom-padding)]", worldOnboarding && "park-onboarding-content")}>
                 {step === "name" && (
                     <SurfacePanel className={cn(panelClass, "max-w-lg space-y-5 border-t-cyan-300/80 animate-in slide-in-from-right duration-300")}>
                         <SurfacePanelHeader
@@ -336,17 +337,10 @@ const LegacyOnboarding: React.FC<{ intent: OnboardingIntent }> = ({ intent }) =>
                             description="やりやすい ところ から はじめるための しつもん"
                         />
                         <div className="space-y-3">
-                            {[
-                                { label: "数をかぞえる・くらべる", value: "q_count" as MathCheck, leading: "🔢" },
-                                { label: "足し算まで", value: "q_add" as MathCheck, leading: "➕" },
-                                { label: "引き算まで", value: "q_sub" as MathCheck, leading: "➖" },
-                                { label: "筆算（2けたのたし算・ひき算）", value: "q_col" as MathCheck, leading: "✏️" },
-                                { label: "かけ算（九九）", value: "q_mul" as MathCheck, leading: "✖️" },
-                            ].map((item) => (
+                            {ONBOARDING_MATH_RANGES.map((item) => (
                                 <SelectionCard
                                     key={item.value}
                                     label={item.label}
-                                    leading={item.leading}
                                     trailing="→"
                                     disabled={isSubmitting}
                                     onClick={() => !isSubmitting && handleMathCheckSelect(item.value)}

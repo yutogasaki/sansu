@@ -1,0 +1,6133 @@
+{
+  "target": "http://127.0.0.1:5591",
+  "startedAt": "2026-09-08T11:52:47.720Z",
+  "scenarios": [
+    {
+      "name": "chromium-number",
+      "captures": [
+        "chromium-number-home.png",
+        "chromium-number-ready-1024x640.png",
+        "chromium-number-rotate-768x1024.png",
+        "chromium-number-rotate-390x844.png",
+        "chromium-number-rotate-1024x600.png",
+        "chromium-number-rotate-1024x768.png",
+        "chromium-number-rotate-1180x820.png",
+        "chromium-number-rotate-1366x1024.png",
+        "chromium-number-rotate-1024x640.png",
+        "chromium-number-retry.png",
+        "chromium-number-hint.png",
+        "chromium-number-answered.png",
+        "chromium-number-model.png",
+        "chromium-number-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "rotate-768x1024",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "pageHeight": 1024,
+          "contentHeight": 1024,
+          "scrollTop": 0,
+          "width": 768,
+          "contentWidth": 768,
+          "question": {
+            "x": 94,
+            "y": 164,
+            "width": 580,
+            "height": 471,
+            "top": 164,
+            "right": 674,
+            "bottom": 635,
+            "left": 94
+          },
+          "prompt": {
+            "x": 94,
+            "y": 372,
+            "width": 580,
+            "height": 57,
+            "top": 372,
+            "right": 674,
+            "bottom": 429,
+            "left": 94
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 94,
+            "y": 944,
+            "width": 580,
+            "height": 44,
+            "top": 944,
+            "right": 674,
+            "bottom": 988,
+            "left": 94
+          }
+        },
+        {
+          "state": "rotate-390x844",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "pageHeight": 844,
+          "contentHeight": 844,
+          "scrollTop": 0,
+          "width": 390,
+          "contentWidth": 390,
+          "question": {
+            "x": 23,
+            "y": 151,
+            "width": 344,
+            "height": 342,
+            "top": 151,
+            "right": 367,
+            "bottom": 493,
+            "left": 23
+          },
+          "prompt": {
+            "x": 23,
+            "y": 302,
+            "width": 344,
+            "height": 42,
+            "top": 302,
+            "right": 367,
+            "bottom": 344,
+            "left": 23
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 23,
+            "y": 776,
+            "width": 344,
+            "height": 44,
+            "top": 776,
+            "right": 367,
+            "bottom": 820,
+            "left": 23
+          }
+        },
+        {
+          "state": "rotate-1024x600",
+          "viewport": {
+            "width": 1024,
+            "height": 600
+          },
+          "pageHeight": 600,
+          "contentHeight": 600,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 409,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 527,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 294,
+            "width": 490.375,
+            "height": 57,
+            "top": 294,
+            "right": 531.375,
+            "bottom": 351,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 530,
+            "width": 950,
+            "height": 44,
+            "top": 530,
+            "right": 987,
+            "bottom": 574,
+            "left": 37
+          }
+        },
+        {
+          "state": "rotate-1024x768",
+          "viewport": {
+            "width": 1024,
+            "height": 768
+          },
+          "pageHeight": 768,
+          "contentHeight": 768,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 577,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 695,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 378,
+            "width": 490.375,
+            "height": 57,
+            "top": 378,
+            "right": 531.375,
+            "bottom": 435,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 698,
+            "width": 950,
+            "height": 44,
+            "top": 698,
+            "right": 987,
+            "bottom": 742,
+            "left": 37
+          }
+        },
+        {
+          "state": "rotate-1180x820",
+          "viewport": {
+            "width": 1180,
+            "height": 820
+          },
+          "pageHeight": 820,
+          "contentHeight": 820,
+          "scrollTop": 0,
+          "width": 1180,
+          "contentWidth": 1180,
+          "question": {
+            "x": 61,
+            "y": 118,
+            "width": 556.75,
+            "height": 629,
+            "top": 118,
+            "right": 617.75,
+            "bottom": 747,
+            "left": 61
+          },
+          "prompt": {
+            "x": 65,
+            "y": 404,
+            "width": 548.75,
+            "height": 57,
+            "top": 404,
+            "right": 613.75,
+            "bottom": 461,
+            "left": 65
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 61,
+            "y": 750,
+            "width": 1058,
+            "height": 44,
+            "top": 750,
+            "right": 1119,
+            "bottom": 794,
+            "left": 61
+          }
+        },
+        {
+          "state": "rotate-1366x1024",
+          "viewport": {
+            "width": 1366,
+            "height": 1024
+          },
+          "pageHeight": 1024,
+          "contentHeight": 1024,
+          "scrollTop": 0,
+          "width": 1180,
+          "contentWidth": 1180,
+          "question": {
+            "x": 154,
+            "y": 118,
+            "width": 556.75,
+            "height": 833,
+            "top": 118,
+            "right": 710.75,
+            "bottom": 951,
+            "left": 154
+          },
+          "prompt": {
+            "x": 158,
+            "y": 506,
+            "width": 548.75,
+            "height": 57,
+            "top": 506,
+            "right": 706.75,
+            "bottom": 563,
+            "left": 158
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 154,
+            "y": 954,
+            "width": 1058,
+            "height": 44,
+            "top": 954,
+            "right": 1212,
+            "bottom": 998,
+            "left": 154
+          }
+        },
+        {
+          "state": "rotate-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "retry",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 412.40625,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 530.40625,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 295.703125,
+            "width": 490.375,
+            "height": 57,
+            "top": 295.703125,
+            "right": 531.375,
+            "bottom": 352.703125,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 530.40625,
+            "width": 498.375,
+            "height": 32.59375,
+            "top": 530.40625,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "name": "chromium-count",
+      "captures": [
+        "chromium-count-ready-1024x640.png",
+        "chromium-count-hint.png",
+        "chromium-count-answered.png",
+        "chromium-count-model.png",
+        "chromium-count-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 278.59375,
+            "width": 490.375,
+            "height": 127.796875,
+            "top": 278.59375,
+            "right": 531.375,
+            "bottom": 406.390625,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 412.40625,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 530.40625,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 260.296875,
+            "width": 490.375,
+            "height": 127.796875,
+            "top": 260.296875,
+            "right": 531.375,
+            "bottom": 388.09375,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 530.40625,
+            "width": 498.375,
+            "height": 32.59375,
+            "top": 530.40625,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 290.59375,
+            "width": 490.375,
+            "height": 103.796875,
+            "top": 290.59375,
+            "right": 531.375,
+            "bottom": 394.390625,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 272.09375,
+            "width": 490.375,
+            "height": 140.796875,
+            "top": 272.09375,
+            "right": 531.375,
+            "bottom": 412.890625,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 81,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "name": "chromium-base10",
+      "captures": [
+        "chromium-base10-ready-1024x640.png",
+        "chromium-base10-hint.png",
+        "chromium-base10-answered.png",
+        "chromium-base10-model.png",
+        "chromium-base10-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 391,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 509,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 228.8125,
+            "width": 490.375,
+            "height": 169.375,
+            "top": 228.8125,
+            "right": 531.375,
+            "bottom": 398.1875,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 393,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 511,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 229.8125,
+            "width": 490.375,
+            "height": 169.375,
+            "top": 229.8125,
+            "right": 531.375,
+            "bottom": 399.1875,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 511,
+            "width": 498.375,
+            "height": 52,
+            "top": 511,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "name": "chromium-decimal",
+      "captures": [
+        "chromium-decimal-ready-1024x640.png",
+        "chromium-decimal-hint.png",
+        "chromium-decimal-answered.png",
+        "chromium-decimal-model.png",
+        "chromium-decimal-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 412.40625,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 530.40625,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 295.703125,
+            "width": 490.375,
+            "height": 57,
+            "top": 295.703125,
+            "right": 531.375,
+            "bottom": 352.703125,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 530.40625,
+            "width": 498.375,
+            "height": 32.59375,
+            "top": 530.40625,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 81,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "name": "chromium-fraction",
+      "captures": [
+        "chromium-fraction-ready-1024x640.png",
+        "chromium-fraction-hint.png",
+        "chromium-fraction-answered.png",
+        "chromium-fraction-model.png",
+        "chromium-fraction-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 300.140625,
+            "width": 490.375,
+            "height": 84.71875,
+            "top": 300.140625,
+            "right": 531.375,
+            "bottom": 384.859375,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 412.40625,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 530.40625,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 281.84375,
+            "width": 490.375,
+            "height": 84.71875,
+            "top": 281.84375,
+            "right": 531.375,
+            "bottom": 366.5625,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 530.40625,
+            "width": 498.375,
+            "height": 32.59375,
+            "top": 530.40625,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 300.140625,
+            "width": 490.375,
+            "height": 84.71875,
+            "top": 300.140625,
+            "right": 531.375,
+            "bottom": 384.859375,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 300.140625,
+            "width": 490.375,
+            "height": 84.71875,
+            "top": 300.140625,
+            "right": 531.375,
+            "bottom": 384.859375,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "name": "chromium-hissan",
+      "captures": [
+        "chromium-hissan-ready-1024x640.png",
+        "chromium-hissan-hint.png",
+        "chromium-hissan-answered.png",
+        "chromium-hissan-model.png",
+        "chromium-hissan-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 210.1875,
+            "y": 243.5,
+            "width": 152,
+            "height": 198,
+            "top": 243.5,
+            "right": 362.1875,
+            "bottom": 441.5,
+            "left": 210.1875
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 412.40625,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 530.40625,
+            "left": 37
+          },
+          "prompt": {
+            "x": 210.1875,
+            "y": 225.203125,
+            "width": 152,
+            "height": 198,
+            "top": 225.203125,
+            "right": 362.1875,
+            "bottom": 423.203125,
+            "left": 210.1875
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 530.40625,
+            "width": 498.375,
+            "height": 32.59375,
+            "top": 530.40625,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 210.1875,
+            "y": 243.5,
+            "width": 152,
+            "height": 198,
+            "top": 243.5,
+            "right": 362.1875,
+            "bottom": 441.5,
+            "left": 210.1875
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 210.1875,
+            "y": 243.5,
+            "width": 152,
+            "height": 198,
+            "top": 243.5,
+            "right": 362.1875,
+            "bottom": 441.5,
+            "left": 210.1875
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 81,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "name": "chromium-multiply",
+      "captures": [
+        "chromium-multiply-ready-1024x640.png",
+        "chromium-multiply-hint.png",
+        "chromium-multiply-answered.png",
+        "chromium-multiply-model.png",
+        "chromium-multiply-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 81.1875,
+            "y": 229.796875,
+            "width": 410,
+            "height": 225.390625,
+            "top": 229.796875,
+            "right": 491.1875,
+            "bottom": 455.1875,
+            "left": 81.1875
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 412.40625,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 530.40625,
+            "left": 37
+          },
+          "prompt": {
+            "x": 81.1875,
+            "y": 211.5,
+            "width": 410,
+            "height": 225.390625,
+            "top": 211.5,
+            "right": 491.1875,
+            "bottom": 436.890625,
+            "left": 81.1875
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 530.40625,
+            "width": 498.375,
+            "height": 32.59375,
+            "top": 530.40625,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 81.1875,
+            "y": 229.796875,
+            "width": 410,
+            "height": 225.390625,
+            "top": 229.796875,
+            "right": 491.1875,
+            "bottom": 455.1875,
+            "left": 81.1875
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 81.1875,
+            "y": 229.796875,
+            "width": 410,
+            "height": 225.390625,
+            "top": 229.796875,
+            "right": 491.1875,
+            "bottom": 455.1875,
+            "left": 81.1875
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "name": "chromium-divide",
+      "captures": [
+        "chromium-divide-ready-1024x640.png",
+        "chromium-divide-hint.png",
+        "chromium-divide-answered.png",
+        "chromium-divide-model.png",
+        "chromium-divide-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 81.1875,
+            "y": 245.296875,
+            "width": 410,
+            "height": 194.390625,
+            "top": 245.296875,
+            "right": 491.1875,
+            "bottom": 439.6875,
+            "left": 81.1875
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 412.40625,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 530.40625,
+            "left": 37
+          },
+          "prompt": {
+            "x": 81.1875,
+            "y": 227,
+            "width": 410,
+            "height": 194.390625,
+            "top": 227,
+            "right": 491.1875,
+            "bottom": 421.390625,
+            "left": 81.1875
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 530.40625,
+            "width": 498.375,
+            "height": 32.59375,
+            "top": 530.40625,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 412.40625,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 530.40625,
+            "left": 37
+          },
+          "prompt": {
+            "x": 81.1875,
+            "y": 209,
+            "width": 410,
+            "height": 230.390625,
+            "top": 209,
+            "right": 491.1875,
+            "bottom": 439.390625,
+            "left": 81.1875
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 530.40625,
+            "width": 498.375,
+            "height": 32.59375,
+            "top": 530.40625,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "name": "chromium-choice",
+      "captures": [
+        "chromium-choice-ready-1024x640.png",
+        "chromium-choice-hint.png",
+        "chromium-choice-answered.png",
+        "chromium-choice-model.png",
+        "chromium-choice-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 237.21875,
+            "width": 490.375,
+            "height": 210.5625,
+            "top": 237.21875,
+            "right": 531.375,
+            "bottom": 447.78125,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 412.40625,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 530.40625,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 218.921875,
+            "width": 490.375,
+            "height": 210.5625,
+            "top": 218.921875,
+            "right": 531.375,
+            "bottom": 429.484375,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 530.40625,
+            "width": 498.375,
+            "height": 32.59375,
+            "top": 530.40625,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 272.09375,
+            "width": 490.375,
+            "height": 140.796875,
+            "top": 272.09375,
+            "right": 531.375,
+            "bottom": 412.890625,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 272.09375,
+            "width": 490.375,
+            "height": 140.796875,
+            "top": 272.09375,
+            "right": 531.375,
+            "bottom": 412.890625,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "name": "chromium-vocab",
+      "captures": [
+        "chromium-vocab-ready-1024x640.png",
+        "chromium-vocab-hint.png",
+        "chromium-vocab-answered.png",
+        "chromium-vocab-model.png",
+        "chromium-vocab-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 287,
+            "width": 490.375,
+            "height": 111,
+            "top": 287,
+            "right": 531.375,
+            "bottom": 398,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 412.40625,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 530.40625,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 268.703125,
+            "width": 490.375,
+            "height": 111,
+            "top": 268.703125,
+            "right": 531.375,
+            "bottom": 379.703125,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 530.40625,
+            "width": 498.375,
+            "height": 32.59375,
+            "top": 530.40625,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 287,
+            "width": 490.375,
+            "height": 111,
+            "top": 287,
+            "right": 531.375,
+            "bottom": 398,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 287,
+            "width": 490.375,
+            "height": 111,
+            "top": 287,
+            "right": 531.375,
+            "bottom": 398,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "name": "webkit-number",
+      "captures": [
+        "webkit-number-home.png",
+        "webkit-number-ready-1024x640.png",
+        "webkit-number-rotate-768x1024.png",
+        "webkit-number-rotate-390x844.png",
+        "webkit-number-rotate-1024x600.png",
+        "webkit-number-rotate-1024x768.png",
+        "webkit-number-rotate-1180x820.png",
+        "webkit-number-rotate-1366x1024.png",
+        "webkit-number-rotate-1024x640.png",
+        "webkit-number-retry.png",
+        "webkit-number-hint.png",
+        "webkit-number-answered.png",
+        "webkit-number-model.png",
+        "webkit-number-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "rotate-768x1024",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "pageHeight": 1024,
+          "contentHeight": 1024,
+          "scrollTop": 0,
+          "width": 768,
+          "contentWidth": 768,
+          "question": {
+            "x": 94,
+            "y": 164,
+            "width": 580,
+            "height": 471,
+            "top": 164,
+            "right": 674,
+            "bottom": 635,
+            "left": 94
+          },
+          "prompt": {
+            "x": 94,
+            "y": 372,
+            "width": 580,
+            "height": 57,
+            "top": 372,
+            "right": 674,
+            "bottom": 429,
+            "left": 94
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 94,
+            "y": 944,
+            "width": 580,
+            "height": 44,
+            "top": 944,
+            "right": 674,
+            "bottom": 988,
+            "left": 94
+          }
+        },
+        {
+          "state": "rotate-390x844",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "pageHeight": 844,
+          "contentHeight": 844,
+          "scrollTop": 0,
+          "width": 390,
+          "contentWidth": 390,
+          "question": {
+            "x": 23,
+            "y": 151,
+            "width": 344,
+            "height": 341.984375,
+            "top": 151,
+            "right": 367,
+            "bottom": 492.984375,
+            "left": 23
+          },
+          "prompt": {
+            "x": 23,
+            "y": 301.984375,
+            "width": 344,
+            "height": 42,
+            "top": 301.984375,
+            "right": 367,
+            "bottom": 343.984375,
+            "left": 23
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 23,
+            "y": 775.984375,
+            "width": 344,
+            "height": 44,
+            "top": 775.984375,
+            "right": 367,
+            "bottom": 819.984375,
+            "left": 23
+          }
+        },
+        {
+          "state": "rotate-1024x600",
+          "viewport": {
+            "width": 1024,
+            "height": 600
+          },
+          "pageHeight": 600,
+          "contentHeight": 600,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 409,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 527,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 294,
+            "width": 490.375,
+            "height": 57,
+            "top": 294,
+            "right": 531.375,
+            "bottom": 351,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 530,
+            "width": 950,
+            "height": 44,
+            "top": 530,
+            "right": 987,
+            "bottom": 574,
+            "left": 37
+          }
+        },
+        {
+          "state": "rotate-1024x768",
+          "viewport": {
+            "width": 1024,
+            "height": 768
+          },
+          "pageHeight": 768,
+          "contentHeight": 768,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 577,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 695,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 378,
+            "width": 490.375,
+            "height": 57,
+            "top": 378,
+            "right": 531.375,
+            "bottom": 435,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 698,
+            "width": 950,
+            "height": 44,
+            "top": 698,
+            "right": 987,
+            "bottom": 742,
+            "left": 37
+          }
+        },
+        {
+          "state": "rotate-1180x820",
+          "viewport": {
+            "width": 1180,
+            "height": 820
+          },
+          "pageHeight": 820,
+          "contentHeight": 820,
+          "scrollTop": 0,
+          "width": 1180,
+          "contentWidth": 1180,
+          "question": {
+            "x": 61,
+            "y": 118,
+            "width": 556.75,
+            "height": 629,
+            "top": 118,
+            "right": 617.75,
+            "bottom": 747,
+            "left": 61
+          },
+          "prompt": {
+            "x": 65,
+            "y": 404,
+            "width": 548.75,
+            "height": 57,
+            "top": 404,
+            "right": 613.75,
+            "bottom": 461,
+            "left": 65
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 61,
+            "y": 750,
+            "width": 1058,
+            "height": 44,
+            "top": 750,
+            "right": 1119,
+            "bottom": 794,
+            "left": 61
+          }
+        },
+        {
+          "state": "rotate-1366x1024",
+          "viewport": {
+            "width": 1366,
+            "height": 1024
+          },
+          "pageHeight": 1024,
+          "contentHeight": 1024,
+          "scrollTop": 0,
+          "width": 1180,
+          "contentWidth": 1180,
+          "question": {
+            "x": 154,
+            "y": 118,
+            "width": 556.75,
+            "height": 833,
+            "top": 118,
+            "right": 710.75,
+            "bottom": 951,
+            "left": 154
+          },
+          "prompt": {
+            "x": 158,
+            "y": 506,
+            "width": 548.75,
+            "height": 57,
+            "top": 506,
+            "right": 706.75,
+            "bottom": 563,
+            "left": 158
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 154,
+            "y": 954,
+            "width": 1058,
+            "height": 44,
+            "top": 954,
+            "right": 1212,
+            "bottom": 998,
+            "left": 154
+          }
+        },
+        {
+          "state": "rotate-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "retry",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 413,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 531,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 296,
+            "width": 490.375,
+            "height": 57,
+            "top": 296,
+            "right": 531.375,
+            "bottom": 353,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 531,
+            "width": 498.375,
+            "height": 32,
+            "top": 531,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "webkit-count",
+      "captures": [
+        "webkit-count-ready-1024x640.png",
+        "webkit-count-hint.png",
+        "webkit-count-answered.png",
+        "webkit-count-model.png",
+        "webkit-count-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 279,
+            "width": 490.375,
+            "height": 127,
+            "top": 279,
+            "right": 531.375,
+            "bottom": 406,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 413,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 531,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 261,
+            "width": 490.375,
+            "height": 127,
+            "top": 261,
+            "right": 531.375,
+            "bottom": 388,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 531,
+            "width": 498.375,
+            "height": 32,
+            "top": 531,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 292.5,
+            "width": 490.375,
+            "height": 100,
+            "top": 292.5,
+            "right": 531.375,
+            "bottom": 392.5,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 291,
+            "width": 490.375,
+            "height": 103,
+            "top": 291,
+            "right": 531.375,
+            "bottom": 394,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "webkit-base10",
+      "captures": [
+        "webkit-base10-ready-1024x640.png",
+        "webkit-base10-hint.png",
+        "webkit-base10-answered.png",
+        "webkit-base10-model.png",
+        "webkit-base10-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 391,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 509,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 229.5,
+            "width": 490.375,
+            "height": 168,
+            "top": 229.5,
+            "right": 531.375,
+            "bottom": 397.5,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 393,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 511,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 230.5,
+            "width": 490.375,
+            "height": 168,
+            "top": 230.5,
+            "right": 531.375,
+            "bottom": 398.5,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 511,
+            "width": 498.375,
+            "height": 52,
+            "top": 511,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "webkit-decimal",
+      "captures": [
+        "webkit-decimal-ready-1024x640.png",
+        "webkit-decimal-hint.png",
+        "webkit-decimal-answered.png",
+        "webkit-decimal-model.png",
+        "webkit-decimal-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 413,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 531,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 296,
+            "width": 490.375,
+            "height": 57,
+            "top": 296,
+            "right": 531.375,
+            "bottom": 353,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 531,
+            "width": 498.375,
+            "height": 32,
+            "top": 531,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "webkit-fraction",
+      "captures": [
+        "webkit-fraction-ready-1024x640.png",
+        "webkit-fraction-hint.png",
+        "webkit-fraction-answered.png",
+        "webkit-fraction-model.png",
+        "webkit-fraction-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 300.5,
+            "width": 490.375,
+            "height": 84,
+            "top": 300.5,
+            "right": 531.375,
+            "bottom": 384.5,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 413,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 531,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 282.5,
+            "width": 490.375,
+            "height": 84,
+            "top": 282.5,
+            "right": 531.375,
+            "bottom": 366.5,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 531,
+            "width": 498.375,
+            "height": 32,
+            "top": 531,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 300.5,
+            "width": 490.375,
+            "height": 84,
+            "top": 300.5,
+            "right": 531.375,
+            "bottom": 384.5,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 300.5,
+            "width": 490.375,
+            "height": 84,
+            "top": 300.5,
+            "right": 531.375,
+            "bottom": 384.5,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "webkit-hissan",
+      "captures": [
+        "webkit-hissan-ready-1024x640.png",
+        "webkit-hissan-hint.png",
+        "webkit-hissan-answered.png",
+        "webkit-hissan-model.png",
+        "webkit-hissan-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 210.1875,
+            "y": 243.5,
+            "width": 152,
+            "height": 198,
+            "top": 243.5,
+            "right": 362.1875,
+            "bottom": 441.5,
+            "left": 210.1875
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 413,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 531,
+            "left": 37
+          },
+          "prompt": {
+            "x": 210.1875,
+            "y": 225.5,
+            "width": 152,
+            "height": 198,
+            "top": 225.5,
+            "right": 362.1875,
+            "bottom": 423.5,
+            "left": 210.1875
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 531,
+            "width": 498.375,
+            "height": 32,
+            "top": 531,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 210.1875,
+            "y": 243.5,
+            "width": 152,
+            "height": 198,
+            "top": 243.5,
+            "right": 362.1875,
+            "bottom": 441.5,
+            "left": 210.1875
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 210.1875,
+            "y": 243.5,
+            "width": 152,
+            "height": 198,
+            "top": 243.5,
+            "right": 362.1875,
+            "bottom": 441.5,
+            "left": 210.1875
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "webkit-multiply",
+      "captures": [
+        "webkit-multiply-ready-1024x640.png",
+        "webkit-multiply-hint.png",
+        "webkit-multiply-answered.png",
+        "webkit-multiply-model.png",
+        "webkit-multiply-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 81.1875,
+            "y": 230,
+            "width": 410,
+            "height": 225,
+            "top": 230,
+            "right": 491.1875,
+            "bottom": 455,
+            "left": 81.1875
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 413,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 531,
+            "left": 37
+          },
+          "prompt": {
+            "x": 81.1875,
+            "y": 212,
+            "width": 410,
+            "height": 225,
+            "top": 212,
+            "right": 491.1875,
+            "bottom": 437,
+            "left": 81.1875
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 531,
+            "width": 498.375,
+            "height": 32,
+            "top": 531,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 81.1875,
+            "y": 230,
+            "width": 410,
+            "height": 225,
+            "top": 230,
+            "right": 491.1875,
+            "bottom": 455,
+            "left": 81.1875
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 81.1875,
+            "y": 230,
+            "width": 410,
+            "height": 225,
+            "top": 230,
+            "right": 491.1875,
+            "bottom": 455,
+            "left": 81.1875
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "webkit-divide",
+      "captures": [
+        "webkit-divide-ready-1024x640.png",
+        "webkit-divide-hint.png",
+        "webkit-divide-answered.png",
+        "webkit-divide-model.png",
+        "webkit-divide-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 81.1875,
+            "y": 245.5,
+            "width": 410,
+            "height": 194,
+            "top": 245.5,
+            "right": 491.1875,
+            "bottom": 439.5,
+            "left": 81.1875
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 413,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 531,
+            "left": 37
+          },
+          "prompt": {
+            "x": 81.1875,
+            "y": 227.5,
+            "width": 410,
+            "height": 194,
+            "top": 227.5,
+            "right": 491.1875,
+            "bottom": 421.5,
+            "left": 81.1875
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 531,
+            "width": 498.375,
+            "height": 32,
+            "top": 531,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 413,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 531,
+            "left": 37
+          },
+          "prompt": {
+            "x": 81.1875,
+            "y": 209.5,
+            "width": 410,
+            "height": 230,
+            "top": 209.5,
+            "right": 491.1875,
+            "bottom": 439.5,
+            "left": 81.1875
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 531,
+            "width": 498.375,
+            "height": 32,
+            "top": 531,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 314,
+            "width": 490.375,
+            "height": 57,
+            "top": 314,
+            "right": 531.375,
+            "bottom": 371,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "webkit-choice",
+      "captures": [
+        "webkit-choice-ready-1024x640.png",
+        "webkit-choice-hint.png",
+        "webkit-choice-answered.png",
+        "webkit-choice-model.png",
+        "webkit-choice-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 238,
+            "width": 490.375,
+            "height": 209,
+            "top": 238,
+            "right": 531.375,
+            "bottom": 447,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 413,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 531,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 220,
+            "width": 490.375,
+            "height": 209,
+            "top": 220,
+            "right": 531.375,
+            "bottom": 429,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 531,
+            "width": 498.375,
+            "height": 32,
+            "top": 531,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 272.5,
+            "width": 490.375,
+            "height": 140,
+            "top": 272.5,
+            "right": 531.375,
+            "bottom": 412.5,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 275,
+            "width": 490.375,
+            "height": 135,
+            "top": 275,
+            "right": 531.375,
+            "bottom": 410,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "webkit-vocab",
+      "captures": [
+        "webkit-vocab-ready-1024x640.png",
+        "webkit-vocab-hint.png",
+        "webkit-vocab-answered.png",
+        "webkit-vocab-model.png",
+        "webkit-vocab-continued.png"
+      ],
+      "geometry": [
+        {
+          "state": "ready-1024x640",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 287,
+            "width": 490.375,
+            "height": 111,
+            "top": 287,
+            "right": 531.375,
+            "bottom": 398,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "hint",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 413,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 531,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 269,
+            "width": 490.375,
+            "height": 111,
+            "top": 269,
+            "right": 531.375,
+            "bottom": 380,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 531,
+            "width": 498.375,
+            "height": 32,
+            "top": 531,
+            "right": 535.375,
+            "bottom": 563,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "answered",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 287,
+            "width": 490.375,
+            "height": 111,
+            "top": 287,
+            "right": 531.375,
+            "bottom": 398,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "model",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "prompt": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "questionOverflow": 0,
+          "support": {
+            "x": 37,
+            "y": 118,
+            "width": 949.984375,
+            "height": 435,
+            "top": 118,
+            "right": 986.984375,
+            "bottom": 553,
+            "left": 37
+          },
+          "actions": {
+            "x": 37,
+            "y": 560,
+            "width": 950,
+            "height": 54,
+            "top": 560,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        },
+        {
+          "state": "continued",
+          "viewport": {
+            "width": 1024,
+            "height": 640
+          },
+          "pageHeight": 640,
+          "contentHeight": 640,
+          "scrollTop": 0,
+          "width": 1024,
+          "contentWidth": 1024,
+          "question": {
+            "x": 37,
+            "y": 118,
+            "width": 498.375,
+            "height": 449,
+            "top": 118,
+            "right": 535.375,
+            "bottom": 567,
+            "left": 37
+          },
+          "prompt": {
+            "x": 41,
+            "y": 287,
+            "width": 490.375,
+            "height": 111,
+            "top": 287,
+            "right": 531.375,
+            "bottom": 398,
+            "left": 41
+          },
+          "questionOverflow": 0,
+          "actions": {
+            "x": 37,
+            "y": 570,
+            "width": 950,
+            "height": 44,
+            "top": 570,
+            "right": 987,
+            "bottom": 614,
+            "left": 37
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    }
+  ],
+  "pass": true,
+  "scope": "Disposable native profile/memory fixtures, real planner and input. Chromium/WebKit viewport checks are not physical iPad Safari or installed-PWA verification.",
+  "manifest": {
+    "version": "development-local:a07bca9a-ac1f-42e9-926e-5400b5a2900a",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "legacy"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "completedAt": "2026-09-08T11:54:32.524Z"
+}

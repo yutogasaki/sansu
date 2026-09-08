@@ -47,8 +47,8 @@ async function verifyOwnedLoop(page, profileId, state, samples, touch, prefix) {
     assert.equal(state.island.completedSets, firstCompleted + 1);
     assert.equal(state.island.growth.expansionLevel, 0);
     assert.equal(state.island.items.length, 3);
-    await page.locator('[data-renderer="three"][data-expanded="false"]').waitFor();
     await activate(button(page, 'しまへ'), touch); await waitMode(page, 'home');
+    await page.locator('[data-renderer="three"][data-expanded="false"]').waitFor();
     await capture(page, `${prefix}-second-section-growing`);
     const bench = state.island.items.find(item => item.id === 'living-bench');
     assert(bench?.position, 'A usable bench is placed automatically');
@@ -77,6 +77,10 @@ async function verifyOwnedLoop(page, profileId, state, samples, touch, prefix) {
     await activate(button(page, 'いまは しまっておく'), touch); await waitMode(page, 'home');
     await activate(page.locator('.island-start'), touch); await waitMode(page, 'learning');
     state = await finishSet(page, profileId, samples, touch);
+    for (let extra = 0; state.island.items.find(item => item.id === bench.id).growthLevel < 2; extra++) {
+        assert(extra < 6, 'Normal answers reach the second appearance');
+        state = await finishSet(page, profileId, samples, touch);
+    }
     const stored = state.island.items.find(item => item.id === bench.id);
     assert.equal(stored.position, undefined, 'A further upgrade honors deliberate storage');
     assert.equal(stored.appearanceLevel, 0, 'A further upgrade honors the chosen appearance');
@@ -120,17 +124,22 @@ try {
                 return true;
             });
             assert(lost, 'Test browser must support actual WebGL context-loss simulation');
-            await button(page, 'もういちど みる').waitFor();
+            // The learning layout intentionally hides the whole world, including
+            // its recovery control. Context loss must never cover the answer UI.
+            await page.locator('.island-stage__retry').waitFor({ state: 'attached' });
             await capture(page, 'renderer-context-loss-learning');
             const during = await answerUI(page, before.plan);
             assert.equal(during.state.plan.cursor, before.plan.cursor + 1, 'Fallback keeps learning operational');
+            await button(page, 'しまへ').click(); await waitMode(page, 'home');
             await button(page, 'もういちど みる').click();
             await waitReady(page);
+            await page.locator('.island-start').click(); await waitMode(page, 'learning');
+            assert.deepEqual((await readNative(page, id)).plan, during.state.plan, 'World recovery preserves the identical learning reservation');
             const recovered = await answerUI(page, during.state.plan);
             assert.equal(recovered.state.plan.cursor, during.state.plan.cursor + 1);
             await capture(page, 'renderer-recovered-learning');
             report.scenarios.push({ name: 'renderer-recovery', ...(await runtimeMetadata(page)), passed: true,
-                evidenceScope: 'Actual WebGL context loss shows retry; an answer persists during fallback and another after Three recovery.' });
+                evidenceScope: 'Actual WebGL context loss keeps learning usable while the world stays hidden; an answer persists during fallback, then visible home retry restores Three and the identical reservation accepts another answer.' });
             console.log('PASS actual WebGL loss, learning in fallback, Three retry and subsequent answer');
         } finally { await context.close(); }
     }

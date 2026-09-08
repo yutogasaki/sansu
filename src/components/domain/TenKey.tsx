@@ -2,6 +2,8 @@ import React from "react";
 import { Button } from "../ui/Button";
 import { Icons } from "../icons";
 import { cn } from "../../utils/cn";
+import { acknowledgeAnswerConfirmation, useAnswerConfirmationDemonstrated } from './answerConfirmGuidance';
+import './TenKey.css';
 
 interface TenKeyProps {
     onInput: (val: number | string) => void;
@@ -16,6 +18,8 @@ interface TenKeyProps {
     className?: string;
     minRowHeight?: number;
     enterLabel?: string;
+    confirmationMode?: 'automatic' | 'manual';
+    writtenInput?: boolean;
 }
 
 export const TenKey: React.FC<TenKeyProps> = ({
@@ -31,7 +35,11 @@ export const TenKey: React.FC<TenKeyProps> = ({
     className,
     minRowHeight,
     enterLabel = 'こたえる',
+    confirmationMode,
+    writtenInput = false,
 }) => {
+    const confirmationDemonstrated = useAnswerConfirmationDemonstrated();
+    const confirmReady = confirmationMode === 'manual' && !disabled && !enterDisabled;
     const baseBtnClass = cn(
         "h-full w-full border border-white/75 bg-white/72 font-bold text-slate-700 shadow-[0_14px_24px_-20px_rgba(15,23,42,0.32)] transition-all active:scale-95 hover:bg-white/84",
         compact ? "text-lg rounded-xl mobile:text-sm" : "text-2xl rounded-2xl land:text-xl mobile:text-base"
@@ -94,7 +102,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
             )}
 
             {/* Row 4 */}
-            {onCursorMove ? (
+            {onCursorMove && !writtenInput ? (
                 <>
                     <Button
                         disabled={disabled}
@@ -125,12 +133,19 @@ export const TenKey: React.FC<TenKeyProps> = ({
             )}
 
             {/* Enter Key */}
-            <Button
+            {writtenInput && confirmationMode === 'automatic' ? <div aria-hidden="true" data-written-auto-confirm /> : <Button
                 disabled={disabled || enterDisabled}
                 aria-label={enterLabel}
                 data-keypad-submit
-                onClick={onEnter}
+                data-confirmation-mode={confirmationMode}
+                data-confirmation-state={confirmationMode ? confirmReady ? 'ready' : 'idle' : undefined}
+                data-confirmation-cue={confirmReady && !confirmationDemonstrated ? 'intro' : undefined}
+                onClick={() => {
+                    if (confirmationMode === 'manual') acknowledgeAnswerConfirmation();
+                    onEnter();
+                }}
                 className={cn(
+                    "answer-confirm-key",
                     "flex h-full w-full flex-col items-center justify-center border border-cyan-200/80 bg-[linear-gradient(135deg,#2BBAA0,#5DC4D2)] text-white shadow-[0_18px_34px_-22px_rgba(34,197,214,0.62)] transition-all active:scale-95 hover:brightness-[1.03] mobile:text-base",
                     compact ? "rounded-xl" : "rounded-2xl"
                 )}
@@ -138,7 +153,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
             >
                 <Icons.Check className={enterIconClass} strokeWidth={3} />
                 {enterLabel !== 'こたえる' && <span className="text-[10px] leading-none">つぎへ</span>}
-            </Button>
+            </Button>}
         </div>
     );
 };

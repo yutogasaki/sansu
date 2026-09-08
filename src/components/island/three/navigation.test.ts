@@ -18,6 +18,21 @@ function inspectPath(route: ResidentRoute | undefined, target: IslandStageItem, 
 }
 
 describe('island resident physical routes', () => {
+    it('routes around actual display footprints and rejects blocked or invalid extra obstacles', () => {
+        const obstacle = { x: 0, z: 1.5, radius: .72 }, from = { x: -2, z: 1.5 }, to = { x: 2, z: 1.5 };
+        const route = planResidentPointRoute(from, to, [], 0, { obstacles: [obstacle] });
+        expect(route).toBeDefined();
+        for (let i = 1; i < route!.points.length; i++) {
+            const a = route!.points[i - 1], b = route!.points[i];
+            for (let step = 0; step <= 100; step++) {
+                const point = { x: a.x + (b.x - a.x) * step / 100, z: a.z + (b.z - a.z) * step / 100 };
+                expect(residentPointIsClear(point, 0, [...residentObstacles([], ''), obstacle])).toBe(true);
+            }
+        }
+        expect(planResidentPointRoute(from, obstacle, [], 0, { obstacles: [obstacle] })).toBeUndefined();
+        expect(planResidentPointRoute(from, to, [], 0, { obstacles: [{ ...obstacle, radius: -1 }] })).toBeUndefined();
+        expect(planResidentPointRoute(from, to, [], 0, { obstacles: [{ ...obstacle, x: NaN }] })).toBeUndefined();
+    });
     it('routes around the full body of a stationary resident instead of crossing it', () => {
         const target = bench(1.75, 1.5), occupied = [{ x: 0, z: 1.5 }];
         const route = planResidentRoute({ x: -2, z: 1.5 }, target, [target], 0, undefined, { occupied });

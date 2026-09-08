@@ -8,7 +8,6 @@ import {
     markAppUpdateInteraction,
     shouldDeferAppUpdate,
     shouldDeferAppUpdateForState,
-    shouldResetAppCache,
     stripReloadMarker,
 } from './pwaUpdateUtils'
 
@@ -28,13 +27,6 @@ describe('pwaUpdateUtils', () => {
         )
 
         expect(url).toBe('https://example.com/study?mode=math#question-3')
-    })
-
-    it('matches only app-managed cache names for reset', () => {
-        expect(shouldResetAppCache('workbox-precache-v2')).toBe(true)
-        expect(shouldResetAppCache('google-fonts-cache')).toBe(true)
-        expect(shouldResetAppCache('gstatic-fonts-cache')).toBe(true)
-        expect(shouldResetAppCache('user-generated-assets')).toBe(false)
     })
 
     it.each([

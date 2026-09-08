@@ -1,8 +1,22 @@
 import { describe, expect, it } from 'vitest';
 import { createIsland } from '../../domain/island/catalog';
 import { islandCompletionExpansion, islandExpansionPreview } from './islandExpansionPreview';
+import type { IslandPlan } from '../../domain/island/types';
 
 describe('completion earns the next island expansion', () => {
+    it('waits until the reserved short section can actually finish the final growth mark', () => {
+        const island = createIsland('p', 0);
+        island.growth!.progress.garden = 5;
+        island.growth!.pendingAnswers = { garden: 12, waterside: 0, grove: 0, village: 0 };
+        const plan = { status: 'active', growthTarget: 'garden', rewardPacing: 'answers-v1', slots: Array(3).fill({}) } as IslandPlan;
+        expect(islandExpansionPreview(island, plan)).toBeUndefined();
+        island.growth!.pendingAnswers.garden = 15;
+        expect(islandExpansionPreview(island, plan)).toBe('east');
+        island.growth!.pendingAnswers.garden = 0;
+        delete plan.rewardPacing;
+        expect(islandExpansionPreview(island, plan)).toBe('east');
+    });
+
     it('offers the first expansion through either initially available place, not a locked place', () => {
         const island = createIsland('p', 0);
         expect(islandCompletionExpansion(island, 'garden')).toBe('east');

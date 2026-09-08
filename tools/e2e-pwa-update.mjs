@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const HOST = "127.0.0.1";
 const PORT_CANDIDATES = [4273, 4274, 4275];
-const APP_TITLE_MARKER = "<title>ぽこもこ</title>";
+const APP_TITLE_MARKER = "<title>ぽこもこと不思議な島</title>";
 const SERVER_TIMEOUT_MS = 30_000;
 const STEP_TIMEOUT_MS = 15_000;
 const RECOVERY_PROTECTION_WAIT_MS = 4_500;

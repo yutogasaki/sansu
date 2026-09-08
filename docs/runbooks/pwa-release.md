@@ -36,7 +36,8 @@
 - `index.html`, `manifest.json`, and `sw.js` are not strongly cached on supported hosts
 - `updateViaCache: 'none'` behavior is still intact
 - 表示中は最大60秒間隔で確認し、起動・復帰・再接続・フォーカス・pageshow・SPA内の画面遷移でも確認する
-- App still reloads after version drift or service worker activation
+- SW更新通信と版確認は独立し、版確認/復旧用HTMLの取得は本文を含め10秒で打ち切る。SWのactivatedだけで先走らず、controlling後に一度だけreloadする。
+- 版差の復旧はオンライン/表示/保存保護をHTML取得の前後で確認する。`__app-update`付きURLをnavigation fallbackから除外して最新HTMLを取得し、登録解除やcache削除は行わない。失敗時は次の復帰/再接続/定期確認で再試行する。同じ版への復旧はsessionStorageでタブ内1回に制限する（storage利用不可時は通常確認を継続）。
 - `/onboarding`、`/study`、`/explore`、`/battle/play` は、子どもがまだpointer/key操作をしていない初回表示ではversion driftのreloadを許可し、操作後の同一セッションだけを保護する
 - Studyの回答/テスト保存、Exploreのrun開始/回答/帰還保存が進行中は、route遷移後もreloadを待機し、全critical persistence解放後にだけ再開する
 - React RouterのSPA遷移をnative `hashchange` に依存せず観測し、保護対象画面から離れると延期中の更新を一度だけ適用する。別の保護対象画面へ移った場合も最初の操作前に更新できる
@@ -59,6 +60,8 @@
 9. Scenario D（fresh old build → new build for each case）: verify same-route checkpoints independently at Explore replay, Battle cancel/replay, and Study persisted break/continue. Confirm the result/reward/break remains visible, no reload happens before persistence or the child's next action, and exactly one reload follows that action.
 10. Run `npm run e2e:pwa-update`; confirm a real `version.json` drift causes exactly one reload, and that safe/protected Router handoffs, delayed recovery, and the same-route Battle checkpoint pass without `hashchange` or duplicate reloads.
 11. On iOS, repeat relaunch/update timing because activation can lag behind Chromium.
+
+ローカル二build回帰は `npm run e2e:pwa-two-build`（`verify:release`にも含む）。既定はclassic flagで2回buildし、`output/pwa-two-build-*`へ保存する。固定buildを使う場合は `SANSU_PWA_OLD_DIR=<旧build> SANSU_PWA_NEW_DIR=<新build>` を両方指定する。同じsourceでも別buildのversionを用い、実SW更新と、SW配信停止/ネットワーク復旧を分けて確認する。実装根拠: [Workbox lifecycle](https://developer.chrome.com/docs/workbox/modules/workbox-window)、[navigation fallback](https://developer.chrome.com/docs/workbox/modules/workbox-build#type-GenerateSWOptions)。
 
 実際の公開二ビルド監査には、公開前に `SANSU_PARK_LIVE_URL=https://sansu-seven.vercel.app node tools/e2e-park-live-update.mjs` を起動する。専用ブラウザのテストプロフィールで旧版をSW制御下・offlineに保持し、公開後に新しい40桁のGit SHAを標準入力へ渡す。オンライン復帰による自動更新、保護中フォーム、1回のreload、IndexedDB/localStorage保持、公開Three.jsを確認する。実機検証とは区別する。
 

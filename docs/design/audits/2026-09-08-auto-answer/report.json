@@ -1,0 +1,860 @@
+{
+  "target": "http://127.0.0.1:5316",
+  "startedAt": "2026-09-08T10:16:05.895Z",
+  "scenarios": [
+    {
+      "name": "390-sub_tiny-single",
+      "skill": "sub_tiny",
+      "type": "number",
+      "kind": "single",
+      "captures": [
+        "390-sub_tiny-single-empty.png",
+        "390-sub_tiny-single-incorrect.png",
+        "390-sub_tiny-single-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 69,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      },
+      "logs": [
+        {
+          "profileId": "67304c81-5820-4918-97b2-191ba15f5db4",
+          "subject": "math",
+          "itemId": "sub_tiny",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-08T10:16:08.255Z",
+          "learningEvidence": {
+            "completion": "whole-problem",
+            "assistance": "independent",
+            "problem": {
+              "catalogVersion": "curriculum-v1",
+              "subject": "math",
+              "itemId": "sub_tiny",
+              "unitId": "math.remove-small",
+              "representation": "concrete",
+              "inputType": "number",
+              "variant": "default",
+              "problemKey": "{\"answer\":\"1\",\"inputType\":\"number\",\"item\":\"sub_tiny\",\"question\":\"なし 2こ あります\\n1こ なくなると いくつ？\",\"visual\":{\"actionLabel\":\"なくなる\",\"group\":{\"count\":2,\"crossedOutCount\":1,\"emoji\":\"🍐\",\"label\":\"なし\"},\"kind\":\"subtraction-items\",\"prompt\":\"のこりは いくつ？\",\"takenAwayCount\":1}}"
+            }
+          },
+          "id": 1
+        },
+        {
+          "profileId": "67304c81-5820-4918-97b2-191ba15f5db4",
+          "subject": "math",
+          "itemId": "sub_tiny",
+          "result": "correct",
+          "isReview": true,
+          "timestamp": "2026-09-08T10:16:08.509Z",
+          "learningEvidence": {
+            "completion": "whole-problem",
+            "assistance": "assisted",
+            "problem": {
+              "catalogVersion": "curriculum-v1",
+              "subject": "math",
+              "itemId": "sub_tiny",
+              "unitId": "math.remove-small",
+              "representation": "concrete",
+              "inputType": "number",
+              "variant": "default",
+              "problemKey": "{\"answer\":\"1\",\"inputType\":\"number\",\"item\":\"sub_tiny\",\"question\":\"なし 2こ あります\\n1こ なくなると いくつ？\",\"visual\":{\"actionLabel\":\"なくなる\",\"group\":{\"count\":2,\"crossedOutCount\":1,\"emoji\":\"🍐\",\"label\":\"なし\"},\"kind\":\"subtraction-items\",\"prompt\":\"のこりは いくつ？\",\"takenAwayCount\":1}}"
+            }
+          },
+          "id": 2
+        }
+      ]
+    },
+    {
+      "name": "390-sub_tiny-save-retry",
+      "skill": "sub_tiny",
+      "type": "number",
+      "kind": "save-retry",
+      "captures": [
+        "390-sub_tiny-save-retry-empty.png",
+        "390-sub_tiny-save-retry-retained-draft.png",
+        "390-sub_tiny-save-retry-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 69,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "name": "390-add_2d1d_nc-manual",
+      "skill": "add_2d1d_nc",
+      "type": "number",
+      "kind": "manual",
+      "captures": [
+        "390-add_2d1d_nc-manual-home.png",
+        "390-add_2d1d_nc-manual-empty.png",
+        "390-add_2d1d_nc-manual-confirm-needed.png",
+        "390-add_2d1d_nc-manual-reduced-motion.png",
+        "390-add_2d1d_nc-manual-learned-static.png",
+        "390-add_2d1d_nc-manual-reopened-static.png",
+        "390-add_2d1d_nc-manual-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 69,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      },
+      "readyStyle": {
+        "background": "rgb(245, 205, 101)",
+        "border": "2px",
+        "ring": "answer-confirm-ring",
+        "iterations": "2"
+      }
+    },
+    {
+      "name": "390-dec_add-decimal",
+      "skill": "dec_add",
+      "type": "number",
+      "kind": "decimal",
+      "captures": [
+        "390-dec_add-decimal-empty.png",
+        "390-dec_add-decimal-confirm-needed.png",
+        "390-dec_add-decimal-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 69,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      },
+      "readyStyle": {
+        "background": "rgb(254, 246, 227)",
+        "border": "2px",
+        "ring": "answer-confirm-ring",
+        "iterations": "2"
+      }
+    },
+    {
+      "name": "390-frac_add_same-fraction",
+      "skill": "frac_add_same",
+      "type": "multi-number",
+      "kind": "fraction",
+      "captures": [
+        "390-frac_add_same-fraction-empty.png",
+        "390-frac_add_same-fraction-confirm-needed.png",
+        "390-frac_add_same-fraction-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 62,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      },
+      "readyStyle": {
+        "background": "rgb(255, 250, 240)",
+        "border": "2px",
+        "ring": "answer-confirm-ring",
+        "iterations": "2"
+      }
+    },
+    {
+      "name": "390-add_2d2d_c-written",
+      "skill": "add_2d2d_c",
+      "type": "hissan",
+      "kind": "written",
+      "captures": [
+        "390-add_2d2d_c-written-empty.png",
+        "390-add_2d2d_c-written-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 62,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      },
+      "steps": 1
+    },
+    {
+      "name": "390-mul_2d1d-written",
+      "skill": "mul_2d1d",
+      "type": "hissan",
+      "kind": "written",
+      "captures": [
+        "390-mul_2d1d-written-empty.png",
+        "390-mul_2d1d-written-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 62,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      },
+      "steps": 1
+    },
+    {
+      "name": "390-div_2d1d_exact-written",
+      "skill": "div_2d1d_exact",
+      "type": "hissan",
+      "kind": "written",
+      "captures": [
+        "390-div_2d1d_exact-written-empty.png",
+        "390-div_2d1d_exact-written-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 62,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      },
+      "steps": 3
+    },
+    {
+      "name": "768-sub_tiny-single",
+      "skill": "sub_tiny",
+      "type": "number",
+      "kind": "single",
+      "captures": [
+        "768-sub_tiny-single-empty.png",
+        "768-sub_tiny-single-incorrect.png",
+        "768-sub_tiny-single-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 62,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      },
+      "logs": [
+        {
+          "profileId": "e4a8faa0-3f95-4482-b59f-592ce2f3219b",
+          "subject": "math",
+          "itemId": "sub_tiny",
+          "result": "incorrect",
+          "isReview": true,
+          "timestamp": "2026-09-08T10:16:30.032Z",
+          "learningEvidence": {
+            "completion": "whole-problem",
+            "assistance": "independent",
+            "problem": {
+              "catalogVersion": "curriculum-v1",
+              "subject": "math",
+              "itemId": "sub_tiny",
+              "unitId": "math.remove-small",
+              "representation": "concrete",
+              "inputType": "number",
+              "variant": "default",
+              "problemKey": "{\"answer\":\"1\",\"inputType\":\"number\",\"item\":\"sub_tiny\",\"question\":\"いちご 2こ あります\\n1こ なくなると いくつ？\",\"visual\":{\"actionLabel\":\"なくなる\",\"group\":{\"count\":2,\"crossedOutCount\":1,\"emoji\":\"🍓\",\"label\":\"いちご\"},\"kind\":\"subtraction-items\",\"prompt\":\"のこりは いくつ？\",\"takenAwayCount\":1}}"
+            }
+          },
+          "id": 1
+        },
+        {
+          "profileId": "e4a8faa0-3f95-4482-b59f-592ce2f3219b",
+          "subject": "math",
+          "itemId": "sub_tiny",
+          "result": "correct",
+          "isReview": true,
+          "timestamp": "2026-09-08T10:16:30.379Z",
+          "learningEvidence": {
+            "completion": "whole-problem",
+            "assistance": "assisted",
+            "problem": {
+              "catalogVersion": "curriculum-v1",
+              "subject": "math",
+              "itemId": "sub_tiny",
+              "unitId": "math.remove-small",
+              "representation": "concrete",
+              "inputType": "number",
+              "variant": "default",
+              "problemKey": "{\"answer\":\"1\",\"inputType\":\"number\",\"item\":\"sub_tiny\",\"question\":\"いちご 2こ あります\\n1こ なくなると いくつ？\",\"visual\":{\"actionLabel\":\"なくなる\",\"group\":{\"count\":2,\"crossedOutCount\":1,\"emoji\":\"🍓\",\"label\":\"いちご\"},\"kind\":\"subtraction-items\",\"prompt\":\"のこりは いくつ？\",\"takenAwayCount\":1}}"
+            }
+          },
+          "id": 2
+        }
+      ]
+    },
+    {
+      "name": "768-sub_tiny-save-retry",
+      "skill": "sub_tiny",
+      "type": "number",
+      "kind": "save-retry",
+      "captures": [
+        "768-sub_tiny-save-retry-empty.png",
+        "768-sub_tiny-save-retry-retained-draft.png",
+        "768-sub_tiny-save-retry-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 62,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "name": "768-add_2d1d_nc-manual",
+      "skill": "add_2d1d_nc",
+      "type": "number",
+      "kind": "manual",
+      "captures": [
+        "768-add_2d1d_nc-manual-home.png",
+        "768-add_2d1d_nc-manual-empty.png",
+        "768-add_2d1d_nc-manual-confirm-needed.png",
+        "768-add_2d1d_nc-manual-reduced-motion.png",
+        "768-add_2d1d_nc-manual-learned-static.png",
+        "768-add_2d1d_nc-manual-reopened-static.png",
+        "768-add_2d1d_nc-manual-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 62,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      },
+      "readyStyle": {
+        "background": "rgb(252, 235, 194)",
+        "border": "2px",
+        "ring": "answer-confirm-ring",
+        "iterations": "2"
+      }
+    },
+    {
+      "name": "768-dec_add-decimal",
+      "skill": "dec_add",
+      "type": "number",
+      "kind": "decimal",
+      "captures": [
+        "768-dec_add-decimal-empty.png",
+        "768-dec_add-decimal-confirm-needed.png",
+        "768-dec_add-decimal-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 62,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      },
+      "readyStyle": {
+        "background": "rgb(255, 250, 240)",
+        "border": "2px",
+        "ring": "answer-confirm-ring",
+        "iterations": "2"
+      }
+    },
+    {
+      "name": "768-frac_add_same-fraction",
+      "skill": "frac_add_same",
+      "type": "multi-number",
+      "kind": "fraction",
+      "captures": [
+        "768-frac_add_same-fraction-empty.png",
+        "768-frac_add_same-fraction-confirm-needed.png",
+        "768-frac_add_same-fraction-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 62,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      },
+      "readyStyle": {
+        "background": "rgb(252, 237, 198)",
+        "border": "2px",
+        "ring": "answer-confirm-ring",
+        "iterations": "2"
+      }
+    },
+    {
+      "name": "768-add_2d2d_c-written",
+      "skill": "add_2d2d_c",
+      "type": "hissan",
+      "kind": "written",
+      "captures": [
+        "768-add_2d2d_c-written-empty.png",
+        "768-add_2d2d_c-written-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 62,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      },
+      "steps": 1
+    },
+    {
+      "name": "768-mul_2d1d-written",
+      "skill": "mul_2d1d",
+      "type": "hissan",
+      "kind": "written",
+      "captures": [
+        "768-mul_2d1d-written-empty.png",
+        "768-mul_2d1d-written-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 62,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      },
+      "steps": 1
+    },
+    {
+      "name": "768-div_2d1d_exact-written",
+      "skill": "div_2d1d_exact",
+      "type": "hissan",
+      "kind": "written",
+      "captures": [
+        "768-div_2d1d_exact-written-empty.png",
+        "768-div_2d1d_exact-written-next-question.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "auto-answer-local-20260908-r3",
+        "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 62,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      },
+      "steps": 3
+    },
+    {
+      "name": "study-390-single",
+      "skill": "sub_tiny",
+      "type": "number",
+      "kind": "single",
+      "captures": [
+        "study-390-single-empty.png",
+        "study-390-single-saved.png"
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "name": "study-390-wrong",
+      "skill": "sub_tiny",
+      "type": "number",
+      "kind": "wrong",
+      "captures": [
+        "study-390-wrong-empty.png",
+        "study-390-wrong-saved.png"
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "name": "study-390-manual",
+      "skill": "add_2d1d_nc",
+      "type": "number",
+      "kind": "manual",
+      "captures": [
+        "study-390-manual-empty.png",
+        "study-390-manual-confirm-needed.png",
+        "study-390-manual-saved.png"
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "name": "study-390-written",
+      "skill": "add_2d2d_nc",
+      "type": "hissan",
+      "kind": "written",
+      "captures": [
+        "study-390-written-empty.png",
+        "study-390-written-saved.png"
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "name": "study-768-single",
+      "skill": "sub_tiny",
+      "type": "number",
+      "kind": "single",
+      "captures": [
+        "study-768-single-empty.png",
+        "study-768-single-saved.png"
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "name": "study-768-wrong",
+      "skill": "sub_tiny",
+      "type": "number",
+      "kind": "wrong",
+      "captures": [
+        "study-768-wrong-empty.png",
+        "study-768-wrong-saved.png"
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "name": "study-768-manual",
+      "skill": "add_2d1d_nc",
+      "type": "number",
+      "kind": "manual",
+      "captures": [
+        "study-768-manual-empty.png",
+        "study-768-manual-confirm-needed.png",
+        "study-768-manual-saved.png"
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "name": "study-768-written",
+      "skill": "add_2d2d_nc",
+      "type": "hissan",
+      "kind": "written",
+      "captures": [
+        "study-768-written-empty.png",
+        "study-768-written-saved.png"
+      ],
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "scope": "Production preview, disposable native profile/memory fixtures, actual planner/input/writer. Synthetic same-task bursts and native transaction abort are explicit diagnostics. Author layout checks do not prove child comprehension.",
+  "sourceStart": [
+    {
+      "file": "src/domain/math/answerCompletion.ts",
+      "sha256": "34a677eb3e02bcb860e9590396e302a5d825aa5242035f397128326a884d2397"
+    },
+    {
+      "file": "src/components/domain/LearningAnswerForm.tsx",
+      "sha256": "923b83f0b497f79ab605b770ad8a7ee120cd6c96212d95b3788a2563fd7dbf50"
+    },
+    {
+      "file": "src/components/domain/TenKey.tsx",
+      "sha256": "187b9446b16f64c7795385e882ddc77e3c47edc4fc2a9b276007b0c97e59dbdb"
+    },
+    {
+      "file": "src/components/domain/TenKey.css",
+      "sha256": "11df484a33edc885db89399a75856a32fd44fa90873e82e23b3feeb91deffd57"
+    },
+    {
+      "file": "src/components/domain/answerConfirmGuidance.ts",
+      "sha256": "17e1780107335b6d8c27cd2bb91108e3d6d359b1dceef7e67fa9692dd6eeebfe"
+    },
+    {
+      "file": "src/pages/Study.tsx",
+      "sha256": "792e49e8580f38193872d46e14ac85fed13a84d0acd941482335b196f5a89f8a"
+    },
+    {
+      "file": "src/pages/StudyLayout.tsx",
+      "sha256": "ed0c047c284d9e0218956e57f51f5bde172b1bd6f8fd1252d50dee073d616bfe"
+    },
+    {
+      "file": "src/hooks/useHissanSession.ts",
+      "sha256": "9911e0ff1347adfa9064649d2f8626e5908a8ece89942d9db6b00ca6682e3f25"
+    }
+  ],
+  "manifest": {
+    "version": "auto-answer-local-20260908-r3:0d7a808c-0c5e-44e4-b73e-10f17a9c631b",
+    "revision": "auto-answer-local-20260908-r3",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "legacy"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceEnd": [
+    {
+      "file": "src/domain/math/answerCompletion.ts",
+      "sha256": "34a677eb3e02bcb860e9590396e302a5d825aa5242035f397128326a884d2397"
+    },
+    {
+      "file": "src/components/domain/LearningAnswerForm.tsx",
+      "sha256": "923b83f0b497f79ab605b770ad8a7ee120cd6c96212d95b3788a2563fd7dbf50"
+    },
+    {
+      "file": "src/components/domain/TenKey.tsx",
+      "sha256": "187b9446b16f64c7795385e882ddc77e3c47edc4fc2a9b276007b0c97e59dbdb"
+    },
+    {
+      "file": "src/components/domain/TenKey.css",
+      "sha256": "11df484a33edc885db89399a75856a32fd44fa90873e82e23b3feeb91deffd57"
+    },
+    {
+      "file": "src/components/domain/answerConfirmGuidance.ts",
+      "sha256": "17e1780107335b6d8c27cd2bb91108e3d6d359b1dceef7e67fa9692dd6eeebfe"
+    },
+    {
+      "file": "src/pages/Study.tsx",
+      "sha256": "792e49e8580f38193872d46e14ac85fed13a84d0acd941482335b196f5a89f8a"
+    },
+    {
+      "file": "src/pages/StudyLayout.tsx",
+      "sha256": "ed0c047c284d9e0218956e57f51f5bde172b1bd6f8fd1252d50dee073d616bfe"
+    },
+    {
+      "file": "src/hooks/useHissanSession.ts",
+      "sha256": "9911e0ff1347adfa9064649d2f8626e5908a8ece89942d9db6b00ca6682e3f25"
+    }
+  ]
+}

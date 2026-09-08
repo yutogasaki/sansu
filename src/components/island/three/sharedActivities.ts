@@ -1,5 +1,6 @@
 import type { IslandLandAccess } from '../../../domain/island/catalog';
 import { ISLAND_ITEMS } from '../../../domain/island/catalog';
+import { islandSharingPairs as matchingPairs, type IslandSharingPair as ActivityPair } from '../../../domain/island/sharedSettings';
 import { planResidentPointRoute, planResidentRoute, type GroundPoint, type ResidentRoute } from './navigation';
 import type { IslandStageItem } from './types';
 
@@ -34,42 +35,8 @@ export interface SharedActivityReplayPreference {
     carrier: number;
 }
 
-interface ActivityPair {
-    kind: SharedActivityKind;
-    source: IslandStageItem & { position: GroundPoint };
-    seat: IslandStageItem & { position: GroundPoint };
-    distance: number;
-}
-const COMBINATIONS = [
-    { kind: 'flower', source: 'flower', seat: 'bench' },
-    { kind: 'star', source: 'lantern', seat: 'mushroom' },
-    { kind: 'bubble', source: 'fountain', seat: 'swing' },
-] as const;
 const distance = (a: GroundPoint, b: GroundPoint) => Math.hypot(a.x - b.x, a.z - b.z);
-const compareId = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
 const placed = (item: IslandStageItem): item is IslandStageItem & { position: GroundPoint } => Boolean(item.position);
-
-function matchingPairs(items: readonly IslandStageItem[], selectedId: string): ActivityPair[] {
-    const selected = items.find(item => item.id === selectedId);
-    if (!selected || !placed(selected)) return [];
-    const combination = COMBINATIONS.find(candidate => candidate.source === selected.kind || candidate.seat === selected.kind);
-    if (!combination) return [];
-    const pairs: ActivityPair[] = [];
-    for (const other of items) {
-        if (other.id === selectedId || !placed(other)) continue;
-        const source: ActivityPair['source'] = selected.kind === combination.source ? selected : other;
-        const seat: ActivityPair['seat'] = selected.kind === combination.seat ? selected : other;
-        if (source.kind !== combination.source || seat.kind !== combination.seat) continue;
-        const d = distance(source.position, seat.position);
-        if (!d || d > ISLAND_ITEMS[source.kind].radius + ISLAND_ITEMS[seat.kind].radius + 1.4) continue;
-        const facing = (Math.sin(seat.rotation) * (source.position.x - seat.position.x)
-            + Math.cos(seat.rotation) * (source.position.z - seat.position.z)) / d;
-        if (!Number.isFinite(facing) || facing < .5) continue;
-        pairs.push({ kind: combination.kind, source, seat, distance: d });
-    }
-    return pairs.sort((a, b) => a.distance - b.distance
-        || compareId(a.source.id, b.source.id) || compareId(a.seat.id, b.seat.id));
-}
 
 function roleOrder(residents: readonly SharedActivityResident[], roundRobin: number[], pair: ActivityPair) {
     return roundRobin.flatMap((receiver, receiverTurn) => roundRobin.filter(carrier => carrier !== receiver)

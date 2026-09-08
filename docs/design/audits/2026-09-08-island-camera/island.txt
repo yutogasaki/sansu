@@ -1,0 +1,18 @@
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:island
+> node tools/e2e-island.mjs
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForURL: Timeout 30000ms exceeded.
+=========================== logs ===========================
+waiting for navigation to "**/#/onboarding" until "load"
+============================================================
+    at verifyIslandProgression (/private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-camera-kj4lp_dr/tools/island-e2e-progression.mjs:17:61)
+    at async file:///private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-camera-kj4lp_dr/tools/e2e-island.mjs:102:31 {
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0

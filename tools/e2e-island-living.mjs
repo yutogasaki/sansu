@@ -23,7 +23,7 @@ assert.equal(version.revision, source.revision); assert(version.island.enabled);
 assert.equal(version.island.candidate, ISLAND_CANDIDATE);
 const report = { target, version, sourceHash: source.sourceHash, manifestPath, startedAt: new Date().toISOString(),
     humanN: 0, pass: false, sourceStart: sha(JSON.stringify(start)), captures: [],
-    scope: 'Actual empty-database setup and 25 normal learning sections on each viewport. No profile, growth, clock or discovery injection. Author/Chromium evidence, not child observation.' };
+    scope: 'Actual empty-database setup and normal learning through four maturities and one further section on each viewport. No profile, growth, clock or discovery injection. Author/Chromium evidence, not child observation.' };
 const browser = await chromium.launch(process.env.SANSU_ISLAND_BROWSER_GPU === 'metal' ? { args: ['--use-angle=metal'] } : {});
 try {
     report.results = await verifyIslandProgression(browser, target, async (page, name) => {

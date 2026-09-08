@@ -1,0 +1,129 @@
+{
+  "candidate": "pokomoko-shell-v1",
+  "target": "http://127.0.0.1:5373",
+  "version": {
+    "version": "pokomoko-world-463508f-r3:bbb71565-b695-4035-b839-a8bb5814aa78",
+    "revision": "pokomoko-world-463508f-r3",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "legacy"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceHash": "63aedf2a040375d23a4cbd445dec0fb117cadb31e5c29733e15b56088dea1e3b",
+  "captures": [
+    {
+      "file": "screens/phone-explicit-periodic-test.png",
+      "sha256": "cd25c262c69b9e0904fa1198d27a322ca6f9bae11ce4eacb415e814dd5237f14"
+    },
+    {
+      "file": "screens/phone-explicit-review.png",
+      "sha256": "497727f5d5f773cacc48a22b0ae53e612f97c6f5f41a2444425694131784642e"
+    },
+    {
+      "file": "screens/phone-launch.png",
+      "sha256": "40a302e814bc5f32898709e1db6d644e4ddde77dfa5cc6518bf05fdf6a4a4e6d"
+    },
+    {
+      "file": "screens/phone-learning-resumed.png",
+      "sha256": "e1efbdfec3cbb079ac3fd1cc85a5d2e4c04b9f8df7bee0be995790495780df09"
+    },
+    {
+      "file": "screens/phone-native-learning.png",
+      "sha256": "1d049279b290a13711786ee4d8c6a3a33d8b8aad6ca0d5103214e5fa7e2651b3"
+    },
+    {
+      "file": "screens/phone-new-setup.png",
+      "sha256": "be7c0bad749f4198213dfa5ac9594557133e10bbfb67a9f2f7851f9633ae8b43"
+    },
+    {
+      "file": "screens/phone-new-welcome.png",
+      "sha256": "af6bfb90af865651936eac3cdfce249d28d637db3fa328979369b2758523a06c"
+    },
+    {
+      "file": "screens/phone-other-games.png",
+      "sha256": "c51cbffe7f1d893deb2bde0c96eaa20cc698dae36bac2c5119125d098f7bbff3"
+    },
+    {
+      "file": "screens/phone-paused-island.png",
+      "sha256": "22f8e1e2a69cc3ef7e6da2bc2daffd933666fb44856977bcdfd443d1c4244b57"
+    },
+    {
+      "file": "screens/phone-regular-link-resumed.png",
+      "sha256": "e1efbdfec3cbb079ac3fd1cc85a5d2e4c04b9f8df7bee0be995790495780df09"
+    },
+    {
+      "file": "screens/phone-settings-expanded.png",
+      "sha256": "f3c4ae0f5ce5d7b3dbf8a169b4631bee0620d4c9a05efdc409eea48ea542275f"
+    },
+    {
+      "file": "screens/phone-settings.png",
+      "sha256": "ca4326871b44e5b5c77968fd4cffcc0a529c67851da3f0134f76ec27cd13dbb8"
+    },
+    {
+      "file": "screens/phone-stats.png",
+      "sha256": "6d170a46f1debc1692142a2d4014e03701c35c3e74ce261513c5119be761d7ca"
+    },
+    {
+      "file": "screens/tablet-explicit-periodic-test.png",
+      "sha256": "ee6b555f2671bf0a70713f542d592d7c99cc9738b54193cfe3635b485e04ffbf"
+    },
+    {
+      "file": "screens/tablet-explicit-review.png",
+      "sha256": "fe6209e439ad6403658bd8df3405c0916124ac70dbd81a353e01998071f70de6"
+    },
+    {
+      "file": "screens/tablet-launch.png",
+      "sha256": "282d4518ff6a606d1b37d86784acfd5e8cb4b2371ec64f154035b9110c5a4770"
+    },
+    {
+      "file": "screens/tablet-learning-resumed.png",
+      "sha256": "e341f977dfd75e4691a6d406f36442f748f5344da6ee418c0c5df38820053d7c"
+    },
+    {
+      "file": "screens/tablet-native-learning.png",
+      "sha256": "6787c61706a4883b20c387d689b3f52f88cedd97405d89c93d70bc0ccf7aa089"
+    },
+    {
+      "file": "screens/tablet-new-setup.png",
+      "sha256": "1a11f61f2b4e6a8dc879c656ed7fa74e18e3aaf9ed6240fae50178899f772e41"
+    },
+    {
+      "file": "screens/tablet-new-welcome.png",
+      "sha256": "27ddf50761bdcc58b534ab82c4a3aed19519e03dfc7cda4f6fb6c4a03c45b1f9"
+    },
+    {
+      "file": "screens/tablet-other-games.png",
+      "sha256": "952d881eca51cf034043a92ae1df395e2fdea275c4132178d1142b049cb21b92"
+    },
+    {
+      "file": "screens/tablet-paused-island.png",
+      "sha256": "9581b39b08bea7cd4e790ab3668568100f7cb755df38ff301492a1481f1f5887"
+    },
+    {
+      "file": "screens/tablet-regular-link-resumed.png",
+      "sha256": "e341f977dfd75e4691a6d406f36442f748f5344da6ee418c0c5df38820053d7c"
+    },
+    {
+      "file": "screens/tablet-settings-expanded.png",
+      "sha256": "c15280b742da67fa15ae7bde16a44cd63e7aa2ab98be8ae01ee4a5e8d41c3cb5"
+    },
+    {
+      "file": "screens/tablet-settings.png",
+      "sha256": "014b10edaf4487c075701121eea09344e22aa6804ca213ba4b97fb07215b0680"
+    },
+    {
+      "file": "screens/tablet-stats.png",
+      "sha256": "37994d35352b2ac7fa86d20abc17e0f4cfe62b60e4812e008dfb50fe75730d0f"
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import { getIslandExpansionLevel } from '../../domain/island/expansion';
+import { islandGrowthStep } from '../../domain/island/pacing';
 import { getIslandGrowthTarget, isIslandHabitatUnlocked, ISLAND_HABITATS } from '../../domain/island/growth';
 import type { IslandHabitatId, IslandPlan, IslandRecord } from '../../domain/island/types';
 
@@ -15,5 +16,8 @@ export function islandCompletionExpansion(island: IslandRecord, habitat: IslandH
 export function islandExpansionPreview(island: IslandRecord, plan?: IslandPlan) {
     if (plan && !plan.growthTarget) return undefined;
     const target = plan?.status === 'active' && plan.growthTarget ? plan.growthTarget : getIslandGrowthTarget(island);
-    return island.growth?.progress[target] === 5 ? islandCompletionExpansion(island, target) : undefined;
+    const step = islandGrowthStep(island, target);
+    const legacy = plan ? plan.rewardPacing === undefined : island.growth?.pendingAnswers === undefined;
+    const nearlyGrown = legacy || step.remaining <= (plan?.status === 'active' ? plan.slots.length : 6);
+    return step.progress === 5 && nearlyGrown ? islandCompletionExpansion(island, target) : undefined;
 }

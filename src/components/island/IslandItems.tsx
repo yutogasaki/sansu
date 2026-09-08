@@ -2,12 +2,28 @@ import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Check, RotateCw, X } from 'l
 import { ISLAND_ITEMS } from '../../domain/island/catalog';
 import { getIslandExpansionLevel } from '../../domain/island/expansion';
 import { getIslandItemAppearanceLevel, getIslandItemGrowthLevel } from '../../domain/island/growth';
-import type { IslandItem, IslandItemKind, IslandRecord, IslandPosition } from '../../domain/island/types';
+import type { IslandBasicItemKind, IslandItem, IslandItemKind, IslandRecord, IslandPosition } from '../../domain/island/types';
+import type { IslandFurniturePlacementResult } from './islandFurniturePlacement';
 
 /** Small object illustrations for choosing possessions; the living world stays in the 3D stage. */
 export function ItemPicture({ kind }: { kind: IslandItemKind }) {
     return <svg viewBox="0 0 96 80" aria-hidden="true" className="island-item-picture">
         <ellipse cx="48" cy="69" rx="33" ry="6" fill="#292341" opacity=".12" />
+        {kind === 'telescope' && <g stroke="#292341" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m48 39-18 29m18-29 19 29m-19-29-1 29" stroke="#c57f43" strokeWidth="5" />
+            <path d="m26 35 42-20 8 15-42 20Z" fill="#9580ca" /><path d="m68 15 8 15 5-3-8-15Z" fill="#60dcf2" />
+            <path d="m25 36-8 4 5 9 8-4" fill="#292341" /><path d="m37 34 5 10" stroke="#fff1bf" strokeWidth="4" />
+        </g>}
+        {kind === 'hammock' && <g stroke="#292341" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m19 22-8 44m11-44 9 44m49-44-9 44m9-44 9 44" stroke="#c57f43" strokeWidth="5" />
+            <path d="M18 24Q47 49 78 24L76 38Q49 69 21 38Z" fill="#60dcf2" /><path d="M20 32Q49 57 77 31" fill="none" stroke="#fff1bf" strokeWidth="6" />
+            <path d="m18 24 4 16m56-16-3 16" stroke="#e6d6a2" strokeWidth="3" />
+        </g>}
+        {kind === 'tea-table' && <g stroke="#292341" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m30 45-4 24m39-24 5 24" stroke="#c57f43" strokeWidth="6" /><ellipse cx="48" cy="44" rx="32" ry="13" fill="#e79b50" />
+            <path d="M37 29h12v10q-6 7-12 0Z" fill="#fff1bf" /><path d="M49 31q12-1 7 9h-7" fill="none" stroke="#fff1bf" strokeWidth="4" />
+            <ellipse cx="43" cy="29" rx="6" ry="2" fill="#c57f43" /><path d="M42 22q-5-5 0-9" fill="none" stroke="#9580ca" />
+        </g>}
         {kind === 'bench' && <g stroke="#292341" strokeLinecap="round" strokeLinejoin="round">
             <path d="M25 25v42m46-42v42M29 54v15m45-15v15" strokeWidth="5" />
             <rect x="19" y="24" width="58" height="10" rx="3" fill="#e79b50" strokeWidth="2" />
@@ -66,7 +82,7 @@ export function ItemPicture({ kind }: { kind: IslandItemKind }) {
 }
 
 export function IslandRewards({ island, intro = false, disabled, onChoose, onContinue, onClose }: {
-    island: IslandRecord; intro?: boolean; disabled: boolean; onChoose: (rewardId: string, kind: IslandItemKind) => void;
+    island: IslandRecord; intro?: boolean; disabled: boolean; onChoose: (rewardId: string, kind: IslandBasicItemKind) => void;
     onContinue: () => void; onClose: () => void;
 }) {
     const reward = island.pendingRewards[0];
@@ -83,8 +99,8 @@ export function IslandRewards({ island, intro = false, disabled, onChoose, onCon
     </section>;
 }
 
-export function IslandInventory({ items, disabled, onSelect, onClose }: {
-    items: IslandItem[]; disabled: boolean; onSelect: (item: IslandItem) => void; onClose: () => void;
+export function IslandInventory({ items, disabled, onSelect, onClose, onFurniture }: {
+    items: IslandItem[]; disabled: boolean; onSelect: (item: IslandItem) => void; onClose: () => void; onFurniture?: () => void;
 }) {
     return <section className="island-sheet" aria-label="しまの もちもの">
         <div className="island-sheet-title"><div><p className="island-eyebrow">じぶんの しまを ととのえよう</p><h2>どれを うごかす？</h2></div>
@@ -93,12 +109,15 @@ export function IslandInventory({ items, disabled, onSelect, onClose }: {
             aria-label={`${ISLAND_ITEMS[item.kind].name} ${index + 1}を うごかす`} onClick={() => onSelect(item)}>
             <ItemPicture kind={item.kind} /><strong>{ISLAND_ITEMS[item.kind].name}</strong><small>{item.position ? 'しまに ある' : item.autoPlacementBlocked ? 'おく ばしょを えらべるよ' : 'しまって ある'}</small>
             {item.autoPlacementBlocked && <small>しまが いっぱい。すきな ばしょへ。</small>}</button>)}</div>
+        {onFurniture && <button className="island-secondary" disabled={disabled} onClick={onFurniture}>くらしの どうぐを みる <ArrowRight size={18} /></button>}
     </section>;
 }
 
-export function IslandPlay({ items, disabled, selectedId, message, onSelect, onMove, onInventory, onContinue, onClose }: {
+export function IslandPlay({ items, disabled, selectedId, message, onSelect, onMove, onInventory, onContinue, onClose, onGuide, onPhoto }: {
     items: IslandItem[]; disabled: boolean; selectedId?: string; message?: string;
     onSelect: (id: string) => void; onMove: (item: IslandItem) => void; onInventory: () => void; onContinue: () => void; onClose: () => void;
+    onGuide?: () => void;
+    onPhoto?: () => void;
 }) {
     const placed = items.filter(item => item.position);
     const selected = placed.find(item => item.id === selectedId);
@@ -113,15 +132,18 @@ export function IslandPlay({ items, disabled, selectedId, message, onSelect, onM
             <ItemPicture kind={item.kind} /><strong>{ISLAND_ITEMS[item.kind].name}</strong><small>{ISLAND_ITEMS[item.kind].description}</small>
         </button>)}</div>
         <div className="island-play-actions">
+            {onGuide && <button className="island-text-button" disabled={disabled} onClick={onGuide}>みつけものを みる</button>}
+            {onPhoto && <button className="island-text-button" disabled={disabled} onClick={onPhoto}>いまを しゃしんに</button>}
             {selected && <button className="island-text-button" disabled={disabled} onClick={() => onMove(selected)}>{ISLAND_ITEMS[selected.kind].name}を うごかす</button>}
             <button className="island-secondary island-play-return" disabled={disabled} onClick={onContinue}>ひかりを とどける <ArrowRight size={18} /></button>
         </div>
     </section>;
 }
 
-export function IslandPlacement({ item, valid, disabled, onPoint, onRotate, onSave, onStore, onCancel, onAppearance }: {
+export function IslandPlacement({ item, valid, disabled, onPoint, onRotate, onSave, onStore, onCancel, onAppearance, availability, onFindUsable, onArrangeSurroundings }: {
     item: IslandItem; valid: boolean; disabled: boolean; onPoint: (point: IslandPosition) => void;
     onRotate: () => void; onSave: () => void; onStore: () => void; onCancel: () => void; onAppearance?: (level: number) => void;
+    availability?: IslandFurniturePlacementResult; onFindUsable?: () => void; onArrangeSurroundings?: () => void;
 }) {
     const point = item.position ?? { x: 0, z: 1 };
     const move = (x: number, z: number) => onPoint({ x: point.x + x, z: point.z + z });
@@ -129,6 +151,18 @@ export function IslandPlacement({ item, valid, disabled, onPoint, onRotate, onSa
         <div className="island-sheet-title"><div><p className="island-eyebrow">{ISLAND_ITEMS[item.kind].name}</p><h2>どこに おこう？</h2></div>
             <button className="island-icon-button" aria-label="いどうを やめる" disabled={disabled} onClick={onCancel}><X size={20} /></button></div>
         <p className="island-placement-hint" role="status">{valid ? 'にわを タッチ。やじるしでも うごかせるよ。' : 'もうすこし ひろい ばしょへ うごかそう。'}</p>
+        {onFindUsable && <div className="island-placement-availability" data-furniture-placement={availability?.status ?? 'checking'}>
+            <p role="status">{availability?.status === 'ready' ? 'えらんだ なかまが、ここで つかえるよ。'
+                : availability?.status === 'blocked' ? valid ? 'ここには おけるけれど、つかうには すきまが いるよ。' : 'ここには おけないよ。ひろい ばしょを さがそう。'
+                    : availability?.status === 'no-space' ? 'つかえる ばしょが みつからなかったよ。まわりを ととのえて、また ためそう。'
+                        : availability?.status === 'searching' ? 'なかまが つかえる ばしょを さがしているよ。' : 'なかまが つかえるか たしかめているよ。'}</p>
+            <button className="island-secondary" disabled={disabled || availability?.status === 'searching'} onClick={onFindUsable}>つかえる ばしょを さがす</button>
+            {availability?.status === 'no-space' && onArrangeSurroundings && <>
+                <button className="island-secondary" disabled={disabled} onClick={onArrangeSurroundings}>まわりの ものを うごかす</button>
+                <p className="island-note">いまの ばしょえらびは やめて、もちものを ひらくよ。どうぐは のこるよ。</p>
+            </>}
+            <p className="island-note">みつかった ばしょを みてから「ここに おく」で きめよう。</p>
+        </div>}
         <div className="island-placement-row"><div className="island-direction-controls" aria-label="いどう">
             <button className="island-icon-button" aria-label="ひだりへ" disabled={disabled} onClick={() => move(-.25, 0)}><ArrowLeft /></button>
             <button className="island-icon-button" aria-label="おくへ" disabled={disabled} onClick={() => move(0, -.25)}><ArrowUp /></button>

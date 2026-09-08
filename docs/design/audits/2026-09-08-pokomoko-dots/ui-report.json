@@ -1,0 +1,1569 @@
+{
+  "target": "http://127.0.0.1:5374",
+  "candidate": "pokomoko-dots-v1",
+  "flag": "VITE_ISLAND_ENABLED=true",
+  "startedAt": "2026-09-08T11:53:29.549Z",
+  "pass": true,
+  "scope": "Disposable native profiles. Chromium phone/tablet, not physical devices. Actual Island reservation and one answer precede utility navigation, reload, and old regular-practice links. Persisted plan, current question, cursor, support, rewards and logs must survive. Unsubmitted form digits are transient and are not claimed to survive unmount/reload. Explicit review/test routes retain their existing learning meanings. Screenshots support visual review; this script does not certify art appeal or child comprehension.",
+  "scenarios": [
+    {
+      "name": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "soundEnabled": false,
+      "errors": [],
+      "preservation": [
+        {
+          "reason": "pause to Island",
+          "planId": "[\"island-plan-v1\",\"island-shell-phone-1788868414286\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "93ede67b9c13ce309584e542a7670c391bb89a566484f32110612b620a8dc011"
+        },
+        {
+          "reason": "settings and records return",
+          "planId": "[\"island-plan-v1\",\"island-shell-phone-1788868414286\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "93ede67b9c13ce309584e542a7670c391bb89a566484f32110612b620a8dc011"
+        },
+        {
+          "reason": "reload resumed Island",
+          "planId": "[\"island-plan-v1\",\"island-shell-phone-1788868414286\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "93ede67b9c13ce309584e542a7670c391bb89a566484f32110612b620a8dc011"
+        },
+        {
+          "reason": "other-games return",
+          "planId": "[\"island-plan-v1\",\"island-shell-phone-1788868414286\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "93ede67b9c13ce309584e542a7670c391bb89a566484f32110612b620a8dc011"
+        },
+        {
+          "reason": "regular practice link /study",
+          "planId": "[\"island-plan-v1\",\"island-shell-phone-1788868414286\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "93ede67b9c13ce309584e542a7670c391bb89a566484f32110612b620a8dc011"
+        },
+        {
+          "reason": "regular practice link /study?session=normal",
+          "planId": "[\"island-plan-v1\",\"island-shell-phone-1788868414286\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "93ede67b9c13ce309584e542a7670c391bb89a566484f32110612b620a8dc011"
+        },
+        {
+          "reason": "explicit Study /study?session=review&force_review=1",
+          "planId": "[\"island-plan-v1\",\"island-shell-phone-1788868414286\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "93ede67b9c13ce309584e542a7670c391bb89a566484f32110612b620a8dc011"
+        },
+        {
+          "reason": "explicit Study /study?session=periodic-test&focus_subject=math",
+          "planId": "[\"island-plan-v1\",\"island-shell-phone-1788868414286\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "93ede67b9c13ce309584e542a7670c391bb89a566484f32110612b620a8dc011"
+        },
+        {
+          "reason": "explicit Study /study?session=normal&focus_subject=math",
+          "planId": "[\"island-plan-v1\",\"island-shell-phone-1788868414286\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "93ede67b9c13ce309584e542a7670c391bb89a566484f32110612b620a8dc011"
+        },
+        {
+          "reason": "return from explicit Study",
+          "planId": "[\"island-plan-v1\",\"island-shell-phone-1788868414286\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "93ede67b9c13ce309584e542a7670c391bb89a566484f32110612b620a8dc011"
+        }
+      ],
+      "shellChecks": [
+        {
+          "stage": "settings",
+          "geometry": {
+            "viewport": 390,
+            "document": 390,
+            "body": 390,
+            "shell": [
+              {
+                "className": "relative flex h-full min-h-0 flex-col overflow-hidden text-text-main island-shell",
+                "width": 390,
+                "scroll": 390
+              },
+              {
+                "className": "relative min-h-0 overflow-hidden flex-1",
+                "width": 390,
+                "scroll": 390
+              },
+              {
+                "className": "island-shell-nav",
+                "width": 390,
+                "scroll": 390
+              }
+            ]
+          },
+          "controls": [
+            {
+              "label": "きろく",
+              "width": 103.484375,
+              "height": 60,
+              "x": 20,
+              "y": 771.5,
+              "right": 123.484375,
+              "bottom": 831.5,
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "text": "きろく",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "しま",
+              "width": 119.015625,
+              "height": 60,
+              "x": 135.484375,
+              "y": 771.5,
+              "right": 254.5,
+              "bottom": 831.5,
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "text": "しま",
+              "fontSize": 14,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "せってい",
+              "width": 103.484375,
+              "height": 60,
+              "x": 266.5,
+              "y": 771.5,
+              "right": 369.984375,
+              "bottom": 831.5,
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "text": "せってい",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            }
+          ]
+        },
+        {
+          "stage": "expanded-settings",
+          "geometry": {
+            "viewport": 390,
+            "document": 390,
+            "body": 390,
+            "shell": [
+              {
+                "className": "relative flex h-full min-h-0 flex-col overflow-hidden text-text-main island-shell",
+                "width": 390,
+                "scroll": 390
+              },
+              {
+                "className": "relative min-h-0 overflow-hidden flex-1",
+                "width": 390,
+                "scroll": 390
+              },
+              {
+                "className": "island-shell-nav",
+                "width": 390,
+                "scroll": 390
+              }
+            ]
+          },
+          "controls": [
+            {
+              "label": "きろく",
+              "width": 103.484375,
+              "height": 60,
+              "x": 20,
+              "y": 771.5,
+              "right": 123.484375,
+              "bottom": 831.5,
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "text": "きろく",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "しま",
+              "width": 119.015625,
+              "height": 60,
+              "x": 135.484375,
+              "y": 771.5,
+              "right": 254.5,
+              "bottom": 831.5,
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "text": "しま",
+              "fontSize": 14,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "せってい",
+              "width": 103.484375,
+              "height": 60,
+              "x": 266.5,
+              "y": 771.5,
+              "right": 369.984375,
+              "bottom": 831.5,
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "text": "せってい",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            }
+          ]
+        },
+        {
+          "stage": "stats",
+          "geometry": {
+            "viewport": 390,
+            "document": 390,
+            "body": 390,
+            "shell": [
+              {
+                "className": "relative flex h-full min-h-0 flex-col overflow-hidden text-text-main island-shell",
+                "width": 390,
+                "scroll": 390
+              },
+              {
+                "className": "relative min-h-0 overflow-hidden flex-1",
+                "width": 390,
+                "scroll": 390
+              },
+              {
+                "className": "island-shell-nav",
+                "width": 390,
+                "scroll": 390
+              }
+            ]
+          },
+          "controls": [
+            {
+              "label": "きろく",
+              "width": 103.484375,
+              "height": 60,
+              "x": 20,
+              "y": 771.5,
+              "right": 123.484375,
+              "bottom": 831.5,
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "text": "きろく",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "しま",
+              "width": 119.015625,
+              "height": 60,
+              "x": 135.484375,
+              "y": 771.5,
+              "right": 254.5,
+              "bottom": 831.5,
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "text": "しま",
+              "fontSize": 14,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "せってい",
+              "width": 103.484375,
+              "height": 60,
+              "x": 266.5,
+              "y": 771.5,
+              "right": 369.984375,
+              "bottom": 831.5,
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "text": "せってい",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            }
+          ]
+        },
+        {
+          "stage": "other-games",
+          "geometry": {
+            "viewport": 390,
+            "document": 390,
+            "body": 390,
+            "shell": [
+              {
+                "className": "relative flex h-full min-h-0 flex-col overflow-hidden text-text-main island-shell",
+                "width": 390,
+                "scroll": 390
+              },
+              {
+                "className": "relative min-h-0 overflow-hidden flex-1",
+                "width": 390,
+                "scroll": 390
+              },
+              {
+                "className": "island-shell-nav",
+                "width": 390,
+                "scroll": 390
+              }
+            ]
+          },
+          "controls": [
+            {
+              "label": "きろく",
+              "width": 103.484375,
+              "height": 60,
+              "x": 20,
+              "y": 771.5,
+              "right": 123.484375,
+              "bottom": 831.5,
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "text": "きろく",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "しま",
+              "width": 119.015625,
+              "height": 60,
+              "x": 135.484375,
+              "y": 771.5,
+              "right": 254.5,
+              "bottom": 831.5,
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "text": "しま",
+              "fontSize": 14,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "せってい",
+              "width": 103.484375,
+              "height": 60,
+              "x": 266.5,
+              "y": 771.5,
+              "right": 369.984375,
+              "bottom": 831.5,
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "text": "せってい",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            }
+          ]
+        }
+      ],
+      "routes": [
+        {
+          "requested": "/study",
+          "actual": "#/island",
+          "nativeIslandLearning": true
+        },
+        {
+          "requested": "/study?session=normal",
+          "actual": "#/island",
+          "nativeIslandLearning": true
+        },
+        {
+          "requested": "/study?session=review&force_review=1",
+          "actual": "#/study?session=review&force_review=1",
+          "explicitStudyPreserved": true
+        },
+        {
+          "requested": "/study?session=periodic-test&focus_subject=math",
+          "actual": "#/study?session=periodic-test&focus_subject=math",
+          "explicitStudyPreserved": true
+        },
+        {
+          "requested": "/study?session=normal&focus_subject=math",
+          "actual": "#/study?session=normal&focus_subject=math",
+          "explicitStudyPreserved": true
+        }
+      ],
+      "profileId": "island-shell-phone-1788868414286",
+      "runtime": {
+        "revision": "pokomoko-dots-463508f-v1",
+        "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      },
+      "evidenceTarget": "production-manifest-verified",
+      "pass": true
+    },
+    {
+      "name": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "soundEnabled": false,
+      "errors": [],
+      "preservation": [
+        {
+          "reason": "pause to Island",
+          "planId": "[\"island-plan-v1\",\"island-shell-tablet-1788868452425\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "b39d6d27d1480e7a5569fb9bf74545916500389c380dc6feb5a321947e79fcc8"
+        },
+        {
+          "reason": "settings and records return",
+          "planId": "[\"island-plan-v1\",\"island-shell-tablet-1788868452425\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "b39d6d27d1480e7a5569fb9bf74545916500389c380dc6feb5a321947e79fcc8"
+        },
+        {
+          "reason": "reload resumed Island",
+          "planId": "[\"island-plan-v1\",\"island-shell-tablet-1788868452425\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "b39d6d27d1480e7a5569fb9bf74545916500389c380dc6feb5a321947e79fcc8"
+        },
+        {
+          "reason": "other-games return",
+          "planId": "[\"island-plan-v1\",\"island-shell-tablet-1788868452425\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "b39d6d27d1480e7a5569fb9bf74545916500389c380dc6feb5a321947e79fcc8"
+        },
+        {
+          "reason": "regular practice link /study",
+          "planId": "[\"island-plan-v1\",\"island-shell-tablet-1788868452425\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "b39d6d27d1480e7a5569fb9bf74545916500389c380dc6feb5a321947e79fcc8"
+        },
+        {
+          "reason": "regular practice link /study?session=normal",
+          "planId": "[\"island-plan-v1\",\"island-shell-tablet-1788868452425\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "b39d6d27d1480e7a5569fb9bf74545916500389c380dc6feb5a321947e79fcc8"
+        },
+        {
+          "reason": "explicit Study /study?session=review&force_review=1",
+          "planId": "[\"island-plan-v1\",\"island-shell-tablet-1788868452425\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "b39d6d27d1480e7a5569fb9bf74545916500389c380dc6feb5a321947e79fcc8"
+        },
+        {
+          "reason": "explicit Study /study?session=periodic-test&focus_subject=math",
+          "planId": "[\"island-plan-v1\",\"island-shell-tablet-1788868452425\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "b39d6d27d1480e7a5569fb9bf74545916500389c380dc6feb5a321947e79fcc8"
+        },
+        {
+          "reason": "explicit Study /study?session=normal&focus_subject=math",
+          "planId": "[\"island-plan-v1\",\"island-shell-tablet-1788868452425\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "b39d6d27d1480e7a5569fb9bf74545916500389c380dc6feb5a321947e79fcc8"
+        },
+        {
+          "reason": "return from explicit Study",
+          "planId": "[\"island-plan-v1\",\"island-shell-tablet-1788868452425\",0]",
+          "cursor": 1,
+          "revision": 1,
+          "persistedStateHash": "b39d6d27d1480e7a5569fb9bf74545916500389c380dc6feb5a321947e79fcc8"
+        }
+      ],
+      "shellChecks": [
+        {
+          "stage": "settings",
+          "geometry": {
+            "viewport": 768,
+            "document": 768,
+            "body": 768,
+            "shell": [
+              {
+                "className": "relative flex h-full min-h-0 flex-col overflow-hidden text-text-main island-shell",
+                "width": 760,
+                "scroll": 760
+              },
+              {
+                "className": "relative min-h-0 overflow-hidden flex-1",
+                "width": 760,
+                "scroll": 760
+              },
+              {
+                "className": "island-shell-nav",
+                "width": 760,
+                "scroll": 760
+              }
+            ]
+          },
+          "controls": [
+            {
+              "label": "きろく",
+              "width": 208.25,
+              "height": 60,
+              "x": 36,
+              "y": 951.5,
+              "right": 244.25,
+              "bottom": 1011.5,
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "text": "きろく",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "しま",
+              "width": 239.484375,
+              "height": 60,
+              "x": 264.25,
+              "y": 951.5,
+              "right": 503.734375,
+              "bottom": 1011.5,
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "text": "しま",
+              "fontSize": 14,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "せってい",
+              "width": 208.25,
+              "height": 60,
+              "x": 523.734375,
+              "y": 951.5,
+              "right": 731.984375,
+              "bottom": 1011.5,
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "text": "せってい",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            }
+          ]
+        },
+        {
+          "stage": "expanded-settings",
+          "geometry": {
+            "viewport": 768,
+            "document": 768,
+            "body": 768,
+            "shell": [
+              {
+                "className": "relative flex h-full min-h-0 flex-col overflow-hidden text-text-main island-shell",
+                "width": 760,
+                "scroll": 760
+              },
+              {
+                "className": "relative min-h-0 overflow-hidden flex-1",
+                "width": 760,
+                "scroll": 760
+              },
+              {
+                "className": "island-shell-nav",
+                "width": 760,
+                "scroll": 760
+              }
+            ]
+          },
+          "controls": [
+            {
+              "label": "きろく",
+              "width": 208.25,
+              "height": 60,
+              "x": 36,
+              "y": 951.5,
+              "right": 244.25,
+              "bottom": 1011.5,
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "text": "きろく",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "しま",
+              "width": 239.484375,
+              "height": 60,
+              "x": 264.25,
+              "y": 951.5,
+              "right": 503.734375,
+              "bottom": 1011.5,
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "text": "しま",
+              "fontSize": 14,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "せってい",
+              "width": 208.25,
+              "height": 60,
+              "x": 523.734375,
+              "y": 951.5,
+              "right": 731.984375,
+              "bottom": 1011.5,
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "text": "せってい",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            }
+          ]
+        },
+        {
+          "stage": "stats",
+          "geometry": {
+            "viewport": 768,
+            "document": 768,
+            "body": 768,
+            "shell": [
+              {
+                "className": "relative flex h-full min-h-0 flex-col overflow-hidden text-text-main island-shell",
+                "width": 760,
+                "scroll": 760
+              },
+              {
+                "className": "relative min-h-0 overflow-hidden flex-1",
+                "width": 760,
+                "scroll": 760
+              },
+              {
+                "className": "island-shell-nav",
+                "width": 760,
+                "scroll": 760
+              }
+            ]
+          },
+          "controls": [
+            {
+              "label": "きろく",
+              "width": 208.25,
+              "height": 60,
+              "x": 36,
+              "y": 951.5,
+              "right": 244.25,
+              "bottom": 1011.5,
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "text": "きろく",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "しま",
+              "width": 239.484375,
+              "height": 60,
+              "x": 264.25,
+              "y": 951.5,
+              "right": 503.734375,
+              "bottom": 1011.5,
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "text": "しま",
+              "fontSize": 14,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "せってい",
+              "width": 208.25,
+              "height": 60,
+              "x": 523.734375,
+              "y": 951.5,
+              "right": 731.984375,
+              "bottom": 1011.5,
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "text": "せってい",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            }
+          ]
+        },
+        {
+          "stage": "other-games",
+          "geometry": {
+            "viewport": 768,
+            "document": 768,
+            "body": 768,
+            "shell": [
+              {
+                "className": "relative flex h-full min-h-0 flex-col overflow-hidden text-text-main island-shell",
+                "width": 760,
+                "scroll": 760
+              },
+              {
+                "className": "relative min-h-0 overflow-hidden flex-1",
+                "width": 760,
+                "scroll": 760
+              },
+              {
+                "className": "island-shell-nav",
+                "width": 760,
+                "scroll": 760
+              }
+            ]
+          },
+          "controls": [
+            {
+              "label": "きろく",
+              "width": 208.25,
+              "height": 60,
+              "x": 36,
+              "y": 951.5,
+              "right": 244.25,
+              "bottom": 1011.5,
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "text": "きろく",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "しま",
+              "width": 239.484375,
+              "height": 60,
+              "x": 264.25,
+              "y": 951.5,
+              "right": 503.734375,
+              "bottom": 1011.5,
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "text": "しま",
+              "fontSize": 14,
+              "textFits": true,
+              "hit": true
+            },
+            {
+              "label": "せってい",
+              "width": 208.25,
+              "height": 60,
+              "x": 523.734375,
+              "y": 951.5,
+              "right": 731.984375,
+              "bottom": 1011.5,
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "text": "せってい",
+              "fontSize": 12,
+              "textFits": true,
+              "hit": true
+            }
+          ]
+        }
+      ],
+      "routes": [
+        {
+          "requested": "/study",
+          "actual": "#/island",
+          "nativeIslandLearning": true
+        },
+        {
+          "requested": "/study?session=normal",
+          "actual": "#/island",
+          "nativeIslandLearning": true
+        },
+        {
+          "requested": "/study?session=review&force_review=1",
+          "actual": "#/study?session=review&force_review=1",
+          "explicitStudyPreserved": true
+        },
+        {
+          "requested": "/study?session=periodic-test&focus_subject=math",
+          "actual": "#/study?session=periodic-test&focus_subject=math",
+          "explicitStudyPreserved": true
+        },
+        {
+          "requested": "/study?session=normal&focus_subject=math",
+          "actual": "#/study?session=normal&focus_subject=math",
+          "explicitStudyPreserved": true
+        }
+      ],
+      "profileId": "island-shell-tablet-1788868452425",
+      "runtime": {
+        "revision": "pokomoko-dots-463508f-v1",
+        "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      },
+      "evidenceTarget": "production-manifest-verified",
+      "pass": true
+    }
+  ],
+  "captures": [
+    {
+      "file": "phone-launch.png",
+      "stage": "launch",
+      "sha256": "f4cce2ccfde64f40242c8846655854cdd89937efef0f22bf10307c3a1a25f4c0",
+      "url": "http://127.0.0.1:5374/#/island",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": false,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": {
+        "revision": "pokomoko-dots-463508f-v1",
+        "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "phone-native-learning.png",
+      "stage": "native-learning",
+      "sha256": "c986058962470afe4c0cd8f17efa8e9f5e3f7425dffdc7b19fb7e65c07ed9af4",
+      "url": "http://127.0.0.1:5374/#/island",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": false,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": {
+        "revision": "pokomoko-dots-463508f-v1",
+        "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 69,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "phone-paused-island.png",
+      "stage": "paused-island",
+      "sha256": "9bba527cad95757f3a65a7547bd71e6a7552928c76e3119f24f5d24d3d2aae0a",
+      "url": "http://127.0.0.1:5374/#/island",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": false,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": {
+        "revision": "pokomoko-dots-463508f-v1",
+        "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "phone-settings.png",
+      "stage": "settings",
+      "sha256": "99f83b360d59c2974d652adb90decb1722adc2a404c2db104347f8763a168b2c",
+      "url": "http://127.0.0.1:5374/#/settings",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": "pokomoko-dots-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": false,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": null
+    },
+    {
+      "file": "phone-settings-expanded.png",
+      "stage": "settings-expanded",
+      "sha256": "afbbb01f09068be07fb61cde1fd1e4db47052b7447a6c89f5eba6c75e8bdb8d7",
+      "url": "http://127.0.0.1:5374/#/settings",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": "pokomoko-dots-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": false,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": null
+    },
+    {
+      "file": "phone-stats.png",
+      "stage": "stats",
+      "sha256": "36239069309ddf15e2dac6cf296dcb7193411017486965bf7e3f6e947492af55",
+      "url": "http://127.0.0.1:5374/#/stats",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": "pokomoko-dots-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": false,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": null
+    },
+    {
+      "file": "phone-learning-resumed.png",
+      "stage": "learning-resumed",
+      "sha256": "0d06b8c4b458da2dbcff3f3de8b2dd5b696995d73008f6bd461134478a6e1ed6",
+      "url": "http://127.0.0.1:5374/#/island",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": false,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": {
+        "revision": "pokomoko-dots-463508f-v1",
+        "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 69,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "phone-other-games.png",
+      "stage": "other-games",
+      "sha256": "fa4713c5c922abc1aa5003084f3f7451c163fc0aba8a2c1ebdc9eb1c02ee1410",
+      "url": "http://127.0.0.1:5374/#/battle",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": "pokomoko-dots-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": false,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": null
+    },
+    {
+      "file": "phone-regular-link-resumed.png",
+      "stage": "regular-link-resumed",
+      "sha256": "0d06b8c4b458da2dbcff3f3de8b2dd5b696995d73008f6bd461134478a6e1ed6",
+      "url": "http://127.0.0.1:5374/#/island",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": null,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": false,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": {
+        "revision": "pokomoko-dots-463508f-v1",
+        "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 69,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "phone-explicit-review.png",
+      "stage": "explicit-review",
+      "sha256": "0c524cdc6f9f8656d15ac1e3b1649f2e8133c78c08711c4124df4ebaa87c345a",
+      "url": "http://127.0.0.1:5374/#/study?session=review&force_review=1",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": "pokomoko-dots-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": false,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": null
+    },
+    {
+      "file": "phone-explicit-periodic-test.png",
+      "stage": "explicit-periodic-test",
+      "sha256": "116297401fb3d3fc63c886752038862adb97a083132fecf8243720003fd9665c",
+      "url": "http://127.0.0.1:5374/#/study?session=periodic-test&focus_subject=math",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": "pokomoko-dots-v1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": false,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": null
+    },
+    {
+      "file": "tablet-launch.png",
+      "stage": "launch",
+      "sha256": "07249dd25bfccf68eee32178bebf5377cdface9f46168d390637908af6faf079",
+      "url": "http://127.0.0.1:5374/#/island",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": null,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": true,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": {
+        "revision": "pokomoko-dots-463508f-v1",
+        "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "file": "tablet-native-learning.png",
+      "stage": "native-learning",
+      "sha256": "88c0496dfeaa10c283d910231d150ccb353751362437d8586e2f47a64d357e4b",
+      "url": "http://127.0.0.1:5374/#/island",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": null,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": true,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": {
+        "revision": "pokomoko-dots-463508f-v1",
+        "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 62,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "file": "tablet-paused-island.png",
+      "stage": "paused-island",
+      "sha256": "cdd1fbb2530aa61df0d7263ea9d3dc3cf094ae612e99c3f4a7e8ca22558b9a13",
+      "url": "http://127.0.0.1:5374/#/island",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": null,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": true,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": {
+        "revision": "pokomoko-dots-463508f-v1",
+        "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "file": "tablet-settings.png",
+      "stage": "settings",
+      "sha256": "cce12569d9af945127dd63669b934177b181ba8f2dbd5c8e9a9655b61ae6e373",
+      "url": "http://127.0.0.1:5374/#/settings",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": "pokomoko-dots-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": true,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": null
+    },
+    {
+      "file": "tablet-settings-expanded.png",
+      "stage": "settings-expanded",
+      "sha256": "418080de0fa46616c8d34decf09ae622c31e68f926c99499e9694eae23b6d468",
+      "url": "http://127.0.0.1:5374/#/settings",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": "pokomoko-dots-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": true,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": null
+    },
+    {
+      "file": "tablet-stats.png",
+      "stage": "stats",
+      "sha256": "bb3a8a85e2eee1ad19c0cba6e9a249ce2281ad6dd893b1bea111dce7fe054b9c",
+      "url": "http://127.0.0.1:5374/#/stats",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": "pokomoko-dots-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": true,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": null
+    },
+    {
+      "file": "tablet-learning-resumed.png",
+      "stage": "learning-resumed",
+      "sha256": "2e3b5ae8526111a21dd78c17066205c986874f36e56c667f83ea074edd1182ae",
+      "url": "http://127.0.0.1:5374/#/island",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": null,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": true,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": {
+        "revision": "pokomoko-dots-463508f-v1",
+        "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 62,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "file": "tablet-other-games.png",
+      "stage": "other-games",
+      "sha256": "2c96018079e58a0758f05cee1f440b8e0beecce9165c67eb27abe63b41474935",
+      "url": "http://127.0.0.1:5374/#/battle",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": "pokomoko-dots-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": true,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": null
+    },
+    {
+      "file": "tablet-regular-link-resumed.png",
+      "stage": "regular-link-resumed",
+      "sha256": "2e3b5ae8526111a21dd78c17066205c986874f36e56c667f83ea074edd1182ae",
+      "url": "http://127.0.0.1:5374/#/island",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": null,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": true,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": {
+        "revision": "pokomoko-dots-463508f-v1",
+        "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 62,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "file": "tablet-explicit-review.png",
+      "stage": "explicit-review",
+      "sha256": "8f90eb9f7a6ab4aa221a7209568f3afaccf2ca053c2a746910b6d392f03e3464",
+      "url": "http://127.0.0.1:5374/#/study?session=review&force_review=1",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": "pokomoko-dots-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": true,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": null
+    },
+    {
+      "file": "tablet-explicit-periodic-test.png",
+      "stage": "explicit-periodic-test",
+      "sha256": "1ac856904d68a4a6b744a82b1703e582eb783d504f96130ae2576972caaf7f47",
+      "url": "http://127.0.0.1:5374/#/study?session=periodic-test&focus_subject=math",
+      "revision": "pokomoko-dots-463508f-v1",
+      "delivery": "snap-root-v1",
+      "configuredDelivery": "snap-root-v1",
+      "lineage": "pokko-field-v1",
+      "shellCandidate": "pokomoko-dots-v1",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": true,
+      "serviceWorkerControlled": false,
+      "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+      "islandCandidate": "mystic-island-living-v5",
+      "island": null
+    }
+  ],
+  "browserVersion": "145.0.7632.6",
+  "manifest": {
+    "version": "pokomoko-dots-463508f-v1:c86929de-0e44-45cf-ad3f-f050a062fa65",
+    "revision": "pokomoko-dots-463508f-v1",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "legacy"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "emptyProfile": {
+    "requested": "/study",
+    "actual": "#/onboarding",
+    "onboardingRequired": true,
+    "url": "http://127.0.0.1:5374/#/onboarding",
+    "revision": "pokomoko-dots-463508f-v1",
+    "delivery": "snap-root-v1",
+    "configuredDelivery": "snap-root-v1",
+    "lineage": "pokko-field-v1",
+    "shellCandidate": null,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "reducedMotion": true,
+    "serviceWorkerControlled": false
+  },
+  "finishedAt": "2026-09-08T11:54:31.244Z"
+}

@@ -1,0 +1,6 @@
+
+> pokko-fushigi-zukan-app@0.0.0 build
+> tsc -b && vite build && npm run assets:check
+
+src/components/island/three/runtime.ts(187,13): error TS6133: 'workshopPointerId' is declared but its value is never read.
+src/components/island/three/runtime.ts(510,18): error TS2339: Property 'poseWorkshopResident' does not exist on type 'IslandScene'.

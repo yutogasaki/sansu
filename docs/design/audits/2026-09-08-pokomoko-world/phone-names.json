@@ -1,0 +1,64 @@
+{
+  "target": "http://127.0.0.1:5373",
+  "title": "ぽこもこと不思議な島",
+  "apple": "ぽこもこ",
+  "manifest": {
+    "name": "ぽこもこと不思議な島",
+    "short_name": "ぽこもこ",
+    "description": "といて、ほって、みつけよう。算数が地底探検になる子ども向けゲーム。",
+    "start_url": ".",
+    "scope": ".",
+    "display": "standalone",
+    "background_color": "#f4eff9",
+    "theme_color": "#f4eff9",
+    "orientation": "any",
+    "icons": [
+      {
+        "src": "icons/icon-192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any"
+      },
+      {
+        "src": "icons/icon-512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any"
+      },
+      {
+        "src": "icons/icon-maskable-192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "maskable"
+      },
+      {
+        "src": "icons/icon-maskable-512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "maskable"
+      }
+    ]
+  },
+  "version": {
+    "version": "pokomoko-world-463508f-r3:bbb71565-b695-4035-b839-a8bb5814aa78",
+    "revision": "pokomoko-world-463508f-r3",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "legacy"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "viewport": {
+    "width": 390,
+    "height": 844
+  }
+}

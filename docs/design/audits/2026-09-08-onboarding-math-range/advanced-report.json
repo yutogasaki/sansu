@@ -1,0 +1,103 @@
+{
+  "target": "http://127.0.0.1:5638",
+  "evidence": "DEV real UI placement, first reservation and visible answer form; no preloaded learning fixtures.",
+  "cases": [
+    {
+      "id": "九九",
+      "label": "かけ算（九九）",
+      "start": 14,
+      "pass": true,
+      "errors": [],
+      "skillIds": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": "division",
+      "label": "わり算（筆算・あまりまで）",
+      "start": 18,
+      "pass": true,
+      "errors": [],
+      "skillIds": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": "decimal-add",
+      "label": "小数（たし算・ひき算）",
+      "start": 19,
+      "pass": true,
+      "errors": [],
+      "skillIds": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": "decimal-mul",
+      "label": "小数（かけ算・わり算）",
+      "start": 20,
+      "pass": true,
+      "errors": [],
+      "skillIds": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": "fraction-add",
+      "label": "分数（たし算・ひき算）",
+      "start": 22,
+      "pass": true,
+      "errors": [],
+      "skillIds": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": "fraction-mul",
+      "label": "分数（かけ算・わり算）",
+      "start": 24,
+      "pass": true,
+      "errors": [],
+      "skillIds": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": "application",
+      "label": "割合・平均・比まで",
+      "start": 27,
+      "pass": true,
+      "errors": [],
+      "skillIds": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": "speed",
+      "label": "速さまで",
+      "start": 28,
+      "pass": true,
+      "errors": [],
+      "skillIds": [
+        null,
+        null,
+        null
+      ]
+    }
+  ],
+  "pass": true
+}

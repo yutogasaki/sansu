@@ -1,11 +1,5 @@
 const RELOAD_MARKER_PARAM = '__app-update'
 
-const APP_CACHE_NAME_PATTERNS = [
-    'workbox-precache',
-    'google-fonts-cache',
-    'gstatic-fonts-cache',
-]
-
 const UPDATE_PROTECTED_HASH_ROUTES = [
     '/onboarding',
     '/study',
@@ -33,10 +27,6 @@ export const stripReloadMarker = (currentUrl: string) => {
     url.searchParams.delete(RELOAD_MARKER_PARAM)
     return url.toString()
 }
-
-export const shouldResetAppCache = (cacheName: string) => (
-    APP_CACHE_NAME_PATTERNS.some((pattern) => cacheName.includes(pattern))
-)
 
 export const getUpdateProtectedRouteKey = (hash: string) => {
     const hashPath = normalizeHashPath(hash)

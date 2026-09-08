@@ -10,6 +10,7 @@ import type { IslandLearningFeedback } from './learningFeedback';
 import { islandObservationBinding } from '../../domain/island/learningObservation';
 import { readIslandLearningDOM, type IslandLearningObserver } from './useIslandLearningObservation';
 import './IslandLearningPanel.css';
+import './IslandLearningFocus.css';
 
 function LightSeed({ filled, current }: { filled: boolean; current: boolean }) {
     return <span className="island-light-seed" data-filled={filled} data-current={current} aria-hidden="true">
@@ -58,6 +59,7 @@ export function IslandLearningPanel({ plan, intro = false, busy, feedback, onAct
         </div>
         <IslandAnswerFeedback feedback={feedback?.id === dismissedReceipt ? undefined : feedback} />
         <IslandAnswerForm key={`${plan.id}:${plan.cursor}`} slot={slot} disabled={busy} answerReceiptId={answerReceiptId}
+            retryAnswer={feedback?.kind === 'retry' ? feedback.retryAnswer : undefined}
             englishAutoRead={englishAutoRead} onInteraction={() => setDismissedReceipt(feedback?.id)}
             onAnswer={answer => onAction({ type: 'answer', answer })} />
         <div className="island-learning-actions">

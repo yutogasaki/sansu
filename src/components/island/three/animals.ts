@@ -1,4 +1,6 @@
 import type { IslandLandAccess } from '../../../domain/island/catalog';
+import type { IslandResidentLook } from '../../../domain/island/experience';
+import type { IslandExpressionSelection } from '../../../domain/island/expression';
 import * as THREE from 'three';
 import { IslandMaterials } from './primitives';
 import type { IslandStageItem } from './types';
@@ -8,17 +10,21 @@ import { planResidentRoute, RESIDENT_FOOTPRINT, residentGroundHeight, type Resid
 import { ISLAND_ITEMS } from '../../../domain/island/catalog';
 import type { LearningReactionKind } from './learningReaction';
 import type { ResidentInterestSample } from './residentInterest';
+import { IslandResidentOutfit, residentOutfitStandingBounds } from './residentOutfit';
+import { ExpressionResidentVisuals, expressionResidentStandingBounds } from './expressionResidentVisuals';
 import { clampUnit, easeResident, FURNITURE_USE_MS, makeResidentRig, RESIDENT_SCALE, residentFootY,
-    residentSeatContactY, residentSeatRootY, sampleResidentStride, SEATED_BODY_Y, turnResidentToward, type ResidentSpecies } from './residentRig';
+    residentSeatContactY, residentSeatRootY, sampleResidentStride, SEATED_BODY_Y, poseResidentTail, turnResidentToward, type ResidentSpecies } from './residentRig';
 
 export type ResidentAction = 'idle' | 'walk' | 'sit' | 'sniff' | 'admire' | 'swing' | 'rest' | 'watch';
 export type SharedResidentPose = 'carry' | 'offer' | 'receive' | 'enjoy';
 export type SharedResidentHand = 'left' | 'right';
 const ACTIONS: Record<IslandStageItem['kind'], ResidentAction> = {
+    telescope: 'idle', hammock: 'idle', 'tea-table': 'idle',
     bench: 'sit', flower: 'sniff', lantern: 'admire', swing: 'swing', mushroom: 'rest', fountain: 'watch',
 };
 export const RESIDENT_NAMES = { otter: 'カワウソ', rabbit: 'ウサギ', fox: 'キツネ' } as const;
 const USE_CAPTIONS: Record<IslandStageItem['kind'], string> = {
+    telescope: 'ぼうえんきょうを のぞいた', hammock: 'ハンモックで ひとやすみ', 'tea-table': 'おちゃを いっしょに',
     bench: 'ベンチに すわった', flower: 'おはなの においを くんくん', lantern: 'あかりを みあげた',
     swing: 'ブランコに すわった', mushroom: 'きのこの いすで ひとやすみ', fountain: 'ふんすいを のぞいた',
 };
@@ -31,6 +37,7 @@ export class IslandResident {
     readonly pose: THREE.Group;
     readonly body: THREE.Group;
     readonly head: THREE.Group;
+    readonly tail: THREE.Group;
     readonly feet: THREE.Mesh[];
     readonly seatContact: THREE.Object3D;
     private readonly shoulders: THREE.Group[];
@@ -40,6 +47,10 @@ export class IslandResident {
     private learningArmDelta?: { index: number; x: number; z: number };
     private readonly destination = new THREE.Vector3();
     private readonly standingBounds: THREE.Box3;
+    private readonly outfit: IslandResidentOutfit;
+    private readonly expression: ExpressionResidentVisuals;
+    private freeLook: IslandResidentLook = 'original';
+    private expressionOutfit: IslandExpressionSelection['residents'][ResidentSpecies]['outfit'] = null;
     private startTime = 0;
     private duration = 0;
     private useStartedAt = 0;
@@ -66,14 +77,26 @@ export class IslandResident {
     constructor(readonly species: ResidentSpecies, m: IslandMaterials,
         position: [number, number, number], private onArrival: (caption: string) => void) {
         const rig = makeResidentRig(species, m);
-        this.standingBounds = new THREE.Box3().setFromObject(rig.pose, true);
-        this.pose = rig.pose; this.body = rig.body; this.head = rig.head; this.feet = rig.feet;
+        this.standingBounds = new THREE.Box3().setFromObject(rig.pose, true).union(residentOutfitStandingBounds(species, rig.head.position.y))
+            .union(expressionResidentStandingBounds(species, rig.head.position.y));
+        this.outfit = new IslandResidentOutfit(species, rig.body, rig.head);
+        this.expression = new ExpressionResidentVisuals(species, rig.body, rig.head);
+        this.pose = rig.pose; this.body = rig.body; this.head = rig.head; this.tail = rig.tail; this.feet = rig.feet;
         this.shoulders = rig.shoulders; this.handContacts = rig.handContacts; this.seatContact = rig.seatContact;
         this.group.position.set(...position);
         this.group.scale.setScalar(RESIDENT_SCALE);
         this.group.rotation.y = .28;
         this.group.add(this.pose);
     }
+
+    setAppearance(look: IslandResidentLook) { this.freeLook = look; return this.outfit.set(this.expressionOutfit ? 'original' : look); }
+    setExpression(selection?: IslandExpressionSelection['residents'][ResidentSpecies]) {
+        this.expressionOutfit = selection?.outfit ?? null;
+        const freeChanged = this.outfit.set(this.expressionOutfit ? 'original' : this.freeLook);
+        return this.expression.set(this.expressionOutfit, selection?.pattern ?? null) || freeChanged;
+    }
+    expressionDiagnostic() { return this.expression.describe(); }
+    disposeAppearance() { this.outfit.dispose(); this.expression.dispose(); }
 
     /** Snapshot the current pose and any already-started motion. The scene can fit
      * this envelope at section entry without moving residents or following them. */
@@ -94,7 +117,8 @@ export class IslandResident {
     }
 
     visit(item: IslandStageItem, now: number, reduced: boolean, items: IslandStageItem[], landAccess: IslandLandAccess, plannedRoute?: ResidentRoute) {
-        if (!item.position) return false;
+        // Optional tools have their own physical contact controller; never silently use a generic watch/sit.
+        if (!item.position || ['telescope', 'hammock', 'tea-table'].includes(item.kind)) return false;
         const route = plannedRoute ?? planResidentRoute(this.group.position, item, items, landAccess, this.itemId || this.departingId);
         if (!route) return false;
         this.clearSharedPose(); this.clearLearningPose();
@@ -300,6 +324,7 @@ export class IslandResident {
         this.sharedPose = undefined;
         this.pose.position.set(0, 0, 0); this.pose.rotation.set(0, 0, 0);
         this.body.position.y = 0; this.body.rotation.set(0, 0, 0); this.head.rotation.set(0, 0, 0);
+        poseResidentTail(this.tail, this.species, 0);
         this.learningHeadDelta.set(0, 0, 0); this.learningArmDelta = undefined;
         this.shoulders.forEach((shoulder, index) => shoulder.rotation.set(0, 0, (index ? 1 : -1) * .2));
         this.feet.forEach(foot => { foot.position.y = residentFootY(this.species); foot.position.z = .12; });
@@ -307,6 +332,7 @@ export class IslandResident {
 
     private sitOn(seat: FurniturePoint, angle = 0, amount = 1) {
         this.body.position.y = SEATED_BODY_Y * amount;
+        poseResidentTail(this.tail, this.species, amount);
         this.feet.forEach(foot => {
             foot.position.y += (.08 - foot.position.y) * amount;
             foot.position.z += (.27 - foot.position.z) * amount;

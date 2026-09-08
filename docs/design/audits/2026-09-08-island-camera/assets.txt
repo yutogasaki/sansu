@@ -1,0 +1,8 @@
+
+> pokko-fushigi-zukan-app@0.0.0 assets:check
+> node tools/check-asset-budget.mjs
+
+PASS assets:check
+- PWA precache: 145 unique files, 10.30 MiB / 12.00 MiB
+- Explore artwork: 27 production files, 4.92 MiB / 8.00 MiB
+- Production-input contract: docs/design only; absent from public and precache

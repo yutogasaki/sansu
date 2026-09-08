@@ -1,3 +1,5 @@
+import { BookOpen, ShieldCheck, UserRound, Volume2 } from "lucide-react";
+import { islandEnabled } from "../domain/island/feature";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "../components/ui/Button";
@@ -352,12 +354,18 @@ export const Settings: React.FC = () => {
     const textLabel = isEasy ? t("やさしい", "やさしい") : t("ふつう", "標準");
     const kanjiLabel = profile?.kanjiMode ? "漢字" : "ひらがな";
 
-    const accordionHeader = (key: string, title: string, summary: string) => (
+    const sectionIcons = { profile: UserRound, learning: BookOpen, display: Volume2, parent: ShieldCheck };
+    const accordionHeader = (key: keyof typeof sectionIcons, title: string, summary: string) => {
+        const SectionIcon = sectionIcons[key];
+        return (
         <button
             type="button"
             onClick={() => toggleSection(key)}
-            className="flex w-full items-center justify-between gap-3 rounded-[20px] px-5 py-4 text-left transition-colors hover:bg-white/30 active:scale-[0.99]"
+            aria-expanded={openSection === key}
+            data-setting-section={key}
+            className="pokomoko-setting-trigger flex w-full items-center justify-between gap-3 rounded-[20px] px-5 py-4 text-left transition-colors hover:bg-white/30 active:scale-[0.99]"
         >
+            {islandEnabled() && <span className="pokomoko-setting-patch" aria-hidden="true"><SectionIcon size={23} strokeWidth={1.8} /></span>}
             <div className="min-w-0 flex-1">
                 <div className="text-[15px] font-black text-slate-800">{title}</div>
                 <div className="mt-0.5 truncate text-xs text-slate-500">{summary}</div>
@@ -366,7 +374,8 @@ export const Settings: React.FC = () => {
                 className={`h-5 w-5 shrink-0 text-slate-400 transition-transform duration-200 ${openSection === key ? "-rotate-90" : "rotate-180"}`}
             />
         </button>
-    );
+        );
+    };
 
     return (
         <ScreenScaffold
@@ -616,7 +625,7 @@ export const Settings: React.FC = () => {
                     <button
                         type="button"
                         onClick={handleReset}
-                        className="w-full rounded-[20px] py-3 text-center text-sm font-bold text-rose-500 transition-colors hover:bg-rose-50/50"
+                        className="pokomoko-reset-action w-full rounded-[20px] py-3 text-center text-sm font-bold text-rose-500 transition-colors hover:bg-rose-50/50"
                     >
                         {t("データをすべてリセット", "全データをリセット")}
                     </button>

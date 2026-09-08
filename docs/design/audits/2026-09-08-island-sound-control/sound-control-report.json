@@ -1,0 +1,373 @@
+{
+  "target": "http://127.0.0.1:5598",
+  "evidence": "Disposable profile; real UI and digital audio. Suspended resume and aborted settings writes are explicit fault diagnostics. No physical-speaker claim.",
+  "runs": [
+    {
+      "name": "phone",
+      "audio": [
+        {
+          "step": "explicit-enable",
+          "peak": 0.2134087085723877,
+          "starts": [
+            0.38
+          ],
+          "resumeGestures": [
+            {
+              "active": true,
+              "blocked": false
+            },
+            {
+              "active": true,
+              "blocked": false
+            },
+            {
+              "active": true,
+              "blocked": false
+            },
+            {
+              "active": true,
+              "blocked": false
+            },
+            {
+              "active": true,
+              "blocked": false
+            },
+            {
+              "active": true,
+              "blocked": false
+            },
+            {
+              "active": true,
+              "blocked": false
+            },
+            {
+              "active": true,
+              "blocked": false
+            }
+          ]
+        },
+        {
+          "step": "learning-enable",
+          "peak": 0.34110796451568604,
+          "starts": [
+            0.38
+          ],
+          "resumeGestures": []
+        },
+        {
+          "step": "resume-retry",
+          "peak": 0.34110796451568604,
+          "starts": [
+            0.38
+          ],
+          "resumeGestures": [
+            {
+              "active": true,
+              "blocked": false
+            }
+          ]
+        },
+        {
+          "step": "gesture-state-race",
+          "peak": 0.34110796451568604,
+          "starts": [
+            0.38
+          ],
+          "resumeGestures": []
+        },
+        {
+          "step": "correct-answer",
+          "peak": 0.37562301754951477,
+          "starts": [
+            0.075,
+            0.075,
+            0.38
+          ],
+          "resumeGestures": []
+        }
+      ],
+      "captures": [
+        {
+          "state": "home-off",
+          "file": "phone-home-off.png",
+          "revision": "sound-control-isolated",
+          "version": "sound-control-isolated:ab57470b-351c-4098-92a5-903d34b34020",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-living-v5",
+          "learningCandidate": "mystic-island-learning-v2",
+          "mode": "home",
+          "renderer": "three",
+          "artDirection": "moon-garden",
+          "drawCalls": 79,
+          "expanded": "false",
+          "residentAction": "idle",
+          "residentItemId": "",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false
+        },
+        {
+          "state": "learning-off",
+          "file": "phone-learning-off.png",
+          "revision": "sound-control-isolated",
+          "version": "sound-control-isolated:ab57470b-351c-4098-92a5-903d34b34020",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-living-v5",
+          "learningCandidate": "mystic-island-learning-v2",
+          "mode": "learning",
+          "renderer": "three",
+          "artDirection": "moon-garden",
+          "drawCalls": 69,
+          "expanded": "false",
+          "residentAction": "idle",
+          "residentItemId": "",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false
+        },
+        {
+          "state": "resume-refused",
+          "file": "phone-resume-refused.png",
+          "revision": "sound-control-isolated",
+          "version": "sound-control-isolated:ab57470b-351c-4098-92a5-903d34b34020",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-living-v5",
+          "learningCandidate": "mystic-island-learning-v2",
+          "mode": "learning",
+          "renderer": "three",
+          "artDirection": "moon-garden",
+          "drawCalls": 69,
+          "expanded": "false",
+          "residentAction": "idle",
+          "residentItemId": "",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false
+        },
+        {
+          "state": "correct",
+          "file": "phone-correct.png",
+          "revision": "sound-control-isolated",
+          "version": "sound-control-isolated:ab57470b-351c-4098-92a5-903d34b34020",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-living-v5",
+          "learningCandidate": "mystic-island-learning-v2",
+          "mode": "learning",
+          "renderer": "three",
+          "artDirection": "moon-garden",
+          "drawCalls": 69,
+          "expanded": "false",
+          "residentAction": "idle",
+          "residentItemId": "",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false
+        }
+      ],
+      "checks": [
+        "Touch enable and keyboard mute preserve all learning records, both profile mirrors and the draft",
+        "Explicit unresolved-resume diagnostic times out, stays retryable and recovers on an active gesture",
+        "The enable gesture cannot accidentally mute when auto-resume changes state before click",
+        "Injected settings transaction abort restores mute and preserves the draft; retry saves successfully",
+        "Reload preserves the sound preference and the same reserved learning question"
+      ],
+      "pass": true
+    },
+    {
+      "name": "tablet",
+      "audio": [
+        {
+          "step": "explicit-enable",
+          "peak": 0.34110796451568604,
+          "starts": [
+            0.38
+          ],
+          "resumeGestures": [
+            {
+              "active": true,
+              "blocked": false
+            },
+            {
+              "active": true,
+              "blocked": false
+            },
+            {
+              "active": true,
+              "blocked": false
+            },
+            {
+              "active": true,
+              "blocked": false
+            },
+            {
+              "active": true,
+              "blocked": false
+            },
+            {
+              "active": true,
+              "blocked": false
+            },
+            {
+              "active": true,
+              "blocked": false
+            },
+            {
+              "active": true,
+              "blocked": false
+            }
+          ]
+        },
+        {
+          "step": "learning-enable",
+          "peak": 0.34110796451568604,
+          "starts": [
+            0.38
+          ],
+          "resumeGestures": []
+        },
+        {
+          "step": "resume-retry",
+          "peak": 0.34110796451568604,
+          "starts": [
+            0.38
+          ],
+          "resumeGestures": [
+            {
+              "active": true,
+              "blocked": false
+            }
+          ]
+        },
+        {
+          "step": "gesture-state-race",
+          "peak": 0.34110796451568604,
+          "starts": [
+            0.38
+          ],
+          "resumeGestures": []
+        },
+        {
+          "step": "correct-answer",
+          "peak": 0.34110796451568604,
+          "starts": [
+            0.075,
+            0.075,
+            0.38
+          ],
+          "resumeGestures": []
+        }
+      ],
+      "captures": [
+        {
+          "state": "home-off",
+          "file": "tablet-home-off.png",
+          "revision": "sound-control-isolated",
+          "version": "sound-control-isolated:ab57470b-351c-4098-92a5-903d34b34020",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-living-v5",
+          "learningCandidate": "mystic-island-learning-v2",
+          "mode": "home",
+          "renderer": "three",
+          "artDirection": "moon-garden",
+          "drawCalls": 79,
+          "expanded": "false",
+          "residentAction": "idle",
+          "residentItemId": "",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false
+        },
+        {
+          "state": "learning-off",
+          "file": "tablet-learning-off.png",
+          "revision": "sound-control-isolated",
+          "version": "sound-control-isolated:ab57470b-351c-4098-92a5-903d34b34020",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-living-v5",
+          "learningCandidate": "mystic-island-learning-v2",
+          "mode": "learning",
+          "renderer": "three",
+          "artDirection": "moon-garden",
+          "drawCalls": 62,
+          "expanded": "false",
+          "residentAction": "idle",
+          "residentItemId": "",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false
+        },
+        {
+          "state": "resume-refused",
+          "file": "tablet-resume-refused.png",
+          "revision": "sound-control-isolated",
+          "version": "sound-control-isolated:ab57470b-351c-4098-92a5-903d34b34020",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-living-v5",
+          "learningCandidate": "mystic-island-learning-v2",
+          "mode": "learning",
+          "renderer": "three",
+          "artDirection": "moon-garden",
+          "drawCalls": 62,
+          "expanded": "false",
+          "residentAction": "idle",
+          "residentItemId": "",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false
+        },
+        {
+          "state": "correct",
+          "file": "tablet-correct.png",
+          "revision": "sound-control-isolated",
+          "version": "sound-control-isolated:ab57470b-351c-4098-92a5-903d34b34020",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-living-v5",
+          "learningCandidate": "mystic-island-learning-v2",
+          "mode": "learning",
+          "renderer": "three",
+          "artDirection": "moon-garden",
+          "drawCalls": 62,
+          "expanded": "false",
+          "residentAction": "idle",
+          "residentItemId": "",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "serviceWorkerControlled": false,
+          "reducedMotion": false
+        }
+      ],
+      "checks": [
+        "Touch enable and keyboard mute preserve all learning records, both profile mirrors and the draft",
+        "Explicit unresolved-resume diagnostic times out, stays retryable and recovers on an active gesture",
+        "The enable gesture cannot accidentally mute when auto-resume changes state before click",
+        "Injected settings transaction abort restores mute and preserves the draft; retry saves successfully",
+        "Reload preserves the sound preference and the same reserved learning question"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

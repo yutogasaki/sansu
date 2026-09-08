@@ -1,0 +1,15 @@
+{
+  "target": "http://127.0.0.1:5198",
+  "evidence": "DEV real UI placement, first reservation and visible answer form; no preloaded learning fixtures.",
+  "cases": [
+    {
+      "id": "九九",
+      "label": "かけ算（九九）",
+      "start": 14,
+      "pass": false,
+      "errors": [],
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5198/#/onboarding\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5198/#/onboarding\", waiting until \"load\"\u001b[22m\n\n    at /Users/yutogasaki/Projects/sansu/output/playwright/onboarding-math-range-20260908/advanced.mjs:14:14"
+    }
+  ],
+  "pass": false
+}

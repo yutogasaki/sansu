@@ -1,0 +1,174 @@
+/* Optional controls only. The home, learning shelf and 3D canvas keep their own layout. */
+.app-container .island-page .island-sheet.island-panel {
+    --island-panel-selected: color-mix(in srgb, var(--pokomoko-blue) 10%, var(--pokomoko-paper));
+    width: calc(100% - 24px);
+    min-width: 0;
+    padding: 16px 16px 20px;
+    margin-block: 12px 20px;
+    border: 1px solid var(--pokomoko-edge);
+    border-radius: 24px;
+    background: var(--pokomoko-paper);
+    color: var(--pokomoko-ink);
+}
+.island-page .island-panel :is(.island-sheet-title, .island-customization-heading) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    margin-bottom: 14px;
+}
+.island-page .island-panel :is(.island-sheet-title, .island-customization-heading) h2 {
+    flex: 1 1 150px;
+    min-width: 0;
+    margin: 0;
+    font-size: clamp(18px, 3vw, 21px);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+.island-page .island-panel .island-panel-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    flex-shrink: 0;
+    width: auto;
+    min-height: 44px;
+    height: auto;
+    margin-left: auto;
+    padding: 8px 10px;
+    border-radius: 14px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+.island-page .island-panel .island-customization-heading { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+.island-page .island-panel .island-customization-heading > .island-panel-back { grid-column: 2; grid-row: 1; }
+.island-page .island-panel .island-customization-wallet {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 10px;
+    border-color: var(--pokomoko-edge);
+}
+.island-page .island-sheet.island-panel :is(p, small, label, legend, summary):not(.island-stage *) {
+    font-size: max(12px, .8125rem);
+    line-height: 1.65;
+}
+.island-page .island-panel button:not(.island-stage button) {
+    min-height: 44px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+.island-page .island-panel :is(.island-primary, .island-secondary):not(.island-stage *) {
+    gap: 7px;
+    min-width: 0;
+    padding: 10px 12px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+.island-page .island-panel .island-primary:not(.island-stage *) {
+    min-height: 52px;
+    font-size: 14px;
+}
+.island-page .island-panel button > svg:not(.island-stage *) { flex-shrink: 0; }
+.island-page .island-panel .island-customization-unit { font-size: 12px; }
+.island-page .island-panel .island-panel-choices {
+    gap: 8px;
+    min-width: 0;
+}
+.island-page .island-panel .island-panel-choices > button {
+    position: relative;
+    min-width: 0;
+    padding-inline: 10px 24px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+.island-page .island-panel .island-panel-choices > button strong {
+    font-size: 13px;
+    line-height: 1.5;
+}
+.island-page .island-panel .island-panel-choices > button[aria-pressed=true] {
+    border-color: var(--pokomoko-blue);
+    background: var(--island-panel-selected);
+    color: var(--pokomoko-ink);
+    box-shadow: inset 0 0 0 1px var(--pokomoko-blue);
+    outline: none;
+}
+/* A persistent check shape complements the blue state; it is not an ownership badge. */
+.island-page .island-panel .island-panel-choices > button[aria-pressed=true]::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 9px;
+    height: 5px;
+    border-left: 2px solid var(--pokomoko-blue);
+    border-bottom: 2px solid var(--pokomoko-blue);
+    transform: rotate(-45deg);
+    pointer-events: none;
+}
+.island-page .island-panel .island-panel-choices .island-experience-check { display: none; }
+.island-page .island-panel .island-panel-choices > button:focus-visible,
+.island-page .island-panel button:focus-visible:not(.island-stage *),
+.island-page .island-panel summary:focus-visible:not(.island-stage *) {
+    outline: 3px solid var(--pokomoko-blue);
+    outline-offset: 3px;
+}
+.island-page .island-panel :is(.island-panel-footer, .island-panel-actions) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+.island-page .island-panel .island-panel-footer {
+    justify-content: space-between;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--pokomoko-edge);
+}
+.island-page .island-panel .island-panel-footer > button { flex: 1 1 130px; }
+.island-page .island-panel :is(.island-error, .island-customization-error, .island-experience-error, .island-workshop-error, .island-photo-error) {
+    display: grid;
+    gap: 8px;
+    width: 100%;
+    margin-block: 12px;
+    padding: 12px;
+    border: 1px solid var(--pokomoko-edge);
+    border-radius: 14px;
+    background: var(--pokomoko-canvas);
+}
+.island-page .island-panel :is(.island-error, .island-customization-error, .island-experience-error, .island-workshop-error, .island-photo-error) p { margin: 0; }
+.island-page .island-panel :is(.island-expression-wallet, .island-furniture-wallet) {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 12px 0;
+}
+.island-page .island-panel .island-panel-environment-status { margin: 8px 0 0; color: var(--pokomoko-muted); }
+@media (max-width: 699px) {
+    .island-page .island-panel :is(.island-customization-categories, .island-customization-parts,
+        .island-customization-slots, .island-customization-rail, .island-expression-tabs,
+        .island-furniture-choices, .island-experience-tabs, .island-experience-choices,
+        .island-album-tabs, .island-photo-targets) {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .island-page .island-panel .island-customization-rail { margin: 0; padding: 3px; max-width: 100%; overflow: visible; }
+    .island-page .island-panel .island-customization-item { width: auto; min-width: 0; min-height: 90px; }
+    .island-page .island-panel .island-album-tabs > button { text-align: center; }
+    .island-page .island-panel .island-album-habitats { flex-wrap: wrap; justify-content: flex-start; }
+    .island-page .island-panel :is(.island-expression-residents, .island-experience-friends, .island-furniture-residents > div) {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .island-page .island-panel .island-expression-free fieldset > div {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+@media (min-width: 700px) {
+    .app-container .island-page .island-sheet.island-panel { padding: 20px 24px 24px; }
+    .island-page .island-panel .island-album-tabs { flex-wrap: wrap; }
+    .island-page .island-panel .island-album-tabs > button { flex: 1 1 150px; }
+}

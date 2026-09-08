@@ -1,0 +1,46 @@
+{
+  "revision": "463508f03ecd7810f6132e14cdf92e0a6ec7ce7b",
+  "buildRevision": "463508f-written-input-b71394fedf",
+  "sourceHash": "b71394fedf2122e347e57d82a1707e838076ba700a5a980d4471c3c66f916e13",
+  "sourceRoot": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-written-input-checked-8zq89re4",
+  "flags": {
+    "VITE_ISLAND_ENABLED": "true",
+    "VITE_BUILD_PLAY_ENABLED": "false"
+  },
+  "islandManifest": {
+    "version": "463508f-written-input-b71394fedf:47376176-ff00-43d2-b781-fab0705084bf",
+    "revision": "463508f-written-input-b71394fedf",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "legacy"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "parkManifest": {
+    "version": "463508f-written-input-b71394fedf:34e57d8d-7e1f-4639-8311-ada487881e88",
+    "revision": "463508f-written-input-b71394fedf",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "legacy"
+    },
+    "island": {
+      "enabled": false,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  }
+}

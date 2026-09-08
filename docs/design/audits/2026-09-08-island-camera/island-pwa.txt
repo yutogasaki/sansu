@@ -1,0 +1,26 @@
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:island-pwa
+> node tools/e2e-island-pwa.mjs
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Only the place frozen in this reservation earns one section
+
+1 !== 2
+
+    at assertIslandSectionGrowth (file:///private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-camera-kj4lp_dr/tools/island-e2e-helpers.mjs:183:16)
+    at answerUI (file:///private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-camera-kj4lp_dr/tools/island-e2e-helpers.mjs:159:9)
+    at async file:///private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-camera-kj4lp_dr/tools/e2e-island-pwa.mjs:154:27
+    at async noReloadWhile (file:///private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-camera-kj4lp_dr/tools/e2e-island-pwa.mjs:22:9)
+    at async file:///private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-camera-kj4lp_dr/tools/e2e-island-pwa.mjs:152:9 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 2,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

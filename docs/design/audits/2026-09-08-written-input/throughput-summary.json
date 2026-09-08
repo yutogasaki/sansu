@@ -1,0 +1,133 @@
+{
+  "rawReport": "output/playwright/written-throughput-checked-02/report.json",
+  "rawReportSHA256": "b5fc0f7ee76182e0854cb1fcd64e0b37db27122e30da230cfe413ac0b1d9d87f",
+  "runCount": 80,
+  "fixtureId": "cold-open-fixed-ten-v1",
+  "fixtureHash": "959267b8827be99953db083012013bbbb47101ce88950d4829930220f1acaee3",
+  "buildSource": {
+    "path": "/private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-written-input-checked-8zq89re4/build-source.json",
+    "manifestSHA": "438d476ba28e094dfc851ed6f4eb1abfaed0c3af9e728ee65915e376787b3d1c",
+    "sourceHash": "b71394fedf2122e347e57d82a1707e838076ba700a5a980d4471c3c66f916e13",
+    "revision": "463508f03ecd7810f6132e14cdf92e0a6ec7ce7b",
+    "flags": {
+      "VITE_ISLAND_ENABLED": "true",
+      "VITE_BUILD_PLAY_ENABLED": "false"
+    }
+  },
+  "runner": {
+    "cwd": "/private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-written-input-checked-8zq89re4",
+    "command": [
+      "/usr/local/bin/node",
+      "/private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-written-input-checked-8zq89re4/tools/e2e-island-throughput.mjs"
+    ]
+  },
+  "target": "http://127.0.0.1:5632",
+  "startedAt": "2026-09-08T12:46:31.476Z",
+  "finishedAt": "2026-09-08T12:53:55.182Z",
+  "repetitions": 10,
+  "layouts": [
+    {
+      "name": "phone",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "tablet",
+      "width": 768,
+      "height": 1024
+    }
+  ],
+  "method": {
+    "setup": "Wait for the empty-profile Island welcome to commit before inserting each disposable profile; retain the same document for fixture hooks and navigate only after that lookup has resolved.",
+    "input": "physical-keyboard digits and Enter, identical answers and ordinary actions in both lanes",
+    "order": "Study/Island alternates by repetition and scenario within each viewport",
+    "timing": "Browser performance.now; answer delay begins at actual Enter keydown. Total includes typing and automated observation overhead. Q6 ends only when the exact next plan is operable; no continuation action is performed.",
+    "fixtureScope": "Isolated disposable browser profiles only. Before timing, one explicitly synthetic existing-island completion bypasses the introduction. Island creates real six-slot plans, with a test-only Dexie creating hook replacing newly created slots before display; existing reservations are never changed.",
+    "plannerTruth": "Not production planner evidence. All fixed slots are explicit test-fixture main assignments with no review or maintenance flags.",
+    "learningDifference": "Island records the real atomic writer and reward receipts in its disposable profile. Study uses its existing nonrecording DEV fixture. Neither lane reads or changes a real user profile.",
+    "islandTail": "Six slots in each of two newly saved sets, after the declared synthetic existing-island baseline. Only the first four slots of the second new set are answered. Two repeated fixture tail slots remain pending and unsubmitted.",
+    "missDifference": "Island retries and corrects Q4/Q8 on the same saved Problem. Study retains its correction panel and explicit next action. Only all-correct throughput is compared for the >=1.0 gate.",
+    "rendering": "Both lanes use reduced-motion and sound off. Before timed input, every initial Island keypad control must fit and preserve a 44px target; active digit/edit keys must receive a center hit, while empty submit must remain disabled. Normal-motion, touch and full-input fidelity are separate Island E2E gates."
+  },
+  "browser": {
+    "name": "chromium",
+    "version": "145.0.7632.6"
+  },
+  "runtime": {
+    "revisions": [
+      "463508f-written-input-b71394fedf"
+    ],
+    "versions": [
+      "463508f-written-input-b71394fedf:d13b65d2-d269-492d-9d22-d8bd3a3b8386"
+    ],
+    "candidates": [
+      "mystic-island-living-v5"
+    ],
+    "learningCandidates": [
+      "mystic-island-learning-v2"
+    ],
+    "deliveryIds": [
+      "mystic-island-v1"
+    ],
+    "flag": "VITE_ISLAND_ENABLED=true",
+    "evidenceSource": "Actual rendered Island data attributes on the shared Vite target; Study fixture runs against the same server."
+  },
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 122.48942706470083,
+      "islandMedianProblemsPerMinute": 294.6593088896671,
+      "allCorrectIslandToStudyRatio": 2.4055897390557917,
+      "correctOperableP95Ms": 193.79999995231628,
+      "incorrectRetryP95Ms": 194.19999998807907,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 191.34999999403954,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 193.9000000357628,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4898.399999976158,
+      "rawIslandDurationMedianMs": 2036.25
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 121.65696795270554,
+      "islandMedianProblemsPerMinute": 294.9710338989819,
+      "allCorrectIslandToStudyRatio": 2.424612735816765,
+      "correctOperableP95Ms": 194.0999999642372,
+      "incorrectRetryP95Ms": 193.69999998807907,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 190.44999998807907,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 196,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4931.9000000059605,
+      "rawIslandDurationMedianMs": 2034.0999999940395
+    }
+  ],
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "evidence": {
+    "eligible": true,
+    "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "pass": true
+}

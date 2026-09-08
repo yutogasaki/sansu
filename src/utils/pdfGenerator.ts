@@ -384,8 +384,8 @@ export const generateMathPDF = async (
 ) => {
     const pdfDoc = await PDFDocument.create();
     pdfDoc.setTitle(`${title}.pdf`);
-    pdfDoc.setAuthor('ぽこもこ');
-    pdfDoc.setCreator('ぽこもこ');
+    pdfDoc.setAuthor('ぽこもこと不思議な島');
+    pdfDoc.setCreator('ぽこもこと不思議な島');
     if (userName) {
         pdfDoc.setSubject(`User: ${userName}`);
     }
@@ -494,8 +494,8 @@ export const generateVocabPDF = async (
 ) => {
     const pdfDoc = await PDFDocument.create();
     pdfDoc.setTitle(`${title}.pdf`);
-    pdfDoc.setAuthor('ぽこもこ');
-    pdfDoc.setCreator('ぽこもこ');
+    pdfDoc.setAuthor('ぽこもこと不思議な島');
+    pdfDoc.setCreator('ぽこもこと不思議な島');
     pdfDoc.registerFontkit(fontkit);
 
     const customFont = await loadPdfFont(pdfDoc);

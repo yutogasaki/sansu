@@ -1,0 +1,1123 @@
+{
+  "target": "http://127.0.0.1:5198",
+  "evidence": "DEV interaction diagnostic with real empty DB and profile creation; not an immutable release build or a child observation.",
+  "sourceStart": {
+    "src/domain/user/onboarding.ts": "ba919e66e01065d80ca9ec7e43a507da0edd30856000cbd4bf5beffb6d186c3b",
+    "src/pages/Onboarding.tsx": "e783dc8ad81d81786a826f83fe60bbfd4144deaa3e55d95e33a45ea030413067",
+    "src/components/island/IslandOnboarding.tsx": "0d3df7ff90f341830cced16f3abebadddb381f551731d2209a87b0414322c8be",
+    "src/components/island/IslandOnboarding.css": "206178e73ae22774d28da7c8a7caa4e949bdf80a1c80d97dd527f15bca90e870"
+  },
+  "cases": [
+    {
+      "name": "390x844",
+      "captures": [
+        "390x844-grade.png",
+        "390x844-ranges-bottom.png",
+        "390x844-ranges-top.png",
+        "390x844-first-learning.png",
+        "390x844-add-ranges-bottom.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "grades": [
+        {
+          "name": "年少",
+          "width": 147,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "年中",
+          "width": 147,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "年長",
+          "width": 147,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 1 年生",
+          "width": 147,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 2 年生",
+          "width": 147,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 3 年生",
+          "width": 147,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 4 年生",
+          "width": 147,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 5 年生",
+          "width": 147,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 6 年生",
+          "width": 147,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        }
+      ],
+      "ranges": [
+        {
+          "name": "数をかぞえる・くらべる",
+          "width": 304,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "足し算まで",
+          "width": 304,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "引き算まで",
+          "width": 304,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "筆算（2けたのたし算・ひき算）",
+          "width": 304,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "かけ算（九九）",
+          "width": 304,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "わり算（筆算・あまりまで）",
+          "width": 304,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小数（たし算・ひき算）",
+          "width": 304,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小数（かけ算・わり算）",
+          "width": 304,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "分数（たし算・ひき算）",
+          "width": 304,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "分数（かけ算・わり算）",
+          "width": 304,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "割合・平均・比まで",
+          "width": 304,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "速さまで",
+          "width": 304,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        }
+      ],
+      "addGrades": [
+        {
+          "name": "年少さん",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "年中さん",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "年長さん",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 1 年生",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 2 年生",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 3 年生",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 4 年生",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 5 年生",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 6 年生",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        }
+      ],
+      "addRanges": [
+        {
+          "name": "数をかぞえる・くらべる→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "足し算まで→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "引き算まで→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "筆算（2けたのたし算・ひき算）→",
+          "width": 316,
+          "height": 90,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "かけ算（九九）→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "わり算（筆算・あまりまで）→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小数（たし算・ひき算）→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小数（かけ算・わり算）→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "分数（たし算・ひき算）→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "分数（かけ算・わり算）→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "割合・平均・比まで→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "速さまで→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        }
+      ],
+      "placement": {
+        "first": [
+          2,
+          18,
+          19
+        ],
+        "added": [
+          6,
+          24,
+          25
+        ]
+      }
+    },
+    {
+      "name": "768x1024",
+      "captures": [
+        "768x1024-grade.png",
+        "768x1024-ranges-bottom.png",
+        "768x1024-ranges-top.png",
+        "768x1024-first-learning.png",
+        "768x1024-add-ranges-bottom.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "grades": [
+        {
+          "name": "年少",
+          "width": 167,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "年中",
+          "width": 167,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "年長",
+          "width": 167,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 1 年生",
+          "width": 167,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 2 年生",
+          "width": 167,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 3 年生",
+          "width": 167,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 4 年生",
+          "width": 167,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 5 年生",
+          "width": 167,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 6 年生",
+          "width": 167,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        }
+      ],
+      "ranges": [
+        {
+          "name": "数をかぞえる・くらべる",
+          "width": 344,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "足し算まで",
+          "width": 344,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "引き算まで",
+          "width": 344,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "筆算（2けたのたし算・ひき算）",
+          "width": 344,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "かけ算（九九）",
+          "width": 344,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "わり算（筆算・あまりまで）",
+          "width": 344,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小数（たし算・ひき算）",
+          "width": 344,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小数（かけ算・わり算）",
+          "width": 344,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "分数（たし算・ひき算）",
+          "width": 344,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "分数（かけ算・わり算）",
+          "width": 344,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "割合・平均・比まで",
+          "width": 344,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "速さまで",
+          "width": 344,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        }
+      ],
+      "addGrades": [
+        {
+          "name": "年少さん",
+          "width": 172,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "年中さん",
+          "width": 172,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "年長さん",
+          "width": 172,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 1 年生",
+          "width": 172,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 2 年生",
+          "width": 172,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 3 年生",
+          "width": 172,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 4 年生",
+          "width": 172,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 5 年生",
+          "width": 172,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 6 年生",
+          "width": 172,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        }
+      ],
+      "addRanges": [
+        {
+          "name": "数をかぞえる・くらべる→",
+          "width": 356,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "足し算まで→",
+          "width": 356,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "引き算まで→",
+          "width": 356,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "筆算（2けたのたし算・ひき算）→",
+          "width": 356,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "かけ算（九九）→",
+          "width": 356,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "わり算（筆算・あまりまで）→",
+          "width": 356,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小数（たし算・ひき算）→",
+          "width": 356,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小数（かけ算・わり算）→",
+          "width": 356,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "分数（たし算・ひき算）→",
+          "width": 356,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "分数（かけ算・わり算）→",
+          "width": 356,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "割合・平均・比まで→",
+          "width": 356,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "速さまで→",
+          "width": 356,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        }
+      ],
+      "placement": {
+        "first": [
+          2,
+          18,
+          19
+        ],
+        "added": [
+          6,
+          24,
+          25
+        ]
+      }
+    },
+    {
+      "name": "390x640",
+      "captures": [
+        "390x640-grade.png",
+        "390x640-ranges-bottom.png",
+        "390x640-ranges-top.png",
+        "390x640-first-learning.png",
+        "390x640-add-ranges-bottom.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "grades": [
+        {
+          "name": "年少",
+          "width": 151,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "年中",
+          "width": 151,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "年長",
+          "width": 151,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 1 年生",
+          "width": 151,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 2 年生",
+          "width": 151,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 3 年生",
+          "width": 151,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 4 年生",
+          "width": 151,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 5 年生",
+          "width": 151,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 6 年生",
+          "width": 151,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        }
+      ],
+      "ranges": [
+        {
+          "name": "数をかぞえる・くらべる",
+          "width": 312,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "足し算まで",
+          "width": 312,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "引き算まで",
+          "width": 312,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "筆算（2けたのたし算・ひき算）",
+          "width": 312,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "かけ算（九九）",
+          "width": 312,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "わり算（筆算・あまりまで）",
+          "width": 312,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小数（たし算・ひき算）",
+          "width": 312,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小数（かけ算・わり算）",
+          "width": 312,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "分数（たし算・ひき算）",
+          "width": 312,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "分数（かけ算・わり算）",
+          "width": 312,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "割合・平均・比まで",
+          "width": 312,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "速さまで",
+          "width": 312,
+          "height": 54,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        }
+      ],
+      "addGrades": [
+        {
+          "name": "年少さん",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "年中さん",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "年長さん",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 1 年生",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 2 年生",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 3 年生",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 4 年生",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 5 年生",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小学 6 年生",
+          "width": 152,
+          "height": 64,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        }
+      ],
+      "addRanges": [
+        {
+          "name": "数をかぞえる・くらべる→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "足し算まで→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "引き算まで→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "筆算（2けたのたし算・ひき算）→",
+          "width": 316,
+          "height": 90,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "かけ算（九九）→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "わり算（筆算・あまりまで）→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小数（たし算・ひき算）→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "小数（かけ算・わり算）→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "分数（たし算・ひき算）→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "分数（かけ算・わり算）→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "割合・平均・比まで→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        },
+        {
+          "name": "速さまで→",
+          "width": 316,
+          "height": 62,
+          "visible": true,
+          "hit": true,
+          "disabled": false
+        }
+      ],
+      "placement": {
+        "first": [
+          2,
+          18,
+          19
+        ],
+        "added": [
+          6,
+          24,
+          25
+        ]
+      }
+    }
+  ],
+  "pass": true,
+  "sourceEnd": {
+    "src/domain/user/onboarding.ts": "ba919e66e01065d80ca9ec7e43a507da0edd30856000cbd4bf5beffb6d186c3b",
+    "src/pages/Onboarding.tsx": "e783dc8ad81d81786a826f83fe60bbfd4144deaa3e55d95e33a45ea030413067",
+    "src/components/island/IslandOnboarding.tsx": "0d3df7ff90f341830cced16f3abebadddb381f551731d2209a87b0414322c8be",
+    "src/components/island/IslandOnboarding.css": "206178e73ae22774d28da7c8a7caa4e949bdf80a1c80d97dd527f15bca90e870"
+  }
+}

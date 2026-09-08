@@ -1,0 +1,275 @@
+import assert from 'node:assert/strict';
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { chromium } from 'playwright';
+import { seedLearningProfile, expectedLearningModel } from './island-learning-fixtures.mjs';
+import { readNative, runtimeMetadata, waitReady } from './island-e2e-helpers.mjs';
+
+const base = process.env.SANSU_AUTO_ANSWER_URL || 'http://127.0.0.1:5316';
+const out = path.resolve(process.env.SANSU_AUTO_ANSWER_OUTPUT || 'output/playwright/answer-completion');
+await fs.mkdir(out, { recursive: true });
+await assert.rejects(fs.access(path.join(out, 'report.json')), { code: 'ENOENT' }, 'Use a fresh output directory');
+const report = { target: base, startedAt: new Date().toISOString(), scenarios: [], pass: false,
+    scope: 'Production preview, disposable native profile/memory fixtures, actual planner/input/writer. Synthetic same-task bursts and native transaction abort are explicit diagnostics. Author layout checks do not prove child comprehension.' };
+const files = ['src/domain/math/answerCompletion.ts', 'src/components/domain/LearningAnswerForm.tsx', 'src/components/domain/TenKey.tsx',
+    'src/components/domain/TenKey.css', 'src/components/domain/answerConfirmGuidance.ts', 'src/pages/Study.tsx', 'src/pages/StudyLayout.tsx', 'src/hooks/useHissanSession.ts'];
+const hashes = async () => Promise.all(files.map(async file => ({ file, sha256: createHash('sha256').update(await fs.readFile(file)).digest('hex') })));
+report.sourceStart = await hashes();
+const browser = await chromium.launch();
+const key = (page, text) => page.locator('.park-keypad').getByRole('button', { name: text === '.' ? 'しょうすうてん' : text, exact: true });
+const confirm = page => page.locator('[data-keypad-submit]');
+const form = page => page.locator('.park-answer');
+async function ready(page, plan) {
+    await page.waitForFunction(({ id, revision }) => {
+        const root = document.querySelector('[data-island-plan-id]');
+        return root?.getAttribute('data-island-plan-id') === id && Number(root.getAttribute('data-island-plan-revision')) === revision
+            && root.getAttribute('data-input-ready') === 'true';
+    }, { id: plan.id, revision: plan.revision });
+}
+async function changed(page, before) {
+    await page.waitForFunction(revision => Number(document.querySelector('[data-island-plan-revision]')?.getAttribute('data-island-plan-revision')) > revision, before.plan.revision);
+    const after = await readNative(page, before.plan.profileId);
+    await ready(page, after.plan);
+    return after;
+}
+async function type(page, value, touch) {
+    for (const char of value) {
+        if (touch) await key(page, char).tap(); else await page.keyboard.press(char);
+    }
+}
+async function capture(page, row, state) {
+    const name = `${row.name}-${state}.png`;
+    await page.screenshot({ path: path.join(out, name), animations: 'disabled', fullPage: true });
+    row.captures.push(name);
+}
+async function stable(page, state) {
+    const after = await readNative(page, state.plan.profileId);
+    assert.equal(after.plan.revision, state.plan.revision, 'Draft entry does not submit');
+    assert.deepEqual(after.logs, state.logs);
+}
+async function manualAnswer(page, state, touch) {
+    const answer = state.plan.slots[state.plan.cursor].problem.correctAnswer;
+    const values = Array.isArray(answer) ? answer : [answer];
+    for (const [i, value] of values.entries()) {
+        if (values.length > 1) await page.locator('.park-input').nth(i).click();
+        await type(page, value, touch);
+    }
+}
+async function confirmManually(page, touch) {
+    if (touch) await confirm(page).tap(); else await page.keyboard.press('Enter');
+}
+
+try {
+    for (const width of [390, 768]) {
+        const touch = width === 390;
+        const cases = [
+            { skill: 'sub_tiny', type: 'number', kind: 'single' },
+            { skill: 'sub_tiny', type: 'number', kind: 'save-retry' },
+            { skill: 'add_2d1d_nc', type: 'number', kind: 'manual' },
+            { skill: 'dec_add', type: 'number', kind: 'decimal' },
+            { skill: 'frac_add_same', type: 'multi-number', kind: 'fraction' },
+            { skill: 'add_2d2d_c', type: 'hissan', kind: 'written' },
+            { skill: 'mul_2d1d', type: 'hissan', kind: 'written' },
+            { skill: 'div_2d1d_exact', type: 'hissan', kind: 'written' },
+        ];
+        for (const scenario of cases) {
+            const context = await browser.newContext({ viewport: { width, height: width === 390 ? 844 : 1024 }, hasTouch: touch, serviceWorkers: 'block' });
+            const page = await context.newPage(); page.setDefaultTimeout(15000);
+            const row = { name: `${width}-${scenario.skill}-${scenario.kind}`, ...scenario, captures: [], errors: [], pass: false };
+            report.scenarios.push(row); page.on('pageerror', error => row.errors.push(error.message));
+            try {
+                if (scenario.kind === 'save-retry') await page.addInitScript(() => {
+                    const put = IDBObjectStore.prototype.put;
+                    window.__autoAnswerAbortCount = 0;
+                    IDBObjectStore.prototype.put = function(value, ...args) {
+                        const request = put.call(this, value, ...args);
+                        if (this.name === 'islandPlans' && window.__abortAutoAnswer) {
+                            window.__abortAutoAnswer = false; window.__autoAnswerAbortCount++; this.transaction.abort();
+                        }
+                        return request;
+                    };
+                });
+                await page.goto(`${base}/#/island`);
+                await page.waitForURL('**/#/onboarding');
+                if (!report.manifest) report.manifest = await page.evaluate(async () => (await fetch('/version.json')).json());
+                const profileId = await seedLearningProfile(page, scenario);
+                await page.goto(`${base}/#/island`); await waitReady(page);
+                if (scenario.kind === 'manual') await capture(page, row, 'home');
+                await page.locator('.island-start').click();
+                await page.locator('[data-island-plan-id][data-input-ready="true"]').waitFor();
+                let state = await readNative(page, profileId); await ready(page, state.plan);
+                assert.equal(state.plan.slots[0].problem.categoryId, scenario.skill);
+                assert.equal(await form(page).getAttribute('data-input-type'), scenario.type);
+                row.runtime = await runtimeMetadata(page);
+                assert.equal(row.runtime.version, report.manifest.version);
+                await capture(page, row, 'empty');
+                const positions = await page.locator('.park-keypad button').evaluateAll(buttons => buttons.map(button => ({ label: button.getAttribute('aria-label'), x: button.getBoundingClientRect().x, y: button.getBoundingClientRect().y })));
+                assert.equal(await confirm(page).isDisabled(), true);
+
+                if (scenario.kind === 'save-retry') {
+                    await page.evaluate(() => { window.__abortAutoAnswer = true; });
+                    await type(page, state.plan.slots[0].problem.correctAnswer, touch);
+                    await page.locator('.island-error').waitFor();
+                    await page.locator('[data-keypad-submit][data-confirmation-mode="manual"]:enabled').waitFor();
+                    await stable(page, state);
+                    assert.equal(await page.evaluate(() => window.__autoAnswerAbortCount), 1);
+                    assert.equal(await page.locator('.park-input span').innerText(), state.plan.slots[0].problem.correctAnswer);
+                    await capture(page, row, 'retained-draft');
+                    await confirmManually(page, touch); state = await changed(page, state);
+                    assert.equal(state.plan.cursor, 1); assert.equal(state.logs.length, 1); assert.equal(state.logs[0].result, 'correct');
+                } else if (scenario.kind === 'single') {
+                    assert.equal(await form(page).getAttribute('data-answer-completion'), 'automatic');
+                    // One wrong digit must be recorded too, without Enter.
+                    await type(page, '9', touch); state = await changed(page, state);
+                    assert.equal(state.plan.cursor, 0); assert.equal(state.logs.length, 1); assert.equal(state.logs[0].result, 'incorrect');
+                    await capture(page, row, 'incorrect');
+                    // An explicit synthetic burst exercises the synchronous latch and repeat filtering.
+                    const answer = state.plan.slots[0].problem.correctAnswer;
+                    await page.evaluate(answer => {
+                        window.dispatchEvent(new KeyboardEvent('keydown', { key: answer, repeat: true, bubbles: true }));
+                        window.dispatchEvent(new KeyboardEvent('keydown', { key: '.', bubbles: true }));
+                    }, answer);
+                    await stable(page, state);
+                    await page.evaluate(answer => {
+                        for (const key of [answer, answer, 'Enter', '9']) window.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
+                    }, answer);
+                    state = await changed(page, state);
+                    assert.equal(state.plan.cursor, 1); assert.equal(state.logs.length, 2);
+                    assert((await page.locator('.park-input span').allTextContents()).every(value => value === '□'), 'The next answer fields remain empty (the next problem may also be a choice)');
+                    row.logs = state.logs;
+                    assert.equal(state.logs.find(log => log.result === 'correct').learningEvidence.assistance, 'assisted');
+                } else if (scenario.kind === 'written') {
+                    assert.equal(await form(page).getAttribute('data-answer-completion'), 'automatic');
+                    const grid = expectedLearningModel(state.plan.slots[0]); assert(grid);
+                    row.steps = grid.steps.length;
+                    let incorrectRows = 0;
+                    for (const [index, step] of grid.steps.entries()) {
+                        if (index === 0 && grid.steps.length > 1) {
+                            const wrong = step.correctValues.map((value, i) => i === 0 ? value === '9' ? '8' : '9' : value);
+                            await type(page, wrong.join(''), touch); state = await changed(page, state);
+                            assert.equal(state.plan.cursor, 0); assert.equal(state.plan.slots[0].hissanStep ?? 0, 0);
+                            assert.equal(state.logs.length, 1, 'The existing Island writer records an incorrect row');
+                            assert.equal(state.logs[0].result, 'incorrect');
+                            assert.notEqual(state.logs[0].learningEvidence?.completion, 'whole-problem', 'An incorrect row does not become whole-problem evidence');
+                            incorrectRows = 1;
+                        }
+                        if (step.correctValues.length > 1) {
+                            await type(page, step.correctValues[0], touch); await stable(page, state);
+                        }
+                        await type(page, step.correctValues.slice(step.correctValues.length > 1 ? 1 : 0).join(''), touch);
+                        state = await changed(page, state);
+                        if (index < grid.steps.length - 1) {
+                            assert.equal(state.plan.cursor, 0); assert.equal(state.plan.slots[0].hissanStep, index + 1);
+                            assert.equal(state.logs.length, incorrectRows, 'A completed intermediate row is not a whole answer');
+                            await page.keyboard.press('Enter'); await stable(page, state);
+                        }
+                    }
+                    assert.equal(state.plan.cursor, 1); assert.equal(state.logs.length, incorrectRows + 1); assert.equal(state.logs.filter(log => log.result === 'correct').length, 1);
+                } else {
+                    assert.equal(await form(page).getAttribute('data-answer-completion'), 'manual');
+                    if (scenario.kind === 'decimal') {
+                        await type(page, '1.', touch); assert.equal(await confirm(page).isDisabled(), true); await stable(page, state);
+                        await page.getByRole('button', { name: 'こたえを けす', exact: true }).click();
+                    }
+                    await manualAnswer(page, state, touch); await stable(page, state);
+                    assert.equal(await confirm(page).getAttribute('data-confirmation-state'), 'ready');
+                    assert.equal(await confirm(page).getAttribute('data-confirmation-cue'), 'intro');
+                    row.readyStyle = await confirm(page).evaluate(button => ({ background: getComputedStyle(button).backgroundColor, border: getComputedStyle(button).borderWidth,
+                        ring: getComputedStyle(button, '::after').animationName, iterations: getComputedStyle(button, '::after').animationIterationCount }));
+                    assert.equal(row.readyStyle.ring, 'answer-confirm-ring'); assert.equal(row.readyStyle.iterations, '2');
+                    assert.equal(row.readyStyle.border, '2px');
+                    await capture(page, row, 'confirm-needed');
+                    if (scenario.kind === 'manual') {
+                        // Static state survives reduced motion and all digit/action keys keep their positions.
+                        await page.emulateMedia({ reducedMotion: 'reduce' });
+                        assert.equal(await confirm(page).evaluate(button => getComputedStyle(button, '::after').animationName), 'none');
+                        await capture(page, row, 'reduced-motion');
+                        await page.emulateMedia({ reducedMotion: 'no-preference' });
+                        const afterPositions = await page.locator('.park-keypad button').evaluateAll(buttons => buttons.map(button => ({ label: button.getAttribute('aria-label'), x: button.getBoundingClientRect().x, y: button.getBoundingClientRect().y })));
+                        assert.deepEqual(afterPositions, positions);
+                        await page.getByRole('button', { name: 'こたえを けす', exact: true }).click(); await type(page, '9', touch);
+                        await confirmManually(page, touch); state = await changed(page, state);
+                        assert.equal(state.plan.cursor, 0); assert.equal(state.logs[0].result, 'incorrect');
+                        await manualAnswer(page, state, touch); await stable(page, state);
+                        assert.equal(await confirm(page).getAttribute('data-confirmation-cue'), null, 'Demonstrated confirmation no longer animates');
+                        assert.equal(await confirm(page).getAttribute('data-confirmation-state'), 'ready');
+                        await capture(page, row, 'learned-static');
+                        await page.reload(); await waitReady(page);
+                        if (await page.locator('.island-page').getAttribute('data-mode') !== 'learning') await page.locator('.island-start').click();
+                        await ready(page, state.plan);
+                        await manualAnswer(page, state, touch); await stable(page, state);
+                        assert.equal(await confirm(page).getAttribute('data-confirmation-cue'), null, 'Reopening the app remembers demonstrated confirmation');
+                        assert.equal(await confirm(page).getAttribute('data-confirmation-state'), 'ready');
+                        await capture(page, row, 'reopened-static');
+                    }
+                    await confirmManually(page, touch); state = await changed(page, state);
+                    assert.equal(state.plan.cursor, 1); assert(state.logs.some(log => log.result === 'correct'));
+                }
+                await capture(page, row, 'next-question');
+                assert.deepEqual(row.errors, []); row.pass = true;
+                console.log(`PASS ${row.name}`);
+            } catch (error) {
+                row.error = error.stack; await capture(page, row, 'failure').catch(() => {}); throw error;
+            } finally { await context.close(); }
+        }
+    }
+    // The separate Study page uses the same completion rule through its real
+    // review route, so the island launch redirect cannot hide this regression.
+    for (const width of [390, 768]) for (const scenario of [
+        { skill: 'sub_tiny', type: 'number', kind: 'single' },
+        { skill: 'sub_tiny', type: 'number', kind: 'wrong' },
+        { skill: 'add_2d1d_nc', type: 'number', kind: 'manual' },
+        { skill: 'add_2d2d_nc', type: 'hissan', kind: 'written' },
+    ]) {
+        const context = await browser.newContext({ viewport: { width, height: width === 390 ? 844 : 1024 }, hasTouch: width === 390, serviceWorkers: 'block' });
+        const page = await context.newPage(); page.setDefaultTimeout(15000);
+        const row = { name: `study-${width}-${scenario.kind}`, ...scenario, captures: [], errors: [], pass: false };
+        report.scenarios.push(row); page.on('pageerror', error => row.errors.push(error.message));
+        try {
+            await page.goto(`${base}/#/settings`); await page.waitForURL('**/#/onboarding');
+            const profileId = await seedLearningProfile(page, scenario);
+            await page.goto(`${base}/#/study?session=review&force_review=1&focus_subject=math&focus_ids=${scenario.skill}`);
+            const first = page.locator('[data-study-index="0"][data-feedback="none"]'); await first.waitFor();
+            const question = await first.getAttribute('data-question-text');
+            const story = scenario.skill === 'sub_tiny' ? question.match(/(\d+)こ[\s\S]*?(\d+)こ/) : undefined;
+            const match = question.match(/(\d+)\s*([+−-])\s*(\d+)/) ?? (story ? [story[0], story[1], '-', story[2]] : undefined);
+            assert(match, question);
+            const answer = String(match[2] === '+' ? Number(match[1]) + Number(match[3]) : Number(match[1]) - Number(match[3]));
+            const before = await readNative(page, profileId); assert.equal(before.logs.length, 0);
+            await capture(page, row, 'empty');
+            const digit = value => page.getByRole('group', { name: 'すうじ キーパッド' }).getByRole('button', { name: value, exact: true });
+            const enterDigits = async value => { for (const char of value) { if (width === 390) await digit(char).tap(); else await page.keyboard.press(char); } };
+            if (scenario.kind === 'written') {
+                const grid = expectedLearningModel({ problem: { categoryId: scenario.skill, questionText: question, correctAnswer: answer } }); assert(grid);
+                assert.equal(await confirm(page).getAttribute('data-confirmation-mode'), 'automatic');
+                for (const step of grid.steps) {
+                    await enterDigits(step.correctValues.join(''));
+                }
+            } else {
+                await enterDigits(scenario.kind === 'wrong' ? '9' : answer);
+                if (scenario.kind === 'manual') {
+                    assert.equal((await readNative(page, profileId)).logs.length, 0);
+                    assert.equal(await confirm(page).getAttribute('data-confirmation-state'), 'ready');
+                    await capture(page, row, 'confirm-needed'); await confirmManually(page, width === 390);
+                }
+            }
+            if (scenario.kind === 'wrong') await page.locator('[data-study-index="0"][data-feedback="incorrect"]').waitFor();
+            else await page.locator('[data-study-index="1"][data-feedback="none"]').waitFor();
+            // The real save can finish after the feedback's first paint.
+            await page.waitForFunction(async profileId => {
+                const db = await new Promise((resolve, reject) => { const r = indexedDB.open('SansuDatabase'); r.onsuccess = () => resolve(r.result); r.onerror = () => reject(r.error); });
+                const logs = await new Promise(resolve => { const r = db.transaction('logs').objectStore('logs').getAll(); r.onsuccess = () => resolve(r.result); }); db.close();
+                return logs.filter(log => log.profileId === profileId).length === 1;
+            }, profileId);
+            const after = await readNative(page, profileId); assert.equal(after.logs.length, 1);
+            assert.equal(after.logs[0].result, scenario.kind === 'wrong' ? 'incorrect' : 'correct');
+            assert.equal(after.logs[0].itemId, scenario.skill);
+            await capture(page, row, 'saved'); assert.deepEqual(row.errors, []); row.pass = true; console.log(`PASS ${row.name}`);
+        } catch (error) { row.error = error.stack; await capture(page, row, 'failure').catch(() => {}); throw error; }
+        finally { await context.close(); }
+    }
+    report.sourceEnd = await hashes(); assert.deepEqual(report.sourceEnd, report.sourceStart); report.pass = true;
+} finally {
+    await fs.writeFile(path.join(out, 'report.json'), JSON.stringify(report, null, 2)); await browser.close();
+}

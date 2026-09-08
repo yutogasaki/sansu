@@ -1,0 +1,151 @@
+{
+  "manifest": {
+    "version": "463508f-local-learning-focus:27916efa-a7f9-4982-b9a2-4d4544e9d8c8",
+    "revision": "463508f-local-learning-focus",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "legacy"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-living-v5",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "target": "http://127.0.0.1:5389",
+  "tests": [
+    {
+      "engine": "chromium",
+      "startedAt": "2026-09-08T11:55:52.007Z",
+      "finishedAt": "2026-09-08T11:56:50.224Z",
+      "pass": true,
+      "scope": "Isolated native profile/memory fixtures with normal reserved problems. Real touch/keyboard input and viewport rotation. Local browser layout evidence, not physical iPad or child observation.",
+      "checks": 196,
+      "scenarios": [
+        {
+          "name": "number",
+          "pass": true,
+          "answerSteps": 1,
+          "errors": [],
+          "minKeyHeight": 47.5
+        },
+        {
+          "name": "base-ten",
+          "pass": true,
+          "answerSteps": 1,
+          "errors": [],
+          "minKeyHeight": 47.5
+        },
+        {
+          "name": "fraction",
+          "pass": true,
+          "answerSteps": 1,
+          "errors": [],
+          "minKeyHeight": 47.5
+        },
+        {
+          "name": "written-add",
+          "pass": true,
+          "answerSteps": 1,
+          "errors": [],
+          "minKeyHeight": 47.5
+        },
+        {
+          "name": "written-multiply",
+          "pass": true,
+          "answerSteps": 3,
+          "errors": [],
+          "minKeyHeight": 47.5
+        },
+        {
+          "name": "written-divide",
+          "pass": true,
+          "answerSteps": 6,
+          "errors": [],
+          "minKeyHeight": 47.5
+        },
+        {
+          "name": "vocabulary",
+          "pass": true,
+          "answerSteps": 1,
+          "errors": [],
+          "minKeyHeight": null
+        }
+      ]
+    },
+    {
+      "engine": "webkit",
+      "startedAt": "2026-09-08T11:55:52.039Z",
+      "finishedAt": "2026-09-08T11:56:42.515Z",
+      "pass": true,
+      "scope": "Isolated native profile/memory fixtures with normal reserved problems. Real touch/keyboard input and viewport rotation. Local browser layout evidence, not physical iPad or child observation.",
+      "checks": 196,
+      "scenarios": [
+        {
+          "name": "number",
+          "pass": true,
+          "answerSteps": 1,
+          "errors": [],
+          "minKeyHeight": 47.5
+        },
+        {
+          "name": "base-ten",
+          "pass": true,
+          "answerSteps": 1,
+          "errors": [],
+          "minKeyHeight": 47.5
+        },
+        {
+          "name": "fraction",
+          "pass": true,
+          "answerSteps": 1,
+          "errors": [],
+          "minKeyHeight": 47.5
+        },
+        {
+          "name": "written-add",
+          "pass": true,
+          "answerSteps": 1,
+          "errors": [],
+          "minKeyHeight": 47.5
+        },
+        {
+          "name": "written-multiply",
+          "pass": true,
+          "answerSteps": 3,
+          "errors": [],
+          "minKeyHeight": 47.5
+        },
+        {
+          "name": "written-divide",
+          "pass": true,
+          "answerSteps": 6,
+          "errors": [],
+          "minKeyHeight": 47.5
+        },
+        {
+          "name": "vocabulary",
+          "pass": true,
+          "answerSteps": 1,
+          "errors": [],
+          "minKeyHeight": null
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "src/components/island/IslandLearningFocus.css",
+      "sha256": "5564e2285647bbedf7a4f1fc30f3842a9d1538f29bbc5558a62f4f9e47ce3024"
+    },
+    {
+      "path": "tools/e2e-island-learning-layout.mjs",
+      "sha256": "39921b4ecee51ab59900360a5138cb24276996732a962790f1f54779500f472e"
+    }
+  ]
+}

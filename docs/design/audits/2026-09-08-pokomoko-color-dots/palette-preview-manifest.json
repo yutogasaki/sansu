@@ -1,0 +1,60 @@
+{
+  "target": "http://127.0.0.1:5376",
+  "type": "actual app with palette-only preview overrides",
+  "captures": [
+    {
+      "file": "previews/phone-a-teal-amber.png",
+      "palette": "a-teal-amber",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "temporaryCss": true
+    },
+    {
+      "file": "previews/phone-b-ivory-grape.png",
+      "palette": "b-ivory-grape",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "temporaryCss": true
+    },
+    {
+      "file": "previews/phone-c-grape-coral.png",
+      "palette": "c-grape-coral",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "temporaryCss": true
+    },
+    {
+      "file": "previews/tablet-a-teal-amber.png",
+      "palette": "a-teal-amber",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "temporaryCss": true
+    },
+    {
+      "file": "previews/tablet-b-ivory-grape.png",
+      "palette": "b-ivory-grape",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "temporaryCss": true
+    },
+    {
+      "file": "previews/tablet-c-grape-coral.png",
+      "palette": "c-grape-coral",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "temporaryCss": true
+    }
+  ]
+}

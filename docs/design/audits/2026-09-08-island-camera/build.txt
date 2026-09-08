@@ -1,0 +1,9 @@
+
+> pokko-fushigi-zukan-app@0.0.0 build
+> tsc -b && vite build && npm run assets:check
+
+src/components/island/IslandStage.tsx(64,37): error TS7006: Parameter 'action' implicitly has an 'any' type.
+src/components/island/IslandStage.tsx(65,45): error TS7006: Parameter 'id' implicitly has an 'any' type.
+src/components/island/IslandStage.tsx(66,41): error TS7006: Parameter 'id' implicitly has an 'any' type.
+src/components/island/IslandStage.tsx(67,39): error TS7006: Parameter 'kind' implicitly has an 'any' type.
+src/components/island/IslandStage.tsx(76,79): error TS2554: Expected 2-3 arguments, but got 4.

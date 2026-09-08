@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { createHash } from 'node:crypto';
+import { IslandCameraControls } from './islandCameraControls';
 import { describe, expect, it } from 'vitest';
 import type { IslandAccentId, IslandCosmetics, IslandThemeId } from '../../../domain/island/customization';
 import { createIsland, getIslandLands, ISLAND_ITEMS, isValidIslandPlacement } from '../../../domain/island/catalog';
@@ -20,9 +22,23 @@ function meshes(object: THREE.Object3D) {
 }
 function shape(object: THREE.Object3D) {
     object.updateMatrixWorld(true);
-    return meshes(object).map(child => ({ matrix: child.matrixWorld.toArray(),
-        positions: Array.from(child.geometry.getAttribute('position').array),
-        colors: child.geometry.getAttribute('color') ? Array.from(child.geometry.getAttribute('color').array) : null }));
+    // Surface batching may differ while every actual rendered vertex and color
+    // stays identical. Compare those surfaces instead of incidental mesh order.
+    const vertices: string[] = [];
+    for (const child of meshes(object)) {
+        const positions = child.geometry.getAttribute('position'), colors = child.geometry.getAttribute('color');
+        const material = child.material as THREE.MeshStandardMaterial;
+        const color = material.color ?? new THREE.Color('white');
+        const map = material.map?.image?.data;
+        const texture = map ? createHash('sha256').update(map).digest('hex') : '';
+        for (let i = 0; i < positions.count; i++) {
+            const point = new THREE.Vector3().fromBufferAttribute(positions, i).applyMatrix4(child.matrixWorld);
+            const rgb = colors && material.vertexColors ? [colors.getX(i), colors.getY(i), colors.getZ(i)] : [1, 1, 1];
+            vertices.push([...point.toArray(), color.r * rgb[0], color.g * rgb[1], color.b * rgb[2]]
+                .map(value => Math.round(value * 1e5)).join(',') + ':' + texture);
+        }
+    }
+    return createHash('sha256').update(vertices.sort().join(';')).digest('hex');
 }
 function stage(grown = false): IslandStageState {
     const island = createIsland('cosmetics-rendering', 1);
@@ -32,13 +48,13 @@ function stage(grown = false): IslandStageState {
 }
 
 describe('owned cosmetic scenery', () => {
-    it('leaves the default scene geometry and rooted tree exactly as authored', () => {
-        const world = new IslandCosmeticScenery(), materials = new IslandMaterials('moon-garden');
+    it.each(themes)('leaves the %s legacy scene geometry and rooted tree exactly as authored', themeId => {
+        const world = new IslandCosmeticScenery({ themeId, accentId: null }), materials = new IslandMaterials(themeId);
         const scenery = makeScenery(materials), tree = makeStarTree(materials);
         try {
             expect(shape(world.scenery)).toEqual(shape(scenery));
             expect(shape(world.tree)).toEqual(shape(tree));
-            expect(world.environment.children).toHaveLength(0);
+            expect(world.environment.children.length === 0).toBe(themeId === 'moon-garden');
             expect(world.accents.children).toHaveLength(0);
             expect(sameIslandCosmetics(undefined, { themeId: 'moon-garden', accentId: null })).toBe(true);
             expect(sameIslandCosmetics({ themeId: 'starry', accentId: null }, { themeId: 'starry', accentId: 'candy-flags' })).toBe(false);
@@ -136,7 +152,7 @@ describe('owned cosmetic scenery', () => {
                     }
                 }
                 expect(residentMinimum, `resident footprint at land ${expansionLevel}`).toBeGreaterThan(RESIDENT_FOOTPRINT);
-                expect(furnitureMinimum.size).toBe(6);
+                expect([...furnitureMinimum.keys()].sort()).toEqual(Object.keys(ISLAND_ITEMS).sort());
                 expect(Math.min(...furnitureMinimum.values()), `all furniture footprints at land ${expansionLevel}`).toBeGreaterThan(0);
             }
         } finally { world.dispose(); }
@@ -175,7 +191,8 @@ describe('owned cosmetic scenery', () => {
                 const camera = new THREE.OrthographicCamera(-7, 7, 5, -5, .1, 100);
                 const runtime = Object.create(IslandScene.prototype) as { resize(): void };
                 Object.assign(runtime, { camera, host: { clientWidth: width, clientHeight: height },
-                    renderer: { setSize: () => undefined }, expansion: world.expansion, westExpansion: world.westExpansion,
+                    renderer: { setSize: () => undefined, getSize: (size: THREE.Vector2) => size.set(width, height) }, rendererSize: new THREE.Vector2(),
+                    cameraControls: new IslandCameraControls(() => undefined), expansion: world.expansion, westExpansion: world.westExpansion,
                     state, items: new Map(), requestFrame: () => undefined });
                 runtime.resize();
                 world.group.updateMatrixWorld(true);

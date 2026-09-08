@@ -3,6 +3,8 @@ import { IslandMaterials, batch, cylinder, ellipsoid, mesh, pole, star } from '.
 import { roundedBoxGeometry } from './geometry';
 import { sampleFurnitureSwing } from './furnitureVisuals';
 import type { IslandItemKind } from './types';
+import { appearanceBlossom, appearanceFamily } from './appearanceMotifs';
+import { isOptionalFurniture, makeOptionalFurniture } from './optionalFurnitureGeometry';
 export { getFurnitureAnchors } from './furnitureVisuals';
 
 export const ITEM_CAPTIONS: Record<IslandItemKind, string> = {
@@ -12,6 +14,7 @@ export const ITEM_CAPTIONS: Record<IslandItemKind, string> = {
     swing: 'ウサギが ブランコに すわった',
     mushroom: 'カワウソが きのこの いすで ひとやすみ',
     fountain: 'ウサギが ふんすいを のぞいた',
+    telescope: 'ぼうえんきょうで そらを のぞいた', hammock: 'ハンモックで ひとやすみ', 'tea-table': 'おちゃを いっしょに',
 };
 
 function softBox(parent: THREE.Object3D, material: THREE.Material, position: [number, number, number], size: [number, number, number], radius = .035) {
@@ -53,6 +56,8 @@ export function makeFlowers(m: IslandMaterials, count = 3) {
                 [x + side * .042, height * .44 - .2, z], [.075, .019, .035], 10);
             leaf.rotation.z = side * .48;
         }
+        const styled = appearanceBlossom(blooms, m, x, height - .42, z, .14, color);
+        if (!styled) {
         for (let i = 0; i < 5; i++) {
             const a = i * Math.PI * 2 / 5;
             const petal = ellipsoid(blooms, m.get(color), [x + Math.cos(a) * .066, height - .42, z + Math.sin(a) * .066], [.073, .031, .046], 10);
@@ -60,12 +65,14 @@ export function makeFlowers(m: IslandMaterials, count = 3) {
         }
         ellipsoid(blooms, m.get('#d99635'), [x, height - .389, z], [.042, .025, .042], 10);
         ellipsoid(blooms, m.get('#ffe599'), [x - .012, height - .37, z - .008], [.018, .008, .017], 8);
+        }
     });
     [fixed, leaves, blooms].forEach(section => batch(section, m.painted));
     return group;
 }
 
-export function makeFurniture(kind: IslandItemKind, m: IslandMaterials) {
+export function makeFurniture(kind: IslandItemKind, m: IslandMaterials, waterMaterials = m) {
+    if (isOptionalFurniture(kind)) return makeOptionalFurniture(kind, m);
     if (kind === 'flower') return makeFlowers(m);
     const group = new THREE.Group(), fixed = part(group, 'furniture-static');
     const wood = m.get('#b77640'), cutWood = m.get('#e9b768'), green = m.get('#4d7e62');
@@ -125,20 +132,28 @@ export function makeFurniture(kind: IslandItemKind, m: IslandMaterials) {
             ellipsoid(fixed, m.get('#fff0c8'), [x, .613, z], [s, .009, s], 10);
         }
     }
+    if (kind === 'mushroom' && appearanceFamily(m) === 'crystal') {
+        const edge = mesh(fixed, new THREE.CylinderGeometry(.47, .50, .055, 8), m.surface('#b3eff4', .35, .08), [0, .488, 0]);
+        edge.rotation.y = Math.PI / 8;
+    }
+    if (kind === 'mushroom' && appearanceFamily(m) === 'starry') for (const x of [-.32, .32]) {
+        const mark = star(fixed, m.get('#fff0c8'), [x, .557, .14], .06); mark.rotation.x = -Math.PI / 2;
+    }
     if (kind === 'fountain') {
         profile(fixed, m.get('#8eaaa3'), [[0, .015], [.61, .015], [.69, .07], [.69, .14], [.65, .18], [0, .18]], 28);
         profile(fixed, m.get('#d5dac3'), [[.52, .17], [.64, .17], [.68, .235], [.68, .3], [.65, .34], [.56, .34], [.53, .30], [.52, .17]], 28);
         profile(fixed, m.get('#bdcbb7'), [[0, .27], [.18, .27], [.19, .32], [.13, .43], [.12, .58], [.17, .6], [.17, .64], [0, .64]], 20);
-        cylinder(fixed, m.surface('#67c9bf', .24, .06), [0, .292, 0], .537, .015, .537, 28);
+        const surface = part(group, 'fountain-surface');
+        cylinder(surface, waterMaterials.surface('#67c9bf', .24, .06), [0, .292, 0], .537, .015, .537, 28);
         const water = part(group, 'fountain-water', [0, .64, 0]);
-        ellipsoid(water, m.surface('#b3efde', .2, .04, true), [0, .09, 0], [.06, .145, .06], 12);
+        ellipsoid(water, waterMaterials.surface('#b3efde', .2, .04, true), [0, .09, 0], [.06, .145, .06], 12);
         for (let i = 0; i < 3; i++) {
             const angle = i * Math.PI * 2 / 3;
-            ellipsoid(water, m.surface('#b3efde', .2, .04, true), [Math.cos(angle) * .22, -.16, Math.sin(angle) * .22], [.037, .055, .037], 10);
+            ellipsoid(water, waterMaterials.surface('#b3efde', .2, .04, true), [Math.cos(angle) * .22, -.16, Math.sin(angle) * .22], [.037, .055, .037], 10);
         }
         batch(water);
         const ripple = part(group, 'fountain-ripple', [0, .309, 0]);
-        const ring = mesh(ripple, new THREE.TorusGeometry(.30, .01, 5, 28), m.surface('#c0eee1', .3, .04));
+        const ring = mesh(ripple, new THREE.TorusGeometry(.30, .01, 5, 28), waterMaterials.surface('#c0eee1', .3, .04));
         ring.rotation.x = -Math.PI / 2;
     }
     batch(fixed, m.painted);

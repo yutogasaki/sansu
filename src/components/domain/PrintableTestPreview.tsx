@@ -71,7 +71,7 @@ const SheetHeader = ({ testSet, paperId, profileName, answers }: Omit<SheetProps
         <header className="printable-test-sheet-header">
             <div className="printable-test-sheet-heading">
                 <div>
-                    <p className="printable-test-brand">ぽこもこ</p>
+                    <p className="printable-test-brand">ぽこもこと不思議な島</p>
                     <h2>{testSet.subject === "math" ? "さんすう" : "えいご"} テスト{answers ? " — 解答" : ""}</h2>
                 </div>
                 <span className="printable-test-level">レベル {testSet.level} · {testSet.problems.length}問</span>

@@ -1,0 +1,20 @@
+
+ RUN  v2.1.9 /private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-camera-kj4lp_dr
+
+ ✓ src/components/island/three/islandCameraControls.test.ts (6 tests) 7ms
+ ✓ src/components/island/three/sceneFraming.test.ts (15 tests) 2016ms
+ ✓ src/components/island/three/cosmeticScenery.test.ts (16 tests) 6073ms
+   ✓ owned cosmetic scenery > leaves the default scene geometry and rooted tree exactly as authored 618ms
+   ✓ owned cosmetic scenery > changes real canopy silhouettes and house geometry, beyond recoloring 545ms
+   ✓ owned cosmetic scenery > moon-garden preserves true ground, light anchors and growth through every accent 768ms
+   ✓ owned cosmetic scenery > starry preserves true ground, light anchors and growth through every accent 595ms
+   ✓ owned cosmetic scenery > candy preserves true ground, light anchors and growth through every accent 663ms
+   ✓ owned cosmetic scenery > crystal preserves true ground, light anchors and growth through every accent 399ms
+   ✓ owned cosmetic scenery > keeps crystal shore silhouettes clear of all land, bridge, resident and furniture footprints after expansion 365ms
+   ✓ owned cosmetic scenery > disposes each owned geometry, material and texture once without touching resident materials 1119ms
+
+ Test Files  3 passed (3)
+      Tests  37 passed (37)
+   Start at  18:42:38
+   Duration  7.12s (transform 512ms, setup 0ms, collect 1.18s, tests 8.10s, environment 1ms, prepare 460ms)
+

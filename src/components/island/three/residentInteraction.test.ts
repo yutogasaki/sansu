@@ -17,6 +17,25 @@ const enclosedBench = () => {
 };
 
 describe('reachable, replayable island furniture', () => {
+    it('invites the reachable unused rabbit to flowers, otter to water and fox to lights', () => {
+        const candidates: ResidentCandidate[] = [
+            { species: 'otter', visible: true, position: { x: 1.2, z: 1.8 } },
+            { species: 'rabbit', visible: true, position: { x: -1.5, z: 2 } },
+            { species: 'fox', visible: true, position: { x: 2.5, z: 2 } },
+        ];
+        for (const [kind, index] of [['flower', 1], ['fountain', 0], ['lantern', 2]] as const) {
+            const target: IslandStageItem = { id: kind, kind, position: { x: 0, z: 0 }, rotation: 0 };
+            expect(chooseReachableResident(candidates, target, [target], 4)?.index).toBe(index);
+        }
+        const target: IslandStageItem = { id: 'flower', kind: 'flower', position: { x: 0, z: 0 }, rotation: 0 };
+        candidates[1].visible = false;
+        expect(chooseReachableResident(candidates, target, [target], 4)?.index).toBe(0);
+        candidates[1].visible = true; candidates[1].itemId = 'a-different-item';
+        expect(chooseReachableResident(candidates, target, [target], 4)?.index).toBe(0);
+        candidates[1].itemId = undefined;
+        candidates[0].itemId = target.id;
+        expect(chooseReachableResident(candidates, target, [target], 4)).toMatchObject({ index: 0, replay: true });
+    });
     it('gives every visible reachable resident a turn, including the distant fox', () => {
         const target = bench(0, 0);
         let after = -1;

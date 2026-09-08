@@ -23,6 +23,8 @@ import { getDevStudyAdjacentSelection, getDevStudySelectionSummary } from "../co
 import { reachPwaUpdateCheckpoint } from "../pwa";
 import { COLD_OPEN_FIXED_TEN_ID } from "../domain/benchmark/coldOpenFixedTen";
 import { studyLearningEvidence } from '../domain/learning/attemptContext';
+import { canConfirmNumberFields, isSingleDigitMathInput } from '../domain/math/answerCompletion';
+import { acknowledgeAnswerConfirmation } from '../components/domain/answerConfirmGuidance';
 
 type FixedSessionStats = {
     correct: number;
@@ -98,6 +100,7 @@ export const Study: React.FC = () => {
 
     // Processing Lock (Ref) to Prevent Double Submission / Spamming
     const isProcessingRef = React.useRef(false);
+    const automaticBoundaryRef = React.useRef(false);
 
     // 問題表示時刻を記録（回答時間計測用）
     const problemShownAtRef = React.useRef<number>(Date.now());
@@ -408,58 +411,6 @@ export const Study: React.FC = () => {
         fixedSessionCompletionDue,
     ]);
 
-    // Handlers - 全てのフックより前に定義
-    const handleTenKeyInput = useCallback((val: string | number) => {
-        const valStr = val.toString();
-        if (
-            completionPresentation !== "none"
-            || fixedSessionCompletionInFlightRef.current
-            || isInputLocked(feedback, isProcessingRef.current)
-        ) return;
-        playSound("tap");
-
-        if (hissan.isHissanActive) {
-            hissan.handleHissanInput(valStr);
-            return;
-        }
-
-        if (currentProblem?.inputType === 'multi-number' && currentProblem.inputConfig?.fields) {
-            const fields = currentProblem.inputConfig.fields;
-            const currentFieldLength = fields[activeFieldIndex]?.length || 3;
-
-            setUserInputs(prev => {
-                const newInputs = [...prev];
-                if (newInputs[activeFieldIndex].length < currentFieldLength) {
-                    newInputs[activeFieldIndex] += valStr;
-
-                    if (newInputs[activeFieldIndex].length >= currentFieldLength) {
-                        if (activeFieldIndex < fields.length - 1) {
-                            const currentFieldIndex = activeFieldIndex;
-                            scheduleUiTimeout(() => {
-                                setActiveFieldIndex(prev => (
-                                    prev === currentFieldIndex ? currentFieldIndex + 1 : prev
-                                ));
-                            }, 50);
-                        }
-                    }
-                }
-                return newInputs;
-            });
-        } else {
-            if (userInput.length < 8) {
-                setUserInput(prev => prev + valStr);
-            }
-        }
-    }, [
-        completionPresentation,
-        feedback,
-        currentProblem,
-        activeFieldIndex,
-        userInput.length,
-        scheduleUiTimeout,
-        hissan,
-    ]);
-
     const handleBackspace = useCallback(() => {
         if (
             completionPresentation !== "none"
@@ -544,13 +495,17 @@ export const Study: React.FC = () => {
     }, [completionPresentation]);
 
     // Submitting - useEffectより前に定義
-    const handleSubmit = useCallback(async (choiceValue?: string) => {
+    const handleSubmit = useCallback(async (choiceValue?: string, numericValue?: string, automatic = false) => {
         if (
             completionPresentation !== "none"
             || fixedSessionCompletionInFlightRef.current
             || isInputLocked(feedback, isProcessingRef.current)
             || !currentProblem
         ) return;
+        if (!automatic && (hissan.isHissanActive || isSingleDigitMathInput(currentProblem)) && !saveError) return;
+        if (!hissan.isHissanActive && currentProblem.inputType !== 'choice'
+            && !canConfirmNumberFields(currentProblem.inputType === 'multi-number' ? userInputs : [numericValue ?? userInput])) return;
+        if (!automatic && currentProblem.inputType !== 'choice') acknowledgeAnswerConfirmation();
         setSaveError(false);
 
         // 筆算モードの場合はhissanEnterを使う
@@ -590,7 +545,7 @@ export const Study: React.FC = () => {
         const isCorrect = checkAnswer(
             currentProblem.inputType as "number" | "choice" | "multi-number",
             currentProblem.correctAnswer,
-            userInput,
+            numericValue ?? userInput,
             userInputs,
             choiceValue,
         );
@@ -648,6 +603,75 @@ export const Study: React.FC = () => {
         benchmarkId,
         currentIndex,
         queue.length,
+        saveError,
+    ]);
+
+    // Release an automatic row boundary only after the new controls commit.
+    useLayoutEffect(() => { automaticBoundaryRef.current = false; }, [currentProblem, hissan.currentStepIndex, hissan.stepFeedback, hissan.userValues, feedback, saveError]);
+
+    // Handlers - 全てのフックより前に定義
+    const handleTenKeyInput = useCallback((val: string | number) => {
+        const valStr = val.toString();
+        if (!/^[0-9.]$/.test(valStr) || automaticBoundaryRef.current) return;
+        if (isSingleDigitMathInput(currentProblem) && valStr === '.') return;
+        if (
+            completionPresentation !== "none"
+            || fixedSessionCompletionInFlightRef.current
+            || isInputLocked(feedback, isProcessingRef.current)
+        ) return;
+        playSound("tap");
+
+        if (hissan.isHissanActive) {
+            if (hissan.handleHissanInput(valStr)) {
+                automaticBoundaryRef.current = true;
+                void handleSubmit(undefined, undefined, true);
+            }
+            return;
+        }
+
+        if (isSingleDigitMathInput(currentProblem)) {
+            setUserInput(valStr);
+            automaticBoundaryRef.current = true;
+            void handleSubmit(undefined, valStr, true);
+            return;
+        }
+
+        if (currentProblem?.inputType === 'multi-number' && currentProblem.inputConfig?.fields) {
+            const fields = currentProblem.inputConfig.fields;
+            const currentFieldLength = fields[activeFieldIndex]?.length || 3;
+
+            setUserInputs(prev => {
+                const newInputs = [...prev];
+                if (newInputs[activeFieldIndex].length < currentFieldLength) {
+                    newInputs[activeFieldIndex] += valStr;
+
+                    if (newInputs[activeFieldIndex].length >= currentFieldLength) {
+                        if (activeFieldIndex < fields.length - 1) {
+                            const currentFieldIndex = activeFieldIndex;
+                            scheduleUiTimeout(() => {
+                                setActiveFieldIndex(prev => (
+                                    prev === currentFieldIndex ? currentFieldIndex + 1 : prev
+                                ));
+                            }, 50);
+                        }
+                    }
+                }
+                return newInputs;
+            });
+        } else {
+            if (userInput.length < 8) {
+                setUserInput(prev => prev + valStr);
+            }
+        }
+    }, [
+        completionPresentation,
+        feedback,
+        currentProblem,
+        activeFieldIndex,
+        userInput.length,
+        scheduleUiTimeout,
+        hissan,
+        handleSubmit,
     ]);
 
     // スキップ処理（仕様 4.7）
@@ -693,6 +717,10 @@ export const Study: React.FC = () => {
     // PCキーボード操作（仕様 4.2）
     useLayoutEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.isComposing || e.altKey || e.ctrlKey || e.metaKey) return;
+            const target = e.target as HTMLElement;
+            if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return;
+            if (e.repeat && (/^[0-9.]$/.test(e.key) || e.key === 'Enter')) { e.preventDefault(); return; }
             if (profileSettingsStatus !== "ready" || loading) return;
             if (completionPresentation !== "none") return;
             if (feedback !== "none") return;
@@ -886,6 +914,7 @@ export const Study: React.FC = () => {
                 hissanActiveCellPos={hissan.activeCellPos}
                 hissanUserValues={hissan.userValues}
                 hissanStepFeedback={hissan.stepFeedback}
+                hissanCorrecting={hissan.correcting}
                 hissanCanInputDecimal={hissan.canInputDecimal}
                 onHissanCellClick={hissan.handleCellClick}
                 onHissanToggle={hissan.canToggleHissanMode ? () => {

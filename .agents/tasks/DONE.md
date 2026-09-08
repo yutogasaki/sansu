@@ -7,6 +7,26 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 
 ## Current Index
 
+- 2026-09-08: 筆算をEnterなしで連続入力し、正しい数字を残して誤りだけ訂正。固定キー・保存再送、実UI6ケース・2,632テスト・固定80runを確認。公開なし -> `docs/done/2026-09.md`
+
+- 2026-09-08: PWA確認の通信待ちと復旧時cache削除を修正。実二build更新・offline保持・学習保存保護を確認しrelease検証へ追加。公開なし -> `docs/done/2026-09.md`
+
+- 2026-09-08: 学習中の島を非表示にし、全テンキーと支援をスクロールなしで固定。iPad縦横/phoneの固定Chromium・WebKitで計392状態PASS。公開なし -> `docs/done/2026-09.md`
+
+- 2026-09-08: iPad横向きの問題と入力を左右配置し、全キー・支援・続行を画面内に保持。固定Chromium/WebKit20ケース、全2,580テストを確認。公開なし -> `docs/done/2026-09.md`
+
+- 2026-09-08: 初回/追加の算数範囲を九九から速さまでの12択へ拡張。6年生と末尾への縦scroll、開始レベル上限、保存分離を確認。公開なし -> `docs/done/2026-09.md`
+
+- 2026-09-08: 算数の1桁形式と筆算段の自動採点、必要なEnterだけの視覚案内、再起動後も案内の動きを止める端末記憶を実装。単体・固定実画面24ケースPASS、公開なし -> `docs/done/2026-09.md`
+
+- 2026-09-08: 算数のヒントを図の問い・分解の目的・現在の筆算段に合わせて修正。全体2,442件、最終関連67件、実UI21ケースを確認。公開なし -> `docs/done/2026-09.md`
+
+- 2026-09-08: 島に「おとを だす／おと オン」を追加し、明示gestureで音声を再開。正解表示も拡大。固定コピーで音声/PWA/2,240テスト、Mac Metalの正式80runを確認。共有全体の統合と公開は別 -> `docs/done/2026-09.md`
+
+- 2026-09-08: 島の360度回転・1〜2.5倍ズーム・復帰操作を実装。カメラ専用phone/tablet・37unitと共有版typecheckはPASS、全体gateの未達を記録。公開なし -> `docs/done/2026-09.md`
+
+- 2026-09-08: パッチワークのくま風アプリアイコンを生成。正方形PNGと180/64/32pxの表示確認を保存、配布アイコンは未変更 -> `docs/done/2026-09.md`
+
 - 2026-09-08: 学習区間で10ほし、島3テーマ/3飾りの試着・交換・無料切替・目標を実装。2,232テスト、実UI/PWA、正式80run/15gate、追加操作0を確認 -> `docs/done/2026-09.md`
 
 - 2026-09-08: 独力正答、卒業後の再学習、実時間SRS、Lv11の7単元進行、英語Due予算を実装。共有core2,188テスト、固定実UI/PWA・正式80runを確認 -> `docs/done/2026-09.md`
@@ -67,3 +87,11 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 - 2026-07-19: Explore answer receipts, retry-safe UI, and persisted run lifecycle -> `docs/done/2026-07.md`
 
 - 2026-09-07: Latest app production release — docs/done/2026-09.md
+
+- 2026-09-08: ぽこもこ正式名と紫/生成りの共通UIをローカル実装。最終26画面PASS、速度の一部未達は公開前の残件として記録 -> `docs/done/2026-09.md`
+
+- 2026-09-08: 星の問題数連動・価格・島の段階的な成長/解放を調整。既存成果と旧予約を保持し、2,466テスト・実UI/PWA・固定80run再測定がPASS -> `docs/done/2026-09.md`
+
+- 2026-09-08: ぽこもこの背景を白い布と大小の水玉へ変更。固定production26画面と2,232 testsを確認 -> `docs/done/2026-09.md`
+
+- 2026-09-08: 水玉と色使いだけで不思議さを表す3配色比較。Aをローカル試作へ統合、固定26画面と2,232 tests PASS -> `docs/done/2026-09.md`

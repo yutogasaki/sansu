@@ -28,23 +28,35 @@
 .island-light-seed[data-current=true] path:last-child { fill: #7e9c6b; opacity: 1; }
 .island-light-seed[data-filled=true] path:first-child { fill: #ffd447; stroke: #34435d; }
 .island-light-seed[data-filled=true] path:last-child { fill: #5c8756; stroke: #4c7349; opacity: 1; }
-.island-workbench-message { height: 30px; display: flex; align-items: center; justify-content: center; line-height: 1.4; }
+.island-workbench-message { height: 46px; display: flex; align-items: center; justify-content: center; line-height: 1.4; }
 .island-answer-result { display: flex; align-items: center; gap: 9px; padding: 2px 12px 2px 7px; border-radius: 12px; background: #ffec9f; color: var(--island-ink); }
 .island-answer-result p { margin: 0; font-size: 17px; font-weight: 750; white-space: nowrap; }
 .island-answer-result__symbol { position: relative; display: grid; place-items: center; width: 26px; height: 26px; flex: 0 0 auto; }
 .island-answer-result[data-result=retry] { background: #f5e4d6; color: #694932; }
 .island-answer-result[data-result=supported] { background: #e6edd8; }
+.island-answer-result[data-result=correct] { gap: 10px; padding: 2px 16px 2px 9px; border-radius: 18px; background: #ffe17a; }
+.island-answer-result[data-result=correct] p { font-size: 20px; }
+.island-answer-result[data-result=correct] .island-answer-result__symbol { width: 36px; height: 36px; }
+.island-answer-result[data-result=correct] .island-answer-result__symbol > svg { width: 36px; height: 36px; }
 .island-answer-result[data-result=correct] .island-answer-result__symbol,
 .island-answer-result[data-result=step] .island-answer-result__symbol,
 .island-answer-result[data-result=supported] .island-answer-result__symbol { animation: island-answer-pop 260ms ease-out; }
 .island-answer-result[data-result=correct] .island-answer-result__symbol::after {
     content: ''; position: absolute; inset: -3px; border: 2px solid #ba831a; border-radius: 50%; opacity: 0;
-    pointer-events: none; animation: island-answer-ring 360ms ease-out;
+    pointer-events: none; animation: island-answer-ring 480ms ease-out;
 }
+.island-answer-result__rays { position: absolute; inset: -6px; pointer-events: none; opacity: 0; animation: island-answer-rays 520ms ease-out; }
+.island-answer-result__rays i { position: absolute; width: 3px; height: 7px; border-radius: 3px; background: #946515; }
+.island-answer-result__rays i:nth-child(1) { top: 0; left: 7px; transform: rotate(-35deg); }
+.island-answer-result__rays i:nth-child(2) { top: 0; right: 7px; transform: rotate(35deg); }
+.island-answer-result__rays i:nth-child(3) { bottom: 0; left: 7px; transform: rotate(35deg); }
+.island-answer-result__rays i:nth-child(4) { bottom: 0; right: 7px; transform: rotate(-35deg); }
 @keyframes island-answer-pop { 0% { transform: scale(.75); } 55% { transform: scale(1.14); } 100% { transform: scale(1); } }
 @keyframes island-answer-ring { 0% { transform: scale(.8); opacity: .8; } 100% { transform: scale(1.6); opacity: 0; } }
+@keyframes island-answer-rays { 0% { transform: scale(.75); opacity: 0; } 25% { opacity: 1; } 100% { transform: scale(1.2); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
     .island-answer-result .island-answer-result__symbol, .island-answer-result .island-answer-result__symbol::after { animation: none; }
+    .island-answer-result__rays { display: none; }
 }
 .island-workbench .island-learning-actions { min-height: 44px; margin-top: 3px; }
 .island-workbench .island-learning-actions .island-text-button { font-size: 11px; padding-inline: 5px; }
@@ -59,11 +71,48 @@
     .island-page[data-mode=learning] .island-header { max-width: 900px; min-height: 61px; padding-top: 12px; }
     .island-page[data-mode=learning] .island-brand h1 { font-size: 21px; }
     .island-page .island-workbench { padding: 16px 30px 5px; margin-bottom: 18px; }
-    .island-workbench-message { height: 34px; }
     .island-light-seed { width: 25px; height: 27px; }
     .island-light-trail { gap: 7px; }
 }
 @media(max-height:740px) and (max-width:699px) {
     .island-page[data-mode=learning] { --island-stage-height: 150px; }
     .island-page[data-mode=learning][data-complex=true] { --island-stage-height: 115px; }
+}
+
+/* Use the width of an iPad in landscape without shrinking the input targets.
+   Keep progress, feedback and actions outside the flexible problem row. */
+@media (min-width: 900px) and (orientation: landscape) {
+    .island-page[data-mode=learning] {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+    }
+    .island-page[data-mode=learning] > .island-header {
+        flex: none;
+        width: 100%;
+        max-width: 1100px;
+        min-height: 49px;
+        padding-top: max(5px, env(safe-area-inset-top));
+    }
+    .island-page[data-mode=learning] > .island-workbench {
+        flex: 1;
+        min-height: 0;
+        width: calc(100% - 32px);
+        max-width: 1100px;
+        margin: 0 auto 8px;
+        padding: 8px 20px 5px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-rows: 44px minmax(0, 1fr) auto;
+        column-gap: 24px;
+    }
+    .island-workbench .island-learning-progress { grid-area: 1 / 1; }
+    .island-workbench .island-workbench-message { grid-area: 1 / 2; height: 44px; }
+    .island-workbench > .island-answer-stage {
+        grid-area: 2 / 1 / 3 / -1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .island-workbench .island-learning-actions { grid-area: 3 / 1 / 4 / -1; }
 }

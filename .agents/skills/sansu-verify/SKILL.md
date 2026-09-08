@@ -18,6 +18,12 @@ description: Run and interpret Sansu's required verification flow after substant
 3. Report failures from the first meaningful error, not downstream noise
 4. If a required check cannot run, record the gap clearly
 
+## Iteration and integration
+
+- During implementation, reproduce a failure with the smallest check that covers its cause. Use saved timestamps, source data and a focused regression before repeating an expensive browser journey; do not make an unrelated feature wait for that diagnosis.
+- Assign independent implementation owners and share one typecheck for the integrated changes. Run the full required matrix on a stable integration candidate after the focused checks pass. Repeat a broad check when its inputs changed or an unresolved result requires it, and retain the earlier result with its exact source.
+- Keep focused checks and explicit diagnostic fixtures separate from end-to-end evidence. A short reproduction can guide a fix; it does not prove real acquisition, offline recovery, learning throughput, visual appeal or child motivation. Final acceptance still follows the verification matrix.
+
 ## Common Commands
 
 - `npm run docs:check`

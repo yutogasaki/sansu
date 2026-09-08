@@ -1,0 +1,14 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/domain/island/customizationRepository.test.ts (16 tests) 471ms
+ ✓ src/domain/island/growthRepository.test.ts (11 tests) 1574ms
+   ✓ owned atomic living island persistence > aborts growth, snapshot, answer, profile and completion together then saves each once on retry 1104ms
+ ✓ src/domain/island/pacing.test.ts (5 tests) 13ms
+ ✓ src/components/island/islandExpansionPreview.test.ts (4 tests) 3ms
+
+ Test Files  4 passed (4)
+      Tests  36 passed (36)
+   Start at  18:52:33
+   Duration  4.29s (transform 578ms, setup 0ms, collect 5.10s, tests 2.06s, environment 1ms, prepare 201ms)
+

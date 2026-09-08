@@ -1,11 +1,16 @@
 import { useState } from 'react';
-import { BookOpen, Flower2, RotateCcw, X } from 'lucide-react';
+import { BookOpen, Camera, Flower2, Heart, RotateCcw, Waves, X } from 'lucide-react';
 import { ISLAND_DISCOVERIES, ISLAND_HABITATS, isIslandHabitatUnlocked } from '../../domain/island/growth';
 import type { IslandHabitatId, IslandRecord } from '../../domain/island/types';
 import { DEFAULT_ISLAND_COSMETICS, getIslandCosmetics } from '../../domain/island/customization';
 import IslandStage from './IslandStage';
 import { islandAlbumMemories, islandAlbumMemoryTitle, islandComparisonMemory } from './islandAlbumMemory';
+import { getIslandWorkshop, getWorkshopSpecimenName, WORKSHOP_SPECIMEN_IDS, type WorkshopSpecimenId } from '../../domain/island/workshop';
+import { SHARED_DISPLAY_IDS } from '../../domain/island/sharedMemories';
+import { getIslandExpression } from '../../domain/island/expression';
+import { islandAlbumMemoryStyle } from './islandAlbumPresentation';
 import './IslandGrowth.css';
+import './IslandPanel.css';
 
 const comparisonNames: Record<IslandHabitatId | 'all', string> = {
     garden: 'にわ', waterside: 'みずべ', grove: '木かげ', village: 'いえ', all: 'しまぜんぶ',
@@ -13,38 +18,61 @@ const comparisonNames: Record<IslandHabitatId | 'all', string> = {
 
 /** Both panes use the production renderer. The old scene receives only its
  * immutable memory, never current progress or editable callbacks. */
-export function IslandAlbum({ island, disabled, closeDisabled = disabled, onTry, onPlace, onClose, initialComparison = 'garden' }: {
+export function IslandAlbum({ island, disabled, closeDisabled = disabled, onTry, onPlace, onClose, onPhotos, onWorkshop, onShared, initialComparison = 'garden' }: {
     island: IslandRecord; disabled: boolean; onTry: (itemId: string, discoveryId: string) => void;
     onPlace: (itemId: string) => void; onClose: () => void;
     closeDisabled?: boolean;
     initialComparison?: IslandHabitatId | 'all';
+    onPhotos?: () => void;
+    onWorkshop?: (id?: WorkshopSpecimenId) => void;
+    onShared?: () => void;
 }) {
-    const [tab, setTab] = useState<'memories' | 'discoveries'>('memories');
+    const [tab, setTab] = useState<'memories' | 'discoveries' | 'workshop'>('memories');
     const [comparison, setComparison] = useState<IslandHabitatId | 'all'>(initialComparison);
     const [memoryId, setMemoryId] = useState(islandComparisonMemory(island.growth?.memories ?? [], initialComparison)?.id);
     const memories = island.growth?.memories ?? [];
     const timeline = islandAlbumMemories(memories, comparison);
     const memory = timeline.find(candidate => candidate.id === memoryId) ?? timeline[0];
     const discoveries = island.growth?.discoveries ?? [];
+    const workshop = getIslandWorkshop(island);
+    const observationNames = { clean: 'すなが とれた', float: 'みずに ういた', sink: 'しずんだ', transmit: 'ひかりを とおした', opaque: 'かげが できた' };
+    const workshopRecords = [
+        ...WORKSHOP_SPECIMEN_IDS.flatMap(specimenId => {
+            const specimen = workshop.specimens[specimenId], name = getWorkshopSpecimenName(workshop, specimenId);
+            return [...specimen.observations.map(entry => ({ ...entry, name, description: observationNames[entry.result], specimenId })),
+                ...(specimen.identity ? [{ ...specimen.identity, name, description: 'しょうたいを みつけた', specimenId }] : [])];
+        }),
+        ...workshop.creations.map(entry => ({ ...entry, name: entry.partId === 'wheel' ? 'みずで まわった' : 'おとが ひびいた', description: 'じぶんで つないだ しくみ', specimenId: undefined })),
+    ].sort((a, b) => a.observedAt - b.observedAt || a.order - b.order || a.id.localeCompare(b.id));
     const placeName = comparison === 'all' ? 'しま' : comparisonNames[comparison];
     const compare = (habitat: IslandHabitatId | 'all') => {
         setComparison(habitat);
         setMemoryId(islandComparisonMemory(memories, habitat)?.id);
     };
-    return <section className="island-sheet island-album" aria-label="しまの アルバム"
+    return <section className="island-sheet island-panel island-album" aria-label="しまの アルバム"
         data-island-revision={island.revision} data-discovery-count={discoveries.length}>
-        <div className="island-sheet-title"><h2>しまの アルバム</h2><button className="island-icon-button" disabled={closeDisabled} aria-label="アルバムを とじる" onClick={onClose}><X size={20} /></button></div>
-        <div className="island-album-tabs" role="group" aria-label="アルバムの なかみ">
+        <div className="island-sheet-title"><h2>しまの アルバム</h2><button className="island-icon-button island-panel-back" disabled={closeDisabled} aria-label="アルバムを とじる" onClick={onClose}><X size={20} /><span>もどる</span></button></div>
+        <div className="island-album-tabs island-panel-choices" role="group" aria-label="アルバムの なかみ">
             <button className="island-secondary" aria-pressed={tab === 'memories'} onClick={() => setTab('memories')}><BookOpen size={18} />そだちの きろく</button>
             <button className="island-secondary" aria-pressed={tab === 'discoveries'} onClick={() => setTab('discoveries')}><Flower2 size={18} />みつけた くらし</button>
+            {onPhotos && <button className="island-secondary" disabled={closeDisabled} onClick={onPhotos}><Camera size={18} />しゃしん</button>}
+            {island.completedSets >= 1 && onWorkshop && <button className="island-secondary" aria-pressed={tab === 'workshop'} onClick={() => setTab('workshop')}><Waves size={18} />いりえの はっけん</button>}
+            {island.completedSets >= 1 && onShared && <button className="island-secondary" disabled={closeDisabled} onClick={onShared}><Heart size={18} />かざりと きおく</button>}
         </div>
-        {tab === 'memories' ? memory ? <>
-            <div className="island-album-habitats" role="group" aria-label="みくらべる ばしょ">
+        {tab === 'workshop' ? <div className="island-discovery-list">
+            {WORKSHOP_SPECIMEN_IDS.map(id => <article className="island-discovery" key={id}><Waves size={24} aria-hidden="true" /><div><h3>{getWorkshopSpecimenName(workshop, id)}</h3>
+                <p>{SHARED_DISPLAY_IDS.some(slot => island.sharedMemories?.displays[slot]?.target.targetKey === workshop.specimens[id].id) ? 'しまにも かざっているよ' : 'いりえで みつけた もの'}</p></div>
+                <button className="island-secondary" disabled={closeDisabled} onClick={() => onWorkshop?.(id)}>この ものを ためす</button></article>)}
+            {workshopRecords.map(entry => <article className="island-discovery" key={entry.id} data-workshop-record-id={entry.id}><BookOpen size={24} aria-hidden="true" />
+                <div><h3>{entry.name}</h3><p>{entry.description}</p><small>{new Date(entry.observedAt).toLocaleDateString('ja-JP', { month: 'long', day: 'numeric' })}</small></div>
+                <button className="island-secondary" disabled={closeDisabled} onClick={() => onWorkshop?.(entry.specimenId)}>{entry.specimenId ? 'もういちど ためす' : 'つくる ばしょへ'}</button></article>)}
+        </div> : tab === 'memories' ? memory ? <>
+            <div className="island-album-habitats island-panel-choices" role="group" aria-label="みくらべる ばしょ">
                 {ISLAND_HABITATS.map(habitat => <button key={habitat.id} aria-pressed={comparison === habitat.id}
                     disabled={!isIslandHabitatUnlocked(island, habitat.id)} onClick={() => compare(habitat.id)}>{comparisonNames[habitat.id]}</button>)}
                 <button aria-pressed={comparison === 'all'} onClick={() => compare('all')}>{comparisonNames.all}</button>
             </div>
-            <div className="island-album-timeline" role="group" aria-label="むかしの しまを えらぶ">{timeline.map(entry =>
+            <div className="island-album-timeline island-panel-choices" role="group" aria-label="むかしの しまを えらぶ">{timeline.map(entry =>
                 <button key={entry.id} aria-pressed={entry.id === memory.id} onClick={() => setMemoryId(entry.id)}>
                     {islandAlbumMemoryTitle(memories, entry, comparison)}
                 </button>)}</div>
@@ -52,12 +80,15 @@ export function IslandAlbum({ island, disabled, closeDisabled = disabled, onTry,
                 <article className="island-album-scene" data-memory-id={memory.id} data-memory-completed-sets={memory.completedSets}>
                     <h3>あのころの {placeName}</h3>
                     <IslandStage key={memory.id} items={memory.items} completedSets={memory.completedSets} pulse={0} learning={false} readOnly
+                        {...islandAlbumMemoryStyle(memory)}
                         cosmetics={memory.cosmetics ?? DEFAULT_ISLAND_COSMETICS}
                         growth={{ version: 1, progress: memory.progress, expansionLevel: memory.expansionLevel, focus: memory.focus, memories: [], discoveries: [] }} districtFocus="all" comparisonHabitat={comparison} />
                     <p>{new Date(memory.capturedAt).toLocaleDateString('ja-JP', { month: 'long', day: 'numeric' })}・{islandAlbumMemoryTitle(memories, memory, comparison)}</p>
                 </article>
                 <article className="island-album-scene" data-memory-current="true"><h3>いまの {placeName}</h3>
-                    <IslandStage items={island.items} completedSets={island.completedSets} pulse={0} learning={false} readOnly growth={island.growth} cosmetics={getIslandCosmetics(island)} districtFocus="all" comparisonHabitat={comparison} />
+                    <IslandStage items={island.items} completedSets={island.completedSets} pulse={0} learning={false} readOnly growth={island.growth} cosmetics={getIslandCosmetics(island)} districtFocus="all" comparisonHabitat={comparison}
+                        experience={island.experience} expressionSelection={getIslandExpression(island).selection}
+                        shared={{ island, active: false }} />
                     <p>{island.completedSets}回 ひかりを とどけた しま</p>
                 </article>
             </div>

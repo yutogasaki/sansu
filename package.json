@@ -24,7 +24,7 @@
         "test": "vitest",
         "test:run": "vitest run",
         "verify:core": "npm run docs:check && npm run lint && npm run typecheck && npm run test:run && npm run build",
-        "verify:release": "npm run verify:core && npm run e2e:smoke && npm run e2e:pwa-update",
+        "verify:release": "npm run verify:core && npm run e2e:smoke && npm run e2e:pwa-update && npm run e2e:pwa-two-build",
         "preview": "vite preview",
         "e2e:smoke": "node tools/e2e-smoke.mjs",
         "e2e:print": "node tools/e2e-print-tests.mjs",
@@ -34,6 +34,7 @@
         "e2e:visual-audit": "node tools/e2e-smoke.mjs --visual-audit",
         "e2e:visual-audit:local": "node tools/run-local-visual-audit.mjs",
         "e2e:pwa-update": "node tools/e2e-pwa-update.mjs",
+        "e2e:pwa-two-build": "node tools/e2e-pwa-two-build.mjs",
         "benchmark:fixed-ten": "node tools/e2e-fixed-ten-throughput.mjs",
         "e2e:island-living": "node tools/e2e-island-living.mjs"
     },

@@ -1,0 +1,8 @@
+.island-header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.island-header .island-brand { min-width: 0; }
+.island-header .island-brand > div { min-width: 0; }
+.island-header .island-brand h1 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.island-sound-control { position: relative; flex-shrink: 0; }
+.island-sound-button { display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-height: 44px; padding: 5px 8px; border: 1px solid #52607a; border-radius: 12px; background: var(--island-paper); color: var(--island-ink); font-size: 11px; font-weight: 650; white-space: nowrap; }
+.island-sound-button[data-sound-state=ready] { color: var(--island-leaf); }
+.island-sound-message { position: absolute; top: calc(100% + 6px); right: 0; width: max-content; max-width: min(240px, 75vw); padding: 8px 12px; border: 1px solid #52607a; border-radius: 12px; background: var(--island-paper); color: var(--island-ink); font-size: 12px; line-height: 1.6; box-shadow: 0 3px 0 #2631452e; }

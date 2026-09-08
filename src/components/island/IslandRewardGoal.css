@@ -1,0 +1,7 @@
+.island-reward-goal { display:flex; align-items:center; gap:10px; width:100%; min-height:54px; padding:9px 3px; margin-top:8px; text-align:left; color:var(--island-ink); }
+.island-reward-goal > svg { flex-shrink:0; }
+.island-reward-goal > span { display:grid; flex:1; min-width:0; gap:3px; overflow-wrap:anywhere; }
+.island-reward-goal strong { font-size:12px; }
+.island-reward-goal small { font-size:11px; color:var(--island-muted); }
+.island-reward-goal-choice { min-height:44px; }
+.island-reward-goal-choice[aria-pressed=true] { background:#ffe1ed; }

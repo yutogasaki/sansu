@@ -1,23 +1,23 @@
-/* Island utility surfaces share the world palette without competing with play. */
+/* Pokomoko utility surfaces: quiet cloth colors and a few stitched patches. */
 .island-shell {
-    --island-shell-canvas: #fff3d5;
-    --island-shell-paper: #fff9e8;
-    --island-shell-ink: #263145;
-    --island-shell-blue: #245bbd;
-    --island-shell-yellow: #ffd447;
-    --island-shell-muted: #627087;
-    --island-shell-edge: #52607a;
+    --island-shell-canvas: var(--pokomoko-canvas);
+    --island-shell-paper: var(--pokomoko-paper);
+    --island-shell-ink: var(--pokomoko-ink);
+    --island-shell-blue: var(--pokomoko-blue);
+    --island-shell-primary: var(--pokomoko-blue);
+    --island-shell-muted: var(--pokomoko-muted);
+    --island-shell-edge: var(--pokomoko-edge);
     --color-dark: var(--island-shell-ink);
     --brand-ink: var(--island-shell-ink);
     --brand-paper: var(--island-shell-paper);
     --brand-paper-edge: var(--island-shell-edge);
     --app-accent: var(--island-shell-blue);
-    --app-accent-strong: #194a9f;
+    --app-accent-strong: var(--pokomoko-blue-deep);
     --app-surface: var(--island-shell-paper);
     --app-surface-strong: var(--island-shell-paper);
-    --app-surface-soft: #f5f1ed;
-    --app-border: #a6a6a5;
-    --app-border-soft: #d3d2ca;
+    --app-surface-soft: #eee7f6;
+    --app-border: var(--pokomoko-edge);
+    --app-border-soft: #e3dbe9;
     --app-shadow-soft: 0 2px 0 rgb(38 49 69 / 6%);
     --app-shadow: 0 3px 0 rgb(38 49 69 / 8%);
     --app-shadow-strong: 0 10px 28px rgb(38 49 69 / 13%);
@@ -30,12 +30,12 @@
     --toolbar-bg: var(--island-shell-paper);
     --toolbar-shadow: none;
     color: var(--island-shell-ink);
-    background: var(--island-shell-canvas);
+    background: var(--island-shell-canvas) var(--pokomoko-dot-field) 14px 6px / 430px 430px repeat;
 }
 
 body.app-mode-island-shell,
 body.app-mode-island-shell #root {
-    background: #fff3d5;
+    background: var(--pokomoko-canvas);
 }
 
 body.app-mode-island-shell .app-container {
@@ -46,7 +46,7 @@ body.app-mode-island-shell .app-container {
 .island-shell .brand-utility-screen,
 .island-shell .brand-study-screen {
     color: var(--island-shell-ink);
-    background: var(--island-shell-canvas);
+    background: var(--island-shell-canvas) var(--pokomoko-dot-field) 14px 6px / 430px 430px repeat;
 }
 
 .island-shell .card-surface {
@@ -61,10 +61,10 @@ body.app-mode-island-shell .app-container {
 .island-shell .island-utility-content { max-width: 600px; }
 
 .island-shell .app-button--primary {
-    color: var(--island-shell-ink);
-    background: var(--island-shell-yellow);
+    color: #fff;
+    background: var(--island-shell-primary);
     border: 1px solid var(--island-shell-edge);
-    box-shadow: 0 3px 0 var(--island-shell-ink);
+    box-shadow: 0 3px 0 var(--pokomoko-blue-deep);
 }
 
 .island-shell .app-button--secondary {
@@ -75,7 +75,11 @@ body.app-mode-island-shell .app-container {
 }
 
 .island-shell-header {
-    gap: 12px;
+    width: 100%;
+    max-width: 648px;
+    margin-inline: auto;
+    padding-inline: 24px;
+    gap: 14px;
     padding-top: calc(var(--safe-area-top) + 20px);
     padding-bottom: 18px;
 }
@@ -89,22 +93,25 @@ body.app-mode-island-shell .app-container {
 
 .island-shell-mark {
     display: inline-flex;
-    width: 44px;
-    height: 44px;
+    width: 56px;
+    height: 56px;
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
     border: 1px solid var(--island-shell-edge);
-    border-radius: 15px;
+    border-radius: 19px;
+    overflow: hidden;
+    padding: 3px;
+    box-shadow: 0 3px 0 #ddd2e8;
     color: var(--island-shell-blue);
-    background: #e7edf8;
+    background: #e8dff3;
 }
 
 .island-shell-eyebrow {
     color: var(--island-shell-muted);
     font-size: 11px;
-    line-height: 1.5;
-    letter-spacing: .08em;
+    line-height: 1.6;
+    letter-spacing: .025em;
 }
 
 .island-shell-back {
@@ -125,7 +132,7 @@ body.app-mode-island-shell .app-container {
     width: 100%;
     min-height: calc(84px + var(--safe-area-bottom));
     padding: 9px max(20px, env(safe-area-inset-right)) calc(11px + var(--safe-area-bottom)) max(20px, env(safe-area-inset-left));
-    border-top: 1px solid #d3d2ca;
+    border-top: 1px dashed var(--pokomoko-stitch);
     color: var(--island-shell-muted);
     background: var(--island-shell-paper);
 }
@@ -153,18 +160,20 @@ body.app-mode-island-shell .app-container {
 
 .island-shell-tab[aria-current="page"] {
     color: var(--island-shell-blue);
-    background: #e7edf8;
+    background: #e8dff3;
 }
 
 .island-shell-tab--home,
 .island-shell-tab--home[aria-current="page"] {
-    color: var(--island-shell-ink);
-    background: var(--island-shell-yellow);
+    color: #fff;
+    background: var(--island-shell-primary);
     border-color: var(--island-shell-edge);
-    box-shadow: 0 3px 0 var(--island-shell-ink);
+    box-shadow: 0 3px 0 var(--pokomoko-blue-deep);
 }
 
 .island-shell-tab--home {
+    flex-direction: row;
+    gap: 8px;
     font-size: 14px;
     font-weight: 750;
 }
@@ -189,4 +198,32 @@ body.app-mode-island-shell .app-container {
 @media (prefers-reduced-motion: reduce) {
     .island-shell-tab { transition: none; }
     .island-shell-tab--home:active { transform: none; }
+}
+
+.island-shell-mark img { width: 100%; height: 100%; object-fit: cover; border-radius: 15px; }
+.island-shell-home-bear { width: 36px; height: 36px; border-radius: 12px; border: 1px solid #ffffff6b; }
+.island-shell .pokomoko-setting-trigger { min-height: 88px; padding: 18px; gap: 15px; }
+.island-shell .pokomoko-setting-trigger[aria-expanded=true] { background: #f0eaf7; }
+.island-shell .pokomoko-setting-patch {
+    position: relative; display: grid; place-items: center; width: 43px; height: 45px;
+    flex-shrink: 0; border-radius: 15px 18px 14px 16px; color: #315481;
+    background: #dfebf7; box-shadow: 0 2px 0 #ccd9e8;
+}
+.island-shell .pokomoko-setting-patch::after {
+    content: ''; position: absolute; inset: 4px; border: 1px dashed #8297b67a;
+    border-radius: 11px 14px 10px 12px; pointer-events: none;
+}
+.island-shell [data-setting-section=learning] .pokomoko-setting-patch { background: var(--pokomoko-rose); color: #854b6d; box-shadow: 0 2px 0 #e5c4d1; }
+.island-shell [data-setting-section=display] .pokomoko-setting-patch { background: var(--pokomoko-lavender); color: #654884; box-shadow: 0 2px 0 #cdbce1; }
+.island-shell [data-setting-section=parent] .pokomoko-setting-patch { background: var(--pokomoko-mint); color: #39665b; box-shadow: 0 2px 0 #c5ddd4; }
+@media(max-width:360px) {
+    .island-shell-eyebrow { font-size: 10px; }
+    .island-shell-nav { gap: 8px; padding-inline: 14px; }
+    .island-shell .pokomoko-setting-trigger { gap: 10px; padding-inline: 14px; }
+}
+
+.island-shell .island-shell-header { background: var(--pokomoko-canvas); border-radius: 0 0 24px 24px; }
+.island-shell .pokomoko-reset-action {
+    display: block; width: fit-content; max-width: 100%; margin-inline: auto;
+    padding-inline: 20px; color: #bd2449; background: var(--pokomoko-paper);
 }

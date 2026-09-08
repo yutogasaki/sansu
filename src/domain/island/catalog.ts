@@ -1,6 +1,8 @@
-import type { IslandItemKind, IslandPosition, IslandRecord } from './types';
+import type { IslandBasicItemKind, IslandItemKind, IslandPosition, IslandRecord } from './types';
+import { ISLAND_FURNITURE_CATALOG } from './furniture';
 import { initializeIslandGrowth } from './growth';
 import { getIslandExpansionLevel, type IslandExpansionLevel } from './expansion';
+import { isClearOfSharedDisplays } from './sharedDisplayGeometry';
 
 export const ISLAND_ITEMS: Record<IslandItemKind, { name: string; description: string; radius: number }> = {
     bench: { name: 'ベンチ', description: 'どうぶつが ひとやすみ', radius: .65 },
@@ -9,6 +11,9 @@ export const ISLAND_ITEMS: Record<IslandItemKind, { name: string; description: s
     swing: { name: 'ブランコ', description: 'ゆらゆら ゆれて あそぶ', radius: .8 },
     mushroom: { name: 'きのこの いす', description: 'どうぶつが ひとやすみ', radius: .6 },
     fountain: { name: 'ふんすい', description: 'みずを のぞいて あそぶ', radius: .7 },
+    telescope: ISLAND_FURNITURE_CATALOG[0],
+    hammock: ISLAND_FURNITURE_CATALOG[1],
+    'tea-table': ISLAND_FURNITURE_CATALOG[2],
 };
 
 export const ISLAND_MAIN_LAND = { x: 0, z: 0, radiusX: 4.8, radiusZ: 3.6 };
@@ -26,8 +31,8 @@ export const ISLAND_RESERVED_AREAS = [
     { x: -6.7, z: -1.2, radius: .55 },
 ] as const;
 
-export function islandRewardChoices(sequence: number): IslandItemKind[] {
-    const choices: IslandItemKind[][] = [
+export function islandRewardChoices(sequence: number): IslandBasicItemKind[] {
+    const choices: IslandBasicItemKind[][] = [
         ['flower', 'bench', 'lantern'],
         ['swing', 'mushroom', 'fountain'],
         ['bench', 'swing', 'flower'],
@@ -82,6 +87,7 @@ function canPlaceKind(island: IslandRecord, kind: IslandItemKind, position: Isla
     const radius = ISLAND_ITEMS[kind]?.radius;
     if (!radius || !fitsLand(position, radius, getIslandLandAccess(island))) return false;
     if (ISLAND_RESERVED_AREAS.some(area => Math.hypot(position.x - area.x, position.z - area.z) < radius + area.radius)) return false;
+    if (!isClearOfSharedDisplays(island, position, radius)) return false;
     return island.items.every(item => item.id === itemId || !item.position
         || Math.hypot(item.position.x - position.x, item.position.z - position.z) >= radius + ISLAND_ITEMS[item.kind].radius + .08);
 }

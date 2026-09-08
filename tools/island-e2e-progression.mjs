@@ -31,7 +31,13 @@ export async function verifyIslandProgression(browser, base, capture, { producti
             await page.locator('.island-start').click(); await waitMode(page, 'learning');
             let state = await readNative(page, profileId);
             const initialMemory = state.island.growth.memories[0];
-            for (let sequence = 1; sequence <= 24; sequence++) {
+            const earned = { garden: 0, waterside: 0, grove: 0, village: 0 }, memorySets = [0];
+            let earnedStars = 0;
+            for (let sequence = 1; Object.values(state.island.growth.progress).some(value => value < 6); sequence++) {
+                assert(sequence <= 84, 'Four places mature by 84 short sections');
+                const targetHabitat = state.plan.growthTarget, previousMature = Object.values(state.island.growth.progress).filter(value => value === 6).length;
+                earned[targetHabitat] = Math.min(63, earned[targetHabitat] + state.plan.slots.length);
+                earnedStars += state.plan.slots.length;
                 const reservationId = state.plan.id, previousItems = state.island.items;
                 let attempts = 0;
                 while (state.plan?.id === reservationId) {
@@ -48,44 +54,55 @@ export async function verifyIslandProgression(browser, base, capture, { producti
                     assert(current); assert.deepEqual(current.position, old.position); assert.equal(current.rotation, old.rotation);
                 }
                 assert.deepEqual(state.island.growth.memories[0], initialMemory, 'Historical snapshot never changes during later growth');
-                assert.deepEqual(state.island.growth.memories.map(memory => memory.completedSets), [0, 6, 12, 18, 24].filter(set => set <= sequence),
+                for (const [habitat, answers] of Object.entries(earned)) {
+                    const thresholds = [3, 9, 18, 30, 45, 63], progress = thresholds.filter(value => answers >= value).length;
+                    assert.equal(state.island.growth.progress[habitat], progress);
+                    assert.equal(state.island.growth.pendingAnswers[habitat], progress === 6 ? 0 : answers - (thresholds[progress - 1] ?? 0));
+                }
+                assert.equal(state.island.customization.points, earnedStars);
+                const mature = Object.values(state.island.growth.progress).filter(value => value === 6).length;
+                const major = mature > previousMature;
+                if (major) memorySets.push(sequence);
+                assert.deepEqual(state.island.growth.memories.map(memory => memory.completedSets), memorySets,
                     'Only initial, maturity and land expansion add album records');
-                const expansionLevel = sequence >= 12 ? 2 : sequence >= 6 ? 1 : 0;
+                const expansionLevel = Math.min(2, mature), allMature = mature === 4;
                 assert.equal(state.island.growth.expansionLevel, expansionLevel, 'One mature place opens east; two open west');
-                assert.equal(state.island.items.length, sequence >= 12 ? 7 : sequence >= 6 ? 5 : 3);
-                const major = [6, 12, 18, 24].includes(sequence);
+                assert.equal(state.island.items.length, mature >= 2 ? 7 : mature >= 1 ? 5 : 3);
+                const nextTarget = state.plan.growthTarget;
+                const nearExpansion = mature < 2 && state.island.growth.progress[nextTarget] === 5
+                    && state.island.growth.pendingAnswers[nextTarget] + state.plan.slots.length >= 18;
                 const notice = page.locator('[data-growth-milestone]').filter({ hasText: /なった|できた|つながった/ });
                 if (major) {
                     await notice.waitFor();
                     assert.equal(await notice.getAttribute('data-growth-milestone'), reservationId);
                     assert.equal(await notice.getByRole('button').count(), 0, 'Major change has no confirmation action');
-                    if (sequence === 6 || sequence === 12) assert.match(await notice.innerText(), /しまが 大きく ひろがったよ/);
+                    if (mature <= 2) assert.match(await notice.innerText(), /しまが 大きく ひろがったよ/);
                     const panelBefore = await page.locator('.island-learning').boundingBox();
                     await capture(page, `${prefix}-${sequence}-major-learning`);
                     assert.deepEqual(await page.locator('.island-learning').boundingBox(), panelBefore, 'Milestone overlay leaves input geometry stable');
                 } else assert.equal(await page.locator(`[data-growth-milestone='${reservationId}']`).count(), 0, 'Small steps do not replay the major announcement');
-                if ([1, 2, 3, 5, 6, 11, 12, 18, 24].includes(sequence)) {
+                if ([1, 2, 3].includes(sequence) || major || nearExpansion) {
                     await button(page, 'しまへ').click(); await waitMode(page, 'home');
                     await capture(page, `${prefix}-${sequence}-sections`);
                     const preview = page.locator('[data-island-expansion-preview]');
-                    if (sequence === 5 || sequence === 11) {
-                        assert.equal(await preview.getAttribute('data-island-expansion-preview'), sequence === 5 ? 'east' : 'west');
+                    if (nearExpansion) {
+                        assert.equal(await preview.getAttribute('data-island-expansion-preview'), mature === 0 ? 'east' : 'west');
                         assert.match(await preview.innerText(), /しまが ひろがるよ/);
                     } else assert.equal(await preview.count(), 0, 'Expansion is previewed only one section before a maturity that opens land');
                     if (major) {
                         await page.locator('.island-growth-return').click(); await waitMode(page, 'album');
-                        const habitat = sequence === 6 || sequence === 12 ? 'all' : sequence === 18 ? 'grove' : 'village';
+                        const habitat = mature <= 2 ? 'all' : targetHabitat;
                         assert.equal(await page.locator('.island-album-compare').getAttribute('data-comparison-habitat'), habitat);
                         await page.locator('[data-memory-current] [data-renderer="three"]').waitFor();
                         await capture(page, `${prefix}-${sequence}-major-comparison`);
                         await button(page, 'アルバムを とじる').click(); await waitMode(page, 'home');
                     }
                     const stage = page.locator('[data-renderer="three"]');
-                    assert.equal(await stage.getAttribute('data-expanded'), String(sequence >= 6));
-                    assert.equal(await stage.getAttribute('data-west-expanded'), String(sequence >= 12));
+                    assert.equal(await stage.getAttribute('data-expanded'), String(mature >= 1));
+                    assert.equal(await stage.getAttribute('data-west-expanded'), String(mature >= 2));
                     milestones.push({ completedSets: sequence, progress: state.island.growth.progress,
                         expansionLevel, itemCount: state.island.items.length, ...(await runtimeMetadata(page)) });
-                    if (sequence !== 24) {
+                    if (!allMature) {
                         await page.locator('.island-start').click(); await waitMode(page, 'learning');
                         state = await readNative(page, profileId);
                     }
@@ -158,7 +175,7 @@ export async function verifyIslandProgression(browser, base, capture, { producti
             state = await readNative(page, profileId);
             const planId = state.plan.id;
             while (state.plan?.id === planId) state = await answer(page, state);
-            assert.equal(state.island.completedSets, 25);
+            assert.equal(state.island.completedSets, matured.completedSets + 1);
             assert.deepEqual(state.island.items, matured.items);
             assert.deepEqual(state.island.growth.progress, matured.growth.progress);
             assert.deepEqual(state.island.growth.memories, matured.growth.memories);
@@ -197,8 +214,9 @@ export async function verifyIslandProgression(browser, base, capture, { producti
             await page.reload(); await waitReady(page);
             assert.deepEqual((await readNative(page, profileId)).island.items, expandedPlacement.island.items);
             assert.deepEqual(errors, []);
-            results.push({ viewport, milestones, discoveries: state.island.growth.discoveries, passed: true });
-            console.log(`PASS ${prefix}: 25 real UI sections, all four mature habitats, stable7items, autonomous discovery, 3D history and replay`);
+            results.push({ viewport, completedSets: state.island.completedSets, earnedQuestions: state.island.customization.points,
+                milestones, discoveries: state.island.growth.discoveries, passed: true });
+            console.log(`PASS ${prefix}: ${state.island.completedSets} real UI sections, all four mature habitats, stable7items, autonomous discovery, 3D history and replay`);
         } catch (error) {
             await capture(page, `${prefix}-failure`).catch(() => undefined);
             await writeFile(`${process.env.SANSU_ISLAND_OUTPUT || 'output/playwright/island'}/${prefix}-failure-state.json`, JSON.stringify(await readNative(page).catch(() => null), null, 2));
@@ -206,5 +224,5 @@ export async function verifyIslandProgression(browser, base, capture, { producti
         } finally { await context.close(); }
     }
     return { name: 'east-and-growth', passed: true, results,
-        evidenceScope: 'Phone/tablet normal planner and 25 UI sections. Full finite growth, stable items, observed life, districts, immutable production-rendered history, discovery replay and resumed learning.' };
+        evidenceScope: 'Phone/tablet normal planner through all four maturities plus another UI section; every whole-problem credit checked. Full finite growth, stable items, observed life, districts, immutable production-rendered history, discovery replay and resumed learning.' };
 }

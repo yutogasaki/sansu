@@ -1,6 +1,7 @@
-import { Check, Flower2, House, Sprout, Trees, Waves, X } from 'lucide-react';
+import { Check, Eye, Flower2, House, Map as MapIcon, Sprout, Trees, Waves, X } from 'lucide-react';
 import { getIslandGrowthTarget, getIslandHabitatLevel, isIslandHabitatUnlocked, ISLAND_HABITATS } from '../../domain/island/growth';
 import { getIslandExpansionLevel } from '../../domain/island/expansion';
+import { islandGrowthStep } from '../../domain/island/pacing';
 import type { IslandHabitatId, IslandPlan, IslandRecord } from '../../domain/island/types';
 import { islandCompletionExpansion, islandExpansionPreview } from './islandExpansionPreview';
 import './IslandGrowth.css';
@@ -24,21 +25,24 @@ export function IslandGrowthSummary({ island, plan, disabled, onChoose }: {
     return <div className="island-growth-summary" data-growth-target={target}>
         <Icon size={21} aria-hidden="true" />
         <div><p>{complete ? 'みんなの いばしょが 育ったよ' : `${habitat.name}が 育っているよ`}</p>
-            {!complete && <GrowthSteps value={island.growth?.progress[target] ?? 0} />}
+            {!complete && <GrowthSteps island={island} habitat={target} />}
             {expansion ? <small className="island-growth-preview" data-island-expansion-preview={expansion}>もうすぐ {expansion === 'east' ? 'ひがし' : 'にし'}へ しまが ひろがるよ</small>
                 : !complete && next !== target && <small>つぎは {nextName}</small>}</div>
         {!complete && <button className="island-text-button" disabled={disabled} onClick={onChoose} aria-label="育てる ばしょを えらぶ">かえる</button>}
     </div>;
 }
 
-function GrowthSteps({ value }: { value: number }) {
-    return <span className="island-growth-steps" role="img" aria-label={`そだち ${value} / 6`}>
-        {Array.from({ length: 6 }, (_, index) => <i key={index} data-grown={index < value} data-milestone={[0, 2, 5].includes(index)} />)}
+function GrowthSteps({ island, habitat }: { island: IslandRecord; habitat: IslandHabitatId }) {
+    const { progress, value, remaining } = islandGrowthStep(island, habitat);
+    return <span className="island-growth-steps" role="img" aria-label={`そだち ${progress} / 6${remaining ? `、つぎの めもりまで ${remaining}もん` : ''}`}>
+        {Array.from({ length: 6 }, (_, index) => <i key={index} data-grown={index < progress} data-milestone={[0, 2, 5].includes(index)}>
+            <b style={{ width: `${Math.max(0, Math.min(1, value - index)) * 100}%` }} /></i>)}
     </span>;
 }
 
-export function IslandGrowthChoices({ island, plan, disabled, onSelect, onClose }: {
+export function IslandGrowthChoices({ island, plan, disabled, onSelect, onClose, previewHabitat, onPreview }: {
     island: IslandRecord; plan?: IslandPlan; disabled: boolean; onSelect: (id: IslandHabitatId) => void; onClose: () => void;
+    previewHabitat?: IslandHabitatId; onPreview?: (id: IslandHabitatId | undefined) => void;
 }) {
     const next = getIslandGrowthTarget(island);
     const frozen = plan?.status === 'active' ? plan.growthTarget : undefined;
@@ -51,17 +55,19 @@ export function IslandGrowthChoices({ island, plan, disabled, onSelect, onClose 
             const level = getIslandHabitatLevel(island, habitat.id);
             // A different place starts after the reserved place finishes. Its
             // final growth may already have opened this land, so do not promise it twice.
-            const finishingAnother = frozen && frozen !== habitat.id && island.growth?.progress[frozen] === 5;
+            const finishingAnother = frozen && frozen !== habitat.id && Boolean(islandExpansionPreview(island, plan));
             const expansion = (plan && !plan.growthTarget) || finishingAnother ? undefined : islandCompletionExpansion(island, habitat.id);
             const Icon = habitatIcons[habitat.id];
-            return <button key={habitat.id} className="island-growth-place" disabled={disabled || !unlocked || level === 3}
+            return <div key={habitat.id} className="island-growth-preview-row"><button className="island-growth-place" disabled={disabled || !unlocked || level === 3}
                 aria-pressed={next === habitat.id} onClick={() => onSelect(habitat.id)}>
                 <Icon size={28} aria-hidden="true" /><span><strong>{habitat.name}</strong>
                     <small>{!unlocked ? 'しまが ひろがると 育てられるよ' : level === 3 ? '大きく 育ったよ' : habitat.description}</small>
                     {expansion && <small className="island-growth-preview">育てきると、{expansion === 'east' ? 'ひがし' : 'にし'}へ しまが ひろがるよ</small>}
-                    {unlocked && <GrowthSteps value={island.growth?.progress[habitat.id] ?? 0} />}</span>
+                    {unlocked && <GrowthSteps island={island} habitat={habitat.id} />}</span>
                 {next === habitat.id ? <Check size={20} aria-label="つぎに 育つ ばしょ" /> : level < 3 && unlocked ? <Sprout size={19} aria-hidden="true" /> : null}
-            </button>;
+            </button>{onPreview && unlocked && level < 3 && <button className="island-text-button island-growth-look" disabled={disabled}
+                aria-pressed={previewHabitat === habitat.id} onClick={() => onPreview(previewHabitat === habitat.id ? undefined : habitat.id)}>
+                <Eye size={17} />{previewHabitat === habitat.id ? 'いまの すがたへ' : 'つぎの すがたを みる'}</button>}</div>;
         })}</div>
     </section>;
 }
@@ -69,10 +75,15 @@ export function IslandGrowthChoices({ island, plan, disabled, onSelect, onClose 
 export function IslandDistricts({ island, value, disabled, onChange }: {
     island: Pick<IslandRecord, 'completedSets' | 'growth'>; value: IslandDistrict; disabled: boolean; onChange: (value: IslandDistrict) => void;
 }) {
-    const places: { id: IslandDistrict; label: string; level: number }[] = [
-        { id: 'all', label: 'しまぜんぶ', level: 0 }, { id: 'home', label: 'にわ', level: 0 },
-        { id: 'east', label: 'ひがし', level: 1 }, { id: 'west', label: 'にし', level: 2 },
+    const level = getIslandExpansionLevel(island);
+    const places = [
+        { id: 'all' as const, label: 'しまぜんぶ', level: 0, Icon: MapIcon },
+        { id: 'west' as const, label: 'にし', level: 2, Icon: Trees },
+        { id: 'home' as const, label: 'にわ', level: 0, Icon: House },
+        { id: 'east' as const, label: 'ひがし', level: 1, Icon: Waves },
     ];
-    return <div className="island-districts" role="group" aria-label="ながめる ばしょ">{places.filter(place => place.level <= getIslandExpansionLevel(island)).map(place =>
-        <button key={place.id} disabled={disabled} aria-pressed={place.id === value} onClick={() => onChange(place.id)}>{place.label}</button>)}</div>;
+    return <div className="island-districts" data-expanded={level > 0} role="group" aria-label="ながめる ばしょ">{places.filter(place => place.level <= level).map(({ id, label, Icon }) =>
+        <button key={id} disabled={disabled} aria-pressed={id === value} onClick={() => onChange(id)}>
+            {level > 0 && <Icon size={20} aria-hidden="true" />}<span>{label}</span>
+        </button>)}</div>;
 }

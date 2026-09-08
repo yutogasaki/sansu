@@ -13,7 +13,7 @@ import { createIsland, findAvailablePosition, ISLAND_EAST_LAND, ISLAND_ITEMS, IS
     ISLAND_RESERVED_AREAS, ISLAND_WEST_LAND, isValidIslandPlacement } from './catalog';
 import { claimIslandReward, IslandConflict, islandTables, openIsland, saveIslandEdit, startIslandPlan } from './repository';
 import { commitIslandLearning } from './commit';
-import type { IslandPlan } from './types';
+import { ISLAND_BASIC_ITEM_KINDS, type IslandPlan } from './types';
 
 const databases: SansuDatabase[] = [];
 const options = { indexedDB, IDBKeyRange };
@@ -278,8 +278,9 @@ describe('free placement and ownership', () => {
         for (const [land, completedSets, sign] of [[ISLAND_EAST_LAND, 2, 1], [ISLAND_WEST_LAND, 12, -1]] as const) {
             expect(land.radiusX * land.radiusZ / (ISLAND_MAIN_LAND.radiusX * ISLAND_MAIN_LAND.radiusZ)).toBeGreaterThan(.58);
             expect(land.x - sign * land.radiusX).toBeCloseTo(sign * 4.3);
-            for (const [kind, { radius }] of Object.entries(ISLAND_ITEMS)) {
-                const item = { ...island.items[0], kind: kind as keyof typeof ISLAND_ITEMS };
+            for (const kind of ISLAND_BASIC_ITEM_KINDS) {
+                const { radius } = ISLAND_ITEMS[kind];
+                const item = { ...island.items[0], kind };
                 const layout = { ...island, completedSets, items: [item] };
                 for (let sample = 0; sample < 72; sample++) {
                     const angle = sample / 72 * Math.PI * 2;
@@ -369,7 +370,7 @@ describe('free placement and ownership', () => {
         await startIslandPlan('other', d);
         await expect(commitIslandLearning('child', plan.id, 0, correctAction(plan), d)).rejects.toBeInstanceOf(IslandConflict);
         await expect(openIsland('child', d)).rejects.toBeInstanceOf(IslandConflict);
-        await d.transaction('rw', [...islandTables(d), d.exploreRuns, d.exploreRunEvents, d.exploreDiscoveries, d.parks, d.parkPlans, d.parkEvents], () => deleteProfileOwnedIndexedDbRows(d, 'child'));
+        await d.transaction('rw', [...islandTables(d), d.exploreRuns, d.exploreRunEvents, d.exploreDiscoveries, d.parks, d.parkPlans, d.parkEvents, d.islandPhotoAlbums, d.islandPhotos, d.islandPhotoBlobs], () => deleteProfileOwnedIndexedDbRows(d, 'child'));
         expect(await d.islands.get('child')).toBeUndefined();
         expect(await d.islandPlans.where('profileId').equals('child').count()).toBe(0);
         expect(await d.islandEvents.where('profileId').equals('child').count()).toBe(0);
@@ -393,7 +394,7 @@ describe('free placement and ownership', () => {
         legacy.close();
         const d = new SansuDatabase(name, options); databases.push(d);
         await d.open();
-        expect(d.verno).toBe(7);
+        expect(d.verno).toBe(8);
         expect(await d.profiles.get(p.id)).toEqual(p);
         expect(await d.parks.get(p.id)).toEqual(park);
         expect(await d.parkPlans.get(parkPlan.id)).toEqual(parkPlan);

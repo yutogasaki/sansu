@@ -1,8 +1,9 @@
 import type { IslandStageItem, IslandStageState } from './types';
 import type { SharedActivityPlan } from './sharedActivities';
-import { getIslandExpansionLevel } from '../../../domain/island/expansion';
+import { resolveIslandLivingSetting } from '../../../domain/island/livingSettings';
+import { isIslandVisitor, islandVisitorAvailability } from '../../../domain/island/visitors';
 
-export type LivingNature = 'butterfly' | 'boat';
+export type LivingNature = 'butterfly' | 'boat' | 'petal-ripple' | 'lantern-reflection' | 'ribbon-butterfly' | 'pond-firefly' | 'leaf-bird';
 export interface LivingVisit { item: IslandStageItem; discoveryId: string; nature?: LivingNature; shared?: boolean }
 
 const level = (item: IslandStageItem) => Math.max(0, Math.min(3, item.growthLevel ?? 0));
@@ -15,17 +16,20 @@ export function livingVisitsForItem(item: IslandStageItem): LivingVisit[] {
     if (item.habitatId === 'garden') {
         if (item.kind === 'flower') {
             choices.push({ discoveryId: 'flower-scent' });
-            if (level(item) >= 2) choices.push({ discoveryId: 'butterfly-visit', nature: 'butterfly' });
+            if (level(item) >= 2) choices.push({ discoveryId: 'butterfly-visit', nature: 'butterfly' },
+                { discoveryId: 'petal-ripple', nature: 'petal-ripple' }, { discoveryId: 'ribbon-butterfly', nature: 'ribbon-butterfly' });
         }
         if (['flower', 'bench'].includes(item.kind) && level(item) >= 3) choices.push({ discoveryId: 'flower-sharing', shared: true });
     }
     if (item.habitatId === 'waterside' && ['fountain', 'swing'].includes(item.kind)) {
         choices.push({ discoveryId: 'water-gazing' });
         if (level(item) >= 2) choices.push({ discoveryId: 'water-sharing', shared: true });
+        if (item.kind === 'fountain' && level(item) >= 2) choices.push({ discoveryId: 'pond-firefly', nature: 'pond-firefly' });
         if (item.kind === 'fountain' && level(item) >= 3) choices.push({ discoveryId: 'leaf-boat', nature: 'boat' });
     }
     if (item.habitatId === 'grove') {
         if (item.kind === 'mushroom') choices.push({ discoveryId: 'shade-rest' });
+        if (item.kind === 'mushroom' && level(item) >= 2) choices.push({ discoveryId: 'leaf-bird', nature: 'leaf-bird' });
         if (['mushroom', 'lantern'].includes(item.kind) && level(item) >= 2) choices.push({ discoveryId: 'lantern-sharing', shared: true });
     }
     if (item.habitatId === 'village' && item.kind === 'lantern') {
@@ -33,6 +37,8 @@ export function livingVisitsForItem(item: IslandStageItem): LivingVisit[] {
         if (level(item) >= 2) choices.push({ discoveryId: 'lantern-sharing', shared: true });
         if (level(item) >= 3) choices.push({ discoveryId: 'terrace-time' });
     }
+    if (item.kind === 'lantern' && ['grove', 'village'].includes(item.habitatId) && level(item) >= 2)
+        choices.push({ discoveryId: 'lantern-reflection', nature: 'lantern-reflection' });
     return choices.map(choice => ({ item, ...choice }));
 }
 
@@ -41,16 +47,8 @@ export function canRunLivingActivities(state: IslandStageState | undefined, visi
 }
 
 export function livingVisitHasSetting(state: IslandStageState, visit: LivingVisit) {
-    const position = visit.item.position;
-    if (!position) return false;
-    if (visit.discoveryId === 'water-gazing' && visit.item.kind === 'swing') return state.items.some(item => {
-        if (item.kind !== 'fountain' || !item.position) return false;
-        const dx = item.position.x - position.x, dz = item.position.z - position.z, distance = Math.hypot(dx, dz);
-        return distance <= 2.9 && (Math.sin(visit.item.rotation) * dx + Math.cos(visit.item.rotation) * dz) / Math.max(.01, distance) >= .5;
-    });
-    if (visit.discoveryId === 'shade-rest') return [{ x: 1.6, z: -1.6 }, ...(getIslandExpansionLevel(state) >= 2 ? [{ x: -6.7, z: -1.2 }] : [])]
-        .some(tree => Math.hypot(position.x - tree.x, position.z - tree.z) <= 2.8);
-    return true;
+    return Boolean(resolveIslandLivingSetting(state, visit.item, visit.discoveryId))
+        && (!isIslandVisitor(visit.discoveryId) || islandVisitorAvailability(state, visit.discoveryId, visit.item.id).offered);
 }
 
 export function livingCandidates(state: IslandStageState, turn: number): LivingVisit[] {

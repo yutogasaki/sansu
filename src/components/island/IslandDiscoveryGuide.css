@@ -1,0 +1,20 @@
+.island-field-guide { padding-top: 10px; }
+.island-guide-tabs { display: flex; overflow-x: auto; gap: 6px; padding: 3px 0 10px; }
+.island-guide-tabs button { flex: 1 0 auto; min-height: 44px; padding: 8px 12px; border-radius: 12px; font-size: 12px; }
+.island-guide-tabs button[aria-pressed=true] { background: #2945a5; color: #fff9e8; }
+.island-guide-feature { display: grid; grid-template-columns: 86px minmax(0,1fr); gap: 8px 16px; padding: 16px; background: #ffe9b9; border-radius: 22px 22px 8px 22px; border: 1px solid #c8a874; }
+.island-guide-picture { display: grid; place-items: center; min-height: 100px; color: #b23680; border-radius: 50%; background: #fff6da; }
+.island-guide-picture svg { width: 64px; height: 64px; stroke-width: 1.5; }
+.island-guide-picture[data-mystery=true] { color: #414461; }
+.island-guide-story { align-self: center; }
+.island-guide-story h3 { font-size: 17px; line-height: 1.5; font-weight: 750; margin: 4px 0; overflow-wrap: anywhere; }
+.island-guide-story > p:not(.island-eyebrow) { font-size: 12px; line-height: 1.8; }
+.island-guide-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; }
+.island-guide-actions .island-primary { min-height: 48px; font-size: 13px; padding: 10px 12px; }
+.island-guide-hint { grid-column: 1 / -1; font-size: 12px; line-height: 1.8; border-top: 1px dashed #aa906f; padding-top: 10px; }
+.island-guide-index { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin-top: 12px; }
+.island-guide-index button { min-width: 0; min-height: 64px; display: flex; align-items: center; gap: 7px; text-align: left; padding: 8px; border: 1px solid #bcad94; border-radius: 12px; font-size: 10px; line-height: 1.6; }
+.island-guide-index button > svg { width: 22px; min-width: 22px; color: #6e498e; }
+.island-guide-index button > svg:last-child { width: 15px; min-width: 15px; margin-left: auto; }
+.island-guide-index button[aria-pressed=true] { outline: 2px solid #2945a5; outline-offset: 1px; background: #fff9e8; }
+@media(min-width:700px) { .island-guide-feature { grid-template-columns: 130px minmax(0,1fr); padding: 22px; }.island-guide-picture svg { width: 84px; height: 84px; }.island-guide-index { grid-template-columns: repeat(3,minmax(0,1fr)); } }

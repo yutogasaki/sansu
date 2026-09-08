@@ -6,7 +6,7 @@ import { activate, answerUI, button, readNative, runtimeMetadata, seedNative, wa
 
 const base = (process.env.SANSU_ISLAND_SHELL_URL || 'http://127.0.0.1:5198').replace(/\/$/, '');
 const out = process.env.SANSU_ISLAND_SHELL_OUTPUT || 'output/playwright/island-shell';
-const candidate = 'mystic-island-shell-v1';
+const candidate = 'pokomoko-color-dots-v1';
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const report = {
     target: base, candidate, flag: 'VITE_ISLAND_ENABLED=true', startedAt: new Date().toISOString(), pass: false,
@@ -43,8 +43,8 @@ async function assertShell(page, { nav = true, mark = true } = {}) {
     await page.locator(`.island-shell[data-shell-candidate="${candidate}"]`).waitFor();
     const header = page.locator('.island-shell-header');
     await header.first().waitFor({ state: 'attached' });
-    assert.equal(await header.locator('img[src="/icons/icon-192.png"]').count(), 0, 'Utility headers must not switch back to the legacy app mascot');
-    if (mark) assert.equal(await header.locator('[data-island-mark="leaf"]').count(), 1);
+    if (mark) assert.equal(await header.locator('.island-shell-mark img[src="/icons/icon-192.png"]').count(), 1, 'Utility header keeps the adopted Pokomoko bear');
+    assert.equal(await header.locator('.island-shell-eyebrow').textContent(), 'ぽこもこと不思議な島');
     const geometry = await noOverflow(page);
     const controls = [];
     if (nav) {

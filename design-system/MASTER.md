@@ -47,21 +47,25 @@ If a design rule changes, update the SSOT docs first and then refresh this file.
 
 ### Living Island Override
 
+2026-09-09 local candidate `mystic-island-shore-garden-v6`: follow 28 for asymmetric outer shores, a broad sandy edge, low rock relief and shallows while keeping every saved placement ellipse and level walking floor. Follow 07 for a compact home learning action, six play/create entries and a separate archive row; optional panels share clear selected/preview/equipped states. This direction does not imply release approval or replace learning inputs.
+
+Specification 36 adds an optional discovery guide, physical experiments and visitors, next-growth preview, personal names/flags/outfits/ambience, and saved scenery/photos. Use actual rendered results as evidence. Explicit observations frame the target and its partner visibly; learning restores its fixed input/camera contract. Compare current and next growth at the same scale. Keep material character, resident faces/ears and real contact points readable. Stop optional ambience during learning, global sound-off and backgrounding.
+
 Optional theme/ornament previews and star exchanges follow specification 35. Use one real island canvas and compact controls, keeping the preview visible when selecting. World cosmetics never tint semantic learning content, interrupt ordinary questions, or rewrite historical island appearances. The base moon-garden remains available.
 
 The adopted `docs/product/30_living_island_growth_spec.md` governs the current Island flow alongside specification 28. Reuse the existing `moon-garden` 3D world and Island semantic colors; learning grows a few persistent habitats and their uses. New sections, including the first, continue into the next question without reward selection. Legacy reserved gifts remain available.
 
 - Home: one main learning action, a compact current growing-place indicator, and optional habitat selection. Show a changed next destination separately from the frozen active reservation. Mature habitats stop offering upgrades.
 - Living world: autonomous resident use on home/free play, one prominent event at a time. Home object selection opens the existing move/rotate/store controls. Earned earlier appearances remain selectable without removing unlocked play.
-- Views: all, garden, and unlocked east/west districts are optional viewing choices. Learning holds its camera and full input layout; do not introduce district navigation or autonomous visits between questions.
+- Views: all, garden, and unlocked east/west districts are optional viewing choices. Hide the island during learning and give the space to the problem and inputs. Keep the full keypad and support actions visible without scrolling; only long problem, written-history and model content may scroll. Show the grown island when the child returns home.
 - Album: render the immutable past placement, habitat progress and land beside the current scene with the same 3D renderer; both panes are read-only. List only observed discoveries. “ためす” returns to that actual activity, while stored targets offer “おく”. Never open the album automatically during learning.
-- Controls: use shared Island paper/ink/blue/yellow roles, visible focus, at least 44px targets, and concise Japanese. Preserve sound-off/reduced-motion comprehension. Apply separate visual-appeal, silent-comprehension/safety and runtime-integrity gates to the rendered flow.
+- Controls: use shared Pokomoko ivory/indigo/cobalt roles, visible focus, at least 44px targets, and concise Japanese. Preserve sound-off/reduced-motion comprehension. Apply separate visual-appeal, silent-comprehension/safety and runtime-integrity gates to the rendered flow.
 
 ## Color System
 
 Use existing tokens first.
 
-When Island delivery is enabled, shared utility/study screens follow the Island exception in `docs/product/07_ui_design_guideline.md` and `28_mystic_island_spec.md`: cream canvas/paper, dark blue outlines, blue controls, yellow primary action, and the same island mark. `src/components/island/IslandShell.css` scopes these semantic token overrides; the classic values below belong to the legacy delivery.
+When Island delivery is enabled, utility surfaces and world controls follow Pokomoko: simple static polka dots with a fantastical palette (deep teal, violet and a little amber); no landscape illustration or added motion. Tiny black dots and sugary pastel-only trials are not adopted, opaque ivory reading surfaces, indigo text, cobalt primary actions, the approved patchwork bear, and small stitched patches. Keep dots static; protect headings and every reading/input surface with solid color. Use shared --pokomoko-* tokens in src/index.css and IslandShell.css/PokomokoWorld.css; do not spread patterns into learning diagrams or keys. Full name: ぽこもこと不思議な島; installed short name: ぽこもこ. Existing 3D world and semantic learning colors remain unchanged.
 
 ### Base Background
 

@@ -243,7 +243,7 @@ describe('shared answer input compatibility', () => {
         const html = renderToStaticMarkup(<IslandAnswerForm slot={current} disabled={false} onAnswer={noop} />);
         expect(html).toContain('data-input-type="hissan"');
         expect(html).toContain('class="park-support" role="note"');
-        expect(html).toContain('おなじ くらいを たそう。');
+        expect(html).toContain('右はしから、上下の 数を たそう。');
         expect(html).toContain('class="park-keypad"');
         expect(html).not.toContain('class="park-inputs"');
         expect(html).not.toContain('island-problem-prompt');

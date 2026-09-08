@@ -2,6 +2,18 @@
 
 ## 1. 基本方針
 
+2026-09-09に[仕様35のカテゴリをまたぐ「ほしいもの」](35_island_customization_spec.md#カテゴリをまたぐほしいもの1件)を採用した。旧 `customization.desiredItemId` と `desire / clear-desire` receiptを保ち、家具・身支度だけをoptional `IslandRecord.rewardGoal` v1へ保存する。省略は追加目標なしで、読み取り時の移行・自動生成は行わない。両fieldの同時目標、未知版/ID、所持済み目標は拒否する。DB v8のstore/index、島schemaVersion、UserProfile、学習予約と評価、写真storeは変更しない。
+
+目標の選択・変更・解除は無料で、専用writerがactive profileとcanonical意図を検査し、`['island-reward-goal-v1',profileId,revision]` の `reward_goal_changed` receiptをCASより先に照合する。結果不明の再送は元revision/意図を保ち、既存receiptなら最新の島を返して後の目標を上書きしない。対象の取得時だけ、所有追加・必要な減算・該当目標の解除を同一transactionに含める。別品取得・資格成立・試用/装備・通常学習では解除せず、全景/成長snapshotにも目標を含めない。旧fieldと新fieldの各操作境界は仕様35を正本とする。
+
+2026-09-08に[身支度と観察記念の仕様41](41_island_expression_collection_spec.md)を採用した。DB v8のstore/indexと島schemaVersionを保ち、optional expressionの所有と選択を分ける。無料衣装/音へ戻す変更は同一transactionで追加装備を解除し、名前だけの変更は装備を保つ。新しい全景style v2と成長記録は当時の選択だけをcaptureする。旧配置/旧style v1/旧成長記録の省略を区別し、写真bytesや所有・資格・学習を巻き戻さない。取得/装備は専用receiptで再送を先に照合する。
+
+2026-09-08に[置いた道具から始まる暮らし40](40_island_life_furniture_spec.md)を追加採用した。購入専用3kindは各1個の安定IDで既存itemsへ収納取得し、既存ほしの減算とreceiptを原子的に保存する。基本報酬の6kindを別に検証し、旧重複家具と自動成長を保持する。DB v8のstore/indexは変更しない。新kindを読む現在値と成長snapshot、旧全景適用の後発物保持を検査する。
+
+2026-09-08に[部位のきせかえと景色の保存39](39_island_appearance_sets_spec.md)を追加採用した。DB v8のstore/indexを変えず、既存customizationへ検証済みの部位外見、既存3配置枠へ装い/音/旗のsnapshotを追加する。旧テーマの利用権は読み取り時に解決し、旧残高/receiptを作り直さない。単品・テーマ・完成セットは未所持分の減算/所有/適用/receiptを原子的に保存し、結果不明の再送は再見積りや新しい景色のcaptureより先に元receiptを照合する。実装と検証は全体タスクで追う。
+
+2026-09-08に[仲間の仕事・展示・写真38](38_island_shared_memories_spec.md)を追加採用した。[現DB実装](../../src/db/index.ts)はv8で、既存全store/indexを維持し `islandPhotoAlbums / islandPhotos / islandPhotoBlobs` の3storeを追加している。共同記憶/展示はIslandRecordの小さなoptional状態、写真本体/thumbnailは専用Blob rowとし、通常の学習writer/学習transactionへ画像bytesと写真storeを追加しない。active profile、独立album revision/CAS、同操作receipt、profile削除の原子性は下記7.1と仕様38に従う。schema・repositoryの実装と、実画面・PWA・実参加者の検証完了は分けて扱う。
+
 教科共通ゲームは [22_shared_subject_build_and_play_spec.md](22_shared_subject_build_and_play_spec.md) の実装契約に従いDexie v6へ `parks / parkPlans / parkEvents` を追加する。v5の全store・index・行・checkpointは無変換。profile削除は新3storeも同じtransactionに含める。ロールバックはv6対応buildのflag無効化で行い、v5しか知らない旧buildへの巻戻しやDB削除は使わない。
 
 既存 `UserProfile` に探索データを大量追加しない。正式導入時はDexie version 5以降で探索専用テーブルを追加する。
@@ -9,6 +21,23 @@
 既定起動面の探索へMVP-2bの最小学習接続を追加する。run行へplanner assignmentを予約し、SRS対象回答は探索event・run集計・既存回答ログ・MemoryState・プロフィール進捗を同一transactionで保存する。MVP-2eで不適格候補を除外した場合は別identityのgame-only fallbackだけを予約し、学習状態を変更しない。MVP-2cでは同じrun行のoptional active checkpointからrun再開を行い、発見図鑑のrun横断永続化は後続縦切りとする。
 
 ## 2. 既存テーブル
+
+### 家に飾る学習成果（2026-09-09）
+
+[仕様42](42_island_learning_keepsakes_spec.md)の展示は既存 `IslandRecord` のoptional欄だけを追加する。
+
+```ts
+learningKeepsakes?: {
+  version: 1;
+  displayed: IslandLearningKeepsakeId[];
+};
+```
+
+IDは仕様42の固定16品に限り、資格は本人の保存済み `completedSets` から導く。別の所有数・達成数・日時を加算保存しない。`displayed` は最大16件、重複なし、catalog順で保存し、欠如は未展示として読む。未知版/ID、未資格の展示、破損した配列は拒否し、読み取りで移行や既定値の書込みを行わない。DB v8のstore/index、島schemaVersion、UserProfile、学習writer、財布、写真storeは維持する。
+
+専用writerは `display { keepsakeId, displayed }` または `display-earned` を受け、active profileと資格、revisionを既存transactionで検査する。`['island-learning-keepsakes-v1', profileId, revision]` の `learning_keepsakes_changed` receiptはCASより先に照合し、同じ意図の再送は最新の島を返す。新しい資格の自動展示や後の収納の取消を再送へ混ぜない。通常回答はこのoptional欄を保持し、展示操作は学習/ほし/他の成果を変更しない。
+
+詳細履歴は本人のcanonicalな完了plan/eventをreadonlyで取得する。25回以下の節目は最大25組、それ以降は節目に対応する1組に限定する。正確な日時・重複しない予約問題数・教科は確認できる部分だけを表示し、欠如や矛盾を現在日時や推定問題数で補わない。成長履歴/保存景色に現在の展示を後付けせず、旧写真bytesも変更しない。家内のcamera、home/keepsakes/noticesのsection、選択中の近景は一時状態であり、新たな保存欄を設けない。
 
 ### 紙テストの問題保持（2026-09-07）
 
@@ -178,6 +207,25 @@ SRS対象assignmentでは既存 `logs` / MemoryState / weak / 解放・昇格用
 - 既存学習ログは保持
 - バックアップなしの破壊的変更は禁止
 
+### 7.1 version 8 — 写真の独立保存（2026-09-08）
+
+`SANSU_V8_STORES` は `SANSU_V7_STORES` をそのまま展開し、次の3storeだけを追加する。upgrade callbackによる既存行の変換や書換えは行わない。
+
+```ts
+islandPhotoAlbums: '&profileId'
+islandPhotos: '&id, profileId, [profileId+capturedAt]'
+islandPhotoBlobs: '&id, profileId'
+```
+
+- `islandPhotoAlbums` はprofile別のversion 1/単調revision、`islandPhotos` は名前・構図・撮影時刻・PNG寸法/容量/SHA-256などの小さなmetadataを持つ。`islandPhotoBlobs` の同じphoto IDの1行へ本体PNGとthumbnail Blobをまとめる。未作成のアルバムは仮想のrevision 0として読み、閲覧で保存しない。
+- [写真repository](../../src/domain/island/photosRepository.ts)の書込transactionは `appData / islandPhotoAlbums / islandPhotos / islandPhotoBlobs / islandEvents` の5tableだけ。active profileと本人の存在を先に確認し、album revision、最大12枚、本体とthumbnail合計24MiB、photo ID、metadata/Blobの一致を検査する。本体2MiB/長辺1600px、thumbnail128KiB/長辺320pxの制約とPNG/SHA-256検査は写真domainに従う。画像の検査・ハッシュ計算はtransactionの外で行う。
+- 成功はmetadata/Blob/album revision/`photo_changed` receiptの全commit後。取消や再送のためにBlobをeventへ複製しない。receiptは `['island-photo:v1:operation', profileId, expectedAlbumRevision]` の主キーで直接取得し、同じcanonical intentだけ再送できる。結果不明時は元のphoto ID・時刻・metadata・実PNG・revisionを維持する。保存後に本人が削除した写真へ古い成功再送が来ても復活させず、`present: false` を返す。
+- 一覧はmetadataを読む。本体を開く処理とthumbnailを渡すAPIを分けるが、現在のBlob storeは同じ1行に両画像を持つため、thumbnail取得でも該当Blob rowは読み込む。削除は両画像・metadataを一緒に消し、revision/receiptを残す。満杯、quota、未知I/O、壊れたrowを理由に既存写真を自動削除・初期化しない。
+- [profile削除](../../src/domain/user/repository.ts)は上記写真3storeを既存の所有row削除と同じtransactionに含め、別profileの写真を保持する。写真のbytes/storeを島の `islandTables` や共通学習writerへ追加しない。通常回答は既存plan/Problemを正本として続ける。
+- v7→v8の全既存store/index/代表行、学習予約・入江checkpoint・receiptの保持、profile削除、保存abort/CAS/同操作再送は[写真repository tests](../../src/domain/island/photosRepository.test.ts)で照合する。実canvasからの故障再送・背景化は[検証matrix](../ai/verification_matrix.md)の写真persistenceハーネスで別に確認し、unit testを実ブラウザの証拠へ読み替えない。
+
+v8導入後のrollbackはv8を理解するbuildで機能を無効化する。v7だけを知る旧buildへの巻戻し、schema downgrade、IndexedDB削除をrollback手順にしない。
+
 ## 2026-09-07: Mystic Island additive storage
 
 整数の多段筆算では、新規予約Problemにoptionalの`hissanVersion: 2`を持たせる。Island/Parkの版なしProblemは従来の筆算generatorで読み、保存済み`hissanStep`と`hissanValues`の行・列座標を再解釈しない。新しいProblemだけ多段generatorを使い、商とあまりの`correctAnswer`配列を連結しない。既存テーブル・index・Dexie versionは変更せず、旧planの一括書換えも行わない。表示・入力契約は [06_screen_specs.md](06_screen_specs.md)「多桁の筆算」を参照。
@@ -186,7 +234,7 @@ SRS対象assignmentでは既存 `logs` / MemoryState / weak / 解放・昇格用
 
 区間開始時に通常6問/複雑3問の完全なProblem・支援/筆算状態・学習sourceを予約し、再読込で再生成しない。active profile所有権、plan revision、action receiptを照合し、学習回答と既存writerの記録、最終問題の完了受取権を同一transactionへ保存する。支援・skipは独力確認Dueを残し、支援正解を独力正答に数えない。未受取権は次の区間を始めても保持し、受取をitemとclaim eventへ原子的に変換する。配置・回転・収納は島revisionを使ったCASで保存する。
 
-rollbackはv7 schemaを維持したまま `VITE_ISLAND_ENABLED` を無効化する。schemaのdowngradeやIndexedDB削除をrollback手順にしない。PWAは島の学習中・保存中を保護する。
+島導入時のrollbackはv7 schemaを維持したまま `VITE_ISLAND_ENABLED` を無効化する。v8導入後は上記7.1のv8対応buildを使い、schemaのdowngradeやIndexedDB削除をrollback手順にしない。PWAは島の学習中・保存中を保護する。
 
 島の再確認改善では、既存island行にoptionalの算数再確認状態と英語Due巡回位置を加える。旧行は未設定のまま読み込める。算数はskill単位の失敗問題識別と別表現/独力の確認段階を持ち、訂正正解で消さない。状態更新は回答または次区間予約と同一transaction、島revisionのCASとreceipt冪等性に従う。区間のProblemは予約後に差し替えない。新しいtable/index、既存履歴の書換え、schema downgradeは伴わない。
 

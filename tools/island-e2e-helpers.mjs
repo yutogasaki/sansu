@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 
-export const ISLAND_CANDIDATE = 'mystic-island-living-v5';
+export const ISLAND_CANDIDATE = 'mystic-island-shore-garden-v6';
 export const button = (page, name) => page.getByRole('button', { name, exact: true });
 export const activate = (locator, touch = false) => touch ? locator.tap() : locator.click();
 
@@ -68,7 +68,13 @@ export async function waitMode(page, mode) {
 
 export async function waitReady(page) {
     await page.locator(`.island-page[data-visual-candidate-id="${ISLAND_CANDIDATE}"]`).waitFor();
-    await page.locator('[data-renderer="three"] canvas').waitFor();
+    await page.waitForFunction(() => {
+        const root = document.querySelector('.island-page');
+        // Learning deliberately hides its mounted world; wait for the actual input surface.
+        if (root?.getAttribute('data-mode') === 'learning') return Boolean(root.querySelector('[data-input-ready="true"] .park-answer'));
+        const canvas = root?.querySelector('[data-renderer="three"] canvas');
+        return Boolean(canvas && canvas.getBoundingClientRect().width > 0 && canvas.getBoundingClientRect().height > 0);
+    });
 }
 
 export async function runtimeMetadata(page) {
@@ -102,6 +108,7 @@ export async function answerUI(page, plan, { incorrect = false, touch = false, d
         return grid ? grid.steps[slot.hissanStep || 0].correctValues : slot.problem.correctAnswer;
     }, slot) : slot.problem.correctAnswer;
     const inputType = await page.locator('.park-answer').getAttribute('data-input-type');
+    const automatic = await page.locator('.park-answer').getAttribute('data-answer-completion') === 'automatic';
     let submit;
     if (inputType === 'choice') {
         const choice = slot.problem.inputConfig.choices.find(choice => incorrect ? choice.value !== answer : choice.value === answer);
@@ -112,12 +119,17 @@ export async function answerUI(page, plan, { incorrect = false, touch = false, d
         const entered = incorrect ? values.map(value => String(value) === '9' ? '8' : '9') : values;
         for (let index = 0; index < entered.length; index++) {
             if (inputType !== 'hissan') await activate(page.locator('.park-input').nth(index), touch);
-            for (const digit of String(entered[index])) {
+            const digits = String(entered[index]);
+            for (const [position, digit] of [...digits].entries()) {
+                if (automatic && index === entered.length - 1 && position === digits.length - 1) {
+                    submit = page.locator('.park-keypad').getByRole('button', { name: digit === '.' ? 'しょうすうてん' : digit, exact: true });
+                    continue; // The last digit is now the actual submit gesture.
+                }
                 if (touch) await activate(page.locator('.park-keypad').getByRole('button', { name: digit === '.' ? 'しょうすうてん' : digit, exact: true }), true);
                 else await page.keyboard.type(digit);
             }
         }
-        submit = page.locator('.park-answer .park-keypad [data-keypad-submit]');
+        if (!automatic) submit = page.locator('.park-answer .park-keypad [data-keypad-submit]');
     }
     // Start in the actual submit event, excluding Playwright transport and typing time.
     await page.evaluate(({ planId, revision, expectedNextPlanId, allowNext, allowReward }) => {
@@ -180,10 +192,21 @@ export function assertIslandSectionGrowth(before, after, plan = before.plan) {
     assert.deepEqual(after.island.pendingRewards, before.island.pendingRewards, 'Automatic growth adds no unclaimed furniture');
     assert(before.island.growth && after.island.growth, 'A new growth reservation has persistent growth state');
     for (const habitat of ['garden', 'waterside', 'grove', 'village']) {
-        assert.equal(after.island.growth.progress[habitat],
-            Math.min(6, before.island.growth.progress[habitat] + Number(habitat === plan.growthTarget)),
-            'Only the place frozen in this reservation earns one section');
+        const progress = before.island.growth.progress[habitat], pending = before.island.growth.pendingAnswers?.[habitat] ?? 0;
+        if (plan.rewardPacing === 'answers-v1') {
+            // Independent cumulative thresholds check marks and saved fractions together.
+            const totals = [0, 3, 9, 18, 30, 45, 63];
+            const total = Math.min(63, totals[progress] + pending + (habitat === plan.growthTarget ? plan.slots.length : 0));
+            const expected = totals.filter(value => value <= total).length - 1;
+            assert.equal(after.island.growth.progress[habitat], expected, 'Only completed whole problems grow the frozen place');
+            assert.equal(after.island.growth.pendingAnswers[habitat], total - totals[expected], 'Partial effort is saved without duplication');
+        } else {
+            assert.equal(after.island.growth.progress[habitat], Math.min(6, progress + Number(habitat === plan.growthTarget)),
+                'A saved legacy reservation retains one growth mark');
+        }
     }
+    assert.equal(after.island.customization.points, (before.island.customization?.points ?? before.island.completedSets * 10)
+        + (plan.rewardPacing === 'answers-v1' ? plan.slots.length : 10), 'The saved wallet receives the frozen reservation reward once');
     for (const item of before.island.items) {
         const current = after.island.items.find(candidate => candidate.id === item.id);
         assert(current, 'Growth keeps every owned identity');
@@ -194,7 +217,9 @@ export function assertIslandSectionGrowth(before, after, plan = before.plan) {
 
 export async function assertKeypad(page, requireViewport = true) {
     if (await page.locator('.park-choices').count()) return;
-    for (const name of ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', 'こたえを けす', 'ひとつ もどす', 'こたえる']) {
+    const names = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', 'こたえを けす', 'ひとつ もどす'];
+    if (!await page.locator('[data-written-auto-confirm]').count()) names.push('こたえる');
+    for (const name of names) {
         const key = page.locator('.park-keypad').getByRole('button', { name, exact: true });
         await key.waitFor();
         if (requireViewport) {

@@ -7,7 +7,9 @@ export function IslandAnswerFeedback({ feedback }: { feedback?: IslandLearningFe
     const Icon = result?.kind === 'retry' ? X : result?.kind === 'supported' ? Sprout : Circle;
     return <div className="island-workbench-message" role="status" aria-live="polite" aria-atomic="true">
         {result && <div key={result.id} className="island-answer-result" data-result={result.kind}>
-            <span className="island-answer-result__symbol" aria-hidden="true"><Icon size={26} strokeWidth={3} /></span>
+            <span className="island-answer-result__symbol" aria-hidden="true"><Icon size={26} strokeWidth={3} />
+                {result.kind === 'correct' && <span className="island-answer-result__rays"><i /><i /><i /><i /></span>}
+            </span>
             <p>{result.text}</p>
         </div>}
     </div>;

@@ -1,0 +1,27 @@
+.island-expression { min-width:0; }
+.island-expression .island-sheet-title h2 { font-size:1.1rem; }
+.island-expression-tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.4rem; }
+.island-expression-tabs button { min-width:0; padding:.65rem .25rem; gap:.3rem; font-size:.8rem; }
+.island-expression [aria-pressed="true"] { outline:3px solid var(--pokomoko-blue); outline-offset:1px; }
+.island-expression-wallet { display:flex; align-items:center; gap:.4rem; margin:1rem 0; }
+.island-expression-wallet strong { font-size:1.3rem; }
+.island-expression-residents { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem; }
+.island-expression-catalog { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.65rem; }
+.island-expression-card { display:flex; flex-direction:column; align-items:center; gap:.5rem; min-width:0; padding:1rem .55rem; color:var(--pokomoko-ink); background:var(--pokomoko-paper); border:1px solid var(--island-muted); border-radius:16px; }
+.island-expression-card strong { font-size:.9rem; overflow-wrap:anywhere; }
+.island-expression-card small { display:flex; align-items:center; gap:.3rem; font-size:.75rem; }
+.island-expression-detail { margin-top:1.2rem; }
+.island-expression-detail h3 { font-size:1.05rem; margin:0 0 .3rem; }
+.island-expression-detail p { line-height:1.6; }
+.island-expression-preview { display:flex; align-items:center; flex-wrap:wrap; gap:.5rem; padding:.7rem 0; font-size:.85rem; }
+.island-expression-preview .island-text-button { display:inline-flex; align-items:center; gap:.3rem; }
+.island-expression-use,.island-expression-acquire { display:grid; gap:.5rem; margin-top:1rem; }
+.island-expression-acquire small { line-height:1.5; }
+.island-expression-free { margin-top:1.5rem; padding-top:1rem; border-top:1px solid var(--island-muted); }
+.island-expression-free > p { font-size:.85rem; }
+.island-expression-free fieldset { border:0; margin:.8rem 0; padding:0; }
+.island-expression-free legend { font-weight:700; margin-bottom:.5rem; }
+.island-expression-free fieldset > div { display:flex; flex-wrap:wrap; gap:.5rem; }
+.island-expression-footer { display:flex; justify-content:space-between; gap:.5rem; margin-top:1.4rem; }
+.island-page[data-mode="expression"] .island-stage { --island-stage-height:clamp(240px,35dvh,380px); position:sticky; top:0; z-index:2; }
+@media(min-width:700px) { .island-expression-catalog { grid-template-columns:repeat(3,minmax(0,1fr)); } .island-expression-tabs button { font-size:.95rem; } }

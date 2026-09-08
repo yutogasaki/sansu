@@ -5,11 +5,12 @@ export interface IslandLearningFeedback {
     id: string;
     kind: 'correct' | 'retry' | 'support' | 'step' | 'supported';
     text: string;
+    retryAnswer?: string[];
 }
 
 /** World light follows completed questions; the receipt still distinguishes answers from modeled completion. */
 export function islandFeedbackForReceipt(before: Pick<IslandPlan, 'id' | 'cursor'>, after: Pick<IslandPlan, 'id' | 'cursor'>,
-    event: Pick<IslandEvent, 'id' | 'planId' | 'slotIndex' | 'type' | 'result'>): {
+    event: Pick<IslandEvent, 'id' | 'planId' | 'slotIndex' | 'type' | 'result' | 'action'>): {
     feedback: IslandLearningFeedback;
     reaction?: IslandReaction;
 } | undefined {
@@ -22,7 +23,8 @@ export function islandFeedbackForReceipt(before: Pick<IslandPlan, 'id' | 'cursor
     }
     if (event.type !== 'answer') return;
     if (event.result === 'incorrect' || event.result === 'assisted-incorrect') {
-        return { feedback: { id: event.id, kind: 'retry', text: 'もういちど' }, reaction: { id: event.id, kind: 'retry' } };
+        const retryAnswer = event.action?.type === 'answer' && Array.isArray(event.action.answer) ? event.action.answer : undefined;
+        return { feedback: { id: event.id, kind: 'retry', text: 'もういちど', ...(retryAnswer ? { retryAnswer } : {}) }, reaction: { id: event.id, kind: 'retry' } };
     }
     if (event.result === 'correct' || event.result === 'assisted-correct') {
         if (after.cursor === before.cursor + 1) {

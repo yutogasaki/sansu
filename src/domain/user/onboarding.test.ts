@@ -4,7 +4,7 @@ import { SansuDatabase } from '../../db';
 import { getAvailableSkills } from '../math/curriculum';
 import { createInitialProfile } from './profile';
 import { completeOnboardingProfile, onboardingDestination, OnboardingAlreadyCompleted, OnboardingConflict,
-    resolveOnboardingSelection, type OnboardingSelection } from './onboarding';
+    ONBOARDING_GRADES, ONBOARDING_MATH_RANGES, resolveOnboardingSelection, type OnboardingSelection } from './onboarding';
 
 const options = { indexedDB, IDBKeyRange };
 const databases: SansuDatabase[] = [];
@@ -14,17 +14,55 @@ const snapshot = async (d: SansuDatabase) => Object.fromEntries(await Promise.al
 afterEach(async () => { for (const d of databases.splice(0)) { d.close(); await d.delete(); } });
 
 describe('explicit first learning setup', () => {
-    it('uses the exact parent grade, range and English mappings', () => {
+    it('uses the parent grade adjustments capped at the chosen topic and preserves English placement', () => {
         const bases = [[-2, 0], [-1, 2], [0, 8], [1, 10], [2, 11], [3, 13], [4, 14], [5, 15], [6, 16]];
         const adjustments = { q_count: -6, q_add: -3, q_sub: -1, q_col: 1, q_mul: 4 } as const;
+        const topicEnds = { q_count: 7, q_add: 9, q_sub: 10, q_col: 11, q_mul: 14 } as const;
         for (const [grade, base] of bases) for (const [mathRange, adjustment] of Object.entries(adjustments)) {
-            const resolved = resolveOnboardingSelection({ ...selection, grade, mathRange: mathRange as keyof typeof adjustments }, 'first');
-            expect(resolved.mathStartLevel).toBe(Math.max(1, Math.min(28, base + adjustment)));
+            const range = mathRange as keyof typeof adjustments;
+            const resolved = resolveOnboardingSelection({ ...selection, grade, mathRange: range }, 'first');
+            expect(resolved.mathStartLevel).toBe(Math.max(1, Math.min(topicEnds[range], base + adjustment)));
         }
         for (const [englishRange, level] of Object.entries({ beginner: 1, some: 4, confident: 7 } as const)) {
             const resolved = resolveOnboardingSelection({ ...selection, subject: 'mix', englishRange: englishRange as 'beginner' | 'some' | 'confident' }, 'first');
             expect(resolved.vocabStartLevel).toBe(level);
         }
+    });
+
+    it('keeps every range available and ordered for preschool through sixth grade', () => {
+        for (const { value: grade } of ONBOARDING_GRADES) {
+            const levels = ONBOARDING_MATH_RANGES.map(({ value: mathRange }) =>
+                resolveOnboardingSelection({ ...selection, grade, mathRange }, 'first').mathStartLevel);
+            expect(levels).toEqual([...levels].sort((a, b) => a - b));
+            expect(levels.at(-1)).toBe(28);
+        }
+    });
+
+    it.each([
+        ['q_div', 18, 19], ['q_decimal', 19, 20], ['q_decimal_mul', 20, 21],
+        ['q_fraction', 22, 23], ['q_fraction_mul', 24, 25], ['q_application', 27, 28], ['q_speed', 28, 28],
+    ] as const)('starts beyond %s for both second and sixth graders without inventing answer evidence', async (mathRange, start, main) => {
+        for (const grade of [2, 6]) for (const intent of ['first', 'legacy-first', 'add'] as const) {
+            const d = database();
+            const chosen = { ...selection, name: 'あおい', grade, mathRange };
+            const result = await completeOnboardingProfile(chosen, 'new-profile', intent, d);
+            expect(result.profile).toMatchObject({ grade, mathStartLevel: start, mathMainLevel: main,
+                mathMaxUnlocked: main, todayCount: 0, recentAttempts: [] });
+            const rows = await d.memoryMath.toArray();
+            expect(rows.map(row => row.id).sort()).toEqual([...getAvailableSkills(start)].sort());
+            expect(rows.every(row => row.status === 'retired' && row.totalAnswers === 0 && row.correctAnswers === 0)).toBe(true);
+            expect(await d.logs.count()).toBe(0);
+            expect(await d.islandPlans.count()).toBe(0);
+            expect(await completeOnboardingProfile(chosen, 'new-profile', intent, d)).toEqual(result);
+            expect(await d.memoryMath.toArray()).toEqual(rows);
+        }
+    });
+
+    it('does not retire written multiplication, division or decimals when a sixth grader chooses only九九', async () => {
+        const d = database();
+        const { profile } = await completeOnboardingProfile({ ...selection, grade: 6, mathRange: 'q_mul' }, 'sixth', 'first', d);
+        expect(profile).toMatchObject({ mathStartLevel: 14, mathMainLevel: 15, mathMaxUnlocked: 15 });
+        expect((await d.memoryMath.toArray()).map(row => row.id).sort()).toEqual([...getAvailableSkills(14)].sort());
     });
 
     it('rejects missing or invalid required choices before creating any data', async () => {

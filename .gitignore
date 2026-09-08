@@ -4,6 +4,7 @@ build
 .env
 .DS_Store
 *.log
+!docs/design/audits/2026-09-08-island-balance/logs/*.log
 playwright-report
 test-results
 .playwright-cli/

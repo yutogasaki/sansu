@@ -77,7 +77,11 @@ function sampleSurface(object: THREE.Object3D) {
 }
 
 function bodySurface(body: THREE.Object3D) {
-    return body.children.filter(child => child instanceof THREE.Mesh && child.visible).flatMap(child => sampleSurface(child));
+    // The articulated tail remains part of the body identity after leaving the
+    // torso material batch. Only that named branch is recursive: including the
+    // head or shoulders here would let their visibility conceal a hidden torso.
+    return body.children.filter(child => (child instanceof THREE.Mesh || child.name === 'resident-tail') && child.visible)
+        .flatMap(child => sampleSurface(child));
 }
 
 function routeProgress(plan: SharedActivityPlan, position: THREE.Vector3) {
@@ -149,8 +153,8 @@ export function sampleSharedActivityPoses(plan: SharedActivityPlan, residents: r
                     composition: {
                         source: phase === 'gather' ? sampleSurface(source) : [],
                         carrierHead: sampleSurface(carrier.head), receiverHead: sampleSurface(receiver.head),
-                        // Direct body meshes retain real torso/tail surfaces;
-                        // head and articulated arms are measured independently.
+                        // Torso meshes and the articulated tail remain one body
+                        // channel; head and arms are measured independently.
                         carrierBody: bodySurface(carrier.body), receiverBody: bodySurface(receiver.body),
                         carrierArm: sampleSurface(carrier.group.getObjectByName(`shoulder-${selected.carrier}`)!),
                         receiverArm: sampleSurface(receiver.group.getObjectByName(`shoulder-${selected.receiver}`)!),

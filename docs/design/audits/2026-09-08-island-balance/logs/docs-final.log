@@ -1,0 +1,13 @@
+
+> pokko-fushigi-zukan-app@0.0.0 docs:check
+> node tools/check-docs.mjs
+
+WARN
+- docs/tasks/design-refresh-status.md: 次回棚卸し目安 (2026-05-15) is in the past
+- docs/tasks/backlog.md: 次回棚卸し目安 (2026-05-15) is in the past
+- docs/tasks/ui-fix-tasklist.md: 次回棚卸し目安 (2026-05-15) is in the past
+- docs/tasks/active/2026-03-17-v1-core-stabilization-plan.md: Review By (2026-05-15) is in the past
+- docs/tasks/active/2026-07-19-root-tangle-observation-morph.md: Review By (2026-07-26) is in the past
+- docs/tasks/active/2026-07-21-cold-open-value-loop.md: Review By (2026-07-28) is in the past
+- docs/tasks/active/2026-07-23-whole-app-brand-coherence.md: Review By (2026-07-30) is in the past
+PASS docs:check

@@ -8,6 +8,7 @@ import { makeExpansion, makeLighthouse, makeScenery, makeStarTree } from './scen
 import { chooseSharedActivityPresentation, fitSharedActivityFrame, type SharedActivityFrame } from './sharedActivityFraming';
 import type { SharedActivityPlan } from './sharedActivities';
 import { SharedActivityVisuals } from './sharedActivityVisuals';
+import { sampleSharedActivityPoses } from './sharedActivityPoseSamples';
 import { chooseSharedActivity, sharedActivityDeliveryPlans } from './sharedActivities';
 import type { IslandStageItem } from './types';
 
@@ -38,6 +39,72 @@ function blockedAt(point: THREE.Vector3, view: THREE.Camera, object: THREE.Objec
     const ray = new THREE.Raycaster(point.clone().addScaledVector(backward, distance), backward.negate(), 0, distance - .04);
     return ray.intersectObject(object, true).length > 0;
 }
+function boundedCameraSearch(diagnostic: NonNullable<SharedActivityFrame['visibilityDiagnostics']>) {
+    const search = diagnostic.cameraSearch!;
+    expect(search).toBeDefined(); expect(search.length).toBeGreaterThanOrEqual(1); expect(search.length).toBeLessThanOrEqual(3);
+    expect(search.map(step => step.evaluatedHeight)).toEqual([8, 10.5, 13].slice(0, search.length));
+    expect(diagnostic.cameraCandidates).toBe(search.length * 6); expect(diagnostic.cameraCandidates).toBeLessThanOrEqual(18);
+    // Stop at the first successful bounded height pass. A later readable pose
+    // cannot justify accepting an earlier hidden subject at the same height.
+    for (const step of search.slice(0, -1)) expect(step.readabilitySatisfied).toBe(false);
+    const final = search[search.length - 1];
+    expect(final.chosenHeight).toBe(diagnostic.cameraHeight);
+    expect(final.minimumPhaseVisibility).toBe(diagnostic.minimumPhaseVisibility);
+    expect(final.minimumCompositionVisibility).toBe(diagnostic.minimumCompositionVisibility);
+    expect(final.minimumPoseIdentityVisibility).toBe(diagnostic.minimumPoseIdentityVisibility);
+    expect(final.bodySeparationPx).toBe(diagnostic.bodySeparationPx);
+    expect(final.readabilitySatisfied).toBe(true); expect(diagnostic.readabilitySatisfied).toBe(true);
+    expect(final.minimumPhaseVisibility).toBeGreaterThanOrEqual(.5);
+    expect(final.minimumCompositionVisibility).toBeGreaterThanOrEqual(.5);
+    expect(final.minimumPoseIdentityVisibility).toBeGreaterThanOrEqual(.5);
+    expect(final.bodySeparationPx).toBeGreaterThanOrEqual(60);
+    return search;
+}
+
+describe('body identity keeps the actual articulated tail', () => {
+    it.each(['otter', 'rabbit', 'fox'] as const)('%s retains tail surfaces in every held pose without borrowing head or arm surfaces', species => {
+        const materials = new IslandMaterials();
+        const source: IslandStageItem = { id: 'source', kind: 'flower', position: { x: 1.5, z: 1.75 }, rotation: 0 };
+        const seat: IslandStageItem = { id: 'seat', kind: 'bench', position: { x: -.5, z: .75 }, rotation: Math.PI / 2 };
+        const from = { x: 1.5, z: 2.52 }, handoffPoint = { x: .69, z: .75 };
+        const plan: SharedActivityPlan = { kind: 'flower', pairId: species, selectedItemId: source.id, source, seat, carrier: 0, receiver: 1,
+            gatherRoute: { points: [from, from], yaw: Math.PI }, receiverRoute: { points: [seat.position!, seat.position!], yaw: Math.PI / 2 },
+            deliveryRoute: { points: [from, handoffPoint], yaw: -Math.PI / 2 }, handoffPoint };
+        const residents = [new IslandResident(species, materials, [from.x, 0, from.z], () => {}),
+            new IslandResident(species, materials, [seat.position!.x, 0, seat.position!.z], () => {})];
+        const sampled = sampleSharedActivityPoses(plan, residents, 6, { carrier: 'left', receiver: 'right' })!;
+        const pointKey = (point: THREE.Vector3) => point.toArray().map(value => Math.round(value * 1e7)).join(',');
+        try {
+            const samples = sampled.options[0].samples;
+            expect(samples).toHaveLength(18);
+            for (const sample of samples) {
+                // Frozen pose matrices identify the real triangle surfaces even
+                // after the isolated proxy has advanced to a later animation.
+                const tails = sample.self.filter(({ mesh }) => {
+                    for (let ancestor = mesh.parent; ancestor; ancestor = ancestor.parent) if (ancestor.name === 'resident-tail') return true;
+                    return false;
+                });
+                expect(tails).toHaveLength(2);
+                for (const [index, role] of ['carrier', 'receiver'].entries()) {
+                    const { mesh, inverse } = tails[index], position = mesh.geometry.getAttribute('position'), indices = mesh.geometry.index;
+                    const matrix = inverse.clone().invert(), centroids = new Set<string>();
+                    for (let triangle = 0; triangle < (indices?.count ?? position.count); triangle += 3) {
+                        const point = new THREE.Vector3();
+                        for (let corner = 0; corner < 3; corner++) point.add(new THREE.Vector3().fromBufferAttribute(position,
+                            indices ? indices.getX(triangle + corner) : triangle + corner));
+                        centroids.add(pointKey(point.multiplyScalar(1 / 3).applyMatrix4(matrix)));
+                    }
+                    const body = sample.composition[role === 'carrier' ? 'carrierBody' : 'receiverBody']!.map(pointKey);
+                    expect(body.some(point => centroids.has(point)), `${species} ${role} ${sample.phase} omits its actual tail`).toBe(true);
+                    for (const channel of role === 'carrier' ? ['carrierHead', 'carrierArm'] as const : ['receiverHead', 'receiverArm'] as const) {
+                        const independent = new Set(sample.composition[channel]!.map(pointKey));
+                        expect(body.some(point => independent.has(point)), `${channel} was included in the body channel`).toBe(false);
+                    }
+                }
+            }
+        } finally { sampled.dispose(); residents.forEach(resident => disposeGeometry(resident.group)); materials.dispose(); }
+    });
+});
 
 describe('one side view contains the complete shared delivery', () => {
     it.each(PAIRS)('$kind fits all quarter-turn chair directions and phone/tablet stage shapes', pair => {
@@ -158,7 +225,18 @@ describe('one side view contains the complete shared delivery', () => {
                 const frame = fitSharedActivityFrame(plan, { ...objects, viewportWidth: viewport.width }, viewport.width / viewport.height);
                 const diagnostic = frame.visibilityDiagnostics!;
                 expect(frame.presentationHands).toBeDefined(); expect(diagnostic.sampleCount).toBe(18);
-                expect(diagnostic.handCandidates).toBe(4); expect(diagnostic.cameraCandidates).toBe(6);
+                expect(diagnostic.handCandidates).toBe(4);
+                const search = boundedCameraSearch(diagnostic);
+                if (fixture.name === '624 star spectator') {
+                    expect(search.map(step => step.evaluatedHeight)).toEqual([8, 10.5]);
+                    expect(search[0].bodySeparationPx).toBeGreaterThanOrEqual(60);
+                    expect(search[0].minimumCompositionVisibility).toBeGreaterThanOrEqual(.5);
+                    expect(search[0].minimumPoseIdentityVisibility).toBeGreaterThanOrEqual(.5);
+                    // The actual star is too obscured in the six lower views;
+                    // the next height must improve the prop, not waive its gate.
+                    expect(search[0].minimumPhaseVisibility).toBeLessThan(.5);
+                    expect(search[1].minimumPhaseVisibility).toBeGreaterThanOrEqual(.5);
+                } else expect(diagnostic.cameraCandidates).toBe(6);
                 expect(diagnostic.fullyHiddenPhases).toBe(0); expect(diagnostic.minimumPhaseVisibility).toBeGreaterThan(.5);
                 for (const phase of ['gather', 'carry', 'share', 'enjoy', 'reduced'] as const) expect(diagnostic.phaseVisibility[phase]).toBeGreaterThan(.5);
                 expect(diagnostic.bodySeparationPx).toBeGreaterThanOrEqual(60);
@@ -397,7 +475,17 @@ describe('recorded 5d7 subjects cannot borrow visibility from later poses', () =
             expect(diagnostic.minimumPhaseVisibility).toBeGreaterThanOrEqual(.5);
             expect(diagnostic.minimumCompositionVisibility).toBeGreaterThanOrEqual(.5);
             expect(diagnostic.bodySeparationPx).toBeGreaterThanOrEqual(60);
-            expect(diagnostic.cameraCandidates).toBe(6); expect(diagnostic.cameraHeight).toBe(8);
+            const search = boundedCameraSearch(diagnostic);
+            if (fixture.name === 'tablet-bubble') {
+                expect(search.map(step => step.evaluatedHeight)).toEqual([8, 10.5]);
+                expect(search[0].bodySeparationPx).toBeGreaterThanOrEqual(60);
+                expect(search[0].minimumPhaseVisibility).toBeGreaterThanOrEqual(.5);
+                expect(search[0].minimumCompositionVisibility).toBeGreaterThanOrEqual(.5);
+                // In early enjoy poses the receiver's real body is hidden even
+                // though phase averages pass. The higher view must expose it.
+                expect(search[0].minimumPoseIdentityVisibility).toBeLessThan(.5);
+                expect(search[1].minimumPoseIdentityVisibility).toBeGreaterThanOrEqual(.5);
+            } else { expect(diagnostic.cameraCandidates).toBe(6); expect(diagnostic.cameraHeight).toBe(8); }
             for (const object of [source, seat, objects.carrier, objects.receiver]) visible(object, camera(selected.frame));
             if (fixture.name === 'tablet-fox-flower') {
                 expect(plans).toHaveLength(3); expect(selected.attemptedPlans).toBe(3);

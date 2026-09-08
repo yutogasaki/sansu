@@ -10,6 +10,7 @@ import { applyTreeGrowth, makeExpansion, makeScenery } from './scenery';
 import { makeWestExpansion } from './westScenery';
 import { createIsland } from '../../../domain/island/catalog';
 import { getIslandExpansionLevel } from '../../../domain/island/expansion';
+import { IslandCameraControls } from './islandCameraControls';
 
 const materials: IslandMaterials[] = [], actors: IslandResident[] = [];
 function actor(species: ResidentSpecies, position: [number, number, number]) {
@@ -72,7 +73,8 @@ describe('frozen learning frame after free play', () => {
             expect(after.projectionMatrix.toArray()).toEqual(before.projectionMatrix.toArray());
             const scene = Object.create(IslandScene.prototype) as { resize(): void };
             Object.assign(scene, { camera: view, host: { clientWidth: width, clientHeight: height },
-                renderer: { setSize: () => undefined }, expansion: { visible: level >= 1 }, westExpansion: { visible: level >= 2 },
+                renderer: { setSize: () => undefined, getSize: (size: THREE.Vector2) => size.set(width, height) }, rendererSize: new THREE.Vector2(),
+                cameraControls: new IslandCameraControls(() => undefined), expansion: { visible: level >= 1 }, westExpansion: { visible: level >= 2 },
                 state, items: new Map(), requestFrame: () => undefined });
             scene.resize();
             for (const object of objects) {

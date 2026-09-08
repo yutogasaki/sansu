@@ -12,7 +12,14 @@ import { getIslandGrowthTarget, initializeIslandGrowth, isIslandHabitatId, isIsl
 import { hasValidGrowthItemFields, hasValidIslandGrowth } from './growthValidation';
 import { selectIslandSubject } from './subjectSelection';
 import { hasValidIslandCustomization } from './customization';
-import { ISLAND_ITEM_KINDS, type IslandEdit, type IslandItemKind, type IslandPlan, type IslandRecord } from './types';
+import { hasValidIslandExperience } from './experience';
+import { hasValidIslandExpression } from './expression';
+import { hasValidIslandWorkshop } from './workshop';
+import { hasValidIslandSharedMemories } from './sharedMemories';
+import { hasValidIslandFurnitureItems } from './furniture';
+import { hasValidIslandRewardGoal } from './rewardGoal';
+import { hasValidIslandLearningKeepsakes } from './learningKeepsakes';
+import { ISLAND_BASIC_ITEM_KINDS, ISLAND_ITEM_KINDS, type IslandBasicItemKind, type IslandEdit, type IslandPlan, type IslandRecord } from './types';
 
 export class IslandConflict extends ParkConflict {}
 export const islandTables = (database: SansuDatabase) => [
@@ -23,13 +30,14 @@ export function assertIsland(island: IslandRecord) {
     if (island.schemaVersion !== 1 || !Number.isInteger(island.revision) || island.revision < 0
         || !Number.isInteger(island.completedSets) || island.completedSets < 0
         || !Array.isArray(island.items) || !Array.isArray(island.pendingRewards)
+        || !hasValidIslandFurnitureItems(island.items)
         || new Set(island.items.map(item => item.id)).size !== island.items.length
         || new Set(island.pendingRewards.map(reward => reward.id)).size !== island.pendingRewards.length
         || island.items.some(item => !ISLAND_ITEM_KINDS.includes(item.kind) || !Number.isFinite(item.rotation)
             || !hasValidGrowthItemFields(item)
             || (item.position && (!Number.isFinite(item.position.x) || !Number.isFinite(item.position.z))))
         || island.pendingRewards.some(reward => reward.choices.length !== 3 || new Set(reward.choices).size !== 3
-            || reward.choices.some(kind => !ISLAND_ITEM_KINDS.includes(kind)))
+            || reward.choices.some(kind => !ISLAND_BASIC_ITEM_KINDS.includes(kind)))
         || (island.pendingMathChecks !== undefined && (!Array.isArray(island.pendingMathChecks)
             || island.pendingMathChecks.some(check => !check)
             || new Set(island.pendingMathChecks.map(check => check.skillId)).size !== island.pendingMathChecks.length
@@ -42,13 +50,17 @@ export function assertIsland(island: IslandRecord) {
         || (island.nextSubjectChoice !== undefined && (!island.nextSubjectChoice
             || typeof island.nextSubjectChoice.afterPlanId !== 'string' || !island.nextSubjectChoice.afterPlanId
             || !['math', 'vocab'].includes(island.nextSubjectChoice.subject)))
-        || !hasValidIslandGrowth(island) || !hasValidIslandCustomization(island)) throw new IslandConflict('Invalid island');
+        || !hasValidIslandGrowth(island) || !hasValidIslandCustomization(island) || !hasValidIslandExperience(island)
+        || !hasValidIslandExpression(island) || !hasValidIslandRewardGoal(island) || !hasValidIslandLearningKeepsakes(island)
+        || !hasValidIslandWorkshop(island) || !hasValidIslandSharedMemories(island)) throw new IslandConflict('Invalid island');
 }
 
 export function assertIslandPlan(plan: IslandPlan, profileId: string) {
     if (plan.profileId !== profileId || plan.schemaVersion !== 1 || plan.plannerVersion !== 'island-learning-v1'
         || !Number.isInteger(plan.revision) || plan.revision < 0 || !Number.isInteger(plan.cursor)
+        || !Array.isArray(plan.rewardChoices) || plan.rewardChoices.some(kind => !ISLAND_BASIC_ITEM_KINDS.includes(kind))
         || (plan.growthTarget !== undefined && !isIslandHabitatId(plan.growthTarget))
+        || (plan.rewardPacing !== undefined && (plan.rewardPacing !== 'answers-v1' || plan.slots?.length > 6))
         || !Array.isArray(plan.slots) || plan.slots.length === 0 || plan.cursor < 0 || plan.cursor > plan.slots.length
         || (plan.introducedItemIds !== undefined && (!Array.isArray(plan.introducedItemIds)
             || plan.introducedItemIds.some(id => typeof id !== 'string' || !plan.slots.some(slot => slot.problem.categoryId === id))))
@@ -126,6 +138,7 @@ export async function startIslandPlan(profileId: string, database = db): Promise
             status: 'active', cursor: 0, revision: 0, startedAt: now,
             rewardId: `${id}:reward`, rewardChoices: islandRewardChoices(island.completedSets),
             growthTarget: getIslandGrowthTarget(growingIsland),
+            rewardPacing: 'answers-v1',
             introducedItemIds: [...new Set(learning.slots.filter(slot => !(learning.subject === 'math' ? mergedMath : mergedVocab)
                 .some(state => state.id === slot.problem.categoryId && state.totalAnswers > 0)).map(slot => slot.problem.categoryId))],
         };
@@ -138,7 +151,8 @@ export async function startIslandPlan(profileId: string, database = db): Promise
     });
 }
 
-export async function claimIslandReward(profileId: string, revision: number, rewardId: string, kind: IslandItemKind, database = db): Promise<IslandRecord> {
+export async function claimIslandReward(profileId: string, revision: number, rewardId: string, kind: IslandBasicItemKind, database = db): Promise<IslandRecord> {
+    if (!ISLAND_BASIC_ITEM_KINDS.includes(kind)) throw new IslandConflict('Reward kind unavailable');
     return database.transaction('rw', islandTables(database), async () => {
         const { island } = await ownedIsland(database, profileId);
         const id = `${rewardId}:claimed`;

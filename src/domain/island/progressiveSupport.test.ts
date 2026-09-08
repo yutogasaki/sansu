@@ -97,7 +97,8 @@ describe('Island progressive support persistence', () => {
         expect(result.plan).toMatchObject({ status: 'completed', cursor: 1 });
         expect(result.island).toMatchObject({ completedSets: 1, pendingPlanId: undefined });
         expect(result.island.pendingRewards).toHaveLength(0);
-        expect(result.island.growth?.progress.garden).toBe(1);
+        expect(result.island.growth?.progress.garden).toBe(0);
+        expect((await d.islands.get('child'))?.growth?.pendingAnswers?.garden).toBe(1);
         expect(result.plan.slots[0].problem).toEqual(problem);
         expect(await d.logs.count()).toBe(0);
         expect(await d.islandEvents.where('type').equals('answer').count()).toBe(0);
@@ -141,7 +142,8 @@ describe('Island progressive support persistence', () => {
             expect(await d.islandEvents.where('type').equals('supported_completed').count()).toBe(1);
             expect(await d.islandEvents.where('type').equals('plan_completed').count()).toBe(1);
             expect((await d.islands.get('child'))?.pendingRewards).toHaveLength(0);
-        expect((await d.islands.get('child'))?.growth?.progress.garden).toBe(1);
+        expect((await d.islands.get('child'))?.growth?.progress.garden).toBe(0);
+        expect((await d.islands.get('child'))?.growth?.pendingAnswers?.garden).toBe(1);
             expect(await d.logs.count()).toBe(0);
         } finally { second.close(); }
     });

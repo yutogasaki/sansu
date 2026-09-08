@@ -128,8 +128,9 @@ export async function assertControls(page, { allowScroll = false } = {}) {
     const choices = page.locator('.park-choices button');
     const isChoice = await choices.count() > 0;
     const written = await page.locator('.park-answer [data-written-operation]').count() > 0;
+    const singleDigit = await page.locator('.park-answer[data-input-type="number"][data-answer-completion="automatic"]').count() > 0;
     const controls = isChoice ? await choices.all() : [
-        ...numericKeys, 'こたえを けす', 'ひとつ もどす', ...(written ? [] : ['しょうすうてん']),
+        ...numericKeys, 'こたえを けす', 'ひとつ もどす', ...(written || singleDigit ? [] : ['しょうすうてん']),
     ].map(name => page.locator('.park-keypad').getByRole('button', { name, exact: true }));
     if (!isChoice) {
         const submit = page.locator('.park-keypad [data-keypad-submit]');
@@ -289,6 +290,7 @@ export async function expectedAnswer(page, slot) {
 async function prepareAnswer(page, slot, { wrong, touch }) {
     const expected = await expectedAnswer(page, slot);
     const type = await page.locator('.park-answer').getAttribute('data-input-type');
+    const automatic = await page.locator('.park-answer').getAttribute('data-answer-completion') === 'automatic';
     if (type === 'choice') {
         const choice = slot.problem.inputConfig.choices.find(choice => wrong ? choice.value !== expected.values : choice.value === expected.values);
         assert(choice);
@@ -298,7 +300,11 @@ async function prepareAnswer(page, slot, { wrong, touch }) {
     const entered = wrong ? values.map(value => String(value) === '9' ? '8' : '9') : values;
     for (let index = 0; index < entered.length; index += 1) {
         if (type !== 'hissan') await activate(page.locator('.park-input').nth(index), touch);
-        for (const digit of String(entered[index])) {
+        const digits = String(entered[index]);
+        for (const [position, digit] of [...digits].entries()) {
+            if (automatic && index === entered.length - 1 && position === digits.length - 1) {
+                return { expected, submitKey: digit, control: page.locator('.park-keypad').getByRole('button', { name: digit === '.' ? 'しょうすうてん' : digit, exact: true }) };
+            }
             if (touch) await activate(page.locator('.park-keypad').getByRole('button', { name: digit === '.' ? 'しょうすうてん' : digit, exact: true }), true);
             else await page.keyboard.type(digit);
         }
@@ -379,11 +385,12 @@ export async function attempt(page, before, { wrong = false, touch = false, doub
     assert(!keyboardDouble || choiceIndex < 0, 'Physical Enter double-submit is exercised on numeric input');
     const completed = !wrong && prepared.expected.final;
     const expectedTransition = expectedLearningTransition(before, completed);
-    await page.evaluate(({ id, revision, keyboardDouble, expectedTransition }) => {
+    const submitKey = prepared.submitKey ?? 'Enter';
+    await page.evaluate(({ id, revision, keyboardDouble, expectedTransition, submitKey }) => {
         window.__islandFocusedTiming = undefined;
         const eventType = keyboardDouble ? 'keydown' : 'click';
         const onSubmit = event => {
-            if (keyboardDouble && event.key !== 'Enter') return;
+            if (keyboardDouble && event.key !== submitKey) return;
             document.removeEventListener(eventType, onSubmit, true);
             const started = performance.now();
             const tick = () => {
@@ -401,7 +408,7 @@ export async function attempt(page, before, { wrong = false, touch = false, doub
             requestAnimationFrame(tick);
         };
         document.addEventListener(eventType, onSubmit, true);
-    }, { id: plan.id, revision: plan.revision, keyboardDouble, expectedTransition });
+    }, { id: plan.id, revision: plan.revision, keyboardDouble, expectedTransition, submitKey });
     const expectedReceipt = { id: JSON.stringify(['island-action-v1', plan.profileId, plan.id, plan.revision]) };
     let contactObservation;
     if (completed && onCorrectContact) {
@@ -441,10 +448,10 @@ export async function attempt(page, before, { wrong = false, touch = false, doub
         contactObservation.catch(() => {});
     }
     if (keyboardDouble) {
-        await page.keyboard.down('Enter');
-        await page.keyboard.down('Enter');
-        await page.keyboard.up('Enter');
-        await page.keyboard.press('Enter');
+        await page.keyboard.down(submitKey);
+        await page.keyboard.down(submitKey);
+        await page.keyboard.up(submitKey);
+        await page.keyboard.press(submitKey);
     } else if (double) await submit.dblclick({ delay: 0 });
     else await activate(submit, touch);
     await page.waitForFunction(() => Boolean(window.__islandFocusedTiming));

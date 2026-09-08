@@ -1,0 +1,24 @@
+import { chromium } from 'playwright';
+import assert from 'node:assert/strict';
+import { promises as fs } from 'node:fs';
+import { onboardingControls, onboardingStores } from '../../../tools/island-onboarding-checks.mjs';
+const out='output/playwright/onboarding-math-range-20260908';
+const report={target:'http://127.0.0.1:5639',evidence:'Classic DEV onboarding with empty DB; actual scrolling and profile save.',cases:[],pass:false};
+const browser=await chromium.launch();
+try{for(const viewport of [{width:390,height:640},{width:768,height:1024}]){
+ const context=await browser.newContext({viewport,hasTouch:true,serviceWorkers:'block',reducedMotion:'reduce'});
+ const page=await context.newPage();page.setDefaultTimeout(20000);
+ const row={name:`${viewport.width}x${viewport.height}`,pass:false,errors:[]};report.cases.push(row);page.on('pageerror',e=>row.errors.push(String(e)));
+ try{
+  await page.goto(`${report.target}/#/onboarding`);await page.getByRole('button',{name:/はじめる/}).click();
+  await page.getByPlaceholder('あだ名でOK').fill('ろくねんせい');await page.getByRole('button',{name:'次へ',exact:true}).click();
+  row.grades=await onboardingControls(page,'.brand-utility-screen .grid button');assert.equal(row.grades.length,9);
+  await page.screenshot({path:`${out}/classic-${row.name}-grade-bottom.png`,animations:'disabled'});
+  await page.getByRole('button',{name:/小学 6 年生/}).click();await page.getByRole('button',{name:/さんすう だけ/}).click();
+  row.ranges=await onboardingControls(page,'.brand-utility-screen .space-y-3 button');assert.equal(row.ranges.length,12);
+  await page.screenshot({path:`${out}/classic-${row.name}-ranges-bottom.png`,animations:'disabled'});
+  await page.getByRole('button',{name:/速さまで/}).click();await page.waitForURL('**/#/explore');
+  const profile=(await onboardingStores(page)).profiles.rows[0];assert.equal(profile.grade,6);assert.equal(profile.mathStartLevel,28);assert.equal(profile.mathMainLevel,28);
+  assert.deepEqual(row.errors,[]);row.pass=true;console.log(`PASS classic ${row.name}: grade 6 and all 12 ranges reachable, highest range saved`);
+ }catch(e){row.failure=String(e.stack);await page.screenshot({path:`${out}/classic-${row.name}-failure.png`});throw e;}finally{await context.close();}
+}report.pass=true;}finally{await browser.close();await fs.writeFile(`${out}/classic-report.json`,JSON.stringify(report,null,2));}

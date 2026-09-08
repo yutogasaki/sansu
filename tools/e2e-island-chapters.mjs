@@ -23,7 +23,7 @@ assert.equal(version.revision, source.revision); assert(version.island.enabled);
 assert.equal(version.island.candidate, ISLAND_CANDIDATE);
 const report = { target, version, sourceHash: source.sourceHash, manifestPath, startedAt: new Date().toISOString(),
     sourceStart: sha(JSON.stringify(start)), captures: [], scenarios: [], humanN: 0, pass: false,
-    scope: 'Primary phone/tablet flows use empty-database setup, an optional home-first growth choice and seven real normal-planner sections. Separate clearly marked mixed-history fixtures check old omitted and new explicit land state in the production album. No fixture is counted as earned progress or child observation.' };
+    scope: 'Primary phone/tablet flows use empty-database setup, an optional home-first growth choice and real normal-planner whole-problem effort through the first home maturity. Separate clearly marked mixed-history fixtures check old omitted and new explicit land state in the production album. No fixture is counted as earned progress or child observation.' };
 const browser = await chromium.launch(process.env.SANSU_ISLAND_BROWSER_GPU === 'metal' ? { args: ['--use-angle=metal'] } : {});
 
 async function capture(page, name) {
@@ -61,7 +61,7 @@ async function inspectMixedHistory(layout, earned) {
             capturedAt: initial.capturedAt + 1, focus: 'village', progress: { garden: 1, waterside: 0, grove: 0, village: 1 },
             items: fixture.items.map(item => ({ ...item, growthLevel: ['garden', 'village'].includes(item.habitatId) ? 1 : 0 })) };
         const mature = structuredClone(fixture.growth.memories[1]);
-        assert.equal(mature.completedSets, 7); assert.equal(mature.expansionLevel, 1);
+        assert.equal(mature.completedSets, earned.completedSets); assert.equal(mature.expansionLevel, 1);
         fixture.growth.memories = [initial, oldEast, mature];
         fixture.growth.discoveries = [];
         await page.evaluate(async fixture => {
@@ -76,7 +76,7 @@ async function inspectMixedHistory(layout, earned) {
         const timeline = page.locator('.island-album-timeline button');
         assert.equal(await timeline.count(), 3);
         const before = await readNative(page, id);
-        for (const [index, sets, east] of [[0, 0, false], [1, 2, true], [2, 7, true]]) {
+        for (const [index, sets, east] of [[0, 0, false], [1, 2, true], [2, mature.completedSets, true]]) {
             await timeline.nth(index).click();
             await page.locator(`[data-memory-completed-sets="${sets}"] [data-renderer="three"]`).waitFor();
             const historic = page.locator('[data-memory-id] [data-renderer="three"]');
@@ -120,14 +120,19 @@ try {
             await page.locator('.island-start').click(); await waitMode(page, 'learning');
             state = await finishSection(page, state);
             assert.equal(state.island.growth.progress.garden, 1); assert.equal(state.plan.growthTarget, 'village');
-            for (let progress = 1; progress <= 6; progress++) {
+            let homeAnswers = 0;
+            for (let section = 0; homeAnswers < 63; section++) {
+                assert(section < 21);
                 const planId = state.plan.id;
+                homeAnswers += state.plan.slots.length;
+                const progress = [3, 9, 18, 30, 45, 63].filter(value => homeAnswers >= value).length;
                 state = await finishSection(page, state);
                 assert.equal(state.island.growth.progress.village, progress);
                 assert.equal(state.island.growth.expansionLevel, progress === 6 ? 1 : 0);
-                assert.deepEqual(state.island.growth.memories.map(memory => memory.completedSets), progress === 6 ? [0, 7] : [0]);
+                assert.deepEqual(state.island.growth.memories.map(memory => memory.completedSets), progress === 6 ? [0, state.island.completedSets] : [0]);
                 if (progress < 6) assert.equal(await page.locator(`[data-growth-milestone='${planId}']`).count(), 0);
-                if (progress === 5 || progress === 6) {
+                const near = progress === 5 && homeAnswers + state.plan.slots.length >= 63;
+                if (near || progress === 6) {
                     if (progress === 6) {
                         const notice = page.locator('[data-growth-milestone]'); await notice.waitFor();
                         assert.match(await notice.innerText(), /おうちに テラスが できた/);
@@ -141,22 +146,22 @@ try {
                     assert.equal(await stage.getAttribute('data-west-expanded'), 'false');
                     if (progress === 5) {
                         assert.equal(await page.locator('[data-island-expansion-preview]').getAttribute('data-island-expansion-preview'), 'east');
-                        assert.equal(state.island.completedSets, 6, 'Six total sections alone must not unlock land');
+                        assert(homeAnswers < 63, 'Land waits for the home to mature, regardless of total section count');
                     }
-                    await capture(page, `${name}-${progress === 5 ? 'one-to-maturity' : 'east-opened-at-seven'}`);
+                    await capture(page, `${name}-${progress === 5 ? 'one-to-maturity' : 'east-opened-after-home-maturity'}`);
                     if (progress === 5) { await page.locator('.island-start').click(); await waitMode(page, 'learning'); }
                 }
             }
-            assert.equal(state.island.completedSets, 7); assert.equal(state.island.items.length, 5);
+            assert(homeAnswers >= 63); assert.equal(state.island.items.length, 5);
             state = await readNative(page, id);
             earned = structuredClone(state.island);
             await page.reload(); await waitReady(page); await waitMode(page, 'learning');
             const restored = await readNative(page, id);
             assert.deepEqual(restored.plan, state.plan); assert.deepEqual(restored.island.growth, state.island.growth);
             assert.deepEqual(errors, []);
-            report.scenarios.push({ name, synthetic: false, completedSets: 7, progress: state.island.growth.progress,
+            report.scenarios.push({ name, synthetic: false, completedSets: state.island.completedSets, homeAnswers, progress: state.island.growth.progress,
                 expansionLevel: state.island.growth.expansionLevel, pass: true });
-            console.log(`PASS ${name}: optional next target stays frozen; home matures first and opens east at seven real sections`);
+            console.log(`PASS ${name}: optional next target stays frozen; home matures first and opens east after 63 completed home problems`);
         } catch (error) {
             await capture(page, `${name}-failure`).catch(() => undefined); throw error;
         } finally { await context.close(); }

@@ -6,7 +6,7 @@ import path from "node:path";
 
 const HOST = "127.0.0.1";
 const PORT_CANDIDATES = [4173, 4174, 4175];
-const APP_TITLE_MARKER = "<title>ぽこもこ</title>";
+const APP_TITLE_MARKER = "<title>ぽこもこと不思議な島</title>";
 const DEV_START_TIMEOUT_MS = 45_000;
 const STEP_TIMEOUT_MS = 15_000;
 const SCENARIO_TIMEOUT_MS = 60_000;

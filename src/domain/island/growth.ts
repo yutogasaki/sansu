@@ -1,6 +1,10 @@
 import { findAvailablePosition, isValidIslandPlacement } from './catalog';
 import { getIslandExpansionLevel, type IslandExpansionLevel } from './expansion';
-import { getIslandCosmetics } from './customization';
+import { captureIslandCosmetics } from './customization';
+import { captureIslandSceneStyle } from './sceneStyle';
+import { advanceIslandGrowth } from './pacing';
+import { resolveIslandLivingSetting } from './livingSettings';
+import { isIslandVisitor, islandVisitorAvailability } from './visitors';
 import { ISLAND_HABITAT_IDS, type IslandGrowthMemory, type IslandGrowthState, type IslandHabitatId,
     type IslandItem, type IslandItemKind, type IslandRecord } from './types';
 
@@ -23,6 +27,11 @@ export const ISLAND_DISCOVERIES: readonly { id: string; name: string; descriptio
     { id: 'lantern-sharing', name: 'ほしあかりを いっしょに', description: 'あかりを ともだちの ところへ とどけた', habitatId: 'village', minLevel: 2, kinds: ['lantern', 'mushroom'] },
     { id: 'home-visit', name: 'あかりの おうちへ', description: 'あかりの そばへ あそびにきた', habitatId: 'village', minLevel: 1, kinds: ['lantern'] },
     { id: 'terrace-time', name: 'テラスで のんびり', description: 'そだった おうちで いっしょに すごす', habitatId: 'village', minLevel: 3, kinds: ['lantern'] },
+    { id: 'petal-ripple', name: 'はなびらの みずあそび', description: 'おはなから はなびらが ふわり。みずに わが ひろがった', habitatId: 'garden', minLevel: 2, kinds: ['flower'] },
+    { id: 'lantern-reflection', name: 'みずに うつる あかり', description: 'あかりを みずの そばへ。みずにも ひかりが ゆれた', habitatId: 'village', minLevel: 2, kinds: ['lantern'] },
+    { id: 'ribbon-butterfly', name: 'リボンの ちょう', description: 'おはなに リボンもようの ちょうが やってきた', habitatId: 'garden', minLevel: 2, kinds: ['flower'] },
+    { id: 'pond-firefly', name: 'みずべの ほたる', description: 'みずの そばで ちいさな おしりが ぴかり', habitatId: 'waterside', minLevel: 2, kinds: ['fountain'] },
+    { id: 'leaf-bird', name: 'はっぱの ことり', description: '木かげに はっぱみたいな ことりが やってきた', habitatId: 'grove', minLevel: 2, kinds: ['mushroom'] },
 ];
 
 export function isIslandHabitatId(value: unknown): value is IslandHabitatId {
@@ -78,7 +87,8 @@ function snapshot(island: IslandRecord, kind: IslandGrowthMemory['kind'], now: n
         ...(habitatId ? { level: getIslandHabitatLevel(island, habitatId) } : {}),
         expansionLevel: getIslandExpansionLevel(island), progress: { ...growth.progress }, focus: growth.focus,
         items: island.items.map(item => ({ ...item, ...(item.position ? { position: { ...item.position } } : {}) })),
-        cosmetics: getIslandCosmetics(island),
+        cosmetics: captureIslandCosmetics(island),
+        sceneStyle: captureIslandSceneStyle(island),
     };
 }
 
@@ -139,15 +149,20 @@ function syncManagedItems(island: IslandRecord) {
 }
 
 /** Pure completion transform. The transaction caller owns exactly-once completion and set count. */
-export function growIslandAfterCompletedSet(island: IslandRecord, target: IslandHabitatId, now: number): IslandRecord {
+export function growIslandAfterCompletedSet(island: IslandRecord, target: IslandHabitatId, now: number, answers?: number): IslandRecord {
     // The caller has already counted this completion. Freeze only land earned
     // before it, including when an old record has no explicit expansion level.
     const before = initializeIslandGrowth({ ...island, completedSets: island.completedSets - 1 }, now);
     const initialized = { ...before, completedSets: island.completedSets };
+    const advanced = advanceIslandGrowth(initialized.growth!.progress[target], initialized.growth!.pendingAnswers?.[target] ?? 0, answers);
     let updated: IslandRecord = {
         ...initialized,
         growth: { ...initialized.growth!, progress: { ...initialized.growth!.progress,
-            [target]: Math.min(6, initialized.growth!.progress[target] + 1) },
+            [target]: advanced.progress },
+        ...((answers !== undefined || initialized.growth!.pendingAnswers) ? {
+            pendingAnswers: { garden: 0, waterside: 0, grove: 0, village: 0,
+                ...initialized.growth!.pendingAnswers, [target]: advanced.pending },
+        } : {}),
         memories: [...initialized.growth!.memories], discoveries: [...initialized.growth!.discoveries] },
     };
     const maturePlaces = ISLAND_HABITAT_IDS.filter(id => updated.growth!.progress[id] >= 6).length;
@@ -167,6 +182,10 @@ export function canObserveIslandDiscovery(island: IslandRecord, discoveryId: str
     const definition = ISLAND_DISCOVERIES.find(discovery => discovery.id === discoveryId);
     const item = island.items.find(candidate => candidate.id === itemId);
     if (!definition || !item?.position || !definition.kinds.includes(item.kind)) return false;
+    if (!resolveIslandLivingSetting(island, item, discoveryId)) return false;
+    if (isIslandVisitor(discoveryId) && !islandVisitorAvailability(island, discoveryId, itemId).offered) return false;
+    if (discoveryId === 'lantern-reflection') return (item.habitatId === 'grove' || item.habitatId === 'village')
+        && getIslandHabitatLevel(island, item.habitatId) >= 2;
     if (discoveryId === 'lantern-sharing') return (item.habitatId === 'grove' || item.habitatId === 'village')
         && getIslandHabitatLevel(island, item.habitatId) >= 2;
     if (item.habitatId !== definition.habitatId) return false;

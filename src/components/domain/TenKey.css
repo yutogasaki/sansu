@@ -1,0 +1,36 @@
+/* The same physical key stays put. Only a required, complete answer activates it. */
+button.answer-confirm-key[data-keypad-submit][data-confirmation-mode][data-confirmation-state="idle"] {
+    background: var(--brand-paper, #fffaf0);
+    color: var(--brand-ink, #173f49);
+    border-color: transparent;
+    box-shadow: none;
+    opacity: .3;
+}
+
+button.answer-confirm-key[data-keypad-submit][data-confirmation-mode][data-confirmation-state="ready"] {
+    position: relative;
+    background: var(--explore-amber, #f4c64f);
+    color: var(--brand-ink, #173f49);
+    border: 2px solid var(--brand-ink, #173f49);
+    box-shadow: inset 0 0 0 2px var(--brand-paper, #fffaf0), 0 2px 0 var(--brand-ink, #173f49);
+    opacity: 1;
+}
+
+button[data-keypad-submit][data-confirmation-cue="intro"]::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid var(--explore-amber, #f4c64f);
+    border-radius: inherit;
+    pointer-events: none;
+    animation: answer-confirm-ring 1.2s ease-out 2 both;
+}
+
+@keyframes answer-confirm-ring {
+    from { transform: scale(1); opacity: .75; }
+    to { transform: scale(1.16); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    button[data-keypad-submit][data-confirmation-cue="intro"]::after { animation: none; display: none; }
+}

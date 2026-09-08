@@ -8,7 +8,7 @@ import { courseLayout, PARTS } from '../domain/park/course';
 import { openPark, recordParkVisit, saveParkEdit, startParkPlan } from '../domain/park/repository';
 import { commitParkLearning } from '../domain/park/commit';
 import { simulateCourse } from '../domain/park/simulation';
-import type { ParkLearningAction, PartKind } from '../domain/park/types';
+import type { ParkLearningAction, ParkPlan, PartKind } from '../domain/park/types';
 import { THREE_PARK_CANDIDATE, threeParkRequested } from '../components/park/three/config';
 import { ParkStage } from '../components/park/ParkStage';
 import { parkBeatDuration } from '../components/park/playback';
@@ -26,11 +26,14 @@ type Playback = { id: string; courseId: string; layout: (PartKind | null)[]; ind
 function ParkSession({ profile }: { profile: UserProfile }) {
     const navigate = useNavigate();
     const park = useLiveQuery(() => db.parks.get(profile.id), [profile.id]);
-    const plan = useLiveQuery(() => park?.pendingPlanId ? db.parkPlans.get(park.pendingPlanId) : undefined, [park?.pendingPlanId]);
+    const livePlan = useLiveQuery(() => park?.pendingPlanId ? db.parkPlans.get(park.pendingPlanId) : undefined, [park?.pendingPlanId]);
     const [screen, setScreen] = useState<'course' | 'workshop' | 'learning'>('course');
     const [editing, setEditing] = useState(false);
     const [play, setPlay] = useState<Playback>();
     const [message, setMessage] = useState('');
+    const [answerReceipt, setAnswerReceipt] = useState<{ id: string; plan: ParkPlan; cursor: number; step: number; retryAnswer?: string[] }>();
+    // Show the committed next row before enabling input, even if liveQuery paints later.
+    const plan = answerReceipt && livePlan && answerReceipt.plan.id === livePlan.id && answerReceipt.plan.revision > livePlan.revision ? answerReceipt.plan : livePlan;
     const { busy, error, run } = useParkActions();
     const playing = Boolean(play && !play.done);
     useEffect(() => {
@@ -67,6 +70,9 @@ function ParkSession({ profile }: { profile: UserProfile }) {
         if (!plan) return;
         const receipt = await run(() => commitParkLearning(profile.id, plan.id, plan.revision, action));
         if (!receipt) return;
+        if (action.type === 'answer') setAnswerReceipt({ id: receipt.event.id, plan: receipt.plan, cursor: plan.cursor,
+            step: plan.slots[plan.cursor].hissanStep ?? 0,
+            retryAnswer: receipt.event.result?.includes('incorrect') && Array.isArray(action.answer) ? action.answer : undefined });
         if (receipt.plan.status === 'completed') {
             setMessage(`${PARTS[receipt.plan.partKind].name}が できた！ ならべてみよう。`);
             setPlay(undefined);
@@ -100,7 +106,9 @@ function ParkSession({ profile }: { profile: UserProfile }) {
                     <p>{PARTS[plan.partKind].name}を つくろう<br /><small>{plan.subject === 'math' ? 'さんすう' : 'えいたんご'} · {plan.cursor + 1} / {plan.slots.length}</small></p>
                     <button className="park-text-button" disabled={busy} onClick={() => { setScreen('course'); setMessage('つづきは そのまま とっておくよ。'); }}>ひとやすみ</button>
                 </div>
-                <ParkAnswerForm key={`${plan.id}:${plan.revision}`} slot={slot} disabled={busy} onAnswer={value => void answer({ type: 'answer', answer: value })} />
+                <ParkAnswerForm key={`${plan.id}:${plan.cursor}:${slot.hissanStep ?? 0}:${answerReceipt?.id ?? 'initial'}`} slot={slot} disabled={busy}
+                    retryAnswer={answerReceipt?.plan.id === plan.id && answerReceipt.cursor === plan.cursor && answerReceipt.step === (slot.hissanStep ?? 0) ? answerReceipt.retryAnswer : undefined}
+                    onAnswer={value => void answer({ type: 'answer', answer: value })} />
                 <div className="park-learning-actions">
                     {!slot.assisted && <button className="park-text-button" disabled={busy} onClick={() => void answer({ type: 'support_opened' })}>いっしょに みる</button>}
                     <button className="park-text-button" disabled={busy} onClick={() => void answer({ type: 'skipped' })}>このもんだいは あとで</button>

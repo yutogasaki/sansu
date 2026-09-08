@@ -17,7 +17,7 @@ export default function IslandWelcome({ onStart, actionLabel = 'まなぶ' }: { 
         setMessage(''); setPlayRequest({ id: crypto.randomUUID(), itemId });
     };
     return <main className="island-page island-welcome" data-mode="welcome" data-onboarding-world="island" data-onboarding-candidate={ISLAND_ONBOARDING_CANDIDATE} data-visual-candidate-id={ISLAND_VISUAL_CANDIDATE} data-delivery-id={ISLAND_DELIVERY_ID} data-build-revision={__BUILD_REVISION__} data-build-version={__APP_VERSION__}>
-        <header><h1>ぽこもこ</h1></header>
+        <header><h1 className="pokomoko-wordmark"><span>ぽこもこ</span><small>と不思議な島</small></h1></header>
         <IslandStage items={preview.items} growth={preview.growth} completedSets={0} pulse={0} learning={false} playRequest={playRequest}
             onItemSelect={play} onPlayResult={result => {
                 if (result.requestId === playRequest?.id && result.status !== 'playing') setMessage('いまは うまく あそべないよ');

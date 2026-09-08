@@ -39,9 +39,9 @@ afterEach(async () => { for (const d of databases.splice(0)) { d.close(); await 
 
 describe('atomic owned island customization', () => {
     it('persists legacy credit once, buys and equips a selected theme, clears its goal, and switches freely', async () => {
-        const d = await setup(5), original = await current(d);
+        const d = await setup(8), original = await current(d);
         const desired = await customizeIsland('child', original.revision, { type: 'desire', itemId: 'starry' }, d);
-        expect(desired.customization).toMatchObject({ points: 50, desiredItemId: 'starry' });
+        expect(desired.customization).toMatchObject({ points: 80, desiredItemId: 'starry' });
         const bought = await customizeIsland('child', desired.revision, { type: 'purchase', itemId: 'starry' }, d);
         expect(bought.customization).toMatchObject({ points: 20, themeId: 'starry', desiredItemId: null, ownedItemIds: ['moon-garden', 'starry'] });
         d.close(); await d.open();
@@ -58,7 +58,7 @@ describe('atomic owned island customization', () => {
     });
 
     it('combines theme and accent independently, and changes or clears a goal without spending', async () => {
-        const d = await setup(5);
+        const d = await setup(9);
         let island = await current(d);
         for (const action of [
             { type: 'purchase', itemId: 'starry' }, { type: 'purchase', itemId: 'candy-flags' },
@@ -73,7 +73,7 @@ describe('atomic owned island customization', () => {
     });
 
     it('serializes same purchase across tabs and retries into one debit and receipt', async () => {
-        const d = await setup(6), island = await current(d), action = { type: 'purchase' as const, itemId: 'starry' as const };
+        const d = await setup(9), island = await current(d), action = { type: 'purchase' as const, itemId: 'starry' as const };
         const second = new SansuDatabase(d.name, options); await second.open();
         try {
             const results = await Promise.all([d, second].map(database => customizeIsland('child', island.revision, action, database)));
@@ -113,7 +113,7 @@ describe('atomic owned island customization', () => {
     });
 
     it('rolls back purchase, debit, ownership and equip when its receipt fails, then retries the same choice', async () => {
-        const d = await setup(5), island = await current(d), before = await snapshot(d);
+        const d = await setup(8), island = await current(d), before = await snapshot(d);
         const fail = (_key: unknown, event: IslandEvent) => { if (event.type === 'customization_changed') throw new Error('disk full'); };
         d.islandEvents.hook('creating', fail);
         await expect(customizeIsland('child', island.revision, { type: 'purchase', itemId: 'starry' }, d)).rejects.toThrow('disk full');
@@ -123,7 +123,7 @@ describe('atomic owned island customization', () => {
     });
 
     it('checks active ownership before returning an old receipt or reading another profile balance', async () => {
-        const d = await setup(3), island = await current(d);
+        const d = await setup(6), island = await current(d);
         await customizeIsland('child', island.revision, { type: 'purchase', itemId: 'starry' }, d);
         const app = (await d.appData.get('app'))!, other = { ...app.profiles.child, id: 'other' };
         await d.profiles.put(other);
@@ -137,6 +137,44 @@ describe('atomic owned island customization', () => {
 });
 
 describe('exactly once stars from committed learning', () => {
+    it.each([3, 6])('awards exactly %i stars for a complete reservation of that many whole problems', async count => {
+        const d = await setup();
+        let plan = await startIslandPlan('child', d);
+        // Explicitly fixed short/long reservations isolate rewards from planner selection.
+        plan.slots = Array.from({ length: count }, (_, index) => ({ ...structuredClone(plan.slots[index % plan.slots.length]),
+            problem: { ...structuredClone(plan.slots[index % plan.slots.length].problem), id: `balance-${index}` } }));
+        await d.islandPlans.put(plan);
+        plan = await beforeFinal(d, plan);
+        expect(getIslandCustomization(await current(d)).points).toBe(0);
+        const action = correctAction(plan);
+        await commitIslandLearning('child', plan.id, plan.revision, action, d);
+        const earned = await current(d);
+        expect(earned.customization?.points).toBe(count);
+        expect(earned.growth?.progress.garden).toBe(1);
+        expect(earned.growth?.pendingAnswers?.garden).toBe(count - 3);
+        const saved = await snapshot(d);
+        d.close(); await d.open();
+        await commitIslandLearning('child', plan.id, plan.revision, action, d);
+        expect(await snapshot(d)).toEqual(saved);
+    });
+
+    it('finishes a saved old growth reservation at its original reward before adopting new pacing', async () => {
+        const d = await setup();
+        let plan = await startIslandPlan('child', d);
+        delete plan.rewardPacing;
+        await d.islandPlans.put(plan);
+        d.close(); await d.open();
+        expect((await startIslandPlan('child', d)).rewardPacing).toBeUndefined();
+        plan = await beforeFinal(d, plan);
+        const result = await commitIslandLearningSession('child', plan.id, plan.revision, correctAction(plan), d);
+        expect(result.receipt.island.customization?.points).toBe(10);
+        expect(result.receipt.island.growth?.progress.garden).toBe(1);
+        expect(result.nextPlan?.rewardPacing).toBe('answers-v1');
+        const next = await beforeFinal(d, result.nextPlan!);
+        await commitIslandLearning('child', next.id, next.revision, correctAction(next), d);
+        expect((await current(d)).customization?.points).toBe(10 + next.slots.length);
+    });
+
     it('continues earning after every habitat and every catalog item are complete', async () => {
         const d = await setup(24), island = await current(d);
         island.growth!.progress = { garden: 6, waterside: 6, grove: 6, village: 6 };
@@ -147,7 +185,7 @@ describe('exactly once stars from committed learning', () => {
         await commitIslandLearning('child', plan.id, plan.revision, correctAction(plan), d);
         const result = await current(d);
         expect(result.completedSets).toBe(25);
-        expect(result.customization?.points).toBe(10);
+        expect(result.customization?.points).toBe(3);
         expect(result.growth?.progress).toEqual(island.growth!.progress);
         expect(result.growth?.memories).toEqual(island.growth!.memories);
     });
@@ -155,7 +193,7 @@ describe('exactly once stars from committed learning', () => {
     it.each([false, true])('credits final completion once including legacy gift contract=%s', async legacy => {
         const d = await setup(3);
         let plan = await startIslandPlan('child', d);
-        if (legacy) { delete plan.growthTarget; await d.islandPlans.put(plan); }
+        if (legacy) { delete plan.growthTarget; delete plan.rewardPacing; await d.islandPlans.put(plan); }
         plan = await beforeFinal(d, plan);
         expect((await current(d)).customization).toBeUndefined();
         const action = correctAction(plan), second = new SansuDatabase(d.name, options); await second.open();
@@ -164,7 +202,7 @@ describe('exactly once stars from committed learning', () => {
             await commitIslandLearning('child', plan.id, plan.revision, action, d);
             const island = await current(d);
             expect(island.completedSets).toBe(4);
-            expect(island.customization?.points).toBe(40);
+            expect(island.customization?.points).toBe(legacy ? 40 : 33);
             expect(island.pendingRewards).toHaveLength(legacy ? 1 : 0);
             expect(await d.islandEvents.where('type').equals('plan_completed').count()).toBe(1);
         } finally { second.close(); }
@@ -178,7 +216,7 @@ describe('exactly once stars from committed learning', () => {
             expect(getIslandCustomization(await current(d)).points).toBe(0);
         }
         const result = await commitIslandLearning('child', plan.id, plan.revision, { type: 'supported_completed' }, d);
-        expect(result.island.customization?.points).toBe(10);
+        expect(result.island.customization?.points).toBe(3);
         expect(result.event.result).toBe('supported-completion');
     });
 
@@ -194,13 +232,13 @@ describe('exactly once stars from committed learning', () => {
         const result = await commitIslandLearningSession('child', plan.id, plan.revision, correctAction(plan), d);
         d.islandEvents.hook('creating').unsubscribe(failNext);
         expect(result.nextPlan).toBeUndefined();
-        expect((await current(d)).customization?.points).toBe(40);
+        expect((await current(d)).customization?.points).toBe(33);
         await commitIslandLearningSession('child', plan.id, plan.revision, correctAction(plan), d);
-        expect((await current(d)).customization?.points).toBe(40);
+        expect((await current(d)).customization?.points).toBe(33);
     });
 
     it('serializes final completion with spending without recreating spent credit', async () => {
-        const d = await setup(4), plan = await beforeFinal(d, await startIslandPlan('child', d)), island = await current(d);
+        const d = await setup(7), plan = await beforeFinal(d, await startIslandPlan('child', d)), island = await current(d);
         const second = new SansuDatabase(d.name, options); await second.open();
         try {
             const results = await Promise.allSettled([
@@ -210,8 +248,8 @@ describe('exactly once stars from committed learning', () => {
             expect(results[1].status).toBe('fulfilled');
             let latest = await current(d);
             if (results[0].status === 'rejected') latest = await customizeIsland('child', latest.revision, { type: 'purchase', itemId: 'starry' }, d);
-            expect(latest.completedSets).toBe(5);
-            expect(latest.customization?.points).toBe(20);
+            expect(latest.completedSets).toBe(8);
+            expect(latest.customization?.points).toBe(13);
             expect(latest.customization?.ownedItemIds).toEqual(['moon-garden', 'starry']);
         } finally { second.close(); }
     });

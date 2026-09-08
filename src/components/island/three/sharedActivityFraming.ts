@@ -29,6 +29,15 @@ type IdentityChannel = 'carrierHead' | 'receiverHead' | 'carrierBody' | 'receive
 interface PoseIdentityVisibility { phase: VisibilityPhase; progress: number; visibility: Partial<Record<IdentityChannel, number>> }
 const IDENTITY_CHANNELS: readonly SharedActivityCompositionChannel[] = ['carrierHead', 'receiverHead', 'carrierBody', 'receiverBody'];
 type CompositionVisibility = Partial<Record<VisibilityPhase, Partial<Record<SharedActivityCompositionChannel, number>>>>;
+interface CameraSearchStep {
+    evaluatedHeight: number;
+    chosenHeight: number;
+    minimumPhaseVisibility: number;
+    minimumCompositionVisibility: number;
+    minimumPoseIdentityVisibility: number;
+    bodySeparationPx: number;
+    readabilitySatisfied: boolean;
+}
 export interface SharedActivityFrame {
     position: THREE.Vector3;
     quaternion: THREE.Quaternion;
@@ -42,7 +51,9 @@ export interface SharedActivityFrame {
         fullyHiddenPhases: number; testedRays: number; bodySeparationPx: number; minimumPawSpanPx: number;
         compositionVisibility: CompositionVisibility; minimumCompositionVisibility: number; fullyHiddenCompositionChannels: number;
         poseIdentityVisibility: PoseIdentityVisibility[]; minimumPoseIdentityVisibility: number;
-        compositionRays: number; cameraHeight: number; readabilitySatisfied: boolean };
+        compositionRays: number; cameraHeight: number; readabilitySatisfied: boolean;
+        /** Best result after each bounded height pass; at most three entries. */
+        cameraSearch?: CameraSearchStep[] };
 }
 
 /** Keep a readable current delivery without scoring alternatives. An exhausted
@@ -230,6 +241,7 @@ export function fitSharedActivityFrame(plan: SharedActivityPlan, objects: Shared
             self: [], composition: {}, bounds: whole, carrierHand: carrierRoot, receiverHand: seat };
         const options = sampled?.options ?? [{ hands: undefined, samples: [fallback] }];
         let chosen: SharedActivityFrame | undefined, best: number[] | undefined, cameraCandidates = 0;
+        const cameraSearch: CameraSearchStep[] = [];
         for (const cameraHeight of sampled ? [8, 10.5, 13] : [8]) {
             for (const angle of [0, Math.PI / 8, -Math.PI / 8]) for (const sign of [1, -1]) {
                 const direction = side.clone().multiplyScalar(sign).applyAxisAngle(UP, angle);
@@ -274,11 +286,19 @@ export function fitSharedActivityFrame(plan: SharedActivityPlan, objects: Shared
                     }
                 }
             }
+            const diagnostic = chosen?.visibilityDiagnostics;
+            if (diagnostic) cameraSearch.push({ evaluatedHeight: cameraHeight, chosenHeight: diagnostic.cameraHeight,
+                minimumPhaseVisibility: diagnostic.minimumPhaseVisibility, minimumCompositionVisibility: diagnostic.minimumCompositionVisibility,
+                minimumPoseIdentityVisibility: diagnostic.minimumPoseIdentityVisibility, bodySeparationPx: diagnostic.bodySeparationPx,
+                readabilitySatisfied: diagnostic.readabilitySatisfied });
             // The familiar view is retained when it already makes every subject
             // readable. Only a failed base set unlocks the two bounded higher views.
             if (!sampled || chosen?.visibilityDiagnostics?.readabilitySatisfied) break;
         }
-        if (chosen?.visibilityDiagnostics) chosen.visibilityDiagnostics.cameraCandidates = cameraCandidates;
+        if (chosen?.visibilityDiagnostics) {
+            chosen.visibilityDiagnostics.cameraCandidates = cameraCandidates;
+            chosen.visibilityDiagnostics.cameraSearch = cameraSearch;
+        }
         return chosen!;
     } finally { sampled?.dispose(); }
 }

@@ -14,7 +14,10 @@ const out = process.env.SANSU_ISLAND_ONBOARDING_OUTPUT || 'output/playwright/isl
 const filter = process.env.SANSU_ISLAND_ONBOARDING_SCENARIO;
 const cases = [
     { name: 'phone-math', width: 390, height: 844, touch: true, grade: -1, gradeLabel: '年中', subject: 'math', math: '数をかぞえる・くらべる', mathStart: 1, vocabStart: 1, nameInput: '', play: true, double: true, back: true, compatibility: true },
-    { name: 'tablet-mix', width: 768, height: 1024, grade: 3, gradeLabel: '小学 3 年生', subject: 'mix', math: '筆算（2けたのたし算・ひき算）', english: 'すこし', mathStart: 14, vocabStart: 4, nameInput: 'あおい', play: true, double: true },
+    { name: 'tablet-mix', width: 768, height: 1024, grade: 3, gradeLabel: '小学 3 年生', subject: 'mix', math: '筆算（2けたのたし算・ひき算）', english: 'すこし', mathStart: 11, vocabStart: 4, nameInput: 'あおい', play: true, double: true },
+    { name: 'phone-second-division', width: 390, height: 844, touch: true, grade: 2, gradeLabel: '小学 2 年生', subject: 'math', math: 'わり算（筆算・あまりまで）', mathStart: 18, vocabStart: 1, nameInput: '' },
+    { name: 'tablet-sixth-fractions', width: 768, height: 1024, grade: 6, gradeLabel: '小学 6 年生', subject: 'mix', math: '分数（かけ算・わり算）', english: 'すこし', mathStart: 24, vocabStart: 4, nameInput: '' },
+    { name: 'phone-sixth-speed', width: 390, height: 844, touch: true, grade: 6, gradeLabel: '小学 6 年生', subject: 'math', math: '速さまで', mathStart: 28, vocabStart: 1, nameInput: '' },
     { name: 'phone-vocab-no-play', width: 390, height: 844, touch: true, reduced: true, grade: 2, gradeLabel: '小学 2 年生', subject: 'vocab', english: 'はじめて', mathStart: 11, vocabStart: 1, nameInput: '' },
     { name: 'tablet-reduced-math', width: 768, height: 1024, reduced: true, soundOff: true, grade: 1, gradeLabel: '小学 1 年生', subject: 'math', math: '足し算まで', mathStart: 7, vocabStart: 1, nameInput: 'みなと', play: true },
     { name: 'phone-save-abort-retry', width: 390, height: 844, touch: true, grade: 2, gradeLabel: '小学 2 年生', subject: 'math', math: '引き算まで', mathStart: 10, vocabStart: 1, nameInput: '', fault: 'abort-once' },
@@ -243,7 +246,11 @@ async function compatibility(page, row, created) {
     assert.deepEqual(await onboardingStores(page), created);
     await record(page, row, 'settings-add-name', { fullPage: true });
     await page.getByPlaceholder('あだ名でOK').fill('ふたりめ'); await button(page, '次へ').click();
+    row.controls.addGrades = await onboardingControls(page, '.park-onboarding-content button');
     await button(page, '年中さん').click(); await page.getByRole('button', { name: /さんすう だけ/ }).click();
+    row.controls.addMath = await onboardingControls(page, '.park-onboarding-content button');
+    assert.equal(row.controls.addMath.length, 12, 'Settings add exposes the same full math range catalog');
+    await record(page, row, 'settings-add-advanced-ranges');
     await page.getByRole('button', { name: /数をかぞえる・くらべる/ }).click();
     await page.waitForURL('**/#/island'); await waitReady(page);
     const added = await onboardingStores(page), second = assertCreated(added, { ...row, nameInput: 'ふたりめ' }, 2);

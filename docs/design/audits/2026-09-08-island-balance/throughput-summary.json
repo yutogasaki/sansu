@@ -1,0 +1,156 @@
+{
+  "initial": {
+    "target": "http://127.0.0.1:5390",
+    "startedAt": "2026-09-08T09:57:17.258Z",
+    "finishedAt": "2026-09-08T10:09:53.318Z",
+    "repetitions": 10,
+    "layouts": [
+      {
+        "name": "phone",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      }
+    ],
+    "comparisons": [
+      {
+        "layout": "phone",
+        "studyMedianProblemsPerMinute": 123.71682194651738,
+        "islandMedianProblemsPerMinute": 138.29470701436068,
+        "allCorrectIslandToStudyRatio": 1.117832683045684,
+        "correctOperableP95Ms": 806.8000000119209,
+        "incorrectRetryP95Ms": 361.19999998807907,
+        "correctSamples": 200,
+        "incorrectSamples": 20,
+        "automaticSectionTransitionMedianMs": 340.75,
+        "automaticSectionTransitionSamples": 10,
+        "sectionBoundaryP95Ms": 827.3999999761581,
+        "sectionBoundarySamples": 20,
+        "rawStudyDurationMedianMs": 4849.799999982119,
+        "rawIslandDurationMedianMs": 4342
+      },
+      {
+        "layout": "tablet",
+        "studyMedianProblemsPerMinute": 125.51119665792831,
+        "islandMedianProblemsPerMinute": 194.11007970194936,
+        "allCorrectIslandToStudyRatio": 1.546555884021904,
+        "correctOperableP95Ms": 358.4000000357628,
+        "incorrectRetryP95Ms": 347.5,
+        "correctSamples": 200,
+        "incorrectSamples": 20,
+        "automaticSectionTransitionMedianMs": 242.69999998807907,
+        "automaticSectionTransitionSamples": 10,
+        "sectionBoundaryP95Ms": 653.8000000119209,
+        "sectionBoundarySamples": 20,
+        "rawStudyDurationMedianMs": 4780.450000017881,
+        "rawIslandDurationMedianMs": 3148.399999976158
+      }
+    ],
+    "gates": {
+      "tenAlternatingRepetitions": true,
+      "allCorrectIslandThroughputNotBelowStudy": true,
+      "correctP95AtMost650Ms": false,
+      "incorrectP95AtMost550Ms": true,
+      "sectionBoundaryP95AtMost650Ms": false,
+      "twentySameQuestionIncorrectSamplesPerLayout": true,
+      "noExtraOrdinaryQuestionActions": true,
+      "automaticSectionBoundaryIncluded": true,
+      "emptyInputAfterEveryTransition": true,
+      "initialIslandControlsUsable": true,
+      "exactFixtureAndAtomicReceipts": true,
+      "phoneAndTablet": true,
+      "noBrowserErrors": true,
+      "oneRenderedBuildAndCandidate": true,
+      "sourceFilesUnchangedDuringBenchmark": true
+    },
+    "evidence": {
+      "eligible": true,
+      "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+      "productionPlannerEvidence": false,
+      "userLearningStateTouched": false
+    },
+    "pass": false,
+    "rawSha256": "0582b7cf254ce9600ed81a627906120ee420a2c9aea62a2ea31ab087945c67e4"
+  },
+  "repeat": {
+    "target": "http://127.0.0.1:5390",
+    "startedAt": "2026-09-08T10:15:30.934Z",
+    "finishedAt": "2026-09-08T10:23:31.024Z",
+    "repetitions": 10,
+    "layouts": [
+      {
+        "name": "phone",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      }
+    ],
+    "comparisons": [
+      {
+        "layout": "phone",
+        "studyMedianProblemsPerMinute": 125.55589404084587,
+        "islandMedianProblemsPerMinute": 280.96701261651765,
+        "allCorrectIslandToStudyRatio": 2.237784333128267,
+        "correctOperableP95Ms": 194.79999995231628,
+        "incorrectRetryP95Ms": 194.80000001192093,
+        "correctSamples": 200,
+        "incorrectSamples": 20,
+        "automaticSectionTransitionMedianMs": 188.59999999403954,
+        "automaticSectionTransitionSamples": 10,
+        "sectionBoundaryP95Ms": 219.0999999642372,
+        "sectionBoundarySamples": 20,
+        "rawStudyDurationMedianMs": 4778.75,
+        "rawIslandDurationMedianMs": 2135.550000011921
+      },
+      {
+        "layout": "tablet",
+        "studyMedianProblemsPerMinute": 124.2314917536005,
+        "islandMedianProblemsPerMinute": 268.3304124238662,
+        "allCorrectIslandToStudyRatio": 2.1599226463131433,
+        "correctOperableP95Ms": 193.10000002384186,
+        "incorrectRetryP95Ms": 194.5,
+        "correctSamples": 200,
+        "incorrectSamples": 20,
+        "automaticSectionTransitionMedianMs": 188.90000000596046,
+        "automaticSectionTransitionSamples": 10,
+        "sectionBoundaryP95Ms": 193.10000002384186,
+        "sectionBoundarySamples": 20,
+        "rawStudyDurationMedianMs": 4829.699999988079,
+        "rawIslandDurationMedianMs": 2236.050000011921
+      }
+    ],
+    "gates": {
+      "tenAlternatingRepetitions": true,
+      "allCorrectIslandThroughputNotBelowStudy": true,
+      "correctP95AtMost650Ms": true,
+      "incorrectP95AtMost550Ms": true,
+      "sectionBoundaryP95AtMost650Ms": true,
+      "twentySameQuestionIncorrectSamplesPerLayout": true,
+      "noExtraOrdinaryQuestionActions": true,
+      "automaticSectionBoundaryIncluded": true,
+      "emptyInputAfterEveryTransition": true,
+      "initialIslandControlsUsable": true,
+      "exactFixtureAndAtomicReceipts": true,
+      "phoneAndTablet": true,
+      "noBrowserErrors": true,
+      "oneRenderedBuildAndCandidate": true,
+      "sourceFilesUnchangedDuringBenchmark": true
+    },
+    "evidence": {
+      "eligible": true,
+      "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+      "productionPlannerEvidence": false,
+      "userLearningStateTouched": false
+    },
+    "pass": true,
+    "rawSha256": "fb6b6c9a4a3fc188ba0e7184a383d713b116f6b64efbf1fc41161e491b0e6f74"
+  }
+}

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { ISLAND_TERRAIN_SEGMENTS, terrainContour, type IslandTerrainProfile } from './terrainProfile';
 
 export type Size3 = readonly [number, number, number];
 export interface LoftRing {
@@ -96,16 +97,16 @@ export function organicEllipsoidGeometry(size: Size3, phase = 0): THREE.BufferGe
 }
 
 /** Every outline remains outside the saved placement ellipse, including polygon chords. */
-export function shoreContour(angle: number) {
-    return 1.052 + Math.sin(angle * 3 + .6) * .029 + Math.sin(angle * 5 - 1.1) * .013;
+export function shoreContour(angle: number, profile: IslandTerrainProfile = 'main') {
+    return terrainContour(angle, profile);
 }
 
 /** The saved placement ellipse is a subset of this level, closed surface. */
-export function islandGroundGeometry(radiusX: number, radiusZ: number): THREE.BufferGeometry {
+export function islandGroundGeometry(radiusX: number, radiusZ: number, profile: IslandTerrainProfile = 'main'): THREE.BufferGeometry {
     positive(radiusX, 'Radius'); positive(radiusZ, 'Radius');
-    const count = 64, positions = [0, 0, 0], indices: number[] = [], colors = [1, 1, 1];
+    const count = ISLAND_TERRAIN_SEGMENTS, positions = [0, 0, 0], indices: number[] = [], colors = [1, 1, 1];
     for (const radial of [.34, .67, 1]) for (let i = 0; i <= count; i++) {
-        const angle = i / count * Math.PI * 2, radius = radial * shoreContour(angle);
+        const angle = i / count * Math.PI * 2, radius = radial * shoreContour(angle, profile);
         const x = Math.cos(angle) * radiusX * radius, z = Math.sin(angle) * radiusZ * radius;
         positions.push(x, 0, z);
         const shade = .97 + .03 * Math.sin(x * .7 + z * .4) * Math.cos(z * .65);

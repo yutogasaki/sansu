@@ -6,9 +6,9 @@ import {
     enterAppUpdateSession,
     markAppUpdateInteraction,
     shouldDeferAppUpdateForState,
-    shouldResetAppCache,
     stripReloadMarker,
 } from './pwaUpdateUtils'
+import { fetchUpdateResource, hasAttemptedUpdateRecovery, recordUpdateRecovery } from './pwaUpdateRecovery'
 
 const UPDATE_CHECK_INTERVAL_MS = 60 * 1000
 const UPDATE_RECOVERY_DELAY_MS = 4000
@@ -20,6 +20,7 @@ const SERVICE_WORKER_SCOPE = APP_BASE_URL
 let hasTriggeredReload = false
 let hasScheduledRecoveryReload = false
 let updateCheckInFlight: Promise<void> | null = null
+let serviceWorkerCheckInFlight = false
 let deferredReloadVersion: string | null = null
 let deferredRecoveryVersion: string | null = null
 let updateSessionSequence = 0
@@ -58,7 +59,7 @@ const reloadForUpdate = (version = Date.now().toString()): boolean => {
         return false
     }
 
-    if (isCurrentUpdateProtected()) {
+    if (isCurrentUpdateProtected() || !shouldCheckForUpdates()) {
         deferredReloadVersion = version
         return false
     }
@@ -75,11 +76,18 @@ const shouldCheckForUpdates = () => (
 )
 
 const checkForServiceWorkerUpdate = async (workbox: Workbox) => {
-    if (!shouldCheckForUpdates()) {
+    if (serviceWorkerCheckInFlight || !shouldCheckForUpdates()) {
         return
     }
 
-    await workbox.update().catch(() => undefined)
+    serviceWorkerCheckInFlight = true
+    try {
+        await workbox.update()
+    } catch {
+        // Version checks remain independent of registration/network failures.
+    } finally {
+        serviceWorkerCheckInFlight = false
+    }
 }
 
 const checkForAppVersionUpdate = async () => {
@@ -88,16 +96,10 @@ const checkForAppVersionUpdate = async () => {
     }
 
     try {
-        const response = await fetch(`${VERSION_URL}?t=${Date.now()}`, {
-            cache: 'no-store',
-        })
-
-        if (!response.ok) {
-            return null
-        }
-
-        const data = await response.json() as AppVersionPayload
-        if (!data.version || data.version === __APP_VERSION__) {
+        const body = await fetchUpdateResource(`${VERSION_URL}?t=${Date.now()}`, 'application/json')
+        if (!body) return null
+        const data = JSON.parse(body) as AppVersionPayload
+        if (typeof data?.version !== 'string' || !data.version.trim() || data.version === __APP_VERSION__) {
             return null
         }
 
@@ -108,29 +110,14 @@ const checkForAppVersionUpdate = async () => {
     }
 }
 
-const resetStaleServiceWorkerState = async () => {
-    const registration = await navigator.serviceWorker
-        .getRegistration(SERVICE_WORKER_SCOPE)
-        .catch(() => undefined)
-
-    const cacheNames = 'caches' in window
-        ? await caches.keys().catch(() => [] as string[])
-        : []
-
-    await Promise.all([
-        registration?.unregister().catch(() => false),
-        ...cacheNames
-            .filter(shouldResetAppCache)
-            .map((cacheName) => caches.delete(cacheName).catch(() => false)),
-    ])
-}
-
 const scheduleRecoveryReload = (version: string) => {
     if (hasScheduledRecoveryReload || deferredRecoveryVersion || hasTriggeredReload) {
         return
     }
 
-    if (isCurrentUpdateProtected()) {
+    if (hasAttemptedUpdateRecovery(version)) return
+
+    if (isCurrentUpdateProtected() || !shouldCheckForUpdates()) {
         deferredRecoveryVersion = version
         return
     }
@@ -138,26 +125,33 @@ const scheduleRecoveryReload = (version: string) => {
     hasScheduledRecoveryReload = true
 
     window.setTimeout(() => {
-        if (hasTriggeredReload) {
-            return
-        }
-
-        if (isCurrentUpdateProtected()) {
-            hasScheduledRecoveryReload = false
-            deferredRecoveryVersion = version
-            return
-        }
-
-        void resetStaleServiceWorkerState()
-            .catch(() => undefined)
-            .finally(() => {
-                reloadForUpdate(version)
-            })
+        void (async () => {
+            try {
+                if (hasTriggeredReload) return
+                if (!shouldCheckForUpdates() || isCurrentUpdateProtected()) {
+                    deferredRecoveryVersion = version
+                    return
+                }
+                // The marker bypasses the old navigation fallback. Check that
+                // the network can serve the app before navigating; keep the
+                // installed worker and offline pack intact if it cannot.
+                const html = await fetchUpdateResource(
+                    buildReloadUrl(window.location.href, version), 'text/html',
+                )
+                if (!html || !shouldCheckForUpdates() || isCurrentUpdateProtected()) {
+                    deferredRecoveryVersion = version
+                    return
+                }
+                if (reloadForUpdate(version)) recordUpdateRecovery(version)
+            } finally {
+                hasScheduledRecoveryReload = false
+            }
+        })()
     }, UPDATE_RECOVERY_DELAY_MS)
 }
 
 const resumeDeferredUpdate = (): boolean => {
-    if (hasTriggeredReload || isCurrentUpdateProtected()) {
+    if (hasTriggeredReload || isCurrentUpdateProtected() || !shouldCheckForUpdates()) {
         return false
     }
 
@@ -251,27 +245,8 @@ const runVersionDriftRecoveryCheck = () => {
 }
 
 const runUpdateCheck = (workbox: Workbox) => {
-    if (updateCheckInFlight || !shouldCheckForUpdates()) {
-        return
-    }
-
-    updateCheckInFlight = (async () => {
-        await checkForServiceWorkerUpdate(workbox)
-
-        if (hasTriggeredReload) {
-            return
-        }
-
-        const nextVersion = await checkForAppVersionUpdate()
-
-        if (!nextVersion || hasTriggeredReload) {
-            return
-        }
-
-        scheduleRecoveryReload(nextVersion)
-    })().finally(() => {
-        updateCheckInFlight = null
-    })
+    void checkForServiceWorkerUpdate(workbox)
+    runVersionDriftRecoveryCheck()
 }
 
 const attachUpdateCheckTriggers = (triggerUpdateCheck: () => void) => {
@@ -337,6 +312,7 @@ export const registerPWA = () => {
 
     triggerUpdateCheck = runVersionDriftRecoveryCheck
     attachUpdateCheckTriggers(() => {
+        resumeDeferredUpdate()
         triggerUpdateCheck()
     })
 
@@ -354,14 +330,6 @@ export const registerPWA = () => {
     })
 
     workbox.addEventListener('controlling', (event) => {
-        if (!event.isUpdate && !event.isExternal) {
-            return
-        }
-
-        reloadForUpdate()
-    })
-
-    workbox.addEventListener('activated', (event) => {
         if (!event.isUpdate && !event.isExternal) {
             return
         }

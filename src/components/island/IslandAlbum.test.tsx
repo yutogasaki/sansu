@@ -77,7 +77,7 @@ describe('immutable growth album', () => {
             onTry={() => undefined} onPlace={() => undefined} onClose={() => undefined} />);
         expect(stages[0]).toMatchObject({ completedSets: 6, comparisonHabitat: 'waterside', growth: { expansionLevel: 1, progress: { waterside: 0 } } });
         expect(stages[1]).toMatchObject({ completedSets: 24, comparisonHabitat: 'waterside', growth: { progress: { waterside: 6 } } });
-        const timeline = markup.match(/class="island-album-timeline"[\s\S]*?<\/div>/)?.[0];
+        const timeline = markup.match(/class="island-album-timeline(?: [^"]*)?"[\s\S]*?<\/div>/)?.[0];
         expect(timeline?.match(/<button/g)).toHaveLength(2);
         expect(timeline).toContain('ひがしへ はしが つながった');
         expect(timeline).toContain('みずべが にぎやかに なった');

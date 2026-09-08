@@ -107,7 +107,8 @@ describe('Island observation preserves the existing transaction and clocks', () 
         expect(plan.slots[0].hissanValues).toEqual(savedCells);
         expect((await d.logs.toArray()).map(log => log.result)).toEqual(['skipped']);
         expect((await d.islands.get('child'))?.pendingRewards).toHaveLength(0);
-        expect((await d.islands.get('child'))?.growth?.progress.garden).toBe(1);
+        expect((await d.islands.get('child'))?.growth?.progress.garden).toBe(0);
+        expect((await d.islands.get('child'))?.growth?.pendingAnswers?.garden).toBe(1);
     });
 
     it.each([undefined, false, { version: 77 }, { version: 1, adapterVersion: 'island-dom-v1', eventAt: NaN },
@@ -162,7 +163,8 @@ describe('Island observation preserves the existing transaction and clocks', () 
             expect(await d.logs.count()).toBe(1);
             expect((await d.memoryMath.get(['child', arithmetic.categoryId]))?.correctAnswers).toBe(11);
             expect((await d.islands.get('child'))?.pendingRewards).toHaveLength(0);
-        expect((await d.islands.get('child'))?.growth?.progress.garden).toBe(1);
+        expect((await d.islands.get('child'))?.growth?.progress.garden).toBe(0);
+        expect((await d.islands.get('child'))?.growth?.pendingAnswers?.garden).toBe(1);
         } finally { connection.close(); }
     });
 

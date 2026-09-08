@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createIsland } from './catalog';
+import { createIslandAppearance } from './appearance';
 import { DEFAULT_ISLAND_COSMETICS, earnIslandCustomizationStars, getIslandCosmetics, getIslandCustomization,
     hasValidIslandCosmetics, hasValidIslandCustomization, type IslandCustomizationState } from './customization';
 import { growIslandAfterCompletedSet, initializeIslandGrowth } from './growth';
@@ -23,7 +24,7 @@ describe('island cosmetic state and legacy compatibility', () => {
         state.ownedItemIds.push('candy');
         expect(getIslandCustomization(island).points).toBe(3);
         expect(island.customization.ownedItemIds).toEqual(['moon-garden', 'starry']);
-        expect(earnIslandCustomizationStars(island).points).toBe(13);
+        expect(earnIslandCustomizationStars(island, { slots: [] }).points).toBe(13);
         expect(island.customization.points).toBe(3);
     });
 
@@ -61,7 +62,7 @@ describe('island cosmetic state and legacy compatibility', () => {
         for (let set = 1; set <= 6; set++) grown = growIslandAfterCompletedSet({ ...grown, completedSets: set }, 'garden', set);
         const memory = grown.growth!.memories[1];
         expect(grown.growth!.memories[0].cosmetics).toBeUndefined();
-        expect(memory.cosmetics).toEqual({ themeId: 'starry', accentId: 'candy-flags' });
+        expect(memory.cosmetics).toEqual({ themeId: 'starry', accentId: 'candy-flags', appearance: createIslandAppearance('starry', 'legacy-v1') });
         expect(grown.customization?.points).toBe(0); // Growth cannot grant currency by itself.
         grown.customization!.themeId = 'moon-garden';
         expect(memory.cosmetics?.themeId).toBe('starry');
@@ -75,7 +76,7 @@ describe('island cosmetic state and legacy compatibility', () => {
         delete legacy.growth;
         legacy.customization = { ...getIslandCustomization(legacy), points: 0, themeId: 'starry', ownedItemIds: ['moon-garden', 'starry'] };
         const initialized = initializeIslandGrowth(legacy, 10);
-        expect(initialized.growth?.memories[0].cosmetics).toEqual({ themeId: 'starry', accentId: null });
+        expect(initialized.growth?.memories[0].cosmetics).toEqual({ themeId: 'starry', accentId: null, appearance: createIslandAppearance('starry', 'legacy-v1') });
         expect(initialized.customization?.points).toBe(0);
     });
 });

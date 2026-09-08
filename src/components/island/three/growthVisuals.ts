@@ -2,6 +2,9 @@ import * as THREE from 'three';
 import { batch, box, curve, cylinder, disposeGeometry, ellipsoid, IslandMaterials, pole, star } from './primitives';
 import { makeFlowers } from './furniture';
 import { applyTreeGrowth } from './scenery';
+import { appearanceBlossom } from './appearanceMotifs';
+import { ScenerySlotBuild } from './appearanceParts';
+import type { IslandAppearanceSlotId } from '../../../domain/island/appearance';
 import { getIslandExpansionLevel } from '../../../domain/island/expansion';
 import type { IslandStageItem, IslandStageState } from './types';
 
@@ -24,6 +27,7 @@ function smallFlowers(group: THREE.Group, m: IslandMaterials, x: number, y: numb
 }
 
 function blossom(group: THREE.Group, m: IslandMaterials, x: number, y: number, z: number, radius: number, color: string) {
+    if (appearanceBlossom(group, m, x, y, z, radius, color)) return;
     for (let i = 0; i < 7; i++) {
         const angle = i * Math.PI * 2 / 7;
         const petal = ellipsoid(group, m.get(color),
@@ -191,7 +195,7 @@ function habitatAppearance(state: IslandStageState, habitat: 'grove' | 'village'
 /** Fixed scenery grows in place as well, rather than multiplying buildings.
  * Structure stays inside existing reserved ground; upper foliage can overhang. */
 export function applySceneryGrowth(group: THREE.Group, state: IslandStageState, m: IslandMaterials,
-    trees?: { main?: THREE.Group; west?: THREE.Group }) {
+    trees?: { main?: THREE.Group; west?: THREE.Group }, slot?: IslandAppearanceSlotId) {
     const treeLevel = habitatAppearance(state, 'grove'), houseLevel = habitatAppearance(state, 'village');
     if (trees?.main) applyTreeGrowth(trees.main, state.growth ? treeLevel : undefined);
     if (trees?.west) applyTreeGrowth(trees.west, state.growth ? treeLevel : undefined);
@@ -199,11 +203,15 @@ export function applySceneryGrowth(group: THREE.Group, state: IslandStageState, 
     const key = `${Boolean(state.growth)}:${treeLevel}:${houseLevel}:${western}`;
     if (group.userData.growthVisualKey === key) return false;
     group.userData.growthVisualKey = key;
-    for (const child of [...group.children]) { child.removeFromParent(); disposeGeometry(child); }
+    const retired = new THREE.Group();
+    for (const child of [...group.children]) retired.add(child);
+    disposeGeometry(retired);
     if (!state.growth) return true;
-    const tree = new THREE.Group(); tree.name = 'grown-tree'; tree.position.set(1.6, 0, -1.6);
-    const house = new THREE.Group(); house.name = 'grown-house'; house.position.set(-2.6, 0, -1.65);
-    group.add(tree, house);
+    const treeBuild = new ScenerySlotBuild(slot), houseBuild = new ScenerySlotBuild(slot);
+    treeBuild.group.name = 'grown-tree'; treeBuild.group.position.set(1.6, 0, -1.6);
+    houseBuild.group.name = 'grown-house'; houseBuild.group.position.set(-2.6, 0, -1.65);
+    const tree = treeBuild.part('tree'); let house = houseBuild.part('houseBody');
+    group.add(treeBuild.group, houseBuild.group);
     if (treeLevel >= 1) {
         for (const x of [-.7, .72]) ellipsoid(tree, m.get('#76a84d'), [x, 2.28, -.2], [.55, .3, .43], 14);
         leaves(tree, m, .33, .07, -.24, 4, .16);
@@ -222,8 +230,9 @@ export function applySceneryGrowth(group: THREE.Group, state: IslandStageState, 
     if (houseLevel >= 1) {
         for (const x of [-.61, .55]) {
             cylinder(house, m.get('#ba7b49'), [x, .18, .72], .13, .25, .16);
-            smallFlowers(house, m, x, .31, .72, .47);
+            smallFlowers(houseBuild.part('flower'), m, x, .31, .72, .47);
         }
+        house = houseBuild.part('houseRoof');
         const canopyHeight = [0, 1.2, 1.46, 1.75][houseLevel];
         const canopy = box(house, m.get(houseLevel === 3 ? '#dc7c62' : '#e8c47e'), [-.1, canopyHeight, .97],
             [[0, 0, 0], [1.32, .08, .48], [1.75, .12, .6], [2.15, .14, .8]][houseLevel] as [number, number, number]);
@@ -233,69 +242,38 @@ export function applySceneryGrowth(group: THREE.Group, state: IslandStageState, 
         }
     }
     if (houseLevel >= 2) {
+        house = houseBuild.part('houseBody');
         // A shallow porch and awning enrich the existing foundation, without new obstacles.
         box(house, m.get('#e4b275'), [0, .045, .78], [1.35, .08, .29]);
         for (const x of [-.5, .42]) pole(house, m.get('#ba7b49'), [x, .08, .94], [x, houseLevel === 3 ? 1.71 : 1.42, .94], .046);
     }
     if (houseLevel >= 3) {
+        house = houseBuild.part('houseBody');
         // One attached roof room and a broad veranda make the same cottage
         // visibly mature. The tall front dormer adds a new roof silhouette;
         // the original broad patchwork planes remain exposed behind it.
         box(house, m.get('#f7e8c6'), [.38, 2.37, .62], [.94, 1.02, .68]);
+        house = houseBuild.part('houseRoof');
         const roofLeft = box(house, m.get('#f39482'), [.08, 2.95, .65], [.69, .1, .87]); roofLeft.rotation.z = .45;
         const roofRight = box(house, m.get('#dc7c62'), [.68, 2.95, .65], [.69, .1, .87]); roofRight.rotation.z = -.45;
+        house = houseBuild.part('houseWindows');
         box(house, m.get('#e4b275'), [.38, 2.43, .976], [.63, .63, .025]);
         box(house, m.get('#80b5b5'), [.38, 2.43, .995], [.48, .48, .018]);
         box(house, m.get('#efcf94'), [.38, 2.43, 1.01], [.045, .48, .017]);
         box(house, m.get('#efcf94'), [.38, 2.43, 1.01], [.48, .045, .017]);
+        house = houseBuild.part('houseBody');
         curve(house, m.get('#b49b64'), [[-.81, 1.66, 1.34], [-.1, 1.51, 1.34], [.61, 1.66, 1.34]], .023);
         for (const x of [-.56, -.1, .36]) star(house, m.get('#ffe093', true), [x, 1.5, 1.36], .087);
         leaves(house, m, -.79, .82, .81, 5, .14);
         leaves(house, m, .62, 1.62, .96, 4, .14);
     }
-    batch(tree, m.painted); batch(house, m.painted);
+    treeBuild.finish(false); houseBuild.finish(false);
+    batch(treeBuild.group, m.painted); batch(houseBuild.group, m.painted);
     if (western) {
-        const westTree = tree.clone(true); westTree.name = 'grown-west-tree';
+        const westTree = treeBuild.group.clone(true); westTree.name = 'grown-west-tree';
         westTree.position.set(-6.7, 0, -1.2); westTree.scale.setScalar(.65); group.add(westTree);
     }
     return true;
 }
 
-/** One natural visitor at a time, attached to the visited object. The earned
- * behavior is independent of the chosen old appearance. */
-export class IslandNatureVisuals {
-    readonly group = new THREE.Group();
-    private readonly butterfly = new THREE.Group();
-    private readonly wings: THREE.Group[] = [];
-    private readonly boat = new THREE.Group();
-    constructor(m: IslandMaterials) {
-        this.group.name = 'island-nature';
-        ellipsoid(this.butterfly, m.get('#735b42'), [0, 0, 0], [.017, .055, .017], 8);
-        for (const side of [-1, 1]) {
-            const wing = new THREE.Group();
-            ellipsoid(wing, m.get('#f2bb74'), [side * .064, .023, 0], [.077, .061, .012], 10);
-            ellipsoid(wing, m.get('#efcf94'), [side * .052, -.032, .004], [.055, .044, .01], 10);
-            this.wings.push(wing); this.butterfly.add(wing);
-        }
-        const leaf = ellipsoid(this.boat, m.get('#76a85b'), [0, 0, 0], [.12, .021, .058], 12);
-        leaf.rotation.y = .25;
-        pole(this.boat, m.get('#b49b64'), [0, .01, 0], [0, .17, 0], .008);
-        const sail = ellipsoid(this.boat, m.get('#fff0c0'), [.04, .115, 0], [.045, .06, .007], 8); sail.rotation.z = -.2;
-        this.group.add(this.butterfly, this.boat); this.clear();
-    }
-    clear() { this.group.visible = false; this.butterfly.visible = false; this.boat.visible = false; }
-    update(kind: 'butterfly' | 'boat', source: THREE.Group, elapsed: number, reduced: boolean) {
-        this.group.visible = true; this.butterfly.visible = kind === 'butterfly'; this.boat.visible = kind === 'boat';
-        source.updateWorldMatrix(true, false);
-        const phase = reduced ? .8 : Math.min(1, elapsed / 4200), turn = phase * Math.PI * 2;
-        const local = kind === 'butterfly'
-            ? new THREE.Vector3(Math.sin(turn) * .17, (source.userData.growthFlowerHeight ?? .52) + .14 + Math.sin(phase * Math.PI) * .2, Math.cos(turn) * .14)
-            : new THREE.Vector3(Math.sin(turn) * .32, .327, Math.cos(turn) * .32);
-        const object = kind === 'butterfly' ? this.butterfly : this.boat;
-        object.position.copy(source.localToWorld(local));
-        object.rotation.y = kind === 'boat' ? turn + source.rotation.y : .3;
-        this.wings.forEach((wing, i) => { wing.rotation.y = (i ? 1 : -1) * (reduced ? .35 : .3 + Math.sin(elapsed / 110) * .55); });
-        return !reduced && phase < 1;
-    }
-    dispose() { disposeGeometry(this.group); }
-}
+export { IslandNatureVisuals } from './natureVisuals';

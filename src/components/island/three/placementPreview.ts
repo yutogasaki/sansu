@@ -3,6 +3,9 @@ import { ISLAND_ITEMS } from '../../../domain/island/catalog';
 import { makeFurniture } from './furniture';
 import { batch, disposeGeometry, IslandMaterials, mesh } from './primitives';
 import type { IslandStageItem } from './types';
+import type { IslandCosmeticScenery } from './cosmeticScenery';
+import { applyFurnitureAppearance, furnitureAppearanceMaterials } from './furnitureAppearance';
+import { applyFurnitureGrowth } from './growthVisuals';
 
 /** The outline describes the real saved footprint; gaps also distinguish an invalid location. */
 export function makePlacementMarker(radius: number, valid: boolean) {
@@ -40,14 +43,19 @@ export class IslandPlacementPreview {
     private item?: IslandStageItem;
     private validMarker?: THREE.Group;
     private invalidMarker?: THREE.Group;
+    private appearanceKey?: string;
 
     constructor(private readonly materials: IslandMaterials) { this.group.visible = false; }
 
-    update(item?: IslandStageItem, valid = true) {
+    update(item?: IslandStageItem, valid = true, world?: IslandCosmeticScenery, progress = 0) {
         if (!item?.position) { this.clear(); return; }
-        if (item.id !== this.item?.id || item.kind !== this.item?.kind) {
+        const slot = item.kind === 'flower' ? 'flower' : item.kind === 'mushroom' ? 'mushroom' : item.kind === 'fountain' ? 'water' : undefined;
+        const appearanceKey = `${slot && world ? world.appearance.slots[slot] : 'fixed'}:${item.growthLevel}:${item.appearanceLevel}:${progress}`;
+        if (item.id !== this.item?.id || item.kind !== this.item?.kind || appearanceKey !== this.appearanceKey) {
             this.clear();
             const model = makeFurniture(item.kind, this.materials);
+            if (world) applyFurnitureAppearance(model, item, world, this.materials);
+            applyFurnitureGrowth(model, item, world ? furnitureAppearanceMaterials(item, world, this.materials) : this.materials, progress);
             // Mutable instance materials already belong to this model. Shared palette materials
             // need one clone, retained for the entire edit, including all rotations and moves.
             const clones = new Map<THREE.Material, THREE.Material>();
@@ -72,6 +80,7 @@ export class IslandPlacementPreview {
             this.invalidMarker = makePlacementMarker(radius, false);
             this.group.add(model, this.validMarker, this.invalidMarker);
             this.buildCount++;
+            this.appearanceKey = appearanceKey;
         }
         this.item = item;
         this.group.visible = true;
@@ -86,6 +95,7 @@ export class IslandPlacementPreview {
         disposeGeometry(this.group);
         this.group.clear(); this.group.visible = false;
         this.item = undefined; this.validMarker = this.invalidMarker = undefined;
+        this.appearanceKey = undefined;
     }
 
     dispose() { this.clear(); this.group.removeFromParent(); }

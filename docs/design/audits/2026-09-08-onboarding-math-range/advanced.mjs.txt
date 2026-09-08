@@ -1,0 +1,28 @@
+import { chromium } from 'playwright';
+import assert from 'node:assert/strict';
+import { promises as fs } from 'node:fs';
+import { onboardingStores } from '../../../tools/island-onboarding-checks.mjs';
+const out='output/playwright/onboarding-math-range-20260908';
+const report={target:process.env.SANSU_RANGE_BASE_URL || 'http://127.0.0.1:5198',evidence:'DEV real UI placement, first reservation and visible answer form; no preloaded learning fixtures.',cases:[],pass:false};
+const ranges=[['九九','かけ算（九九）',14],['division','わり算（筆算・あまりまで）',18],['decimal-add','小数（たし算・ひき算）',19],['decimal-mul','小数（かけ算・わり算）',20],['fraction-add','分数（たし算・ひき算）',22],['fraction-mul','分数（かけ算・わり算）',24],['application','割合・平均・比まで',27],['speed','速さまで',28]];
+const browser=await chromium.launch({args:['--use-angle=metal']});
+try {for (const [id,label,start] of ranges) {
+ const context=await browser.newContext({viewport:{width:390,height:844},hasTouch:true,serviceWorkers:'block'});
+ const page=await context.newPage();page.setDefaultTimeout(20000);
+ const row={id,label,start,pass:false,errors:[]};report.cases.push(row);page.on('pageerror',e=>row.errors.push(String(e)));
+ try {
+  await page.goto(`${report.target}/#/onboarding`);
+  await page.getByRole('button',{name:'まなぶ',exact:true}).click();
+  await page.getByRole('button',{name:'小学 6 年生',exact:true}).click();
+  await page.getByRole('button',{name:'さんすう',exact:true}).click();
+  await page.getByRole('button',{name:label,exact:true}).click();
+  await page.locator('.island-page[data-mode="learning"]').waitFor();await page.locator('.park-answer').waitFor();
+  const stored=await onboardingStores(page),profile=stored.profiles.rows[0],plan=stored.islandPlans.rows[0];
+  assert.equal(profile.mathStartLevel,start);assert.equal(profile.mathMainLevel,Math.min(28,start+1));
+  assert.equal(stored.profiles.rows.length,1);assert.equal(plan.slots.length,3);assert.equal(stored.logs.rows.length,0);
+  assert.deepEqual(row.errors,[]);row.pass=true;row.skillIds=plan.slots.map(s=>s.problem.skillId);
+  await page.screenshot({path:`${out}/advanced-${id}.png`,animations:'disabled'});
+  console.log(`PASS ${id}: Lv${start} -> Lv${profile.mathMainLevel}, first question ready`);
+ } catch(e) {row.failure=String(e.stack);await page.screenshot({path:`${out}/advanced-${id}-failure.png`});throw e;}
+ finally{await context.close();}
+} report.pass=true;}finally{await browser.close();await fs.writeFile(`${out}/advanced-report.json`,JSON.stringify(report,null,2));}

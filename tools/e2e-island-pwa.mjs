@@ -1,14 +1,100 @@
 import { chromium } from 'playwright';
 import { promises as fs } from 'node:fs';
 import assert from 'node:assert/strict';
-import { answerUI, button, readNative, runtimeMetadata, seedNative, waitMode, waitReady } from './island-e2e-helpers.mjs';
+import { answerUI, button, readNative, runtimeMetadata, seedNative, waitMode, waitReady as waitSceneReady } from './island-e2e-helpers.mjs';
 import { assertExploreCheckpoint, waitForExploreNumericReady, waitForPageState } from './async-state-checks.mjs';
 
 const base = process.env.SANSU_ISLAND_PRODUCTION_URL || 'http://127.0.0.1:5298';
 const out = process.env.SANSU_ISLAND_OUTPUT || 'output/playwright/island';
+const comparisonStores = ['islands', 'islandPlans', 'islandEvents', 'logs', 'memoryMath', 'memoryVocab', 'exploreRuns'];
+const scope = {
+    comparisonStores, bootstrapOwnerStores: ['profiles', 'appData'],
+    fixture: 'Native profile only; real UI creates reservations/answers. Legacy additionally omits growth and reward-pacing fields from its actual first reservation.',
+    scenarios: ['Profile-free Island welcome -> seeded owner home -> protected learning/growth checkpoints',
+        'Legacy frozen questions/gift/10 stars -> one explicit migration with unchanged balance',
+        'Hook-free real SW control and cached home bundles -> offline first reservation/answers/reload'],
+    limits: 'Seven-store learning/Island comparisons; not every database store, photo-Blob persistence, real two-build update, or human/normal-speed evidence.',
+};
+if (process.argv.includes('--plan')) {
+    console.log(JSON.stringify({ preparedOnly: true, browserStarted: false, target: base, output: out,
+        environment: ['SANSU_ISLAND_PRODUCTION_URL', 'SANSU_ISLAND_OUTPUT'],
+        sourceRule: 'External fingerprint verifies the frozen app and explicit immutable QA overlay before/after execution.', ...scope }, null, 2));
+    process.exit(0);
+}
 await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch();
-const report = { target: base, flag: 'VITE_ISLAND_ENABLED=true', hookChecks: [], offline: null, pass: false };
+const report = { target: base, flag: 'VITE_ISLAND_ENABLED=true', scope, bootstrapChecks: [], hookChecks: [], offline: null, pass: false };
+async function waitReady(page) {
+    const island = page.locator('.island-page[data-visual-candidate-id="mystic-island-shore-garden-v6"]');
+    await island.waitFor();
+    if (await island.getAttribute('data-mode') === 'learning') {
+        // The learning focus layout keeps the scene mounted but intentionally
+        // hidden. Verify the restored input, not visibility of that canvas.
+        await page.locator('[data-renderer="three"] canvas').waitFor({ state: 'attached' });
+        await page.locator('.island-workbench[data-input-ready="true"]').waitFor();
+    } else {
+        await waitSceneReady(page);
+    }
+}
+async function nativeOwner(page) {
+    return page.evaluate(async () => {
+        const open = indexedDB.open('SansuDatabase');
+        const database = await new Promise((resolve, reject) => { open.onsuccess = () => resolve(open.result); open.onerror = () => reject(open.error); });
+        try {
+            const transaction = database.transaction(['profiles', 'appData']);
+            const read = request => new Promise((resolve, reject) => { request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
+            const [profiles, app] = await Promise.all([read(transaction.objectStore('profiles').getAll()), read(transaction.objectStore('appData').get('app'))]);
+            return { profiles, app, localActiveId: localStorage.getItem('sansu_active_profile') };
+        } finally { database.close(); }
+    });
+}
+async function waitEmptyWelcome(page) {
+    await page.waitForURL('**/#/onboarding');
+    await page.locator('.island-welcome[data-mode="welcome"][data-onboarding-candidate="island-touch-first-v1"]').waitFor();
+    await waitSceneReady(page);
+    const owner = await nativeOwner(page), state = await readNative(page);
+    assert.deepEqual(owner.profiles, []); assert.deepEqual(owner.app?.profiles, {});
+    assert.equal(owner.app.activeProfileId, null); assert.equal(owner.localActiveId, null);
+    for (const store of comparisonStores) assert.deepEqual(state[store], [], `Welcome must not create ${store}`);
+    assert.equal(new URL(page.url()).hash, '#/onboarding');
+}
+async function waitSeededHome(page, profileId) {
+    await page.waitForURL('**/#/island'); await waitMode(page, 'home'); await waitReady(page);
+    await page.waitForFunction(() => {
+        const root = document.querySelector('.island-page[data-mode="home"]');
+        const renderer = root?.querySelector('[data-renderer="three"]');
+        const canvas = renderer?.querySelector('canvas'), rect = canvas?.getBoundingClientRect();
+        return Boolean(rect && rect.width > 1 && rect.height > 1 && Number(renderer.getAttribute('data-draw-calls')) > 0);
+    });
+    const owner = await nativeOwner(page), state = await readNative(page);
+    assert.equal(owner.localActiveId, profileId); assert.equal(owner.app.activeProfileId, profileId);
+    assert.deepEqual(owner.profiles.map(profile => profile.id), [profileId]);
+    assert.deepEqual(Object.keys(owner.app.profiles), [profileId]);
+    assert.equal(owner.app.profiles[profileId].id, profileId); assert.equal(owner.app.profiles[profileId].soundEnabled, false);
+    assert.equal(state.islands.length, 1); assert.equal(state.island.profileId, profileId);
+    assert.equal(state.island.completedSets, 0); assert.equal(state.island.pendingPlanId, undefined);
+    assert.equal(state.plan, undefined);
+    for (const store of comparisonStores.filter(name => name !== 'islands')) assert.deepEqual(state[store], [], `Seeded home must not create ${store}`);
+    assert.equal(new URL(page.url()).hash, '#/island');
+    return state;
+}
+async function offlineHomeBundles(page) {
+    const evidence = await page.evaluate(async () => {
+        const registration = await navigator.serviceWorker.ready;
+        const urls = [...new Set(performance.getEntriesByType('resource').map(entry => entry.name).filter(name => {
+            const url = new URL(name);
+            return url.origin === location.origin && /\/assets\/.*\.(?:js|css)$/.test(url.pathname);
+        }))];
+        const resources = await Promise.all(urls.map(async url => ({ url, cached: Boolean(await caches.match(url, { ignoreSearch: true })) })));
+        return { controlled: Boolean(navigator.serviceWorker.controller), active: registration.active?.state,
+            hookEnabled: window.__SANSU_PWA_E2E__ === true, resources };
+    });
+    assert.equal(evidence.hookEnabled, false); assert.equal(evidence.controlled, true); assert.equal(evidence.active, 'activated');
+    assert(evidence.resources.some(resource => new URL(resource.url).pathname.endsWith('.js')), 'The real home and renderer JavaScript must load before disconnecting');
+    assert(evidence.resources.some(resource => new URL(resource.url).pathname.endsWith('.css')), 'The real home styles must load before disconnecting');
+    assert(evidence.resources.every(resource => resource.cached), 'Every loaded home JS/CSS bundle must be in the real SW cache before disconnecting');
+    return evidence;
+}
 const dispatch = (page, type, detail) => page.evaluate(({ type, detail }) => window.dispatchEvent(new CustomEvent(type, { detail })), { type, detail });
 const markerRequest = (page, marker, timeout = 12000) => page.waitForRequest(request => request.isNavigationRequest()
     && new URL(request.url()).searchParams.get('__app-update') === marker, { timeout });
@@ -36,11 +122,11 @@ try {
     await page.addInitScript(() => { window.__SANSU_PWA_E2E__ = true; });
     try {
         await page.goto(`${base}/#/island`);
-        await page.waitForURL('**/#/onboarding');
+        await waitEmptyWelcome(page);
         const id = await seedNative(page, 'island-production-checkpoint');
         await page.goto(`${base}/#/`);
-        await waitReady(page);
-        assert.equal(new URL(page.url()).hash, '#/island');
+        await waitSeededHome(page, id);
+        report.bootstrapChecks.push({ scenario: 'current', profileId: id, emptyWelcome: true, seededHome: true, reservedPlanBeforeStart: false });
         report.runtime = await runtimeMetadata(page);
         const manifest = await page.evaluate(async () => (await fetch('/version.json', { cache: 'no-store' })).json());
         assert.equal(manifest.island.enabled, true);
@@ -50,7 +136,7 @@ try {
         assert.equal(manifest.version, report.runtime.version);
         assert.equal(manifest.revision, report.runtime.revision);
         report.manifest = manifest;
-        await page.locator('.island-start').click();
+        await page.locator('.island-page[data-mode="home"] .island-start').click();
         await waitMode(page, 'learning');
         let before = await readNative(page, id);
         const protectedMarker = 'island-active-learning';
@@ -156,7 +242,8 @@ try {
         await waitMode(page, 'learning');
         assert.equal(continuous.island.completedSets, 2);
         assert.deepEqual(continuous.island.pendingRewards, []);
-        assert.equal(continuous.island.growth.progress.garden, 2);
+        assert.equal(continuous.island.growth.progress.garden, boundaryBefore.plan.slots.length === 6 ? 2 : 1);
+        assert.equal(continuous.island.growth.pendingAnswers.garden, boundaryBefore.plan.slots.length === 6 ? 0 : 3);
         assert.equal(continuous.island.growth.expansionLevel, 0);
         assert.equal(continuous.island.items.length, 3);
         assert.deepEqual(continuous.island.growth.memories.map(memory => memory.completedSets), [0]);
@@ -177,8 +264,8 @@ try {
 
         // The first real maturity is now the land-expansion checkpoint.
         continuous = boundaryRestored;
-        for (let step = 0; continuous.island.completedSets < 5; step++) {
-            assert(step < 210, 'Five real sections must finish');
+        for (let step = 0; !(continuous.island.growth.progress.garden === 5 && continuous.island.growth.pendingAnswers.garden + continuous.plan.slots.length >= 18); step++) {
+            assert(step < 500, 'Real answers must reach the first maturity');
             continuous = (await answerUI(page, continuous.plan, { dev: false })).state;
         }
         assert.equal(continuous.island.growth.expansionLevel, 0);
@@ -191,10 +278,10 @@ try {
                 continuous = (await answerUI(page, continuous.plan, { dev: false })).state;
             }
         });
-        assert.equal(continuous.island.completedSets, 6);
+        assert.equal(continuous.island.completedSets, matureBefore.island.completedSets + 1);
         assert.equal(continuous.island.growth.progress.garden, 6);
         assert.equal(continuous.island.growth.expansionLevel, 1);
-        assert.deepEqual(continuous.island.growth.memories.map(memory => memory.completedSets), [0, 6]);
+        assert.deepEqual(continuous.island.growth.memories.map(memory => memory.completedSets), [0, continuous.island.completedSets]);
         assert.equal(continuous.island.items.length, 5);
         assert(continuous.island.items.some(item => item.kind === 'swing' && item.position));
         const matureNavigation = markerRequest(page, matureMarker), matureLoaded = page.waitForEvent('domcontentloaded');
@@ -248,7 +335,7 @@ try {
 
     // Explicit pre-growth Island compatibility, separate from the new-player
     // flow and the old Explore route. Keep the real reserved questions; only
-    // remove additive growth fields to model an actual saved Island v1 plan.
+    // remove additive growth/reward-pacing fields to model an actual saved Island v1 plan.
     const legacyContext = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block' });
     const legacyPage = await legacyContext.newPage();
     legacyPage.setDefaultTimeout(15000);
@@ -256,11 +343,13 @@ try {
     legacyPage.on('pageerror', error => legacyErrors.push(error.stack));
     await legacyPage.addInitScript(() => { window.__SANSU_PWA_E2E__ = true; });
     try {
-        await legacyPage.goto(`${base}/#/island`); await legacyPage.waitForURL('**/#/onboarding');
+        await legacyPage.goto(`${base}/#/island`); await waitEmptyWelcome(legacyPage);
         const id = await seedNative(legacyPage, 'island-legacy-gift-checkpoint');
-        await legacyPage.goto(`${base}/#/island`); await waitReady(legacyPage);
-        await legacyPage.locator('.island-start').click(); await waitMode(legacyPage, 'learning');
+        await legacyPage.goto(`${base}/#/island`); await waitSeededHome(legacyPage, id);
+        report.bootstrapChecks.push({ scenario: 'legacy', profileId: id, emptyWelcome: true, seededHome: true, reservedPlanBeforeStart: false });
+        await legacyPage.locator('.island-page[data-mode="home"] .island-start').click(); await waitMode(legacyPage, 'learning');
         const generated = await readNative(legacyPage, id);
+        assert.equal(generated.plan.rewardPacing, 'answers-v1');
         await legacyPage.evaluate(async ({ profileId, planId }) => {
             const open = indexedDB.open('SansuDatabase');
             const database = await new Promise((resolve, reject) => { open.onsuccess = () => resolve(open.result); open.onerror = () => reject(open.error); });
@@ -275,13 +364,15 @@ try {
                     transaction.objectStore('islands').put(row);
                 };
                 const plan = transaction.objectStore('islandPlans').get(planId);
-                plan.onsuccess = () => { delete plan.result.growthTarget; transaction.objectStore('islandPlans').put(plan.result); };
+                plan.onsuccess = () => { delete plan.result.growthTarget; delete plan.result.rewardPacing; transaction.objectStore('islandPlans').put(plan.result); };
                 await done;
             } finally { database.close(); }
         }, { profileId: id, planId: generated.plan.id });
         const frozen = await readNative(legacyPage, id);
         assert.equal(frozen.plan.growthTarget, undefined); assert.equal(frozen.island.growth, undefined);
+        assert.equal(frozen.plan.rewardPacing, undefined);
         assert.deepEqual(frozen.plan.slots, generated.plan.slots);
+        const legacyPoints = frozen.island.customization?.points ?? frozen.island.completedSets * 10;
         await legacyPage.reload(); await waitReady(legacyPage); await waitMode(legacyPage, 'learning');
         assert.deepEqual(await readNative(legacyPage, id), frozen, 'Opening an old reservation must not migrate or replace it');
         let oldState = (await answerUI(legacyPage, frozen.plan, { dev: false })).state;
@@ -295,6 +386,8 @@ try {
         });
         const oldCompleted = oldState.islandPlans.find(plan => plan.id === frozen.plan.id);
         assert.equal(oldCompleted.status, 'completed'); assert.equal(oldCompleted.growthTarget, undefined);
+        assert.equal(oldCompleted.rewardPacing, undefined);
+        assert.equal(oldState.island.customization.points, legacyPoints + 10, 'The absent frozen pacing field earns the original ten stars, not the new question count');
         assert.deepEqual(oldCompleted.slots.map(slot => slot.problem), frozen.plan.slots.map(slot => slot.problem));
         assert.equal(oldState.island.growth, undefined); assert.equal(oldState.island.completedSets, 1);
         assert.equal(oldState.island.pendingRewards.length, 1); assert.equal(oldState.plan, undefined);
@@ -309,6 +402,8 @@ try {
         const migrated = await readNative(legacyPage, id);
         assert.equal(migrated.plan.id, JSON.stringify(['island-plan-v1', id, 1]));
         assert.equal(migrated.plan.growthTarget, 'garden'); assert.equal(migrated.plan.cursor, 0);
+        assert.equal(migrated.plan.rewardPacing, 'answers-v1');
+        assert.equal(migrated.island.customization.points, oldState.island.customization.points, 'New reservation and update cannot re-award the old ten stars');
         assert.equal(migrated.island.completedSets, 1);
         assert.deepEqual(migrated.island.pendingRewards, oldState.island.pendingRewards, 'The unclaimed old gift survives new reservation and update');
         assert.deepEqual(migrated.island.growth.progress, { garden: 0, waterside: 0, grove: 0, village: 0 });
@@ -326,7 +421,7 @@ try {
         const legacyRuntime = await runtimeMetadata(legacyPage);
         assert.equal(legacyRuntime.version, report.manifest.version);
         assert.deepEqual(legacyErrors, []);
-        report.legacyIsland = { fixture: 'Actual initial reserved questions with optional growth fields omitted; gift earned through actual UI',
+        report.legacyIsland = { fixture: 'Actual initial reserved questions with optional growth/reward-pacing fields omitted; original gift and ten stars earned through actual UI',
             frozen, completed: oldState, migrated, runtime: legacyRuntime };
         report.hookChecks.push('legacy Island reservation and reward screen defer update; new reservation migrates once and keeps the unclaimed old gift');
     } finally { await legacyContext.close(); }
@@ -336,17 +431,20 @@ try {
     offlinePage.setDefaultTimeout(15000);
     try {
         await offlinePage.goto(`${base}/#/island`);
-        await offlinePage.waitForURL('**/#/onboarding');
+        await waitEmptyWelcome(offlinePage);
         await offlinePage.evaluate(() => navigator.serviceWorker.ready);
         await offlinePage.reload();
         await offlinePage.waitForFunction(() => Boolean(navigator.serviceWorker.controller));
+        await waitEmptyWelcome(offlinePage);
         const id = await seedNative(offlinePage, 'island-offline');
         await offlinePage.goto(`${base}/#/island`);
-        await waitReady(offlinePage);
+        const offlineHome = await waitSeededHome(offlinePage, id);
+        const bundles = await offlineHomeBundles(offlinePage);
+        report.bootstrapChecks.push({ scenario: 'offline', profileId: id, emptyWelcome: true, seededHome: true, reservedPlanBeforeStart: false, bundles });
         await offlineContext.setOffline(true);
         await offlinePage.reload();
-        await waitReady(offlinePage);
-        await offlinePage.locator('.island-start').click();
+        assert.deepEqual(await waitSeededHome(offlinePage, id), offlineHome, 'Offline home reload preserves the seven-store pre-reservation fixture');
+        await offlinePage.locator('.island-page[data-mode="home"] .island-start').click();
         await waitMode(offlinePage, 'learning');
         let state = await readNative(offlinePage, id);
         const firstPlanId = state.plan.id;

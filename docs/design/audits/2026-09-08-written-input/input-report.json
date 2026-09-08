@@ -1,0 +1,128 @@
+{
+  "target": "http://127.0.0.1:5630",
+  "parkTarget": "http://127.0.0.1:5631",
+  "scenarios": [
+    {
+      "name": "island-390",
+      "captures": [
+        "island-390-ready.png",
+        "island-390-two-holes.png",
+        "island-390-next-row.png",
+        "island-390-save-retry.png",
+        "island-390-completed.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "463508f-written-input-b71394fedf",
+        "version": "463508f-written-input-b71394fedf:47376176-ff00-43d2-b781-fab0705084bf",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 81,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      },
+      "correctionDigits": 2,
+      "rowDigits": 4
+    },
+    {
+      "name": "island-1024",
+      "captures": [
+        "island-1024-ready.png",
+        "island-1024-two-holes.png",
+        "island-1024-next-row.png",
+        "island-1024-save-retry.png",
+        "island-1024-completed.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "runtime": {
+        "revision": "463508f-written-input-b71394fedf",
+        "version": "463508f-written-input-b71394fedf:47376176-ff00-43d2-b781-fab0705084bf",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-living-v5",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 79,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      },
+      "correctionDigits": 2,
+      "rowDigits": 4
+    },
+    {
+      "name": "study-390",
+      "captures": [
+        "study-390-ready.png",
+        "study-390-two-holes.png",
+        "study-390-next-row.png",
+        "study-390-completed.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "correctionDigits": 2,
+      "rowDigits": 4
+    },
+    {
+      "name": "study-1024",
+      "captures": [
+        "study-1024-ready.png",
+        "study-1024-two-holes.png",
+        "study-1024-next-row.png",
+        "study-1024-completed.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "correctionDigits": 2,
+      "rowDigits": 4
+    },
+    {
+      "name": "park-390",
+      "captures": [
+        "park-390-ready.png",
+        "park-390-two-holes.png",
+        "park-390-next-row.png",
+        "park-390-completed.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "correctionDigits": 2,
+      "rowDigits": 4
+    },
+    {
+      "name": "park-1024",
+      "captures": [
+        "park-1024-ready.png",
+        "park-1024-two-holes.png",
+        "park-1024-next-row.png",
+        "park-1024-completed.png"
+      ],
+      "errors": [],
+      "pass": true,
+      "correctionDigits": 2,
+      "rowDigits": 3
+    }
+  ],
+  "pass": true,
+  "scope": "Disposable native profile fixtures; real generated questions, DOM input and saved receipts. A one-shot native transaction abort tests failed saves. Author inspection is not a child usability study."
+}

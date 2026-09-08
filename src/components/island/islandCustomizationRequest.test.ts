@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { createIsland } from '../../domain/island/catalog';
 import { IslandConflict } from '../../domain/island/repository';
-import { executeIslandCustomizationRequest, type IslandCustomizationRequest } from './islandCustomizationRequest';
+import { executeIslandCustomizationRequest, IslandCustomizationPending, type IslandCustomizationRequest } from './islandCustomizationRequest';
 
 describe('customization request recovery', () => {
     const action = { type: 'purchase' as const, itemId: 'starry' as const };
@@ -26,10 +26,21 @@ describe('customization request recovery', () => {
         expect(write.mock.calls.map(call => call[0].revision)).toEqual([2, 2]);
         expect(pending.current).toBeUndefined();
     });
-    it('makes a deliberately different action a fresh intent', async () => {
+    it('retains an uncertain purchase when a different action is attempted', async () => {
         const pending = { current: { revision: 2, action } as IslandCustomizationRequest | undefined };
         const write = vi.fn().mockResolvedValue(createIsland('child', 1));
-        await executeIslandCustomizationRequest(pending, 4, { type: 'desire', itemId: 'candy' }, write);
-        expect(write).toHaveBeenCalledWith({ revision: 4, action: { type: 'desire', itemId: 'candy' } });
+        await expect(executeIslandCustomizationRequest(pending, 4, { type: 'desire', itemId: 'candy' }, write)).rejects.toBeInstanceOf(IslandCustomizationPending);
+        expect(write).not.toHaveBeenCalled();
+        expect(pending.current).toEqual({ revision: 2, action });
+    });
+    it('freezes the selected equipment scope so a retry cannot become a whole-house purchase', async () => {
+        const pending = { current: undefined as IslandCustomizationRequest | undefined };
+        const first = { type: 'purchase' as const, itemId: 'candy-house' as const, slot: 'houseRoof' as const };
+        const write = vi.fn().mockRejectedValueOnce(new Error('response lost')).mockResolvedValueOnce(createIsland('child', 1));
+        await expect(executeIslandCustomizationRequest(pending, 2, first, write)).rejects.toThrow('response lost');
+        Reflect.set(first, 'slot', 'houseWindows');
+        await executeIslandCustomizationRequest(pending, 9, { type: 'purchase', itemId: 'candy-house', slot: 'houseRoof' }, write);
+        expect(write.mock.calls[1][0]).toBe(write.mock.calls[0][0]);
+        expect(write.mock.calls[1][0]).toEqual({ revision: 2, action: { type: 'purchase', itemId: 'candy-house', slot: 'houseRoof' } });
     });
 });

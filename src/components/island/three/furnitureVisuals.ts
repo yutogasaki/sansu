@@ -4,6 +4,9 @@ export interface FurniturePoint { x: number; y: number; z: number }
 export interface FurnitureAnchors { seat?: FurniturePoint; look: FurniturePoint; light?: FurniturePoint }
 
 const ANCHORS: Record<IslandItemKind, FurnitureAnchors> = {
+    telescope: { look: { x: -.18, y: 1.55, z: .46 } },
+    hammock: { look: { x: 0, y: .44, z: .12 } },
+    'tea-table': { look: { x: 0, y: .86, z: .62 } },
     bench: { seat: { x: 0, y: .5, z: 0 }, look: { x: 0, y: .78, z: -.23 } },
     flower: { look: { x: 0, y: .46, z: 0 }, light: { x: .1, y: .55, z: -.085 } },
     lantern: { look: { x: .12, y: .91, z: 0 }, light: { x: .12, y: .91, z: 0 } },

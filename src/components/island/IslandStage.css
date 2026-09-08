@@ -22,10 +22,81 @@
 }
 
 .island-stage__canvas[hidden] { display: none; }
+.island-stage[data-keepsake-room=true] {
+    --island-stage-height: clamp(255px, 35dvh, 390px);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--island-paper, #fff9e8);
+}
+.island-stage[data-keepsake-room=true] .island-stage__caption { display: none; }
+.island-stage[data-keepsake-room=true] canvas { animation: island-house-enter 180ms ease-out; }
+@keyframes island-house-enter { from { opacity: .25; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+    .island-stage[data-keepsake-room=true] canvas { animation: none; }
+}
+
+/* The actual flag occupies the left half of its fixed close-up. Retain both
+   preview lines in the other half; ordinary island notices keep their full width. */
+.island-stage[data-flag-focus="true"] > .island-growth-preview-notice {
+    left: auto;
+    right: 12px;
+    width: min(164px, calc(50% - 24px));
+    margin: 0;
+    padding: 8px 10px;
+}
 .island-stage--placing .island-stage__canvas { cursor: grab; }
 .island-stage__canvas canvas { touch-action: pan-y; }
 .island-stage--placing .island-stage__canvas canvas { touch-action: none; }
+.island-stage--viewing .island-stage__canvas canvas { touch-action: none; }
 .island-stage--placing .island-stage__canvas:active { cursor: grabbing; }
+.island-stage--viewing .island-stage__canvas { cursor: grab; }
+.island-stage--viewing .island-stage__canvas:active { cursor: grabbing; }
+
+.island-camera {
+    position: absolute;
+    z-index: 2;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    border: 1px solid var(--pokomoko-edge, #d5c9e0);
+    border-radius: 18px;
+    background: var(--island-paper, #fff9e8);
+    color: var(--island-ink, #263145);
+}
+.island-camera button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 12px;
+}
+.island-camera button:hover:not(:disabled) { background: var(--park-mint, #e7edf8); }
+.island-camera button:focus-visible { outline: 3px solid var(--island-leaf, #245bbd); outline-offset: 2px; }
+.island-camera__divider { width: 1px; height: 20px; background: var(--island-muted, #4c5c66); opacity: .3; }
+.island-camera__reset { gap: 5px; padding: 0 8px; font-size: 11px; font-weight: 600; }
+.island-camera-hint {
+    position: absolute;
+    top: 62px;
+    right: 12px;
+    z-index: 1;
+    margin: 0;
+    padding: 3px 8px;
+    border-radius: 12px;
+    background: var(--island-paper, #fff9e8);
+    color: var(--island-ink, #263145);
+    font-size: 11px;
+    line-height: 1.5;
+    pointer-events: none;
+}
+
+@media (max-width: 599px) {
+    .island-camera__reset span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+    .island-camera__reset { padding: 0; }
+}
 
 .island-stage__caption {
     position: absolute;

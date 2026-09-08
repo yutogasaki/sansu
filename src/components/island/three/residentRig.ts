@@ -20,6 +20,15 @@ export const residentSeatContactY = (species: ResidentSpecies) =>
     proportions[species].bodyY + SEATED_BODY_Y - proportions[species].bodyRadiusY;
 export const residentSeatRootY = (species: ResidentSpecies, seatY: number) => seatY - residentSeatContactY(species) * RESIDENT_SCALE;
 
+/** A seated animal brings its actual tail around its hip. The fox's long tail
+ * hangs low beside the seat, clear of both the backboard and offered objects.
+ * Zero keeps exactly the original standing silhouette. */
+export function poseResidentTail(tail: THREE.Group, species: ResidentSpecies, seated: number) {
+    const amount = clampUnit(seated);
+    if (species === 'fox') tail.rotation.set(.5 * amount, Math.PI * .75 * amount, Math.PI / 2 * amount);
+    else tail.rotation.set((species === 'rabbit' ? -Math.PI / 4 : 0) * amount, Math.PI * amount, 0);
+}
+
 /** A planted foot travels backwards by exactly the root's forward distance.
  * The return half of each stride lifts the sole, instead of sliding it forward. */
 export function sampleResidentStride(distance: number, totalDistance: number) {
@@ -66,12 +75,15 @@ export function makeResidentRig(species: ResidentSpecies, m: IslandMaterials) {
     const cream = m.get('#fff0d4'), dark = m.get('#493e32');
     cloth(ellipsoid(body, fur, [0, proportions[species].bodyY, 0], rabbit ? [.245, .34, .22] : otter ? [.305, .4, .255] : [.33, .37, .265]), 'body');
     if (!otter) ellipsoid(body, cream, [0, .47, .21], rabbit ? [.16, .22, .055] : [.23, .25, .067]);
-    if (otter) cloth(makeOtterTail(body, fur), 'cream');
-    else {
-        const tail = ellipsoid(body, fur, [0, .19, -.31], rabbit ? [.12, .12, .12] : [.2, .105, .6]);
-        tail.rotation.x = -.2;
-    }
     batch(body);
+    // Keep the existing shape/material at its exact standing transform, but
+    // retain one joint instead of baking the tail into the torso material batch.
+    const tail = new THREE.Group(); tail.name = 'resident-tail'; tail.userData.visualCandidate = fox ? 'island-tail-seat-joint-v2' : 'island-tail-seat-joint-v1';
+    tail.position.set(fox ? -.18 : 0, otter ? .245 : rabbit ? .29 : .19, fox ? .1 : -.1);
+    const tailShape = otter ? cloth(makeOtterTail(tail, fur), 'cream')
+        : ellipsoid(tail, fur, [0, .19, -.31], rabbit ? [.12, .12, .12] : [.2, .105, .6]);
+    if (!otter) tailShape.rotation.x = -.2;
+    tailShape.position.sub(tail.position); body.add(tail);
     const shoulders = [-1, 1].map(side => {
         const shoulder = new THREE.Group();
         shoulder.name = side < 0 ? 'shoulder-left' : 'shoulder-right';
@@ -126,5 +138,5 @@ export function makeResidentRig(species: ResidentSpecies, m: IslandMaterials) {
     pose.add(seatContact);
     pose.traverse(object => { if (object instanceof THREE.Mesh) object.castShadow = false; });
     const handContacts = shoulders.map(shoulder => shoulder.getObjectByName(shoulder.name === 'shoulder-left' ? 'hand-contact-left' : 'hand-contact-right')!);
-    return { pose, body, head, feet, shoulders, handContacts, seatContact };
+    return { pose, body, head, tail, feet, shoulders, handContacts, seatContact };
 }

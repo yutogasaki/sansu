@@ -41,6 +41,13 @@ describe('Island saved answer presentation', () => {
         }
     });
 
+    it('carries the saved failed row into correction without reusing successful or unrelated receipts', () => {
+        const action = { type: 'answer' as const, answer: ['2', '8', '1'] };
+        expect(islandFeedbackForReceipt(before, before, { ...event, action, result: 'incorrect' })?.feedback.retryAnswer).toEqual(action.answer);
+        expect(islandFeedbackForReceipt(before, before, { ...event, action })?.feedback.retryAnswer).toBeUndefined();
+        expect(islandFeedbackForReceipt(before, before, { ...event, action, result: 'incorrect', slotIndex: 0 })).toBeUndefined();
+    });
+
     it('does not replay a receipt from another slot or section', () => {
         expect(islandFeedbackForReceipt(before, { ...before, cursor: 2 }, { ...event, slotIndex: 0 })).toBeUndefined();
         expect(islandFeedbackForReceipt(before, { ...before, id: 'next-section' }, event)).toBeUndefined();

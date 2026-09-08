@@ -151,9 +151,9 @@ try {
             assert.equal(answers[0].learningLogId, logs[0].id); assert.equal(logs[0].result, 'correct');
             assert.equal(logs[0].itemId, finalSlot.problem.categoryId);
             assert.equal(failedNext.island.completedSets, 2); assert.deepEqual(failedNext.island.pendingRewards, []);
-            assert.equal(failedNext.island.growth.progress[before.plan.growthTarget], before.island.growth.progress[before.plan.growthTarget] + 1,
-                'The completed answer and its automatic growth survive a failed next reservation');
-            assert(failedNext.island.items.some(item => item.kind === 'fountain' && item.position));
+            assertIslandSectionGrowth(before, failedNext);
+            assert(failedNext.island.items.some(item => item.kind === 'bench' && item.position));
+            assert.equal(failedNext.island.growth.expansionLevel, 0, 'Two sections do not mature a place or open the eastern land');
             assert.equal(failedNext.plan, undefined); assert.equal(failedNext.islandPlans.length, 2);
             assert.equal(failedNext.islandEvents.filter(event => event.type === 'plan_completed').length, 2);
             assert.equal(await page.locator('.park-answer').count(), 0, 'A saved final answer cannot be resubmitted from the failure screen');

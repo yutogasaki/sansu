@@ -31,7 +31,8 @@ const formats: [string, Problem][] = [
 describe('Island staged assistance presentation', () => {
     it('shows the method in a hint while withholding the worked example and final answer', () => {
         const hint = html(slot());
-        expect(hint).toContain('7を 2と 5に わけて');
+        expect(hint).toContain('8は あと2で10');
+        expect(hint).toContain('7を 2と5に わけて');
         expect(hint).not.toContain('15');
         expect(hint).not.toContain('こたえは');
         expect(hint).not.toContain('island-support-example');
@@ -89,12 +90,26 @@ describe('Island staged assistance presentation', () => {
     it('keeps Hissan hints free of correct row values and supports old answer-exposed slots', () => {
         const problem = formats.find(([name]) => name === 'hissan')![1];
         const hint = html(slot(problem));
-        expect(hint).toContain('おなじ くらいを たそう');
+        expect(hint).toContain('右はしから、上下の 数を たそう');
         for (const value of parkHissanGrid(problem)!.steps.flatMap(step => step.correctValues)) expect(hint).not.toContain(value);
         const legacy = slot(arithmetic);
         delete legacy.supportStage;
         expect(html(legacy)).toContain('おてほん');
         expect(html(legacy)).toContain('15');
+    });
+
+    it('follows the current written division step without exposing future quotient digits or changing saved cells', () => {
+        const problem: Problem = { ...arithmetic, categoryId: 'div_3d1d_exact', questionText: '156 ÷ 3 =',
+            correctAnswer: '52', inputType: 'hissan', hissanVersion: 2 };
+        const current = { ...slot(problem), hissanStep: 0, hissanValues: {} };
+        const before = structuredClone(current);
+        expect(html(current)).toContain('15 に 3 は いくつ はいるかな');
+        expect(html(current)).not.toContain('52');
+        const next = { ...current, hissanStep: 1, hissanValues: { '0-1': '5' } };
+        expect(html(next)).toContain('3 × 5 を、右から かこう');
+        expect(html(next)).not.toContain('52');
+        expect(html(next)).not.toContain('15 に');
+        expect(current).toEqual(before);
     });
 
     it('offers only the appropriate support action without adding an ordinary completion tap', () => {

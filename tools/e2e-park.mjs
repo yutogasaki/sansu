@@ -33,6 +33,7 @@ const capture = async (page, name) => {
     await page.screenshot({ path: `${out}/${name}.png`, animations: 'disabled' });
 };
 async function uiAnswer(page, plan, incorrect = false) {
+    const automatic = await page.locator('.park-answer').getAttribute('data-answer-completion') === 'automatic';
     const slot = plan.slots[plan.cursor];
     const answer = await page.evaluate(async slot => {
         const { parkHissanGrid } = await import('/src/domain/park/learning.ts');
@@ -44,14 +45,14 @@ async function uiAnswer(page, plan, incorrect = false) {
         await page.locator('.park-choices').getByRole('button', { name: choice.label, exact: true }).click();
     } else if (await page.locator('[data-input-type="hissan"]').count()) {
         await page.keyboard.type((incorrect ? answer.map(() => '9') : answer).join(''), { delay: 40 });
-        await page.getByRole('button', { name: 'こたえる', exact: true }).click();
+        if (!automatic) await page.getByRole('button', { name: 'こたえる', exact: true }).click();
     } else {
         const values = Array.isArray(answer) ? answer : [answer];
         for (let i = 0; i < values.length; i++) {
             await page.locator('.park-input').nth(i).click();
-            await page.keyboard.type(incorrect ? '99999' : values[i], { delay: 40 });
+            await page.keyboard.type(incorrect ? automatic ? '9' : '99999' : values[i], { delay: 40 });
         }
-        await page.getByRole('button', { name: 'こたえる', exact: true }).click();
+        if (!automatic) await page.getByRole('button', { name: 'こたえる', exact: true }).click();
     }
     await waitForPageState(page, async ({ id, revision }) => {
         const { db } = await import('/src/db/index.ts');

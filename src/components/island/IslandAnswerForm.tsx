@@ -9,7 +9,7 @@ import { useIslandSpeech } from './useIslandSpeech';
 import { IslandSpeechControl } from './IslandSpeechControl';
 import './IslandAnswerForm.css';
 
-export function IslandAnswerForm({ slot, disabled, onAnswer, answerReceiptId, onInteraction, englishAutoRead = false }: Pick<LearningAnswerFormProps, 'disabled' | 'onAnswer' | 'onInteraction'> & {
+export function IslandAnswerForm({ slot, disabled, onAnswer, answerReceiptId, retryAnswer, onInteraction, englishAutoRead = false }: Pick<LearningAnswerFormProps, 'disabled' | 'onAnswer' | 'onInteraction' | 'retryAnswer'> & {
     slot: IslandLearningSlot;
     answerReceiptId?: string;
     englishAutoRead?: boolean;
@@ -18,11 +18,12 @@ export function IslandAnswerForm({ slot, disabled, onAnswer, answerReceiptId, on
     const speech = useIslandSpeech(slot.problem.subject === 'vocab' ? slot.problem.questionText : undefined, englishAutoRead, disabled);
     // A saved answer clears the old entry synchronously before the next ready
     // paint. Help receipts do not replace that key or discard the child's draft.
-    const [lastAnswerReceipt, setLastAnswerReceipt] = useState(answerReceiptId);
-    if (answerReceiptId && answerReceiptId !== lastAnswerReceipt) setLastAnswerReceipt(answerReceiptId);
+    const [lastAnswerReceipt, setLastAnswerReceipt] = useState({ id: answerReceiptId, retryAnswer });
+    if (answerReceiptId && answerReceiptId !== lastAnswerReceipt.id) setLastAnswerReceipt({ id: answerReceiptId, retryAnswer });
     const model = stage === 'model';
     return <div className="island-answer-stage" data-support-stage={stage ?? 'none'}>
-        <LearningAnswerForm key={lastAnswerReceipt ?? 'initial'} slot={slot} disabled={disabled || model}
+        <LearningAnswerForm key={lastAnswerReceipt.id ?? 'initial'} slot={slot} disabled={disabled || model}
+        retryAnswer={lastAnswerReceipt.retryAnswer}
         onInteraction={() => { playSound('tap'); onInteraction?.(); }}
         onAnswer={answer => { if (!disabled && !model) onAnswer(answer); }} className="island-answer" resetCursorOnClear
         renderPrompt={problem => <IslandProblemPrompt problem={problem}

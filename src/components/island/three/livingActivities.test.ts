@@ -12,7 +12,7 @@ describe('living island opportunities', () => {
         expect(livingVisitsForItem({ ...flower, growthLevel: 0 })).toEqual([]);
         expect(livingVisitsForItem({ ...flower, growthLevel: 1 }).map(visit => visit.discoveryId)).toEqual(['flower-scent']);
         expect(livingVisitsForItem({ ...flower, appearanceLevel: 0 }).map(visit => visit.discoveryId))
-            .toEqual(['flower-scent', 'butterfly-visit', 'flower-sharing']);
+            .toEqual(['flower-scent', 'butterfly-visit', 'petal-ripple', 'ribbon-butterfly', 'flower-sharing']);
         expect(livingVisitsForItem({ ...flower, position: undefined })).toEqual([]);
     });
     it('never schedules life while learning, editing, viewing an album, offscreen or in legacy scenes', () => {
@@ -23,18 +23,23 @@ describe('living island opportunities', () => {
         expect(canRunLivingActivities(state, false)).toBe(false);
     });
     it('rotates all opportunities without randomness or a rare time requirement', () => {
-        expect([0, 1, 2].map(turn => livingCandidates(state, turn)[0].discoveryId))
-            .toEqual(['flower-scent', 'butterfly-visit', 'flower-sharing']);
-        expect(livingCandidates(state, 3)[0].discoveryId).toBe('flower-scent');
+        expect([0, 1].map(turn => livingCandidates(state, turn)[0].discoveryId))
+            .toEqual(['flower-scent', 'butterfly-visit']);
+        expect(livingCandidates(state, 2)[0].discoveryId).toBe('flower-scent');
         expect(state.growth!.discoveries).toEqual([]);
     });
     it('focuses the actual selected district and distinguishes grove lamps from home lamps', () => {
         const lamp: IslandStageItem = { id: 'lamp', kind: 'lantern', habitatId: 'grove', growthLevel: 3,
             position: { x: -5.9, z: -.35 }, rotation: 0 };
-        expect(livingVisitsForItem(lamp).map(visit => visit.discoveryId)).toEqual(['lantern-sharing']);
-        expect(livingCandidates({ ...state, items: [flower, lamp], districtFocus: 'west' }, 0).map(visit => visit.item.id)).toEqual(['lamp']);
+        expect(livingVisitsForItem(lamp).map(visit => visit.discoveryId)).toEqual(['lantern-sharing', 'lantern-reflection']);
+        expect(livingCandidates({ ...state, items: [flower, lamp], districtFocus: 'west' }, 0)).toEqual([]);
+        const seat: IslandStageItem = { id: 'seat', kind: 'mushroom', habitatId: 'grove', growthLevel: 3,
+            position: { x: -5.8, z: 1.3 }, rotation: Math.atan2(-.1, -1.65) };
+        const visits = livingCandidates({ ...state, items: [flower, lamp, seat], districtFocus: 'west' }, 0);
+        expect(visits.some(visit => visit.item.id === lamp.id)).toBe(true);
+        expect(visits.every(visit => visit.item.id !== flower.id)).toBe(true);
         expect(livingVisitsForItem({ ...lamp, habitatId: 'village' }).map(visit => visit.discoveryId))
-            .toEqual(['home-visit', 'lantern-sharing', 'terrace-time']);
+            .toEqual(['home-visit', 'lantern-sharing', 'terrace-time', 'lantern-reflection']);
     });
     it('changes water watching and shade discoveries when furniture is moved or turned', () => {
         const fountain: IslandStageItem = { id: 'water', kind: 'fountain', habitatId: 'waterside', growthLevel: 3,

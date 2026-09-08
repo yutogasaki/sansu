@@ -9,7 +9,7 @@ const phaseLabels = {
 
 /** A written calculation retains the paper's places while the keypad owns input. */
 export function WrittenArithmeticGrid({ gridData, currentStepIndex, activeCellPos, userValues,
-    onCellClick, stepFeedback = 'none', disabled = false }: HissanGridProps) {
+    onCellClick, stepFeedback = 'none', correcting = false, disabled = false }: HissanGridProps) {
     const layout = gridData.writtenLayout!;
     // The legacy coordinate model reserves a full operator column. Put × in
     // the row label so its empty cells do not shrink the child's digit targets.
@@ -73,6 +73,7 @@ export function WrittenArithmeticGrid({ gridData, currentStepIndex, activeCellPo
         : 'ここに いれよう';
     return <section className="written-arithmetic" aria-label={`${layout.expression} のひっさん`}
         data-written-operation={layout.kind} data-written-step={currentStepIndex} data-written-phase={step?.phase}
+        data-written-correction={correcting}
         style={{ '--written-columns': gridData.columnCount - columnOffset } as CSSProperties}>
         <div className="written-heading"><span>{layout.expression}</span><span className="written-kind">ひっさん</span></div>
         <div className="written-guidance" aria-live="polite" aria-atomic="true">
@@ -86,6 +87,6 @@ export function WrittenArithmeticGrid({ gridData, currentStepIndex, activeCellPo
             </div>
         </div>
         <div className="written-input-guide"><span>{direction}</span>
-            <span>{stepFeedback === 'incorrect' ? 'このだんを もういちど' : 'マスを おすと なおせるよ'}</span></div>
+            <span>{correcting ? 'あいたマスを なおそう' : stepFeedback === 'incorrect' ? 'このだんを もういちど' : 'マスを おすと なおせるよ'}</span></div>
     </section>;
 }

@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { promises as fs } from 'node:fs';
 import { resolve } from 'node:path';
 import { chromium } from 'playwright';
-import { activate, button, ISLAND_CANDIDATE, readNative, runtimeMetadata, waitMode, waitReady } from './island-e2e-helpers.mjs';
+import { activate, assertIslandSectionGrowth, button, ISLAND_CANDIDATE, readNative, runtimeMetadata, waitMode, waitReady } from './island-e2e-helpers.mjs';
 import { assertControls, attempt, waitLearningReady } from './island-learning-checks.mjs';
 import { armOnboardingObservation, assertProfileFree, onboardingStores, untouchedStep, welcomePlay } from './island-onboarding-checks.mjs';
 
@@ -13,7 +13,7 @@ const out = process.env.SANSU_ISLAND_RHYTHM_OUTPUT;
 assert(base && buildSourcePath && out, 'Set explicit production URL, build-source manifest and fresh rhythm output directory');
 const cases = [
     { name: 'phone-math', viewport: { width: 390, height: 844 }, touch: true, grade: '小学 1 年生', range: '足し算まで', mathStart: 7 },
-    { name: 'tablet-written', viewport: { width: 768, height: 1024 }, touch: false, grade: '小学 3 年生', range: '筆算（2けたのたし算・ひき算）', mathStart: 14 },
+    { name: 'tablet-written', viewport: { width: 768, height: 1024 }, touch: false, grade: '小学 3 年生', range: '筆算（2けたのたし算・ひき算）', mathStart: 11 },
 ].filter(row => !process.env.SANSU_ISLAND_RHYTHM_SCENARIO || row.name === process.env.SANSU_ISLAND_RHYTHM_SCENARIO);
 assert(cases.length, 'Select phone-math or tablet-written');
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -92,7 +92,7 @@ async function finishPlan(page, row, state, introduction) {
     assert.equal(state.island.completedSets, before.island.completedSets + 1);
     assert(plan.growthTarget, 'Real new reservations fix their automatic growth destination');
     assert.deepEqual(state.island.pendingRewards, before.island.pendingRewards, 'Learning grows a place without minting possessions');
-    assert.equal(state.island.growth.progress[plan.growthTarget], Math.min(6, before.island.growth.progress[plan.growthTarget] + 1));
+    assertIslandSectionGrowth(before, state, plan);
     const added = state.islandEvents.filter(event => !before.islandEvents.some(old => old.id === event.id));
     assert.equal(added.filter(event => event.type === 'plan_completed' && event.planId === plan.id).length, 1);
     assert.equal(final.sample.autoContinued, true); assert.equal(final.sample.terminal, false);

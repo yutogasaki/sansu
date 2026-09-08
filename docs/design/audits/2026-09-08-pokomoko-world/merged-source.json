@@ -1,0 +1,97 @@
+{
+  "at": "2026-09-08T10:15:01.645657+00:00",
+  "pass": true,
+  "files": [
+    {
+      "path": "index.html",
+      "fixed": "cdd6344014bd75831ce5f0877d90deebeb3dca47200da850bbc32d8fe7ab8c29",
+      "integrated": "cdd6344014bd75831ce5f0877d90deebeb3dca47200da850bbc32d8fe7ab8c29"
+    },
+    {
+      "path": "public/manifest.json",
+      "fixed": "0f706da2e25c4ae8869480af654360d4857bef79e62576ed09d114b30ca3a2a3",
+      "integrated": "0f706da2e25c4ae8869480af654360d4857bef79e62576ed09d114b30ca3a2a3"
+    },
+    {
+      "path": "src/components/Footer.tsx",
+      "fixed": "077de2f727be8cd6f5ef34fbd0630ef8d905217391fa2a69871e4922f2569204",
+      "integrated": "077de2f727be8cd6f5ef34fbd0630ef8d905217391fa2a69871e4922f2569204"
+    },
+    {
+      "path": "src/components/Header.tsx",
+      "fixed": "4049085c7cc49e3d2de0251f64d6cd0cd84a745cd7fa0152fcf29523c55de4e9",
+      "integrated": "4049085c7cc49e3d2de0251f64d6cd0cd84a745cd7fa0152fcf29523c55de4e9"
+    },
+    {
+      "path": "src/components/Layout.tsx",
+      "fixed": "3d2c558ac27d278e7fc97afd8d790113742df9bcc6d25b9d4df753c7a6171cc1",
+      "integrated": "3d2c558ac27d278e7fc97afd8d790113742df9bcc6d25b9d4df753c7a6171cc1"
+    },
+    {
+      "path": "src/components/domain/PrintableTestPreview.tsx",
+      "fixed": "380f444f7cc38ee84862b7ff609b008f8b215a50deb8f62cb7e3f4ae02bbf722",
+      "integrated": "380f444f7cc38ee84862b7ff609b008f8b215a50deb8f62cb7e3f4ae02bbf722"
+    },
+    {
+      "path": "src/components/island/IslandShell.css",
+      "fixed": "b5083d227ec0c2d38410aca7a1fc7bd86cadbd55b58e228c81eb999d3d3388fc",
+      "integrated": "b5083d227ec0c2d38410aca7a1fc7bd86cadbd55b58e228c81eb999d3d3388fc"
+    },
+    {
+      "path": "src/components/island/IslandWelcome.tsx",
+      "fixed": "c738b456eba456d083dc6e226b82f858b3620a6779ae74c6bc518ffc23af4878",
+      "integrated": "c738b456eba456d083dc6e226b82f858b3620a6779ae74c6bc518ffc23af4878"
+    },
+    {
+      "path": "src/index.css",
+      "fixed": "067827a105064d81c212dc50d3880c68f97f465f9a067b69de8288b9f3ca19ad",
+      "integrated": "067827a105064d81c212dc50d3880c68f97f465f9a067b69de8288b9f3ca19ad"
+    },
+    {
+      "path": "src/pages/Onboarding.tsx",
+      "fixed": "57859773298ae1796f15d019082621ba5609dd1a3752eb5efaaa0473f36198a0",
+      "integrated": "57859773298ae1796f15d019082621ba5609dd1a3752eb5efaaa0473f36198a0"
+    },
+    {
+      "path": "src/pages/Settings.tsx",
+      "fixed": "15dcc8a352d370701721bcce651b25866218a8953e484323a3b4a5e2897b3094",
+      "integrated": "15dcc8a352d370701721bcce651b25866218a8953e484323a3b4a5e2897b3094"
+    },
+    {
+      "path": "src/utils/pdfGenerator.ts",
+      "fixed": "f61b4bf4ba8a3941ca18295781dce332d196bcf6840b734f4235c4551e5cbebc",
+      "integrated": "f61b4bf4ba8a3941ca18295781dce332d196bcf6840b734f4235c4551e5cbebc"
+    },
+    {
+      "path": "tools/e2e-fixed-ten-throughput.mjs",
+      "fixed": "e783d3a462f8827c18182cf950d0a294213c6e2569f6fd3b63d4fad16b19e7ff",
+      "integrated": "e783d3a462f8827c18182cf950d0a294213c6e2569f6fd3b63d4fad16b19e7ff"
+    },
+    {
+      "path": "tools/e2e-island-shell.mjs",
+      "fixed": "28bdc8f7371bed71472865b593691f089b540dcc3e4aa96d7533e55224ba8988",
+      "integrated": "28bdc8f7371bed71472865b593691f089b540dcc3e4aa96d7533e55224ba8988"
+    },
+    {
+      "path": "tools/e2e-pwa-update.mjs",
+      "fixed": "7fdcd23b1b716fd18b1236223d355f3e1d7e4b0be9a234a902c9b60419da6310",
+      "integrated": "7fdcd23b1b716fd18b1236223d355f3e1d7e4b0be9a234a902c9b60419da6310"
+    },
+    {
+      "path": "tools/e2e-smoke.mjs",
+      "fixed": "650ad7f0df3eafca0aed78873920cf66776b0903147a02e913afc4585dc5718a",
+      "integrated": "650ad7f0df3eafca0aed78873920cf66776b0903147a02e913afc4585dc5718a"
+    },
+    {
+      "path": "tools/run-local-visual-audit.mjs",
+      "fixed": "4a2f9cca4658d83972c1f00d0c3254953b3f540cd10a66761c3f7c56788a4616",
+      "integrated": "4a2f9cca4658d83972c1f00d0c3254953b3f540cd10a66761c3f7c56788a4616"
+    },
+    {
+      "path": "src/components/island/PokomokoWorld.css",
+      "fixed": "df56faa19c8b4e7c90717f5e51d7580fac22967221f3fc24f695152c4462bfbc",
+      "integrated": "df56faa19c8b4e7c90717f5e51d7580fac22967221f3fc24f695152c4462bfbc"
+    }
+  ],
+  "revision": "pokomoko-world-463508f-r3"
+}

@@ -1,5 +1,5 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vitest/config'
+import { configDefaults, defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import { loadEnv } from 'vite'
@@ -37,7 +37,7 @@ const resolveBuildMetadata = (mode: string) => {
     const island = {
         enabled: env.VITE_ISLAND_ENABLED === 'true',
         delivery: 'mystic-island-v1',
-        candidate: 'mystic-island-living-v5',
+        candidate: 'mystic-island-shore-garden-v6',
         learningCandidate: 'mystic-island-learning-v2',
         residentCandidate: 'patchwork-otter-v1',
         artDirection: ['festival', 'moon-garden', 'prism'].includes(env.VITE_ISLAND_ART_DIRECTION)
@@ -129,6 +129,9 @@ export default defineConfig(({ mode }) => {
                 workbox: {
                     skipWaiting: true,
                     clientsClaim: true,
+                    // A drift recovery must fetch the new HTML from the host,
+                    // even when the currently controlling worker is stale.
+                    navigateFallbackDenylist: [/[?&]__app-update=/],
                     // Explicit includeAssets above owns approved offline media;
                     // this glob is intentionally limited to the app shell.
                     globPatterns: ['**/*.{js,css,html,ico,woff,woff2}'],
@@ -168,7 +171,9 @@ export default defineConfig(({ mode }) => {
         ],
         test: {
             environment: "node",
-            globals: true
+            globals: true,
+            // Immutable verification snapshots are evidence, not a second test suite.
+            exclude: [...configDefaults.exclude, 'output/**']
         },
         build: {
             rollupOptions: {

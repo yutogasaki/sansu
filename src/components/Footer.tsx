@@ -44,7 +44,8 @@ export const Footer: React.FC = () => {
                                 navigate(item.to);
                             }}
                         >
-                            <item.icon width={24} height={24} strokeWidth={active ? 2.5 : 2} aria-hidden="true" />
+                            {primary ? <img className="island-shell-home-bear" src="/icons/icon-192.png" alt="" aria-hidden="true" />
+                                : <item.icon width={24} height={24} strokeWidth={active ? 2.5 : 2} aria-hidden="true" />}
                             <span>{item.label}</span>
                         </button>
                     );

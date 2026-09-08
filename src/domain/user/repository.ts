@@ -185,6 +185,9 @@ export const deleteProfileOwnedIndexedDbRows = async (
     database.islands.delete(id),
     database.islandPlans.where("profileId").equals(id).delete(),
     database.islandEvents.where("profileId").equals(id).delete(),
+    database.islandPhotoAlbums.delete(id),
+    database.islandPhotos.where("profileId").equals(id).delete(),
+    database.islandPhotoBlobs.where("profileId").equals(id).delete(),
 ]);
 
 export const deleteProfile = async (id: string) => {
@@ -207,6 +210,9 @@ export const deleteProfile = async (id: string) => {
             db.islands,
             db.islandPlans,
             db.islandEvents,
+            db.islandPhotoAlbums,
+            db.islandPhotos,
+            db.islandPhotoBlobs,
         ],
         async () => {
             const appData = await getAppData();

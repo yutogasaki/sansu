@@ -25,6 +25,18 @@ Keep only short active entries here, and put detailed execution context in `docs
 
 
 
+- Full island experience from benchmark -> docs/tasks/active/2026-09-08-island-experience.md
+
+
+
+
+
+
+
+
+
+
+
 - Learning rhythm and island game experience -> docs/tasks/active/2026-09-07-experience-improvements.md
 
 

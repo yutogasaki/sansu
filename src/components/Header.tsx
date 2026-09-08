@@ -2,7 +2,6 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Icons } from "./icons";
 import { islandEnabled } from "../domain/island/feature";
-import { IslandMark } from "./island/IslandMark";
 import { cn } from "../utils/cn";
 
 interface HeaderProps {
@@ -42,7 +41,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, showBack, onBac
                     </button>
                 )}
                 {title && !showBack && (isIslandHeader ? (
-                    <span className="island-shell-mark"><IslandMark size={24} strokeWidth={2} /></span>
+                    <span className="island-shell-mark"><img src="/icons/icon-192.png" alt="" aria-hidden="true" /></span>
                 ) : (
                     <img
                         src="/icons/icon-192.png"
@@ -52,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, showBack, onBac
                     />
                 ))}
                 <div className="min-w-0 flex flex-col">
-                    {title && isIslandHeader && <span className="island-shell-eyebrow">ふしぎな しま</span>}
+                    {title && isIslandHeader && <span className="island-shell-eyebrow">ぽこもこと不思議な島</span>}
                     {title && (
                         <h1
                             className="truncate text-[28px] font-bold leading-none tracking-[-0.03em] text-text-main"

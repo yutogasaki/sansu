@@ -1,0 +1,43 @@
+
+> pokko-fushigi-zukan-app@0.0.0 typecheck
+> tsc -b --pretty false
+
+src/components/island/IslandStage.tsx(64,37): error TS7006: Parameter 'action' implicitly has an 'any' type.
+src/components/island/IslandStage.tsx(65,45): error TS7006: Parameter 'id' implicitly has an 'any' type.
+src/components/island/IslandStage.tsx(66,41): error TS7006: Parameter 'id' implicitly has an 'any' type.
+src/components/island/IslandStage.tsx(67,39): error TS7006: Parameter 'kind' implicitly has an 'any' type.
+src/components/island/IslandStage.tsx(76,79): error TS2554: Expected 2-3 arguments, but got 4.
+src/components/island/three/workshopScene.ts(378,76): error TS2345: Argument of type '"straight" | "elbow" | "wheel" | "bell" | "source"' is not assignable to parameter of type '"straight" | "elbow" | "wheel" | "bell"'.
+  Type '"source"' is not assignable to type '"straight" | "elbow" | "wheel" | "bell"'.
+src/components/island/three/workshopScene.ts(378,114): error TS2345: Argument of type '"straight" | "elbow" | "wheel" | "bell" | "source"' is not assignable to parameter of type '"straight" | "elbow" | "wheel" | "bell"'.
+  Type '"source"' is not assignable to type '"straight" | "elbow" | "wheel" | "bell"'.
+src/components/island/three/workshopScene.ts(444,17): error TS2339: Property 'moved' does not exist on type 'Pointer'.
+  Property 'moved' does not exist on type '{ id: number; kind: "brush" | "command"; }'.
+src/components/island/three/workshopScene.ts(444,52): error TS2339: Property 'from' does not exist on type 'Pointer'.
+  Property 'from' does not exist on type '{ id: number; kind: "brush" | "command"; }'.
+src/components/island/three/workshopScene.ts(445,93): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type 'Record<"driftwood" | "seaglass" | "striped-shell", WorkshopSpecimenVisual>'.
+src/components/island/three/workshopScene.ts(445,124): error TS2339: Property 'specimenId' does not exist on type '{ id: number; kind: "specimen"; specimenId: "driftwood" | "seaglass" | "striped-shell"; from: Vector3; moved: boolean; } | { id: number; kind: "brush" | "command"; }'.
+  Property 'specimenId' does not exist on type '{ id: number; kind: "brush" | "command"; }'.
+src/components/island/three/workshopScene.ts(475,25): error TS2339: Property 'moved' does not exist on type '{ id: number; kind: "specimen"; specimenId: "driftwood" | "seaglass" | "striped-shell"; from: Vector3; moved: boolean; } | { id: number; kind: "brush" | "command"; }'.
+  Property 'moved' does not exist on type '{ id: number; kind: "brush" | "command"; }'.
+src/components/island/three/workshopScene.ts(476,17): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type 'Record<"driftwood" | "seaglass" | "striped-shell", WorkshopSpecimenVisual>'.
+src/components/island/three/workshopScene.ts(476,48): error TS2339: Property 'specimenId' does not exist on type '{ id: number; kind: "specimen"; specimenId: "driftwood" | "seaglass" | "striped-shell"; from: Vector3; moved: boolean; } | { id: number; kind: "brush" | "command"; }'.
+  Property 'specimenId' does not exist on type '{ id: number; kind: "brush" | "command"; }'.
+src/components/island/three/workshopScene.ts(476,88): error TS2339: Property 'from' does not exist on type '{ id: number; kind: "specimen"; specimenId: "driftwood" | "seaglass" | "striped-shell"; from: Vector3; moved: boolean; } | { id: number; kind: "brush" | "command"; }'.
+  Property 'from' does not exist on type '{ id: number; kind: "brush" | "command"; }'.
+src/components/island/three/workshopScene.ts(477,75): error TS2339: Property 'specimenId' does not exist on type '{ id: number; kind: "specimen"; specimenId: "driftwood" | "seaglass" | "striped-shell"; from: Vector3; moved: boolean; } | { id: number; kind: "brush" | "command"; }'.
+  Property 'specimenId' does not exist on type '{ id: number; kind: "brush" | "command"; }'.
+src/components/island/three/workshopScene.ts(479,31): error TS2339: Property 'moved' does not exist on type '{ id: number; kind: "specimen"; specimenId: "driftwood" | "seaglass" | "striped-shell"; from: Vector3; moved: boolean; } | { id: number; kind: "brush" | "command"; }'.
+  Property 'moved' does not exist on type '{ id: number; kind: "brush" | "command"; }'.
+src/components/island/three/workshopScene.ts(479,95): error TS2339: Property 'specimenId' does not exist on type '{ id: number; kind: "specimen"; specimenId: "driftwood" | "seaglass" | "striped-shell"; from: Vector3; moved: boolean; } | { id: number; kind: "brush" | "command"; }'.
+  Property 'specimenId' does not exist on type '{ id: number; kind: "brush" | "command"; }'.
+src/components/island/three/workshopScene.ts(480,18): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type 'Record<"driftwood" | "seaglass" | "striped-shell", WorkshopSpecimenVisual>'.
+src/components/island/three/workshopScene.ts(480,49): error TS2339: Property 'specimenId' does not exist on type '{ id: number; kind: "specimen"; specimenId: "driftwood" | "seaglass" | "striped-shell"; from: Vector3; moved: boolean; } | { id: number; kind: "brush" | "command"; }'.
+  Property 'specimenId' does not exist on type '{ id: number; kind: "brush" | "command"; }'.
+src/components/island/three/workshopScene.ts(480,89): error TS2339: Property 'from' does not exist on type '{ id: number; kind: "specimen"; specimenId: "driftwood" | "seaglass" | "striped-shell"; from: Vector3; moved: boolean; } | { id: number; kind: "brush" | "command"; }'.
+  Property 'from' does not exist on type '{ id: number; kind: "brush" | "command"; }'.
+src/components/island/three/workshopScene.ts(488,14): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type 'Record<"driftwood" | "seaglass" | "striped-shell", WorkshopSpecimenVisual>'.
+src/components/island/three/workshopScene.ts(488,45): error TS2339: Property 'specimenId' does not exist on type '{ id: number; kind: "specimen"; specimenId: "driftwood" | "seaglass" | "striped-shell"; from: Vector3; moved: boolean; } | { id: number; kind: "brush" | "command"; }'.
+  Property 'specimenId' does not exist on type '{ id: number; kind: "brush" | "command"; }'.
+src/components/island/three/workshopScene.ts(488,85): error TS2339: Property 'from' does not exist on type '{ id: number; kind: "specimen"; specimenId: "driftwood" | "seaglass" | "striped-shell"; from: Vector3; moved: boolean; } | { id: number; kind: "brush" | "command"; }'.
+  Property 'from' does not exist on type '{ id: number; kind: "brush" | "command"; }'.

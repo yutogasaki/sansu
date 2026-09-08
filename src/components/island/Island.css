@@ -13,6 +13,12 @@
 .island-brand > svg { color: #245bbd; }
 .island-brand p { font-size: 11px; letter-spacing: .08em; }
 .island-brand h1 { font-size: 19px; font-weight: 750; line-height: 1.5; letter-spacing: .055em; }
+.island-brand h1 { max-width: min(68vw,520px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.island-photo-message { max-width: 660px; padding: 8px 24px; margin: auto; font-size: 12px; text-align: center; }
+.island-showcase-controls { max-width: 760px; margin: auto; padding: 12px 20px; text-align: center; }
+.island-showcase-controls h1 { font-size: 22px; line-height: 1.7; margin-bottom: 14px; overflow-wrap: anywhere; }
+.island-showcase-controls > div { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.island-page[data-mode=showcase] .island-stage { --island-stage-height: min(68dvh,720px); margin-top: 0; }
 .island-icon-button { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; min-width: 44px; flex-shrink: 0; border-radius: 50%; background: #fff9e8; color: var(--island-ink); border: 1px solid #52607a; }
 .island-text-button { min-height: 44px; padding: 8px 10px; font-size: 12px; font-weight: 600; text-underline-offset: 4px; }
 .island-text-button:hover { text-decoration: underline; }

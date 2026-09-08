@@ -5,7 +5,15 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
-    { ignores: ['dist'] },
+    { ignores: ['dist', 'output/**'] },
+    {
+        files: ['**/*.test.{js,mjs,ts,tsx}'],
+        rules: {
+            'no-restricted-imports': ['error', {
+                paths: [{ name: 'node:test', message: 'Vitest discovers these test files. Import test/describe from vitest so the suite is registered.' }],
+            }],
+        },
+    },
     {
         extends: [js.configs.recommended, ...tseslint.configs.recommended],
         files: ['**/*.{ts,tsx}'],

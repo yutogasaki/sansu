@@ -3,6 +3,7 @@ import type { UserProfile, MemoryState, AppData } from '../domain/types';
 import type { LearningEvidenceContext } from '../domain/learning/types';
 import type { ParkRecord, ParkPlan, ParkEvent } from '../domain/park/types';
 import type { IslandRecord, IslandPlan, IslandEvent } from '../domain/island/types';
+import type { IslandPhotoAlbum, IslandPhotoMetadata, IslandPhotoBlobRecord } from '../domain/island/photos';
 import type {
     ExploreDiscoveryRecord,
     ExploreRunEventRecord,
@@ -47,7 +48,24 @@ export const SANSU_V6_STORES = {
     parkEvents: '&id, profileId, planId, type, timestamp',
 } as const;
 
+export const SANSU_V7_STORES = {
+    ...SANSU_V6_STORES,
+    islands: '&profileId',
+    islandPlans: '&id, profileId, [profileId+status]',
+    islandEvents: '&id, profileId, planId, type, timestamp',
+} as const;
+
+export const SANSU_V8_STORES = {
+    ...SANSU_V7_STORES,
+    islandPhotoAlbums: '&profileId',
+    islandPhotos: '&id, profileId, [profileId+capturedAt]',
+    islandPhotoBlobs: '&id, profileId',
+} as const;
+
 export class SansuDatabase extends Dexie {
+    islandPhotoAlbums!: Table<IslandPhotoAlbum, string>;
+    islandPhotos!: Table<IslandPhotoMetadata, string>;
+    islandPhotoBlobs!: Table<IslandPhotoBlobRecord, string>;
     islands!: Table<IslandRecord, string>;
     islandPlans!: Table<IslandPlan, string>;
     islandEvents!: Table<IslandEvent, string>;
@@ -101,12 +119,9 @@ export class SansuDatabase extends Dexie {
 
         this.version(5).stores(SANSU_V5_STORES);
         this.version(6).stores(SANSU_V6_STORES);
-        this.version(7).stores({
-            ...SANSU_V6_STORES,
-            islands: '&profileId',
-            islandPlans: '&id, profileId, [profileId+status]',
-            islandEvents: '&id, profileId, planId, type, timestamp',
-        });
+        this.version(7).stores(SANSU_V7_STORES);
+        // Additive only: existing learning, island and receipt rows are untouched.
+        this.version(8).stores(SANSU_V8_STORES);
     }
 }
 

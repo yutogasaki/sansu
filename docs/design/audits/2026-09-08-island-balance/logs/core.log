@@ -1,0 +1,43 @@
+
+> pokko-fushigi-zukan-app@0.0.0 verify:core
+> npm run docs:check && npm run lint && npm run typecheck && npm run test:run && npm run build
+
+
+> pokko-fushigi-zukan-app@0.0.0 docs:check
+> node tools/check-docs.mjs
+
+WARN
+- docs/tasks/design-refresh-status.md: 次回棚卸し目安 (2026-05-15) is in the past
+- docs/tasks/backlog.md: 次回棚卸し目安 (2026-05-15) is in the past
+- docs/tasks/ui-fix-tasklist.md: 次回棚卸し目安 (2026-05-15) is in the past
+- docs/tasks/active/2026-03-17-v1-core-stabilization-plan.md: Review By (2026-05-15) is in the past
+- docs/tasks/active/2026-07-19-root-tangle-observation-morph.md: Review By (2026-07-26) is in the past
+- docs/tasks/active/2026-07-21-cold-open-value-loop.md: Review By (2026-07-28) is in the past
+- docs/tasks/active/2026-07-23-whole-app-brand-coherence.md: Review By (2026-07-30) is in the past
+PASS docs:check
+
+> pokko-fushigi-zukan-app@0.0.0 lint
+> eslint .
+
+
+/Users/yutogasaki/Projects/sansu/src/components/island/IslandMilestone.tsx
+  17:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+✖ 1 problem (0 errors, 1 warning)
+
+
+> pokko-fushigi-zukan-app@0.0.0 typecheck
+> tsc -b --pretty false
+
+src/components/island/IslandStage.tsx(64,37): error TS7006: Parameter 'action' implicitly has an 'any' type.
+src/components/island/IslandStage.tsx(65,45): error TS7006: Parameter 'id' implicitly has an 'any' type.
+src/components/island/IslandStage.tsx(66,41): error TS7006: Parameter 'id' implicitly has an 'any' type.
+src/components/island/IslandStage.tsx(67,39): error TS7006: Parameter 'kind' implicitly has an 'any' type.
+src/components/island/IslandStage.tsx(76,79): error TS2554: Expected 2-3 arguments, but got 4.
+src/components/island/three/workshopScene.ts(368,47): error TS2339: Property 'partId' does not exist on type '{ kind: "specimen" | "sand"; specimenId: "driftwood" | "seaglass" | "striped-shell"; section?: number | undefined; } | { kind: "part" | "socket"; partId: "bell" | "straight" | "elbow" | "wheel"; }'.
+  Property 'partId' does not exist on type '{ kind: "specimen" | "sand"; specimenId: "driftwood" | "seaglass" | "striped-shell"; section?: number | undefined; }'.
+src/components/island/three/workshopScene.ts(369,60): error TS2339: Property 'partId' does not exist on type '{ kind: "specimen" | "sand"; specimenId: "driftwood" | "seaglass" | "striped-shell"; section?: number | undefined; } | { kind: "part" | "socket"; partId: "bell" | "straight" | "elbow" | "wheel"; }'.
+  Property 'partId' does not exist on type '{ kind: "specimen" | "sand"; specimenId: "driftwood" | "seaglass" | "striped-shell"; section?: number | undefined; }'.
+src/components/island/three/workshopScene.ts(369,74): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type 'Record<"bell" | "straight" | "elbow" | "wheel", WorkshopPartVisual>'.
+src/components/island/three/workshopScene.ts(369,97): error TS2339: Property 'partId' does not exist on type '{ kind: "specimen" | "sand"; specimenId: "driftwood" | "seaglass" | "striped-shell"; section?: number | undefined; } | { kind: "part" | "socket"; partId: "bell" | "straight" | "elbow" | "wheel"; }'.
+  Property 'partId' does not exist on type '{ kind: "specimen" | "sand"; specimenId: "driftwood" | "seaglass" | "striped-shell"; section?: number | undefined; }'.

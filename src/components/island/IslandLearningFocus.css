@@ -1,0 +1,62 @@
+/* Learning owns the viewport. The hidden scene stays mounted so returning home
+   preserves its runtime; its visibility observer pauses offscreen rendering. */
+.island-page[data-mode=learning] {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+.island-page[data-mode=learning] > .island-stage { display: none; }
+.island-page[data-mode=learning] > .island-header {
+    flex: none;
+    width: 100%;
+    margin-block: 0;
+}
+.island-page[data-mode=learning] > .island-error { flex: none; }
+.island-page[data-mode=learning] > .island-workbench {
+    flex: 1;
+    min-height: 0;
+    margin-top: 8px;
+}
+.island-workbench > .island-learning-progress,
+.island-workbench > .island-workbench-message,
+.island-workbench > .island-learning-actions { flex: none; }
+.island-workbench > .island-answer-stage { flex: 1; min-height: 0; }
+
+/* Landscape tablets use the existing two-column workbench. Stacked layouts
+   reserve input space first and let only the problem or help content scroll. */
+@media (max-width: 899px), (orientation: portrait) {
+    .island-page[data-mode=learning] > .island-workbench {
+        display: flex;
+        flex-direction: column;
+    }
+    .island-page[data-mode=learning] .island-answer {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        min-height: 0;
+    }
+    .island-page[data-mode=learning] .island-workbench .island-answer .park-question {
+        flex: 1;
+        min-height: 0;
+        margin: 0;
+        overflow: auto;
+        overscroll-behavior: contain;
+        align-items: safe center;
+    }
+    .island-page[data-mode=learning] .island-answer .park-support {
+        flex: none;
+        max-height: min(25dvh, 148px);
+        overflow: auto;
+        overscroll-behavior: contain;
+    }
+    .island-page[data-mode=learning] .island-answer .park-inputs,
+    .island-page[data-mode=learning] .island-answer .park-keypad,
+    .island-page[data-mode=learning] .island-answer .park-choices { flex: none; }
+    .island-page[data-mode=learning] .island-answer .park-keypad { width: 100%; }
+    .island-page[data-mode=learning] .island-answer-stage[data-support-stage=model] .park-support {
+        flex: 1;
+        min-height: 0;
+        max-height: none;
+    }
+}

@@ -43,9 +43,34 @@ let currentBgmType: BgmType | null = null;
 let isSoundEnabled = false;
 Howler.mute(true);
 
+export type SoundPlaybackStatus = 'off' | 'ready' | 'blocked';
+const soundListeners = new Set<() => void>();
+let observedContext: AudioContext | null = null;
+let playbackFailed = false;
+const notifySound = () => soundListeners.forEach(listener => listener());
+const observeAudioContext = () => {
+    if (observedContext === Howler.ctx) return;
+    observedContext?.removeEventListener('statechange', notifySound);
+    observedContext = Howler.ctx;
+    observedContext?.addEventListener('statechange', notifySound);
+};
+
+export const getSoundPlaybackStatus = (): SoundPlaybackStatus => !isSoundEnabled ? 'off'
+    : playbackFailed || Howler.noAudio || (Howler.usingWebAudio && Howler.ctx?.state !== 'running') ? 'blocked' : 'ready';
+
+export const subscribeSoundPlayback = (listener: () => void) => {
+    observeAudioContext();
+    soundListeners.add(listener);
+    return () => { soundListeners.delete(listener); };
+};
+const soundPlayed = () => { playbackFailed = false; notifySound(); };
+const soundFailed = () => { playbackFailed = true; notifySound(); };
+
 export const setSoundEnabled = (enabled: boolean) => {
     isSoundEnabled = enabled;
     Howler.mute(!enabled);
+    observeAudioContext();
+    notifySound();
 };
 
 export const loadSounds = () => {
@@ -55,10 +80,14 @@ export const loadSounds = () => {
             seInstances[key as SoundType] = new Howl({
                 src: [src],
                 volume: seVolume(key as SoundType),
-                preload: true
+                preload: true,
+                onplay: soundPlayed,
+                onplayerror: soundFailed,
+                onloaderror: soundFailed,
             });
         }
     });
+    observeAudioContext();
 };
 
 export const playSound = (type: SoundType) => {
@@ -68,7 +97,10 @@ export const playSound = (type: SoundType) => {
     if (!seInstances[type]) {
         seInstances[type] = new Howl({
             src: [SE_ASSETS[type]],
-            volume: seVolume(type)
+            volume: seVolume(type),
+            onplay: soundPlayed,
+            onplayerror: soundFailed,
+            onloaderror: soundFailed,
         });
     }
 
@@ -76,6 +108,57 @@ export const playSound = (type: SoundType) => {
     // For SE, we might want overlapping (default) or single instance?
     // Howler default is overlapping, which is good for rapid taps.
     seInstances[type]?.play();
+};
+
+/** Call directly from a click, before awaiting persistence. A separate, cancellable
+ * cue cannot remain queued and play later after leaving the screen. */
+export const enableSoundFromGesture = (): { result: Promise<boolean>; cancel: () => void } => {
+    playbackFailed = true;
+    setSoundEnabled(true);
+    let cue: Howl | undefined;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let settled = false;
+    let started = false;
+    let context: AudioContext | null = null;
+    let resolveResult: (playing: boolean) => void = () => {};
+    const result = new Promise<boolean>(resolve => { resolveResult = resolve; });
+    const finish = (playing: boolean) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        context?.removeEventListener('statechange', confirmPlaying);
+        if (playing) soundPlayed();
+        else { cue?.unload(); soundFailed(); }
+        resolveResult(playing);
+    };
+    const confirmPlaying = () => {
+        if (!isSoundEnabled) finish(false);
+        else if (started && (!Howler.usingWebAudio || context?.state === 'running')) finish(true);
+    };
+    const cancel = () => {
+        clearTimeout(timer);
+        context?.removeEventListener('statechange', confirmPlaying);
+        cue?.unload();
+        if (!settled) { settled = true; resolveResult(false); }
+    };
+    try {
+        cue = new Howl({ src: [SE_ASSETS.correct], volume: seVolume('correct'),
+            onplay: () => { started = true; confirmPlaying(); },
+            onplayerror: () => finish(false), onloaderror: () => finish(false),
+            onend: () => { cue?.unload(); },
+        });
+        observeAudioContext();
+        context = Howler.ctx;
+        context?.addEventListener('statechange', confirmPlaying);
+        timer = setTimeout(() => finish(false), 1500);
+        // Explicit resume also covers an interrupted context after backgrounding.
+        // Keep HTML5 fallback play() on the gesture's stack as well.
+        if (Howler.usingWebAudio && Howler.ctx?.state !== 'running') {
+            void Howler.ctx.resume().catch(() => finish(false));
+        }
+        cue.play();
+    } catch { finish(false); }
+    return { result, cancel };
 };
 
 /** Short toy bell; uses the shared mute gate and can be stopped on leaving play. */

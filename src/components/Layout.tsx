@@ -28,7 +28,7 @@ export const Layout: React.FC = () => {
     return (
         <div
             className={cn("relative flex h-full min-h-0 flex-col overflow-hidden text-text-main", isIslandShell && "island-shell")}
-            data-shell-candidate={isIslandShell ? "mystic-island-shell-v1" : undefined}
+            data-shell-candidate={isIslandShell ? "pokomoko-color-dots-v1" : undefined}
         >
             <main
                 className={cn(

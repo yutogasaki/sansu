@@ -40,7 +40,25 @@ Use it to find the right source of truth before editing docs, tasks, runbooks, o
 
 ## Frequently Used Docs
 
+本人の学習成果を暮らしている家の一角へ飾る[賞状とトロフィー42](product/42_island_learning_keepsakes_spec.md)。島の実家の玄関から同じSceneの家内へ入り、賞状3点/トロフィー13点を無料で展示・収納する。「いえ」は実アルバム/かざりと記憶にもつながり、お知らせ0件はその事実を表示し、実際のおくりものがある場合だけ受取へつなぐ。[固定23 app＋QA修正版の限定実画面検証](../output/island-experience/keepsakes-23-02/report.json)は、両幅で実5区間による最初の賞状/トロフィー、実写真、保存保持と同予約復帰を確認した。正式速度検証は待機中、art parity HOLD、子どもの意欲はHuman N=0で未検証、元Goalは進行中。
+
+身支度、観察から得る記念品、無料の朝夕・季節の採用契約は[身支度と小さなコレクション41](product/41_island_expression_collection_spec.md)。取得と装備、所有と全景snapshotを分け、無料の衣装・音へ戻す操作と旧写真を保持する。
+
+任意に迎えた望遠鏡・ハンモック・茶卓を自分で置き、住民の実利用へつなぐ採用契約は[置いた道具から始まる暮らし40](product/40_island_life_furniture_spec.md)。基本家具の成長と同じ学習への復帰を保持する。実装・実画面の検証は全体タスクで追う。
+
+iPad横向きで問題と数字キーが画面内に収まる左右配置は[実画面一覧](design/audits/2026-09-08-ipad-landscape/contact-sheet.html)と[検証記録](design/audits/2026-09-08-ipad-landscape/README.md)を参照。
+
+島を直接回して寄れる任意操作は[眺め操作の仕様](product/30_living_island_growth_spec.md#島の眺め操作)と[実画面・検証記録](design/audits/2026-09-08-island-camera/README.md)を参照。
+
 学習の蓄積でほしを貯め、実際の島でテーマ/飾りを試して選択交換する契約は[島のきせかえ](product/35_island_customization_spec.md)。通常の連問と自動成長を維持し、目標・着せ替えはホームの任意操作とする。
+
+分析全体から進める発見帳・実験・来訪・成長予告・島と仲間の表現・景色の保存は[体験仕様36](product/36_island_experience_spec.md)。[全項目の対応表](tasks/active/2026-09-08-island-experience-coverage.md)と[進行中タスク](tasks/active/2026-09-08-island-experience.md)で実装・検証と未充足を区別する。
+
+本人が道具で未知物を調べ、素材から部品を作り、水路/水車/ベルをつないで住民と試す採用契約は[おためしの入江37](product/37_island_workshop_spec.md)。島の通常学習・7家具の成長と独立した任意の試作として実装する。
+
+選んだ住民の仕事と共同記憶、入江の同じ物/作品を主島に飾る再訪、実写真の端末内棚は[共有の思い出38](product/38_island_shared_memories_spec.md)。画像を通常学習の保存から分離し、分析の愛着・展示・思い出をつなぐ追加採用契約。
+
+空/岸/水/家/植物/橋を個別に集めて混ぜ、衣装/音/旗も含めた景色を残す契約は[部位のきせかえと景色の保存39](product/39_island_appearance_sets_spec.md)。旧テーマ所有を保持し、単品とセットの未所持分だけを確定交換する。
 
 島での算数・英語は[教科の切り替え](product/28_mystic_island_spec.md#教科の切り替え)を参照。固定交互から、初見の短い継続・必要な復習・任意の「つぎも」に合わせた3〜6問の区間へ変更する。
 

@@ -1,0 +1,21 @@
+.island-furniture-wallet { display:flex; align-items:center; gap:.45rem; color:var(--pokomoko-ink); margin:.5rem 0 1rem; }
+.island-furniture-wallet strong { font-size:1.25rem; }
+.island-furniture-wallet span { font-size:.8rem; }
+.island-furniture-choices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.5rem; }
+.island-furniture-choices .island-reward { min-width:0; padding:.65rem .25rem; }
+.island-furniture-choices .island-reward strong { font-size:.82rem; overflow-wrap:anywhere; }
+.island-furniture-choices .island-reward small { display:flex; align-items:center; gap:.2rem; justify-content:center; }
+.island-furniture-detail { margin:1rem 0; }
+.island-furniture-detail h3 { font-size:1.1rem; margin:0 0 .35rem; }
+.island-furniture-detail p { margin:0; line-height:1.6; }
+.island-furniture-residents { border:0; margin:.7rem 0; padding:0; }
+.island-furniture-residents legend { font-weight:700; margin-bottom:.4rem; }
+.island-furniture-residents > div { display:flex; flex-wrap:wrap; gap:.4rem; }
+.island-furniture-residents button { min-height:44px; padding:.5rem .8rem; }
+.island-furniture-residents button[aria-pressed="true"] { outline:3px solid var(--pokomoko-blue); outline-offset:1px; }
+.island-furniture-preview-actions { display:flex; align-items:center; flex-wrap:wrap; gap:.5rem; margin:1rem 0 .5rem; }
+.island-furniture-preview-actions span { font-size:.8rem; }
+.island-furniture-price { margin:.8rem 0 .4rem; font-weight:700; }
+.island-furniture-footer { display:flex; justify-content:space-between; gap:.5rem; margin-top:1rem; }
+.island-page[data-mode="furniture"] .island-stage { --island-stage-height:clamp(240px,35dvh,380px); position:sticky; top:0; z-index:2; }
+@media(min-width:700px) { .island-furniture-choices { gap:.8rem; } .island-furniture-choices .island-reward strong { font-size:1rem; } }

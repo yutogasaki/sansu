@@ -1,0 +1,57 @@
+.island-page[data-mode=experience] { overflow-x:hidden; }
+.island-page[data-mode=experience] .island-stage { --island-stage-height:clamp(210px,29dvh,330px); position:sticky; top:0; z-index:2; }
+.island-experience { width:100%; min-width:0; padding-top:6px; }
+.island-experience .island-sheet-title { margin-bottom:7px; }
+.island-experience .island-sheet-title h2 { font-size:20px; margin:0; }
+.island-experience-tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; }
+.island-experience-tabs .island-secondary { min-width:0; padding:7px 5px; font-size:12px; gap:6px; }
+.island-experience [aria-pressed=true] { background:#fff0b6; outline:2px solid var(--island-leaf); outline-offset:1px; }
+.island-experience-section { display:grid; gap:16px; margin-top:17px; min-width:0; }
+.island-experience-name { min-width:0; }
+.island-experience-name label, .island-experience-fieldset legend { display:block; font-size:12px; font-weight:650; margin-bottom:7px; }
+.island-experience-name > div { display:flex; min-width:0; gap:7px; }
+.island-experience-name input { width:0; min-width:0; flex:1; min-height:46px; background:var(--island-paper); color:var(--island-ink); border:1px solid var(--island-muted); border-radius:12px; padding:9px; font:inherit; font-size:16px; }
+.island-experience-name input:focus-visible { outline:3px solid var(--island-leaf); outline-offset:2px; }
+.island-experience-name .island-secondary { flex-shrink:0; font-size:12px; gap:4px; padding:6px 9px; }
+.island-experience-fieldset { border:0; min-width:0; margin:0; padding:0; }
+.island-experience-choices { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; padding:2px; }
+.island-experience-choices > button { min-width:0; min-height:68px; border:1px solid var(--island-muted); border-radius:14px; background:var(--island-paper); display:flex; flex-direction:column; justify-content:center; align-items:center; position:relative; gap:6px; font-size:12px; padding:7px 3px; }
+.island-experience-choices .island-experience-check { position:absolute; right:5px; top:5px; color:var(--island-leaf); }
+.island-experience-audio { display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:4px; }
+.island-experience-audio .island-text-button { display:inline-flex; align-items:center; gap:6px; }
+.island-experience-audio small { color:var(--island-muted); font-size:12px; }
+.island-experience-friends { display:flex; gap:8px; min-width:0; }
+.island-experience-friends > button { flex:1; min-width:0; display:block; padding:8px 4px; overflow-wrap:anywhere; font-size:12px; }
+.island-experience-friends small { font-size:12px; }
+.island-experience-favorite { display:flex; align-items:center; gap:6px; color:var(--island-muted); font-size:12px; }
+.island-experience-favorite p { flex:1; }
+.island-experience-favorite .island-text-button { display:inline-flex; align-items:center; gap:4px; padding-inline:4px; }
+.island-experience-looks { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.island-experience-look { display:flex; align-items:center; justify-content:center; width:34px; height:30px; }
+.island-experience-look--scarf > i { display:block; position:relative; width:30px; height:9px; background:#f4a4b9; border:1.5px solid var(--island-ink); border-radius:4px; transform:rotate(-9deg); }
+.island-experience-look--scarf > i::after { content:''; position:absolute; top:5px; right:4px; width:9px; height:15px; border:1.5px solid var(--island-ink); border-top:0; border-radius:0 0 3px 3px; background:#f4a4b9; }
+.island-experience-look--cap > i { display:block; position:relative; width:25px; height:19px; border:1.5px solid var(--island-ink); border-radius:15px 15px 3px 3px; background:#ffd447; }
+.island-experience-look--cap > i::after { content:''; position:absolute; height:5px; width:33px; left:-5px; bottom:-4px; border:1.5px solid var(--island-ink); border-radius:5px; background:#ffd447; }
+.island-experience-caption { color:var(--island-muted); font-size:12px; line-height:1.7; margin:0; }
+.island-experience-layout { min-width:0; border-top:1px solid var(--island-muted); padding-top:12px; }
+.island-experience-layout-heading { display:flex; align-items:center; gap:8px; margin-bottom:10px; min-width:0; }
+.island-experience-layout-heading > span { display:grid; place-items:center; width:25px; height:25px; border:1px solid var(--island-muted); border-radius:50%; background:var(--island-paper); font-size:12px; flex-shrink:0; }
+.island-experience-layout-heading h3 { flex:1; min-width:0; overflow-wrap:anywhere; font-size:13px; font-weight:650; }
+.island-experience-layout-heading small { font-size:12px; }
+.island-experience-layout .island-experience-name > div { flex-wrap:wrap; }
+.island-experience-layout .island-experience-name input { min-width:105px; }
+.island-experience-layout .island-experience-name .island-secondary { font-size:12px; }
+.island-experience-layout-actions { display:flex; flex-wrap:wrap; gap:7px; align-items:center; margin-top:9px; }
+.island-experience-layout-actions > .island-secondary { flex:1; padding:6px 7px; font-size:12px; gap:4px; }
+.island-experience-layout-actions > .island-icon-button { width:44px; }
+.island-experience-delete { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin-top:9px; padding:8px; border:1px dashed var(--island-muted); border-radius:12px; font-size:12px; }
+.island-experience-delete p { width:100%; line-height:1.8; }
+.island-experience-delete small { display:block; color:var(--island-muted); }
+.island-experience-delete .island-secondary { font-size:12px; }
+.island-experience-preview { display:flex; align-items:center; gap:6px; padding:4px 8px; background:var(--island-paper); border:1px solid var(--island-leaf); border-radius:12px; font-size:12px; }
+.island-experience-preview span { flex:1; }
+.island-experience-preview .island-text-button { font-size:12px; padding-inline:4px; }
+.island-experience-error { margin-top:12px; padding:9px 11px; border:1px solid var(--island-muted); border-radius:12px; background:var(--island-paper); font-size:12px; line-height:1.7; }
+.island-experience-souvenirs { display:flex; gap:8px; margin-top:21px; padding-top:14px; border-top:1px solid var(--island-muted); }
+.island-experience-souvenirs > button { flex:1; min-width:0; padding:8px 5px; font-size:12px; gap:5px; }
+@media(min-width:700px) { .island-experience-tabs .island-secondary { font-size:14px; } .island-experience-name .island-secondary, .island-experience-layout .island-experience-name .island-secondary, .island-experience-layout-actions > .island-secondary, .island-experience-souvenirs > button { font-size:12px; } }
