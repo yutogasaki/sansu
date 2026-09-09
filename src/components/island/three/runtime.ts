@@ -427,7 +427,7 @@ export class IslandScene {
         if (previousHome !== this.keepsakeRoomActive && previous && !state.learning) this.homePresentation.begin(this.camera, performance.now(), this.motion.matches);
         if (state.learning) this.homePresentation.cancel();
         const keepsakesChanged = this.keepsakeRoom.update(state.learningKeepsakes?.state, state.completedSets,
-            this.keepsakeRoomActive, state.learningKeepsakes?.selectedId);
+            this.keepsakeRoomActive, state.learningKeepsakes?.selectedId, state.challengeDisplayed);
         this.sharedJobs.beforeUpdate(state.shared ? { ...state.shared,
             active: state.shared.active && !state.learning && !state.readOnly && !this.workshopActive && !state.preview } : undefined);
         let sharedGeometryChanged = false;

@@ -9,14 +9,16 @@ export const readMathLevel11Pilot = async (
     database: SansuDatabase,
     profileId: string,
     asOf: string = new Date().toISOString(),
-) => database.transaction('r', database.logs, database.parkEvents, database.islandEvents, async () => {
-    const [logs, parkEvents, islandEvents] = await Promise.all([
+) => database.transaction('r', database.logs, database.parkEvents, database.islandEvents, database.challengeContacts, async () => {
+    const [logs, parkEvents, islandEvents, contacts] = await Promise.all([
         database.logs.where('[profileId+subject]').equals([profileId, 'math']).toArray(),
         database.parkEvents.where('profileId').equals(profileId).toArray(),
         database.islandEvents.where('profileId').equals(profileId).toArray(),
+        database.challengeContacts.where('profileId').equals(profileId).toArray(),
     ]);
     const records = [
         ...logs,
+        ...contacts.map(contact => ({ id: `challenge-contact:${contact.itemId}`, profileId, subject: 'math' as const, itemId: contact.itemId, timestamp: contact.uncertain ? asOf : contact.latestAt, result: 'contact' as const, contactUncertain: contact.uncertain })),
         ...reservedEventsToEvidenceRecords(parkEvents.map((event) => ({ ...event, id: `park:${event.id}` }))),
         ...reservedEventsToEvidenceRecords(islandEvents.map((event) => ({ ...event, id: `island:${event.id}` }))),
     ];

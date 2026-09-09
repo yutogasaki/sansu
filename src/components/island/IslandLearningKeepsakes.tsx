@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { ArrowLeft, ArrowRight, Award, BookOpen, Camera, Check, Gift, House, PackageOpen, Sparkles, Star, Trophy, X } from 'lucide-react';
 import { getIslandLearningKeepsakes, isIslandLearningKeepsakeAvailable, ISLAND_LEARNING_KEEPSAKES,
     type IslandLearningKeepsakeAction, type IslandLearningKeepsakeId } from '../../domain/island/learningKeepsakes';
@@ -9,6 +9,7 @@ import './IslandPanel.css';
 
 export type IslandHouseSection = 'home' | 'keepsakes' | 'notices';
 export interface IslandLearningKeepsakesProps {
+    challenge?: ReactNode;
     section?: IslandHouseSection;
     onSectionChange?: (section: IslandHouseSection) => void;
     island: IslandRecord;
@@ -34,7 +35,7 @@ function displayAction(keepsakeId: IslandLearningKeepsakeId, displayed: boolean)
 /** The page supplies the actual house. Reading an award never places one;
  * only the explicit display controls save the person's display selection. */
 export function IslandLearningKeepsakes({ island, controls, disabled, onClose, onLearn, onPhoto, onSelect, onShowRoom, comparisonDisabled = disabled,
-    onPhotos, onAlbum, onShared, onRewards, section, onSectionChange }: IslandLearningKeepsakesProps) {
+    onPhotos, onAlbum, onShared, onRewards, section, onSectionChange, challenge }: IslandLearningKeepsakesProps) {
     const [localSection, setLocalSection] = useState<IslandHouseSection>('home');
     const currentSection = section ?? localSection;
     const changeSection = (next: IslandHouseSection) => {
@@ -81,6 +82,7 @@ export function IslandLearningKeepsakes({ island, controls, disabled, onClose, o
                 <button className="island-secondary" data-keepsake-action="notices" disabled={disabled} onClick={() => changeSection('notices')}>
                     <Gift size={26} aria-hidden="true" /><strong>おしらせ</strong><small>{island.pendingRewards.length > 0 ? `おくりもの ${island.pendingRewards.length}こ` : 'けいじばんを みる'}</small></button>
             </nav>
+            {challenge}
         </div>}
         {currentSection === 'notices' && <article className="island-house-notices" aria-label="いえの おしらせ">
             <h3>おしらせ</h3>

@@ -1,3 +1,4 @@
+import { useLearningSessionLease } from '../hooks/useLearningSessionLease';
 import { allowsDecimalEntry, appendNumberField } from '../domain/math/numberEntry';
 import React, { useState, useEffect, useLayoutEffect, useCallback, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -43,6 +44,18 @@ type FixedSessionCompletionState =
     | { status: "saving" | "error" | "saved"; stats: FixedSessionStats };
 
 export const Study: React.FC = () => {
+    const [profileId, setProfileId] = useState<string | null>(null);
+    const navigate = useNavigate();
+    useEffect(() => { let live = true; void getActiveProfile().then(profile => { if (live) setProfileId(profile?.id ?? null); }); return () => { live = false; }; }, []);
+    const lease = useLearningSessionLease(profileId);
+    if (lease !== 'ready') return <main className="min-h-screen flex flex-col items-center justify-center gap-4" aria-live="polite">
+        <p>{lease === 'blocked' ? 'ほかの がめんで まなんでいるよ' : 'じゅんび しているよ'}</p>
+        <button onClick={() => navigate('/')}>もどる</button>
+    </main>;
+    return <StudyContent />;
+};
+
+const StudyContent: React.FC = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const devSkill = searchParams.get("dev_skill") || undefined;

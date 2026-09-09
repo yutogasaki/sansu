@@ -1,0 +1,138 @@
+{
+  "target": "http://127.0.0.1:5317",
+  "flag": "VITE_ISLAND_ENABLED=true",
+  "scope": {
+    "comparisonStores": [
+      "islands",
+      "islandPlans",
+      "islandEvents",
+      "logs",
+      "memoryMath",
+      "memoryVocab",
+      "exploreRuns"
+    ],
+    "bootstrapOwnerStores": [
+      "profiles",
+      "appData"
+    ],
+    "fixture": "Native profile only; real UI creates reservations/answers. Legacy additionally omits growth and reward-pacing fields from its actual first reservation.",
+    "scenarios": [
+      "Profile-free Island welcome -> seeded owner home -> protected learning/growth checkpoints",
+      "Legacy frozen questions/gift/10 stars -> one explicit migration with unchanged balance",
+      "Hook-free real SW control and cached home bundles -> offline first reservation/answers/reload"
+    ],
+    "limits": "Seven-store learning/Island comparisons; not every database store, photo-Blob persistence, real two-build update, or human/normal-speed evidence."
+  },
+  "bootstrapChecks": [
+    {
+      "scenario": "current",
+      "profileId": "island-production-checkpoint",
+      "emptyWelcome": true,
+      "seededHome": true,
+      "reservedPlanBeforeStart": false
+    },
+    {
+      "scenario": "legacy",
+      "profileId": "island-legacy-gift-checkpoint",
+      "emptyWelcome": true,
+      "seededHome": true,
+      "reservedPlanBeforeStart": false
+    },
+    {
+      "scenario": "offline",
+      "profileId": "island-offline",
+      "emptyWelcome": true,
+      "seededHome": true,
+      "reservedPlanBeforeStart": false,
+      "bundles": {
+        "controlled": true,
+        "active": "activated",
+        "hookEnabled": false,
+        "resources": [
+          {
+            "url": "http://127.0.0.1:5317/assets/react-DcHpdqMy.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/index-BMs7Wc1c.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/icons-MsP3h5iq.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/motion-iLBaTeAD.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/index-LWXeXQj9.css",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/audio-DwtSHwBT.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/data-DHx4MMMe.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/charts-Dqb-tBNT.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/IslandOnboarding-BN9DKrAX.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/IslandWelcome-BofjMrZz.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/IslandWelcome-BJp8Sa-m.css",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/Island-GhGu76Z5.css",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/Island-D8BkA0a9.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/islandFurniturePlacement-WQKOqDj1.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/runtime-DklleALN.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/Island-DBR3YO0L.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5317/assets/Island-BQfPRxZo.css",
+            "cached": true
+          }
+        ]
+      }
+    }
+  ],
+  "hookChecks": [
+    "active learning defers update; user home checkpoint reloads with reserved plan preserved",
+    "critical persistence hold spans navigation and releases deferred update afterwards",
+    "continue pointer protects fresh session; answer receipt survives next user checkpoint",
+    "first automatic growth defers update; growth, auto placement and next reservation survive user checkpoint",
+    "ordinary second section keeps update deferred; minor growth, unchanged land and album, and next reservation survive the voluntary checkpoint",
+    "first maturity defers update; east expansion, combined album record, stable items and next reservation survive the voluntary checkpoint",
+    "Island home keeps the legacy Explore run for explicit resume and preserves Island data",
+    "legacy Island reservation and reward screen defer update; new reservation migrates once and keeps the unclaimed old gift"
+  ],
+  "status": "PASS",
+  "fullReport": "/tmp/sansu-challenge-island-pwa/pwa-report.json",
+  "runtimeRevision": "1177140-challenge-v1",
+  "runtimeVersion": "1177140-challenge-v1:020ca50f-2fd9-4a58-8e70-47b2b70ff1af"
+}

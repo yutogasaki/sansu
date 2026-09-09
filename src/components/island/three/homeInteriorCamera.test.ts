@@ -52,6 +52,23 @@ function checkVisible(room: IslandLearningKeepsakeScenery, camera: THREE.Camera,
 }
 
 describe('a perspective camera inside the same closed house', () => {
+    it.each([390 / 295, 768 / 380, 1024 / 380])('keeps both additional challenge awards visible at aspect %s', aspect => {
+        const room = roomAt(true);
+        try {
+            room.update(all, 1000, true, undefined, ['certificate', 'trophy']);
+            const camera = fit(room, aspect);
+            for (const id of ['certificate', 'trophy']) {
+                const award = room.group.getObjectByName(`challenge-${id}`)!;
+                const bounds = new THREE.Box3().setFromObject(award);
+                checkVisible(room, camera, award, [bounds.getCenter(new THREE.Vector3())]);
+                for (const point of vertices(award)) {
+                    const ndc = point.project(camera);
+                    expect(Math.max(Math.abs(ndc.x), Math.abs(ndc.y))).toBeLessThan(.98);
+                }
+            }
+        } finally { room.dispose(); }
+    });
+
     it.each([390 / 295, 768 / 380])('places the real room floor above the unchanged exterior foundation at aspect %s', aspect => {
         const world = new IslandCosmeticScenery(), room = roomAt(true), scene = new THREE.Scene();
         scene.add(world.group, room.group);

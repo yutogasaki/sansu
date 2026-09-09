@@ -201,12 +201,12 @@ describe('v7 to v8 additive migration', () => {
         for (const table of legacy.tables) if (old[table.name].length) await table.bulkPut(old[table.name]);
         const schemas = Object.fromEntries(legacy.tables.map(table => [table.name, { primary: table.schema.primKey.src, indexes: table.schema.indexes.map(index => index.src) }])); legacy.close();
         const upgraded = new SansuDatabase(name, options); databases.push(upgraded); await upgraded.open();
-        expect(upgraded.verno).toBe(8);
+        expect(upgraded.verno).toBe(9);
         for (const name of Object.keys(SANSU_V7_STORES)) {
             expect(await upgraded.table(name).toArray()).toEqual(old[name]);
             const table = upgraded.table(name); expect({ primary: table.schema.primKey.src, indexes: table.schema.indexes.map(index => index.src) }).toEqual(schemas[name]);
         }
-        for (const table of [upgraded.islandPhotoAlbums, upgraded.islandPhotos, upgraded.islandPhotoBlobs]) expect(await table.count()).toBe(0);
+        for (const table of [upgraded.islandPhotoAlbums, upgraded.islandPhotos, upgraded.islandPhotoBlobs, upgraded.challengeRuns, upgraded.challengeEvents, upgraded.challengeSummaries, upgraded.challengeContacts]) expect(await table.count()).toBe(0);
         const before = await learningSnapshot(upgraded), shot = await photoInput(); await saveIslandPhoto('child', 0, shot.input, shot.blobs, upgraded);
         expect(await learningSnapshot(upgraded)).toEqual(before); expect((await readIslandPhotoAlbum('child', upgraded)).photos).toHaveLength(1);
     });

@@ -11,6 +11,8 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 export interface MemoryAttemptEvidence {
     independence: 'independent' | 'assisted' | 'unknown';
     wholeProblem?: boolean;
+    latestChallengeContactAt?: string;
+    challengeContactUncertain?: boolean;
 }
 
 const normalizeStrength = (strength: number): number => Number.isFinite(strength)
@@ -53,14 +55,14 @@ export const updateMemoryState = (
     const nextReviewAt = parseTimestamp(current.nextReview);
     const lastIndependentAt = parseTimestamp(current.lastIndependentCorrectAt
         ?? (!evidence ? current.lastCorrectAt : undefined));
-    const lastAttemptAt = parseTimestamp(current.updatedAt);
+    const lastAttemptAt = Math.max(parseTimestamp(current.updatedAt), parseTimestamp(evidence?.latestChallengeContactAt) || -Infinity);
     const elapsed = (timestamp: number) => Number.isFinite(timestamp)
         && now.getTime() - timestamp >= DAY_MS;
     // 仕様34: a learning-day boundary alone is not one elapsed day.
-    const canAdvance = nextReviewAt <= now.getTime()
+    const canAdvance = !evidence?.challengeContactUncertain && nextReviewAt <= now.getTime()
         && elapsed(lastIndependentAt) && elapsed(lastAttemptAt)
         && lastIndependentAt < learningDayStart.getTime();
-    const canFinishRelearning = nextReviewAt <= now.getTime()
+    const canFinishRelearning = !evidence?.challengeContactUncertain && nextReviewAt <= now.getTime()
         && elapsed(parseTimestamp(current.relearningStartedAt)) && elapsed(lastAttemptAt);
 
     let next = { ...current, strength };

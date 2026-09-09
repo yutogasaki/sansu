@@ -1,6 +1,9 @@
 import { IslandHelp, IslandTutorial, TUTORIAL_TOPICS } from '../components/island/tutorial/IslandTutorial';
 import { useIslandTutorial } from '../components/island/tutorial/useIslandTutorial';
 import type { TutorialId } from '../domain/island/tutorialState';
+import { useLearningSessionLease } from '../hooks/useLearningSessionLease';
+import { ChallengePanel } from '../components/challenge/ChallengePanel';
+import { ChallengeHomeCard } from '../components/challenge/ChallengeHomeCard';
 import HomeJourneyPreview from '../components/island/homeJourney/HomeJourneyPreview';
 import { homeJourneyEnabled } from '../domain/island/homeJourney';
 import { crossedHomeJourneyStep } from '../components/island/homeJourney/growthReveal';
@@ -124,6 +127,8 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const live = useLiveQuery(() => db.islands.get(profile.id), [profile.id]);
     const island = live && (!snapshot || live.revision >= snapshot.revision) ? live : snapshot;
     const [plan, setPlan] = useState<IslandPlan>();
+    const [challengeStartIntent, setChallengeStartIntent] = useState(false);
+    const challengeSummary = useLiveQuery(() => db.challengeSummaries.get(profile.id), [profile.id]);
     const [localScreen, setLocalScreen] = useState<Screen>('home');
     // An old reservation's gift is part of the same focused session. Changing
     // the route here would incorrectly allow a deferred PWA reload mid-receipt.
@@ -131,6 +136,8 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const screen = navigation ? navigation.learning ? learningScreen : navigation.view : localScreen;
     const setScreen = navigation?.setView ?? setLocalScreen;
     const listening = useEnglishListening(profile.id, active && screen === 'learning' && profile.subjectMode !== 'math', profile.vocabLevels ?? [], plan?.slots[plan.cursor]?.problem);
+    const learningLease = useLearningSessionLease(profile.id, active && screen === 'learning');
+    useEffect(() => { if (screen === 'challenge') setChallengeStartIntent(false); }, [screen]);
     const [workshopView, setWorkshopView] = useState<IslandWorkshopView>({ mode: 'observe', selectedSpecimenId: 'driftwood', selectedPartId: 'straight', selectedToolId: 'brush' });
     const [workshopRequest, setWorkshopRequest] = useState<WorkshopSceneRequest>();
     const [sharedSelection, setSharedSelection] = useState<SharedDisplayId>();
@@ -256,6 +263,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     };
 
     const begin = async () => {
+        if (screen === 'challenge' || screen === 'learning' && learningLease !== 'ready') return;
         if (navigation && !navigation.learning) { navigation.startLearning(); return; }
         setPreparingLearning(true);
         // The shell keeps the ordinary page's selection and previews for close.
@@ -313,17 +321,17 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     useEffect(() => {
         if (!navigation?.learning) { learningStarted.current = false; return; }
         if (navigation.targetProfile && navigation.targetProfile !== profile.id) { exitMismatchedLearning(); return; }
-        if (busy || opening || loadError || learningStarted.current) return;
+        if (busy || opening || loadError || learningStarted.current || learningLease !== 'ready') return;
         learningStarted.current = true;
         beginRequestedLearning();
-    }, [navigation?.learning, navigation?.targetProfile, busy, opening, loadError, profile.id]);
+    }, [navigation?.learning, navigation?.targetProfile, busy, opening, loadError, profile.id, learningLease]);
     const reportBlocked = navigation?.setBlocked;
     const reportLearningBlocked = navigation?.setLearningBlocked;
     useLayoutEffect(() => {
         reportBlocked?.(active && (busy && busyKind !== 'discovery' || preparingLearning || opening));
-        reportLearningBlocked?.(busy || preparingLearning || opening);
+        reportLearningBlocked?.(busy || preparingLearning || opening || screen === 'challenge');
         return () => { reportBlocked?.(false); reportLearningBlocked?.(false); };
-    }, [reportBlocked, reportLearningBlocked, active, busy, busyKind, preparingLearning, opening]);
+    }, [reportBlocked, reportLearningBlocked, active, busy, busyKind, preparingLearning, opening, screen]);
     const recoverPlacement = useEffectEvent(() => navigation?.open('/island?view=inventory', true));
     const placementWasPrepared = useRef(false);
     useEffect(() => {
@@ -611,7 +619,8 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
         {active && screen === 'home' && homeJourneyEnabled() && <HomeJourneyPreview state={island.homeJourney}
             growthAt={homeJourneyGrowthAt} onGrowthShown={() => setHomeJourneyGrowthAt(undefined)} />}
-        {active && !(screen === 'home' && homeJourneyEnabled()) && !['help', 'album', 'photos', 'inventory'].includes(screen) && <IslandStage onTutorialReady={setTutorialStageReady} onCameraPractice={() => tutorial.practice('view')} closeHomeView={screen === 'home'} compactCameraControls={screen === 'home'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
+        {active && !(screen === 'home' && homeJourneyEnabled()) && !['help', 'album', 'photos', 'inventory', 'challenge'].includes(screen) && <IslandStage onTutorialReady={setTutorialStageReady} onCameraPractice={() => tutorial.practice('view')} closeHomeView={screen === 'home'} compactCameraControls={screen === 'home'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
+            challengeDisplayed={challengeSummary?.displayed}
             learningKeepsakes={keepsakeRoomActive ? { state: island.learningKeepsakes, selectedId: keepsakeFocus } : undefined}
             onHomeEnter={!busy && ['home', 'play'].includes(screen) ? enterHouse : undefined}
             onHomeAction={!busy && screen === 'keepsakes' ? action => {
@@ -717,12 +726,15 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             action={tutorial.current.id === 'growth' && screen === 'home' ? 'みにいく' : undefined}
             onAction={() => { tutorial.practice('growth'); setAlbumComparison(latestMilestone?.habitats[0] ?? island.growth?.focus ?? 'garden'); setScreen('album'); }} />}
         {(screen === 'play' || screen === 'placement') && <IslandDistricts island={island} value={district} disabled={busy} onChange={setDistrict} />}
-        {learning && nextPlanError ? <section className="island-sheet island-learning-retry">
+        {learning && learningLease !== 'ready' ? <section className="island-sheet" role="status"><p>{learningLease === 'loading' ? 'じゅんびしているよ' : 'ほかの がめんの まなびを とじてから、もういちど ひらこう。'}</p></section>
+            : learning && nextPlanError ? <section className="island-sheet island-learning-retry">
             <p role="status">{plan?.status === 'completed' ? 'ここまで といたぶんは のこっているよ。' : 'まだ もんだいを ひらけなかったよ。'}</p>
             <button className="island-primary" disabled={busy} onClick={() => void begin()}>つづきの もんだいを ひらく</button>
         </section>
             : learning ? null
             : screen === 'help' ? <IslandHelp island={island} disabled={busy} onClose={home} onTry={tryTutorial} />
+            : screen === 'challenge' ? active && <ChallengePanel key={profile.id} profileId={profile.id} initialStart={challengeStartIntent}
+                onClose={() => { setChallengeStartIntent(false); if (navigation) navigation.back(); else setScreen('keepsakes'); }} />
             : screen === 'reward' && island.pendingRewards.length ? <IslandRewards island={island} intro={island.completedSets === 1 && Boolean(plan && isFirstIslandPlan(plan))} disabled={busy} onChoose={(id, kind) => void claim(id, kind)} onContinue={() => void begin()} onClose={home} />
             : screen === 'play' ? <IslandPlay items={island.items} disabled={busy} selectedId={playRequest?.itemId} message={playMessage}
                 onSelect={play} onMove={select} onInventory={() => setScreen('inventory')} onContinue={() => void begin()} onClose={home} onGuide={openGuide} onPhoto={photograph} />
@@ -777,6 +789,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     onCommand={command => setWorkshopRequest({ id: crypto.randomUUID(), command })}
                     onAction={workshopActions.act} error={workshopActions.error} onRetry={workshopActions.retry} onClose={home} onLearn={() => void begin()} />
                 : screen === 'keepsakes' ? <IslandLearningKeepsakes island={island} controls={keepsakes} disabled={busy} comparisonDisabled={comparisonDisabled}
+                    challenge={<ChallengeHomeCard key={profile.id} profileId={profile.id} disabled={busy} onLearn={() => void begin()} onResult={() => { setChallengeStartIntent(false); setScreen('challenge'); }} onStart={() => { setChallengeStartIntent(true); setScreen('challenge'); }} />}
                     section={houseSection} onSectionChange={section => { setHouseSection(section); setKeepsakeFocus(undefined); }}
                     onSelect={setKeepsakeFocus} onShowRoom={() => setKeepsakeFocus(undefined)}
                     onClose={home} onLearn={() => void begin()} onPhoto={photograph} onPhotos={openPhotos}
@@ -872,7 +885,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                         </div>
                     </IslandHomeActions>
                 </section>}
-        {plan && slot && <IslandLearningPanel plan={plan} active={active && learning && !nextPlanError}
+        {plan && slot && <IslandLearningPanel plan={plan} active={active && learning && learningLease === 'ready' && !nextPlanError}
             hintPending={busyKind === 'learning-hint' && active && learning && !preparingLearning}
             intro={isFirstIslandPlan(plan)} observation={active && learning && !listening.isOpen ? observation : undefined}
             busy={busy || preparingLearning || !active || !learning || listening.isOpen} feedback={learningFeedback} englishAutoRead={profile.englishAutoRead && !listening.isOpen} onAction={action => void answer(action)}

@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import type { IslandLearningKeepsakeScenery } from './learningKeepsakeScenery';
 
-export const ISLAND_HOME_CAMERA_CANDIDATE = 'island-home-interior-v3';
+export const ISLAND_HOME_CAMERA_CANDIDATE = 'island-home-interior-v4';
 export const ISLAND_HOME_CAMERA_POSITION = [0, 3, 4.62] as const;
-const livingNames = ['home-reading-seat', 'home-coffee-table', 'home-album', 'home-notice-board', 'home-plant-pot', 'home-window-frame'];
+const livingNames = ['home-reading-seat', 'home-coffee-table', 'home-album', 'home-notice-board', 'home-plant-pot', 'home-window-frame', 'challenge-certificate', 'challenge-trophy'];
 const corners = (bounds: THREE.Box3) => [bounds.min.x, bounds.max.x].flatMap(x => [bounds.min.y, bounds.max.y].flatMap(y =>
     [bounds.min.z, bounds.max.z].map(z => new THREE.Vector3(x, y, z))));
 

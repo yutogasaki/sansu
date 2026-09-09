@@ -25,6 +25,17 @@ describe('real learning keepsake record and display choices', () => {
         expect(p.controls.act).not.toHaveBeenCalled();
     });
 
+    it('keeps house destinations and directly available challenge controls and names the exit', () => {
+        const p = props(); p.section = 'home'; p.onAlbum = vi.fn();
+        p.challenge = <div data-challenge-content>チャレンジの条件と操作</div>;
+        const html = renderToStaticMarkup(<IslandLearningKeepsakes {...p} />);
+        expect(html.indexOf('data-keepsake-action="notices"')).toBeLessThan(html.indexOf('data-challenge-content'));
+        expect(html).not.toContain('class="island-house-challenge"');
+        expect(html).toContain('data-challenge-content');
+        expect(p.controls.act).not.toHaveBeenCalled();
+    });
+
+
     it('keeps all 16 future milestones readable with no award claim or invented old date', () => {
         const p = props(), before = structuredClone(p.island), html = renderToStaticMarkup(<IslandLearningKeepsakes {...p} />);
         expect(html.match(/data-keepsake-choice=/g)).toHaveLength(16);

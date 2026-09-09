@@ -24,7 +24,7 @@ export function useIslandNavigationState(enabled: boolean) {
     const [visited, setVisited] = useState(active);
     const state = location.state as NavigationState | null;
     const tab: IslandTab = isIsland
-        ? view === 'keepsakes' ? 'house' : view === 'home' ? 'island' : state?.islandTab ?? 'island'
+        ? ['keepsakes', 'challenge'].includes(view) ? 'house' : view === 'home' ? 'island' : state?.islandTab ?? 'island'
         : location.pathname === '/stats' ? 'stats'
         : /^\/(settings(?:\/|$)|parents$|dev$)/.test(location.pathname) ? 'settings' : state?.islandTab ?? 'island';
     const [houseEntry, setHouseEntry] = useState(0);

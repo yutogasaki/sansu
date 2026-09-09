@@ -1,4 +1,4 @@
-export const ISLAND_SCREENS = ['home', 'help', 'learning', 'reward', 'inventory', 'placement', 'play', 'growth', 'album', 'customization', 'guide', 'experience', 'expression', 'showcase', 'workshop', 'camera', 'photos', 'shared', 'furniture', 'keepsakes'] as const;
+export const ISLAND_SCREENS = ['home', 'help', 'learning', 'reward', 'inventory', 'placement', 'play', 'growth', 'album', 'customization', 'guide', 'experience', 'expression', 'showcase', 'workshop', 'camera', 'photos', 'shared', 'furniture', 'keepsakes', 'challenge'] as const;
 export type IslandScreen = typeof ISLAND_SCREENS[number];
 
 export function islandScreenFromSearch(search: string): IslandScreen {
@@ -22,7 +22,7 @@ export function islandViewUrl(screen: IslandScreen) {
 }
 
 export function islandFocusScreen(screen: IslandScreen, photo?: string | null) {
-    return ['learning', 'placement', 'camera', 'showcase', 'workshop', 'reward'].includes(screen)
+    return ['learning', 'placement', 'camera', 'showcase', 'workshop', 'reward', 'challenge'].includes(screen)
         || screen === 'photos' && Boolean(photo);
 }
 
@@ -33,6 +33,7 @@ export function islandParentUrl(pathname: string, search: string) {
     if (pathname === '/settings/curriculum') return '/settings?section=learning';
     if (pathname === '/parents' || pathname === '/dev') return '/settings?section=parent';
     if (pathname === '/island') {
+        if (query.get('view') === 'challenge') return islandViewUrl('keepsakes');
         if (query.has('photo')) return islandViewUrl('photos');
         if (query.get('view') === 'placement') return islandViewUrl('inventory');
         if (query.get('view') === 'camera') return islandViewUrl('photos');

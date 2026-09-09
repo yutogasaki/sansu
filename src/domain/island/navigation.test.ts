@@ -11,7 +11,7 @@ describe('island navigation contract', () => {
     });
     it('keeps normal lists available and gives focused work the viewport', () => {
         for (const view of ['home', 'inventory', 'album', 'photos', 'growth', 'furniture'] as const) expect(islandFocusScreen(view)).toBe(false);
-        for (const view of ['learning', 'placement', 'camera', 'showcase', 'workshop'] as const) expect(islandFocusScreen(view)).toBe(true);
+        for (const view of ['learning', 'placement', 'camera', 'showcase', 'workshop', 'challenge'] as const) expect(islandFocusScreen(view)).toBe(true);
         expect(islandFocusScreen('photos', 'stored-photo')).toBe(true);
     });
     it('keeps the handbook addressable and returns learning to that same page', () => {
@@ -29,6 +29,7 @@ describe('island navigation contract', () => {
         ['/settings/curriculum', '', '/settings?section=learning'],
         ['/settings', '?section=learning&learn=1', '/settings?section=learning'],
         ['/island', '?learn=1', '/island'],
+        ['/island', '?view=challenge', '/island?view=keepsakes'],
         ['/island', '?view=placement', '/island?view=inventory'],
         ['/island', '?view=photos&photo=a', '/island?view=photos'],
     ])('has an in-app fallback for direct entry %s%s', (path, search, parent) => {
