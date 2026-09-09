@@ -149,7 +149,7 @@ describe('default mint lawn bump surface', () => {
         } finally { disposeGeometry(oldScene); disposeGeometry(newScene); legacy.dispose(); selected.dispose(); }
     });
 
-    it('shares the three caps texture and retires it once on purchase, restore and exit', () => {
+    it('keeps the visible cap texture and retires it once on purchase, restore and exit', () => {
         const world = new IslandCosmeticScenery(), caps = capMeshes(world.partObjects('ground'));
         const baseline = capShape(caps), disposed = caps.map(() => 0);
         caps.forEach(({ material }, i) => material.addEventListener('dispose', () => disposed[i]++));
@@ -157,14 +157,14 @@ describe('default mint lawn bump surface', () => {
         let textureRetired = 0; texture.addEventListener('dispose', () => textureRetired++);
         const shore = world.partObjects('shore'), water = world.partObjects('water'), tree = world.tree;
         try {
-            expect(caps).toHaveLength(3); expect(textures.size).toBe(1);
+            expect(caps).toHaveLength(1); expect(textures.size).toBe(1);
             expect(world.updateAppearance()).toBe(false); expect(capMeshes(world.partObjects('ground'))).toEqual(caps);
             const appearance = structuredClone(world.appearance);
             appearance.slots.ground = islandAppearanceStyleId('candy', 'ground');
             const choice = { themeId: 'moon-garden' as const, accentId: null, appearance };
             world.updateAppearance(choice);
             const purchased = capMeshes(world.partObjects('ground'));
-            expect(capShape(purchased)).toEqual(baseline); expect(disposed).toEqual([1, 1, 1]);
+            expect(capShape(purchased)).toEqual(baseline); expect(disposed).toEqual([1]);
             expect(textureRetired).toBe(1);
             expect(purchased.every(({ material }) => material.name === 'biscuit-ground-v1' && material.map && !material.bumpMap)).toBe(true);
             expect(purchased.every(({ material }) => material.map!.repeat.equals(new THREE.Vector2(1, 1)))).toBe(true);
@@ -175,7 +175,7 @@ describe('default mint lawn bump surface', () => {
             expect(capShape(restored)).toEqual(baseline); expect(restoredTexture).not.toBe(texture);
             let restoredRetired = 0; restoredTexture.addEventListener('dispose', () => restoredRetired++);
             world.dispose(); world.dispose();
-            expect(restoredRetired).toBe(1); expect(textureRetired).toBe(1); expect(disposed).toEqual([1, 1, 1]);
+            expect(restoredRetired).toBe(1); expect(textureRetired).toBe(1); expect(disposed).toEqual([1]);
         } finally { world.dispose(); }
     });
 });

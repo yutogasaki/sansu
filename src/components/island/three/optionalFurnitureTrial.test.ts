@@ -1,14 +1,15 @@
 import * as THREE from 'three';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { IslandScene } from './runtime';
-import { createIsland, getIslandLandAccess, isValidIslandPlacement } from '../../../domain/island/catalog';
+import { createIsland, getIslandLandAccess, getIslandLands, isValidIslandPlacement, ISLAND_ITEMS } from '../../../domain/island/catalog';
+import { islandFloorContains } from '../../../domain/island/landGeometry';
 import { IslandResident } from './animals';
 import { IslandMaterials, disposeGeometry } from './primitives';
 import { makeOptionalFurniture } from './optionalFurnitureGeometry';
 import { OptionalFurnitureController } from './optionalFurnitureController';
 import { resolveOptionalFurnitureTrial } from './optionalFurnitureTrial';
 import type { IslandStageItem, IslandStageState } from './types';
-import { planResidentPointRoute, residentObstacles, residentPointIsClear, RESIDENT_FOOTPRINT } from './navigation';
+import { planResidentPointRoute, residentGroundHeight, residentGroundIsSafe, residentObstacles, residentPointIsClear, RESIDENT_FOOTPRINT } from './navigation';
 import { optionalFurnitureGroundSupports } from './optionalFurnitureGeometry';
 import { optionalFootprintClearsCircle, optionalFootprintsAreSeparate, optionalResidentFootprint } from './optionalFurnitureNavigation';
 import { OptionalFurniturePlacement, furniturePlacementKey, type IslandFurniturePlacementResult } from './optionalFurniturePlacement';
@@ -87,7 +88,7 @@ describe('borrowed tools choose an actually usable legal trial location', () => 
         expect(runtime.furnitureTrial.group.uuid).toBe(uuid); expect(JSON.stringify(f.island)).toBe(saved);
         f.dispose();
     });
-    it('keeps furniture-03 hammock search blocked until surrounding furniture is explicitly rearranged', () => {
+    it('uses the new connecting floor for the formerly blocked furniture-03 hammock without moving saved furniture', () => {
         const f = fixture('hammock');
         // Recorded positions/items, with constructor idle poses: the browser
         // trace did not capture idle yaw. Full render verification is separate.
@@ -103,8 +104,50 @@ describe('borrowed tools choose an actually usable legal trial location', () => 
         placement.update({ preview: seed, choice, island: f.island, searchRequestId: 'first-search' });
         for (let i = 0; i < 1000 && placement.busy; i++) placement.step(i * 20, false);
         expect(placement.busy).toBe(false);
-        expect(events.at(-1)).toMatchObject({ status: 'no-space', residentId: 'rabbit', itemId: seed.id });
-        expect(events.some(event => event.suggestion)).toBe(false);
+        // Furniture-03 on the old separate ellipses exhausted this search:
+        // no-space until the telescope moved to (-.5,-2.5). Keep that original
+        // failure evidence; connected floor now makes an unchanged layout usable.
+        const first = events.at(-1)!;
+        expect(first).toMatchObject({ status: 'ready', residentId: 'rabbit', itemId: seed.id,
+            suggestion: { requestId: 'first-search' } });
+        expect(JSON.stringify(f.island)).toBe(saved);
+        expect(f.residents.map(resident => ({ uuid: resident.group.uuid, position: resident.group.position.toArray() }))).toEqual(poses);
+        expect(f.controller.active).toBe(false);
+        const suggested = { ...seed, position: first.suggestion!.position, rotation: first.suggestion!.rotation };
+        const confirmedLayout = { ...f.island, items: [...f.island.items, suggested] }, land = getIslandLandAccess(f.island);
+        expect(isValidIslandPlacement(confirmedLayout, suggested.id, suggested.position, suggested.rotation)).toBe(true);
+        const oldFootprintFits = (point: { x: number; z: number }, radius: number) => getIslandLands(land).some(area =>
+            ((point.x - area.x) / (area.radiusX - radius)) ** 2 + ((point.z - area.z) / (area.radiusZ - radius)) ** 2 <= 1);
+        f.group.position.set(suggested.position.x, 0, suggested.position.z); f.group.rotation.set(0, suggested.rotation, 0);
+        expect(f.controller.start({ item: suggested, group: f.group, ...choice, requestId: 'use-new-floor', borrowed: false,
+            items: confirmedLayout.items, land, now: 0, reduced: false }).status).toBe('playing');
+        const actor = f.controller.describe()!.actors[0] as { uuid: string; route: [number, number][] };
+        expect(actor.uuid).toBe(poses[1].uuid);
+        // Establish why this is newly possible, rather than merely accepting a
+        // different status: the furniture or approach needs the new floor.
+        expect(!oldFootprintFits(suggested.position, ISLAND_ITEMS.hammock.radius)
+            || actor.route.some(([x, z]) => !oldFootprintFits({ x, z }, RESIDENT_FOOTPRINT)
+                && !(x >= 4.05 && x <= 5.5 && Math.abs(z) <= .09)), JSON.stringify({ suggested, route: actor.route })).toBe(true);
+        const physical = optionalFurnitureGroundSupports('hammock').map(support => {
+            const point = f.group.localToWorld(new THREE.Vector3(support.x, 0, support.z));
+            expect(islandFloorContains(point, support.radius, 1)).toBe(true);
+            return { x: point.x, z: point.z, radius: support.radius };
+        });
+        const obstacles = [...residentObstacles(f.island.items, ''), ...physical];
+        for (let t = 0; t < 17000 && f.controller.phase !== 'settled'; t += 40) {
+            f.controller.update(t, false); f.controller.afterRender(() => true);
+            if (f.controller.phase !== 'walking') continue;
+            const rabbit = f.residents[1], body = optionalResidentFootprint(rabbit.group);
+            expect(residentPointIsClear(rabbit.group.position, land, obstacles)).toBe(true);
+            expect(rabbit.group.position.y).toBeCloseTo(residentGroundHeight(rabbit.group.position, land), 8);
+            expect(residentObstacles(f.island.items, '').every(circle => optionalFootprintClearsCircle(body, circle))).toBe(true);
+            expect(f.residents.filter(other => other !== rabbit).every(other => optionalFootprintsAreSeparate(body, optionalResidentFootprint(other.group)))).toBe(true);
+        }
+        expect(f.controller.describe()).toMatchObject({ phase: 'settled', contactSeen: true, actorIds: ['rabbit'] });
+        f.controller.cancel(18000, confirmedLayout.items, land);
+        expect(f.controller.active).toBe(false);
+        expect(f.residents.map(resident => ({ uuid: resident.group.uuid, position: resident.group.position.toArray() }))).toEqual(poses);
+        expect(residentGroundIsSafe(f.residents[1].group.position, land)).toBe(true);
         expect(JSON.stringify(f.island)).toBe(saved);
 
         // A distinct explicit placement changes only the surrounding telescope.

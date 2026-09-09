@@ -1,4 +1,5 @@
 import { getIslandLandBounds, getIslandLandLevel, type IslandLandAccess, ISLAND_EAST_LAND, ISLAND_ITEMS, ISLAND_MAIN_LAND, ISLAND_RESERVED_AREAS, ISLAND_WEST_LAND } from '../../../domain/island/catalog';
+import { islandFloorContains } from '../../../domain/island/landGeometry';
 import type { IslandStageItem } from './types';
 
 export interface GroundPoint { x: number; z: number }
@@ -24,11 +25,9 @@ const onEllipse = (point: GroundPoint, land: typeof ISLAND_MAIN_LAND) =>
 
 /** Foot centers stay inside an inset shore or on the explicit bridge deck. */
 export function residentGroundIsSafe(point: GroundPoint, expanded: IslandLandAccess) {
-    if (onEllipse(point, ISLAND_MAIN_LAND)) return true;
-    if (eastOpen(expanded) && (onEllipse(point, ISLAND_EAST_LAND)
-        || (point.x >= 4.05 && point.x <= 5.5 && Math.abs(point.z) <= .09))) return true;
-    return westOpen(expanded) && (onEllipse(point, ISLAND_WEST_LAND)
-        || (point.x <= -4.05 && point.x >= -5.5 && Math.abs(point.z) <= .09));
+    if (islandFloorContains(point, FOOTPRINT, getIslandLandLevel(expanded))) return true;
+    if (eastOpen(expanded) && point.x >= 4.05 && point.x <= 5.5 && Math.abs(point.z) <= .09) return true;
+    return westOpen(expanded) && point.x <= -4.05 && point.x >= -5.5 && Math.abs(point.z) <= .09;
 }
 
 export function residentGroundHeight(point: GroundPoint, expanded: IslandLandAccess) {
@@ -57,15 +56,16 @@ export function findSafeResidentSpawn(origin: GroundPoint, items: readonly Islan
     if (land === ISLAND_EAST_LAND && !eastOpen(landAccess)) return undefined;
     if (land === ISLAND_WEST_LAND && !westOpen(landAccess)) return undefined;
     const obstacles = [...residentObstacles(items, ''), ...extraObstacles];
-    const clear = (point: GroundPoint) => onEllipse(point, land)
-        && residentPointIsClear(point, landAccess, obstacles)
+    const clear = (point: GroundPoint) => residentPointIsClear(point, landAccess, obstacles)
         && occupied.every(other => distance(point, other) >= FOOTPRINT * 2);
-    if (clear(origin)) return { x: origin.x, z: origin.z };
+    // A valid current origin on newly connecting ground must survive a cancelled
+    // visit. Searching for a replacement still stays within the original district.
+    if (clear(origin) && (onEllipse(origin, land) || residentGroundHeight(origin, landAccess) === 0)) return { x: origin.x, z: origin.z };
     let nearest: GroundPoint | undefined, nearestDistance = Infinity;
     for (let ix = Math.ceil((land.x - land.radiusX) / STEP); ix <= Math.floor((land.x + land.radiusX) / STEP); ix++) {
         for (let iz = Math.ceil((land.z - land.radiusZ) / STEP); iz <= Math.floor((land.z + land.radiusZ) / STEP); iz++) {
             const point = { x: ix * STEP, z: iz * STEP }, d = distance(point, origin);
-            if (d < nearestDistance && clear(point)) { nearest = point; nearestDistance = d; }
+            if (d < nearestDistance && onEllipse(point, land) && clear(point)) { nearest = point; nearestDistance = d; }
         }
     }
     return nearest;

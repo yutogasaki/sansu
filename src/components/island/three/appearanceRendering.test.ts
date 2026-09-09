@@ -60,7 +60,7 @@ describe('independently equipped actual island surfaces', () => {
         try {
             f.world.updateAppearance({ themeId: 'moon-garden', accentId: null, appearance }); f.update();
             const ground = levelMeshes();
-            expect(ground).toHaveLength(3);
+            expect(ground).toHaveLength(1);
             expect(ground.map(mesh => Array.from(mesh.geometry.getAttribute('position').array))).toEqual(before);
             const textures = new Set(ground.map(mesh => (mesh.material as THREE.MeshStandardMaterial).map));
             expect(textures.size).toBe(1);

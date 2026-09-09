@@ -1,0 +1,472 @@
+{
+  "date": "2026-09-09",
+  "status": "local visual adoption; original37 FAIL retained; test-only verification37-02 full PASS; classic37 PASS",
+  "humanN": 0,
+  "fullGoalComplete": false,
+  "sourceAParity": "HOLD",
+  "formalTimingEligible": false,
+  "app": {
+    "report": "output/playwright/island-renewal/connected-review-37-01/report.json",
+    "reportSha256": "29ba4f7a742929b713d0ebd236db6d044a58e40513cdfa642b7887773c748941",
+    "qa": "output/playwright/island-renewal/connected-review-37-01.mjs",
+    "qaSha256": "f5ee33d6375760296552d4e07ab6b19a4b9ded9f854e4ab3dc6990443948416c",
+    "source37": {
+      "revision": "workshop-20260909-794c920135eb",
+      "sha256": "794c920135ebfeadbe7bb3a1db99d2bb53b38d115767d7d0bd20fea7543e17d8",
+      "inputCount": 1081,
+      "manifestSha256": "aae904a7cf046e13e1aaadebf1bd6aee14c973d7adaae487ee9e5c2a774346a5",
+      "candidate": "mystic-island-shore-garden-v17",
+      "url": "http://127.0.0.1:5423",
+      "flags": {
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_BUILD_PLAY_ENABLED": "true"
+      },
+      "baseCommit": "9e02ceeea0688366a96919e782f9e1c6d8e36228",
+      "composition": "19 explicit source/test overlays plus 6 candidate replacements; concurrent navigation app/QA/package/docs excluded"
+    },
+    "source36": {
+      "revision": "workshop-20260909-0c1dfa1c54fc",
+      "candidate": "mystic-island-shore-garden-v16",
+      "sourceHash": "0c1dfa1c54fc86449797b91a5cb40b04798041cbccb6716d24f4e4fd6be3a0a6",
+      "inputs": 1076,
+      "base": "http://127.0.0.1:5422",
+      "manifestSha": "f4421ed6a0d77a4cabaf946ae4703aed70b5d4129097e4b89e629af077a2454d"
+    },
+    "actualVersions": {
+      "before": "workshop-20260909-0c1dfa1c54fc:9335b320-4296-40ae-92da-968ef94e3d81",
+      "after": "workshop-20260909-794c920135eb:3ddada38-80cf-4b46-b6fe-37cbcfbb09e6"
+    },
+    "renderFlags": {
+      "island": true,
+      "buildPlay": true
+    },
+    "viewports": {
+      "phone": [
+        390,
+        844
+      ],
+      "tablet": [
+        768,
+        1024
+      ]
+    },
+    "reducedMotion": true,
+    "serviceWorkerControlled": true,
+    "fixture": {
+      "path": "output/island-experience/camera-23-03/phone-mature-fixture-declared-fixture.json",
+      "sha256": "7f91c523195460efd12a072dc831d53ae70fc3673dd67391d1f5c4bd8f0c812f",
+      "completedSets": 24,
+      "progress": 6,
+      "storedItems": 2,
+      "placementExtra": "one declared lantern at (0,1.75), expansion1",
+      "acquisitionEvidence": false,
+      "realAnswers": 0
+    },
+    "visualRows": 8,
+    "visualCaptures": 24,
+    "placementRows": 4,
+    "rawPngCount": 70,
+    "preservedPngCount": 22,
+    "sameDocumentCanvasDuringVisualExpansion": true,
+    "defaultCameraExactAcrossLevels": [
+      0,
+      1,
+      2
+    ],
+    "allCamera": "changes with the actual floor envelope; not asserted equal across levels",
+    "allStores": "all actual object stores; Blob bytes hashed; no unknown changes absorbed",
+    "allowedWrites": [
+      "declared fixture expansion/revision/time",
+      "exact UI plan-start transaction",
+      "only on37: selected lantern pose + revision/time + item_edited event"
+    ],
+    "placement": {
+      "kind": "lantern",
+      "from": [
+        0,
+        1.75
+      ],
+      "to": [
+        4.25,
+        1.75
+      ],
+      "expansionLevel": 1,
+      "before36": "actual preview invalid, save disabled, cancel all-store invariant",
+      "after37": "valid unsaved, cancel all-store invariant, repeat then save, actual y0 after reload, same reservation input-ready",
+      "cancelPng": false,
+      "cancelEvidence": "both target/both width cancel-native.json matched exact prior baseline",
+      "sameReservation": true
+    },
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "contextsClosed": 12,
+    "sourceStable": true,
+    "qaStable": true,
+    "browserClosed": true,
+    "pass": true,
+    "serviceWorkerControlledMetadataCount": 32
+  },
+  "designContract": {
+    "connectorRadiusZ": 3.35,
+    "contourBlendWidth": 0.18,
+    "floorY": 0,
+    "oldEllipsesAndSavedCoordinates": "retained; connector areas added, no saved furniture/display relocation",
+    "automaticSceneryException": "crystal theme water-edge ornaments moved outside new floor; no owned item pose changes"
+  },
+  "directionStudy": {
+    "kind": "actual-model geometry study, not generated image or production app flow",
+    "report": "output/playwright/island-renewal/connected-direction-03/report.json",
+    "reportSha256": "9dfb53f815b3e30936729075a13c083be174e881c1985f688ba64734e1c09f20",
+    "runner": "output/playwright/island-renewal/connected-direction-03.mjs",
+    "runnerSha256": "69631a47499da2363c268a709297ae998353681c552703be2b8e1c19fd26a4b2",
+    "inputCount": 50,
+    "inputsDigest": "83d992fca00fb346cbb868fca28a270bf0c12abf1c1c52a3651f0821351326ea",
+    "rows": 12,
+    "preservedPngCount": 6,
+    "levelsInArchive": [
+      2
+    ],
+    "radii": [
+      2.25,
+      2.9,
+      3.35
+    ],
+    "camera": "fixed36 camera, identical within each lane/level across radii",
+    "appRevision": null,
+    "dbEvidence": false,
+    "acquisitionEvidence": false,
+    "sourceStable": true,
+    "browserClosed": true,
+    "allRowsPass": true
+  },
+  "integration": {
+    "buildTypeAssets": "PASS",
+    "lint": {
+      "status": "PASS",
+      "errors": 0,
+      "existingWarnings": 1
+    },
+    "originalFullSuite": {
+      "status": "FAIL",
+      "filesPassed": 297,
+      "filesFailed": 2,
+      "testsPassed": 3290,
+      "testsFailed": 3,
+      "durationSeconds": 89.56,
+      "failures": [
+        "waterSurface.test.ts: simultaneous palettes still expects ocean + 3 separate coasts (4); connected result is2",
+        "waterSurface.test.ts: retired/replaced surfaces still expects4; connected result is2",
+        "optionalFurnitureTrial.test.ts: prior hammock fixture expects no-space; added floor returns ready"
+      ]
+    },
+    "separateImmutableVerification": {
+      "status": "PASS",
+      "sourceHash": "82a5a3e8a149ae1a20641b6c460b9734a87bfc71986f119334820859536f84ee",
+      "manifest": "output/island-experience/workshop-verification-37-02/verification-source.json",
+      "manifestSha256": "e6f780e83c0f0bc2b30cafd077ebea3171453ef9e6f20c09717b28b04f5ee510",
+      "appAndQAUnchanged": true,
+      "changedFiles": [
+        "src/components/island/three/waterSurface.test.ts",
+        "src/components/island/three/optionalFurnitureTrial.test.ts"
+      ],
+      "filesPassed": 299,
+      "testsPassed": 3297,
+      "durationSeconds": 85.36,
+      "newBuild": false,
+      "typecheck": "PASS",
+      "lint": "PASS; 0 errors / 1 existing warning",
+      "log": "output/playwright/island-renewal/integration-tests-37-02.log",
+      "logSha256": "5ef315b696fad6b369a364495a11103bb039aad53614e54d015c74a7cb9980b4"
+    },
+    "classicSmoke": {
+      "status": "PASS",
+      "passed": 31,
+      "failed": 0,
+      "source": "output/island-experience/smoke-37-01/execution-summary.json",
+      "summarySha256": "989f295afab8ff2dc5204be5a72907c0ed64293003015ce359dd64a721081f14",
+      "rawReportSha256": "53e20414e944fecf18f7914b8cd3d629f46dac4966853949f221d47e738be9f3",
+      "revision": "workshop-20260909-794c920135eb",
+      "actualDelivery": "classic-v1",
+      "flags": {
+        "VITE_ISLAND_ENABLED": false,
+        "VITE_BUILD_PLAY_ENABLED": false
+      },
+      "sourceStable": true,
+      "qaStable": true,
+      "allContextsClosed": 31,
+      "ownedPidsObserved": 40,
+      "remainingPids": 0,
+      "profileRemoved": true,
+      "dev4173Closed": true,
+      "preview5423Unchanged": true
+    },
+    "formal80": "not run for37",
+    "pwa": "not run for37",
+    "ci": "not run for37; successful 9e02cee CI belongs to prior commit",
+    "logs": {
+      "integration-build-37.log": {
+        "path": "output/playwright/island-renewal/integration-build-37.log",
+        "sha256": "fb6e36cbb927783d7737e05e8526b50ba9d6568405831ec35c4555e52aa11ac6"
+      },
+      "integration-lint-37.log": {
+        "path": "output/playwright/island-renewal/integration-lint-37.log",
+        "sha256": "34d7f88825ad9f20105d2b4776ed5c9ea00ebc1d2bf3afc11eed934281d5ffe7"
+      },
+      "integration-tests-37.log": {
+        "path": "output/playwright/island-renewal/integration-tests-37.log",
+        "sha256": "95090116c39383ddbf78cb176d710ef3d429a1de8cc318dda2c9ab7a180db1de"
+      }
+    },
+    "indexProof": {
+      "file": "index-source-check.json",
+      "sha256": "d45523028ec2053272c5b57f4e2b02a16907a4a13760cd5139ffcb80bc178059",
+      "checkedInputs": 1081,
+      "pass": true,
+      "scope": "matches verification37-02: original app and QA37 plus exactly 2 updated tests; concurrent navigation left in working tree"
+    }
+  },
+  "preparationFailures": [
+    {
+      "path": "output/playwright/island-renewal/connected-direction-01/failure.json",
+      "sha256": "91473f3f024743a27651f5703dd80b54c9a91113bb7b2ba375718a8476b9d123",
+      "phase": "before browser launch",
+      "reason": "esbuild virtual define input treated as filesystem path",
+      "appFailure": false
+    },
+    {
+      "path": "output/playwright/island-renewal/freeze-37.mjs",
+      "sha256": "cf98e5972554a23db20cb2d292248e635fd65e61260660004df18f7264ca43a2",
+      "reason": "root-reported git archive stdout buffer limit; replaced by bounded archive file in freeze-37-02.mjs before fixed37 creation",
+      "appFailure": false,
+      "rawFailureLog": "not separately located; original script and parent report retained"
+    }
+  ],
+  "limits": [
+    "declared maturity/basic furniture, not real acquisition or child behavior",
+    "normal motion and other visual combinations not covered by this reduced-motion moon-garden walkthrough",
+    "east connector lantern point only; west floor and all furniture use not browser-proven here",
+    "no answer submitted; same reservation/input readiness only",
+    "cancel has exact DB evidence, no dedicated screenshot",
+    "no standalone performance, PWA, full-goal or source A parity certification"
+  ],
+  "images": [
+    {
+      "file": "images/phone-after-default-level-0.png",
+      "sha256": "fbc23b024b6f3c1310de24a8616926cb8d9c5b4328033867e2d292ce4d21d660",
+      "source": "output/playwright/island-renewal/connected-review-37-01/phone-after-default-level-0.png",
+      "kind": "app",
+      "label": "phone / 固定37 / 庭の近景 / 拡張0"
+    },
+    {
+      "file": "images/phone-after-default-level-2.png",
+      "sha256": "e05a07e3977602b326ef48278faa31abff0079f97826b8f11c80eceafe607c9a",
+      "source": "output/playwright/island-renewal/connected-review-37-01/phone-after-default-level-2.png",
+      "kind": "app",
+      "label": "phone / 固定37 / 庭の近景 / 拡張2"
+    },
+    {
+      "file": "images/phone-after-all-level-0.png",
+      "sha256": "9de342b34fc7b9318394c72ef15812b60f6616491f6eb886fb23eacfcfdefe0f",
+      "source": "output/playwright/island-renewal/connected-review-37-01/phone-after-all-level-0.png",
+      "kind": "app",
+      "label": "phone / 固定37 / しまぜんぶ / 拡張0"
+    },
+    {
+      "file": "images/phone-after-all-level-1.png",
+      "sha256": "ea21a50cb72ecb760d4ad329bd263b04611dda5fcf974916a81615e839ffb6cf",
+      "source": "output/playwright/island-renewal/connected-review-37-01/phone-after-all-level-1.png",
+      "kind": "app",
+      "label": "phone / 固定37 / しまぜんぶ / 拡張1"
+    },
+    {
+      "file": "images/phone-after-all-level-2.png",
+      "sha256": "484af62e58e41d21de67fc4f3a04a65340f3cf515190064cf99578f8ae1dc494",
+      "source": "output/playwright/island-renewal/connected-review-37-01/phone-after-all-level-2.png",
+      "kind": "app",
+      "label": "phone / 固定37 / しまぜんぶ / 拡張2"
+    },
+    {
+      "file": "images/phone-before-all-level-2.png",
+      "sha256": "308a945a8a0c6437ed39de9ff03ab564756b2977c97d54d63be63715b894285a",
+      "source": "output/playwright/island-renewal/connected-review-37-01/phone-before-all-level-2.png",
+      "kind": "app",
+      "label": "phone / 固定36 / 旧全景 / 拡張2"
+    },
+    {
+      "file": "images/phone-before-placement-old-connector-rejected-page.png",
+      "sha256": "8a81ffafc0261460195122b4f20eaf23080104f6d4c33a0f144a6b00fe382b22",
+      "source": "output/playwright/island-renewal/connected-review-37-01/phone-before-placement-old-connector-rejected-page.png",
+      "kind": "app",
+      "label": "phone / 固定36 / 旧床の配置拒否"
+    },
+    {
+      "file": "images/phone-after-placement-connector-legal-unsaved-page.png",
+      "sha256": "b991a359501d0747f4f3c53b6ca5ab3fba1f9d86bc48b043c10f3c8911ff562b",
+      "source": "output/playwright/island-renewal/connected-review-37-01/phone-after-placement-connector-legal-unsaved-page.png",
+      "kind": "app",
+      "label": "phone / 固定37 / 新床へ未保存プレビュー（この後に取消）"
+    },
+    {
+      "file": "images/phone-after-placement-connector-saved.png",
+      "sha256": "2e62d9b02ab8d14d8d63084160d4bc57881918f72d8e3540b8494925741b21f1",
+      "source": "output/playwright/island-renewal/connected-review-37-01/phone-after-placement-connector-saved.png",
+      "kind": "app",
+      "label": "phone / 固定37 / 新床へ保存した実模型"
+    },
+    {
+      "file": "images/phone-after-placement-connector-reloaded.png",
+      "sha256": "b0d3986d2cc00aeabe44b6169145a333f52c2f61c67f59ea4370d32c674f10d0",
+      "source": "output/playwright/island-renewal/connected-review-37-01/phone-after-placement-connector-reloaded.png",
+      "kind": "app",
+      "label": "phone / 固定37 / 再読込後の実模型"
+    },
+    {
+      "file": "images/phone-after-placement-same-learning-plan.png",
+      "sha256": "4e83cc5ad40824a503b6ecddc51a31edec4c688060c12e771a1ccebbd21cdb82",
+      "source": "output/playwright/island-renewal/connected-review-37-01/phone-after-placement-same-learning-plan.png",
+      "kind": "app",
+      "label": "phone / 固定37 / 同じ学習予約へ復帰・回答0"
+    },
+    {
+      "file": "images/tablet-after-default-level-0.png",
+      "sha256": "89996834d346ec1e02bf0f6e51586f59f30848b9ffc87844a4aaba372c3abd69",
+      "source": "output/playwright/island-renewal/connected-review-37-01/tablet-after-default-level-0.png",
+      "kind": "app",
+      "label": "tablet / 固定37 / 庭の近景 / 拡張0"
+    },
+    {
+      "file": "images/tablet-after-default-level-2.png",
+      "sha256": "8041febd8055d55a06b23f28852098c07de00005b9cd157ba48400e8d8c4d047",
+      "source": "output/playwright/island-renewal/connected-review-37-01/tablet-after-default-level-2.png",
+      "kind": "app",
+      "label": "tablet / 固定37 / 庭の近景 / 拡張2"
+    },
+    {
+      "file": "images/tablet-after-all-level-0.png",
+      "sha256": "a476dbfd54a4e1498ebea27b43e5022e531eb450c6fe94cf6eeabf52a712a9d5",
+      "source": "output/playwright/island-renewal/connected-review-37-01/tablet-after-all-level-0.png",
+      "kind": "app",
+      "label": "tablet / 固定37 / しまぜんぶ / 拡張0"
+    },
+    {
+      "file": "images/tablet-after-all-level-1.png",
+      "sha256": "70c927a9dd789ae345f3c3fb937ab69d796d1afbc885ad42319b10a5ebd13466",
+      "source": "output/playwright/island-renewal/connected-review-37-01/tablet-after-all-level-1.png",
+      "kind": "app",
+      "label": "tablet / 固定37 / しまぜんぶ / 拡張1"
+    },
+    {
+      "file": "images/tablet-after-all-level-2.png",
+      "sha256": "0cd1d65ba133cd0382f69671ddc49a99d990bc0bfcfff0838e1ceacfecf94bf1",
+      "source": "output/playwright/island-renewal/connected-review-37-01/tablet-after-all-level-2.png",
+      "kind": "app",
+      "label": "tablet / 固定37 / しまぜんぶ / 拡張2"
+    },
+    {
+      "file": "images/tablet-before-all-level-2.png",
+      "sha256": "6c33902a71af17cc5df1c85391911c265725dfaa8487815e1204f059e4d5d966",
+      "source": "output/playwright/island-renewal/connected-review-37-01/tablet-before-all-level-2.png",
+      "kind": "app",
+      "label": "tablet / 固定36 / 旧全景 / 拡張2"
+    },
+    {
+      "file": "images/tablet-before-placement-old-connector-rejected-page.png",
+      "sha256": "55b5cfc241b5f2fcf9b58360d26890211beecdbb7a46fca3cb8e2f089a64995c",
+      "source": "output/playwright/island-renewal/connected-review-37-01/tablet-before-placement-old-connector-rejected-page.png",
+      "kind": "app",
+      "label": "tablet / 固定36 / 旧床の配置拒否"
+    },
+    {
+      "file": "images/tablet-after-placement-connector-legal-unsaved-page.png",
+      "sha256": "65018e71d2bebb1272fc7b53fe39122e178405a3c10f6d97e0b35030dee48ad9",
+      "source": "output/playwright/island-renewal/connected-review-37-01/tablet-after-placement-connector-legal-unsaved-page.png",
+      "kind": "app",
+      "label": "tablet / 固定37 / 新床へ未保存プレビュー（この後に取消）"
+    },
+    {
+      "file": "images/tablet-after-placement-connector-saved.png",
+      "sha256": "a7e2b72211988fd02c31ce3dbd9e48908de0c5cd1678e794861aa1d037c1fc2e",
+      "source": "output/playwright/island-renewal/connected-review-37-01/tablet-after-placement-connector-saved.png",
+      "kind": "app",
+      "label": "tablet / 固定37 / 新床へ保存した実模型"
+    },
+    {
+      "file": "images/tablet-after-placement-connector-reloaded.png",
+      "sha256": "55565e0fd2723608391a558171c6528162d7d065ff43f984dd35308892d926d9",
+      "source": "output/playwright/island-renewal/connected-review-37-01/tablet-after-placement-connector-reloaded.png",
+      "kind": "app",
+      "label": "tablet / 固定37 / 再読込後の実模型"
+    },
+    {
+      "file": "images/tablet-after-placement-same-learning-plan.png",
+      "sha256": "b5e55a215071b77638aa31479d6ec22da81771923a19973fa24f919f70319d80",
+      "source": "output/playwright/island-renewal/connected-review-37-01/tablet-after-placement-same-learning-plan.png",
+      "kind": "app",
+      "label": "tablet / 固定37 / 同じ学習予約へ復帰・回答0"
+    },
+    {
+      "file": "images/direction-phone-radius-2.25-level-2.png",
+      "sha256": "b1d58830906e43dfaa6087393d16c086605d5a38c626df11a76b780d228e34ae",
+      "source": "output/playwright/island-renewal/connected-direction-03/phone-radius-2.25-level-2.png",
+      "kind": "direction",
+      "label": "phone / 実模型方向研究 / 半径2.25 / 拡張2"
+    },
+    {
+      "file": "images/direction-phone-radius-2.9-level-2.png",
+      "sha256": "dcb184c1db44189b79a9ce070e0815c78500ee738b5c0ee9bce3761a37988861",
+      "source": "output/playwright/island-renewal/connected-direction-03/phone-radius-2.9-level-2.png",
+      "kind": "direction",
+      "label": "phone / 実模型方向研究 / 半径2.9 / 拡張2"
+    },
+    {
+      "file": "images/direction-phone-radius-3.35-level-2.png",
+      "sha256": "2dd61ed3e522c3851543b06172a17c125b10d27afc62a23283bed0bf0e3e9dd3",
+      "source": "output/playwright/island-renewal/connected-direction-03/phone-radius-3.35-level-2.png",
+      "kind": "direction",
+      "label": "phone / 実模型方向研究 / 半径3.35 / 拡張2"
+    },
+    {
+      "file": "images/direction-tablet-radius-2.25-level-2.png",
+      "sha256": "b6c55a6d464ec5024b4716d772d96d8c53eef6a8823502dee42816f5fde2f125",
+      "source": "output/playwright/island-renewal/connected-direction-03/tablet-radius-2.25-level-2.png",
+      "kind": "direction",
+      "label": "tablet / 実模型方向研究 / 半径2.25 / 拡張2"
+    },
+    {
+      "file": "images/direction-tablet-radius-2.9-level-2.png",
+      "sha256": "51dd37d50eeec3a7a75657762a8bedc7b60b92483a147db11853ed0490df565d",
+      "source": "output/playwright/island-renewal/connected-direction-03/tablet-radius-2.9-level-2.png",
+      "kind": "direction",
+      "label": "tablet / 実模型方向研究 / 半径2.9 / 拡張2"
+    },
+    {
+      "file": "images/direction-tablet-radius-3.35-level-2.png",
+      "sha256": "08b46e0a981659e5bdee94ed102f286c76f5fe5d33513df330a50a047989d053",
+      "source": "output/playwright/island-renewal/connected-direction-03/tablet-radius-3.35-level-2.png",
+      "kind": "direction",
+      "label": "tablet / 実模型方向研究 / 半径3.35 / 拡張2"
+    }
+  ],
+  "docsCheckBeforeCommit": {
+    "checks": [
+      {
+        "mode": "current-tracked",
+        "exitCode": 1,
+        "files": 4813,
+        "temporaryPath": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-connected37-final-current-tracked-lgse3bnm",
+        "log": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/docs-37-02-current-tracked.log",
+        "logSha256": "74d961bb988239e69834538a117b6ca4940eab603002ac89bc59d65545c3da0c"
+      },
+      {
+        "mode": "commit-index",
+        "exitCode": 0,
+        "files": 4813,
+        "temporaryPath": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-connected37-final-commit-index-y75ftf06",
+        "log": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/docs-37-02-commit-index.log",
+        "logSha256": "5072f36f4c7f61c0116858a3fabd596acddf145b2e549b6ec6661375d320acb1"
+      }
+    ],
+    "scope": "The current-tracked copy uses current working contents with ignored output excluded. The commit-index copy contains only the intended commit, excluding the parallel navigation docs/hunks.",
+    "interpretation": "Exact intended index PASS with 4813 tracked paths including 28 PNGs. Current tracked working copy FAIL has only seven links to concurrent untracked navigation docs; those working changes are retained and excluded from this commit."
+  }
+}

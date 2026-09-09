@@ -20,6 +20,8 @@ import { cameraPanHull, type CameraPanPoint } from './cameraPanFraming';
 import { IslandMaterials, disposeGeometry, star } from './primitives';
 import { applyTreeLife, getTreeLightAnchor } from './scenery';
 import { islandTerrainEnvelope } from './terrainProfile';
+import { connectedTerrainEnvelope } from './connectedTerrain';
+import { getIslandFloorAreas } from '../../../domain/island/landGeometry';
 import { applyFurnitureGrowth, IslandNatureVisuals } from './growthVisuals';
 import { applyFurnitureAppearance, furnitureAppearanceMaterials } from './furnitureAppearance';
 import { fitNatureObservationCamera, inspectCurrentButterflyObservation, inspectCurrentLeafBirdObservation } from './natureObservationFrame';
@@ -1204,7 +1206,15 @@ export class IslandScene {
         }
         const lands = getIslandLands(this.landAccess);
         const regions = lands.map(area => islandTerrainEnvelope(area).map(point => new THREE.Vector3(...point)));
+        const level = getIslandExpansionLevel(this.state ?? { completedSets: 0 });
+        for (const area of getIslandFloorAreas(level).filter(area => !lands.some(land => land.x === area.x))) {
+            regions.push(Array.from({ length: 64 }, (_, i) => {
+                const angle = i / 64 * Math.PI * 2;
+                return new THREE.Vector3(area.x + Math.cos(angle) * area.radiusX, 0, area.z + Math.sin(angle) * area.radiusZ);
+            }));
+        }
         const points = regions.flat();
+        if (level > 0) points.push(...connectedTerrainEnvelope(level).map(point => new THREE.Vector3(...point)));
         points.push(new THREE.Vector3(-3.1, 2.75, -2), new THREE.Vector3(1.3, 4.8, -1.65),
             new THREE.Vector3(-1.4, 0, 4.45), new THREE.Vector3(3.46, 3.3, -1.65));
         if (western) points.push(new THREE.Vector3(-6.7, 3.2, -1.2));

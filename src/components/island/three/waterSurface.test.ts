@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { describe, expect, it } from 'vitest';
 import { islandAppearanceStyleId } from '../../../domain/island/appearance';
+import { createIsland } from '../../../domain/island/catalog';
 import { IslandCosmeticScenery } from './cosmeticScenery';
 
 function surfaces(world: IslandCosmeticScenery) {
@@ -21,15 +22,21 @@ const observeDisposal = (world: IslandCosmeticScenery) => surfaces(world).map(({
     material.addEventListener('dispose', () => count.value++);
     return count;
 });
+function grow(world: IslandCosmeticScenery, level: 0 | 1 | 2) {
+    const island = createIsland('water-floor', 1);
+    world.updateGrowth({ ...island, completedSets: 24, growth: { ...island.growth!, expansionLevel: level }, pulse: 0, learning: false });
+}
 
 describe('static ocean and shallow-water resources', () => {
-    it('keeps simultaneous theme palettes independent without altering their water geometry or other slots', () => {
+    it.each([0, 1, 2] as const)('keeps simultaneous palettes and other slots independent at floor level %s', level => {
         const original = new IslandCosmeticScenery();
         const preview = new IslandCosmeticScenery({ themeId: 'candy', accentId: null });
+        grow(original, level); grow(preview, level);
         try {
             const originalColors = colors(original), originalPositions = positions(original);
-            expect(surfaces(original)).toHaveLength(4); // Ocean plus the three existing shore meshes.
-            expect(surfaces(preview)).toHaveLength(4);
+            // Initial coast, or two connected shallow bands, plus the ocean.
+            expect(surfaces(original)).toHaveLength(level === 0 ? 2 : 3);
+            expect(surfaces(preview)).toHaveLength(level === 0 ? 2 : 3);
             expect(colors(preview)).not.toEqual(originalColors);
             expect(positions(preview)).toEqual(originalPositions);
             const retainedGround = preview.partObjects('ground');
@@ -45,8 +52,9 @@ describe('static ocean and shallow-water resources', () => {
         } finally { original.dispose(); preview.dispose(); }
     });
 
-    it('reuses unchanged surfaces and retires each replaced or exited material once, without allocating textures', () => {
+    it.each([0, 1, 2] as const)('reuses and retires water resources without textures at floor level %s', level => {
         const world = new IslandCosmeticScenery();
+        grow(world, level);
         const original = surfaces(world), retired = observeDisposal(world);
         try {
             expect(world.updateAppearance()).toBe(false);
@@ -58,7 +66,7 @@ describe('static ocean and shallow-water resources', () => {
             expect(world.updateAppearance(choice)).toBe(true);
             expect(retired.every(count => count.value === 1)).toBe(true);
             const replacement = surfaces(world), exited = observeDisposal(world);
-            expect(replacement).toHaveLength(4);
+            expect(replacement).toHaveLength(level === 0 ? 2 : 3);
             for (const { material } of replacement) {
                 expect(material.vertexColors).toBe(true);
                 expect(material.color.toArray()).toEqual([1, 1, 1]);

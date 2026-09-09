@@ -3,6 +3,8 @@ import { ISLAND_FURNITURE_CATALOG } from './furniture';
 import { initializeIslandGrowth } from './growth';
 import { getIslandExpansionLevel, type IslandExpansionLevel } from './expansion';
 import { isClearOfSharedDisplays } from './sharedDisplayGeometry';
+import { getIslandFloorBounds, islandFloorContains, ISLAND_MAIN_LAND, ISLAND_EAST_LAND, ISLAND_WEST_LAND } from './landGeometry';
+export { ISLAND_MAIN_LAND, ISLAND_EAST_LAND, ISLAND_WEST_LAND } from './landGeometry';
 
 export const ISLAND_ITEMS: Record<IslandItemKind, { name: string; description: string; radius: number }> = {
     bench: { name: 'ベンチ', description: 'どうぶつが ひとやすみ', radius: .65 },
@@ -16,11 +18,6 @@ export const ISLAND_ITEMS: Record<IslandItemKind, { name: string; description: s
     'tea-table': ISLAND_FURNITURE_CATALOG[2],
 };
 
-export const ISLAND_MAIN_LAND = { x: 0, z: 0, radiusX: 4.8, radiusZ: 3.6 };
-// Grow outward from the existing inner banks at ±4.3. Every earlier shore,
-// saved possession and bridge landing remains inside the enlarged district.
-export const ISLAND_EAST_LAND = { x: 7.3, z: 0, radiusX: 3, radiusZ: 3.4 };
-export const ISLAND_WEST_LAND = { x: -7.3, z: 0, radiusX: 3, radiusZ: 3.4 };
 export const ISLAND_RESERVED_AREAS = [
     { x: -2.6, z: -1.65, radius: 1.15 },
     { x: 1.6, z: -1.6, radius: .85 },
@@ -59,13 +56,7 @@ export function getIslandLands(access: IslandLandAccess) {
 }
 
 export function getIslandLandBounds(access: IslandLandAccess) {
-    const lands = getIslandLands(access);
-    return {
-        minX: Math.min(...lands.map(land => land.x - land.radiusX)),
-        maxX: Math.max(...lands.map(land => land.x + land.radiusX)),
-        minZ: Math.min(...lands.map(land => land.z - land.radiusZ)),
-        maxZ: Math.max(...lands.map(land => land.z + land.radiusZ)),
-    };
+    return getIslandFloorBounds(getIslandLandLevel(access));
 }
 
 /** Both automatic placement and reachable advice search every unlocked shore. */
@@ -77,15 +68,10 @@ export function islandPlacementCandidates(access: IslandLandAccess): IslandPosit
     return candidates;
 }
 
-function fitsLand(position: IslandPosition, radius: number, access: IslandLandAccess) {
-    return getIslandLands(access).some(land => ((position.x - land.x) / (land.radiusX - radius)) ** 2
-        + ((position.z - land.z) / (land.radiusZ - radius)) ** 2 <= 1);
-}
-
 function canPlaceKind(island: IslandRecord, kind: IslandItemKind, position: IslandPosition, itemId?: string) {
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z)) return false;
     const radius = ISLAND_ITEMS[kind]?.radius;
-    if (!radius || !fitsLand(position, radius, getIslandLandAccess(island))) return false;
+    if (!radius || !islandFloorContains(position, radius, getIslandLandLevel(getIslandLandAccess(island)))) return false;
     if (ISLAND_RESERVED_AREAS.some(area => Math.hypot(position.x - area.x, position.z - area.z) < radius + area.radius)) return false;
     if (!isClearOfSharedDisplays(island, position, radius)) return false;
     return island.items.every(item => item.id === itemId || !item.position

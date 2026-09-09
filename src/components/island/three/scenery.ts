@@ -309,10 +309,16 @@ function dock(m: IslandMaterials) {
     return group;
 }
 
-export function makeScenery(m: IslandMaterials, slot?: IslandAppearanceSlotId) {
+/** The unexpanded island keeps its authored silhouette. Expanded scenery owns
+ * one shared terrain root while the house, plants and paths stay in place. */
+export function makeMainIslandTerrain(m: IslandMaterials, slot?: IslandAppearanceSlotId) {
+    return land(m, ISLAND_MAIN_LAND.x, ISLAND_MAIN_LAND.z,
+        ISLAND_MAIN_LAND.radiusX, ISLAND_MAIN_LAND.radiusZ, slot);
+}
+
+export function makeScenery(m: IslandMaterials, slot?: IslandAppearanceSlotId, options: { terrain?: boolean } = {}) {
     const build = new ScenerySlotBuild(slot), result = build.group;
-    if (!slot || ['ground', 'shore', 'water'].includes(slot)) result.add(land(m, ISLAND_MAIN_LAND.x, ISLAND_MAIN_LAND.z,
-        ISLAND_MAIN_LAND.radiusX, ISLAND_MAIN_LAND.radiusZ, slot));
+    if (options.terrain !== false && (!slot || ['ground', 'shore', 'water'].includes(slot))) result.add(makeMainIslandTerrain(m, slot));
     const house = !slot || ['houseBody', 'houseRoof', 'houseWindows', 'flower'].includes(slot) ? cottage(m, slot) : undefined;
     if (!slot || slot === 'bridge') build.part('bridge').add(dock(m));
     let group = build.part('tree');
@@ -362,9 +368,10 @@ export function makeScenery(m: IslandMaterials, slot?: IslandAppearanceSlotId) {
     return scenery;
 }
 
-export function makeExpansion(m: IslandMaterials, slot?: IslandAppearanceSlotId, profile: IslandTerrainProfile = 'east') {
+export function makeExpansion(m: IslandMaterials, slot?: IslandAppearanceSlotId, profile: IslandTerrainProfile = 'east',
+    options: { terrain?: boolean } = {}) {
     const build = new ScenerySlotBuild(slot), result = build.group;
-    if (!slot || ['ground', 'shore', 'water'].includes(slot)) result.add(land(m, ISLAND_EAST_LAND.x, ISLAND_EAST_LAND.z,
+    if (options.terrain !== false && (!slot || ['ground', 'shore', 'water'].includes(slot))) result.add(land(m, ISLAND_EAST_LAND.x, ISLAND_EAST_LAND.z,
         ISLAND_EAST_LAND.radiusX, ISLAND_EAST_LAND.radiusZ, slot, profile));
     let group = build.part('bridge');
     const wood = m.surface('#d6a76e', .86);

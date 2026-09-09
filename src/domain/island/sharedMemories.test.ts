@@ -48,6 +48,25 @@ function workRef(island: IslandRecord): SharedTargetRef {
 }
 
 describe('shared display and memory identities', () => {
+    it('uses unlocked connecting floor for exhibits and keeps both furniture and exhibit collisions', () => {
+        const base = createIsland('connected-exhibit', 0), point = { x: 4.25, z: 1.5 };
+        const ref = specimen(), target = resolveSharedTarget(base, ref);
+        const opened = { ...base, completedSets: 12, growth: { ...base.growth!, expansionLevel: 1 as const } };
+        expect(isValidSharedDisplayPlacement(base, 'display-1', target, point)).toBe(false);
+        expect(isValidSharedDisplayPlacement(opened, 'display-1', target, point)).toBe(true);
+        expect(isValidSharedDisplayPlacement(opened, 'display-1', target, { x: -point.x, z: point.z })).toBe(false);
+        expect(isValidSharedDisplayPlacement({ ...opened, growth: { ...opened.growth, expansionLevel: 2 } },
+            'display-1', target, { x: -point.x, z: point.z })).toBe(true);
+        expect(isValidSharedDisplayPlacement(opened, 'display-1', target, { x: 4.75, z: 0 })).toBe(false);
+        const occupied = { ...opened, items: [...opened.items, { ...opened.items[0], id: 'neck-furniture', position: point }] };
+        expect(isValidSharedDisplayPlacement(occupied, 'display-1', target, point)).toBe(false);
+        const placed = change(opened, { type: 'place-display', displayId: 'display-1', target: ref,
+            position: point, rotation: 0, expectedDisplayKey: null }).island;
+        expect(isValidIslandPlacement(placed, placed.items[0].id, point)).toBe(false);
+        expect(isValidSharedDisplayPlacement(placed, 'display-2', resolveSharedTarget(placed, specimen('seaglass')), point)).toBe(false);
+        expect(placed.items).toEqual(opened.items); expect(placed.growth).toEqual(opened.growth);
+    });
+
     it('keeps legacy absence virtual, rejects unknown formats, and uses encoded workshop individual identity', () => {
         const island = initial('child/:日本語');
         expect(getIslandSharedMemories(island)).toEqual({ version: 1, displays: {}, memories: [], nextMemoryOrder: 1 });

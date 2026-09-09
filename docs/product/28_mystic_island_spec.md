@@ -1,12 +1,14 @@
 # 不思議な島 — 学習と島の暮らし
 
+地形は[一続きの岸として育つ島](../design/2026-09-09-island-renewal/connected-shore-direction.md)に従う。東西の解放時に母島とのくびれへ半径3.65×3.35の配置/歩行可能な地面をつなぎ、ground/shore/waterを一続きの外岸へまとめる。既存の全配置楕円・保存された物・橋・床は保ち、地区一覧と接続床の判定を分ける。3形の実モデル比較後、[固定37の実画面](../design/2026-09-09-island-renewal/connected-v17/README.md)で両幅の初期/東/東西、近景/全景、実配置の取消・保存・再読込・同予約復帰を局所確認した。成熟/家具は明示fixture、Human N=0、横幅とsource A全体の品質差・最終正式速度/PWAは未完了であり、Goal全体の完成とはしない。
+
 成長時の既定表示は未ロード・初期・東西解放後とも同じ庭の画角を使う。[成長する島の輪郭と見渡し方](../design/2026-09-09-island-renewal/island-growth-shape-direction.md)に従い、東西の余分な岸の膨らみを抑え、本人が選んだ全景を斜めの奥行きある構図にする。全景は装備した遠景も収め、近景・歩行/pan境界へは広げない。旧配置楕円・保存座標・橋・歩行床を保つ。[固定36の実画面と検証](../design/2026-09-09-island-renewal/growth-v16/README.md)で局所改善を確認し、横に三つの土地が並ぶ骨格とsource A全体の品質差は残す。
 
 既定屋根は `island-roof-surface-v1` を使う。[屋根の素材方針](../design/2026-09-09-island-renewal/roof-material-direction.md)に従い、既定 `legacy-v1:moon-garden:houseRoof` の面だけを大きな丸端の色瓦へ、4継ぎ目色だけを暖かな黄土/クリームへ変える。既存の閉じたshell・UV・door・旗・窓、他テーマと本人の明示部位を保持し、実立体瓦の追加とはしない。[固定33→34の実画像](../design/2026-09-09-island-renewal/roof-v14/README.md)で二重の黒線を減らす局所改善を採用した。
 
-既定の `legacy-v1:moon-garden:ground` 上面は `island-grass-surface-v5` の静止した短葉のbump面を使う。専用poolが128²のmipmap付きheight textureを一度生成し、repeat0.25・bumpScale1.2で法線へ反映する。bumpScaleはworld高さではなく、geometry・歩行床・保存座標・base color・粗さ・既存UVを変えない。3土地のcapが共有し、取得品への切替/退出で一度だけ解放する。map付き部位・`parts-v1`・他テーマ・岸・道・家は対象外で、時間uniformや毎frameの更新は加えない。[固定28→33の実画面監査](../design/2026-09-09-island-renewal/grass-v13/README.md)で、小葉の起伏と足元・道の可読性を局所改善として採用した。明示した成熟fixtureの比較であり、実獲得や子どもの観察ではない。過去29〜32のHOLD/GPU診断履歴は同監査と[制作経緯](../design/2026-09-09-island-renewal/direction.md)へ残し、source A全体との一致はHOLDとする。
+既定の `legacy-v1:moon-garden:ground` 上面は `island-grass-surface-v5` の静止した短葉のbump面を使う。専用poolが128²のmipmap付きheight textureを一度生成し、repeat0.25・bumpScale1.2で法線へ反映する。bumpScaleはworld高さではなく、geometry・歩行床・保存座標・base color・粗さ・既存UVを変えない。初期のcapと解放時に張り直す一続きのcapが同じpoolを使い、取得品への切替/退出で一度だけ解放する。map付き部位・`parts-v1`・他テーマ・岸・道・家は対象外で、時間uniformや毎frameの更新は加えない。[固定28→33の実画面監査](../design/2026-09-09-island-renewal/grass-v13/README.md)で、小葉の起伏と足元・道の可読性を局所改善として採用した。明示した成熟fixtureの比較であり、実獲得や子どもの観察ではない。過去29〜32のHOLD/GPU診断履歴は同監査と[制作経緯](../design/2026-09-09-island-renewal/direction.md)へ残し、source A全体との一致はHOLDとする。
 
-> 2026-09-09: ユーザーは島の形を現状に限定せず、ゲーム全体の改善を委任した。[造形比較](../design/2026-09-09-island-renewal/direction.md)に基づき、`mystic-island-shore-garden-v16`を現在のローカル制作候補とする。均一な円盤から、非対称の外岸・片側の砂浜・低い岩と浅瀬へ変える。既存の配置楕円をすべて内包し、歩行面y=0・橋・予約域・保存x/zを保つ。新たな高低差の歩行や陸地切断を描画だけで導入しない。全景/部位/東西の画角は同じterrain envelopeに従い、景色や成長の比較は同倍率。過去写真の画素は変更しない。操作面は07に従う。方向選定とruntime/公開判定は別とする。 v7では海/浅瀬へ静止した濃淡を加え、v8では既定moon-gardenの6つの樹冠塊を丸い起伏のある閉面へ変える。枝を受ける下側の厚み、成長倍率、木/樹冠の同一性、所有palette/模様を維持し、他テーマと学習入力には適用しない。v13では既定地面の小葉の陰影を局所採用する。
+> 2026-09-09: ユーザーは島の形を現状に限定せず、ゲーム全体の改善を委任した。[造形比較](../design/2026-09-09-island-renewal/direction.md)に基づき、`mystic-island-shore-garden-v17`を現在のローカル制作候補とする。均一な円盤から、非対称の外岸・片側の砂浜・低い岩と浅瀬へ変える。既存の配置楕円をすべて内包し、歩行面y=0・橋・予約域・保存x/zを保つ。新たな高低差の歩行や陸地切断を描画だけで導入しない。全景/部位/東西の画角は同じterrain envelopeに従い、景色や成長の比較は同倍率。過去写真の画素は変更しない。操作面は07に従う。方向選定とruntime/公開判定は別とする。 v7では海/浅瀬へ静止した濃淡を加え、v8では既定moon-gardenの6つの樹冠塊を丸い起伏のある閉面へ変える。枝を受ける下側の厚み、成長倍率、木/樹冠の同一性、所有palette/模様を維持し、他テーマと学習入力には適用しない。v13では既定地面の小葉の陰影を局所採用する。
 
 > 2026-09-08: 分析全体から採用する任意の発見帳、物と環境の反応、来訪、成長予告、名前・旗・衣装・環境音、景色の保存/記念写真は[体験仕様36](36_island_experience_spec.md)に従う。学習の通常入力・連問・保存済み予約は維持する。仕様の採用と実画面の完成判定は分ける。
 

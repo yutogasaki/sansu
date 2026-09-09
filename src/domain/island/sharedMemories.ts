@@ -1,4 +1,5 @@
-import { getIslandLandAccess, getIslandLands, ISLAND_ITEMS, ISLAND_RESERVED_AREAS } from './catalog';
+import { getIslandLandAccess, getIslandLandLevel, ISLAND_ITEMS, ISLAND_RESERVED_AREAS } from './catalog';
+import { islandFloorContains } from './landGeometry';
 import { getIslandExperience, ISLAND_RESIDENT_IDS, normalizeIslandExperienceName, type IslandResidentId } from './experience';
 import { isIslandHabitatUnlocked } from './growth';
 import { getIslandWorkshop, getWorkshopSpecimenName, WORKSHOP_SPECIMENS, WORKSHOP_SPECIMEN_IDS, WORKSHOP_WORK_IDS,
@@ -325,8 +326,7 @@ export const isSharedResidentAvailable = (island: IslandRecord, residentId: Isla
 export function isValidSharedDisplayPlacement(island: IslandRecord, displayId: SharedDisplayId, target: SharedTarget, point: IslandPosition): boolean {
     if (!position(point) || !member(SHARED_DISPLAY_IDS, displayId) || !hasValidSharedTarget(island.profileId, target)) return false;
     const radius = SHARED_DISPLAY_RADII[target.kind];
-    if (!getIslandLands(getIslandLandAccess(island)).some(land => ((point.x - land.x) / (land.radiusX - radius)) ** 2
-        + ((point.z - land.z) / (land.radiusZ - radius)) ** 2 <= 1)) return false;
+    if (!islandFloorContains(point, radius, getIslandLandLevel(getIslandLandAccess(island)))) return false;
     if (ISLAND_RESERVED_AREAS.some(area => Math.hypot(point.x - area.x, point.z - area.z) < radius + area.radius)) return false;
     if (island.items.some(item => item.position && Math.hypot(point.x - item.position.x, point.z - item.position.z) < radius + ISLAND_ITEMS[item.kind].radius + .08)) return false;
     return sharedDisplayObstacles(island).every(other => other.displayId === displayId

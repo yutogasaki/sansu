@@ -1,0 +1,18 @@
+{
+  "pass": true,
+  "checkedInputs": 1081,
+  "verificationSourceHash": "82a5a3e8a149ae1a20641b6c460b9734a87bfc71986f119334820859536f84ee",
+  "appSource": {
+    "snapshot": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-37",
+    "revision": "workshop-20260909-794c920135eb",
+    "sourceHash": "794c920135ebfeadbe7bb3a1db99d2bb53b38d115767d7d0bd20fea7543e17d8",
+    "unchangedAppAndQA": true,
+    "changedFilesAreTestsOnly": true
+  },
+  "testOnlyOverlays": [
+    "src/components/island/three/waterSurface.test.ts",
+    "src/components/island/three/optionalFurnitureTrial.test.ts"
+  ],
+  "method": "Every SHA256-verified frozen file matches its staged Git blob identity",
+  "scopedOut": "Concurrent navigation source, QA, package and docs remain in working tree"
+}

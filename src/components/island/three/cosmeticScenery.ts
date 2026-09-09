@@ -2,8 +2,8 @@ import * as THREE from 'three';
 import type { IslandCosmetics } from '../../../domain/island/customization';
 import { ISLAND_APPEARANCE_SLOT_IDS, resolveIslandAppearance, sameIslandAppearance,
     type IslandAppearanceSlotId, type IslandResolvedAppearance } from '../../../domain/island/appearance';
-import { IslandMaterials, disposeGeometry } from './primitives';
-import { getTreeLightAnchor, makeExpansion, makeLighthouse, makeOcean, makeScenery, makeStarTree, replaceTreeAppearance } from './scenery';
+import { IslandMaterials, batch, disposeGeometry } from './primitives';
+import { getTreeLightAnchor, makeExpansion, makeLighthouse, makeMainIslandTerrain, makeOcean, makeScenery, makeStarTree, replaceTreeAppearance } from './scenery';
 import { addAccentMotifs, addThemeEnvironment } from './themeMotifs';
 import { applySceneryGrowth } from './growthVisuals';
 import type { IslandStageItem, IslandStageState } from './types';
@@ -11,6 +11,7 @@ import { getIslandExpansionLevel } from '../../../domain/island/expansion';
 import { IslandPartMaterials } from './appearanceParts';
 import { addAppearanceBridge, addAppearanceSky, addAppearanceWater } from './appearanceMotifs';
 import { describeAppearanceSlot } from './appearanceDiagnostics';
+import { buildConnectedTerrain } from './connectedTerrain';
 
 export const ISLAND_CUSTOMIZATION_CANDIDATE = 'island-cosmetics-parts-v2';
 export const ISLAND_LEGACY_APPEARANCE_CANDIDATE = 'island-cosmetics-v1';
@@ -20,7 +21,12 @@ export function sameIslandCosmetics(a: IslandCosmetics = DEFAULT_ISLAND_COSMETIC
     return a.accentId === b.accentId && sameIslandAppearance(resolveIslandAppearance(a), resolveIslandAppearance(b));
 }
 
-interface SlotLayer { materials: IslandPartMaterials; groups: THREE.Group[]; growth: THREE.Group }
+type TerrainSlot = 'ground' | 'shore' | 'water';
+const terrainSlots: readonly TerrainSlot[] = ['ground', 'shore', 'water'];
+interface SlotLayer {
+    materials: IslandPartMaterials; groups: THREE.Group[]; growth: THREE.Group;
+    terrain?: { parent: THREE.Group; group: THREE.Group };
+}
 const hasMeshes = (group: THREE.Group) => { let found = false; group.traverse(child => { found ||= child instanceof THREE.Mesh; }); return found; };
 
 /** Each equipped surface owns its GPU resources. The world's physical containers,
@@ -44,10 +50,12 @@ export class IslandCosmeticScenery {
     private diagnostic?: ReturnType<IslandCosmeticScenery['makeDiagnostic']>;
     private furnitureKey = '';
     private furniture = new Map<IslandAppearanceSlotId, THREE.Group[]>();
+    private terrainLevel: 0 | 1 | 2 = 0;
     cosmetics: IslandCosmetics;
     appearance: IslandResolvedAppearance;
 
-    constructor(cosmetics: IslandCosmetics = DEFAULT_ISLAND_COSMETICS) {
+    constructor(cosmetics: IslandCosmetics = DEFAULT_ISLAND_COSMETICS,
+        private readonly terrainOptions?: Parameters<typeof buildConnectedTerrain>[3]) {
         this.cosmetics = { ...cosmetics, ...(cosmetics.appearance ? { appearance: resolveIslandAppearance(cosmetics) } : {}) };
         this.appearance = resolveIslandAppearance(cosmetics);
         this.group.name = 'island-appearance';
@@ -100,16 +108,24 @@ export class IslandCosmeticScenery {
     private buildLayer(slot: IslandAppearanceSlotId): SlotLayer {
         const materials = new IslandPartMaterials(this.appearance.slots[slot]);
         const groups: THREE.Group[] = [], growth = new THREE.Group();
+        let terrain: SlotLayer['terrain'];
         const attach = (parent: THREE.Group, child: THREE.Group) => {
             child.userData.appearanceSlot = slot; child.userData.appearanceStyle = materials.styleId;
             groups.push(child); if (hasMeshes(child)) parent.add(child);
         };
-        if (!['sky', 'mushroom'].includes(slot)) attach(this.scenery, makeScenery(materials, slot));
+        if (!['sky', 'mushroom'].includes(slot)) {
+            const scenery = makeScenery(materials, slot, { terrain: false });
+            if (terrainSlots.includes(slot as TerrainSlot)) {
+                const group = this.makeTerrain(materials, slot as TerrainSlot);
+                scenery.add(group); terrain = { parent: scenery, group };
+            }
+            attach(this.scenery, scenery);
+        }
         if (['ground', 'shore', 'water', 'bridge', 'tree', 'flower'].includes(slot)) {
-        const east = makeExpansion(materials, slot);
+        const east = makeExpansion(materials, slot, 'east', { terrain: false });
         if (slot === 'bridge') addAppearanceBridge(east, materials);
         attach(this.expansion, east);
-        const west = makeExpansion(materials, slot, 'west'); west.rotation.y = Math.PI;
+        const west = makeExpansion(materials, slot, 'west', { terrain: false }); west.rotation.y = Math.PI;
         if (slot === 'bridge') addAppearanceBridge(west, materials);
         attach(this.westExpansion, west);
         }
@@ -123,7 +139,27 @@ export class IslandCosmeticScenery {
             const environment = new THREE.Group(); addThemeEnvironment(environment, materials); attach(this.environment, environment);
         }
         groups.push(growth); growth.userData.appearanceSlot = slot; this.growth.add(growth);
-        return { materials, groups, growth };
+        return { materials, groups, growth, terrain };
+    }
+
+    private makeTerrain(materials: IslandPartMaterials, slot: TerrainSlot) {
+        const group = this.terrainLevel === 0 ? batch(makeMainIslandTerrain(materials, slot))
+            : buildConnectedTerrain(materials, this.terrainLevel, slot, this.terrainOptions);
+        group.name = `island-terrain-${slot}`;
+        return group;
+    }
+
+    private updateTerrain(level: 0 | 1 | 2) {
+        if (this.terrainLevel === level) return false;
+        this.terrainLevel = level;
+        for (const slot of terrainSlots) {
+            const layer = this.layers.get(slot)!, terrain = layer.terrain!;
+            terrain.group.removeFromParent(); disposeGeometry(terrain.group);
+            terrain.group = this.makeTerrain(layer.materials, slot);
+            terrain.parent.add(terrain.group);
+        }
+        this.diagnostic = undefined;
+        return true;
     }
 
     updateAppearance(cosmetics: IslandCosmetics = DEFAULT_ISLAND_COSMETICS) {
@@ -150,12 +186,13 @@ export class IslandCosmeticScenery {
     }
 
     updateGrowth(state: IslandStageState) {
+        if (this.disposed) return false;
         this.lastState = state;
         const level = getIslandExpansionLevel(state);
         const previousVisibility = `${this.expansion.visible}:${this.westExpansion.visible}:${this.lighthouse.visible}`;
         this.expansion.visible = level >= 1; this.westExpansion.visible = level >= 2;
         this.lighthouse.visible = level >= 1 && state.completedSets >= 6;
-        let changed = false;
+        let changed = this.updateTerrain(level);
         for (const slot of ['tree', 'houseBody', 'houseRoof', 'houseWindows', 'flower'] as const) {
             const layer = this.layers.get(slot)!;
             changed = applySceneryGrowth(layer.growth, state, layer.materials,

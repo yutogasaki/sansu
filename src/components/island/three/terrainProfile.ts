@@ -1,5 +1,5 @@
-/** Shore-garden: visual land only. Saved placement and walking ellipses remain
- * authoritative in domain/island/catalog; every old point stays on the y=0 cap. */
+/** Authored coast profiles, also used by the connected terrain builder.
+ * Physical floors live in domain/island/landGeometry; every old ellipse stays on y=0. */
 export type IslandTerrainProfile = 'main' | 'east' | 'west';
 export type TerrainPoint = [number, number, number];
 export interface TerrainArea { x: number; z: number; radiusX: number; radiusZ: number }

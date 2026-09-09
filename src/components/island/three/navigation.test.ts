@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { ISLAND_RESERVED_AREAS } from '../../../domain/island/catalog';
-import { planResidentPointRoute, planResidentRoute, residentGroundHeight, residentObstacles, residentPointIsClear, type ResidentRoute } from './navigation';
+import { findSafeResidentSpawn, planResidentPointRoute, planResidentRoute, residentGroundHeight, residentGroundIsSafe,
+    residentObstacles, residentPointIsClear, type ResidentRoute } from './navigation';
 import type { IslandStageItem } from './types';
 
 const bench = (x: number, z: number): IslandStageItem => ({ id: 'seat', kind: 'bench', position: { x, z }, rotation: 0 });
@@ -18,6 +19,31 @@ function inspectPath(route: ResidentRoute | undefined, target: IslandStageItem, 
 }
 
 describe('island resident physical routes', () => {
+    it('walks to connecting ground only after unlock and retains a safe origin when a visit is cancelled', () => {
+        for (const sign of [1, -1]) {
+            const point = { x: sign * 4.25, z: 1.5 }, access = { expansionLevel: sign > 0 ? 1 as const : 2 as const };
+            expect(residentGroundIsSafe(point, { expansionLevel: 0 })).toBe(false);
+            expect(planResidentPointRoute({ x: 0, z: 1.5 }, point, [], { expansionLevel: 0 })).toBeUndefined();
+            const route = planResidentPointRoute({ x: 0, z: 1.5 }, point, [], access);
+            expect(route).toBeDefined();
+            for (let i = 1; i < route!.points.length; i++) for (let step = 0; step <= 40; step++) {
+                const from = route!.points[i - 1], to = route!.points[i], t = step / 40;
+                const sample = { x: from.x + (to.x - from.x) * t, z: from.z + (to.z - from.z) * t };
+                expect(residentPointIsClear(sample, access, residentObstacles([], ''))).toBe(true);
+                expect(residentGroundHeight(sample, access)).toBe(0);
+            }
+            expect(findSafeResidentSpawn(point, [], access)).toEqual(point);
+            expect(planResidentPointRoute({ x: 0, z: 1.5 }, point, [], access, { occupied: [point] })).toBeUndefined();
+            expect(planResidentPointRoute({ x: 0, z: 1.5 }, point, [], access,
+                { obstacles: [{ ...point, radius: .72 }] })).toBeUndefined();
+        }
+        // Spawn callers place roots at y=0. Adding floor must not newly treat an
+        // elevated bridge-only origin as an unchanged ordinary ground spawn.
+        const bridge = { x: 4.6, z: .1 }, access = { expansionLevel: 1 as const };
+        expect(residentGroundHeight(bridge, access)).toBeGreaterThan(0);
+        expect(findSafeResidentSpawn(bridge, [], access)).not.toEqual(bridge);
+    });
+
     it('routes around actual display footprints and rejects blocked or invalid extra obstacles', () => {
         const obstacle = { x: 0, z: 1.5, radius: .72 }, from = { x: -2, z: 1.5 }, to = { x: 2, z: 1.5 };
         const route = planResidentPointRoute(from, to, [], 0, { obstacles: [obstacle] });

@@ -45,7 +45,9 @@ describe('western island growth and physical routes', () => {
         expect(residentGroundIsSafe({ x: -6.2, z: 0 }, true)).toBe(false);
         expect(residentGroundIsSafe({ x: -6.2, z: 0 }, 12)).toBe(true);
         expect(residentGroundIsSafe({ x: -4.75, z: 0 }, 12)).toBe(true);
-        expect(residentGroundIsSafe({ x: -4.55, z: .1 }, 12)).toBe(false);
+        // The formerly narrow bridge edge is now backed by real connecting floor.
+        expect(residentGroundIsSafe({ x: -4.55, z: .1 }, 12)).toBe(true);
+        expect(residentGroundIsSafe({ x: -4.55, z: .1 }, 11)).toBe(false);
         expect(residentGroundIsSafe({ x: -8.5, z: 0 }, 12)).toBe(true);
         expect(residentGroundIsSafe({ x: -10, z: 0 }, 12)).toBe(false);
         expect(residentGroundIsSafe({ x: 6.2, z: 0 }, true)).toBe(true);
