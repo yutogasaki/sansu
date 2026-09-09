@@ -1,0 +1,74 @@
+{
+  "base": "http://127.0.0.1:5238",
+  "evidence": "DEV: real UI answers from explicit profile fixture; speech mock is separate from native speech",
+  "scenarios": [
+    {
+      "width": 390,
+      "answers": 9,
+      "speech": {
+        "texts": [
+          "This is a dog.",
+          "This is a dog.",
+          "This is a dog."
+        ],
+        "cancellations": 2
+      },
+      "nativeSpeech": "きくだけで いいよ",
+      "metadata": {
+        "revision": "development-local",
+        "version": "development-local:bd27c12a-507f-4079-9380-00b80395b4fd",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 85,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "answers": 9,
+      "speech": {
+        "texts": [
+          "This is an apple.",
+          "This is an apple.",
+          "This is an apple."
+        ],
+        "cancellations": 2
+      },
+      "nativeSpeech": "きくだけで いいよ",
+      "metadata": {
+        "revision": "development-local",
+        "version": "development-local:bd27c12a-507f-4079-9380-00b80395b4fd",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 85,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      },
+      "pass": true
+    }
+  ]
+}

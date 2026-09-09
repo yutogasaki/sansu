@@ -1,0 +1,17 @@
+.english-listening-entry { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 6px 10px; color: var(--pokomoko-ink, #333564); font-size: 13px; font-weight: 700; white-space: nowrap; }
+.english-listening-entry:disabled { opacity: .45; }
+.english-listening { position: fixed; inset: 0; margin: auto; width: min(440px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 0; border-radius: 28px; color: var(--pokomoko-ink, #333564); background: var(--pokomoko-ivory, #fff9ed); box-shadow: var(--app-shadow-strong); overflow-y: auto; }
+.english-listening::backdrop { background: var(--app-overlay, #252b465e); }
+.english-listening-content { display: flex; flex-direction: column; align-items: center; padding: 24px; gap: 16px; text-align: center; }
+.english-listening-heading { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; }
+.english-listening-picture { display: grid; place-items: center; width: 160px; height: 150px; }
+.english-listening-picture svg { width: 128px; height: 128px; }
+.english-listening-english { font-size: clamp(24px, 6vw, 30px); font-weight: 700; line-height: 1.35; }
+.english-listening-japanese { font-size: 18px; line-height: 1.6; }
+.english-listening-status { min-height: 24px; font-size: 13px; }
+.english-listening-play, .english-listening-continue { min-height: 48px; width: 100%; border-radius: 16px; font-weight: 700; }
+.english-listening-play { display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--pokomoko-cobalt, #405bc5); color: white; }
+.english-listening-play:disabled { opacity: .5; }
+.english-listening-continue { border: 1px solid currentColor; background: transparent; }
+.english-listening button:focus-visible, .english-listening-entry:focus-visible { outline: 3px solid var(--app-accent-strong); outline-offset: 3px; }
+@media (max-height: 650px) { .english-listening-content { padding: 18px; gap: 10px; } .english-listening-picture { height: 95px; } .english-listening-picture svg { width: 90px; height: 90px; } }

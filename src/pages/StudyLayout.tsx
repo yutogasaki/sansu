@@ -28,6 +28,7 @@ import { cn } from "../utils/cn";
 type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test" | "dev";
 
 interface StudyLayoutProps {
+    listeningEntry?: React.ReactNode;
     emptyReview?: boolean;
     loading: boolean;
     isFinished: boolean;
@@ -120,6 +121,7 @@ const ResultMetric: React.FC<ResultMetricProps> = ({ label, value, tone = "defau
 );
 
 export const StudyLayout: React.FC<StudyLayoutProps> = ({
+    listeningEntry,
     emptyReview = false,
     loading,
     isFinished,
@@ -617,6 +619,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                     </button>
                 </div>
             </div>
+
+            {listeningEntry && <div className="flex-none flex justify-end px-4">{listeningEntry}</div>}
 
             {devSessionSummary && onOpenDevSwitcher && (
                 <div className="flex-none px-4 pt-2 mobile:px-3">

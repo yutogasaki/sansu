@@ -35,6 +35,8 @@ import { getIslandGrowthMilestone, isIslandHabitatUnlocked } from '../domain/isl
 import { IslandMilestoneNotice, IslandMilestoneReturn, type IslandMilestone } from '../components/island/IslandMilestone';
 import { runIslandMilestoneLearningAction, useIslandMilestoneNotice } from '../components/island/useIslandMilestoneNotice';
 import { IslandLearningPanel } from '../components/island/IslandLearningPanel';
+import { useEnglishListening } from '../hooks/useEnglishListening';
+import { EnglishListening, EnglishListeningEntry } from '../components/domain/EnglishListening';
 import { IslandSoundControl } from '../components/island/IslandSoundControl';
 import { islandFeedbackForReceipt, type IslandLearningFeedback, type IslandReaction } from '../components/island/learningFeedback';
 import { getIslandCosmetics } from '../domain/island/customization';
@@ -128,6 +130,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const learningScreen = plan?.status === 'completed' && isFirstIslandPlan(plan) && !plan.growthTarget ? 'reward' : 'learning';
     const screen = navigation ? navigation.learning ? learningScreen : navigation.view : localScreen;
     const setScreen = navigation?.setView ?? setLocalScreen;
+    const listening = useEnglishListening(profile.id, active && screen === 'learning' && profile.subjectMode !== 'math', profile.vocabLevels ?? [], plan?.slots[plan.cursor]?.problem);
     const [workshopView, setWorkshopView] = useState<IslandWorkshopView>({ mode: 'observe', selectedSpecimenId: 'driftwood', selectedPartId: 'straight', selectedToolId: 'brush' });
     const [workshopRequest, setWorkshopRequest] = useState<WorkshopSceneRequest>();
     const [sharedSelection, setSharedSelection] = useState<SharedDisplayId>();
@@ -348,6 +351,9 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         }, intermediate ? 0 : 180);
         if (!result) return;
         const { receipt, nextPlan, latestIsland } = result;
+        if (receipt.plan.slots[plan.cursor]?.completed && !currentSlot.completed && action.type !== 'skipped') {
+            listening.record(currentSlot.problem, receipt.plan.status === 'completed');
+        }
         observation.succeeded(request);
         setPlan(nextPlan ?? receipt.plan); setSnapshot(latestIsland ?? receipt.island);
         if (receipt.plan.status === 'completed') {
@@ -868,13 +874,15 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 </section>}
         {plan && slot && <IslandLearningPanel plan={plan} active={active && learning && !nextPlanError}
             hintPending={busyKind === 'learning-hint' && active && learning && !preparingLearning}
-            intro={isFirstIslandPlan(plan)} observation={active && learning ? observation : undefined}
-            busy={busy || preparingLearning || !active || !learning} feedback={learningFeedback} englishAutoRead={profile.englishAutoRead} onAction={action => void answer(action)}
+            intro={isFirstIslandPlan(plan)} observation={active && learning && !listening.isOpen ? observation : undefined}
+            busy={busy || preparingLearning || !active || !learning || listening.isOpen} feedback={learningFeedback} englishAutoRead={profile.englishAutoRead && !listening.isOpen} onAction={action => void answer(action)}
+            listeningEntry={listening.sentence ? <EnglishListeningEntry disabled={busy || preparingLearning || listening.isOpen} onOpen={listening.open} /> : undefined}
             subjectChoice={profile.subjectMode === 'mix' ? {
                 selected: island.nextSubjectChoice?.afterPlanId === plan.id && island.nextSubjectChoice.subject === plan.subject,
                 onChange: selected => { void run(() => setIslandNextSubject(profile.id, island.revision, plan.id, selected))
                     .then(updated => { if (updated) setSnapshot(updated); }); },
             } : undefined} />}
+        {listening.isOpen && listening.sentence && <EnglishListening sentence={listening.sentence} easy={profile.uiTextMode === 'easy'} onClose={listening.close} />}
     </main>;
 }
 

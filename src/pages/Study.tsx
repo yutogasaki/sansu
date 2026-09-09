@@ -7,6 +7,9 @@ import { useHissanSession } from "../hooks/useHissanSession";
 import { playSound, setSoundEnabled } from "../utils/audio";
 import { getActiveProfile, updateProfileAtomically } from "../domain/user/repository";
 import { StudyLayout } from "./StudyLayout";
+import { useEnglishListening } from '../hooks/useEnglishListening';
+import { EnglishListening, EnglishListeningEntry } from '../components/domain/EnglishListening';
+import type { UserProfile } from '../domain/types';
 import {
     isFixedSessionKind,
     shouldPrefetchNextBlock,
@@ -130,6 +133,9 @@ export const Study: React.FC = () => {
     const [isEasyText, setIsEasyText] = useState(false);
     const [hissanModeEnabled, setHissanModeEnabled] = useState(false);
     const [profileSettingsStatus, setProfileSettingsStatus] = useState<"loading" | "ready" | "error">("loading");
+    const [listeningProfile, setListeningProfile] = useState<UserProfile>();
+    const listening = useEnglishListening(`${listeningProfile?.id}:${sessionResetKey}`, listeningProfile?.subjectMode !== 'math' && (!sessionKindParam || sessionKindParam === 'normal'), listeningProfile?.vocabLevels ?? [], queue[currentIndex]);
+    const recordListeningAnswer = listening.record;
     const [isDevSwitcherOpen, setIsDevSwitcherOpen] = useState(false);
 
     const currentProblem = queue[currentIndex];
@@ -171,6 +177,7 @@ export const Study: React.FC = () => {
         getActiveProfile().then(profile => {
             if (!active) return;
             if (profile) {
+                setListeningProfile(profile);
                 setSoundEnabled(profile.soundEnabled);
                 setEnglishAutoRead(profile.englishAutoRead || false);
                 setIsEasyText(profile.uiTextMode === "easy");
@@ -489,6 +496,7 @@ export const Study: React.FC = () => {
         // Latch synchronously so a double tap cannot skip a question before
         // React commits the next render. The problem-change effect unlocks it.
         isProcessingRef.current = true;
+        if (currentProblem && feedback !== 'skipped') recordListeningAnswer(currentProblem, (currentIndex + 1) % blockSize === 0);
         setFeedback("none");
         setShowCorrection(false);
         setSaveError(false);
@@ -496,7 +504,7 @@ export const Study: React.FC = () => {
         setCurrentIndex(prev => prev + 1);
         problemShownAtRef.current = Date.now();
         // Note: isProcessingRef reset is handled in the effect when currentProblem changes
-    }, [completionPresentation]);
+    }, [completionPresentation, currentProblem, currentIndex, blockSize, feedback, recordListeningAnswer]);
 
     // Submitting - useEffectより前に定義
     const handleSubmit = useCallback(async (choiceValue?: string, numericValue?: string, automatic = false) => {
@@ -883,7 +891,8 @@ export const Study: React.FC = () => {
                 onSubmitChoice={(val) => handleSubmit(val)}
                 onFocusField={setActiveFieldIndex}
                 swipeHandlers={swipeHandlers}
-                englishAutoRead={englishAutoRead}
+                englishAutoRead={englishAutoRead && !listening.isOpen}
+                listeningEntry={listening.sentence ? <EnglishListeningEntry disabled={loading || feedback !== 'none' || listening.isOpen} onOpen={listening.open} /> : undefined}
                 isEasyText={isEasyText}
                 onToggleTTS={handleToggleTTS}
                 devSessionSummary={devSelectionSummary}
@@ -908,6 +917,7 @@ export const Study: React.FC = () => {
                     hissan.toggleHissanMode();
                 } : undefined}
             />
+            {listening.isOpen && listening.sentence && <EnglishListening sentence={listening.sentence} easy={isEasyText} onClose={listening.close} />}
             {isDevSession && focusSubject && (
                 <DevStudySwitcher
                     isOpen={isDevSwitcherOpen}
