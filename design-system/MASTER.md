@@ -153,8 +153,8 @@ Do not distribute these colors evenly. A live frame starts from `dominant family
 
 ### Icons
 
-- Rounded line icons
-- Limited fill
+- Utility symbols use rounded lines and limited fill.
+- Island and house destinations use the dedicated color-filled object icons specified in UI guideline §6.1: distinctive silhouettes, indigo contours, localized pattern, and visible text labels.
 - Avoid emoji-style iconography
 
 ## World And Illustration

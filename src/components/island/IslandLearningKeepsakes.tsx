@@ -1,5 +1,6 @@
+import { IslandToyIcon } from './IslandToyIcon';
 import { useState, type ReactNode } from 'react';
-import { ArrowLeft, ArrowRight, Award, BookOpen, Camera, Check, Gift, House, PackageOpen, Sparkles, Star, Trophy } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Award, Camera, Check, Gift, House, PackageOpen, Star, Trophy } from 'lucide-react';
 import { getIslandLearningKeepsakes, isIslandLearningKeepsakeAvailable, ISLAND_LEARNING_KEEPSAKES,
     type IslandLearningKeepsakeAction, type IslandLearningKeepsakeId } from '../../domain/island/learningKeepsakes';
 import type { IslandRecord } from '../../domain/island/types';
@@ -64,7 +65,7 @@ export function IslandLearningKeepsakes({ island, controls, disabled, onClose, o
     });
     return <section className="island-sheet island-panel island-learning-keepsakes" aria-label="いえ"
         data-testid="island-learning-keepsakes" data-keepsake-section={currentSection} data-keepsake-selected={selected.id}>
-        <div className="island-sheet-title"><h2><House size={22} aria-hidden="true" />{currentSection === 'keepsakes' ? 'まなびの きねん' : currentSection === 'notices' ? 'おしらせ' : 'いえの なか'}</h2>
+        <div className="island-sheet-title"><h2><IslandToyIcon kind="house" size={30} />{currentSection === 'keepsakes' ? 'まなびの きねん' : currentSection === 'notices' ? 'おしらせ' : 'いえの なか'}</h2>
             <button className="island-icon-button island-panel-back" data-keepsake-action="close" disabled={comparisonDisabled} aria-label="いえを とじて しまへ" onClick={onClose}>
                 <ArrowLeft size={18} aria-hidden="true" /><span>しまへ</span></button></div>
         {currentSection !== 'home' && <button className="island-secondary island-house-back" data-keepsake-action="home"
@@ -73,15 +74,15 @@ export function IslandLearningKeepsakes({ island, controls, disabled, onClose, o
             {walkingAvailable && <p>ゆかを タップすると カワウソが あるくよ。</p>}
             <nav className="island-house-destinations" aria-label="いえの なかで みるもの">
                 {onAlbum && <button className="island-secondary" data-keepsake-action="album" disabled={comparisonDisabled} onClick={onAlbum}>
-                    <BookOpen size={26} aria-hidden="true" /><strong>アルバム</strong><small>おもいでを ひらく</small></button>}
+                    <IslandToyIcon kind="album" /><strong>アルバム</strong><small>おもいでを ひらく</small></button>}
                 {onPhotos && <button className="island-secondary" data-keepsake-action="photos" disabled={disabled} onClick={onPhotos}>
-                    <Camera size={26} aria-hidden="true" /><strong>しゃしん</strong><small>とった しゃしんを みる</small></button>}
+                    <IslandToyIcon kind="camera" /><strong>しゃしん</strong><small>とった しゃしん</small></button>}
                 {onShared && <button className="island-secondary" data-keepsake-action="shared" disabled={disabled} onClick={onShared}>
-                    <Sparkles size={26} aria-hidden="true" /><strong>かざりと きおく</strong><small>だいじなものを みる</small></button>}
+                    <IslandToyIcon kind="display" /><strong>かざりと きおく</strong><small>だいじな たからもの</small></button>}
                 <button className="island-secondary" data-keepsake-action="open-keepsakes" disabled={disabled} onClick={() => changeSection('keepsakes')}>
-                    <Trophy size={26} aria-hidden="true" /><strong>まなびの きねん</strong><small>{state.displayed.length > 0 ? `${state.displayed.length}こ かざっているよ` : earned.length > 0 ? 'もっている きねんを かざろう' : 'まなんだ あゆみを のこそう'}</small></button>
+                    <IslandToyIcon kind="keepsake" /><strong>まなびの きねん</strong><small>{state.displayed.length > 0 ? `${state.displayed.length}こ かざっているよ` : earned.length > 0 ? 'きねんを かざろう' : 'まなびの あゆみ'}</small></button>
                 <button className="island-secondary" data-keepsake-action="notices" disabled={disabled} onClick={() => changeSection('notices')}>
-                    <Gift size={26} aria-hidden="true" /><strong>おしらせ</strong><small>{island.pendingRewards.length > 0 ? `おくりもの ${island.pendingRewards.length}こ` : 'けいじばんを みる'}</small></button>
+                    <IslandToyIcon kind="gift" /><strong>おしらせ</strong><small>{island.pendingRewards.length > 0 ? `おくりもの ${island.pendingRewards.length}こ` : 'けいじばんを みる'}</small></button>
             </nav>
             {challenge}
         </div>}

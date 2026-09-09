@@ -1,5 +1,6 @@
+import { IslandToyIcon } from './IslandToyIcon';
 import { useEffect, useRef, type ReactNode } from 'react';
-import { ArrowRight, BookOpen, Gamepad2, Gift, House, PackageOpen, Palette, PawPrint, Search, Sparkles, Waves, Menu, X, ChevronDown } from 'lucide-react';
+import { ArrowRight, BookOpen, Gamepad2, Gift, PackageOpen, Palette, PawPrint, Search, Sparkles, Waves, Menu, X, ChevronDown } from 'lucide-react';
 import './IslandHomeActions.css';
 
 export interface IslandHomeActionsProps {
@@ -74,31 +75,31 @@ export function IslandHomeMenuContents({ busy, comparisonDisabled, workshopUnloc
             <ArrowRight size={19} aria-hidden="true" />
         </button>}
         <section aria-label="しまを たのしむ"><div className="island-home-action-grid">
-            {actions.filter(action => ['play', 'guide'].includes(action.id)).map(({ id, label, name, Icon, onClick, disabled }) => <button key={id}
+            {actions.filter(action => ['play', 'guide'].includes(action.id)).map(({ id, label, name, onClick, disabled }) => <button key={id}
                 className={`island-secondary island-home-tile${id === 'play' ? ' island-play-entry' : ''}`}
                 data-home-action={id} aria-label={name} disabled={disabled} onClick={() => onChoose(onClick)}>
-                <span className="island-home-action-patch" aria-hidden="true"><Icon size={25} /></span><span>{label}</span>
+                <span className="island-home-action-patch" aria-hidden="true"><IslandToyIcon kind={id === 'play' ? 'play' : id === 'guide' ? 'find' : id === 'inventory' ? 'box' : id === 'customization' ? 'display' : id === 'workshop' ? 'boat' : 'palette'} /></span><span>{label}</span>
             </button>)}
         </div></section>
         <details className="island-menu-group" data-home-group="arrange">
-            <summary><Palette size={22} aria-hidden="true" /><span>しまを ととのえる<small>もちもの・きせかえ・育てる ばしょ</small></span><ChevronDown size={18} aria-hidden="true" /></summary>
-            <div className="island-home-action-grid">{actions.filter(action => ['inventory', 'customization', 'experience'].includes(action.id)).map(({ id, label, name, Icon, onClick, disabled }) => <button key={id}
+            <summary><IslandToyIcon kind="palette" /><span>しまを ととのえる<small>もちもの・きせかえ・育てる ばしょ</small></span><ChevronDown size={18} aria-hidden="true" /></summary>
+            <div className="island-home-action-grid">{actions.filter(action => ['inventory', 'customization', 'experience'].includes(action.id)).map(({ id, label, name, onClick, disabled }) => <button key={id}
                 className="island-secondary island-home-tile" data-home-action={id} aria-label={name} disabled={disabled} onClick={() => onChoose(onClick)}>
-                <span className="island-home-action-patch" aria-hidden="true"><Icon size={25} /></span><span>{label}</span>
+                <span className="island-home-action-patch" aria-hidden="true"><IslandToyIcon kind={id === 'play' ? 'play' : id === 'guide' ? 'find' : id === 'inventory' ? 'box' : id === 'customization' ? 'display' : id === 'workshop' ? 'boat' : 'palette'} /></span><span>{label}</span>
             </button>)}</div>
             {children}
         </details>
         {onKeepsakes ? <button className="island-secondary island-home-record island-home-house" disabled={comparisonDisabled} onClick={() => onChoose(onKeepsakes)} data-home-action="keepsakes">
-            <House size={22} aria-hidden="true" /><span>いえで おもいでを みる<small>しゃしん・アルバム・まなびの きねん</small></span><ArrowRight size={18} aria-hidden="true" />
+            <IslandToyIcon kind="house" /><span>いえで おもいでを みる<small>しゃしん・アルバム・まなびの きねん</small></span><ArrowRight size={18} aria-hidden="true" />
         </button> : <div className="island-home-records">
             <button className="island-secondary island-home-record" disabled={comparisonDisabled} onClick={() => onChoose(onAlbum)} data-home-action="album"><BookOpen size={19} aria-hidden="true" />アルバム</button>
             {workshopUnlocked && <button className="island-secondary island-home-record" disabled={busy} onClick={() => onChoose(onShared)} data-home-action="shared"><PackageOpen size={19} aria-hidden="true" />かざりと きおく</button>}
         </div>}
         {(workshopUnlocked || onOtherGames) && <details className="island-menu-group" data-home-group="more-play">
             <summary><Gamepad2 size={22} aria-hidden="true" /><span>もっと あそぶ</span><ChevronDown size={18} aria-hidden="true" /></summary>
-            <div className="island-home-action-grid">{actions.filter(action => ['workshop', 'other-games'].includes(action.id)).map(({ id, label, name, Icon, onClick, disabled }) => <button key={id}
+            <div className="island-home-action-grid">{actions.filter(action => ['workshop', 'other-games'].includes(action.id)).map(({ id, label, name, onClick, disabled }) => <button key={id}
                 className="island-secondary island-home-tile" data-home-action={id} aria-label={name} disabled={disabled} onClick={() => onChoose(onClick)}>
-                <span className="island-home-action-patch" aria-hidden="true"><Icon size={25} /></span><span>{label}</span>
+                <span className="island-home-action-patch" aria-hidden="true"><IslandToyIcon kind={id === 'play' ? 'play' : id === 'guide' ? 'find' : id === 'inventory' ? 'box' : id === 'customization' ? 'display' : id === 'workshop' ? 'boat' : 'palette'} /></span><span>{label}</span>
             </button>)}</div>
         </details>}
         {onHelp && <button className="island-secondary island-home-record" disabled={comparisonDisabled} onClick={() => onChoose(onHelp)} data-home-action="help"><BookOpen size={19} aria-hidden="true" />あそびかた</button>}

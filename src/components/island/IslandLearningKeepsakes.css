@@ -1,22 +1,45 @@
 .island-learning-keepsakes { min-width: 0; }
 .island-learning-keepsakes .island-sheet-title h2 { display: flex; align-items: center; gap: 8px; }
 .island-learning-keepsakes .island-house-overview > p { margin: 0 0 12px; color: var(--pokomoko-muted); }
-/* Unequal destinations: the album is a reading place; notices stay quiet. */
-.island-house-destinations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+/* A wide album entrance, roomy object cards, and a quiet notice row. */
+.island-house-destinations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .island-page .island-panel.island-learning-keepsakes .island-house-destinations > button {
-    display: grid; grid-template-columns: 30px minmax(0, 1fr); text-align: left;
-    align-content: center; gap: 2px 10px; min-height: 76px; padding: 10px 12px;
-    border-color: var(--pokomoko-edge); background: var(--pokomoko-canvas);
+    position: relative; display: grid; grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 40px auto 1fr; align-content: start; justify-items: start;
+    text-align: left; gap: 6px; min-height: 132px; padding: 15px;
+    border: 1px solid color-mix(in srgb, var(--pokomoko-edge) 65%, var(--pokomoko-paper));
+    border-radius: 19px; background: var(--pokomoko-paper);
+    box-shadow: 0 3px 0 color-mix(in srgb, var(--pokomoko-edge) 28%, transparent);
+    color: var(--pokomoko-ink);
 }
-.island-house-destinations > button > svg { grid-row: span 2; align-self: center; color: var(--pokomoko-blue); }
-.island-house-destinations strong { font-size: 14px; }
-.island-learning-keepsakes .island-house-destinations small { margin: 0; }
+.island-house-destinations > button > .island-toy-icon { width: 40px; height: 40px; grid-area: auto; align-self: center; }
+.island-house-destinations strong { font-size: 14px; line-height: 1.5; font-weight: 700; }
+.island-learning-keepsakes .island-house-destinations small { margin: 0; font-size: 12px; line-height: 1.65; color: var(--pokomoko-muted); }
+.island-house-destinations > button::after {
+    content: ''; position: absolute; right: 17px; top: 22px;
+    width: 6px; height: 6px; border-top: 1.5px solid var(--pokomoko-muted);
+    border-right: 1.5px solid var(--pokomoko-muted); transform: rotate(45deg);
+}
 .island-page .island-panel.island-learning-keepsakes .island-house-destinations > [data-keepsake-action=album] {
-    grid-column: 1 / -1; background: var(--pokomoko-lavender);
+    grid-column: 1 / -1; grid-template-columns: 54px minmax(0, 1fr); grid-template-rows: auto auto;
+    align-content: center; min-height: 92px; gap: 3px 15px; padding: 17px 36px 17px 18px;
+    background: color-mix(in srgb, var(--pokomoko-lavender) 42%, var(--pokomoko-paper));
 }
-.island-page .island-panel.island-learning-keepsakes .island-house-destinations > [data-keepsake-action=open-keepsakes] {
-    background: var(--pokomoko-mint);
+.island-house-destinations > [data-keepsake-action=album] > .island-toy-icon { grid-row: span 2; width: 50px; height: 50px; }
+.island-house-destinations > [data-keepsake-action=album] strong { font-size: 16px; }
+.island-house-destinations > [data-keepsake-action=album]::after { top: calc(50% - 3px); }
+.island-page .island-panel.island-learning-keepsakes .island-house-destinations > [data-keepsake-action=notices],
+.island-page .island-panel.island-learning-keepsakes .island-house-destinations:has([data-keepsake-action=shared]) > [data-keepsake-action=open-keepsakes] {
+    grid-column: 1 / -1; grid-template-columns: 36px minmax(0, 1fr); grid-template-rows: auto auto;
+    min-height: 68px; align-content: center; gap: 1px 12px; padding: 12px 34px 12px 15px;
+    box-shadow: none; background: var(--pokomoko-canvas);
 }
+.island-house-destinations > [data-keepsake-action=notices] > .island-toy-icon,
+.island-house-destinations:has([data-keepsake-action=shared]) > [data-keepsake-action=open-keepsakes] > .island-toy-icon { grid-row: span 2; width: 34px; height: 34px; }
+.island-house-destinations > [data-keepsake-action=notices]::after,
+.island-house-destinations:has([data-keepsake-action=shared]) > [data-keepsake-action=open-keepsakes]::after { top: calc(50% - 3px); }
+.island-house-destinations > button:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; }
+.island-page .island-panel.island-learning-keepsakes .island-house-destinations > button:active:not(:disabled) { box-shadow: none; background: var(--pokomoko-canvas); }
 /* Keep starting a challenge directly available, with its explanation secondary. */
 .island-house-overview .challenge-card { padding: 12px; margin: 12px 0 0; border-radius: 16px; }
 .island-house-overview .challenge-card-heading { gap: 10px; }
@@ -26,10 +49,6 @@
 .app-container .island-page .island-sheet.island-panel.island-learning-keepsakes { margin-top: 0; border-radius: 0 0 24px 24px; border-top: 0; }
 .island-page .island-panel.island-learning-keepsakes > .island-sheet-title { margin-bottom: 4px; padding-block: 0; }
 .island-page .island-learning-keepsakes[data-keepsake-section=home] .island-panel-footer { margin-top: 4px; }
-@media (max-width: 420px) {
-    .island-page .island-panel.island-learning-keepsakes .island-house-destinations > button { grid-template-columns: 24px minmax(0, 1fr); gap: 2px 6px; padding-inline: 8px; }
-    .island-house-destinations strong { font-size: 13px; }
-}
 .island-house-back { margin-bottom: 12px; }
 .island-house-notices { padding: 14px; border: 1px solid var(--pokomoko-edge); border-radius: 16px; }
 .island-house-notices h3 { margin: 0 0 8px; font-size: 17px; }
@@ -61,6 +80,3 @@
 .island-keepsake-history summary:focus-visible, .island-keepsake-future summary:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 2px; }
 .island-keepsake-note { color: var(--pokomoko-muted); margin-top: 12px; }
 .island-keepsake-count { margin: 0 0 14px; }
-/* Photo history, when available, shares the first row with the album. */
-.island-page .island-panel.island-learning-keepsakes .island-house-destinations:has([data-keepsake-action=photos]) > [data-keepsake-action=album] { grid-column: auto; }
-.island-page .island-panel.island-learning-keepsakes .island-house-destinations:has([data-keepsake-action=photos]) > button:last-child:nth-child(odd) { grid-column: 1 / -1; min-height: 60px; }

@@ -1,0 +1,11 @@
+.island-toy-icon {
+    --toy-blue: #7294db;
+    --toy-pink: #e99abb;
+    --toy-yellow: #f3cd67;
+    --toy-mint: #88bea7;
+    flex-shrink: 0;
+    overflow: visible;
+}
+.island-shell-tab .island-toy-icon { width: 27px; height: 27px; }
+.island-home-action-patch .island-toy-icon { width: 42px; height: 42px; }
+.island-home-house > .island-toy-icon, .island-menu-group > summary > .island-toy-icon { width: 38px; height: 38px; }

@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Icons } from "./icons";
 import { warmUpTTS } from "../utils/tts";
 import { islandEnabled } from "../domain/island/feature";
-import { IslandMark } from "./island/IslandMark";
+import { IslandToyHouse, IslandToyLand } from "./island/IslandToyIcon";
 import { islandTabUrl, type IslandTab, useIslandNavigation } from './island/useIslandNavigation';
 
 type TabItem = {
@@ -23,8 +23,8 @@ export const Footer: React.FC = () => {
 
     if (islandHome) {
         const tabs: TabItem[] = [
-            { to: "/island", icon: IslandMark, label: "しま", tab: "island" },
-            { to: islandTabUrl("house"), icon: Icons.Home, label: "いえ", tab: "house" },
+            { to: "/island", icon: IslandToyLand, label: "しま", tab: "island" },
+            { to: islandTabUrl("house"), icon: IslandToyHouse, label: "いえ", tab: "house" },
             { to: "/study", icon: Icons.Study, label: "まなぶ" },
             { to: "/stats", icon: Icons.Stats, label: "きろく", tab: "stats" },
             { to: "/settings", icon: Icons.Settings, label: "設定", tab: "settings" },

@@ -42,7 +42,7 @@ describe('real learning keepsake record and display choices', () => {
         const html = renderToStaticMarkup(<IslandLearningKeepsakes {...p} />);
         expect(html).toContain('いえの なか');
         expect(html).toContain('いえを とじて しまへ');
-        expect(html).toContain('まなんだ あゆみを のこそう');
+        expect(html).toContain('まなびの あゆみ');
         expect(html).not.toContain('0こ かざっているよ');
         expect(p.controls.act).not.toHaveBeenCalled();
     });
