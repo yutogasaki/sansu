@@ -115,10 +115,8 @@ const main = async () => {
     if (!file || (await stat(file.absolutePath)).size < 128) errors.push(`${url}: playable SE is missing or empty`);
     if (!precacheSet.has(url)) errors.push(`${url}: SE is missing from offline precache`);
   }
-  const parkManifest = JSON.parse(await readFile(path.join(ROOT, 'src/components/park/artManifest.json'), 'utf8'));
-  for (const sprite of Object.values(parkManifest.sprites)) {
-    const url = `assets/park/resin-v1/${sprite.file}`;
-    if (!precacheSet.has(url)) errors.push(`${url}: park sprite is missing from precache`);
+  for (const url of [...publicFiles.map(file => file.relativePath), ...precacheUrls]) {
+    if (url.startsWith('assets/park/')) errors.push(`${url}: retired park artwork must not ship`);
   }
   for (const file of exploreArtwork) {
     if (!precacheSet.has(file.relativePath)) {

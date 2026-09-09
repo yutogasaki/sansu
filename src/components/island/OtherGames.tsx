@@ -1,10 +1,8 @@
-import { ArrowRight, Blocks, Compass, Handshake, ArrowLeftRight, SlidersHorizontal } from 'lucide-react';
+import { ArrowRight, Compass, Handshake, ArrowLeftRight, SlidersHorizontal } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { ScreenScaffold } from '../ScreenScaffold';
-import { BUILD_PLAY_AVAILABLE } from '../../domain/park/feature';
 
 const games = [
-    { to: '/park', title: 'ちいさな遊園地', detail: 'つくった コースで あそぶ', icon: Blocks },
     { to: '/explore', title: 'ポッコの たんけん', detail: 'さんすうで 道をひらく', icon: Compass },
     { to: '/battle/play?mode=boss_coop', title: 'ふたりで きょうりょく', detail: 'いっしょに こたえる', icon: Handshake },
     { to: '/battle/play?mode=tug_of_war', title: 'つなひき たいせん', detail: 'ふたりで ひっぱりあう', icon: ArrowLeftRight },
@@ -14,7 +12,7 @@ export function OtherGames() {
     const navigate = useNavigate();
     return <ScreenScaffold title="ほかの あそび" showBack onBack={() => navigate('/island')}>
         <div className="mx-auto flex w-full max-w-xl flex-col gap-3 px-[var(--screen-padding-x)] pb-6">
-            {games.filter(game => game.to !== '/park' || BUILD_PLAY_AVAILABLE).map(game => {
+            {games.map(game => {
                 const Icon = game.icon;
                 return <button key={game.to} type="button" onClick={() => navigate(game.to)}
                     className="app-pill flex min-h-20 items-center gap-4 rounded-2xl p-4 text-left focus-visible:outline-2 focus-visible:outline-offset-2">

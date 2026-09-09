@@ -1,0 +1,16 @@
+/* Shared learning controls. Legacy class names preserve Island overrides. */
+.park-button { min-height: 52px; padding: 12px 20px; border: 1.5px solid var(--park-ink); border-radius: 18px; background: var(--park-cream); font-weight: 700; }
+.park-button:active { transform: translateY(2px); }
+.park-support { padding: 12px 14px; border-radius: 14px; background: var(--park-mint); line-height: 1.8; font-size: 14px; margin-bottom: 14px; }
+.park-question { display: flex; justify-content: center; align-items: center; min-height: 140px; padding: 16px 0; }
+.park-question > * { max-width: 100%; }
+.park-inputs { display: flex; gap: 12px; justify-content: center; margin-bottom: 16px; }
+.park-input { min-width: 66px; min-height: 64px; padding: 4px 15px; border-bottom: 3px solid var(--park-mint-dark); background: white; border-radius: 10px; }
+.park-input[aria-pressed=true] { background: var(--park-mint); }
+.park-input small { display: block; font-size: 11px; }
+.park-input span { font-size: 28px; }
+.park-keypad { height: 255px; max-width: 420px; margin-inline: auto; }
+.park-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.park-choices button { min-height: 70px; font-size: 18px; }
+.park-onboarding-grade { min-height: 64px; padding: 12px 6px; text-align: center; }
+@media (prefers-reduced-motion: reduce) { .park-button:active { transform: none; } }

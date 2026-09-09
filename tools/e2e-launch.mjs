@@ -6,8 +6,8 @@ import { seedNative, readNative } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_LAUNCH_BASE_URL || 'http://127.0.0.1:5222';
 const mode = process.env.SANSU_LAUNCH_MODE || 'island';
-const destination = { island: '/island', park: '/park', classic: '/battle' }[mode];
-assert(destination, 'Choose island, park, or classic launch mode');
+const destination = { island: '/island', classic: '/battle' }[mode];
+assert(destination, 'Choose island or classic launch mode');
 const out = process.env.SANSU_LAUNCH_OUTPUT || `output/playwright/launch-${mode}`;
 await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch();
@@ -18,7 +18,7 @@ page.on('pageerror', error => errors.push(error.message));
 const report = { target: base, mode, destination, pass: false, checks: [] };
 const home = async () => {
     await page.waitForURL(`**/#${destination}`);
-    await page.locator({ island: '.island-page[data-mode="home"]', park: '.park-page[data-visual-mode="toy-course"]', classic: '.game-hub' }[mode]).waitFor();
+    await page.locator({ island: '.island-page[data-mode="home"]', classic: '.game-hub' }[mode]).waitFor();
     assert.equal(await page.locator('#explore-problem-title, .island-page[data-mode="learning"], .park-page[data-visual-mode="learning"]').count(), 0);
 };
 try {
@@ -40,7 +40,7 @@ try {
     assert(runId);
     const saved = await readNative(page, id);
     assert(saved.exploreRuns.some(run => run.runId === runId && run.status === 'active'));
-    for (const entry of ['', '/#/', '/#/?learn=1', '/#/missing-page?start=learn', '/#/onboarding']) {
+    for (const entry of ['', '/#/', '/#/?learn=1', '/#/missing-page?start=learn', '/#/onboarding', '/#/park', '/#/park?learn=1&parkRenderer=three']) {
         await page.goto(`${base}${entry}`); await home();
         const state = await readNative(page, id);
         for (const store of ['exploreRuns', 'islandPlans', 'logs', 'memoryMath', 'memoryVocab']) {

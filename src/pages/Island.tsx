@@ -78,7 +78,7 @@ import { useIslandWorkshop } from '../components/island/useIslandWorkshop';
 import { useIslandWorkshopAudio } from '../components/island/useIslandWorkshopAudio';
 import { getIslandWorkshop, getWorkshopSpecimenName, workshopSpecimenIdentity } from '../domain/island/workshop';
 import type { WorkshopSceneRequest } from '../components/island/three/workshopScene';
-import '../components/park/Park.css';
+import '../components/domain/LearningAnswerForm.css';
 import '../components/island/Island.css';
 import '../components/island/IslandDisplayLayout.css';
 import '../components/island/IslandWideWorkspace.css';
