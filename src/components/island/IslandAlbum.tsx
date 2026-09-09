@@ -1,5 +1,6 @@
+import { IslandPanelHeading } from './IslandPanelHeading';
 import { useState } from 'react';
-import { BookOpen, Camera, Flower2, Heart, RotateCcw, Waves, X } from 'lucide-react';
+import { BookOpen, Camera, Flower2, Heart, RotateCcw, Waves } from 'lucide-react';
 import { ISLAND_DISCOVERIES, ISLAND_HABITATS, isIslandHabitatUnlocked } from '../../domain/island/growth';
 import type { IslandHabitatId, IslandRecord } from '../../domain/island/types';
 import { DEFAULT_ISLAND_COSMETICS, getIslandCosmetics } from '../../domain/island/customization';
@@ -52,7 +53,7 @@ export function IslandAlbum({ island, disabled, closeDisabled = disabled, onTry,
     };
     return <section className="island-sheet island-panel island-album" aria-label="しまの アルバム"
         data-island-revision={island.revision} data-discovery-count={discoveries.length}>
-        <div className="island-sheet-title"><h2>しまの アルバム</h2><button className="island-icon-button island-panel-back" disabled={closeDisabled} aria-label="アルバムを とじる" onClick={onClose}><X size={20} /><span>もどる</span></button></div>
+        <IslandPanelHeading title="しまの アルバム" onExit={onClose} disabled={closeDisabled} exitAriaLabel="アルバムから もどる" />
         <label className="island-album-category"><BookOpen size={20} aria-hidden="true" />
             <select aria-label="アルバムの なかみ" value={tab} onChange={event => setTab(event.target.value as typeof tab)}>
                 <option value="memories">そだちの きろく</option>

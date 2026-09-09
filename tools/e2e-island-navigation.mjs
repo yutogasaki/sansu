@@ -43,8 +43,8 @@ try {
             await page.waitForURL('**/#/onboarding');
             await page.locator('.island-welcome').waitFor();
             const id = await seedNative(page, randomUUID());
-            // Select the same arithmetic level as the actual "足し算まで" setup,
-            // so this draft regression exercises a numeric form, not a choice.
+            // A two-digit arithmetic profile leaves a real incomplete draft.
+            // One-digit bridge questions now submit immediately after one key.
             await page.evaluate(async id => {
                 const request = indexedDB.open('SansuDatabase');
                 const db = await new Promise(resolve => { request.onsuccess = () => resolve(request.result); });
@@ -52,8 +52,8 @@ try {
                 const read = request => new Promise(resolve => { request.onsuccess = () => resolve(request.result); });
                 const profile = await read(tx.objectStore('profiles').get(id));
                 const app = await read(tx.objectStore('appData').get('app'));
-                Object.assign(profile, { mathStartLevel: 8, mathMainLevel: 9, mathMaxUnlocked: 9,
-                    mathLevels: Array.from({ length: 9 }, (_, index) => ({ level: index + 1, unlocked: true, enabled: true, recentAnswersNonReview: [] })) });
+                Object.assign(profile, { mathStartLevel: 10, mathMainLevel: 11, mathMaxUnlocked: 11,
+                    mathLevels: Array.from({ length: 11 }, (_, index) => ({ level: index + 1, unlocked: true, enabled: true, recentAnswersNonReview: [] })) });
                 tx.objectStore('profiles').put(profile); app.profiles[id] = profile; tx.objectStore('appData').put(app);
                 await new Promise((resolve, reject) => { tx.oncomplete = resolve; tx.onerror = () => reject(tx.error); });
                 db.close();
@@ -67,10 +67,32 @@ try {
                 assert.equal((await readNative(page, id)).plan, undefined, `${entry} cannot start questions`);
             }
             await capture('home');
+            for (const [action, mode, title] of [
+                ['play', 'play', 'どうぶつと あそぶ'], ['guide', 'guide', 'みつける'],
+                ['inventory', 'inventory', 'もちものを おく'], ['customization', 'customization', 'しまの きせかえ'],
+                ['experience', 'experience', 'なまえ・けしき'], ['help', 'help', 'あそびかた'],
+            ]) {
+                await button(page, 'しまのメニュー').click();
+                if (['inventory', 'customization', 'experience'].includes(action)) await page.locator('[data-home-group=arrange] > summary').click();
+                const entry = page.locator(`[data-home-action=${action}]`);
+                assert.equal((await entry.innerText()).trim(), title, 'The entry names the destination');
+                await entry.click(); await waitMode(page, mode);
+                const heading = page.locator('.island-panel-heading');
+                assert.equal(await heading.getByRole('heading', { level: 2 }).innerText(), title);
+                const back = heading.getByRole('button');
+                assert.equal(await back.innerText(), 'もどる');
+                await capture(mode);
+                await back.click(); await waitMode(page, 'home');
+            }
             await nav.getByRole('button', { name: 'いえ', exact: true }).click();
             await waitMode(page, 'keepsakes'); await ordinary('#/island?view=keepsakes');
             assert.equal(await nav.locator('[aria-current="page"]').innerText(), 'いえ');
             await capture('house');
+            await page.locator('[data-keepsake-action=notices]').click();
+            await page.getByRole('heading', { name: 'おしらせ', exact: true }).first().waitFor();
+            assert.equal(await page.locator('[data-keepsake-action=close]').count(), 0, 'House detail has one parent return');
+            await page.locator('[data-keepsake-action=home]').click();
+            await page.locator('[data-keepsake-action=album]').waitFor();
             await page.locator('[data-keepsake-action="album"]').click();
             await waitMode(page, 'album'); await ordinary('#/island?view=album');
             assert.equal(await nav.locator('[aria-current="page"]').innerText(), 'いえ');
@@ -124,7 +146,8 @@ try {
                 }
             }
             await button(page, 'しまのメニュー').click();
-            await button(page, 'もちもの').click(); await ordinary('#/island?view=inventory');
+            await page.locator('[data-home-group=arrange] > summary').click();
+            await page.locator('[data-home-action=inventory]').click(); await ordinary('#/island?view=inventory');
             const move = page.getByRole('button', { name: /を うごかす$/ }).first();
             await move.click(); await focus('placement');
             const beforeMove = await readNative(page, id);
@@ -169,7 +192,7 @@ try {
             assert.equal(answered.state.logs.length, 1);
             await button(page, 'とじる').click(); await ordinary('#/stats');
             await page.waitForFunction(() => [...document.querySelectorAll('div')].some(element => element.textContent === 'かいとう' && /^1\s*かいとう$/.test(element.parentElement.textContent)));
-            const metric = page.getByText('かいとう', { exact: true }).locator('..');
+            const metric = page.locator('.stats-metric').filter({ has: page.getByText('かいとう', { exact: true }) });
             assert.match(await metric.innerText(), /^1\s/, 'One saved answer replaces the empty state with the actual answer metric');
             assert.deepEqual(errors, []);
             report.scenarios.push({ viewport, pass: true, checks: ['top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', 'settings source retained', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer'], errors });

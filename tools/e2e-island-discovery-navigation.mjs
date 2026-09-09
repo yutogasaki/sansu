@@ -174,7 +174,7 @@ async function assertAlbumBoundary(page, comparison) {
     await waitMode(page, 'album'); await assertHeld(page);
     await page.locator('[data-memory-current] [data-renderer="three"]').waitFor();
     assert.equal(await page.locator('.island-album-compare').getAttribute('data-comparison-habitat'), comparison);
-    assert.equal(await button(page, 'アルバムを とじる').isEnabled(), true, 'Read-only return remains available while discovery is held');
+    assert.equal(await button(page, 'アルバムから もどる').isEnabled(), true, 'Read-only return remains available while discovery is held');
     const stages = await page.locator('.island-album-compare [data-testid="island-stage"]').evaluateAll(elements => elements.map(el => ({
         theme: el.dataset.islandTheme, accent: el.dataset.islandAccent, readOnly: el.dataset.readOnly,
     })));
@@ -286,7 +286,7 @@ try {
             await page.locator('.island-growth-return').click();
             row.milestoneAlbum = await assertAlbumBoundary(page, 'all');
             await capture(page, `${layout.name}-03-held-milestone-album`);
-            await button(page, 'アルバムを とじる').click(); await assertHomeBoundary(page);
+            await button(page, 'アルバムから もどる').click(); await assertHomeBoundary(page);
             await button(page, 'しまのメニュー').click();
             await button(page, 'アルバム').click();
             row.ordinaryAlbum = await assertAlbumBoundary(page, 'garden');
@@ -295,7 +295,7 @@ try {
             row.discoveredActionsWhileHeld = await page.locator('[data-discovery-id] button').evaluateAll(elements => elements.map(el => ({ label: el.textContent.trim(), disabled: el.disabled })));
             assert(row.discoveredActionsWhileHeld.every(control => control.disabled), 'Discovery replay/placement actions retain the interactive lock');
             row.discoveryActionsPresentWhileHeld = row.discoveredActionsWhileHeld.length;
-            await button(page, 'アルバムを とじる').click(); await assertHomeBoundary(page);
+            await button(page, 'アルバムから もどる').click(); await assertHomeBoundary(page);
             assert.deepEqual(learningInvariant(await readNative(page, id)), invariant, 'Read-only navigation cannot change learning or history');
             await capture(page, `${layout.name}-05-held-returned-home`);
             assert.equal(await page.evaluate(() => window.__releaseIslandDiscoveryCompletion()), true);

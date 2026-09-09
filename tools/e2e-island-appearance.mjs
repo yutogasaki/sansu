@@ -242,8 +242,8 @@ async function returnLearning(page, row, label) {
     const before = await tables(page), plan = (await readNative(page)).plan;
     assert(plan?.status === 'active');
     const mode = await page.locator('.island-page').getAttribute('data-mode');
-    if (mode === 'customization') await press(page, 'きせかえを とじる', row.touch, panel(page));
-    else if (mode === 'experience') await press(page, 'しまへ もどる', row.touch, page.getByTestId('island-experience'));
+    if (mode === 'customization') await press(page, 'きせかえから もどる', row.touch, panel(page));
+    else if (mode === 'experience') await press(page, 'なまえ・けしきから もどる', row.touch, page.getByTestId('island-experience'));
     else assert.equal(mode, 'home', 'Use the actual optional-screen close control before learning');
     await waitMode(page, 'home'); await idle(page);
     assert.deepEqual((await readNative(page)).plan, plan); unchanged(before, await tables(page));
@@ -420,7 +420,7 @@ async function sceneSave(page, row) {
 
     // Make current scenery visibly different using already-owned windows. This
     // makes snapshot preview/cancel observable without granting any new rights.
-    await press(page, 'しまへ もどる', row.touch, experience); await waitMode(page, 'home'); await open(page, row);
+    await press(page, 'なまえ・けしきから もどる', row.touch, experience); await waitMode(page, 'home'); await open(page, row);
     await checkDB(page, row, 'saved-scene-exit-to-owned-customization-readonly', after);
     await choose(page, row, 'candy', 'house', 'houseWindows'); await act(page, row, 'equip');
     const current = await waitNative(page, island => savedSlots(island).houseWindows === 'parts-v1:candy:houseWindows', 'current owned windows differ from saved layout');

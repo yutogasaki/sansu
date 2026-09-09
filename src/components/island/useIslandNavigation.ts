@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { islandFocusScreen, islandLearningRequested, islandParentUrl, islandScreenFromSearch, islandViewUrl, withoutIslandLearning, type IslandScreen } from '../../domain/island/navigation';
+import { islandFocusScreen, islandHouseSectionFromSearch, islandHouseUrl, islandLearningRequested, islandParentUrl, islandScreenFromSearch, islandViewUrl, withoutIslandLearning, type IslandScreen, type IslandHouseSection } from '../../domain/island/navigation';
 import { warmUpTTS } from '../../utils/tts';
 
 export type IslandTab = 'island' | 'house' | 'stats' | 'settings';
@@ -18,6 +18,7 @@ export function useIslandNavigationState(enabled: boolean) {
     const learning = enabled && islandLearningRequested(location.search);
     const active = enabled && (isIsland || learning);
     const view = isIsland ? islandScreenFromSearch(location.search) : 'home';
+    const houseSection = isIsland ? islandHouseSectionFromSearch(location.search) : 'home';
     const [blocked, setBlocked] = useState(false);
     // A discovery save can leave reading routes open while new learning must wait.
     const [learningBlocked, setLearningBlocked] = useState(false);
@@ -65,6 +66,16 @@ export function useIslandNavigationState(enabled: boolean) {
         if (state?.islandParent?.key && state.islandParent.href.startsWith('/') && !state.islandParent.href.startsWith('//')) navigate(-1);
         else navigate(islandParentUrl(location.pathname, location.search), { replace: true, state: { islandTab: tab } });
     }, [blocked, navigate, state, location.pathname, location.search, tab]);
+    const setHouseSection = useCallback((next: IslandHouseSection) => {
+        if (blocked || learning || view !== 'keepsakes' || next === houseSection) return;
+        if (next === 'home' && state?.islandParent?.href === islandHouseUrl('home')) back();
+        else open(islandHouseUrl(next), houseSection !== 'home');
+    }, [blocked, learning, view, houseSection, state?.islandParent?.href, back, open]);
+    const openPhotoGallery = useCallback(() => {
+        const gallery = islandViewUrl('photos');
+        if (view === 'camera' && state?.islandParent?.href === gallery) back();
+        else open(gallery, view === 'camera');
+    }, [view, state?.islandParent?.href, back, open]);
     const startLearning = useCallback(() => {
         if (blocked || learningBlocked || learning) return;
         learningTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -89,11 +100,11 @@ export function useIslandNavigationState(enabled: boolean) {
         navigate(target, { state: { islandTab: next } });
     }, [blocked, navigate, setHouseEntry]);
 
-    return useMemo(() => ({ enabled, active, isIsland, learning, view, focus, tab, houseEntry, photoId, blocked, learningBlocked,
+    return useMemo(() => ({ enabled, active, isIsland, learning, view, focus, tab, houseEntry, houseSection, photoId, blocked, learningBlocked,
         mounted: enabled && (visited || active), targetProfile,
-        open, back, startLearning, setView, selectTab, setBlocked, setLearningBlocked,
+        open, back, startLearning, setView, selectTab, setHouseSection, openPhotoGallery, setBlocked, setLearningBlocked,
         ordinaryHref: withoutIslandLearning(location.pathname, location.search),
-    }), [enabled, active, isIsland, learning, view, focus, tab, houseEntry, photoId, blocked, learningBlocked, visited, targetProfile, open, back, startLearning, setView, selectTab, setBlocked, setLearningBlocked, location.pathname, location.search]);
+    }), [enabled, active, isIsland, learning, view, focus, tab, houseEntry, houseSection, photoId, blocked, learningBlocked, visited, targetProfile, open, back, startLearning, setView, selectTab, setHouseSection, openPhotoGallery, setBlocked, setLearningBlocked, location.pathname, location.search]);
 }
 
 export type IslandNavigation = ReturnType<typeof useIslandNavigationState>;

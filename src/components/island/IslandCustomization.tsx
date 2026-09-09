@@ -1,5 +1,6 @@
+import { IslandPanelHeading } from './IslandPanelHeading';
 import { useEffect, useState } from 'react';
-import { Cloud, House, TreePine, Waves, Fence, Map, RotateCcw, Check, Gem, Heart, MoonStar, Sparkles, Star, Candy, X, ArrowRight } from 'lucide-react';
+import { Cloud, House, TreePine, Waves, Fence, Map, RotateCcw, Check, Gem, Heart, MoonStar, Sparkles, Star, Candy, ArrowRight } from 'lucide-react';
 import { CUSTOMIZATION_CATALOG, getIslandCosmetics, getIslandCustomization, hasIslandCustomizationItem, quoteIslandCustomization,
     type IslandCosmetics, type IslandCustomizationAction, type IslandCustomizationItemId, type IslandThemeId } from '../../domain/island/customization';
 import { ISLAND_APPEARANCE_PART_IDS, ISLAND_APPEARANCE_PART_SLOTS, type IslandAppearancePartId, type IslandAppearanceSlotId } from '../../domain/island/appearance';
@@ -59,8 +60,8 @@ export function IslandCustomization({ island, preview, selectedId, selectedSlot,
     const items = CUSTOMIZATION_CATALOG.filter(item => item.kind === kind && (kind !== 'part' || item.partId === part));
     return <section className="island-sheet island-panel island-customization" data-testid="island-customization" data-selected-item={selectedId}
         data-selected-slot={selectedSlot ?? 'all'} data-customization-category={kind} data-cosmetic-focus={focus} data-points={state.points} data-preview={changed} aria-label="しまの きせかえ">
-        <div className="island-customization-heading"><h2>きせかえ</h2><div className="island-customization-wallet" aria-label={`もっている ほし ${state.points}こ`}><small>まなぶと たまる ほし</small><Stars amount={state.points} /></div>
-            <button className="island-icon-button island-panel-back" disabled={disabled} aria-label="きせかえを とじる" onClick={onClose}><X size={20} /><span>もどる</span></button></div>
+        <IslandPanelHeading title="しまの きせかえ" onExit={onClose} disabled={disabled} exitAriaLabel="きせかえから もどる"
+            actions={<div className="island-customization-wallet" aria-label={`もっている ほし ${state.points}こ`}><small>まなぶと たまる ほし</small><Stars amount={state.points} /></div>} />
         {error && <div className="island-customization-error" role="alert"><p>{error}</p>{onRetry && <button className="island-secondary" disabled={disabled}
             data-customization-action="retry" onClick={onRetry}>けっかを たしかめる</button>}</div>}
         <IslandRewardGoalFeedback controls={rewardGoal} disabled={disabled} />

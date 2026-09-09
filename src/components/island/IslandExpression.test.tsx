@@ -72,7 +72,7 @@ describe('expression acquisition and learning exits', () => {
         const props = base(100);
         const html = renderToStaticMarkup(<IslandExpression {...props} pending error="きろくを たしかめよう。" onRetry={() => undefined} />);
         expect(button(html, 'acquire')).toContain('disabled'); expect(button(html, 'learn')).not.toContain('disabled');
-        expect(html.match(/<button[^>]*aria-label="みじたくを とじる"[^>]*>/)?.[0]).not.toContain('disabled');
+        expect(html.match(/<button[^>]*aria-label="みじたくから もどる"[^>]*>/)?.[0]).not.toContain('disabled');
         expect(html).toContain('きろくを たしかめる');
     });
 });

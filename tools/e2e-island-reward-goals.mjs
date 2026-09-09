@@ -251,8 +251,8 @@ async function openItem(page, row, item) {
 }
 async function closeItem(page, row, item) {
     await readOnly(page, row, `close-${idOf(item)}`, async () => {
-        await press(page, row, item.category === 'customization' ? 'きせかえを とじる' : item.category === 'furniture' ? 'どうぐを とじる' : 'みじたくを とじる');
-        if (item.category === 'expression') { await waitMode(page, 'experience'); await press(page, row, 'しまへ もどる', page.getByTestId('island-experience')); }
+        await press(page, row, item.category === 'customization' ? 'きせかえから もどる' : item.category === 'furniture' ? 'どうぐから もどる' : 'みじたくから もどる');
+        if (item.category === 'expression') { await waitMode(page, 'experience'); await press(page, row, 'なまえ・けしきから もどる', page.getByTestId('island-experience')); }
         await waitMode(page, 'home');
     });
 }

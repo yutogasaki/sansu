@@ -1,5 +1,16 @@
 export const ISLAND_SCREENS = ['home', 'help', 'learning', 'reward', 'inventory', 'placement', 'play', 'growth', 'album', 'customization', 'guide', 'experience', 'expression', 'showcase', 'workshop', 'camera', 'photos', 'shared', 'furniture', 'keepsakes', 'challenge'] as const;
 export type IslandScreen = typeof ISLAND_SCREENS[number];
+export type IslandHouseSection = 'home' | 'keepsakes' | 'notices';
+
+export function islandHouseSectionFromSearch(search: string): IslandHouseSection {
+    const query = new URLSearchParams(search);
+    const section = query.get('house');
+    return query.get('view') === 'keepsakes' && (section === 'keepsakes' || section === 'notices') ? section : 'home';
+}
+
+export function islandHouseUrl(section: IslandHouseSection) {
+    return `/island?view=keepsakes${section === 'home' ? '' : `&house=${section}`}`;
+}
 
 export function islandScreenFromSearch(search: string): IslandScreen {
     const view = new URLSearchParams(search).get('view');
@@ -33,6 +44,7 @@ export function islandParentUrl(pathname: string, search: string) {
     if (pathname === '/settings/curriculum') return '/settings?section=learning';
     if (pathname === '/parents' || pathname === '/dev') return '/settings?section=parent';
     if (pathname === '/island') {
+        if (islandHouseSectionFromSearch(search) !== 'home') return islandHouseUrl('home');
         if (query.get('view') === 'challenge') return islandViewUrl('keepsakes');
         if (query.has('photo')) return islandViewUrl('photos');
         if (query.get('view') === 'placement') return islandViewUrl('inventory');

@@ -86,7 +86,7 @@ async function finishSection(page, state) {
     await waitMode(page, 'learning'); return state;
 }
 async function home(page) {
-    if (await panel(page).count()) await tap(page, panel(page).getByRole('button', { name: 'しまへ もどる', exact: true }));
+    if (await panel(page).count()) await tap(page, panel(page).getByRole('button', { name: 'なまえ・けしきから もどる', exact: true }));
     else await tap(page, button(page, 'しまへ'));
     await waitMode(page, 'home');
 }

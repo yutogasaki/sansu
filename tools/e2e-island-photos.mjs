@@ -133,7 +133,7 @@ try {
             await camera(page).getByRole('button', { name: 'しゃしんを みる', exact: true }).click(); await waitMode(page, 'photos');
             await gallery(page).locator('.island-photo-card').first().click(); await gallery(page).locator('.island-photo-detail img').waitFor();
             await capture(page, `${name}-03-gallery-detail`);
-            await gallery(page).getByRole('button', { name: 'しゃしんの アルバムを とじる', exact: true }).click(); await waitMode(page, 'home');
+            await gallery(page).getByRole('button', { name: 'しゃしんの アルバムから もどる', exact: true }).click(); await waitMode(page, 'home');
             await button(page, 'おためしの いりえ').click(); await waitMode(page, 'workshop');
             for (const composition of ['specimen', 'work']) {
                 if (composition === 'work') await button(page, 'つくる').click();
@@ -164,7 +164,7 @@ try {
             await button(page, 'しまづくり').click(); await waitMode(page, 'experience');
             await page.getByLabel('しまの なまえ', { exact: true }).fill('しゃしんの しま');
             await page.getByTestId('island-experience').locator('form').first().getByRole('button', { name: 'なまえを つける', exact: true }).click(); await idle(page);
-            await page.getByTestId('island-experience').getByRole('button', { name: 'しまへ もどる', exact: true }).click(); await waitMode(page, 'home');
+            await page.getByTestId('island-experience').getByRole('button', { name: 'なまえ・けしきから もどる', exact: true }).click(); await waitMode(page, 'home');
             await openGallery(page); saved = await tables(page);
             assert.deepEqual(saved.islandPhotos.find(photo => photo.id === first.id), first);
             assert.deepEqual(saved.islandPhotoBlobs.find(photo => photo.id === first.id), firstBlob);
@@ -221,7 +221,7 @@ try {
             saved = await tables(page); assert.equal(saved.islandPhotos.filter(photo => photo.profileId === secondOwner).length, 1);
             assert.deepEqual(saved.islandPhotoBlobs.filter(photo => photo.profileId === owner), firstOwner.islandPhotoBlobs.filter(photo => photo.profileId === owner));
             await camera(page).getByRole('button', { name: 'カメラを とじる', exact: true }).click(); await waitMode(page, 'photos');
-            await gallery(page).getByRole('button', { name: 'しゃしんの アルバムを とじる', exact: true }).click(); await waitMode(page, 'home');
+            await gallery(page).getByRole('button', { name: 'しゃしんの アルバムから もどる', exact: true }).click(); await waitMode(page, 'home');
             await button(page, 'せってい').click(); await page.locator('[data-setting-section="profile"]').click();
             await page.locator('.space-y-3.px-4.py-4').filter({ hasText: firstName }).getByRole('button', { name: /切替|きりかえ/ }).click(); await resumedInput();
             if (await page.locator('.island-page[data-mode="learning"]').count()) { await button(page, 'しまへ').click(); await waitMode(page, 'home'); }

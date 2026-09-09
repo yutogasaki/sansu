@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, Camera, Download, Image, RotateCcw, Trash2, X } from 'lucide-react';
+import { IslandPanelHeading } from './IslandPanelHeading';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { ArrowRight, Camera, Download, Image, RotateCcw, Trash2 } from 'lucide-react';
 import { loadIslandPhotoBlobs, loadIslandPhotoThumbnail } from '../../domain/island/photosRepository';
 import type { IslandPhotoMetadata } from '../../domain/island/photos';
 import { downloadStoredIslandPhoto } from './islandPhotoCapture';
@@ -32,15 +33,14 @@ export function IslandPhotoCamera({ photos, targets, targetId, disabled, onTarge
     onTarget: (id: string) => void; onCapture: () => void; onGallery: () => void; onClose: () => void; onLearn: () => void;
 }) {
     return <section className="island-sheet island-panel island-photo-camera" data-testid="island-photo-camera" data-photo-status={photos.status}>
-        <div className="island-sheet-title"><h2>しゃしんを とろう</h2>
-            <button className="island-icon-button island-panel-back" aria-label="カメラを とじる" disabled={disabled} onClick={onClose}><X size={20} /><span>とじる</span></button></div>
+        <IslandPanelHeading title="しゃしんを とる" kind="close" onExit={onClose} disabled={disabled} exitAriaLabel="カメラを とじる" />
         <div className="island-photo-targets island-panel-choices" role="group" aria-label="うつす もの">{targets.map(target =>
             <button key={target.id} className="island-secondary" aria-pressed={targetId === target.id}
                 disabled={disabled || photos.processing} onClick={() => onTarget(target.id)}>{target.label}</button>)}</div>
         {photos.preview && <figure className="island-photo-preview" data-photo-saved={photos.status === 'saved'}>
             <PhotoPreview blob={photos.preview.blobs.image} name={photos.preview.input.targetName ?? photos.preview.input.islandName} />
-            <figcaption>{photos.status === 'saved' ? 'アルバムに のこしたよ。'
-                : photos.status === 'saving' ? 'アルバムに のこしているよ…' : 'まだ のこせていない しゃしん'}</figcaption>
+            <figcaption>{photos.status === 'saved' ? 'しゃしんの たなに のこしたよ。'
+                : photos.status === 'saving' ? 'しゃしんの たなに のこしているよ…' : 'まだ のこせていない しゃしん'}</figcaption>
         </figure>}
         {photos.error && <p className="island-photo-error" role="alert">{photos.error}</p>}
         {photos.readError && <p className="island-photo-error" role="alert">{photos.readError}
@@ -70,30 +70,38 @@ function PhotoImage({ photo }: { photo: IslandPhotoMetadata }) {
         : <span className="island-photo-loading" role="status">{loaded?.error ? 'しゃしんを ひらけなかったよ' : 'ひらいているよ…'}</span>;
 }
 
-function PhotoDetail({ photo, photos, decoration, disabled, onBack }: { photo: IslandPhotoMetadata; photos: PhotoState; decoration?: IslandAlbumDecoration; disabled: boolean; onBack: () => void }) {
+function PhotoDetail({ photo, photos, decoration, disabled, onRemove }: { photo: IslandPhotoMetadata; photos: PhotoState; decoration?: IslandAlbumDecoration; disabled: boolean; onRemove: (id: string) => void }) {
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [downloadError, setDownloadError] = useState(false);
+    const [readAttempt, setReadAttempt] = useState(0);
+    const deleteTrigger = useRef<HTMLButtonElement>(null);
+    const cancelDelete = useRef<HTMLButtonElement>(null);
+    const dismissDelete = () => { setConfirmDelete(false); deleteTrigger.current?.focus({ preventScroll: true }); };
+    useEffect(() => { if (confirmDelete) cancelDelete.current?.focus(); }, [confirmDelete]);
     // Leaving or changing profile cancels delivery of a delayed image read.
     const [exportBlob, setExportBlob] = useState<Blob>();
     useEffect(() => {
         let alive = true;
+        setExportBlob(undefined); setDownloadError(false);
         void loadIslandPhotoBlobs(photo.profileId, photo.id).then(blobs => {
             if (alive) { if (blobs) setExportBlob(blobs.image); else setDownloadError(true); }
         }).catch(() => { if (alive) setDownloadError(true); });
         return () => { alive = false; };
-    }, [photo.profileId, photo.id]);
+    }, [photo.profileId, photo.id, readAttempt]);
     return <article className="island-photo-detail" data-photo-id={photo.id}>
-        <button className="island-text-button" onClick={onBack}><X size={20} />とじる</button>
         <figure>{exportBlob ? <PhotoPreview blob={exportBlob} name={photo.targetName ?? photo.islandName} />
             : <p role="status">{downloadError ? 'しゃしんを ひらけなかったよ' : 'ひらいているよ…'}</p>}<figcaption><strong>{photo.targetName ?? photo.islandName}</strong>
             <span>{photo.islandName} · {new Date(photo.capturedAt).toLocaleDateString('ja-JP', { month: 'long', day: 'numeric' })}</span></figcaption><IslandAlbumStamp decoration={decoration} /></figure>
         <div className="island-photo-actions"><button className="island-secondary" disabled={!exportBlob}
             onClick={() => exportBlob && downloadStoredIslandPhoto(exportBlob)}><Download size={18} />PNGで とりだす</button>
-            <button className="island-text-button" disabled={disabled || photos.processing} onClick={() => setConfirmDelete(true)}><Trash2 size={17} />この しゃしんを はずす</button></div>
-        {downloadError && <p role="alert">まだ とりだせなかったよ。ひらきなおして ためそう。</p>}
-        {confirmDelete && <div className="island-photo-delete"><p>この しゃしんを アルバムから はずす？</p>
-            <button className="island-secondary" disabled={disabled || photos.processing} onClick={() => setConfirmDelete(false)}>のこしておく</button>
-            <button className="island-secondary" disabled={disabled || photos.processing} onClick={() => { void photos.remove(photo.id).then(removed => { if (removed) onBack(); }); }}>はずす</button></div>}
+            <button ref={deleteTrigger} className="island-text-button" disabled={disabled || photos.processing} onClick={() => setConfirmDelete(true)}><Trash2 size={17} />この しゃしんを はずす</button></div>
+        {downloadError && <div className="island-photo-error" role="alert"><p>しゃしんを ひらけなかったよ。もういちど ためせるよ。</p>
+            <button className="island-secondary" disabled={disabled || photos.processing} onClick={() => setReadAttempt(value => value + 1)}>しゃしんを ひらきなおす</button></div>}
+        {confirmDelete && <div className="island-photo-delete" role="group" aria-label="しゃしんを はずす かくにん" onKeyDown={event => {
+            if (event.key === 'Escape' && !disabled && !photos.processing) { event.preventDefault(); event.stopPropagation(); dismissDelete(); }
+        }}><p>この しゃしんを たなから はずす？</p>
+            <button ref={cancelDelete} className="island-secondary" disabled={disabled || photos.processing} onClick={dismissDelete}>のこしておく</button>
+            <button className="island-secondary" disabled={disabled || photos.processing} onClick={() => onRemove(photo.id)}>はずす</button></div>}
     </article>;
 }
 
@@ -110,20 +118,32 @@ export function IslandPhotoGallery({ photos, decoration, disabled, onCamera, onC
     const navigation = useIslandNavigation();
     const [localSelectedId, setLocalSelectedId] = useState<string>();
     const selectedId = navigation ? navigation.photoId : localSelectedId;
+    const activeSelection = useRef(selectedId);
+    useLayoutEffect(() => {
+        activeSelection.current = selectedId;
+        return () => { activeSelection.current = undefined; };
+    }, [selectedId]);
     const setSelectedId = (id?: string) => {
         if (navigation) { if (id) navigation.open(`/island?view=photos&photo=${encodeURIComponent(id)}`); else navigation.back(); }
         else setLocalSelectedId(id);
     };
+    const remove = async (id: string) => {
+        // History can change the selected photo without leaving the live album.
+        // The deleted row disappearing alone must not invalidate a genuine completion.
+        if (activeSelection.current !== id) return;
+        if (await photos.remove(id) && activeSelection.current === id) setSelectedId(undefined);
+    };
     const selected = photos.snapshot?.photos.find(photo => photo.id === selectedId);
     return <section className="island-sheet island-panel island-photo-gallery" data-testid="island-photo-gallery">
-        {!selectedId && <div className="island-sheet-title"><h2>しゃしんの アルバム</h2>
-            <button className="island-icon-button island-panel-back" disabled={disabled} aria-label="しゃしんの アルバムから もどる" onClick={onClose}><ArrowLeft size={20} /><span>もどる</span></button></div>}
+        <IslandPanelHeading title="しゃしん" kind={selectedId ? 'close' : 'back'}
+            onExit={selectedId ? () => setSelectedId(undefined) : onClose} disabled={disabled || photos.processing}
+            exitAriaLabel={selectedId ? undefined : 'しゃしんの アルバムから もどる'} />
         {photos.error && <p className="island-photo-error" role="alert">{photos.error}</p>}
         {photos.canRetry && <button className="island-secondary" disabled={disabled || photos.processing} onClick={photos.retry}>もういちど ためす</button>}
         <IslandAlbumBinding decoration={decoration}>{photos.readError ? <p role="alert">{photos.readError}<button className="island-text-button" onClick={photos.retryRead}>もういちど ひらく</button></p>
             : !photos.snapshot ? <p role="status">アルバムを ひらいているよ…</p>
-                : selected ? <PhotoDetail key={selected.id} photo={selected} photos={photos} decoration={decoration} disabled={disabled} onBack={() => setSelectedId(undefined)} />
-                    : selectedId ? <div role="alert"><p>この しゃしんを ひらけなかったよ。</p><button className="island-secondary" onClick={() => setSelectedId(undefined)}><X size={20} />とじる</button></div>
+                : selected ? <PhotoDetail key={selected.id} photo={selected} photos={photos} decoration={decoration} disabled={disabled} onRemove={id => { void remove(id); }} />
+                    : selectedId ? <div role="status"><p>この しゃしんは いま たなに ないよ。とじると ほかの しゃしんを みられるよ。</p></div>
                     : photos.snapshot.photos.length ? <><p className="island-photo-count">{photos.snapshot.photos.length} / 12まい</p>
                         <div className="island-photo-grid">{photos.snapshot.photos.map(photo => <button key={photo.id} className="island-photo-card"
                             data-photo-id={photo.id} onClick={() => setSelectedId(photo.id)}><PhotoImage photo={photo} />

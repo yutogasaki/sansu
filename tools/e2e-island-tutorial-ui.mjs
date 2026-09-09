@@ -22,7 +22,7 @@ for (const width of [390, 768]) {
         await page.locator('[data-tutorial]').waitFor({ state: 'hidden' });
         await button(page, 'しまのメニュー').click(); await button(page, 'どうぶつと あそぶ').click(); await waitMode(page, 'play');
         await page.locator('[data-tutorial="play"]').waitFor(); await capture('play');
-        await button(page, 'あんないを とじる').click(); await button(page, 'あそびを とじる').click(); await waitMode(page, 'home');
+        await button(page, 'あんないを とじる').click(); await button(page, 'あそびから もどる').click(); await waitMode(page, 'home');
         await button(page, 'しまのメニュー').click(); if (await page.locator('[data-home-group=arrange]').count()) await page.locator('[data-home-group=arrange] > summary').click(); await page.locator('[data-home-action=customization]').click(); await waitMode(page, 'customization');
         await page.locator('[data-tutorial="customization"]').waitFor(); await capture('customization');
         await page.locator('[data-customization-id]').last().click(); await page.locator('[data-tutorial]').waitFor({ state: 'hidden' });

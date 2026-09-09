@@ -99,3 +99,7 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 - 2026-09-08: ぽこもこの背景を白い布と大小の水玉へ変更。固定production26画面と2,232 testsを確認 -> `docs/done/2026-09.md`
 
 - 2026-09-08: 水玉と色使いだけで不思議さを表す3配色比較。Aをローカル試作へ統合、固定26画面と2,232 tests PASS -> `docs/done/2026-09.md`
+
+- 2026-09-09: 島の入口名と画面見出し、戻る/閉じる、家内の一段戻りを統一。3,423 tests・smoke31・ナビ2幅・退出操作4幅を確認 -> `docs/done/2026-09.md`
+- 2026-09-09 家の履歴・棚の空状態・保存再確認・短い画面を改善。4サイズ/3428unit/smoke31 PASS -> docs/done/2026-09.md
+- 2026-09-09 写真の読込/削除中断・家への帰還・空報酬・短い横向き撮影を改善。4サイズ/3440unit通過 -> docs/done/2026-09.md

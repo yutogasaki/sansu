@@ -57,7 +57,7 @@ for (const width of [390, 768]) {
         await other.close(); await page.bringToFront();
         await page.locator('.island-play-choices button').first().click(); await guide.waitFor({ state: 'hidden' });
         await page.waitForFunction(id => localStorage.getItem(`pokomoko:tutorial:v1:${encodeURIComponent(id)}:play:practiced`) === '1', profileId);
-        await button(page, 'あそびを とじる').click(); await waitMode(page, 'home');
+        await button(page, 'あそびから もどる').click(); await waitMode(page, 'home');
         await help(); await capture('help');
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
         const sizes = await page.locator('.island-help button').evaluateAll(nodes => nodes.map(node => { const r = node.getBoundingClientRect(); return [r.width, r.height]; }));

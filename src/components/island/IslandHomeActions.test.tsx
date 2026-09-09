@@ -29,7 +29,7 @@ describe('home optional action hierarchy', () => {
         expect(html).toContain('<details class="island-menu-group" data-home-group="arrange">');
         expect(html).toContain('<details class="island-menu-group" data-home-group="more-play">');
         expect(html).not.toContain('<details open');
-        expect(html).toContain('>あそぶ</span>'); expect(html).toContain('>つくる</span>');
+        expect(html).toContain('>どうぶつと あそぶ</span>'); expect(html).toContain('>おためしの いりえ</span>');
     });
     it('does not invent locked workshop, shared, or empty gift buttons', () => {
         const tree = contents(props({ workshopUnlocked: false }));

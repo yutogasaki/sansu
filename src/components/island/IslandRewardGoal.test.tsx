@@ -61,7 +61,7 @@ describe('cross-category goal visibility and deliberate selection', () => {
         const retry = renderToStaticMarkup(<IslandFurniture {...props} rewardGoal={pending} />);
         expect(retry.match(/<button[^>]*data-reward-goal-action="choose"[^>]*>/)?.[0]).toContain('disabled');
         expect(retry).toContain('ほしいものの きろくを たしかめる');
-        expect(retry.match(/<button[^>]*aria-label="どうぐを とじる"[^>]*>/)?.[0]).not.toContain('disabled');
+        expect(retry.match(/<button[^>]*aria-label="どうぐから もどる"[^>]*>/)?.[0]).not.toContain('disabled');
         expect(retry).toContain('>まなぶ ');
         expect(renderToStaticMarkup(<IslandRewardGoalFeedback controls={pending} disabled={false} />)).toContain('data-reward-goal-action="retry"');
     });

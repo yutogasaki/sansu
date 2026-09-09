@@ -1,3 +1,4 @@
+import { IslandPanelHeading } from './IslandPanelHeading';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Check, RotateCw, X } from 'lucide-react';
 import { ISLAND_ITEMS } from '../../domain/island/catalog';
 import { getIslandExpansionLevel } from '../../domain/island/expansion';
@@ -88,16 +89,16 @@ export function IslandRewards({ island, intro = false, disabled, onChoose, onCon
     onContinue: () => void; onClose: () => void;
 }) {
     const reward = island.pendingRewards[0];
-    return <section className="island-sheet island-rewards" aria-label="しまへの おくりもの" data-intro={intro}>
-        <div className="island-sheet-title"><div><p className="island-eyebrow">{intro ? 'はじめての おくりもの' : 'しまへの おくりもの'}</p><h2>どれを むかえる？</h2></div>
-            <button className="island-icon-button" aria-label="しまへ もどる" onClick={onClose} disabled={disabled}><X size={20} /></button></div>
+    return <section className="island-sheet island-panel island-rewards" aria-label="しまへの おくりもの" data-intro={intro}>
+        <IslandPanelHeading title={reward ? 'おくりものを えらぶ' : 'おくりもの'} description={reward ? intro ? 'はじめての おくりもの' : 'どれを むかえる？' : undefined} kind="close" onExit={onClose} disabled={disabled} exitAriaLabel="おくりものを とじる" />
+        {!reward && <p className="island-note" role="status">いまは うけとる おくりものは ないよ。</p>}
         {reward && <div className="island-reward-choices">{reward.choices.map(kind => <button className="island-reward" key={kind}
             disabled={disabled} onClick={() => onChoose(reward.id, kind)}><ItemPicture kind={kind} /><strong>{ISLAND_ITEMS[kind].name}</strong></button>)}</div>}
-        {getIslandExpansionLevel(island) >= 1 && island.completedSets === 2 && <p className="island-milestone">はしが つながった！ あたらしい にわにも おけるよ。</p>}
-        {getIslandExpansionLevel(island) >= 1 && island.completedSets === 4 && <p className="island-milestone">キツネが あそびに きたよ。いっしょに すごそう。</p>}
-        {getIslandExpansionLevel(island) >= 1 && island.completedSets === 6 && <p className="island-milestone">とうだいに あかりが ともったよ！</p>}
-        <button className="island-primary island-continue" disabled={disabled} onClick={onContinue}>つづけて とく <ArrowRight size={20} /></button>
-        <p className="island-note">おくりものは あとで えらんでも いいよ{island.pendingRewards.length > 1 ? `（${island.pendingRewards.length}こ）` : ''}</p>
+        {reward && getIslandExpansionLevel(island) >= 1 && island.completedSets === 2 && <p className="island-milestone">はしが つながった！ あたらしい にわにも おけるよ。</p>}
+        {reward && getIslandExpansionLevel(island) >= 1 && island.completedSets === 4 && <p className="island-milestone">キツネが あそびに きたよ。いっしょに すごそう。</p>}
+        {reward && getIslandExpansionLevel(island) >= 1 && island.completedSets === 6 && <p className="island-milestone">とうだいに あかりが ともったよ！</p>}
+        <button className="island-primary island-continue" disabled={disabled} onClick={onContinue}>{reward ? 'つづけて とく' : 'まなぶ'} <ArrowRight size={20} /></button>
+        {reward && <p className="island-note">おくりものは あとで えらんでも いいよ{island.pendingRewards.length > 1 ? `（${island.pendingRewards.length}こ）` : ''}</p>}
     </section>;
 }
 
@@ -105,8 +106,7 @@ export function IslandInventory({ items, disabled, onSelect, onClose, onFurnitur
     items: IslandItem[]; disabled: boolean; onSelect: (item: IslandItem) => void; onClose: () => void; onFurniture?: () => void;
 }) {
     return <section className="island-sheet island-panel island-inventory-panel" aria-label="しまの もちもの">
-        <div className="island-sheet-title"><div><p className="island-eyebrow">じぶんの しまを ととのえよう</p><h2>どれを うごかす？</h2></div>
-            <button className="island-icon-button island-panel-back" aria-label="もちものから もどる" disabled={disabled} onClick={onClose}><ArrowLeft size={20} /><span>もどる</span></button></div>
+        <IslandPanelHeading title="もちものを おく" description="どれを うごかす？" onExit={onClose} disabled={disabled} exitAriaLabel="もちものから もどる" />
         <div className="island-inventory">{items.map((item, index) => <button key={item.id} disabled={disabled} className="island-reward"
             aria-label={`${ISLAND_ITEMS[item.kind].name} ${index + 1}を うごかす`} onClick={() => onSelect(item)}>
             <ItemPicture kind={item.kind} /><strong>{ISLAND_ITEMS[item.kind].name}</strong><small>{item.position ? 'しまに ある' : item.autoPlacementBlocked ? 'おく ばしょを えらべるよ' : 'しまって ある'}</small>
@@ -124,8 +124,7 @@ export function IslandPlay({ items, disabled, selectedId, message, onSelect, onM
     const placed = items.filter(item => item.position);
     const selected = placed.find(item => item.id === selectedId);
     return <section className="island-sheet island-play" aria-label="どうぶつと あそぶ">
-        <div className="island-sheet-title"><h2>どこで あそぼう？</h2>
-            <button className="island-icon-button" aria-label="あそびを とじる" onClick={onClose} disabled={disabled}><X size={20} /></button></div>
+        <IslandPanelHeading title="どうぶつと あそぶ" description="どこで あそぼう？" onExit={onClose} disabled={disabled} exitAriaLabel="あそびから もどる" />
         <p className="island-play-message" role="status">{message ?? (placed.length ? 'しまの ものか、したの えを えらんでね。' : 'もちものから おくと、どうぶつが あそべるよ。')}</p>
         {!placed.length && <button className="island-secondary island-play-move" disabled={disabled} onClick={onInventory}>もちものを ひらく</button>}
         <div className="island-inventory island-play-choices" role="group" aria-label="あそぶ もの">{placed.map((item, index) => <button key={item.id} disabled={disabled}

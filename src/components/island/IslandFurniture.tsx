@@ -1,4 +1,5 @@
-import { ArrowRight, Check, PackageOpen, PawPrint, Star, X } from 'lucide-react';
+import { IslandPanelHeading } from './IslandPanelHeading';
+import { ArrowRight, Check, PackageOpen, PawPrint, Star } from 'lucide-react';
 import { ISLAND_FURNITURE_CATALOG, getOwnedIslandFurniture, quoteIslandFurniture, type IslandOptionalFurnitureKind } from '../../domain/island/furniture';
 import type { IslandResidentId } from '../../domain/island/experience';
 import type { IslandItem, IslandRecord } from '../../domain/island/types';
@@ -22,8 +23,7 @@ export function IslandFurniture({ island, kind, trial, residents, residentId, pa
     const canTry = Boolean((owned?.position || trial?.position) && residents.some(resident => resident.id === residentId)
         && (kind !== 'tea-table' || partnerId !== residentId && residents.some(resident => resident.id === partnerId)));
     return <section className="island-sheet island-panel island-furniture-shop" aria-label="くらしの どうぐ" data-furniture-kind={kind}>
-        <div className="island-sheet-title"><div><p className="island-eyebrow">なかまと すごす ばしょ</p><h2>くらしの どうぐ</h2></div>
-            <button className="island-icon-button island-panel-back" aria-label="どうぐを とじる" onClick={onClose} disabled={disabled}><X size={20} /><span>もどる</span></button></div>
+        <IslandPanelHeading title="くらしの どうぐ" description="なかまと すごす ばしょ" onExit={onClose} disabled={disabled} exitAriaLabel="どうぐから もどる" />
         <p className="island-furniture-wallet"><Star size={18} aria-hidden="true" /><strong>{quote.points}</strong><span>まなぶと たまる ほし</span></p>
         <div className="island-furniture-choices island-panel-choices" role="group" aria-label="どうぐを えらぶ">{ISLAND_FURNITURE_CATALOG.map(item => {
             const has = Boolean(getOwnedIslandFurniture(island, item.kind));

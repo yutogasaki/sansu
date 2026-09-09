@@ -133,7 +133,7 @@ try {
             await assertPreserved('Placement movement and cancellation preserve ownership and the reservation');
             await button(page, 'くらしの どうぐを みる').click(); await waitMode(page, 'furniture'); await waitReady(page);
             await capture('04-furniture-view-only');
-            await button(page, 'どうぐを とじる').click(); await waitMode(page, 'inventory');
+            await button(page, 'どうぐから もどる').click(); await waitMode(page, 'inventory');
             await button(page, 'もちものから もどる').click(); await waitMode(page, 'home');
 
             await openMenuEntry(page, 'album', 'album');
@@ -150,7 +150,7 @@ try {
             await category.selectOption('discoveries'); await page.locator('.island-album-empty').waitFor();
             assert.equal(await page.locator('.island-album-compare').count(), 0);
             await category.selectOption('memories'); await page.locator('[data-memory-current] [data-renderer="three"]').waitFor();
-            await button(page, 'アルバムを とじる').click(); await waitMode(page, 'home');
+            await button(page, 'アルバムから もどる').click(); await waitMode(page, 'home');
             await assertPreserved('Album category changes preserve immutable history and current ownership');
 
             await openMenuEntry(page, 'customization', 'customization'); await waitReady(page); await capture('06-customization-view-only');
@@ -164,15 +164,15 @@ try {
                 await page.waitForFunction(expected => document.querySelector('.island-page > .island-customization')?.scrollTop === expected, scrollTop);
                 row.checks.push('Closing learning restores the wide editor scroll position');
             }
-            await button(page, 'きせかえを とじる').click(); await waitMode(page, 'home');
+            await button(page, 'きせかえから もどる').click(); await waitMode(page, 'home');
             await openMenuEntry(page, 'experience', 'experience'); await waitReady(page); await capture('07-experience-view-only');
             await page.locator('[data-experience-action="expression"]').click(); await waitMode(page, 'expression'); await waitReady(page); await capture('08-expression-view-only');
-            await button(page, 'みじたくを とじる').click(); await waitMode(page, 'experience');
-            await button(page, 'しまへ もどる').click(); await waitMode(page, 'home');
+            await button(page, 'みじたくから もどる').click(); await waitMode(page, 'experience');
+            await button(page, 'なまえ・けしきから もどる').click(); await waitMode(page, 'home');
             await openMenuEntry(page, 'guide', 'guide'); await waitReady(page); await capture('09-guide-view-only');
-            await button(page, 'みつけものを とじる').click(); await waitMode(page, 'home');
+            await button(page, 'みつけものから もどる').click(); await waitMode(page, 'home');
             await button(page, '育てる ばしょを えらぶ').click(); await waitMode(page, 'growth'); await waitReady(page); await capture('10-growth-view-only');
-            await button(page, 'ばしょえらびを とじる').click(); await waitMode(page, 'home');
+            await button(page, 'ばしょえらびから もどる').click(); await waitMode(page, 'home');
             await assertPreserved('Optional world panels remain view-only');
 
             await button(page, 'せってい').click(); await page.waitForURL(url => url.hash === '#/settings');

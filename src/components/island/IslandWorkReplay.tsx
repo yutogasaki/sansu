@@ -1,5 +1,6 @@
+import { IslandPanelHeading } from './IslandPanelHeading';
 import { useState } from 'react';
-import { ArrowRight, Camera, ChevronLeft, Play } from 'lucide-react';
+import { ArrowRight, Camera, Play } from 'lucide-react';
 import type { SharedTarget } from '../../domain/island/sharedMemories';
 import type { WorkshopSceneCommand } from './three/workshopScene';
 
@@ -19,7 +20,7 @@ export function IslandWorkReplay({ target, disabled, showingDraft, onShowDraft, 
 }) {
     const [confirm, setConfirm] = useState(false);
     return <section className="island-sheet island-shared" aria-label="のこした さくひんを ためす">
-        <div className="island-sheet-title"><h2>{target.name}</h2><button className="island-text-button" disabled={disabled} onClick={onClose}><ChevronLeft size={17} />かざりへ</button></div>
+        <IslandPanelHeading title={target.name} kind="close" onExit={onClose} disabled={disabled} exitAriaLabel="さいせいを とじる" />
         <p>{showingDraft ? 'いまの つくりかけを みているよ。' : 'かざった ときの さくひんだよ。'}みるだけで つくりかけは かわらないよ。</p>
         {error && <div className="island-error" role="alert"><p>{error}</p>{onRetry && <button className="island-secondary" disabled={disabled} onClick={onRetry}>もういちど のこす</button>}</div>}
         <div className="island-shared-row"><button className="island-primary" disabled={disabled} onClick={() => onCommand({ type: 'run' })}><Play size={18} />みずを ながす</button>

@@ -1,5 +1,6 @@
+import { IslandPanelHeading } from './IslandPanelHeading';
 import { useState } from 'react';
-import { ArrowRight, Brush, Camera, Check, ChevronLeft, Droplets, Hand, Lightbulb, Play, Redo2, RotateCw, Save, Undo2, Waves, Wrench } from 'lucide-react';
+import { ArrowRight, Brush, Camera, Check, Droplets, Hand, Lightbulb, Play, Redo2, RotateCw, Save, Undo2, Wrench } from 'lucide-react';
 import { getWorkshopAssemblableParts, getWorkshopSpecimenName, WORKSHOP_SHELF_IDS, WORKSHOP_SPECIMEN_IDS, WORKSHOP_WORK_IDS,
     type IslandWorkshopAction, type IslandWorkshopState, type WorkshopSpecimenId, type WorkshopToolId, type WorkshopWorkId } from '../../domain/island/workshop';
 import { WORKSHOP_PART_IDS, WORKSHOP_PARTS, type WorkshopPartId, type WorkshopRotation } from '../../domain/island/workshopLayout';
@@ -72,8 +73,7 @@ export function IslandWorkshop({ workshop, view, onView, disabled, onCommand, on
         onCommand({ type: 'place-specimen', specimenId, station: tool });
     };
     return <section className="island-sheet island-panel island-workshop" aria-label="おためしの いりえ" onPointerDownCapture={onGesture} onKeyDownCapture={onGesture}>
-        <div className="island-sheet-title"><h2><Waves size={21} />おためしの いりえ</h2>
-            <button className="island-text-button island-panel-back" disabled={disabled} onClick={onClose}><ChevronLeft size={16} />しまへ</button></div>
+        <IslandPanelHeading title="おためしの いりえ" kind="close" onExit={onClose} disabled={disabled} exitAriaLabel="いりえを とじる" />
         <div className="island-workshop-tabs island-panel-choices" aria-label="いりえの あそび">
             <button className="island-secondary" disabled={disabled} aria-pressed={view.mode === 'observe'} onClick={() => onView({ ...view, mode: 'observe' })}><Hand size={18} />しらべる</button>
             <button className="island-secondary" disabled={disabled} aria-pressed={view.mode === 'build'} onClick={() => onView({ ...view, mode: 'build' })}><Wrench size={18} />つくる</button>

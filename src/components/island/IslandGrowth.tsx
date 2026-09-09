@@ -1,4 +1,5 @@
-import { Check, Eye, Flower2, House, Map as MapIcon, Sprout, Trees, Waves, X } from 'lucide-react';
+import { IslandPanelHeading } from './IslandPanelHeading';
+import { Check, Eye, Flower2, House, Map as MapIcon, Sprout, Trees, Waves } from 'lucide-react';
 import { getIslandGrowthTarget, getIslandHabitatLevel, isIslandHabitatUnlocked, ISLAND_HABITATS } from '../../domain/island/growth';
 import { getIslandExpansionLevel } from '../../domain/island/expansion';
 import { islandGrowthStep } from '../../domain/island/pacing';
@@ -48,7 +49,7 @@ export function IslandGrowthChoices({ island, plan, disabled, onSelect, onClose,
     const frozen = plan?.status === 'active' ? plan.growthTarget : undefined;
     const current = ISLAND_HABITATS.find(place => place.id === frozen);
     return <section className="island-sheet island-growth-choices" aria-label="育てる ばしょを えらぶ">
-        <div className="island-sheet-title"><h2>どこを 育てよう？</h2><button className="island-icon-button" disabled={disabled} aria-label="ばしょえらびを とじる" onClick={onClose}><X size={20} /></button></div>
+        <IslandPanelHeading title="育てる ばしょ" description="どこを 育てよう？" onExit={onClose} disabled={disabled} exitAriaLabel="ばしょえらびから もどる" />
         {current && <p className="island-note">いまの もんだいは {current.name}へ。えらぶと、つぎから 育つよ。</p>}
         <div className="island-growth-place-list">{ISLAND_HABITATS.map(habitat => {
             const unlocked = Boolean(island.growth) && isIslandHabitatUnlocked(island, habitat.id);

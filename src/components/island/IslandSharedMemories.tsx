@@ -1,5 +1,6 @@
+import { IslandPanelHeading } from './IslandPanelHeading';
 import { useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Camera, ChevronLeft, Flower2, Hand, Heart, Lightbulb, PackageOpen, Play, RotateCw, X } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Camera, Flower2, Hand, Heart, Lightbulb, Play, RotateCw, X } from 'lucide-react';
 import { findSharedDisplayPosition } from './islandSharedPlacement';
 import { getIslandExperience, ISLAND_RESIDENT_IDS, type IslandResidentId } from '../../domain/island/experience';
 import { getIslandSharedMemories, isSharedResidentAvailable, isValidSharedDisplayPlacement, resolveSharedTarget,
@@ -81,8 +82,7 @@ export function IslandSharedMemories({ island, selectedId, preview, disabled, er
         if (request) await onAction({ type: 'cancel-request', requestId: request.requestId });
     };
     return <section className="island-sheet island-shared" aria-label="かざりと なかまの きおく">
-        <div className="island-sheet-title"><h2><PackageOpen size={22} />かざりと きおく</h2>
-            <button className="island-text-button" disabled={disabled} onClick={onClose}><ChevronLeft size={16} />しまへ</button></div>
+        <IslandPanelHeading title="かざりと きおく" onExit={onClose} disabled={disabled} exitAriaLabel="かざりと きおくから もどる" />
         <div className="island-shared-tabs"><button className="island-secondary" aria-pressed={tab === 'displays'} onClick={() => { setTab('displays'); onCommand({ type: 'stop' }); }}>しまに かざる</button>
             <button className="island-secondary" aria-pressed={tab === 'memories'} onClick={() => { setTab('memories'); onPreview(undefined); onCommand({ type: 'stop' }); }}><Heart size={17} />なかまの きおく</button></div>
         {(error || localError) && <div className="island-error" role="alert"><p>{error ?? localError}</p>{onRetry && <button className="island-secondary" disabled={disabled} onClick={() => void onRetry()}>もういちど のこす</button>}</div>}

@@ -32,16 +32,17 @@ describe('real learning keepsake record and display choices', () => {
         expect(html.indexOf('data-keepsake-action="notices"')).toBeLessThan(html.indexOf('data-challenge-content'));
         expect(html).not.toContain('class="island-house-challenge"');
         expect(html).toContain('data-challenge-content');
+        expect(html).toContain('しまへ');
+        expect(html).not.toContain('0こ かざっているよ');
         expect(p.controls.act).not.toHaveBeenCalled();
     });
-
 
 
     it('names the room and exit and guides an empty display without emphasizing zero', () => {
         const p = props(); p.section = 'home'; p.onAlbum = vi.fn();
         const html = renderToStaticMarkup(<IslandLearningKeepsakes {...p} />);
         expect(html).toContain('いえの なか');
-        expect(html).toContain('いえを とじて しまへ');
+        expect(html).toContain('しまへ もどる');
         expect(html).toContain('まなびの あゆみ');
         expect(html).not.toContain('0こ かざっているよ');
         expect(p.controls.act).not.toHaveBeenCalled();
@@ -51,8 +52,10 @@ describe('real learning keepsake record and display choices', () => {
         expect(html.match(/data-keepsake-choice=/g)).toHaveLength(16);
         expect(choice(html, 'completed-1000')).toContain('data-keepsake-state="locked"');
         expect(choice(html, 'completed-1000')).not.toContain('disabled');
-        expect(action(html, 'display')).toContain('disabled'); expect(action(html, 'display-earned')).toContain('disabled');
+        expect(action(html, 'display')).toBeUndefined(); expect(action(html, 'display-earned')).toBeUndefined();
         expect(action(html, 'learn')).not.toContain('disabled'); expect(html).toContain('あと 1かい');
+        expect(html).not.toContain('0こ かざっているよ');
+        expect(html.match(/data-keepsake-action="learn"/g)).toHaveLength(1);
         expect(html).not.toContain('data-keepsake-earned-date'); expect(html).not.toContain('たしかめられた まなびの きろく');
         expect(p.island).toEqual(before); expect(p.controls.act).not.toHaveBeenCalled();
     });
@@ -84,7 +87,7 @@ describe('real learning keepsake record and display choices', () => {
         expect(action(html, 'display')).toContain('disabled'); expect(action(html, 'display-earned')).toContain('disabled');
         expect(choice(html, 'completed-5')).toContain('disabled'); expect(action(html, 'retry')).not.toContain('disabled');
         expect(action(html, 'learn')).not.toContain('disabled'); expect(action(html, 'room')).not.toContain('disabled');
-        expect(html.match(/<button[^>]*aria-label="いえを とじて しまへ"[^>]*>/)?.[0]).not.toContain('disabled');
+        expect(html.match(/<button[^>]*aria-label="いえの なかへ もどる"[^>]*>/)?.[0]).not.toContain('disabled');
         expect(html).toContain('もっているものを ぜんぶ かざる きろく'); expect(html).toContain('けしきの きろくとは べつ');
     });
     it('puts the earned first award action ahead of the collection and keeps future awards and history optional', () => {
@@ -122,12 +125,30 @@ describe('real learning keepsake record and display choices', () => {
         for (const section of ['notices', 'keepsakes', 'home'] as const) {
             const html = renderToStaticMarkup(<IslandLearningKeepsakes {...p} section={section} />);
             expect(html).toContain(`data-keepsake-section="${section}"`);
-            expect(action(html, 'close')).not.toContain('disabled'); expect(action(html, 'learn')).not.toContain('disabled');
-            if (section === 'home') expect(action(html, 'home')).toBeUndefined(); else expect(action(html, 'home')).not.toContain('disabled');
+            expect(action(html, 'learn')).not.toContain('disabled');
+            const exit = section === 'home' ? 'close' : 'home';
+            expect(action(html, exit)).toBeDefined(); expect(action(html, exit)).not.toContain('disabled');
+            expect(action(html, section === 'home' ? 'home' : 'close')).toBeUndefined();
             if (section === 'notices') { expect(html).toContain('いまは あたらしい おしらせは ないよ'); expect(action(html, 'rewards')).toBeUndefined(); }
         }
         expect(p.controls.act).not.toHaveBeenCalled(); expect(p.controls.select).not.toHaveBeenCalled(); expect(p.onSectionChange).not.toHaveBeenCalled();
         expect(p.island).toEqual(before);
+    });
+
+    it.each(['home', 'notices', 'keepsakes'] as const)('exposes uncertain display recovery in %s without claiming it is running', section => {
+        const p = props(10); p.section = section;
+        p.controls.pending = { type: 'display', keepsakeId: 'completed-5', displayed: true };
+        p.controls.error = 'たしかめよう。'; p.controls.retry = vi.fn(async () => true);
+        const html = renderToStaticMarkup(<IslandLearningKeepsakes {...p} />);
+        expect(action(html, 'retry')).not.toContain('disabled');
+        expect(html).toContain('もういちど たしかめられるよ');
+        expect(html).not.toContain('きろくを たしかめているよ');
+        expect(p.controls.retry).not.toHaveBeenCalled();
+    });
+    it('does not offer a redundant bulk action for one earned keepsake', () => {
+        const html = renderToStaticMarkup(<IslandLearningKeepsakes {...props(1)} />);
+        expect(action(html, 'display')).not.toContain('disabled');
+        expect(action(html, 'display-earned')).toBeUndefined();
     });
 
 });

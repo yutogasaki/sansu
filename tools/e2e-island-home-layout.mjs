@@ -77,7 +77,7 @@ try {
             await openMenu();
             await button(page, 'アルバム').click(); await waitMode(page, 'album');
             assert.equal(await page.locator('dialog[open]').count(), 0);
-            await button(page, 'アルバムを とじる').click(); await waitMode(page, 'home');
+            await button(page, 'アルバムから もどる').click(); await waitMode(page, 'home');
             scenario.checks.push('all menu entries, keyboard order, Escape focus restore and destination close');
             await nav.getByRole('button', { name: 'まなぶ', exact: true }).click();
             await waitMode(page, 'learning'); await waitReady(page);

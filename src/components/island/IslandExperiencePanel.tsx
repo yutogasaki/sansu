@@ -1,5 +1,6 @@
+import { IslandPanelHeading } from './IslandPanelHeading';
 import { useEffect, useId, useState } from 'react';
-import { Camera, Check, Eye, Flag, Flower2, Leaf, MapPin, Moon, PawPrint, RotateCcw, Save, Star, Trash2, Volume2, VolumeX, Waves, Wind, X } from 'lucide-react';
+import { Camera, Check, Eye, Flag, Flower2, Leaf, MapPin, Moon, PawPrint, RotateCcw, Save, Star, Trash2, Volume2, VolumeX, Waves, Wind } from 'lucide-react';
 import { getIslandExperience, ISLAND_AMBIENCES, ISLAND_EMBLEMS, ISLAND_EXPERIENCE_NAME_LIMIT, ISLAND_LAYOUT_IDS,
     ISLAND_RESIDENT_LOOKS, ISLAND_RESIDENT_PROFILES, type IslandAmbience, type IslandEmblem, type IslandExperienceAction,
     type IslandLayoutId, type IslandResidentId, type IslandResidentLook } from '../../domain/island/experience';
@@ -92,7 +93,7 @@ export function IslandExperiencePanel({ island, disabled, onAction, previewLayou
     const tabs = [{ id: 'island', name: 'しま', Icon: Flag }, { id: 'friends', name: 'なかま', Icon: PawPrint },
         { id: 'layouts', name: 'けしき', Icon: Save }] as const;
     return <section className="island-sheet island-panel island-experience" data-testid="island-experience" data-experience-tab={tab} aria-label="わたしの しま">
-        <div className="island-sheet-title"><h2>わたしの しま</h2><button className="island-icon-button island-panel-back" disabled={disabled} onClick={onClose} aria-label="しまへ もどる"><X size={20} /><span>もどる</span></button></div>
+        <IslandPanelHeading title="なまえ・けしき" onExit={onClose} disabled={disabled} exitAriaLabel="なまえ・けしきから もどる" />
         <div className="island-experience-tabs island-panel-choices" role="group" aria-label="かえたい もの">{tabs.map(({ id, name, Icon }) =>
             <button key={id} className="island-secondary" disabled={disabled} aria-pressed={tab === id}
                 onClick={() => { onPreview(undefined); setTab(id); }}><Icon size={18} aria-hidden="true" />{name}</button>)}</div>

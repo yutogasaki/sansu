@@ -41,7 +41,8 @@ export function useIslandPhotos(profileId: string, enabled: boolean,
     const album = useLiveQuery(async () => {
         if (!enabled) return undefined;
         try { return { snapshot: await readIslandPhotoAlbum(profileId), owner: profileId }; }
-        catch (cause) { return { error: islandPhotoErrorMessage(cause instanceof IslandPhotoConflict ? cause.code : undefined), owner: profileId }; }
+        catch (cause) { return { error: cause instanceof IslandPhotoConflict && cause.code === 'inactive'
+            ? islandPhotoErrorMessage('inactive') : 'しゃしんの たなを ひらけなかったよ。もういちど ためせるよ。', owner: profileId }; }
     }, [profileId, enabled, readAttempt]);
 
     const cancel = useCallback(() => {
@@ -151,10 +152,12 @@ export function useIslandPhotos(profileId: string, enabled: boolean,
     const remove = async (photoId: string) => {
         const snapshot = latestAlbum.current;
         if (!current(scope.current) || working.current || snapshot?.album.profileId !== profileId) return false;
+        const owner = scope.current;
         const intent: PhotoIntent = { type: 'delete', revision: snapshot.album.revision, photoId };
         pending.current = intent;
-        await execute(intent, scope.current);
-        return pending.current === undefined;
+        await execute(intent, owner);
+        // cancel() also clears pending. Only this still-active view may close.
+        return current(owner) && pending.current === undefined;
     };
     const retry = () => {
         if (pending.current && !working.current && enabled && canRetry) void execute(pending.current, scope.current);

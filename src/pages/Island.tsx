@@ -164,8 +164,11 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const [photoOrigin, setPhotoOrigin] = useState<Screen>('home');
     const [portraitResident, setPortraitResident] = useState<'otter' | 'rabbit' | 'fox'>();
     const [keepsakeFocus, setKeepsakeFocus] = useState<IslandLearningKeepsakeId>();
-    const [houseSection, setHouseSection] = useState<'home' | 'keepsakes' | 'notices'>('home');
-    useLayoutEffect(() => { setHouseSection('home'); setKeepsakeFocus(undefined); }, [navigation?.houseEntry]);
+    const [localHouseSection, setLocalHouseSection] = useState<'home' | 'keepsakes' | 'notices'>('home');
+    const houseSection = navigation?.houseSection ?? localHouseSection;
+    const setHouseSection = navigation?.setHouseSection ?? setLocalHouseSection;
+    useLayoutEffect(() => { setLocalHouseSection('home'); setKeepsakeFocus(undefined); }, [navigation?.houseEntry]);
+    useLayoutEffect(() => { if (houseSection !== 'keepsakes') setKeepsakeFocus(undefined); }, [houseSection]);
     const [returnToHouse, setReturnToHouse] = useState(false);
     const [expressionResident, setExpressionResident] = useState<IslandResidentId>();
     const [expressionEntryItem, setExpressionEntryItem] = useState<IslandExpressionItemId>('raincoat');
@@ -321,7 +324,8 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         setWorkshopRequest(undefined);
         setGrowthPreviewHabitat(undefined); setReturnToGuide(false);
         setStarReceipt(undefined);
-        setReturnToHouse(false); setHouseSection('home'); setKeepsakeFocus(undefined);
+        setReturnToHouse(false); setLocalHouseSection('home');
+        if (!navigation) setKeepsakeFocus(undefined);
         setPreview(undefined); setFeedback(''); setLearningFeedback(undefined); setReaction(undefined);
         if (navigation) navigation.back(); else setScreen(destination);
     };
@@ -354,7 +358,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const enterHouse = () => {
         if (comparisonDisabled) return;
         setReturnToHouse(false);
-        setHouseSection('home');
+        setLocalHouseSection('home');
         setKeepsakeFocus(undefined); setPreview(undefined); setReaction(undefined); setPlayRequest(undefined); setScreen('keepsakes');
     };
     const answer = async (action: IslandLearningAction) => {
@@ -517,7 +521,8 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const openPhotos = () => {
         if (busy) return;
         if (screen === 'keepsakes' || screen === 'camera' && photoOrigin === 'keepsakes') setReturnToHouse(true);
-        photos.cancel(); setWorkshopRequest(undefined); setPlayRequest(undefined); setReaction(undefined); setScreen('photos');
+        photos.cancel(); setWorkshopRequest(undefined); setPlayRequest(undefined); setReaction(undefined);
+        if (navigation) navigation.openPhotoGallery(); else setScreen('photos');
     };
     const tryDiscovery = (itemId: string, discoveryId: string) => {
         if (busy || !island) return;
@@ -636,7 +641,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             onHomeAction={!busy && screen === 'keepsakes' ? action => {
                 if (action.type === 'album') { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }
                 else if (action.type === 'notices') { setKeepsakeFocus(undefined); setHouseSection('notices'); }
-                else { keepsakes.select(action.id); setKeepsakeFocus(action.id); setHouseSection('keepsakes'); }
+                else if (!keepsakes.pending) { keepsakes.select(action.id); setKeepsakeFocus(action.id); setHouseSection('keepsakes'); }
             } : undefined}
             photographing={screen === 'camera'} photoRequestId={screen === 'camera' ? photos.requestId : undefined} onPhoto={photos.consume}
             growthAt={homeJourneyGrowthAt} onGrowthShown={() => setHomeJourneyGrowthAt(undefined)} />}
@@ -662,7 +667,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             onHomeAction={!busy && screen === 'keepsakes' ? action => {
                 if (action.type === 'album') { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }
                 else if (action.type === 'notices') { setKeepsakeFocus(undefined); setHouseSection('notices'); }
-                else { keepsakes.select(action.id); setKeepsakeFocus(action.id); setHouseSection('keepsakes'); }
+                else if (!keepsakes.pending) { keepsakes.select(action.id); setKeepsakeFocus(action.id); setHouseSection('keepsakes'); }
             } : undefined}
             furnitureTrial={furnitureTrial}
             furnitureTrialChoice={furnitureTrial ? { residentId: furnitureResident, ...(furnitureKind === 'tea-table' ? { partnerId: furniturePartner } : {}) } : undefined}
@@ -771,7 +776,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             : screen === 'help' ? <IslandHelp island={island} disabled={busy} onClose={home} onTry={tryTutorial} />
             : screen === 'challenge' ? active && <ChallengePanel key={profile.id} profileId={profile.id} initialStart={challengeStartIntent}
                 onClose={() => { setChallengeStartIntent(false); if (navigation) navigation.back(); else setScreen('keepsakes'); }} />
-            : screen === 'reward' && island.pendingRewards.length ? <IslandRewards island={island} intro={island.completedSets === 1 && Boolean(plan && isFirstIslandPlan(plan))} disabled={busy} onChoose={(id, kind) => void claim(id, kind)} onContinue={() => void begin()} onClose={home} />
+            : screen === 'reward' ? <IslandRewards island={island} intro={island.completedSets === 1 && Boolean(plan && isFirstIslandPlan(plan))} disabled={busy} onChoose={(id, kind) => void claim(id, kind)} onContinue={() => void begin()} onClose={home} />
             : screen === 'play' ? <IslandPlay items={island.items} disabled={busy} selectedId={playRequest?.itemId} message={playMessage}
                 onSelect={play} onMove={select} onInventory={() => setScreen('inventory')} onContinue={() => void begin()} onClose={home} onGuide={openGuide} onPhoto={photograph} />
             : screen === 'inventory' ? <IslandInventory items={island.items} disabled={busy} onSelect={select} onClose={home} onFurniture={openFurniture} />
@@ -826,7 +831,8 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     onView={view => { setWorkshopView(view); if (view.mode !== workshopView.mode || view.residentId !== workshopView.residentId) setWorkshopRequest({ id: crypto.randomUUID(), command: { type: 'stop' } }); }}
                     onCommand={command => setWorkshopRequest({ id: crypto.randomUUID(), command })}
                     onAction={workshopActions.act} error={workshopActions.error} onRetry={workshopActions.retry} onClose={home} onLearn={() => void begin()} />
-                : screen === 'keepsakes' ? <IslandLearningKeepsakes walkingAvailable={!homeJourneyEnabled()} island={island} controls={keepsakes} disabled={busy} comparisonDisabled={comparisonDisabled}
+                : screen === 'keepsakes' ? <IslandLearningKeepsakes island={island} controls={keepsakes} disabled={busy} comparisonDisabled={comparisonDisabled}
+                    walkingAvailable={!homeJourneyScene}
                     challenge={<ChallengeHomeCard key={profile.id} profileId={profile.id} disabled={busy} onLearn={() => void begin()} onResult={() => { setChallengeStartIntent(false); setScreen('challenge'); }} onStart={() => { setChallengeStartIntent(true); setScreen('challenge'); }} />}
                     section={houseSection} onSectionChange={section => { setHouseSection(section); setKeepsakeFocus(undefined); }}
                     onSelect={setKeepsakeFocus} onShowRoom={() => setKeepsakeFocus(undefined)}

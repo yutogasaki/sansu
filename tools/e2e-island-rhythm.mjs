@@ -211,7 +211,7 @@ try {
             await activate(button(page, 'アルバム'), row.touch); await waitMode(page, 'album');
             assertVisitPreservesLearning(await onboardingStores(page), paused, 'Viewing immutable memories preserves learning and current island');
             await capture(page, row, 'growth-album');
-            await activate(button(page, 'アルバムを とじる'), row.touch); await waitMode(page, 'home');
+            await activate(button(page, 'アルバムから もどる'), row.touch); await waitMode(page, 'home');
             await activate(page.locator('.island-start'), row.touch); await waitMode(page, 'learning');
             await waitLearningReady(page, state.plan);
             assertVisitPreservesLearning(await onboardingStores(page), paused, 'One explicit home start resumes the exact pending reservation');

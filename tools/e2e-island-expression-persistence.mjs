@@ -205,8 +205,8 @@ async function openExpression(page, row) {
     assert.equal(await stage(page).evaluate(host => host.closest('figure')?.getAttribute('data-expression-candidate')), expressionCandidate);
 }
 async function closeExpression(page, row) {
-    await activate(button(panel(page), 'みじたくを とじる'), row.touch); await waitMode(page, 'experience');
-    await activate(button(page.getByTestId('island-experience'), 'しまへ もどる'), row.touch); await waitMode(page, 'home'); await waitReady(page); await idle(page);
+    await activate(button(panel(page), 'みじたくから もどる'), row.touch); await waitMode(page, 'experience');
+    await activate(button(page.getByTestId('island-experience'), 'なまえ・けしきから もどる'), row.touch); await waitMode(page, 'home'); await waitReady(page); await idle(page);
 }
 async function choose(page, row, id) {
     const item = catalog.find(item => item.id === id); assert(item);
@@ -342,7 +342,7 @@ async function createOwnerPhoto(page, row) {
     }
     await page.screenshot({ path: `${out}/${row.name}-photo-${row.photos.length}-captured.png`, fullPage: true });
     await activate(button(camera, 'しゃしんを みる'), row.touch); await waitMode(page, 'photos');
-    await activate(button(gallery, 'しゃしんの アルバムを とじる'), row.touch); await waitMode(page, 'home'); await idle(page);
+    await activate(button(gallery, 'しゃしんの アルバムから もどる'), row.touch); await waitMode(page, 'home'); await idle(page);
     assert.deepEqual(await tables(page), after, 'Export and gallery return are read-only');
 }
 async function verifyOwnerPhoto(page, row) {
@@ -376,7 +376,7 @@ async function verifyOwnerPhoto(page, row) {
     }
     await recordBoundary(row, `existing-photo-export-${row.owner}`, before, after, () => exactDelta(before, after, row.owner), { photoId: expected.metadata.id });
     expected.finalExport = finalExport; expected.actualImageHash = actualImageHash;
-    await activate(button(gallery, 'しゃしんの アルバムを とじる'), row.touch); await waitMode(page, 'home');
+    await activate(button(gallery, 'しゃしんの アルバムから もどる'), row.touch); await waitMode(page, 'home');
     await openExpression(page, row);
     await photoNavigationBoundary(page, row, `photo-gallery-exit-${row.owner}`, after);
 }

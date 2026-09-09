@@ -531,7 +531,7 @@ const waitForStudyReady = async (page) => {
 const completeSessionBySkipping = async (page, totalQuestions) => {
   for (let index = 0; index < totalQuestions; index += 1) {
     await page.getByRole("button", { name: /スキップ/ }).waitFor({ timeout: STEP_TIMEOUT_MS });
-    await page.keyboard.press("Escape");
+    await page.getByRole("button", { name: /スキップ/ }).click();
     await page.getByRole("button", { name: /次へ/ }).waitFor({ timeout: STEP_TIMEOUT_MS });
     await page.getByRole("button", { name: /次へ/ }).click();
 

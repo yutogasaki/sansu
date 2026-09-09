@@ -145,6 +145,23 @@ describe('photo hook adopts real receipt results independently of liveQuery and 
 });
 
 describe('photo result adoption stays within profile and view ownership', () => {
+    it.each(['cancelled', 'disabled', 'hidden', 'unmounted', 'profile'] as const)('does not navigate after a delayed deletion returns to a %s view', async boundary => {
+        const h = await harness(), id = h.shoot(); await h.finishOperation(0); await h.waitStatus('saved', id);
+        const gate = deferred<IslandPhotoWriteResult>(); let result: IslandPhotoWriteResult | undefined;
+        hooks.remove.mockImplementationOnce(async (owner, revision, photoId) => {
+            result = await actual.deleteIslandPhoto(owner, revision, photoId, h.d); return gate.promise;
+        });
+        const removed = h.api.remove(id);
+        await vi.waitFor(() => expect(result).toBeDefined());
+        if (boundary === 'cancelled') h.api.cancel();
+        else if (boundary === 'disabled') h.render('child', false);
+        else if (boundary === 'hidden') h.hidden();
+        else if (boundary === 'unmounted') h.unmount();
+        else await h.switchOwner('other');
+        gate.resolve(result!);
+        expect(await removed).toBe(false);
+        expect(await h.d.islandPhotos.toArray()).toEqual([]);
+    });
     it('ignores a former profile write result after switching, and the new owner starts from its own album revision', async () => {
         const h = await harness(), gate = deferred<IslandPhotoWriteResult>(); let result: IslandPhotoWriteResult | undefined;
         hooks.save.mockImplementationOnce(async (id, revision, input, blobs) => { result = await actual.saveIslandPhoto(id, revision, input, blobs, h.d); return gate.promise; });

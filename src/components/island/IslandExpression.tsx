@@ -1,5 +1,6 @@
+import { IslandPanelHeading } from './IslandPanelHeading';
 import { useEffect, useState } from 'react';
-import { ArrowRight, BookImage, Check, Eye, Flag, Footprints, Leaf, Music2, PawPrint, RotateCcw, Shirt, Sparkles, Star, X } from 'lucide-react';
+import { ArrowRight, BookImage, Check, Eye, Flag, Footprints, Leaf, Music2, PawPrint, RotateCcw, Shirt, Sparkles, Star } from 'lucide-react';
 import { getIslandCustomization } from '../../domain/island/customization';
 import { getIslandExperience, type IslandResidentId } from '../../domain/island/experience';
 import { isIslandHabitatUnlocked } from '../../domain/island/growth';
@@ -83,8 +84,7 @@ export function IslandExpression({ island, disabled, pending, previewAction, pre
         { id: 'memories', name: 'おもいで', Icon: BookImage }] as const;
     return <section className="island-sheet island-panel island-expression" aria-label="みじたくと コレクション" data-expression-tab={category}
         data-expression-item={selected.itemId} data-expression-resident={selectedResident}>
-        <div className="island-sheet-title"><h2>みじたくと コレクション</h2>
-            <button className="island-icon-button island-panel-back" aria-label="みじたくを とじる" disabled={disabled} onClick={onClose}><X size={20} /><span>もどる</span></button></div>
+        <IslandPanelHeading title="みじたくと コレクション" onExit={onClose} disabled={disabled} exitAriaLabel="みじたくから もどる" />
         <div className="island-expression-tabs island-panel-choices" role="group" aria-label="かえたい もの">{tabs.map(({ id, name, Icon }) => <button key={id}
             className="island-secondary" disabled={busy} aria-pressed={category === id} onClick={() => { onPreview(undefined); setCategory(id); setFlagOverview(false); }}>
             <Icon size={17} aria-hidden="true" />{name}</button>)}</div>

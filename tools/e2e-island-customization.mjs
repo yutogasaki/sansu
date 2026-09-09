@@ -119,7 +119,7 @@ async function waitCosmetics(page, theme, accent = 'none', expected = styles(the
 async function home(page) {
     if (await page.locator('.island-page[data-mode="learning"]').count()) await waitLearningInput(page);
     await idle(page);
-    const close = gallery(page).getByRole('button', { name: 'きせかえを とじる', exact: true });
+    const close = gallery(page).getByRole('button', { name: 'きせかえから もどる', exact: true });
     await tapOrClick(page, await close.count() ? close : button(page, 'しまへ'));
     await waitMode(page, 'home'); await waitWorld(page);
 }

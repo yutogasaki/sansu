@@ -1,5 +1,6 @@
+import { IslandPanelHeading } from './IslandPanelHeading';
 import { useState } from 'react';
-import { Bird, Bug, Check, Flower2, House, Lightbulb, Search, Trees, Waves, X } from 'lucide-react';
+import { Bird, Bug, Check, Flower2, House, Lightbulb, Search, Trees, Waves } from 'lucide-react';
 import { ISLAND_DISCOVERIES, ISLAND_HABITATS } from '../../domain/island/growth';
 import type { IslandHabitatId, IslandRecord } from '../../domain/island/types';
 import { firstIslandDiscovery, islandDiscoveryGuide } from './islandDiscoveryHints';
@@ -23,8 +24,7 @@ export function IslandDiscoveryGuide({ island, disabled, closeDisabled = disable
     const selected = islandDiscoveryGuide(island, selectedId ?? '');
     const entries = ISLAND_DISCOVERIES.filter(entry => entry.habitatId === habitat);
     return <section className="island-sheet island-field-guide" aria-label="しまの みつけもの">
-        <div className="island-sheet-title"><div><p className="island-eyebrow">さわって、ためして、みつけよう</p><h2>しまの みつけもの</h2></div>
-            <button className="island-icon-button" disabled={closeDisabled} aria-label="みつけものを とじる" onClick={onClose}><X size={20} /></button></div>
+        <IslandPanelHeading title="みつける" description="さわって、ためして、みつけよう" onExit={onClose} disabled={closeDisabled} exitAriaLabel="みつけものから もどる" />
         <div className="island-guide-tabs" role="group" aria-label="みつける ばしょ">{ISLAND_HABITATS.map(place => <button key={place.id} aria-pressed={habitat === place.id}
             onClick={() => { setHabitat(place.id); setSelectedId(firstIslandDiscovery(island, place.id)); setHintId(undefined); }}>{place.name}</button>)}</div>
         {selected && <article className="island-guide-feature" data-guide-id={selected.entry.id} data-guide-status={selected.status} data-observed={Boolean(selected.seen)}>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { islandFocusScreen, islandLearningRequested, islandParentUrl, islandScreenFromSearch, withoutIslandLearning } from './navigation';
+import { islandFocusScreen, islandHouseSectionFromSearch, islandHouseUrl, islandLearningRequested, islandParentUrl, islandScreenFromSearch, withoutIslandLearning } from './navigation';
 
 describe('island navigation contract', () => {
     it('opens home independently of reserved learning and rejects unknown views', () => {
@@ -8,6 +8,17 @@ describe('island navigation contract', () => {
         expect(islandLearningRequested('?view=home&pendingPlanId=reserved')).toBe(false);
         expect(islandLearningRequested('?learn=1')).toBe(true);
         expect(islandLearningRequested('?start=learn&profile=child')).toBe(true);
+    });
+    it('preserves addressable house detail through learning and recovers unknown sections', () => {
+        for (const section of ['keepsakes', 'notices'] as const) {
+            const href = islandHouseUrl(section), search = href.slice('/island'.length);
+            expect(islandHouseSectionFromSearch(search)).toBe(section);
+            expect(islandParentUrl('/island', search)).toBe('/island?view=keepsakes');
+            expect(islandParentUrl('/island', `${search}&learn=1`)).toBe(href);
+        }
+        expect(islandHouseSectionFromSearch('?view=keepsakes&house=unknown')).toBe('home');
+        expect(islandHouseSectionFromSearch('?view=album&house=notices')).toBe('home');
+        expect(islandParentUrl('/island', '?view=keepsakes')).toBe('/island');
     });
     it('keeps normal lists available and gives focused work the viewport', () => {
         for (const view of ['home', 'inventory', 'album', 'photos', 'growth', 'furniture'] as const) expect(islandFocusScreen(view)).toBe(false);

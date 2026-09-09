@@ -188,11 +188,11 @@ try {
             await capture(page, `${layout.name}-03-current-growth`);
             assert.equal(await stage(page).getAttribute('data-camera-frame'), previewCamera, 'Current and next growth use the same close framing');
             assert.deepEqual(await readNative(page, profileId), beforeGuide);
-            await button(page, 'ばしょえらびを とじる').click(); await waitMode(page, 'home');
+            await button(page, 'ばしょえらびから もどる').click(); await waitMode(page, 'home');
             await openGuide(page); await button(page, 'みずべ').click(); await selectDiscovery(page, 'leaf-boat');
             assert.match(await page.locator('.island-guide-story').innerText(), /しまが ひろがる/);
             assert.equal(await button(page, '育つ すがたを みる').count(), 0, 'Locked land cannot promise an unavailable real preview');
-            await button(page, 'みつけものを とじる').click(); await waitMode(page, 'home');
+            await button(page, 'みつけものから もどる').click(); await waitMode(page, 'home');
             await page.locator('.island-start').click(); await waitMode(page, 'learning');
             state = await readNative(page, profileId);
             assert.deepEqual(state.plan, beforeGuide.plan, 'Optional reading returns to the same reserved question');
@@ -228,9 +228,9 @@ try {
             await capture(page, `${layout.name}-06-replay`); await idle(page);
             assert.deepEqual(await readNative(page, profileId), afterPhoto, 'Recorded discovery replay grants no duplicate rewards/observations');
             assert.deepEqual(await photoTables(page), photo.after, 'Replay/remount creates no additional photos or receipts');
-            await button(page, 'あそびを とじる').click(); await waitMode(page, 'home');
+            await button(page, 'あそびから もどる').click(); await waitMode(page, 'home');
             await idle(page); await button(page, 'アルバム').click(); await waitMode(page, 'album');
-            await button(page, 'アルバムを とじる').click(); await waitMode(page, 'home'); await waitPageReady(page);
+            await button(page, 'アルバムから もどる').click(); await waitMode(page, 'home'); await waitPageReady(page);
             await page.locator('.island-start').click(); await waitMode(page, 'learning');
             assert.deepEqual((await readNative(page, profileId)).plan, afterObservation.plan);
             state = (await attempt(page, await readNative(page, profileId))).after;

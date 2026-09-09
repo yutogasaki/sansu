@@ -199,8 +199,8 @@ async function enterExpression(page, row) {
     await activate(page.locator('[data-experience-action="expression"]'), row.touch); await waitMode(page, 'expression'); await waitWorld(page);
 }
 async function closeExpression(page, row) {
-    await press(page, row, 'みじたくを とじる', panel(page)); await waitMode(page, 'experience');
-    await press(page, row, 'しまへ もどる', page.getByTestId('island-experience')); await waitMode(page, 'home'); await waitWorld(page);
+    await press(page, row, 'みじたくから もどる', panel(page)); await waitMode(page, 'experience');
+    await press(page, row, 'なまえ・けしきから もどる', page.getByTestId('island-experience')); await waitMode(page, 'home'); await waitWorld(page);
 }
 async function selectItem(page, row, item, residentId = 'otter') {
     const tabs = { friends: 'なかま', world: 'けしきと おと', memories: 'おもいで' };

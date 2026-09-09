@@ -468,6 +468,7 @@ async function run(page, row) {
     const wide = await waitRoom(page, ['first-completion']); assert.notDeepEqual(close.camera, wide.camera);
     assert.equal(close.room.awards.find(award => award.id === 'first-completion').uuid, wide.room.awards.find(award => award.id === 'first-completion').uuid);
     await capture(page, row, 'certificate-in-room');
+    await readOnly(page, row, 'reopen-certificate-shelf', async () => { await activate(panel(page).locator('[data-keepsake-action="open-keepsakes"]'), row.touch); });
     await display(page, row, { type: 'display', keepsakeId: 'first-completion', displayed: false }, []);
     await capture(page, row, 'certificate-stored');
     await display(page, row, { type: 'display', keepsakeId: 'first-completion', displayed: true }, ['first-completion']);
@@ -486,6 +487,7 @@ async function run(page, row) {
     await capture(page, row, 'earned-trophy-closeup');
     await readOnly(page, row, 'two-earned-whole-room', async () => { await activate(panel(page).locator('[data-keepsake-action="room"]'), row.touch); });
     await waitRoom(page, ['first-completion', 'completed-5']); await capture(page, row, 'two-earned-awards');
+    await readOnly(page, row, 'reopen-earned-shelf', async () => { await activate(panel(page).locator('[data-keepsake-action="open-keepsakes"]'), row.touch); });
     await select(page, row, 'first-completion'); await display(page, row, { type: 'display', keepsakeId: 'first-completion', displayed: false }, ['completed-5']);
     await closeRoom(page, row); const beforeReload = await tables(page), reserved = (await readNative(page, row.owner)).plan;
     await page.reload(); await waitLearningInput(page, reserved); // A live pending reservation is the route's reload destination.

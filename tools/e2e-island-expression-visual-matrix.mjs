@@ -81,11 +81,11 @@ const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 async function idle(page) { await page.waitForFunction(() => document.querySelector('.island-page')?.dataset.busy === 'false'); }
 async function press(page, row, label, scope = page) { await idle(page); await activate(button(scope, label), row.touch); }
 async function closeExpression(page, row) {
-    const control = button(panel(page), 'みじたくを とじる');
+    const control = button(panel(page), 'みじたくから もどる');
     await page.evaluate(() => {
         window.__visualClose = { events: [] };
         const record = event => {
-            const button = document.querySelector('.island-expression button[aria-label="みじたくを とじる"]');
+            const button = document.querySelector('.island-expression button[aria-label="みじたくから もどる"]');
             if (!button) return;
             const box = button.getBoundingClientRect(), canvas = document.querySelector('[data-testid="island-stage"] canvas');
             const hit = document.elementFromPoint(event.clientX, event.clientY);
@@ -410,7 +410,7 @@ async function furniture(page, row, use) {
         await wear(page, row, partner);
     }
     await closeExpression(page, row);
-    await press(page, row, 'しまへ もどる', experience(page)); await waitMode(page, 'home');
+    await press(page, row, 'なまえ・けしきから もどる', experience(page)); await waitMode(page, 'home');
     await press(page, row, 'もちもの'); await waitMode(page, 'inventory');
     await press(page, row, 'くらしの どうぐを みる'); await waitMode(page, 'furniture');
     await activate(shop(page).locator(`[data-furniture-choice="${use.kind}"]`), row.touch);
@@ -452,7 +452,7 @@ async function furniture(page, row, use) {
     }
     await check(page, row, label); row.uses.push({ ...use, ...result });
     if (repair) { repair.pass = true; repair.result = result; await fs.writeFile(`${out}/${row.name}-repair-${use.kind}-${use.residentId}.json`, JSON.stringify(repair, null, 2)); }
-    await press(page, row, 'どうぐを とじる', shop(page)); await waitMode(page, 'home');
+    await press(page, row, 'どうぐから もどる', shop(page)); await waitMode(page, 'home');
     await press(page, row, 'しまづくり'); await waitMode(page, 'experience');
     await activate(experience(page).locator('[data-experience-action="expression"]'), row.touch); await waitMode(page, 'expression');
     await check(page, row, `${label}-exit`);
@@ -490,7 +490,7 @@ try {
                     if (await page.locator('.island-page').getAttribute('data-mode') === 'placement') {
                         await press(page, row, 'いどうを やめる', page.locator('section[aria-label="おく ばしょを えらぶ"]')); await waitMode(page, 'furniture');
                     }
-                    await press(page, row, 'どうぐを とじる', shop(page)); await waitMode(page, 'home');
+                    await press(page, row, 'どうぐから もどる', shop(page)); await waitMode(page, 'home');
                     await press(page, row, 'しまづくり'); await waitMode(page, 'experience');
                     await activate(experience(page).locator('[data-experience-action="expression"]'), row.touch); await waitMode(page, 'expression');
                     await check(page, row, `failed-${use.kind}-${use.residentId}-exit`);

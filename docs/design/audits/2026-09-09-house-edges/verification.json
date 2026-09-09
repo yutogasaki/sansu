@@ -1,0 +1,575 @@
+{
+  "target": "http://127.0.0.1:5388",
+  "scope": "Native profile, real first three answers and first award; explicit 1000-completion aggregate fixture for long collection; one native display-write failure diagnostic.",
+  "scenarios": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": true,
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "pass": true,
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pass": true,
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "captures": [
+    {
+      "file": "390-island.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "390-house-empty.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "390-first-keepsake.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "390-earned-first-award.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 91,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "390-long-collection.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 91,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "390-recovery-home.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 91,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "390-large-text.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 99,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "320-island.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "320-house-empty.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "320-first-keepsake.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "320-earned-first-award.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 153,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "320-long-collection.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 91,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "320-recovery-home.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 91,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "768-island.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "768-house-empty.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "768-first-keepsake.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 83,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "768-earned-first-award.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 153,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "768-long-collection.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 91,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "768-recovery-home.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 91,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "844-island.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "844-house-empty.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "844-first-keepsake.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "844-earned-first-award.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 84,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "844-long-collection.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 92,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "844-recovery-home.png",
+      "revision": "70ad92c-house-edges-v2",
+      "version": "70ad92c-house-edges-v2:aee47378-e840-4723-a7a6-29742e457062",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 92,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    }
+  ],
+  "pass": true,
+  "unit": {
+    "files": 318,
+    "tests": 3428
+  },
+  "smoke": {
+    "target": "classic DEV",
+    "passed": 31
+  },
+  "assets": "94 files / 10.54 MiB"
+}

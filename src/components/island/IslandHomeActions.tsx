@@ -60,9 +60,9 @@ type IslandHomeMenuContentsProps = Omit<IslandHomeActionsProps, 'active' | 'onOp
 export function IslandHomeMenuContents({ busy, comparisonDisabled, workshopUnlocked, pendingRewards,
     onPlay, onGuide, onWorkshop, onInventory, onCustomization, onExperience, onRewards, onAlbum, onShared, onKeepsakes, onOtherGames, onHelp, children, onChoose }: IslandHomeMenuContentsProps) {
     const actions = [
-        { id: 'play', label: 'あそぶ', name: 'どうぶつと あそぶ', Icon: PawPrint, onClick: onPlay, disabled: busy },
+        { id: 'play', label: 'どうぶつと あそぶ', name: 'どうぶつと あそぶ', Icon: PawPrint, onClick: onPlay, disabled: busy },
         { id: 'guide', label: 'みつける', name: 'みつける', Icon: Search, onClick: onGuide, disabled: comparisonDisabled },
-        ...(workshopUnlocked ? [{ id: 'workshop', label: 'つくる', name: 'おためしの いりえ', Icon: Waves, onClick: onWorkshop, disabled: busy }] : []),
+        ...(workshopUnlocked ? [{ id: 'workshop', label: 'おためしの いりえ', name: 'おためしの いりえ', Icon: Waves, onClick: onWorkshop, disabled: busy }] : []),
         ...(onOtherGames ? [{ id: 'other-games', label: 'ほかの あそび', name: 'ほかの あそび', Icon: Gamepad2, onClick: onOtherGames, disabled: busy }] : []),
         { id: 'inventory', label: 'もちものを おく', name: 'もちものを おく', Icon: PackageOpen, onClick: onInventory, disabled: busy },
         { id: 'customization', label: 'しまの きせかえ', name: 'しまの きせかえ', Icon: Sparkles, onClick: onCustomization, disabled: busy },

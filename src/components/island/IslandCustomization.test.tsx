@@ -92,7 +92,7 @@ describe('island customization choices', () => {
             disabled={false} onSelect={noop} onAction={noop} onClose={noop} error="そうさの けっかを たしかめよう。" onRetry={noop} />);
         expect(html).toMatch(/<button class="island-secondary" data-customization-action="retry"/);
         expect(html).toMatch(/<button class="island-primary" disabled="" data-customization-action="purchase"/);
-        const close = html.match(/<button[^>]*aria-label="きせかえを とじる"[^>]*>[\s\S]*?<\/button>/)?.[0];
+        const close = html.match(/<button[^>]*aria-label="きせかえから もどる"[^>]*>[\s\S]*?<\/button>/)?.[0];
         expect(close).toBeDefined(); expect(close).not.toContain('disabled'); expect(close).toContain('もどる');
     });
     it('waits for an explicit preview choice before exposing a purchase when opening the saved island', () => {

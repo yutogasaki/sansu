@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, BookOpen, Camera, Hand, Move, PawPrint, Search, Sparkles, Sprout, X } from 'lucide-react';
+import { ArrowRight, Camera, Hand, Move, PawPrint, Search, Sparkles, Sprout, X } from 'lucide-react';
+import { IslandPanelHeading } from '../IslandPanelHeading';
 import type { IslandScreen } from '../../../domain/island/navigation';
 import type { IslandRecord } from '../../../domain/island/types';
 import type { TutorialId } from '../../../domain/island/tutorialState';
@@ -25,8 +26,7 @@ export function IslandHelp({ island, disabled, onTry, onClose }: {
     const topic = TUTORIAL_TOPICS.find(topic => topic.id === selected)!;
     const unavailable = tutorialUnavailable(selected, island);
     return <section className="island-sheet island-help" aria-label="あそびかた">
-        <div className="island-sheet-title"><h2><BookOpen size={22} aria-hidden="true" /> あそびかた</h2>
-            <button className="island-text-button" onClick={onClose}><X size={20} />とじる</button></div>
+        <IslandPanelHeading title="あそびかた" onExit={onClose} disabled={disabled} exitAriaLabel="あそびかたから もどる" />
         <p>知りたいことを えらんでね。</p>
         <div className="island-help-topics" role="group" aria-label="知りたいこと">
             {TUTORIAL_TOPICS.map(({ id, title, Icon }) => <button key={id} className="island-secondary" aria-pressed={id === selected} onClick={() => setSelected(id)}><Icon size={22} aria-hidden="true" />{title}</button>)}

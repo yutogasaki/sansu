@@ -318,8 +318,8 @@ async function enterExpression(page, row) {
     await activate(page.locator('[data-experience-action="expression"]'), row.touch); await waitMode(page, 'expression'); await waitWorld(page);
 }
 async function closeExpression(page, row) {
-    await press(page, row, 'みじたくを とじる', panel(page)); await waitMode(page, 'experience');
-    await press(page, row, 'しまへ もどる', page.getByTestId('island-experience')); await waitMode(page, 'home'); await waitWorld(page);
+    await press(page, row, 'みじたくから もどる', panel(page)); await waitMode(page, 'experience');
+    await press(page, row, 'なまえ・けしきから もどる', page.getByTestId('island-experience')); await waitMode(page, 'home'); await waitWorld(page);
 }
 async function selectItem(page, row, item, residentId = 'otter') {
     const tabs = { friends: 'なかま', world: 'けしきと おと', memories: 'おもいで' };
@@ -382,7 +382,7 @@ async function createPhoto(page, row) {
     assert.equal(sha(await fs.readFile(`${out}/${file}`)), photo.image.sha256); row.photo.originalExport = file;
     await capture(page, row, 'original-photo');
     await press(page, row, 'しゃしんを みる', camera(page)); await waitMode(page, 'photos');
-    await press(page, row, 'しゃしんの アルバムを とじる', gallery(page)); await waitMode(page, 'home');
+    await press(page, row, 'しゃしんの アルバムから もどる', gallery(page)); await waitMode(page, 'home');
 }
 
 /** Read-only actual frame probe. It never dispatches an application action. */
@@ -672,7 +672,7 @@ async function exportUnchangedPhoto(page, row) {
     assert.equal(sha(await fs.readFile(`${out}/${file}`)), row.photo.metadata.image.sha256);
     await checkDB(page, row, 'decorated-album-original-export', before); await capture(page, row, 'decorated-real-photo');
     row.photo.decoratedExport = file;
-    await press(page, row, 'しゃしんの アルバムを とじる', gallery(page)); await waitMode(page, 'home'); await enterExpression(page, row);
+    await press(page, row, 'しゃしんの アルバムから もどる', gallery(page)); await waitMode(page, 'home'); await enterExpression(page, row);
 }
 async function sceneRoundTrip(page, row) {
     const before = await tables(page), original = islandFor(before, row.owner), layoutId = 'slot-1', name = 'みんなの ひとやすみ';
@@ -733,7 +733,7 @@ async function freeLookCompatibility(page, row) {
     const beforeAll = await tables(page), owned = islandFor(beforeAll, row.owner).expression.ownedItemIds;
     const baseline = await scene(page), rigIds = Object.fromEntries(baseline.expression.residents.map(resident => [resident.id, resident.uuid]));
     const openFreeLooks = async residentId => {
-        await press(page, row, 'みじたくを とじる', panel(page)); await waitMode(page, 'experience');
+        await press(page, row, 'みじたくから もどる', panel(page)); await waitMode(page, 'experience');
         await press(page, row, 'なかま', experience);
         await activate(experience.locator(`[data-resident-id="${residentId}"]`), row.touch);
     };

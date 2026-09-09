@@ -80,3 +80,21 @@
 .island-keepsake-history summary:focus-visible, .island-keepsake-future summary:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 2px; }
 .island-keepsake-note { color: var(--pokomoko-muted); margin-top: 12px; }
 .island-keepsake-count { margin: 0 0 14px; }
+/* The selected record remains reachable above long collections and large text. */
+.island-learning-keepsakes :is(.island-panel-heading h2, .island-keepsake-detail h3):focus-visible {
+    outline: 3px solid var(--pokomoko-blue); outline-offset: 4px; border-radius: 4px;
+}
+.island-keepsake-selected > div { min-width: 0; overflow-wrap: anywhere; }
+.island-keepsake-recovery { margin-block: 10px; }
+@media (max-width: 359px) {
+    .island-keepsake-choices { grid-template-columns: minmax(0, 1fr); }
+    .island-page .island-panel.island-learning-keepsakes .island-keepsake-actions { grid-template-columns: minmax(0, 1fr); }
+}
+/* A fixed room leaves no usable control area on a short landscape screen. */
+@media (max-height: 600px) {
+    .island-page:is([data-mode=keepsakes], [data-mode=camera]):has(> .island-stage[data-keepsake-room=true]) {
+        --island-sticky-stage-height: 0px;
+        scroll-padding-top: 80px;
+    }
+    .island-page:is([data-mode=keepsakes], [data-mode=camera]) > .island-stage[data-keepsake-room=true] { position: relative; }
+}

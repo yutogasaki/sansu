@@ -323,8 +323,8 @@ async function enterExpression(page, row) {
     await activate(page.locator('[data-experience-action="expression"]'), row.touch); await waitMode(page, 'expression'); await waitWorld(page);
 }
 async function closeExpression(page, row) {
-    await press(page, row, 'みじたくを とじる', panel(page)); await waitMode(page, 'experience');
-    await press(page, row, 'しまへ もどる', page.getByTestId('island-experience')); await waitMode(page, 'home'); await waitWorld(page);
+    await press(page, row, 'みじたくから もどる', panel(page)); await waitMode(page, 'experience');
+    await press(page, row, 'なまえ・けしきから もどる', page.getByTestId('island-experience')); await waitMode(page, 'home'); await waitWorld(page);
 }
 async function selectItem(page, row, item, residentId = 'otter') {
     const tabs = { friends: 'なかま', world: 'けしきと おと', memories: 'おもいで' };
@@ -387,7 +387,7 @@ async function createPhoto(page, row) {
     assert.equal(sha(await fs.readFile(`${out}/${file}`)), photo.image.sha256); row.photo.originalExport = file;
     await capture(page, row, 'original-photo');
     await press(page, row, 'しゃしんを みる', camera(page)); await waitMode(page, 'photos');
-    await press(page, row, 'しゃしんの アルバムを とじる', gallery(page)); await waitMode(page, 'home');
+    await press(page, row, 'しゃしんの アルバムから もどる', gallery(page)); await waitMode(page, 'home');
 }
 
 
@@ -404,7 +404,7 @@ async function exportUnchangedPhoto(page, row) {
     assert.equal(sha(await fs.readFile(`${out}/${file}`)), row.photo.metadata.image.sha256);
     await checkDB(page, row, 'decorated-album-original-export', before, undefined, true); await capture(page, row, 'decorated-real-photo');
     row.photo.decoratedExport = file;
-    await press(page, row, 'しゃしんの アルバムを とじる', gallery(page)); await waitMode(page, 'home'); await enterExpression(page, row);
+    await press(page, row, 'しゃしんの アルバムから もどる', gallery(page)); await waitMode(page, 'home'); await enterExpression(page, row);
 }
 
 async function learningAndReload(page, row) {
@@ -559,7 +559,7 @@ async function selectGuide(page, row, id) {
     return guide(page).locator(`[data-guide-id="${id}"]`).getAttribute('data-guide-status');
 }
 async function closeGuide(page, row) {
-    await press(page, row, 'みつけものを とじる', guide(page)); await waitMode(page, 'home');
+    await press(page, row, 'みつけものから もどる', guide(page)); await waitMode(page, 'home');
 }
 async function ordinarySection(page, row, reason) {
     await waitMode(page, 'home'); await idle(page);
@@ -722,7 +722,7 @@ async function earnVisitor(page, row, id) {
             const after = await tables(page); assertDiscoveryDelta(before, after, row.owner);
             const trace = await endObservationProbe(page, row, id); assert(trace.gesture.trusted && !trace.gesture.hidden);
             assert(await retainedVisitor(page, row, id)); await capture(page, row, `${id}-observed`);
-            await press(page, row, 'あそびを とじる'); await waitMode(page, 'home'); return;
+            await press(page, row, 'あそびから もどる'); await waitMode(page, 'home'); return;
         }
         assert(['grow', 'visit'].includes(status), `Unexpected ${id} status ${status}; no injected maturity or placement`);
         await closeGuide(page, row); await ordinarySection(page, row, `${id}:${status}`);

@@ -1,0 +1,965 @@
+{
+  "target": "http://127.0.0.1:5386",
+  "version": {
+    "version": "70ad92c-ui-continuity-working:55862086-1db2-4189-a448-3aac9ce95ace",
+    "revision": "70ad92c-ui-continuity-working",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "fixture": "Native profiles with three actual UI answers. No independent child observers (N=0).",
+  "pass": true,
+  "rows": [
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "checks": [
+        {
+          "mode": "play",
+          "kind": "back",
+          "geometry": {
+            "x": 24,
+            "y": 530.828125,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 574.828125,
+            "right": 110.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "guide",
+          "kind": "back",
+          "geometry": {
+            "x": 24,
+            "y": 403.828125,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 447.828125,
+            "right": 110.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "inventory",
+          "kind": "back",
+          "geometry": {
+            "x": 93.34375,
+            "y": 60.3125,
+            "width": 91.96875,
+            "height": 44,
+            "bottom": 104.3125,
+            "right": 185.3125,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "customization",
+          "kind": "back",
+          "geometry": {
+            "x": 29,
+            "y": 308.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 352.09375,
+            "right": 115,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "experience",
+          "kind": "back",
+          "geometry": {
+            "x": 29,
+            "y": 298.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 342.09375,
+            "right": 115,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "expression",
+          "kind": "back",
+          "geometry": {
+            "x": 29,
+            "y": 333.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 377.09375,
+            "right": 115,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "furniture",
+          "kind": "back",
+          "geometry": {
+            "x": 29,
+            "y": 332.3125,
+            "width": 86,
+            "height": 44,
+            "bottom": 376.3125,
+            "right": 115,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "growth",
+          "kind": "back",
+          "geometry": {
+            "x": 24,
+            "y": 429.828125,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 473.828125,
+            "right": 110.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "keepsakes",
+          "kind": "back",
+          "geometry": {
+            "x": 29,
+            "y": 335.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 379.09375,
+            "right": 115,
+            "hit": true,
+            "label": "しまへ",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "album",
+          "kind": "back",
+          "geometry": {
+            "x": 94.78125,
+            "y": 15.09375,
+            "width": 91.96875,
+            "height": 44,
+            "bottom": 59.09375,
+            "right": 186.75,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "photos",
+          "kind": "back",
+          "geometry": {
+            "x": 29,
+            "y": 93.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 137.09375,
+            "right": 115,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "camera",
+          "kind": "close",
+          "geometry": {
+            "x": 245,
+            "y": 449.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 493.09375,
+            "right": 331,
+            "hit": true,
+            "label": "とじる",
+            "icon": "lucide lucide-x"
+          }
+        },
+        {
+          "mode": "workshop",
+          "kind": "close",
+          "geometry": {
+            "x": 245,
+            "y": 401.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 445.09375,
+            "right": 331,
+            "hit": true,
+            "label": "とじる",
+            "icon": "lucide lucide-x"
+          }
+        },
+        {
+          "mode": "shared",
+          "kind": "back",
+          "geometry": {
+            "x": 24,
+            "y": 304.09375,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 348.09375,
+            "right": 110.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "help",
+          "kind": "back",
+          "geometry": {
+            "x": 24,
+            "y": 76.09375,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 120.09375,
+            "right": 110.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "checks": [
+        {
+          "mode": "play",
+          "kind": "back",
+          "geometry": {
+            "x": 24,
+            "y": 597.53125,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 641.53125,
+            "right": 110.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "guide",
+          "kind": "back",
+          "geometry": {
+            "x": 24,
+            "y": 470.53125,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 514.53125,
+            "right": 110.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "inventory",
+          "kind": "back",
+          "geometry": {
+            "x": 123.34375,
+            "y": 97.3125,
+            "width": 91.96875,
+            "height": 44,
+            "bottom": 141.3125,
+            "right": 215.3125,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "customization",
+          "kind": "back",
+          "geometry": {
+            "x": 29,
+            "y": 354.28125,
+            "width": 86,
+            "height": 44,
+            "bottom": 398.28125,
+            "right": 115,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "experience",
+          "kind": "back",
+          "geometry": {
+            "x": 29,
+            "y": 345.84375,
+            "width": 86,
+            "height": 44,
+            "bottom": 389.84375,
+            "right": 115,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "expression",
+          "kind": "back",
+          "geometry": {
+            "x": 29,
+            "y": 396.484375,
+            "width": 86,
+            "height": 44,
+            "bottom": 440.484375,
+            "right": 115,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "furniture",
+          "kind": "back",
+          "geometry": {
+            "x": 29,
+            "y": 400.703125,
+            "width": 86,
+            "height": 44,
+            "bottom": 444.703125,
+            "right": 115,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "growth",
+          "kind": "back",
+          "geometry": {
+            "x": 24,
+            "y": 472.53125,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 516.53125,
+            "right": 110.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "keepsakes",
+          "kind": "back",
+          "geometry": {
+            "x": 29,
+            "y": 375.484375,
+            "width": 86,
+            "height": 44,
+            "bottom": 419.484375,
+            "right": 115,
+            "hit": true,
+            "label": "しまへ",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "album",
+          "kind": "back",
+          "geometry": {
+            "x": 124.78125,
+            "y": 93.09375,
+            "width": 91.96875,
+            "height": 44,
+            "bottom": 137.09375,
+            "right": 216.75,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "photos",
+          "kind": "back",
+          "geometry": {
+            "x": 29,
+            "y": 93.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 137.09375,
+            "right": 115,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "camera",
+          "kind": "close",
+          "geometry": {
+            "x": 275,
+            "y": 533.5625,
+            "width": 86,
+            "height": 44,
+            "bottom": 577.5625,
+            "right": 361,
+            "hit": true,
+            "label": "とじる",
+            "icon": "lucide lucide-x"
+          }
+        },
+        {
+          "mode": "workshop",
+          "kind": "close",
+          "geometry": {
+            "x": 275,
+            "y": 464,
+            "width": 86,
+            "height": 44,
+            "bottom": 508,
+            "right": 361,
+            "hit": true,
+            "label": "とじる",
+            "icon": "lucide lucide-x"
+          }
+        },
+        {
+          "mode": "shared",
+          "kind": "back",
+          "geometry": {
+            "x": 24,
+            "y": 371.046875,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 415.046875,
+            "right": 110.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "help",
+          "kind": "back",
+          "geometry": {
+            "x": 24,
+            "y": 76.09375,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 120.09375,
+            "right": 110.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "checks": [
+        {
+          "mode": "play",
+          "kind": "back",
+          "geometry": {
+            "x": 86,
+            "y": 679.65625,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 723.65625,
+            "right": 172.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "guide",
+          "kind": "back",
+          "geometry": {
+            "x": 86,
+            "y": 572.65625,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 616.65625,
+            "right": 172.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "inventory",
+          "kind": "back",
+          "geometry": {
+            "x": 471.3125,
+            "y": 119.5625,
+            "width": 91.96875,
+            "height": 44,
+            "bottom": 163.5625,
+            "right": 563.28125,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "customization",
+          "kind": "back",
+          "geometry": {
+            "x": 79,
+            "y": 428.28125,
+            "width": 86,
+            "height": 44,
+            "bottom": 472.28125,
+            "right": 165,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "experience",
+          "kind": "back",
+          "geometry": {
+            "x": 79,
+            "y": 418.046875,
+            "width": 86,
+            "height": 44,
+            "bottom": 462.046875,
+            "right": 165,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "expression",
+          "kind": "back",
+          "geometry": {
+            "x": 79,
+            "y": 479.484375,
+            "width": 86,
+            "height": 44,
+            "bottom": 523.484375,
+            "right": 165,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "furniture",
+          "kind": "back",
+          "geometry": {
+            "x": 79,
+            "y": 485.953125,
+            "width": 86,
+            "height": 44,
+            "bottom": 529.953125,
+            "right": 165,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "growth",
+          "kind": "back",
+          "geometry": {
+            "x": 86,
+            "y": 574.65625,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 618.65625,
+            "right": 172.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "keepsakes",
+          "kind": "back",
+          "geometry": {
+            "x": 79,
+            "y": 458.484375,
+            "width": 86,
+            "height": 44,
+            "bottom": 502.484375,
+            "right": 165,
+            "hit": true,
+            "label": "しまへ",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "album",
+          "kind": "back",
+          "geometry": {
+            "x": 472.984375,
+            "y": 113.09375,
+            "width": 91.96875,
+            "height": 44,
+            "bottom": 157.09375,
+            "right": 564.953125,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "photos",
+          "kind": "back",
+          "geometry": {
+            "x": 79,
+            "y": 113.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 157.09375,
+            "right": 165,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "camera",
+          "kind": "close",
+          "geometry": {
+            "x": 603,
+            "y": 609.171875,
+            "width": 86,
+            "height": 44,
+            "bottom": 653.171875,
+            "right": 689,
+            "hit": true,
+            "label": "とじる",
+            "icon": "lucide lucide-x"
+          }
+        },
+        {
+          "mode": "workshop",
+          "kind": "close",
+          "geometry": {
+            "x": 603,
+            "y": 561.40625,
+            "width": 86,
+            "height": 44,
+            "bottom": 605.40625,
+            "right": 689,
+            "hit": true,
+            "label": "とじる",
+            "icon": "lucide lucide-x"
+          }
+        },
+        {
+          "mode": "shared",
+          "kind": "back",
+          "geometry": {
+            "x": 86,
+            "y": 440.09375,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 484.09375,
+            "right": 172.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "help",
+          "kind": "back",
+          "geometry": {
+            "x": 86,
+            "y": 92.09375,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 136.09375,
+            "right": 172.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 640
+      },
+      "checks": [
+        {
+          "mode": "play",
+          "kind": "back",
+          "geometry": {
+            "x": 214,
+            "y": 265.6875,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 309.6875,
+            "right": 300.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "guide",
+          "kind": "back",
+          "geometry": {
+            "x": 635.40625,
+            "y": 96.6875,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 140.6875,
+            "right": 722.375,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "inventory",
+          "kind": "back",
+          "geometry": {
+            "x": 667.3125,
+            "y": 119.5625,
+            "width": 91.96875,
+            "height": 44,
+            "bottom": 163.5625,
+            "right": 759.28125,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "customization",
+          "kind": "back",
+          "geometry": {
+            "x": 635.40625,
+            "y": 92.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 136.09375,
+            "right": 721.40625,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "experience",
+          "kind": "back",
+          "geometry": {
+            "x": 635.40625,
+            "y": 92.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 136.09375,
+            "right": 721.40625,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "expression",
+          "kind": "back",
+          "geometry": {
+            "x": 635.40625,
+            "y": 92.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 136.09375,
+            "right": 721.40625,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "furniture",
+          "kind": "back",
+          "geometry": {
+            "x": 635.40625,
+            "y": 98.5625,
+            "width": 86,
+            "height": 44,
+            "bottom": 142.5625,
+            "right": 721.40625,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "growth",
+          "kind": "back",
+          "geometry": {
+            "x": 635.40625,
+            "y": 96.6875,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 140.6875,
+            "right": 722.375,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "keepsakes",
+          "kind": "back",
+          "geometry": {
+            "x": 207,
+            "y": 355.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 399.09375,
+            "right": 293,
+            "hit": true,
+            "label": "しまへ",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "album",
+          "kind": "back",
+          "geometry": {
+            "x": 728.984375,
+            "y": 30.09375,
+            "width": 91.96875,
+            "height": 44,
+            "bottom": 74.09375,
+            "right": 820.953125,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "photos",
+          "kind": "back",
+          "geometry": {
+            "x": 207,
+            "y": 113.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 157.09375,
+            "right": 293,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "camera",
+          "kind": "close",
+          "geometry": {
+            "x": 731,
+            "y": 449.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 493.09375,
+            "right": 817,
+            "hit": true,
+            "label": "とじる",
+            "icon": "lucide lucide-x"
+          }
+        },
+        {
+          "mode": "workshop",
+          "kind": "close",
+          "geometry": {
+            "x": 731,
+            "y": 421.09375,
+            "width": 86,
+            "height": 44,
+            "bottom": 465.09375,
+            "right": 817,
+            "hit": true,
+            "label": "とじる",
+            "icon": "lucide lucide-x"
+          }
+        },
+        {
+          "mode": "shared",
+          "kind": "back",
+          "geometry": {
+            "x": 214,
+            "y": 320.09375,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 364.09375,
+            "right": 300.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        },
+        {
+          "mode": "help",
+          "kind": "back",
+          "geometry": {
+            "x": 214,
+            "y": 92.09375,
+            "width": 86.96875,
+            "height": 44,
+            "bottom": 136.09375,
+            "right": 300.96875,
+            "hit": true,
+            "label": "もどる",
+            "icon": "lucide lucide-arrow-left"
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true
+    }
+  ]
+}
