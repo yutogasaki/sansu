@@ -1,3 +1,4 @@
+import { useRef, type ReactNode } from 'react';
 import { IslandPanelHeading } from './IslandPanelHeading';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Check, RotateCw, X } from 'lucide-react';
 import { ISLAND_ITEMS } from '../../domain/island/catalog';
@@ -115,29 +116,34 @@ export function IslandInventory({ items, disabled, onSelect, onClose, onFurnitur
     </section>;
 }
 
-export function IslandPlay({ items, disabled, selectedId, message, onSelect, onMove, onInventory, onContinue, onClose, onGuide, onPhoto }: {
+export function IslandPlay({ items, disabled, selectedId, message, residentName, districts, onSelect, onMove, onInventory, onContinue, onClose, onGuide, onPhoto }: {
     items: IslandItem[]; disabled: boolean; selectedId?: string; message?: string;
+    residentName?: string;
+    districts?: ReactNode;
     onSelect: (id: string) => void; onMove: (item: IslandItem) => void; onInventory: () => void; onContinue: () => void; onClose: () => void;
     onGuide?: () => void;
     onPhoto?: () => void;
 }) {
+    const body = useRef<HTMLDivElement>(null);
     const placed = items.filter(item => item.position);
     const selected = placed.find(item => item.id === selectedId);
     return <section className="island-sheet island-play" aria-label="どうぶつと あそぶ">
-        <IslandPanelHeading title="どうぶつと あそぶ" description="どこで あそぼう？" onExit={onClose} disabled={disabled} exitAriaLabel="あそびから もどる" />
+        <IslandPanelHeading title={residentName ? `${residentName}と あそぶ` : 'どうぶつと あそぶ'} description="どこで あそぼう？" onExit={onClose} disabled={disabled} exitAriaLabel="あそびから もどる" />
+        <div className="island-play-body" ref={body}>
         <p className="island-play-message" role="status">{message ?? (placed.length ? 'しまの ものか、したの えを えらんでね。' : 'もちものから おくと、どうぶつが あそべるよ。')}</p>
+        {selected && <button className="island-secondary island-play-move" disabled={disabled} onClick={() => onMove(selected)}>{ISLAND_ITEMS[selected.kind].name}を うごかす</button>}
+        {districts}
         {!placed.length && <button className="island-secondary island-play-move" disabled={disabled} onClick={onInventory}>もちものを ひらく</button>}
         <div className="island-inventory island-play-choices" role="group" aria-label="あそぶ もの">{placed.map((item, index) => <button key={item.id} disabled={disabled}
             className="island-reward" aria-pressed={item.id === selectedId}
-            aria-label={`${ISLAND_ITEMS[item.kind].name} ${index + 1}で あそぶ`} onClick={() => onSelect(item.id)}>
+            aria-label={`${ISLAND_ITEMS[item.kind].name} ${index + 1}で あそぶ`} onClick={() => { onSelect(item.id); body.current?.scrollTo({ top: 0, behavior: 'instant' }); }}>
             <ItemPicture kind={item.kind} /><strong>{ISLAND_ITEMS[item.kind].name}</strong><small>{ISLAND_ITEMS[item.kind].description}</small>
         </button>)}</div>
         <div className="island-play-actions">
             {onGuide && <button className="island-text-button" disabled={disabled} onClick={onGuide}>みつけものを みる</button>}
             {onPhoto && <button className="island-text-button" disabled={disabled} onClick={onPhoto}>いまを しゃしんに</button>}
-            {selected && <button className="island-text-button" disabled={disabled} onClick={() => onMove(selected)}>{ISLAND_ITEMS[selected.kind].name}を うごかす</button>}
             <button className="island-secondary island-play-return" disabled={disabled} onClick={onContinue}>ひかりを とどける <ArrowRight size={18} /></button>
-        </div>
+        </div></div>
     </section>;
 }
 

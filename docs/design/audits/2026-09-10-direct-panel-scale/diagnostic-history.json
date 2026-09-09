@@ -1,0 +1,13 @@
+{
+  "scope": "Earlier failures are separate from the passing v5 reports; paths are local evidence.",
+  "runs": [
+    {"path":"/tmp/sansu-direct-scale-v1", "classification":"harness", "finding":"Zoom-out was already at its minimum; changed the view with rotation."},
+    {"path":"/tmp/sansu-direct-scale-v1b", "classification":"fixture", "finding":"Corrected optional furniture to canonical singleton IDs; invalid records were correctly rejected."},
+    {"path":"/tmp/sansu-direct-scale-v1c", "classification":"UX gap", "finding":"Dense legal placement blocks paths; moved the move action beside its status."},
+    {"path":"/tmp/sansu-direct-scale-v2", "classification":"harness occlusion", "finding":"The bench center was covered by a resident; used visible flower geometry. Separately corrected the garden-item app branch."},
+    {"path":"/tmp/sansu-direct-scale-landscape-v3b", "classification":"application", "finding":"Scrolling the scene out of view paused play; v5 fixes scene and scrolls only the list body."},
+    {"path":"/tmp/sansu-direct-scale-small-v3b", "classification":"harness", "finding":"Decluttered labels detach on resize; used actual resident models."},
+    {"path":"/tmp/sansu-direct-scale-tablet-v5", "classification":"harness occlusion", "finding":"A rabbit covered the flower; rotated the real camera before tapping."},
+    {"path":"/tmp/sansu-direct-smoke-v5", "classification":"isolated retest", "finding":"One classic bridge submit timed out without an established app cause. Retained failure; same app inputs passed all 31 cases in a separate unedited copy."}
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "base": "53db4de",
+  "version": {
+    "version": "53db4de-direct-integration:aaf301cc-1519-47c2-9cda-b51880d15f39",
+    "revision": "53db4de-direct-integration",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceHash": "ae0190885e16a275d9ffd12e4655eb1d680637080a2239e90708711cf0699383",
+  "overrides": [
+    {
+      "path": "src/components/island/IslandLearningFocus.css",
+      "sha256": "f8e97fa895f779febb21d029235f20073291861fc9bef1c4ec1d742f8f3c3423"
+    },
+    {
+      "path": "src/components/island/IslandLearningTheme.css",
+      "sha256": "50f0952a3c766ac4a01299cc0fdf275e6f581471bb730e54291c28bdff9e9cb3"
+    },
+    {
+      "path": "src/components/island/useIslandPromptSize.ts",
+      "sha256": "64c997e88519b83cdb7468c102c56cdf39df40f9ec653d3bc315e9ec67d14093"
+    }
+  ],
+  "checks": {
+    "typecheck": true,
+    "build": true,
+    "assets": true,
+    "directUnit": 5,
+    "realJourneyWidths": [
+      390,
+      768
+    ]
+  }
+}

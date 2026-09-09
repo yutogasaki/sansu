@@ -66,9 +66,11 @@ try {
             assert.equal(await page.locator('.island-direct-panel').count(), 0, 'Dragging does not select a target');
             if (await button(page, 'もとの ながめ').isVisible()) await button(page, 'もとの ながめ').click();
             await page.locator('[data-direct-target="resident"]').tap(); await capture('resident');
-            await page.locator('.island-direct-play-list').getByRole('button', { name: 'ベンチで あそぶ', exact: true }).tap(); await waitMode(page, 'play');
+            await button(page, 'えから えらぶ').tap(); await waitMode(page, 'play');
+            await page.getByRole('heading', { name: 'カワウソと あそぶ', exact: true }).waitFor();
+            await page.locator('.island-play-choices').getByRole('button', { name: /ベンチ.*で あそぶ/ }).first().tap();
             await page.waitForFunction(() => document.querySelector('[data-testid="island-stage"]')?.getAttribute('data-resident-species') === 'otter');
-            await capture('play'); await button(page, 'あそびを とじる').tap(); await waitMode(page, 'home');
+            await capture('play'); await button(page, 'あそびから もどる').tap(); await waitMode(page, 'home');
             await page.locator('[data-direct-target="home"]').tap(); await waitMode(page, 'keepsakes'); await capture('house');
             await page.locator('[data-keepsake-action="close"]').click(); await waitMode(page, 'home');
             await button(page, 'もちもの').tap(); await waitMode(page, 'inventory');

@@ -38,6 +38,7 @@ export interface IslandStageState {
     /** Repository-validated challenge selection, separate from the legacy sixteen keepsakes. */
     challengeDisplayed?: readonly ('certificate' | 'trophy')[];
     directInteractions?: boolean;
+    directPlaySelection?: boolean;
     learningKeepsakes?: { state?: IslandLearningKeepsakesState; selectedId?: IslandLearningKeepsakeId };
     shared?: IslandSharedStageState;
     sharedRequest?: IslandSharedSceneRequest;

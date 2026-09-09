@@ -8,7 +8,7 @@ const island: IslandRecord = { profileId: 'p', schemaVersion: 1, revision: 0, co
     growth: { version: 1, progress: { garden: 1, waterside: 0, grove: 0, village: 0 }, focus: 'village', memories: [], discoveries: [] } };
 const noop = () => undefined;
 const render = (target: IslandDirectTarget, record = island, plan?: IslandPlan, preview = false) => renderToStaticMarkup(<IslandDirectActions target={target} island={record} plan={plan}
-    disabled={false} preview={preview} onPreview={noop} onGrow={noop} onPlay={noop} onMove={noop} onInventory={noop} onClose={noop} />);
+    disabled={false} preview={preview} onPreview={noop} onGrow={noop} onPlay={noop} onBrowsePlay={noop} onMove={noop} onInventory={noop} onClose={noop} />);
 
 describe('direct island actions', () => {
     it('distinguishes an immutable reservation from the chosen next place', () => {
@@ -22,11 +22,16 @@ describe('direct island actions', () => {
         expect(render({ kind: 'garden' }, mature)).not.toContain('つぎの すがた');
         expect(render({ kind: 'garden' }, { ...island, growth: undefined })).not.toContain('ここを 育てる</button>');
     });
-    it('offers only placed possessions to the selected resident', () => {
+    it('keeps resident actions bounded instead of duplicating growing inventory', () => {
         const record = { ...island, items: [{ id: 'f', kind: 'flower' as const, rotation: 0, position: { x: 0, z: 1 } }, { id: 'b', kind: 'bench' as const, rotation: 0 }] };
         const html = render({ kind: 'resident', id: 'rabbit' }, record);
-        expect(html).toContain('おはなで あそぶ');
+        expect(html).toContain('しまの あそび道具を タップしてね');
+        expect(html).toContain('えから えらぶ');
+        expect(html).not.toContain('おはなで あそぶ');
         expect(html).not.toContain('ベンチで あそぶ');
+        const many = { ...record, items: Array.from({ length: 100 }, (_, i) => ({ ...record.items[0], id: `f-${i}` })) };
+        expect(render({ kind: 'resident', id: 'rabbit' }, many)).toBe(html);
         expect(render({ kind: 'resident', id: 'rabbit' })).toContain('もちものを おく');
+        expect(render({ kind: 'resident', id: 'rabbit' }, { ...record, items: [record.items[1]] })).not.toContain('えから えらぶ');
     });
 });

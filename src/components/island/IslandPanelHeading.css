@@ -1,5 +1,5 @@
 /* Stable navigation geometry across ordinary sheets and focused activities. */
-.island-page :is(.island-sheet, .island-photo-detail) > .island-sheet-title.island-panel-heading {
+.island-page :is(.island-sheet, .island-photo-detail, .island-direct-panel) > .island-sheet-title.island-panel-heading {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     align-items: center;
@@ -7,7 +7,7 @@
     min-height: 44px;
     margin-bottom: 14px;
 }
-.island-page :is(.island-sheet, .island-photo-detail) > .island-panel-heading[data-exit-kind=close] {
+.island-page :is(.island-sheet, .island-photo-detail, .island-direct-panel) > .island-panel-heading[data-exit-kind=close] {
     grid-template-columns: minmax(0, 1fr) auto;
 }
 .island-page .island-panel-heading > .island-panel-heading-copy { min-width: 0; }

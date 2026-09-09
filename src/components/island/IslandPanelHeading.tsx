@@ -5,6 +5,7 @@ import './IslandPanelHeading.css';
 interface IslandPanelHeadingProps {
     title: ReactNode;
     titleRef?: Ref<HTMLHeadingElement>;
+    exitRef?: Ref<HTMLButtonElement>;
     description?: ReactNode;
     actions?: ReactNode;
     onExit: () => void;
@@ -16,10 +17,10 @@ interface IslandPanelHeadingProps {
 }
 
 /** One visual contract; the caller retains its existing return/save behavior. */
-export function IslandPanelHeading({ title, titleRef, description, actions, onExit, disabled, kind = 'back',
+export function IslandPanelHeading({ title, titleRef, exitRef, description, actions, onExit, disabled, kind = 'back',
     exitLabel, exitAriaLabel, houseAction }: IslandPanelHeadingProps) {
     const Icon = kind === 'back' ? ArrowLeft : X;
-    const exit = <button type="button" className="island-icon-button island-panel-back" disabled={disabled}
+    const exit = <button ref={exitRef} type="button" className="island-icon-button island-panel-back" disabled={disabled}
         aria-label={exitAriaLabel} data-keepsake-action={houseAction} onClick={onExit}>
         <Icon size={20} aria-hidden="true" /><span>{exitLabel ?? (kind === 'back' ? 'もどる' : 'とじる')}</span>
     </button>;

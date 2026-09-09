@@ -1,0 +1,146 @@
+{
+  "target": "http://127.0.0.1:5393",
+  "engine": "chromium",
+  "baseline": true,
+  "humanN": 0,
+  "diagnostic": true,
+  "fixture": "Explicit native maturity, legal placements, names and prior discoveries; not earned learning. Real pointer input and native save comparisons. No app callbacks injected.",
+  "fixtureInputs": [
+    {
+      "path": "src/domain/island/appearance.ts",
+      "sha256": "82b2b15ad08ff9af312ed46e822b3c867e6901749c58b93c27ebad695734697c"
+    },
+    {
+      "path": "src/domain/island/catalog.ts",
+      "sha256": "b8f9b8f1158837e5ef42ed2655a8040f0d17ace886a87284af946af32b7ac875"
+    },
+    {
+      "path": "src/domain/island/customization.ts",
+      "sha256": "9f96c54d351140134f535109a3442197daf3355f5adae06fbcd7889ddb75930f"
+    },
+    {
+      "path": "src/domain/island/expansion.ts",
+      "sha256": "c796fa922d4cfdaa7434db896ca65ad3615a3d5b2abb2b577d736c5cbcf3f74a"
+    },
+    {
+      "path": "src/domain/island/experience.ts",
+      "sha256": "b404d022565c4c2fd8553415b82ea8f4722e971412f19738c4e326e115659126"
+    },
+    {
+      "path": "src/domain/island/expression.ts",
+      "sha256": "87c519ce3712125c17c3b70b2e28c1f30bfdb04f7fdddbd2dadca0c81a9350ce"
+    },
+    {
+      "path": "src/domain/island/furniture.ts",
+      "sha256": "a96384bafc01d321bc79fa1c626dce824a3d9bef7347aa3fd07872552b57f7e6"
+    },
+    {
+      "path": "src/domain/island/growth.ts",
+      "sha256": "c1f928de79a56ee8625bcfe21905c32b3c4f2fa4fc6025b6e6bd865019b033bf"
+    },
+    {
+      "path": "src/domain/island/landGeometry.ts",
+      "sha256": "74eade9917f0dc64e481add10391c933b043f15f54a714fdc087b4313197d73f"
+    },
+    {
+      "path": "src/domain/island/livingSettings.ts",
+      "sha256": "77a4ff96b2a948ff8d462135668245ea1c924df31189789c26da0fbc626b11a4"
+    },
+    {
+      "path": "src/domain/island/pacing.ts",
+      "sha256": "0a8d92902558f2e3922002ee2c22ce92b2ec4126e9c9854afcfb64e14fc88c86"
+    },
+    {
+      "path": "src/domain/island/residentIdentity.ts",
+      "sha256": "38fd155108acaf88b4236e3bdb2bc09492bc962413b908a19d20cf18c8797a0e"
+    },
+    {
+      "path": "src/domain/island/rewardGoalTypes.ts",
+      "sha256": "478a1611bc7f9445d1bba0002d1d13c51ff8bcb1bc82457949a0e89aff83ece1"
+    },
+    {
+      "path": "src/domain/island/sceneStyle.ts",
+      "sha256": "00b421bce926fc58343d2d99f298717ea2d321671dac97311c5bdc98e4135e1d"
+    },
+    {
+      "path": "src/domain/island/sharedDisplayGeometry.ts",
+      "sha256": "1dfd7ceecbfb63cdf65ad11b9ac102796979afc4d4809d801a183435c06e71ba"
+    },
+    {
+      "path": "src/domain/island/sharedSettings.ts",
+      "sha256": "769d7101f0b95fdd30d9660f5cda4efb48af8a9745473a4474e1e38ba7615489"
+    },
+    {
+      "path": "src/domain/island/types.ts",
+      "sha256": "05295f8028d03bc6aeade4ee112b825f602cf244377943ba93bafccdf09ce05f"
+    },
+    {
+      "path": "src/domain/island/visitors.ts",
+      "sha256": "5f4c7ea864931ab43d0b63f1b3f6248f2eb5d0757425a1525f41a82b3f084901"
+    }
+  ],
+  "fixtureHash": "cec6d5d75359bbdd0de45de413eaac3d5f6a0300a4225e69255754cf64bcfc2c",
+  "version": {
+    "version": "45d62a9-direct-before:2cba2759-74b4-4c0e-8b9a-41c491f51a08",
+    "revision": "45d62a9-direct-before",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "scenarios": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "captures": [
+        {
+          "file": "390-placed-16.png",
+          "revision": "45d62a9-direct-before",
+          "version": "45d62a9-direct-before:2cba2759-74b4-4c0e-8b9a-41c491f51a08",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "mystic-island-learning-v2",
+          "mode": "home",
+          "renderer": "three",
+          "artDirection": "moon-garden",
+          "drawCalls": 194,
+          "expanded": "true",
+          "residentAction": "idle",
+          "residentItemId": "",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true
+        }
+      ],
+      "counts": [
+        {
+          "count": 16,
+          "height": 355.515625,
+          "buttons": 17,
+          "worldOverlap": 132962.84375,
+          "resetOverlap": 4723.125,
+          "worldHeight": 646.40625,
+          "worldWidth": 390
+        }
+      ],
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

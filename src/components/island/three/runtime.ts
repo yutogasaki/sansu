@@ -1595,7 +1595,7 @@ export class IslandScene {
         if (id) {
             if (cameraTap && this.state.directInteractions) {
                 const item = this.items.get(id)?.item;
-                this.callbacks.directSelect?.(item?.habitatId === 'garden' ? { kind: 'garden' } : { kind: 'item', id });
+                this.callbacks.directSelect?.(item?.habitatId === 'garden' && !this.state.directPlaySelection ? { kind: 'garden' } : { kind: 'item', id });
             } else this.callbacks.select(id);
             return;
         }
