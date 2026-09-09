@@ -8,6 +8,24 @@ import { islandTerrainEnvelope, ISLAND_TERRAIN_PROFILES, ISLAND_TERRAIN_SEGMENTS
     terrainContour, terrainEdge, terrainRocks } from './terrainProfile';
 
 const areas = [ISLAND_MAIN_LAND, ISLAND_EAST_LAND, ISLAND_WEST_LAND];
+// Fixed33/34 authored outline, retained as a geometric before-fixture. A camera
+// change must not pass for an actual reduction of the side islands' extra land.
+const previousProfiles = {
+    main: { phase: .2, lobes: [[1.95, .34, .245], [.56, .28, .16], [4.27, .42, .16]] },
+    east: { phase: 1.4, lobes: [[.21, .44, .20], [1.85, .32, .13], [4.75, .35, .195]] },
+    west: { phase: 2.7, lobes: [[.64, .37, .16], [2.0, .31, .115], [4.85, .38, .25]] },
+} as const;
+function previousContour(angle: number, profile: typeof ISLAND_TERRAIN_PROFILES[number]) {
+    const p = previousProfiles[profile];
+    return 1.018 + .006 * Math.sin(angle * 5 + p.phase) + p.lobes.reduce((sum, [center, width, amount]) => {
+        const distance = Math.atan2(Math.sin(angle - center), Math.cos(angle - center));
+        return sum + amount * Math.exp(-.5 * (distance / width) ** 2);
+    }, 0);
+}
+const polygonArea = (points: { x: number; z: number }[]) => Math.abs(points.reduce((sum, point, i) => {
+    const next = points[(i + 1) % points.length];
+    return sum + point.x * next.z - next.x * point.z;
+}, 0)) / 2;
 function vertices(group: THREE.Object3D) {
     const result: THREE.Vector3[] = []; group.updateWorldMatrix(true, true);
     group.traverse(child => {
@@ -18,13 +36,44 @@ function vertices(group: THREE.Object3D) {
 }
 
 describe('shore garden terrain keeps saved physical land', () => {
-    it.each(ISLAND_TERRAIN_PROFILES)('%s has large asymmetric outer lobes and one broad sand sector, with no inward cut', profile => {
+    it.each(ISLAND_TERRAIN_PROFILES)('%s contains the saved ellipse and retains a broad sand sector without an inward cut', profile => {
         const radii = Array.from({ length: ISLAND_TERRAIN_SEGMENTS }, (_, i) => terrainContour(i / ISLAND_TERRAIN_SEGMENTS * Math.PI * 2, profile));
         expect(Math.min(...radii)).toBeGreaterThan(1 / Math.cos(Math.PI / ISLAND_TERRAIN_SEGMENTS));
-        expect(Math.max(...radii) - Math.min(...radii)).toBeGreaterThan(.17);
         const widths = radii.map((r, i) => terrainEdge(i / ISLAND_TERRAIN_SEGMENTS * Math.PI * 2, 'beach', profile).radius - r);
         expect(Math.max(...widths)).toBeGreaterThan(.24);
         expect(Math.max(...widths) - Math.min(...widths)).toBeGreaterThan(.20);
+    });
+
+    it('keeps the main outline while reducing real side-cap area and limiting bridge/outer-end bulges', () => {
+        for (const profile of ISLAND_TERRAIN_PROFILES) {
+            const radii = Array.from({ length: 360 }, (_, i) => terrainContour(i * Math.PI / 180, profile));
+            for (let i = 0; i < 360; i++) {
+                const previous = previousContour(i * Math.PI / 180, profile);
+                if (profile === 'main') expect(radii[i]).toBe(previous);
+                else expect(radii[i]).toBeLessThanOrEqual(previous);
+            }
+            if (profile === 'main') continue;
+            expect(Math.max(...radii)).toBeLessThan(1.10);
+            expect(Math.max(...radii) - Math.min(...radii)).toBeGreaterThan(.03);
+            expect(Math.max(...radii) - Math.min(...radii)).toBeLessThan(.09);
+            for (const center of [0, Math.PI]) for (const offset of [-.35, 0, .35]) {
+                expect(terrainContour(center + offset, profile)).toBeLessThan(1.08);
+            }
+            const { radiusX: rx, radiusZ: rz } = ISLAND_EAST_LAND;
+            const geometry = islandGroundGeometry(rx, rz, profile);
+            try {
+                const position = geometry.getAttribute('position'), start = 1 + 2 * (ISLAND_TERRAIN_SEGMENTS + 1);
+                const actual = Array.from({ length: ISLAND_TERRAIN_SEGMENTS }, (_, i) => ({
+                    x: position.getX(start + i), z: position.getZ(start + i),
+                }));
+                const previous = actual.map((_, i) => {
+                    const angle = i / ISLAND_TERRAIN_SEGMENTS * Math.PI * 2, radius = previousContour(angle, profile);
+                    return { x: Math.cos(angle) * rx * radius, z: Math.sin(angle) * rz * radius };
+                });
+                expect(polygonArea(actual)).toBeLessThan(polygonArea(previous) * .94);
+                expect(polygonArea(actual)).toBeGreaterThan(Math.PI * rx * rz);
+            } finally { geometry.dispose(); }
+        }
     });
 
     it.each(ISLAND_TERRAIN_PROFILES)('%s keeps old ellipse centers, chords and boundary samples on the exact flat floor', profile => {

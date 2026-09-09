@@ -175,16 +175,16 @@ describe('independently equipped actual island surfaces', () => {
         } finally { world.dispose(); }
     });
 
-    it.each(['starry', 'candy', 'crystal'] as const)('%s exposes actual new sky silhouettes in the home camera before and after expansion', family => {
+    it.each(['starry', 'candy', 'crystal'] as const)('%s fits its actual distant silhouettes in the chosen overview at each land stage', family => {
         const world = new IslandCosmeticScenery({ themeId: 'moon-garden', accentId: null, appearance: createIslandAppearance(family) });
         try {
-            for (const level of [0, 2] as const) for (const [width, height] of [[390, 380], [768, 470]]) {
-                const current = state(); current.growth!.expansionLevel = level; world.updateGrowth(current);
+            for (const level of [0, 1, 2] as const) for (const [width, height] of [[390, 338], [768, 410], [390, 380], [768, 470]]) {
+                const current = state(); current.growth!.expansionLevel = level; current.districtFocus = 'all'; world.updateGrowth(current);
                 const camera = new THREE.OrthographicCamera(-7, 7, 5, -5, .1, 100);
                 const runtime = Object.create(IslandScene.prototype) as { resize(): void };
                 Object.assign(runtime, { camera, host: { clientWidth: width, clientHeight: height },
                     renderer: { setSize: () => undefined, getSize: (size: THREE.Vector2) => size.set(width, height) }, rendererSize: new THREE.Vector2(),
-                    cameraControls: new IslandCameraControls(() => undefined), expansion: world.expansion, westExpansion: world.westExpansion,
+                    world, cameraControls: new IslandCameraControls(() => undefined), expansion: world.expansion, westExpansion: world.westExpansion,
                     state: current, items: new Map(), requestFrame: () => undefined });
                 runtime.resize(); world.group.updateMatrixWorld(true);
                 for (const object of actualMeshes([world.sky])) {

@@ -1166,7 +1166,11 @@ export class IslandScene {
         const target = this.state?.learning ? this.learningFocus.clone() : new THREE.Vector3(districtX, .85, -.03);
         if (this.state?.learning && height < 130) target.y -= .18;
         const manualView = canControlIslandCamera(this.state) && this.cameraControls.view.manual;
-        const offset = new THREE.Vector3(4.7, 8.8, 13.5);
+        // The overview follows the land into depth; local and acting views keep
+        // their familiar orientation and saved world coordinates never move.
+        const overview = district === 'all' && !this.state?.learning
+            && !this.explicitNatureObservation && !this.sharedCamera;
+        const offset = overview ? new THREE.Vector3(9.4, 8.8, 10.77) : new THREE.Vector3(4.7, 8.8, 13.5);
         if (manualView) offset.applyAxisAngle(new THREE.Vector3(0, 1, 0), this.cameraControls.view.azimuth);
         this.camera.position.copy(target).add(offset);
         this.camera.lookAt(target); this.camera.updateMatrixWorld(true);
@@ -1220,7 +1224,16 @@ export class IslandScene {
             this.applyCameraPan(bounds, projectedRegions, aspect);
             this.camera.updateProjectionMatrix(); this.requestFrame(); return;
         }
-        const center = bounds.getCenter(new THREE.Vector3()), size = bounds.getSize(new THREE.Vector3());
+        // An overview includes the owned distant sky too. It must not enlarge
+        // the walkable pan bounds or change the familiar local garden frame.
+        const overviewBounds = bounds.clone();
+        if (this.world?.sky.visible) {
+            const sky = new THREE.Box3().setFromObject(this.world.sky, true);
+            if (!sky.isEmpty()) for (const corner of boxCorners(sky)) {
+                overviewBounds.expandByPoint(corner.applyMatrix4(this.camera.matrixWorldInverse));
+            }
+        }
+        const center = overviewBounds.getCenter(new THREE.Vector3()), size = overviewBounds.getSize(new THREE.Vector3());
         const fitHeight = Math.max(size.y, size.x / aspect) * 1.09;
         this.camera.left = center.x - fitHeight * aspect / 2;
         this.camera.right = center.x + fitHeight * aspect / 2;

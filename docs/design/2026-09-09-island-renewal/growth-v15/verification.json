@@ -1,0 +1,618 @@
+{
+  "date": "2026-09-09",
+  "candidate": "mystic-island-shore-garden-v15",
+  "scope": "Fixed34 to fixed35 visual outline, explicit all view and untouched default camera continuity only. Expansion levels are diagnostic writes, not genuine growth acquisition.",
+  "originReport": {
+    "path": "output/playwright/island-renewal/growth-review-35-01/report.json",
+    "sha256": "6ade451fcf6501a1bce5dd5cc20151d86501cf9eb618a791154109a04da8f5cf"
+  },
+  "originImageDirectory": "output/playwright/island-renewal/growth-review-35-01",
+  "targets": [
+    {
+      "name": "before",
+      "snapshot": 34,
+      "url": "http://127.0.0.1:5420",
+      "revision": "workshop-20260909-193b42164378",
+      "sourceHash": "193b42164378cf84c3841ef3b0c1849be420cfad2e5e84b3a88114a4c2c270db",
+      "inputs": 1076,
+      "manifestSha256": "1c1ae46885c2ce1942475eed085241de05c8ef97fe13025126d21a7ae6c8a43c",
+      "candidate": "mystic-island-shore-garden-v14",
+      "servedVersion": "workshop-20260909-193b42164378:364cf6aa-01a4-4171-8807-f30a5d6adb18",
+      "flags": {
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_BUILD_PLAY_ENABLED": "true"
+      }
+    },
+    {
+      "name": "after",
+      "snapshot": 35,
+      "url": "http://127.0.0.1:5421",
+      "revision": "workshop-20260909-94e5462d1f11",
+      "sourceHash": "94e5462d1f11b3f0ee30c0727fcb4b77c873b1986577ee644966ad90fbeb0be7",
+      "inputs": 1076,
+      "manifestSha256": "1b8896d40d077d71b0077a775443fd420119b4722b029ff8579bfa46ef3b3c2a",
+      "candidate": "mystic-island-shore-garden-v15",
+      "servedVersion": "workshop-20260909-94e5462d1f11:2c635205-c81c-4d5a-8bcf-8f1cfb587cd8",
+      "flags": {
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_BUILD_PLAY_ENABLED": "true"
+      }
+    }
+  ],
+  "composition": {
+    "baseSnapshot": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-34",
+    "baseRevision": "workshop-20260909-193b42164378",
+    "baseSourceHash": "193b42164378cf84c3841ef3b0c1849be420cfad2e5e84b3a88114a4c2c270db",
+    "overlays": [
+      "src/components/island/islandDistrictView.ts",
+      "src/components/island/islandDistrictView.test.ts",
+      "src/components/island/three/runtime.ts",
+      "src/components/island/three/terrainProfile.ts",
+      "src/components/island/three/terrainProfile.test.ts",
+      "src/domain/island/feature.ts",
+      "vite.config.ts",
+      "tools/island-e2e-helpers.mjs",
+      "tools/e2e-island-observation.mjs",
+      "tools/e2e-island-pwa.mjs",
+      "tools/e2e-island-throughput.mjs"
+    ],
+    "excluded": "Navigation app UI excluded; unexecuted PWA runner contains concurrent navigation QA edits. See growth-v16/index-source-check.json for commit isolation."
+  },
+  "fixture": {
+    "source": "output/island-experience/camera-23-03/phone-mature-fixture-declared-fixture.json",
+    "sha256": "7f91c523195460efd12a072dc831d53ae70fc3673dd67391d1f5c4bd8f0c812f",
+    "acquisitionEvidence": false,
+    "completedSets": 24,
+    "progress": {
+      "garden": 6,
+      "waterside": 6,
+      "grove": 6,
+      "village": 6
+    },
+    "storedItemCount": 2,
+    "expansionSequence": [
+      0,
+      1,
+      2
+    ],
+    "mutation": "Native islands.put + explicit Dexie notification. After baseline only expansionLevel/revision/updatedAt change.",
+    "initialization": "One declared initial reload per isolated row; baseline follows ordinary initialization.",
+    "viewing": "Subsequent views match expected all-objectStore baseline including Blob SHA; no navigation, reload fallback or canvas replacement.",
+    "independentDefaultAndAllContexts": true
+  },
+  "render": {
+    "renderer": "three",
+    "mode": "home",
+    "artDirection": "moon-garden",
+    "reducedMotion": true,
+    "serviceWorkerControlled": true,
+    "phone": {
+      "viewport": [
+        390,
+        844
+      ],
+      "canvas": [
+        390,
+        338
+      ]
+    },
+    "tablet": {
+      "viewport": [
+        768,
+        1024
+      ],
+      "canvas": [
+        768,
+        410
+      ]
+    }
+  },
+  "rows": [
+    {
+      "lane": "phone",
+      "target": "before",
+      "view": "default",
+      "pass": true,
+      "contextClosed": true,
+      "districts": [
+        "all",
+        "home",
+        "home"
+      ],
+      "drawCalls": [
+        89,
+        202,
+        255
+      ],
+      "cameraExactlyEqualToPreviousLevel": [
+        null,
+        false,
+        true
+      ],
+      "cameraFrameSha256": [
+        "5d3074442b02dd1b86f476af410c9f7351a1496f55be28e5c29afea1853652f6",
+        "a8179776614e894ded19a9d06230fcebd70d018b226840ae0ad1211295d281d8",
+        "a8179776614e894ded19a9d06230fcebd70d018b226840ae0ad1211295d281d8"
+      ],
+      "frameTimestamps": [
+        1883,
+        2309.9,
+        2746.698
+      ],
+      "sameDocumentAndCanvas": true,
+      "allStoresPreservedAfterDeclaredWrites": true
+    },
+    {
+      "lane": "phone",
+      "target": "before",
+      "view": "all",
+      "pass": true,
+      "contextClosed": true,
+      "districts": [
+        "all",
+        "all",
+        "all"
+      ],
+      "drawCalls": [
+        89,
+        204,
+        152
+      ],
+      "cameraExactlyEqualToPreviousLevel": [
+        null,
+        false,
+        false
+      ],
+      "cameraFrameSha256": [
+        "5d3074442b02dd1b86f476af410c9f7351a1496f55be28e5c29afea1853652f6",
+        "6c0e778e439a6e39cd96cb54c9f3ee198417d397d3240d2ebef7ea89554806a7",
+        "27953fce0a922392f9fc4c80082258844ef5b142b1bd4d205c0eea8427a476d8"
+      ],
+      "frameTimestamps": [
+        2234.4,
+        2410.766,
+        3128.2
+      ],
+      "sameDocumentAndCanvas": true,
+      "allStoresPreservedAfterDeclaredWrites": true
+    },
+    {
+      "lane": "phone",
+      "target": "after",
+      "view": "default",
+      "pass": true,
+      "contextClosed": true,
+      "districts": [
+        "home",
+        "home",
+        "home"
+      ],
+      "drawCalls": [
+        89,
+        202,
+        255
+      ],
+      "cameraExactlyEqualToPreviousLevel": [
+        null,
+        true,
+        true
+      ],
+      "cameraFrameSha256": [
+        "a8179776614e894ded19a9d06230fcebd70d018b226840ae0ad1211295d281d8",
+        "a8179776614e894ded19a9d06230fcebd70d018b226840ae0ad1211295d281d8",
+        "a8179776614e894ded19a9d06230fcebd70d018b226840ae0ad1211295d281d8"
+      ],
+      "frameTimestamps": [
+        1919.5,
+        2319.6,
+        2754.498
+      ],
+      "sameDocumentAndCanvas": true,
+      "allStoresPreservedAfterDeclaredWrites": true
+    },
+    {
+      "lane": "phone",
+      "target": "after",
+      "view": "all",
+      "pass": true,
+      "contextClosed": true,
+      "districts": [
+        "all",
+        "all",
+        "all"
+      ],
+      "drawCalls": [
+        89,
+        204,
+        262
+      ],
+      "cameraExactlyEqualToPreviousLevel": [
+        null,
+        false,
+        false
+      ],
+      "cameraFrameSha256": [
+        "ad024bc734901ee92faabbcc278f5d6abdefbeac9af206d87913f74788c61576",
+        "444d94e7356c569812369710476be8464fdbef0aed2d0ecff81bb30c5f9fd2f1",
+        "dd79ba3562d3e04392f09a99d07491f866ae4e87e45d37389eea5a0ba547629f"
+      ],
+      "frameTimestamps": [
+        2364.266,
+        2774.8,
+        3219.832
+      ],
+      "sameDocumentAndCanvas": true,
+      "allStoresPreservedAfterDeclaredWrites": true
+    },
+    {
+      "lane": "tablet",
+      "target": "before",
+      "view": "default",
+      "pass": true,
+      "contextClosed": true,
+      "districts": [
+        "all",
+        "home",
+        "home"
+      ],
+      "drawCalls": [
+        89,
+        204,
+        262
+      ],
+      "cameraExactlyEqualToPreviousLevel": [
+        null,
+        false,
+        true
+      ],
+      "cameraFrameSha256": [
+        "a6db700e8d2737cbe83d8c1bc6e0afd30306ceec08d30a5c21ea0f991c9c6862",
+        "996e72de7fcc9dade3a58a14999802aabfcd8de754880fc03d31d0d020f5d3c0",
+        "996e72de7fcc9dade3a58a14999802aabfcd8de754880fc03d31d0d020f5d3c0"
+      ],
+      "frameTimestamps": [
+        1974.2,
+        2407.732,
+        2874.532
+      ],
+      "sameDocumentAndCanvas": true,
+      "allStoresPreservedAfterDeclaredWrites": true
+    },
+    {
+      "lane": "tablet",
+      "target": "before",
+      "view": "all",
+      "pass": true,
+      "contextClosed": true,
+      "districts": [
+        "all",
+        "all",
+        "all"
+      ],
+      "drawCalls": [
+        89,
+        204,
+        152
+      ],
+      "cameraExactlyEqualToPreviousLevel": [
+        null,
+        false,
+        false
+      ],
+      "cameraFrameSha256": [
+        "a6db700e8d2737cbe83d8c1bc6e0afd30306ceec08d30a5c21ea0f991c9c6862",
+        "3cda8f31da125e8fb63204abcc88c0a158e004d125e7f3ef6ed12e82fb36f987",
+        "0994757bd3747b7d7eb435009da20dc1c59774c27158187562a009dfbd3be5bf"
+      ],
+      "frameTimestamps": [
+        2194.5,
+        2436.266,
+        3115.1
+      ],
+      "sameDocumentAndCanvas": true,
+      "allStoresPreservedAfterDeclaredWrites": true
+    },
+    {
+      "lane": "tablet",
+      "target": "after",
+      "view": "default",
+      "pass": true,
+      "contextClosed": true,
+      "districts": [
+        "home",
+        "home",
+        "home"
+      ],
+      "drawCalls": [
+        89,
+        204,
+        152
+      ],
+      "cameraExactlyEqualToPreviousLevel": [
+        null,
+        true,
+        true
+      ],
+      "cameraFrameSha256": [
+        "996e72de7fcc9dade3a58a14999802aabfcd8de754880fc03d31d0d020f5d3c0",
+        "996e72de7fcc9dade3a58a14999802aabfcd8de754880fc03d31d0d020f5d3c0",
+        "996e72de7fcc9dade3a58a14999802aabfcd8de754880fc03d31d0d020f5d3c0"
+      ],
+      "frameTimestamps": [
+        1922.9,
+        2349.5,
+        3110.9
+      ],
+      "sameDocumentAndCanvas": true,
+      "allStoresPreservedAfterDeclaredWrites": true
+    },
+    {
+      "lane": "tablet",
+      "target": "after",
+      "view": "all",
+      "pass": true,
+      "contextClosed": true,
+      "districts": [
+        "all",
+        "all",
+        "all"
+      ],
+      "drawCalls": [
+        89,
+        204,
+        262
+      ],
+      "cameraExactlyEqualToPreviousLevel": [
+        null,
+        false,
+        false
+      ],
+      "cameraFrameSha256": [
+        "845bafbec881d444f2920db0fe37b01b89074422713d865decdc20bdcb2fcee5",
+        "24b91203e9451ce185e969aa899615fe3b74795140aa244dce4a6191c2f1c966",
+        "260f30ca750aa7a90b8205e850dda6907fedd5ca56a0319402f7057d25c608b7"
+      ],
+      "frameTimestamps": [
+        2209.866,
+        2594.7,
+        2987.232
+      ],
+      "sameDocumentAndCanvas": true,
+      "allStoresPreservedAfterDeclaredWrites": true
+    }
+  ],
+  "aggregate": {
+    "pass": true,
+    "rows": 8,
+    "contexts": 8,
+    "stageCaptures": 24,
+    "rawPageCaptures": 24,
+    "durablePageCaptures": 2,
+    "sourceStable": true,
+    "qaStable": true,
+    "browserClosed": true,
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "consoleWarnings": 20,
+    "warningKinds": [
+      "Three PCFSoftShadowMap deprecation",
+      "GPU ReadPixels stall"
+    ],
+    "defaultAfterThreeFramesExactlyEqual": true
+  },
+  "qaClosure": [
+    {
+      "path": "output/playwright/island-renewal/growth-review-35-01.mjs",
+      "sha256": "c2f2d0cfd2f3c1ae2990d8364964794cc585e998082c1d8b3ce4a4827966a406"
+    },
+    {
+      "path": "output/island-experience/camera-23-03/phone-mature-fixture-declared-fixture.json",
+      "sha256": "7f91c523195460efd12a072dc831d53ae70fc3673dd67391d1f5c4bd8f0c812f"
+    },
+    {
+      "path": "output/island-experience/workshop-snapshot-34/build-source.json",
+      "sha256": "1c1ae46885c2ce1942475eed085241de05c8ef97fe13025126d21a7ae6c8a43c"
+    },
+    {
+      "path": "output/island-experience/workshop-snapshot-34/tools/island-e2e-helpers.mjs",
+      "sha256": "534bbbcaece0630b86e3e1310087282a9b883a4510d4ce4ea28c33804861e942"
+    },
+    {
+      "path": "output/island-experience/workshop-snapshot-35/build-source.json",
+      "sha256": "1b8896d40d077d71b0077a775443fd420119b4722b029ff8579bfa46ef3b3c2a"
+    },
+    {
+      "path": "output/island-experience/workshop-snapshot-35/tools/island-e2e-helpers.mjs",
+      "sha256": "3ecf0c8edbc8ebbbb26db27afc53401127876112797f5923933ec246e7cd2169"
+    }
+  ],
+  "images": [
+    {
+      "file": "phone-before-default-level-0.png",
+      "sha256": "59846ef15f5bcf49af97b326f0433c43b75cfd662323074a07ec0551a2d140a2",
+      "bytes": 108263
+    },
+    {
+      "file": "phone-before-default-level-1.png",
+      "sha256": "c9466ba17bf2551a1bdddcdb60b466a975c1eb0fe1bcd478eac9b34e41d31dc5",
+      "bytes": 114850
+    },
+    {
+      "file": "phone-before-default-level-2.png",
+      "sha256": "6de5a0769da9fdeec7ada3a240580eb0075ff2d66496c78b3f3262bf180b8097",
+      "bytes": 124381
+    },
+    {
+      "file": "phone-before-all-level-0.png",
+      "sha256": "59846ef15f5bcf49af97b326f0433c43b75cfd662323074a07ec0551a2d140a2",
+      "bytes": 108263
+    },
+    {
+      "file": "phone-before-all-level-1.png",
+      "sha256": "cb648f03e31fbc8b6cf141c5541cb604c6d8c7b342a5ce757a7a21daccd75ced",
+      "bytes": 106426
+    },
+    {
+      "file": "phone-before-all-level-2.png",
+      "sha256": "13f21e25d8e3da87dafd1425337456f4af0b479733da20739e367a7fb8be2f25",
+      "bytes": 107556
+    },
+    {
+      "file": "phone-after-default-level-0.png",
+      "sha256": "fbc23b024b6f3c1310de24a8616926cb8d9c5b4328033867e2d292ce4d21d660",
+      "bytes": 109079
+    },
+    {
+      "file": "phone-after-default-level-1.png",
+      "sha256": "441a44b10e2bc4972ae3aabf9df448c0c494c4c40aefc35c07b4d00ec1f0773e",
+      "bytes": 114523
+    },
+    {
+      "file": "phone-after-default-level-2.png",
+      "sha256": "ecfe23a19b961232c3eaa41608353016e8520c079142c1a0efb552ceb796b889",
+      "bytes": 123884
+    },
+    {
+      "file": "phone-after-all-level-0.png",
+      "sha256": "9de342b34fc7b9318394c72ef15812b60f6616491f6eb886fb23eacfcfdefe0f",
+      "bytes": 114319
+    },
+    {
+      "file": "phone-after-all-level-1.png",
+      "sha256": "b007c8c41837207862bc458eb4f12bcb356e13dba65d74c5b8285643c0f81daf",
+      "bytes": 115612
+    },
+    {
+      "file": "phone-after-all-level-2.png",
+      "sha256": "308a945a8a0c6437ed39de9ff03ab564756b2977c97d54d63be63715b894285a",
+      "bytes": 116905
+    },
+    {
+      "file": "tablet-before-default-level-0.png",
+      "sha256": "19afd3a87f135077306ca7406e6288846b44f0781e88127718f7be2dd7b09734",
+      "bytes": 204693
+    },
+    {
+      "file": "tablet-before-default-level-1.png",
+      "sha256": "317bf7e41191a3d93da2bd8b0443c28148e4077ef81af04d19df95b19ba57f1b",
+      "bytes": 225084
+    },
+    {
+      "file": "tablet-before-default-level-2.png",
+      "sha256": "be098b343de66ceac82f42f7f99fc555a07841d18dc20bd8137492d94b1139e2",
+      "bytes": 257895
+    },
+    {
+      "file": "tablet-before-all-level-0.png",
+      "sha256": "19afd3a87f135077306ca7406e6288846b44f0781e88127718f7be2dd7b09734",
+      "bytes": 204693
+    },
+    {
+      "file": "tablet-before-all-level-1.png",
+      "sha256": "82bd827ad0c03875542fcbb8abca3c33ed46f38f68e19d61bf2f014f354c3bf5",
+      "bytes": 225924
+    },
+    {
+      "file": "tablet-before-all-level-2.png",
+      "sha256": "1cfd217403c3fff2372da265bb36a76d6c22ba16fbf53a7122f24583a879ab38",
+      "bytes": 230908
+    },
+    {
+      "file": "tablet-after-default-level-0.png",
+      "sha256": "89996834d346ec1e02bf0f6e51586f59f30848b9ffc87844a4aaba372c3abd69",
+      "bytes": 203638
+    },
+    {
+      "file": "tablet-after-default-level-1.png",
+      "sha256": "92b892e668e8c34803662d0103a84fe71e69258efa04a9e9865bd0311524439a",
+      "bytes": 224421
+    },
+    {
+      "file": "tablet-after-default-level-2.png",
+      "sha256": "3c9c8050ba6591581e8b49165579008f4439e64d871c8c3021b455cf515b83eb",
+      "bytes": 256554
+    },
+    {
+      "file": "tablet-after-all-level-0.png",
+      "sha256": "a476dbfd54a4e1498ebea27b43e5022e531eb450c6fe94cf6eeabf52a712a9d5",
+      "bytes": 209345
+    },
+    {
+      "file": "tablet-after-all-level-1.png",
+      "sha256": "07c20213cb7b7c2d48411ea01c03e734b4a832ca8a5863f7498a2b5f6c0f5d02",
+      "bytes": 229537
+    },
+    {
+      "file": "tablet-after-all-level-2.png",
+      "sha256": "6c33902a71af17cc5df1c85391911c265725dfaa8487815e1204f059e4d5d966",
+      "bytes": 247406
+    },
+    {
+      "file": "phone-after-default-level-2-page.png",
+      "sha256": "7a09340959215d3ce7dcc0c3e964c5c48c06f0191557cbc51a5ee2ae6b625dec",
+      "bytes": 175180
+    },
+    {
+      "file": "tablet-after-default-level-2-page.png",
+      "sha256": "3958fb9be956e0c81bb6778cd2dbd3ce1eb7f409f43c0243774657e521d256cc",
+      "bytes": 324093
+    }
+  ],
+  "checks": {
+    "typeBuildAssets": {
+      "status": "PASS",
+      "path": "output/playwright/island-renewal/integration-build-35.log",
+      "sha256": "b53b43b98a3434f542cfdf252ced747cf841313bc3ed6163574a64ccf3ce598b"
+    },
+    "lint": {
+      "status": "PASS",
+      "errors": 0,
+      "warnings": 1,
+      "path": "output/playwright/island-renewal/integration-lint-35.log",
+      "sha256": "784d2d6ae4f2934e1dd6eb05c1f592bbfb257dbddcf0a0bbe9ae14c5e5368652"
+    },
+    "fullUnit": {
+      "status": "FAIL",
+      "filesPassed": 294,
+      "filesFailed": 2,
+      "testsPassed": 3270,
+      "testsFailed": 4,
+      "total": 3274,
+      "path": "output/playwright/island-renewal/integration-tests-35.log",
+      "sha256": "bc86434b36ec9bf2044667c36f0c409eb14595afd02b20997b3a1b49c8bc2eb0",
+      "failures": [
+        "appearanceRendering: starry/candy/crystal sky projection (3)",
+        "cosmeticScenery: legacy scenery geometry hash (1)"
+      ],
+      "diagnosis": "Root/camera agent investigating new all-view framing and roof-material batch split; fixes belong to the next snapshot."
+    },
+    "formal80": "NOT_RUN_ON_35",
+    "ordinarySmoke": "NOT_RUN_ON_35",
+    "ci": "NOT_RUN_ON_35"
+  },
+  "decision": {
+    "localVisual": "Root author review of six phone/tablet level-2 stages: diagonal depth and restrained side-island bulges are local improvements.",
+    "reviewedStages": [
+      "phone-before-all-level-2.png",
+      "phone-after-all-level-2.png",
+      "phone-after-default-level-2.png",
+      "tablet-before-all-level-2.png",
+      "tablet-after-all-level-2.png",
+      "tablet-after-default-level-2.png"
+    ],
+    "sourceAOverallParity": "HOLD",
+    "remaining": "Saved three-ellipse horizontal skeleton remains; all combinations, all critical paths and release completion are not established.",
+    "humanN": 0,
+    "silentComprehension": "NOT_OBSERVED",
+    "motivationEvidence": false,
+    "fullGoalStatus": "ACTIVE",
+    "releaseReady": false
+  },
+  "limitations": [
+    "Both viewports use reduced motion; normal motion is not covered.",
+    "Progress remains 6 for all habitats as expansionLevel changes; these are not three genuinely earned growth states.",
+    "Before/after all camera differs intentionally; no same-camera claim across versions.",
+    "Draw calls vary 89-262; no constant-draw or throughput claim.",
+    "Fixed33 grass/performance and fixed34 roof evidence keep their original version attribution."
+  ]
+}

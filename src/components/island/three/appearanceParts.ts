@@ -3,6 +3,7 @@ import { getIslandAppearanceStyle, type IslandAppearanceSlotId, type IslandAppea
 import { batch, disposeGeometry, IslandMaterials } from './primitives';
 import { createBiscuitGroundSurface } from './appearanceGround';
 import { createIslandGrassSurface } from './grassSurface';
+import { createIslandRoofSurface } from './roofSurface';
 
 /** A builder retains only its named surface. Existing authored builders without
  * a selection keep their original mesh order and palette for legacy rendering. */
@@ -33,11 +34,15 @@ export class IslandPartMaterials extends IslandMaterials {
     readonly style;
     private biscuitGround?: ReturnType<typeof createBiscuitGroundSurface>;
     private grassGround?: ReturnType<typeof createIslandGrassSurface>;
+    private roofSurface?: ReturnType<typeof createIslandRoofSurface>;
     constructor(readonly styleId: IslandAppearanceStyleId) {
         const style = getIslandAppearanceStyle(styleId);
         super(style.family); this.style = style;
+        this.roofSurface = createIslandRoofSurface(styleId);
     }
     override surface(color: string, roughness: number, metalness = 0, glow = false) {
+        const roof = this.roofSurface?.surface(color, roughness, metalness, glow);
+        if (roof) return roof;
         if (this.style.version === 'parts-v1' && this.style.family === 'candy'
             && this.style.slot === 'ground' && color.toLowerCase() === '#72ab50') {
             return (this.biscuitGround ??= createBiscuitGroundSurface()).material;
@@ -51,6 +56,7 @@ export class IslandPartMaterials extends IslandMaterials {
     override dispose() {
         this.biscuitGround?.dispose(); this.biscuitGround = undefined;
         this.grassGround?.dispose(); this.grassGround = undefined;
+        this.roofSurface?.dispose(); this.roofSurface = undefined;
         super.dispose();
     }
     override color(source: string) {

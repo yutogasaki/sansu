@@ -1,4 +1,4 @@
-/** Shore-garden v6: visual land only. Saved placement and walking ellipses remain
+/** Shore-garden: visual land only. Saved placement and walking ellipses remain
  * authoritative in domain/island/catalog; every old point stays on the y=0 cap. */
 export type IslandTerrainProfile = 'main' | 'east' | 'west';
 export type TerrainPoint = [number, number, number];
@@ -14,10 +14,12 @@ export const ISLAND_MAIN_TERRAIN_STONES = {
 
 const profiles = {
     main: { phase: .2, beach: 1.22, lobes: [[1.95, .34, .245], [.56, .28, .16], [4.27, .42, .16]], rocks: [.32, .69, 2.48, 2.78, 3.84, 4.96] },
-    east: { phase: 1.4, beach: 1.62, lobes: [[.21, .44, .20], [1.85, .32, .13], [4.75, .35, .195]], rocks: [.6, 2.28, 4.36] },
+    // Side islands keep a small asymmetric edge; their saved ellipses already
+    // provide the full usable land, so large extra lobes need not rival the main.
+    east: { phase: 1.4, beach: 1.62, lobes: [[.21, .44, .045], [1.85, .32, .065], [4.75, .35, .06]], rocks: [.6, 2.28, 4.36] },
     // This profile is authored in the existing east builder's local coordinates;
     // the complete west group still rotates PI so its bridge/props never move.
-    west: { phase: 2.7, beach: 4.62, lobes: [[.64, .37, .16], [2.0, .31, .115], [4.85, .38, .25]], rocks: [.25, 3.9, 5.58] },
+    west: { phase: 2.7, beach: 4.62, lobes: [[.64, .37, .045], [2.0, .31, .055], [4.85, .38, .06]], rocks: [.25, 3.9, 5.58] },
 } as const;
 const bump = (angle: number, center: number, width: number) => {
     const distance = Math.atan2(Math.sin(angle - center), Math.cos(angle - center));
@@ -25,7 +27,7 @@ const bump = (angle: number, center: number, width: number) => {
 };
 
 /** Minimum radius > sec(PI/64), including polygon chords, not only vertices.
- * Large positive lobes shape the exterior without cutting into old land. */
+ * Positive lobes shape the exterior without cutting into old land. */
 export function terrainContour(angle: number, profile: IslandTerrainProfile = 'main') {
     const p = profiles[profile];
     return 1.018 + .006 * Math.sin(angle * 5 + p.phase)

@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { IslandCameraControls } from './islandCameraControls';
 import { describe, expect, it } from 'vitest';
 import type { IslandAccentId, IslandCosmetics, IslandThemeId } from '../../../domain/island/customization';
+import type { IslandAppearanceSlotId } from '../../../domain/island/appearance';
 import { createIsland, getIslandLands, ISLAND_ITEMS, isValidIslandPlacement } from '../../../domain/island/catalog';
 import { RESIDENT_FOOTPRINT, residentPointIsClear } from './navigation';
 import type { IslandItemKind } from './types';
@@ -40,6 +41,30 @@ function shape(object: THREE.Object3D) {
     }
     return createHash('sha256').update(vertices.sort().join(';')).digest('hex');
 }
+function geometryShape(object: THREE.Object3D) {
+    object.updateMatrixWorld(true);
+    const triangles: string[] = [];
+    object.traverseVisible(child => {
+        if (!(child instanceof THREE.Mesh)) return;
+        const positions = child.geometry.getAttribute('position'), indices = child.geometry.index;
+        const vertices = Array.from({ length: positions.count }, (_, i) => new THREE.Vector3()
+            .fromBufferAttribute(positions, i).applyMatrix4(child.matrixWorld).toArray()
+            .map(value => Math.round(value * 1e5)).join(','));
+        const start = child.geometry.drawRange.start;
+        const end = Math.min(indices?.count ?? positions.count, start + child.geometry.drawRange.count);
+        for (let i = start; i < end; i += 3) {
+            const material = Array.isArray(child.material)
+                ? child.material[child.geometry.groups.find(group => i >= group.start && i < group.start + group.count)?.materialIndex ?? 0]
+                : child.material;
+            if (!material.visible) continue;
+            const points = [0, 1, 2].map(offset => vertices[indices?.getX(i + offset) ?? i + offset]);
+            // Material batching may reorder triangles or their first vertex,
+            // but must preserve connectivity, winding and world position.
+            triangles.push(points.map((_, offset) => [...points.slice(offset), ...points.slice(0, offset)].join('|')).sort()[0]);
+        }
+    });
+    return createHash('sha256').update(triangles.sort().join(';')).digest('hex');
+}
 function stage(grown = false): IslandStageState {
     const island = createIsland('cosmetics-rendering', 1);
     return { ...island, pulse: 0, learning: false, completedSets: grown ? 24 : 0,
@@ -52,7 +77,19 @@ describe('owned cosmetic scenery', () => {
         const world = new IslandCosmeticScenery({ themeId, accentId: null }), materials = new IslandMaterials(themeId);
         const scenery = makeScenery(materials), tree = makeStarTree(materials);
         try {
-            expect(shape(world.scenery)).toEqual(shape(scenery));
+            expect(geometryShape(world.scenery)).toEqual(geometryShape(scenery));
+            if (themeId === 'moon-garden') {
+                // The default roof deliberately replaces the old paint/map.
+                // All other rendered slots retain their authored appearance;
+                // roof paint and resource ownership have dedicated tests.
+                for (const group of world.scenery.children) {
+                    const slot = group.userData.appearanceSlot as IslandAppearanceSlotId;
+                    if (slot === 'houseRoof') continue;
+                    const authored = makeScenery(materials, slot);
+                    try { expect(shape(group), slot).toEqual(shape(authored)); }
+                    finally { disposeGeometry(authored); }
+                }
+            } else expect(shape(world.scenery)).toEqual(shape(scenery));
             expect(shape(world.tree)).toEqual(shape(tree));
             expect(world.environment.children.length === 0).toBe(themeId === 'moon-garden');
             expect(world.accents.children).toHaveLength(0);

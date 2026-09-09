@@ -6,6 +6,8 @@
 
 ## Goal
 
+2026-09-09追加: [成長する島の画角と岸](../../design/2026-09-09-island-renewal/growth-v16/README.md)を固定36で局所改善。初期/東/西解放でも既定庭のcamera32値を保ち、東西の余分なcapを約10%抑え、本人が選ぶ全景は斜めに奥行きを見せる。閉じた家・家具・橋・保存楕円は維持。[屋根の局所素材](../../design/2026-09-09-island-renewal/roof-v14/README.md)も接続。35で検出した空の画角切れ3件と、旧屋根材質を含む形状hash比較1件を修正し、36は296 suites/3274 tests・型/lint/build/assets、成長8比較経路・空の12比較画像で限定PASS。現在の並行ナビ変更はこの固定版へ含めず、元35 FAILを保存する。横に三つの土地が並ぶ骨格、source A全体の造形差、Human N=0、最終統合のPWA/正式速度の確認は未完了。通常classic smokeも同じ固定36で31経路PASS、1076入力/QAを保持し専用browser/DEVを終了した。以前の正式速度/PWAの合格は各版へ帰属させる。
+
 2026-09-09追加: [芝の局所改善v13](../../design/2026-09-09-island-renewal/grass-v13/README.md)を固定33で確認。平らなミント色の上面へ短い葉の起伏を加え、同じ明示成熟fixtureのphone/tablet・全景/近景で道と足元を保持した。4比較経路・全store/source/QA保持・build/型/assetsと295 suites/3264 testsが合格。前の固定29〜32は見た目HOLDのまま保存し、source A全体の造形差とHuman N=0は残す。家は閉じた玄関から入る生活空間で、学習の記念・アルバム・大事な物・お知らせへつながる現行仕様42を維持する。
 
 2026-09-09追加: [島と操作の領域分離](../../design/audits/2026-09-09-island-panel-layout/README.md)を固定28で確認。3幅の6画面でスクロール中の戻る遮蔽が37/72位置から0へ改善、canvas実高と全storeを保持。固定28は294 suites/3244 tests・型/build/assets PASS。main保存地点 `e7ad86f` のVerify Core/Docs Checkも合格。音QA03の採取負荷を修正し、同app20のQA05では両幅の必須50〜150ms窓・三音2周・無料音/解除復帰を通過。直後のQAのJSON変換でundefinedフィールドを落とす比較に失敗したため元05 FAILを保持し、停止境界は別の短いQA06で両幅PASS。同じ予約への実非最終1回答/reloadまで確認し、[音の検証記録](../../design/audits/2026-09-09-island-audio/README.md)へ分割した証拠と限界を残した。

@@ -1,0 +1,15 @@
+{
+  "revision": "workshop-20260909-0c1dfa1c54fc",
+  "sourceHash": "0c1dfa1c54fc86449797b91a5cb40b04798041cbccb6716d24f4e4fd6be3a0a6",
+  "inputs": 1076,
+  "matchingIndexedInputs": 1075,
+  "allAppAndExecutedQaInputsMatchFixed36": true,
+  "unexecutedQaException": {
+    "path": "tools/e2e-island-pwa.mjs",
+    "reason": "Snapshot35 captured concurrent navigation-only PWA runner changes. This runner was not executed for35/36. Index retains HEAD runner and changes only candidate13 to16; working navigation edits are preserved.",
+    "indexedSha256": "07306eb033890f4fbb1748c076321c728dd4cb4402ede40bda97a3dfebe2bc33"
+  },
+  "mismatches": [
+    "tools/e2e-island-pwa.mjs"
+  ]
+}
