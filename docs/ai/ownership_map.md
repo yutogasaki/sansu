@@ -15,6 +15,7 @@
 
 | 話題 | 正本 | 補助文書 | 更新するタイミング |
 |---|---|---|---|
+| 家からの学習チャレンジ | [product/46_home_learning_challenge_spec.md](/docs/product/46_home_learning_challenge_spec.md) | 01、31、34、42、43 | 専用出題・時間・中断・結果・賞・学習接触の境界が変わるとき |
 | 家の一角に飾る本人の学習成果 | [product/42_island_learning_keepsakes_spec.md](/docs/product/42_island_learning_keepsakes_spec.md) | [product/07_ui_design_guideline.md](/docs/product/07_ui_design_guideline.md), [product/13_data_storage_migration_spec.md](/docs/product/13_data_storage_migration_spec.md), [product/30_living_island_growth_spec.md](/docs/product/30_living_island_growth_spec.md) | 完了区間由来の資格、複数展示/収納、実家と家内視点の連続性、実記録の詳細、既存アルバム/通知への入口、旧snapshot/写真保持が変わるとき |
 | 島の追加身支度・観察記念・朝夕と季節 | [product/41_island_expression_collection_spec.md](/docs/product/41_island_expression_collection_spec.md) | [product/36_island_experience_spec.md](/docs/product/36_island_experience_spec.md), [product/39_island_appearance_sets_spec.md](/docs/product/39_island_appearance_sets_spec.md), [product/13_data_storage_migration_spec.md](/docs/product/13_data_storage_migration_spec.md) | 取得と装備、無料設定への復帰、観察資格、全景v2、有限足跡/音、旧snapshot/写真の互換が変わるとき |
 | 島のポイント・テーマ・飾りの交換 | [product/35_island_customization_spec.md](/docs/product/35_island_customization_spec.md) | [product/30_living_island_growth_spec.md](/docs/product/30_living_island_growth_spec.md), [product/28_mystic_island_spec.md](/docs/product/28_mystic_island_spec.md) | 獲得・選択交換・目標・実景プレビュー・所持と外見の保存が変わるとき |

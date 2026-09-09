@@ -1,5 +1,7 @@
 # Documentation Index
 
+家から一操作で始める[学習チャレンジ46](product/46_home_learning_challenge_spec.md)は初版仕様のみ。1分たしざんの出題・採点・中断・記録・追加の賞・学習整合・受入条件を定義し、アプリ実装と子どもの体験検証は未実施。
+
 ## Purpose
 
 This file is the main entry point for repository documentation.
