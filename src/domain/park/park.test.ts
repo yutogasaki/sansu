@@ -150,7 +150,7 @@ describe('reserved learning and atomic rewards', () => {
         await d.appData.put({ ...app, activeProfileId: 'other', profiles: { ...app.profiles, other } });
         await openPark('other', d);
         await expect(commitParkLearning('child', plan.id, 0, correctAction(plan), d)).rejects.toBeInstanceOf(ParkConflict);
-        await d.transaction('rw', [...parkTables(d), d.exploreRuns, d.exploreRunEvents, d.exploreDiscoveries, d.islands, d.islandPlans, d.islandEvents, d.islandPhotoAlbums, d.islandPhotos, d.islandPhotoBlobs], async () => { await deleteProfileOwnedIndexedDbRows(d, 'child'); });
+        await d.transaction('rw', [...parkTables(d), d.exploreRuns, d.exploreRunEvents, d.exploreDiscoveries, d.islands, d.islandPlans, d.islandEvents, d.islandPhotoAlbums, d.islandPhotos, d.islandPhotoBlobs, d.challengeRuns, d.challengeEvents, d.challengeSummaries, d.challengeContacts], async () => { await deleteProfileOwnedIndexedDbRows(d, 'child'); });
         expect(await d.parks.get('child')).toBeUndefined();
         expect(await d.parkPlans.count()).toBe(0);
         expect(await d.parkEvents.count()).toBe(0);
@@ -167,7 +167,7 @@ describe('reserved learning and atomic rewards', () => {
         legacy.close();
         const d = new SansuDatabase(name, options); databases.push(d);
         await d.open();
-        expect(d.verno).toBe(8);
+        expect(d.verno).toBe(9);
         await expect(d.profiles.get(p.id)).resolves.toEqual(p);
         await expect(d.exploreRuns.get('legacy')).resolves.toEqual(run);
         expect(await d.parks.count()).toBe(0);

@@ -1,12 +1,14 @@
+import { NumberFieldsLayout } from './NumberFieldsLayout';
 import { allowsDecimalEntry, appendNumberField } from '../../domain/math/numberEntry';
 import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { MathProblemPrompt } from './MathProblemPrompt';
+import { AnswerCells } from './AnswerCells';
 import { TenKey } from './TenKey';
 import { HissanGrid } from './HissanGrid';
 import { parkHissanGrid } from '../../domain/park/learning';
 import type { LearningSlot } from '../../domain/park/types';
 import type { ChoiceOption, Problem } from '../../domain/types';
-import { canConfirmNumberFields, isSingleDigitMathInput, isWrittenStepComplete } from '../../domain/math/answerCompletion';
+import { canConfirmNumberFields, mathAnswerShape, isAnswerShapeComplete, appendAnswerDigit, removeAnswerDigit, isWrittenStepComplete } from '../../domain/math/answerCompletion';
 import { acknowledgeAnswerConfirmation } from './answerConfirmGuidance';
 import { nextWrittenInput, writtenRetryValues, writtenInputOrder, writtenAutomaticValues } from '../../domain/math/writtenInput';
 
@@ -34,8 +36,8 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
     const step = grid?.steps[slot.hissanStep ?? 0];
     const inputOrder = step ? writtenInputOrder(step) : [];
     const automaticValues = step ? writtenAutomaticValues(step) : [];
-    const singleDigit = isSingleDigitMathInput(problem);
-    const automatic = Boolean(step) || singleDigit;
+    const answerShape = mathAnswerShape(problem);
+    const automatic = Boolean(step) || Boolean(answerShape);
     const fieldCount = step ? step.correctValues.length : problem.inputType === 'multi-number' ? problem.inputConfig!.fields!.length : 1;
     const [inputState, setInputState] = useState(() => {
         const values = step ? (retryAnswer ? writtenRetryValues(retryAnswer, step.correctValues) : automaticValues).map((value, i) => automaticValues[i] || value) : Array<string>(fieldCount).fill('');
@@ -60,11 +62,11 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
         return true;
     };
     const setActive = (index: number) => updateInput(current => ({ ...current, active: index, lastEdited: undefined }));
-    const canSubmit = step ? isWrittenStepComplete(values) : canConfirmNumberFields(values);
+    const canSubmit = step ? isWrittenStepComplete(values) : answerShape ? isAnswerShapeComplete(values, answerShape) : canConfirmNumberFields(values);
     const submit = (auto = false) => {
         const current = pendingInput.current.values;
         if (disabled || submitting.current || (automatic && !auto && !hasSubmitted)) return;
-        if (!(step ? isWrittenStepComplete(current) : canConfirmNumberFields(current))) return;
+        if (!(step ? isWrittenStepComplete(current) : answerShape ? isAnswerShapeComplete(current, answerShape) : canConfirmNumberFields(current))) return;
         if (deferSubmission) { queuedSubmit.current = auto; return; }
         submitting.current = true;
         setSubmissionCount(count => count + 1);
@@ -79,21 +81,22 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
         if (text === '.' && (grid || !allowsDecimalEntry(problem))) return;
         const changed = updateInput(current => {
             if (step && (step.correctValues[current.active] === '.' ? text !== '.' : !/^[0-9]$/.test(text))) return current;
+            if (!step && answerShape) return { ...appendAnswerDigit(current.values, current.active, text, answerShape), lastEdited: current.active };
             if (!step && problem.inputType === 'multi-number') {
                 return { ...appendNumberField(current.values, current.active, text, problem.inputConfig?.fields?.map(field => field.length) ?? []), lastEdited: current.active };
             }
             if (text === '.' && current.values[current.active].includes('.')) return current;
-            const limit = step || singleDigit ? 1 : problem.inputConfig?.fields?.[current.active]?.length ?? 8;
+            const limit = step ? 1 : problem.inputConfig?.fields?.[current.active]?.length ?? 8;
             const values = current.values.map((value, i) => i === current.active ? (step ? text : (value + text).slice(0, limit)) : value);
             return { values, active: step ? nextWrittenInput(values, current.active, inputOrder) : current.active, lastEdited: current.active };
         });
-        if (changed && automatic && (step ? isWrittenStepComplete(pendingInput.current.values) : /^[0-9]$/.test(pendingInput.current.values[0]))) submit(true);
+        if (changed && automatic && (step ? isWrittenStepComplete(pendingInput.current.values) : Boolean(answerShape && isAnswerShapeComplete(pendingInput.current.values, answerShape)))) submit(true);
     };
     const remove = () => {
         if (!disabled && !submitting.current) updateInput(current => {
             queuedSubmit.current = undefined;
-            const cursor = !current.values[current.active] ? step ? current.lastEdited ?? inputOrder[Math.max(0, inputOrder.indexOf(current.active) - 1)] : problem.inputType === 'multi-number' ? Math.max(0, current.active - 1) : current.active : current.active;
-            return { active: cursor, values: current.values.map((value, i) => i === cursor ? value.slice(0, -1) : value), lastEdited: undefined };
+            const cursor = !current.values[current.active] ? step ? current.lastEdited ?? inputOrder[Math.max(0, inputOrder.indexOf(current.active) - 1)] : problem.inputType === 'multi-number' ? current.lastEdited ?? Math.max(0, current.active - 1) : current.active : current.active;
+            return { active: cursor, values: current.values.map((value, i) => i === cursor ? (!step && answerShape ? removeAnswerDigit(value) : value.slice(0, -1)) : value), lastEdited: undefined };
         });
     };
     const clear = () => {
@@ -101,9 +104,10 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
         queuedSubmit.current = undefined;
         updateInput(current => ({ values: step ? automaticValues : Array<string>(fieldCount).fill(''), active: step ? inputOrder[0] : resetCursorOnClear ? 0 : current.active, lastEdited: undefined }));
     };
-    const moveCursor = (direction: 'left' | 'right') => {
+    const moveCursor = (direction: 'left' | 'right', separator = false) => {
         if (disabled) return;
         updateInput(current => {
+            if (separator && answerShape && !step && !isAnswerShapeComplete([current.values[current.active]], [answerShape[current.active]])) return current;
             const order = step ? inputOrder : current.values.map((_, i) => i);
             const position = Math.max(0, order.indexOf(current.active));
             const next = Math.max(0, Math.min(order.length - 1, position + (direction === 'left' ? -1 : 1)));
@@ -121,12 +125,12 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
     });
     useLayoutEffect(() => {
         const handle = (event: KeyboardEvent) => {
-            if (event.repeat && (/^[0-9.]$/.test(event.key) || event.key === 'Enter')) { event.preventDefault(); return; }
             if (disabled || submitting.current || problem.inputType === 'choice' || event.isComposing || event.altKey || event.ctrlKey || event.metaKey) return;
             const target = event.target as HTMLElement;
-            if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
+            if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return;
+            if (event.repeat && (/^[0-9.]$/.test(event.key) || event.key === 'Enter')) { event.preventDefault(); return; }
             if (/^[0-9.]$/.test(event.key)) { event.preventDefault(); input(event.key); }
-            if (event.key === '/' && problem.inputType === 'multi-number') { event.preventDefault(); moveCursor('right'); }
+            if (event.key === '/' && problem.inputType === 'multi-number') { event.preventDefault(); moveCursor('right', true); }
             if (event.key === 'Backspace') { event.preventDefault(); remove(); }
             if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); moveCursor(event.key === 'ArrowLeft' ? 'left' : 'right'); }
             if (event.key === 'Enter' && (target.tagName !== 'BUTTON' || target.closest('.park-keypad, .park-inputs, [data-written-input]'))) { event.preventDefault(); submit(); }
@@ -159,15 +163,15 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
                 aria-label={renderChoiceLabel ? choice.label : undefined}
                 onClick={() => { if (!disabled) { onInteraction?.(); onAnswer(choice.value); } }}>{renderChoiceLabel ? renderChoiceLabel(choice, problem) : choice.label}</button>)}
         </div> : <>
-            {!grid && <div className="park-inputs">
+            {!grid && <NumberFieldsLayout fields={problem.inputConfig?.fields} className="park-inputs">
                 {values.map((value, i) => <button key={i} className="park-input" aria-label={problem.inputConfig?.fields?.[i]?.label ?? 'こたえ'}
                     aria-pressed={active === i} disabled={disabled} onClick={() => setActive(i)}>
                     {problem.inputConfig?.fields?.[i]?.label && <small>{problem.inputConfig.fields[i].label}</small>}
-                    <span>{value || '□'}</span>
+                    {answerShape ? <AnswerCells shape={answerShape[i]} value={value} active={active === i && !disabled} /> : <span>{value || '□'}</span>}
                 </button>)}
-            </div>}
+            </NumberFieldsLayout>}
             <div className="park-keypad"><TenKey onInput={input} onDelete={remove} onClear={clear} onEnter={() => submit()}
-                disabled={disabled} enterDisabled={!canSubmit || (automatic && !hasSubmitted)} showDecimal={!grid && allowsDecimalEntry(problem)} nextFieldLabel={problem.inputType === 'multi-number' ? 'つぎの欄へ' : undefined} minRowHeight={44}
+                disabled={disabled} enterDisabled={!canSubmit || (automatic && !hasSubmitted)} showDecimal={!grid && !answerShape && allowsDecimalEntry(problem)} nextFieldLabel={problem.inputType === 'multi-number' ? 'つぎの欄へ' : undefined} nextFieldDisabled={problem.inputType === 'multi-number' && active === fieldCount - 1} minRowHeight={44}
                 confirmationMode={automatic && !hasSubmitted ? 'automatic' : 'manual'}
                 writtenInput={Boolean(step)}
                 enterLabel={grid?.writtenLayout && (slot.hissanStep ?? 0) < grid.steps.length - 1 ? 'このだんを たしかめる' : undefined}

@@ -10,7 +10,7 @@ const viewports = [
     { name: 'phone', viewport: { width: 390, height: 844 }, touch: true, reducedMotion: 'no-preference' },
     { name: 'tablet', viewport: { width: 768, height: 1024 }, touch: false, reducedMotion: 'reduce' },
 ];
-const candidate = 'island-home-interior-v3';
+const candidate = 'island-home-interior-v4';
 const scope = [
     'Only an empty-history native profile fixture; no island, progress, currency, qualifications, plans, answers or geometry injected.',
     'First three actual UI answers earn the certificate. Read, display, store, redisplay, actual-object close-up and house overview, then one real photo.',

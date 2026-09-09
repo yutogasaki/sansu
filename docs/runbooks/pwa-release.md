@@ -1,5 +1,7 @@
 # PWA Release Runbook
 
+> 2026-09-09: 遊園地は公開終了。旧BuildPlay/renderer flagは再有効化しない。公開版では `park.enabled=false` / `park.renderer=retired` と一覧からの除去、旧 `/park` のホーム復帰を確認する。以下の旧遊園地の公開・復帰手順は適用しない。
+
 ## When To Use
 
 - PWA update behavior changed

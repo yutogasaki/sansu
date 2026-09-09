@@ -58,8 +58,38 @@ describe('a finite room for actual learning keepsakes', () => {
                 }
             }
             expect(trophyBounds).toHaveLength(13); expect(shapes.size).toBe(13);
-            expect(meshes(room.group).length).toBeLessThan(160);
-            expect(meshes(room.group).reduce((sum, m) => sum + (m.geometry.index?.count ?? m.geometry.getAttribute('position').count) / 3, 0)).toBeLessThan(25000);
+            expect(meshes(room.group).length).toBeLessThan(180);
+            expect(meshes(room.group).reduce((sum, m) => sum + (m.geometry.index?.count ?? m.geometry.getAttribute('position').count) / 3, 0)).toBeLessThan(28000);
+        } finally { room.dispose(); }
+    });
+
+    it('adds two independently selected challenge slots without moving or removing the sixteen keepsakes', () => {
+        const room = new IslandLearningKeepsakeScenery();
+        try {
+            room.update(all, 1000, true);
+            const originals = room.describe().awards;
+            expect(room.describe().challengeAwards.every(award => !award.visible)).toBe(true);
+            expect(room.update(all, 1000, true, undefined, ['certificate', 'trophy'])).toBe(true);
+            expect(room.describe().awards).toEqual(originals);
+            expect(room.describe().awards.filter(award => award.visible).length
+                + room.describe().challengeAwards.filter(award => award.visible).length).toBe(18);
+            const envelope = new THREE.Box3().setFromPoints(room.framePoints());
+            const certificate = room.group.getObjectByName('challenge-certificate')!;
+            const trophy = room.group.getObjectByName('challenge-trophy')!;
+            for (const award of [certificate, trophy]) {
+                for (const point of vertices(award)) expect(envelope.containsPoint(point)).toBe(true);
+                const bounds = new THREE.Box3().setFromPoints(vertices(award));
+                for (const legacy of ISLAND_LEARNING_KEEPSAKES) {
+                    const oldBounds = new THREE.Box3().setFromPoints(vertices(room.group.getObjectByName(`keepsake-${legacy.id}`)!));
+                    expect(bounds.intersectsBox(oldBounds)).toBe(false);
+                }
+            }
+            expect(new THREE.Box3().setFromPoints(vertices(trophy)).min.y).toBeCloseTo(1.02);
+            expect(room.update(all, 1000, true, undefined, ['certificate', 'trophy'])).toBe(false);
+            room.update(all, 1000, true, undefined, ['certificate']);
+            expect(room.describe().challengeAwards.filter(award => award.visible).map(award => award.id)).toEqual(['certificate']);
+            room.update(all, 1000, false, undefined, ['certificate', 'trophy']);
+            expect(room.describe().challengeAwards).toEqual([]);
         } finally { room.dispose(); }
     });
 

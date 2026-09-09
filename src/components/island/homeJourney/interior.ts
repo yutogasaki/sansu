@@ -1,11 +1,12 @@
 import * as T from 'three';
-import { IslandLearningKeepsakeScenery } from '../three/learningKeepsakeScenery';
+import { IslandLearningKeepsakeScenery, type IslandChallengeDisplayId } from '../three/learningKeepsakeScenery';
 import { fitIslandHomeInteriorCamera } from '../three/homeInteriorCamera';
 import type { IslandLearningKeepsakeId, IslandLearningKeepsakesState } from '../../../domain/island/learningKeepsakes';
 
 export interface HomeJourneyRoomState {
     state?: IslandLearningKeepsakesState;
     completedSets: number;
+    challengeDisplayed?: readonly IslandChallengeDisplayId[];
     selectedId?: IslandLearningKeepsakeId;
 }
 
@@ -19,7 +20,7 @@ export function createHomeJourneyInterior(house: T.Object3D) {
     return {
         room, camera,
         update(value: HomeJourneyRoomState | undefined, aspect: number) {
-            room.update(value?.state, value?.completedSets, Boolean(value), value?.selectedId);
+            room.update(value?.state, value?.completedSets, Boolean(value), value?.selectedId, value?.challengeDisplayed);
             return !value || fitIslandHomeInteriorCamera(camera, room, aspect);
         },
         dispose() { room.dispose(); room.group.removeFromParent(); },

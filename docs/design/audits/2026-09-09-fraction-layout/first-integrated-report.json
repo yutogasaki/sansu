@@ -1,0 +1,72 @@
+[
+  {
+    "width": 390,
+    "route": "island",
+    "skill": "frac_add_same",
+    "errors": [],
+    "question": "3/9 + 3/9 =",
+    "keypadBottom": 696.828125,
+    "pass": true
+  },
+  {
+    "width": 390,
+    "route": "island",
+    "skill": "frac_mixed",
+    "errors": [],
+    "pass": false,
+    "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(await next.isDisabled())\n\n    at file:///private/tmp/sansu-fraction-entry/output/fraction-entry/check-integrated.mjs:25:18"
+  },
+  {
+    "width": 390,
+    "route": "study",
+    "skill": "frac_add_same",
+    "errors": [],
+    "question": "1/3 + 1/3 =",
+    "keypadBottom": 806,
+    "pass": true
+  },
+  {
+    "width": 390,
+    "route": "study",
+    "skill": "frac_mixed",
+    "errors": [],
+    "question": "3 4/6 + 3 5/6 =",
+    "keypadBottom": 806,
+    "pass": true
+  },
+  {
+    "width": 768,
+    "route": "island",
+    "skill": "frac_add_same",
+    "errors": [],
+    "question": "1/3 + 1/3 =",
+    "keypadBottom": 814.59375,
+    "pass": true
+  },
+  {
+    "width": 768,
+    "route": "island",
+    "skill": "frac_mixed",
+    "errors": [],
+    "pass": false,
+    "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(await next.isDisabled())\n\n    at file:///private/tmp/sansu-fraction-entry/output/fraction-entry/check-integrated.mjs:25:18"
+  },
+  {
+    "width": 768,
+    "route": "study",
+    "skill": "frac_add_same",
+    "errors": [],
+    "question": "1/2 + 1/2 =",
+    "keypadBottom": 986,
+    "pass": true
+  },
+  {
+    "width": 768,
+    "route": "study",
+    "skill": "frac_mixed",
+    "errors": [],
+    "question": "1 10/11 + 1 4/11 =",
+    "keypadBottom": 986,
+    "pass": true
+  }
+]

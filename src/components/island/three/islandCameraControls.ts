@@ -1,5 +1,5 @@
 import type { IslandStageState } from './types';
-import { frameIslandCameraPan, type CameraPanFraming, type CameraPanPoint } from './cameraPanFraming';
+import { cameraPointOnGround, groundPointInCamera, frameIslandCameraPan, type CameraPanFraming, type CameraPanPoint } from './cameraPanFraming';
 
 export const ISLAND_MIN_ZOOM = 1;
 export const ISLAND_MAX_ZOOM = 6;
@@ -7,13 +7,16 @@ export type IslandCameraAction = 'left' | 'right' | 'in' | 'out' | 'reset';
 export interface IslandCameraView { zoom: number; azimuth: number; pan: CameraPanPoint; manual: boolean }
 export const initialIslandCameraView = (): IslandCameraView => ({ zoom: 1, azimuth: 0, pan: { x: 0, y: 0 }, manual: false });
 interface Point { x: number; y: number }
-interface Pointer extends Point { start: Point; moved: boolean }
+interface Pointer extends Point { start: Point; moved: boolean; settling?: boolean }
 export interface IslandCameraViewport { left: number; top: number; width: number; height: number }
 
 export function canControlIslandCamera(state?: IslandStageState) {
     return Boolean(state && !state.learning && !state.readOnly && !state.learningKeepsakes && !state.preview && !state.cosmeticFocus && !state.furnitureTrial && !state.playRequest && !state.workshop?.active
         && !state.shared?.active && !state.shared?.focusDisplayId && !state.expressionResidentId && !state.residentPortraitId && !state.expressionFlagFocus);
 }
+
+export const hasChangedIslandCameraView = (view: IslandCameraView) => view.manual
+    && (Math.abs(view.zoom - 1) > 1e-6 || Math.abs(view.azimuth) > 1e-6 || Math.hypot(view.pan.x, view.pan.y) > 1e-6);
 
 const wrapAngle = (angle: number) => Math.atan2(Math.sin(angle), Math.cos(angle));
 
@@ -23,6 +26,7 @@ export class IslandCameraControls {
     view: IslandCameraView = initialIslandCameraView();
     private pointers = new Map<number, Pointer>();
     private framing?: CameraPanFraming;
+    private anchor?: { ground: CameraPanPoint; after: Point; height: number };
 
     constructor(private readonly changed: (view: IslandCameraView) => void) {}
 
@@ -36,6 +40,19 @@ export class IslandCameraControls {
     /** Called after the normal-island base fit, never from a learning or authored close-up frame. */
     setFrame(framing: CameraPanFraming) {
         this.framing = framing;
+        const anchor = this.anchor;
+        this.anchor = undefined;
+        if (anchor) {
+            const point = groundPointInCamera(framing, anchor.ground);
+            if (point) {
+                const zoom = Math.max(ISLAND_MIN_ZOOM, Math.min(ISLAND_MAX_ZOOM, framing.height / anchor.height));
+                const height = framing.height / zoom;
+                this.view = { ...this.view, zoom, pan: {
+                    x: point.x - framing.center.x - anchor.after.x * height * framing.aspect,
+                    y: point.y - framing.center.y - anchor.after.y * height,
+                } };
+            }
+        }
         const frame = frameIslandCameraPan(framing, this.view.zoom, this.view.pan);
         this.view = { ...this.view, pan: frame.pan };
         return frame;
@@ -75,6 +92,14 @@ export class IslandCameraControls {
         if (this.framing && before && after && viewport && viewport.width > 0 && viewport.height > 0) {
             const height = this.framing.height / this.view.zoom, width = height * this.framing.aspect;
             const ratio = this.view.zoom / zoom;
+            const ground = cameraPointOnGround(this.framing, {
+                x: this.framing.center.x + pan.x + ((before.x - viewport.left) / viewport.width - .5) * width,
+                y: this.framing.center.y + pan.y + (.5 - (before.y - viewport.top) / viewport.height) * height,
+            });
+            if (ground) this.anchor = { ground, height: height * ratio, after: {
+                x: (after.x - viewport.left) / viewport.width - .5,
+                y: .5 - (after.y - viewport.top) / viewport.height,
+            } };
             pan.x += ((before.x - viewport.left) / viewport.width - .5) * width
                 - ((after.x - viewport.left) / viewport.width - .5) * width * ratio;
             pan.y += (.5 - (before.y - viewport.top) / viewport.height) * height
@@ -103,7 +128,8 @@ export class IslandCameraControls {
             return;
         }
         const totalX = point.x - pointer.start.x, totalY = point.y - pointer.start.y;
-        if (!pointer.moved && Math.hypot(totalX, totalY) < 8) return;
+        if ((!pointer.moved || pointer.settling) && Math.hypot(totalX, totalY) < 8) return;
+        pointer.settling = false;
         pointer.moved = true;
         this.zoomAndMove(this.view.zoom, before, point, viewport);
     }
@@ -111,9 +137,14 @@ export class IslandCameraControls {
     up(id: number, point: Point) {
         const pointer = this.pointers.get(id);
         this.pointers.delete(id);
+        if (pointer && this.pointers.size === 1) {
+            const remaining = this.pointers.values().next().value!;
+            remaining.start = { x: remaining.x, y: remaining.y };
+            remaining.settling = true;
+        }
         return Boolean(pointer && !pointer.moved && Math.hypot(point.x - pointer.start.x, point.y - pointer.start.y) < 8);
     }
 
-    cancel() { this.pointers.clear(); }
+    cancel() { this.pointers.clear(); this.anchor = undefined; }
     hasPointer(id: number) { return this.pointers.has(id); }
 }

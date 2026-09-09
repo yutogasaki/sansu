@@ -16,12 +16,10 @@ import { loadSounds, setSoundEnabled } from "./utils/audio";
 import { getActiveProfile } from "./domain/user/repository";
 import { applyThemeForCurrentTime, getMsUntilNextThemeCheck } from "./utils/theme";
 import { notifyPwaRouteNavigation } from "./pwa";
-import { LaunchRoute } from "./components/park/LaunchRoute";
-import { BUILD_PLAY_AVAILABLE } from "./domain/park/feature";
+import { LaunchRoute } from "./components/LaunchRoute";
 import { islandAvailable, islandEnabled } from "./domain/island/feature";
 import { islandStudyDestination } from "./domain/island/studyRoute";
 
-const Park = lazy(() => import('./pages/Park'));
 const Island = lazy(() => import('./pages/Island'));
 
 type ProfileResolution = "loading" | "ready" | "missing";
@@ -232,10 +230,7 @@ function App() {
                     </Route>
 
                     <Route element={<Layout />}>
-                        <Route path="/park" element={BUILD_PLAY_AVAILABLE ?
-                            <PrivateRoute><Suspense fallback={<Spinner fullScreen message="ゆうえんちを じゅんびちゅう…" />}><Park /></Suspense></PrivateRoute>
-                            : <Navigate to="/" replace />
-                        } />
+                        <Route path="/park" element={<Navigate to="/" replace />} />
                         <Route path="/island" element={islandAvailable() ?
                             <PrivateRoute>{islandEnabled() ? null : <Suspense fallback={<Spinner fullScreen message="しまを じゅんびちゅう…" />}><Island /></Suspense>}</PrivateRoute>
                             : <Navigate to="/" replace />

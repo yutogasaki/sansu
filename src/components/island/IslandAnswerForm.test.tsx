@@ -6,7 +6,6 @@ import { generateMathProblem, MATH_GENERATORS } from '../../domain/math';
 import { createSeededRandom } from '../../utils/random';
 import { MathProblemPrompt } from '../domain/MathProblemPrompt';
 import { LearningAnswerForm } from '../domain/LearningAnswerForm';
-import { ParkAnswerForm } from '../park/ParkAnswerForm';
 import { IslandAnswerForm } from './IslandAnswerForm';
 import { IslandProblemPrompt, IslandChoiceLabel } from './IslandProblemPrompt';
 import { IslandGlyph } from './IslandGlyph';
@@ -165,7 +164,7 @@ describe('Island problem semantic presentation', () => {
         expect(count(assisted, 'data-island-glyph="🍎"')).toBe(count(independent, 'data-island-glyph="🍎"') + 1);
         expect(assisted).toContain('こたえは <span class="island-choice-label"><svg');
         expect(independent).not.toContain('class="park-support"');
-        const park = renderToStaticMarkup(<ParkAnswerForm slot={{ ...slot(problem), assisted: true }} disabled={false} onAnswer={noop} />);
+        const park = renderToStaticMarkup(<LearningAnswerForm slot={{ ...slot(problem), assisted: true }} disabled={false} onAnswer={noop} />);
         expect(park).toContain('こたえは 🍎。');
         expect(park).not.toContain('data-island-glyph');
     });
@@ -212,10 +211,9 @@ describe('shared answer input compatibility', () => {
         expect(visible).not.toContain('こたえは ');
     });
 
-    it('leaves Park as the unthemed shared form', () => {
+    it('leaves the shared form unthemed', () => {
         const props = { slot: slot(), disabled: false, onAnswer: noop };
-        expect(renderToStaticMarkup(<ParkAnswerForm {...props} />)).toBe(renderToStaticMarkup(<LearningAnswerForm {...props} />));
-        expect(renderToStaticMarkup(<ParkAnswerForm {...props} />)).not.toContain('island-');
+        expect(renderToStaticMarkup(<LearningAnswerForm {...props} />)).not.toContain('island-');
     });
 
     it('retains all number keys and action labels in their existing order', () => {

@@ -99,11 +99,11 @@ E1〜E3の `growth.discoveries` に未知標本を無理に追加しない。現
 |---|---|---|
 | [simulation.ts](../../../src/domain/park/simulation.ts) `simulateCourse` | 純粋な決定的ルール→順序付き `PlayBeat`。並び替えで勢い/泡/色/飛び越しが変わる構造とテストの切り分け | `PartKind` はslide/trampoline/bubble/mat/bell/paint、1次元の順番。水/軸portの2次元接続は表現しない。名前だけ水車へ変換すると因果が嘘になるため別simulatorを作る |
 | [course.ts](../../../src/domain/park/course.ts) `courseLayout` / `editPark` / `assertPark` | 有限所有ID・重複配置防止・純粋な編集・案の切替という不変条件 | ParkRecord/学習計画/部品報酬は島へ持ち込まない。4×4の接続とundo/draftは別stateが必要 |
-| [PartWorkshop.tsx](../../../src/components/park/PartWorkshop.tsx) `PartDemo` | 部品選択前に実際の動作を見られる点 | 学習後に1部品を作る導線とper-demo stageを島へ複製しない。入江の実sceneで触って試す |
-| [ParkStage.tsx](../../../src/components/park/ParkStage.tsx) / [playback.ts](../../../src/components/park/playback.ts) | 任意の再演、beatごとの時間、reducedの結果状態 | 横長sprite投影・ベル音の呼出しをそのまま入江の座標/音許可へ持ち込まない |
-| [three/config.ts](../../../src/components/park/three/config.ts) `supportsThreePark` | 現対応範囲を明示的に判定する設計 | 現Threeは**3枠かつslide/trampoline/bubbleのみ**。4部品やbell/paintでも同じ3Dになるとは言えない |
-| [three/toys.ts](../../../src/components/park/three/toys.ts) `createSlide` / `createTrampoline` / `createGate` | 厚みのあるExtrude形状、接触位置で変形する布、足の高さが決まる形づくりの参考 | 樹脂すべり台/トランポリン/シャボン門は水路/水車/貝ではない。入江用の木の溝・回転羽・軸・貝のgeometryが必要 |
-| [three/choreography.ts](../../../src/components/park/three/choreography.ts) / [three/scene.ts](../../../src/components/park/three/scene.ts) `createToyScene` | 接触→予備動作→移動→着地、描画資源のdisposeと実geometry測定 | +Xの固定玩具台/別WebGLRenderer/固定doll。島の住民/単一rendererに同じsceneを重ねて増設しない |
+| `PartWorkshop.tsx`（公開終了・Git履歴参照） `PartDemo` | 部品選択前に実際の動作を見られる点 | 学習後に1部品を作る導線とper-demo stageを島へ複製しない。入江の実sceneで触って試す |
+| `ParkStage.tsx`（公開終了・Git履歴参照） / `playback.ts`（公開終了・Git履歴参照） | 任意の再演、beatごとの時間、reducedの結果状態 | 横長sprite投影・ベル音の呼出しをそのまま入江の座標/音許可へ持ち込まない |
+| `three/config.ts`（公開終了・Git履歴参照） `supportsThreePark` | 現対応範囲を明示的に判定する設計 | 現Threeは**3枠かつslide/trampoline/bubbleのみ**。4部品やbell/paintでも同じ3Dになるとは言えない |
+| `three/toys.ts`（公開終了・Git履歴参照） `createSlide` / `createTrampoline` / `createGate` | 厚みのあるExtrude形状、接触位置で変形する布、足の高さが決まる形づくりの参考 | 樹脂すべり台/トランポリン/シャボン門は水路/水車/貝ではない。入江用の木の溝・回転羽・軸・貝のgeometryが必要 |
+| `three/choreography.ts`（公開終了・Git履歴参照） / `three/scene.ts`（公開終了・Git履歴参照） `createToyScene` | 接触→予備動作→移動→着地、描画資源のdisposeと実geometry測定 | +Xの固定玩具台/別WebGLRenderer/固定doll。島の住民/単一rendererに同じsceneを重ねて増設しない |
 
 採用案は、既存 `IslandStage` のrenderer内に入江のscene groupとcamera focusを追加し、ホームの世界と切り替える方式。3標本・3道具・4部品を実形状で作り、raycastの意味を `specimen/tool/part/port/station` に限定する。商品カード/図鑑カードごとのrendererは増やさない。主島の7家具や4居場所の成長対象には入江の部品を追加しない。
 

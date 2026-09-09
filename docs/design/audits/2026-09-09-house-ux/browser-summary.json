@@ -1,0 +1,342 @@
+{
+  "target": "http://127.0.0.1:5253",
+  "phone": {
+    "width": 390,
+    "pass": true,
+    "checks": [
+      "first-screen destinations and 44px hit targets",
+      "direct challenge preserved",
+      "empty notices and back",
+      "actual 3D album tap",
+      "display/store/display-all/reload",
+      "exit to island"
+    ]
+  },
+  "tablet": {
+    "width": 768,
+    "pass": true,
+    "checks": [
+      "first-screen destinations and 44px hit targets",
+      "direct challenge preserved",
+      "empty notices and back",
+      "actual 3D album tap",
+      "display/store/display-all/reload",
+      "exit to island"
+    ]
+  },
+  "phoneEvidenceSource": "final/report.json (phone completed; subsequent tablet fixture initialization failed)",
+  "tabletEvidenceSource": "final-tablet/report.json",
+  "captures": [
+    {
+      "file": "390-island.png",
+      "revision": "house-ux-v4-local",
+      "version": "house-ux-v4-local:2b936d67-d4de-4b85-a291-91a5d43e4c22",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "room": "{\"candidate\":\"island-home-interior-v4\",\"uuid\":\"d6b40f85-947a-45aa-956a-b6c908dac21b\",\"visible\":false,\"selectedId\":null,\"challengeAwards\":[],\"awards\":[]}"
+    },
+    {
+      "file": "390-house-empty.png",
+      "revision": "house-ux-v4-local",
+      "version": "house-ux-v4-local:2b936d67-d4de-4b85-a291-91a5d43e4c22",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 74,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "room": "{\"candidate\":\"island-home-interior-v4\",\"uuid\":\"d6b40f85-947a-45aa-956a-b6c908dac21b\",\"visible\":true,\"selectedId\":null,\"challengeAwards\":[{\"id\":\"certificate\",\"visible\":false},{\"id\":\"trophy\",\"visible\":false}],\"awards\":[{\"id\":\"first-completion\",\"uuid\":\"62ed4961-6666-482d-bf3c-17ac3dad3020\",\"visible\":false,\"position\":[-3.1408,0.858535,-2.2591]},{\"id\":\"completed-5\",\"uuid\":\"f3e497dc-9d0c-4b60-88d7-ff3da2277990\",\"visible\":false,\"position\":[-2.704,0.8997709999999999,-2.2214]},{\"id\":\"completed-10\",\"uuid\":\"5cb4b7dd-350c-473e-a924-d045ce7deb8f\",\"visible\":false,\"position\":[-2.509,0.8997709999999999,-2.2214]},{\"id\":\"completed-20\",\"uuid\":\"2862129a-a219-48d9-a40c-0532b4f68ca1\",\"visible\":false,\"position\":[-2.314,0.8997709999999999,-2.2214]},{\"id\":\"certificate-25\",\"uuid\":\"a69af0f5-03f6-42f5-bbfe-ab3d7ba18f05\",\"visible\":false,\"position\":[-3.1408,0.577735,-2.2591]},{\"id\":\"completed-30\",\"uuid\":\"d32f014d-7c55-48d6-94b5-f20f38e708bd\",\"visible\":false,\"position\":[-2.119,0.8997709999999999,-2.2214]},{\"id\":\"completed-50\",\"uuid\":\"b6ea091f-39d6-4d62-b697-c8de8e821ef4\",\"visible\":false,\"position\":[-1.924,0.8997709999999999,-2.2214]},{\"id\":\"completed-75\",\"uuid\":\"897d4ca5-fc89-4551-b0a7-f7528e1937d8\",\"visible\":false,\"position\":[-2.6065,0.608571,-2.2214]},{\"id\":\"completed-100\",\"uuid\":\"7e2ea27f-0f2c-4b31-90e0-f96ab9451313\",\"visible\":false,\"position\":[-2.4115,0.608571,-2.2214]},{\"id\":\"certificate-100\",\"uuid\":\"65aeaab5-c9cf-4272-b680-18c18ffe1187\",\"visible\":false,\"position\":[-3.1408,0.296935,-2.2591]},{\"id\":\"completed-150\",\"uuid\":\"f3f50664-8af7-4d89-8fe8-d50dfe621f05\",\"visible\":false,\"position\":[-2.2165,0.608571,-2.2214]},{\"id\":\"completed-200\",\"uuid\":\"2c505591-7b24-4fd9-b888-f087f47991b3\",\"visible\":false,\"position\":[-2.0215,0.608571,-2.2214]},{\"id\":\"completed-300\",\"uuid\":\"f9b8d645-ece0-4ba8-b7ac-c3c05ec2f166\",\"visible\":false,\"position\":[-2.6065,0.3173709999999999,-2.2214]},{\"id\":\"completed-500\",\"uuid\":\"9c71974c-4760-467c-97ea-c2fca24ec72d\",\"visible\":false,\"position\":[-2.4115,0.3173709999999999,-2.2214]},{\"id\":\"completed-750\",\"uuid\":\"8668e6bd-ab0f-48be-a69f-98cd0b090fe5\",\"visible\":false,\"position\":[-2.2165,0.3173709999999999,-2.2214]},{\"id\":\"completed-1000\",\"uuid\":\"ecae473c-734c-4500-906b-2cfea5dfde2d\",\"visible\":false,\"position\":[-2.0215,0.3173709999999999,-2.2214]}]}"
+    },
+    {
+      "file": "390-notices.png",
+      "revision": "house-ux-v4-local",
+      "version": "house-ux-v4-local:2b936d67-d4de-4b85-a291-91a5d43e4c22",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 74,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "room": "{\"candidate\":\"island-home-interior-v4\",\"uuid\":\"d6b40f85-947a-45aa-956a-b6c908dac21b\",\"visible\":true,\"selectedId\":null,\"challengeAwards\":[{\"id\":\"certificate\",\"visible\":false},{\"id\":\"trophy\",\"visible\":false}],\"awards\":[{\"id\":\"first-completion\",\"uuid\":\"62ed4961-6666-482d-bf3c-17ac3dad3020\",\"visible\":false,\"position\":[-3.1408,0.858535,-2.2591]},{\"id\":\"completed-5\",\"uuid\":\"f3e497dc-9d0c-4b60-88d7-ff3da2277990\",\"visible\":false,\"position\":[-2.704,0.8997709999999999,-2.2214]},{\"id\":\"completed-10\",\"uuid\":\"5cb4b7dd-350c-473e-a924-d045ce7deb8f\",\"visible\":false,\"position\":[-2.509,0.8997709999999999,-2.2214]},{\"id\":\"completed-20\",\"uuid\":\"2862129a-a219-48d9-a40c-0532b4f68ca1\",\"visible\":false,\"position\":[-2.314,0.8997709999999999,-2.2214]},{\"id\":\"certificate-25\",\"uuid\":\"a69af0f5-03f6-42f5-bbfe-ab3d7ba18f05\",\"visible\":false,\"position\":[-3.1408,0.577735,-2.2591]},{\"id\":\"completed-30\",\"uuid\":\"d32f014d-7c55-48d6-94b5-f20f38e708bd\",\"visible\":false,\"position\":[-2.119,0.8997709999999999,-2.2214]},{\"id\":\"completed-50\",\"uuid\":\"b6ea091f-39d6-4d62-b697-c8de8e821ef4\",\"visible\":false,\"position\":[-1.924,0.8997709999999999,-2.2214]},{\"id\":\"completed-75\",\"uuid\":\"897d4ca5-fc89-4551-b0a7-f7528e1937d8\",\"visible\":false,\"position\":[-2.6065,0.608571,-2.2214]},{\"id\":\"completed-100\",\"uuid\":\"7e2ea27f-0f2c-4b31-90e0-f96ab9451313\",\"visible\":false,\"position\":[-2.4115,0.608571,-2.2214]},{\"id\":\"certificate-100\",\"uuid\":\"65aeaab5-c9cf-4272-b680-18c18ffe1187\",\"visible\":false,\"position\":[-3.1408,0.296935,-2.2591]},{\"id\":\"completed-150\",\"uuid\":\"f3f50664-8af7-4d89-8fe8-d50dfe621f05\",\"visible\":false,\"position\":[-2.2165,0.608571,-2.2214]},{\"id\":\"completed-200\",\"uuid\":\"2c505591-7b24-4fd9-b888-f087f47991b3\",\"visible\":false,\"position\":[-2.0215,0.608571,-2.2214]},{\"id\":\"completed-300\",\"uuid\":\"f9b8d645-ece0-4ba8-b7ac-c3c05ec2f166\",\"visible\":false,\"position\":[-2.6065,0.3173709999999999,-2.2214]},{\"id\":\"completed-500\",\"uuid\":\"9c71974c-4760-467c-97ea-c2fca24ec72d\",\"visible\":false,\"position\":[-2.4115,0.3173709999999999,-2.2214]},{\"id\":\"completed-750\",\"uuid\":\"8668e6bd-ab0f-48be-a69f-98cd0b090fe5\",\"visible\":false,\"position\":[-2.2165,0.3173709999999999,-2.2214]},{\"id\":\"completed-1000\",\"uuid\":\"ecae473c-734c-4500-906b-2cfea5dfde2d\",\"visible\":false,\"position\":[-2.0215,0.3173709999999999,-2.2214]}]}"
+    },
+    {
+      "file": "390-before-album-tap.png",
+      "revision": "house-ux-v4-local",
+      "version": "house-ux-v4-local:2b936d67-d4de-4b85-a291-91a5d43e4c22",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 74,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "room": "{\"candidate\":\"island-home-interior-v4\",\"uuid\":\"d6b40f85-947a-45aa-956a-b6c908dac21b\",\"visible\":true,\"selectedId\":null,\"challengeAwards\":[{\"id\":\"certificate\",\"visible\":false},{\"id\":\"trophy\",\"visible\":false}],\"awards\":[{\"id\":\"first-completion\",\"uuid\":\"62ed4961-6666-482d-bf3c-17ac3dad3020\",\"visible\":false,\"position\":[-3.1408,0.858535,-2.2591]},{\"id\":\"completed-5\",\"uuid\":\"f3e497dc-9d0c-4b60-88d7-ff3da2277990\",\"visible\":false,\"position\":[-2.704,0.8997709999999999,-2.2214]},{\"id\":\"completed-10\",\"uuid\":\"5cb4b7dd-350c-473e-a924-d045ce7deb8f\",\"visible\":false,\"position\":[-2.509,0.8997709999999999,-2.2214]},{\"id\":\"completed-20\",\"uuid\":\"2862129a-a219-48d9-a40c-0532b4f68ca1\",\"visible\":false,\"position\":[-2.314,0.8997709999999999,-2.2214]},{\"id\":\"certificate-25\",\"uuid\":\"a69af0f5-03f6-42f5-bbfe-ab3d7ba18f05\",\"visible\":false,\"position\":[-3.1408,0.577735,-2.2591]},{\"id\":\"completed-30\",\"uuid\":\"d32f014d-7c55-48d6-94b5-f20f38e708bd\",\"visible\":false,\"position\":[-2.119,0.8997709999999999,-2.2214]},{\"id\":\"completed-50\",\"uuid\":\"b6ea091f-39d6-4d62-b697-c8de8e821ef4\",\"visible\":false,\"position\":[-1.924,0.8997709999999999,-2.2214]},{\"id\":\"completed-75\",\"uuid\":\"897d4ca5-fc89-4551-b0a7-f7528e1937d8\",\"visible\":false,\"position\":[-2.6065,0.608571,-2.2214]},{\"id\":\"completed-100\",\"uuid\":\"7e2ea27f-0f2c-4b31-90e0-f96ab9451313\",\"visible\":false,\"position\":[-2.4115,0.608571,-2.2214]},{\"id\":\"certificate-100\",\"uuid\":\"65aeaab5-c9cf-4272-b680-18c18ffe1187\",\"visible\":false,\"position\":[-3.1408,0.296935,-2.2591]},{\"id\":\"completed-150\",\"uuid\":\"f3f50664-8af7-4d89-8fe8-d50dfe621f05\",\"visible\":false,\"position\":[-2.2165,0.608571,-2.2214]},{\"id\":\"completed-200\",\"uuid\":\"2c505591-7b24-4fd9-b888-f087f47991b3\",\"visible\":false,\"position\":[-2.0215,0.608571,-2.2214]},{\"id\":\"completed-300\",\"uuid\":\"f9b8d645-ece0-4ba8-b7ac-c3c05ec2f166\",\"visible\":false,\"position\":[-2.6065,0.3173709999999999,-2.2214]},{\"id\":\"completed-500\",\"uuid\":\"9c71974c-4760-467c-97ea-c2fca24ec72d\",\"visible\":false,\"position\":[-2.4115,0.3173709999999999,-2.2214]},{\"id\":\"completed-750\",\"uuid\":\"8668e6bd-ab0f-48be-a69f-98cd0b090fe5\",\"visible\":false,\"position\":[-2.2165,0.3173709999999999,-2.2214]},{\"id\":\"completed-1000\",\"uuid\":\"ecae473c-734c-4500-906b-2cfea5dfde2d\",\"visible\":false,\"position\":[-2.0215,0.3173709999999999,-2.2214]}]}"
+    },
+    {
+      "file": "390-album.png",
+      "revision": "house-ux-v4-local",
+      "version": "house-ux-v4-local:2b936d67-d4de-4b85-a291-91a5d43e4c22",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "album",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 69,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "room": "{\"candidate\":\"island-home-interior-v4\",\"uuid\":\"ddba0bc0-3239-4ed2-a10d-a69b55234665\",\"visible\":false,\"selectedId\":null,\"challengeAwards\":[],\"awards\":[]}"
+    },
+    {
+      "file": "390-certificate-displayed.png",
+      "revision": "house-ux-v4-local",
+      "version": "house-ux-v4-local:2b936d67-d4de-4b85-a291-91a5d43e4c22",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 140,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "room": "{\"candidate\":\"island-home-interior-v4\",\"uuid\":\"b896d364-c864-4c97-bf3a-fe92767d51b7\",\"visible\":true,\"selectedId\":null,\"challengeAwards\":[{\"id\":\"certificate\",\"visible\":false},{\"id\":\"trophy\",\"visible\":false}],\"awards\":[{\"id\":\"first-completion\",\"uuid\":\"fe70db51-638d-4b5f-b243-faf6d9b47605\",\"visible\":true,\"position\":[-3.1408,0.858535,-2.2591]},{\"id\":\"completed-5\",\"uuid\":\"4f873da6-a75c-491b-88e4-1379c08a803a\",\"visible\":false,\"position\":[-2.704,0.8997709999999999,-2.2214]},{\"id\":\"completed-10\",\"uuid\":\"d35a5c0d-00d7-4109-a7c6-32782d926047\",\"visible\":false,\"position\":[-2.509,0.8997709999999999,-2.2214]},{\"id\":\"completed-20\",\"uuid\":\"093a1b99-3c81-4300-84f6-5964be71f583\",\"visible\":false,\"position\":[-2.314,0.8997709999999999,-2.2214]},{\"id\":\"certificate-25\",\"uuid\":\"e67e80a2-14ef-486e-9ec2-e35a894238b0\",\"visible\":false,\"position\":[-3.1408,0.577735,-2.2591]},{\"id\":\"completed-30\",\"uuid\":\"a8bd967b-2ab3-4dae-9e64-7788b7b52f2e\",\"visible\":false,\"position\":[-2.119,0.8997709999999999,-2.2214]},{\"id\":\"completed-50\",\"uuid\":\"3d991f15-3edf-4c19-a9fd-7c807226fc30\",\"visible\":false,\"position\":[-1.924,0.8997709999999999,-2.2214]},{\"id\":\"completed-75\",\"uuid\":\"4b19d3f2-cf17-4a7a-a186-b96a69cbca35\",\"visible\":false,\"position\":[-2.6065,0.608571,-2.2214]},{\"id\":\"completed-100\",\"uuid\":\"623649c3-ddfe-4145-92d7-b3fa8187b3f6\",\"visible\":false,\"position\":[-2.4115,0.608571,-2.2214]},{\"id\":\"certificate-100\",\"uuid\":\"324f52e8-6571-4a7a-b8ea-1381ff42bd84\",\"visible\":false,\"position\":[-3.1408,0.296935,-2.2591]},{\"id\":\"completed-150\",\"uuid\":\"756e0ea4-9f60-4bf4-8074-3450745b2842\",\"visible\":false,\"position\":[-2.2165,0.608571,-2.2214]},{\"id\":\"completed-200\",\"uuid\":\"ddab0b81-838b-45a7-a993-70e15d5cd74a\",\"visible\":false,\"position\":[-2.0215,0.608571,-2.2214]},{\"id\":\"completed-300\",\"uuid\":\"098f46ce-3cd6-4154-bc85-4e7fea78fab5\",\"visible\":false,\"position\":[-2.6065,0.3173709999999999,-2.2214]},{\"id\":\"completed-500\",\"uuid\":\"595229ce-06bd-45ea-b2b0-a9a5fe950cbb\",\"visible\":false,\"position\":[-2.4115,0.3173709999999999,-2.2214]},{\"id\":\"completed-750\",\"uuid\":\"64e1b5b7-9273-481f-99f2-41bb3e15ef7c\",\"visible\":false,\"position\":[-2.2165,0.3173709999999999,-2.2214]},{\"id\":\"completed-1000\",\"uuid\":\"a441c10c-0883-4a78-8f4c-1f24c6ebbac7\",\"visible\":false,\"position\":[-2.0215,0.3173709999999999,-2.2214]}]}"
+    },
+    {
+      "file": "390-house-earned.png",
+      "revision": "house-ux-v4-local",
+      "version": "house-ux-v4-local:2b936d67-d4de-4b85-a291-91a5d43e4c22",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "room": "{\"candidate\":\"island-home-interior-v4\",\"uuid\":\"4ff48588-9baa-4f2b-9f4e-b1f28347710d\",\"visible\":true,\"selectedId\":null,\"challengeAwards\":[{\"id\":\"certificate\",\"visible\":false},{\"id\":\"trophy\",\"visible\":false}],\"awards\":[{\"id\":\"first-completion\",\"uuid\":\"1f46fefe-0084-41ff-ad73-5449419f03e9\",\"visible\":true,\"position\":[-3.1408,0.858535,-2.2591]},{\"id\":\"completed-5\",\"uuid\":\"76aeb0e2-a0b6-4a82-9858-23ec36942746\",\"visible\":true,\"position\":[-2.704,0.8997709999999999,-2.2214]},{\"id\":\"completed-10\",\"uuid\":\"e832e0f5-c395-46ce-bbb3-ad362b3147fe\",\"visible\":false,\"position\":[-2.509,0.8997709999999999,-2.2214]},{\"id\":\"completed-20\",\"uuid\":\"69c1a405-ae08-4a04-af35-7f26f9e97727\",\"visible\":false,\"position\":[-2.314,0.8997709999999999,-2.2214]},{\"id\":\"certificate-25\",\"uuid\":\"f398726e-201c-4afc-8911-d6c846ba42a7\",\"visible\":false,\"position\":[-3.1408,0.577735,-2.2591]},{\"id\":\"completed-30\",\"uuid\":\"416fe2d6-94c3-402a-a227-8ba5aaab89e1\",\"visible\":false,\"position\":[-2.119,0.8997709999999999,-2.2214]},{\"id\":\"completed-50\",\"uuid\":\"6cd4d758-249c-4a6b-ae7f-a66b49617624\",\"visible\":false,\"position\":[-1.924,0.8997709999999999,-2.2214]},{\"id\":\"completed-75\",\"uuid\":\"2db2558f-5861-44d7-9d43-cab63ad7f5b1\",\"visible\":false,\"position\":[-2.6065,0.608571,-2.2214]},{\"id\":\"completed-100\",\"uuid\":\"889f2882-f1f2-4742-8a35-413b3c3cd5da\",\"visible\":false,\"position\":[-2.4115,0.608571,-2.2214]},{\"id\":\"certificate-100\",\"uuid\":\"874bd69a-b629-40db-9f09-4571a2cee168\",\"visible\":false,\"position\":[-3.1408,0.296935,-2.2591]},{\"id\":\"completed-150\",\"uuid\":\"450b2506-6065-41b0-8c04-a900bfc92e70\",\"visible\":false,\"position\":[-2.2165,0.608571,-2.2214]},{\"id\":\"completed-200\",\"uuid\":\"22a4020e-1f41-411a-b98b-49087bea50ab\",\"visible\":false,\"position\":[-2.0215,0.608571,-2.2214]},{\"id\":\"completed-300\",\"uuid\":\"7dd22d87-e8c6-4fab-b4d0-e8ee68426570\",\"visible\":false,\"position\":[-2.6065,0.3173709999999999,-2.2214]},{\"id\":\"completed-500\",\"uuid\":\"dcff23ae-e989-47bd-bcbd-bbcdaa785675\",\"visible\":false,\"position\":[-2.4115,0.3173709999999999,-2.2214]},{\"id\":\"completed-750\",\"uuid\":\"06efa11c-7d90-4a46-a894-f187308e2539\",\"visible\":false,\"position\":[-2.2165,0.3173709999999999,-2.2214]},{\"id\":\"completed-1000\",\"uuid\":\"a655ec9c-c43c-4714-a616-6bc2de5f2f3d\",\"visible\":false,\"position\":[-2.0215,0.3173709999999999,-2.2214]}]}"
+    },
+    {
+      "file": "768-island.png",
+      "revision": "house-ux-v4-local",
+      "version": "house-ux-v4-local:2b936d67-d4de-4b85-a291-91a5d43e4c22",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "home",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 86,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "room": "{\"candidate\":\"island-home-interior-v4\",\"uuid\":\"d615ae50-599b-44e0-adb5-45b8a5aafc34\",\"visible\":false,\"selectedId\":null,\"challengeAwards\":[],\"awards\":[]}"
+    },
+    {
+      "file": "768-house-empty.png",
+      "revision": "house-ux-v4-local",
+      "version": "house-ux-v4-local:2b936d67-d4de-4b85-a291-91a5d43e4c22",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 74,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "room": "{\"candidate\":\"island-home-interior-v4\",\"uuid\":\"d615ae50-599b-44e0-adb5-45b8a5aafc34\",\"visible\":true,\"selectedId\":null,\"challengeAwards\":[{\"id\":\"certificate\",\"visible\":false},{\"id\":\"trophy\",\"visible\":false}],\"awards\":[{\"id\":\"first-completion\",\"uuid\":\"4080e9bd-cb0d-47b5-b9d3-981b72a0fb1c\",\"visible\":false,\"position\":[-3.1408,0.858535,-2.2591]},{\"id\":\"completed-5\",\"uuid\":\"65be4f26-ddba-4938-96da-4067361f38ca\",\"visible\":false,\"position\":[-2.704,0.8997709999999999,-2.2214]},{\"id\":\"completed-10\",\"uuid\":\"a1c13df9-2b73-4ce6-83db-8c6b1948cc1c\",\"visible\":false,\"position\":[-2.509,0.8997709999999999,-2.2214]},{\"id\":\"completed-20\",\"uuid\":\"856ba88c-fd24-4eb7-8676-ae8589a02895\",\"visible\":false,\"position\":[-2.314,0.8997709999999999,-2.2214]},{\"id\":\"certificate-25\",\"uuid\":\"243c2282-2039-4b8f-a501-5e3a08b10b2f\",\"visible\":false,\"position\":[-3.1408,0.577735,-2.2591]},{\"id\":\"completed-30\",\"uuid\":\"aa1f2d52-607c-4e92-8c57-6d6a5578defa\",\"visible\":false,\"position\":[-2.119,0.8997709999999999,-2.2214]},{\"id\":\"completed-50\",\"uuid\":\"4535dd0b-eae3-4002-917f-a95fcadf42ba\",\"visible\":false,\"position\":[-1.924,0.8997709999999999,-2.2214]},{\"id\":\"completed-75\",\"uuid\":\"5a26cf3c-7fb4-4e2a-94b3-7ad84db117d9\",\"visible\":false,\"position\":[-2.6065,0.608571,-2.2214]},{\"id\":\"completed-100\",\"uuid\":\"89f0add6-3b60-48f5-843d-1b608879d626\",\"visible\":false,\"position\":[-2.4115,0.608571,-2.2214]},{\"id\":\"certificate-100\",\"uuid\":\"76755d00-abd8-4525-8a4b-e79f69fafe84\",\"visible\":false,\"position\":[-3.1408,0.296935,-2.2591]},{\"id\":\"completed-150\",\"uuid\":\"22e590ff-d2a4-4857-ac9d-18659a47beda\",\"visible\":false,\"position\":[-2.2165,0.608571,-2.2214]},{\"id\":\"completed-200\",\"uuid\":\"660ea1a5-a0c1-43d7-bd07-83d31cb7468e\",\"visible\":false,\"position\":[-2.0215,0.608571,-2.2214]},{\"id\":\"completed-300\",\"uuid\":\"10b76dee-7152-4329-9652-262e60203c15\",\"visible\":false,\"position\":[-2.6065,0.3173709999999999,-2.2214]},{\"id\":\"completed-500\",\"uuid\":\"de4cda4d-0936-45e0-a6f7-a5fdb696c7c1\",\"visible\":false,\"position\":[-2.4115,0.3173709999999999,-2.2214]},{\"id\":\"completed-750\",\"uuid\":\"04b68287-1d43-4357-8df2-74b7f2c217d5\",\"visible\":false,\"position\":[-2.2165,0.3173709999999999,-2.2214]},{\"id\":\"completed-1000\",\"uuid\":\"aa5c7a47-cf25-48a7-bb1f-218398cc378f\",\"visible\":false,\"position\":[-2.0215,0.3173709999999999,-2.2214]}]}"
+    },
+    {
+      "file": "768-notices.png",
+      "revision": "house-ux-v4-local",
+      "version": "house-ux-v4-local:2b936d67-d4de-4b85-a291-91a5d43e4c22",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 74,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "room": "{\"candidate\":\"island-home-interior-v4\",\"uuid\":\"d615ae50-599b-44e0-adb5-45b8a5aafc34\",\"visible\":true,\"selectedId\":null,\"challengeAwards\":[{\"id\":\"certificate\",\"visible\":false},{\"id\":\"trophy\",\"visible\":false}],\"awards\":[{\"id\":\"first-completion\",\"uuid\":\"4080e9bd-cb0d-47b5-b9d3-981b72a0fb1c\",\"visible\":false,\"position\":[-3.1408,0.858535,-2.2591]},{\"id\":\"completed-5\",\"uuid\":\"65be4f26-ddba-4938-96da-4067361f38ca\",\"visible\":false,\"position\":[-2.704,0.8997709999999999,-2.2214]},{\"id\":\"completed-10\",\"uuid\":\"a1c13df9-2b73-4ce6-83db-8c6b1948cc1c\",\"visible\":false,\"position\":[-2.509,0.8997709999999999,-2.2214]},{\"id\":\"completed-20\",\"uuid\":\"856ba88c-fd24-4eb7-8676-ae8589a02895\",\"visible\":false,\"position\":[-2.314,0.8997709999999999,-2.2214]},{\"id\":\"certificate-25\",\"uuid\":\"243c2282-2039-4b8f-a501-5e3a08b10b2f\",\"visible\":false,\"position\":[-3.1408,0.577735,-2.2591]},{\"id\":\"completed-30\",\"uuid\":\"aa1f2d52-607c-4e92-8c57-6d6a5578defa\",\"visible\":false,\"position\":[-2.119,0.8997709999999999,-2.2214]},{\"id\":\"completed-50\",\"uuid\":\"4535dd0b-eae3-4002-917f-a95fcadf42ba\",\"visible\":false,\"position\":[-1.924,0.8997709999999999,-2.2214]},{\"id\":\"completed-75\",\"uuid\":\"5a26cf3c-7fb4-4e2a-94b3-7ad84db117d9\",\"visible\":false,\"position\":[-2.6065,0.608571,-2.2214]},{\"id\":\"completed-100\",\"uuid\":\"89f0add6-3b60-48f5-843d-1b608879d626\",\"visible\":false,\"position\":[-2.4115,0.608571,-2.2214]},{\"id\":\"certificate-100\",\"uuid\":\"76755d00-abd8-4525-8a4b-e79f69fafe84\",\"visible\":false,\"position\":[-3.1408,0.296935,-2.2591]},{\"id\":\"completed-150\",\"uuid\":\"22e590ff-d2a4-4857-ac9d-18659a47beda\",\"visible\":false,\"position\":[-2.2165,0.608571,-2.2214]},{\"id\":\"completed-200\",\"uuid\":\"660ea1a5-a0c1-43d7-bd07-83d31cb7468e\",\"visible\":false,\"position\":[-2.0215,0.608571,-2.2214]},{\"id\":\"completed-300\",\"uuid\":\"10b76dee-7152-4329-9652-262e60203c15\",\"visible\":false,\"position\":[-2.6065,0.3173709999999999,-2.2214]},{\"id\":\"completed-500\",\"uuid\":\"de4cda4d-0936-45e0-a6f7-a5fdb696c7c1\",\"visible\":false,\"position\":[-2.4115,0.3173709999999999,-2.2214]},{\"id\":\"completed-750\",\"uuid\":\"04b68287-1d43-4357-8df2-74b7f2c217d5\",\"visible\":false,\"position\":[-2.2165,0.3173709999999999,-2.2214]},{\"id\":\"completed-1000\",\"uuid\":\"aa5c7a47-cf25-48a7-bb1f-218398cc378f\",\"visible\":false,\"position\":[-2.0215,0.3173709999999999,-2.2214]}]}"
+    },
+    {
+      "file": "768-before-album-tap.png",
+      "revision": "house-ux-v4-local",
+      "version": "house-ux-v4-local:2b936d67-d4de-4b85-a291-91a5d43e4c22",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 74,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "room": "{\"candidate\":\"island-home-interior-v4\",\"uuid\":\"d615ae50-599b-44e0-adb5-45b8a5aafc34\",\"visible\":true,\"selectedId\":null,\"challengeAwards\":[{\"id\":\"certificate\",\"visible\":false},{\"id\":\"trophy\",\"visible\":false}],\"awards\":[{\"id\":\"first-completion\",\"uuid\":\"4080e9bd-cb0d-47b5-b9d3-981b72a0fb1c\",\"visible\":false,\"position\":[-3.1408,0.858535,-2.2591]},{\"id\":\"completed-5\",\"uuid\":\"65be4f26-ddba-4938-96da-4067361f38ca\",\"visible\":false,\"position\":[-2.704,0.8997709999999999,-2.2214]},{\"id\":\"completed-10\",\"uuid\":\"a1c13df9-2b73-4ce6-83db-8c6b1948cc1c\",\"visible\":false,\"position\":[-2.509,0.8997709999999999,-2.2214]},{\"id\":\"completed-20\",\"uuid\":\"856ba88c-fd24-4eb7-8676-ae8589a02895\",\"visible\":false,\"position\":[-2.314,0.8997709999999999,-2.2214]},{\"id\":\"certificate-25\",\"uuid\":\"243c2282-2039-4b8f-a501-5e3a08b10b2f\",\"visible\":false,\"position\":[-3.1408,0.577735,-2.2591]},{\"id\":\"completed-30\",\"uuid\":\"aa1f2d52-607c-4e92-8c57-6d6a5578defa\",\"visible\":false,\"position\":[-2.119,0.8997709999999999,-2.2214]},{\"id\":\"completed-50\",\"uuid\":\"4535dd0b-eae3-4002-917f-a95fcadf42ba\",\"visible\":false,\"position\":[-1.924,0.8997709999999999,-2.2214]},{\"id\":\"completed-75\",\"uuid\":\"5a26cf3c-7fb4-4e2a-94b3-7ad84db117d9\",\"visible\":false,\"position\":[-2.6065,0.608571,-2.2214]},{\"id\":\"completed-100\",\"uuid\":\"89f0add6-3b60-48f5-843d-1b608879d626\",\"visible\":false,\"position\":[-2.4115,0.608571,-2.2214]},{\"id\":\"certificate-100\",\"uuid\":\"76755d00-abd8-4525-8a4b-e79f69fafe84\",\"visible\":false,\"position\":[-3.1408,0.296935,-2.2591]},{\"id\":\"completed-150\",\"uuid\":\"22e590ff-d2a4-4857-ac9d-18659a47beda\",\"visible\":false,\"position\":[-2.2165,0.608571,-2.2214]},{\"id\":\"completed-200\",\"uuid\":\"660ea1a5-a0c1-43d7-bd07-83d31cb7468e\",\"visible\":false,\"position\":[-2.0215,0.608571,-2.2214]},{\"id\":\"completed-300\",\"uuid\":\"10b76dee-7152-4329-9652-262e60203c15\",\"visible\":false,\"position\":[-2.6065,0.3173709999999999,-2.2214]},{\"id\":\"completed-500\",\"uuid\":\"de4cda4d-0936-45e0-a6f7-a5fdb696c7c1\",\"visible\":false,\"position\":[-2.4115,0.3173709999999999,-2.2214]},{\"id\":\"completed-750\",\"uuid\":\"04b68287-1d43-4357-8df2-74b7f2c217d5\",\"visible\":false,\"position\":[-2.2165,0.3173709999999999,-2.2214]},{\"id\":\"completed-1000\",\"uuid\":\"aa5c7a47-cf25-48a7-bb1f-218398cc378f\",\"visible\":false,\"position\":[-2.0215,0.3173709999999999,-2.2214]}]}"
+    },
+    {
+      "file": "768-album.png",
+      "revision": "house-ux-v4-local",
+      "version": "house-ux-v4-local:2b936d67-d4de-4b85-a291-91a5d43e4c22",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "album",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 51,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "room": "{\"candidate\":\"island-home-interior-v4\",\"uuid\":\"3d665875-7eab-4c38-8a0a-a87064d09129\",\"visible\":false,\"selectedId\":null,\"challengeAwards\":[],\"awards\":[]}"
+    },
+    {
+      "file": "768-certificate-displayed.png",
+      "revision": "house-ux-v4-local",
+      "version": "house-ux-v4-local:2b936d67-d4de-4b85-a291-91a5d43e4c22",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 140,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "room": "{\"candidate\":\"island-home-interior-v4\",\"uuid\":\"161a7eb6-c17e-4b61-a425-2e9df6b23bb5\",\"visible\":true,\"selectedId\":null,\"challengeAwards\":[{\"id\":\"certificate\",\"visible\":false},{\"id\":\"trophy\",\"visible\":false}],\"awards\":[{\"id\":\"first-completion\",\"uuid\":\"481013ba-32c6-4d21-b670-f0aa5ec78d18\",\"visible\":true,\"position\":[-3.1408,0.858535,-2.2591]},{\"id\":\"completed-5\",\"uuid\":\"2ed96d93-62c6-47aa-8588-ac3c5dae5443\",\"visible\":false,\"position\":[-2.704,0.8997709999999999,-2.2214]},{\"id\":\"completed-10\",\"uuid\":\"d56ccae3-d76a-45b9-9687-7c42cf8ca0b0\",\"visible\":false,\"position\":[-2.509,0.8997709999999999,-2.2214]},{\"id\":\"completed-20\",\"uuid\":\"6a05f2fb-8df5-4c96-968b-bf81bd6a3288\",\"visible\":false,\"position\":[-2.314,0.8997709999999999,-2.2214]},{\"id\":\"certificate-25\",\"uuid\":\"d20eac62-1709-43e1-b907-4a5ac58c46c9\",\"visible\":false,\"position\":[-3.1408,0.577735,-2.2591]},{\"id\":\"completed-30\",\"uuid\":\"97a87eff-c5dc-4092-bc9f-9db4322393ab\",\"visible\":false,\"position\":[-2.119,0.8997709999999999,-2.2214]},{\"id\":\"completed-50\",\"uuid\":\"2ba471b2-d0b8-4bbc-b6ae-75e796b281a2\",\"visible\":false,\"position\":[-1.924,0.8997709999999999,-2.2214]},{\"id\":\"completed-75\",\"uuid\":\"e67fa5f8-a35b-4437-aa31-912cd034fb6c\",\"visible\":false,\"position\":[-2.6065,0.608571,-2.2214]},{\"id\":\"completed-100\",\"uuid\":\"0047f612-cd5f-4f58-9005-abce09facf72\",\"visible\":false,\"position\":[-2.4115,0.608571,-2.2214]},{\"id\":\"certificate-100\",\"uuid\":\"72a6ec4e-01b8-4dad-9bd9-2bed5005a277\",\"visible\":false,\"position\":[-3.1408,0.296935,-2.2591]},{\"id\":\"completed-150\",\"uuid\":\"6d386010-371b-4f3d-a5e8-b67e1703bfb4\",\"visible\":false,\"position\":[-2.2165,0.608571,-2.2214]},{\"id\":\"completed-200\",\"uuid\":\"9206bc97-f712-498f-ba4b-9999acb83b3f\",\"visible\":false,\"position\":[-2.0215,0.608571,-2.2214]},{\"id\":\"completed-300\",\"uuid\":\"a4d1874d-f50c-4219-a8f8-7f180f4a4227\",\"visible\":false,\"position\":[-2.6065,0.3173709999999999,-2.2214]},{\"id\":\"completed-500\",\"uuid\":\"36e89af6-eadb-4f1e-b1bc-e2f03b2e9af3\",\"visible\":false,\"position\":[-2.4115,0.3173709999999999,-2.2214]},{\"id\":\"completed-750\",\"uuid\":\"c5576106-28ab-4508-96a1-fcdc9556cd86\",\"visible\":false,\"position\":[-2.2165,0.3173709999999999,-2.2214]},{\"id\":\"completed-1000\",\"uuid\":\"a5ec2102-c300-4b29-86a2-d328fc669f7d\",\"visible\":false,\"position\":[-2.0215,0.3173709999999999,-2.2214]}]}"
+    },
+    {
+      "file": "768-house-earned.png",
+      "revision": "house-ux-v4-local",
+      "version": "house-ux-v4-local:2b936d67-d4de-4b85-a291-91a5d43e4c22",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true,
+      "room": "{\"candidate\":\"island-home-interior-v4\",\"uuid\":\"84c68afb-fe25-4044-9864-b38dde595278\",\"visible\":true,\"selectedId\":null,\"challengeAwards\":[{\"id\":\"certificate\",\"visible\":false},{\"id\":\"trophy\",\"visible\":false}],\"awards\":[{\"id\":\"first-completion\",\"uuid\":\"97be1c6b-3e1d-4155-a80b-93fead727150\",\"visible\":true,\"position\":[-3.1408,0.858535,-2.2591]},{\"id\":\"completed-5\",\"uuid\":\"87de36d0-7da3-4bf6-87af-bb02c96d5733\",\"visible\":true,\"position\":[-2.704,0.8997709999999999,-2.2214]},{\"id\":\"completed-10\",\"uuid\":\"6e3dd4d1-8435-44ba-91b0-8411b96802b6\",\"visible\":false,\"position\":[-2.509,0.8997709999999999,-2.2214]},{\"id\":\"completed-20\",\"uuid\":\"1657bdef-3a7a-484d-951e-dc488dcea646\",\"visible\":false,\"position\":[-2.314,0.8997709999999999,-2.2214]},{\"id\":\"certificate-25\",\"uuid\":\"6d3dde6a-46ff-42f7-988f-0aff405b6f66\",\"visible\":false,\"position\":[-3.1408,0.577735,-2.2591]},{\"id\":\"completed-30\",\"uuid\":\"aca5c17a-6f3e-49f6-98b6-580fb6a1c2fc\",\"visible\":false,\"position\":[-2.119,0.8997709999999999,-2.2214]},{\"id\":\"completed-50\",\"uuid\":\"cff60291-4cdf-4908-a794-4c9317c4b796\",\"visible\":false,\"position\":[-1.924,0.8997709999999999,-2.2214]},{\"id\":\"completed-75\",\"uuid\":\"709255fa-ccc7-4108-b929-c8125e29f7b8\",\"visible\":false,\"position\":[-2.6065,0.608571,-2.2214]},{\"id\":\"completed-100\",\"uuid\":\"eaabfe38-0fb3-4330-8913-c39486163726\",\"visible\":false,\"position\":[-2.4115,0.608571,-2.2214]},{\"id\":\"certificate-100\",\"uuid\":\"c066365f-ebde-4241-b8e7-273e3653cd5f\",\"visible\":false,\"position\":[-3.1408,0.296935,-2.2591]},{\"id\":\"completed-150\",\"uuid\":\"bd7c5f74-477d-4adb-a754-6d4a9d17f9ff\",\"visible\":false,\"position\":[-2.2165,0.608571,-2.2214]},{\"id\":\"completed-200\",\"uuid\":\"cf26505d-e5c9-4827-979f-edad354b964b\",\"visible\":false,\"position\":[-2.0215,0.608571,-2.2214]},{\"id\":\"completed-300\",\"uuid\":\"64c9a1ca-5727-4a86-bd45-dabc63702564\",\"visible\":false,\"position\":[-2.6065,0.3173709999999999,-2.2214]},{\"id\":\"completed-500\",\"uuid\":\"345e562e-e1b9-422a-894c-d1fecc83ebef\",\"visible\":false,\"position\":[-2.4115,0.3173709999999999,-2.2214]},{\"id\":\"completed-750\",\"uuid\":\"be4bbd10-a2f3-447f-a341-d1d84c749e70\",\"visible\":false,\"position\":[-2.2165,0.3173709999999999,-2.2214]},{\"id\":\"completed-1000\",\"uuid\":\"bca988f0-21f9-4fff-9182-75e6754181a3\",\"visible\":false,\"position\":[-2.0215,0.3173709999999999,-2.2214]}]}"
+    }
+  ],
+  "fixture": "Profile and completedSets=5 are explicit diagnostic fixtures; not evidence of earning awards through learning.",
+  "pwaUpdateVerified": false,
+  "independentObservers": 0
+}

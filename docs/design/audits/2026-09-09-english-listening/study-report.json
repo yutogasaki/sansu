@@ -1,0 +1,18 @@
+{
+  "base": "http://127.0.0.1:5238",
+  "evidence": "DEV: real UI answers from explicit profile fixture; speech mock is separate from native speech",
+  "scenarios": [
+    {
+      "surface": "study",
+      "width": 390,
+      "answers": 10,
+      "pass": true
+    },
+    {
+      "surface": "study",
+      "width": 768,
+      "answers": 10,
+      "pass": true
+    }
+  ]
+}

@@ -14,6 +14,38 @@ function props(completedSets = 0): IslandLearningKeepsakesProps {
 const action = (html: string, value: string) => html.match(new RegExp(`<button[^>]*data-keepsake-action="${value}"[^>]*>`))?.[0];
 const choice = (html: string, value: string) => html.match(new RegExp(`<button[^>]*data-keepsake-choice="${value}"[^>]*>`))?.[0];
 describe('real learning keepsake record and display choices', () => {
+    it('keeps album reading and returning available during a background discovery save', () => {
+        const p = props(1); p.section = 'home'; p.disabled = true; p.comparisonDisabled = false;
+        p.onAlbum = vi.fn(); p.onPhotos = vi.fn();
+        const html = renderToStaticMarkup(<IslandLearningKeepsakes {...p} />);
+        expect(action(html, 'album')).not.toContain('disabled');
+        expect(action(html, 'close')).not.toContain('disabled');
+        expect(action(html, 'photos')).toContain('disabled');
+        expect(action(html, 'open-keepsakes')).toContain('disabled');
+        expect(p.controls.act).not.toHaveBeenCalled();
+    });
+
+    it('keeps house destinations and directly available challenge controls and names the exit', () => {
+        const p = props(); p.section = 'home'; p.onAlbum = vi.fn();
+        p.challenge = <div data-challenge-content>チャレンジの条件と操作</div>;
+        const html = renderToStaticMarkup(<IslandLearningKeepsakes {...p} />);
+        expect(html.indexOf('data-keepsake-action="notices"')).toBeLessThan(html.indexOf('data-challenge-content'));
+        expect(html).not.toContain('class="island-house-challenge"');
+        expect(html).toContain('data-challenge-content');
+        expect(p.controls.act).not.toHaveBeenCalled();
+    });
+
+
+
+    it('names the room and exit and guides an empty display without emphasizing zero', () => {
+        const p = props(); p.section = 'home'; p.onAlbum = vi.fn();
+        const html = renderToStaticMarkup(<IslandLearningKeepsakes {...p} />);
+        expect(html).toContain('いえの なか');
+        expect(html).toContain('いえを とじて しまへ');
+        expect(html).toContain('まなんだ あゆみを のこそう');
+        expect(html).not.toContain('0こ かざっているよ');
+        expect(p.controls.act).not.toHaveBeenCalled();
+    });
     it('keeps all 16 future milestones readable with no award claim or invented old date', () => {
         const p = props(), before = structuredClone(p.island), html = renderToStaticMarkup(<IslandLearningKeepsakes {...p} />);
         expect(html.match(/data-keepsake-choice=/g)).toHaveLength(16);
@@ -52,7 +84,7 @@ describe('real learning keepsake record and display choices', () => {
         expect(action(html, 'display')).toContain('disabled'); expect(action(html, 'display-earned')).toContain('disabled');
         expect(choice(html, 'completed-5')).toContain('disabled'); expect(action(html, 'retry')).not.toContain('disabled');
         expect(action(html, 'learn')).not.toContain('disabled'); expect(action(html, 'room')).not.toContain('disabled');
-        expect(html.match(/<button[^>]*aria-label="いえを とじる"[^>]*>/)?.[0]).not.toContain('disabled');
+        expect(html.match(/<button[^>]*aria-label="いえを とじて しまへ"[^>]*>/)?.[0]).not.toContain('disabled');
         expect(html).toContain('もっているものを ぜんぶ かざる きろく'); expect(html).toContain('けしきの きろくとは べつ');
     });
     it('puts the earned first award action ahead of the collection and keeps future awards and history optional', () => {

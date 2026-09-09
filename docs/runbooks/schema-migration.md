@@ -55,3 +55,17 @@ Use this runbook when local data shape, Dexie schema, or profile structure chang
 - Profile deletion and full reset include all three stores and photo receipts in the existing profile deletion transaction. A native abort must restore both photo and pre-existing profile data.
 - Before release, run the focused photo domain/repository tests plus the existing profile deletion tests, then the required checks above. The repository tests include a v7→v8 open with existing learning/workshop receipts, first photo save, two-owner isolation, native abort, capacity limits and stale replay after deletion.
 - Roll back with a v8-compatible build that disables the album UI. Do not open the upgraded database with a v7-only build, erase stores, delete the database or ask families to clear browser storage.
+
+## v9: 家の学習チャレンジ（2026-09-09）
+
+Additive migration. `challengeRuns` (`&id, profileId, [profileId+status], createdAt`),
+`challengeEvents` (`&key, profileId, runId`), `challengeSummaries` (`&profileId`),
+`challengeContacts` (`[profileId+itemId], profileId`) are dedicated stores. Existing
+v8 stores and all 16 keepsakes are untouched; no upgrade data rewrite is needed.
+Runs retain the source snapshot, owner, ordered event keys and result receipt.
+Result, summary, awards and contact checkpoint commit in one transaction. Keep the
+latest 20 completed runs; summary retains award and best provenance after cleanup.
+Profile deletion includes all four stores. Rollback disables the entry flag in a
+schema-v9-capable build; never downgrade IndexedDB. Verify opening populated v8
+with v9, learning/island/photo preservation, challenge completion/reload, and
+profile deletion before release. Two-build browser migration remains a release gate.

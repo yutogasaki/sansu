@@ -201,6 +201,11 @@ export const writeLearningAttemptInTransaction = async (
     database: SansuDatabase,
     input: LearningAttemptWriteInput,
 ): Promise<LearningAttemptWriteReceipt> => {
+    if (await database.challengeRuns.where('[profileId+status]').anyOf(
+        [input.profileId, 'countdown'], [input.profileId, 'running'],
+    ).count()) {
+        throw new Error('challenge-already-active');
+    }
     const skipped = input.result === "skipped";
     const scoredResult = input.result === "correct" ? "correct" : "incorrect";
     const recentItemLogs = await database.logs
@@ -233,7 +238,10 @@ export const writeLearningAttemptInTransaction = async (
         ? await database.logs.where('[profileId+subject]').equals([input.profileId, input.subject])
             .filter(previous => previous.id !== logId && previous.itemId === input.itemId && isIndependentCorrect(previous)).count()
         : independentCorrectCount(existing);
+    const challengeContact = input.subject === 'math' ? await database.challengeContacts.get([input.profileId, input.itemId]) : undefined;
     const memoryEvidence = {
+        latestChallengeContactAt: challengeContact?.latestAt,
+        challengeContactUncertain: challengeContact?.uncertain,
         independence: learningEvidence?.assistance ?? 'unknown',
         wholeProblem: learningEvidence?.completion === 'whole-problem',
     } as const;
@@ -376,6 +384,8 @@ export const writeLearningAttemptInTransaction = async (
 };
 
 export const getLearningAttemptTransactionTables = (database: SansuDatabase) => [
+    database.challengeRuns,
+    database.challengeContacts,
     database.logs,
     database.memoryMath,
     database.memoryVocab,

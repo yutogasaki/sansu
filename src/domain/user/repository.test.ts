@@ -39,6 +39,10 @@ const mocks = vi.hoisted(() => ({
     islandPhotoAlbumsDelete: vi.fn(),
     islandPhotosDelete: vi.fn(),
     islandPhotoBlobsDelete: vi.fn(),
+    challengeRunsDelete: vi.fn(),
+    challengeEventsDelete: vi.fn(),
+    challengeSummariesDelete: vi.fn(),
+    challengeContactsDelete: vi.fn(),
     getLocalActiveId: vi.fn(),
     setLocalActiveId: vi.fn(),
     clearLocalActiveId: vi.fn(),
@@ -48,6 +52,10 @@ const mocks = vi.hoisted(() => ({
 vi.mock("../../db", () => ({
     db: {
         transaction: mocks.transaction,
+        challengeRuns: { where: () => ({ equals: () => ({ delete: mocks.challengeRunsDelete }) }) },
+        challengeEvents: { where: () => ({ equals: () => ({ delete: mocks.challengeEventsDelete }) }) },
+        challengeSummaries: { delete: mocks.challengeSummariesDelete },
+        challengeContacts: { where: () => ({ equals: () => ({ delete: mocks.challengeContactsDelete }) }) },
         parks: { delete: mocks.parksDelete },
         parkPlans: { where: () => ({ equals: () => ({ delete: mocks.parkPlansDelete }) }) },
         parkEvents: { where: () => ({ equals: () => ({ delete: mocks.parkEventsDelete }) }) },
@@ -357,6 +365,10 @@ describe("getActiveProfile", () => {
         expect(mocks.islandPhotoAlbumsDelete).toHaveBeenCalledWith(removed.id);
         expect(mocks.islandPhotosDelete).toHaveBeenCalledOnce();
         expect(mocks.islandPhotoBlobsDelete).toHaveBeenCalledOnce();
+        expect(mocks.challengeRunsDelete).toHaveBeenCalledOnce();
+        expect(mocks.challengeEventsDelete).toHaveBeenCalledOnce();
+        expect(mocks.challengeSummariesDelete).toHaveBeenCalledWith(removed.id);
+        expect(mocks.challengeContactsDelete).toHaveBeenCalledOnce();
         expect(mocks.clearProfileStorageData).toHaveBeenCalledWith(removed.id);
         expect(mocks.setLocalActiveId).toHaveBeenCalledWith(kept.id);
     });

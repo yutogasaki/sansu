@@ -4,14 +4,14 @@ import type { IslandScene } from './three/runtime';
 import type { IslandStageProps } from './three/types';
 import type { ReactNode } from 'react';
 import { IslandCameraToolbar } from './IslandCameraToolbar';
-import { canControlIslandCamera, initialIslandCameraView, type IslandCameraView } from './three/islandCameraControls';
+import { canControlIslandCamera, hasChangedIslandCameraView, initialIslandCameraView, type IslandCameraView } from './three/islandCameraControls';
 import './IslandStage.css';
 
 const DEFAULT_CAPTION = 'カワウソと ウサギが くらす しま';
 const deliveredState = (props: IslandStageProps, sharedId?: string): IslandStageProps => ({ ...props,
     sharedRequest: props.sharedRequest?.command.type === 'stop' || props.sharedRequest?.id === sharedId ? props.sharedRequest : undefined });
 
-export function IslandStage(props: IslandStageProps & { compactCameraControls?: boolean; milestoneNotice?: ReactNode; expressionCaptionKey?: string }) {
+export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready: boolean) => void; onCameraPractice?: () => void; compactCameraControls?: boolean; milestoneNotice?: ReactNode; expressionCaptionKey?: string }) {
     const host = useRef<HTMLDivElement>(null);
     const runtime = useRef<IslandScene | null>(null);
     const current = useRef(props);
@@ -27,13 +27,15 @@ export function IslandStage(props: IslandStageProps & { compactCameraControls?: 
     const [attempt, setAttempt] = useState(0);
     const [cameraView, setCameraView] = useState<IslandCameraView>(initialIslandCameraView);
     const cameraEnabled = canControlIslandCamera(props);
+    const onTutorialReady = props.onTutorialReady;
+    useEffect(() => { onTutorialReady?.(ready && !failed); return () => onTutorialReady?.(false); }, [ready, failed, onTutorialReady]);
     const workshopActive = Boolean(props.workshop?.active && !failed);
     const sharedActive = Boolean(props.shared?.active && !failed);
     const { sharedRequest, onSharedFeedback } = props;
     const sharedEnabled = props.shared?.active;
     const sceneLabel = workshopActive
         ? props.workshop?.mode === 'build' ? 'みぞと 水車を つなぐ いりえ' : 'ものを しらべる いりえ'
-        : props.learningKeepsakes && !props.learning ? 'しまの いえ。だいじなものと まなびの きねん'
+        : props.learningKeepsakes && !props.learning ? 'しまの いえ。ゆかを タップ、または やじるしキーで カワウソが あるくよ'
         : sharedActive ? 'しまの かざりと なかま'
         : props.expressionFlagFocus && !props.learning ? 'しまの はたと かざり'
         : props.preview ? 'しまの ものを おく ばしょを えらんでいるよ'
@@ -137,7 +139,7 @@ export function IslandStage(props: IslandStageProps & { compactCameraControls?: 
                     sharedFeedback: value => current.current.onSharedFeedback?.(value),
                     caption: value => { if (!disposed && !failedThisAttempt) setCaption({ text: value, context: current.current.expressionCaptionKey }); },
                     failure: fail,
-                    cameraView: setCameraView,
+                    cameraView: view => { setCameraView(view); if (view.manual) current.current.onCameraPractice?.(); },
                     ready: () => {
                         if (disposed || failedThisAttempt) return;
                         setReady(true);
@@ -165,6 +167,12 @@ export function IslandStage(props: IslandStageProps & { compactCameraControls?: 
         data-workshop-candidate={props.workshop?.active ? 'island-workshop-v1' : undefined}>
         <div className="island-stage__viewport">
             <div className="island-stage__canvas" ref={host} role="img" aria-label={sceneLabel}
+                tabIndex={props.learningKeepsakes && !props.learning ? 0 : undefined}
+                onKeyDown={event => {
+                    if (!props.learningKeepsakes || props.learning) return;
+                    const step: Record<string, [number, number]> = { ArrowLeft: [-.4, 0], ArrowRight: [.4, 0], ArrowUp: [0, -.4], ArrowDown: [0, .4] };
+                    if (step[event.key]) { event.preventDefault(); runtime.current?.walkHomeResident(...step[event.key]); }
+                }}
                 data-testid="island-stage" data-renderer={failed ? 'fallback' : 'loading'} hidden={failed} />
             {failed && <div className="island-stage__fallback" role="img" aria-label={caption}>
                 <span className="island-stage__fallback-land" aria-hidden="true">⌂</span>
@@ -172,6 +180,9 @@ export function IslandStage(props: IslandStageProps & { compactCameraControls?: 
                 <button type="button" className="island-stage__retry" onClick={() => { setCaption({ text: 'しまを ひらいているよ', context: props.expressionCaptionKey }); setFailed(false); setAttempt(value => value + 1); }}>もういちど みる</button>
             </div>}
             {!failed && props.milestoneNotice}
+            {!failed && cameraEnabled && hasChangedIslandCameraView(cameraView) && <button type="button"
+                className="island-stage__quick-reset" disabled={props.photographing}
+                onClick={() => runtime.current?.controlCamera('reset')}>もとの ながめ</button>}
         </div>
         {!failed && cameraEnabled && <div className={`island-stage__controls${props.compactCameraControls ? ' island-stage__controls--compact' : ''}`}>
             {props.compactCameraControls ? <details className="island-view-tools"><summary>ながめ</summary>

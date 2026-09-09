@@ -31,8 +31,8 @@ const resolveBuildMetadata = (mode: string) => {
     // Generate once per build and share it between the app and version.json.
     const appVersion = `${buildRevision}:${randomUUID()}`
     const park = {
-        enabled: env.VITE_BUILD_PLAY_ENABLED === 'true',
-        renderer: env.VITE_PARK_RENDERER === 'three' ? 'three' : 'legacy',
+        enabled: false, // Retired: stale deployment flags cannot reactivate the mode.
+        renderer: 'retired',
     }
     const island = {
         enabled: env.VITE_ISLAND_ENABLED === 'true',
@@ -63,7 +63,6 @@ const resolveBuildMetadata = (mode: string) => {
 const exploreArtworkGlob = 'assets/explore/**/scene-*.{jpg,jpeg,webp,avif}'
 const openingRootPullArtworkGlob = 'assets/explore/opening-root-pull-v*/*.{jpg,jpeg,webp,avif}'
 const ikimonoArtworkGlob = 'ikimono/*.webp'
-const parkArtworkGlob = 'assets/park/resin-v1/*.webp'
 
 type AssetFile = {
     type: 'asset';
@@ -122,8 +121,6 @@ export default defineConfig(({ mode }) => {
                     ikimonoArtworkGlob,
                     exploreArtworkGlob,
                     openingRootPullArtworkGlob,
-                    parkArtworkGlob,
-                    'assets/park/three-v1/*-icon.png',
                 ],
                 manifest: false, // We use public/manifest.json
                 workbox: {

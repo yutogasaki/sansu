@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { PokkoBaseArt } from "../components/explore/PokkoBaseArt";
 import { Icons } from "../components/icons";
 import { ScreenScaffold } from "../components/ScreenScaffold";
-import { BUILD_PLAY_AVAILABLE } from "../domain/park/feature";
 import { islandAvailable, islandEnabled } from "../domain/island/feature";
 import { OtherGames } from "../components/island/OtherGames";
 
@@ -55,7 +54,6 @@ export const GameHub: React.FC = () => {
             >
                 <div className="game-hub__content">
                     {islandAvailable() && <button type="button" className="game-hub__launch explore-focus-ring" onClick={() => navigate('/island')}>ふしぎな しまへ</button>}
-                    {BUILD_PLAY_AVAILABLE && <button className="game-hub__launch explore-focus-ring" onClick={() => navigate('/park')}>ちいさな遊園地で あそぶ</button>}
                     <motion.section
                         className="game-hub__hero"
                         aria-labelledby="game-hub-explore-title"

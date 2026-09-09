@@ -1,3 +1,4 @@
+import { clearProfileTutorial } from '../island/tutorialState';
 import { db, type SansuDatabase } from "../../db";
 import { AppData, UserProfile } from "../types";
 import { clearProfileStorageData, profileStorage } from "../../utils/storage";
@@ -172,6 +173,10 @@ export const deleteProfileOwnedIndexedDbRows = async (
     database: SansuDatabase,
     id: string,
 ) => Promise.all([
+    database.challengeRuns.where("profileId").equals(id).delete(),
+    database.challengeEvents.where("profileId").equals(id).delete(),
+    database.challengeSummaries.delete(id),
+    database.challengeContacts.where("profileId").equals(id).delete(),
     database.profiles.delete(id),
     database.logs.where("profileId").equals(id).delete(),
     database.memoryMath.where("profileId").equals(id).delete(),
@@ -196,6 +201,7 @@ export const deleteProfile = async (id: string) => {
     await db.transaction(
         "rw",
         [
+            db.challengeRuns, db.challengeEvents, db.challengeSummaries, db.challengeContacts,
             db.appData,
             db.profiles,
             db.logs,
@@ -232,6 +238,7 @@ export const deleteProfile = async (id: string) => {
     );
 
     clearProfileStorageData(id);
+    clearProfileTutorial(id);
 
     if (nextActive) {
         profileStorage.setActiveId(nextActive);

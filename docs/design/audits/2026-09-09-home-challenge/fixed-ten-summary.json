@@ -1,0 +1,11 @@
+{
+  "pass": false,
+  "error": "locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-onboarding-world=\"island\"][data-mode=\"welcome\"]') to be visible\u001b[22m\n\n    at runLane (/private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-challenge-final-hn3oi00c/tools/e2e-island-throughput.mjs:221:85)\n    at async file:///private/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-challenge-final-hn3oi00c/tools/e2e-island-throughput.mjs:438:38",
+  "comparisons": [],
+  "gates": {},
+  "evidence": {},
+  "completedRuns": 65,
+  "plannedRuns": 80,
+  "fullReport": "/tmp/sansu-challenge-fixed-ten-formal.json",
+  "classification": "Incomplete: onboarding welcome wait timed out before next measured lane; no aggregate timing verdict."
+}

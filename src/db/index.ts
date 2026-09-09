@@ -1,3 +1,4 @@
+import type { ChallengeRun, ChallengeEvent, ChallengeSummary, ChallengeContact } from '../domain/challenge/types';
 import Dexie, { type DexieOptions, type Table } from 'dexie';
 import type { UserProfile, MemoryState, AppData } from '../domain/types';
 import type { LearningEvidenceContext } from '../domain/learning/types';
@@ -62,7 +63,18 @@ export const SANSU_V8_STORES = {
     islandPhotoBlobs: '&id, profileId',
 } as const;
 
+export const SANSU_V9_STORES = { ...SANSU_V8_STORES,
+    challengeRuns: '&id, profileId, [profileId+status], createdAt',
+    challengeEvents: '&key, profileId, runId',
+    challengeSummaries: '&profileId',
+    challengeContacts: '[profileId+itemId], profileId',
+} as const;
+
 export class SansuDatabase extends Dexie {
+    challengeRuns!: Table<ChallengeRun, string>;
+    challengeEvents!: Table<ChallengeEvent, string>;
+    challengeSummaries!: Table<ChallengeSummary, string>;
+    challengeContacts!: Table<ChallengeContact, [string, string]>;
     islandPhotoAlbums!: Table<IslandPhotoAlbum, string>;
     islandPhotos!: Table<IslandPhotoMetadata, string>;
     islandPhotoBlobs!: Table<IslandPhotoBlobRecord, string>;
@@ -122,6 +134,7 @@ export class SansuDatabase extends Dexie {
         this.version(7).stores(SANSU_V7_STORES);
         // Additive only: existing learning, island and receipt rows are untouched.
         this.version(8).stores(SANSU_V8_STORES);
+        this.version(9).stores(SANSU_V9_STORES);
     }
 }
 

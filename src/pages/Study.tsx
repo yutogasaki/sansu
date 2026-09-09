@@ -1,3 +1,4 @@
+import { useLearningSessionLease } from '../hooks/useLearningSessionLease';
 import { allowsDecimalEntry, appendNumberField } from '../domain/math/numberEntry';
 import React, { useState, useEffect, useLayoutEffect, useCallback, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -7,6 +8,9 @@ import { useHissanSession } from "../hooks/useHissanSession";
 import { playSound, setSoundEnabled } from "../utils/audio";
 import { getActiveProfile, updateProfileAtomically } from "../domain/user/repository";
 import { StudyLayout } from "./StudyLayout";
+import { useEnglishListening } from '../hooks/useEnglishListening';
+import { EnglishListening, EnglishListeningEntry } from '../components/domain/EnglishListening';
+import type { UserProfile } from '../domain/types';
 import {
     isFixedSessionKind,
     shouldPrefetchNextBlock,
@@ -24,7 +28,7 @@ import { getDevStudyAdjacentSelection, getDevStudySelectionSummary } from "../co
 import { reachPwaUpdateCheckpoint } from "../pwa";
 import { COLD_OPEN_FIXED_TEN_ID } from "../domain/benchmark/coldOpenFixedTen";
 import { studyLearningEvidence } from '../domain/learning/attemptContext';
-import { canConfirmNumberFields, isSingleDigitMathInput } from '../domain/math/answerCompletion';
+import { canConfirmNumberFields, mathAnswerShape, appendAnswerDigit, removeAnswerDigit, isAnswerShapeComplete } from '../domain/math/answerCompletion';
 import { acknowledgeAnswerConfirmation } from '../components/domain/answerConfirmGuidance';
 
 type FixedSessionStats = {
@@ -40,6 +44,18 @@ type FixedSessionCompletionState =
     | { status: "saving" | "error" | "saved"; stats: FixedSessionStats };
 
 export const Study: React.FC = () => {
+    const [profileId, setProfileId] = useState<string | null>(null);
+    const navigate = useNavigate();
+    useEffect(() => { let live = true; void getActiveProfile().then(profile => { if (live) setProfileId(profile?.id ?? null); }); return () => { live = false; }; }, []);
+    const lease = useLearningSessionLease(profileId);
+    if (lease !== 'ready') return <main className="min-h-screen flex flex-col items-center justify-center gap-4" aria-live="polite">
+        <p>{lease === 'blocked' ? 'ほかの がめんで まなんでいるよ' : 'じゅんび しているよ'}</p>
+        <button onClick={() => navigate('/')}>もどる</button>
+    </main>;
+    return <StudyContent />;
+};
+
+const StudyContent: React.FC = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const devSkill = searchParams.get("dev_skill") || undefined;
@@ -91,10 +107,12 @@ export const Study: React.FC = () => {
     // State
     const [currentIndex, setCurrentIndex] = useState(0);                    // 0-4
     const [userInput, setUserInput] = useState("");                         // Single input
+    const numberDraft = React.useRef(userInput);
+    useLayoutEffect(() => { numberDraft.current = userInput; }, [userInput]);
     const [userInputs, setUserInputs] = useState<string[]>([]);             // Multi input
     const [activeFieldIndex, setActiveFieldIndex] = useState(0);            // Focus for multi
-    const fieldDraft = React.useRef({ values: userInputs, active: activeFieldIndex });
-    useLayoutEffect(() => { fieldDraft.current = { values: userInputs, active: activeFieldIndex }; }, [userInputs, activeFieldIndex]);
+    const fieldDraft = React.useRef<{ values: string[]; active: number; lastEdited?: number }>({ values: userInputs, active: activeFieldIndex });
+    useLayoutEffect(() => { fieldDraft.current = { ...fieldDraft.current, values: userInputs, active: activeFieldIndex }; }, [userInputs, activeFieldIndex]);
 
     const [feedback, setFeedback] = useState<"none" | "correct" | "incorrect" | "skipped">("none");
     const [showCorrection, setShowCorrection] = useState(false);
@@ -130,9 +148,13 @@ export const Study: React.FC = () => {
     const [isEasyText, setIsEasyText] = useState(false);
     const [hissanModeEnabled, setHissanModeEnabled] = useState(false);
     const [profileSettingsStatus, setProfileSettingsStatus] = useState<"loading" | "ready" | "error">("loading");
+    const [listeningProfile, setListeningProfile] = useState<UserProfile>();
+    const listening = useEnglishListening(`${listeningProfile?.id}:${sessionResetKey}`, listeningProfile?.subjectMode !== 'math' && (!sessionKindParam || sessionKindParam === 'normal'), listeningProfile?.vocabLevels ?? [], queue[currentIndex]);
+    const recordListeningAnswer = listening.record;
     const [isDevSwitcherOpen, setIsDevSwitcherOpen] = useState(false);
 
     const currentProblem = queue[currentIndex];
+    useLayoutEffect(() => { fieldDraft.current.lastEdited = undefined; }, [currentProblem]);
 
     useEffect(() => {
         learningAssistanceRef.current = 'independent';
@@ -171,6 +193,7 @@ export const Study: React.FC = () => {
         getActiveProfile().then(profile => {
             if (!active) return;
             if (profile) {
+                setListeningProfile(profile);
                 setSoundEnabled(profile.soundEnabled);
                 setEnglishAutoRead(profile.englishAutoRead || false);
                 setIsEasyText(profile.uiTextMode === "easy");
@@ -429,13 +452,14 @@ export const Study: React.FC = () => {
 
         if (currentProblem?.inputType === 'multi-number') {
             const current = fieldDraft.current;
-            const active = !current.values[current.active] ? Math.max(0, current.active - 1) : current.active;
-            const values = current.values.map((value, index) => index === active ? value.slice(0, -1) : value);
+            const active = !current.values[current.active] ? current.lastEdited ?? Math.max(0, current.active - 1) : current.active;
+            const values = current.values.map((value, index) => index === active ? (mathAnswerShape(currentProblem) ? removeAnswerDigit(value) : value.slice(0, -1)) : value);
             fieldDraft.current = { values, active };
             setUserInputs(values);
             setActiveFieldIndex(active);
         } else {
-            setUserInput(prev => prev.slice(0, -1));
+            numberDraft.current = mathAnswerShape(currentProblem) ? removeAnswerDigit(numberDraft.current) : numberDraft.current.slice(0, -1);
+            setUserInput(numberDraft.current);
         }
     }, [completionPresentation, feedback, currentProblem, hissan]);
 
@@ -450,17 +474,17 @@ export const Study: React.FC = () => {
             return;
         }
         if (currentProblem?.inputType === 'multi-number') {
-            setUserInputs(prev => {
-                const newInputs = [...prev];
-                newInputs[activeFieldIndex] = "";
-                return newInputs;
-            });
+            const current = fieldDraft.current;
+            const values = current.values.map((value, i) => i === current.active ? '' : value);
+            fieldDraft.current = { ...current, values, lastEdited: undefined };
+            setUserInputs(values);
         } else {
-            setUserInput("");
+            numberDraft.current = '';
+            setUserInput('');
         }
-    }, [completionPresentation, feedback, currentProblem, activeFieldIndex, hissan]);
+    }, [completionPresentation, feedback, currentProblem, hissan]);
 
-    const handleCursorMove = useCallback((direction: "left" | "right") => {
+    const handleCursorMove = useCallback((direction: "left" | "right", separator = false) => {
         if (
             completionPresentation !== "none"
             || fixedSessionCompletionInFlightRef.current
@@ -471,12 +495,14 @@ export const Study: React.FC = () => {
             return;
         }
         if (currentProblem?.inputType === 'multi-number' && currentProblem.inputConfig?.fields) {
+            const current = fieldDraft.current;
+            const shape = mathAnswerShape(currentProblem);
+            if (separator && shape && !isAnswerShapeComplete([current.values[current.active]], [shape[current.active]])) return;
             const maxIndex = currentProblem.inputConfig.fields.length - 1;
-            if (direction === "right") {
-                setActiveFieldIndex(prev => Math.min(prev + 1, maxIndex));
-            } else {
-                setActiveFieldIndex(prev => Math.max(prev - 1, 0));
-            }
+            const active = Math.max(0, Math.min(maxIndex, current.active + (direction === 'right' ? 1 : -1)));
+            if (active === current.active) return;
+            fieldDraft.current = { ...current, active, lastEdited: undefined };
+            setActiveFieldIndex(active);
         }
     }, [completionPresentation, feedback, currentProblem, hissan]);
 
@@ -489,6 +515,7 @@ export const Study: React.FC = () => {
         // Latch synchronously so a double tap cannot skip a question before
         // React commits the next render. The problem-change effect unlocks it.
         isProcessingRef.current = true;
+        if (currentProblem && feedback !== 'skipped') recordListeningAnswer(currentProblem, (currentIndex + 1) % blockSize === 0);
         setFeedback("none");
         setShowCorrection(false);
         setSaveError(false);
@@ -496,19 +523,21 @@ export const Study: React.FC = () => {
         setCurrentIndex(prev => prev + 1);
         problemShownAtRef.current = Date.now();
         // Note: isProcessingRef reset is handled in the effect when currentProblem changes
-    }, [completionPresentation]);
+    }, [completionPresentation, currentProblem, currentIndex, blockSize, feedback, recordListeningAnswer]);
 
     // Submitting - useEffectより前に定義
-    const handleSubmit = useCallback(async (choiceValue?: string, numericValue?: string, automatic = false) => {
+    const handleSubmit = useCallback(async (choiceValue?: string, numericValue?: string, automatic = false, numericFields?: string[]) => {
         if (
             completionPresentation !== "none"
             || fixedSessionCompletionInFlightRef.current
             || isInputLocked(feedback, isProcessingRef.current)
             || !currentProblem
         ) return;
-        if (!automatic && (hissan.isHissanActive || isSingleDigitMathInput(currentProblem)) && !saveError) return;
+        const shape = mathAnswerShape(currentProblem);
+        if (!automatic && (hissan.isHissanActive || shape) && !saveError) return;
+        const submittedValues = currentProblem.inputType === 'multi-number' ? (numericFields ?? userInputs) : [numericValue ?? userInput];
         if (!hissan.isHissanActive && currentProblem.inputType !== 'choice'
-            && !canConfirmNumberFields(currentProblem.inputType === 'multi-number' ? userInputs : [numericValue ?? userInput])) return;
+            && !(shape ? isAnswerShapeComplete(submittedValues, shape) : canConfirmNumberFields(submittedValues))) return;
         if (!automatic && currentProblem.inputType !== 'choice') acknowledgeAnswerConfirmation();
         setSaveError(false);
 
@@ -550,7 +579,7 @@ export const Study: React.FC = () => {
             currentProblem.inputType as "number" | "choice" | "multi-number",
             currentProblem.correctAnswer,
             numericValue ?? userInput,
-            userInputs,
+            numericFields ?? userInputs,
             choiceValue,
         );
 
@@ -633,10 +662,23 @@ export const Study: React.FC = () => {
             return;
         }
 
-        if (isSingleDigitMathInput(currentProblem)) {
-            setUserInput(valStr);
-            automaticBoundaryRef.current = true;
-            void handleSubmit(undefined, valStr, true);
+        const shape = mathAnswerShape(currentProblem);
+        if (shape) {
+            const multi = currentProblem.inputType === 'multi-number';
+            const draft = multi ? fieldDraft.current : { values: [numberDraft.current], active: 0 };
+            const next = appendAnswerDigit(draft.values, draft.active, valStr, shape);
+            if (multi) {
+                fieldDraft.current = { ...next, lastEdited: draft.active };
+                setUserInputs(next.values);
+                setActiveFieldIndex(next.active);
+            } else {
+                numberDraft.current = next.values[0];
+                setUserInput(next.values[0]);
+            }
+            if (next.values.some((value, i) => value !== draft.values[i]) && isAnswerShapeComplete(next.values, shape)) {
+                automaticBoundaryRef.current = true;
+                void handleSubmit(undefined, next.values[0], true, next.values);
+            }
             return;
         }
 
@@ -735,7 +777,7 @@ export const Study: React.FC = () => {
                 e.preventDefault();
             }
             else if (e.key === '/' && currentProblem?.inputType === 'multi-number') {
-                handleCursorMove('right');
+                handleCursorMove('right', true);
                 e.preventDefault();
             }
             else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
@@ -881,9 +923,14 @@ export const Study: React.FC = () => {
                 onEnter={() => handleSubmit()}
                 onCursorMove={handleCursorMove}
                 onSubmitChoice={(val) => handleSubmit(val)}
-                onFocusField={setActiveFieldIndex}
+                onFocusField={index => {
+                    if (isProcessingRef.current || index === fieldDraft.current.active) return;
+                    fieldDraft.current = { ...fieldDraft.current, active: index, lastEdited: undefined };
+                    setActiveFieldIndex(index);
+                }}
                 swipeHandlers={swipeHandlers}
-                englishAutoRead={englishAutoRead}
+                englishAutoRead={englishAutoRead && !listening.isOpen}
+                listeningEntry={listening.sentence ? <EnglishListeningEntry disabled={loading || feedback !== 'none' || listening.isOpen} onOpen={listening.open} /> : undefined}
                 isEasyText={isEasyText}
                 onToggleTTS={handleToggleTTS}
                 devSessionSummary={devSelectionSummary}
@@ -908,6 +955,7 @@ export const Study: React.FC = () => {
                     hissan.toggleHissanMode();
                 } : undefined}
             />
+            {listening.isOpen && listening.sentence && <EnglishListening sentence={listening.sentence} easy={isEasyText} onClose={listening.close} />}
             {isDevSession && focusSubject && (
                 <DevStudySwitcher
                     isOpen={isDevSwitcherOpen}

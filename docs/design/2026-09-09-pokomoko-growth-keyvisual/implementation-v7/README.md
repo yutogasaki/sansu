@@ -1,3 +1,5 @@
+[Final main integration evidence](main-integration/README.md) / [latest runtime screens](main-integration/review.html)
+
 # 家の外・室内・学習の接続7
 
 2026-09-09。mainへ採用する独立候補は[コミット検証](commit-check/README.md)と[その実画面](commit-check/review.html)を参照。以下は先行の共有snapshot。[実画面の一周と基準比較](review.html)。[統合仕様47](../../../product/47_home_island_integration_spec.md)に従うDEV実装。初回公開候補と引継ぎ契約を先に定義し、本番移行を自動実行しない。

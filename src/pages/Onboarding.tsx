@@ -16,10 +16,6 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useTimeoutScheduler } from "../hooks/useTimeoutScheduler";
 import { logInDev } from "../utils/debug";
 import { cn } from "../utils/cn";
-import { BUILD_PLAY_ENABLED } from "../domain/park/feature";
-import { threeParkRequested } from "../components/park/three/config";
-import { ParkWelcome } from "../components/park/ParkWelcome";
-import { PartIcon } from "../components/park/PartArt";
 
 import { islandEnabled } from "../domain/island/feature";
 import { Leaf } from "lucide-react";
@@ -53,8 +49,7 @@ export const Onboarding: React.FC = () => {
 
 const LegacyOnboarding: React.FC<{ intent: OnboardingIntent }> = ({ intent }) => {
     const islandOnboarding = islandEnabled();
-    const parkOnboarding = !islandOnboarding && (BUILD_PLAY_ENABLED || (import.meta.env.DEV && threeParkRequested()));
-    const worldOnboarding = islandOnboarding || parkOnboarding;
+    const worldOnboarding = islandOnboarding;
     const navigate = useNavigate();
     const [step, setStep] = useState<Step>("welcome");
     const [name, setName] = useState("");
@@ -212,7 +207,6 @@ const LegacyOnboarding: React.FC<{ intent: OnboardingIntent }> = ({ intent }) =>
 
     if (step === "welcome") {
         if (islandOnboarding) return <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandWelcome onStart={() => setStep("name")} actionLabel="はじめる" /></Suspense>;
-        if (parkOnboarding) return <ParkWelcome onStart={() => setStep("name")} />;
         return (
             <div className="brand-onboarding relative flex h-full min-h-0 flex-col items-center justify-center overflow-hidden px-[var(--screen-padding-x)] animate-in fade-in duration-500">
                 <SurfacePanel className={cn(panelClass, "brand-onboarding__panel relative z-10 max-w-md space-y-5 text-center")}>
@@ -254,7 +248,7 @@ const LegacyOnboarding: React.FC<{ intent: OnboardingIntent }> = ({ intent }) =>
     }
 
     return (
-        <div className={cn("relative flex h-full min-h-0 flex-col overflow-hidden", islandOnboarding ? "island-page island-onboarding-setup" : parkOnboarding ? "park-page park-onboarding-setup" : "brand-utility-screen")}>
+        <div className={cn("relative flex h-full min-h-0 flex-col overflow-hidden", islandOnboarding ? "island-page island-onboarding-setup" : "brand-utility-screen")}>
             {(!worldOnboarding || step !== "done") && <Header
                 title={stepTitle}
                 showBack={!isSubmitting}
@@ -382,7 +376,7 @@ const LegacyOnboarding: React.FC<{ intent: OnboardingIntent }> = ({ intent }) =>
                             じゅんび ちゅう
                         </Badge>
                         <div className="mx-auto flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[24px] border border-emerald-100/90 bg-[linear-gradient(145deg,rgba(236,253,245,0.95),rgba(220,252,231,0.85))] text-4xl shadow-[0_20px_34px_-24px_rgba(34,197,94,0.28)]">
-                            {islandOnboarding ? <Leaf size={48} /> : parkOnboarding ? <div className="park-onboarding-ready-art"><PartIcon kind="trampoline" /></div> : <span aria-hidden="true">🌿</span>}
+                            {islandOnboarding ? <Leaf size={48} /> : <span aria-hidden="true">🌿</span>}
                         </div>
                         <div>
                             <div className="text-2xl font-bold text-slate-700">じゅんび できたよ</div>

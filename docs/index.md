@@ -4,7 +4,11 @@
 
 家・学習・島の次の作業と統合上の論点は[2026-09-09の全体整合監査](design/2026-09-09-home-island-consistency-audit.md)を参照。採用済み仕様、DEV試作、検討案、並行実装と検証範囲を分け、実行順を整理している。
 
-家から一操作で始める[学習チャレンジ46](product/46_home_learning_challenge_spec.md)は初版仕様のみ。1分たしざんの出題・採点・中断・記録・追加の賞・学習整合・受入条件を定義し、アプリ実装と子どもの体験検証は未実施。
+英語の[短い文章を聞く体験](product/03_english_skills.md#7-短い文章を聞く)は、絵・英文・日本語文を見ながら任意に再生し、回答なしで終えてよい。Study通常学習とIslandに10文の初版を実装。単語練習と併存し、再生を習得や報酬に数えない。
+
+島の機能を「学習・変化・任意操作」に整理した[UI優先順位の実装記録](design/2026-09-09-island-ui-hierarchy.md)。育成先と編集を折り畳み、思い出の入口を家へまとめた。
+
+家から一操作で始める[学習チャレンジ46](product/46_home_learning_challenge_spec.md)の初版を実装。1分たしざんの出題・採点・中断・記録・追加の賞・学習整合を接続した。実画面の限定検証は合格、全体検証の制約と子どもの体験評価の未実施は46末尾を参照。
 
 ## Purpose
 
@@ -179,3 +183,5 @@ The repository is transitioning toward an exploration-first math game. [product/
 - [画面目的別レイアウト仕様](product/44_display_layout_spec.md)
 
 - [家から育つ島の接続試作](product/45_home_journey_preview_spec.md)
+
+- [島のあそびかたとその場の案内](product/46_island_tutorial_spec.md)

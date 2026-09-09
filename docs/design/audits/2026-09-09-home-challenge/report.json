@@ -1,0 +1,172 @@
+{
+  "target": "http://127.0.0.1:5317",
+  "candidate": "home-challenge-v1",
+  "fixture": "Explicit eligible level8 profile + one historical independent addition log; challenge results are earned with real 60s UI runs. Human N=0.",
+  "captures": [
+    {
+      "file": "390-home.png",
+      "revision": "1177140-challenge-v1",
+      "version": "1177140-challenge-v1:020ca50f-2fd9-4a58-8e70-47b2b70ff1af",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 74,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false
+    },
+    {
+      "file": "390-ready.png",
+      "revision": "1177140-challenge-v1",
+      "version": "1177140-challenge-v1:020ca50f-2fd9-4a58-8e70-47b2b70ff1af",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "challenge",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false
+    },
+    {
+      "file": "390-result.png",
+      "revision": "1177140-challenge-v1",
+      "version": "1177140-challenge-v1:020ca50f-2fd9-4a58-8e70-47b2b70ff1af",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "challenge",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false
+    },
+    {
+      "file": "390-awards.png",
+      "revision": "1177140-challenge-v1",
+      "version": "1177140-challenge-v1:020ca50f-2fd9-4a58-8e70-47b2b70ff1af",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false
+    },
+    {
+      "file": "768-home.png",
+      "revision": "1177140-challenge-v1",
+      "version": "1177140-challenge-v1:020ca50f-2fd9-4a58-8e70-47b2b70ff1af",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 74,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "768-ready.png",
+      "revision": "1177140-challenge-v1",
+      "version": "1177140-challenge-v1:020ca50f-2fd9-4a58-8e70-47b2b70ff1af",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "challenge",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "768-result.png",
+      "revision": "1177140-challenge-v1",
+      "version": "1177140-challenge-v1:020ca50f-2fd9-4a58-8e70-47b2b70ff1af",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "challenge",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    },
+    {
+      "file": "768-awards.png",
+      "revision": "1177140-challenge-v1",
+      "version": "1177140-challenge-v1:020ca50f-2fd9-4a58-8e70-47b2b70ff1af",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "keepsakes",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 87,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": true
+    }
+  ],
+  "scenarios": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pass": true
+    }
+  ],
+  "pass": true
+}

@@ -1,6 +1,6 @@
 # 家の学習チャレンジ
 
-2026-09-09、家を入口とする任意の学習チャレンジと時間制限種目の具体化をユーザーが指示。本書は初版の実装契約。アプリは未実装であり、体験検証・公開承認を意味しない。親仕様は[01](01_app_spec.md)、展示は[42](42_island_learning_keepsakes_spec.md)、戻り先は[43](43_island_navigation_spec.md)。
+2026-09-09、家を入口とする任意の学習チャレンジと時間制限種目の具体化をユーザーが指示。本書は初版の実装契約。初版を実装した。検証の範囲と未充足は末尾に記録し、公開承認を意味しない。親仕様は[01](01_app_spec.md)、展示は[42](42_island_learning_keepsakes_spec.md)、戻り先は[43](43_island_navigation_spec.md)。
 
 ## 目的と初版の範囲
 
@@ -94,3 +94,9 @@
 | 配信 | core、smoke、島の該当E2E、PWA更新/島offline、通常連問の固定10問benchmark。schema変更時は二build移行・保有データ保持を追加 |
 
 実画面の証拠はtarget・build revision・flag・candidate ID付きで入口→挑戦→結果→家の展示のcontact sheetを残す。視覚的魅力、無説明理解/安全、runtime整合を別判定する。子どもの自発的再挑戦、制限時間への反応、10問目標の到達性は未検証と明示し、独立観察で確認する。今回の仕様更新は `npm run docs:check` と参照/矛盾の読み合わせを検証範囲とする。
+
+## 初版の実装状況（2026-09-09）
+
+専用出題・単調時計・家の直接入口・結果・2品の展示・v9保存・排他lease・関連概念の接触・未確定結果と削除の回復を実装。再利用可能な実画面テストは `node tools/e2e-home-challenge.mjs`（`SANSU_CHALLENGE_URL` と新しい `SANSU_CHALLENGE_OUTPUT` を指定）。配信flag `VITE_HOME_CHALLENGE_ENABLED=false` は新規開始だけを停止し、取得品の表示・収納を保持する。
+
+[実画面と検証記録](../design/audits/2026-09-09-home-challenge/README.md)に実60秒での2幅・オフライン・展示・reloadの合格と、全体15秒テストtimeout、正式benchmarkの開始画面timeoutによる未完、実iOS/二build検証の未実施を分けて記録した。子どもの再挑戦意欲と10問目標の到達性は未検証。

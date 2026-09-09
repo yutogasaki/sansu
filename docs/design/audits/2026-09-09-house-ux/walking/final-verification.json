@@ -1,0 +1,23 @@
+{
+  "appSrcSha256ExcludingTests": "0d15d53f5870e15c251bee1872069bdc9dbfac5987c8601c974533531f4351ca",
+  "docs": "PASS",
+  "lint": "PASS, pre-existing Fast Refresh warning",
+  "typecheck": "PASS",
+  "build": "PASS",
+  "assets": "PASS, 10.51 MiB precache",
+  "smokeScenarios": 31,
+  "browser": {
+    "390": "PASS, normal motion",
+    "768": "PASS, reduced motion"
+  },
+  "fullSuite": {
+    "passed": 3487,
+    "failed": 15,
+    "cause": "Hand-built runtime fixtures lacked new HomeResident instance"
+  },
+  "focusedAfterFixtureUpdate": {
+    "passed": 23,
+    "failed": 0
+  },
+  "releasePwaAndHumanEvaluation": "not run for this change"
+}

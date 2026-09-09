@@ -1,0 +1,28 @@
+{
+  "target": "http://127.0.0.1:5253",
+  "build": {
+    "version": "house-ux-v4-local:2b936d67-d4de-4b85-a291-91a5d43e4c22",
+    "revision": "house-ux-v4-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceSha256": "6b0908065bd89298a453ad609a789aaaef26bf24a4d462fbed2867f899815259",
+  "sourceDirectory": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-house-final-t68srei0",
+  "houseCandidate": "island-home-interior-v4",
+  "testedWidths": [
+    390,
+    768
+  ]
+}

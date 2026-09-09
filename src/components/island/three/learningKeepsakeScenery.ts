@@ -1,10 +1,13 @@
 import * as THREE from 'three';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { ISLAND_LEARNING_KEEPSAKES, isIslandLearningKeepsakeAvailable,
     type IslandLearningKeepsakeId, type IslandLearningKeepsakesState } from '../../../domain/island/learningKeepsakes';
 import { roundedBoxGeometry } from './geometry';
 import { cylinder, ellipsoid, mesh, star } from './primitives';
 
-export const ISLAND_KEEPSAKE_SCENERY_CANDIDATE = 'island-home-interior-v3';
+export type IslandChallengeDisplayId = 'certificate' | 'trophy';
+
+export const ISLAND_KEEPSAKE_SCENERY_CANDIDATE = 'island-home-interior-v4';
 export const ISLAND_KEEPSAKE_VIEW = {
     target: [0, 1.65, 1.9], position: [6, 8, 13], minimumHeight: 5.7,
 } as const;
@@ -21,6 +24,8 @@ export type IslandHomeHit = { type: 'keepsake'; id: IslandLearningKeepsakeId } |
 export class IslandLearningKeepsakeScenery {
     readonly group = new THREE.Group();
     private readonly awards = new Map<IslandLearningKeepsakeId, THREE.Group>();
+    private readonly challengeAwards = new Map<IslandChallengeDisplayId, THREE.Group>();
+    private challengeSelection: IslandChallengeDisplayId[] = [];
     private readonly materials = new Set<THREE.Material>();
     private built = false;
     private disposed = false;
@@ -37,15 +42,16 @@ export class IslandLearningKeepsakeScenery {
         this.built = true;
         const wood = this.material('#bd844d'), dark = this.material('#31476a'), paper = this.material('#fff4d3');
         const gold = this.material('#e8b64d', .22), teal = this.material('#3d9b88'), coral = this.material('#cf6957');
-        const ivory = this.material('#f5e8cf'), floor = this.material('#e3c495'), blue = this.material('#385a90');
+        const ivory = this.material('#f5e8cf'), floor = this.material('#e6cca4'), blue = this.material('#5962ad');
+        const cabinet = this.material('#567ea9'), plum = this.material('#8263a9');
         // A finite, warm indoor fill belongs to this room and is retired on
         // exit. It never changes the island's daylight or shadow settings.
         const fill = new THREE.PointLight('#fff5e6', 3, 9, 2);
         fill.name = 'home-interior-fill'; fill.position.set(0, 3.55, 2.45);
         this.group.add(fill);
-        mesh(this.group, roundedBoxGeometry([6.8, 4.1, .13], .035), ivory, [0, 2.05, -.35]).name = 'keepsake-room-wall';
+        mesh(this.group, roundedBoxGeometry([6.8, 4.1, .13], .035, 1), plum, [0, 2.05, -.35]).name = 'keepsake-room-wall';
         mesh(this.group, new THREE.BoxGeometry(.14, 4.1, 5.3), blue, [-3.38, 2.05, 2.2]).name = 'keepsake-room-side-wall';
-        mesh(this.group, roundedBoxGeometry([6.85, .13, 5.3], .04), floor, [0, -.07, 2.2]).name = 'keepsake-room-floor';
+        mesh(this.group, roundedBoxGeometry([6.85, .13, 5.3], .04, 1), floor, [0, -.07, 2.2]).name = 'keepsake-room-floor';
         mesh(this.group, new THREE.BoxGeometry(.14, 4.16, 5.3), ivory, [3.38, 2.05, 2.2]).name = 'home-right-wall';
         mesh(this.group, new THREE.BoxGeometry(6.85, .14, 5.36), paper, [0, 4.15, 2.2]).name = 'home-ceiling';
         mesh(this.group, new THREE.BoxGeometry(6.85, 4.16, .14), blue, [0, 2.05, 4.84]).name = 'home-entry-wall';
@@ -53,25 +59,58 @@ export class IslandLearningKeepsakeScenery {
         ellipsoid(this.group, gold, [1.36, 1.2, 4.713], [.06, .06, .035], 10);
         // Opaque daylight glass closes the window: no hole into the exterior sea.
         mesh(this.group, new THREE.BoxGeometry(.05, 1.42, 1.46), wood, [3.279, 2.38, 1.05]).name = 'home-window-frame';
-        mesh(this.group, new THREE.BoxGeometry(.016, 1.20, 1.24), this.material('#b9dad5'), [3.246, 2.38, 1.05]).name = 'home-window-glass';
+        mesh(this.group, new THREE.BoxGeometry(.016, 1.20, 1.24), this.material('#bce1dc'), [3.246, 2.38, 1.05]).name = 'home-window-glass';
         mesh(this.group, new THREE.BoxGeometry(.026, 1.20, .055), paper, [3.223, 2.38, 1.05]);
         mesh(this.group, new THREE.BoxGeometry(.026, .055, 1.24), paper, [3.223, 2.38, 1.05]);
         mesh(this.group, roundedBoxGeometry([6.5, .1, .08], .015), wood, [0, .09, -.23]);
         mesh(this.group, roundedBoxGeometry([6.5, .09, .085], .015), blue, [0, 3.96, -.23]);
         // A substantial wooden cabinet, with grounded sides and three real
         // shelf boards. The available space stays finite even when empty.
-        for (const x of [-.88, 3.08]) mesh(this.group, roundedBoxGeometry([.1, 3.69, .58], .018), wood, [x, 1.845, .10]);
+        for (const x of [-.88, 3.08]) mesh(this.group, roundedBoxGeometry([.1, 3.69, .58], .018), cabinet, [x, 1.845, .10]);
         for (const y of [.06, .54, 1.66, 2.78, 3.70]) {
-            mesh(this.group, roundedBoxGeometry([4.06, .06, .65], .018), wood, [1.1, y, .10]).name = 'keepsake-room-shelf-board';
+            mesh(this.group, roundedBoxGeometry([4.06, .06, .65], .018, 1), wood, [1.1, y, .10]).name = 'keepsake-room-shelf-board';
         }
         for (let i = 0; i < 6; i++) mesh(this.group, new THREE.BoxGeometry(.016, .004, 5.12), wood, [-2.75 + i * 1.08, .001, 2.2]);
         // The awards live in a furnished home: a reading seat, a book on the
         // table and a small notice board share the space with the actual shelf.
-        const mint = this.material('#89b8a2'), fabric = this.material('#e4a98c');
+        const mint = this.material('#4d9b9b'), fabric = this.material('#d98098');
         mesh(this.group, roundedBoxGeometry([3.9, .025, 2.35], .12), mint, [.25, .018, 2.52]).name = 'home-rug';
-        mesh(this.group, roundedBoxGeometry([1.7, .26, 1.1], .13), fabric, [-2.13, .38, 2.1]).name = 'home-reading-seat';
-        mesh(this.group, roundedBoxGeometry([.25, 1.04, 1.15], .12), fabric, [-2.97, .6, 2.1]);
+        mesh(this.group, roundedBoxGeometry([1.7, .38, 1.1], .18), fabric, [-2.13, .38, 2.1]).name = 'home-reading-seat';
+        const detailStart = this.group.children.length;
+        mesh(this.group, roundedBoxGeometry([.32, 1.2, 1.15], .15), fabric, [-2.97, .6, 2.1]);
         mesh(this.group, roundedBoxGeometry([.55, .3, .66], .1), paper, [-2.4, .65, 2.1]);
+        // A curved upholstered back and a large stitched cushion make a place
+        // to sit, without introducing pretend awards into the empty cabinet.
+        ellipsoid(this.group, fabric, [-2.16, .80, 1.64], [.84, .66, .16], 12).name = 'home-seat-back';
+        const cushion = mesh(this.group, roundedBoxGeometry([.62, .19, .56], .085, 1), gold, [-2.13, .66, 2.03]);
+        cushion.rotation.y = -.18;
+        for (const x of [-2.32, -2.13, -1.94]) {
+            mesh(this.group, new THREE.BoxGeometry(.045, .01, .39), paper, [x, .761, 2.03]);
+        }
+        // Broad woven bands belong only to the rug, leaving floor and walls quiet.
+        for (const z of [1.50, 1.67, 3.38, 3.55]) {
+            mesh(this.group, new THREE.BoxGeometry(3.65, .006, .055), paper, [.25, .034, z]);
+        }
+        for (const x of [-2.70, -1.54]) for (const z of [1.78, 2.43]) {
+            cylinder(this.group, wood, [x, .15, z], .055, .29, .08, 10);
+        }
+        // Cabinet crown: one gently arched silhouette above the existing slots.
+        for (let i = 0; i < 3; i++) {
+            ellipsoid(this.group, cabinet, [-.28 + i * 1.38, 3.77, .1], [.76, i === 1 ? .29 : .19, .31], 10);
+        }
+        // Batch static fabric/wood details by material to retain the room's
+        // draw-call budget. Keep interactive and framing anchors independent.
+        const details = this.group.children.slice(detailStart).filter((object): object is THREE.Mesh => object instanceof THREE.Mesh);
+        for (const material of new Set(details.map(object => object.material))) {
+            const objects = details.filter(object => object.material === material);
+            const geometries = objects.map(object => { object.updateMatrix(); return (object.geometry.index ? object.geometry.toNonIndexed() : object.geometry.clone()).applyMatrix4(object.matrix); });
+            const combined = mergeGeometries(geometries);
+            geometries.forEach(geometry => geometry.dispose());
+            if (combined) {
+                objects.forEach(object => { object.geometry.dispose(); this.group.remove(object); });
+                mesh(this.group, combined, material as THREE.Material).name = 'home-furniture-detail';
+            }
+        }
         const table = cylinder(this.group, wood, [.55, .49, 2.52], .69, .09, .69, 32); table.name = 'home-coffee-table';
         cylinder(this.group, dark, [.55, .25, 2.52], .13, .46, .22, 12);
         const album = mesh(this.group, roundedBoxGeometry([.65, .07, .48], .025), blue, [.53, .58, 2.49]); album.rotation.y = -.18; album.name = 'home-album'; album.userData.homeAction = 'album';
@@ -146,12 +185,26 @@ export class IslandLearningKeepsakeScenery {
                 }
             }
         }
+        // Two dedicated challenge slots leave all sixteen original placements intact.
+        // Reuse the room's material language and geometry, with a wall certificate
+        // above a separate small shelf on the right-hand wall.
+        const certificate = this.awards.get('first-completion')!.clone(true);
+        certificate.name = 'challenge-certificate'; certificate.userData = {};
+        certificate.scale.setScalar(2.65); certificate.rotation.y = -Math.PI / 2;
+        certificate.position.set(3.23, 3.52 - .157 * 2.65, .75);
+        const trophy = this.awards.get('completed-5')!.clone(true);
+        trophy.name = 'challenge-trophy'; trophy.userData = {};
+        trophy.scale.setScalar(2.45); trophy.rotation.y = -Math.PI / 2;
+        trophy.position.set(2.94, 1.02 - .017 * 2.45, .75);
+        mesh(this.group, roundedBoxGeometry([.65, .06, .86], .018), wood, [3.0, .99, .75]).name = 'challenge-award-shelf';
+        this.challengeAwards.set('certificate', certificate); this.challengeAwards.set('trophy', trophy);
+        this.group.add(certificate, trophy);
         this.group.traverse(object => {
             if (object instanceof THREE.Mesh) { object.castShadow = false; object.receiveShadow = false; }
         });
     }
 
-    update(state?: IslandLearningKeepsakesState, completedSets = 0, active = false, selectedId?: IslandLearningKeepsakeId) {
+    update(state?: IslandLearningKeepsakesState, completedSets = 0, active = false, selectedId?: IslandLearningKeepsakeId, challengeDisplayed: readonly IslandChallengeDisplayId[] = []) {
         if (this.disposed) return false;
         if (!active) {
             const changed = this.built || this.group.visible;
@@ -165,7 +218,11 @@ export class IslandLearningKeepsakeScenery {
         const next = ISLAND_LEARNING_KEEPSAKES.filter(entry => requested.includes(entry.id)
             && isIslandLearningKeepsakeAvailable({ completedSets }, entry.id)).map(entry => entry.id);
         const focus = selectedId && next.includes(selectedId) ? selectedId : null;
-        const changed = !this.group.visible || next.join(':') !== this.selection.join(':') || focus !== this.selectedId;
+        const nextChallenge = (['certificate', 'trophy'] as const).filter(id => challengeDisplayed.includes(id));
+        const challengeChanged = nextChallenge.join(':') !== this.challengeSelection.join(':');
+        this.challengeSelection = nextChallenge;
+        this.challengeAwards.forEach((group, id) => { group.visible = nextChallenge.includes(id); });
+        const changed = challengeChanged || !this.group.visible || next.join(':') !== this.selection.join(':') || focus !== this.selectedId;
         this.group.visible = true; this.selection = next; this.selectedId = focus;
         this.awards.forEach((group, id) => { group.visible = next.includes(id); });
         return changed;
@@ -218,6 +275,7 @@ export class IslandLearningKeepsakeScenery {
     describe() {
         this.group.updateWorldMatrix(true, true);
         return { candidate: ISLAND_KEEPSAKE_SCENERY_CANDIDATE, uuid: this.group.uuid, visible: this.group.visible, selectedId: this.selectedId,
+            challengeAwards: [...this.challengeAwards].map(([id, group]) => ({ id, visible: this.group.visible && group.visible })),
             awards: [...this.awards].map(([id, group]) => ({ id, uuid: group.uuid, visible: this.group.visible && group.visible,
                 position: group.getWorldPosition(new THREE.Vector3()).toArray() })) };
     }
@@ -225,7 +283,7 @@ export class IslandLearningKeepsakeScenery {
         const geometries = new Set<THREE.BufferGeometry>();
         this.group.traverse(object => { if (object instanceof THREE.Mesh) geometries.add(object.geometry); });
         geometries.forEach(geometry => geometry.dispose()); this.materials.forEach(material => material.dispose());
-        this.group.clear(); this.awards.clear(); this.materials.clear(); this.built = false;
+        this.group.clear(); this.awards.clear(); this.challengeAwards.clear(); this.challengeSelection = []; this.materials.clear(); this.built = false;
         this.selection = []; this.selectedId = null;
     }
     dispose() {

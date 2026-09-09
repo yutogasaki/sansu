@@ -181,7 +181,6 @@ export const Stats: React.FC = () => {
     const [radarData, setRadarData] = useState<RadarCategoryPoint[]>([]);
     const [trendData, setTrendData] = useState<WeeklyTrendPoint[]>([]);
     const [trendMode, setTrendMode] = useState<"count" | "accuracy">("count");
-    const [showMore, setShowMore] = useState(false);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -452,20 +451,7 @@ export const Stats: React.FC = () => {
                     </SurfacePanel>
                 )}
 
-                <div className="stats-details-toggle">
-                    <Button
-                        variant="secondary"
-                        size="sm"
-                        className="min-h-11 px-6"
-                        aria-expanded={showMore}
-                        aria-controls="stats-learning-details"
-                        onClick={() => setShowMore(previous => !previous)}
-                    >
-                        {showMore ? t("くわしい きろくを とじる", "詳しい記録を閉じる") : t("もっと みる", "もっと見る")}
-                    </Button>
-                </div>
-
-                {showMore && <div id="stats-learning-details" className={navigation ? "stats-details-grid" : "space-y-8"}>
+                <div id="stats-learning-details" className={navigation ? "stats-details-grid" : "space-y-8"}>
                     <SurfacePanel className="space-y-5 rounded-[28px] p-5">
                         <SurfacePanelHeader
                             title={t("せいちょう グラフ", "成長グラフ")}
@@ -709,7 +695,7 @@ export const Stats: React.FC = () => {
                             </InsetPanel>
                         </div>
                     </SurfacePanel>
-                </div>}
+                </div>
             </div>
         </ScreenScaffold>
     );

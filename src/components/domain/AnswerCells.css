@@ -1,0 +1,5 @@
+.answer-cells { display: inline-flex; align-items: center; justify-content: center; gap: .15em; max-width: 100%; font-variant-numeric: tabular-nums; }
+.answer-cell { display: inline-flex; align-items: center; justify-content: center; min-width: .85em; min-height: 1.25em; border: 1px solid var(--color-gray-500, #8395a7); border-radius: .18em; background: var(--app-surface-strong, white); }
+.answer-cell[data-filled="false"] { color: transparent; }
+.answer-cell[data-active="true"] { outline: 2px solid var(--app-accent-strong, #24a08a); outline-offset: 1px; }
+.answer-cells-point { align-self: flex-end; }

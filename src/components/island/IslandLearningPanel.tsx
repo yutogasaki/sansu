@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { Lightbulb, BookOpen } from 'lucide-react';
 import type { IslandLearningAction, IslandPlan } from '../../domain/island/types';
 import { ISLAND_LEARNING_CANDIDATE } from '../../domain/island/feature';
@@ -21,7 +21,7 @@ function LightSeed({ filled, current }: { filled: boolean; current: boolean }) {
 }
 
 /** Help preserves the current draft; saved answers and new slots reset it. */
-export function IslandLearningPanel({ plan, active = true, intro = false, busy, hintPending = false, feedback, onAction, observation, englishAutoRead = false, subjectChoice }: {
+export function IslandLearningPanel({ plan, active = true, intro = false, busy, hintPending = false, feedback, onAction, observation, englishAutoRead = false, subjectChoice, listeningEntry }: {
     plan: IslandPlan;
     active?: boolean;
     intro?: boolean;
@@ -31,6 +31,7 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
     onAction: (action: IslandLearningAction) => void;
     observation?: IslandLearningObserver;
     englishAutoRead?: boolean;
+    listeningEntry?: ReactNode;
     subjectChoice?: { selected: boolean; onChange: (selected: boolean) => void };
 }) {
     const slot = plan.slots[plan.cursor];
@@ -70,6 +71,7 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
             englishAutoRead={englishAutoRead} onInteraction={() => setDismissedReceipt(feedback?.id)}
             onAnswer={answer => onAction({ type: 'answer', answer })} />
         <div className="island-learning-actions">
+            {listeningEntry}
             {!stage ? <>
                 <button className="island-text-button" disabled={busy} onClick={() => onAction({ type: 'support_opened' })}><Lightbulb size={16} aria-hidden="true" />ヒントを みる</button>
                 <button className="island-text-button" disabled={busy} onClick={() => onAction({ type: 'skipped' })}>わからない</button>

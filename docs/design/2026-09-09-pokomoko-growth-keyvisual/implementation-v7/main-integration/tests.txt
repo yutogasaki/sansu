@@ -1,0 +1,607 @@
+
+> pokko-fushigi-zukan-app@0.0.0 test:run
+> vitest run --minWorkers=1 --maxWorkers=4
+
+
+ RUN  v2.1.9 /private/tmp/sansu-home-v7-push
+
+ ✓ src/domain/explore/__tests__/persistenceRepository.test.ts (38 tests) 506ms
+ ✓ src/domain/explore/__tests__/learningPlannerSegment.test.ts (15 tests) 460ms
+ ✓ tools/expression-audio/audio-analysis.test.mjs (53 tests) 4739ms
+   ✓ insect-band classification rejects absent insects and actual wind or water even when made quiet 383ms
+   ✓ raw02 loop prefix positions are missing first-pitch evidence, not proof of an overlapping loop 308ms
+   ✓ one missing first-pitch sample or final required sample fails without shortening either window 596ms
+   ✓ one-sample and wrong-sign native offsets fail instead of choosing a better waveform lag 327ms
+   ✓ unknown, nonfinite, fractional and mismatched native metadata fail rather than falling back to signal alignment 354ms
+   ✓ real-answer cue history can exceed 256 sources, while the finite source cap still cannot block native playback or close 779ms
+ ✓ src/domain/island/island.test.ts (19 tests) 2065ms
+   ✓ island frozen learning sets > reserves three introductory questions, then six familiar questions, and restores the exact plan 443ms
+   ✓ island frozen learning sets > supports mixed vocabulary sets and applies vocabulary progression only to independent answers 463ms
+   ✓ island frozen learning sets > preserves fraction multi-input and stepwise written arithmetic in complete reserved plans 528ms
+ ✓ src/components/island/three/residentRig.test.ts (38 tests) 3198ms
+   ✓ resident local rig and furniture contact > bench supports each resident at the real surface through all rotations 406ms
+   ✓ resident local rig and furniture contact > mushroom supports each resident at the real surface through all rotations 325ms
+   ✓ resident interest stays a removable layer on the real rig > otter keeps real feet, root, seat and shoulder joints on rotated ordinary objects 842ms
+ ✓ src/components/island/three/sharedDisplayScene.test.ts (13 tests) 422ms
+ ✓ src/domain/island/rewardGoalRepository.test.ts (14 tests) 1160ms
+   ✓ reward goals and the real island storage boundary > earns the desired furniture through ordinary learning, preserves photographs and old memories, then resumes the same reservation 478ms
+ ✓ src/domain/island/expressionRepository.test.ts (11 tests) 1044ms
+   ✓ expression ownership with the existing learning and photo stores > earns ordinary stars without materializing expression, acquires separately, reloads and resumes the exact same learning plan 489ms
+ ✓ src/hooks/useStudySession.logic.test.ts (40 tests) 11ms
+ ✓ src/hooks/blockGenerators.test.ts (32 tests) 23ms
+ ✓ src/domain/explore/__tests__/reducer.test.ts (29 tests) 9ms
+ ✓ src/domain/math/generators/counting.test.ts (51 tests) 24ms
+ ✓ src/components/island/three/sharedActivities.test.ts (23 tests) 401ms
+ ✓ src/domain/island/sharedMemories.test.ts (14 tests) 46ms
+ ✓ src/components/island/three/sharedJobController.test.ts (23 tests) 2819ms
+   ✓ shared work after-render and actual object continuity > borrows the actual hand, lamp and receiver for framing without turning strict camera diagnostics into a save gate 452ms
+ ✓ src/components/island/three/workshopScene.test.ts (22 tests) 399ms
+ ✓ src/components/island/three/sharedActivityFraming.test.ts (26 tests) 16633ms
+   ✓ body identity keeps the actual articulated tail > otter retains tail surfaces in every held pose without borrowing head or arm surfaces 344ms
+   ✓ one side view contains the complete shared delivery > 'flower' fits all quarter-turn chair directions and phone/tablet stage shapes 1400ms
+   ✓ one side view contains the complete shared delivery > 'star' fits all quarter-turn chair directions and phone/tablet stage shapes 1187ms
+   ✓ one side view contains the complete shared delivery > 'bubble' fits all quarter-turn chair directions and phone/tablet stage shapes 1582ms
+   ✓ one side view contains the complete shared delivery > scores actual held poses for '624 star spectator' across every phase without touching the live rigs 979ms
+   ✓ one side view contains the complete shared delivery > scores actual held poses for '484 star self-occlusion' across every phase without touching the live rigs 485ms
+   ✓ one side view contains the complete shared delivery > scores actual held poses for '484 bubble self-occlusion' across every phase without touching the live rigs 1042ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'phone star' scene 679ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'tablet star' scene 605ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'phone flower' scene 481ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'tablet flower' scene 485ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'phone bubble' scene 481ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'tablet bubble' scene 416ms
+   ✓ one side view contains the complete shared delivery > selects a legal fixed presentation for cdc5 phone without inventing readability 603ms
+   ✓ one side view contains the complete shared delivery > selects a legal fixed presentation for cdc5 tablet without inventing readability 729ms
+   ✓ one side view contains the complete shared delivery > selects a legal fixed presentation for cdc5 obstructed without inventing readability 1411ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'phone-flower' preserves a legal readable presentation 426ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'phone-star' preserves a legal readable presentation 355ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'phone-bubble' preserves a legal readable presentation 478ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'tablet-flower' preserves a legal readable presentation 536ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'tablet-star' preserves a legal readable presentation 364ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'tablet-bubble' preserves a legal readable presentation 530ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'tablet-fox-flower' preserves a legal readable presentation 888ms
+ ✓ src/domain/math/planner.test.ts (35 tests) 27ms
+ ✓ src/domain/island/experienceRepository.test.ts (12 tests) 2754ms
+   ✓ owned atomic experience persistence > rolls back a failed layout application receipt including all positions, cosmetics and optional expression state 1198ms
+   ✓ saved layout application against the current earned world > keeps real later learning/growth, earned new items, spent stars and the saved next plan when restoring an old layout 1269ms
+ ✓ src/domain/explore/__tests__/g0NumberVessel.test.ts (13 tests) 7ms
+ ✓ src/components/island/three/livingRuntime.test.ts (18 tests) 1355ms
+ ✓ src/domain/island/workshop.test.ts (14 tests) 41ms
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ✓ src/domain/logic.test.ts (26 tests) 12ms
+ ✓ src/components/island/IslandAnswerForm.test.tsx (38 tests) 471ms
+   ✓ Island problem semantic presentation > has a curated equivalent for every symbol actually emitted by the current math generators 370ms
+ ✓ src/domain/algorithms/srs.test.ts (60 tests) 10ms
+ ✓ src/domain/island/photosRepository.test.ts (11 tests) 590ms
+ ✓ src/components/island/useIslandCustomization.test.ts (27 tests) 465ms
+ ✓ src/domain/island/learningObservationCommit.test.ts (28 tests) 762ms
+ ✓ src/domain/island/sharedMemoriesRepository.test.ts (9 tests) 500ms
+ ✓ src/domain/island/learningContinuity.test.ts (13 tests) 1504ms
+   ✓ island learning continuity > does not disguise unselected pending checks as ordinary Due across repeated short sets 340ms
+ ✓ src/components/island/islandWorkshopQueue.test.ts (20 tests) 54ms
+ ✓ src/components/island/useIslandExperience.test.ts (16 tests) 766ms
+ ✓ src/domain/island/growthRepository.test.ts (11 tests) 1873ms
+   ✓ owned atomic living island persistence > aborts growth, snapshot, answer, profile and completion together then saves each once on retry 1229ms
+ ✓ src/components/island/three/runtimeExpressionEnvironment.test.ts (10 tests) 7983ms
+   ✓ runtime environment/flag ownership boundary > restores occlusion then seasonal materials before appearance and growth rebuild, using the same camera and rig roots 1059ms
+   ✓ runtime environment/flag ownership boundary > shows the actual trim even with default identity, reports its actual visibility, and keeps old memories bare 848ms
+   ✓ runtime environment/flag ownership boundary > does not overwrite captured look/flag/environment state or the learning camera when hidden learning receives a saved scene 458ms
+   ✓ runtime environment/flag ownership boundary > restores each saved free look on the same three rigs after removing raincoat 477ms
+   ✓ runtime environment/flag ownership boundary > restores each saved free look on the same three rigs after removing star-beret 389ms
+   ✓ runtime environment/flag ownership boundary > cancels the actual walk and clears live foot marks on learning 1072ms
+   ✓ runtime environment/flag ownership boundary > cancels the actual walk and clears live foot marks on exit 1334ms
+   ✓ runtime environment/flag ownership boundary > cancels the actual walk and clears live foot marks on selection-change 1282ms
+   ✓ runtime environment/flag ownership boundary > does not pass a fresh walk request to the controller while the document is hidden 511ms
+   ✓ runtime environment/flag ownership boundary > releases seasonal clones before the world can dispose their source materials 553ms
+ ✓ src/domain/island/workshopRepository.test.ts (9 tests) 616ms
+ ✓ src/domain/island/workshopLayout.test.ts (17 tests) 25ms
+ ✓ src/domain/island/learningKeepsakesRepository.test.ts (10 tests) 730ms
+ ✓ src/domain/island/customizationRepository.test.ts (16 tests) 665ms
+ ✓ src/components/island/useIslandSharedMemories.test.ts (13 tests) 878ms
+ ✓ src/domain/island/expression.test.ts (16 tests) 27ms
+ ✓ src/components/island/three/natureObservationFrame.test.ts (22 tests) 32541ms
+   ✓ explicit nature observation framing > rejects qualified-03/06 saved phone cameras and a visible but subpixel frontal face (reduced=false) 2552ms
+   ✓ explicit nature observation framing > rejects qualified-03/06 saved phone cameras and a visible but subpixel frontal face (reduced=true) 2254ms
+   ✓ explicit nature observation framing > separates butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.0103626943005182/false) 1286ms
+   ✓ explicit nature observation framing > separates butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.0103626943005182/true) 1218ms
+   ✓ explicit nature observation framing > separates butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.6340425531914893/false) 1214ms
+   ✓ explicit nature observation framing > separates butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.6340425531914893/true) 1202ms
+   ✓ explicit nature observation framing > separates ribbon-butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.0103626943005182/false) 1101ms
+   ✓ explicit nature observation framing > separates ribbon-butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.0103626943005182/true) 999ms
+   ✓ explicit nature observation framing > separates ribbon-butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.6340425531914893/false) 1083ms
+   ✓ explicit nature observation framing > separates ribbon-butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.6340425531914893/true) 974ms
+   ✓ explicit nature observation framing > holds a butterfly covered in every candidate and recovers without moving its host or residents 1618ms
+   ✓ explicit nature observation framing > shows the actual eyes and beak at the rotated mushroom from qualified-03/06 without moving any model (reduced=false) 3263ms
+   ✓ explicit nature observation framing > shows the actual eyes and beak at the rotated mushroom from qualified-03/06 without moving any model (reduced=true) 3171ms
+   ✓ explicit nature observation framing > keeps a landed or hovering bird readable at host yaw 0 in a single fixed observation camera 740ms
+   ✓ explicit nature observation framing > keeps a landed or hovering bird readable at host yaw 1.5707963267948966 in a single fixed observation camera 923ms
+   ✓ explicit nature observation framing > keeps a landed or hovering bird readable at host yaw 3.141592653589793 in a single fixed observation camera 773ms
+   ✓ explicit nature observation framing > keeps a landed or hovering bird readable at host yaw -2.356194490192345 in a single fixed observation camera 967ms
+   ✓ explicit nature observation framing > chooses another front angle when real foreground geometry covers the face and never declares a covered face readable 7197ms
+ ✓ src/domain/park/park.test.ts (131 tests) 244ms
+ ✓ src/domain/explore/__tests__/learningSegmentPersistence.test.ts (7 tests) 151ms
+ ✓ src/domain/learning/attemptPersistence.test.ts (24 tests) 378ms
+ ✓ src/domain/island/furnitureRepository.test.ts (11 tests) 1503ms
+   ✓ atomic optional furniture acquisition > earns stars through ordinary answers, acquires telescope, reloads and resumes the same learning reservation 455ms
+   ✓ atomic optional furniture acquisition > earns stars through ordinary answers, acquires tea-table, reloads and resumes the same learning reservation 575ms
+ ✓ src/components/island/three/growthVisuals.test.ts (21 tests) 608ms
+ ✓ src/components/island/three/optionalFurnitureTrial.test.ts (8 tests) 50326ms
+   ✓ borrowed tools choose an actually usable legal trial location > rechecks the chosen resident using the same borrowed model and retains a usable position on reselection 870ms
+   ✓ borrowed tools choose an actually usable legal trial location > uses the new connecting floor for the formerly blocked furniture-03 hammock without moving saved furniture 1956ms
+   ✓ borrowed tools choose an actually usable legal trial location > keeps the furniture-02 narrow passage blocked for the actual body, then accepts only a child-requested usable preview 8527ms
+   ✓ borrowed tools choose an actually usable legal trial location > drops an old explicit search on movement, lifecycle pause and foreground resume 359ms
+   ✓ borrowed tools choose an actually usable legal trial location > telescope preflights every selected resident then retains the same real model through sequential trials 8657ms
+   ✓ borrowed tools choose an actually usable legal trial location > hammock preflights every selected resident then retains the same real model through sequential trials 4645ms
+   ✓ borrowed tools choose an actually usable legal trial location > tea-table preflights every selected resident then retains the same real model through sequential trials 25191ms
+ ✓ src/hooks/learningProgression.integration.test.ts (12 tests) 6316ms
+   ✓ learning progression from real generated questions > reaches 70% promotion through generated normal blocks and persisted answers 6032ms
+ ✓ src/components/domain/LearningAnswerForm.defer.test.tsx (19 tests) 24ms
+ ✓ src/components/island/three/navigation.test.ts (19 tests) 72ms
+ ✓ src/domain/user/repository.test.ts (9 tests) 9ms
+ ✓ src/domain/explore/__tests__/learningPlanner.test.ts (8 tests) 245ms
+ ✓ src/domain/explore/__tests__/problemAdapter.test.ts (38 tests) 69ms
+ ✓ src/domain/island/learningSession.test.ts (10 tests) 790ms
+ ✓ src/components/island/useIslandPhotos.test.ts (10 tests) 343ms
+ ✓ src/components/island/three/sharedActivityController.test.ts (20 tests) 2004ms
+ ✓ src/domain/explore/__tests__/g0NumberSuika.test.ts (32 tests) 40ms
+ ✓ src/components/island/three/connectedTerrain.test.ts (10 tests) 23590ms
+   ✓ connected terrain exterior > returns finite immutable matching rings and caches only plain coordinates 349ms
+   ✓ connected terrain exterior > supports every old ellipse and candidate connector on one y=0 cap at level 1 560ms
+   ✓ connected terrain exterior > supports every old ellipse and candidate connector on one y=0 cap at level 2 1329ms
+   ✓ connected terrain exterior > fills only the nested external layer bands and leaves no shore through the connecting floor 1171ms
+   ✓ connected terrain exterior > proves band nesting at every linear breakpoint and actual surface support between the boundaries 2044ms
+   ✓ connected terrain exterior > keeps world UVs, slot material identity and borrowed textures across every existing style 17680ms
+ ✓ src/components/island/three/cosmeticScenery.test.ts (19 tests) 25935ms
+   ✓ owned cosmetic scenery > leaves the moon-garden legacy scene geometry and rooted tree exactly as authored 1375ms
+   ✓ owned cosmetic scenery > leaves the starry legacy scene geometry and rooted tree exactly as authored 876ms
+   ✓ owned cosmetic scenery > leaves the candy legacy scene geometry and rooted tree exactly as authored 1291ms
+   ✓ owned cosmetic scenery > leaves the crystal legacy scene geometry and rooted tree exactly as authored 855ms
+   ✓ owned cosmetic scenery > changes real canopy silhouettes and house geometry, beyond recoloring 1353ms
+   ✓ owned cosmetic scenery > moon-garden preserves true ground, light anchors and growth through every accent 3053ms
+   ✓ owned cosmetic scenery > starry preserves true ground, light anchors and growth through every accent 2407ms
+   ✓ owned cosmetic scenery > candy preserves true ground, light anchors and growth through every accent 2678ms
+   ✓ owned cosmetic scenery > crystal preserves true ground, light anchors and growth through every accent 2585ms
+   ✓ owned cosmetic scenery > keeps crystal shore silhouettes clear of all land, bridge, resident and furniture footprints after expansion 575ms
+   ✓ owned cosmetic scenery > disposes each owned geometry, material and texture once without touching resident materials 4821ms
+   ✓ owned cosmetic scenery > fits 'moon-garden' theme at grown=true in the same home camera on phone and tablet 679ms
+   ✓ owned cosmetic scenery > fits 'starry' theme at grown=false in the same home camera on phone and tablet 328ms
+   ✓ owned cosmetic scenery > fits 'starry' theme at grown=true in the same home camera on phone and tablet 635ms
+   ✓ owned cosmetic scenery > fits 'candy' theme at grown=false in the same home camera on phone and tablet 375ms
+   ✓ owned cosmetic scenery > fits 'candy' theme at grown=true in the same home camera on phone and tablet 652ms
+   ✓ owned cosmetic scenery > fits 'crystal' theme at grown=false in the same home camera on phone and tablet 368ms
+   ✓ owned cosmetic scenery > fits 'crystal' theme at grown=true in the same home camera on phone and tablet 747ms
+ ✓ src/components/island/useIslandExpression.test.ts (9 tests) 138ms
+ ✓ src/domain/test/printability.test.ts (22 tests) 14ms
+ ✓ src/domain/island/customizationAppearanceRepository.test.ts (8 tests) 295ms
+ ✓ src/components/explore/ExploreProblemPanel.test.tsx (16 tests) 128ms
+ ✓ src/components/island/three/sharedDisplayFraming.test.ts (11 tests) 7329ms
+   ✓ shared photo actual scene sightlines > clears the photographed tree at (.20, -.60), π/2 on 'phone' without hiding or relocating it 948ms
+   ✓ shared photo actual scene sightlines > clears the photographed tree at (.20, -.60), π/2 on 'tablet' without hiding or relocating it 857ms
+   ✓ shared photo actual scene sightlines > keeps every actual saved work part readable at aspect 1.1016949152542372 1271ms
+   ✓ shared photo actual scene sightlines > keeps every actual saved work part readable at aspect 1.786046511627907 1848ms
+   ✓ shared photo actual scene sightlines > uses transformed world geometry and caches a stable near view without repeating rays 629ms
+   ✓ shared photo actual scene sightlines > responds to a real resident entering the chosen sightline and keeps that view when it clears 1049ms
+   ✓ shared photo actual scene sightlines > ignores invisible and fully transparent meshes, but reports an opaque enclosure as unreadable 661ms
+ ✓ src/domain/explore/__tests__/g0Whitebox.test.ts (13 tests) 12ms
+ ✓ src/components/island/three/sharedDisplayFrameBoundary.test.ts (5 tests) 3483ms
+   ✓ shared job completion releases the display camera > uses the same job candidate for capture, clears it on learning/hidden and returns to the unchanged static display selector 837ms
+   ✓ shared job completion releases the display camera > keeps pending work and clears the actual work parts only after commit and settle at 390px (commit first=false) 626ms
+   ✓ shared job completion releases the display camera > keeps pending work and clears the actual work parts only after commit and settle at 390px (commit first=true) 641ms
+   ✓ shared job completion releases the display camera > keeps pending work and clears the actual work parts only after commit and settle at 768px (commit first=false) 772ms
+   ✓ shared job completion releases the display camera > keeps pending work and clears the actual work parts only after commit and settle at 768px (commit first=true) 607ms
+ ✓ src/components/island/three/runtimeFurnitureClearance.test.ts (5 tests) 11639ms
+   ✓ runtime trial preparation waits for actual saved-furniture clearance > keeps the recorded rabbit walking, then resolves and uses the same choice from the real endpoint 3763ms
+   ✓ runtime trial preparation waits for actual saved-furniture clearance > starts newly required clearance before trial preparation on the same runtime update 914ms
+   ✓ runtime trial preparation waits for actual saved-furniture clearance > discards the old waiting iterator on learning without moving the rabbit to finish 743ms
+   ✓ runtime trial preparation waits for actual saved-furniture clearance > discards the old waiting iterator on exit without moving the rabbit to finish 554ms
+   ✓ runtime trial preparation waits for actual saved-furniture clearance > discards the old waiting iterator on reselection without moving the rabbit to finish 5665ms
+ ✓ src/domain/island/appearance.test.ts (12 tests) 360ms
+   ✓ one wallet, eighteen parts, three completed recipes > charges each component once for every prior-ownership subset, independent of purchase order 339ms
+ ✓ src/domain/island/progressiveSupport.test.ts (13 tests) 479ms
+ ✓ src/domain/learning/evidence.test.ts (16 tests) 45ms
+ ✓ src/components/island/three/residentInteraction.test.ts (18 tests) 223ms
+ ✓ src/components/island/three/appearanceRendering.test.ts (11 tests) 17428ms
+   ✓ independently equipped actual island surfaces > maps the biscuit surface onto unchanged level land and retires its shared texture once 1874ms
+   ✓ independently equipped actual island surfaces > starry changes each actual slot while retaining every other slot and rooted identity 2301ms
+   ✓ independently equipped actual island surfaces > candy changes each actual slot while retaining every other slot and rooted identity 2216ms
+   ✓ independently equipped actual island surfaces > crystal changes each actual slot while retaining every other slot and rooted identity 1791ms
+   ✓ independently equipped actual island surfaces > resolves the same explicit mix independently of legacy theme history, including accents 1205ms
+   ✓ independently equipped actual island surfaces > keeps actual level ground and both bridge decks through three full looks and old restoration 3786ms
+   ✓ independently equipped actual island surfaces > only retires changed-slot resources and disposes each visible owned resource once 852ms
+   ✓ independently equipped actual island surfaces > distinguishes hidden expanded bridge meshes from currently visible geometry 748ms
+   ✓ independently equipped actual island surfaces > starry fits its actual distant silhouettes in the chosen overview at each land stage 846ms
+   ✓ independently equipped actual island surfaces > candy fits its actual distant silhouettes in the chosen overview at each land stage 1021ms
+   ✓ independently equipped actual island surfaces > crystal fits its actual distant silhouettes in the chosen overview at each land stage 786ms
+ ✓ src/domain/island/experience.test.ts (19 tests) 20ms
+ ✓ src/domain/island/growth.test.ts (11 tests) 34ms
+ ✓ src/components/island/three/treeCanopyGeometry.test.ts (10 tests) 1281ms
+   ✓ sculpted moon-garden canopy > retains one closed outward surface with finite unit normals and a welded lighting seam 563ms
+ ✓ src/components/island/three/optionalFurnitureController.test.ts (37 tests) 12471ms
+   ✓ optional tools use the actual bodies and bounded furniture > telescope uses selected otter with visible actual contacts 457ms
+   ✓ optional tools use the actual bodies and bounded furniture > hammock uses selected otter with visible actual contacts 302ms
+   ✓ optional tools use the actual bodies and bounded furniture > tea-table uses selected otter with visible actual contacts 576ms
+   ✓ optional tools use the actual bodies and bounded furniture > tea-table uses selected rabbit with visible actual contacts 558ms
+   ✓ optional tools use the actual bodies and bounded furniture > tea-table uses selected fox with visible actual contacts 699ms
+   ✓ optional tools use the actual bodies and bounded furniture > telescope keeps contact and real framing at rotation 4.71238898038469 in both motion modes 369ms
+   ✓ optional tools use the actual bodies and bounded furniture > tea-table keeps contact and real framing at rotation 1.5707963267948966 in both motion modes 361ms
+   ✓ optional tools use the actual bodies and bounded furniture > tea-table keeps contact and real framing at rotation 3.141592653589793 in both motion modes 422ms
+   ✓ optional tools use the actual bodies and bounded furniture > tea-table keeps contact and real framing at rotation 4.71238898038469 in both motion modes 384ms
+   ✓ optional tools use the actual bodies and bounded furniture > tea passes one real cup from otter to rabbit with both hands touching 497ms
+   ✓ optional tools use the actual bodies and bounded furniture > tea passes one real cup from otter to fox with both hands touching 605ms
+   ✓ optional tools use the actual bodies and bounded furniture > tea passes one real cup from rabbit to otter with both hands touching 501ms
+   ✓ optional tools use the actual bodies and bounded furniture > tea passes one real cup from rabbit to fox with both hands touching 555ms
+   ✓ optional tools use the actual bodies and bounded furniture > tea passes one real cup from fox to otter with both hands touching 629ms
+   ✓ optional tools use the actual bodies and bounded furniture > tea passes one real cup from fox to rabbit with both hands touching 582ms
+   ✓ optional tools use the actual bodies and bounded furniture > routes the actual fox tail around an independent obstacle and the stationary residents 1019ms
+ ✓ src/components/island/three/roofSurface.test.ts (6 tests) 2616ms
+   ✓ default roof material prototype > keeps opaque, deterministic broad colors continuous across both texture edges 460ms
+   ✓ default roof material prototype > delivers the mapped face and all four seams through the actual scenery builder without leaking into other styles 1614ms
+   ✓ default roof material prototype > restores an actual placement clone before retiring the roof pool on an explicit-style switch 504ms
+ ✓ src/domain/math/numberSenseProgress.test.ts (32 tests) 12ms
+ ✓ src/components/island/useIslandLearningKeepsakes.test.ts (11 tests) 256ms
+ ✓ src/components/island/three/grassSurface.test.ts (9 tests) 904ms
+   ✓ default mint lawn bump surface > keeps the visible cap texture and retires it once on purchase, restore and exit 542ms
+ ✓ src/domain/learning/independentProgress.integration.test.ts (12 tests) 285ms
+ ✓ src/domain/island/rewardGoal.test.ts (13 tests) 41ms
+ ✓ src/components/island/three/personalScenery.test.ts (11 tests) 2198ms
+   ✓ house-mounted personal identity > moon-garden leaves the actual nameplate and roof flag visible from the home camera direction 633ms
+   ✓ house-mounted personal identity > starry leaves the actual nameplate and roof flag visible from the home camera direction 526ms
+   ✓ house-mounted personal identity > candy leaves the actual nameplate and roof flag visible from the home camera direction 506ms
+   ✓ house-mounted personal identity > crystal leaves the actual nameplate and roof flag visible from the home camera direction 409ms
+ ✓ src/components/island/islandWorkshopAudio.test.ts (12 tests) 152ms
+ ✓ src/components/island/three/flagFraming.test.ts (7 tests) 8660ms
+   ✓ inspection of the actual island flag > keeps identity and trim in front of actual mature house shapes for legacy and independent styles 8590ms
+ ✓ tools/island-expression-audio-focused-audit.test.mjs (12 tests) 24ms
+ ✓ src/domain/user/onboarding.test.ts (20 tests) 1684ms
+ ✓ src/domain/learningRepository.test.ts (14 tests) 17ms
+ ✓ src/components/island/three/sharedJobFraming.test.ts (6 tests) 34407ms
+   ✓ actual shared job sightlines > replaces the recorded back view with both actual paws and the same held object at aspect 1.3066202090592334 7603ms
+   ✓ actual shared job sightlines > replaces the recorded back view with both actual paws and the same held object at aspect 1.786046511627907 6891ms
+   ✓ actual shared job sightlines > improves the lamp view and exposes actual receiver triangles without hiding residual occlusion at aspect 1.3066202090592334 7181ms
+   ✓ actual shared job sightlines > improves the lamp view and exposes actual receiver triangles without hiding residual occlusion at aspect 1.786046511627907 7982ms
+   ✓ actual shared job sightlines > retains its selected contact angle through moving bounds without full searches or GPU allocations 2808ms
+   ✓ actual shared job sightlines > keeps an unreadable view honest and caps reselection during continuous occlusion 1942ms
+ ✓ src/components/island/three/workshopPresentation.test.ts (14 tests) 1109ms
+ ✓ src/components/island/three/natureVisuals.test.ts (8 tests) 317ms
+ ✓ src/components/island/three/furnitureClearanceController.test.ts (9 tests) 1900ms
+   ✓ saved furniture clearance runs physical moves in sequence > contains the whole current bodies and every future route before the second resident starts 1176ms
+ ✓ src/components/challenge/useChallengeSession.test.tsx (9 tests) 793ms
+ ✓ src/domain/island/learningObservation.test.ts (19 tests) 9ms
+ ✓ src/domain/island/learningKeepsakes.test.ts (32 tests) 33ms
+ ✓ src/components/island/IslandLearningKeepsakes.test.tsx (11 tests) 128ms
+ ✓ src/components/island/useIslandRewardGoal.test.ts (11 tests) 231ms
+ ✓ src/domain/island/sceneStyle.test.ts (6 tests) 18ms
+ ✓ src/components/island/three/runtimePhotography.test.ts (13 tests) 6348ms
+   ✓ current-scene photography boundary > renders before encoding without resetting the current actor or camera 463ms
+   ✓ current-scene photography boundary > photographs a real house keepsake in the existing island scene at 390×354 461ms
+   ✓ current-scene photography boundary > photographs a real house keepsake in the existing island scene at 768×430 316ms
+   ✓ current-scene photography boundary > cannot render or encode a hidden scene 580ms
+   ✓ current-scene photography boundary > cannot render or encode a offscreen scene 575ms
+   ✓ current-scene photography boundary > cannot render or encode a learning scene 634ms
+   ✓ current-scene photography boundary > cannot render or encode a lost scene 611ms
+   ✓ current-scene photography boundary > cannot render or encode a disposed scene 529ms
+   ✓ current-scene photography boundary > tracks the actual otter and cap before capture without changing its pose 681ms
+   ✓ current-scene photography boundary > tracks the actual rabbit and cap before capture without changing its pose 332ms
+   ✓ current-scene photography boundary > tracks the actual fox and cap before capture without changing its pose 338ms
+   ✓ display photo uses the actual scene before encoding > checks live tree occlusion before a 390×354 capture 491ms
+   ✓ display photo uses the actual scene before encoding > checks live tree occlusion before a 768×430 capture 336ms
+ ✓ src/domain/learning/unitPlanning.integration.test.ts (14 tests) 412ms
+ ✓ src/components/island/three/residentTail.test.ts (4 tests) 1590ms
+   ✓ the same actual tail has a reversible sitting joint > otter: original standing shape, clear backboards and standing borrowed pose 447ms
+   ✓ the same actual tail has a reversible sitting joint > keeps the recorded star handoff visible past the real fox tail in every shared phase 1012ms
+ ✓ src/domain/explore/__tests__/g0ChainShot.test.ts (12 tests) 9ms
+ ✓ src/components/island/three/optionalFurnitureFraming.test.ts (6 tests) 6038ms
+   ✓ optional tool close views keep the physical cause visible > keeps the same tea cup and tabletop visible through quaternion-restored handoff at 1.3202856387199153 455ms
+   ✓ optional tool close views keep the physical cause visible > keeps the same tea cup and tabletop visible through quaternion-restored handoff at 2.1429131970179185 410ms
+   ✓ optional tool close views keep the physical cause visible > frames the real hammock cloth past the house roof at 1.3220338983050848 1993ms
+   ✓ optional tool close views keep the physical cause visible > frames the real hammock cloth past the house roof at 2.0210526315789474 2019ms
+   ✓ optional tool close views keep the physical cause visible > keeps the same front-facing selection through a walk and restores every actual pose after camera inspection 1160ms
+ ✓ src/components/island/useIslandFurniture.test.ts (10 tests) 181ms
+ ✓ src/domain/challenge/repository.test.ts (14 tests) 650ms
+ ✓ src/domain/math/writtenArithmetic.test.ts (36 tests) 134ms
+ ✓ src/components/island/three/sharedActivityVisuals.test.ts (12 tests) 89ms
+ ✓ src/domain/park/writtenArithmeticIntegration.test.ts (25 tests) 166ms
+ ✓ src/components/island/islandAmbienceAudio.test.ts (11 tests) 115ms
+ ✓ src/components/island/useIslandMilestoneNotice.test.ts (15 tests) 17ms
+ ✓ src/domain/explore/__tests__/learningSegment.test.ts (20 tests) 8ms
+ ✓ src/components/island/three/learningKeepsakeScenery.test.ts (5 tests) 660ms
+   ✓ a finite room for actual learning keepsakes > physically supports thirteen separate trophies and wall-mounts three papers within a bounded static room 479ms
+ ✓ src/components/island/three/sceneFraming.test.ts (15 tests) 3486ms
+   ✓ frozen learning frame after free play > contains earned shores in matching album cameras and the home view at 390×190, chapter +0 331ms
+   ✓ frozen learning frame after free play > contains earned shores in matching album cameras and the home view at 390×190, chapter 1 337ms
+   ✓ frozen learning frame after free play > contains earned shores in matching album cameras and the home view at 390×190, chapter 2 389ms
+   ✓ frozen learning frame after free play > contains earned shores in matching album cameras and the home view at 390×190, chapter undefined 462ms
+   ✓ frozen learning frame after free play > contains earned shores in matching album cameras and the home view at 768×400, chapter 1 359ms
+   ✓ frozen learning frame after free play > contains earned shores in matching album cameras and the home view at 768×400, chapter 2 402ms
+   ✓ frozen learning frame after free play > contains earned shores in matching album cameras and the home view at 768×400, chapter undefined 372ms
+ ✓ src/components/island/three/optionalFurnitureRuntime.test.ts (8 tests) 1080ms
+ ✓ src/components/island/three/expressionEnvironment.test.ts (7 tests) 13863ms
+   ✓ reversible expression environment on the existing world > moon-garden preserves geometry, growth, ground hits and all original material references through every period/season 3373ms
+   ✓ reversible expression environment on the existing world > starry preserves geometry, growth, ground hits and all original material references through every period/season 3421ms
+   ✓ reversible expression environment on the existing world > candy preserves geometry, growth, ground hits and all original material references through every period/season 3352ms
+   ✓ reversible expression environment on the existing world > crystal preserves geometry, growth, ground hits and all original material references through every period/season 2677ms
+   ✓ reversible expression environment on the existing world > reuses same-selection resources, disposes retired clones once, and restores the newest theme after growth/material regeneration 1035ms
+ ✓ src/domain/levelProgression.test.ts (10 tests) 682ms
+   ✓ evidence required for level progression > uses the same math evidence in the atomic writer and Study service 600ms
+ ✓ src/domain/explore/__tests__/wagerRun.test.ts (19 tests) 6ms
+ ✓ src/components/island/three/residentOutfit.test.ts (13 tests) 882ms
+ ✓ src/domain/island/furniture.test.ts (11 tests) 19ms
+ ✓ src/components/island/three/cameraPanFraming.test.ts (12 tests) 1092ms
+   ✓ real normal-island runtime framing > keeps the new central floor in the actual pan regions and reachable at 390×380 320ms
+ ✓ src/components/island/three/furniture.test.ts (17 tests) 192ms
+ ✓ src/components/island/IslandLearningSupport.test.tsx (18 tests) 95ms
+ ✓ src/domain/explore/__tests__/observation.test.ts (11 tests) 4ms
+ ✓ src/hooks/blockGenerators.progression.test.ts (13 tests) 26ms
+ ✓ src/components/island/three/workshopResidentFraming.test.ts (8 tests) 526ms
+ ✓ src/components/island/three/terrainProfile.test.ts (9 tests) 975ms
+   ✓ shore garden terrain keeps saved physical land > keeps western physical bridge/props identical while its terrain is not an eastern mirror 312ms
+ ✓ src/domain/learning/pilotRepository.test.ts (6 tests) 149ms
+ ✓ src/components/island/IslandCustomization.test.tsx (9 tests) 61ms
+ ✓ src/components/explore/DiscoveryReveal.test.ts (7 tests) 32ms
+ ✓ src/domain/island/subjectSelection.test.ts (10 tests) 21ms
+ ✓ src/components/island/three/furnitureClearance.test.ts (9 tests) 333ms
+ ✓ src/components/island/three/islandCameraControls.test.ts (11 tests) 8ms
+ ✓ src/domain/island/subjectPreference.test.ts (5 tests) 549ms
+ ✓ tools/island-expression-visual-matrix-audit.test.mjs (7 tests) 21ms
+ ✓ src/components/island/three/westNavigation.test.ts (10 tests) 80ms
+ ✓ src/domain/explore/__tests__/runCheckpoint.test.ts (7 tests) 4ms
+ ✓ src/domain/english/planner.test.ts (14 tests) 18ms
+ ✓ src/components/island/useIslandLearningObservation.test.ts (10 tests) 7ms
+ ✓ tools/island-reward-goal-audit.test.mjs (9 tests) 16ms
+ ✓ src/pages/Explore.test.ts (9 tests) 9ms
+ ✓ src/pwa.test.ts (12 tests) 46ms
+ ✓ src/domain/learning/mathCatalog.test.ts (6 tests) 32ms
+ ✓ src/domain/island/experienceAppearance.test.ts (5 tests) 10ms
+ ✓ src/pwaUpdateUtils.test.ts (43 tests) 4ms
+ ✓ src/domain/test/trigger.test.ts (8 tests) 6ms
+ ✓ src/components/island/three/appearanceFraming.test.ts (6 tests) 6371ms
+   ✓ appearance viewing uses fixed real-target cameras > keeps the entire central tree in frame with the same matrix for every style and maturity at aspect 1.1016949152542372 2816ms
+   ✓ appearance viewing uses fixed real-target cameras > keeps the entire central tree in frame with the same matrix for every style and maturity at aspect 1.786046511627907 2187ms
+   ✓ appearance viewing uses fixed real-target cameras > wall, roof and window use one fixed house view without hiding a resident, furniture or display 1298ms
+ ✓ src/components/island/three/homeInteriorCamera.test.ts (11 tests) 46045ms
+   ✓ a perspective camera inside the same closed house > places the real room floor above the unchanged exterior foundation at aspect 1.3220338983050848 603ms
+   ✓ a perspective camera inside the same closed house > places the real room floor above the unchanged exterior foundation at aspect 2.0210526315789474 530ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 390×295, actual cottage=false 13046ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 768×380, actual cottage=false 12019ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 390×295, actual cottage=true 10785ms
+   ✓ a perspective camera inside the same closed house > encloses the viewport, shows living objects and all sixteen awards at 768×380, actual cottage=true 8814ms
+ ✓ src/components/island/three/sharedActivityOcclusion.test.ts (9 tests) 6ms
+ ✓ src/components/island/three/worldPalette.test.ts (4 tests) 168ms
+ ✓ src/components/island/IslandAlbum.test.tsx (4 tests) 39ms
+ ✓ src/components/island/three/geometry.test.ts (8 tests) 1468ms
+   ✓ island sculpted geometry > keeps the static scenery and tree within a bounded mesh and triangle budget 1284ms
+ ✓ src/domain/test/paperTestRepository.test.ts (6 tests) 88ms
+ ✓ src/components/island/islandAlbumPresentation.test.tsx (4 tests) 28ms
+ ✓ src/components/explore/ExplorePathChoice.test.tsx (5 tests) 70ms
+ ✓ src/components/island/three/homeViewFraming.test.ts (16 tests) 6255ms
+   ✓ layout-owned close phone home > enlarges nearby life while retaining both residents and the house, without entering manual camera mode 500ms
+   ✓ layout-owned close phone home > leaves the existing 768x900 framing unchanged 332ms
+   ✓ layout-owned close phone home > leaves the existing 1024x600 framing unchanged 485ms
+   ✓ layout-owned close phone home > leaves the existing 390x330 framing unchanged 337ms
+   ✓ layout-owned close phone home > does not alter the dedicated or overview frame: {"districtFocus":"all"} 382ms
+   ✓ layout-owned close phone home > does not alter the dedicated or overview frame: {"districtFocus":"east"} 339ms
+   ✓ layout-owned close phone home > does not alter the dedicated or overview frame: {"districtFocus":"west"} 677ms
+   ✓ layout-owned close phone home > does not alter the dedicated or overview frame: {"photographing":true} 313ms
+   ✓ layout-owned close phone home > does not alter the dedicated or overview frame: {"readOnly":true,"comparisonHabitat":"garden"} 325ms
+   ✓ layout-owned close phone home > does not alter the dedicated or overview frame: {"learning":true} 368ms
+   ✓ layout-owned close phone home > does not alter the dedicated or overview frame: {"preview":{"id":"move","kind":"flower","position":{"x":0,"z":1},"rotation":0}} 373ms
+   ✓ layout-owned close phone home > does not alter the dedicated or overview frame: {"playRequest":{"id":"replay","itemId":"flower"}} 388ms
+   ✓ layout-owned close phone home > returns from the whole-island view to the same close home frame 395ms
+   ✓ layout-owned close phone home > lets an automatic shared activity keep its authored camera with manual mode still off 448ms
+ ✓ src/components/island/islandPhotoCapture.test.ts (11 tests) 16ms
+ ✓ src/components/island/IslandExpression.test.tsx (5 tests) 38ms
+ ✓ src/components/island/tutorial/useIslandTutorial.test.ts (6 tests) 3ms
+ ✓ src/components/island/IslandRewardGoal.test.tsx (7 tests) 36ms
+ ✓ src/domain/explore/__tests__/discoveryPage.test.ts (9 tests) 6ms
+ ✓ src/components/explore/rootPullPresentation.test.ts (10 tests) 4ms
+ ✓ src/components/island/IslandGrowth.test.tsx (6 tests) 27ms
+ ✓ src/domain/learning/unitPractice.test.ts (7 tests) 24ms
+ ✓ src/domain/math/generators/advanced.test.ts (10 tests) 22ms
+ ✓ src/domain/challenge/engine.test.ts (17 tests) 3044ms
+   ✓ challenge source v1 > covers all 45 ordered pairs, balances each block, exhausts bags, and avoids repeated/reversed neighbors 3034ms
+ ✓ src/components/island/IslandHomeActions.test.tsx (6 tests) 29ms
+ ✓ src/domain/island/pacing.test.ts (5 tests) 10ms
+ ✓ src/components/island/three/placementOcclusion.test.ts (8 tests) 759ms
+ ✓ src/components/island/three/expressionResidentWalk.test.ts (16 tests) 43354ms
+   ✓ explicit expression trial uses the actual feet and a bounded legal walk > leaves the actual mature default bench before otter trial, reduced=false 6398ms
+   ✓ explicit expression trial uses the actual feet and a bounded legal walk > leaves the actual mature default bench before rabbit trial, reduced=false 2140ms
+   ✓ explicit expression trial uses the actual feet and a bounded legal walk > leaves the actual mature default bench before fox trial, reduced=false 3974ms
+   ✓ explicit expression trial uses the actual feet and a bounded legal walk > leaves the actual mature default bench before otter trial, reduced=true 6033ms
+   ✓ explicit expression trial uses the actual feet and a bounded legal walk > leaves the actual mature default bench before rabbit trial, reduced=true 2146ms
+   ✓ explicit expression trial uses the actual feet and a bounded legal walk > leaves the actual mature default bench before fox trial, reduced=true 3732ms
+   ✓ explicit expression trial uses the actual feet and a bounded legal walk > cancellation during preparing restores the same seated rig and stops pending departure 417ms
+   ✓ explicit expression trial uses the actual feet and a bounded legal walk > cancellation during departing restores the same seated rig and stops pending departure 1803ms
+   ✓ explicit expression trial uses the actual feet and a bounded legal walk > cancellation during walking restores the same seated rig and stops pending departure 1591ms
+   ✓ explicit expression trial uses the actual feet and a bounded legal walk > otter, reduced=false: same rig lands and cancels without moving furniture 2756ms
+   ✓ explicit expression trial uses the actual feet and a bounded legal walk > rabbit, reduced=false: same rig lands and cancels without moving furniture 2299ms
+   ✓ explicit expression trial uses the actual feet and a bounded legal walk > fox, reduced=false: same rig lands and cancels without moving furniture 2075ms
+   ✓ explicit expression trial uses the actual feet and a bounded legal walk > otter, reduced=true: same rig lands and cancels without moving furniture 2806ms
+   ✓ explicit expression trial uses the actual feet and a bounded legal walk > rabbit, reduced=true: same rig lands and cancels without moving furniture 2525ms
+   ✓ explicit expression trial uses the actual feet and a bounded legal walk > fox, reduced=true: same rig lands and cancels without moving furniture 2519ms
+ ✓ src/components/island/three/expressionFootTrails.test.ts (3 tests) 345ms
+ ✓ src/components/explore/PaintedEncounterLineage.test.tsx (5 tests) 36ms
+ ✓ src/components/island/three/expressionResidentVisuals.test.ts (12 tests) 2395ms
+   ✓ expressions stay attached to the original residents > tea-table preserves rabbit real contacts in raincoat and beret 380ms
+   ✓ expressions stay attached to the original residents > tea-table preserves fox real contacts in raincoat and beret 403ms
+ ✓ src/components/island/IslandExpressionFlag.test.tsx (2 tests) 9ms
+ ✓ src/domain/explore/__tests__/encounters.test.ts (7 tests) 4ms
+ ✓ src/domain/explore/__tests__/rapidLoopEligibility.test.ts (27 tests) 7ms
+ ✓ src/components/domain/PrintableTestPreview.test.tsx (6 tests) 46ms
+ ✓ src/domain/explore/__tests__/rapidLoop.test.ts (6 tests) 11ms
+ ✓ src/domain/learning/context.test.ts (6 tests) 135ms
+ ✓ src/components/island/islandAlbumMemory.test.ts (7 tests) 5ms
+ ✓ src/components/island/three/livingActivities.test.ts (5 tests) 4ms
+ ✓ src/domain/island/customization.test.ts (20 tests) 10ms
+ ✓ src/domain/math/generators/subtraction.test.ts (10 tests) 7ms
+ ✓ src/utils/audio.test.ts (8 tests) 23ms
+ ✓ src/components/dev/suika/NumberSuikaStage.test.tsx (10 tests) 21ms
+ ✓ src/domain/battle/engine.test.ts (10 tests) 9ms
+ ✓ src/domain/learning/englishCatalog.test.ts (5 tests) 99ms
+ ✓ src/components/island/three/runtimeExpressionResidents.test.ts (3 tests) 2862ms
+   ✓ expression rendering stays optional inside a read-only scene > pause restores the actual resident, clears every live mark and consumes the interrupted request 906ms
+   ✓ expression rendering stays optional inside a read-only scene > changing reduced motion schedules the owned temporary rig instead of resetting it through ordinary updates 923ms
+   ✓ expression rendering stays optional inside a read-only scene > frames the actual read-only trial and releases that camera on learning and exit 1032ms
+ ✓ src/domain/math/answerCompletion.test.ts (13 tests) 175ms
+ ✓ src/components/ikimono/fuwafuwaDailyConversation.test.ts (4 tests) 2ms
+ ✓ src/domain/math/studyPresentation.test.ts (8 tests) 5ms
+ ✓ src/domain/island/homeJourney.test.ts (4 tests) 135ms
+ ✓ src/components/island/three/learningReaction.test.ts (12 tests) 6ms
+ ✓ src/domain/math/generators/addition.test.ts (10 tests) 10ms
+ ✓ src/domain/island/learningChecks.test.ts (14 tests) 15ms
+ ✓ src/components/island/islandDiscoveryGuide.test.ts (7 tests) 10ms
+ ✓ src/components/dev/g0v2/G0MechanicRemixStage.test.tsx (4 tests) 21ms
+ ✓ src/components/explore/ReturnSummary.test.tsx (5 tests) 51ms
+ ✓ src/components/island/three/islandCameraAnchor.test.ts (4 tests) 10ms
+ ✓ src/components/dev/g0/G0WhiteboxStage.test.tsx (6 tests) 16ms
+ ✓ src/components/island/three/waterSurface.test.ts (6 tests) 5683ms
+   ✓ static ocean and shallow-water resources > keeps simultaneous palettes and other slots independent at floor level 0 1213ms
+   ✓ static ocean and shallow-water resources > keeps simultaneous palettes and other slots independent at floor level 1 1313ms
+   ✓ static ocean and shallow-water resources > keeps simultaneous palettes and other slots independent at floor level 2 1697ms
+   ✓ static ocean and shallow-water resources > reuses and retires water resources without textures at floor level 0 342ms
+   ✓ static ocean and shallow-water resources > reuses and retires water resources without textures at floor level 1 575ms
+   ✓ static ocean and shallow-water resources > reuses and retires water resources without textures at floor level 2 542ms
+ ✓ src/domain/island/catalogExpansion.test.ts (3 tests) 7ms
+ ✓ src/prototypes/pittari/engine.test.ts (18 tests) 14ms
+ ✓ src/domain/math/profileProgress.test.ts (67 tests) 34ms
+ ✓ src/components/island/learningGuidance.test.ts (13 tests) 5ms
+ ✓ src/domain/math/generators/division.test.ts (5 tests) 26ms
+ ✓ tools/island-qualified-audit.test.mjs (12 tests) 21ms
+ ✓ src/components/island/three/sharedJobActor.test.ts (3 tests) 271ms
+ ✓ src/components/island/three/residentInterest.test.ts (11 tests) 13ms
+ ✓ src/domain/island/landGeometry.test.ts (4 tests) 80ms
+ ✓ src/utils/tts.test.ts (6 tests) 6ms
+ ✓ src/utils/pdfGenerator.test.ts (5 tests) 6ms
+ ✓ src/components/island/three/sharedActivityContinuity.test.ts (12 tests) 2983ms
+   ✓ shared props remain attached while the real resident poses change phase > 'flower' 'left/left' keeps actual holding paws and the prop continuous across every handoff boundary 357ms
+   ✓ shared props remain attached while the real resident poses change phase > 'star' 'right/left' keeps actual holding paws and the prop continuous across every handoff boundary 401ms
+ ✓ src/domain/english/listening.test.ts (4 tests) 3ms
+ ✓ src/domain/test/paperTest.test.ts (4 tests) 5ms
+ ✓ src/domain/island/photos.test.ts (3 tests) 15ms
+ ✓ src/components/island/learningFeedback.test.ts (7 tests) 4ms
+ ✓ src/components/island/IslandMilestone.test.tsx (6 tests) 10ms
+ ✓ src/components/island/three/placementPreview.test.ts (3 tests) 41ms
+ ✓ src/components/island/three/connectedScenery.test.ts (3 tests) 2634ms
+   ✓ one connected island across growth and appearance changes > replaces only terrain at unlocks, keeping the home, bridges and texture owner alive 1247ms
+   ✓ one connected island across growth and appearance changes > supports all original and connecting floors once at level 1 636ms
+   ✓ one connected island across growth and appearance changes > supports all original and connecting floors once at level 2 749ms
+ ✓ src/components/island/islandWorkshopRequest.test.ts (6 tests) 10ms
+ ✓ src/domain/learning/independentProgress.test.ts (17 tests) 4ms
+ ✓ src/components/island/islandCustomizationRequest.test.ts (4 tests) 4ms
+ ✓ src/components/domain/answerCompletion.test.tsx (4 tests) 35ms
+ ✓ src/components/explore/snapRootPresentation.test.ts (5 tests) 2ms
+ ✓ src/components/explore/RootPullOpeningArt.test.tsx (8 tests) 20ms
+ ✓ src/domain/stats/repository.test.ts (1 test) 16ms
+ ✓ src/domain/explore/__tests__/generator.test.ts (2 tests) 395ms
+   ✓ createExploreMap > keeps every generated node reachable across multiple seeds 391ms
+ ✓ src/components/island/useIslandDiscoveries.test.ts (4 tests) 8ms
+ ✓ src/components/island/islandExperienceRequest.test.ts (4 tests) 7ms
+ ✓ src/domain/island/visitors.test.ts (4 tests) 6ms
+ ✓ src/components/island/three/homePresentation.test.ts (3 tests) 49ms
+ ✓ src/domain/stats/aggregation.test.ts (3 tests) 6ms
+ ✓ src/components/explore/FireflyFlowerEncounterArt.test.tsx (8 tests) 19ms
+ ✓ src/components/ikimono/lifecycle.test.ts (5 tests) 6ms
+ ✓ src/domain/park/englishPlanning.test.ts (7 tests) 223ms
+ ✓ src/components/explore/MakimodonEncounterArt.test.tsx (8 tests) 28ms
+ ✓ src/components/island/three/growthNavigation.test.ts (2 tests) 501ms
+   ✓ automatically grown places support real resident life > keeps all seven anchor objects legal and reachable through the complete chapter 478ms
+ ✓ src/components/island/three/residentPortraitFraming.test.ts (6 tests) 364ms
+ ✓ src/domain/explore/__tests__/openingExperience.test.ts (5 tests) 4ms
+ ✓ src/domain/island/livingSettings.test.ts (4 tests) 10ms
+ ✓ tools/asset-policy.test.mjs (19 tests) 13ms
+ ✓ src/domain/math/generators/fraction.test.ts (6 tests) 4ms
+ ✓ src/domain/math/hissanEngine.test.ts (8 tests) 17ms
+ ✓ src/components/island/three/residentFabric.test.ts (3 tests) 2191ms
+   ✓ one cloth resident in the shared island > keeps atlas UVs through body/head batching and every articulated hand/foot 2041ms
+ ✓ src/domain/test/testSet.test.ts (3 tests) 121ms
+ ✓ src/domain/math/additionProgress.test.ts (9 tests) 18ms
+ ✓ src/components/island/islandExpansionPreview.test.ts (4 tests) 2ms
+ ✓ src/domain/island/tutorialState.test.ts (5 tests) 9ms
+ ✓ src/components/island/islandCustomizationPreview.test.ts (4 tests) 5ms
+ ✓ src/components/island/visualLearningGuidance.test.ts (6 tests) 4ms
+ ✓ src/components/island/IslandFurniturePlacement.test.tsx (3 tests) 20ms
+ ✓ src/components/explore/makimodonPresentation.test.ts (4 tests) 3ms
+ ✓ src/components/ikimono/fuwafuwaSpeech.test.ts (6 tests) 4ms
+ ✓ src/components/explore/ResearchBookStage.test.tsx (3 tests) 103ms
+ ✓ src/domain/island/navigation.test.ts (11 tests) 2ms
+ ✓ src/components/Footer.test.tsx (9 tests) 32ms
+ ✓ src/domain/park/learningContinuation.test.ts (3 tests) 47ms
+ ✓ src/components/island/islandGrowthPreview.test.ts (3 tests) 33ms
+ ✓ src/domain/explore/__tests__/rewardPresentation.test.ts (7 tests) 3ms
+ ✓ src/domain/math/writtenPlaceValue.test.ts (10 tests) 5ms
+ ✓ src/components/explore/rapidTrailPresentation.test.ts (4 tests) 2ms
+ ✓ src/domain/explore/__tests__/suikaQuantity.test.ts (7 tests) 4ms
+ ✓ src/domain/explore/__tests__/attemptIdentity.test.ts (8 tests) 7ms
+ ✓ src/components/island/homeJourney/interior.test.ts (5 tests) 1285ms
+   ✓ the growing home and its real interior > keeps the room and camera within the same basic house at 0 answers 460ms
+   ✓ the growing home and its real interior > keeps the room and camera within the same basic house at 9 answers 304ms
+   ✓ the growing home and its real interior > keeps the room and camera within the same basic house at 45 answers 304ms
+ ✓ src/domain/explore/__tests__/rewards.test.ts (5 tests) 4ms
+ ✓ src/domain/english/generator.test.ts (4 tests) 2793ms
+   ✓ English catalog and choices > every word produces four unique rendered choices (kanji=false) 1880ms
+   ✓ English catalog and choices > every word produces four unique rendered choices (kanji=true) 908ms
+ ✓ src/components/domain/WrittenArithmeticGrid.test.tsx (3 tests) 16ms
+ ✓ src/domain/explore/__tests__/g0MechanicMetrics.test.ts (2 tests) 2ms
+ ✓ src/components/island/islandFurnitureTrial.test.ts (5 tests) 16ms
+ ✓ src/pwaUpdateRecovery.test.ts (3 tests) 11ms
+ ✓ src/components/ikimono/hitokoto.test.ts (5 tests) 4ms
+ ✓ tools/learning-unit-report.test.mjs (2 tests) 146ms
+ ✓ src/components/ikimono/fuwafuwaAlbumCopy.test.ts (3 tests) 2ms
+ ✓ src/components/island/islandStarReceiptEligibility.test.ts (3 tests) 3ms
+ ✓ src/components/island/three/homeWalk.test.ts (3 tests) 279ms
+ ✓ src/components/explore/PokkoVisualLineage.test.tsx (5 tests) 34ms
+ ✓ src/domain/math/subtractionProgress.test.ts (5 tests) 6ms
+ ✓ src/components/island/islandDistrictView.test.ts (5 tests) 3ms
+ ✓ src/domain/explore/__tests__/runStructure.test.ts (3 tests) 4ms
+ ✓ src/domain/learning/runtimeUnitPractice.test.ts (9 tests) 9ms
+ ✓ src/domain/math/numberEntry.test.ts (4 tests) 193ms
+ ✓ src/components/island/IslandWelcome.test.tsx (2 tests) 11ms
+ ✓ src/domain/math/sequenceProgress.test.ts (5 tests) 12ms
+ ✓ src/domain/learning/reviewBudget.test.ts (7 tests) 3ms
+ ✓ src/domain/explore/__tests__/encounterPhase.test.ts (7 tests) 12ms
+ ✓ src/components/island/three/workshopGround.test.ts (1 test) 205ms
+ ✓ src/domain/explore/__tests__/fixedTenBenchmark.test.ts (2 tests) 3ms
+ ✓ src/domain/benchmark/coldOpenFixedTen.test.ts (2 tests) 4ms
+ ✓ src/domain/learning/reviewPolicy.test.ts (5 tests) 6ms
+ ✓ src/domain/explore/__tests__/replay.test.ts (3 tests) 12ms
+ ✓ src/components/island/homeJourney/delivery.test.ts (4 tests) 2ms
+ ✓ src/hooks/useLearningSessionLease.test.ts (1 test) 8ms
+ ✓ src/components/island/homeJourney/growthReveal.test.ts (4 tests) 3ms
+ ✓ src/domain/math/comparisonProgress.test.ts (5 tests) 3ms
+ ✓ src/components/domain/answerConfirmGuidance.test.ts (2 tests) 9ms
+ ✓ src/components/explore/AuthoredEncounterArt.test.tsx (6 tests) 14ms
+ ✓ src/utils/learningDay.test.ts (5 tests) 9ms
+ ✓ src/components/ikimono/fuwafuwaMilestones.test.ts (4 tests) 45ms
+ ✓ src/components/ikimono/sceneText.test.ts (3 tests) 3ms
+ ✓ src/components/dev/devStudySelection.test.ts (2 tests) 5ms
+ ✓ src/components/island/homeJourney/contacts.test.ts (1 test) 13ms
+ ✓ src/domain/island/studyRoute.test.ts (16 tests) 2ms
+ ✓ src/domain/math/writtenInput.test.ts (3 tests) 2ms
+ ✓ src/components/island/three/sharedCarryRoute.test.ts (2 tests) 4ms
+ ✓ src/components/ikimono/ikimonoMotion.test.ts (3 tests) 3ms
+ ✓ src/components/ui/modalLayerManager.test.ts (2 tests) 2ms
+ ✓ src/components/gate/arithmeticGate.test.ts (3 tests) 5ms
+ ✓ src/components/LaunchRoute.test.tsx (4 tests) 7ms
+ ✓ src/components/home/homeMagicEnergy.test.ts (2 tests) 2ms
+ ✓ src/components/island/three/westScenery.test.ts (1 test) 133ms
+ ✓ src/domain/island/feature.test.ts (6 tests) 4ms
+ ✓ src/domain/island/expansion.test.ts (2 tests) 3ms
+ ✓ src/components/explore/RootPullDiscoveryReveal.test.tsx (1 test) 13ms
+ ✓ src/components/explore/MakimodonResearchArt.test.tsx (2 tests) 29ms
+ ✓ src/components/domain/NumberFieldsLayout.test.tsx (4 tests) 7ms
+ ✓ src/components/ikimono/IkimonoArtwork.test.tsx (2 tests) 12ms
+ ✓ src/utils/theme.test.ts (4 tests) 5ms
+ ✓ src/components/island/IslandProsePrompt.test.tsx (3 tests) 10ms
+ ✓ src/components/explore/exploreAnswerInput.test.ts (3 tests) 3ms
+ ✓ src/components/island/homeJourney/scene.test.ts (3 tests) 413ms
+ ✓ src/domain/math/deterministicGeneration.test.ts (2 tests) 44ms
+ ✓ src/components/explore/PokkoBaseArt.test.tsx (1 test) 10ms
+ ✓ src/domain/math/hissanTypes.test.ts (2 tests) 5ms
+ ✓ src/components/explore/DiscoveryPageArt.test.tsx (1 test) 19ms
+
+ Test Files  324 passed (324)
+      Tests  3524 passed (3524)
+   Start at  21:30:16
+   Duration  175.77s (transform 5.83s, setup 0ms, collect 144.95s, tests 489.73s, environment 48ms, prepare 16.64s)
+

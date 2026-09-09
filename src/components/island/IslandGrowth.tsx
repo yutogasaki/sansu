@@ -24,7 +24,7 @@ export function IslandGrowthSummary({ island, plan, disabled, onChoose }: {
     const Icon = habitatIcons[target];
     return <div className="island-growth-summary" data-growth-target={target}>
         <Icon size={21} aria-hidden="true" />
-        <div><p>{complete ? 'みんなの いばしょが 育ったよ' : `${habitat.name}が 育っているよ`}</p>
+        <div><p>{complete ? 'みんなの いばしょが 育ったよ' : `いま 育てる ばしょ：${habitat.name}`}</p>
             {!complete && <GrowthSteps island={island} habitat={target} />}
             {expansion ? <small className="island-growth-preview" data-island-expansion-preview={expansion}>もうすぐ {expansion === 'east' ? 'ひがし' : 'にし'}へ しまが ひろがるよ</small>
                 : !complete && next !== target && <small>つぎは {nextName}</small>}</div>

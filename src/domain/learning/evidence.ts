@@ -10,7 +10,8 @@ export interface LearningEvidenceRecord {
     subject: SubjectKey;
     itemId: string;
     timestamp: string;
-    result: 'correct' | 'incorrect' | 'skipped' | 'barrier';
+    result: 'correct' | 'incorrect' | 'skipped' | 'barrier' | 'contact';
+    contactUncertain?: boolean;
     skipped?: boolean;
     learningEvidence?: LearningEvidenceContext;
     learningEvidenceBarrier?: LearningEvidenceBarrier;
@@ -124,6 +125,10 @@ export const evaluateMathLevel11Pilot = (
         const time = Date.parse(record.timestamp);
         const previousContact = lastContact.get(mapping.unitId);
         lastContact.set(mapping.unitId, time);
+        if (record.result === 'contact') {
+            if (record.contactUncertain) lastUnknown.set(mapping.unitId, time);
+            continue;
+        }
         if (!context || context.assistance === 'unknown' || context.problem.variant === 'unknown'
             || (isBarrier && !['support-opened', 'error-correction', 'skipped'].includes(barrier?.reason ?? ''))) {
             unknown.set(mapping.unitId, (unknown.get(mapping.unitId) ?? 0) + 1);

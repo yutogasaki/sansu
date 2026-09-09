@@ -1,6 +1,8 @@
 export interface CameraPanPoint { x: number; y: number }
 export interface CameraPanBounds { minX: number; maxX: number; minY: number; maxY: number }
 export interface CameraPanFraming {
+    /** Ground coordinates (x/z) projected into camera-space x/y. */
+    ground?: { origin: CameraPanPoint; x: CameraPanPoint; z: CameraPanPoint };
     center: CameraPanPoint;
     height: number;
     aspect: number;
@@ -76,4 +78,21 @@ export function frameIslandCameraPan(base: CameraPanFraming, zoom: number, pan: 
     }
     return { left: center.x - width / 2, right: center.x + width / 2, top: center.y + height / 2, bottom: center.y - height / 2,
         width, height, pan: { x: center.x - base.center.x, y: center.y - base.center.y } };
+}
+
+/** Intersect a camera-space point with the island's level ground plane. */
+export function cameraPointOnGround(frame: CameraPanFraming, point: CameraPanPoint): CameraPanPoint | undefined {
+    const basis = frame.ground;
+    if (!basis) return undefined;
+    const determinant = basis.x.x * basis.z.y - basis.z.x * basis.x.y;
+    if (Math.abs(determinant) < 1e-8) return undefined;
+    const x = point.x - basis.origin.x, y = point.y - basis.origin.y;
+    return { x: (x * basis.z.y - basis.z.x * y) / determinant,
+        y: (basis.x.x * y - x * basis.x.y) / determinant };
+}
+
+export function groundPointInCamera(frame: CameraPanFraming, point: CameraPanPoint): CameraPanPoint | undefined {
+    const basis = frame.ground;
+    return basis && { x: basis.origin.x + basis.x.x * point.x + basis.z.x * point.y,
+        y: basis.origin.y + basis.x.y * point.x + basis.z.y * point.y };
 }

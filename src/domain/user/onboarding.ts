@@ -97,7 +97,7 @@ export async function completeOnboardingProfile(selection: OnboardingSelection, 
             return { profile: existing, activeProfileId: app.activeProfileId && profiles[app.activeProfileId] ? app.activeProfileId : existing.id };
         }
         if (intent !== 'add' && Object.keys(profiles).length) throw new OnboardingAlreadyCompleted('First profile already exists');
-        const profile = { ...createInitialProfile(resolved.name, resolved.grade, resolved.mathStartLevel, resolved.vocabStartLevel, resolved.subject), id: completionId };
+        const profile = { ...createInitialProfile(resolved.name, resolved.grade, resolved.mathStartLevel, resolved.vocabStartLevel, resolved.subject), id: completionId, islandTutorialVersion: 1 as const };
         if (resolved.seedMath) {
             const now = new Date().toISOString(), nextReview = getNextReviewDate(5).toISOString();
             const memories: MemoryState[] = getAvailableSkills(resolved.mathStartLevel).map(id => ({
