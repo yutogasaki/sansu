@@ -95,6 +95,7 @@ export async function verifyIslandProgression(browser, base, capture, { producti
                         assert.match(await preview.innerText(), /しまが ひろがるよ/);
                     } else assert.equal(await preview.count(), 0, 'Expansion is previewed only one section before a maturity that opens land');
                     if (major) {
+                        await button(page, 'しまのメニュー').click();
                         await page.locator('.island-growth-return').click(); await waitMode(page, 'album');
                         const habitat = mature <= 2 ? 'all' : targetHabitat;
                         assert.equal(await page.locator('.island-album-compare').getAttribute('data-comparison-habitat'), habitat);
@@ -129,12 +130,15 @@ export async function verifyIslandProgression(browser, base, capture, { producti
             assert.deepEqual(state.island.growth.progress, beforeVisit.island.growth.progress);
             await capture(page, `${prefix}-autonomous-life`);
             for (const name of ['ひがし', 'にし', 'にわ', 'しまぜんぶ']) {
+                await button(page, 'しまのメニュー').click();
                 await button(page, name).click();
+                await button(page, 'しまのメニューを とじる').click();
                 await capture(page, `${prefix}-district-${name}`);
             }
             state = await readNative(page, profileId);
             assert(state.island.growth.discoveries.length > 0, 'District viewing preserves observed facts');
             await page.locator(`.island-page[data-discovery-count="${state.island.growth.discoveries.length}"]`).waitFor();
+            await button(page, 'しまのメニュー').click();
             await button(page, 'アルバム').click(); await waitMode(page, 'album');
             await page.locator('[data-memory-id] [data-renderer="three"]').waitFor();
             await page.locator('[data-memory-current] [data-renderer="three"]').waitFor();
@@ -143,6 +147,7 @@ export async function verifyIslandProgression(browser, base, capture, { producti
             assert.equal(await page.locator('[data-memory-id] [data-renderer="three"]').getAttribute('data-expanded'), 'false');
             assert.equal(await page.locator('[data-memory-current] [data-renderer="three"]').getAttribute('data-west-expanded'), 'true');
             const compare = async habitat => {
+                await page.locator('.island-album-compare').scrollIntoViewIfNeeded();
                 await page.waitForFunction(habitat => {
                     const stages = [...document.querySelectorAll('.island-album-compare [data-renderer="three"]')];
                     return stages.length === 2 && stages.every(stage => stage.dataset.comparisonHabitat === habitat && stage.dataset.cameraFrame)
@@ -155,15 +160,15 @@ export async function verifyIslandProgression(browser, base, capture, { producti
                     `Both equal-scale actual scenes fit the viewport: ${JSON.stringify(bounds)}`);
             };
             await compare('garden');
-            assert.equal(await page.locator('.island-album-timeline button').count(), 2, 'Garden timeline shows baseline and its maturity only');
-            assert.match(await page.locator('.island-album-timeline').innerText(), /おはなが いっぱいに なった/);
+            assert.equal(await page.locator('.island-album-timeline option').count(), 2, 'Garden timeline shows baseline and its maturity only');
+            assert.match(await page.locator('.island-album-timeline').textContent(), /おはなが いっぱいに なった/);
             await capture(page, `${prefix}-album-before-after`);
             for (const [habitat, label] of [['waterside', 'みずべ'], ['grove', '木かげ'], ['village', 'いえ'], ['all', 'しまぜんぶ']]) {
-                await page.getByRole('group', { name: 'みくらべる ばしょ' }).getByRole('button', { name: label, exact: true }).click();
+                await page.getByRole('combobox', { name: 'みくらべる ばしょ', exact: true }).selectOption({ label });
                 await compare(habitat); await capture(page, `${prefix}-album-${habitat}`);
-                assert.equal(await page.locator('.island-album-timeline button').count(), habitat === 'all' ? 5 : 2);
+                assert.equal(await page.locator('.island-album-timeline option').count(), habitat === 'all' ? 5 : 2);
             }
-            await button(page, 'みつけた くらし').click();
+            await page.getByRole('combobox', { name: 'アルバムの なかみ', exact: true }).selectOption('discoveries');
             const discovered = page.locator('[data-discovery-id]').first();
             const discoveryId = await discovered.getAttribute('data-discovery-id');
             await capture(page, `${prefix}-discovery-album`);
@@ -193,6 +198,7 @@ export async function verifyIslandProgression(browser, base, capture, { producti
             // Optional customization is checked after maturity, so it cannot
             // supply the placements or growth the normal loop just proved.
             await button(page, 'とじる').click(); await waitMode(page, 'home');
+            await button(page, 'しまのメニュー').click();
             await button(page, 'もちもの').click(); await waitMode(page, 'inventory');
             await page.getByRole('button', { name: /^ひかる おはな \d+を うごかす$/ }).click();
             await waitMode(page, 'placement');
@@ -211,6 +217,7 @@ export async function verifyIslandProgression(browser, base, capture, { producti
             await capture(page, `${prefix}-customized-learning-resumed`);
             // The expanded shoreline is usable land, not only a larger drawing.
             await button(page, 'とじる').click(); await waitMode(page, 'home');
+            await button(page, 'しまのメニュー').click();
             await button(page, 'もちもの').click(); await waitMode(page, 'inventory');
             await page.getByRole('button', { name: /^ひかる おはな \d+を うごかす$/ }).click();
             await waitMode(page, 'placement');
@@ -218,7 +225,8 @@ export async function verifyIslandProgression(browser, base, capture, { producti
             await button(page, 'ここに おく').click(); await waitMode(page, 'home');
             const expandedPlacement = await readNative(page, profileId);
             assert.deepEqual(expandedPlacement.island.items.find(item => item.id === 'starter-flower').position, { x: 9.25, z: .8 });
-            await button(page, 'ひがし').click(); await capture(page, `${prefix}-expanded-land-placement`);
+            await button(page, 'しまのメニュー').click(); await button(page, 'ひがし').click();
+            await button(page, 'しまのメニューを とじる').click(); await capture(page, `${prefix}-expanded-land-placement`);
             await page.reload(); await waitReady(page);
             assert.deepEqual((await readNative(page, profileId)).island.items, expandedPlacement.island.items);
             assert.deepEqual(errors, []);

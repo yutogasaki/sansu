@@ -58,6 +58,8 @@ export interface IslandStageState {
     growth?: IslandGrowthState;
     growthTarget?: IslandHabitatId;
     districtFocus?: 'all' | 'home' | 'east' | 'west';
+    /** Layout-owned close framing for the ordinary phone home; never a manual zoom. */
+    closeHomeView?: boolean;
     comparisonHabitat?: IslandHabitatId | 'all';
     readOnly?: boolean;
     photographing?: boolean;

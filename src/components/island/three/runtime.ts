@@ -628,6 +628,7 @@ export class IslandScene {
                 ...this.furnitureClearance.learningFrameBounds()];
         }
         if (!previous || viewModeChanged || landChanged || previous.completedSets !== state.completedSets || previous.learning !== state.learning || previous.districtFocus !== state.districtFocus
+            || previous.closeHomeView !== state.closeHomeView
             || previous.workshop?.active !== state.workshop?.active || previous.workshop?.mode !== state.workshop?.mode
             || previous.workshop?.residentId !== state.workshop?.residentId
             || previous.residentPortraitId !== state.residentPortraitId
@@ -1228,7 +1229,13 @@ export class IslandScene {
                 ?? getIslandLands(this.landAccess)[0];
             const terrain = islandTerrainEnvelope(area).map(point => new THREE.Vector3(...point).applyMatrix4(this.camera.matrixWorldInverse));
             const envelopeHeight = Math.max(...terrain.map(point => Math.max(Math.abs(point.y), Math.abs(point.x) / aspect) * 2.1));
-            const fitHeight = Math.max(district === 'home' ? 7.2 : land.radiusZ * 2.2, widthInWorld / aspect, envelopeHeight);
+            // A tall phone home shows nearby life rather than filling its frame
+            // with sea. This is the base fit, so manual controls remain relative
+            // and automatic home/observation/shared presentations keep ownership.
+            const closeHome = this.state?.closeHomeView && district === 'home' && width < 600 && aspect < 1
+                && !this.state.photographing && canControlIslandCamera(this.state)
+                && !this.explicitNatureObservation && !this.sharedCamera;
+            const fitHeight = Math.max(district === 'home' ? 7.2 : land.radiusZ * 2.2, widthInWorld / aspect, envelopeHeight) / (closeHome ? 1.3 : 1);
             this.camera.left = -fitHeight * aspect / 2; this.camera.right = fitHeight * aspect / 2;
             this.camera.top = fitHeight / 2; this.camera.bottom = -fitHeight / 2;
             this.applyCameraPan(bounds, projectedRegions, aspect);

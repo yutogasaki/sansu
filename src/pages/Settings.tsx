@@ -27,6 +27,7 @@ import { holdPwaUpdateForCriticalPersistence } from "../pwa";
 import { activateVocabNextLevel, needsVocabNextLevelActivation } from "../hooks/useStudySession.logic";
 import { ScreenScaffold } from "../components/ScreenScaffold";
 import storage from "../utils/storage";
+import "./UtilityLayout.css";
 
 export const Settings: React.FC = () => {
     const navigate = useNavigate();
@@ -63,7 +64,9 @@ export const Settings: React.FC = () => {
     const t = (easy: string, standard: string) => (isEasy ? easy : standard);
     const TEST_TIMER_OPTIONS = [0, 5, 10, 15, 20] as const;
     const toggleSection = (key: string) => {
-        if (navigation) navigation.open(`/settings?section=${key}`);
+        if (navigation) {
+            if (openSection !== key) navigation.open(`/settings?section=${key}`);
+        }
         else setOpenSection(prev => prev === key ? null : key);
     };
 
@@ -365,14 +368,14 @@ export const Settings: React.FC = () => {
     const kanjiLabel = profile?.kanjiMode ? "漢字" : "ひらがな";
 
     const sectionIcons = { profile: UserRound, learning: BookOpen, display: Volume2, parent: ShieldCheck };
-    const accordionHeader = (key: keyof typeof sectionIcons, title: string, summary: string) => {
-        if (navigation && openSection) return null;
+    const sectionButton = (key: keyof typeof sectionIcons, title: string, summary: string) => {
         const SectionIcon = sectionIcons[key];
         return (
         <button
             type="button"
             onClick={() => toggleSection(key)}
             aria-expanded={openSection === key}
+            aria-current={navigation && openSection === key ? "page" : undefined}
             data-setting-section={key}
             className="pokomoko-setting-trigger flex w-full items-center justify-between gap-3 rounded-[20px] px-5 py-4 text-left transition-colors hover:bg-white/30 active:scale-[0.99]"
         >
@@ -393,7 +396,8 @@ export const Settings: React.FC = () => {
             title={navigation && openSection ? ({ profile: 'プロフィール', learning: t('がくしゅう', '学習'), display: t('ひょうじと おと', '表示とサウンド'), parent: t('ほごしゃ', 'テスト・保護者') }[openSection] ?? t('せってい', '設定')) : t("せってい", "設定")}
             showBack={Boolean(navigation)}
             onBack={navigation?.back}
-            contentClassName="px-6 pt-2"
+            containerClassName={navigation ? "utility-layout-screen" : undefined}
+            contentClassName={navigation ? "utility-layout-scroll" : "px-6 pt-2"}
         >
             <ParentGateModal
                 isOpen={showParentGuard}
@@ -465,10 +469,22 @@ export const Settings: React.FC = () => {
                 </div>
             </Modal>
 
-            <div className="island-utility-content mx-auto w-full max-w-[22rem] space-y-3 pb-2">
+            <div className={navigation ? `utility-layout-content settings-layout${openSection ? " has-selection" : ""}` : "island-utility-content mx-auto w-full max-w-[22rem] space-y-3 pb-2"}>
+                {navigation && <nav className="settings-category-list" aria-label={t("せっていの こうもく", "設定の項目")}>
+                    {sectionButton("profile", "プロフィール", `${profile?.name || "ゲスト"} · ${GRADES[profile?.grade ?? 1] || "???"}`)}
+                    {sectionButton("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel} · Lv.${profile?.mathMainLevel ?? 1}/${profile?.vocabMainLevel ?? 1}`)}
+                    {sectionButton("display", t("みため と おと", "表示とサウンド"), `${soundLabel} · ${textLabel} · ${kanjiLabel}`)}
+                    {sectionButton("parent", t("テスト・おとなむけ", "テスト・保護者"), t("ていきテスト · データの かんり", "定期テスト · データの管理"))}
+                </nav>}
+                <div className={navigation ? "settings-panels" : "space-y-3"}>
+                {navigation && !openSection && <div className="settings-empty-selection">
+                    <BookOpen size={28} strokeWidth={1.6} aria-hidden="true" />
+                    <h2>{t("こうもくを えらぼう", "項目を選んでください")}</h2>
+                    <p>{t("べんきょうや おとの せっていを かえられるよ。", "現在の設定を確認・変更できます。")}</p>
+                </div>}
                 {/* ── プロフィール ── */}
-                <SurfacePanel hidden={Boolean(navigation && openSection && openSection !== "profile")} className="overflow-hidden rounded-[28px] p-0">
-                    {accordionHeader("profile", t("プロフィール", "プロフィール"), `${profile?.name || "ゲスト"} · ${GRADES[profile?.grade ?? 1] || "???"}`)}
+                <SurfacePanel hidden={Boolean(navigation && openSection !== "profile")} className="overflow-hidden rounded-[28px] p-0">
+                    {!navigation && sectionButton("profile", t("プロフィール", "プロフィール"), `${profile?.name || "ゲスト"} · ${GRADES[profile?.grade ?? 1] || "???"}`)}
                     <AnimatePresence>
                         {openSection === "profile" && (
                             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
@@ -501,8 +517,8 @@ export const Settings: React.FC = () => {
                 </SurfacePanel>
 
                 {/* ── 学習 ── */}
-                <SurfacePanel hidden={Boolean(navigation && openSection && openSection !== "learning")} className="overflow-hidden rounded-[28px] p-0">
-                    {accordionHeader("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel} · Lv.${profile?.mathMainLevel ?? 1}/${profile?.vocabMainLevel ?? 1}`)}
+                <SurfacePanel hidden={Boolean(navigation && openSection !== "learning")} className="overflow-hidden rounded-[28px] p-0">
+                    {!navigation && sectionButton("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel} · Lv.${profile?.mathMainLevel ?? 1}/${profile?.vocabMainLevel ?? 1}`)}
                     <AnimatePresence>
                         {openSection === "learning" && (
                             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
@@ -549,8 +565,8 @@ export const Settings: React.FC = () => {
                 </SurfacePanel>
 
                 {/* ── 表示とサウンド ── */}
-                <SurfacePanel hidden={Boolean(navigation && openSection && openSection !== "display")} className="overflow-hidden rounded-[28px] p-0">
-                    {accordionHeader("display", t("みため と おと", "表示とサウンド"), `${soundLabel} · ${textLabel} · ${kanjiLabel}`)}
+                <SurfacePanel hidden={Boolean(navigation && openSection !== "display")} className="overflow-hidden rounded-[28px] p-0">
+                    {!navigation && sectionButton("display", t("みため と おと", "表示とサウンド"), `${soundLabel} · ${textLabel} · ${kanjiLabel}`)}
                     <AnimatePresence>
                         {openSection === "display" && (
                             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
@@ -571,8 +587,8 @@ export const Settings: React.FC = () => {
                 </SurfacePanel>
 
                 {/* ── テスト・保護者 ── */}
-                <SurfacePanel hidden={Boolean(navigation && openSection && openSection !== "parent")} className="overflow-hidden rounded-[28px] p-0">
-                    {accordionHeader("parent", t("テスト・おとなむけ", "テスト・保護者"), t("ていきテスト · ほごしゃメニュー", "定期テスト · 保護者メニュー"))}
+                <SurfacePanel hidden={Boolean(navigation && openSection !== "parent")} className="overflow-hidden rounded-[28px] p-0">
+                    {!navigation && sectionButton("parent", t("テスト・おとなむけ", "テスト・保護者"), t("ていきテスト · ほごしゃメニュー", "定期テスト · 保護者メニュー"))}
                     <AnimatePresence>
                         {openSection === "parent" && (
                             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
@@ -627,21 +643,19 @@ export const Settings: React.FC = () => {
                                     <SettingRow title={t("ほごしゃ メニュー", "保護者メニュー")} description={t("おとなの ひとが みる ページ", "大人向けページ")} action={<Button size="sm" variant="secondary" onClick={() => withParentGuard(() => navigate('/parents', { state: { parentGatePassed: true } }))}>{t("ひらく", "開く")}</Button>} />
                                     <PanelDivider />
                                     <SettingRow title="開発者モード" description="内部状態や検証用の画面を開く" action={<Button size="sm" variant="secondary" onClick={() => navigation ? navigation.open("/dev") : navigate("/dev")}>{t("ひらく", "開く")}</Button>} />
+                                    <PanelDivider />
+                                    <div className="settings-data-management">
+                                        <SurfacePanelHeader title={t("データの かんり", "データの管理")} description={t("この たんまつの きろくを けす とき", "この端末のすべてのプロフィールと記録が対象です")} />
+                                        <button type="button" onClick={handleReset} className="settings-reset-action">
+                                            {t("データをすべてリセット", "全データをリセット")}
+                                        </button>
+                                    </div>
                                 </div>
                             </motion.div>
                         )}
                     </AnimatePresence>
                 </SurfacePanel>
 
-                {/* ── リセット ── */}
-                <div hidden={Boolean(navigation && openSection && openSection !== "parent")} className="pt-4">
-                    <button
-                        type="button"
-                        onClick={handleReset}
-                        className="pokomoko-reset-action w-full rounded-[20px] py-3 text-center text-sm font-bold text-rose-500 transition-colors hover:bg-rose-50/50"
-                    >
-                        {t("データをすべてリセット", "全データをリセット")}
-                    </button>
                 </div>
             </div>
         </ScreenScaffold>

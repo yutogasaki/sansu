@@ -40,6 +40,7 @@ Use it to find the right source of truth before editing docs, tasks, runbooks, o
 
 ## Frequently Used Docs
 
+
 本人の学習成果を暮らしている家の一角へ飾る[賞状とトロフィー42](product/42_island_learning_keepsakes_spec.md)。島の実家の玄関から同じSceneの家内へ入り、賞状3点/トロフィー13点を無料で展示・収納する。「いえ」は実アルバム/かざりと記憶にもつながり、お知らせ0件はその事実を表示し、実際のおくりものがある場合だけ受取へつなぐ。固定23 app＋QA修正版の限定実画面検証（`../output/island-experience/keepsakes-23-02/report.json`）は、両幅で実5区間による最初の賞状/トロフィー、実写真、保存保持と同予約復帰を確認した。固定23の正式80runは合格（自動keyboard固定問題）、art parity HOLD、子どもの意欲はHuman N=0で未検証、元Goalは進行中。
 
 身支度、観察から得る記念品、無料の朝夕・季節の採用契約は[身支度と小さなコレクション41](product/41_island_expression_collection_spec.md)。取得と装備、所有と全景snapshotを分け、無料の衣装・音へ戻す操作と旧写真を保持する。
@@ -126,6 +127,7 @@ The repository is transitioning toward an exploration-first math game. [product/
 
 ## Supporting Docs
 
+- [design/research/2026-09-09-layout-strategy/strategy.md](/docs/design/research/2026-09-09-layout-strategy/strategy.md): 外部12アプリ・KeepGoingの比較と実画面14枚に基づくレイアウト提案。採用内容は画面目的別仕様44へ反映。
 - [design/park-three-runtime.md](/docs/design/park-three-runtime.md): Three.jsによる組替え可能な遊園地の候補、起動・旧表示への復帰、実画面と録画。
 
 - [product/22_shared_subject_build_and_play_spec.md](/docs/product/22_shared_subject_build_and_play_spec.md): 教科共通の遊園地MVP、学習・保存契約。
@@ -167,3 +169,5 @@ The repository is transitioning toward an exploration-first math game. [product/
 - If a change affects process or shared AI workflow, update `docs/ai/contributor-guide.md`.
 - If a fact must survive across unrelated work, decide whether it belongs in `docs/wiki/memory.md` or `.agents/memory/durable.md`.
 - Run `npm run docs:check` after doc or process updates.
+
+- [画面目的別レイアウト仕様](product/44_display_layout_spec.md)

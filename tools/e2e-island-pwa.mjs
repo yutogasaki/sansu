@@ -331,6 +331,7 @@ try {
         await page.goto(`${base}/#/`);
         await page.waitForURL('**/#/island'); await waitReady(page);
         if (await button(page, 'とじる').isVisible()) { await button(page, 'とじる').click(); await waitMode(page, 'home'); }
+        await button(page, 'しまのメニュー').click();
         await button(page, 'ほかの あそび').click();
         await page.getByRole('button', { name: /ポッコの たんけん/ }).click();
         await page.waitForURL('**/#/explore');

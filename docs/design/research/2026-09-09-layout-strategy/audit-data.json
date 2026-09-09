@@ -1,0 +1,156 @@
+[
+  {
+    "step": 1,
+    "file": "current/01-welcome-phone.png",
+    "title": "初回の入口",
+    "device": "phone",
+    "health": "要整理",
+    "strength": "自分で「まなぶ」を押して初回設定へ進める。",
+    "issue": "初回からカメラの道具が並び、何を始める画面かの焦点が散る。",
+    "proposal": "島に触れる楽しさと一つの開始操作を中心にする。",
+    "limit": "初回設定の中間画面は操作したが、全ステップの画像は収録していない。"
+  },
+  {
+    "step": 2,
+    "file": "current/02-learning-phone.png",
+    "title": "学習を開く",
+    "device": "phone",
+    "health": "要改善",
+    "strength": "タブが消え、明示的な「とじる」と支援がある。",
+    "issue": "小さい問題の上下が大きく空き、選択肢までの距離が長い。",
+    "proposal": "問題タイプごとに必要な高さを使い、問題と答えを近づける。",
+    "limit": "今回見たのは初回の3択。筆算、英語、採点後の表示は未監査。"
+  },
+  {
+    "step": 3,
+    "file": "current/03-home-phone.png",
+    "title": "閉じて島へ",
+    "device": "phone",
+    "health": "要改善",
+    "strength": "学習を閉じると島へ戻り、問題は自動再開しない。",
+    "issue": "島の枠には海が多い。下に5段の操作帯があり、機能は横スクロールに隠れる。",
+    "proposal": "島の実物が見える構図と、必要時に開く道具をセットで設計する。",
+    "limit": "初期の島のみ。成熟した地区や多数の展示は未確認。"
+  },
+  {
+    "step": 4,
+    "file": "current/04-settings-phone.png",
+    "title": "設定一覧",
+    "device": "phone",
+    "health": "要整理",
+    "strength": "4つのカテゴリと現在の設定値が見える。",
+    "issue": "大型カードと装飾の空白が多く、全データリセットが第一画面で目立つ。",
+    "proposal": "まとまった設定行へ整理し、リセットは詳細管理へ置く。",
+    "limit": "色のコントラスト比、保護者確認の全経路は未測定。"
+  },
+  {
+    "step": 5,
+    "file": "current/05-settings-detail-phone.png",
+    "title": "学習の設定",
+    "device": "phone",
+    "health": "要整理",
+    "strength": "科目、筆算、難しさの変更先が分かれている。",
+    "issue": "大きな枠と余白が、少数の設定項目に対して重い。",
+    "proposal": "見出しと現在値を揃え、設定する対象に面積を渡す。",
+    "limit": "設定値の変更・保存は今回実行していない。"
+  },
+  {
+    "step": 6,
+    "file": "current/06-records-phone.png",
+    "title": "記録の入口",
+    "device": "phone",
+    "health": "要整理",
+    "strength": "学習量とカレンダーを確認できる。",
+    "issue": "初期状態はゼロの数値が中心で、これから何が残るかが伝わりにくい。",
+    "proposal": "学習後に残る内容と次の行動を示す空状態にする。",
+    "limit": "新規プロフィール、0回答の画面。学習済みデータの密度は未評価。"
+  },
+  {
+    "step": 7,
+    "file": "current/07-records-detail-phone.png",
+    "title": "もっと見る",
+    "device": "phone",
+    "health": "不具合",
+    "strength": "記録から詳細を探す入口が置かれている。",
+    "issue": "押すとボタンだけが消え、内容は増えない。待機・スクロール後も同じ。コード条件も確認。",
+    "proposal": "追加内容があるときだけ入口を出すか、有効な詳細を開く。",
+    "limit": "現在ビルドと作業ツリーのStats.tsxが一致。この調査では未修正。"
+  },
+  {
+    "step": 8,
+    "file": "current/08-inventory-phone.png",
+    "title": "持ち物を選ぶ",
+    "device": "phone",
+    "health": "要改善",
+    "strength": "所有物を絵と名前で選べる。",
+    "issue": "一覧より先に大きい島が置かれ、戻るの文字が縦に折れる。",
+    "proposal": "一覧を主役にし、戻る操作に縮まない幅を確保する。",
+    "limit": "所有物2点の初期状態。多数所持時の分類や読上げは未評価。"
+  },
+  {
+    "step": 9,
+    "file": "current/09-placement-phone.png",
+    "title": "配置を編集",
+    "device": "phone",
+    "health": "要改善",
+    "strength": "編集中はタブが隠れ、矢印・回転・確定が用意されている。",
+    "issue": "閉じるの文字が縦に折れる。終了操作は島の下にあり、さらに道具が画面外へ続く。",
+    "proposal": "上端に取消・確定、実景の下または横に現在の道具を置く。",
+    "limit": "取消だけを実行。実移動・確定保存・保存失敗は今回未検証。"
+  },
+  {
+    "step": 10,
+    "file": "current/10-album-phone.png",
+    "title": "成長を見る",
+    "device": "phone",
+    "health": "要整理",
+    "strength": "過去と現在を実景で見られる。",
+    "issue": "分類・地区・時点の選択が作品より先に何段も並び、比較が縦に長い。",
+    "proposal": "作品を先に見せ、時点とカテゴリはまとめて開く。",
+    "limit": "初期の同じ段階の比較。写真の撮影・一枚表示は今回未監査。"
+  },
+  {
+    "step": 11,
+    "file": "current/11-home-tablet.png",
+    "title": "島・縦タブレット",
+    "device": "tablet",
+    "health": "要改善",
+    "strength": "画面幅を使って島を見せられる。",
+    "issue": "縦の世界枠が高く、遊びや持ち物の入口が第一画面に出ない。",
+    "proposal": "上下の操作領域を先に確保し、世界は残りの有効範囲へ配置する。",
+    "limit": "768×1024のブラウザviewport。実iPad Safariではない。"
+  },
+  {
+    "step": 12,
+    "file": "current/12-inventory-tablet.png",
+    "title": "持ち物・縦タブレット",
+    "device": "tablet",
+    "health": "要改善",
+    "strength": "2つの所持品が十分な大きさで見える。",
+    "issue": "広くしても大きな島＋一覧の縦積みが残り、戻るの文字も折れる。",
+    "proposal": "一覧＋選択詳細へ再配置し、画面の広さを操作に使う。",
+    "limit": "項目数が多い場合の一覧は未確認。"
+  },
+  {
+    "step": 13,
+    "file": "current/13-learning-landscape.png",
+    "title": "学習・横タブレット",
+    "device": "landscape",
+    "health": "要改善",
+    "strength": "問題・選択肢を左右に分け、タブを閉じている。",
+    "issue": "問題が小さいまま中央の左右へ分かれ、広い空白と長い視線移動が残る。",
+    "proposal": "問題の必要サイズを確保し、2列の最大幅と間隔を制限する。",
+    "limit": "同じ予約の1問目を保持。回答保存やキーの全種類は今回未検証。"
+  },
+  {
+    "step": 14,
+    "file": "current/14-home-landscape.png",
+    "title": "島・横タブレット",
+    "device": "landscape",
+    "health": "要改善",
+    "strength": "回転後も島へ戻れ、同じ地区の表示を保つ。",
+    "issue": "世界の下に操作を積むため、遊びの入口が下端のナビに隠れる。",
+    "proposal": "横に余る領域へ補助操作を置き、島と入口を同時に見せる。",
+    "limit": "1024×768。リサイズの全保存状態、実機safe areaは未検証。"
+  }
+]

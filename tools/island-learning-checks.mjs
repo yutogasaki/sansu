@@ -134,10 +134,12 @@ export async function assertControls(page, { allowScroll = false } = {}) {
     ].map(name => page.locator('.park-keypad').getByRole('button', { name, exact: true }));
     if (!isChoice) {
         const submit = page.locator('.park-keypad [data-keypad-submit]');
-        assert.equal(await submit.count(), 1, 'Numeric and written input expose exactly one real submit control');
+        const automaticWritten = await page.locator('.park-answer[data-input-type="hissan"] .park-keypad [data-written-auto-confirm]').count() === 1;
+        assert.equal(await submit.count(), automaticWritten ? 0 : 1,
+            'Written automatic input omits confirmation; numeric and manual retry keep one real submit');
         if (written) assert.equal(await page.locator('.park-keypad').getByRole('button', { name: 'しょうすうてん', exact: true }).count(), 0,
             'Written arithmetic omits the decimal key by its input contract');
-        controls.push(submit);
+        if (!automaticWritten) controls.push(submit);
         controls.push(...await page.locator('.park-keypad button[aria-label^="カーソルを"]').all());
         controls.push(...await page.locator('.park-input').all());
     }

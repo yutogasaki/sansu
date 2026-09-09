@@ -20,7 +20,7 @@ import { selectIslandGrowthTarget, setIslandItemAppearance } from '../domain/isl
 import { holdPwaUpdateForCriticalPersistence, reachPwaUpdateCheckpoint } from '../pwa';
 import { playSound, setSoundEnabled } from '../utils/audio';
 import IslandStage from '../components/island/IslandStage';
-import { IslandInventory, IslandPlacement, IslandPlay, IslandRewards } from '../components/island/IslandItems';
+import { IslandInventory, IslandPlacement, IslandPlacementActions, IslandPlay, IslandRewards } from '../components/island/IslandItems';
 import { useIslandActions } from '../components/island/useIslandActions';
 import { useIslandDiscoveries } from '../components/island/useIslandDiscoveries';
 import { IslandDistricts, IslandGrowthChoices, IslandGrowthSummary, type IslandDistrict } from '../components/island/IslandGrowth';
@@ -77,6 +77,8 @@ import { getIslandWorkshop, getWorkshopSpecimenName, workshopSpecimenIdentity } 
 import type { WorkshopSceneRequest } from '../components/island/three/workshopScene';
 import '../components/park/Park.css';
 import '../components/island/Island.css';
+import '../components/island/IslandDisplayLayout.css';
+import '../components/island/IslandWideWorkspace.css';
 
 type Screen = IslandScreen;
 const RENDERER_RECOVERY_HINT = '「もういちど みる」で、しまを ひらこう。';
@@ -97,6 +99,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const location = useLocation();
     const navigation = useIslandNavigation();
     const hasShell = Boolean(navigation);
+    const [homeMenuOpen, setHomeMenuOpen] = useState(false);
     const active = navigation?.active ?? true;
     const [entry] = useState(() => {
         const query = new URLSearchParams(location.search);
@@ -175,7 +178,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const expression = useIslandExpression(island, active && screen === 'expression', run, setSnapshot);
     const keepsakes = useIslandLearningKeepsakes(island, active && screen === 'keepsakes' && !preparingLearning, run,
         updated => setSnapshot(previous => previous?.profileId === updated.profileId && previous.revision > updated.revision ? previous : updated));
-    const rewardGoal = useIslandRewardGoal(island, active && !preparingLearning && ['home', 'customization', 'furniture', 'expression'].includes(screen) ? screen : undefined,
+    const rewardGoal = useIslandRewardGoal(island, active && !homeMenuOpen && !preparingLearning && ['home', 'customization', 'furniture', 'expression'].includes(screen) ? screen : undefined,
         run, updated => setSnapshot(previous => previous?.profileId === updated.profileId && previous.revision > updated.revision ? previous : updated));
     const photos = useIslandPhotos(profile.id, active && (screen === 'camera' || screen === 'photos' || screen === 'expression'), run);
     const sharedActions = useIslandSharedMemories(island, active && (screen === 'shared' || screen === 'workshop' && Boolean(workReplay)
@@ -198,7 +201,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const ambience = useIslandAmbience(sceneAmbience, profile.soundEnabled,
         active && !preparingLearning && ['home', 'play', 'experience', 'expression', 'showcase'].includes(screen),
         screen === 'expression' && expression.previewAction?.type === 'equip-soundscape');
-    const discoveries = useIslandDiscoveries({ profileId: profile.id, island, enabled: active && ['home', 'play', 'showcase'].includes(screen), busy, run, onSaved: setSnapshot });
+    const discoveries = useIslandDiscoveries({ profileId: profile.id, island, enabled: active && !homeMenuOpen && ['home', 'play', 'showcase'].includes(screen), busy, run, onSaved: setSnapshot });
     const observation = useIslandLearningObservation();
     useEffect(() => { setSoundEnabled(profile.soundEnabled); }, [profile.soundEnabled]);
     useEffect(() => {
@@ -294,15 +297,17 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     useEffect(() => {
         if (!navigation?.learning) { learningStarted.current = false; return; }
         if (navigation.targetProfile && navigation.targetProfile !== profile.id) { exitMismatchedLearning(); return; }
-        if (opening || loadError || learningStarted.current) return;
+        if (busy || opening || loadError || learningStarted.current) return;
         learningStarted.current = true;
         beginRequestedLearning();
-    }, [navigation?.learning, navigation?.targetProfile, opening, loadError, profile.id]);
+    }, [navigation?.learning, navigation?.targetProfile, busy, opening, loadError, profile.id]);
     const reportBlocked = navigation?.setBlocked;
+    const reportLearningBlocked = navigation?.setLearningBlocked;
     useLayoutEffect(() => {
         reportBlocked?.(active && (busy && busyKind !== 'discovery' || preparingLearning || opening));
-        return () => reportBlocked?.(false);
-    }, [reportBlocked, active, busy, busyKind, preparingLearning, opening]);
+        reportLearningBlocked?.(busy || preparingLearning || opening);
+        return () => { reportBlocked?.(false); reportLearningBlocked?.(false); };
+    }, [reportBlocked, reportLearningBlocked, active, busy, busyKind, preparingLearning, opening]);
     const recoverPlacement = useEffectEvent(() => navigation?.open('/island?view=inventory', true));
     const placementWasPrepared = useRef(false);
     useEffect(() => {
@@ -544,12 +549,16 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         ...SHARED_DISPLAY_IDS.flatMap(id => island.sharedMemories?.displays[id] ? [{ id: `display-${id}`, label: sharedTargetName(island, island.sharedMemories.displays[id]!.target) }] : []),
         ...(photoOrigin === 'workshop' ? [{ id: 'inlet', label: workshopView.mode === 'build' ? 'つくった しくみ' : 'みつけた もの' }] : []),
         ...(photoOrigin === 'keepsakes' ? [{ id: 'keepsakes', label: 'いえ' }] : [])];
-    return <main className="island-page" data-game-id="mystic-island-v1" data-mode={screen} data-complex={Boolean(learning && complex)}
+    const savePlacement = () => { setFurniturePlacementSearch(undefined); void place(); };
+    const cancelPlacement = navigation ? home : returnToFurniture ? () => {
+        setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPreview(undefined); setScreen('furniture');
+    } : home;
+    return <main className="island-page" data-layout-version="display-v1" data-game-id="mystic-island-v1" data-mode={screen} data-home-layout={screen === 'home' ? 'world-first-v2' : undefined} data-complex={Boolean(learning && complex)}
         data-visual-candidate-id={ISLAND_VISUAL_CANDIDATE} data-delivery-id={ISLAND_DELIVERY_ID}
         data-learning-candidate={ISLAND_LEARNING_CANDIDATE}
         data-island-revision={island.revision} data-discovery-count={island.growth?.discoveries.length ?? 0}
         data-build-revision={__BUILD_REVISION__} data-build-version={__APP_VERSION__} data-busy={busy}>
-        {screen !== 'showcase' && <header className="island-header"><div className="island-brand" data-learning-milestone={learning ? Boolean(milestoneNotice.milestone) : undefined}>
+        {!['showcase', 'placement'].includes(screen) && <header className="island-header"><div className="island-brand" data-learning-milestone={learning ? Boolean(milestoneNotice.milestone) : undefined}>
             <Leaf size={20} /><div><p>{profile.name}の</p><h1 title={island.experience?.islandName}>{island.experience?.islandName ?? 'ふしぎな しま'}</h1></div>
             {milestoneNotice.milestone && <IslandMilestoneNotice milestone={milestoneNotice.milestone} island={island} />}</div>
             <div className="island-header-actions"><IslandSoundControl key={screen} enabled={profile.soundEnabled} disabled={busy} onChange={enabled => run(async () => {
@@ -565,7 +574,8 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 : navigation?.focus ? null : <button className="island-icon-button" aria-label="せってい" disabled={busy} onClick={() => navigation ? navigation.open('/settings') : navigate('/settings')}><Settings2 size={20} /></button>}</div>
         </header>}
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
-        {active && !['album', 'photos'].includes(screen) && <IslandStage items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
+        {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
+        {active && !['album', 'photos', 'inventory'].includes(screen) && <IslandStage closeHomeView={screen === 'home'} compactCameraControls={screen === 'home'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
             learningKeepsakes={keepsakeRoomActive ? { state: island.learningKeepsakes, selectedId: keepsakeFocus } : undefined}
             onHomeEnter={!busy && ['home', 'play'].includes(screen) ? enterHouse : undefined}
             onHomeAction={!busy && screen === 'keepsakes' ? action => {
@@ -624,7 +634,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             growth={stageIsland.growth} growthTarget={plan?.status === 'active' ? plan.growthTarget : undefined}
             comparisonHabitat={screen === 'growth' ? growthViewHabitat : undefined}
             districtFocus={learning || screen === 'shared' || screen === 'customization' || screen === 'expression' || screen === 'furniture' || screen === 'camera' && photoTargetId !== 'current' ? 'all' : district} readOnly={keepsakeRoomActive || ['growth', 'inventory', 'reward', 'customization', 'guide', 'experience', 'expression'].includes(screen)}
-            onDiscovery={['home', 'play', 'showcase'].includes(screen) ? discoveries.capture : undefined}
+            onDiscovery={!homeMenuOpen && ['home', 'play', 'showcase'].includes(screen) ? discoveries.capture : undefined}
             reaction={reaction} learningProgress={(learning || screen === 'reward') && plan
                 ? { sectionId: plan.id, completed: plan.cursor, total: plan.slots.length } : undefined}
             preview={preview} previewValid={valid} selectedId={screen === 'play' ? playRequest?.itemId : preview?.id}
@@ -665,7 +675,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 if (screen === 'play') play(id);
                 else { const item = island.items.find(candidate => candidate.id === id); if (item) select(item); }
             } : undefined} />}
-        {(screen === 'home' || screen === 'play' || screen === 'placement') && <IslandDistricts island={island} value={district} disabled={busy} onChange={setDistrict} />}
+        {(screen === 'play' || screen === 'placement') && <IslandDistricts island={island} value={district} disabled={busy} onChange={setDistrict} />}
         {learning && nextPlanError ? <section className="island-sheet island-learning-retry">
             <p role="status">{plan?.status === 'completed' ? 'ここまで といたぶんは のこっているよ。' : 'まだ もんだいを ひらけなかったよ。'}</p>
             <button className="island-primary" disabled={busy} onClick={() => void begin()}>つづきの もんだいを ひらく</button>
@@ -784,7 +794,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     onWorkshop={id => { openWorkshop(); setWorkshopView(view => ({ ...view, mode: id ? 'observe' : 'build', selectedSpecimenId: id ?? view.selectedSpecimenId })); }}
                     onPlace={id => { const item = island.items.find(candidate => candidate.id === id); if (item) select(item); }}
                     onTry={tryDiscovery} />
-                : screen === 'placement' && preview ? <IslandPlacement item={preview} valid={valid} disabled={busy} availability={placementAvailability}
+                : screen === 'placement' && preview ? <IslandPlacement hideActions item={preview} valid={valid} disabled={busy} availability={placementAvailability}
                     onFindUsable={furniturePlacementChoice ? () => { setPlacementSuggestionId(undefined); setFurniturePlacementSearch(crypto.randomUUID()); } : undefined}
                     onArrangeSurroundings={furniturePlacementChoice ? () => {
                         setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPlacementSuggestionId(undefined);
@@ -792,26 +802,33 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     } : undefined}
                     onPoint={point => { setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPlacementSuggestionId(undefined); setPreview({ ...preview, position: point }); }}
                     onRotate={() => { setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPlacementSuggestionId(undefined); setPreview({ ...preview, rotation: preview.rotation + Math.PI / 2 }); }}
-                    onSave={() => { setFurniturePlacementSearch(undefined); void place(); }} onStore={() => { setFurniturePlacementSearch(undefined); void place(true); }}
-                    onCancel={navigation ? home : returnToFurniture ? () => { setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPreview(undefined); setScreen('furniture'); } : home} onAppearance={level => void appearance(level)} /> : <section className="island-home-controls">
+                    onSave={savePlacement} onStore={() => { setFurniturePlacementSearch(undefined); void place(true); }}
+                    onCancel={cancelPlacement} onAppearance={level => void appearance(level)} /> : <section className="island-home-controls">
                     {feedback && <p className="island-home-feedback" role="status">{feedback}</p>}
-                    {latestMilestone ? <IslandMilestoneReturn milestone={latestMilestone} island={island} disabled={comparisonDisabled} onCompare={() => {
-                        setAlbumComparison(latestMilestone.expansion ? 'all' : latestMilestone.habitats[0] ?? 'garden'); setScreen('album');
-                    }} /> : null}
+
                     <IslandGrowthSummary island={island} plan={plan} disabled={busy} onChoose={() => {
                         setGrowthViewHabitat(plan?.growthTarget ?? island.growth?.focus ?? 'garden'); setScreen('growth');
                     }} />
                     {!navigation && <button className="island-primary island-start" disabled={busy} onClick={() => void begin()}>{island.pendingPlanId ? 'つづきから とく' : 'まなぶ'}<ArrowRight size={22} /></button>}
-                    <IslandRewardGoal island={island} disabled={busy} onOpen={openRewardGoal} />
-                    <IslandRewardGoalFeedback controls={rewardGoal} disabled={busy} />
-                    <IslandHomeActions busy={busy} comparisonDisabled={comparisonDisabled} workshopUnlocked={island.completedSets >= 1}
+
+                    <IslandHomeActions active={active} onOpenChange={setHomeMenuOpen} busy={busy} comparisonDisabled={comparisonDisabled} workshopUnlocked={island.completedSets >= 1}
                         pendingRewards={island.pendingRewards.length} onPlay={() => {
                         setPlayRequest(undefined); setPlayMessage(undefined); setReaction(undefined); setPreview(undefined); setScreen('play');
                     }} onGuide={openGuide} onWorkshop={openWorkshop} onInventory={() => setScreen('inventory')}
                         onCustomization={openCustomization} onExperience={openExperience} onRewards={() => setScreen('reward')}
                         onKeepsakes={enterHouse}
-                        onShared={() => openShared()} onAlbum={() => { setAlbumComparison('garden'); setScreen('album'); }} />
-                    <footer className="island-footer"><button className="island-text-button" disabled={busy} onClick={() => navigate('/battle')}>ほかの あそび</button></footer>
+                        onOtherGames={() => navigate('/battle')}
+                        onShared={() => openShared()} onAlbum={() => { setAlbumComparison('garden'); setScreen('album'); }}>
+                        <div className="island-menu-progress">
+                            <h3>しまのようす</h3>
+                            <IslandDistricts island={island} value={district} disabled={busy} onChange={setDistrict} />
+                            {latestMilestone ? <IslandMilestoneReturn milestone={latestMilestone} island={island} disabled={comparisonDisabled} onCompare={() => {
+                        setAlbumComparison(latestMilestone.expansion ? 'all' : latestMilestone.habitats[0] ?? 'garden'); setScreen('album');
+                    }} /> : null}
+                            <IslandRewardGoal island={island} disabled={busy} onOpen={openRewardGoal} />
+                            <IslandRewardGoalFeedback controls={rewardGoal} disabled={busy} />
+                        </div>
+                    </IslandHomeActions>
                 </section>}
         {plan && slot && <IslandLearningPanel plan={plan} active={active && learning && !nextPlanError}
             intro={isFirstIslandPlan(plan)} observation={active && learning ? observation : undefined}

@@ -1,0 +1,98 @@
+[
+  {
+    "name": "Duolingo",
+    "category": "learning",
+    "use": "見出しの位置と文字の階層を揃え、島・学習・記録それぞれの内容に合わせてヘッダーと主役の面積を変える。",
+    "avoid": "多数の文字なしタブ、順位、期限、通貨を詰め込む構成。全画面に同じ大きな枠を配らない。",
+    "evidence": "公式のタブ刷新記事と掲載された６画面。レッスン中の退出・保存挙動は未確認。",
+    "url": "https://blog.duolingo.com/core-tabs-redesign/"
+  },
+  {
+    "name": "Khan Academy Kids",
+    "category": "learning",
+    "use": "ホームで過ごすことと学習開始を分ける。家や住民からその場所の遊びに入り、学ぶときは明示的に始める。",
+    "avoid": "風景を覆う大きな中央再生ボタンのコピー。島へ帰っただけで学習が始まる導線。",
+    "evidence": "公式開始ガイドの手順とホーム画像。活動を閉じた後の入力保持・画面復元は未確認。",
+    "url": "https://khankids.zendesk.com/hc/en-us/articles/360006764812-Parent-and-Home-Account-Users-Getting-Started-and-creating-an-account-with-Khan-Academy-Kids"
+  },
+  {
+    "name": "ANTON",
+    "category": "learning",
+    "use": "教材や持ち物は絵と名前のある一覧にする。カテゴリから対象へ一段ずつ進み、戻る先を分かりやすくする。",
+    "avoid": "いつもの学習に毎回長い教材選択を要求すること。問題をゲームの入場料としてだけ扱うこと。",
+    "evidence": "開発元の公式ストア画像と教材選択の公式 FAQ。幅ごとの再配置や回答中のナビは未確認。",
+    "url": "https://play.google.com/store/apps/details?hl=en-US&id=com.solocode.anton"
+  },
+  {
+    "name": "Brilliant",
+    "category": "learning",
+    "use": "問題、現在の入力欄、必要なキーボードを近くにまとめる。いま操作している対象を見た目でも示す。",
+    "avoid": "高度な数式入力や細かなカーソル操作の流用。学習画面へ島の管理道具を混ぜること。",
+    "evidence": "公式入力ヘルプと実演 GIF の静止画。問題部分の画像なので全体ナビの非表示は断定しない。",
+    "url": "https://brilliant.org/help/features/how-do-i-use-interactives-on-brilliant/"
+  },
+  {
+    "name": "Lingokids",
+    "category": "learning",
+    "use": "子どもの活動と保護者の管理を別の領域にする。活動中は問題や遊びに必要なものへ表示を絞る。",
+    "avoid": "学習からの退出ロック。長い活動フィードを島の主画面に置き、探索をスクロール処理にすること。",
+    "evidence": "公式の各エリア・集中設定の説明とレッスン画像。アプリを操作した監査ではない。",
+    "url": "https://help.lingokids.com/hc/en-us/articles/115005129325-What-is-the-Parents-Area"
+  },
+  {
+    "name": "Toca Boca World",
+    "category": "world",
+    "use": "普段は世界を広く見せ、かざるときに家具の道具を開く。編集中も置き先が見える面積を確保する。",
+    "avoid": "家具一覧の常駐。世界の行き先と作業道具を同じタブ列へ混ぜること。期間限定商品の訴求。",
+    "evidence": "公式の地図・編集画像と編集メニューの公式手順。保存後の戻り先や視点復元は未操作。",
+    "url": "https://tocaboca.helpshift.com/hc/en/3-toca-boca-world/faq/138-what-s-new-in-the-home-designer-decoration-menu/"
+  },
+  {
+    "name": "Pocket Camp Complete",
+    "category": "world",
+    "use": "住民や物を触ると、その対象の行動へ進む。表情や家具が分かる近景と、島全景を使い分ける。",
+    "avoid": "全操作を小さなアイコンやジェスチャーだけに隠すこと。販促画像から常設メニューの寸法を推測しない。",
+    "evidence": "移動・会話・採集の公式手順と開発元のストア画像。正確な閉じ方やカメラ復元は未確認。",
+    "url": "https://faq.complete.ac-pocketcamp.com/hc/en-us/articles/37571573161881-How-do-you-move-the-player"
+  },
+  {
+    "name": "Finch",
+    "category": "world",
+    "use": "キャラクターと現在の状態を短く結びつける。設定や衣装は別の入口から開き、その作業へ進む。",
+    "avoid": "島の下に日々のタスクカードを積み、島を小さな挿絵にすること。多数のタブや待ち時間表示のコピー。",
+    "evidence": "ホームと衣装の公式説明、開発元のストア画像。活動中のタブ非表示や下書き復元は未確認。",
+    "url": "https://help.finchcare.com/hc/en-us/articles/37780000231309-Exploring-the-Finch-Home-Page"
+  },
+  {
+    "name": "Forest",
+    "category": "world",
+    "use": "活動中は一つの目的と短い成長表現、退出に集中させる。終わった後に育った世界を眺める対比を作る。",
+    "avoid": "退出によって育てたものを失う仕組み。カウントダウンの焦りや、他人も損をする連帯責任。",
+    "evidence": "公式サイトの説明と集中画面を目視。停止の入口は見えるが、その後の確認文や復帰は未操作。",
+    "url": "https://www.forestapp.cc/"
+  },
+  {
+    "name": "Tsuki’s Odyssey",
+    "category": "world",
+    "use": "ボタンを押さなくても住民の日常を眺めたくなる構図にする。空白の海より、暮らしの見える近景を使う。",
+    "avoid": "操作 UI のない販促画像を通常画面の根拠にすること。成人寄りの内容や課金・広告の仕組み。",
+    "evidence": "開発元のストア説明と家・釣り場の画像。ナビ、編集の終了、通常画面の方向は確認できていない。",
+    "url": "https://apps.apple.com/us/app/tsukis-odyssey/id1564146071"
+  },
+  {
+    "name": "Google Maps",
+    "category": "content",
+    "use": "場所を選ぶことと活動開始を分ける。選んだ対象の説明や補助操作を、必要なときに開く短い面へまとめる。",
+    "avoid": "終了操作をスワイプの奥へ隠すこと。場所情報・レビュー・投稿の複雑な階層を島へ持ち込むこと。",
+    "evidence": "公式の案内開始・終了と情報カードの手順。カード高やタブ非表示の全条件は未確認。",
+    "url": "https://support.google.com/maps/answer/3273406?co=GENIE.Platform%3DiOS&hl=en"
+  },
+  {
+    "name": "Apple Photos",
+    "category": "content",
+    "use": "一覧、単体鑑賞、編集で画面の役割を変える。作品を大きく開き、操作の収納と一覧への帰還を分ける。",
+    "avoid": "戻る・閉じる・取消・保存を同じ × にまとめること。多数のコレクション分類をそのまま移すこと。",
+    "evidence": "公式の閲覧・編集手順と iPad のサイドバー説明。完全なスクロール位置復元は未確認。",
+    "url": "https://support.apple.com/en-ca/guide/iphone/iph3d267610/ios"
+  }
+]

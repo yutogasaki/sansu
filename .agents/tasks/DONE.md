@@ -7,6 +7,10 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 
 ## Current Index
 
+- 2026-09-09: 島・学習・一覧・編集・管理の目的別レイアウトを実装。背景保存中の学習開始も保護。最終core3,376・PWA・正式80runを確認 -> `docs/done/2026-09.md`
+
+- 2026-09-09: 島の表示面積を広げ、タブとホーム操作を縮小。3viewport・横位置復帰・キーボード・PWAを確認。ローカルのみ -> `docs/done/2026-09.md`
+
 - 2026-09-08: 筆算をEnterなしで連続入力し、正しい数字を残して誤りだけ訂正。固定キー・保存再送、実UI6ケース・2,632テスト・固定80runを確認。公開なし -> `docs/done/2026-09.md`
 
 - 2026-09-08: PWA確認の通信待ちと復旧時cache削除を修正。実二build更新・offline保持・学習保存保護を確認しrelease検証へ追加。公開なし -> `docs/done/2026-09.md`

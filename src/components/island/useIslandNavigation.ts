@@ -17,24 +17,29 @@ export function useIslandNavigationState(enabled: boolean) {
     const active = enabled && (isIsland || learning);
     const view = isIsland ? islandScreenFromSearch(location.search) : 'home';
     const [blocked, setBlocked] = useState(false);
+    // A discovery save can leave reading routes open while new learning must wait.
+    const [learningBlocked, setLearningBlocked] = useState(false);
     const [visited, setVisited] = useState(active);
     const state = location.state as NavigationState | null;
     const tab = isIsland ? 'island' : location.pathname === '/stats' ? 'stats' : state?.islandTab ?? 'island';
     const photoId = isIsland ? query.get('photo') : null;
     const focus = active && (learning || islandFocusScreen(view, photoId));
     const href = location.pathname + location.search;
-    const scrollPositions = useRef(new Map<string, number[]>());
+    const scrollPositions = useRef(new Map<string, { top: number; left: number }[]>());
     const learningTrigger = useRef<HTMLElement | null>(null);
-    const scrollSurfaces = () => Array.from(document.querySelectorAll<HTMLElement>('.island-shell .brand-utility-screen > .overflow-y-auto, .island-shell .island-page'));
+    const scrollSurfaces = () => Array.from(document.querySelectorAll<HTMLElement>('.island-shell .brand-utility-screen > .overflow-y-auto, .island-shell .island-page, .island-shell .island-page > .island-sheet, .island-shell .island-home-actions'));
     const rememberScroll = useCallback(() => {
-        scrollPositions.current.set(href, scrollSurfaces().map(element => element.scrollTop));
+        scrollPositions.current.set(href, scrollSurfaces().map(element => ({ top: element.scrollTop, left: element.scrollLeft })));
     }, [href]);
 
     useLayoutEffect(() => { if (active) setVisited(true); }, [active]);
     useLayoutEffect(() => {
         const positions = scrollPositions.current.get(href);
         const frame = requestAnimationFrame(() => {
-            if (positions) scrollSurfaces().forEach((element, index) => { element.scrollTop = positions[index] ?? 0; });
+            if (positions) scrollSurfaces().forEach((element, index) => {
+                element.scrollTop = positions[index]?.top ?? 0;
+                element.scrollLeft = positions[index]?.left ?? 0;
+            });
             if (!learning && learningTrigger.current) {
                 const target = learningTrigger.current.isConnected ? learningTrigger.current : document.querySelector<HTMLElement>('.island-shell-tab--learn');
                 target?.focus({ preventScroll: true });
@@ -55,13 +60,13 @@ export function useIslandNavigationState(enabled: boolean) {
         else navigate(islandParentUrl(location.pathname, location.search), { replace: true, state: { islandTab: tab } });
     }, [blocked, navigate, state, location.pathname, location.search, tab]);
     const startLearning = useCallback(() => {
-        if (blocked || learning) return;
+        if (blocked || learningBlocked || learning) return;
         learningTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
         warmUpTTS();
         const next = new URLSearchParams(location.search);
         next.set('learn', '1');
         open(`${location.pathname}?${next}`);
-    }, [blocked, learning, location.pathname, location.search, open]);
+    }, [blocked, learningBlocked, learning, location.pathname, location.search, open]);
     const setView = useCallback((screen: IslandScreen) => {
         if (screen === 'learning') { startLearning(); return; }
         // A committed placement/reward must not leave its transient editor in forward history.
@@ -73,15 +78,15 @@ export function useIslandNavigationState(enabled: boolean) {
         if (blocked) return;
         const target = next === 'island' ? '/island' : '/stats';
         scrollPositions.current.delete(target);
-        scrollSurfaces().forEach(element => { element.scrollTop = 0; });
+        scrollSurfaces().forEach(element => { element.scrollTop = 0; element.scrollLeft = 0; });
         navigate(target, { state: { islandTab: next } });
     }, [blocked, navigate]);
 
-    return useMemo(() => ({ enabled, active, isIsland, learning, view, focus, tab, photoId, blocked,
+    return useMemo(() => ({ enabled, active, isIsland, learning, view, focus, tab, photoId, blocked, learningBlocked,
         mounted: enabled && (visited || active), targetProfile,
-        open, back, startLearning, setView, selectTab, setBlocked,
+        open, back, startLearning, setView, selectTab, setBlocked, setLearningBlocked,
         ordinaryHref: withoutIslandLearning(location.pathname, location.search),
-    }), [enabled, active, isIsland, learning, view, focus, tab, photoId, blocked, visited, targetProfile, open, back, startLearning, setView, selectTab, setBlocked, location.pathname, location.search]);
+    }), [enabled, active, isIsland, learning, view, focus, tab, photoId, blocked, learningBlocked, visited, targetProfile, open, back, startLearning, setView, selectTab, setBlocked, setLearningBlocked, location.pathname, location.search]);
 }
 
 export type IslandNavigation = ReturnType<typeof useIslandNavigationState>;

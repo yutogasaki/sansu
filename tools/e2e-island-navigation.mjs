@@ -108,6 +108,7 @@ try {
                     assert.deepEqual(returned[store], saved[store], `Top return preserves ${store} without resuming learning`);
                 }
             }
+            await button(page, 'しまのメニュー').click();
             await button(page, 'もちもの').click(); await ordinary('#/island?view=inventory');
             const move = page.getByRole('button', { name: /を うごかす$/ }).first();
             await move.click(); await focus('placement');
@@ -145,14 +146,16 @@ try {
             await page.goto(`${base}/#/island?view=placement`);
             await page.waitForURL('**/#/island?view=inventory'); await ordinary('#/island?view=inventory');
             await nav.getByRole('button', { name: 'きろく', exact: true }).click(); await ordinary('#/stats');
-            await page.getByText('かいとう', { exact: true }).waitFor();
-            const metric = page.getByText('かいとう', { exact: true }).locator('..');
-            assert.match(await metric.innerText(), /^0\s/);
+            await page.getByRole('heading', { name: /まなびの きろくが たまるよ|ここに学びの記録がたまります/ }).waitFor();
+            await page.locator('.stats-first-record').getByRole('button', { name: 'まなぶ', exact: true }).waitFor();
+            assert.equal(await page.locator('.stats-metric').count(), 0, 'Empty records explain the next action instead of repeating zero metrics');
             await learn.click(); await focus('learning'); await waitReady(page);
             const answered = await answerUI(page, (await readNative(page, id)).plan, { dev: false });
             assert.equal(answered.state.logs.length, 1);
             await button(page, 'とじる').click(); await ordinary('#/stats');
             await page.waitForFunction(() => [...document.querySelectorAll('div')].some(element => element.textContent === 'かいとう' && /^1\s*かいとう$/.test(element.parentElement.textContent)));
+            const metric = page.getByText('かいとう', { exact: true }).locator('..');
+            assert.match(await metric.innerText(), /^1\s/, 'One saved answer replaces the empty state with the actual answer metric');
             assert.deepEqual(errors, []);
             report.scenarios.push({ viewport, pass: true, checks: ['top entry without learning', 'stale top query and unknown URL recovery', 'existing-profile onboarding return', 'pending-plan top return without learning writes', 'ordinary tabs', 'settings source retained', 'draft and seven-store equality', 'back/forward', 'home reload without auto-start', 'placement cancel/save', 'camera close', 'real photo/detail close', 'direct learning reload/close', 'curriculum scroll restored', 'direct placement fallback', 'records refresh after answer'], errors });
             console.log(`PASS navigation ${viewport.width}x${viewport.height}`);

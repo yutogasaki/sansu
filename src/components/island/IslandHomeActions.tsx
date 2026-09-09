@@ -1,7 +1,11 @@
-import { ArrowRight, BookOpen, Gift, House, PackageOpen, Palette, PawPrint, Search, Sparkles, Waves } from 'lucide-react';
+import { useEffect, useRef, type ReactNode } from 'react';
+import { ArrowRight, BookOpen, Gamepad2, Gift, House, PackageOpen, Palette, PawPrint, Search, Sparkles, Waves, Menu, X } from 'lucide-react';
 import './IslandHomeActions.css';
 
 export interface IslandHomeActionsProps {
+    active?: boolean;
+    children?: ReactNode;
+    onOpenChange?: (open: boolean) => void;
     busy: boolean;
     comparisonDisabled: boolean;
     workshopUnlocked: boolean;
@@ -16,42 +20,80 @@ export interface IslandHomeActionsProps {
     onAlbum: () => void;
     onShared: () => void;
     onKeepsakes?: () => void;
+    onOtherGames?: () => void;
 }
 
-export function IslandHomeActions({ busy, comparisonDisabled, workshopUnlocked, pendingRewards,
-    onPlay, onGuide, onWorkshop, onInventory, onCustomization, onExperience, onRewards, onAlbum, onShared, onKeepsakes }: IslandHomeActionsProps) {
+export function IslandHomeActions({ comparisonDisabled, onOpenChange, active = true, ...contents }: IslandHomeActionsProps) {
+    const dialog = useRef<HTMLDialogElement>(null);
+    const trigger = useRef<HTMLButtonElement>(null);
+    useEffect(() => {
+        if (!active) dialog.current?.close();
+    }, [active]);
+    useEffect(() => {
+        const element = dialog.current;
+        return () => { element?.close(); onOpenChange?.(false); };
+    }, [onOpenChange]);
+    const close = () => { dialog.current?.close(); onOpenChange?.(false); };
+    const choose = (action: () => void) => { close(); action(); };
+    return <div className="island-home-actions">
+        <button ref={trigger} type="button" className="island-menu-trigger" aria-haspopup="dialog" disabled={comparisonDisabled}
+            onClick={() => { dialog.current?.showModal(); onOpenChange?.(true); }}><Menu size={21} aria-hidden="true" /><span>しまのメニュー</span></button>
+        <dialog ref={dialog} className="island-menu" aria-labelledby="island-menu-title"
+            onClose={() => { onOpenChange?.(false); if (active) trigger.current?.focus({ preventScroll: true }); }}
+            onClick={event => { if (event.target === event.currentTarget) close(); }}>
+            <div className="island-menu-surface">
+                <header className="island-menu-heading"><h2 id="island-menu-title">しまのメニュー</h2>
+                    <button type="button" className="island-text-button" onClick={close} aria-label="しまのメニューを とじる"><X size={20} />とじる</button></header>
+                <IslandHomeMenuContents {...contents} comparisonDisabled={comparisonDisabled} onChoose={choose} />
+            </div>
+        </dialog>
+    </div>;
+}
+
+type IslandHomeMenuContentsProps = Omit<IslandHomeActionsProps, 'active' | 'onOpenChange'> & {
+    onChoose: (action: () => void) => void;
+};
+
+/** The action catalog is independent of the native dialog's focus lifecycle. */
+export function IslandHomeMenuContents({ busy, comparisonDisabled, workshopUnlocked, pendingRewards,
+    onPlay, onGuide, onWorkshop, onInventory, onCustomization, onExperience, onRewards, onAlbum, onShared, onKeepsakes, onOtherGames, children, onChoose }: IslandHomeMenuContentsProps) {
     const actions = [
         { id: 'play', label: 'あそぶ', name: 'どうぶつと あそぶ', Icon: PawPrint, onClick: onPlay, disabled: busy },
         { id: 'guide', label: 'みつける', name: 'みつける', Icon: Search, onClick: onGuide, disabled: comparisonDisabled },
         ...(workshopUnlocked ? [{ id: 'workshop', label: 'つくる', name: 'おためしの いりえ', Icon: Waves, onClick: onWorkshop, disabled: busy }] : []),
+        ...(onOtherGames ? [{ id: 'other-games', label: 'ほかの あそび', name: 'ほかの あそび', Icon: Gamepad2, onClick: onOtherGames, disabled: busy }] : []),
         { id: 'inventory', label: 'もちもの', name: 'もちもの', Icon: PackageOpen, onClick: onInventory, disabled: busy },
         { id: 'customization', label: 'きせかえ', name: 'きせかえ', Icon: Sparkles, onClick: onCustomization, disabled: busy },
         { id: 'experience', label: 'しまづくり', name: 'しまづくり', Icon: Palette, onClick: onExperience, disabled: busy },
     ];
-    return <div className="island-home-secondary island-home-actions">
-        {pendingRewards > 0 && <button className="island-secondary island-home-arrival" disabled={busy} onClick={onRewards} data-home-action="rewards">
+    return <div className="island-menu-scroll">
+        {pendingRewards > 0 && <button className="island-secondary island-home-arrival" disabled={busy} onClick={() => onChoose(onRewards)} data-home-action="rewards">
             <span className="island-home-arrival-icon" aria-hidden="true"><Gift size={25} /></span>
             <span>おくりものを えらぶ<small>{pendingRewards}こ とどいているよ</small></span>
             <ArrowRight size={19} aria-hidden="true" />
         </button>}
+        {['あそぶ', 'ととのえる'].map((group, index) => <section key={group}>
+        <h3>{group}</h3>
         <div className="island-home-action-grid">
-            {actions.map(({ id, label, name, Icon, onClick, disabled }) => <button key={id}
+            {actions.filter(action => ['play', 'guide', 'workshop', 'other-games'].includes(action.id) === (index === 0)).map(({ id, label, name, Icon, onClick, disabled }) => <button key={id}
                 className={`island-secondary island-home-tile${id === 'play' ? ' island-play-entry' : ''}`}
-                data-home-action={id} aria-label={name} disabled={disabled} onClick={onClick}>
+                data-home-action={id} aria-label={name} disabled={disabled} onClick={() => onChoose(onClick)}>
                 <span className="island-home-action-patch" aria-hidden="true"><Icon size={25} strokeWidth={2.2} /></span>
                 <span>{label}</span>
             </button>)}
-        </div>
+        </div></section>)}
+        <h3>おもいで</h3>
         <div className="island-home-records">
-            {onKeepsakes && <button className="island-secondary island-home-record" disabled={busy} onClick={onKeepsakes} data-home-action="keepsakes">
+            {onKeepsakes && <button className="island-secondary island-home-record" disabled={busy} onClick={() => onChoose(onKeepsakes)} data-home-action="keepsakes">
                 <House size={19} aria-hidden="true" />いえ
             </button>}
-            <button className="island-secondary island-home-record" disabled={comparisonDisabled} onClick={onAlbum} data-home-action="album">
+            <button className="island-secondary island-home-record" disabled={comparisonDisabled} onClick={() => onChoose(onAlbum)} data-home-action="album">
                 <BookOpen size={19} aria-hidden="true" />アルバム
             </button>
-            {workshopUnlocked && <button className="island-secondary island-home-record" disabled={busy} onClick={onShared} data-home-action="shared">
+            {workshopUnlocked && <button className="island-secondary island-home-record" disabled={busy} onClick={() => onChoose(onShared)} data-home-action="shared">
                 <PackageOpen size={19} aria-hidden="true" />かざりと きおく
             </button>}
         </div>
+        {children}
     </div>;
 }

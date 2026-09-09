@@ -58,8 +58,8 @@
     .island-answer-result .island-answer-result__symbol, .island-answer-result .island-answer-result__symbol::after { animation: none; }
     .island-answer-result__rays { display: none; }
 }
-.island-workbench .island-learning-actions { min-height: 44px; margin-top: 3px; }
-.island-workbench .island-learning-actions .island-text-button { font-size: 11px; padding-inline: 5px; }
+.island-workbench .island-learning-actions { min-height: 44px; margin-top: 8px; gap: 12px; }
+.island-workbench .island-learning-actions .island-text-button { font-size: 12px; padding-inline: 8px; white-space: nowrap; }
 .island-page[data-mode=learning] { --island-stage-height: 204px; background: #fff3d5; }
 .island-page[data-mode=learning][data-complex=true] { --island-stage-height: 154px; }
 .island-page[data-mode=learning] .island-header { min-height: 49px; padding: max(5px,env(safe-area-inset-top)) 18px 3px; }
@@ -90,7 +90,7 @@
     .island-page[data-mode=learning] > .island-header {
         flex: none;
         width: 100%;
-        max-width: 1100px;
+        max-width: 960px;
         min-height: 49px;
         padding-top: max(5px, env(safe-area-inset-top));
     }
@@ -98,7 +98,7 @@
         flex: 1;
         min-height: 0;
         width: calc(100% - 32px);
-        max-width: 1100px;
+        max-width: 960px;
         margin: 0 auto 8px;
         padding: 8px 20px 5px;
         display: grid;

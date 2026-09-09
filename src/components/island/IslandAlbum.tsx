@@ -11,6 +11,7 @@ import { getIslandExpression } from '../../domain/island/expression';
 import { islandAlbumMemoryStyle } from './islandAlbumPresentation';
 import './IslandGrowth.css';
 import './IslandPanel.css';
+import './IslandWorkspacePanels.css';
 
 const comparisonNames: Record<IslandHabitatId | 'all', string> = {
     garden: 'にわ', waterside: 'みずべ', grove: '木かげ', village: 'いえ', all: 'しまぜんぶ',
@@ -52,13 +53,13 @@ export function IslandAlbum({ island, disabled, closeDisabled = disabled, onTry,
     return <section className="island-sheet island-panel island-album" aria-label="しまの アルバム"
         data-island-revision={island.revision} data-discovery-count={discoveries.length}>
         <div className="island-sheet-title"><h2>しまの アルバム</h2><button className="island-icon-button island-panel-back" disabled={closeDisabled} aria-label="アルバムを とじる" onClick={onClose}><X size={20} /><span>もどる</span></button></div>
-        <div className="island-album-tabs island-panel-choices" role="group" aria-label="アルバムの なかみ">
-            <button className="island-secondary" aria-pressed={tab === 'memories'} onClick={() => setTab('memories')}><BookOpen size={18} />そだちの きろく</button>
-            <button className="island-secondary" aria-pressed={tab === 'discoveries'} onClick={() => setTab('discoveries')}><Flower2 size={18} />みつけた くらし</button>
-            {onPhotos && <button className="island-secondary" disabled={closeDisabled} onClick={onPhotos}><Camera size={18} />しゃしん</button>}
-            {island.completedSets >= 1 && onWorkshop && <button className="island-secondary" aria-pressed={tab === 'workshop'} onClick={() => setTab('workshop')}><Waves size={18} />いりえの はっけん</button>}
-            {island.completedSets >= 1 && onShared && <button className="island-secondary" disabled={closeDisabled} onClick={onShared}><Heart size={18} />かざりと きおく</button>}
-        </div>
+        <label className="island-album-category"><BookOpen size={20} aria-hidden="true" />
+            <select aria-label="アルバムの なかみ" value={tab} onChange={event => setTab(event.target.value as typeof tab)}>
+                <option value="memories">そだちの きろく</option>
+                <option value="discoveries">みつけた くらし</option>
+                {island.completedSets >= 1 && onWorkshop && <option value="workshop">いりえの はっけん</option>}
+            </select>
+        </label>
         {tab === 'workshop' ? <div className="island-discovery-list">
             {WORKSHOP_SPECIMEN_IDS.map(id => <article className="island-discovery" key={id}><Waves size={24} aria-hidden="true" /><div><h3>{getWorkshopSpecimenName(workshop, id)}</h3>
                 <p>{SHARED_DISPLAY_IDS.some(slot => island.sharedMemories?.displays[slot]?.target.targetKey === workshop.specimens[id].id) ? 'しまにも かざっているよ' : 'いりえで みつけた もの'}</p></div>
@@ -67,15 +68,6 @@ export function IslandAlbum({ island, disabled, closeDisabled = disabled, onTry,
                 <div><h3>{entry.name}</h3><p>{entry.description}</p><small>{new Date(entry.observedAt).toLocaleDateString('ja-JP', { month: 'long', day: 'numeric' })}</small></div>
                 <button className="island-secondary" disabled={closeDisabled} onClick={() => onWorkshop?.(entry.specimenId)}>{entry.specimenId ? 'もういちど ためす' : 'つくる ばしょへ'}</button></article>)}
         </div> : tab === 'memories' ? memory ? <>
-            <div className="island-album-habitats island-panel-choices" role="group" aria-label="みくらべる ばしょ">
-                {ISLAND_HABITATS.map(habitat => <button key={habitat.id} aria-pressed={comparison === habitat.id}
-                    disabled={!isIslandHabitatUnlocked(island, habitat.id)} onClick={() => compare(habitat.id)}>{comparisonNames[habitat.id]}</button>)}
-                <button aria-pressed={comparison === 'all'} onClick={() => compare('all')}>{comparisonNames.all}</button>
-            </div>
-            <div className="island-album-timeline island-panel-choices" role="group" aria-label="むかしの しまを えらぶ">{timeline.map(entry =>
-                <button key={entry.id} aria-pressed={entry.id === memory.id} onClick={() => setMemoryId(entry.id)}>
-                    {islandAlbumMemoryTitle(memories, entry, comparison)}
-                </button>)}</div>
             <div className="island-album-compare" data-comparison-habitat={comparison}>
                 <article className="island-album-scene" data-memory-id={memory.id} data-memory-completed-sets={memory.completedSets}>
                     <h3>あのころの {placeName}</h3>
@@ -92,6 +84,20 @@ export function IslandAlbum({ island, disabled, closeDisabled = disabled, onTry,
                     <p>{island.completedSets}回 ひかりを とどけた しま</p>
                 </article>
             </div>
+            <div className="island-album-selection">
+                <label className="island-album-habitats"><span>ばしょ</span>
+                    <select aria-label="みくらべる ばしょ" value={comparison} onChange={event => compare(event.target.value as IslandHabitatId | 'all')}>
+                        {ISLAND_HABITATS.map(habitat => <option key={habitat.id} value={habitat.id}
+                            disabled={!isIslandHabitatUnlocked(island, habitat.id)}>{comparisonNames[habitat.id]}</option>)}
+                        <option value="all">{comparisonNames.all}</option>
+                    </select>
+                </label>
+                <label className="island-album-timeline"><span>あのころ</span>
+                    <select aria-label="むかしの しまを えらぶ" value={memory.id} onChange={event => setMemoryId(event.target.value)}>
+                        {timeline.map(entry => <option key={entry.id} value={entry.id}>{islandAlbumMemoryTitle(memories, entry, comparison)}</option>)}
+                    </select>
+                </label>
+            </div>
         </> : <p className="island-album-empty">しまが 育つと、ここで みくらべられるよ。</p>
             : discoveries.length ? <div className="island-discovery-list">{discoveries.map(discovery => {
                 const entry = ISLAND_DISCOVERIES.find(candidate => candidate.id === discovery.id);
@@ -105,5 +111,9 @@ export function IslandAlbum({ island, disabled, closeDisabled = disabled, onTry,
                 </article>;
             })}</div> : <div className="island-album-empty"><Flower2 size={36} /><p>どうぶつたちは なにを しているかな。<br />しまを ながめたり、いっしょに あそんで みよう。</p>
                 <button className="island-secondary" disabled={closeDisabled} onClick={onClose}>しまを みる</button></div>}
+        {(onPhotos || island.completedSets >= 1 && onShared) && <div className="island-album-related" role="group" aria-label="ほかの おもいで">
+            {onPhotos && <button className="island-secondary" disabled={closeDisabled} onClick={onPhotos}><Camera size={18} />しゃしん</button>}
+            {island.completedSets >= 1 && onShared && <button className="island-secondary" disabled={closeDisabled} onClick={onShared}><Heart size={18} />かざりと きおく</button>}
+        </div>}
     </section>;
 }

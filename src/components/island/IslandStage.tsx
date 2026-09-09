@@ -11,7 +11,7 @@ const DEFAULT_CAPTION = 'カワウソと ウサギが くらす しま';
 const deliveredState = (props: IslandStageProps, sharedId?: string): IslandStageProps => ({ ...props,
     sharedRequest: props.sharedRequest?.command.type === 'stop' || props.sharedRequest?.id === sharedId ? props.sharedRequest : undefined });
 
-export function IslandStage(props: IslandStageProps & { milestoneNotice?: ReactNode; expressionCaptionKey?: string }) {
+export function IslandStage(props: IslandStageProps & { compactCameraControls?: boolean; milestoneNotice?: ReactNode; expressionCaptionKey?: string }) {
     const host = useRef<HTMLDivElement>(null);
     const runtime = useRef<IslandScene | null>(null);
     const current = useRef(props);
@@ -173,9 +173,12 @@ export function IslandStage(props: IslandStageProps & { milestoneNotice?: ReactN
             </div>}
             {!failed && props.milestoneNotice}
         </div>
-        {!failed && cameraEnabled && <div className="island-stage__controls">
-            <IslandCameraToolbar view={cameraView} disabled={props.photographing} onAction={action => runtime.current?.controlCamera(action)} />
-            <p className="island-camera-hint">ひろげて 拡大・なぞって 移動</p>
+        {!failed && cameraEnabled && <div className={`island-stage__controls${props.compactCameraControls ? ' island-stage__controls--compact' : ''}`}>
+            {props.compactCameraControls ? <details className="island-view-tools"><summary>ながめ</summary>
+                <div className="island-view-tools-panel"><IslandCameraToolbar view={cameraView} disabled={props.photographing} onAction={action => runtime.current?.controlCamera(action)} />
+                <p className="island-camera-hint">ひろげて 拡大・なぞって 移動</p></div>
+            </details> : <><IslandCameraToolbar view={cameraView} disabled={props.photographing} onAction={action => runtime.current?.controlCamera(action)} />
+            <p className="island-camera-hint">ひろげて 拡大・なぞって 移動</p></>}
         </div>}
         <figcaption hidden={workshopActive || sharedActive || Boolean(props.preview) || Boolean(props.expressionCaptionKey) && caption === DEFAULT_CAPTION} className={`island-stage__caption${caption === DEFAULT_CAPTION ? ' island-stage__caption--quiet' : ''}`} aria-live="polite" aria-atomic="true">{caption}</figcaption>
     </figure>;

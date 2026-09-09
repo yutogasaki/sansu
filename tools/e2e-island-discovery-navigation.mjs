@@ -21,7 +21,7 @@ const start = await fingerprint();
 const report = { target, manifestPath, sourceHash: source.sourceHash, sourceStart: sha(JSON.stringify(start)),
     qaStart: start.filter(file => qa.includes(file.path)), startedAt: new Date().toISOString(), humanN: 0,
     diagnosticOnly: true, timingEvidenceEligible: false, applicationDataInjected: false, pass: false,
-    scope: 'Real empty-profile setup, six normal learning sections without returning home, and the first naturally observed discovery. Only its real native completion callback is delayed. Read-only album navigation must remain available while learning/exchange/editing stay locked. A second callback hold begins at the actual learning-resume click and confirms comparison stays locked for that interaction. Native records, problems, profile, growth and discovery are never fabricated. Not normal speed or child motivation evidence.',
+    scope: 'Real empty-profile setup and normal learning sections through the first garden maturity without returning home, then the first naturally observed discovery. Earned stars are checked against completed reservations and their native plan_completed receipts. Only the first discovery real native completion callback is delayed. Read-only album navigation must remain available while learning/exchange/editing stay locked. A second callback hold begins at the actual learning-resume click and confirms focused learning hides tabs and locks return and answer controls until the same reservation resumes. Native records, problems, profile, growth and discovery are never fabricated. Not normal speed or child motivation evidence.',
     captures: [], scenarios: [], errors: [] };
 let browser;
 
@@ -155,6 +155,9 @@ async function assertHeld(page) {
 }
 async function assertHomeBoundary(page) {
     await waitMode(page, 'home'); await assertHeld(page);
+    const menu = button(page, 'しまのメニュー');
+    assert.equal(await menu.isEnabled(), true, 'Read-only destinations stay reachable during a background save');
+    await menu.click();
     const compare = page.locator('.island-growth-return'), album = button(page, 'アルバム');
     assert.equal(await compare.isEnabled(), true, 'Milestone comparison remains readable during a background save');
     assert.equal(await album.isEnabled(), true, 'The ordinary album entry remains readable during a background save');
@@ -164,6 +167,7 @@ async function assertHomeBoundary(page) {
         assert.equal(await control.isDisabled(), true, `Interactive action stays locked: ${await control.innerText()}`);
         controls.push({ label: await control.innerText(), disabled: true });
     }
+    await button(page, 'しまのメニューを とじる').click();
     return controls;
 }
 async function assertAlbumBoundary(page, comparison) {
@@ -186,6 +190,28 @@ async function finishSection(page, state) {
     }
     assert.equal(state.island.completedSets, previous + 1);
     return state;
+}
+function completedSectionReceipts(state) {
+    const plans = state.islandPlans.filter(plan => plan.status === 'completed');
+    const events = state.islandEvents.filter(event => event.type === 'plan_completed');
+    assert.equal(events.length, plans.length, 'Every completed reservation has exactly one native completion receipt');
+    assert.equal(state.island.completedSets, plans.length);
+    const receipts = plans.map(plan => {
+        assert.equal(plan.rewardPacing, 'answers-v1', 'Fresh reservations retain the current whole-question reward contract');
+        assert(plan.slots.length >= 3 && plan.slots.length <= 6, 'Use the actual normal planner section length');
+        assert.equal(plan.cursor, plan.slots.length); assert(plan.slots.every(slot => slot.completed));
+        const matches = events.filter(event => event.planId === plan.id);
+        assert.equal(matches.length, 1);
+        const receipt = matches[0];
+        assert.equal(receipt.id, `${plan.id}:completed`); assert.equal(receipt.timestamp, plan.completedAt);
+        assert.equal(receipt.habitatId, plan.growthTarget); assert.equal(receipt.rewardId, undefined);
+        return { planId: plan.id, receiptId: receipt.id, completedAt: plan.completedAt,
+            growthTarget: plan.growthTarget, rewardPacing: plan.rewardPacing, completedQuestions: plan.slots.length };
+    });
+    const earnedQuestions = receipts.reduce((total, receipt) => total + receipt.completedQuestions, 0);
+    assert.equal(state.island.customization?.points ?? 0, earnedQuestions,
+        'Only completed whole questions in receipted sections earn one star each');
+    return { receipts, earnedQuestions };
 }
 
 try {
@@ -222,15 +248,31 @@ try {
             await page.getByRole('button', { name: /数をかぞえる・くらべる/ }).click();
             await waitReady(page); await waitMode(page, 'learning');
             let state = await readNative(page), id = state.island.profileId;
-            while (state.island.completedSets < 6) state = await finishSection(page, state);
-            assert.equal(state.island.completedSets, 6); assert.equal(state.island.customization.points, 60);
+            let earned = completedSectionReceipts(state);
+            // Spec 30: growth marks cost 3/6/9/12/15/18 whole questions.
+            // Wait for the first maturity so its comparison entry exists; keep
+            // each real planner reservation intact rather than fixing a set count.
+            while (earned.earnedQuestions < 63) {
+                assert(state.island.completedSets < 21, 'The first place matures within 21 normal sections of at least three questions');
+                assert.equal(state.plan.growthTarget, 'garden');
+                state = await finishSection(page, state);
+                earned = completedSectionReceipts(state);
+            }
+            const completedSets = state.island.completedSets;
+            assert(earned.earnedQuestions < 69, 'Stop at the first completed reservation reaching 63 questions');
+            assert(earned.receipts.every(receipt => receipt.growthTarget === 'garden'));
+            assert.deepEqual(state.island.growth.progress, { garden: 6, waterside: 0, grove: 0, village: 0 });
+            assert.equal(state.island.growth.expansionLevel, 1);
             assert.equal(state.island.growth.discoveries.length, 0, 'No prior island visit or fabricated discovery');
-            assert.deepEqual(state.island.growth.memories.map(memory => memory.completedSets), [0, 6]);
+            assert.deepEqual(state.island.growth.memories.map(memory => memory.completedSets), [0, completedSets]);
+            row.completedSetsBeforeReturn = completedSets; row.earnedQuestionsBeforeReturn = earned.earnedQuestions;
+            row.completedSectionReceipts = earned.receipts;
+            row.memorySetsBeforeReturn = state.island.growth.memories.map(memory => memory.completedSets);
             const invariant = learningInvariant(state);
             row.beforeLearningSHA256 = sha(JSON.stringify(invariant));
-            await capture(page, `${layout.name}-01-six-real-sections`);
+            await capture(page, `${layout.name}-01-first-real-maturity`);
             await page.evaluate(() => window.__armIslandDiscoveryCompletion());
-            await button(page, 'しまへ').click(); await waitMode(page, 'home');
+            await button(page, 'とじる').click(); await waitMode(page, 'home');
             await page.waitForFunction(() => window.__islandDiscoveryCompletionProbe?.held === true, undefined, { timeout: 60000 });
             const held = await assertHeld(page);
             row.actualDiscovery = held.actualEvent; row.controlsHeld = await assertHomeBoundary(page);
@@ -240,14 +282,16 @@ try {
                 'The held callback belongs to an already committed real discovery event');
             await capture(page, `${layout.name}-02-background-held-home`);
             // Each action is sent once. A failed first navigation stays a failure.
+            await button(page, 'しまのメニュー').click();
             await page.locator('.island-growth-return').click();
             row.milestoneAlbum = await assertAlbumBoundary(page, 'all');
             await capture(page, `${layout.name}-03-held-milestone-album`);
             await button(page, 'アルバムを とじる').click(); await assertHomeBoundary(page);
+            await button(page, 'しまのメニュー').click();
             await button(page, 'アルバム').click();
             row.ordinaryAlbum = await assertAlbumBoundary(page, 'garden');
             await capture(page, `${layout.name}-04-held-ordinary-album`);
-            await button(page, 'みつけた くらし').click(); await assertHeld(page);
+            await page.getByRole('combobox', { name: 'アルバムの なかみ', exact: true }).selectOption('discoveries'); await assertHeld(page);
             row.discoveredActionsWhileHeld = await page.locator('[data-discovery-id] button').evaluateAll(elements => elements.map(el => ({ label: el.textContent.trim(), disabled: el.disabled })));
             assert(row.discoveredActionsWhileHeld.every(control => control.disabled), 'Discovery replay/placement actions retain the interactive lock');
             row.discoveryActionsPresentWhileHeld = row.discoveredActionsWhileHeld.length;
@@ -268,20 +312,39 @@ try {
             await installStartCompletionHold(page);
             await page.locator('.island-start').click();
             await page.waitForFunction(() => window.__islandStartCompletionProbe?.held === true);
-            await waitMode(page, 'home');
+            await waitMode(page, 'learning');
             assert.equal(await page.locator('.island-page').getAttribute('data-busy'), 'true');
-            const interactiveControls = [page.locator('.island-growth-return'), button(page, 'アルバム'),
-                page.locator('.island-start'), button(page, 'きせかえ'), button(page, 'もちもの'), button(page, 'どうぶつと あそぶ')];
-            row.controlsDuringManualStart = [];
-            for (const control of interactiveControls) {
-                assert.equal(await control.isDisabled(), true, 'An actual learning-resume transaction locks comparison and editing');
-                row.controlsDuringManualStart.push({ label: await control.innerText(), disabled: true });
-            }
+            // The shell enters focused learning immediately. Its old home menu
+            // and tab trigger are no longer the controls the child can operate.
+            assert.match(page.url(), /[?&]learn=1(?:&|$)/);
+            assert.equal(await page.locator('.island-shell-nav').count(), 0, 'Learning focus removes ordinary tabs during resume');
+            assert.equal(await button(page, 'しまのメニュー').count(), 0, 'Home comparison and editing entries are outside focused learning');
+            const learning = page.locator('.island-learning:not([hidden])');
+            await learning.waitFor();
+            assert.equal(await learning.getAttribute('data-input-ready'), 'false');
+            assert.equal(await learning.getAttribute('data-island-plan-id'), beforeResume.plan.id);
+            assert.equal(await learning.getAttribute('data-island-plan-revision'), String(beforeResume.plan.revision));
+            assert.equal(await learning.locator('.park-answer').getAttribute('data-problem-id'), beforeResume.plan.slots[beforeResume.plan.cursor].problem.id);
+            const close = page.locator('.island-learning-pause');
+            assert.equal(await close.isVisible(), true); assert.equal(await close.isDisabled(), true, 'Return stays locked during the actual resume transaction');
+            const answerControls = await learning.locator('.park-answer button').evaluateAll(elements => elements.map(el => ({
+                label: el.getAttribute('aria-label') ?? el.textContent.trim(), disabled: el.disabled,
+            })));
+            const supportControls = await learning.locator('.island-learning-actions button').evaluateAll(elements => elements.map(el => ({
+                label: el.getAttribute('aria-label') ?? el.textContent.trim(), disabled: el.disabled,
+            })));
+            assert(answerControls.length > 0 && supportControls.length > 0, 'The actual question and support controls remain present');
+            assert(answerControls.every(control => control.disabled), 'The held resume disables every actual answer control');
+            assert(supportControls.every(control => control.disabled), 'The held resume disables every support action');
+            row.controlsDuringManualStart = [{ label: (await close.textContent()).trim(), disabled: true }, ...answerControls, ...supportControls];
+            row.manualStartFocus = { url: page.url(), tabsPresent: false, planId: beforeResume.plan.id,
+                problemId: beforeResume.plan.slots[beforeResume.plan.cursor].problem.id, inputReady: false };
             assert.deepEqual(learningInvariant(await readNative(page, id)), learningInvariant(beforeResume),
                 'Resuming the existing reservation cannot replace it or alter learning/history while its callback is held');
             await capture(page, `${layout.name}-07-manual-start-held`);
             assert.equal(await page.evaluate(() => window.__releaseIslandStartCompletion()), true);
-            await waitMode(page, 'learning');
+            await waitMode(page, 'learning'); await waitReady(page);
+            assert.equal(await close.isEnabled(), true, 'The same learning session becomes operable after the real callback releases');
             row.startProbe = await page.evaluate(() => structuredClone(window.__islandStartCompletionProbe));
             assert.equal(row.startProbe.hits, 1); assert.equal(row.startProbe.trustedStartClick, true);
             assert.equal(row.startProbe.released, true); assert.equal(row.startProbe.held, false);
@@ -294,7 +357,8 @@ try {
             }
             assert.equal(state.plan.id, planId); assert.equal(state.plan.cursor, cursor + 1);
             assert.equal(state.logs.length, previous.logs.length + 1);
-            assert.equal(state.island.completedSets, 6); assert.equal(state.island.customization.points, 60);
+            assert.equal(state.island.completedSets, completedSets);
+            assert.deepEqual(completedSectionReceipts(state), earned, 'One resumed question cannot award another section or its stars');
             assert.deepEqual(state.island.growth.memories, invariant.memories);
             await capture(page, `${layout.name}-08-real-answer-resumed`);
             row.resumedQuestionCompleted = true; row.probe = await probeState(page);

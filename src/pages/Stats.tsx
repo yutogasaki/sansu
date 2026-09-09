@@ -38,6 +38,7 @@ import { SkillRadarChart } from "../components/charts/SkillRadarChart";
 import { ScreenScaffold } from "../components/ScreenScaffold";
 import { useIslandNavigation } from '../components/island/useIslandNavigation';
 import { logInDev } from "../utils/debug";
+import "./UtilityLayout.css";
 
 type SubjectType = "math" | "vocab";
 
@@ -64,31 +65,6 @@ interface StableSkill {
     totalAnswers: number;
     lastCorrectAt?: string;
 }
-
-type SectionKey =
-    | "summary"
-    | "calendar"
-    | "growth"
-    | "weak"
-    | "review"
-    | "tests"
-    | "progress"
-    | "parent";
-
-type SectionState = Record<SectionKey, boolean>;
-
-const SECTION_STORAGE_KEY = "sansu_stats_sections_v1";
-
-const DEFAULT_SECTIONS: SectionState = {
-    summary: true,
-    calendar: true,
-    growth: false,
-    weak: false,
-    review: false,
-    tests: false,
-    progress: false,
-    parent: false,
-};
 
 const WEEKDAY_JA = ["日", "月", "火", "水", "木", "金", "土"];
 
@@ -136,26 +112,27 @@ const buildGrowthMessage = (thisWeekCount: number, prevWeekCount: number): strin
 
     const diff = thisWeekCount - prevWeekCount;
     if (diff > 0) return `せんしゅう より ${diff}もん ふえたよ。`;
-    if (diff < 0) return `せんしゅう より ${Math.abs(diff)}もん すくない。ペースを とりもどそう。`;
+    if (diff < 0) return "まなぶ ひも、やすむ ひも。じぶんの ペースで つづけよう。";
     return "せんしゅう と おなじ ペースで がんばれてる。";
 };
 
 const buildWeakPatternMessage = (logs: AttemptLog[]): string => {
+    if (logs.length === 0) return "もんだいを とくと、れんしゅうする ところを ここで みられるよ。";
     const recent = [...logs].sort((a, b) => b.timestamp.localeCompare(a.timestamp)).slice(0, 100);
     const mistakes = recent.filter(l => l.result !== "correct");
-    if (mistakes.length === 0) return "さいきん は ミスが ほとんど ないよ。";
+    if (mistakes.length === 0) return "さいきん といた もんだいを、ここで ふりかえれるよ。";
 
     const skipped = mistakes.filter(l => l.skipped === true || l.result === "skipped").length;
     const reviewMistakes = mistakes.filter(l => l.isReview && l.result !== "correct").length;
     const firstTryMistakes = mistakes.filter(l => !l.isReview && l.result !== "correct").length;
 
     if (skipped >= reviewMistakes && skipped >= firstTryMistakes) {
-        return "とばした もんだい が おおめ。むずかしい とき は 1だん かんたんに。";
+        return "あとで とく もんだいが あるよ。すきな ところから ためせるよ。";
     }
     if (reviewMistakes >= firstTryMistakes) {
-        return "ふくしゅう での ミスが おおい。まず ふくしゅう を さきに やろう。";
+        return "ふくしゅうの もんだいを、もういちど ためせるよ。";
     }
-    return "あたらしい もんだい での ミスが おおい。ていねい に 1もんずつ。";
+    return "あたらしい もんだいも、ひとつずつ ためせるよ。";
 };
 
 const formatDate = (iso?: string) => {
@@ -171,26 +148,6 @@ const getLabel = (id: string, subject: SubjectType): string => {
     return word?.surface ?? word?.id ?? id;
 };
 
-const loadSectionState = (): SectionState => {
-    try {
-        const raw = localStorage.getItem(SECTION_STORAGE_KEY);
-        if (!raw) return DEFAULT_SECTIONS;
-        const parsed = JSON.parse(raw) as Partial<SectionState>;
-        return {
-            summary: parsed.summary ?? DEFAULT_SECTIONS.summary,
-            calendar: parsed.calendar ?? DEFAULT_SECTIONS.calendar,
-            growth: parsed.growth ?? DEFAULT_SECTIONS.growth,
-            weak: parsed.weak ?? DEFAULT_SECTIONS.weak,
-            review: parsed.review ?? DEFAULT_SECTIONS.review,
-            progress: parsed.progress ?? DEFAULT_SECTIONS.progress,
-            tests: parsed.tests ?? DEFAULT_SECTIONS.tests,
-            parent: parsed.parent ?? DEFAULT_SECTIONS.parent,
-        };
-    } catch {
-        return DEFAULT_SECTIONS;
-    }
-};
-
 interface MetricTileProps {
     label: string;
     value: React.ReactNode;
@@ -198,9 +155,9 @@ interface MetricTileProps {
 }
 
 const MetricTile: React.FC<MetricTileProps> = ({ label, value }) => (
-    <InsetPanel className="space-y-2 px-4 py-4 text-center">
+    <InsetPanel className="stats-metric space-y-2 px-4 py-4 text-center">
         <div className="text-2xl font-black tracking-[-0.03em] text-slate-800">{value}</div>
-        <div className="text-[10px] font-bold tracking-[0.14em] text-slate-500">{label}</div>
+        <div className="text-xs font-bold text-slate-500">{label}</div>
     </InsetPanel>
 );
 
@@ -224,13 +181,8 @@ export const Stats: React.FC = () => {
     const [radarData, setRadarData] = useState<RadarCategoryPoint[]>([]);
     const [trendData, setTrendData] = useState<WeeklyTrendPoint[]>([]);
     const [trendMode, setTrendMode] = useState<"count" | "accuracy">("count");
-    const [sections] = useState<SectionState>(() => loadSectionState());
     const [showMore, setShowMore] = useState(false);
     const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        localStorage.setItem(SECTION_STORAGE_KEY, JSON.stringify(sections));
-    }, [sections]);
 
     useEffect(() => {
         if (learningOverlay) return;
@@ -416,7 +368,8 @@ export const Stats: React.FC = () => {
                 title={t("きろく", "記録")}
                 rightAction={closeAction}
                 footerSpacing="base"
-                contentClassName="px-6 pt-2"
+                containerClassName={navigation ? "utility-layout-screen" : undefined}
+                contentClassName={navigation ? "utility-layout-scroll" : "px-6 pt-2"}
             >
                 プロフィールが見つかりません。
             </ScreenScaffold>
@@ -427,10 +380,17 @@ export const Stats: React.FC = () => {
         <ScreenScaffold
             title={t("きろく", "記録")}
             rightAction={closeAction}
-            contentClassName="px-6 pt-2"
+            containerClassName={navigation ? "utility-layout-screen" : undefined}
+            contentClassName={navigation ? "utility-layout-scroll" : "px-6 pt-2"}
         >
-            <div className="island-utility-content mx-auto w-full max-w-[22rem] space-y-8 pb-2">
-                {sections.summary && (
+            <div className={navigation ? "utility-layout-content stats-layout" : "island-utility-content mx-auto w-full max-w-[22rem] space-y-8 pb-2"}>
+                <div className={navigation ? "stats-overview" : "space-y-8"}>
+                {totalStats.count === 0 ? (
+                    <SurfacePanel className="stats-first-record space-y-4 p-5">
+                        <SurfacePanelHeader title={t("まなびの きろくが たまるよ", "ここに学びの記録がたまります")} description={t("といた もんだいや、まなんだ ひを ここで ふりかえれるよ。", "解いた問題や学習した日を、ここで振り返れます。")} />
+                        <Button onClick={() => { if (navigation) navigation.startLearning(); else { warmUpTTS(); navigate("/study"); } }}>まなぶ</Button>
+                    </SurfacePanel>
+                ) : (
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
                             title="きょう の まとめ"
@@ -438,14 +398,13 @@ export const Stats: React.FC = () => {
                         />
                         <div className="grid grid-cols-2 gap-2.5">
                             <MetricTile label="かいとう" value={todayStats.count} />
-                            <MetricTile label="せいかいりつ" value={`${todayAccuracy}%`} />
+                            <MetricTile label="せいかいりつ" value={todayStats.count > 0 ? `${todayAccuracy}%` : "—"} />
                             <MetricTile label="ふん" value={todayMinutes} />
                             <MetricTile label="れんぞくにち" value={profile.streak || 0} />
                         </div>
                     </SurfacePanel>
                 )}
 
-                {sections.calendar && (
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
                             title="1しゅうかん カレンダー"
@@ -460,58 +419,18 @@ export const Stats: React.FC = () => {
                                                 "border-sky-200/90 bg-[linear-gradient(180deg,rgba(125,211,252,0.9),rgba(224,242,254,0.92))] text-sky-900 shadow-[0_16px_26px_-20px_rgba(14,165,233,0.45)]";
 
                                 return (
-                                    <div key={day.dateKey} className="text-center">
+                                    <div key={day.dateKey} className="text-center" aria-label={`${day.label} ${day.count}もん`}>
                                         <div className="mb-1 text-[10px] font-bold text-slate-500">{day.label}</div>
                                         <div className={`flex h-9 items-center justify-center rounded-[18px] border text-xs font-black ${tone}`}>
-                                            {day.count}
+                                            {day.count > 0 ? day.count : "—"}
                                         </div>
                                     </div>
                                 );
                             })}
                         </div>
                     </SurfacePanel>
-                )}
 
-                {sections.growth && (
-                    <SurfacePanel className="space-y-5 rounded-[28px] p-5">
-                        <SurfacePanelHeader
-                            title={t("せいちょう グラフ", "成長グラフ")}
-                            description={growthMessage}
-                        />
-                        <WeeklyTrendChart data={trendData} mode={trendMode} />
-                        <SegmentedControl
-                            className="mx-auto w-full max-w-xs"
-                            value={trendMode}
-                            onChange={setTrendMode}
-                            options={[
-                                { value: "count", label: "かいとう" },
-                                { value: "accuracy", label: "せいかいりつ" },
-                            ]}
-                        />
-
-                        {stableSkills.length > 0 && (
-                            <>
-                                <PanelDivider />
-                                <SectionLabel className="px-0">{t("できるように なったこと", "できるようになったこと")}</SectionLabel>
-                                <div className="space-y-2">
-                                    {stableSkills.slice(0, 3).map(skill => (
-                                        <InsetPanel key={`${skill.subject}-${skill.id}`} className="space-y-2 px-4 py-4">
-                                            <div className="flex flex-wrap items-center gap-2">
-                                                <Badge variant={skill.subject === "math" ? "primary" : "success"}>
-                                                    {skill.subject === "math" ? t("さんすう", "算数") : t("えいご", "英語")}
-                                                </Badge>
-                                                <div className="font-bold text-slate-800">{skill.label}</div>
-                                            </div>
-                                            <div className="text-[11px] text-slate-500">
-                                                つよさ {skill.strength} / かいとう {skill.totalAnswers}かい
-                                            </div>
-                                        </InsetPanel>
-                                    ))}
-                                </div>
-                            </>
-                        )}
-                    </SurfacePanel>
-                )}
+                </div>
 
                 {eventCheckPending && (
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
@@ -535,23 +454,66 @@ export const Stats: React.FC = () => {
                     </SurfacePanel>
                 )}
 
-                {!showMore && (
-                    <div className="flex justify-center">
-                        <Button
-                            variant="secondary"
-                            size="sm"
-                            className="px-6"
-                            onClick={() => setShowMore(true)}
-                        >
-                            {t("もっと みる", "もっと見る")}
-                        </Button>
-                    </div>
-                )}
+                <div className="stats-details-toggle">
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        className="min-h-11 px-6"
+                        aria-expanded={showMore}
+                        aria-controls="stats-learning-details"
+                        onClick={() => setShowMore(previous => !previous)}
+                    >
+                        {showMore ? t("くわしい きろくを とじる", "詳しい記録を閉じる") : t("もっと みる", "もっと見る")}
+                    </Button>
+                </div>
 
-                {showMore && sections.weak && (
+                {showMore && <div id="stats-learning-details" className={navigation ? "stats-details-grid" : "space-y-8"}>
+                    <SurfacePanel className="space-y-5 rounded-[28px] p-5">
+                        <SurfacePanelHeader
+                            title={t("せいちょう グラフ", "成長グラフ")}
+                            description={growthMessage}
+                        />
+                        {totalStats.count > 0 ? (
+                            <>
+                                <WeeklyTrendChart data={trendData} mode={trendMode} />
+                                <SegmentedControl
+                                    className="mx-auto w-full max-w-xs"
+                                    value={trendMode}
+                                    onChange={setTrendMode}
+                                    options={[
+                                        { value: "count", label: "かいとう" },
+                                        { value: "accuracy", label: "せいかいりつ" },
+                                    ]}
+                                />
+                            </>
+                        ) : <p className="text-sm leading-6 text-slate-500">{t("まなんだ ひと もんだいの かずを、グラフで ふりかえれるよ。", "学習した日と問題の数を、グラフで振り返れます。")}</p>}
+
+                        {stableSkills.length > 0 && (
+                            <>
+                                <PanelDivider />
+                                <SectionLabel className="px-0">{t("できるように なったこと", "できるようになったこと")}</SectionLabel>
+                                <div className="space-y-2">
+                                    {stableSkills.slice(0, 3).map(skill => (
+                                        <InsetPanel key={`${skill.subject}-${skill.id}`} className="space-y-2 px-4 py-4">
+                                            <div className="flex flex-wrap items-center gap-2">
+                                                <Badge variant={skill.subject === "math" ? "primary" : "success"}>
+                                                    {skill.subject === "math" ? t("さんすう", "算数") : t("えいご", "英語")}
+                                                </Badge>
+                                                <div className="font-bold text-slate-800">{skill.label}</div>
+                                            </div>
+                                            <div className="text-[11px] text-slate-500">
+                                                つよさ {skill.strength} / かいとう {skill.totalAnswers}かい
+                                            </div>
+                                        </InsetPanel>
+                                    ))}
+                                </div>
+                            </>
+                        )}
+                    </SurfacePanel>
+
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
-                            title="まちがい ぶんせき"
+                            title={t("れんしゅうする ところ", "練習するところ")}
                             description={weakPatternMessage}
                         />
                         <div className="space-y-2">
@@ -573,18 +535,16 @@ export const Stats: React.FC = () => {
                                     </Button>
                                 </InsetPanel>
                             )) : (
-                                <InsetPanel className="px-4 py-4 text-xs text-slate-500">いまは とくに にがて なし。</InsetPanel>
+                                <InsetPanel className="px-4 py-4 text-xs text-slate-500">{totalStats.count === 0 ? t("まだ きろくが ないよ。まなぶと ここで みられるよ。", "学習すると、練習するところを確認できます。") : t("いまは まとめて れんしゅうする ところは ないよ。", "今はまとめて練習する項目はありません。")}</InsetPanel>
                             )}
                         </div>
                     </SurfacePanel>
-                )}
 
-                {showMore && sections.review && (
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
-                            title="ふくしゅう キュー"
-                            description={t(`きょう やるべき ふくしゅう: ${reviewCount}けん`, `今日やるべき復習: ${reviewCount}件`)}
-                            action={(
+                            title={t("ふくしゅう", "復習")}
+                            description={reviewCount > 0 ? t(`きょうの ふくしゅう: ${reviewCount}けん`, `今日の復習: ${reviewCount}件`) : t("きょうの ふくしゅうは ないよ。", "今日の復習はありません。")}
+                            action={reviewCount > 0 ? (
                                 <Button
                                     size="sm"
                                     className="h-10 text-sm"
@@ -592,10 +552,10 @@ export const Stats: React.FC = () => {
                                 >
                                     {t("まとめて やる", "まとめて学習")}
                                 </Button>
-                            )}
+                            ) : undefined}
                         />
 
-                        <InsetPanel className="flex flex-col gap-3 px-4 py-4 land:flex-row land:items-center land:justify-between">
+                        {totalStats.count > 0 && <InsetPanel className="flex flex-col gap-3 px-4 py-4 land:flex-row land:items-center land:justify-between">
                             <div>
                                 <div className="font-bold text-slate-700">{t("テストの じゅんび (10もん)", "テスト準備 (10問)")}</div>
                                 <div className="mt-1 text-xs text-slate-500">{t("にがてを さきに かためる", "苦手を先に固める")}</div>
@@ -607,7 +567,7 @@ export const Stats: React.FC = () => {
                             >
                                 {t("やる", "開始")}
                             </Button>
-                        </InsetPanel>
+                        </InsetPanel>}
 
                         {reviewItems.length > 0 && (
                             <div className="space-y-2">
@@ -631,9 +591,7 @@ export const Stats: React.FC = () => {
                         )}
 
                     </SurfacePanel>
-                )}
 
-                {sections.progress && (
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
                             title={t("スキル マップ", "スキルマップ")}
@@ -682,16 +640,15 @@ export const Stats: React.FC = () => {
                             </InsetPanel>
                         </div>
                     </SurfacePanel>
-                )}
 
-                {showMore && sections.tests && (
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
                             title={t("ていき テスト りれき", "定期テスト履歴")}
                             description={t("さいきん の テストけっか を のこしておく", "最近のテスト結果を確認")}
                         />
                         {periodicTestHistory.length === 0 ? (
-                            <InsetPanel className="px-4 py-4 text-xs text-slate-500">{t("まだ きろく が ないよ", "まだ記録がありません")}</InsetPanel>
+                            <InsetPanel className="px-4 py-4 text-xs text-slate-500">{t("テストを うけると、ここに けっかが のこるよ。", "テストを受けると、ここに結果が残ります。")}
+                                <Button size="sm" variant="secondary" className="mt-3 min-h-11" onClick={() => navigation ? navigation.open("/settings?section=parent") : navigate("/settings")}>{t("テストの せってい", "テストの設定")}</Button></InsetPanel>
                         ) : (
                             <div className="space-y-2">
                                 {periodicTestHistory.map((test) => (
@@ -720,9 +677,7 @@ export const Stats: React.FC = () => {
                             </div>
                         )}
                     </SurfacePanel>
-                )}
 
-                {showMore && sections.parent && (
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
                             title={t("ほごしゃ むけ ミニレポート", "保護者向けミニレポート")}
@@ -756,7 +711,7 @@ export const Stats: React.FC = () => {
                             </InsetPanel>
                         </div>
                     </SurfacePanel>
-                )}
+                </div>}
             </div>
         </ScreenScaffold>
     );

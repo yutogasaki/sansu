@@ -1,0 +1,114 @@
+/* Spec 44: these optional tools share the available width with their live scene.
+   The explicit mode list leaves focused learning, placement and photo flows alone. */
+@media (min-width: 900px) and (min-height: 540px) {
+    .app-container .island-page[data-layout-version]:is(
+        [data-mode=customization], [data-mode=experience], [data-mode=expression],
+        [data-mode=furniture], [data-mode=guide], [data-mode=growth]
+    ) {
+        --island-sticky-stage-height: 0px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) clamp(380px, 40%, 460px);
+        grid-template-rows: auto auto minmax(0, 1fr);
+        min-height: 0;
+        padding: 0;
+        overflow: hidden;
+        scroll-padding-top: 0;
+    }
+
+    .app-container .island-page[data-layout-version]:is(
+        [data-mode=customization], [data-mode=experience], [data-mode=expression],
+        [data-mode=furniture], [data-mode=guide], [data-mode=growth]
+    ) > .island-header {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        width: 100%;
+        max-width: none;
+        min-height: 60px;
+        margin: 0;
+        padding: max(8px, env(safe-area-inset-top)) 20px 8px;
+    }
+
+    .app-container .island-page[data-layout-version]:is(
+        [data-mode=customization], [data-mode=experience], [data-mode=expression],
+        [data-mode=furniture], [data-mode=guide], [data-mode=growth]
+    ) > .island-error {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+    }
+
+    .app-container .island-page[data-layout-version]:is(
+        [data-mode=customization], [data-mode=experience], [data-mode=expression],
+        [data-mode=furniture], [data-mode=guide], [data-mode=growth]
+    ) > .island-stage {
+        grid-column: 1;
+        grid-row: 3;
+        position: relative;
+        top: auto;
+        min-width: 0;
+        min-height: 0;
+        height: 100%;
+        border-radius: 0;
+    }
+
+    .app-container .island-page[data-layout-version]:is(
+        [data-mode=customization], [data-mode=experience], [data-mode=expression],
+        [data-mode=furniture], [data-mode=guide], [data-mode=growth]
+    ) > .island-stage > .island-stage__viewport {
+        /* The controls are siblings of the canvas, not an overlay on its scene. */
+        height: calc(100% - var(--island-stage-controls-height, 0px));
+        min-height: 0;
+    }
+
+    .app-container .island-page[data-layout-version]:is(
+        [data-mode=customization], [data-mode=experience], [data-mode=expression],
+        [data-mode=furniture], [data-mode=guide], [data-mode=growth]
+    ) > .island-sheet {
+        grid-column: 2;
+        grid-row: 3;
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+        min-height: 0;
+        height: 100%;
+        margin: 0;
+        padding: 16px 20px 24px;
+        overflow: auto;
+        overscroll-behavior: contain;
+        scroll-padding-top: 88px;
+        border: 0;
+        border-left: 1px solid var(--pokomoko-edge);
+        border-radius: 0;
+        background: var(--pokomoko-paper);
+    }
+
+    .app-container .island-page[data-layout-version]:is(
+        [data-mode=customization], [data-mode=experience], [data-mode=expression],
+        [data-mode=furniture], [data-mode=guide], [data-mode=growth]
+    ) > .island-sheet > :is(.island-sheet-title, .island-customization-heading) {
+        top: 0;
+    }
+}
+
+@media (min-width: 900px) and (min-height: 540px) {
+    /* A desktop sidebar is still a narrow reading surface. Do not inherit
+       full-page tablet grids that split Japanese labels into single letters. */
+    .island-page[data-layout-version] > .island-customization .island-customization-categories,
+    .island-page[data-layout-version] > .island-customization .island-customization-rail,
+    .island-page[data-layout-version] > .island-expression .island-expression-catalog,
+    .island-page[data-layout-version] > .island-furniture-shop .island-furniture-choices {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .island-page[data-layout-version] > .island-customization .island-customization-parts {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .island-page[data-layout-version] > .island-customization .island-customization-item { width: 100%; }
+    .island-page[data-layout-version] > .island-customization > .island-text-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+}

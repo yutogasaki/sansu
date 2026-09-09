@@ -59,4 +59,78 @@
         min-height: 0;
         max-height: none;
     }
+    /* A short equation and its controls form one unit. Rich diagrams and
+       written work still use the flexible, independently scrolling question. */
+    .island-page[data-mode=learning] .island-answer:has(.island-problem-prompt[data-problem-visual=symbolic]) {
+        justify-content: safe center;
+    }
+    .island-page[data-mode=learning] .island-workbench .island-answer:has(.island-problem-prompt[data-problem-visual=symbolic]) .park-question {
+        flex: 0 1 auto;
+        margin-bottom: 16px;
+    }
+}
+
+/* Choice prompts need no full-height worksheet or distant second column.
+   Keep the visible answer buttons fixed while a long prompt/help can scroll. */
+.island-page[data-mode=learning] .island-answer-stage:has([data-input-type=choice]) {
+    display: flex;
+    min-height: 0;
+}
+.island-page[data-mode=learning] .island-workbench .island-answer[data-input-type=choice] {
+    display: flex;
+    flex-direction: column;
+    justify-content: safe center;
+    width: 100%;
+    max-width: 520px;
+    height: 100%;
+    min-height: 0;
+    margin-inline: auto;
+}
+.island-page[data-mode=learning] .island-workbench .island-answer[data-input-type=choice] .park-question {
+    flex: 0 1 auto;
+    min-height: 0;
+    margin: 0 0 20px;
+    padding-block: 8px;
+    overflow: auto;
+    overscroll-behavior: contain;
+    align-items: safe center;
+}
+.island-page[data-mode=learning] .island-workbench .island-answer[data-input-type=choice] .park-choices {
+    flex: none;
+    width: 100%;
+    margin: 0;
+}
+.island-page[data-mode=learning] .island-workbench .island-answer[data-input-type=choice] .park-support {
+    flex: 0 1 auto;
+    max-height: min(25dvh, 148px);
+    margin-bottom: 12px;
+    overflow: auto;
+    overscroll-behavior: contain;
+}
+.island-page[data-mode=learning] .island-workbench .island-answer-stage[data-support-stage=model] .island-answer[data-input-type=choice] .park-support {
+    flex: 1;
+    min-height: 0;
+    max-height: none;
+}
+.island-page[data-mode=learning] .island-answer[data-input-type=choice] [data-visual-caption] {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Wider displays keep the task and number pad within a comfortable shared
+   reading width; available screen width does not become extra separation. */
+@media (min-width: 900px) and (orientation: landscape) {
+    /* Three answers fit one row below the wider prompt. Reserve the freed
+       height for a real hint without compressing the question or tap targets. */
+    .island-page[data-mode=learning] .island-workbench .island-answer[data-input-type=choice] .park-choices:has(> button:nth-child(3):last-child) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        overflow-wrap: anywhere;
+    }
+    .island-page[data-mode=learning] .island-workbench .island-answer:not([data-input-type=choice]) {
+        width: 100%;
+        max-width: 880px;
+        margin-inline: auto;
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+        column-gap: 24px;
+    }
 }

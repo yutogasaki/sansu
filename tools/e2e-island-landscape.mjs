@@ -6,7 +6,7 @@ import { seedLearningProfile, expectedLearningAnswer } from './island-learning-f
 import { readNative, runtimeMetadata, waitReady } from './island-e2e-helpers.mjs';
 import { assertControls, assertProblemMeaning, waitLearningReady } from './island-learning-checks.mjs';
 
-const base = process.env.SANSU_ISLAND_PRODUCTION_URL || 'http://127.0.0.1:5198';
+const base = process.env.SANSU_ISLAND_PRODUCTION_URL || process.env.SANSU_ISLAND_BASE_URL || 'http://127.0.0.1:5198';
 const out = path.resolve(process.env.SANSU_ISLAND_LANDSCAPE_OUTPUT || 'output/playwright/island-landscape');
 await fs.mkdir(out, { recursive: true });
 await assert.rejects(fs.access(path.join(out, 'report.json')), { code: 'ENOENT' }, 'Use a fresh output directory');
@@ -23,7 +23,10 @@ const scenarios = [
     { name: 'divide', skill: 'div_2d1d_exact', type: 'hissan' },
     { name: 'choice', skill: 'compare_2d', type: 'choice' },
     { name: 'vocab', skill: '', subject: 'vocab', type: 'choice' },
-];
+].filter(scenario => !process.env.SANSU_ISLAND_LANDSCAPE_SCENARIOS
+    || process.env.SANSU_ISLAND_LANDSCAPE_SCENARIOS.split(',').includes(scenario.name));
+assert(scenarios.length > 0, 'Scenario filter must match a learning input');
+report.filteredDiagnostic = Boolean(process.env.SANSU_ISLAND_LANDSCAPE_SCENARIOS);
 
 async function capture(page, row, state, { model = false, portrait = false } = {}) {
     const geometry = await page.locator('.island-page').evaluate(root => {

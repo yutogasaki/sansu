@@ -1,0 +1,157 @@
+{
+  "target": "http://127.0.0.1:5677",
+  "manifestPath": "/tmp/sansu-display-v1-ostlMT/build-source.json",
+  "sourceHash": "896c08153bd78ec90a72ad3ab7a9d4de10264b84b9bd3db6bacfe9dc3f96f432",
+  "sourceStart": "60f0bd242be61668390afd557d806b5598f43b9b872bb6ec0c3404ec022f0eb0",
+  "qaStart": [
+    {
+      "path": "tools/e2e-island-discovery-navigation.mjs",
+      "sha256": "6310168cebcefa1f14a738cdc2eef096e12598827fdf2a43726492470bfe97e6"
+    },
+    {
+      "path": "tools/island-e2e-helpers.mjs",
+      "sha256": "831360d331e430e04b532bb42068a1bdc2b665730b49bbfa9a3e2e842fa4386f"
+    },
+    {
+      "path": "tools/island-learning-checks.mjs",
+      "sha256": "0dfdce176b43887b88daaf9800872d1082e47306a63a315f97c8ad04aaa5c37e"
+    },
+    {
+      "path": "tools/island-learning-fixtures.mjs",
+      "sha256": "6dda4730b390b5b062cf8fd3de8376da8c917ff29b3844ae2e6e5f8f56656f87"
+    }
+  ],
+  "startedAt": "2026-09-09T08:01:05.244Z",
+  "humanN": 0,
+  "diagnosticOnly": true,
+  "timingEvidenceEligible": false,
+  "applicationDataInjected": false,
+  "pass": false,
+  "scope": "Real empty-profile setup and normal learning sections through the first garden maturity without returning home, then the first naturally observed discovery. Earned stars are checked against completed reservations and their native plan_completed receipts. Only the first discovery real native completion callback is delayed. Read-only album navigation must remain available while learning/exchange/editing stay locked. A second callback hold begins at the actual learning-resume click and confirms comparison stays locked for that interaction. Native records, problems, profile, growth and discovery are never fabricated. Not normal speed or child motivation evidence.",
+  "captures": [
+    {
+      "file": "phone-failure.png",
+      "sha256": "1c61db86cddb56276ff5ec1138bf850969acd10940be66f83b98c47158e267cc",
+      "revision": "display-layout-v4",
+      "version": "display-layout-v4:5b66135f-2dd1-44d3-a285-675ecfc9e942",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 143,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "stages": [
+        {
+          "theme": "moon-garden",
+          "accent": "none",
+          "candidate": "island-cosmetics-parts-v2",
+          "readOnly": "false",
+          "cameraFrame": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.20000,9.17000,14.30000,1.00000,0.27778,0.00000,0.00000,0.00000,0.00000,0.27778,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000",
+          "renderer": "three"
+        }
+      ],
+      "probe": {
+        "armed": false,
+        "marked": 0,
+        "held": false,
+        "released": false,
+        "hits": 0,
+        "installedAt": 1788940865507,
+        "events": []
+      },
+      "startProbe": null
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "explicitCompletionDelayDiagnostic": true,
+      "pass": false,
+      "errors": [],
+      "failure": {
+        "message": "Cannot read properties of undefined (reading 'points')",
+        "stack": "TypeError: Cannot read properties of undefined (reading 'points')\n    at completedSectionReceipts (file:///private/tmp/sansu-display-v1-ostlMT/tools/e2e-island-discovery-navigation.mjs:212:45)\n    at file:///private/tmp/sansu-display-v1-ostlMT/tools/e2e-island-discovery-navigation.mjs:251:26"
+      },
+      "probe": {
+        "armed": false,
+        "marked": 0,
+        "held": false,
+        "released": false,
+        "hits": 0,
+        "installedAt": 1788940865507,
+        "events": []
+      },
+      "startProbe": null
+    }
+  ],
+  "errors": [
+    {
+      "message": "Cannot read properties of undefined (reading 'points')",
+      "stack": "TypeError: Cannot read properties of undefined (reading 'points')\n    at completedSectionReceipts (file:///private/tmp/sansu-display-v1-ostlMT/tools/e2e-island-discovery-navigation.mjs:212:45)\n    at file:///private/tmp/sansu-display-v1-ostlMT/tools/e2e-island-discovery-navigation.mjs:251:26"
+    }
+  ],
+  "version": {
+    "version": "display-layout-v4:5b66135f-2dd1-44d3-a285-675ecfc9e942",
+    "revision": "display-layout-v4",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "legacy"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "interactionLockSourceBoundary": {
+    "defaultInteractionKindPresent": true,
+    "synchronousLockRemains": true,
+    "discoveryQueueExplicitKindPresent": true,
+    "albumTryAndPlaceRetainBusyDisabled": true,
+    "actionsSHA256": "a8ccb015bd99930f680b5dd82dd85e2ffb85d3ba3f1d66b241a02ac7a2903c88",
+    "discoveryQueueSHA256": "ebc23af6a052e436d99c8fa49c3f3d478cbd9017011ef477acc046bc2c49222d",
+    "albumSHA256": "4c8df58b925a115e94dceec07132299d310b7ade53d2168da8fd1d7837371962",
+    "islandPageSHA256": "36c995e9e4185fcc45de0a68393382238a88e6ab379fe759a6dd80a2ddb0390a"
+  },
+  "browserClosed": true,
+  "sourceEnd": "60f0bd242be61668390afd557d806b5598f43b9b872bb6ec0c3404ec022f0eb0",
+  "qaEnd": [
+    {
+      "path": "tools/e2e-island-discovery-navigation.mjs",
+      "sha256": "6310168cebcefa1f14a738cdc2eef096e12598827fdf2a43726492470bfe97e6"
+    },
+    {
+      "path": "tools/island-e2e-helpers.mjs",
+      "sha256": "831360d331e430e04b532bb42068a1bdc2b665730b49bbfa9a3e2e842fa4386f"
+    },
+    {
+      "path": "tools/island-learning-checks.mjs",
+      "sha256": "0dfdce176b43887b88daaf9800872d1082e47306a63a315f97c8ad04aaa5c37e"
+    },
+    {
+      "path": "tools/island-learning-fixtures.mjs",
+      "sha256": "6dda4730b390b5b062cf8fd3de8376da8c917ff29b3844ae2e6e5f8f56656f87"
+    }
+  ],
+  "sourceUnchanged": true,
+  "completedAt": "2026-09-09T08:01:09.464Z"
+}

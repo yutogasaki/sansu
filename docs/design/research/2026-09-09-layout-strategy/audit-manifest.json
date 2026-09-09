@@ -1,0 +1,106 @@
+{
+  "auditDate": "2026-09-09",
+  "recordedAt": "2026-09-09T06:18:21.932735+00:00",
+  "target": "http://127.0.0.1:5294",
+  "scope": "frozen local home-space-v2; not public production or concurrent working tree",
+  "baseRevision": "d4d157f26b6fac0fea9514377bb1d0f2f0af37da",
+  "sourceHash": "399ad78b63e0c6c8eb2a0fd6bf370c51336fb3dfc63348d6149a325d3cfc5d7b",
+  "distHash": "d8476066ab88dcb0b37d5ec8c42ea319fcb73bd38d467ec8b8826eef3aa599d3",
+  "version": {
+    "version": "home-space-v2:101c1ec2-b080-41af-97e5-677ebcff9c73",
+    "revision": "home-space-v2",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v17",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "delivery": "mystic-island-v1",
+  "visualCandidate": "mystic-island-shore-garden-v17",
+  "learningCandidate": "mystic-island-learning-v2",
+  "profile": "new audit-only local profile; grade 2; arithmetic; zero answers",
+  "viewports": [
+    [
+      390,
+      844
+    ],
+    [
+      768,
+      1024
+    ],
+    [
+      1024,
+      768
+    ]
+  ],
+  "capture": "Codex in-app browser CUA; saved exact screenshots visually inspected; some initial AX text is incremental",
+  "cache": "not cleared; offline/update state not tested in this audit",
+  "participants": 0,
+  "screenshots": [
+    {
+      "file": "current/01-welcome-phone.png",
+      "sha256": "5e8c4681a1a08947d43c96d1d573ff7a8fd1ff99aa43b2b36e792826b40a683d"
+    },
+    {
+      "file": "current/02-learning-phone.png",
+      "sha256": "a1d003457d52fcf8fa099c01fb614abab3714cee7dd287a34efecb15ea371a75"
+    },
+    {
+      "file": "current/03-home-phone.png",
+      "sha256": "5d33a4c618808dfb724dbd4d29aa8ab4e46f42dd055dd9fa0ba6231ae27b9b89"
+    },
+    {
+      "file": "current/04-settings-phone.png",
+      "sha256": "8a78439be1a97f26944e2603c3d0774888e027a751d9dd99d120f1fa71fc90a9"
+    },
+    {
+      "file": "current/05-settings-detail-phone.png",
+      "sha256": "b50be3d906a8644b6112c5641efa0525bbbffc6c679ba57b13f30a2f61257cd9"
+    },
+    {
+      "file": "current/06-records-phone.png",
+      "sha256": "a339cdc06404c9e4c90a11f876534b3d1cdc89d1146e410a31f9ab4254b0bdf5"
+    },
+    {
+      "file": "current/07-records-detail-phone.png",
+      "sha256": "50441abd6d064fb61c5f953d49b13c7021919faa8d65727ca6a22be5f4df145b"
+    },
+    {
+      "file": "current/08-inventory-phone.png",
+      "sha256": "3f08346447767db052826caffd35c9f2323a90ea899b151ec6edd7feb6ccd6ae"
+    },
+    {
+      "file": "current/09-placement-phone.png",
+      "sha256": "f7a394fa65d4ebbed83b3dd532c04b973fb0bb96d5e118f9ee479854db8caa9b"
+    },
+    {
+      "file": "current/10-album-phone.png",
+      "sha256": "91cd581668f56e7dce0c065353088082971d94cf0ec418c7866fe5f1f762de66"
+    },
+    {
+      "file": "current/11-home-tablet.png",
+      "sha256": "fdfa264c8730b2ab13e5a36924b0b722a069bda6f9228b88bee8914f51169be5"
+    },
+    {
+      "file": "current/12-inventory-tablet.png",
+      "sha256": "d26b6377675e98f5b1059c82bac1f70e0d26f36b3a7c55c4308a56eff3b064c2"
+    },
+    {
+      "file": "current/13-learning-landscape.png",
+      "sha256": "4ce83bb8763cfd30b84454d63facad6f5aa92052fcaf0b2a075a36eaaec88966"
+    },
+    {
+      "file": "current/14-home-landscape.png",
+      "sha256": "5a0c43d77b0bae872c8c88872f7205641371c913fa162b4935807105822cbbb4"
+    }
+  ]
+}

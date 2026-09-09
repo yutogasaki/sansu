@@ -1,0 +1,34 @@
+{
+  "base": "d4d157f26b6fac0fea9514377bb1d0f2f0af37da",
+  "sourceHash": "399ad78b63e0c6c8eb2a0fd6bf370c51336fb3dfc63348d6149a325d3cfc5d7b",
+  "distHash": "d8476066ab88dcb0b37d5ec8c42ea319fcb73bd38d467ec8b8826eef3aa599d3",
+  "build": {
+    "version": "home-space-v2:101c1ec2-b080-41af-97e5-677ebcff9c73",
+    "revision": "home-space-v2",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "three"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v17",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "flag": "VITE_ISLAND_ENABLED=true",
+  "target": "http://127.0.0.1:5294",
+  "qaHashes": {
+    "tools/e2e-island-home-layout.mjs": "107388bb7381c95c522a007392c6f7723c4a78dbaa81714eab4aad82c425d6f3",
+    "tools/e2e-island-navigation.mjs": "c835416b3f59e884cd15b01d54f7e9d7f6d74f7ff9a6cbd127346dbb49adcb66",
+    "tools/island-e2e-helpers.mjs": "d6892d1b32a9abdd541bd94ac1b2603a22359a58b2e5a5cddd6b157c863c7526",
+    "tools/async-state-checks.mjs": "1b653540a5854c00f43c4bb07b8a1c8ebbfea63f441da41076574a1f8fb761db"
+  },
+  "sourceAndQaUnchangedAfter": true,
+  "checkedAfter": "2026-09-09T04:32:10.876Z",
+  "scope": "HEAD plus only home-space implementation; parallel learning-milestone work excluded."
+}

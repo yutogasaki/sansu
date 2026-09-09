@@ -1,0 +1,144 @@
+/* Collection and editing surfaces share the world's paper and ink, while
+   letting each page reserve its own canvas and navigation space. */
+.island-page :is(.island-inventory-panel, .island-placement, .island-album) {
+    min-width: 0;
+}
+.island-page .island-sheet:is(.island-inventory-panel, .island-album) > .island-sheet-title {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: center;
+}
+.island-page .island-inventory-panel .island-sheet-title > div { min-width: 0; }
+.island-page .island-sheet:is(.island-inventory-panel, .island-album) .island-panel-back,
+.island-page .island-placement-toolbar .island-panel-back {
+    flex: 0 0 auto;
+    width: auto;
+    height: auto;
+    min-width: 86px;
+    min-height: 44px;
+    padding: 8px 12px;
+    gap: 6px;
+    border-radius: 14px;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow-wrap: normal;
+}
+.island-page .island-inventory-panel .island-inventory {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 18px 0;
+}
+.island-page .island-inventory-panel .island-reward {
+    min-height: 174px;
+    padding: 16px 10px;
+    gap: 7px;
+    border-bottom-width: 1px;
+}
+.island-page .island-inventory-panel .island-item-picture { height: 88px; max-width: 120px; }
+.island-page .island-inventory-panel .island-reward strong { font-size: 14px; line-height: 1.55; }
+.island-page .island-inventory-panel .island-reward small { margin: 0; font-size: 12px; line-height: 1.5; }
+.island-page .island-inventory-panel > .island-secondary { width: 100%; }
+
+.island-page .island-placement-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+    padding: 10px 14px;
+    background: var(--pokomoko-paper);
+    color: var(--pokomoko-ink);
+}
+.island-page .island-placement-toolbar > button { flex-shrink: 0; }
+.island-page .island-placement-toolbar > .island-panel-back { margin-left: 0; }
+.island-page .island-placement-toolbar > .island-primary {
+    min-height: 44px;
+    padding: 9px 15px;
+    gap: 7px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+.island-page .island-placement > .island-placement-toolbar { padding: 0 0 16px; }
+.island-page .island-placement-heading h2 { margin: 3px 0 0; font-size: 19px; line-height: 1.5; }
+.island-page .island-placement .island-placement-hint { margin: 8px 0 12px; }
+.island-page .island-placement-controls {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(44px, 1fr));
+    gap: 8px;
+    max-width: 360px;
+    margin-bottom: 16px;
+}
+.island-page .island-placement-controls .island-icon-button {
+    width: 100%;
+    height: 48px;
+    border-radius: 14px;
+}
+.island-page .island-placement .island-placement-availability {
+    padding-block: 12px;
+    border-top: 1px solid var(--pokomoko-edge);
+}
+.island-page .island-placement .island-placement-availability > p:first-child { margin-top: 0; }
+.island-page .island-placement .island-appearance { margin-top: 16px; }
+
+.island-page .island-album .island-album-category {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+.island-page .island-album .island-album-category > svg { flex: 0 0 auto; color: var(--pokomoko-blue); }
+.island-page .island-album select {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid var(--pokomoko-edge);
+    border-radius: 12px;
+    background: var(--pokomoko-paper);
+    color: var(--pokomoko-ink);
+    font: inherit;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.island-page .island-album select:focus-visible {
+    outline: 3px solid var(--pokomoko-blue);
+    outline-offset: 3px;
+}
+.island-page .island-album .island-album-compare { gap: 16px; }
+.island-page .island-album .island-album-scene h3 { margin-bottom: 7px; font-size: 14px; }
+.island-page .island-album .island-album-scene .island-stage {
+    --island-stage-height: clamp(156px, 23dvh, 210px);
+    border-radius: 16px;
+}
+.island-page .island-album .island-album-scene > p { margin-top: 6px; }
+.island-page .island-album .island-album-selection {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-block: 18px 8px;
+}
+.island-page .island-album .island-album-selection > label {
+    display: grid;
+    align-content: start;
+    gap: 6px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    color: var(--pokomoko-muted);
+}
+.island-page .island-album .island-album-related {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--pokomoko-edge);
+}
+.island-page .island-album .island-album-related > button { flex: 1 1 130px; }
+@media (min-width: 700px) {
+    .island-page .island-inventory-panel .island-inventory { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .island-page .island-album .island-album-scene .island-stage { --island-stage-height: clamp(230px, 36dvh, 360px); }
+    .island-page .island-album .island-album-selection { grid-template-columns: minmax(160px, 1fr) minmax(0, 2fr); }
+}

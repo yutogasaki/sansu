@@ -1,0 +1,113 @@
+{
+  "recordedAt": "2026-09-09T08:31:35.562Z",
+  "application": {
+    "version": "display-layout-v5:ea6fba49-ab80-4f71-8eee-f53a4b50b733",
+    "revision": "display-layout-v5",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "legacy"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceHash": "d9c2f6abf8e8247f9edc980e7c5f13993f5c5a086125b9422993be8552fa17ad",
+  "qaHash": "84ea04115a68a20922113af4fff99945680fc8fac41a32ba1b47cc012608c51d",
+  "frozenInputAndQaMatches": true,
+  "checks": [
+    {
+      "name": "home",
+      "pass": true,
+      "report": "reports/home.json",
+      "sha256": "3544ef534164976124f23df2c816cc7726ad9bd2698e23cf62395fc191394378",
+      "target": "http://127.0.0.1:5687",
+      "reusedBeforeLastStartLock": false,
+      "scenarios": 4
+    },
+    {
+      "name": "navigation",
+      "pass": true,
+      "report": "reports/navigation.json",
+      "sha256": "dccf25aa874b9c823de329777d937f26b91f66dedc49b2a88c76f3143ce14d7b",
+      "target": "http://127.0.0.1:5687",
+      "reusedBeforeLastStartLock": false,
+      "scenarios": 2
+    },
+    {
+      "name": "workspaces",
+      "pass": true,
+      "report": "reports/workspaces.json",
+      "sha256": "a16abba6f27d6be3a784823c604a8bbd276a51b1ead5f065f127d01b772d1721",
+      "target": "http://127.0.0.1:5687",
+      "reusedBeforeLastStartLock": false,
+      "scenarios": 2
+    },
+    {
+      "name": "landscape",
+      "pass": true,
+      "report": "reports/landscape.json",
+      "sha256": "49a171e7f2e0e23cc594456959ce2418894a8d77075874ab7be525229fb8566d",
+      "target": "http://127.0.0.1:5687",
+      "reusedBeforeLastStartLock": false,
+      "scenarios": 2
+    },
+    {
+      "name": "island-pwa",
+      "pass": true,
+      "report": "reports/island-pwa.json",
+      "sha256": "013725921814e59aab62f5e117c4c1688f11fc37dcfa40c4941ca92dc4caec8d",
+      "target": "http://127.0.0.1:5687",
+      "reusedBeforeLastStartLock": false
+    },
+    {
+      "name": "island-full-before-start-lock",
+      "pass": true,
+      "report": "reports/island-full-before-start-lock.json",
+      "sha256": "df3136cae695410c15c6703052b1e596252ebfcfee7f1052ad8abab645b543da",
+      "target": "http://127.0.0.1:5678",
+      "reusedBeforeLastStartLock": true,
+      "scenarios": 11
+    },
+    {
+      "name": "landscape-full-before-start-lock",
+      "pass": true,
+      "report": "reports/landscape-full-before-start-lock.json",
+      "sha256": "fc9aa78024f7fdcab147bafba275c3cd4a70f1af37f7745affe77526c661b5d9",
+      "target": "http://127.0.0.1:5677",
+      "reusedBeforeLastStartLock": true,
+      "scenarios": 20
+    },
+    {
+      "name": "discovery",
+      "pass": true,
+      "report": "reports/discovery.json",
+      "sha256": "7e49b4da1cf33dcf1e9612417c5905cb5591d8afcb833787170e3d11c2a4ee5a",
+      "target": "http://127.0.0.1:5687",
+      "reusedBeforeLastStartLock": false,
+      "scenarios": 2,
+      "sourceHash": "d9c2f6abf8e8247f9edc980e7c5f13993f5c5a086125b9422993be8552fa17ad"
+    },
+    {
+      "name": "throughput",
+      "pass": true,
+      "report": "reports/throughput.json",
+      "sha256": "e7faae6642247a542e22ad670743de0702b5a1513c99d28689be7bd120af1422",
+      "target": "http://127.0.0.1:5688",
+      "reusedBeforeLastStartLock": false,
+      "runs": 80,
+      "eligible": true,
+      "sourceHash": "d9c2f6abf8e8247f9edc980e7c5f13993f5c5a086125b9422993be8552fa17ad"
+    }
+  ],
+  "requiredBrowserChecksPass": true,
+  "authorVisualReview": "Reviewed actual v5 phone/wide screenshots and menu/utility contact sheet; no new artwork or art-parity claim.",
+  "independentChildrenObserved": 0,
+  "realIOSDeviceTested": false
+}

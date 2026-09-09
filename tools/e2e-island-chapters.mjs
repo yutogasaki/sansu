@@ -71,13 +71,15 @@ async function inspectMixedHistory(layout, earned) {
             await new Promise((resolve, reject) => { tx.oncomplete = resolve; tx.onabort = () => reject(tx.error); }); database.close();
         }, fixture);
         await page.goto(`${target}/#/island`); await waitReady(page); await waitMode(page, 'home');
+        await button(page, 'しまのメニュー').click();
         await button(page, 'アルバム').click(); await waitMode(page, 'album');
-        await page.getByRole('group', { name: 'みくらべる ばしょ' }).getByRole('button', { name: 'しまぜんぶ', exact: true }).click();
-        const timeline = page.locator('.island-album-timeline button');
+        await page.getByRole('combobox', { name: 'みくらべる ばしょ', exact: true }).selectOption('all');
+        const timeline = page.locator('.island-album-timeline option');
         assert.equal(await timeline.count(), 3);
         const before = await readNative(page, id);
         for (const [index, sets, east] of [[0, 0, false], [1, 2, true], [2, mature.completedSets, true]]) {
-            await timeline.nth(index).click();
+            await page.getByRole('combobox', { name: 'むかしの しまを えらぶ', exact: true }).selectOption({ index });
+            await page.locator('.island-album-compare').scrollIntoViewIfNeeded();
             await page.locator(`[data-memory-completed-sets="${sets}"] [data-renderer="three"]`).waitFor();
             const historic = page.locator('[data-memory-id] [data-renderer="three"]');
             assert.equal(await historic.getAttribute('data-expanded'), String(east));
@@ -110,7 +112,7 @@ try {
             let state = await readNative(page), initialPlan = structuredClone(state.plan);
             const id = state.island.profileId;
             assert.equal(initialPlan.growthTarget, 'garden'); assert.equal(state.island.growth.expansionLevel, 0);
-            await button(page, 'しまへ').click(); await waitMode(page, 'home');
+            await button(page, 'とじる').click(); await waitMode(page, 'home');
             await button(page, '育てる ばしょを えらぶ').click();
             await page.locator('.island-growth-place').filter({ hasText: 'いえの まわり' }).click(); await waitMode(page, 'home');
             state = await readNative(page, id);
@@ -140,7 +142,7 @@ try {
                         assert.equal(await notice.getByRole('button').count(), 0);
                         await capture(page, `${name}-first-maturity-learning`);
                     }
-                    await button(page, 'しまへ').click(); await waitMode(page, 'home');
+                    await button(page, 'とじる').click(); await waitMode(page, 'home');
                     const stage = page.locator('[data-renderer="three"]');
                     assert.equal(await stage.getAttribute('data-expanded'), String(progress === 6));
                     assert.equal(await stage.getAttribute('data-west-expanded'), 'false');

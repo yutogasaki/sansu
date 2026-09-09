@@ -4,6 +4,8 @@ import { getIslandExpansionLevel } from '../../domain/island/expansion';
 import { getIslandItemAppearanceLevel, getIslandItemGrowthLevel } from '../../domain/island/growth';
 import type { IslandBasicItemKind, IslandItem, IslandItemKind, IslandRecord, IslandPosition } from '../../domain/island/types';
 import type { IslandFurniturePlacementResult } from './islandFurniturePlacement';
+import './IslandPanel.css';
+import './IslandWorkspacePanels.css';
 
 /** Small object illustrations for choosing possessions; the living world stays in the 3D stage. */
 export function ItemPicture({ kind }: { kind: IslandItemKind }) {
@@ -102,9 +104,9 @@ export function IslandRewards({ island, intro = false, disabled, onChoose, onCon
 export function IslandInventory({ items, disabled, onSelect, onClose, onFurniture }: {
     items: IslandItem[]; disabled: boolean; onSelect: (item: IslandItem) => void; onClose: () => void; onFurniture?: () => void;
 }) {
-    return <section className="island-sheet" aria-label="しまの もちもの">
+    return <section className="island-sheet island-panel island-inventory-panel" aria-label="しまの もちもの">
         <div className="island-sheet-title"><div><p className="island-eyebrow">じぶんの しまを ととのえよう</p><h2>どれを うごかす？</h2></div>
-            <button className="island-icon-button" aria-label="もちものから もどる" disabled={disabled} onClick={onClose}><ArrowLeft size={20} /><span>もどる</span></button></div>
+            <button className="island-icon-button island-panel-back" aria-label="もちものから もどる" disabled={disabled} onClick={onClose}><ArrowLeft size={20} /><span>もどる</span></button></div>
         <div className="island-inventory">{items.map((item, index) => <button key={item.id} disabled={disabled} className="island-reward"
             aria-label={`${ISLAND_ITEMS[item.kind].name} ${index + 1}を うごかす`} onClick={() => onSelect(item)}>
             <ItemPicture kind={item.kind} /><strong>{ISLAND_ITEMS[item.kind].name}</strong><small>{item.position ? 'しまに ある' : item.autoPlacementBlocked ? 'おく ばしょを えらべるよ' : 'しまって ある'}</small>
@@ -140,17 +142,34 @@ export function IslandPlay({ items, disabled, selectedId, message, onSelect, onM
     </section>;
 }
 
-export function IslandPlacement({ item, valid, disabled, onPoint, onRotate, onSave, onStore, onCancel, onAppearance, availability, onFindUsable, onArrangeSurroundings }: {
+export function IslandPlacementActions({ valid, disabled, onSave, onCancel }: {
+    valid: boolean; disabled: boolean; onSave: () => void; onCancel: () => void;
+}) {
+    return <div className="island-placement-toolbar" role="group" aria-label="おく ばしょの そうさ">
+        <button className="island-icon-button island-panel-back" aria-label="いどうを とじる" disabled={disabled} onClick={onCancel}><X size={20} /><span>とじる</span></button>
+        <button className="island-primary" disabled={disabled || !valid} onClick={onSave}><Check size={20} />ここに おく</button>
+    </div>;
+}
+
+export function IslandPlacement({ item, valid, disabled, hideActions = false, onPoint, onRotate, onSave, onStore, onCancel, onAppearance, availability, onFindUsable, onArrangeSurroundings }: {
     item: IslandItem; valid: boolean; disabled: boolean; onPoint: (point: IslandPosition) => void;
+    hideActions?: boolean;
     onRotate: () => void; onSave: () => void; onStore: () => void; onCancel: () => void; onAppearance?: (level: number) => void;
     availability?: IslandFurniturePlacementResult; onFindUsable?: () => void; onArrangeSurroundings?: () => void;
 }) {
     const point = item.position ?? { x: 0, z: 1 };
     const move = (x: number, z: number) => onPoint({ x: point.x + x, z: point.z + z });
-    return <section className="island-sheet island-placement" aria-label="おく ばしょを えらぶ">
-        <div className="island-sheet-title"><div><p className="island-eyebrow">{ISLAND_ITEMS[item.kind].name}</p><h2>どこに おこう？</h2></div>
-            <button className="island-icon-button" aria-label="いどうを とじる" disabled={disabled} onClick={onCancel}><X size={20} /><span>とじる</span></button></div>
+    return <section className="island-sheet island-panel island-placement" aria-label="おく ばしょを えらぶ">
+        {!hideActions && <IslandPlacementActions valid={valid} disabled={disabled} onSave={onSave} onCancel={onCancel} />}
+        <div className="island-placement-heading"><p className="island-eyebrow">{ISLAND_ITEMS[item.kind].name}</p><h2>どこに おこう？</h2></div>
         <p className="island-placement-hint" role="status">{valid ? 'にわを タッチ。やじるしでも うごかせるよ。' : 'もうすこし ひろい ばしょへ うごかそう。'}</p>
+        <div className="island-placement-controls island-direction-controls" role="group" aria-label="いどう">
+            <button className="island-icon-button" aria-label="ひだりへ" disabled={disabled} onClick={() => move(-.25, 0)}><ArrowLeft /></button>
+            <button className="island-icon-button" aria-label="おくへ" disabled={disabled} onClick={() => move(0, -.25)}><ArrowUp /></button>
+            <button className="island-icon-button" aria-label="てまえへ" disabled={disabled} onClick={() => move(0, .25)}><ArrowDown /></button>
+            <button className="island-icon-button" aria-label="みぎへ" disabled={disabled} onClick={() => move(.25, 0)}><ArrowRight /></button>
+            <button className="island-icon-button" aria-label="まわす" disabled={disabled} onClick={onRotate}><RotateCw size={20} /></button>
+        </div>
         {onFindUsable && <div className="island-placement-availability" data-furniture-placement={availability?.status ?? 'checking'}>
             <p role="status">{availability?.status === 'ready' ? 'えらんだ なかまが、ここで つかえるよ。'
                 : availability?.status === 'blocked' ? valid ? 'ここには おけるけれど、つかうには すきまが いるよ。' : 'ここには おけないよ。ひろい ばしょを さがそう。'
@@ -163,13 +182,6 @@ export function IslandPlacement({ item, valid, disabled, onPoint, onRotate, onSa
             </>}
             <p className="island-note">みつかった ばしょを みてから「ここに おく」で きめよう。</p>
         </div>}
-        <div className="island-placement-row"><div className="island-direction-controls" aria-label="いどう">
-            <button className="island-icon-button" aria-label="ひだりへ" disabled={disabled} onClick={() => move(-.25, 0)}><ArrowLeft /></button>
-            <button className="island-icon-button" aria-label="おくへ" disabled={disabled} onClick={() => move(0, -.25)}><ArrowUp /></button>
-            <button className="island-icon-button" aria-label="てまえへ" disabled={disabled} onClick={() => move(0, .25)}><ArrowDown /></button>
-            <button className="island-icon-button" aria-label="みぎへ" disabled={disabled} onClick={() => move(.25, 0)}><ArrowRight /></button>
-            <button className="island-icon-button" aria-label="まわす" disabled={disabled} onClick={onRotate}><RotateCw size={20} /></button>
-        </div><button className="island-primary" disabled={disabled || !valid} onClick={onSave}><Check size={20} />ここに おく</button></div>
         {item.habitatId && onAppearance && <fieldset className="island-appearance"><legend>すきな すがた</legend>
             <div>{Array.from({ length: getIslandItemGrowthLevel(item) + 1 }, (_, level) => <button key={level} disabled={disabled}
                 aria-pressed={level === getIslandItemAppearanceLevel(item)} onClick={() => onAppearance(level)}>

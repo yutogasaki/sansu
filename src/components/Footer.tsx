@@ -39,7 +39,7 @@ export const Footer: React.FC = () => {
                             className={`island-shell-tab${primary ? " island-shell-tab--learn island-start" : ""}`}
                             aria-label={item.label}
                             aria-current={active ? "page" : undefined}
-                            disabled={navigation?.blocked}
+                            disabled={navigation?.blocked || (primary && navigation?.learningBlocked)}
                             onClick={() => {
                                 if (navigation) {
                                     if (primary) navigation.startLearning();

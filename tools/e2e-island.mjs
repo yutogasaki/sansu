@@ -53,6 +53,7 @@ async function verifyOwnedLoop(page, profileId, state, samples, touch, prefix) {
     await capture(page, `${prefix}-second-section-growing`);
     const bench = state.island.items.find(item => item.id === 'living-bench');
     assert(bench?.position, 'A usable bench is placed automatically');
+    await activate(button(page, 'しまのメニュー'), touch);
     await activate(button(page, 'もちもの'), touch); await waitMode(page, 'inventory');
     await capture(page, `${prefix}-inventory`);
     await activate(page.getByRole('button', { name: /^ベンチ \d+を うごかす$/ }), touch);
@@ -73,6 +74,7 @@ async function verifyOwnedLoop(page, profileId, state, samples, touch, prefix) {
     await activate(page.locator('.island-start'), touch); await waitMode(page, 'learning');
     assert.deepEqual((await readNative(page, profileId)).island.items.find(item => item.id === bench.id), moved);
     await activate(button(page, 'とじる'), touch); await waitMode(page, 'home');
+    await activate(button(page, 'しまのメニュー'), touch);
     await activate(button(page, 'もちもの'), touch);
     await activate(page.getByRole('button', { name: /^ベンチ \d+を うごかす$/ }), touch);
     await waitMode(page, 'placement');
