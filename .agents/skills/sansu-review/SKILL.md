@@ -25,6 +25,8 @@ description: Review diffs in Sansu for regressions, over-change, child-tone issu
 - Does it change learning thresholds, SRS behavior, or block prioritization?
 - Does it create page-local styling that should be shared?
 - Does it skip docs or verification updates implied by the change?
+- Does an initial-view adjustment invoke a user camera action that sets manual mode or cancels automatic presentation? Review those state effects, the overview/reset behavior, and the return from dedicated views; changing the default framing and simulating a user zoom are not interchangeable.
+- When terrain expands, do placement, walking and camera bounds use the same new floor, and do generated ornaments stay clear of usable surfaces? Preserve saved object coordinates and test valid placement against the contract rather than requiring the old search direction.
 
 ## Output Format
 

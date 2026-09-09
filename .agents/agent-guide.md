@@ -60,6 +60,12 @@ Do not duplicate the same durable rule across `docs/`, `.agents/`, `.claude/`, a
 - UX must invite replay without shaming children; exploration uses readable valleys and short, energetic peaks.
 - Routing, storage, tests, and PWA/update flows are high-risk areas.
 
+## Scope Changes And Finishing
+
+- When the user asks to stop analysis, shorten the task, or finish implementation, replace the old execution plan with the remaining concrete deliverable, necessary fixes, and applicable verification. Do not keep expanding a benchmark checklist or polishing unrelated details to satisfy the superseded plan.
+- Once those checks pass on unchanged inputs, finish the authorized commit/push and report the result. Reopen verification for changed inputs, a meaningful failure, or an unresolved risk; do not repeat the full application suite for evidence-only wording edits. Follow `sansu-verify` for the verification boundary and record required gaps without claiming a full release pass.
+- Distinguish stopping work on a Goal from changing its app status. If cancellation is unavailable, report that limitation once and continue the newly authorized work; do not mark an unachieved Goal complete or blocked as a substitute for cancellation.
+
 ## Key Commands
 
 ```bash
