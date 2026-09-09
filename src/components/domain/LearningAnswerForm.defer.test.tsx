@@ -1,0 +1,141 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { ReactElement } from 'react';
+import type { LearningAnswerFormProps } from './LearningAnswerForm';
+
+const hooks = vi.hoisted(() => {
+    type Cell = { value?: unknown; deps?: readonly unknown[]; cleanup?: () => void };
+    let cells: Cell[] = [], cursor = 0, dirty = false;
+    const effects: (() => void)[] = [];
+    return {
+        reset() { cells = []; cursor = 0; dirty = false; effects.length = 0; },
+        begin() { cursor = 0; dirty = false; },
+        changed: () => dirty,
+        useState(initial: unknown) {
+            const i = cursor++;
+            cells[i] ??= { value: typeof initial === 'function' ? initial() : initial };
+            return [cells[i].value, (next: unknown) => {
+                const value = typeof next === 'function' ? next(cells[i].value) : next;
+                if (!Object.is(value, cells[i].value)) { cells[i].value = value; dirty = true; }
+            }];
+        },
+        useRef(initial: unknown) { const i = cursor++; cells[i] ??= { value: { current: initial } }; return cells[i].value; },
+        effect(callback: () => (() => void) | void, deps?: readonly unknown[]) {
+            const i = cursor++, previous = cells[i];
+            cells[i] ??= {};
+            if (!deps || !previous?.deps || deps.some((value, j) => !Object.is(value, previous.deps?.[j]))) {
+                cells[i].deps = deps;
+                effects.push(() => { cells[i].cleanup?.(); cells[i].cleanup = callback() || undefined; });
+            }
+        },
+        commit() { for (const effect of effects.splice(0)) effect(); },
+        unmount() { for (const cell of cells) cell.cleanup?.(); },
+    };
+});
+vi.mock('react', async importOriginal => ({ ...await importOriginal<typeof import('react')>(),
+    useState: hooks.useState, useRef: hooks.useRef, useLayoutEffect: hooks.effect,
+    useCallback: (callback: unknown) => callback,
+    useMemo: (factory: () => unknown) => factory(),
+}));
+import { LearningAnswerForm } from './LearningAnswerForm';
+import { TenKey } from './TenKey';
+import { useHissanSession } from '../../hooks/useHissanSession';
+
+beforeEach(() => { hooks.reset(); vi.stubGlobal('window', new EventTarget()); });
+afterEach(() => { hooks.unmount(); vi.unstubAllGlobals(); });
+function harness() {
+    let props: LearningAnswerFormProps = {
+        slot: { problem: { id: 'written', subject: 'math', categoryId: 'mul_2d1d', questionText: '23 × 4 =',
+            correctAnswer: '92', inputType: 'hissan', hissanVersion: 2, isReview: false },
+        source: 'main', assisted: false, completed: false, countsTowardReviewCap: false },
+        disabled: false, deferSubmission: true, onAnswer: vi.fn(),
+    };
+    let tree: ReactElement;
+    const render = (update: Partial<LearningAnswerFormProps> = {}) => {
+        props = { ...props, ...update };
+        for (let attempt = 0; attempt < 10; attempt++) {
+            hooks.begin(); tree = LearningAnswerForm(props); hooks.commit();
+            if (!hooks.changed()) return;
+        }
+        throw new Error('Render did not settle');
+    };
+    const find = (element: ReactElement): ReactElement | undefined => {
+        if (element.type === TenKey) return element;
+        const children = (element.props as { children?: unknown }).children;
+        for (const child of [children].flat(Infinity)) {
+            if (child && typeof child === 'object' && 'type' in child) { const result = find(child as ReactElement); if (result) return result; }
+        }
+    };
+    const keypad = () => find(tree)!.props as Parameters<typeof TenKey>[0];
+    render();
+    return { render, keypad, get props() { return props; }, key(key: string) {
+        window.dispatchEvent(Object.assign(new Event('keydown', { cancelable: true }), { key })); render();
+    } };
+}
+
+describe('written draft during a hint save', () => {
+    it('accepts native keys and submits a full row once through the latest receipt callback', () => {
+        const h = harness(), old = h.props.onAnswer, saved = vi.fn();
+        expect(h.keypad().disabled).toBe(false);
+        h.key('9'); h.key('2'); h.key('7');
+        expect(old).not.toHaveBeenCalled();
+        h.render({ deferSubmission: false, onAnswer: saved, slot: { ...h.props.slot, assisted: true } });
+        h.render();
+        expect(saved).toHaveBeenCalledTimes(1);
+        expect(saved).toHaveBeenCalledWith(['2', '9']);
+        expect(old).not.toHaveBeenCalled();
+    });
+    it('allows Backspace to cancel the queued row and waits for the missing digit', () => {
+        const h = harness(), answer = h.props.onAnswer;
+        h.key('9'); h.key('2'); h.key('Backspace');
+        h.render({ deferSubmission: false });
+        expect(answer).not.toHaveBeenCalled();
+        h.key('2');
+        expect(answer).toHaveBeenCalledTimes(1);
+        expect(answer).toHaveBeenCalledWith(['2', '9']);
+    });
+    it('preserves partial input if a hint save fails without changing the slot', () => {
+        const h = harness(), answer = h.props.onAnswer;
+        h.key('9'); h.render({ deferSubmission: false }); h.key('2');
+        expect(answer).toHaveBeenCalledTimes(1);
+        expect(answer).toHaveBeenCalledWith(['2', '9']);
+        expect(h.props.slot.assisted).toBe(false);
+    });
+    it('does not flush or accept keys when a model or answer save disables the form', () => {
+        const h = harness(), answer = h.props.onAnswer;
+        h.key('9'); h.key('2');
+        h.render({ disabled: true, deferSubmission: false }); h.key('7');
+        expect(h.keypad().disabled).toBe(true);
+        expect(answer).not.toHaveBeenCalled();
+    });
+});
+
+
+describe('Study digit-only written session', () => {
+    it('keeps decimal formatting through corrections, clear and consecutive native events', () => {
+        const RenderHarness = () => { hooks.begin(); return useHissanSession(); };
+        let session = RenderHarness();
+        session.resetHissan({ id: 'decimal', subject: 'math', categoryId: 'dec_add', questionText: '12.3 + 4 =', correctAnswer: '16.3', inputType: 'hissan', isReview: false }, true);
+        session = RenderHarness();
+        expect(session.canInputDecimal).toBe(false);
+        expect(session.handleHissanInput('1')).toBe(false);
+        expect(session.handleHissanInput('.')).toBe(false);
+        expect(session.handleHissanInput('9')).toBe(false);
+        expect(session.handleHissanInput('3')).toBe(true);
+        expect(session.handleHissanEnter()).toBe('incorrect');
+        session = RenderHarness();
+        expect([...session.userValues.values()].sort()).toEqual(['.', '1', '3']);
+        expect(session.handleHissanInput('6')).toBe(true);
+        expect(session.handleHissanEnter()).toBe('all-correct');
+        session.resetHissan({ id: 'decimal2', subject: 'math', categoryId: 'dec_add', questionText: '12.3 + 4 =', correctAnswer: '16.3', inputType: 'hissan', isReview: false }, true);
+        session.handleHissanInput('8');
+        session.handleHissanClear();
+        session = RenderHarness();
+        expect([...session.userValues.values()]).toEqual(['.']);
+        expect(session.handleHissanInput('1')).toBe(false);
+        session.handleHissanBackspace();
+        expect(session.handleHissanInput('1')).toBe(false);
+        expect(session.handleHissanInput('6')).toBe(false);
+        expect(session.handleHissanInput('3')).toBe(true);
+        expect(session.handleHissanEnter()).toBe('all-correct');
+    });
+});

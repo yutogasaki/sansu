@@ -4,6 +4,7 @@ import { islandSupportStage } from '../../domain/island/learningSupport';
 import { HissanGrid } from '../domain/HissanGrid';
 import { IslandChoiceLabel, IslandProblemPrompt } from './IslandProblemPrompt';
 import { islandLearningGuidance } from './learningGuidance';
+import type { HissanStep } from '../../domain/math/hissanTypes';
 
 const hissanGuide = {
     addition: '右はしから、上下の 数を たそう。10以上なら、左へ 1を くりあげるよ。',
@@ -12,13 +13,25 @@ const hissanGuide = {
     division: 'わられる 数の 左から みよう。わる 数が いくつ はいるかな。',
 };
 
+const stepGuide: Record<NonNullable<HissanStep['phase']>, string> = {
+    multiply: '一の位から 1けたずつ かけよう。10以上なら 一の位を かき、十の位の 数を 次の位の かけ算に たすよ。',
+    sum: '同じ位の 数を 上下に たそう。10以上なら 一の位を かき、十の位の 数を 左の位に たすよ。',
+    quotient: 'わる数を 1倍、2倍…して、いま 見ている数を こえない いちばん大きい かける数を さがそう。',
+    subtract: '上の 数から、いま かけて 出した数を ひこう。ひけない位は 左から かりよう。',
+    'bring-down': 'まだ 使っていない 次の数字を、のこりの 右となりへ おろそう。',
+    remainder: 'のこった 数が あまりだよ。わる数より 小さいか たしかめよう。',
+};
+
 export function IslandLearningSupport({ slot }: { slot: IslandLearningSlot }) {
     const problem = slot.problem;
     const grid = parkHissanGrid(problem);
     const stage = islandSupportStage(slot);
     if (!stage) return null;
+    const phase = grid?.steps[slot.hissanStep ?? 0]?.phase;
     const guidance = grid ? { text: stage === 'hint'
-        ? grid.steps[slot.hissanStep ?? 0]?.hint ?? hissanGuide[grid.operation]
+        ? phase === 'multiply' && grid.operation === 'division'
+            ? 'たてた 商と わる数を かけよう。その数を 上の数から ひいて、のこりを 調べるよ。'
+            : phase ? stepGuide[phase] : hissanGuide[grid.operation]
         : hissanGuide[grid.operation] } : islandLearningGuidance(problem);
     const answer = problem.displayAnswer ?? (Array.isArray(problem.correctAnswer) ? problem.correctAnswer.join(' / ') : problem.correctAnswer);
     if (stage === 'hint') return <div className="island-learning-support" data-support-kind="hint">

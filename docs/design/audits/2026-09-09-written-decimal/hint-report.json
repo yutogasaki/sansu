@@ -1,0 +1,175 @@
+{
+  "target": "http://127.0.0.1:5689",
+  "scope": "Native profile fixtures, real planner and receipts. Delayed completion and aborted hint saves are explicit diagnostics.",
+  "cases": [
+    {
+      "width": 390,
+      "scenario": "immediate",
+      "pass": true,
+      "errors": [],
+      "question": "154 × 58 =",
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:75979a02-8186-4d33-8fbd-afca6d4d2feb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 143,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      },
+      "hint": "ヒント 一の位から 1けたずつ かけよう。10以上なら 一の位を かき、十の位の 数を 次の位の かけ算に たすよ。"
+    },
+    {
+      "width": 390,
+      "scenario": "delayed",
+      "pass": true,
+      "errors": [],
+      "question": "330 × 98 =",
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:75979a02-8186-4d33-8fbd-afca6d4d2feb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 143,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      },
+      "hint": "ヒント 一の位から 1けたずつ かけよう。10以上なら 一の位を かき、十の位の 数を 次の位の かけ算に たすよ。"
+    },
+    {
+      "width": 390,
+      "scenario": "failed",
+      "pass": true,
+      "errors": [],
+      "question": "214 × 50 =",
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:75979a02-8186-4d33-8fbd-afca6d4d2feb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 143,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      },
+      "hint": "ヒント 同じ位の 数を 上下に たそう。10以上なら 一の位を かき、十の位の 数を 左の位に たすよ。"
+    },
+    {
+      "width": 1024,
+      "scenario": "immediate",
+      "pass": true,
+      "errors": [],
+      "question": "618 × 30 =",
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:75979a02-8186-4d33-8fbd-afca6d4d2feb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 85,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      },
+      "hint": "ヒント 同じ位の 数を 上下に たそう。10以上なら 一の位を かき、十の位の 数を 左の位に たすよ。"
+    },
+    {
+      "width": 1024,
+      "scenario": "delayed",
+      "pass": true,
+      "errors": [],
+      "question": "276 × 60 =",
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:75979a02-8186-4d33-8fbd-afca6d4d2feb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 85,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      },
+      "hint": "ヒント 同じ位の 数を 上下に たそう。10以上なら 一の位を かき、十の位の 数を 左の位に たすよ。"
+    },
+    {
+      "width": 1024,
+      "scenario": "failed",
+      "pass": true,
+      "errors": [],
+      "question": "737 × 54 =",
+      "runtime": {
+        "revision": "development-local",
+        "version": "development-local:75979a02-8186-4d33-8fbd-afca6d4d2feb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 143,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      },
+      "hint": "ヒント 一の位から 1けたずつ かけよう。10以上なら 一の位を かき、十の位の 数を 次の位の かけ算に たすよ。"
+    }
+  ],
+  "pass": true
+}

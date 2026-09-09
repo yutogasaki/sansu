@@ -43,7 +43,7 @@ export interface HissanStep {
     description: string;
     /** このステップで入力する行インデックス */
     rowIndex: number;
-    /** このステップで入力するセルのインデックス一覧（入力順。商は左から） */
+    /** このステップで入力するセルのインデックス一覧（保存・採点順。表示の入力順は writtenInputOrder で求める） */
     inputCellIndices: number[];
     /** 各セルの正解値 */
     correctValues: string[];
@@ -59,6 +59,8 @@ export interface HissanStep {
  * 筆算グリッド全体の定義
  */
 export interface HissanGridData {
+    /** Full operands for presentation; old row/column coordinates stay unchanged. */
+    operandTexts?: [string, string];
     /** グリッドの行一覧 */
     rows: HissanRow[];
     /** ステップ一覧（入力順） */

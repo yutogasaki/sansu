@@ -3,7 +3,7 @@ import { Problem } from '../domain/types';
 import { HissanGridData } from '../domain/math/hissanTypes';
 import { resolveStudyHissanPresentation } from '../domain/math/studyPresentation';
 import { isWrittenStepComplete } from '../domain/math/answerCompletion';
-import { nextWrittenInput, writtenRetryValues } from '../domain/math/writtenInput';
+import { nextWrittenInput, writtenRetryValues, writtenInputOrder, writtenAutomaticValues } from '../domain/math/writtenInput';
 
 type StepFeedback = 'none' | 'correct' | 'incorrect';
 type EnterResult = 'step-correct' | 'all-correct' | 'incorrect' | 'incomplete';
@@ -40,9 +40,11 @@ const clearCurrentStep = (state: HissanSessionState): HissanSessionState => {
     if (!step) return state;
     const userValues = new Map(state.userValues);
     for (const col of step.inputCellIndices) userValues.delete(`${step.rowIndex}-${col}`);
+    writtenAutomaticValues(step).forEach((value, i) => { if (value) userValues.set(`${step.rowIndex}-${step.inputCellIndices[i]}`, value); });
+    const cursorIndex = writtenInputOrder(step)[0];
     return {
-        ...state, userValues, cursorIndex: 0, stepFeedback: 'none', correcting: false, lastInputIndex: undefined,
-        activeCellPos: [step.rowIndex, step.inputCellIndices[0]],
+        ...state, userValues, cursorIndex, stepFeedback: 'none', correcting: false, lastInputIndex: undefined,
+        activeCellPos: [step.rowIndex, step.inputCellIndices[cursorIndex]],
     };
 };
 
@@ -60,8 +62,7 @@ export const useHissanSession = () => {
         // Build while disabled too, so the child can open written work later.
         Object.assign(next, resolveStudyHissanPresentation(problem, hissanEnabled));
         const firstStep = next.gridData?.steps[0];
-        if (firstStep) next.activeCellPos = [firstStep.rowIndex, firstStep.inputCellIndices[0]];
-        publish(next);
+        publish(firstStep ? clearCurrentStep(next) : next);
     }, [publish]);
 
     const handleHissanInput = useCallback((val: number | string) => {
@@ -77,7 +78,7 @@ export const useHissanSession = () => {
         userValues.set(`${step.rowIndex}-${col}`, value);
         const values = step.inputCellIndices.map(cell => userValues.get(`${step.rowIndex}-${cell}`) ?? '');
         const complete = isWrittenStepComplete(values);
-        const cursorIndex = nextWrittenInput(values, current.cursorIndex);
+        const cursorIndex = nextWrittenInput(values, current.cursorIndex, writtenInputOrder(step));
         publish({ ...current, userValues, cursorIndex, lastInputIndex: current.cursorIndex,
             activeCellPos: complete ? null : [step.rowIndex, step.inputCellIndices[cursorIndex]] });
         return complete;
@@ -89,7 +90,7 @@ export const useHissanSession = () => {
         if (!current.isHissanActive || !step || current.stepFeedback !== 'none') return;
         let cursorIndex = current.cursorIndex;
         const key = `${step.rowIndex}-${step.inputCellIndices[cursorIndex]}`;
-        if (!current.userValues.get(key)) cursorIndex = current.lastInputIndex ?? Math.max(0, cursorIndex - 1);
+        if (!current.userValues.get(key)) cursorIndex = current.lastInputIndex ?? writtenInputOrder(step)[Math.max(0, writtenInputOrder(step).indexOf(cursorIndex) - 1)];
         const col = step.inputCellIndices[cursorIndex];
         const userValues = new Map(current.userValues);
         userValues.delete(`${step.rowIndex}-${col}`);
@@ -107,7 +108,7 @@ export const useHissanSession = () => {
         if (!current.isHissanActive || !step || current.stepFeedback !== 'none') return;
         const col = step.inputCellIndices[current.cursorIndex];
         // Input order varies by operation; arrows always follow the visible column direction.
-        const candidates = step.inputCellIndices.filter(c => direction === 'left' ? c < col : c > col);
+        const candidates = writtenInputOrder(step).map(i => step.inputCellIndices[i]).filter(c => direction === 'left' ? c < col : c > col);
         const nextCol = candidates.length ? (direction === 'left' ? Math.max(...candidates) : Math.min(...candidates)) : col;
         publish({ ...current, cursorIndex: step.inputCellIndices.indexOf(nextCol), lastInputIndex: undefined, activeCellPos: [step.rowIndex, nextCol] });
     }, [publish]);
@@ -117,7 +118,7 @@ export const useHissanSession = () => {
         const grid = current.gridData;
         const step = grid?.steps[current.currentStepIndex];
         if (!current.isHissanActive || !grid || !step || current.stepFeedback !== 'none') return 'incomplete';
-        const emptyIndex = step.inputCellIndices.findIndex(col => !current.userValues.get(`${step.rowIndex}-${col}`));
+        const emptyIndex = writtenInputOrder(step).find(i => !current.userValues.get(`${step.rowIndex}-${step.inputCellIndices[i]}`)) ?? -1;
         if (emptyIndex >= 0) {
             publish({ ...current, cursorIndex: emptyIndex, activeCellPos: [step.rowIndex, step.inputCellIndices[emptyIndex]] });
             return 'incomplete';
@@ -129,7 +130,7 @@ export const useHissanSession = () => {
             step.inputCellIndices.forEach((col, index) => {
                 if (!values[index]) userValues.delete(`${step.rowIndex}-${col}`);
             });
-            const cursorIndex = Math.max(0, values.findIndex(value => !value));
+            const cursorIndex = nextWrittenInput(values, -1, writtenInputOrder(step));
             publish({ ...current, userValues, cursorIndex, correcting: true, lastInputIndex: undefined,
                 activeCellPos: [step.rowIndex, step.inputCellIndices[cursorIndex]] });
             return 'incorrect';
@@ -137,8 +138,7 @@ export const useHissanSession = () => {
         const nextStepIndex = current.currentStepIndex + 1;
         const nextStep = grid.steps[nextStepIndex];
         if (nextStep) {
-            publish({ ...current, currentStepIndex: nextStepIndex, cursorIndex: 0, correcting: false, lastInputIndex: undefined,
-                activeCellPos: [nextStep.rowIndex, nextStep.inputCellIndices[0]] });
+            publish(clearCurrentStep({ ...current, currentStepIndex: nextStepIndex }));
             return 'step-correct';
         }
         publish({ ...current, stepFeedback: 'correct', activeCellPos: null });
@@ -150,7 +150,7 @@ export const useHissanSession = () => {
         const step = current.gridData?.steps[current.currentStepIndex];
         if (!current.isHissanActive || !step || current.stepFeedback !== 'none' || rowIndex !== step.rowIndex) return;
         const cursorIndex = step.inputCellIndices.indexOf(colIndex);
-        if (cursorIndex >= 0) publish({ ...current, cursorIndex, lastInputIndex: undefined, activeCellPos: [rowIndex, colIndex] });
+        if (writtenInputOrder(step).includes(cursorIndex)) publish({ ...current, cursorIndex, lastInputIndex: undefined, activeCellPos: [rowIndex, colIndex] });
     }, [publish]);
 
     const toggleHissanMode = useCallback(() => {
@@ -168,7 +168,7 @@ export const useHissanSession = () => {
     return {
         ...state,
         canToggleHissanMode: state.isHissanEligibleSkill && !state.isForcedHissanSkill,
-        canInputDecimal: state.gridData?.steps[state.currentStepIndex]?.correctValues.includes('.') ?? false,
+        canInputDecimal: false,
         handleHissanInput,
         handleHissanBackspace,
         handleHissanClear,

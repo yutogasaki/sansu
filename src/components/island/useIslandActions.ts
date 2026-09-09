@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { holdPwaUpdateForCriticalPersistence } from '../../pwa';
 
-export type IslandActionKind = 'interaction' | 'discovery';
+export type IslandActionKind = 'interaction' | 'discovery' | 'learning-hint';
 
 /** Synchronous lock prevents double taps before React commits disabled controls. */
 export function useIslandActions() {

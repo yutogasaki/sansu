@@ -21,11 +21,12 @@ function LightSeed({ filled, current }: { filled: boolean; current: boolean }) {
 }
 
 /** Help preserves the current draft; saved answers and new slots reset it. */
-export function IslandLearningPanel({ plan, active = true, intro = false, busy, feedback, onAction, observation, englishAutoRead = false, subjectChoice }: {
+export function IslandLearningPanel({ plan, active = true, intro = false, busy, hintPending = false, feedback, onAction, observation, englishAutoRead = false, subjectChoice }: {
     plan: IslandPlan;
     active?: boolean;
     intro?: boolean;
     busy: boolean;
+    hintPending?: boolean;
     feedback?: IslandLearningFeedback;
     onAction: (action: IslandLearningAction) => void;
     observation?: IslandLearningObserver;
@@ -45,6 +46,7 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
     });
     if (!slot) return null;
     const stage = islandSupportStage(slot);
+    const allowHintDraft = hintPending && slot.problem.inputType === 'hissan';
     const answerReceiptId = feedback && ['correct', 'retry', 'step'].includes(feedback.kind) ? feedback.id : undefined;
     return <section ref={section} hidden={!active} inert={!active || undefined} className="island-learning island-workbench" aria-label="しまへ ひかりを とどけよう"
         data-learning-candidate={ISLAND_LEARNING_CANDIDATE}
@@ -63,7 +65,7 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
             <span className="island-learning-count">{plan.cursor + 1}<small> / {plan.slots.length}</small></span>
         </div>
         <IslandAnswerFeedback feedback={feedback?.id === dismissedReceipt ? undefined : feedback} />
-        <IslandAnswerForm key={`${plan.id}:${plan.cursor}`} slot={slot} disabled={busy} answerReceiptId={answerReceiptId}
+        <IslandAnswerForm key={`${plan.id}:${plan.cursor}`} slot={slot} disabled={busy && !allowHintDraft} deferSubmission={busy && allowHintDraft} answerReceiptId={answerReceiptId}
             retryAnswer={feedback?.kind === 'retry' ? feedback.retryAnswer : undefined}
             englishAutoRead={englishAutoRead} onInteraction={() => setDismissedReceipt(feedback?.id)}
             onAnswer={answer => onAction({ type: 'answer', answer })} />

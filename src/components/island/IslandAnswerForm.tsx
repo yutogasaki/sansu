@@ -9,7 +9,7 @@ import { useIslandSpeech } from './useIslandSpeech';
 import { IslandSpeechControl } from './IslandSpeechControl';
 import './IslandAnswerForm.css';
 
-export function IslandAnswerForm({ slot, disabled, onAnswer, answerReceiptId, retryAnswer, onInteraction, englishAutoRead = false }: Pick<LearningAnswerFormProps, 'disabled' | 'onAnswer' | 'onInteraction' | 'retryAnswer'> & {
+export function IslandAnswerForm({ slot, disabled, deferSubmission, onAnswer, answerReceiptId, retryAnswer, onInteraction, englishAutoRead = false }: Pick<LearningAnswerFormProps, 'disabled' | 'deferSubmission' | 'onAnswer' | 'onInteraction' | 'retryAnswer'> & {
     slot: IslandLearningSlot;
     answerReceiptId?: string;
     englishAutoRead?: boolean;
@@ -23,6 +23,7 @@ export function IslandAnswerForm({ slot, disabled, onAnswer, answerReceiptId, re
     const model = stage === 'model';
     return <div className="island-answer-stage" data-support-stage={stage ?? 'none'}>
         <LearningAnswerForm key={lastAnswerReceipt.id ?? 'initial'} slot={slot} disabled={disabled || model}
+        deferSubmission={deferSubmission}
         retryAnswer={lastAnswerReceipt.retryAnswer}
         onInteraction={() => { playSound('tap'); onInteraction?.(); }}
         onAnswer={answer => { if (!disabled && !model) onAnswer(answer); }} className="island-answer" resetCursorOnClear

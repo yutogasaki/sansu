@@ -47,6 +47,6 @@ describe('nonverbal answer confirmation', () => {
         expect(html).toContain('data-written-correction="true"');
         expect(html).toContain('あいたマスを なおそう');
         expect(html).toMatch(/data-written-input="2-2"[^>]*>9<\/button>/);
-        expect(html).toMatch(/data-active="true"[^>]*data-written-input="2-3"/);
+        expect(html).toMatch(/data-active="true"[^>]*data-written-input="2-1"/);
     });
 });

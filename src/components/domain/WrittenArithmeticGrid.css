@@ -50,3 +50,12 @@ button.written-cell:disabled { cursor:default; }
     .written-rule { margin-left:52px; }
     .written-input-guide { font-size:11px; }
 }
+.written-place { position:relative; min-width:0; }
+.written-decimal { position:absolute; right:-4px; bottom:3px; z-index:2; font:700 24px/1 ui-monospace,monospace; pointer-events:none; }
+.written-place[data-padding=true] { color:#74808b; }
+.written-place-value .written-paper { width:calc(var(--written-columns) * 44px + var(--written-label-width,42px) + 14px); overflow:visible; }
+.written-place-value .written-row { grid-template-columns:var(--written-label-width,42px) minmax(0,1fr); }
+.written-place-value .written-digits { padding-right:4px; }
+.written-place-value [data-dividend=true] .written-digits { border-left:2px solid var(--written-ink); }
+.written-normalization { text-align:center; font-size:15px; margin-bottom:8px; }
+.written-normalization small { display:block; font-size:11px; color:#586a77; }

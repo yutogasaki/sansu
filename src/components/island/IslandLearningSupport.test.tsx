@@ -103,10 +103,10 @@ describe('Island staged assistance presentation', () => {
             correctAnswer: '52', inputType: 'hissan', hissanVersion: 2 };
         const current = { ...slot(problem), hissanStep: 0, hissanValues: {} };
         const before = structuredClone(current);
-        expect(html(current)).toContain('15 に 3 は いくつ はいるかな');
+        expect(html(current)).toContain('いちばん大きい かける数を さがそう');
         expect(html(current)).not.toContain('52');
         const next = { ...current, hissanStep: 1, hissanValues: { '0-1': '5' } };
-        expect(html(next)).toContain('3 × 5 を、右から かこう');
+        expect(html(next)).toContain('たてた 商と わる数を かけよう');
         expect(html(next)).not.toContain('52');
         expect(html(next)).not.toContain('15 に');
         expect(current).toEqual(before);

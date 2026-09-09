@@ -61,7 +61,8 @@ export async function runIslandMilestoneLearningAction<T>(run: ReturnType<typeof
         if (action.type === 'support_opened' || action.type === 'model_opened' || action.type === 'skipped') notice.dismiss();
         announce = notice.receipt();
         return save();
-    }, minimumMs);
+    }, action.type === 'support_opened' ? 0 : minimumMs,
+    action.type === 'support_opened' ? 'learning-hint' : 'interaction');
     if (announce && !result) notice.dismiss();
     return { result, announce };
 }

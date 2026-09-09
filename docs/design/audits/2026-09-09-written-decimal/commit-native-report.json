@@ -1,0 +1,390 @@
+{
+  "scope": "Native profile fixtures, actual planner, digit-only physical input and actual answer receipts.",
+  "cases": [
+    {
+      "width": 390,
+      "requestedSkill": "dec_add",
+      "actualSkill": "dec_add",
+      "question": "4.4 + 0.5 =",
+      "digits": "49",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"107278d4-18f6-407d-9a65-35f2e6031c08\",\"[\\\"island-plan-v1\\\",\\\"107278d4-18f6-407d-9a65-35f2e6031c08\\\",0]\",0]",
+        "profileId": "107278d4-18f6-407d-9a65-35f2e6031c08",
+        "planId": "[\"island-plan-v1\",\"107278d4-18f6-407d-9a65-35f2e6031c08\",0]",
+        "timestamp": 1788949551719,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": [
+            "9",
+            ".",
+            "4"
+          ]
+        },
+        "slotIndex": 0,
+        "result": "correct",
+        "learningLogId": 1,
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"107278d4-18f6-407d-9a65-35f2e6031c08\",0]:slot-0",
+          "revisionBefore": 0,
+          "supportBefore": "unassisted-slot",
+          "answerScope": "hissan-step",
+          "wholeCompleted": true,
+          "stepIndexBefore": 0,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788949551698,
+          "presentation": {
+            "id": "89617bca-efc0-43dc-a21b-00e961117e8e",
+            "documentId": "d66b00e3-0d6f-4c47-930d-c7d0256e71d5",
+            "observedAt": 1788949551554,
+            "inputVersion": "island-input-v1",
+            "inputMode": "hissan",
+            "referenceVisual": "absent"
+          },
+          "elapsedSincePresentationMs": 144.20000000018626,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 390,
+      "requestedSkill": "dec_sub",
+      "actualSkill": "dec_sub",
+      "question": "6.5 - 3 =",
+      "digits": "35",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"7474b9c7-e2ca-417a-9bd1-a8004171933c\",\"[\\\"island-plan-v1\\\",\\\"7474b9c7-e2ca-417a-9bd1-a8004171933c\\\",0]\",0]",
+        "profileId": "7474b9c7-e2ca-417a-9bd1-a8004171933c",
+        "planId": "[\"island-plan-v1\",\"7474b9c7-e2ca-417a-9bd1-a8004171933c\",0]",
+        "timestamp": 1788949560341,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": [
+            "5",
+            ".",
+            "3"
+          ]
+        },
+        "slotIndex": 0,
+        "result": "correct",
+        "learningLogId": 1,
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"7474b9c7-e2ca-417a-9bd1-a8004171933c\",0]:slot-0",
+          "revisionBefore": 0,
+          "supportBefore": "unassisted-slot",
+          "answerScope": "hissan-step",
+          "wholeCompleted": true,
+          "stepIndexBefore": 0,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788949560327,
+          "presentation": {
+            "id": "aa8cc51d-cd9c-44dd-b837-5d7b22c01ba2",
+            "documentId": "22d26541-fc11-46f8-85e0-86c0f3762c21",
+            "observedAt": 1788949559761,
+            "inputVersion": "island-input-v1",
+            "inputMode": "hissan",
+            "referenceVisual": "absent"
+          },
+          "elapsedSincePresentationMs": 565.7000000001863,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 390,
+      "requestedSkill": "dec_mul_dec",
+      "actualSkill": "dec_mul_dec",
+      "question": "1.1 × 3.7 =",
+      "digits": "407",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"09b9e55a-c367-41f5-b451-9df4b224166b\",\"[\\\"island-plan-v1\\\",\\\"09b9e55a-c367-41f5-b451-9df4b224166b\\\",0]\",0]",
+        "profileId": "09b9e55a-c367-41f5-b451-9df4b224166b",
+        "planId": "[\"island-plan-v1\",\"09b9e55a-c367-41f5-b451-9df4b224166b\",0]",
+        "timestamp": 1788949568731,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": [
+            "7",
+            "0",
+            ".",
+            "4"
+          ]
+        },
+        "slotIndex": 0,
+        "result": "correct",
+        "learningLogId": 1,
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"09b9e55a-c367-41f5-b451-9df4b224166b\",0]:slot-0",
+          "revisionBefore": 0,
+          "supportBefore": "unassisted-slot",
+          "answerScope": "hissan-step",
+          "wholeCompleted": true,
+          "stepIndexBefore": 0,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788949568715,
+          "presentation": {
+            "id": "40e65f82-1b78-4f0d-b2f6-9865cfddd434",
+            "documentId": "081349eb-42d4-4595-847a-ac9f1ac1a96e",
+            "observedAt": 1788949568136,
+            "inputVersion": "island-input-v1",
+            "inputMode": "hissan",
+            "referenceVisual": "absent"
+          },
+          "elapsedSincePresentationMs": 578.7999999998137,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 390,
+      "requestedSkill": "dec_div_dec",
+      "actualSkill": "dec_div_dec",
+      "question": "37.2 ÷ 9.3 =",
+      "digits": "4",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"72f3a988-e8ae-44fa-bc83-c46fc9bf9439\",\"[\\\"island-plan-v1\\\",\\\"72f3a988-e8ae-44fa-bc83-c46fc9bf9439\\\",0]\",0]",
+        "profileId": "72f3a988-e8ae-44fa-bc83-c46fc9bf9439",
+        "planId": "[\"island-plan-v1\",\"72f3a988-e8ae-44fa-bc83-c46fc9bf9439\",0]",
+        "timestamp": 1788949575784,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": [
+            "4"
+          ]
+        },
+        "slotIndex": 0,
+        "result": "correct",
+        "learningLogId": 1,
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"72f3a988-e8ae-44fa-bc83-c46fc9bf9439\",0]:slot-0",
+          "revisionBefore": 0,
+          "supportBefore": "unassisted-slot",
+          "answerScope": "hissan-step",
+          "wholeCompleted": true,
+          "stepIndexBefore": 0,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788949575770,
+          "presentation": {
+            "id": "85ee124f-643a-4d9a-b8dc-7d8f17ac2547",
+            "documentId": "a8a99942-b332-42a5-85cd-ed57fb8385dc",
+            "observedAt": 1788949575228,
+            "inputVersion": "island-input-v1",
+            "inputMode": "hissan",
+            "referenceVisual": "absent"
+          },
+          "elapsedSincePresentationMs": 541.2000000001863,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "requestedSkill": "dec_add",
+      "actualSkill": "dec_add",
+      "question": "9.1 + 5 =",
+      "digits": "141",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"0a9976d7-4df5-4461-97a8-5c58252eb33f\",\"[\\\"island-plan-v1\\\",\\\"0a9976d7-4df5-4461-97a8-5c58252eb33f\\\",0]\",0]",
+        "profileId": "0a9976d7-4df5-4461-97a8-5c58252eb33f",
+        "planId": "[\"island-plan-v1\",\"0a9976d7-4df5-4461-97a8-5c58252eb33f\",0]",
+        "timestamp": 1788949583226,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": [
+            "1",
+            ".",
+            "4",
+            "1"
+          ]
+        },
+        "slotIndex": 0,
+        "result": "correct",
+        "learningLogId": 1,
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"0a9976d7-4df5-4461-97a8-5c58252eb33f\",0]:slot-0",
+          "revisionBefore": 0,
+          "supportBefore": "unassisted-slot",
+          "answerScope": "hissan-step",
+          "wholeCompleted": true,
+          "stepIndexBefore": 0,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788949583206,
+          "presentation": {
+            "id": "c451b148-6d86-4cff-ab68-a2525a04b585",
+            "documentId": "47c61a88-7647-47ce-b263-b1194d0049a9",
+            "observedAt": 1788949582592,
+            "inputVersion": "island-input-v1",
+            "inputMode": "hissan",
+            "referenceVisual": "absent"
+          },
+          "elapsedSincePresentationMs": 613.5,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "requestedSkill": "dec_sub",
+      "actualSkill": "dec_sub",
+      "question": "5.3 - 3.5 =",
+      "digits": "18",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"4dac4aa0-4437-482d-b725-aa985ecbb934\",\"[\\\"island-plan-v1\\\",\\\"4dac4aa0-4437-482d-b725-aa985ecbb934\\\",0]\",0]",
+        "profileId": "4dac4aa0-4437-482d-b725-aa985ecbb934",
+        "planId": "[\"island-plan-v1\",\"4dac4aa0-4437-482d-b725-aa985ecbb934\",0]",
+        "timestamp": 1788949589938,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": [
+            "8",
+            ".",
+            "1"
+          ]
+        },
+        "slotIndex": 0,
+        "result": "correct",
+        "learningLogId": 1,
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"4dac4aa0-4437-482d-b725-aa985ecbb934\",0]:slot-0",
+          "revisionBefore": 0,
+          "supportBefore": "unassisted-slot",
+          "answerScope": "hissan-step",
+          "wholeCompleted": true,
+          "stepIndexBefore": 0,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788949589915,
+          "presentation": {
+            "id": "ecc3199f-f2d5-4f38-acaf-795bd46a359c",
+            "documentId": "5cb331cf-63ff-4b75-948b-f3843b2e7269",
+            "observedAt": 1788949589343,
+            "inputVersion": "island-input-v1",
+            "inputMode": "hissan",
+            "referenceVisual": "absent"
+          },
+          "elapsedSincePresentationMs": 571.6999999992549,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "requestedSkill": "dec_mul_dec",
+      "actualSkill": "dec_mul_dec",
+      "question": "6.8 × 0.5 =",
+      "digits": "34",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"cc7ee36a-0515-4f5d-919b-1814078aed16\",\"[\\\"island-plan-v1\\\",\\\"cc7ee36a-0515-4f5d-919b-1814078aed16\\\",0]\",0]",
+        "profileId": "cc7ee36a-0515-4f5d-919b-1814078aed16",
+        "planId": "[\"island-plan-v1\",\"cc7ee36a-0515-4f5d-919b-1814078aed16\",0]",
+        "timestamp": 1788949596425,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": [
+            "4",
+            ".",
+            "3"
+          ]
+        },
+        "slotIndex": 0,
+        "result": "correct",
+        "learningLogId": 1,
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"cc7ee36a-0515-4f5d-919b-1814078aed16\",0]:slot-0",
+          "revisionBefore": 0,
+          "supportBefore": "unassisted-slot",
+          "answerScope": "hissan-step",
+          "wholeCompleted": true,
+          "stepIndexBefore": 0,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788949596404,
+          "presentation": {
+            "id": "f0bd4ec5-d522-4d05-87d4-034d3f93b06d",
+            "documentId": "815ba5f5-220a-4e7f-afa1-40c593783cf8",
+            "observedAt": 1788949595841,
+            "inputVersion": "island-input-v1",
+            "inputMode": "hissan",
+            "referenceVisual": "absent"
+          },
+          "elapsedSincePresentationMs": 562.8999999994412,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "requestedSkill": "dec_div_dec",
+      "actualSkill": "dec_div_dec",
+      "question": "9.18 ÷ 3.4 =",
+      "digits": "27",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"b67f7886-2744-4ccf-8161-2d7e0c2cb4ce\",\"[\\\"island-plan-v1\\\",\\\"b67f7886-2744-4ccf-8161-2d7e0c2cb4ce\\\",0]\",0]",
+        "profileId": "b67f7886-2744-4ccf-8161-2d7e0c2cb4ce",
+        "planId": "[\"island-plan-v1\",\"b67f7886-2744-4ccf-8161-2d7e0c2cb4ce\",0]",
+        "timestamp": 1788949604238,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": [
+            "7",
+            ".",
+            "2"
+          ]
+        },
+        "slotIndex": 0,
+        "result": "correct",
+        "learningLogId": 1,
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"b67f7886-2744-4ccf-8161-2d7e0c2cb4ce\",0]:slot-0",
+          "revisionBefore": 0,
+          "supportBefore": "unassisted-slot",
+          "answerScope": "hissan-step",
+          "wholeCompleted": true,
+          "stepIndexBefore": 0,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788949604219,
+          "presentation": {
+            "id": "fc0597b5-fc06-45ab-b034-524e7edfbff9",
+            "documentId": "ce44a830-03fb-43f7-b958-50e68fbd1562",
+            "observedAt": 1788949603676,
+            "inputVersion": "island-input-v1",
+            "inputMode": "hissan",
+            "referenceVisual": "absent"
+          },
+          "elapsedSincePresentationMs": 543.3000000007451,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    }
+  ],
+  "pass": true
+}

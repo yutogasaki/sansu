@@ -1,6 +1,6 @@
 import React from "react";
-import { HissanGridData, HissanStep } from "../../domain/math/hissanTypes";
-import { HissanCellView } from "./HissanCell";
+import { HissanGridData } from "../../domain/math/hissanTypes";
+import { PlaceValueArithmeticGrid } from "./PlaceValueArithmeticGrid";
 import { WrittenArithmeticGrid } from './WrittenArithmeticGrid';
 
 export interface HissanGridProps {
@@ -33,74 +33,12 @@ export const HissanGrid: React.FC<HissanGridProps> = ({
     correcting = false,
     disabled = false,
 }) => {
-    const currentStep: HissanStep | undefined = gridData.steps[currentStepIndex];
 
     if (gridData.writtenLayout) return <WrittenArithmeticGrid gridData={gridData}
         currentStepIndex={currentStepIndex} activeCellPos={activeCellPos} userValues={userValues}
         onCellClick={onCellClick} stepFeedback={stepFeedback} correcting={correcting} disabled={disabled} />;
 
-    return (
-        <div className="flex flex-col items-center gap-0.5 p-2">
-            {gridData.rows.map((row, rowIdx) => (
-                <div key={rowIdx} className="flex gap-0.5">
-                    {row.cells.map((cell, colIdx) => {
-                        const cellKey = `${rowIdx}-${colIdx}`;
-                        const userValue = userValues.get(cellKey);
-
-                        // セル状態の決定
-                        let displayCell = { ...cell };
-
-                        // ユーザーが入力した値がある場合
-                        if (userValue !== undefined && userValue !== '') {
-                            displayCell = {
-                                ...displayCell,
-                                value: userValue,
-                                state: 'filled',
-                            };
-                        }
-
-                        // 前のステップで完了済みのセルはロック
-                        if (
-                            row.stepIndex !== undefined &&
-                            row.stepIndex < currentStepIndex &&
-                            displayCell.correctValue !== undefined &&
-                            displayCell.state !== 'empty'
-                        ) {
-                            displayCell = {
-                                ...displayCell,
-                                state: 'locked',
-                            };
-                        }
-
-                        // 不正解フィードバック
-                        if (
-                            stepFeedback === 'incorrect' &&
-                            currentStep &&
-                            currentStep.rowIndex === rowIdx &&
-                            currentStep.inputCellIndices.includes(colIdx)
-                        ) {
-                            // 不正解時はセルをハイライト（赤系）
-                            // これはCSSクラスで対応
-                        }
-
-                        // アクティブセルの判定
-                        const isActive =
-                            activeCellPos !== null &&
-                            activeCellPos[0] === rowIdx &&
-                            activeCellPos[1] === colIdx;
-
-                        return (
-                            <HissanCellView
-                                key={cellKey}
-                                cell={displayCell}
-                                isActive={isActive}
-                                onClick={() => onCellClick(rowIdx, colIdx)}
-                                size="md"
-                            />
-                        );
-                    })}
-                </div>
-            ))}
-        </div>
-    );
+    return <PlaceValueArithmeticGrid gridData={gridData} currentStepIndex={currentStepIndex}
+        activeCellPos={activeCellPos} userValues={userValues} onCellClick={onCellClick}
+        stepFeedback={stepFeedback} correcting={correcting} disabled={disabled} />;
 };

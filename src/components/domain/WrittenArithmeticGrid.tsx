@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, type CSSProperties } from 'react';
 import type { HissanGridProps } from './HissanGrid';
 import './WrittenArithmeticGrid.css';
+import { writtenAutomaticValues } from '../../domain/math/writtenInput';
 
 const phaseLabels = {
     multiply: 'かける', sum: 'あわせる', quotient: 'たてる',
@@ -42,10 +43,11 @@ export function WrittenArithmeticGrid({ gridData, currentStepIndex, activeCellPo
                 {row.cells.map((cell, column) => {
                     if (column < columnOffset) return null;
                     const index = current ? step.inputCellIndices.indexOf(column) : -1;
-                    const editable = index >= 0;
+                    const formatting = index >= 0 && writtenAutomaticValues(step)[index];
+                    const editable = index >= 0 && !formatting;
                     const completed = gridData.steps.some(previous => previous.index < currentStepIndex
                         && previous.rowIndex === rowIndex && previous.inputCellIndices.includes(column));
-                    const future = cell.correctValue !== undefined && !editable && !completed;
+                    const future = cell.correctValue !== undefined && !editable && !completed && !formatting;
                     const value = userValues.get(`${rowIndex}-${column}`) ?? cell.value;
                     const active = editable && activeCellPos?.[0] === rowIndex && activeCellPos[1] === column;
                     const focus = step?.focusCells?.some(([r, c]) => r === rowIndex && c === column);
@@ -68,9 +70,7 @@ export function WrittenArithmeticGrid({ gridData, currentStepIndex, activeCellPo
     const pinned = layout.kind === 'division'
         ? [layout.quotientRow!, layout.dividendRow!]
         : gridData.rows.map((row, index) => row.type === 'operand' || row.type === 'operator' ? index : -1).filter(index => index >= 0);
-    const direction = step && step.inputCellIndices.length > 1
-        ? step.inputCellIndices[0] > step.inputCellIndices[step.inputCellIndices.length - 1] ? '← みぎから' : 'ひだりから →'
-        : 'ここに いれよう';
+    const direction = step && step.inputCellIndices.length > 1 ? 'ひだりから →' : 'ここに いれよう';
     return <section className="written-arithmetic" aria-label={`${layout.expression} のひっさん`}
         data-written-operation={layout.kind} data-written-step={currentStepIndex} data-written-phase={step?.phase}
         data-written-correction={correcting}
@@ -78,7 +78,7 @@ export function WrittenArithmeticGrid({ gridData, currentStepIndex, activeCellPo
         <div className="written-heading"><span>{layout.expression}</span><span className="written-kind">ひっさん</span></div>
         <div className="written-guidance" aria-live="polite" aria-atomic="true">
             <strong>{step?.phase ? phaseLabels[step.phase] : 'こたえ'}</strong>
-            <span>{step?.hint || step?.description}</span>
+            <span>{(step?.hint || step?.description)?.replace('右から かこう', '左から いれよう').replace('右から たそう', 'たして、左から いれよう')}</span>
         </div>
         <div className="written-paper">
             <div className="written-pinned">{pinned.map(renderRow)}</div>

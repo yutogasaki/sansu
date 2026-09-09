@@ -831,6 +831,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     </IslandHomeActions>
                 </section>}
         {plan && slot && <IslandLearningPanel plan={plan} active={active && learning && !nextPlanError}
+            hintPending={busyKind === 'learning-hint' && active && learning && !preparingLearning}
             intro={isFirstIslandPlan(plan)} observation={active && learning ? observation : undefined}
             busy={busy || preparingLearning || !active || !learning} feedback={learningFeedback} englishAutoRead={profile.englishAutoRead} onAction={action => void answer(action)}
             subjectChoice={profile.subjectMode === 'mix' ? {

@@ -115,6 +115,7 @@ export const generateAdditionGrid = (a: number, b: number, answerText?: string):
     };
 
     return {
+        operandTexts: [String(a), String(b)],
         rows: [row1, row2, separatorRow, resultRow],
         steps: [step],
         columnCount,
@@ -212,6 +213,7 @@ export const generateSubtractionGrid = (a: number, b: number, answerText?: strin
     };
 
     return {
+        operandTexts: [String(a), String(b)],
         rows: [row1, row2, separatorRow, resultRow],
         steps: [step],
         columnCount,
@@ -281,6 +283,7 @@ export const generateMultiplicationGrid = (a: number, b: number, answerText?: st
     const resultRow: HissanRow = { cells: resultCells, type: 'result', stepIndex: 0 };
 
     return {
+        operandTexts: [String(a), String(b)],
         rows: [row1, row2, separatorRow, resultRow],
         steps: [{
             index: 0,
@@ -356,6 +359,7 @@ export const generateDivisionGrid = (a: number, b: number, answerText?: string):
     const resultRow: HissanRow = { cells: resultCells, type: 'result', stepIndex: 0 };
 
     return {
+        operandTexts: [String(a), String(b)],
         rows: [row1, row2, separatorRow, resultRow],
         steps: [{
             index: 0,
