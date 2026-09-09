@@ -27,6 +27,7 @@ import { IslandDistricts, IslandGrowthChoices, IslandGrowthSummary, type IslandD
 import { IslandAlbum } from '../components/island/IslandAlbum';
 import { getIslandGrowthMilestone, isIslandHabitatUnlocked } from '../domain/island/growth';
 import { IslandMilestoneNotice, IslandMilestoneReturn, type IslandMilestone } from '../components/island/IslandMilestone';
+import { runIslandMilestoneLearningAction, useIslandMilestoneNotice } from '../components/island/useIslandMilestoneNotice';
 import { IslandLearningPanel } from '../components/island/IslandLearningPanel';
 import { IslandSoundControl } from '../components/island/IslandSoundControl';
 import { islandFeedbackForReceipt, type IslandLearningFeedback, type IslandReaction } from '../components/island/learningFeedback';
@@ -165,6 +166,8 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const [feedback, setFeedback] = useState('');
     const [loadError, setLoadError] = useState(false);
     const { busy, busyKind, error, run } = useIslandActions();
+    const milestoneNotice = useIslandMilestoneNotice(profile.id, active && screen === 'learning' && !preparingLearning,
+        Boolean(error || loadError || nextPlanError));
     const comparisonDisabled = busy && busyKind !== 'discovery';
     const customization = useIslandCustomization(island, active && screen === 'customization', run, setSnapshot);
     const furniture = useIslandFurniture(island, active && screen === 'furniture', run, setSnapshot);
@@ -321,7 +324,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         const written = action.type === 'answer' ? parkHissanGrid(currentSlot.problem) : null;
         const intermediate = written && (currentSlot.hissanStep ?? 0) < written.steps.length - 1;
         let request: IslandLearningRequest | undefined;
-        const result = await run(() => {
+        const { result, announce } = await runIslandMilestoneLearningAction(run, milestoneNotice, action, () => {
             request = observation.request(islandObservationBinding(plan), action);
             return commitIslandLearningSession(profile.id, plan.id, plan.revision, request.action, db, request.observation);
         }, intermediate ? 0 : 180);
@@ -334,9 +337,14 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         const earnedReceipt = islandStarReceipt(plan, receipt.plan, receipt.event, lastStarReceipt.current);
         if (earnedReceipt) { lastStarReceipt.current = earnedReceipt; setStarReceipt({ id: earnedReceipt, stars: islandPlanStars(receipt.plan) }); }
         setLearningFeedback(response?.feedback);
+        if (response?.feedback.kind === 'retry' || response?.feedback.kind === 'support') milestoneNotice.dismiss();
         if (island && receipt.plan.growthTarget && receipt.plan.status === 'completed') {
             const milestone = getIslandGrowthMilestone(island, receipt.island);
-            if (milestone) setLatestMilestone({ id: receipt.plan.id, ...milestone });
+            if (milestone) {
+                const earned = { id: receipt.plan.id, ...milestone };
+                setLatestMilestone(earned);
+                if (!result.nextPlanError) announce?.(earned);
+            }
         }
         setReaction(response?.reaction ? { ...response.reaction, growthTarget: plan.growthTarget } : undefined);
         if (response?.reaction?.kind === 'correct') {
@@ -541,7 +549,9 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         data-learning-candidate={ISLAND_LEARNING_CANDIDATE}
         data-island-revision={island.revision} data-discovery-count={island.growth?.discoveries.length ?? 0}
         data-build-revision={__BUILD_REVISION__} data-build-version={__APP_VERSION__} data-busy={busy}>
-        {screen !== 'showcase' && <header className="island-header"><div className="island-brand"><Leaf size={20} /><div><p>{profile.name}の</p><h1 title={island.experience?.islandName}>{island.experience?.islandName ?? 'ふしぎな しま'}</h1></div></div>
+        {screen !== 'showcase' && <header className="island-header"><div className="island-brand" data-learning-milestone={learning ? Boolean(milestoneNotice.milestone) : undefined}>
+            <Leaf size={20} /><div><p>{profile.name}の</p><h1 title={island.experience?.islandName}>{island.experience?.islandName ?? 'ふしぎな しま'}</h1></div>
+            {milestoneNotice.milestone && <IslandMilestoneNotice milestone={milestoneNotice.milestone} island={island} />}</div>
             <div className="island-header-actions"><IslandSoundControl key={screen} enabled={profile.soundEnabled} disabled={busy} onChange={enabled => run(async () => {
                 const updated = await updateProfileAtomically(profile.id, current => ({ ...current, soundEnabled: enabled }));
                 if (!updated) throw new Error('Profile unavailable');
@@ -610,7 +620,6 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 : <>{growthLook && <aside className="island-growth-preview-notice" role="status"><strong>つぎに 育つ すがた・おためし</strong>{growthLook.description}</aside>}
                     {screen === 'experience' && experience.previewIsland && <aside className="island-growth-preview-notice" role="status"><strong>けしきの おためし</strong>いまの しまは そのまま。</aside>}
                     {screen === 'expression' && expression.previewAction && <aside className="island-growth-preview-notice" role="status"><strong>むりょうの おためし</strong>いまの しまは そのまま。</aside>}
-                    {learning && latestMilestone && <IslandMilestoneNotice key={latestMilestone.id} milestone={latestMilestone} island={island} />}
                     {(learning || screen === 'reward') && starReceipt && <IslandStarReceipt key={starReceipt.id} receiptId={starReceipt.id} stars={starReceipt.stars} />}</>}
             growth={stageIsland.growth} growthTarget={plan?.status === 'active' ? plan.growthTarget : undefined}
             comparisonHabitat={screen === 'growth' ? growthViewHabitat : undefined}

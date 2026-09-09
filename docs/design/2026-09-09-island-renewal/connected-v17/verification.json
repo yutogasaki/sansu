@@ -493,7 +493,7 @@
   },
   "firstUnlock": {
     "evidenceFile": "first-unlock-verification.json",
-    "evidenceSha256": "c4b23a8a53a96bc811473f580f51c14e80fc5220ac9892e785c2349a59c01ac5",
+    "evidenceSha256": "b03d44e8483706dd80e4d11c6b63fdbe9a07a9638f12a513911484dd1c5bb8d6",
     "actualScreens": "first-unlock/README.md",
     "target": "production http://127.0.0.1:5423",
     "revision": "workshop-20260909-794c920135eb",
@@ -509,8 +509,14 @@
     "extraActions": 0,
     "milestoneDOMAttached": 4,
     "milestoneVisible": 0,
-    "milestoneDisplay": "FAIL; repair pending",
+    "milestoneDisplay": "NOT_VISIBLE_AS_SPECIFIED_AT_BUILD37; new header has separate fixed39 seven-case evidence",
     "sourceUnchanged": true,
-    "browserClosed": true
+    "browserClosed": true,
+    "correction": {
+      "supersededMilestoneDisplay": "FAIL; repair pending",
+      "supersededEvidenceSha256": "c4b23a8a53a96bc811473f580f51c14e80fc5220ac9892e785c2349a59c01ac5",
+      "reason": "Prior FAIL/repair wording lacked the applicable SSOT check. Build37 invisibility matches specification30 at d4d157f. The newly adopted header announcement is verified separately at fixed39; no original measurements changed.",
+      "rawAndMeasurementsUnchanged": true
+    }
   }
 }

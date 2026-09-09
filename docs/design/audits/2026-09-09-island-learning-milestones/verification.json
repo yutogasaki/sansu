@@ -1,0 +1,2550 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS — seven selected production header cases only",
+  "compiledAt": "2026-09-09T04:40:04.478734+00:00",
+  "target": {
+    "url": "http://127.0.0.1:5433",
+    "revision": "workshop-20260909-b3f96489e126",
+    "candidate": "mystic-island-shore-garden-v17",
+    "sourceHash": "b3f96489e126f2ed3f4465ae9beb4d28b4a5b32d8b5ad14bb2d09fccc432c33d",
+    "inputs": 1089,
+    "manifestPath": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-39/build-source.json",
+    "composition": {
+      "baseCommit": "d4d157f26b6fac0fea9514377bb1d0f2f0af37da",
+      "overlays": [
+        "src/components/island/IslandMilestone.tsx",
+        "src/components/island/IslandMilestone.css",
+        "src/components/island/IslandMilestone.test.tsx",
+        "src/components/island/useIslandMilestoneNotice.ts",
+        "src/components/island/useIslandMilestoneNotice.test.ts",
+        "src/pages/Island.tsx"
+      ],
+      "excluded": "Concurrent home-space layout/navigation edits, shared-jobs QA, all documentation. Island.tsx explicitly removes only peer data-home-layout/onOtherGames/footer changes from copied file; worktree untouched."
+    }
+  },
+  "actualVersion": {
+    "version": "workshop-20260909-b3f96489e126:4f47503e-33f0-4488-aa48-4b335131c04d",
+    "revision": "workshop-20260909-b3f96489e126",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "legacy"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v17",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "checks": {
+    "fixed39SourceChecks": "Parent reported: 302 files / 3327 tests, type/lint/build/assets PASS; one existing Fast Refresh warning. Separate from this browser evidence.",
+    "functionalHeaderCases": {
+      "pass": 7,
+      "total": 7
+    },
+    "formal80": {
+      "status": "PASS",
+      "evidence": "throughput-verification.json",
+      "sha256": "5fcb599da19fd6e01da4a448dddbffe9ea483fd68cd06cfb907d38c70ff18571",
+      "scope": "Separate dedicated DEV fixed-ten: 80 alternating runs, all 15 gates, eligible/pass true, zero extra ordinary actions. Does not extend production or human evidence."
+    },
+    "relatedE2E": {
+      "islandPwa": "PASS",
+      "evidence": "pwa-verification.json",
+      "classicSmoke": "PASS_31_SCENARIOS",
+      "remaining": "Full four-habitat growth tour running separately; all selected header cases remain their own scope.",
+      "classicPwa": "PASS_4_SCENARIOS",
+      "classicEvidence": "regression-verification.json"
+    }
+  },
+  "execution": {
+    "sessionId": 66473,
+    "terminalExitCode": 0,
+    "terminalConfirmation": "Resumed exact live exec handle and received exit_code 0",
+    "startedAt": "2026-09-09T04:31:01.589Z",
+    "finishedAt": "2026-09-09T04:32:22.804Z",
+    "durationMs": 81379.91145799999,
+    "browser": "Playwright Chromium 145.0.7632.6",
+    "headed": false,
+    "motion": "normal",
+    "profileSound": "off",
+    "serviceWorkerControlled": true,
+    "contextsClosed": 7,
+    "browserClosed": true,
+    "ownedServerStarted": false,
+    "cleanupBoundary": "All seven contexts and the owned browser awaited close. Existing production server5433 was preserved. Subsequent Chromium observed at13:34:10 belonged to the separate throughput runner and was not touched."
+  },
+  "provenance": {
+    "report": {
+      "path": "output/playwright/island-renewal/milestone-header-38-01/report.json",
+      "sha256": "d0a12533bdaa070318785c1341d27fa4992df536534838aac5912db9da71e792"
+    },
+    "sourceStart": {
+      "path": "output/playwright/island-renewal/milestone-header-38-01/source-start.json",
+      "sha256": "8f96d9cac55da8bbaf0941942e1664594ae5c74c3af70514b0b74d87baded8c8"
+    },
+    "sourceEnd": {
+      "path": "output/playwright/island-renewal/milestone-header-38-01/source-end.json",
+      "sha256": "8f96d9cac55da8bbaf0941942e1664594ae5c74c3af70514b0b74d87baded8c8"
+    },
+    "runLog": {
+      "path": "output/playwright/island-renewal/milestone-header-38-01-run.log",
+      "sha256": "947e72d4ee7e7a9c90bddd8e09b26124fecfd99aa962e82ef9e852fa951d0452"
+    },
+    "qa": {
+      "path": "output/playwright/island-renewal/milestone-header-38-01.mjs",
+      "sha256": "270df20178b71006e12b664546b0cb4ba34b7b59b1acf9aef00ed2c5da2e8e7b"
+    },
+    "retainedQaCopy": {
+      "path": "output/playwright/island-renewal/milestone-header-38-01/qa-source.mjs",
+      "sha256": "270df20178b71006e12b664546b0cb4ba34b7b59b1acf9aef00ed2c5da2e8e7b"
+    },
+    "manifestSha256": "b41aa4dbbd1fce924e40126001c160f7d4564028c0beea73714abee1b5a4133b",
+    "sourceManifestInputs": 1089,
+    "manifestSourceHash": "b3f96489e126f2ed3f4465ae9beb4d28b4a5b32d8b5ad14bb2d09fccc432c33d",
+    "fingerprintAppSha256": "83d04f4c064d56e36eff0fdf1fa4594ad067c55e07fd336709750e6b388bda18",
+    "fingerprintNote": "Manifest hashes relative+sha256 input records; QA fingerprint hashes its path+sha256 app record serialization. Different aggregate formats, both individually verified; neither is substituted for the other.",
+    "sourceStable": true,
+    "retainedSourceAndSnapshotInputsBothChecked": true,
+    "qaRuntimeClosureFiles": 490,
+    "qaRuntimeClosureSha256": "cd2ca125fc4d92a9946d050f7534be05e0faf4173e402ea62105c2f349c97bd2",
+    "qaRuntimeClosureStable": true,
+    "qaRuntimeClosureScope": "QA entry + two frozen helper modules + Playwright/Playwright-core runtime JS/MJS/CJS/JSON files; 490 files. Full per-file list remains in raw source-start/end.",
+    "entryAndHelperFiles": [
+      {
+        "path": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/milestone-header-38-01.mjs",
+        "sha256": "270df20178b71006e12b664546b0cb4ba34b7b59b1acf9aef00ed2c5da2e8e7b"
+      },
+      {
+        "path": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-milestone-39-EdpxeA/tools/island-e2e-helpers.mjs",
+        "sha256": "d6892d1b32a9abdd541bd94ac1b2603a22359a58b2e5a5cddd6b157c863c7526"
+      },
+      {
+        "path": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-milestone-39-EdpxeA/tools/island-qualified-audit.mjs",
+        "sha256": "329bd36cc6508c74473ff93e6fe0093818a5a82a83a7be0a6ce58c61f5354714"
+      }
+    ],
+    "node": "v22.22.3",
+    "nodeExecutable": {
+      "path": "/Users/yutogasaki/.hermes/node/bin/node",
+      "sha256": "5d9d3872911e2340a43b707962e68143de8a4e8d54628845c0c4f2de1fb7cd5c"
+    }
+  },
+  "counts": {
+    "declaredCases": 7,
+    "completedSections": 7,
+    "realCorrectAnswers": 21,
+    "additionalRealIncorrectAnswer": 1,
+    "totalRealAnswerSubmissions": 22,
+    "explicitHintOperations": 2,
+    "extraContinuationActions": 0,
+    "nativeStores": 17,
+    "selectedOriginalScreens": 16
+  },
+  "timing": {
+    "classification": "Single final-answer-to-next-input diagnostic per case, not P95 or formal80. Setup/initialization and screenshot latency excluded from this interval.",
+    "rangeMs": [
+      185.39999997615814,
+      189.80000007152557
+    ],
+    "expiryObservedMs": [
+      5994.699999928474,
+      5998
+    ],
+    "expiryQaWindowMs": [
+      5900,
+      6064
+    ],
+    "expiryBoundary": "Native MutationObserver sampled insertion/removal. Sampling tolerance is disclosed; no claim of subframe exact6s scheduling."
+  },
+  "storageMethod": {
+    "capture": "Readonly single transaction getAll for all17stores; native structured values kept in runtime comparisons; Blob bytes represented by MIME/size/SHA256 and dates explicitly encoded. JSON artifacts are derived exports.",
+    "exactReadonlyBoundaries": [
+      "timed removal (two expiry cases)",
+      "home return using existing exact discovery-delta oracle (actual additions0 in all cases)",
+      "same reservation reentry",
+      "same reservation reload"
+    ],
+    "learningWrites": "Real answers/completion/next-reservation legitimately write learning state. Support/incorrect branches strictly oracle-check islands against the canonical current-question follow-up; exported changes for all17stores are enumerated percase, not described as globally readonly.",
+    "photoBoundary": "All three photo stores remain empty in these minimal fixtures; no nonempty photo-byte persistence claim."
+  },
+  "priorCorrection": {
+    "fixed37": "Four notifications existed but were visually hidden, as the then-current specification30 required. Earlier defect/FAIL classification arose from insufficient SSOT comparison; raw measurements/PNG/SHA and old failure evidence remain unchanged.",
+    "new39": "Newly adopted learning-header-v1 contract, tested using this new production run; no retroactive fixed37 PASS.",
+    "reference": "../../2026-09-09-island-renewal/connected-v17/first-unlock/README.md"
+  },
+  "limits": {
+    "humanN": 0,
+    "humanComprehensionOrMotivation": "UNVERIFIED",
+    "sourceAArtParity": "HOLD",
+    "wholeGoal": "ACTIVE / NOT COMPLETE",
+    "fixtureScope": "Native profile and declared immediately preceding IslandRecord only. Existing initial memory stays unchanged. No invented prior answers, logs, mature memories, plans, receipts or skill-memory rows.",
+    "notHistoricalAcquisition": true,
+    "nativeNumericFixture": "Level9 profile +mirror only; no skill memory/slots/problem/plan injected. Real initial reservations were3slots; next numeric reservations were6slots.",
+    "notMeasured": [
+      "real children or child motivation",
+      "real mobile hardware/assistive technology",
+      "sound output (soundoff)",
+      "reduced-motion browser path",
+      "all milestones/maturity variants",
+      "formal P95",
+      "related E2E regression",
+      "shared resident jobs or whole-game completion"
+    ]
+  },
+  "rows": [
+    {
+      "case": "phone-east",
+      "pass": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fixture": {
+        "nativeProfile": true,
+        "numericLevel9": false,
+        "declaredOldGift": false,
+        "completedSetsBefore": 20,
+        "expansionBefore": 0,
+        "managedItemsBefore": 3,
+        "inventedHistoricalAnswersPlansReceipts": false
+      },
+      "realCorrectAnswers": 3,
+      "completedPlanId": "[\"island-plan-v1\",\"milestone-header-phone-east\",20]",
+      "nextPlanId": "[\"island-plan-v1\",\"milestone-header-phone-east\",21]",
+      "nextPlanSlotCount": 3,
+      "nextInputType": "choice",
+      "finalSubmitToNextInputMs": 189.80000007152557,
+      "extraContinuationActions": 0,
+      "nextInputReady": true,
+      "emptyNextInput": true,
+      "notice": {
+        "lines": [
+          "ひがしへ",
+          "ひろがったよ"
+        ],
+        "visible": true,
+        "buttons": 0,
+        "ariaAtomic": "true",
+        "ariaLabel": "しまが 大きく ひろがったよ。おはなが いっぱいに なった。ひがしへ はしが つながったよ",
+        "observedLifetimeMs": 5994.699999928474,
+        "boundary": "expiry"
+      },
+      "geometry": {
+        "compared": [
+          "header",
+          "brand",
+          "problem",
+          "input",
+          "answerStage",
+          "all input keys",
+          "sound",
+          "close"
+        ],
+        "comparisonToleranceCssPx": 0.05,
+        "maximumObservedRectDeltaCssPx": 0,
+        "sameProblemAfterExpiry": true,
+        "sound": {
+          "rect": {
+            "x": 206.15625,
+            "y": 10.59375,
+            "width": 100.875,
+            "height": 44,
+            "right": 307.03125,
+            "bottom": 54.59375
+          },
+          "label": "おとを だす",
+          "disabled": false,
+          "hit": true,
+          "visible": true,
+          "inViewport": true
+        },
+        "close": {
+          "rect": {
+            "x": 315.03125,
+            "y": 5,
+            "width": 56.96875,
+            "height": 55.1875,
+            "right": 372,
+            "bottom": 60.1875
+          },
+          "label": "とじる",
+          "disabled": false,
+          "hit": true,
+          "visible": true,
+          "inViewport": true
+        },
+        "oldGiftRect": null,
+        "twoLinesAndControlsNonoverlapping": true
+      },
+      "storage": {
+        "stores": [
+          "appData",
+          "exploreDiscoveries",
+          "exploreRunEvents",
+          "exploreRuns",
+          "islandEvents",
+          "islandPhotoAlbums",
+          "islandPhotoBlobs",
+          "islandPhotos",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "memoryVocab",
+          "parkEvents",
+          "parkPlans",
+          "parks",
+          "profiles"
+        ],
+        "beforeFinalToAfterFinal": {
+          "appData": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "app": [
+                "profiles"
+              ]
+            }
+          },
+          "islandEvents": {
+            "beforeRows": 3,
+            "afterRows": 6,
+            "addedKeys": [
+              "[\"island-action-v1\",\"milestone-header-phone-east\",\"[\\\"island-plan-v1\\\",\\\"milestone-header-phone-east\\\",20]\",2]",
+              "[\"island-plan-v1\",\"milestone-header-phone-east\",20]:completed",
+              "[\"island-plan-v1\",\"milestone-header-phone-east\",21]:started"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "islandPlans": {
+            "beforeRows": 1,
+            "afterRows": 2,
+            "addedKeys": [
+              "[\"island-plan-v1\",\"milestone-header-phone-east\",21]"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {
+              "[\"island-plan-v1\",\"milestone-header-phone-east\",20]": [
+                "completedAt",
+                "cursor",
+                "revision",
+                "slots",
+                "status"
+              ]
+            }
+          },
+          "islands": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "milestone-header-phone-east": [
+                "completedSets",
+                "customization",
+                "growth",
+                "items",
+                "mathReviewTurn",
+                "pendingPlanId",
+                "revision",
+                "updatedAt"
+              ]
+            }
+          },
+          "logs": {
+            "beforeRows": 2,
+            "afterRows": 3,
+            "addedKeys": [
+              "3"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "memoryMath": {
+            "beforeRows": 2,
+            "afterRows": 3,
+            "addedKeys": [
+              "count_shape"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "profiles": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "milestone-header-phone-east": [
+                "mathLevels",
+                "mathSkills",
+                "recentAttempts",
+                "todayCount"
+              ]
+            }
+          }
+        },
+        "correctAnswerReceipts": 3,
+        "finalTransactionAndContinuationEventTypes": [
+          "answer",
+          "plan_completed",
+          "plan_started"
+        ],
+        "priorGrowthMemoriesPreserved": true,
+        "oneNewGrowthMemory": true,
+        "pendingRewardsPreserved": true,
+        "completionPendingAnswers": {
+          "garden": 0,
+          "waterside": 0,
+          "grove": 0,
+          "village": 0
+        },
+        "supportOrIncorrect": null,
+        "homeExactDiscoveryOracle": true,
+        "actualHomeDiscoveries": [],
+        "recordedExitBaselineAndAfterReloadEqualAll17Stores": true,
+        "runtimeReentryAndReloadExactNativeComparisons": true,
+        "sameReservationRevisionAfterReentryReload": true,
+        "noticeReplayAfterReentryReload": false,
+        "replayObservation": "2 requestAnimationFrame callbacks plus 400ms after input-ready per entry/reload; not indefinite monitoring"
+      },
+      "probe": {
+        "frames": 16,
+        "overflow": false,
+        "lifetimes": [
+          {
+            "id": "[\"island-plan-v1\",\"milestone-header-phone-east\",20]",
+            "added": 3253.4000000953674,
+            "removed": 9248.100000023842
+          }
+        ]
+      },
+      "contextClosed": true,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "rawEvidence": [
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-east-after-final-native.json",
+          "sha256": "949dcd867142ece30c76c3b50c767e972c63f2712600db7693b2b14df4d3a312"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-east-after-reload-native.json",
+          "sha256": "949dcd867142ece30c76c3b50c767e972c63f2712600db7693b2b14df4d3a312"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-east-before-final-native.json",
+          "sha256": "86e4f0c882ee1b81808d50984c55159b92881543d5385f38dbfc31ea1f5d45db"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-east-declared-fixture.json",
+          "sha256": "d31ce2a81fa6bec8d5aef6497926f6d3aba597af509fe6a3dd69f2c26c3bc847"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-east-notice-probe.json",
+          "sha256": "36ed1b172c58fdac4263809174e96d156a04ad1f9d353f013f5c591e390cf9c9"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-east-trace.zip",
+          "sha256": "0b9ff91a89562808d85d46b3d30384fc4b7b27dd7a55763cc9ff4bf16445830a"
+        }
+      ],
+      "screens": [
+        "screens/phone-east-last-question.png",
+        "screens/phone-east-notice-next-input.png",
+        "screens/phone-east-expired-same-input.png"
+      ]
+    },
+    {
+      "case": "phone-west",
+      "pass": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fixture": {
+        "nativeProfile": true,
+        "numericLevel9": false,
+        "declaredOldGift": false,
+        "completedSetsBefore": 41,
+        "expansionBefore": 1,
+        "managedItemsBefore": 5,
+        "inventedHistoricalAnswersPlansReceipts": false
+      },
+      "realCorrectAnswers": 3,
+      "completedPlanId": "[\"island-plan-v1\",\"milestone-header-phone-west\",41]",
+      "nextPlanId": "[\"island-plan-v1\",\"milestone-header-phone-west\",42]",
+      "nextPlanSlotCount": 3,
+      "nextInputType": "choice",
+      "finalSubmitToNextInputMs": 185.39999997615814,
+      "extraContinuationActions": 0,
+      "nextInputReady": true,
+      "emptyNextInput": true,
+      "notice": {
+        "lines": [
+          "にしへ",
+          "ひろがったよ"
+        ],
+        "visible": true,
+        "buttons": 0,
+        "ariaAtomic": "true",
+        "ariaLabel": "しまが 大きく ひろがったよ。みずべが にぎやかに なった。にしへ はしが つながったよ",
+        "observedLifetimeMs": null,
+        "boundary": "close"
+      },
+      "geometry": {
+        "compared": [
+          "header",
+          "brand",
+          "problem",
+          "input",
+          "answerStage",
+          "all input keys",
+          "sound",
+          "close"
+        ],
+        "comparisonToleranceCssPx": 0.05,
+        "maximumObservedRectDeltaCssPx": 0,
+        "sameProblemAfterExpiry": "Not the selected boundary; help layout may intentionally change",
+        "sound": {
+          "rect": {
+            "x": 206.15625,
+            "y": 10.59375,
+            "width": 100.875,
+            "height": 44,
+            "right": 307.03125,
+            "bottom": 54.59375
+          },
+          "label": "おとを だす",
+          "disabled": false,
+          "hit": true,
+          "visible": true,
+          "inViewport": true
+        },
+        "close": {
+          "rect": {
+            "x": 315.03125,
+            "y": 5,
+            "width": 56.96875,
+            "height": 55.1875,
+            "right": 372,
+            "bottom": 60.1875
+          },
+          "label": "とじる",
+          "disabled": false,
+          "hit": true,
+          "visible": true,
+          "inViewport": true
+        },
+        "oldGiftRect": null,
+        "twoLinesAndControlsNonoverlapping": true
+      },
+      "storage": {
+        "stores": [
+          "appData",
+          "exploreDiscoveries",
+          "exploreRunEvents",
+          "exploreRuns",
+          "islandEvents",
+          "islandPhotoAlbums",
+          "islandPhotoBlobs",
+          "islandPhotos",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "memoryVocab",
+          "parkEvents",
+          "parkPlans",
+          "parks",
+          "profiles"
+        ],
+        "beforeFinalToAfterFinal": {
+          "appData": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "app": [
+                "profiles"
+              ]
+            }
+          },
+          "islandEvents": {
+            "beforeRows": 3,
+            "afterRows": 6,
+            "addedKeys": [
+              "[\"island-action-v1\",\"milestone-header-phone-west\",\"[\\\"island-plan-v1\\\",\\\"milestone-header-phone-west\\\",41]\",2]",
+              "[\"island-plan-v1\",\"milestone-header-phone-west\",41]:completed",
+              "[\"island-plan-v1\",\"milestone-header-phone-west\",42]:started"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "islandPlans": {
+            "beforeRows": 1,
+            "afterRows": 2,
+            "addedKeys": [
+              "[\"island-plan-v1\",\"milestone-header-phone-west\",42]"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {
+              "[\"island-plan-v1\",\"milestone-header-phone-west\",41]": [
+                "completedAt",
+                "cursor",
+                "revision",
+                "slots",
+                "status"
+              ]
+            }
+          },
+          "islands": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "milestone-header-phone-west": [
+                "completedSets",
+                "customization",
+                "growth",
+                "items",
+                "mathReviewTurn",
+                "pendingPlanId",
+                "revision",
+                "updatedAt"
+              ]
+            }
+          },
+          "logs": {
+            "beforeRows": 2,
+            "afterRows": 3,
+            "addedKeys": [
+              "3"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "memoryMath": {
+            "beforeRows": 2,
+            "afterRows": 3,
+            "addedKeys": [
+              "count_pair"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "profiles": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "milestone-header-phone-west": [
+                "mathLevels",
+                "mathSkills",
+                "recentAttempts",
+                "todayCount"
+              ]
+            }
+          }
+        },
+        "correctAnswerReceipts": 3,
+        "finalTransactionAndContinuationEventTypes": [
+          "answer",
+          "plan_completed",
+          "plan_started"
+        ],
+        "priorGrowthMemoriesPreserved": true,
+        "oneNewGrowthMemory": true,
+        "pendingRewardsPreserved": true,
+        "completionPendingAnswers": {
+          "garden": 0,
+          "waterside": 0,
+          "grove": 0,
+          "village": 0
+        },
+        "supportOrIncorrect": null,
+        "homeExactDiscoveryOracle": true,
+        "actualHomeDiscoveries": [],
+        "recordedExitBaselineAndAfterReloadEqualAll17Stores": true,
+        "runtimeReentryAndReloadExactNativeComparisons": true,
+        "sameReservationRevisionAfterReentryReload": true,
+        "noticeReplayAfterReentryReload": false,
+        "replayObservation": "2 requestAnimationFrame callbacks plus 400ms after input-ready per entry/reload; not indefinite monitoring"
+      },
+      "probe": {
+        "frames": 4,
+        "overflow": false,
+        "lifetimes": [
+          {
+            "id": "[\"island-plan-v1\",\"milestone-header-phone-west\",41]",
+            "added": 2746.600000023842
+          }
+        ]
+      },
+      "contextClosed": true,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "rawEvidence": [
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-west-after-final-native.json",
+          "sha256": "56ad00629a4d41b8d97f61ab2a48da5b5fe3fa8775594e3388cf257646bc28fa"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-west-after-reload-native.json",
+          "sha256": "56ad00629a4d41b8d97f61ab2a48da5b5fe3fa8775594e3388cf257646bc28fa"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-west-before-final-native.json",
+          "sha256": "788828bc89516b419d275f67fcdbb30b9326fad5fd073b5b594204e482efa47a"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-west-declared-fixture.json",
+          "sha256": "910a94fb433c2401e839353ffa435bf3c10c937293b21c1e9e6b340e334631ad"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-west-notice-probe.json",
+          "sha256": "e580cbdbf099e4764b978a4af901db7d228606a8083c3504d2ed47564f2df13e"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-west-trace.zip",
+          "sha256": "8c8db72a6452847d7a6a73424674933886fcd5419e3fb0488c0bab046a9aa716"
+        }
+      ],
+      "screens": []
+    },
+    {
+      "case": "tablet-east",
+      "pass": true,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "fixture": {
+        "nativeProfile": true,
+        "numericLevel9": false,
+        "declaredOldGift": false,
+        "completedSetsBefore": 20,
+        "expansionBefore": 0,
+        "managedItemsBefore": 3,
+        "inventedHistoricalAnswersPlansReceipts": false
+      },
+      "realCorrectAnswers": 3,
+      "completedPlanId": "[\"island-plan-v1\",\"milestone-header-tablet-east\",20]",
+      "nextPlanId": "[\"island-plan-v1\",\"milestone-header-tablet-east\",21]",
+      "nextPlanSlotCount": 3,
+      "nextInputType": "choice",
+      "finalSubmitToNextInputMs": 189.39999997615814,
+      "extraContinuationActions": 0,
+      "nextInputReady": true,
+      "emptyNextInput": true,
+      "notice": {
+        "lines": [
+          "ひがしへ",
+          "ひろがったよ"
+        ],
+        "visible": true,
+        "buttons": 0,
+        "ariaAtomic": "true",
+        "ariaLabel": "しまが 大きく ひろがったよ。おはなが いっぱいに なった。ひがしへ はしが つながったよ",
+        "observedLifetimeMs": null,
+        "boundary": "incorrect"
+      },
+      "geometry": {
+        "compared": [
+          "header",
+          "brand",
+          "problem",
+          "input",
+          "answerStage",
+          "all input keys",
+          "sound",
+          "close"
+        ],
+        "comparisonToleranceCssPx": 0.05,
+        "maximumObservedRectDeltaCssPx": 0,
+        "sameProblemAfterExpiry": "Not the selected boundary; help layout may intentionally change",
+        "sound": {
+          "rect": {
+            "x": 584.15625,
+            "y": 17.59375,
+            "width": 100.875,
+            "height": 44,
+            "right": 685.03125,
+            "bottom": 61.59375
+          },
+          "label": "おとを だす",
+          "disabled": false,
+          "hit": true,
+          "visible": true,
+          "inViewport": true
+        },
+        "close": {
+          "rect": {
+            "x": 693.03125,
+            "y": 12,
+            "width": 56.96875,
+            "height": 55.1875,
+            "right": 750,
+            "bottom": 67.1875
+          },
+          "label": "とじる",
+          "disabled": false,
+          "hit": true,
+          "visible": true,
+          "inViewport": true
+        },
+        "oldGiftRect": null,
+        "twoLinesAndControlsNonoverlapping": true
+      },
+      "storage": {
+        "stores": [
+          "appData",
+          "exploreDiscoveries",
+          "exploreRunEvents",
+          "exploreRuns",
+          "islandEvents",
+          "islandPhotoAlbums",
+          "islandPhotoBlobs",
+          "islandPhotos",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "memoryVocab",
+          "parkEvents",
+          "parkPlans",
+          "parks",
+          "profiles"
+        ],
+        "beforeFinalToAfterFinal": {
+          "appData": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "app": [
+                "profiles"
+              ]
+            }
+          },
+          "islandEvents": {
+            "beforeRows": 3,
+            "afterRows": 6,
+            "addedKeys": [
+              "[\"island-action-v1\",\"milestone-header-tablet-east\",\"[\\\"island-plan-v1\\\",\\\"milestone-header-tablet-east\\\",20]\",2]",
+              "[\"island-plan-v1\",\"milestone-header-tablet-east\",20]:completed",
+              "[\"island-plan-v1\",\"milestone-header-tablet-east\",21]:started"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "islandPlans": {
+            "beforeRows": 1,
+            "afterRows": 2,
+            "addedKeys": [
+              "[\"island-plan-v1\",\"milestone-header-tablet-east\",21]"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {
+              "[\"island-plan-v1\",\"milestone-header-tablet-east\",20]": [
+                "completedAt",
+                "cursor",
+                "revision",
+                "slots",
+                "status"
+              ]
+            }
+          },
+          "islands": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "milestone-header-tablet-east": [
+                "completedSets",
+                "customization",
+                "growth",
+                "items",
+                "mathReviewTurn",
+                "pendingPlanId",
+                "revision",
+                "updatedAt"
+              ]
+            }
+          },
+          "logs": {
+            "beforeRows": 2,
+            "afterRows": 3,
+            "addedKeys": [
+              "3"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "memoryMath": {
+            "beforeRows": 2,
+            "afterRows": 3,
+            "addedKeys": [
+              "count_pair"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "profiles": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "milestone-header-tablet-east": [
+                "mathLevels",
+                "mathSkills",
+                "recentAttempts",
+                "todayCount"
+              ]
+            }
+          }
+        },
+        "correctAnswerReceipts": 3,
+        "finalTransactionAndContinuationEventTypes": [
+          "answer",
+          "plan_completed",
+          "plan_started"
+        ],
+        "priorGrowthMemoriesPreserved": true,
+        "oneNewGrowthMemory": true,
+        "pendingRewardsPreserved": true,
+        "completionPendingAnswers": {
+          "garden": 0,
+          "waterside": 0,
+          "grove": 0,
+          "village": 0
+        },
+        "supportOrIncorrect": {
+          "operation": "incorrect",
+          "snapshotComparison": "All 17 exported native stores compared below. This derived JSON comparison does not replace the runtime structured-value oracle.",
+          "changedStores": {
+            "appData": {
+              "beforeRows": 1,
+              "afterRows": 1,
+              "addedKeys": [],
+              "removedKeys": [],
+              "changedRowFields": {
+                "app": [
+                  "profiles"
+                ]
+              }
+            },
+            "islandEvents": {
+              "beforeRows": 6,
+              "afterRows": 7,
+              "addedKeys": [
+                "[\"island-action-v1\",\"milestone-header-tablet-east\",\"[\\\"island-plan-v1\\\",\\\"milestone-header-tablet-east\\\",21]\",0]"
+              ],
+              "removedKeys": [],
+              "changedRowFields": {}
+            },
+            "islandPlans": {
+              "beforeRows": 2,
+              "afterRows": 2,
+              "addedKeys": [],
+              "removedKeys": [],
+              "changedRowFields": {
+                "[\"island-plan-v1\",\"milestone-header-tablet-east\",21]": [
+                  "revision",
+                  "slots"
+                ]
+              }
+            },
+            "islands": {
+              "beforeRows": 1,
+              "afterRows": 1,
+              "addedKeys": [],
+              "removedKeys": [],
+              "changedRowFields": {
+                "milestone-header-tablet-east": [
+                  "pendingMathChecks",
+                  "revision",
+                  "updatedAt"
+                ]
+              }
+            },
+            "logs": {
+              "beforeRows": 3,
+              "afterRows": 4,
+              "addedKeys": [
+                "4"
+              ],
+              "removedKeys": [],
+              "changedRowFields": {}
+            },
+            "memoryMath": {
+              "beforeRows": 3,
+              "afterRows": 4,
+              "addedKeys": [
+                "pattern_copy"
+              ],
+              "removedKeys": [],
+              "changedRowFields": {}
+            },
+            "profiles": {
+              "beforeRows": 1,
+              "afterRows": 1,
+              "addedKeys": [],
+              "removedKeys": [],
+              "changedRowFields": {
+                "milestone-header-tablet-east": [
+                  "mathLevels",
+                  "mathSkills",
+                  "recentAttempts",
+                  "todayCount"
+                ]
+              }
+            }
+          },
+          "unchangedStores": [
+            "exploreDiscoveries",
+            "exploreRunEvents",
+            "exploreRuns",
+            "islandPhotoAlbums",
+            "islandPhotoBlobs",
+            "islandPhotos",
+            "memoryVocab",
+            "parkEvents",
+            "parkPlans",
+            "parks"
+          ],
+          "islandRuntimeOracle": "Exact canonical receipt and exact pendingMathChecks for current question; islands may change only pendingMathChecks, revision +1 and updatedAt. Growth/items/rewards and every other islands field are strictly equal.",
+          "pendingMathCheck": {
+            "createdAt": 1788928294710,
+            "failedProblemId": "[\"island-plan-v1\",\"milestone-header-tablet-east\",21]:slot-0",
+            "failedQuestionKey": "{\"answer\":\"🟢\",\"skillId\":\"pattern_copy\",\"text\":\"つぎは どれ？\",\"visual\":{\"items\":[{\"emoji\":\"🟢\",\"label\":\"みどり\"},{\"emoji\":\"🔴\",\"label\":\"あか\"},{\"emoji\":\"🟢\",\"label\":\"みどり\"},{\"emoji\":\"🔴\",\"label\":\"あか\"}],\"kind\":\"ordinal-row\",\"prompt\":\"つぎは どれ？\",\"showPlaceholder\":true}}",
+            "skillId": "pattern_copy",
+            "stage": "independent"
+          },
+          "samePlanId": true,
+          "cursor": 0,
+          "revisionAfter": 1,
+          "newEvent": [
+            {
+              "action": {
+                "answer": "🔴",
+                "type": "answer"
+              },
+              "id": "[\"island-action-v1\",\"milestone-header-tablet-east\",\"[\\\"island-plan-v1\\\",\\\"milestone-header-tablet-east\\\",21]\",0]",
+              "planId": "[\"island-plan-v1\",\"milestone-header-tablet-east\",21]",
+              "profileId": "milestone-header-tablet-east",
+              "result": "incorrect",
+              "slotIndex": 0,
+              "timestamp": 1788928294710,
+              "type": "answer"
+            }
+          ]
+        },
+        "homeExactDiscoveryOracle": true,
+        "actualHomeDiscoveries": [],
+        "recordedExitBaselineAndAfterReloadEqualAll17Stores": true,
+        "runtimeReentryAndReloadExactNativeComparisons": true,
+        "sameReservationRevisionAfterReentryReload": true,
+        "noticeReplayAfterReentryReload": false,
+        "replayObservation": "2 requestAnimationFrame callbacks plus 400ms after input-ready per entry/reload; not indefinite monitoring"
+      },
+      "probe": {
+        "frames": 6,
+        "overflow": false,
+        "lifetimes": [
+          {
+            "id": "[\"island-plan-v1\",\"milestone-header-tablet-east\",20]",
+            "added": 2546.2000000476837,
+            "removed": 2981.100000023842
+          }
+        ]
+      },
+      "contextClosed": true,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "rawEvidence": [
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-east-after-final-native.json",
+          "sha256": "2c82c9275322b9c6add858384fcce1eb464ee3c5d1ad0f9389da2e534e326268"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-east-after-reload-native.json",
+          "sha256": "11f3c17e1a03dc2d2e0b97b096c324846303e5d6a925dfcd5194a22d9be1307d"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-east-before-final-native.json",
+          "sha256": "2148306e32a1ef6cff7bf818182955a49db80419ecfadcaab47b8ed63fc8cb18"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-east-declared-fixture.json",
+          "sha256": "25cd4254a2272b21a73a48d2ae1ce5f18a8ebacb08f0a3ba6d50feb974668371"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-east-incorrect-native.json",
+          "sha256": "11f3c17e1a03dc2d2e0b97b096c324846303e5d6a925dfcd5194a22d9be1307d"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-east-notice-probe.json",
+          "sha256": "a9d1361eb5d87bd9b68c2e2edbfc4fa3f567ec09472f8583e2dbf3d4f4fd9f16"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-east-trace.zip",
+          "sha256": "7d5ea188ee3fbb6fa49f17dff74f49e113736274dcd9256397581da59acc5d0b"
+        }
+      ],
+      "screens": [
+        "screens/tablet-east-notice-next-input.png",
+        "screens/tablet-east-incorrect-priority.png",
+        "screens/tablet-east-reentered-no-replay.png"
+      ]
+    },
+    {
+      "case": "tablet-west",
+      "pass": true,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "fixture": {
+        "nativeProfile": true,
+        "numericLevel9": false,
+        "declaredOldGift": false,
+        "completedSetsBefore": 41,
+        "expansionBefore": 1,
+        "managedItemsBefore": 5,
+        "inventedHistoricalAnswersPlansReceipts": false
+      },
+      "realCorrectAnswers": 3,
+      "completedPlanId": "[\"island-plan-v1\",\"milestone-header-tablet-west\",41]",
+      "nextPlanId": "[\"island-plan-v1\",\"milestone-header-tablet-west\",42]",
+      "nextPlanSlotCount": 3,
+      "nextInputType": "choice",
+      "finalSubmitToNextInputMs": 187.30000007152557,
+      "extraContinuationActions": 0,
+      "nextInputReady": true,
+      "emptyNextInput": true,
+      "notice": {
+        "lines": [
+          "にしへ",
+          "ひろがったよ"
+        ],
+        "visible": true,
+        "buttons": 0,
+        "ariaAtomic": "true",
+        "ariaLabel": "しまが 大きく ひろがったよ。みずべが にぎやかに なった。にしへ はしが つながったよ",
+        "observedLifetimeMs": null,
+        "boundary": "hint"
+      },
+      "geometry": {
+        "compared": [
+          "header",
+          "brand",
+          "problem",
+          "input",
+          "answerStage",
+          "all input keys",
+          "sound",
+          "close"
+        ],
+        "comparisonToleranceCssPx": 0.05,
+        "maximumObservedRectDeltaCssPx": 0,
+        "sameProblemAfterExpiry": "Not the selected boundary; help layout may intentionally change",
+        "sound": {
+          "rect": {
+            "x": 584.15625,
+            "y": 17.59375,
+            "width": 100.875,
+            "height": 44,
+            "right": 685.03125,
+            "bottom": 61.59375
+          },
+          "label": "おとを だす",
+          "disabled": false,
+          "hit": true,
+          "visible": true,
+          "inViewport": true
+        },
+        "close": {
+          "rect": {
+            "x": 693.03125,
+            "y": 12,
+            "width": 56.96875,
+            "height": 55.1875,
+            "right": 750,
+            "bottom": 67.1875
+          },
+          "label": "とじる",
+          "disabled": false,
+          "hit": true,
+          "visible": true,
+          "inViewport": true
+        },
+        "oldGiftRect": null,
+        "twoLinesAndControlsNonoverlapping": true
+      },
+      "storage": {
+        "stores": [
+          "appData",
+          "exploreDiscoveries",
+          "exploreRunEvents",
+          "exploreRuns",
+          "islandEvents",
+          "islandPhotoAlbums",
+          "islandPhotoBlobs",
+          "islandPhotos",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "memoryVocab",
+          "parkEvents",
+          "parkPlans",
+          "parks",
+          "profiles"
+        ],
+        "beforeFinalToAfterFinal": {
+          "appData": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "app": [
+                "profiles"
+              ]
+            }
+          },
+          "islandEvents": {
+            "beforeRows": 3,
+            "afterRows": 6,
+            "addedKeys": [
+              "[\"island-action-v1\",\"milestone-header-tablet-west\",\"[\\\"island-plan-v1\\\",\\\"milestone-header-tablet-west\\\",41]\",2]",
+              "[\"island-plan-v1\",\"milestone-header-tablet-west\",41]:completed",
+              "[\"island-plan-v1\",\"milestone-header-tablet-west\",42]:started"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "islandPlans": {
+            "beforeRows": 1,
+            "afterRows": 2,
+            "addedKeys": [
+              "[\"island-plan-v1\",\"milestone-header-tablet-west\",42]"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {
+              "[\"island-plan-v1\",\"milestone-header-tablet-west\",41]": [
+                "completedAt",
+                "cursor",
+                "revision",
+                "slots",
+                "status"
+              ]
+            }
+          },
+          "islands": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "milestone-header-tablet-west": [
+                "completedSets",
+                "customization",
+                "growth",
+                "items",
+                "mathReviewTurn",
+                "pendingPlanId",
+                "revision",
+                "updatedAt"
+              ]
+            }
+          },
+          "logs": {
+            "beforeRows": 2,
+            "afterRows": 3,
+            "addedKeys": [
+              "3"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "memoryMath": {
+            "beforeRows": 2,
+            "afterRows": 3,
+            "addedKeys": [
+              "count_pair"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "profiles": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "milestone-header-tablet-west": [
+                "mathLevels",
+                "mathSkills",
+                "recentAttempts",
+                "todayCount"
+              ]
+            }
+          }
+        },
+        "correctAnswerReceipts": 3,
+        "finalTransactionAndContinuationEventTypes": [
+          "answer",
+          "plan_completed",
+          "plan_started"
+        ],
+        "priorGrowthMemoriesPreserved": true,
+        "oneNewGrowthMemory": true,
+        "pendingRewardsPreserved": true,
+        "completionPendingAnswers": {
+          "garden": 0,
+          "waterside": 0,
+          "grove": 0,
+          "village": 0
+        },
+        "supportOrIncorrect": {
+          "operation": "hint",
+          "snapshotComparison": "All 17 exported native stores compared below. This derived JSON comparison does not replace the runtime structured-value oracle.",
+          "changedStores": {
+            "appData": {
+              "beforeRows": 1,
+              "afterRows": 1,
+              "addedKeys": [],
+              "removedKeys": [],
+              "changedRowFields": {
+                "app": [
+                  "profiles"
+                ]
+              }
+            },
+            "islandEvents": {
+              "beforeRows": 6,
+              "afterRows": 7,
+              "addedKeys": [
+                "[\"island-action-v1\",\"milestone-header-tablet-west\",\"[\\\"island-plan-v1\\\",\\\"milestone-header-tablet-west\\\",42]\",0]"
+              ],
+              "removedKeys": [],
+              "changedRowFields": {}
+            },
+            "islandPlans": {
+              "beforeRows": 2,
+              "afterRows": 2,
+              "addedKeys": [],
+              "removedKeys": [],
+              "changedRowFields": {
+                "[\"island-plan-v1\",\"milestone-header-tablet-west\",42]": [
+                  "revision",
+                  "slots"
+                ]
+              }
+            },
+            "islands": {
+              "beforeRows": 1,
+              "afterRows": 1,
+              "addedKeys": [],
+              "removedKeys": [],
+              "changedRowFields": {
+                "milestone-header-tablet-west": [
+                  "pendingMathChecks",
+                  "revision",
+                  "updatedAt"
+                ]
+              }
+            },
+            "memoryMath": {
+              "beforeRows": 3,
+              "afterRows": 4,
+              "addedKeys": [
+                "count_color"
+              ],
+              "removedKeys": [],
+              "changedRowFields": {}
+            },
+            "profiles": {
+              "beforeRows": 1,
+              "afterRows": 1,
+              "addedKeys": [],
+              "removedKeys": [],
+              "changedRowFields": {
+                "milestone-header-tablet-west": [
+                  "mathSkills"
+                ]
+              }
+            }
+          },
+          "unchangedStores": [
+            "exploreDiscoveries",
+            "exploreRunEvents",
+            "exploreRuns",
+            "islandPhotoAlbums",
+            "islandPhotoBlobs",
+            "islandPhotos",
+            "logs",
+            "memoryVocab",
+            "parkEvents",
+            "parkPlans",
+            "parks"
+          ],
+          "islandRuntimeOracle": "Exact canonical receipt and exact pendingMathChecks for current question; islands may change only pendingMathChecks, revision +1 and updatedAt. Growth/items/rewards and every other islands field are strictly equal.",
+          "pendingMathCheck": {
+            "createdAt": 1788928304714,
+            "failedProblemId": "[\"island-plan-v1\",\"milestone-header-tablet-west\",42]:slot-0",
+            "failedQuestionKey": "{\"answer\":\"あか\",\"skillId\":\"count_color\",\"text\":\"これは なにいろ？\",\"visual\":{\"kind\":\"reference-choice-grid\",\"reference\":{\"emoji\":\"🟥\",\"label\":\"あか\"}}}",
+            "skillId": "count_color",
+            "stage": "independent"
+          },
+          "samePlanId": true,
+          "cursor": 0,
+          "revisionAfter": 1,
+          "newEvent": [
+            {
+              "action": {
+                "type": "support_opened"
+              },
+              "id": "[\"island-action-v1\",\"milestone-header-tablet-west\",\"[\\\"island-plan-v1\\\",\\\"milestone-header-tablet-west\\\",42]\",0]",
+              "planId": "[\"island-plan-v1\",\"milestone-header-tablet-west\",42]",
+              "profileId": "milestone-header-tablet-west",
+              "slotIndex": 0,
+              "timestamp": 1788928304714,
+              "type": "support_opened"
+            }
+          ]
+        },
+        "homeExactDiscoveryOracle": true,
+        "actualHomeDiscoveries": [],
+        "recordedExitBaselineAndAfterReloadEqualAll17Stores": true,
+        "runtimeReentryAndReloadExactNativeComparisons": true,
+        "sameReservationRevisionAfterReentryReload": true,
+        "noticeReplayAfterReentryReload": false,
+        "replayObservation": "2 requestAnimationFrame callbacks plus 400ms after input-ready per entry/reload; not indefinite monitoring"
+      },
+      "probe": {
+        "frames": 6,
+        "overflow": false,
+        "lifetimes": [
+          {
+            "id": "[\"island-plan-v1\",\"milestone-header-tablet-west\",41]",
+            "added": 2792.5,
+            "removed": 3045.4000000953674
+          }
+        ]
+      },
+      "contextClosed": true,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "rawEvidence": [
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-west-after-final-native.json",
+          "sha256": "31593d6d0a80cf643d6f73c4696bb35faf7d03227afe74d3d663fb534c0c2ba9"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-west-after-reload-native.json",
+          "sha256": "0e618aa0ce32a94666535baee0df35297a8d89d879800ccf512bf79fd595d010"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-west-before-final-native.json",
+          "sha256": "fcb62f3492fcb50b13b9c5de67755e79ad3aa17d1d183636b0c10e7bd62f4b56"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-west-declared-fixture.json",
+          "sha256": "6caebfa5c35b5d95ac1c61504446f7b7ea1efdae6d8ce6a5a408f059fcbb64ac"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-west-hint-native.json",
+          "sha256": "0e618aa0ce32a94666535baee0df35297a8d89d879800ccf512bf79fd595d010"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-west-notice-probe.json",
+          "sha256": "dd3ba12131440b7f2febc93146508254257b373cf05a2600b5f3e9d2d66021e3"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-west-trace.zip",
+          "sha256": "dff55ac1426b79043d61f1767bb2b77bf9864cc6e14aaae4a04ec875b0e65c44"
+        }
+      ],
+      "screens": [
+        "screens/tablet-west-notice-next-input.png",
+        "screens/tablet-west-hint-priority.png"
+      ]
+    },
+    {
+      "case": "phone-tenkey-east",
+      "pass": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fixture": {
+        "nativeProfile": true,
+        "numericLevel9": true,
+        "declaredOldGift": false,
+        "completedSetsBefore": 20,
+        "expansionBefore": 0,
+        "managedItemsBefore": 3,
+        "inventedHistoricalAnswersPlansReceipts": false
+      },
+      "realCorrectAnswers": 3,
+      "completedPlanId": "[\"island-plan-v1\",\"milestone-header-phone-tenkey-east\",20]",
+      "nextPlanId": "[\"island-plan-v1\",\"milestone-header-phone-tenkey-east\",21]",
+      "nextPlanSlotCount": 6,
+      "nextInputType": "number",
+      "finalSubmitToNextInputMs": 189.10000002384186,
+      "extraContinuationActions": 0,
+      "nextInputReady": true,
+      "emptyNextInput": true,
+      "notice": {
+        "lines": [
+          "ひがしへ",
+          "ひろがったよ"
+        ],
+        "visible": true,
+        "buttons": 0,
+        "ariaAtomic": "true",
+        "ariaLabel": "しまが 大きく ひろがったよ。おはなが いっぱいに なった。ひがしへ はしが つながったよ",
+        "observedLifetimeMs": null,
+        "boundary": "hint"
+      },
+      "geometry": {
+        "compared": [
+          "header",
+          "brand",
+          "problem",
+          "input",
+          "answerStage",
+          "all input keys",
+          "sound",
+          "close"
+        ],
+        "comparisonToleranceCssPx": 0.05,
+        "maximumObservedRectDeltaCssPx": 0,
+        "sameProblemAfterExpiry": "Not the selected boundary; help layout may intentionally change",
+        "sound": {
+          "rect": {
+            "x": 206.15625,
+            "y": 10.59375,
+            "width": 100.875,
+            "height": 44,
+            "right": 307.03125,
+            "bottom": 54.59375
+          },
+          "label": "おとを だす",
+          "disabled": false,
+          "hit": true,
+          "visible": true,
+          "inViewport": true
+        },
+        "close": {
+          "rect": {
+            "x": 315.03125,
+            "y": 5,
+            "width": 56.96875,
+            "height": 55.1875,
+            "right": 372,
+            "bottom": 60.1875
+          },
+          "label": "とじる",
+          "disabled": false,
+          "hit": true,
+          "visible": true,
+          "inViewport": true
+        },
+        "oldGiftRect": null,
+        "twoLinesAndControlsNonoverlapping": true
+      },
+      "storage": {
+        "stores": [
+          "appData",
+          "exploreDiscoveries",
+          "exploreRunEvents",
+          "exploreRuns",
+          "islandEvents",
+          "islandPhotoAlbums",
+          "islandPhotoBlobs",
+          "islandPhotos",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "memoryVocab",
+          "parkEvents",
+          "parkPlans",
+          "parks",
+          "profiles"
+        ],
+        "beforeFinalToAfterFinal": {
+          "appData": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "app": [
+                "profiles"
+              ]
+            }
+          },
+          "islandEvents": {
+            "beforeRows": 3,
+            "afterRows": 6,
+            "addedKeys": [
+              "[\"island-action-v1\",\"milestone-header-phone-tenkey-east\",\"[\\\"island-plan-v1\\\",\\\"milestone-header-phone-tenkey-east\\\",20]\",2]",
+              "[\"island-plan-v1\",\"milestone-header-phone-tenkey-east\",20]:completed",
+              "[\"island-plan-v1\",\"milestone-header-phone-tenkey-east\",21]:started"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "islandPlans": {
+            "beforeRows": 1,
+            "afterRows": 2,
+            "addedKeys": [
+              "[\"island-plan-v1\",\"milestone-header-phone-tenkey-east\",21]"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {
+              "[\"island-plan-v1\",\"milestone-header-phone-tenkey-east\",20]": [
+                "completedAt",
+                "cursor",
+                "revision",
+                "slots",
+                "status"
+              ]
+            }
+          },
+          "islands": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "milestone-header-phone-tenkey-east": [
+                "completedSets",
+                "customization",
+                "growth",
+                "items",
+                "mathReviewTurn",
+                "pendingPlanId",
+                "revision",
+                "updatedAt"
+              ]
+            }
+          },
+          "logs": {
+            "beforeRows": 2,
+            "afterRows": 3,
+            "addedKeys": [
+              "3"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "memoryMath": {
+            "beforeRows": 2,
+            "afterRows": 2,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "add_1d_2_bridge": [
+                "correctAnswers",
+                "independentCorrectAnswers",
+                "lastCorrectAt",
+                "lastIndependentCorrectAt",
+                "totalAnswers",
+                "updatedAt"
+              ]
+            }
+          },
+          "profiles": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "milestone-header-phone-tenkey-east": [
+                "mathLevels",
+                "mathSkills",
+                "recentAttempts",
+                "todayCount"
+              ]
+            }
+          }
+        },
+        "correctAnswerReceipts": 3,
+        "finalTransactionAndContinuationEventTypes": [
+          "answer",
+          "plan_completed",
+          "plan_started"
+        ],
+        "priorGrowthMemoriesPreserved": true,
+        "oneNewGrowthMemory": true,
+        "pendingRewardsPreserved": true,
+        "completionPendingAnswers": {
+          "garden": 0,
+          "waterside": 0,
+          "grove": 0,
+          "village": 0
+        },
+        "supportOrIncorrect": {
+          "operation": "hint",
+          "snapshotComparison": "All 17 exported native stores compared below. This derived JSON comparison does not replace the runtime structured-value oracle.",
+          "changedStores": {
+            "appData": {
+              "beforeRows": 1,
+              "afterRows": 1,
+              "addedKeys": [],
+              "removedKeys": [],
+              "changedRowFields": {
+                "app": [
+                  "profiles"
+                ]
+              }
+            },
+            "islandEvents": {
+              "beforeRows": 6,
+              "afterRows": 7,
+              "addedKeys": [
+                "[\"island-action-v1\",\"milestone-header-phone-tenkey-east\",\"[\\\"island-plan-v1\\\",\\\"milestone-header-phone-tenkey-east\\\",21]\",0]"
+              ],
+              "removedKeys": [],
+              "changedRowFields": {}
+            },
+            "islandPlans": {
+              "beforeRows": 2,
+              "afterRows": 2,
+              "addedKeys": [],
+              "removedKeys": [],
+              "changedRowFields": {
+                "[\"island-plan-v1\",\"milestone-header-phone-tenkey-east\",21]": [
+                  "revision",
+                  "slots"
+                ]
+              }
+            },
+            "islands": {
+              "beforeRows": 1,
+              "afterRows": 1,
+              "addedKeys": [],
+              "removedKeys": [],
+              "changedRowFields": {
+                "milestone-header-phone-tenkey-east": [
+                  "pendingMathChecks",
+                  "revision",
+                  "updatedAt"
+                ]
+              }
+            },
+            "memoryMath": {
+              "beforeRows": 2,
+              "afterRows": 2,
+              "addedKeys": [],
+              "removedKeys": [],
+              "changedRowFields": {
+                "add_1d_2": [
+                  "needsRelearning",
+                  "nextReview",
+                  "relearningStartedAt",
+                  "updatedAt"
+                ]
+              }
+            },
+            "profiles": {
+              "beforeRows": 1,
+              "afterRows": 1,
+              "addedKeys": [],
+              "removedKeys": [],
+              "changedRowFields": {
+                "milestone-header-phone-tenkey-east": [
+                  "mathSkills"
+                ]
+              }
+            }
+          },
+          "unchangedStores": [
+            "exploreDiscoveries",
+            "exploreRunEvents",
+            "exploreRuns",
+            "islandPhotoAlbums",
+            "islandPhotoBlobs",
+            "islandPhotos",
+            "logs",
+            "memoryVocab",
+            "parkEvents",
+            "parkPlans",
+            "parks"
+          ],
+          "islandRuntimeOracle": "Exact canonical receipt and exact pendingMathChecks for current question; islands may change only pendingMathChecks, revision +1 and updatedAt. Growth/items/rewards and every other islands field are strictly equal.",
+          "pendingMathCheck": {
+            "createdAt": 1788928314584,
+            "failedProblemId": "[\"island-plan-v1\",\"milestone-header-phone-tenkey-east\",21]:slot-0",
+            "failedQuestionKey": "{\"answer\":\"6\",\"skillId\":\"add_1d_2\",\"text\":\"2 + 4 =\"}",
+            "skillId": "add_1d_2",
+            "stage": "bridge"
+          },
+          "samePlanId": true,
+          "cursor": 0,
+          "revisionAfter": 1,
+          "newEvent": [
+            {
+              "action": {
+                "type": "support_opened"
+              },
+              "id": "[\"island-action-v1\",\"milestone-header-phone-tenkey-east\",\"[\\\"island-plan-v1\\\",\\\"milestone-header-phone-tenkey-east\\\",21]\",0]",
+              "planId": "[\"island-plan-v1\",\"milestone-header-phone-tenkey-east\",21]",
+              "profileId": "milestone-header-phone-tenkey-east",
+              "slotIndex": 0,
+              "timestamp": 1788928314584,
+              "type": "support_opened"
+            }
+          ]
+        },
+        "homeExactDiscoveryOracle": true,
+        "actualHomeDiscoveries": [],
+        "recordedExitBaselineAndAfterReloadEqualAll17Stores": true,
+        "runtimeReentryAndReloadExactNativeComparisons": true,
+        "sameReservationRevisionAfterReentryReload": true,
+        "noticeReplayAfterReentryReload": false,
+        "replayObservation": "2 requestAnimationFrame callbacks plus 400ms after input-ready per entry/reload; not indefinite monitoring"
+      },
+      "probe": {
+        "frames": 7,
+        "overflow": false,
+        "lifetimes": [
+          {
+            "id": "[\"island-plan-v1\",\"milestone-header-phone-tenkey-east\",20]",
+            "added": 2563,
+            "removed": 2804.3000000715256
+          }
+        ]
+      },
+      "contextClosed": true,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "rawEvidence": [
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-tenkey-east-after-final-native.json",
+          "sha256": "ce251799ea93ba1052688790df4d79cd5483fd114d664cdad050073f8d0cb4f3"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-tenkey-east-after-reload-native.json",
+          "sha256": "0582271428ec5d6c813ec97e38498a231aea9b855846691f7b2b9d3209ea87da"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-tenkey-east-before-final-native.json",
+          "sha256": "5e4c5826ecf2c9379da8216169f004aff6cd360ff8f353779d4443c00fdc676b"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-tenkey-east-declared-fixture.json",
+          "sha256": "25c88632e08f0cc3c03eb73c14c7a85cefefb6378a78b1254c5ab3b44546a3ca"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-tenkey-east-hint-native.json",
+          "sha256": "0582271428ec5d6c813ec97e38498a231aea9b855846691f7b2b9d3209ea87da"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-tenkey-east-notice-probe.json",
+          "sha256": "1cf7d8143ad2f93f27b63dcb63fce79f82e110163e45dae43011040ca1b6d0a1"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-tenkey-east-trace.zip",
+          "sha256": "24f0e38f4bfb6231d2d20f642f7e765c7e61750c5f0a973c89f5150400e97eb0"
+        }
+      ],
+      "screens": [
+        "screens/phone-tenkey-east-last-question.png",
+        "screens/phone-tenkey-east-notice-next-input.png",
+        "screens/phone-tenkey-east-hint-priority.png"
+      ]
+    },
+    {
+      "case": "tablet-tenkey-east",
+      "pass": true,
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "fixture": {
+        "nativeProfile": true,
+        "numericLevel9": true,
+        "declaredOldGift": false,
+        "completedSetsBefore": 20,
+        "expansionBefore": 0,
+        "managedItemsBefore": 3,
+        "inventedHistoricalAnswersPlansReceipts": false
+      },
+      "realCorrectAnswers": 3,
+      "completedPlanId": "[\"island-plan-v1\",\"milestone-header-tablet-tenkey-east\",20]",
+      "nextPlanId": "[\"island-plan-v1\",\"milestone-header-tablet-tenkey-east\",21]",
+      "nextPlanSlotCount": 6,
+      "nextInputType": "number",
+      "finalSubmitToNextInputMs": 188.5,
+      "extraContinuationActions": 0,
+      "nextInputReady": true,
+      "emptyNextInput": true,
+      "notice": {
+        "lines": [
+          "ひがしへ",
+          "ひろがったよ"
+        ],
+        "visible": true,
+        "buttons": 0,
+        "ariaAtomic": "true",
+        "ariaLabel": "しまが 大きく ひろがったよ。おはなが いっぱいに なった。ひがしへ はしが つながったよ",
+        "observedLifetimeMs": 5998,
+        "boundary": "expiry"
+      },
+      "geometry": {
+        "compared": [
+          "header",
+          "brand",
+          "problem",
+          "input",
+          "answerStage",
+          "all input keys",
+          "sound",
+          "close"
+        ],
+        "comparisonToleranceCssPx": 0.05,
+        "maximumObservedRectDeltaCssPx": 0,
+        "sameProblemAfterExpiry": true,
+        "sound": {
+          "rect": {
+            "x": 584.15625,
+            "y": 17.59375,
+            "width": 100.875,
+            "height": 44,
+            "right": 685.03125,
+            "bottom": 61.59375
+          },
+          "label": "おとを だす",
+          "disabled": false,
+          "hit": true,
+          "visible": true,
+          "inViewport": true
+        },
+        "close": {
+          "rect": {
+            "x": 693.03125,
+            "y": 12,
+            "width": 56.96875,
+            "height": 55.1875,
+            "right": 750,
+            "bottom": 67.1875
+          },
+          "label": "とじる",
+          "disabled": false,
+          "hit": true,
+          "visible": true,
+          "inViewport": true
+        },
+        "oldGiftRect": null,
+        "twoLinesAndControlsNonoverlapping": true
+      },
+      "storage": {
+        "stores": [
+          "appData",
+          "exploreDiscoveries",
+          "exploreRunEvents",
+          "exploreRuns",
+          "islandEvents",
+          "islandPhotoAlbums",
+          "islandPhotoBlobs",
+          "islandPhotos",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "memoryVocab",
+          "parkEvents",
+          "parkPlans",
+          "parks",
+          "profiles"
+        ],
+        "beforeFinalToAfterFinal": {
+          "appData": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "app": [
+                "profiles"
+              ]
+            }
+          },
+          "islandEvents": {
+            "beforeRows": 3,
+            "afterRows": 6,
+            "addedKeys": [
+              "[\"island-action-v1\",\"milestone-header-tablet-tenkey-east\",\"[\\\"island-plan-v1\\\",\\\"milestone-header-tablet-tenkey-east\\\",20]\",2]",
+              "[\"island-plan-v1\",\"milestone-header-tablet-tenkey-east\",20]:completed",
+              "[\"island-plan-v1\",\"milestone-header-tablet-tenkey-east\",21]:started"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "islandPlans": {
+            "beforeRows": 1,
+            "afterRows": 2,
+            "addedKeys": [
+              "[\"island-plan-v1\",\"milestone-header-tablet-tenkey-east\",21]"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {
+              "[\"island-plan-v1\",\"milestone-header-tablet-tenkey-east\",20]": [
+                "completedAt",
+                "cursor",
+                "revision",
+                "slots",
+                "status"
+              ]
+            }
+          },
+          "islands": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "milestone-header-tablet-tenkey-east": [
+                "completedSets",
+                "customization",
+                "growth",
+                "items",
+                "mathReviewTurn",
+                "pendingPlanId",
+                "revision",
+                "updatedAt"
+              ]
+            }
+          },
+          "logs": {
+            "beforeRows": 2,
+            "afterRows": 3,
+            "addedKeys": [
+              "3"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "memoryMath": {
+            "beforeRows": 2,
+            "afterRows": 2,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "add_1d_2_bridge": [
+                "correctAnswers",
+                "independentCorrectAnswers",
+                "lastCorrectAt",
+                "lastIndependentCorrectAt",
+                "totalAnswers",
+                "updatedAt"
+              ]
+            }
+          },
+          "profiles": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "milestone-header-tablet-tenkey-east": [
+                "mathLevels",
+                "mathSkills",
+                "recentAttempts",
+                "todayCount"
+              ]
+            }
+          }
+        },
+        "correctAnswerReceipts": 3,
+        "finalTransactionAndContinuationEventTypes": [
+          "answer",
+          "plan_completed",
+          "plan_started"
+        ],
+        "priorGrowthMemoriesPreserved": true,
+        "oneNewGrowthMemory": true,
+        "pendingRewardsPreserved": true,
+        "completionPendingAnswers": {
+          "garden": 0,
+          "waterside": 0,
+          "grove": 0,
+          "village": 0
+        },
+        "supportOrIncorrect": null,
+        "homeExactDiscoveryOracle": true,
+        "actualHomeDiscoveries": [],
+        "recordedExitBaselineAndAfterReloadEqualAll17Stores": true,
+        "runtimeReentryAndReloadExactNativeComparisons": true,
+        "sameReservationRevisionAfterReentryReload": true,
+        "noticeReplayAfterReentryReload": false,
+        "replayObservation": "2 requestAnimationFrame callbacks plus 400ms after input-ready per entry/reload; not indefinite monitoring"
+      },
+      "probe": {
+        "frames": 17,
+        "overflow": false,
+        "lifetimes": [
+          {
+            "id": "[\"island-plan-v1\",\"milestone-header-tablet-tenkey-east\",20]",
+            "added": 2687.6999999284744,
+            "removed": 8685.699999928474
+          }
+        ]
+      },
+      "contextClosed": true,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "rawEvidence": [
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-tenkey-east-after-final-native.json",
+          "sha256": "6bc91aa51f67692013eb2cad5adaf9440e8a6d5b192c69a5819e46bb5355db62"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-tenkey-east-after-reload-native.json",
+          "sha256": "6bc91aa51f67692013eb2cad5adaf9440e8a6d5b192c69a5819e46bb5355db62"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-tenkey-east-before-final-native.json",
+          "sha256": "ec284461559b41de5f34cf4dc952dc40cf9940ee46147aa5d05d9c579dd0a3cc"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-tenkey-east-declared-fixture.json",
+          "sha256": "89ceeb15bbebd170b1ffc8e06a51e216dd6bdf5a16c067710fe598bc3a6b9883"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-tenkey-east-notice-probe.json",
+          "sha256": "fccd72940624fe3add87b3ee859097eb03413e9cfbcc38eac1a32fa16e6a5565"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/tablet-tenkey-east-trace.zip",
+          "sha256": "b5bb29f5219442a9d1a2c69369ffc968a13754799a34642c6add09ca6af52d89"
+        }
+      ],
+      "screens": [
+        "screens/tablet-tenkey-east-notice-next-input.png",
+        "screens/tablet-tenkey-east-expired-same-input.png"
+      ]
+    },
+    {
+      "case": "phone-east-gifts",
+      "pass": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "fixture": {
+        "nativeProfile": true,
+        "numericLevel9": false,
+        "declaredOldGift": true,
+        "completedSetsBefore": 20,
+        "expansionBefore": 0,
+        "managedItemsBefore": 3,
+        "inventedHistoricalAnswersPlansReceipts": false
+      },
+      "realCorrectAnswers": 3,
+      "completedPlanId": "[\"island-plan-v1\",\"milestone-header-phone-east-gifts\",20]",
+      "nextPlanId": "[\"island-plan-v1\",\"milestone-header-phone-east-gifts\",21]",
+      "nextPlanSlotCount": 3,
+      "nextInputType": "choice",
+      "finalSubmitToNextInputMs": 189,
+      "extraContinuationActions": 0,
+      "nextInputReady": true,
+      "emptyNextInput": true,
+      "notice": {
+        "lines": [
+          "ひがしへ",
+          "ひろがったよ"
+        ],
+        "visible": true,
+        "buttons": 0,
+        "ariaAtomic": "true",
+        "ariaLabel": "しまが 大きく ひろがったよ。おはなが いっぱいに なった。ひがしへ はしが つながったよ",
+        "observedLifetimeMs": null,
+        "boundary": "close"
+      },
+      "geometry": {
+        "compared": [
+          "header",
+          "brand",
+          "problem",
+          "input",
+          "answerStage",
+          "all input keys",
+          "sound",
+          "close"
+        ],
+        "comparisonToleranceCssPx": 0.05,
+        "maximumObservedRectDeltaCssPx": 0,
+        "sameProblemAfterExpiry": "Not the selected boundary; help layout may intentionally change",
+        "sound": {
+          "rect": {
+            "x": 176.65625,
+            "y": 10.59375,
+            "width": 100.875,
+            "height": 44,
+            "right": 277.53125,
+            "bottom": 54.59375
+          },
+          "label": "おとを だす",
+          "disabled": false,
+          "hit": true,
+          "visible": true,
+          "inViewport": true
+        },
+        "close": {
+          "rect": {
+            "x": 315.03125,
+            "y": 5,
+            "width": 56.96875,
+            "height": 55.1875,
+            "right": 372,
+            "bottom": 60.1875
+          },
+          "label": "とじる",
+          "disabled": false,
+          "hit": true,
+          "visible": true,
+          "inViewport": true
+        },
+        "oldGiftRect": {
+          "x": 285.53125,
+          "y": 23.796875,
+          "width": 24.5,
+          "height": 17.59375,
+          "right": 310.03125,
+          "bottom": 41.390625
+        },
+        "twoLinesAndControlsNonoverlapping": true
+      },
+      "storage": {
+        "stores": [
+          "appData",
+          "exploreDiscoveries",
+          "exploreRunEvents",
+          "exploreRuns",
+          "islandEvents",
+          "islandPhotoAlbums",
+          "islandPhotoBlobs",
+          "islandPhotos",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "memoryVocab",
+          "parkEvents",
+          "parkPlans",
+          "parks",
+          "profiles"
+        ],
+        "beforeFinalToAfterFinal": {
+          "appData": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "app": [
+                "profiles"
+              ]
+            }
+          },
+          "islandEvents": {
+            "beforeRows": 3,
+            "afterRows": 6,
+            "addedKeys": [
+              "[\"island-action-v1\",\"milestone-header-phone-east-gifts\",\"[\\\"island-plan-v1\\\",\\\"milestone-header-phone-east-gifts\\\",20]\",2]",
+              "[\"island-plan-v1\",\"milestone-header-phone-east-gifts\",20]:completed",
+              "[\"island-plan-v1\",\"milestone-header-phone-east-gifts\",21]:started"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "islandPlans": {
+            "beforeRows": 1,
+            "afterRows": 2,
+            "addedKeys": [
+              "[\"island-plan-v1\",\"milestone-header-phone-east-gifts\",21]"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {
+              "[\"island-plan-v1\",\"milestone-header-phone-east-gifts\",20]": [
+                "completedAt",
+                "cursor",
+                "revision",
+                "slots",
+                "status"
+              ]
+            }
+          },
+          "islands": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "milestone-header-phone-east-gifts": [
+                "completedSets",
+                "customization",
+                "growth",
+                "items",
+                "mathReviewTurn",
+                "pendingPlanId",
+                "revision",
+                "updatedAt"
+              ]
+            }
+          },
+          "logs": {
+            "beforeRows": 2,
+            "afterRows": 3,
+            "addedKeys": [
+              "3"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "memoryMath": {
+            "beforeRows": 2,
+            "afterRows": 3,
+            "addedKeys": [
+              "pattern_copy"
+            ],
+            "removedKeys": [],
+            "changedRowFields": {}
+          },
+          "profiles": {
+            "beforeRows": 1,
+            "afterRows": 1,
+            "addedKeys": [],
+            "removedKeys": [],
+            "changedRowFields": {
+              "milestone-header-phone-east-gifts": [
+                "mathLevels",
+                "mathSkills",
+                "recentAttempts",
+                "todayCount"
+              ]
+            }
+          }
+        },
+        "correctAnswerReceipts": 3,
+        "finalTransactionAndContinuationEventTypes": [
+          "answer",
+          "plan_completed",
+          "plan_started"
+        ],
+        "priorGrowthMemoriesPreserved": true,
+        "oneNewGrowthMemory": true,
+        "pendingRewardsPreserved": true,
+        "completionPendingAnswers": {
+          "garden": 0,
+          "waterside": 0,
+          "grove": 0,
+          "village": 0
+        },
+        "supportOrIncorrect": null,
+        "homeExactDiscoveryOracle": true,
+        "actualHomeDiscoveries": [],
+        "recordedExitBaselineAndAfterReloadEqualAll17Stores": true,
+        "runtimeReentryAndReloadExactNativeComparisons": true,
+        "sameReservationRevisionAfterReentryReload": true,
+        "noticeReplayAfterReentryReload": false,
+        "replayObservation": "2 requestAnimationFrame callbacks plus 400ms after input-ready per entry/reload; not indefinite monitoring"
+      },
+      "probe": {
+        "frames": 4,
+        "overflow": false,
+        "lifetimes": [
+          {
+            "id": "[\"island-plan-v1\",\"milestone-header-phone-east-gifts\",20]",
+            "added": 2541
+          }
+        ]
+      },
+      "contextClosed": true,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "rawEvidence": [
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-east-gifts-after-final-native.json",
+          "sha256": "3e37c4bdc6d9939c2802494f8c6ec9039f8ab1ebcae41143045f9f653f89a172"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-east-gifts-after-reload-native.json",
+          "sha256": "3e37c4bdc6d9939c2802494f8c6ec9039f8ab1ebcae41143045f9f653f89a172"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-east-gifts-before-final-native.json",
+          "sha256": "5505afd5955a0a88caaddb27a0d77668c0acb4c462a971716d578d421b185569"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-east-gifts-declared-fixture.json",
+          "sha256": "3e3856dc58d869dee7560ccc0c4790cebd5d875fa8140efe19784e7f6d3b59cc"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-east-gifts-notice-probe.json",
+          "sha256": "c65141df4b781123eb73800686c8b906cf9738512fbd0c0bf83042c974f4108e"
+        },
+        {
+          "path": "output/playwright/island-renewal/milestone-header-38-01/phone-east-gifts-trace.zip",
+          "sha256": "d01159f85668b6cbe686d80c0bb50065ee3b0e708ad37f8a129316a0fafe127e"
+        }
+      ],
+      "screens": [
+        "screens/phone-east-gifts-last-question.png",
+        "screens/phone-east-gifts-notice-next-input.png",
+        "screens/phone-east-gifts-reloaded-no-replay.png"
+      ]
+    }
+  ],
+  "screens": [
+    {
+      "path": "screens/phone-east-last-question.png",
+      "caption": "phone 選択式：解放直前の3問目",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/phone-east-last-question.png",
+      "sha256": "e271a004830626f0fc7c6683e7dfd3c4b5e8eb3d5810c9bb1fdcf4650a4ae473",
+      "bytes": 32677,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    },
+    {
+      "path": "screens/phone-east-notice-next-input.png",
+      "caption": "phone 東解放：次予約の入力中に2行通知",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/phone-east-notice-next-input.png",
+      "sha256": "14f9137604fc0aca1097898241031b8c18bfc7f73f5779a50bfacec172db88ff",
+      "bytes": 33347,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    },
+    {
+      "path": "screens/phone-east-expired-same-input.png",
+      "caption": "phone 同じ問題：5994.7msで通知だけ消失",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/phone-east-expired-same-input.png",
+      "sha256": "e6d807d77c5468bfa15433e866825ca162acb725f1985763a76c934bfa20f8cd",
+      "bytes": 31135,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    },
+    {
+      "path": "screens/tablet-west-notice-next-input.png",
+      "caption": "tablet 西解放：元ヘッダー内の2行通知",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/tablet-west-notice-next-input.png",
+      "sha256": "6fa1ccca0158f0201ee0b5743a7abe7afe05265abf42b65e810c65f859e26610",
+      "bytes": 43237,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    },
+    {
+      "path": "screens/tablet-west-hint-priority.png",
+      "caption": "tablet 同じ問題：ヒント優先で通知を退避",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/tablet-west-hint-priority.png",
+      "sha256": "9fc68e73be31723c42ff9a73e047a16e5e214a86c60a13cb1d567a6d5088a5d3",
+      "bytes": 43137,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    },
+    {
+      "path": "screens/tablet-east-notice-next-input.png",
+      "caption": "tablet 東解放：誤答操作の直前",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/tablet-east-notice-next-input.png",
+      "sha256": "aed0b770d8b5d8912b712924928662d031f25eea4effe2e47d96a492e5d38ac1",
+      "bytes": 44624,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    },
+    {
+      "path": "screens/tablet-east-incorrect-priority.png",
+      "caption": "tablet 同じ問題：誤答後の「もういちど」優先",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/tablet-east-incorrect-priority.png",
+      "sha256": "afda03fe9093dfbd48735f96a42e423929cd4fd478dfdc52300a628a8815cc44",
+      "bytes": 41963,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    },
+    {
+      "path": "screens/tablet-east-reentered-no-replay.png",
+      "caption": "tablet 同じ予約へ再入場：通知の再演なし",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/tablet-east-reentered-no-replay.png",
+      "sha256": "afda03fe9093dfbd48735f96a42e423929cd4fd478dfdc52300a628a8815cc44",
+      "bytes": 41963,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    },
+    {
+      "path": "screens/phone-tenkey-east-last-question.png",
+      "caption": "phone 数字：実plannerの3問目",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/phone-tenkey-east-last-question.png",
+      "sha256": "9d422e3ce5f9cc733b67d5b6dc738008eae4ad08a90ea223a39d866ad0d11b3c",
+      "bytes": 43253,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    },
+    {
+      "path": "screens/phone-tenkey-east-notice-next-input.png",
+      "caption": "phone 数字：次の6問予約・TenKeyと通知が共存",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/phone-tenkey-east-notice-next-input.png",
+      "sha256": "318f231c56c4f0fa3c504fb4dd52360a4cc47d98de758d22499659240ca616d5",
+      "bytes": 40067,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    },
+    {
+      "path": "screens/phone-tenkey-east-hint-priority.png",
+      "caption": "phone 数字：ヒント表示を優先",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/phone-tenkey-east-hint-priority.png",
+      "sha256": "38a588d79927f07ae2af8bd4e99f0e29dee810d359a5c420722748ab158d1302",
+      "bytes": 38398,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    },
+    {
+      "path": "screens/tablet-tenkey-east-notice-next-input.png",
+      "caption": "tablet 数字：実TenKeyと通知が共存",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/tablet-tenkey-east-notice-next-input.png",
+      "sha256": "14c80e1883dc0fba64aaedcc852f240f16f08fb6c31ac96b7bc43ea5c330380f",
+      "bytes": 51752,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    },
+    {
+      "path": "screens/tablet-tenkey-east-expired-same-input.png",
+      "caption": "tablet 同じ数字問題：5998msで通知だけ消失",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/tablet-tenkey-east-expired-same-input.png",
+      "sha256": "e9d9a988355f6835bd0d767f8e6483a329773279b6885b9cb45e1fdfafb3bb05",
+      "bytes": 49985,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    },
+    {
+      "path": "screens/phone-east-gifts-last-question.png",
+      "caption": "phone 明示fixtureの旧おくりもの1件・解放直前",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/phone-east-gifts-last-question.png",
+      "sha256": "df7be0c4eb3570ccba673f694af410ff8bdbc06a8854d648869985c7cdd6bcbd",
+      "bytes": 32269,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    },
+    {
+      "path": "screens/phone-east-gifts-notice-next-input.png",
+      "caption": "phone 旧おくりもの1件：通知と右側操作が非重複",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/phone-east-gifts-notice-next-input.png",
+      "sha256": "0401e28dc1bc94afc610929ed36d64654f01d2f7d0a7117c64ee9f3b20f51cbb",
+      "bytes": 32813,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    },
+    {
+      "path": "screens/phone-east-gifts-reloaded-no-replay.png",
+      "caption": "phone reload：同じ問題・旧おくりものを保持、通知なし",
+      "source": "output/playwright/island-renewal/milestone-header-38-01/phone-east-gifts-reloaded-no-replay.png",
+      "sha256": "5a219a1f881c84bfc2dcfce192c55bf50864493ca0e174d58f121a4533952331",
+      "bytes": 26774,
+      "format": "Unmodified original UI screenshot PNG; viewed before selection"
+    }
+  ]
+}

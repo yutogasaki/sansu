@@ -1,0 +1,36 @@
+{
+  "scope": "Fixed39 classic regression flag configurations, not Island production or child evidence",
+  "checks": [
+    {
+      "kind": "smoke",
+      "scenarios": 31,
+      "pass": true,
+      "sourceHash": "b3f96489e126f2ed3f4465ae9beb4d28b4a5b32d8b5ad14bb2d09fccc432c33d",
+      "qaSha256": "cb2e5a00fdc8768f6969df85cbba715c43fd95303ce1c999a4b7344bbab500ba",
+      "terminal": {
+        "code": 0,
+        "signal": null
+      },
+      "sourceAndDistStable": true,
+      "raw": "output/island-experience/milestone-smoke-39-01/verification.json",
+      "rawSha256": "79eda4fd4eca3318d7cb679eb29c859c47fed2dac5e019f9a136d5a46239363d",
+      "logSha256": "8efb0a742e76ea7ce6c24a5b5a3d63c45458f4ef4830cae71cd52a4b0573d710"
+    },
+    {
+      "kind": "classic-pwa",
+      "scenarios": 4,
+      "pass": true,
+      "sourceHash": "b3f96489e126f2ed3f4465ae9beb4d28b4a5b32d8b5ad14bb2d09fccc432c33d",
+      "qaSha256": "cb2e5a00fdc8768f6969df85cbba715c43fd95303ce1c999a4b7344bbab500ba",
+      "terminal": {
+        "code": 0,
+        "signal": null
+      },
+      "sourceAndDistStable": true,
+      "raw": "output/island-experience/milestone-classic-pwa-39-01/verification.json",
+      "rawSha256": "72738cfd4d67c7dcec6f9ab0b8cb90bc9a0f81a01a3c772d4c8cee8104206d3c",
+      "logSha256": "18fa0b84d1f34d366ca12e2762311b8949de7c040e9dfa64f13f2d4ad68baebe"
+    }
+  ],
+  "remaining": "Full four-habitat Island tour running; this is a verified incremental checkpoint, not full Goal completion."
+}

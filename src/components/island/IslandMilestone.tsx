@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { ArrowRight, Flower2, House, Trees, Waves } from 'lucide-react';
 import { ISLAND_MATURITY_TITLES } from '../../domain/island/growth';
 import type { IslandHabitatId, IslandRecord } from '../../domain/island/types';
@@ -31,17 +30,14 @@ export function islandMilestoneLines(milestone: IslandMilestone, island: IslandR
 }
 
 export function IslandMilestoneNotice({ milestone, island }: { milestone: IslandMilestone; island: IslandRecord }) {
-    const [visible, setVisible] = useState(true);
-    useEffect(() => {
-        const timeout = window.setTimeout(() => setVisible(false), 6000);
-        return () => window.clearTimeout(timeout);
-    }, []);
-    if (!visible) return null;
-    const Icon = icons[milestone.habitats[0] ?? 'grove'];
-    return <div className="island-growth-milestone" role="status" data-growth-milestone={milestone.id}>
-        <Icon size={25} aria-hidden="true" />
-        <div>{milestone.expansion && <strong className="island-growth-upgrade-title">しまが 大きく ひろがったよ</strong>}
-            {islandMilestoneLines(milestone, island).map(line => <p key={line}>{line}</p>)}</div>
+    const habitat = milestone.habitats[0] ?? 'grove';
+    const subject = milestone.expansion ? milestone.expansion === 'east' ? 'ひがしへ' : 'にしへ'
+        : { garden: 'おはなの', waterside: 'みずべの', grove: '木かげの', village: 'おうちの' }[habitat];
+    const detail = milestone.expansion ? 'ひろがったよ' : '新しいすがた';
+    const description = [...(milestone.expansion ? ['しまが 大きく ひろがったよ'] : []), ...islandMilestoneLines(milestone, island)].join('。');
+    return <div className="island-growth-milestone" role="status" aria-atomic="true" aria-label={description}
+        data-growth-milestone={milestone.id} data-milestone-presentation="learning-header-v1">
+        <strong>{subject}</strong><span>{detail}</span>
     </div>;
 }
 

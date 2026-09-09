@@ -1,0 +1,17 @@
+{
+  "baseCommit": "d4d157f26b6fac0fea9514377bb1d0f2f0af37da",
+  "revision": "workshop-20260909-b3f96489e126",
+  "sourceHash": "b3f96489e126f2ed3f4465ae9beb4d28b4a5b32d8b5ad14bb2d09fccc432c33d",
+  "fixedInputCount": 1089,
+  "indexMatches": 1088,
+  "explicitQaOnlyDifferences": [
+    {
+      "path": "tools/island-e2e-progression.mjs",
+      "fixedSha": "2431bf73f6bf7b5f9c4f92e115efe3e2258de039849106aba830d16e4d90cf11",
+      "indexSha": "61cda601327bdecf28d58bfa45d34b68c1bf534a96753460b3925009c216d335"
+    }
+  ],
+  "codeOverlaysMatch": true,
+  "scope": "Every fixed39 app/build input matches the commit index. The single progression QA text expectation uses the separately frozen QA overlay. Concurrent home layout/navigation and shared-jobs work remains outside the index.",
+  "pass": true
+}

@@ -1,5 +1,7 @@
 # 接続する岸と使える床 — 固定37
 
+後続検証: 新しい学習ヘッダーは[別版39の7実経路](../../audits/2026-09-09-island-learning-milestones/README.md)で限定PASS。以下のPENDINGは固定37の訂正時点を表す。固定37の原測定・画像を新コードの合格へ転用しない。
+
 2026-09-09。`mystic-island-shore-garden-v17` の接続岸を**局所採用**。rootはphoneの固定36/37・全景拡張2とtabletの配置保存後reloadを実見し、個別の岸で縁取られた三つの塊から、庭と暮らしが続く床への改善を確認した。[source A](../shore-garden-a.png)全面との一致はHOLD、Human N=0、Full Goalは継続する。
 
 [contact sheet](contact-sheet.html)に実アプリ22枚と別の実模型方向研究6枚を無加工で保存した。[verification.json](verification.json)に各PNGのSHA256、原report・QA・sourceの帰属を記録する。方向研究は生成画像ではなく実geometryの比較だが、productionアプリ操作・保存の証拠とは区別する。
@@ -68,7 +70,7 @@ classic smoke37も **31/31 PASS**。同じrevisionのclassic-v1・両flag=false�
 
 [初解放の実画面と検証](first-unlock/README.md)は、解放直前の島だけを明示したfixtureから、通常plannerの実3問を回答したphone/tablet×東西の4経路。最後の正答から次入力まで186.9〜187.9ms、追加操作0、実12answer receiptと成長/次予約の保存を確認した。各1回の測定でP95ではなく、上記の固定10問80runとは別の証拠である。1081 app入力とQA closureは不変、全context/browser終了。解放した土地の描画は入力の計時後に帰島して別確認した。
 
-学習中の節目通知は4経路ともDOMに存在するが不可視だった。入力・成長のPASSと、通知表示のFAIL/修正待ちを分ける。非表示のstageに通知を置いている構造を直す必要があり、これを全Goalの完了に含めない。rootはphone東解放後の床とtablet西解放後の入力画像を確認した。
+学習中の節目通知は4経路ともDOMに存在するが不可視だった。訂正（2026-09-09）: 前記録の「通知表示FAIL/修正待ち」はSSOT照合不足で、`d4d157f` の仕様30:34にある「学習中は島とその通知を非表示」と実測は一致する。[派生JSONのcorrection](first-unlock-verification.json)に旧分類と理由を残し、原raw・入力/成長PASS・画像/SHAは不変とした。旧nav全成長巡回のFAILはQA可視期待と当時契約の不一致として保持する。新たな[仕様30](../../../product/30_living_island_growth_spec.md)の大きな節目のみ既存ヘッダー領域に最大6秒出す変更は、寸法不変/誤答支援優先を含め実証PENDING。固定37の結果を新コードの合格や全Goal完了へ広げない。rootはphone東解放後の床とtablet西解放後の入力画像を確認した。
 
 見た目の局所改善、保存/入力の限定整合性、子どもの理解・安全性・自発再遊びの観察は別判定である。normal motion・全外見・全重要経路・子ども観察・source A全面parityは未検証/HOLDのままで、公開完成・元Goal完了・通常plannerや実端末を含む包括的な性能保証を主張しない。
 

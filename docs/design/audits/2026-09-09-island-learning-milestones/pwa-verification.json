@@ -1,0 +1,93 @@
+{
+  "status": "PASS",
+  "scope": {
+    "comparisonStores": [
+      "islands",
+      "islandPlans",
+      "islandEvents",
+      "logs",
+      "memoryMath",
+      "memoryVocab",
+      "exploreRuns"
+    ],
+    "bootstrapOwnerStores": [
+      "profiles",
+      "appData"
+    ],
+    "fixture": "Native profile only; real UI creates reservations/answers. Legacy additionally omits growth and reward-pacing fields from its actual first reservation.",
+    "scenarios": [
+      "Profile-free Island welcome -> seeded owner home -> protected learning/growth checkpoints",
+      "Legacy frozen questions/gift/10 stars -> one explicit migration with unchanged balance",
+      "Hook-free real SW control and cached home bundles -> offline first reservation/answers/reload"
+    ],
+    "limits": "Seven-store learning/Island comparisons; not every database store, photo-Blob persistence, real two-build update, or human/normal-speed evidence."
+  },
+  "runtime": {
+    "revision": "workshop-20260909-b3f96489e126",
+    "version": "workshop-20260909-b3f96489e126:4f47503e-33f0-4488-aa48-4b335131c04d",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-shore-garden-v17",
+    "learningCandidate": "mystic-island-learning-v2",
+    "mode": "home",
+    "renderer": "three",
+    "artDirection": "moon-garden",
+    "drawCalls": 86,
+    "expanded": "false",
+    "residentAction": "idle",
+    "residentItemId": "",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": false,
+    "reducedMotion": false
+  },
+  "hookChecks": [
+    "active learning defers update; user home checkpoint reloads with reserved plan preserved",
+    "critical persistence hold spans navigation and releases deferred update afterwards",
+    "continue pointer protects fresh session; answer receipt survives next user checkpoint",
+    "first automatic growth defers update; growth, auto placement and next reservation survive user checkpoint",
+    "ordinary second section keeps update deferred; minor growth, unchanged land and album, and next reservation survive the voluntary checkpoint",
+    "first maturity defers update; east expansion, combined album record, stable items and next reservation survive the voluntary checkpoint",
+    "Island home keeps the legacy Explore run for explicit resume and preserves Island data",
+    "legacy Island reservation and reward screen defer update; new reservation migrates once and keeps the unclaimed old gift"
+  ],
+  "offline": {
+    "revision": "workshop-20260909-b3f96489e126",
+    "version": "workshop-20260909-b3f96489e126:4f47503e-33f0-4488-aa48-4b335131c04d",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-shore-garden-v17",
+    "learningCandidate": "mystic-island-learning-v2",
+    "mode": "learning",
+    "renderer": "three",
+    "artDirection": "moon-garden",
+    "drawCalls": 152,
+    "expanded": "false",
+    "residentAction": "idle",
+    "residentItemId": "",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": true,
+    "reducedMotion": true,
+    "serviceWorker": "real",
+    "offlineReload": true,
+    "answerPersisted": true,
+    "automaticGrowthPersisted": true,
+    "resumedSamePlan": true,
+    "soundEnabled": false
+  },
+  "terminal": {
+    "code": 0,
+    "signal": null
+  },
+  "sourceAndDistStable": true,
+  "sourceHash": "b3f96489e126f2ed3f4465ae9beb4d28b4a5b32d8b5ad14bb2d09fccc432c33d",
+  "qaSha256": "cb2e5a00fdc8768f6969df85cbba715c43fd95303ce1c999a4b7344bbab500ba",
+  "rawReport": "output/island-experience/milestone-island-pwa-39-01/pwa-report.json",
+  "rawSha256": "7cba7f991a9e61e05ce3e7e5c28d81912b188274cf247908d050ac8f40e649cb",
+  "verificationPath": "output/island-experience/milestone-island-pwa-39-01/verification.json",
+  "verificationSha256": "de95d6cb58a39eeb8ccc2d215581a743f6de36e39a97e820727e3b963c982b3f",
+  "limitations": "Seven-store learning/Island comparisons and owner bootstrap; no nonempty photo bytes, physical device, real two-build update or child evidence."
+}

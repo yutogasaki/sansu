@@ -71,12 +71,17 @@ export async function verifyIslandProgression(browser, base, capture, { producti
                 const nextTarget = state.plan.growthTarget;
                 const nearExpansion = mature < 2 && state.island.growth.progress[nextTarget] === 5
                     && state.island.growth.pendingAnswers[nextTarget] + state.plan.slots.length >= 18;
-                const notice = page.locator('[data-growth-milestone]').filter({ hasText: /なった|できた|つながった/ });
+                const notice = page.locator('[data-growth-milestone][data-milestone-presentation="learning-header-v1"]');
                 if (major) {
                     await notice.waitFor();
                     assert.equal(await notice.getAttribute('data-growth-milestone'), reservationId);
                     assert.equal(await notice.getByRole('button').count(), 0, 'Major change has no confirmation action');
-                    if (mature <= 2) assert.match(await notice.innerText(), /しまが 大きく ひろがったよ/);
+                    assert.match(await notice.getAttribute('aria-label'), /なった|できた|つながった/);
+                    if (mature <= 2) {
+                        assert.match(await notice.getAttribute('aria-label'), /しまが 大きく ひろがったよ/);
+                        assert.equal(await notice.locator('strong').innerText(), mature === 1 ? 'ひがしへ' : 'にしへ');
+                        assert.equal(await notice.locator('span').innerText(), 'ひろがったよ');
+                    }
                     const panelBefore = await page.locator('.island-learning').boundingBox();
                     await capture(page, `${prefix}-${sequence}-major-learning`);
                     assert.deepEqual(await page.locator('.island-learning').boundingBox(), panelBefore, 'Milestone overlay leaves input geometry stable');

@@ -1,6 +1,10 @@
 # 初めての土地解放：固定37の限定検証
 
-入力継続と成長保存は4経路 PASS。学習中の成長通知は4経路とも DOM に存在しますが不可視で、表示は FAIL、修正は PENDING です。全 Goal は ACTIVE、アート全体の一致は HOLD、人の評価は N=0 のままです。
+後続検証: 新しい学習ヘッダーは[別版39の7実経路](../../../audits/2026-09-09-island-learning-milestones/README.md)で限定PASS。以下のPENDINGは固定37の訂正時点を表す。固定37の原測定・画像を新コードの合格へ転用しない。
+
+入力継続と成長保存は4経路 PASS。学習中の成長通知は4経路とも DOM に存在し不可視で、これは固定37当時の仕様と一致します。新たに採用した学習ヘッダーの可視通知は PENDING です。全 Goal は ACTIVE、アート全体の一致は HOLD、人の評価は N=0 のままです。
+
+訂正（2026-09-09）: 前記録の「表示 FAIL・修正待ち」は、当時のSSOT照合が不足した誤分類でした。`d4d157f` の仕様30:34は「学習中は島とその通知を非表示」と明記しています。旧分類と訂正理由を[検証JSONのcorrection](../first-unlock-verification.json)に残し、原report・4件のDOM/可視性・測定値・画像/SHA・12回答のPASSは変えません。旧nav全成長巡回のFAILは、QAの可視期待と当時契約の不一致として保持します。これからの[仕様30](../../../../product/30_living_island_growth_spec.md)は大きな節目のみ既存ヘッダー領域へ最大6秒、キー等の寸法を変えず誤答支援を優先して出す変更であり、固定37の証拠から新表示の成功は主張しません。
 
 対象は固定37 `workshop-20260909-794c920135eb` / `mystic-island-shore-garden-v17` / 両フラグ true / production `5423`。1081入力の source SHA は `794c920135ebfeadbe7bb3a1db99d2bb53b38d115767d7d0bd20fea7543e17d8`。`569d1c0` 相当の固定版で、ナビゲーション統合後の live HEAD `8e36612` ではありません。
 
@@ -30,6 +34,6 @@
 | tablet-east | [解放前](tablet-east-before-home.png) | [解放後](tablet-east-after-home.png) |
 | tablet-west | [解放前](tablet-west-before-home.png) | [解放後](tablet-west-after-home.png) |
 
-[phone の次入力](phone-east-next-input.png) / [tablet の次入力](tablet-west-next-input.png)。これらの画面では成長通知は見えません。帰島後の通知が見えることを、学習中の表示成功へ転用しません。
+[phone の次入力](phone-east-next-input.png) / [tablet の次入力](tablet-west-next-input.png)。これらの画面では成長通知は見えず、当時の仕様どおりです。帰島後の通知が見えることを、新しく採用した学習ヘッダー通知の表示成功へ転用しません。
 
 準備時には esbuild の仮想入力を実ファイル扱いした収集エラーが1件あり、ブラウザ開始前にQAだけ修正しました。原説明は `preparation-first-failure.txt` に保持。固定37の app/source、過去結果、通知表示条件は変更していません。

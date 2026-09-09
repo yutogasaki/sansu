@@ -1,5 +1,7 @@
 # 島の体験全体とベンチマークの対応表
 
+2026-09-09追加: [固定39の新ヘッダー監査](../../design/audits/2026-09-09-island-learning-milestones/README.md)で7ケース・21正答＋追加誤答1/ヒント2、寸法不変・可視/消失・同予約復帰を限定確認した。正式80runとIsland PWAは別の同版証拠としてPASS。過去20/41区間の取得、4地区全巡回、子どもの意欲をこの結果に含めない。
+
 - Date: 2026-09-08
 - Owner: Codex / island experience goal
 - Status: Active — 採用済み体験と残る実経路検証を照合、造形全体・Human N=0・全Goal未完了
@@ -26,9 +28,9 @@
 
 [固定36→37の接続岸・床の記録](../../design/2026-09-09-island-renewal/connected-v17/README.md)は、旧座標と床y=0を保つ3.35接続楕円・外向きの丸み、拡張0/1/2で既定homeの32camera値を維持し、明示allだけ実床へ合わせる構図を確認した。診断fixtureの8視覚contextと、東のランタン1点を実UIで移動/取消/保存/reload/同予約へ戻す4contextの限定PASSで、実回答による初解放・自然な成長過程の証明ではない。app37の1081入力は `569d1c0` の保存地点に対応し、元3test FAILを保持したtest-only検証37-02は299 files/3297 tests PASS、classicは別flag構成で31/31 PASS。Source A全面・Human N=0・全Goal未完了を保持する。
 
-学習中の節目通知には既存不具合が残る。[学習集中CSS](../../../src/components/island/IslandLearningFocus.css)がstageを非表示にする一方、[Island.tsx](../../../src/pages/Island.tsx)は `IslandMilestoneNotice` をそのstage内へ渡している。6秒の `role=status` が存在しても視覚上は出ず、[navigation検証の原FAIL](../../design/audits/2026-09-09-island-navigation/verification.md#別に残る範囲)を保持する。U7/F06で非ブロッキング通知の表示先を直す責任を残し、入力速度のFAILや成長保存の欠落とは混同しない。
+通知の判定を訂正する（2026-09-09）。前記録の「不可視は既存不具合」はSSOT照合不足だった。`d4d157f` の仕様30:34は「学習中は島とその通知を非表示」と明記し、固定37の4件のDOMあり/visible=falseは当時契約と一致する。[navigation検証の原FAIL](../../design/audits/2026-09-09-island-navigation/verification.md#別に残る範囲)はQAの可視期待と当時契約の不一致として保持する。新たな[仕様30](../../product/30_living_island_growth_spec.md)では、大きな節目のみ既存ヘッダー領域に最大6秒、ヘッダー/問題/キー寸法不変・誤答支援優先で示す。U7/F06はこの仕様変更を固定39・7実経路で限定確認し、原測定・画像・入力/成長PASSを変えず、新コードの証拠へ転用しない。
 
-その後の[初解放4経路](../../design/2026-09-09-island-renewal/connected-v17/first-unlock/README.md)は、各幅の東/西解放直前の明示IslandRecord fixtureから、固定37の通常plannerが実生成した3問へ本人UIで正答した限定診断（計12回答/12answer receipts）。最後の答えで成熟と東0→1/西1→2を原子的に保存し、次予約へ追加操作0で進んだ。最後の正答→次入力はphone東/西187.9/187.2ms、tablet東/西187.1/186.9msの各単発で、正式P95ではない。初回からの20/41区間分の育成実績は証明しない。節目通知は4件ともDOMあり・visible=falseを実確認し、保存成功/帰島後の表示と学習中の不可視不具合を分ける。
+その後の[初解放4経路](../../design/2026-09-09-island-renewal/connected-v17/first-unlock/README.md)は、各幅の東/西解放直前の明示IslandRecord fixtureから、固定37の通常plannerが実生成した3問へ本人UIで正答した限定診断（計12回答/12answer receipts）。最後の答えで成熟と東0→1/西1→2を原子的に保存し、次予約へ追加操作0で進んだ。最後の正答→次入力はphone東/西187.9/187.2ms、tablet東/西187.1/186.9msの各単発で、正式P95ではない。初回からの20/41区間分の育成実績は証明しない。節目通知は4件ともDOMあり・visible=falseを実確認し、保存成功/帰島後の表示と、当時仕様どおりの学習中不可視を分ける。新ヘッダー通知は別の固定39・7実経路で限定PASS（最新監査参照）。
 
 2026-09-09追加: W01/W08の素材差は、[固定33の芝v13](../../design/2026-09-09-island-renewal/grass-v13/README.md)で局所改善。既定groundだけの短葉bump面をphone/tabletの同画角で比較し、足元・道の読みやすさと全storeを保持した。実取得ではない明示成熟fixtureの4比較経路、295 suites/3264 testsの範囲であり、全104行・視覚全体・動機の実証へ拡張しない。旧29〜32の見た目HOLDとHuman N=0を保持する。
 
@@ -82,10 +84,10 @@ W01/W02だけ、W08だけの完了で止めず、W03→W04→W05→W06を暮ら�
 | PA01 生息地づくり | 数・位置・組合せが景色になる | [livingSettings.ts](../../../src/domain/island/livingSettings.ts)、[visitors.ts](../../../src/domain/island/visitors.ts): 配置した物の距離・成長を条件に反応と来訪が成立。**コード照合済・実画面未照合** | 到達範囲の予告と本人が水/灯りをつなぐ生息環境制作は残る。採用候補 [U2/U4](2026-09-08-island-experience-remaining-audit.md#additional-candidates)（W04/W07へ統合） | 既実装を改善（候補）：仕様の土台を拡張 | P1 / W04/W07 | 環境の成立/不成立/置き直しで反応を比較。全件V0/V1/V2を併用 |
 | PA02 環境から出会いへ | 自分の整備が誰かを招く | [visitors.ts](../../../src/domain/island/visitors.ts)、[IslandDiscoveryGuide.tsx](../../../src/components/island/IslandDiscoveryGuide.tsx): 3来訪の環境条件・記録・発見後再会がある。**コード照合済・実画面未照合** | 来訪者を暮らしの仲間として迎える利用/持帰りと環境の種類を広げる。採用候補 [U3/U5](2026-09-08-island-experience-remaining-audit.md#additional-candidates)（W03/W07へ統合） | 既実装を改善（候補）：仕様の土台を拡張 | P1 / W03/W07 | 同成長で環境を変え、訪問と再訪を確認。全件V0/V1/V2を併用 |
 | PA03 世界へ作用する技 | 操作した場所がよくなる | [workshopScene.ts](../../../src/components/island/three/workshopScene.ts)と[workshop.ts](../../../src/domain/island/workshop.ts)に、回答の局所成長と別責務の洗浄/光/水を実装。gestures02で触れた区画・取消・同予約復帰を限定確認。 | 世界への作用を未実装へ戻さない。材質別の手応え、結果が先に読める緩急と全実経路の無説明理解はU1/U4に残る。 | 採用・既実装/限定証拠あり・実経路検証残 | P1 / W01/W02 | 変更前後の到達点・入力位置・P95を比較。全件V0/V1/V2を併用 |
-| PA04 移動能力の拡張 | 成長で行ける場所が増える | [landGeometry.ts](../../../src/domain/island/landGeometry.ts)・[navigation.ts](../../../src/components/island/three/navigation.ts)で東西解放と接続床を共有。固定36/37の診断成長0/1/2、東の実配置・同予約復帰を[限定確認](../../design/2026-09-09-island-renewal/connected-v17/README.md)。 | 旧床/橋と既定home画角の連続を保持。追加の初解放4経路は直前fixture→通常plannerの実3正答から保存/次予約まで限定PASS。初回からの全育成は証拠外、学習中の節目通知は不可視不具合を残す。本人のいかだ/短い観察先への移動操作は未採用候補U2/U5として残す。 | 採用・既実装/限定証拠あり・実経路検証残 | P1 / W02/W04 | 成熟前後に実際の往来と新しい操作を確認。全件V0/V1/V2を併用 |
+| PA04 移動能力の拡張 | 成長で行ける場所が増える | [landGeometry.ts](../../../src/domain/island/landGeometry.ts)・[navigation.ts](../../../src/components/island/three/navigation.ts)で東西解放と接続床を共有。固定36/37の診断成長0/1/2、東の実配置・同予約復帰を[限定確認](../../design/2026-09-09-island-renewal/connected-v17/README.md)。 | 旧床/橋と既定home画角の連続を保持。追加の初解放4経路は直前fixture→通常plannerの実3正答から保存/次予約まで限定PASS。初回からの全育成は証拠外、学習中不可視は当時仕様どおり。新ヘッダー通知は固定39・7実経路で限定PASS。本人のいかだ/短い観察先への移動操作は未採用候補U2/U5として残す。 | 採用・既実装/限定証拠あり・実経路検証残 | P1 / W02/W04 | 成熟前後に実際の往来と新しい操作を確認。全件V0/V1/V2を併用 |
 | PA05 クラフト | 集めた物が役に立つ | [workshop.ts](../../../src/domain/island/workshop.ts)・[workshopScene.ts](../../../src/components/island/three/workshopScene.ts)に3標本/4部品/2作品/水と軸、別draftを実装。workshop-diagnostic-04は両幅のA/B・undo・同予約復帰、shared-memories-06はA展示をBの上書き/削除から独立して再演する範囲がPASS。 | 主島展示/再訪は接続済み。残るのは修正後の住民による水源操作→結果の実画面と、仕様38の3仕事/共同記憶の実経路。別題材や自由な積み上げは採用範囲外の候補として区別する。 | 採用・既実装/限定証拠あり・実経路検証残 | P1 / W06 | 部品選択→完成→利用→やり直しを実操作。全件V0/V1/V2を併用 |
 | PA06 用事のない交流 | 一緒に過ごすこと自体が楽しい | [runtime.ts](../../../src/components/island/three/runtime.ts)、[residentInteraction.ts](../../../src/components/island/three/residentInteraction.ts): 単独利用・二人共有・種類別の好み優先がある。**コード照合済・実画面未照合** | 好きな住民を確実に選ぶ交流、散歩/おやつと返事を広げる。採用候補 [U3](2026-09-08-island-experience-remaining-audit.md#additional-candidates)（W03へ統合） | 既実装を改善（候補）：仕様の土台を拡張 | P1 / W03 | 同じ対象を違う住民と試し、返しの差を確認。全件V0/V1/V2を併用 |
-| PA07 仲間ごとの仕事 | 仲間の個性が暮らしに必要になる | [sharedJobController.ts](../../../src/components/island/three/sharedJobController.ts)・[sharedMemories.ts](../../../src/domain/island/sharedMemories.ts)・[IslandSharedMemories.tsx](../../../src/components/island/IslandSharedMemories.tsx)に3仕事、同一物、実接触、描画後確定と任意お返しを接続済み。 | 未統合ではなく仕様38 M01〜M04/M12の実経路検証残。shared-memories-06/shared-camera-03はjobs.status=not-runで、展示のPASSを仕事のPASSへ転用しない。新navigationのmain8e・5292でshared-jobsの新経路を検証中・未判定。入口QAの元失敗は保持し、実仕事の新PASSはまだない。物→手→結果→記憶再訪を確認する。 | 採用・既実装/限定証拠あり・実経路検証残 | P1 / W03/W04 | 得意な仕事の開始→接触→結果が全身で読める。全件V0/V1/V2を併用 |
+| PA07 仲間ごとの仕事 | 仲間の個性が暮らしに必要になる | [sharedJobController.ts](../../../src/components/island/three/sharedJobController.ts)・[sharedMemories.ts](../../../src/domain/island/sharedMemories.ts)・[IslandSharedMemories.tsx](../../../src/components/island/IslandSharedMemories.tsx)に3仕事、同一物、実接触、描画後確定と任意お返しを接続済み。 | 未統合ではなく仕様38 M01〜M04/M12の実経路検証残。shared-memories-06/shared-camera-03はjobs.status=not-runで、展示のPASSを仕事のPASSへ転用しない。新navigationのmain8e・5292のQA03は入口selector FAIL、QA04は明示した完全復元後の実prepared保存を確認したが、controller開始前の経路拒否で未完。元失敗を保持し、実仕事の新PASSはまだない。物→手→結果→記憶再訪を確認する。 | 採用・既実装/限定証拠あり・実経路検証残 | P1 / W03/W04 | 得意な仕事の開始→接触→結果が全身で読める。全件V0/V1/V2を併用 |
 | PA08 小さなお願い | 誰かのために動く納得感 | [sharedMemoriesRepository.ts](../../../src/domain/island/sharedMemoriesRepository.ts)・[useIslandSharedMemories.ts](../../../src/components/island/useIslandSharedMemories.ts)にprepared/result-seen、明示再開/取消、同receipt再送を実装しruntimeへ接続。 | 仕事の途中停止/学習/実hidden→明示再開→可視結果とnative保存を同じ依頼で検証する。住民から任意題材を提案する遊びは現在の本人発注と別の未採用候補。 | 採用・既実装/限定証拠あり・実経路検証残 | P1 / W03/W06 | 受ける/後回し/再開、未達損失なしを確認。全件V0/V1/V2を併用 |
 | PA09 大きな共同目標 | 日常の積み重ねが大きな変化になる | [growth.ts](../../../src/domain/island/growth.ts)、[islandGrowthPreview.ts](../../../src/components/island/islandGrowthPreview.ts): 4居場所の成熟・拡張と次の姿previewがある。**コード照合済・実画面未照合** | 複数の整備/制作が共同広場の実用途へ結ばれる長期目標を追加。採用候補 [U2/U3](2026-09-08-island-experience-remaining-audit.md#additional-candidates)（W02/W03へ統合） | 既実装を改善（候補）：仕様の土台を拡張 | P1 / W02/W03 | 異なる育成順で完成と住民利用を比較。全件V0/V1/V2を併用 |
 | PA10 家内外の模様替え | 同じ進行でも自分らしさが残る | [appearance.ts](../../../src/domain/island/appearance.ts)、[IslandCustomization.tsx](../../../src/components/island/IslandCustomization.tsx)、[experience.ts](../../../src/domain/island/experience.ts): 仕様39の12slot・個別試用/交換・3つの全景保存にsourceあり。**実装/担当回帰あり・実画面未合格** | 空/家/庭のmix、取得権と今回適用の分離、音/衣装/旗を含む保存を接続。成長途中/成熟/異テーマmixの実画面、S01〜S11の全体受入は残る。 | 採用・実装/検証中：仕様39へ接続し残る受入を保持 | P1 / W08/W06 | 家/庭の組合せ、元へ戻す、reload保存。全件V0/V1/V2を併用 |
@@ -280,9 +282,9 @@ C01〜C22の根拠は[読んだsourceの境界](2026-09-08-island-experience-rem
 | ID | 成長の軸 | 具体例 | 対応する体験 / 証拠 |
 |---|---|---|---|
 | G01 | 量が増える | 木、発見、図鑑の棚が増える | W02/W05。有限の成長と発見棚の増加。現状/残り: 有限の成長/15発見あり。現物/作品の棚U1/U2/U5 |
-| G02 | 姿が変わる | つぼみ→花、小屋→屋根窓のある家 | W02/W08。実geometryと次姿preview、固定36/37の診断成長0/1/2で既定home同倍率を確認。直前fixtureからの実回答による解放は限定確認済み。学習中に隠れる節目通知の表示先はU7/F06の未完。 |
+| G02 | 姿が変わる | つぼみ→花、小屋→屋根窓のある家 | W02/W08。実geometryと次姿preview、固定36/37の診断成長0/1/2で既定home同倍率を確認。直前fixtureからの実回答による解放は限定確認済み。新しい学習ヘッダーは固定39・7実経路で限定PASS。 |
 | G03 | 用途が増える | 座れる、渡れる、運べる、照らせる | W03/W04/W06。仕様37の道具/連鎖、38の3仕事、40の3家具用途は既実装。取得後に本人の作品が役立つ一連の実経路と用途の理解が検証残。 |
-| G04 | 空間が広がる | 橋、新しい水辺、別の探索先 | W02/W04。固定36/37の診断0/1/2と東接続点の実配置、追加の直前fixture→実3正答による東/西解放を限定確認。旧床/橋/home画角を保持。初回からの全育成、節目通知の不可視不具合、別観察先の未採用候補は別に残す。 |
+| G04 | 空間が広がる | 橋、新しい水辺、別の探索先 | W02/W04。固定36/37の診断0/1/2と東接続点の実配置、追加の直前fixture→実3正答による東/西解放を限定確認。旧床/橋/home画角を保持。初回からの全育成と別観察先の未採用候補は別に残す。新ヘッダーは固定39・7実経路で限定PASS。 |
 | G05 | 理解が深まる | 初めて知る→別条件でも性質を使える | W04/W05。仕様37の同じ3標本×道具、A/Bの水/軸連鎖は既実装・限定PASS。別条件へ性質を使う理解と、住民と試す因果の実画面は未完。 |
 | G06 | 関係が育つ | 好みが分かる、頼ってもらう、一緒に過ごす | W03。3仕事・同住民/同対象の永続記憶・お返しは仕様38へ実装済み。仕事完了→reload→同物へ再訪する実経路と、関係を感じるかのHuman N=0は別の未確認。 |
 | G07 | 表現が豊かになる | 選べる配置、音、名前、テーマが増える | W06/W08/W09。4部品の自由制作、12slot mix、衣装/模様/音とsceneStyle v2は既実装。完成景色で暮らし、保存/復元後にまた試す一連の使い方を確認する。 |
@@ -432,7 +434,7 @@ C01〜C22の根拠は[読んだsourceの境界](2026-09-08-island-experience-rem
 
 ### Now
 
-- 2026-09-09: 仕様37〜42と569d1c0の実装へ関連行を再照合。接続岸37の限定証拠、3仕事/工作住民の実経路検証残、完成景色の利用、未採用の制作題材を区別した。編集時HEAD/origin/main 8e36612のnavigationと、固定37の正式80run限定PASSは別境界。学習中の節目通知が非表示stageへ入る既存不具合はU7/F06として残す。
+- 2026-09-09: 仕様37〜42と569d1c0の実装へ関連行を再照合。接続岸37の限定証拠、3仕事/工作住民の実経路検証残、完成景色の利用、未採用の制作題材を区別した。編集時HEAD/origin/main 8e36612のnavigationと、固定37の正式80run限定PASSは別境界。学習中不可視を不具合とした記録をSSOT30へ照合して訂正し、新仕様のヘッダー通知は後続の固定39・7実経路で限定確認した。
 
 - 2026-09-08: 原表104件と仕様28/30/35/36を照合し、全行の狙い・現sourceの根拠・残る翻案・仮分類・P1/P2・検証場面を記録した。
 - 18観点、12気持ちよさ、10デザイン、8成長、8欲求、16報酬、24交換比較に現コードの到達範囲と不足を追加した。追加12作品、元の優先12候補も保持する。
@@ -445,7 +447,7 @@ C01〜C22の根拠は[読んだsourceの境界](2026-09-08-island-experience-rem
 
 1. 既存の3仕事各1回→同対象の記憶再訪→途中停止/同予約復帰を、仕様38 M01〜M04/M12の未検証経路として先に確認する。展示や旧carryだけの合格で代替しない。
 2. 仕様37の住民による接触→水車/ベルの結果→接続変更/復元を、修正後の両幅で確認する。標本/制作A/B/undoの既存PASSを再実装要求へ戻さない。
-3. 学習中の節目通知を、入力を塞がず目に入る表示先へ戻す既存不具合を修正・確認する。通知DOMの存在と可視性を分け、正式入力速度の合格で代替しない。
+3. 新仕様30の大きな節目のみのヘッダー通知は固定39で実装し、7実経路・正式80run・Island PWAを限定確認した。固定37の当時仕様どおりの不可視測定とは分け、4地区全成長巡回と残る回帰を追う。
 4. 1シリーズの単品→差額完成→家具利用/展示/写真→保存案復元を限定確認する。全16報酬とU7の責任は残し、過去の有限matrix/音/家の証拠を最新版全体へ転用しない。
 5. 題材付き制作はAC17の未実装・未採用候補として用途と採否を決める。Source A、無説明理解・自発再遊びは別判定で、Human N=0・全Goal未完了を保持する。
 

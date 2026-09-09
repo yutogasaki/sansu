@@ -1,0 +1,204 @@
+{
+  "scope": "Dedicated DEV fixed-ten automated keyboard benchmark; synthetic existing-island fixture. No ordinary planner, first-unlock, milestone-visibility, production/PWA, physical-device or child evidence. N=0.",
+  "revision": "workshop-20260909-b3f96489e126",
+  "sourceHash": "b3f96489e126f2ed3f4465ae9beb4d28b4a5b32d8b5ad14bb2d09fccc432c33d",
+  "manifestSHA": "b41aa4dbbd1fce924e40126001c160f7d4564028c0beea73714abee1b5a4133b",
+  "sourceInputs": 1089,
+  "nodePath": "/Users/yutogasaki/.hermes/node/bin/node",
+  "nodeVersion": "v22.22.3",
+  "browser": {
+    "name": "chromium",
+    "version": "145.0.7632.6"
+  },
+  "playwright": "1.58.1",
+  "runnerSHA": "4cb432c9abc0a097c0e3706680efc4eeaed270d5d7677b5863990a57ca8a45c6",
+  "helperSHA": "d6892d1b32a9abdd541bd94ac1b2603a22359a58b2e5a5cddd6b157c863c7526",
+  "wrapperSHA": "fbc77b7c948705bc29b6d17013780d97688cebe3a191dfd24a2eab4de4262792",
+  "reportSHA": "794b8929e960b206274aa0583257f7578ce33697faf67a83462de4260c4a9b47",
+  "verificationSHA": "c121cf1ae2334a445e735a728ea928207ad3125d4c9f08d9d687596365a1eedb",
+  "startedAt": "2026-09-09T04:34:10.765Z",
+  "finishedAt": "2026-09-09T04:42:19.690Z",
+  "actual": {
+    "revision": "workshop-20260909-b3f96489e126",
+    "version": "workshop-20260909-b3f96489e126:900c63c4-5bd5-433e-9c95-3bd78814b300",
+    "candidate": "mystic-island-shore-garden-v17",
+    "flags": {
+      "VITE_ISLAND_ENABLED": "true",
+      "VITE_BUILD_PLAY_ENABLED": "true"
+    },
+    "target": "http://127.0.0.1:5274",
+    "modules": [
+      {
+        "urlPath": "/@vite/env",
+        "file": "before-served-0.js",
+        "sha256": "0bad76df822ad3e344292a1c5df5e4c76a232fb1867c4b11e058fdfc76e484be"
+      },
+      {
+        "urlPath": "/src/domain/island/feature.ts",
+        "file": "before-served-1.js",
+        "sha256": "b173efa8ecc8794daeaa0fdf485715d4d00a5aed8e6f0fe4727c363561537b62"
+      },
+      {
+        "urlPath": "/src/domain/park/feature.ts",
+        "file": "before-served-2.js",
+        "sha256": "306ccd405ea7097e56fea2a9e06549836e6d9743e591fb0ff196a1d6d0b5fa27"
+      },
+      {
+        "urlPath": "/src/pages/Island.tsx",
+        "file": "before-served-3.js",
+        "sha256": "9e0de1008b9bc37f56422245b09a6f9c984aa4dd5a95a3a2c1035958559597a1"
+      }
+    ]
+  },
+  "runs": 80,
+  "uniqueRuns": 80,
+  "repetitions": 10,
+  "orderVerified": true,
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "eligible": true,
+  "pass": true,
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 124.28027208581891,
+      "islandMedianProblemsPerMinute": 287.4664859948643,
+      "allCorrectIslandToStudyRatio": 2.31305002129671,
+      "correctOperableP95Ms": 206.80000007152557,
+      "incorrectRetryP95Ms": 205.89999997615814,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 195.94999998807907,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 197.80000007152557,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4827.800000071526,
+      "rawIslandDurationMedianMs": 2087.2000000476837
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 124.30724673016901,
+      "islandMedianProblemsPerMinute": 287.61828182594866,
+      "allCorrectIslandToStudyRatio": 2.3137692241730305,
+      "correctOperableP95Ms": 206.29999995231628,
+      "incorrectRetryP95Ms": 206.30000007152557,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 196.75,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 198.20000004768372,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4826.75,
+      "rawIslandDurationMedianMs": 2086.100000023842
+    }
+  ],
+  "extraOrdinaryQuestionActions": 0,
+  "browserErrors": 0,
+  "sourceSnapshotPaths": 1934,
+  "sourceStable": true,
+  "servedStable": true,
+  "previous37": {
+    "scope": "Same fixture/measurement helper, with only an untimed navigation-entry line added in immutable39. No cross-run speed guarantee.",
+    "reportSHA": "2c193fb78bd2140de2c5a714ce107bc5e90b8c5b83e2695cb27e2c9bd47c24db",
+    "deltas": [
+      {
+        "layout": "phone",
+        "correctP95DeltaMs": 7.500000059604645,
+        "incorrectP95DeltaMs": 7.699999928474426,
+        "sectionP95DeltaMs": 0.10000008344650269
+      },
+      {
+        "layout": "tablet",
+        "correctP95DeltaMs": 6.099999964237213,
+        "incorrectP95DeltaMs": 8.100000083446503,
+        "sectionP95DeltaMs": 0.5000000596046448
+      }
+    ]
+  },
+  "terminal": {
+    "wrapper": 0,
+    "runner": {
+      "code": 0,
+      "signal": null
+    },
+    "server": {
+      "code": null,
+      "signal": "SIGINT"
+    }
+  },
+  "cleanup": {
+    "checkedAt": "2026-09-09T04:42:19.941Z",
+    "ownedPids": [
+      90447,
+      90451,
+      90449,
+      90476,
+      90480,
+      90481,
+      90483,
+      90541,
+      90621,
+      90751,
+      90854,
+      90943,
+      91005,
+      91073,
+      91149,
+      91202,
+      91286,
+      91346,
+      91430,
+      91493,
+      91566,
+      91627,
+      91712,
+      91782,
+      91844,
+      91924,
+      91987,
+      92050,
+      92115,
+      92206,
+      92267
+    ],
+    "ownedProcessGroups": [
+      90447,
+      90451,
+      90476
+    ],
+    "remainingOwnedProcesses": [],
+    "temporaryProfiles": [
+      {
+        "path": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/playwright_chromiumdev_profile-CDRntm",
+        "exists": false
+      }
+    ],
+    "port": 5274,
+    "remainingListeners": "",
+    "serverResult": {
+      "code": null,
+      "signal": "SIGINT"
+    },
+    "benchmarkResult": {
+      "code": 0,
+      "signal": null
+    },
+    "browserClosed": true,
+    "pass": true
+  }
+}

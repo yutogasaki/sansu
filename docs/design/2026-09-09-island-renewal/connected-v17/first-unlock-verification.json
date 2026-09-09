@@ -4,12 +4,13 @@
   "scope": "Diagnostic immediately-prior IslandRecord fixture → real normal three-question reservation and three answers → first east/west unlock → next input; four single observations.",
   "status": {
     "inputAndGrowth": "PASS",
-    "growthAnnouncementDuringLearning": "FAIL",
-    "growthAnnouncementFix": "PENDING",
+    "growthAnnouncementDuringLearning": "NOT_VISIBLE_AS_SPECIFIED_AT_BUILD37",
+    "growthAnnouncementFix": "SUPERSEDED_BY_NEW_SPEC_CHANGE",
     "overallGoal": "ACTIVE",
     "artParity": "HOLD",
     "humanEvidence": "NOT_RUN",
-    "humanN": 0
+    "humanN": 0,
+    "newHeaderAnnouncementEvidence": "PASS_SEPARATE_FIXED39_SEVEN_CASES"
   },
   "target": {
     "url": "http://127.0.0.1:5423",
@@ -182,7 +183,7 @@
         "domPresent": true,
         "visible": false,
         "text": "しまが 大きく ひろがったよおはなが いっぱいに なったひがしへ はしが つながったよ",
-        "interpretation": "Presence and visibility are separate. Hidden notice is not a successful visual growth announcement."
+        "interpretation": "DOM present and visible=false match the specification applicable to build37. These measurements do not demonstrate the newly adopted visible header announcement; that evidence is PENDING. See correction for the superseded FAIL classification."
       },
       "actualFrame": {
         "beforeTimestamp": 1565.2,
@@ -291,7 +292,7 @@
         "domPresent": true,
         "visible": false,
         "text": "しまが 大きく ひろがったよみずべが にぎやかに なったにしへ はしが つながったよ",
-        "interpretation": "Presence and visibility are separate. Hidden notice is not a successful visual growth announcement."
+        "interpretation": "DOM present and visible=false match the specification applicable to build37. These measurements do not demonstrate the newly adopted visible header announcement; that evidence is PENDING. See correction for the superseded FAIL classification."
       },
       "actualFrame": {
         "beforeTimestamp": 1743.2,
@@ -400,7 +401,7 @@
         "domPresent": true,
         "visible": false,
         "text": "しまが 大きく ひろがったよおはなが いっぱいに なったひがしへ はしが つながったよ",
-        "interpretation": "Presence and visibility are separate. Hidden notice is not a successful visual growth announcement."
+        "interpretation": "DOM present and visible=false match the specification applicable to build37. These measurements do not demonstrate the newly adopted visible header announcement; that evidence is PENDING. See correction for the superseded FAIL classification."
       },
       "actualFrame": {
         "beforeTimestamp": 1578.9,
@@ -509,7 +510,7 @@
         "domPresent": true,
         "visible": false,
         "text": "しまが 大きく ひろがったよみずべが にぎやかに なったにしへ はしが つながったよ",
-        "interpretation": "Presence and visibility are separate. Hidden notice is not a successful visual growth announcement."
+        "interpretation": "DOM present and visible=false match the specification applicable to build37. These measurements do not demonstrate the newly adopted visible header announcement; that evidence is PENDING. See correction for the superseded FAIL classification."
       },
       "actualFrame": {
         "beforeTimestamp": 1764.5,
@@ -623,7 +624,37 @@
   "limitations": [
     "Not genuine historical acquisition of 20/41 completed sets or all districts. Twelve current answers and their receipts are genuine UI operations after the declared fixture.",
     "Four single observations, not P95, formal80, device benchmark or child evidence.",
-    "Growth notification exists in DOM but is hidden during learning in all four cases. Return-home notification and unlocked terrain can be seen in copied screenshots.",
+    "All four notices exist in DOM and are hidden during learning as specified for build37. Return-home notices and unlocked terrain are visible in copied screenshots. The newly adopted major-milestone header announcement is unverified (PENDING).",
     "No general art parity, release, PWA update or offline acceptance claim."
-  ]
+  ],
+  "correction": {
+    "date": "2026-09-09",
+    "kind": "SSOT interpretation correction; raw observations unchanged",
+    "supersededDerivedStatus": {
+      "inputAndGrowth": "PASS",
+      "growthAnnouncementDuringLearning": "FAIL",
+      "growthAnnouncementFix": "PENDING",
+      "overallGoal": "ACTIVE",
+      "artParity": "HOLD",
+      "humanEvidence": "NOT_RUN",
+      "humanN": 0
+    },
+    "supersededEvidenceSha256": "c4b23a8a53a96bc811473f580f51c14e80fc5220ac9892e785c2349a59c01ac5",
+    "reason": "The prior FAIL/repair classification did not check the applicable SSOT. At commit d4d157f, docs/product/30_living_island_growth_spec.md:34 explicitly required the island and its notices to be hidden during learning. The four invisible notices match that build contract.",
+    "historicalContract": {
+      "commit": "d4d157f",
+      "path": "docs/product/30_living_island_growth_spec.md",
+      "line": 34,
+      "text": "学習中は島とその通知を非表示"
+    },
+    "newContract": "The newly adopted specification uses the existing learning-header region for major milestones for at most six seconds, preserves header/question/key dimensions, prioritizes incorrect-answer support/errors, and adds no action or focus change.",
+    "newHeaderVisualEvidence": "PASS in a later, separate fixed39 audit; build37 measurements remain unchanged",
+    "originalNavigationQA": "The original full-growth e2e:island FAIL is retained as a mismatch between its visible-notice expectation and the then-current contract; it is not evidence for the new header code.",
+    "preserved": "Raw report/trace, all four DOM-present/visible=false observations, twelve answers/receipts, timing and saving results, images and source/QA hashes are unchanged."
+  },
+  "newHeaderFollowUp": {
+    "evidence": "../../audits/2026-09-09-island-learning-milestones/README.md",
+    "revision": "workshop-20260909-b3f96489e126",
+    "scope": "Seven selected production cases only; not a reinterpretation or rerun of the four original build37 measurements."
+  }
 }
