@@ -1,6 +1,6 @@
 {
   "date": "2026-09-09",
-  "status": "local visual adoption; original37 FAIL retained; test-only verification37-02 full PASS; classic37 PASS",
+  "status": "local visual adoption; original37 FAIL retained; test-only verification37-02 full PASS; classic37 and dedicated DEV formal80 PASS",
   "humanN": 0,
   "fullGoalComplete": false,
   "sourceAParity": "HOLD",
@@ -200,9 +200,31 @@
       "dev4173Closed": true,
       "preview5423Unchanged": true
     },
-    "formal80": "not run for37",
+    "formal80": {
+      "status": "PASS",
+      "eligible": true,
+      "runs": 80,
+      "evidenceFile": "throughput-verification.json",
+      "evidenceSha256": "3cf2905e2cad835b77387440add8c834947774f7477da7221a128469e6720481",
+      "rawReport": "output/island-experience/throughput-37-01/report.json",
+      "rawReportSha256": "2c193fb78bd2140de2c5a714ce107bc5e90b8c5b83e2695cb27e2c9bd47c24db",
+      "sourceHash": "794c920135ebfeadbe7bb3a1db99d2bb53b38d115767d7d0bd20fea7543e17d8",
+      "target": "DEV http://127.0.0.1:5224; separate from production5423",
+      "extraOrdinaryActions": 0,
+      "sourceStable": true,
+      "browserClosed": true,
+      "ownedCleanup": true,
+      "fixtureScope": "synthetic existing island and fixed-ten problems; not ordinary planner, first unlock or human timing"
+    },
     "pwa": "not run for37",
-    "ci": "not run for37; successful 9e02cee CI belongs to prior commit",
+    "ci": {
+      "appCommit": "569d1c0d67478676ef898cbae9bc16e8f9d4b351",
+      "core": "PASS",
+      "docs": "PASS",
+      "laterNavigationCommitExcluded": "8e36612",
+      "coreRun": "https://github.com/yutogasaki/sansu/actions/runs/34308069057",
+      "docsRun": "https://github.com/yutogasaki/sansu/actions/runs/34308069053"
+    },
     "logs": {
       "integration-build-37.log": {
         "path": "output/playwright/island-renewal/integration-build-37.log",
@@ -247,7 +269,7 @@
     "east connector lantern point only; west floor and all furniture use not browser-proven here",
     "no answer submitted; same reservation/input readiness only",
     "cancel has exact DB evidence, no dedicated screenshot",
-    "no standalone performance, PWA, full-goal or source A parity certification"
+    "formal fixed-ten DEV timing is separately documented; no PWA, full-goal, ordinary-planner/real-device performance or source A parity certification"
   ],
   "images": [
     {
@@ -468,5 +490,27 @@
     ],
     "scope": "The current-tracked copy uses current working contents with ignored output excluded. The commit-index copy contains only the intended commit, excluding the parallel navigation docs/hunks.",
     "interpretation": "Exact intended index PASS with 4813 tracked paths including 28 PNGs. Current tracked working copy FAIL has only seven links to concurrent untracked navigation docs; those working changes are retained and excluded from this commit."
+  },
+  "firstUnlock": {
+    "evidenceFile": "first-unlock-verification.json",
+    "evidenceSha256": "c4b23a8a53a96bc811473f580f51c14e80fc5220ac9892e785c2349a59c01ac5",
+    "actualScreens": "first-unlock/README.md",
+    "target": "production http://127.0.0.1:5423",
+    "revision": "workshop-20260909-794c920135eb",
+    "scenarios": 4,
+    "realAnswerReceipts": 12,
+    "fixture": "declared island immediately before east/west unlock; planner and answers are actual UI",
+    "inputAndGrowth": "PASS",
+    "timingRangeMs": [
+      186.9,
+      187.9
+    ],
+    "timingStatistics": "four single observations, not P95 or formal80",
+    "extraActions": 0,
+    "milestoneDOMAttached": 4,
+    "milestoneVisible": 0,
+    "milestoneDisplay": "FAIL; repair pending",
+    "sourceUnchanged": true,
+    "browserClosed": true
   }
 }

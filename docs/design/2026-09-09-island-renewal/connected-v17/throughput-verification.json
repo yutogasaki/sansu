@@ -1,0 +1,301 @@
+{
+  "scope": "Fixed37 dedicated DEV formal fixed-ten timing: 80 alternating runs; synthetic existing-island and fixed-problem fixtures. Not ordinary planner, first unlock, production delivery, physical-device or child-speed evidence. Human N=0.",
+  "generatedAt": "2026-09-09T03:54:42.319812+00:00",
+  "output": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-37-01",
+  "revision": "workshop-20260909-794c920135eb",
+  "manifestPath": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-37/build-source.json",
+  "manifestSHA": "aae904a7cf046e13e1aaadebf1bd6aee14c973d7adaae487ee9e5c2a774346a5",
+  "manifestSourceHash": "794c920135ebfeadbe7bb3a1db99d2bb53b38d115767d7d0bd20fea7543e17d8",
+  "manifestInputs": 1081,
+  "manifestMismatchesBefore": [],
+  "manifestMismatchesAfter": [],
+  "flags": {
+    "VITE_ISLAND_ENABLED": "true",
+    "VITE_BUILD_PLAY_ENABLED": "true"
+  },
+  "target": "http://127.0.0.1:5224",
+  "actualServed": {
+    "base": "http://127.0.0.1:5224",
+    "revision": "workshop-20260909-794c920135eb",
+    "version": "workshop-20260909-794c920135eb:d8eebec4-41ee-44e7-820c-6b5fe45b876f",
+    "candidate": "mystic-island-shore-garden-v17",
+    "flags": {
+      "VITE_ISLAND_ENABLED": "true",
+      "VITE_BUILD_PLAY_ENABLED": "true"
+    },
+    "modules": [
+      {
+        "urlPath": "/@vite/env",
+        "file": "served-0.js",
+        "sha256": "367685e525552b01fa43590355551af5ecd51b6732bf164db0e15d9070c341b9"
+      },
+      {
+        "urlPath": "/src/domain/island/feature.ts",
+        "file": "served-1.js",
+        "sha256": "b173efa8ecc8794daeaa0fdf485715d4d00a5aed8e6f0fe4727c363561537b62"
+      },
+      {
+        "urlPath": "/src/domain/park/feature.ts",
+        "file": "served-2.js",
+        "sha256": "306ccd405ea7097e56fea2a9e06549836e6d9743e591fb0ff196a1d6d0b5fa27"
+      },
+      {
+        "urlPath": "/src/pages/Island.tsx",
+        "file": "served-3.js",
+        "sha256": "14f595b200681c9723dabb5f9df924ccbe58806f7f022c131cb0ee8b95469f5f"
+      }
+    ]
+  },
+  "runner": {
+    "cwd": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-37",
+    "command": [
+      "/Users/yutogasaki/.hermes/node/bin/node",
+      "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-37/tools/e2e-island-throughput.mjs"
+    ]
+  },
+  "runnerInputs": {
+    "tools/e2e-island-throughput.mjs": "d4410af13a670eec937d9e961bc5b2e2a892f66bbf5a9275f405e3bad623d814",
+    "tools/island-e2e-helpers.mjs": "d6892d1b32a9abdd541bd94ac1b2603a22359a58b2e5a5cddd6b157c863c7526",
+    "package.json": "1674df6b514eaf598c109e8da3b21adcb844cfa7e8a41786cf0d53ed7de26865",
+    "package-lock.json": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d"
+  },
+  "nodePath": "/Users/yutogasaki/.hermes/node/bin/node",
+  "nodeVersion": "v22.22.3",
+  "runtimePackages": {
+    "playwright": "1.58.1"
+  },
+  "browser": {
+    "name": "chromium",
+    "version": "145.0.7632.6"
+  },
+  "reportSHA": "2c193fb78bd2140de2c5a714ce107bc5e90b8c5b83e2695cb27e2c9bd47c24db",
+  "rawArtifacts": {
+    "report.json": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-37-01/report.json",
+      "sha256": "2c193fb78bd2140de2c5a714ce107bc5e90b8c5b83e2695cb27e2c9bd47c24db"
+    },
+    "run.log": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-37-01/run.log",
+      "sha256": "9be8f518c336d8e0a9cb16d5701e57a71aaacda3860f64d50e06f4bfc25689c7"
+    },
+    "server.log": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-37-01/server.log",
+      "sha256": "71be19850e29d8c13cdceefec2a8f2d4284c898f96a7e3aab0471c32b87db967"
+    },
+    "preflight.json": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-37-01/preflight.json",
+      "sha256": "acb6946d5ed75dedffe8509ee85d7a6c67c0397fb88f1678218f33717e0508d4"
+    },
+    "postflight.json": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-37-01/postflight.json",
+      "sha256": "e2218d0b16ab3ec21f49a163f987f656ed580d94e15fa6dd185f05182efa9ab5"
+    },
+    "cleanup.json": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-37-01/cleanup.json",
+      "sha256": "b751f31a92f2e29be635fd845d62eafec0016eeb7b63224b56318b0e21d251ac"
+    },
+    "owned-processes.json": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-37-01/owned-processes.json",
+      "sha256": "07c7428cfe5b0de5d3db4ecb8e4b931e3221587b5280b697d01852269cb88c42"
+    }
+  },
+  "runs": 80,
+  "repetitions": 10,
+  "startedAt": "2026-09-09T03:43:23.569Z",
+  "finishedAt": "2026-09-09T03:51:31.094Z",
+  "runtime": {
+    "revisions": [
+      "workshop-20260909-794c920135eb"
+    ],
+    "versions": [
+      "workshop-20260909-794c920135eb:d8eebec4-41ee-44e7-820c-6b5fe45b876f"
+    ],
+    "candidates": [
+      "mystic-island-shore-garden-v17"
+    ],
+    "learningCandidates": [
+      "mystic-island-learning-v2"
+    ],
+    "deliveryIds": [
+      "mystic-island-v1"
+    ],
+    "flag": "VITE_ISLAND_ENABLED=true",
+    "evidenceSource": "Actual rendered Island data attributes on the shared Vite target; Study fixture runs against the same server."
+  },
+  "fixtureId": "cold-open-fixed-ten-v1",
+  "fixtureHash": "959267b8827be99953db083012013bbbb47101ce88950d4829930220f1acaee3",
+  "islandSetup": {
+    "id": "normal-existing-island-v1",
+    "initialCompletedSets": 1,
+    "synthetic": true,
+    "scope": "A disposable existing-island fixture, not a real first-time child or an observed completed introduction. No fabricated answer logs or completed-plan receipts."
+  },
+  "sourceSnapshotStart": "4f96d7661a8e0f85c0f62093e3f635fb387360c22e4a698bde99e92145600ae4",
+  "sourceSnapshotEnd": "4f96d7661a8e0f85c0f62093e3f635fb387360c22e4a698bde99e92145600ae4",
+  "sourceSnapshotPathEntries": 1920,
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 123.01637131206874,
+      "islandMedianProblemsPerMinute": 292.22727331606677,
+      "allCorrectIslandToStudyRatio": 2.375515309053806,
+      "correctOperableP95Ms": 199.30000001192093,
+      "incorrectRetryP95Ms": 198.20000004768372,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 193.25000002980232,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 197.69999998807907,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4877.399999976158,
+      "rawIslandDurationMedianMs": 2053.199999988079
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 122.46774823618141,
+      "islandMedianProblemsPerMinute": 288.97577528790794,
+      "allCorrectIslandToStudyRatio": 2.3596071573930844,
+      "correctOperableP95Ms": 200.19999998807907,
+      "incorrectRetryP95Ms": 198.19999998807907,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 194.7999999821186,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 197.69999998807907,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4899.250000029802,
+      "rawIslandDurationMedianMs": 2076.2999999821186
+    }
+  ],
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "evidence": {
+    "eligible": true,
+    "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "pass": true,
+  "browserClosed": true,
+  "extraOrdinaryQuestionActions": 0,
+  "browserErrorCount": 0,
+  "benchmarkTerminalExitCode": 0,
+  "cleanup": {
+    "checkedAt": "2026-09-09T03:52:37.775946+00:00",
+    "ownedPids": [
+      68749,
+      68751,
+      69044,
+      69052,
+      69056,
+      69057,
+      69059,
+      69375,
+      78440
+    ],
+    "ownedProcessGroups": [
+      68749,
+      69044,
+      69052
+    ],
+    "remainingOwnedProcesses": [],
+    "temporaryProfiles": [
+      {
+        "path": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/playwright_chromiumdev_profile-QV9iqP",
+        "exists": false
+      }
+    ],
+    "port": 5224,
+    "remainingListeners": "",
+    "serverSession": 98371,
+    "serverTerminalExitCode": 130,
+    "intentionalServerInterrupt": true,
+    "benchmarkSession": 89938,
+    "benchmarkTerminalExitCode": 0,
+    "browserClosed": true,
+    "pass": true
+  },
+  "baseline33": {
+    "reportPath": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-33-01/report.json",
+    "reportSHA256": "fcbd72dc033c7d1593735c62b6c4215ff6401ed46499a0a1031856324c1a5677",
+    "fixtureAndMethodExactMatch": true,
+    "runnerAndHelperDifference": "candidate v13→v17 only; measured gates and fixtures unchanged",
+    "comparisons": [
+      {
+        "layout": "phone",
+        "before33": {
+          "correctOperableP95Ms": 199.89999997615814,
+          "incorrectRetryP95Ms": 198.39999997615814,
+          "sectionBoundaryP95Ms": 197.5,
+          "allCorrectIslandToStudyRatio": 2.3542155003400222
+        },
+        "after37": {
+          "correctOperableP95Ms": 199.30000001192093,
+          "incorrectRetryP95Ms": 198.20000004768372,
+          "sectionBoundaryP95Ms": 197.69999998807907,
+          "allCorrectIslandToStudyRatio": 2.375515309053806
+        },
+        "deltaMs": {
+          "correctOperableP95Ms": -0.5999999642372131,
+          "incorrectRetryP95Ms": -0.19999992847442627,
+          "sectionBoundaryP95Ms": 0.19999998807907104
+        }
+      },
+      {
+        "layout": "tablet",
+        "before33": {
+          "correctOperableP95Ms": 199.80000001192093,
+          "incorrectRetryP95Ms": 199.29999995231628,
+          "sectionBoundaryP95Ms": 198.19999998807907,
+          "allCorrectIslandToStudyRatio": 2.356269776639441
+        },
+        "after37": {
+          "correctOperableP95Ms": 200.19999998807907,
+          "incorrectRetryP95Ms": 198.19999998807907,
+          "sectionBoundaryP95Ms": 197.69999998807907,
+          "allCorrectIslandToStudyRatio": 2.3596071573930844
+        },
+        "deltaMs": {
+          "correctOperableP95Ms": 0.3999999761581421,
+          "incorrectRetryP95Ms": -1.0999999642372131,
+          "sectionBoundaryP95Ms": -0.5
+        }
+      }
+    ],
+    "interpretation": "Same automated method comparison. Sub-millisecond P95 differences do not establish a repeatable speed improvement or a guarantee. Earlier source33 evidence remains attributed to33."
+  },
+  "commitBoundary": {
+    "appCommit": "569d1c0d67478676ef898cbae9bc16e8f9d4b351",
+    "coreCI": "success per parent",
+    "docsCI": "success per parent",
+    "excludedLaterNavigationCommit": "8e36612",
+    "meaning": "This timed run used immutable app37 and its unchanged QA; main moved during the run without changing the frozen inputs. No evidence for navigation commit8e36612."
+  },
+  "limits": [
+    "Reduced motion, sound off, automated physical keyboard, Chromium headless DEV; not normal-motion/touch/real-device or child learning speed.",
+    "Synthetic existing-island completion and fixed newly created plan slots; not ordinary planner or first unlock timing.",
+    "Island records actual atomic answer receipts in disposable profiles; Study is the established nonrecording DEV fixture.",
+    "DEV5224 is separate from production-preview5423, whose version UUID and PWA evidence are not substituted.",
+    "Original frozen37 full-suite3FAIL and later test-only verification37-02 PASS remain separate.",
+    "Human N=0, source A parity HOLD, full Goal completion not claimed."
+  ],
+  "rawOutputVerification": {
+    "path": "output/island-experience/throughput-37-01/verification.json",
+    "sha256": "16e92ebee9f3db051c75aeae0ef56a4c81a20ae1ba4848d33d11eb830d408c0e"
+  }
+}

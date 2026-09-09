@@ -1,0 +1,629 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-09T04:02:27.908Z",
+  "scope": "Diagnostic immediately-prior IslandRecord fixture → real normal three-question reservation and three answers → first east/west unlock → next input; four single observations.",
+  "status": {
+    "inputAndGrowth": "PASS",
+    "growthAnnouncementDuringLearning": "FAIL",
+    "growthAnnouncementFix": "PENDING",
+    "overallGoal": "ACTIVE",
+    "artParity": "HOLD",
+    "humanEvidence": "NOT_RUN",
+    "humanN": 0
+  },
+  "target": {
+    "url": "http://127.0.0.1:5423",
+    "revision": "workshop-20260909-794c920135eb",
+    "candidate": "mystic-island-shore-garden-v17",
+    "sourceHash": "794c920135ebfeadbe7bb3a1db99d2bb53b38d115767d7d0bd20fea7543e17d8",
+    "sourceInputs": 1081,
+    "flags": {
+      "VITE_ISLAND_ENABLED": true,
+      "VITE_BUILD_PLAY_ENABLED": true
+    },
+    "manifest": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-37/build-source.json",
+    "baseComposition": {
+      "baseCommit": "9e02ceeea0688366a96919e782f9e1c6d8e36228",
+      "overlays": [
+        "src/components/island/three/scenery.ts",
+        "src/components/island/three/cosmeticScenery.ts",
+        "src/components/island/three/runtime.ts",
+        "src/components/island/three/appearanceRendering.test.ts",
+        "src/components/island/three/themeMotifs.ts",
+        "src/components/island/three/terrainProfile.ts",
+        "src/components/island/three/grassSurface.test.ts",
+        "src/components/island/three/connectedTerrain.ts",
+        "src/components/island/three/connectedTerrain.test.ts",
+        "src/components/island/three/connectedScenery.test.ts",
+        "src/components/island/three/navigation.ts",
+        "src/components/island/three/navigation.test.ts",
+        "src/components/island/three/westNavigation.test.ts",
+        "src/domain/island/catalog.ts",
+        "src/domain/island/catalogExpansion.test.ts",
+        "src/domain/island/sharedMemories.ts",
+        "src/domain/island/sharedMemories.test.ts",
+        "src/domain/island/landGeometry.ts",
+        "src/domain/island/landGeometry.test.ts"
+      ],
+      "scopedCandidateReplacements": [
+        "src/domain/island/feature.ts",
+        "vite.config.ts",
+        "tools/island-e2e-helpers.mjs",
+        "tools/e2e-island-observation.mjs",
+        "tools/e2e-island-pwa.mjs",
+        "tools/e2e-island-throughput.mjs"
+      ],
+      "excluded": "Concurrent navigation app, QA, package and docs changes. Shared QA uses git base plus candidate replacement only."
+    },
+    "deliveryVersion": "workshop-20260909-794c920135eb:3ddada38-80cf-4b46-b6fe-37cbcfbb09e6",
+    "delivery": "snap-root-v1",
+    "checkpoint": "569d1c0 equivalent immutable 37; not navigation-integrated live HEAD 8e36612"
+  },
+  "provenance": {
+    "rawReport": "output/playwright/island-renewal/first-unlock-37-01/report.json",
+    "rawReportSha256": "cb870b18eaa80d1908ad3b062b8a533bdfe42edf005bd62493f3a5378c54a2fb",
+    "sourceStart": "output/playwright/island-renewal/first-unlock-37-01/source-start.json",
+    "sourceEnd": "output/playwright/island-renewal/first-unlock-37-01/source-end.json",
+    "manifestSha256": "aae904a7cf046e13e1aaadebf1bd6aee14c973d7adaae487ee9e5c2a774346a5",
+    "sourceInputsStartEndSha256": "5caf5ae62728b500da01c095ba43c81c128da274c596a08c929e6466ca43d9ff",
+    "qaHelperRuntimeStartEndSha256": "22ce6c8f02bd50bcdd0d6e1095eb8fcd414e3e9250188c7909c1ba9f87af3ccd",
+    "qaHelperRuntimeFiles": 489,
+    "runtimeClosureScope": "Own QA + frozen helper + installed Playwright JS/MJS/CJS/JSON files (489 total); Node/Chromium versions recorded, native executable bytes not fingerprinted.",
+    "qaSha256": "472f2a74cc463bb71e133c5b1511352a20962d67075aa57c6fef64c657a9abaa",
+    "node": "v22.22.3",
+    "chromium": "145.0.7632.6",
+    "sourceStable": true
+  },
+  "execution": {
+    "terminalSession": 88753,
+    "exitCode": 0,
+    "browserClosed": true,
+    "contextCount": 4,
+    "contextsClosed": true,
+    "serverStarted": false,
+    "parentPreviewClosed": false,
+    "serviceWorkers": "allow",
+    "reducedMotion": "no-preference",
+    "soundEnabled": false,
+    "wallTimeMs": 29107.284958,
+    "wallTimeScope": "Entire --run including source preflight, setup, all answers, captures and cleanup; pure preparation and prior editing excluded.",
+    "errors": 0,
+    "consoleErrors": 0
+  },
+  "measurement": {
+    "method": "Frozen helper click capture timestamp → rAF confirms exact new plan ID, revision 0, inputReady=true and first-slot cue. Then real enabled answer controls are empty where applicable and pass viewport/center hit checks.",
+    "samplesPerCase": 1,
+    "p95": null,
+    "formal80": false,
+    "thresholdApplied": false,
+    "extraContinuationOperations": 0,
+    "geometryIncludedClaim": false,
+    "geometryCaveat": "Runtime passive-effect updates and hidden learning world are not separately instrumented. Return-home actual frame confirms unlocked terrain after timing; input-ready latency does not prove all geometry cost was included."
+  },
+  "preparation": {
+    "pureDomainFixtures": 2,
+    "negativeCases": [
+      "pendingAnswers=18 rejected at progress5",
+      "locked next habitat rejected"
+    ],
+    "source": "Fixed37 assertIsland/assertIslandPlanGrowth/isValidIslandPlacement/growIslandAfterCompletedSet",
+    "firstFailure": "Preparation closure enumerator treated esbuild virtual <define:import.meta.env> as a file. Corrected in owned QA before any browser; no app failure or source change.",
+    "raw": "output/playwright/island-renewal/first-unlock-37-01/preparation.json"
+  },
+  "rows": [
+    {
+      "name": "phone-east",
+      "fixture": {
+        "declaredCompletedSets": 20,
+        "declaredItems": 3,
+        "growth": {
+          "expansionLevel": 0,
+          "focus": "garden",
+          "progress": {
+            "garden": 5,
+            "waterside": 0,
+            "grove": 0,
+            "village": 0
+          },
+          "pendingAnswers": {
+            "garden": 15,
+            "waterside": 0,
+            "grove": 0,
+            "village": 0
+          }
+        },
+        "scope": "Profile and immediately preceding island are diagnostic; initial real-writer memory preserved. No synthetic prior logs, plans, answer receipts, skill memories or mature memories."
+      },
+      "actualAnswers": 3,
+      "answerReceiptIds": [
+        "[\"island-action-v1\",\"first-unlock-37-phone-east\",\"[\\\"island-plan-v1\\\",\\\"first-unlock-37-phone-east\\\",20]\",0]",
+        "[\"island-action-v1\",\"first-unlock-37-phone-east\",\"[\\\"island-plan-v1\\\",\\\"first-unlock-37-phone-east\\\",20]\",1]",
+        "[\"island-action-v1\",\"first-unlock-37-phone-east\",\"[\\\"island-plan-v1\\\",\\\"first-unlock-37-phone-east\\\",20]\",2]"
+      ],
+      "completedPlanId": "[\"island-plan-v1\",\"first-unlock-37-phone-east\",20]",
+      "nextPlanId": "[\"island-plan-v1\",\"first-unlock-37-phone-east\",21]",
+      "finalSubmitToNextInputMs": 187.89999997615814,
+      "setupThroughFirstTwoAnswersMs": 5767.800791000001,
+      "totalScenarioMs": 7358.316875,
+      "afterGrowth": {
+        "level": 1,
+        "progress": {
+          "garden": 6,
+          "waterside": 0,
+          "grove": 0,
+          "village": 0
+        },
+        "pendingAnswers": {
+          "garden": 0,
+          "waterside": 0,
+          "grove": 0,
+          "village": 0
+        }
+      },
+      "nextInput": {
+        "ready": true,
+        "controls": [
+          {
+            "label": "あお",
+            "hit": true,
+            "inViewport": true
+          },
+          {
+            "label": "あか",
+            "hit": true,
+            "inViewport": true
+          }
+        ],
+        "empty": true,
+        "inputType": "choice"
+      },
+      "extraContinuationClicks": [],
+      "milestone": {
+        "domPresent": true,
+        "visible": false,
+        "text": "しまが 大きく ひろがったよおはなが いっぱいに なったひがしへ はしが つながったよ",
+        "interpretation": "Presence and visibility are separate. Hidden notice is not a successful visual growth announcement."
+      },
+      "actualFrame": {
+        "beforeTimestamp": 1565.2,
+        "afterTimestamp": 3325.1,
+        "beforeExpanded": "false",
+        "afterExpanded": "true",
+        "beforeWestExpanded": "false",
+        "afterWestExpanded": "false"
+      },
+      "native": {
+        "tableCount": 17,
+        "changedByFinalRealAnswer": [
+          "appData",
+          "islandEvents",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "profiles"
+        ],
+        "exactUnchangedTables": [
+          "exploreDiscoveries",
+          "exploreRunEvents",
+          "exploreRuns",
+          "islandPhotoAlbums",
+          "islandPhotoBlobs",
+          "islandPhotos",
+          "memoryVocab",
+          "parkEvents",
+          "parkPlans",
+          "parks"
+        ],
+        "oracleScope": "All 17 tables captured; 10 unaffected tables exact. Native declared fixture changed only islands. Frozen helper verifies each real answer receipt, slot/problem preservation and plan transition; this is not an independently recomputed full profile/SRS reducer oracle."
+      },
+      "contextClosed": true,
+      "inputAndGrowthPass": true
+    },
+    {
+      "name": "phone-west",
+      "fixture": {
+        "declaredCompletedSets": 41,
+        "declaredItems": 5,
+        "growth": {
+          "expansionLevel": 1,
+          "focus": "waterside",
+          "progress": {
+            "garden": 6,
+            "waterside": 5,
+            "grove": 0,
+            "village": 0
+          },
+          "pendingAnswers": {
+            "garden": 0,
+            "waterside": 15,
+            "grove": 0,
+            "village": 0
+          }
+        },
+        "scope": "Profile and immediately preceding island are diagnostic; initial real-writer memory preserved. No synthetic prior logs, plans, answer receipts, skill memories or mature memories."
+      },
+      "actualAnswers": 3,
+      "answerReceiptIds": [
+        "[\"island-action-v1\",\"first-unlock-37-phone-west\",\"[\\\"island-plan-v1\\\",\\\"first-unlock-37-phone-west\\\",41]\",0]",
+        "[\"island-action-v1\",\"first-unlock-37-phone-west\",\"[\\\"island-plan-v1\\\",\\\"first-unlock-37-phone-west\\\",41]\",1]",
+        "[\"island-action-v1\",\"first-unlock-37-phone-west\",\"[\\\"island-plan-v1\\\",\\\"first-unlock-37-phone-west\\\",41]\",2]"
+      ],
+      "completedPlanId": "[\"island-plan-v1\",\"first-unlock-37-phone-west\",41]",
+      "nextPlanId": "[\"island-plan-v1\",\"first-unlock-37-phone-west\",42]",
+      "finalSubmitToNextInputMs": 187.19999992847443,
+      "setupThroughFirstTwoAnswersMs": 5824.930042,
+      "totalScenarioMs": 6936.743208,
+      "afterGrowth": {
+        "level": 2,
+        "progress": {
+          "garden": 6,
+          "waterside": 6,
+          "grove": 0,
+          "village": 0
+        },
+        "pendingAnswers": {
+          "garden": 0,
+          "waterside": 0,
+          "grove": 0,
+          "village": 0
+        }
+      },
+      "nextInput": {
+        "ready": true,
+        "controls": [
+          {
+            "label": "おなじ",
+            "hit": true,
+            "inViewport": true
+          },
+          {
+            "label": "ちがう",
+            "hit": true,
+            "inViewport": true
+          }
+        ],
+        "empty": true,
+        "inputType": "choice"
+      },
+      "extraContinuationClicks": [],
+      "milestone": {
+        "domPresent": true,
+        "visible": false,
+        "text": "しまが 大きく ひろがったよみずべが にぎやかに なったにしへ はしが つながったよ",
+        "interpretation": "Presence and visibility are separate. Hidden notice is not a successful visual growth announcement."
+      },
+      "actualFrame": {
+        "beforeTimestamp": 1743.2,
+        "afterTimestamp": 3064.2,
+        "beforeExpanded": "true",
+        "afterExpanded": "true",
+        "beforeWestExpanded": "false",
+        "afterWestExpanded": "true"
+      },
+      "native": {
+        "tableCount": 17,
+        "changedByFinalRealAnswer": [
+          "appData",
+          "islandEvents",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "profiles"
+        ],
+        "exactUnchangedTables": [
+          "exploreDiscoveries",
+          "exploreRunEvents",
+          "exploreRuns",
+          "islandPhotoAlbums",
+          "islandPhotoBlobs",
+          "islandPhotos",
+          "memoryVocab",
+          "parkEvents",
+          "parkPlans",
+          "parks"
+        ],
+        "oracleScope": "All 17 tables captured; 10 unaffected tables exact. Native declared fixture changed only islands. Frozen helper verifies each real answer receipt, slot/problem preservation and plan transition; this is not an independently recomputed full profile/SRS reducer oracle."
+      },
+      "contextClosed": true,
+      "inputAndGrowthPass": true
+    },
+    {
+      "name": "tablet-east",
+      "fixture": {
+        "declaredCompletedSets": 20,
+        "declaredItems": 3,
+        "growth": {
+          "expansionLevel": 0,
+          "focus": "garden",
+          "progress": {
+            "garden": 5,
+            "waterside": 0,
+            "grove": 0,
+            "village": 0
+          },
+          "pendingAnswers": {
+            "garden": 15,
+            "waterside": 0,
+            "grove": 0,
+            "village": 0
+          }
+        },
+        "scope": "Profile and immediately preceding island are diagnostic; initial real-writer memory preserved. No synthetic prior logs, plans, answer receipts, skill memories or mature memories."
+      },
+      "actualAnswers": 3,
+      "answerReceiptIds": [
+        "[\"island-action-v1\",\"first-unlock-37-tablet-east\",\"[\\\"island-plan-v1\\\",\\\"first-unlock-37-tablet-east\\\",20]\",0]",
+        "[\"island-action-v1\",\"first-unlock-37-tablet-east\",\"[\\\"island-plan-v1\\\",\\\"first-unlock-37-tablet-east\\\",20]\",1]",
+        "[\"island-action-v1\",\"first-unlock-37-tablet-east\",\"[\\\"island-plan-v1\\\",\\\"first-unlock-37-tablet-east\\\",20]\",2]"
+      ],
+      "completedPlanId": "[\"island-plan-v1\",\"first-unlock-37-tablet-east\",20]",
+      "nextPlanId": "[\"island-plan-v1\",\"first-unlock-37-tablet-east\",21]",
+      "finalSubmitToNextInputMs": 187.10000002384186,
+      "setupThroughFirstTwoAnswersMs": 5653.300707999999,
+      "totalScenarioMs": 7326.9489170000015,
+      "afterGrowth": {
+        "level": 1,
+        "progress": {
+          "garden": 6,
+          "waterside": 0,
+          "grove": 0,
+          "village": 0
+        },
+        "pendingAnswers": {
+          "garden": 0,
+          "waterside": 0,
+          "grove": 0,
+          "village": 0
+        }
+      },
+      "nextInput": {
+        "ready": true,
+        "controls": [
+          {
+            "label": "おなじ",
+            "hit": true,
+            "inViewport": true
+          },
+          {
+            "label": "ちがう",
+            "hit": true,
+            "inViewport": true
+          }
+        ],
+        "empty": true,
+        "inputType": "choice"
+      },
+      "extraContinuationClicks": [],
+      "milestone": {
+        "domPresent": true,
+        "visible": false,
+        "text": "しまが 大きく ひろがったよおはなが いっぱいに なったひがしへ はしが つながったよ",
+        "interpretation": "Presence and visibility are separate. Hidden notice is not a successful visual growth announcement."
+      },
+      "actualFrame": {
+        "beforeTimestamp": 1578.9,
+        "afterTimestamp": 3593,
+        "beforeExpanded": "false",
+        "afterExpanded": "true",
+        "beforeWestExpanded": "false",
+        "afterWestExpanded": "false"
+      },
+      "native": {
+        "tableCount": 17,
+        "changedByFinalRealAnswer": [
+          "appData",
+          "islandEvents",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "profiles"
+        ],
+        "exactUnchangedTables": [
+          "exploreDiscoveries",
+          "exploreRunEvents",
+          "exploreRuns",
+          "islandPhotoAlbums",
+          "islandPhotoBlobs",
+          "islandPhotos",
+          "memoryVocab",
+          "parkEvents",
+          "parkPlans",
+          "parks"
+        ],
+        "oracleScope": "All 17 tables captured; 10 unaffected tables exact. Native declared fixture changed only islands. Frozen helper verifies each real answer receipt, slot/problem preservation and plan transition; this is not an independently recomputed full profile/SRS reducer oracle."
+      },
+      "contextClosed": true,
+      "inputAndGrowthPass": true
+    },
+    {
+      "name": "tablet-west",
+      "fixture": {
+        "declaredCompletedSets": 41,
+        "declaredItems": 5,
+        "growth": {
+          "expansionLevel": 1,
+          "focus": "waterside",
+          "progress": {
+            "garden": 6,
+            "waterside": 5,
+            "grove": 0,
+            "village": 0
+          },
+          "pendingAnswers": {
+            "garden": 0,
+            "waterside": 15,
+            "grove": 0,
+            "village": 0
+          }
+        },
+        "scope": "Profile and immediately preceding island are diagnostic; initial real-writer memory preserved. No synthetic prior logs, plans, answer receipts, skill memories or mature memories."
+      },
+      "actualAnswers": 3,
+      "answerReceiptIds": [
+        "[\"island-action-v1\",\"first-unlock-37-tablet-west\",\"[\\\"island-plan-v1\\\",\\\"first-unlock-37-tablet-west\\\",41]\",0]",
+        "[\"island-action-v1\",\"first-unlock-37-tablet-west\",\"[\\\"island-plan-v1\\\",\\\"first-unlock-37-tablet-west\\\",41]\",1]",
+        "[\"island-action-v1\",\"first-unlock-37-tablet-west\",\"[\\\"island-plan-v1\\\",\\\"first-unlock-37-tablet-west\\\",41]\",2]"
+      ],
+      "completedPlanId": "[\"island-plan-v1\",\"first-unlock-37-tablet-west\",41]",
+      "nextPlanId": "[\"island-plan-v1\",\"first-unlock-37-tablet-west\",42]",
+      "finalSubmitToNextInputMs": 186.89999997615814,
+      "setupThroughFirstTwoAnswersMs": 5941.041708000001,
+      "totalScenarioMs": 6963.283374999999,
+      "afterGrowth": {
+        "level": 2,
+        "progress": {
+          "garden": 6,
+          "waterside": 6,
+          "grove": 0,
+          "village": 0
+        },
+        "pendingAnswers": {
+          "garden": 0,
+          "waterside": 0,
+          "grove": 0,
+          "village": 0
+        }
+      },
+      "nextInput": {
+        "ready": true,
+        "controls": [
+          {
+            "label": "おなじ",
+            "hit": true,
+            "inViewport": true
+          },
+          {
+            "label": "ちがう",
+            "hit": true,
+            "inViewport": true
+          }
+        ],
+        "empty": true,
+        "inputType": "choice"
+      },
+      "extraContinuationClicks": [],
+      "milestone": {
+        "domPresent": true,
+        "visible": false,
+        "text": "しまが 大きく ひろがったよみずべが にぎやかに なったにしへ はしが つながったよ",
+        "interpretation": "Presence and visibility are separate. Hidden notice is not a successful visual growth announcement."
+      },
+      "actualFrame": {
+        "beforeTimestamp": 1764.5,
+        "afterTimestamp": 3032.5,
+        "beforeExpanded": "true",
+        "afterExpanded": "true",
+        "beforeWestExpanded": "false",
+        "afterWestExpanded": "true"
+      },
+      "native": {
+        "tableCount": 17,
+        "changedByFinalRealAnswer": [
+          "appData",
+          "islandEvents",
+          "islandPlans",
+          "islands",
+          "logs",
+          "memoryMath",
+          "profiles"
+        ],
+        "exactUnchangedTables": [
+          "exploreDiscoveries",
+          "exploreRunEvents",
+          "exploreRuns",
+          "islandPhotoAlbums",
+          "islandPhotoBlobs",
+          "islandPhotos",
+          "memoryVocab",
+          "parkEvents",
+          "parkPlans",
+          "parks"
+        ],
+        "oracleScope": "All 17 tables captured; 10 unaffected tables exact. Native declared fixture changed only islands. Frozen helper verifies each real answer receipt, slot/problem preservation and plan transition; this is not an independently recomputed full profile/SRS reducer oracle."
+      },
+      "contextClosed": true,
+      "inputAndGrowthPass": true
+    }
+  ],
+  "evidence": [
+    {
+      "path": "first-unlock/phone-east-before-home.png",
+      "source": "output/playwright/island-renewal/first-unlock-37-01/phone-east-before-home.png",
+      "sha256": "f50fd9f972838988586bf6e4866eb0226b82cf6771029184b772e289fbff9ca8",
+      "bytes": 155911,
+      "unmodified": true
+    },
+    {
+      "path": "first-unlock/phone-east-after-home.png",
+      "source": "output/playwright/island-renewal/first-unlock-37-01/phone-east-after-home.png",
+      "sha256": "8fd438767ded86241700dbb6f386ba3cd7b9273aad5913a3fae5ece32fc1971a",
+      "bytes": 165199,
+      "unmodified": true
+    },
+    {
+      "path": "first-unlock/phone-west-before-home.png",
+      "source": "output/playwright/island-renewal/first-unlock-37-01/phone-west-before-home.png",
+      "sha256": "48f4e0ea2efe6155d1064d6e1059b163c13cee2654649658c2b63bc346a4ff0e",
+      "bytes": 170598,
+      "unmodified": true
+    },
+    {
+      "path": "first-unlock/phone-west-after-home.png",
+      "source": "output/playwright/island-renewal/first-unlock-37-01/phone-west-after-home.png",
+      "sha256": "383a906487804ffaf47a0dea97b1ce1853a7afc579a7aa2345d7923b0bdd9a28",
+      "bytes": 179433,
+      "unmodified": true
+    },
+    {
+      "path": "first-unlock/tablet-east-before-home.png",
+      "source": "output/playwright/island-renewal/first-unlock-37-01/tablet-east-before-home.png",
+      "sha256": "b46516ae18ef7d4c5cfd8f932fed3f3152fbe983aecccfb7dfb9bda4f9e2ff9e",
+      "bytes": 263875,
+      "unmodified": true
+    },
+    {
+      "path": "first-unlock/tablet-east-after-home.png",
+      "source": "output/playwright/island-renewal/first-unlock-37-01/tablet-east-after-home.png",
+      "sha256": "dc2382fde9de22d4dd7cc6252bd8089265b919a1a3ec7fb81690c5ba6e4abb5f",
+      "bytes": 300300,
+      "unmodified": true
+    },
+    {
+      "path": "first-unlock/tablet-west-before-home.png",
+      "source": "output/playwright/island-renewal/first-unlock-37-01/tablet-west-before-home.png",
+      "sha256": "baf8efd0b0c1438527f2dee6584ccce07c45fb1bb995addb0ed801f86625248e",
+      "bytes": 301338,
+      "unmodified": true
+    },
+    {
+      "path": "first-unlock/tablet-west-after-home.png",
+      "source": "output/playwright/island-renewal/first-unlock-37-01/tablet-west-after-home.png",
+      "sha256": "ef9d06568e47ee06a1efaa1f1743a93bfc95e8875e9196ec3d181f2589c2ff5f",
+      "bytes": 337500,
+      "unmodified": true
+    },
+    {
+      "path": "first-unlock/phone-east-next-input.png",
+      "source": "output/playwright/island-renewal/first-unlock-37-01/phone-east-next-input.png",
+      "sha256": "348c0acc9a7928dc8d645e42904354d92586ffa1764214006a0c5fce6d968126",
+      "bytes": 30524,
+      "unmodified": true
+    },
+    {
+      "path": "first-unlock/tablet-west-next-input.png",
+      "source": "output/playwright/island-renewal/first-unlock-37-01/tablet-west-next-input.png",
+      "sha256": "072939a9dd1ff77d9310621442621748a423d9f71172e64597834b0448d3296c",
+      "bytes": 46257,
+      "unmodified": true
+    }
+  ],
+  "limitations": [
+    "Not genuine historical acquisition of 20/41 completed sets or all districts. Twelve current answers and their receipts are genuine UI operations after the declared fixture.",
+    "Four single observations, not P95, formal80, device benchmark or child evidence.",
+    "Growth notification exists in DOM but is hidden during learning in all four cases. Return-home notification and unlocked terrain can be seen in copied screenshots.",
+    "No general art parity, release, PWA update or offline acceptance claim."
+  ]
+}
