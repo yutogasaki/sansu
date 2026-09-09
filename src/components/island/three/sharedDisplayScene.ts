@@ -211,7 +211,9 @@ function makeSlot(display: SharedDisplay, appearance?: SharedSpecimenAppearance,
     group.add(table); table.name = 'shared-display-table';
     cylinder(table, m.get('#aa7851'), [0, .285, 0], radius * .35, .43, radius * .27, 20);
     cylinder(table, m.get('#a67a53'), [0, .055, 0], radius * .57, .09, radius * .53, 28);
-    cylinder(table, m.get('#9b725c'), [0, .47, 0], radius - .045, .1, radius - .045, 48);
+    // Keep the support bottom at .42 and its cap below the .512–.52 top slab.
+    // Two opaque caps at .52 otherwise produce radial depth fighting after batching.
+    cylinder(table, m.get('#9b725c'), [0, .465, 0], radius - .045, .09, radius - .045, 48);
     cylinder(table, m.get('#f3e0b6'), [0, .516, 0], radius - .073, .008, radius - .073, 48);
     ring(table, m.get('#dfb780'), [0, .516, 0], radius - .052, .013);
     const preparation: DisplaySlot['preparation'] = [-1, 0, 1].map(x => new THREE.Vector3(x * (work ? .16 : .12), .55, work ? -.69 : -.46)) as DisplaySlot['preparation'];

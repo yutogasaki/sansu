@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { WORKSHOP_SPECIMEN_IDS, type WorkshopSpecimenId } from '../../../domain/island/workshop';
 import { WORKSHOP_PART_IDS, type WorkshopAnchor, type WorkshopPartId } from '../../../domain/island/workshopLayout';
 import { batch, box, curve, cylinder, disposeGeometry, ellipsoid, IslandMaterials, mesh, pole } from './primitives';
+import { WORKSHOP_SAND } from './workshopGround';
 
 // Transfer the island's broad cream/pink/blue masses, grounded forms and
 // material-specific detail. Do not transfer UI labels or ambient particles
@@ -134,7 +135,7 @@ export function createWorkshopGeometry() {
     const water = new THREE.MeshStandardMaterial({ color: '#45afe1', transparent: true, opacity: .22, roughness: .22, depthWrite: false }); extra.push(water);
     for (const root of [observe, build]) {
         const ground = new THREE.Group();
-        ellipsoid(ground, m.get('#f2d89a'), [0, -.2, 0], [4.35, .24, 3.08], 32);
+        ellipsoid(ground, m.get('#f2d89a'), WORKSHOP_SAND.position, WORKSHOP_SAND.scale, WORKSHOP_SAND.segments);
         ellipsoid(ground, m.get('#84d1c8'), [0, -.38, 0], [4.5, .16, 3.24], 32);
         for (let i = 0; i < 9; i++) ellipsoid(ground, m.get(i % 2 ? '#b46ec1' : '#e898bc'), [-3.9 + i * .94, .03, -2.48], [.24, .18, .2], 10);
         batch(ground, m.painted); root.add(ground);

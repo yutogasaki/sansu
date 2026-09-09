@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import type { IslandResident } from './animals';
 import { easeResident, residentFootY, sampleResidentStride, type ResidentSpecies } from './residentRig';
 import type { WorkshopSceneRequest } from './workshopScene';
+import { workshopFootSupport, workshopWaitingOffset } from './workshopGround';
 
 interface Transform { object: THREE.Object3D; position: THREE.Vector3; quaternion: THREE.Quaternion; scale: THREE.Vector3 }
 interface Execution {
@@ -47,28 +48,62 @@ export class IslandWorkshopPresentation {
         actor.feet.forEach(foot => { foot.position.y = residentFootY(actor.species); foot.position.z = .12; });
     }
 
+    private ground() {
+        const actor = this.actor!;
+        actor.group.position.y = 0;
+        actor.feet.forEach(foot => { foot.position.y = residentFootY(actor.species); });
+        actor.group.updateMatrixWorld(true);
+        const supports = actor.feet.map(workshopFootSupport);
+        if (supports.some(support => !support)) return false;
+        const heights = supports.map(support => -support!.clearance);
+        const rootY = (heights[0] + heights[1]) / 2;
+        actor.group.position.y = rootY;
+        actor.feet.forEach((foot, index) => {
+            const scaleY = new THREE.Vector3().setFromMatrixScale(foot.parent!.matrixWorld).y;
+            foot.position.y += (heights[index] - rootY) / scaleY;
+        });
+        actor.group.updateMatrixWorld(true);
+        return true;
+    }
+
+    private entry(approach: THREE.Vector3) {
+        const actor = this.actor!;
+        this.neutral(); actor.group.position.copy(approach); actor.group.rotation.set(0, Math.PI, 0);
+        actor.group.updateMatrixWorld(true);
+        const offset = workshopWaitingOffset(actor.feet);
+        if (offset === undefined) return undefined;
+        actor.group.position.z += offset;
+        return this.ground() ? actor.group.position.clone() : undefined;
+    }
+
     private contactRoot(handle: THREE.Vector3, approach: THREE.Vector3) {
         const actor = this.actor!;
         this.neutral(); actor.group.position.copy(approach);
         actor.group.rotation.set(0, Math.atan2(handle.x - approach.x, handle.z - approach.z), 0);
-        actor.group.updateMatrixWorld(true);
-        const shoulder = actor.group.getObjectByName('shoulder-left')!.getWorldPosition(new THREE.Vector3());
-        const reach = actor.handAnchor(new THREE.Vector3(), 'left').distanceTo(shoulder);
-        const height = handle.y - shoulder.y;
-        if (Math.abs(height) >= reach) return undefined;
         const forward = new THREE.Vector3(0, 0, 1).applyQuaternion(actor.group.quaternion);
-        const horizontal = Math.sqrt(reach * reach - height * height);
-        const desired = handle.clone().addScaledVector(forward, -horizontal);
-        return approach.clone().add(new THREE.Vector3(desired.x - shoulder.x, 0, desired.z - shoulder.z));
+        // Ground height changes the shoulder's reach. Solve the same hand/root
+        // geometry on the real sand, retaining the existing arm and handle.
+        for (let iteration = 0; iteration < 8; iteration++) {
+            if (!this.ground()) return undefined;
+            const shoulder = actor.group.getObjectByName('shoulder-left')!.getWorldPosition(new THREE.Vector3());
+            const reach = actor.handAnchor(new THREE.Vector3(), 'left').distanceTo(shoulder);
+            const height = handle.y - shoulder.y;
+            if (Math.abs(height) >= reach) return undefined;
+            const desired = handle.clone().addScaledVector(forward, -Math.sqrt(reach * reach - height * height));
+            const dx = desired.x - shoulder.x, dz = desired.z - shoulder.z;
+            actor.group.position.x += dx; actor.group.position.z += dz;
+            if (Math.hypot(dx, dz) < 1e-7) break;
+        }
+        return this.ground() ? actor.group.position.clone() : undefined;
     }
 
     beginRun(request: WorkshopSceneRequest, now: number, handle: THREE.Vector3, approach: THREE.Vector3) {
         if (!this.actor || request.command.type !== 'run') return false;
         const contactRoot = this.contactRoot(handle, approach);
         if (!contactRoot) return false;
-        // The approach lane stays outside the 4x4 board. Only the last short
-        // step reaches the source; no ordinary island path is modified.
-        const entry = approach.clone().add(new THREE.Vector3(0, 0, 2.1));
+        const entry = this.entry(approach);
+        if (!entry) return false;
+        // The shorter lane stays within the sand and outside the 4x4 board.
         const points = [entry, approach.clone(), contactRoot], lengths = [0];
         for (let index = 1; index < points.length; index++) lengths.push(lengths[index - 1] + points[index].distanceTo(points[index - 1]));
         this.execution = { request, phase: 'walking', started: now, points, lengths, total: lengths[lengths.length - 1], contactRoot };
@@ -81,7 +116,7 @@ export class IslandWorkshopPresentation {
         const execution = this.execution;
         this.neutral(); this.handTarget = handle.clone(); this.interestTarget = interest?.clone();
         if (!execution) {
-            actor.group.position.copy(approach).add(new THREE.Vector3(0, 0, 2.1)); actor.group.rotation.set(0, Math.PI, 0);
+            this.entry(approach);
             actor.group.updateMatrixWorld(true); return false;
         }
         if (execution.phase === 'walking') {
@@ -94,10 +129,14 @@ export class IslandWorkshopPresentation {
             const t = (distance - execution.lengths[index - 1]) / (execution.lengths[index] - execution.lengths[index - 1]);
             actor.group.position.lerpVectors(from, to, Math.max(0, Math.min(1, t)));
             actor.group.rotation.set(0, Math.atan2(to.x - from.x, to.z - from.z), 0);
-            if (!reduced) {
-                const stride = sampleResidentStride(distance, execution.total);
+            const stride = !reduced ? sampleResidentStride(distance, execution.total) : undefined;
+            if (stride) actor.feet.forEach((foot, index) => { foot.position.z = stride.feet[index].z; });
+            this.ground();
+            if (stride) {
                 actor.pose.position.y = stride.bob;
-                actor.feet.forEach((foot, index) => { foot.position.y += stride.feet[index].lift; foot.position.z = stride.feet[index].z; });
+                // The body bobs while the stance foot stays planted; only the
+                // swing foot rises above its own sand contact.
+                actor.feet.forEach((foot, index) => { foot.position.y += stride.feet[index].lift - stride.bob; });
             }
             if (fraction >= 1) { execution.phase = 'contact'; execution.started = now; }
             actor.group.updateMatrixWorld(true); return true;
@@ -117,6 +156,7 @@ export class IslandWorkshopPresentation {
             const yaw = Math.atan2(interest.x - root.x, interest.z - root.z);
             const delta = Math.atan2(Math.sin(yaw - actor.group.rotation.y), Math.cos(yaw - actor.group.rotation.y));
             actor.group.rotation.y += delta * t * .55; actor.group.updateMatrixWorld(true);
+            this.ground();
             const local = actor.body.worldToLocal(interest.clone()).sub(actor.head.position);
             actor.head.rotation.set(THREE.MathUtils.clamp(Math.atan2(-local.y, Math.hypot(local.x, local.z)), -.5, .5) * t,
                 THREE.MathUtils.clamp(Math.atan2(local.x, local.z), -1.1, 1.1) * t, actor.species === 'rabbit' ? .12 * t : 0);
@@ -137,10 +177,13 @@ export class IslandWorkshopPresentation {
 
     diagnostic() {
         const actor = this.actor;
-        return actor ? { species: actor.species, uuid: actor.group.uuid, visible: actor.group.visible, phase: this.phase,
+        return actor ? { candidate: 'workshop-grounded-residents-v1', species: actor.species, uuid: actor.group.uuid, visible: actor.group.visible, phase: this.phase,
             position: actor.group.position.toArray(), handSide: 'left', hand: actor.handAnchor(new THREE.Vector3(), 'left').toArray(),
             handTarget: this.handTarget?.toArray(), handDistance: this.handTarget ? actor.handAnchor(new THREE.Vector3(), 'left').distanceTo(this.handTarget) : undefined,
-            interestTarget: this.interestTarget?.toArray() } : null;
+            interestTarget: this.interestTarget?.toArray(), ground: { surface: 'workshop-sand', feet: actor.feet.map(foot => {
+                const support = workshopFootSupport(foot);
+                return support ? { point: support.point.toArray(), sandY: support.sandY, clearance: support.clearance } : null;
+            }) } } : null;
     }
 
     cancel() { this.execution = undefined; this.handTarget = undefined; this.interestTarget = undefined; }

@@ -1,0 +1,766 @@
+{
+  "schemaVersion": 1,
+  "scope": "Fixed40 grounded workshop residents, bounded explicit restored-fixture browser diagnostic. Table/shared-job verification is separate.",
+  "source": {
+    "revision": "companion-20260909-b80f785972fa",
+    "sha256": "b80f785972fa1e8f41a15021e8fd1c28b0c0067bfdba5a039d98e6e81147d227",
+    "inputs": 1091,
+    "manifest": "output/island-experience/workshop-snapshot-40/build-source.json",
+    "manifestSha256": "81b11cc35448c904a012ffe35504e05fb1a1d736217578ed45bb1360aaa0daf2",
+    "target": "http://127.0.0.1:5434",
+    "actualVersion": "companion-20260909-b80f785972fa:0eae25e6-b2e3-459e-b04b-259c060d0cb1",
+    "flags": {
+      "VITE_ISLAND_ENABLED": "true",
+      "VITE_BUILD_PLAY_ENABLED": "true",
+      "VITE_PARK_RENDERER": "legacy"
+    },
+    "worldCandidate": "mystic-island-shore-garden-v17",
+    "actorCandidate": "workshop-grounded-residents-v1",
+    "composition": {
+      "baseCommit": "19f7de15a8b0e22c912f63a3a5ea6ddcbf5ee49a",
+      "overlays": [
+        "src/components/island/three/workshopGround.ts",
+        "src/components/island/three/workshopGround.test.ts",
+        "src/components/island/three/workshopGeometry.ts",
+        "src/components/island/three/workshopPresentation.ts",
+        "src/components/island/three/workshopPresentation.test.ts",
+        "src/components/island/three/sharedDisplayScene.ts",
+        "src/components/island/three/sharedDisplayScene.test.ts"
+      ],
+      "excluded": "Concurrent home-space layout/navigation, shared job camera WIP, and all documentation. App baseline is exact Git main 19f7de1 plus only the seven specified grounded-resident and table source/test overlays; worktree untouched."
+    }
+  },
+  "checks": {
+    "pass": true,
+    "testFiles": 303,
+    "tests": 3336,
+    "checks": [
+      {
+        "name": "lint",
+        "exitCode": 0,
+        "log": "output/island-experience/companion-40-checks/lint.log",
+        "sha256": "ecd90267db6ea393fddaa17584299fa43bf1ee33e9f32898fde6dc4f6e4726e8"
+      },
+      {
+        "name": "typecheck",
+        "exitCode": 0,
+        "log": "output/island-experience/companion-40-checks/typecheck.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "build",
+        "exitCode": 0,
+        "log": "output/island-experience/companion-40-checks/build.log",
+        "sha256": "bfe8e30bfe125998f381f092efab0dff8d91a4bc19914877831e6d45d0156ec2"
+      },
+      {
+        "name": "assets",
+        "exitCode": 0,
+        "log": "output/island-experience/companion-40-checks/assets.log",
+        "sha256": "abf43777868b6b1569f46d666896060267eb32fe1a8d24fcb7068eda621395d2"
+      },
+      {
+        "name": "tests",
+        "exitCode": 0,
+        "log": "output/island-experience/companion-40-checks/tests.log",
+        "sha256": "0ef73f22e457178d03f41780d1c1d9107f9042f1d617cf8463a0e1f0543f78d0"
+      }
+    ],
+    "sourceMismatchesBefore": [],
+    "sourceMismatchesAfter": [],
+    "raw": "output/island-experience/companion-40-checks/verification.json",
+    "sha256": "459407ba96d0b9c84de7051e500dbcdbf2fd526178e2a3452fae9829601866a5"
+  },
+  "runtime": {
+    "pass": true,
+    "startedAt": "2026-09-09T05:41:11.995Z",
+    "finishedAt": "2026-09-09T05:41:41.339Z",
+    "terminal": {
+      "sessionId": 70838,
+      "exitCode": 0,
+      "provenance": "parent execution handle confirmed terminal"
+    },
+    "browserClosed": true,
+    "sourceStable": true,
+    "qaStable": true,
+    "servedBefore": {
+      "version": "companion-20260909-b80f785972fa:0eae25e6-b2e3-459e-b04b-259c060d0cb1",
+      "revision": "companion-20260909-b80f785972fa",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": true,
+        "renderer": "legacy"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v17",
+        "learningCandidate": "mystic-island-learning-v2",
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    "answerCount": 0,
+    "originalAnswerCount": 66,
+    "fixture": "Original 02 phone-native seven stores, original IDs and answers-v1 pending reservation; generated QA-only profile from original seedNative. All other native stores must begin empty. No runtime/React state injection.",
+    "provenance": {
+      "fixturePath": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-residents-02/phone-native.json",
+      "oldReport": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-residents-02/report.json",
+      "oldSource": "3e077cc21848eedd4f56852c5a34850d08d5351eec96e562cc5fc1d07d00e77b",
+      "oldPass": false,
+      "oldFailure": "page.waitForFunction: Timeout 30000ms exceeded.\n    at selectResident (/Users/yutogasaki/Projects/sansu/tools/e2e-island-workshop-residents.mjs:90:16)\n    at async cancelDuringWalk (/Users/yutogasaki/Projects/sansu/tools/e2e-island-workshop-residents.mjs:214:5)\n    at async file:///Users/yutogasaki/Projects/sansu/tools/e2e-island-workshop-residents.mjs:336:88"
+    },
+    "inputs": [
+      {
+        "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-40/build-source.json",
+        "sha256": "81b11cc35448c904a012ffe35504e05fb1a1d736217578ed45bb1360aaa0daf2"
+      },
+      {
+        "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-residents-02/phone-native.json",
+        "sha256": "7b95cb8e31e3997ead10e14a3d18e56f066458ffec331262083773db944b0827"
+      },
+      {
+        "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-residents-02/report.json",
+        "sha256": "66de25a9ec0691e7d8586496be62f2387a321b26774e57f00bfcb83484ac1a27"
+      },
+      {
+        "path": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/workshop-residents-ground40-01.mjs",
+        "sha256": "131d165e8b2619cb6f0622ecb9f6e598834dc5ef34a30efffd2dbdb59c10883b"
+      }
+    ],
+    "scenarios": [
+      {
+        "name": "phone",
+        "width": 390,
+        "height": 844,
+        "reducedMotion": false,
+        "pass": true,
+        "contextClosed": true,
+        "fixture": {
+          "source": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-residents-02/phone-native.json",
+          "seededStores": [
+            "islands",
+            "islandPlans",
+            "islandEvents",
+            "logs",
+            "memoryMath",
+            "memoryVocab",
+            "exploreRuns"
+          ],
+          "generatedProfile": true,
+          "actualAcquisition": false,
+          "oldCapturedStoreCount": 7,
+          "currentStoreCount": 17
+        },
+        "actorUuid": "81fc78df-9b2d-43dd-b121-3de9c96a9e64",
+        "sameChoice": {
+          "phase": "watching",
+          "uuid": "81fc78df-9b2d-43dd-b121-3de9c96a9e64",
+          "oldWaitWouldNotResolve": true
+        },
+        "samePlan": {
+          "id": "[\"island-plan-v1\",\"0861c585-259b-46c6-b611-d30c0fbdcf6b\",16]",
+          "revision": 0,
+          "cursor": 0,
+          "answered": false
+        },
+        "cancellations": [
+          {
+            "kind": "reselect",
+            "pass": true
+          },
+          {
+            "kind": "learning",
+            "pass": true
+          },
+          {
+            "kind": "exit",
+            "pass": true
+          }
+        ],
+        "pageErrors": []
+      },
+      {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024,
+        "reducedMotion": true,
+        "pass": true,
+        "contextClosed": true,
+        "fixture": {
+          "source": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-residents-02/phone-native.json",
+          "seededStores": [
+            "islands",
+            "islandPlans",
+            "islandEvents",
+            "logs",
+            "memoryMath",
+            "memoryVocab",
+            "exploreRuns"
+          ],
+          "generatedProfile": true,
+          "actualAcquisition": false,
+          "oldCapturedStoreCount": 7,
+          "currentStoreCount": 17
+        },
+        "actorUuid": "cf55b8c3-e59b-4b68-b5a3-7ef877dad743",
+        "sameChoice": {
+          "phase": "watching",
+          "uuid": "cf55b8c3-e59b-4b68-b5a3-7ef877dad743",
+          "oldWaitWouldNotResolve": true
+        },
+        "samePlan": {
+          "id": "[\"island-plan-v1\",\"0861c585-259b-46c6-b611-d30c0fbdcf6b\",16]",
+          "revision": 0,
+          "cursor": 0,
+          "answered": false
+        },
+        "cancellations": [
+          {
+            "kind": "reselect",
+            "pass": true
+          },
+          {
+            "kind": "learning",
+            "pass": true
+          },
+          {
+            "kind": "exit",
+            "pass": true
+          }
+        ],
+        "pageErrors": []
+      }
+    ],
+    "runs": [
+      {
+        "name": "phone-otter-A",
+        "file": "phone-otter-A-frames.json",
+        "sha256": "1ce6e9c0be99a94c490f00d76f64d5b6a1a03d0e76ea8c1a5c9dd7f9d870309d",
+        "count": 144,
+        "phases": [
+          "walking",
+          "contact",
+          "operating",
+          "watching"
+        ]
+      },
+      {
+        "name": "phone-cancel-reselect",
+        "file": "phone-cancel-reselect-frames.json",
+        "sha256": "a741bce9380b95dcf71471278f49b55e7e45535ab2b43f28560ef6b6d0358430",
+        "count": 4,
+        "phases": [
+          "waiting",
+          "walking"
+        ]
+      },
+      {
+        "name": "phone-cancel-learning",
+        "file": "phone-cancel-learning-frames.json",
+        "sha256": "6eb38762f81a2a05fc23f90f2ba50b889643515472ddd492e633538a46a10aa8",
+        "count": 3,
+        "phases": [
+          "walking",
+          null
+        ]
+      },
+      {
+        "name": "phone-cancel-exit",
+        "file": "phone-cancel-exit-frames.json",
+        "sha256": "a23f5c692380c351b85771e6e0e4b92c5bacf5e6a85146989581f41ae1fcb9de",
+        "count": 4,
+        "phases": [
+          "waiting",
+          "walking",
+          null
+        ]
+      },
+      {
+        "name": "tablet-otter-A",
+        "file": "tablet-otter-A-frames.json",
+        "sha256": "5093dbd5a9cb0bc1c06a6375b7c2d3023ba406015c32d92c3a2cd54285f0dc86",
+        "count": 50,
+        "phases": [
+          "walking",
+          "contact",
+          "operating",
+          "watching"
+        ]
+      },
+      {
+        "name": "tablet-cancel-reselect",
+        "file": "tablet-cancel-reselect-frames.json",
+        "sha256": "f736a56af4ce7aa6264074390fe3700037dc4ae3af54326bcda3766a5c710373",
+        "count": 4,
+        "phases": [
+          "waiting",
+          "walking"
+        ]
+      },
+      {
+        "name": "tablet-cancel-learning",
+        "file": "tablet-cancel-learning-frames.json",
+        "sha256": "29380a13c4f9695abb1a773b84f14a2835045f18c58937f8d27027e1568db393",
+        "count": 3,
+        "phases": [
+          "walking",
+          null
+        ]
+      },
+      {
+        "name": "tablet-cancel-exit",
+        "file": "tablet-cancel-exit-frames.json",
+        "sha256": "3d0f665a6cfdefeaae8a94c1a4ac113d9867062f07409c1a00bcd42e873c28ff",
+        "count": 5,
+        "phases": [
+          "waiting",
+          "walking",
+          null
+        ]
+      }
+    ],
+    "checkpoints": [
+      {
+        "name": "phone-hydrated",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "phone-A-entry",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "phone-A-finished",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "phone-explicit-stop",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "phone-cancel-reselect",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "phone-cancel-learning",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "phone-return-caller",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "phone-cancel-exit",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "phone-reentry",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "phone-reload",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "phone-same-plan-ready",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "tablet-hydrated",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "tablet-A-entry",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "tablet-A-finished",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "tablet-explicit-stop",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "tablet-cancel-reselect",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "tablet-cancel-learning",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "tablet-return-caller",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "tablet-cancel-exit",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "tablet-reentry",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "tablet-reload",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      },
+      {
+        "name": "tablet-same-plan-ready",
+        "exact": true,
+        "sha256": "e1b491dd01fb28900d1db87d54450d58f35ca9389738da66b6c729d1deef03be"
+      }
+    ],
+    "retainedAssertions": [
+      "original >=2 walking frames/root travel >.7",
+      "original handDistance <=.045 before first run",
+      "same actual UUID per run",
+      "no water after walking cancellation",
+      "all current native stores exact at every checkpoint",
+      "actual triangulated sand supports both real feet in wait/contact and at least one in walk",
+      "fixed source + original helper/QA + fixture + own QA hashes before/after",
+      "actual revision/v17/both flags; rendered frames and real stage screenshots; browser/context cleanup"
+    ],
+    "selectedPhaseEvidence": [
+      {
+        "file": "phone-otter-A-phase-actual-hand-contact.png",
+        "sha256": "cb5b7a666359743861fd960d6753c2dcac9462e9faf42f6ab0323ec052b085c2",
+        "phase": "actual-hand-contact",
+        "frameTimestamp": 4593.1,
+        "actorPhase": "operating",
+        "actorUuid": "81fc78df-9b2d-43dd-b121-3de9c96a9e64",
+        "handDistance": 0.006193641581818267,
+        "ground": {
+          "surface": "workshop-sand",
+          "feet": [
+            {
+              "point": [
+                -2.9448648704845244,
+                -0.025778623352536112,
+                -0.17528885801723804
+              ],
+              "sandY": -0.025778623352536126,
+              "clearance": 1.3877787807814457e-17
+            },
+            {
+              "point": [
+                -3.2918786440711374,
+                -0.048771345620763046,
+                -0.2948174491541874
+              ],
+              "sandY": -0.048771345620763074,
+              "clearance": 2.7755575615628914e-17
+            }
+          ]
+        },
+        "run": {
+          "index": 0,
+          "beat": "flow",
+          "reached": [],
+          "complete": false
+        }
+      },
+      {
+        "file": "phone-otter-A-phase-run-wheel.png",
+        "sha256": "2c9d51fc9cf08b4c5dc92915d31ab73395423fee699e895aeef425ff1fe4a507",
+        "phase": "run-wheel",
+        "frameTimestamp": 6366.8,
+        "actorPhase": "watching",
+        "actorUuid": "81fc78df-9b2d-43dd-b121-3de9c96a9e64",
+        "handDistance": 0.8581352216227757,
+        "ground": {
+          "surface": "workshop-sand",
+          "feet": [
+            {
+              "point": [
+                -2.897263324057036,
+                -0.02297053089847098,
+                -0.04065214885239424
+              ],
+              "sandY": -0.022970530898470988,
+              "clearance": 6.938893903907228e-18
+            },
+            {
+              "point": [
+                -3.1324428476434205,
+                -0.037882159443815844,
+                -0.3522652931285646
+              ],
+              "sandY": -0.03788215944381586,
+              "clearance": 1.3877787807814457e-17
+            }
+          ]
+        },
+        "run": {
+          "index": 4,
+          "beat": "wheel",
+          "reached": [
+            "straight",
+            "wheel"
+          ],
+          "complete": false
+        }
+      },
+      {
+        "file": "tablet-otter-A-phase-actual-hand-contact.png",
+        "sha256": "55f3e8e177135be52b136ea5bb64be57c8221112c55e52a051b720abd2d9beb5",
+        "phase": "actual-hand-contact",
+        "frameTimestamp": 3384.5,
+        "actorPhase": "operating",
+        "actorUuid": "cf55b8c3-e59b-4b68-b5a3-7ef877dad743",
+        "handDistance": 7.870927343780159e-11,
+        "ground": {
+          "surface": "workshop-sand",
+          "feet": [
+            {
+              "point": [
+                -2.9448648704845244,
+                -0.025778623352536112,
+                -0.17528885801723804
+              ],
+              "sandY": -0.025778623352536126,
+              "clearance": 1.3877787807814457e-17
+            },
+            {
+              "point": [
+                -3.2918786440711374,
+                -0.048771345620763046,
+                -0.2948174491541874
+              ],
+              "sandY": -0.048771345620763074,
+              "clearance": 2.7755575615628914e-17
+            }
+          ]
+        },
+        "run": {
+          "index": 0,
+          "beat": "flow",
+          "reached": [],
+          "complete": false
+        }
+      },
+      {
+        "file": "tablet-otter-A-phase-run-wheel.png",
+        "sha256": "1ce3f7d657cb20467684206a88a0b140b705db9c60cc720571d0221105d0c28d",
+        "phase": "run-wheel",
+        "frameTimestamp": 4171.4,
+        "actorPhase": "watching",
+        "actorUuid": "cf55b8c3-e59b-4b68-b5a3-7ef877dad743",
+        "handDistance": 0.8665746401994633,
+        "ground": {
+          "surface": "workshop-sand",
+          "feet": [
+            {
+              "point": [
+                -2.962903381034742,
+                -0.025539572694497026,
+                -0.005017877962009041
+              ],
+              "sandY": -0.025539572694497033,
+              "clearance": 6.938893903907228e-18
+            },
+            {
+              "point": [
+                -3.212178682108923,
+                -0.043147338035315674,
+                -0.3054741714131138
+              ],
+              "sandY": -0.043147338035315674,
+              "clearance": 0
+            }
+          ]
+        },
+        "run": {
+          "index": 4,
+          "beat": "wheel",
+          "reached": [
+            "straight",
+            "wheel"
+          ],
+          "complete": false
+        }
+      }
+    ],
+    "raw": "output/island-experience/workshop-residents-ground40-01/report.json",
+    "sha256": "2114bcfaa61f2a19ba6f275224f1fb35b9256b3a26f1f6b477e5ba18f99e3a52",
+    "comparedStores": [
+      "appData",
+      "exploreDiscoveries",
+      "exploreRunEvents",
+      "exploreRuns",
+      "islandEvents",
+      "islandPhotoAlbums",
+      "islandPhotoBlobs",
+      "islandPhotos",
+      "islandPlans",
+      "islands",
+      "logs",
+      "memoryMath",
+      "memoryVocab",
+      "parkEvents",
+      "parkPlans",
+      "parks",
+      "profiles"
+    ],
+    "servedAfterMatchesBefore": true
+  },
+  "offlineGeometry": {
+    "source": {
+      "revision": "companion-20260909-b80f785972fa",
+      "sourceHash": "b80f785972fa1e8f41a15021e8fd1c28b0c0067bfdba5a039d98e6e81147d227",
+      "inputs": 1091
+    },
+    "scope": "Fixed40 offline real model diagnostic; explicit assembled A/B, cap, all vertices including equator; no browser, storage, acquisition or formal performance evidence",
+    "caseCount": 12,
+    "frameCount": 1836,
+    "vertexRays": 1550808,
+    "equatorVertexRays": 82008,
+    "outside": 0,
+    "negativeBelowMinus1e6": 0,
+    "minimumClearance": -5.828670879282072e-16,
+    "maxStationaryFootGap": 6.800116025829084e-16,
+    "allBeginAndSingleEmit": true,
+    "maxEmittedHandDistance": 0.006719127936559665,
+    "allTransformsAndGeometryRestored": true,
+    "cpu": {
+      "meaning": "Single offline 151 pose calls/case while parent full suite runs; not browser, FPS or formal timing",
+      "medianRange": [
+        0.12058400000000802,
+        0.36687500000005
+      ],
+      "worstP95Ms": 0.7711249999999836,
+      "maxMs": 1.2623330000000124
+    },
+    "sourceStable": true,
+    "sha": {
+      "report": "c9f6eeaa9736579ae0edc88b3760a851a7c8c046600cc6fb9925e0cc3058b61c",
+      "probe": "cf56688016304fbae95fd8a5c7766ca0fcd76d6616115390908579c73564aa85",
+      "bundle": "68fa4cba006b14a78d3cb6c8a9bc5dc4446a2368be40c6bf3e5a4bf8631d8fec"
+    },
+    "limits": [
+      "Ordinary cap/actual immutable rig scale 1.22 only; A/B explicit geometry, normal/reduced.",
+      "Only vertex-to-final-triangle vertical support; browser appearance and triangle-interior penetration not measured.",
+      "The potential arbitrary-anchor/scale failure paths were not invoked and remain unproven generalizations.",
+      "No app files changed, no DB, browser or GPU used."
+    ],
+    "preparationFailure": "Missing import.meta.env in first Node bundle; no cases ran. Kept preparation-env-failure.log; final bundle uses DEV=false and actual enabled flags.",
+    "raw": "output/island-experience/workshop-ground-40-review/summary.json",
+    "summarySha256": "9bcb27073fdbf1474b994be86b29c8f74dd233d90ed4f3829f6eebe205228bd7"
+  },
+  "gates": {
+    "runtime": "PASS: only the two explicit restored-fixture routes and exact storage boundaries",
+    "visual": "LOCAL PASS: prior sand-outside floating reduced; thin contact shadow and small hands remain HOLD",
+    "silentComprehension": "HOLD: no child observation or silent causal comprehension evidence",
+    "sourceAParity": "HOLD",
+    "humanN": 0,
+    "genuineAcquisition": false,
+    "fullGoalComplete": false
+  },
+  "preservedFailure": {
+    "fixturePath": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-residents-02/phone-native.json",
+    "oldReport": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-residents-02/report.json",
+    "oldSource": "3e077cc21848eedd4f56852c5a34850d08d5351eec96e562cc5fc1d07d00e77b",
+    "oldPass": false,
+    "oldFailure": "page.waitForFunction: Timeout 30000ms exceeded.\n    at selectResident (/Users/yutogasaki/Projects/sansu/tools/e2e-island-workshop-residents.mjs:90:16)\n    at async cancelDuringWalk (/Users/yutogasaki/Projects/sansu/tools/e2e-island-workshop-residents.mjs:214:5)\n    at async file:///Users/yutogasaki/Projects/sansu/tools/e2e-island-workshop-residents.mjs:336:88",
+    "reason": "02: secondary source run leaves otter watching; selecting the same choice does not reset it to waiting. Current original QA already explicitly stops first.",
+    "status": "Original FAIL unchanged; same choice legitimately preserves watching, so corrected QA explicitly stops first"
+  },
+  "untested": [
+    "new genuine acquisition/63 more answers",
+    "B alternate arrangement/all three species current visual matrix",
+    "native hidden and secondary touch",
+    "one-answer continuation",
+    "silent comprehension/child motivation Human N=0",
+    "full spec37 completion",
+    "Formal input throughput/FPS/browser performance",
+    "Table/shared-job diagnostic (separate parent-owned artifacts)",
+    "Contact shadow strength and hand readability; triangle-interior penetration"
+  ],
+  "screens": [
+    {
+      "file": "screens/before-phone-learning-returned-world.png",
+      "source": "output/island-experience/workshop-residents-nav39-02/phone-learning-returned-world.png",
+      "sha256": "674a09b342c66f5e4b8a81fa41841d66bc215d4883b61ff0d1e04c4553977dd8",
+      "bytes": 41023,
+      "caption": "旧nav39-02 / phone / 学習から工作へ復帰",
+      "processing": "none; original PNG bytes copied",
+      "reviewed": true
+    },
+    {
+      "file": "screens/phone-learning-returned-world.png",
+      "source": "output/island-experience/workshop-residents-ground40-01/phone-learning-returned-world.png",
+      "sha256": "57af6cfe5da796248550f5f3032d95cf7785883627c9919735c663df09e075cf",
+      "bytes": 40799,
+      "caption": "phone / 固定40 / 同じ工作へ復帰",
+      "processing": "none; original PNG bytes copied",
+      "reviewed": true
+    },
+    {
+      "file": "screens/phone-actual-hand-contact.png",
+      "source": "output/island-experience/workshop-residents-ground40-01/phone-otter-A-phase-actual-hand-contact.png",
+      "sha256": "cb5b7a666359743861fd960d6753c2dcac9462e9faf42f6ab0323ec052b085c2",
+      "bytes": 60992,
+      "caption": "phone / 固定40 / 実手接触",
+      "processing": "none; original PNG bytes copied",
+      "reviewed": true
+    },
+    {
+      "file": "screens/phone-run-wheel.png",
+      "source": "output/island-experience/workshop-residents-ground40-01/phone-otter-A-phase-run-wheel.png",
+      "sha256": "2c9d51fc9cf08b4c5dc92915d31ab73395423fee699e895aeef425ff1fe4a507",
+      "bytes": 60272,
+      "caption": "phone / 固定40 / 水車の実描画",
+      "processing": "none; original PNG bytes copied",
+      "reviewed": true
+    },
+    {
+      "file": "screens/tablet-learning-returned-world.png",
+      "source": "output/island-experience/workshop-residents-ground40-01/tablet-learning-returned-world.png",
+      "sha256": "e6a1a3f30501b60a5a8fb984841fb2f5ab1c472c495002831f23cd949f904687",
+      "bytes": 81891,
+      "caption": "tablet / 固定40 / 同じ工作へ復帰",
+      "processing": "none; original PNG bytes copied",
+      "reviewed": true
+    },
+    {
+      "file": "screens/tablet-actual-hand-contact.png",
+      "source": "output/island-experience/workshop-residents-ground40-01/tablet-otter-A-phase-actual-hand-contact.png",
+      "sha256": "55f3e8e177135be52b136ea5bb64be57c8221112c55e52a051b720abd2d9beb5",
+      "bytes": 122116,
+      "caption": "tablet / 固定40 / 実手接触",
+      "processing": "none; original PNG bytes copied",
+      "reviewed": true
+    },
+    {
+      "file": "screens/tablet-run-wheel.png",
+      "source": "output/island-experience/workshop-residents-ground40-01/tablet-otter-A-phase-run-wheel.png",
+      "sha256": "1ce3f7d657cb20467684206a88a0b140b705db9c60cc720571d0221105d0c28d",
+      "bytes": 121201,
+      "caption": "tablet / 固定40 / 水車の実描画",
+      "processing": "none; original PNG bytes copied",
+      "reviewed": true
+    }
+  ]
+}

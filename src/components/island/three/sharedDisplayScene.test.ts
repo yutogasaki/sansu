@@ -126,6 +126,40 @@ describe('shared display physical identity and immutable captures', () => {
 });
 
 describe('shared display geometry, anchors and lifecycle', () => {
+    it('exposes one opaque tabletop surface after batching while retaining the actual support and contact heights', () => {
+        const work = savedWork();
+        for (const target of [specimenTarget(work.island), work.target]) for (const rotation of [0, .61, Math.PI / 2]) {
+            const island = put(work.island, target, 'display-1', 3, rotation), saved = structuredClone(island);
+            const view = scene(island), table = view.group.getObjectByName('shared-display-table')!;
+            const actual = view.targetObject('display-1')!, targetMatrix = actual.matrixWorld.toArray();
+            const tabletopY = .52, topRadius = view.describe()[0].radius - .073;
+            for (const [x, z] of [[.13, .07], [-.23, .11], [.05, .31], [-.3, -.13]]) {
+                const origin = table.localToWorld(new THREE.Vector3(x * topRadius, 2, z * topRadius));
+                const hits = new THREE.Raycaster(origin, new THREE.Vector3(0, -1, 0)).intersectObjects(allMeshes(table), false);
+                const top = hits.filter(hit => hit.face!.normal.y > .999 && Math.abs(hit.point.y - tabletopY) < 1e-6);
+                expect(top.length).toBeGreaterThan(0);
+                const colors = new Set(top.map(hit => {
+                    const object = hit.object as THREE.Mesh, color = object.geometry.getAttribute('color');
+                    expect(object.receiveShadow).toBe(true);
+                    return new THREE.Color().fromBufferAttribute(color, hit.face!.a).getHexString();
+                }));
+                // Former .47 + .1 / 2 dark cap occupied this same plane. Both
+                // real triangle colors survived batching and fought for depth.
+                expect([...colors]).toEqual(['f3e0b6']);
+                expect(hits[0].point.y).toBeCloseTo(tabletopY, 6);
+            }
+            const anchors = view.anchors('display-1')!;
+            expect(anchors.destination.y).toBe(SHARED_DISPLAY_TARGET_Y);
+            expect(anchors.gripLeft.y).toBeCloseTo(.57, 6);
+            expect(anchors.gripRight.y).toBeCloseTo(.57, 6);
+            expect(anchors.lightReceiver.y).toBe(.525);
+            expect(view.update(island)).toBe(false);
+            expect(view.targetObject('display-1')).toBe(actual);
+            expect(actual.matrixWorld.toArray()).toEqual(targetMatrix);
+            expect(island).toEqual(saved);
+        }
+    });
+
     it('keeps every real table, tray, object, petal and selection vertex inside the shared placement footprint', () => {
         const { island: workIsland, target: work } = savedWork();
         for (const target of [...WORKSHOP_SPECIMEN_IDS.map(id => specimenTarget(workIsland, id)), work]) {

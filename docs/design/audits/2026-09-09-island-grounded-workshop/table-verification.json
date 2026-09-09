@@ -1,0 +1,244 @@
+{
+  "date": "2026-09-09",
+  "scope": "Only the opaque shared-display cap overlap is fixed in this app. Shared job camera work is excluded.",
+  "app": {
+    "target": "http://127.0.0.1:5434",
+    "revision": "companion-20260909-b80f785972fa",
+    "sourceHash": "b80f785972fa1e8f41a15021e8fd1c28b0c0067bfdba5a039d98e6e81147d227",
+    "inputCount": 1091,
+    "version": {
+      "version": "companion-20260909-b80f785972fa:0eae25e6-b2e3-459e-b04b-259c060d0cb1",
+      "revision": "companion-20260909-b80f785972fa",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": true,
+        "renderer": "legacy"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v17",
+        "learningCandidate": "mystic-island-learning-v2",
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    "baseCommit": "19f7de15a8b0e22c912f63a3a5ea6ddcbf5ee49a",
+    "overlays": [
+      "src/components/island/three/workshopGround.ts",
+      "src/components/island/three/workshopGround.test.ts",
+      "src/components/island/three/workshopGeometry.ts",
+      "src/components/island/three/workshopPresentation.ts",
+      "src/components/island/three/workshopPresentation.test.ts",
+      "src/components/island/three/sharedDisplayScene.ts",
+      "src/components/island/three/sharedDisplayScene.test.ts"
+    ]
+  },
+  "cause": {
+    "oldSupportTop": 0.52,
+    "oldSlabTop": 0.52,
+    "newSupportTop": 0.51,
+    "retainedSlabTop": 0.52,
+    "retainedSupportBottom": 0.42,
+    "targetSupport": 0.535,
+    "projectionReceiver": 0.525,
+    "savedCoordinatesChanged": false
+  },
+  "provenance": {
+    "rawReport": "output/island-experience/shared-jobs-ground40-01/report.json",
+    "rawSha256": "01fdda927b3bdf5a48e8d1069d17e655092b91fd38551c5df5b8838aa446a0e0",
+    "fixture": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/shared-jobs-nav38-03/phone-failure-native.json",
+      "sha256": "e7cfb2ff579570169ce6be419e1f4384123e0ab1fa181176acddb35e83f0c7f8",
+      "scope": "Retained real-run native data restored into a fresh context. Current interactions are real; this is not empty-DB earning or a full M05 run.",
+      "omitted": [
+        "M01/M02 fresh earning",
+        "M05 12-memory capacity",
+        "M03 interruptions/reload/optional-return negative paths",
+        "M04 other resident memories/rename/storage/reload",
+        "M12 learning return"
+      ]
+    },
+    "rawPass": false,
+    "diagnosticPass": true,
+    "fullSpec38Passed": false,
+    "terminal": 0,
+    "browserClosed": true,
+    "sourceAndQaStable": true,
+    "distStable": true
+  },
+  "layouts": [
+    {
+      "name": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": "no-preference",
+      "pass": true,
+      "contextClosed": true,
+      "errors": [],
+      "jobs": [
+        {
+          "label": "driftwood-otter",
+          "actualFrames": 129,
+          "targetUuid": "0e05bc6a-0a0c-45c7-9821-c2676aa8005c",
+          "actorUuid": "55488fa0-512e-4a0a-9e20-885be0cc9ea1",
+          "emittedMs": 10374.299999952316,
+          "nativeWriteMs": 10865.199999928474,
+          "pass": true
+        },
+        {
+          "label": "driftwood-rabbit",
+          "actualFrames": 351,
+          "targetUuid": "0e05bc6a-0a0c-45c7-9821-c2676aa8005c",
+          "actorUuid": "65074d11-8bf3-4754-b3e7-5e01b8eace50",
+          "emittedMs": 28978.699999928474,
+          "nativeWriteMs": 29383.199999928474,
+          "pass": true
+        },
+        {
+          "label": "driftwood-fox",
+          "actualFrames": 383,
+          "targetUuid": "0e05bc6a-0a0c-45c7-9821-c2676aa8005c",
+          "actorUuid": "2a45624f-a613-43b8-a9fa-d59eda27abb7",
+          "emittedMs": 63771.39999997616,
+          "nativeWriteMs": 64816.5,
+          "pass": true
+        }
+      ],
+      "memoriesRevisited": 1,
+      "nativeComparisons": 11,
+      "actualMetadata": {
+        "revision": "companion-20260909-b80f785972fa",
+        "version": "companion-20260909-b80f785972fa:0eae25e6-b2e3-459e-b04b-259c060d0cb1",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v17",
+        "learningCandidate": "not-applicable",
+        "mode": "welcome",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 86,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "name": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": "reduce",
+      "pass": true,
+      "contextClosed": true,
+      "errors": [],
+      "jobs": [
+        {
+          "label": "driftwood-otter",
+          "actualFrames": 34,
+          "targetUuid": "935ec538-3abe-4ea5-abb9-26414e4871f6",
+          "actorUuid": "ef0304b7-0c0d-4349-8c5f-95791032f118",
+          "emittedMs": 7445.5,
+          "nativeWriteMs": 7875.699999928474,
+          "pass": true
+        },
+        {
+          "label": "driftwood-rabbit",
+          "actualFrames": 69,
+          "targetUuid": "935ec538-3abe-4ea5-abb9-26414e4871f6",
+          "actorUuid": "01a260b1-23ec-4228-97d2-53db934bae68",
+          "emittedMs": 14409,
+          "nativeWriteMs": 14827.599999904633,
+          "pass": true
+        },
+        {
+          "label": "driftwood-fox",
+          "actualFrames": 22,
+          "targetUuid": "935ec538-3abe-4ea5-abb9-26414e4871f6",
+          "actorUuid": "9171fae3-973b-4c23-aea6-97b7ea8a620d",
+          "emittedMs": 20377.899999976158,
+          "nativeWriteMs": 20833.199999928474,
+          "pass": true
+        }
+      ],
+      "memoriesRevisited": 1,
+      "nativeComparisons": 11,
+      "actualMetadata": {
+        "revision": "companion-20260909-b80f785972fa",
+        "version": "companion-20260909-b80f785972fa:0eae25e6-b2e3-459e-b04b-259c060d0cb1",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v17",
+        "learningCandidate": "not-applicable",
+        "mode": "welcome",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 86,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true
+      }
+    }
+  ],
+  "gates": {
+    "visual": "LOCAL IMPROVEMENT: radial depth-fighting stripes removed in actual phone/tablet results. Hand occlusion and readability of lamp-to-shadow causality remain HOLD. No Source A overall parity or child appeal claim.",
+    "meaningAndLearning": "UNCHANGED ALL 17 STORES outside explicit shared operations in 22 comparisons; actual normal answer/resume not exercised by this restored subset. Human N=0.",
+    "runtime": "PASS for the explicit 3 jobs + 1 carry-memory revisit per viewport. Does not prove interruptions, full shelf, photo persistence, offline or new earning."
+  },
+  "images": [
+    {
+      "label": "before-phone",
+      "file": "screens/table-before-phone.png",
+      "source": "output/island-experience/shared-jobs-nav38-diagnostic09/phone-driftwood-fox-result-world.png",
+      "sha256": "ce0bd37690445a6bfeba0dfb55016af20a5a2a1defc90d8dea009cf68e7b6045",
+      "bytes": 82731,
+      "kind": "Unmodified original renderer/browser image; no redraw or crop"
+    },
+    {
+      "label": "after-phone",
+      "file": "screens/table-after-phone.png",
+      "source": "output/island-experience/shared-jobs-ground40-01/phone-driftwood-fox-result-world.png",
+      "sha256": "95406f45c9fcc72cd41a6b7abe3416d2bbca63a878e008948ff48013f101aeec",
+      "bytes": 84951,
+      "kind": "Unmodified original renderer/browser image; no redraw or crop"
+    },
+    {
+      "label": "light-phone",
+      "file": "screens/table-light-phone.png",
+      "source": "output/island-experience/shared-jobs-ground40-01/phone-driftwood-fox-f85b938277e4-actual-light-surface-receiver.png",
+      "sha256": "531d8b76966e52226d647cf1090e179b27606267831b22c31bfaf18b03c29a0f",
+      "bytes": 139263,
+      "kind": "Unmodified original renderer/browser image; no redraw or crop"
+    },
+    {
+      "label": "after-tablet",
+      "file": "screens/table-after-tablet.png",
+      "source": "output/island-experience/shared-jobs-ground40-01/tablet-driftwood-fox-result-world.png",
+      "sha256": "5efad17bb70ce6b78c5246fb8134557e88cff7cfe9e8ed625b5141fd7968810e",
+      "bytes": 150596,
+      "kind": "Unmodified original renderer/browser image; no redraw or crop"
+    },
+    {
+      "label": "light-tablet",
+      "file": "screens/table-light-tablet.png",
+      "source": "output/island-experience/shared-jobs-ground40-01/tablet-driftwood-fox-46592c1a37b7-actual-light-surface-receiver.png",
+      "sha256": "97538ebc1a3d787aaf7134490333695b0b52b6919ec8d9f9770de0ad338d6531",
+      "bytes": 263672,
+      "kind": "Unmodified original renderer/browser image; no redraw or crop"
+    }
+  ]
+}

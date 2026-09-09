@@ -6,7 +6,7 @@
 
 ## Goal
 
-2026-09-09 継続: [学習ヘッダーの大きな節目](../../design/audits/2026-09-09-island-learning-milestones/README.md)を固定39へ退避し、302 files / 3327 tests・型/lint/build/assetsを確認。新ヘッダーの7実経路・追加操作0/寸法不変/支援優先/非再演、同版DEV正式80run（正答P95 206.8/206.3ms）・Island PWA8保護/実offline・classic31経路が限定PASS。同app39の別DEV全成長巡回も両幅（49区間264問／48区間270問）と10追加経路がPASS。原run01の戻り先期待FAILを残し、仕様43どおりアルバムへ戻るQA02で確認した。保存地点 `0b20566` はVerify Core / Docs CheckともPASS。[共有診断09](../../design/audits/2026-09-09-island-shared-jobs/README.md)では元63回答の明示復元から3仕事→運搬記憶1件再訪をphoneで限定確認し、真正取得/全経路とは分ける。[工作住民nav02](../../design/audits/2026-09-09-island-workshop-residents/README.md)はAの水源操作/取消/工房caller復帰を両幅確認したが、復帰待機が砂地を離れるため仕様37に沿って修正中。手の遮蔽/照射結果・工作の接点PNGは視覚HOLDとして追う。
+2026-09-09 継続: [固定40の接地・展示面監査](../../design/audits/2026-09-09-island-grounded-workshop/README.md)で工作の待機・歩行を実砂面へ合わせ、展示台の不透明capの重なりを解消した。303 files / 3336 tests・型/lint/build/assetsがPASS。両幅でAの実歩行/手接触/水→水車→ベル、取消/工房caller復帰/同予約保持を確認（旧66回答7store明示復元、現17store比較22回、追加回答0）。別の旧63回答17store復元では、両幅それぞれ3仕事→運搬記憶1件再訪、全17storeを計22回照合して限定PASS。実足元の砂外浮遊と展示面の縞は局所改善したが、接地の影・手元の小ささ・照射の無文字理解はHOLD。共有cameraの未完コードは40へ含めない。直近保存地点 `19f7de1` のCore/Docs CIはPASS。学習ヘッダー/全成長/正式80run/PWAの固定39証拠は別に保持する。次は手元camera・実取得後の外見/家具/写真の連続経路、成熟全景の横長な輪郭を改善し、全GoalをActiveのまま進める。
 
 2026-09-09 訂正: 固定37の初解放4経路で通知が不可視だった点は、当時の仕様30が学習中の通知を隠す方針だったため、実装不具合ではない。以下の旧FAIL整理は仕様の照合不足だった。原report・画面・入力/成長の測定は保持し、[訂正記録](../../design/2026-09-09-island-renewal/connected-v17/first-unlock/README.md)へ理由を残す。今回、仕様28/30を更新し、実保存された大きな節目のみ既存ヘッダーへ最大6秒・2行で知らせる。問題/キーの位置を保持し、誤答・支援・保存エラーを優先する新しい表示は、別の固定39・7実経路で限定確認した。原37の測定は変更しない。
 
