@@ -1,0 +1,33 @@
+{
+  "target": "http://127.0.0.1:5213",
+  "flag": "DEV + VITE_HOME_JOURNEY_PREVIEW=true",
+  "candidate": "home-journey-close-contact-v3",
+  "kind": "DEV normal-planner integration; not production/art approval",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": "no-preference",
+      "answers": 45,
+      "normalAttempts": 45,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "name": "tablet-reduced",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": "reduce",
+      "answers": 45,
+      "normalAttempts": 45,
+      "errors": [],
+      "pass": true
+    }
+  ]
+}

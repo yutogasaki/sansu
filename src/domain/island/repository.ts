@@ -1,3 +1,4 @@
+import { homeJourneyEnabled, validHomeJourney } from './homeJourney';
 import { db, type SansuDatabase } from '../../db';
 import { getLearningAttemptTransactionTables } from '../learningAttemptWriter';
 import { planParkLearning } from '../park/learning';
@@ -27,7 +28,7 @@ export const islandTables = (database: SansuDatabase) => [
 ];
 
 export function assertIsland(island: IslandRecord) {
-    if (island.schemaVersion !== 1 || !Number.isInteger(island.revision) || island.revision < 0
+    if (!validHomeJourney(island.homeJourney) || island.schemaVersion !== 1 || !Number.isInteger(island.revision) || island.revision < 0
         || !Number.isInteger(island.completedSets) || island.completedSets < 0
         || !Array.isArray(island.items) || !Array.isArray(island.pendingRewards)
         || !hasValidIslandFurnitureItems(island.items)
@@ -56,7 +57,7 @@ export function assertIsland(island: IslandRecord) {
 }
 
 export function assertIslandPlan(plan: IslandPlan, profileId: string) {
-    if (plan.profileId !== profileId || plan.schemaVersion !== 1 || plan.plannerVersion !== 'island-learning-v1'
+    if ((plan.homeJourneyVersion !== undefined && (plan.homeJourneyVersion !== 1 || plan.rewardPacing !== 'answers-v1')) || plan.profileId !== profileId || plan.schemaVersion !== 1 || plan.plannerVersion !== 'island-learning-v1'
         || !Number.isInteger(plan.revision) || plan.revision < 0 || !Number.isInteger(plan.cursor)
         || !Array.isArray(plan.rewardChoices) || plan.rewardChoices.some(kind => !ISLAND_BASIC_ITEM_KINDS.includes(kind))
         || (plan.growthTarget !== undefined && !isIslandHabitatId(plan.growthTarget))
@@ -139,6 +140,7 @@ export async function startIslandPlan(profileId: string, database = db): Promise
             rewardId: `${id}:reward`, rewardChoices: islandRewardChoices(island.completedSets),
             growthTarget: getIslandGrowthTarget(growingIsland),
             rewardPacing: 'answers-v1',
+            ...(homeJourneyEnabled() ? { homeJourneyVersion: 1 as const } : {}),
             introducedItemIds: [...new Set(learning.slots.filter(slot => !(learning.subject === 'math' ? mergedMath : mergedVocab)
                 .some(state => state.id === slot.problem.categoryId && state.totalAnswers > 0)).map(slot => slot.problem.categoryId))],
         };

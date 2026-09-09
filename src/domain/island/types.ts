@@ -1,3 +1,4 @@
+import type { HomeJourneyState } from './homeJourney';
 import type { IslandObservationV1 } from './learningObservation';
 import type { SubjectKey } from '../types';
 import type { LearningSlot, ParkLearningAction } from '../park/types';
@@ -77,6 +78,7 @@ export interface IslandMathCheck {
     createdAt: number;
 }
 export interface IslandRecord {
+    homeJourney?: HomeJourneyState;
     profileId: string;
     schemaVersion: 1;
     revision: number;
@@ -109,6 +111,7 @@ export interface IslandRecord {
     updatedAt: number;
 }
 export interface IslandPlan {
+    homeJourneyVersion?: 1;
     id: string;
     profileId: string;
     schemaVersion: 1;

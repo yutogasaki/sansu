@@ -1,3 +1,6 @@
+import HomeJourneyPreview from '../components/island/homeJourney/HomeJourneyPreview';
+import { homeJourneyEnabled } from '../domain/island/homeJourney';
+import { crossedHomeJourneyStep } from '../components/island/homeJourney/growthReveal';
 import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -159,6 +162,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const [chosenDistrict, setDistrict] = useState<IslandDistrict>();
     const district = islandHomeDistrict(island, chosenDistrict);
     const [latestMilestone, setLatestMilestone] = useState<IslandMilestone>();
+    const [homeJourneyGrowthAt, setHomeJourneyGrowthAt] = useState<number>();
     const [starReceipt, setStarReceipt] = useState<{ id: string; stars: number }>();
     const lastStarReceipt = useRef<string | undefined>(undefined);
     const [albumComparison, setAlbumComparison] = useState<IslandHabitatId | 'all'>('garden');
@@ -337,6 +341,10 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         const { receipt, nextPlan, latestIsland } = result;
         observation.succeeded(request);
         setPlan(nextPlan ?? receipt.plan); setSnapshot(latestIsland ?? receipt.island);
+        if (receipt.plan.status === 'completed') {
+            const step = crossedHomeJourneyStep(island?.homeJourney, (latestIsland ?? receipt.island).homeJourney);
+            if (step) setHomeJourneyGrowthAt(step.at);
+        }
         setNextPlanError(Boolean(result.nextPlanError));
         const response = islandFeedbackForReceipt(plan, receipt.plan, receipt.event);
         const earnedReceipt = islandStarReceipt(plan, receipt.plan, receipt.event, lastStarReceipt.current);
@@ -575,7 +583,9 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         </header>}
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
-        {active && !['album', 'photos', 'inventory'].includes(screen) && <IslandStage closeHomeView={screen === 'home'} compactCameraControls={screen === 'home'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
+        {active && screen === 'home' && homeJourneyEnabled() && <HomeJourneyPreview state={island.homeJourney}
+            growthAt={homeJourneyGrowthAt} onGrowthShown={() => setHomeJourneyGrowthAt(undefined)} />}
+        {active && !(screen === 'home' && homeJourneyEnabled()) && !['album', 'photos', 'inventory'].includes(screen) && <IslandStage closeHomeView={screen === 'home'} compactCameraControls={screen === 'home'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
             learningKeepsakes={keepsakeRoomActive ? { state: island.learningKeepsakes, selectedId: keepsakeFocus } : undefined}
             onHomeEnter={!busy && ['home', 'play'].includes(screen) ? enterHouse : undefined}
             onHomeAction={!busy && screen === 'keepsakes' ? action => {
@@ -806,9 +816,9 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     onCancel={cancelPlacement} onAppearance={level => void appearance(level)} /> : <section className="island-home-controls">
                     {feedback && <p className="island-home-feedback" role="status">{feedback}</p>}
 
-                    <IslandGrowthSummary island={island} plan={plan} disabled={busy} onChoose={() => {
+                    {!homeJourneyEnabled() && <IslandGrowthSummary island={island} plan={plan} disabled={busy} onChoose={() => {
                         setGrowthViewHabitat(plan?.growthTarget ?? island.growth?.focus ?? 'garden'); setScreen('growth');
-                    }} />
+                    }} />}
                     {!navigation && <button className="island-primary island-start" disabled={busy} onClick={() => void begin()}>{island.pendingPlanId ? 'つづきから とく' : 'まなぶ'}<ArrowRight size={22} /></button>}
 
                     <IslandHomeActions active={active} onOpenChange={setHomeMenuOpen} busy={busy} comparisonDisabled={comparisonDisabled} workshopUnlocked={island.completedSets >= 1}

@@ -1,0 +1,49 @@
+{
+  "revision": "f81046bf1208fa451891a2264e91dd2acaed7431",
+  "state": "shared dirty workspace; selected file hashes recorded after run, not a frozen production build",
+  "candidate": "home-journey-whitebox-v1",
+  "target": "http://127.0.0.1:5213",
+  "flags": [
+    "DEV",
+    "VITE_ISLAND_ENABLED=true",
+    "VITE_HOME_JOURNEY_PREVIEW=true"
+  ],
+  "files": [
+    {
+      "path": "src/domain/island/homeJourney.ts",
+      "sha256": "4e2dd480a7a210bf594c0269301b27ca2315696f50f0cb8d2bf80b23d0931d85"
+    },
+    {
+      "path": "src/domain/island/homeJourney.test.ts",
+      "sha256": "6ce19c0b10e3ebaa8d0461d6ba1741c8547a1711edb59f1be210d435b0f56be8"
+    },
+    {
+      "path": "src/domain/island/types.ts",
+      "sha256": "05295f8028d03bc6aeade4ee112b825f602cf244377943ba93bafccdf09ce05f"
+    },
+    {
+      "path": "src/domain/island/repository.ts",
+      "sha256": "6546f64f05299dcfa4984abda41cd891cd70da85cd99b68ac030180177bfd899"
+    },
+    {
+      "path": "src/domain/island/commit.ts",
+      "sha256": "2aa08f8da31f1ebd9b661abc3685a5773b62db4905414d95aa63c0ab40008545"
+    },
+    {
+      "path": "src/pages/Island.tsx",
+      "sha256": "1825fc10db9019ada3d1ca066bd4847ed3ab62449064401c589b8b31295a3425"
+    },
+    {
+      "path": "src/components/island/homeJourney/scene.ts",
+      "sha256": "2c469dccb1de65147304b4512766964818c87736af16e7098a8e341d43286f2b"
+    },
+    {
+      "path": "src/components/island/homeJourney/HomeJourneyPreview.tsx",
+      "sha256": "5ae4e8f72dd08514d08be063be23a703e925dc520a043a3658ce9ae439b6d30d"
+    },
+    {
+      "path": "tools/e2e-home-journey.mjs",
+      "sha256": "ac11e48b16fdcf4140282b167ce1f417ff75fa9a8fbbafa836548ed61b4c056b"
+    }
+  ]
+}

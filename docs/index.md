@@ -173,3 +173,5 @@ The repository is transitioning toward an exploration-first math game. [product/
 - Run `npm run docs:check` after doc or process updates.
 
 - [画面目的別レイアウト仕様](product/44_display_layout_spec.md)
+
+- [家から育つ島の接続試作](product/45_home_journey_preview_spec.md)

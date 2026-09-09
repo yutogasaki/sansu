@@ -1,3 +1,4 @@
+import { advanceHomeJourney } from './homeJourney';
 import { db, type SansuDatabase } from '../../db';
 import { beginRelearning } from '../algorithms/srs';
 import { writeLearningAttemptInTransaction } from '../learningAttemptWriter';
@@ -153,6 +154,7 @@ export async function commitIslandLearning(profileId: string, planId: string, re
             island.pendingPlanId = undefined;
             island.customization = earnIslandCustomizationStars(island, plan);
             island.completedSets += 1;
+            if (plan.homeJourneyVersion === 1) island.homeJourney = advanceHomeJourney(island.homeJourney, plan.slots.length);
             if (plan.growthTarget) island = growIslandAfterCompletedSet(island, plan.growthTarget, now,
                 plan.rewardPacing === 'answers-v1' ? plan.slots.length : undefined);
             await database.islandEvents.add({ id: `${planId}:completed`, profileId, planId, type: 'plan_completed', timestamp: now,

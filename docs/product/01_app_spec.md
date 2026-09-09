@@ -1128,3 +1128,5 @@ interface MemoryState {
 
 ※ 実際の計算は上の到達目安マッピングに従う。`mathMainLevel` / `mathMaxUnlocked` は引き続き `min(28, mathStartLevel + 1)`。速さまで選んだ場合はLv28を練習する。
 ※ 未知の学年値は基準レベル `8` とする。
+
+2026-09-09: 最小構成の実装指示による[家から店への開発用接続試作45](45_home_journey_preview_spec.md)を追加。DEV限定で、新規予約からの追加進行を記録し、公開の成長契約と旧データは保持する。

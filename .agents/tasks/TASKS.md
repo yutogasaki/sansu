@@ -14,6 +14,8 @@ Keep only short active entries here, and put detailed execution context in `docs
 
 ## Current Queue
 
+- Home journey connection preview -> docs/tasks/active/2026-09-09-home-journey-preview.md
+
 
 
 
