@@ -8,7 +8,7 @@ import type { IslandRecord } from '../../../domain/island/types';
 import { IslandResident } from './animals';
 import { IslandMaterials, disposeGeometry } from './primitives';
 import { IslandScene } from './runtime';
-import { fitSharedDisplayCamera, sharedDisplayCameraDiagnostic } from './sharedDisplayFraming';
+import { fitSharedDisplayCamera, sharedDisplayCameraDiagnostic, sharedJobCameraDiagnostic, type SharedJobFrame } from './sharedDisplayFraming';
 import { IslandSharedDisplayScene } from './sharedDisplayScene';
 import { IslandSharedJobController } from './sharedJobController';
 import { IslandCosmeticScenery } from './cosmeticScenery';
@@ -123,7 +123,7 @@ function harness(width: number, height: number, reduced: boolean) {
         expect(diagnostic().branch).toBe('job');
         expect(diagnostic().selection).toBeUndefined();
     };
-    return { runtime, camera, controller, actions, captureJob, diagnostic,
+    return { runtime, camera, controller, actions, captureJob, diagnostic, resident, object,
         contactsVisible: () => nativePartContactsVisible(scene, camera, displays),
         workVisibility: () => nativeSurfaceVisibility(scene, camera, displays.targetObject('display-3')!),
         finishVisibleSteps() {
@@ -145,6 +145,35 @@ function harness(width: number, height: number, reduced: boolean) {
 }
 
 describe('shared job completion releases the display camera', () => {
+    it('uses the same job candidate for capture, clears it on learning/hidden and returns to the unchanged static display selector', () => {
+        const h = harness(390, 354, false);
+        try {
+            const frame: SharedJobFrame = { key: 'actual-runtime-framing-boundary', phase: h.controller.phase, bounds: h.controller.bounds!,
+                channels: [{ name: 'target', objects: [h.object] }],
+                facing: { origin: h.resident.head.getWorldPosition(new THREE.Vector3()), direction: new THREE.Vector3(0, 0, 1) } };
+            const getter = vi.spyOn(h.controller, 'framing', 'get').mockReturnValue(frame);
+            h.runtime.captureImage();
+            expect(h.diagnostic().selection.candidate).toBe('island-shared-job-camera-v2');
+            const selected = sharedJobCameraDiagnostic(h.camera)!;
+            h.runtime.captureImage();
+            expect(sharedJobCameraDiagnostic(h.camera)).toMatchObject({ angle: selected.angle, elevation: selected.elevation, searches: selected.searches, candidates: 0 });
+            const runtimeState = Reflect.get(h.runtime, 'state');
+            runtimeState.learning = true;
+            Reflect.get(h.runtime, 'frameSharedDisplay').call(h.runtime);
+            expect(sharedJobCameraDiagnostic(h.camera)).toBeUndefined();
+            runtimeState.learning = false; h.runtime.captureImage();
+            vi.stubGlobal('document', { hidden: true });
+            Reflect.get(h.runtime, 'frameSharedDisplay').call(h.runtime);
+            expect(sharedJobCameraDiagnostic(h.camera)).toBeUndefined();
+            vi.stubGlobal('document', { hidden: false }); getter.mockRestore();
+            h.finishVisibleSteps(); h.commit(); h.settle(); h.runtime.captureImage();
+            expect(sharedJobCameraDiagnostic(h.camera)).toBeUndefined();
+            expect(h.diagnostic().branch).toBe('display');
+            expect(sharedDisplayCameraDiagnostic(h.camera)?.readable).toBe(true);
+            h.checkIdentity();
+        } finally { h.dispose(); }
+    });
+
     for (const viewport of [{ width: 390, height: 354, reduced: false }, { width: 768, height: 430, reduced: true }]) {
         it.each([false, true])(`keeps pending work and clears the actual work parts only after commit and settle at ${viewport.width}px (commit first=%s)`, commitFirst => {
             const h = harness(viewport.width, viewport.height, viewport.reduced);

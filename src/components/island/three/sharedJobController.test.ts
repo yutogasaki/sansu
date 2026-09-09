@@ -10,6 +10,7 @@ import { IslandSharedJobController } from './sharedJobController';
 import { IslandMaterials, disposeGeometry } from './primitives';
 import { IslandResident } from './animals';
 import type { IslandSharedSceneRequest, IslandSharedStageState } from './types';
+import { fitSharedJobCamera, sharedJobCameraDiagnostic } from './sharedDisplayFraming';
 
 const dispose: (() => void)[] = [];
 afterEach(() => dispose.splice(0).forEach(fn => fn()));
@@ -65,12 +66,47 @@ function harness(island = fixture(), reduced = false) {
     sync();
     dispose.push(() => { controller.dispose(); displays.dispose(); preview.dispose(); residents.forEach(resident => { resident.disposeAppearance(); disposeGeometry(resident.group); }); materials.dispose(); });
     const tick = (visible = true, ms = 200) => { now += ms; controller.update(now, reduced); world.updateMatrixWorld(true); controller.afterRender(() => visible); };
-    return { controller, residents, displays, preview, actions, feedback, tick, state: () => state, sync,
+    return { world, controller, residents, displays, preview, actions, feedback, tick, state: () => state, sync,
         command: (command: IslandSharedSceneRequest['command'], id = `command-${++serial}`) => controller.command({ id, command }, now, reduced),
         until: (condition: () => boolean, visible = true) => { for (let i = 0; i < 250 && !condition(); i++) tick(visible); expect(condition(), JSON.stringify({ feedback, failure: controller.lastFailure, actual: controller.diagnostic() })).toBe(true); } };
 }
 
 describe('shared work after-render and actual object continuity', () => {
+    it('borrows the actual hand, lamp and receiver for framing without turning strict camera diagnostics into a save gate', () => {
+        let island = fixture();
+        for (let section = 0; section < 6; section++) island = reduceIslandWorkshop(island, { type: 'brush', specimenId: 'driftwood', section }, 1);
+        island = prepared(placed(island), 'fox');
+        const h = harness(island, true), saved = JSON.stringify(island);
+        h.command({ type: 'run', requestId: island.sharedMemories!.activeRequest!.requestId });
+        h.until(() => h.controller.phase === 'surface-illuminated');
+        const frame = h.controller.framing!, resident = h.residents[2];
+        expect(frame.channels.find(c => c.name === 'paw-left')).toMatchObject({
+            objects: [resident.group.getObjectByName('hand-contact-left')!.parent],
+            handContact: resident.group.getObjectByName('hand-contact-left'),
+        });
+        expect(frame.channels.find(c => c.name === 'lamp')!.objects[0]).toBe(h.controller.props.lamp);
+        expect(frame.light!.receiverSamples).toHaveLength(5);
+        const table = h.displays.group.getObjectByName('shared-display-table')!;
+        frame.light!.receiverSamples.forEach(point => {
+            const surface = new THREE.Raycaster(new THREE.Vector3(point.x, 2, point.z), new THREE.Vector3(0, -1, 0)).intersectObject(table, true)[0];
+            expect(surface.point.distanceTo(point)).toBeLessThan(1e-6);
+        });
+        const identity = h.controller.diagnostic()!, camera = new THREE.OrthographicCamera(-8, 8, 6, -6, .1, 100);
+        const enclosure = new THREE.Mesh(new THREE.BoxGeometry(8, 8, 8), new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }));
+        enclosure.position.copy(frame.bounds.getCenter(new THREE.Vector3())); h.world.add(enclosure);
+        try {
+            fitSharedJobCamera(camera, frame, 1, [h.world], 0);
+            expect(sharedJobCameraDiagnostic(camera)?.readable).toBe(false);
+            expect(h.controller.diagnostic()).toEqual(identity); expect(JSON.stringify(island)).toBe(saved);
+            // The existing rendered-step callback remains the gameplay contract.
+            // A strict diagnostic of mutually touching surfaces adds no gate.
+            h.until(() => h.actions.length === 1);
+            expect(h.actions[0].type).toBe('complete-request');
+            h.command({ type: 'stop' }); expect(h.controller.framing).toBeUndefined();
+            expect(h.controller.props.group.visible).toBe(false);
+        } finally { enclosure.removeFromParent(); enclosure.geometry.dispose(); enclosure.material.dispose(); }
+    });
+
     it('places the actual preview only after a visible frame, and transfers the same object into the saved scene', () => {
         const h = harness(), target = resolveSharedTarget(h.state().island, ref());
         h.sync({ preview: { displayId: 'display-1', target, position: { x: .2, z: .4 }, rotation: 0, valid: true } });

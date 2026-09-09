@@ -11,6 +11,7 @@ import { makeWestExpansion } from './westScenery';
 import { createIsland } from '../../../domain/island/catalog';
 import { getIslandExpansionLevel } from '../../../domain/island/expansion';
 import { IslandCameraControls } from './islandCameraControls';
+import { buildConnectedTerrain } from './connectedTerrain';
 
 const materials: IslandMaterials[] = [], actors: IslandResident[] = [];
 function actor(species: ResidentSpecies, position: [number, number, number]) {
@@ -64,7 +65,8 @@ describe('frozen learning frame after free play', () => {
         const state = { ...island, completedSets: 24, growth: { ...island.growth!, expansionLevel }, learning: false, districtFocus: 'all' };
         const level = getIslandExpansionLevel(state);
         const objects = [makeScenery(material), ...(level >= 1 ? [makeExpansion(material)] : []),
-            ...(level >= 2 ? [makeWestExpansion(material)] : [])];
+            ...(level >= 2 ? [makeWestExpansion(material)] : []),
+            ...(level > 0 ? (['ground', 'shore', 'water'] as const).map(slot => buildConnectedTerrain(material, level, slot)) : [])];
         try {
             const before = camera(), after = camera(), view = camera();
             fitIslandComparisonCamera(before, 'all', width / height);

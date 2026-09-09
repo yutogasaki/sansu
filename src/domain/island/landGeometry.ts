@@ -13,14 +13,16 @@ export const ISLAND_EAST_LAND: IslandLandArea = Object.freeze({ x: 7.3, z: 0, ra
 export const ISLAND_WEST_LAND: IslandLandArea = Object.freeze({ x: -7.3, z: 0, radiusX: 3, radiusZ: 3.4 });
 export const ISLAND_EAST_CONNECTOR: IslandLandArea = Object.freeze({ x: 3.65, z: 0, radiusX: 3.65, radiusZ: 3.35 });
 export const ISLAND_WEST_CONNECTOR: IslandLandArea = Object.freeze({ x: -3.65, z: 0, radiusX: 3.65, radiusZ: 3.35 });
+/** Mature connecting garden, not another district or growth target. */
+export const ISLAND_CENTRAL_FLOOR: IslandLandArea = Object.freeze({ x: 0, z: -.6, radiusX: 6.5, radiusZ: 5.5 });
 
 const floors: readonly (readonly IslandLandArea[])[] = Object.freeze([
     Object.freeze([ISLAND_MAIN_LAND]),
     Object.freeze([ISLAND_MAIN_LAND, ISLAND_EAST_LAND, ISLAND_EAST_CONNECTOR]),
-    Object.freeze([ISLAND_MAIN_LAND, ISLAND_EAST_LAND, ISLAND_EAST_CONNECTOR, ISLAND_WEST_LAND, ISLAND_WEST_CONNECTOR]),
+    Object.freeze([ISLAND_MAIN_LAND, ISLAND_EAST_LAND, ISLAND_EAST_CONNECTOR, ISLAND_WEST_LAND, ISLAND_WEST_CONNECTOR, ISLAND_CENTRAL_FLOOR]),
 ]);
 
-/** Includes every old ellipse without moving it; connecting ground unlocks with its district. */
+/** Includes every old ellipse without moving it; the deeper central floor opens only with both districts. */
 export function getIslandFloorAreas(level: IslandExpansionLevel): readonly IslandLandArea[] {
     return floors[level];
 }

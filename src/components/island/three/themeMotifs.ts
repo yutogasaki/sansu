@@ -112,9 +112,9 @@ export function addThemeEnvironment(parent: THREE.Group, m: IslandMaterials) {
             ring.rotation.x = Math.PI / 2;
         }
     } else {
-        for (const [x, z, scale] of [[-3.92, 3.62, .65], [-3.16, 3.68, .51], [3.92, 3.62, .62], [3.16, 3.68, .36]]) {
+        for (const [x, z, scale] of [[-3.92, 4.62, .65], [-3.16, 4.68, .51], [3.92, 4.62, .62], [3.16, 4.68, .36]]) {
             // Front-facing shore only. The west/east-side banks become usable
-            // land after expansion, including the connecting floor. These
+            // land after expansion, including the deeper central floor. These
             // automatic water-edge ornaments sit beyond its full footprint.
             for (const [dx, dz, ratio] of [[0, 0, 1], [.17, .05, .68], [-.14, -.04, .48]]) {
                 crystalShard(parent, m, [x + dx, -.25, z + dz], scale * .21, scale * ratio, dx < 0 ? '#9655df' : '#57d7e5');

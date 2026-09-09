@@ -1,5 +1,5 @@
 export const ISLAND_DELIVERY_ID = 'mystic-island-v1';
-export const ISLAND_VISUAL_CANDIDATE = 'mystic-island-shore-garden-v17';
+export const ISLAND_VISUAL_CANDIDATE = 'mystic-island-shore-garden-v18';
 export const ISLAND_LEARNING_CANDIDATE = 'mystic-island-learning-v2';
 
 export function islandEnabled(): boolean {

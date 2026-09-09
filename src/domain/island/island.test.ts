@@ -296,7 +296,7 @@ describe('free placement and ownership', () => {
         }
     });
 
-    it.each([[2, 1], [12, -1]])('finds new outer ground when the previous area is full at section %s', (completedSets, sign) => {
+    it.each([[2, 1], [12, -1]])('finds newly unlocked ground when the previous area is full at section %s', (completedSets, sign) => {
         const island = { ...createIsland('outer-placement', 0), completedSets };
         delete island.growth!.expansionLevel;
         // Deliberately dense legacy possessions block the old search range.
@@ -306,7 +306,7 @@ describe('free placement and ownership', () => {
         const before = structuredClone(island), item = island.items[0];
         const position = findAvailablePosition(island, item.kind, item.id);
         expect(position).toBeDefined();
-        expect(position!.x * sign).toBeGreaterThan(8);
+        expect(isValidIslandPlacement({ ...island, completedSets: completedSets - 1 }, item.id, position!)).toBe(false);
         expect(isValidIslandPlacement(island, item.id, position!)).toBe(true);
         expect(island).toEqual(before);
     });

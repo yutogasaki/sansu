@@ -7,6 +7,7 @@ import { createIsland, getIslandLandAccess, getIslandLands } from '../../../doma
 import { islandTerrainEnvelope } from './terrainProfile';
 import type { IslandStageState } from './types';
 import { IslandHomePresentation } from './homePresentation';
+import { connectedTerrainEnvelope } from './connectedTerrain';
 
 const base: CameraPanFraming = { center: { x: 0, y: 0 }, height: 10, aspect: 2,
     bounds: { minX: -9, maxX: 9, minY: -4, maxY: 4 }, regions: [] };
@@ -55,6 +56,26 @@ function runtime(width: number, height: number, level: 0 | 1 | 2, district: 'all
 }
 
 describe('real normal-island runtime framing', () => {
+    it.each([[390, 380], [768, 470]])('keeps the new central floor in the actual pan regions and reachable at %s×%s', (width, height) => {
+        const h = runtime(width, height, 2), saved = JSON.stringify(h.state);
+        const frame = vi.spyOn(h.controls, 'setFrame'); h.scene.resize();
+        const regions = frame.mock.lastCall![0].regions;
+        const point = new THREE.Vector3(0, 0, -5.5).applyMatrix4(h.camera.matrixWorldInverse);
+        const inside = regions.some(hull => hull.every((a, i) => {
+            const b = hull[(i + 1) % hull.length];
+            return (b.x - a.x) * (point.y - a.y) - (b.y - a.y) * (point.x - a.x) >= -1e-8;
+        }));
+        expect(inside).toBe(true);
+        for (let count = 0; count < 10; count++) h.controls.action('in');
+        const target = new THREE.Vector3(0, 0, -5.5), projected = target.clone().project(h.camera);
+        const start = { x: width / 2, y: height / 2 };
+        const end = { x: start.x - projected.x * width / 2, y: start.y + projected.y * height / 2 };
+        h.controls.down(1, start); h.controls.move(1, end, h.viewport); h.controls.up(1, end);
+        const visible = target.clone().project(h.camera);
+        expect(Math.abs(visible.x)).toBeLessThan(.8); expect(Math.abs(visible.y)).toBeLessThan(.8);
+        expect(JSON.stringify(h.state)).toBe(saved);
+    });
+
     it('lets a manual camera action cancel the house transition without its later frame taking control back', () => {
         const h = runtime(390, 380, 1);
         h.homePresentation.begin(h.camera, 0, false);
@@ -89,7 +110,8 @@ describe('real normal-island runtime framing', () => {
         const lands = getIslandLands(getIslandLandAccess(h.state));
         for (const end of [{ x: 1e6, y: 1e6 }, { x: -1e6, y: -1e6 }, { x: 1e6, y: -1e6 }]) {
             h.controls.down(1, { x: 190, y: 190 }); h.controls.move(1, end, h.viewport); h.controls.up(1, end);
-            const points = lands.flatMap(islandTerrainEnvelope).map(point => new THREE.Vector3(...point).project(h.camera));
+            const points = [...lands.flatMap(islandTerrainEnvelope), ...(level > 0 ? connectedTerrainEnvelope(level) : [])]
+                .map(point => new THREE.Vector3(...point).project(h.camera));
             // At least one actual rendered shore point remains inside the viewport after enormous input.
             expect(points.some(point => Math.abs(point.x) < 1 && Math.abs(point.y) < 1)).toBe(true);
             expect(Math.abs(h.controls.view.pan.x)).toBeLessThan(30);

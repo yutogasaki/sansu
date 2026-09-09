@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import type { IslandExpansionLevel } from '../../../domain/island/expansion';
-import { getIslandFloorAreas, ISLAND_EAST_CONNECTOR, ISLAND_MAIN_LAND, ISLAND_WEST_CONNECTOR,
+import { getIslandFloorAreas, ISLAND_CENTRAL_FLOOR, ISLAND_EAST_CONNECTOR, ISLAND_MAIN_LAND, ISLAND_WEST_CONNECTOR,
     type IslandLandArea } from '../../../domain/island/landGeometry';
 import { IslandMaterials, mesh } from './primitives';
 import { ISLAND_TERRAIN_EDGES, ISLAND_TERRAIN_SEGMENTS, terrainContour, terrainEdge,
@@ -24,14 +24,15 @@ const sortedUnique = (values: number[]) => values.sort((a, b) => a - b)
 
 function areaRing(area: IslandLandArea, edge: TerrainEdge, radiusZ: number): Point[] {
     const connector = area === ISLAND_EAST_CONNECTOR || area === ISLAND_WEST_CONNECTOR;
+    const central = area === ISLAND_CENTRAL_FLOOR;
     const profile = area.x < 0 ? 'west' : area.x > 0 ? 'east' : 'main';
     const sign = profile === 'west' ? -1 : 1;
     return Array.from({ length: ISLAND_TERRAIN_SEGMENTS }, (_, i) => {
         const angle = i * Math.PI * 2 / ISLAND_TERRAIN_SEGMENTS;
         const sample = terrainEdge(angle, edge, profile);
-        // Connecting ellipses need no additional lobe. The small outset still
+        // Connecting and central ellipses need no duplicate main lobe. The small outset still
         // contains their exact physical ellipses between the polygon vertices.
-        const radius = connector ? 1.012 + sample.radius - terrainContour(angle, profile) : sample.radius;
+        const radius = connector || central ? 1.012 + sample.radius - terrainContour(angle, profile) : sample.radius;
         return { x: area.x + Math.cos(angle) * area.radiusX * radius * sign, y: sample.y,
             z: area.z + Math.sin(angle) * (connector ? radiusZ : area.radiusZ) * radius * sign };
     });

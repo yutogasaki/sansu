@@ -12,6 +12,7 @@ import { SharedJobActor, type SharedContactPose } from './sharedJobActor';
 import { SharedJobVisuals } from './sharedJobVisuals';
 import type { IslandResident } from './animals';
 import { planResidentPointRoute, residentObstacles, RESIDENT_FOOTPRINT, type ResidentRoute } from './navigation';
+import type { SharedJobFrame } from './sharedDisplayFraming';
 
 interface Step { name: string; duration: number; pose: (fraction: number) => void; points: () => THREE.Vector3[]; finish?: () => void }
 interface Execution {
@@ -60,6 +61,44 @@ export class IslandSharedJobController {
         if (execution.actor) bounds.union(new THREE.Box3().setFromObject(execution.actor.resident.group, true));
         this.props.group.traverseVisible(object => { if (object instanceof THREE.Mesh) bounds.union(new THREE.Box3().setFromObject(object)); });
         return bounds;
+    }
+    /** Borrow actual meshes for viewing; never solve a different contact pose
+     * or create visible stand-ins for a framing test. */
+    get framing(): SharedJobFrame | undefined {
+        const e = this.execution, resident = e?.actor?.resident, bounds = this.bounds;
+        if (!e || !resident || !bounds || !this.state?.active || !shown(resident.group) || !shown(e.targetVisual.group)) return;
+        const channels: SharedJobFrame['channels'][number][] = [];
+        const target = e.targetVisual;
+        if (target.specimen) channels.push({ name: 'target', objects: [target.specimen.group] });
+        else for (const [id, part] of Object.entries(target.parts)) channels.push({ name: `target-${id}`, objects: [part.group] });
+        channels.push({ name: 'head', objects: [resident.head], identity: true },
+            { name: 'body', objects: resident.body.children.filter(child => child instanceof THREE.Mesh), identity: true });
+        for (const side of resident.species === 'otter' ? ['left', 'right'] : ['left']) {
+            const handContact = resident.group.getObjectByName(`hand-contact-${side}`), paw = handContact?.parent;
+            if (paw) channels.push({ name: `paw-${side}`, objects: [paw], handContact });
+        }
+        const origin = resident.head.getWorldPosition(new THREE.Vector3());
+        const direction = new THREE.Vector3(0, 0, 1).transformDirection(resident.head.matrixWorld);
+        const light = this.props.lightContact;
+        let illumination: SharedJobFrame['light'];
+        if (shown(this.props.lamp)) channels.push({ name: 'lamp', objects: [this.props.lamp] });
+        if (light) {
+            const scene = e.scene ?? this.displays;
+            const slot = scene.group.getObjectByName(`shared-${e.sourceId ?? e.displayId}`);
+            const table = slot?.getObjectByName('shared-display-table');
+            const receiverSamples: THREE.Vector3[] = [];
+            if (table) {
+                table.updateWorldMatrix(true, true);
+                const above = new THREE.Box3().setFromObject(table, true).max.y + .05;
+                for (const [x, z] of [[0, 0], [-.04, 0], [.04, 0], [0, -.04], [0, .04]]) {
+                    const origin = light.receiver.clone().add(new THREE.Vector3(x, 0, z)); origin.y = above;
+                    const hit = new THREE.Raycaster(origin, new THREE.Vector3(0, -1, 0), 0, above - light.receiver.y + .05).intersectObject(table, true)[0];
+                    if (hit) receiverSamples.push(hit.point.clone());
+                }
+            }
+            illumination = { source: light.source.clone(), surface: light.surface.clone(), receiver: light.receiver.clone(), receiverSamples };
+        }
+        return { key: e.id, phase: e.phase, bounds, channels, facing: { origin, direction }, light: illumination };
     }
     /** Called before static slots can be removed by a profile/tab update. */
     beforeUpdate(next?: IslandSharedStageState) {

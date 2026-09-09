@@ -1,10 +1,11 @@
+import { getIslandFloorAreas } from '../../../domain/island/landGeometry';
 import * as THREE from 'three';
 import { createHash } from 'node:crypto';
 import { IslandCameraControls } from './islandCameraControls';
 import { describe, expect, it } from 'vitest';
 import type { IslandAccentId, IslandCosmetics, IslandThemeId } from '../../../domain/island/customization';
 import type { IslandAppearanceSlotId } from '../../../domain/island/appearance';
-import { createIsland, getIslandLands, ISLAND_ITEMS, isValidIslandPlacement } from '../../../domain/island/catalog';
+import { createIsland, ISLAND_ITEMS, isValidIslandPlacement } from '../../../domain/island/catalog';
 import { RESIDENT_FOOTPRINT, residentPointIsClear } from './navigation';
 import type { IslandItemKind } from './types';
 import { IslandCosmeticScenery, sameIslandCosmetics } from './cosmeticScenery';
@@ -146,7 +147,7 @@ describe('owned cosmetic scenery', () => {
                 for (let i = 0; i < positions.count; i++) {
                     const p = new THREE.Vector3().fromBufferAttribute(positions, i).applyMatrix4(object.matrixWorld);
                     if (p.y < 0) continue;
-                    for (const land of getIslandLands({ expansionLevel: 2 })) {
+                    for (const land of getIslandFloorAreas(2)) {
                         expect(((p.x - land.x) / land.radiusX) ** 2 + ((p.z - land.z) / land.radiusZ) ** 2).toBeGreaterThan(1);
                     }
                 }
@@ -160,7 +161,7 @@ describe('owned cosmetic scenery', () => {
                 }
             }
             const centers = [{ x: -5.1, z: 1.5 }, { x: -5, z: 1.5 }];
-            for (let ix = -42; ix <= 42; ix++) for (let iz = -14; iz <= 14; iz++) centers.push({ x: ix / 4, z: iz / 4 });
+            for (let ix = -42; ix <= 42; ix++) for (let iz = -25; iz <= 20; iz++) centers.push({ x: ix / 4, z: iz / 4 });
             const point = new THREE.Vector3(), closest = new THREE.Vector3();
             const clearance = (center: { x: number; z: number }) => {
                 point.set(center.x, 0, center.z);

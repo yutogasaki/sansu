@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { getIslandFloorAreas, getIslandFloorBounds, islandFloorContains,
-    ISLAND_MAIN_LAND, ISLAND_EAST_LAND, ISLAND_WEST_LAND } from './landGeometry';
+    ISLAND_MAIN_LAND, ISLAND_EAST_LAND, ISLAND_WEST_LAND, ISLAND_CENTRAL_FLOOR } from './landGeometry';
 
 describe('connected physical floor', () => {
     it('retains the entire old ellipses and their inset footprints at every unlocked level', () => {
@@ -17,7 +17,7 @@ describe('connected physical floor', () => {
         }
     });
 
-    it('opens connecting floor with its own district, without extending the old outer search bounds', () => {
+    it('opens connecting floor with its own district and adds depth only after both districts open', () => {
         for (const level of [0, 1, 2] as const) {
             for (const sign of [1, -1]) {
                 const point = { x: sign * 4.25, z: 1.5 }, clearance = .72;
@@ -27,7 +27,25 @@ describe('connected physical floor', () => {
                 expect(islandFloorContains(point, clearance, level)).toBe(level >= (sign > 0 ? 1 : 2));
             }
             const bounds = getIslandFloorBounds(level);
-            expect(bounds).toEqual({ minX: level === 2 ? -10.3 : -4.8, maxX: level >= 1 ? 10.3 : 4.8, minZ: -3.6, maxZ: 3.6 });
+            expect(bounds).toEqual({ minX: level === 2 ? -10.3 : -4.8, maxX: level >= 1 ? 10.3 : 4.8,
+                minZ: level === 2 ? -6.1 : -3.6, maxZ: level === 2 ? 4.9 : 3.6 });
+        }
+    });
+
+    it('retains the five original floor declarations and opens a usable central garden without another district', () => {
+        const old = [{ x: 0, z: 0, radiusX: 4.8, radiusZ: 3.6 },
+            { x: 7.3, z: 0, radiusX: 3, radiusZ: 3.4 }, { x: 3.65, z: 0, radiusX: 3.65, radiusZ: 3.35 },
+            { x: -7.3, z: 0, radiusX: 3, radiusZ: 3.4 }, { x: -3.65, z: 0, radiusX: 3.65, radiusZ: 3.35 }];
+        expect(getIslandFloorAreas(0)).toEqual(old.slice(0, 1));
+        expect(getIslandFloorAreas(1)).toEqual(old.slice(0, 3));
+        expect(getIslandFloorAreas(2).slice(0, 5)).toEqual(old);
+        expect(getIslandFloorAreas(2)[5]).toBe(ISLAND_CENTRAL_FLOOR);
+        expect(Object.isFrozen(ISLAND_CENTRAL_FLOOR)).toBe(true);
+        for (const clearance of [0, .42, .8, 1.2]) for (const sign of [-1, 1]) {
+            const point = { x: 0, z: -.6 + sign * (5.5 - clearance) * .99 };
+            expect(islandFloorContains(point, clearance, 0)).toBe(false);
+            expect(islandFloorContains(point, clearance, 1)).toBe(false);
+            expect(islandFloorContains(point, clearance, 2)).toBe(true);
         }
     });
 

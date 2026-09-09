@@ -38,6 +38,30 @@ function zAt(row: readonly ConnectedTerrainPoint[], x: number) {
 }
 
 describe('connected terrain exterior', () => {
+    it('adds a supported central depth only at maturity without repeating the main decorative lobes', () => {
+        const materials = new IslandMaterials();
+        try {
+            for (const level of levels) {
+                const ground = buildConnectedTerrain(materials, level, 'ground');
+                try {
+                    actualMeshes(ground);
+                    for (const z of [-5.8, 4.65]) {
+                        const hits = new THREE.Raycaster(new THREE.Vector3(0, 1, z), new THREE.Vector3(0, -1, 0)).intersectObject(ground, true);
+                        expect(hits.length > 0, `central floor ${level}/${z}`).toBe(level === 2);
+                        expect(hits.every(hit => Math.abs(hit.point.y) < 1e-7)).toBe(true);
+                    }
+                } finally { disposeGeometry(ground); }
+            }
+            const cap = getConnectedTerrainContours(2).cap, depth = cap.map(point => point[2]);
+            // The selected 5.5 floor has a small 1.012 outset, not another
+            // copy of the main island's large positive decorative lobes.
+            expect(Math.min(...depth)).toBeLessThan(-6.1);
+            expect(Math.min(...depth)).toBeGreaterThan(-6.3);
+            expect(Math.max(...depth)).toBeGreaterThan(4.9);
+            expect(Math.max(...depth)).toBeLessThan(5.1);
+        } finally { materials.dispose(); }
+    });
+
     it('returns finite immutable matching rings and caches only plain coordinates', () => {
         for (const level of levels) for (const connectorRadiusZ of widths) {
             const options = { connectorRadiusZ }, rings = getConnectedTerrainContours(level, options);

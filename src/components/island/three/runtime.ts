@@ -12,7 +12,7 @@ import { sharedDisplayObstacles } from '../../../domain/island/sharedDisplayGeom
 import { IslandWorkshopScene, type WorkshopSceneCallbacks } from './workshopScene';
 import { IslandSharedDisplayScene } from './sharedDisplayScene';
 import { IslandSharedJobController } from './sharedJobController';
-import { fitSharedDisplayCamera, sharedDisplayCameraDiagnostic } from './sharedDisplayFraming';
+import { fitSharedDisplayCamera, sharedDisplayCameraDiagnostic, fitSharedJobCamera, sharedJobCameraDiagnostic, clearSharedJobCamera } from './sharedDisplayFraming';
 import { IslandWorkshopPresentation } from './workshopPresentation';
 import { fitIslandWorkshopResidentCamera } from './workshopResidentFraming';
 import { canControlIslandCamera, IslandCameraControls, type IslandCameraAction, type IslandCameraView } from './islandCameraControls';
@@ -110,7 +110,7 @@ export function fitIslandComparisonCamera(camera: THREE.OrthographicCamera,
     camera.lookAt(target); camera.updateMatrixWorld(true);
     let height = Math.max(frame.height, frame.width / aspect);
     if (habitat === 'all') {
-        const terrain = getIslandLands({ expansionLevel: 2 }).flatMap(islandTerrainEnvelope)
+        const terrain = [...getIslandLands({ expansionLevel: 2 }).flatMap(islandTerrainEnvelope), ...connectedTerrainEnvelope(2)]
             .map(point => new THREE.Vector3(...point).applyMatrix4(camera.matrixWorldInverse));
         height = Math.max(height, ...terrain.map(point => Math.max(Math.abs(point.y), Math.abs(point.x) / aspect) * 2.12));
     }
@@ -1207,7 +1207,7 @@ export class IslandScene {
         const lands = getIslandLands(this.landAccess);
         const regions = lands.map(area => islandTerrainEnvelope(area).map(point => new THREE.Vector3(...point)));
         const level = getIslandExpansionLevel(this.state ?? { completedSets: 0 });
-        for (const area of getIslandFloorAreas(level).filter(area => !lands.some(land => land.x === area.x))) {
+        for (const area of getIslandFloorAreas(level).filter(area => !lands.includes(area))) {
             regions.push(Array.from({ length: 64 }, (_, i) => {
                 const angle = i / 64 * Math.PI * 2;
                 return new THREE.Vector3(area.x + Math.cos(angle) * area.radiusX, 0, area.z + Math.sin(angle) * area.radiusZ);
@@ -1579,7 +1579,7 @@ export class IslandScene {
         this.trialSearch = undefined;
         this.optionalPlacement?.cancel();
         if (this.furnitureTrial) this.furnitureTrial.group.visible = false;
-        this.pointerCancel(); this.sharedJobs.stop(); this.workshop.stop(); this.workshopPresentation.restore();
+        this.pointerCancel(); this.sharedJobs.stop(); clearSharedJobCamera(this.camera); this.workshop.stop(); this.workshopPresentation.restore();
         this.cancelLivingActivity(performance.now()); this.clearOrdinaryInterest();
         cancelAnimationFrame(this.frame); this.frame = 0; window.clearTimeout(this.idleTimer);
     }
@@ -2006,12 +2006,22 @@ export class IslandScene {
                 ...detail });
             return result;
         };
-        if (this.state?.learning || this.workshopActive || this.portraitResident) return observed('inactive', false);
+        if (this.state?.learning || this.workshopActive || this.portraitResident || this.onscreen === false
+            || typeof document !== 'undefined' && document.hidden) {
+            clearSharedJobCamera(this.camera); return observed('inactive', false);
+        }
         // The controller retains its result for replay. Once it is both settled
         // and saved, the selected display needs the live scene occlusion check.
         const finished = phase === 'settled' && committed;
         const job = finished ? undefined : this.sharedJobs?.bounds;
-        if (job) return observed('job', fitSharedDisplayCamera(this.camera, job, Math.max(1, this.host.clientWidth) / Math.max(1, this.host.clientHeight)));
+        if (job) {
+            const frame = this.sharedJobs.framing, aspect = Math.max(1, this.host.clientWidth) / Math.max(1, this.host.clientHeight);
+            if (frame) return observed('job', fitSharedJobCamera(this.camera, frame, aspect, [this.scene], performance.now()),
+                { selection: sharedJobCameraDiagnostic(this.camera) });
+            clearSharedJobCamera(this.camera);
+            return observed('job', fitSharedDisplayCamera(this.camera, job, aspect));
+        }
+        clearSharedJobCamera(this.camera);
         const target = id && this.sharedDisplays.describe().find(display => display.displayId === id);
         const visual = id && this.sharedDisplays.targetVisual(id);
         if (!target || !visual) return observed('missing-display', false, { hasTarget: Boolean(target), hasVisual: Boolean(visual) });

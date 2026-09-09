@@ -60,15 +60,23 @@ export async function prepareIslandPhoto(frame: string, isCurrent: () => boolean
             if (blob.size <= IMAGE_LIMIT) { original = { blob, ...size }; break; }
         }
         if (!original) throw new Error('Photo is too large');
-        const thumbnailSize = islandPhotoDimensions(image.naturalWidth, image.naturalHeight, 320);
-        canvas.width = thumbnailSize.width; canvas.height = thumbnailSize.height;
-        context.drawImage(image, 0, 0, thumbnailSize.width, thumbnailSize.height);
-        const thumbnail = await encode(canvas, isCurrent);
-        if (thumbnail.size > THUMBNAIL_LIMIT) throw new Error('Photo thumbnail is too large');
+        // Detailed scenery can exceed the PNG byte limit even at 320px. Keep
+        // the original untouched and choose the largest permitted thumbnail.
+        const thumbnailCandidates = [320, 256, 192, 160]
+            .map(size => islandPhotoDimensions(image.naturalWidth, image.naturalHeight, size))
+            .filter((size, index, all) => index === 0 || size.width !== all[index - 1].width || size.height !== all[index - 1].height);
+        let thumbnail: { blob: Blob; width: number; height: number } | undefined;
+        for (const size of thumbnailCandidates) {
+            canvas.width = size.width; canvas.height = size.height;
+            context.drawImage(image, 0, 0, size.width, size.height);
+            const blob = await encode(canvas, isCurrent);
+            if (blob.size <= THUMBNAIL_LIMIT) { thumbnail = { blob, ...size }; break; }
+        }
+        if (!thumbnail) throw new Error('Photo thumbnail is too large');
         const imageMetadata = await describe(original.blob, original.width, original.height, isCurrent);
-        const thumbnailMetadata = await describe(thumbnail, thumbnailSize.width, thumbnailSize.height, isCurrent);
+        const thumbnailMetadata = await describe(thumbnail.blob, thumbnail.width, thumbnail.height, isCurrent);
         return { image: imageMetadata, thumbnail: thumbnailMetadata,
-            blobs: { image: original.blob, thumbnail } };
+            blobs: { image: original.blob, thumbnail: thumbnail.blob } };
     } finally {
         image.src = '';
         canvas.width = 1; canvas.height = 1;

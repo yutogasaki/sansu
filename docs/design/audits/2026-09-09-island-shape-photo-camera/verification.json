@@ -1,0 +1,542 @@
+{
+  "application": {
+    "revision": "final-island-20260909-001e95ed1175",
+    "sourceHash": "001e95ed1175c9d941e392e4bf3d49aaca737ed46442518ccbc18b546874b272",
+    "inputCount": 1092,
+    "target": "http://127.0.0.1:5436",
+    "version": {
+      "version": "final-island-20260909-001e95ed1175:55979212-504c-40ab-a441-a78e53aa33fd",
+      "revision": "final-island-20260909-001e95ed1175",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": true,
+        "renderer": "legacy"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "mystic-island-learning-v2",
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    "baseCommit": "7ea0e33a8d8d9bbc63730029aefd15413617d236",
+    "overlays": [
+      "src/components/island/three/themeMotifs.ts",
+      "src/components/island/three/cosmeticScenery.test.ts",
+      "src/domain/island/island.test.ts",
+      "src/components/island/three/cameraPanFraming.test.ts",
+      "src/components/island/three/sceneFraming.test.ts",
+      "src/domain/island/landGeometry.ts",
+      "src/domain/island/landGeometry.test.ts",
+      "src/components/island/three/connectedTerrain.ts",
+      "src/components/island/three/connectedTerrain.test.ts",
+      "src/components/island/islandPhotoCapture.ts",
+      "src/components/island/islandPhotoCapture.test.ts",
+      "src/domain/island/feature.ts",
+      "vite.config.ts",
+      "tools/e2e-island-pwa.mjs",
+      "tools/e2e-island-observation.mjs",
+      "tools/island-e2e-helpers.mjs",
+      "tools/e2e-island-throughput.mjs",
+      "src/components/island/three/runtime.ts",
+      "src/components/island/three/sharedDisplayFraming.ts",
+      "src/components/island/three/sharedJobController.ts",
+      "src/components/island/three/sharedJobFraming.test.ts",
+      "src/components/island/three/sharedDisplayFrameBoundary.test.ts",
+      "src/components/island/three/sharedJobController.test.ts"
+    ]
+  },
+  "core": {
+    "passed": true,
+    "testFiles": 304,
+    "tests": 3355,
+    "checks": [
+      {
+        "name": "lint",
+        "args": [
+          "node_modules/eslint/bin/eslint.js",
+          "."
+        ],
+        "code": 0,
+        "signal": null,
+        "durationMs": 19442,
+        "logPath": "/Users/yutogasaki/Projects/sansu/output/island-experience/final-42-checks/lint.log",
+        "sha256": "5438d98a59982b0a16fe0e795668a4a923d1da74297f6b3f7021debb2548340a"
+      },
+      {
+        "name": "typecheck",
+        "args": [
+          "node_modules/typescript/bin/tsc",
+          "-b",
+          "--pretty",
+          "false"
+        ],
+        "code": 0,
+        "signal": null,
+        "durationMs": 3561,
+        "logPath": "/Users/yutogasaki/Projects/sansu/output/island-experience/final-42-checks/typecheck.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "build",
+        "args": [
+          "node_modules/vite/bin/vite.js",
+          "build"
+        ],
+        "code": 0,
+        "signal": null,
+        "durationMs": 7467,
+        "logPath": "/Users/yutogasaki/Projects/sansu/output/island-experience/final-42-checks/build.log",
+        "sha256": "560501d17a2838c70bd5942833f42a526e74688519a6176c1aff2c9bd57fde89"
+      },
+      {
+        "name": "assets",
+        "args": [
+          "tools/check-asset-budget.mjs"
+        ],
+        "code": 0,
+        "signal": null,
+        "durationMs": 33,
+        "logPath": "/Users/yutogasaki/Projects/sansu/output/island-experience/final-42-checks/assets.log",
+        "sha256": "7a65959fbd53873e9363653e89a210348132a13cb146e9c1310a5cd2315429d3"
+      },
+      {
+        "name": "classic-build",
+        "args": [
+          "node_modules/vite/bin/vite.js",
+          "build",
+          "--outDir",
+          "dist-classic"
+        ],
+        "code": 0,
+        "signal": null,
+        "durationMs": 8343,
+        "logPath": "/Users/yutogasaki/Projects/sansu/output/island-experience/final-42-checks/classic-build.log",
+        "sha256": "f14259289df2ece4f6a7357fd61527308ca4d6ce9ff920d44f648691bdbc2706"
+      },
+      {
+        "name": "tests",
+        "args": [
+          "node_modules/vitest/vitest.mjs",
+          "run",
+          "--minWorkers=1",
+          "--maxWorkers=4"
+        ],
+        "code": 0,
+        "signal": null,
+        "durationMs": 161102,
+        "logPath": "/Users/yutogasaki/Projects/sansu/output/island-experience/final-42-checks/tests.log",
+        "sha256": "d14a8700a4e5fb7e09dc9f20ad42e74745af723ca1757b538a3193cdde39c5f2"
+      }
+    ]
+  },
+  "shore": {
+    "passed": true,
+    "visualRows": 8,
+    "placements": [
+      {
+        "prefix": "phone-before-placement",
+        "pass": true,
+        "cancelPreserved": true,
+        "reloadPreserved": null,
+        "samePlanResumed": true,
+        "realAnswers": 0
+      },
+      {
+        "prefix": "phone-after-placement",
+        "pass": true,
+        "cancelPreserved": true,
+        "reloadPreserved": true,
+        "samePlanResumed": true,
+        "realAnswers": 0
+      },
+      {
+        "prefix": "tablet-before-placement",
+        "pass": true,
+        "cancelPreserved": true,
+        "reloadPreserved": null,
+        "samePlanResumed": true,
+        "realAnswers": 0
+      },
+      {
+        "prefix": "tablet-after-placement",
+        "pass": true,
+        "cancelPreserved": true,
+        "reloadPreserved": true,
+        "samePlanResumed": true,
+        "realAnswers": 0
+      }
+    ],
+    "sourceStable": true,
+    "qaStable": true,
+    "browserClosed": true,
+    "reportSha256": "9f2260667a8222f69e9b5f81c0b85c6f23dd32f18357c0f7ecc5b1ccec43df54",
+    "scope": "Declared mature fixture. Existing coordinates preserved; actual move/cancel/save/reload and same reservation, no newly earned growth or answers."
+  },
+  "photos": {
+    "status": "PASS",
+    "terminalExitCode": 0,
+    "sessionId": 63854,
+    "application": {
+      "revision": "final-island-20260909-001e95ed1175",
+      "sourceHash": "001e95ed1175c9d941e392e4bf3d49aaca737ed46442518ccbc18b546874b272",
+      "inputs": 1092,
+      "target": "http://127.0.0.1:5436"
+    },
+    "sourceStable": true,
+    "qaStable": true,
+    "qaClosureSha256": "6d0af703d9f4051bf177ffdab33e0133f23509fa62c266d317a590230170b6e0",
+    "reportSha256": "00dc47ab140a0ab2733c2f4e4f22eebf2d7c3ea1a74bf3d13b9da8fd3ccb8754",
+    "browserClosed": true,
+    "contextsClosed": true,
+    "scope": "Original04 native17-store checkpoint, same owned otter hammock use, original camera whole-island capture, real image/PNG, same photo ID and exact17-store reload. No new answers/acquisitions/goal/scenery/display scope.",
+    "cases": [
+      {
+        "viewport": "phone",
+        "status": "PASS",
+        "reducedMotion": "no-preference",
+        "restored17StoresExact": true,
+        "actualEntryExact": true,
+        "sameOwnedUse": {
+          "label": "owned-hammock-otter",
+          "kind": "hammock",
+          "requestId": "e40f7062-fa0b-420e-b397-c867d64d6f41",
+          "actorIds": [
+            "otter"
+          ],
+          "actorUuids": [
+            "e2d77881-2bec-469e-98f6-c5e8892d2915"
+          ],
+          "borrowed": false,
+          "contactFrame": 8352,
+          "phases": [
+            "walking",
+            "mounting",
+            "contact",
+            "using",
+            "settled"
+          ],
+          "pass": true
+        },
+        "photo": {
+          "id": "[\"island-photo:v1\",\"c7f823e3-bd4c-4d3a-a1eb-42cc639a65ae\",\"e75bbc5f-2ce3-4fa8-b442-cb0af3973a23\"]",
+          "profileId": "c7f823e3-bd4c-4d3a-a1eb-42cc639a65ae",
+          "version": 1,
+          "capturedAt": 1788935267204,
+          "islandName": "わたしの しま",
+          "composition": "island",
+          "image": {
+            "mime": "image/png",
+            "width": 375,
+            "height": 354,
+            "bytes": 158173,
+            "sha256": "aebf32bd2d083ebc74f11ab7b36fdb71cab3e8c2fd302b632427c234770519ba"
+          },
+          "thumbnail": {
+            "mime": "image/png",
+            "width": 256,
+            "height": 242,
+            "bytes": 91069,
+            "sha256": "fd534cf7f071307171d8fe376dc3e0504f522e3cccd446713d992cba3e1b8a3e"
+          }
+        },
+        "fallbackExercised": true,
+        "preview": {
+          "sha256": "aebf32bd2d083ebc74f11ab7b36fdb71cab3e8c2fd302b632427c234770519ba",
+          "width": 375,
+          "height": 354,
+          "bytes": 158173
+        },
+        "actualThumbnail": {
+          "sha256": "fd534cf7f071307171d8fe376dc3e0504f522e3cccd446713d992cba3e1b8a3e",
+          "width": 256,
+          "height": 242,
+          "bytes": 91069
+        },
+        "reloadedOriginal": {
+          "sha256": "aebf32bd2d083ebc74f11ab7b36fdb71cab3e8c2fd302b632427c234770519ba",
+          "width": 375,
+          "height": 354,
+          "bytes": 158173
+        },
+        "photoAndReloadPass": true,
+        "screens": [
+          {
+            "file": "phone-original-photo.png",
+            "sha256": "aebf32bd2d083ebc74f11ab7b36fdb71cab3e8c2fd302b632427c234770519ba"
+          },
+          {
+            "file": "phone-reloaded-original-photo.png",
+            "sha256": "aebf32bd2d083ebc74f11ab7b36fdb71cab3e8c2fd302b632427c234770519ba"
+          },
+          {
+            "file": "phone-reloaded-photo.png",
+            "sha256": "50c9c7525182ec1af696daa7aefd43b31b058410e128cea35d2b03f7c585aba0"
+          },
+          {
+            "file": "phone-owned-hammock-otter-settled-world.png",
+            "sha256": "26c4605a9a7f6b28fd825b5081d4be37fcfe4f04712ff7eb3924c7ff9c4d88e9"
+          }
+        ]
+      },
+      {
+        "viewport": "tablet",
+        "status": "PASS",
+        "reducedMotion": "reduce",
+        "restored17StoresExact": true,
+        "actualEntryExact": true,
+        "sameOwnedUse": {
+          "label": "owned-hammock-otter",
+          "kind": "hammock",
+          "requestId": "c1fe2bb1-fa40-4166-b1af-cbbcd998b9d8",
+          "actorIds": [
+            "otter"
+          ],
+          "actorUuids": [
+            "3084a932-e680-4b75-9920-49173b0038c4"
+          ],
+          "borrowed": false,
+          "contactFrame": 4921.9,
+          "phases": [
+            "walking",
+            "mounting",
+            "contact",
+            "using",
+            "settled"
+          ],
+          "pass": true
+        },
+        "photo": {
+          "id": "[\"island-photo:v1\",\"c7f823e3-bd4c-4d3a-a1eb-42cc639a65ae\",\"964ab5e0-5001-4353-ab63-0b1a10d60ce2\"]",
+          "profileId": "c7f823e3-bd4c-4d3a-a1eb-42cc639a65ae",
+          "version": 1,
+          "capturedAt": 1788935277239,
+          "islandName": "わたしの しま",
+          "composition": "island",
+          "image": {
+            "mime": "image/png",
+            "width": 768,
+            "height": 430,
+            "bytes": 320409,
+            "sha256": "689d45f5ddc553b5e94d58da99aac065288b046d1f688769beacf66f799a0af0"
+          },
+          "thumbnail": {
+            "mime": "image/png",
+            "width": 320,
+            "height": 179,
+            "bytes": 84701,
+            "sha256": "21617cbc228690d49800170558a46c859d13acfa8fe232cc56cf7bf4ad8a4615"
+          }
+        },
+        "fallbackExercised": false,
+        "preview": {
+          "sha256": "689d45f5ddc553b5e94d58da99aac065288b046d1f688769beacf66f799a0af0",
+          "width": 768,
+          "height": 430,
+          "bytes": 320409
+        },
+        "actualThumbnail": {
+          "sha256": "21617cbc228690d49800170558a46c859d13acfa8fe232cc56cf7bf4ad8a4615",
+          "width": 320,
+          "height": 179,
+          "bytes": 84701
+        },
+        "reloadedOriginal": {
+          "sha256": "689d45f5ddc553b5e94d58da99aac065288b046d1f688769beacf66f799a0af0",
+          "width": 768,
+          "height": 430,
+          "bytes": 320409
+        },
+        "photoAndReloadPass": true,
+        "screens": [
+          {
+            "file": "tablet-original-photo.png",
+            "sha256": "689d45f5ddc553b5e94d58da99aac065288b046d1f688769beacf66f799a0af0"
+          },
+          {
+            "file": "tablet-reloaded-original-photo.png",
+            "sha256": "689d45f5ddc553b5e94d58da99aac065288b046d1f688769beacf66f799a0af0"
+          },
+          {
+            "file": "tablet-reloaded-photo.png",
+            "sha256": "59be9347add5115ae55c6fb534d848623e48825de67cd845a490ee1813d0deb8"
+          },
+          {
+            "file": "tablet-owned-hammock-otter-settled-world.png",
+            "sha256": "aaf59cb09381be894a05db65a0f825cd693a0f1658e64f7d6f644ba90ebee6ab"
+          }
+        ]
+      }
+    ],
+    "preservedFailures": [
+      "appearance-life-39-04",
+      "appearance-life-39-photo-diagnostic-02",
+      "photo-fallback-42-01: unescaped JSON photo ID CSS locator",
+      "photo-fallback-42-02: erroneous grid tap after URL-selected detail reload"
+    ],
+    "limits": [
+      "Phone actual fallback exercised; tablet320 normal branch, fallback not exercised",
+      "Original checkpoint has no old photos; newly saved nonempty photo preserved through reload",
+      "Same original phone checkpoint is explicitly restored for each viewport; this is not new acquisition evidence",
+      "IndexedDB internal key-generator counter unrecorded",
+      "No formal timing, Human N0, whole Goal not assessed"
+    ]
+  },
+  "jobs": {
+    "diagnosticPass": true,
+    "fullSpec38Passed": false,
+    "sourceUnchanged": true,
+    "distUnchanged": true,
+    "browserClosed": true,
+    "reportSha256": "a3fe1bc3072b63b6c3a3b2ba445e0a1b0ea4a213be39f42139e85b65cba86bbd",
+    "layouts": [
+      {
+        "name": "phone",
+        "pass_": true,
+        "jobs": 3,
+        "memories": 1,
+        "databaseChecks": 11,
+        "errors": [],
+        "contextClosed": true
+      },
+      {
+        "name": "tablet",
+        "pass_": true,
+        "jobs": 3,
+        "memories": 1,
+        "databaseChecks": 11,
+        "errors": [],
+        "contextClosed": true
+      }
+    ],
+    "scope": "Old63-answer/native17-store checkpoint restored. Three actual jobs and one carry-memory revisit per width. No new acquisition, capacity, interruption or learning-answer claim."
+  },
+  "images": [
+    {
+      "file": "phone-entry.png",
+      "label": "phone: 初期の庭",
+      "source": "output/island-experience/central-shore-42-01/phone-after-default-level-0-page.png",
+      "sha256": "f508d4c85843ce8d48078c92d5a23fe80e01b38eaeb5ba5b25a07a337feec4aa",
+      "revision": "final-island-20260909-001e95ed1175"
+    },
+    {
+      "file": "phone-before-island.png",
+      "label": "phone: 成熟した島・変更前",
+      "source": "output/island-experience/central-shore-42-01/phone-before-all-level-2.png",
+      "sha256": "484af62e58e41d21de67fc4f3a04a65340f3cf515190064cf99578f8ae1dc494",
+      "revision": "companion-20260909-b80f785972fa"
+    },
+    {
+      "file": "phone-after-island.png",
+      "label": "phone: 成熟した島・変更後",
+      "source": "output/island-experience/central-shore-42-01/phone-after-all-level-2.png",
+      "sha256": "81303be39e4c40b8ad1e2da44c30e6458bb3f2fc481d194734e5f0af3eae4b8e",
+      "revision": "final-island-20260909-001e95ed1175"
+    },
+    {
+      "file": "phone-photo-reloaded.png",
+      "label": "phone: 写真の再読込",
+      "source": "output/island-experience/photo-fallback-42-03/phone-reloaded-photo.png",
+      "sha256": "50c9c7525182ec1af696daa7aefd43b31b058410e128cea35d2b03f7c585aba0",
+      "revision": "final-island-20260909-001e95ed1175"
+    },
+    {
+      "file": "phone-pickup-contact.png",
+      "label": "phone: 実物を持つ",
+      "source": "output/island-experience/shared-jobs-42-01/phone-driftwood-otter-aaaeb7ad3545-pickup-contact.png",
+      "sha256": "aeae112d2eb6052bf548ece2867fb57772d698ebd62916cc14ebb0c2c5da2e88",
+      "revision": "final-island-20260909-001e95ed1175"
+    },
+    {
+      "file": "phone-actual-light-surface-receiver.png",
+      "label": "phone: 実物へ光を当てる",
+      "source": "output/island-experience/shared-jobs-42-01/phone-driftwood-fox-be54fa818ffc-actual-light-surface-receiver.png",
+      "sha256": "79e3032f3ae342650e0ed3c181d2fee31bdf85828af287f2f2b6889d4b3ceaa8",
+      "revision": "final-island-20260909-001e95ed1175"
+    },
+    {
+      "file": "tablet-entry.png",
+      "label": "tablet: 初期の庭",
+      "source": "output/island-experience/central-shore-42-01/tablet-after-default-level-0-page.png",
+      "sha256": "e249e7e582b01969e6efdf55dbb4b3b9e21a606dff243d6819390ab965a55536",
+      "revision": "final-island-20260909-001e95ed1175"
+    },
+    {
+      "file": "tablet-before-island.png",
+      "label": "tablet: 成熟した島・変更前",
+      "source": "output/island-experience/central-shore-42-01/tablet-before-all-level-2.png",
+      "sha256": "0cd1d65ba133cd0382f69671ddc49a99d990bc0bfcfff0838e1ceacfecf94bf1",
+      "revision": "companion-20260909-b80f785972fa"
+    },
+    {
+      "file": "tablet-after-island.png",
+      "label": "tablet: 成熟した島・変更後",
+      "source": "output/island-experience/central-shore-42-01/tablet-after-all-level-2.png",
+      "sha256": "1b4d4f235b6e1c996da8edc6a7f344cf0f61bef796859cbe42ffe0b9645e85c8",
+      "revision": "final-island-20260909-001e95ed1175"
+    },
+    {
+      "file": "tablet-photo-reloaded.png",
+      "label": "tablet: 写真の再読込",
+      "source": "output/island-experience/photo-fallback-42-03/tablet-reloaded-photo.png",
+      "sha256": "59be9347add5115ae55c6fb534d848623e48825de67cd845a490ee1813d0deb8",
+      "revision": "final-island-20260909-001e95ed1175"
+    },
+    {
+      "file": "tablet-pickup-contact.png",
+      "label": "tablet: 実物を持つ",
+      "source": "output/island-experience/shared-jobs-42-01/tablet-driftwood-otter-30fdbd6cd913-pickup-contact.png",
+      "sha256": "fa73b2cdec115a998343c93dfb5acd6f43545e3dcb25963fef55d062cb781ffe",
+      "revision": "final-island-20260909-001e95ed1175"
+    },
+    {
+      "file": "tablet-actual-light-surface-receiver.png",
+      "label": "tablet: 実物へ光を当てる",
+      "source": "output/island-experience/shared-jobs-42-01/tablet-driftwood-fox-84083a775a02-actual-light-surface-receiver.png",
+      "sha256": "7bc5a93497d8287d06287bf1cfff9a5681ea4224950ac577bfcb715eb4d18282",
+      "revision": "final-island-20260909-001e95ed1175"
+    },
+    {
+      "file": "phone-central-placement.png",
+      "label": "phone: 追加した中央の床へ実配置",
+      "source": "output/island-experience/central-shore-42-01/phone-after-placement-connector-saved.png",
+      "sha256": "378eb1f99f14f4043b96359bc763a3af09d27671ec338d0b824102e650a76b12",
+      "revision": "final-island-20260909-001e95ed1175"
+    }
+  ],
+  "humanN": 0,
+  "goalAuditStoppedByUser": true,
+  "preservedFailures": [
+    "final-41-checks: legacy search-direction expectation and crystal overlap",
+    "appearance-life-39-04: thumbnail size error",
+    "photo-fallback-42-01: unescaped photo ID in QA selector",
+    "photo-fallback-42-02: QA expected grid instead of retained detail route"
+  ],
+  "limits": [
+    "Localized author review only; no Source A parity or child motivation claim",
+    "The cancelled whole-Goal audit is not marked complete",
+    "Formal throughput, full four-habitat acquisition, profile/CAS failure matrix and PWA are not rerun by these affected-feature checks; earlier versioned evidence is separate"
+  ],
+  "smoke": {
+    "pass": true,
+    "app": "final-island-20260909-001e95ed1175",
+    "target": "script-owned classic server",
+    "terminal": {
+      "code": 0,
+      "signal": null
+    },
+    "sourceAndDistStable": true,
+    "logSha256": "2536034a3c270b899a449899ed35d5828c40abbb5a9cefed2b7732ce32ee382d",
+    "scope": "Single specified regression against final fixed42 using exact frozen QA. Human N=0; DEV, classic and Island production configurations are separate.",
+    "reportSha256": "aa23474a2982ae9aa1440f389471632f6a1b8f8261877ae81132319b9a3ec165"
+  },
+  "docs": {
+    "commitIndex": "PASS",
+    "existingReviewDateWarnings": 7,
+    "logSha256": "5072f36f4c7f61c0116858a3fabd596acddf145b2e549b6ec6661375d320acb1",
+    "scope": "Intended commit only; unrelated unstaged documentation is excluded."
+  }
+}
