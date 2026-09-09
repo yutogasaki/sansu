@@ -24,8 +24,14 @@ export function appendAnswerDigit(values: readonly string[], active: number, dig
     if (field[value.length] === '.') value += '.';
     if (value.length >= field.length) return { values: next, active };
     next[active] = value + digit;
-    const following = shape.findIndex((candidate, i) => i > active && next[i].length < candidate.length);
-    return { values: next, active: next[active].length === field.length && following >= 0 ? following : active };
+    const following = Array.from({ length: shape.length }, (_, offset) => (active + 1 + offset) % shape.length)
+        .find(i => (next[i] ?? '').length < shape[i].length);
+    return { values: next, active: next[active].length === field.length && following !== undefined ? following : active };
+}
+
+/** A printed decimal point never consumes a deletion keystroke. */
+export function removeAnswerDigit(value: string): string {
+    return value.replace(/\.$/, '').slice(0, -1).replace(/\.$/, '');
 }
 
 /** Every existing Hissan input cell holds exactly one digit or decimal point. */

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { canConfirmNumberFields, mathAnswerShape, appendAnswerDigit, isAnswerShapeComplete, isWrittenStepComplete } from './answerCompletion';
+import { canConfirmNumberFields, mathAnswerShape, appendAnswerDigit, removeAnswerDigit, isAnswerShapeComplete, isWrittenStepComplete } from './answerCompletion';
 import { MATH_GENERATORS } from './index';
 import { createSeededRandom } from '../../utils/random';
 import { createInitialProfile } from '../user/profile';
@@ -55,6 +55,19 @@ describe('immediate answer-cell completion', () => {
         expect(appendAnswerDigit(['1', '7'], 0, '8', shape)).toEqual({ values: ['18', '7'], active: 0 });
         expect(isAnswerShapeComplete(['18', '7'], shape)).toBe(true);
         expect(isAnswerShapeComplete(['1', '7'], shape)).toBe(false);
+    });
+
+    it('returns to earlier empty fields when the child starts at the last field', () => {
+        expect(appendAnswerDigit(['', '', ''], 2, '7', ['□', '□', '□']))
+            .toEqual({ values: ['', '', '7'], active: 0 });
+        expect(appendAnswerDigit(['', '2', ''], 2, '7', ['□', '□', '□']))
+            .toEqual({ values: ['', '2', '7'], active: 0 });
+    });
+
+    it.each([
+        ['', ''], ['1', ''], ['12.34', '12.3'], ['12.3', '12'], ['12.', '1'], ['0.5', '0'],
+    ])('removes one digit from %s, leaving %s', (value, expected) => {
+        expect(removeAnswerDigit(value)).toBe(expected);
     });
 
     it('accepts any filled written row, including incorrect digits, and never a partial row', () => {

@@ -67,8 +67,10 @@ function harness(problemOverride: Partial<LearningAnswerFormProps['slot']['probl
     };
     const keypad = () => find(tree)!.props as Parameters<typeof TenKey>[0];
     render();
-    return { render, keypad, get props() { return props; }, key(key: string) {
-        window.dispatchEvent(Object.assign(new Event('keydown', { cancelable: true }), { key })); render();
+    return { render, keypad, get props() { return props; }, key(key: string, target?: Partial<HTMLElement>, repeat = false) {
+        const event = Object.assign(new Event('keydown', { cancelable: true }), { key, repeat });
+        if (target) Object.defineProperty(event, 'target', { value: target });
+        window.dispatchEvent(event); render(); return event;
     } };
 }
 
@@ -207,4 +209,63 @@ describe('automatic numeric save boundary', () => {
         expect(h.props.onAnswer).toHaveBeenCalledTimes(2);
         expect(h.props.onAnswer).toHaveBeenLastCalledWith('12');
     });
+});
+
+
+describe('answer-cell editing edge cases', () => {
+    it('Backspace crosses the printed point without spending a key on punctuation', () => {
+        const h = harness({ categoryId: 'dec_add', correctAnswer: '12.34', inputType: 'number', hissanVersion: undefined });
+        h.render({ deferSubmission: false });
+        h.key('1'); h.key('2'); h.key('3'); h.key('Backspace'); h.key('Backspace');
+        h.key('9'); h.key('8'); h.key('7');
+        expect(h.props.onAnswer).toHaveBeenCalledTimes(1);
+        expect(h.props.onAnswer).toHaveBeenCalledWith('19.87');
+    });
+    it('treats slash as a separator without skipping the automatically selected field', () => {
+        const h = harness({ categoryId: 'frac_mixed', correctAnswer: ['1','2','3'], inputType: 'multi-number', hissanVersion: undefined,
+            inputConfig: { fields: [{label:'整数',length:2},{label:'分子',length:2},{label:'分母',length:2}] } });
+        h.render({ deferSubmission: false });
+        h.key('1'); h.key('/'); h.key('2'); h.key('/'); h.key('3');
+        expect(h.props.onAnswer).toHaveBeenCalledWith(['1','2','3']);
+    });
+    it('can clear while on the last field, then fill all fields without another navigation key', () => {
+        const h = harness({ categoryId: 'frac_add_same', correctAnswer: ['1','2'], inputType: 'multi-number', hissanVersion: undefined,
+            inputConfig: { fields: [{label:'分子',length:1},{label:'分母',length:1}] } });
+        h.render({ deferSubmission: false });
+        h.key('ArrowRight'); h.keypad().onClear(); h.render();
+        h.key('2'); h.key('1');
+        expect(h.props.onAnswer).toHaveBeenCalledWith(['1','2']);
+    });
+});
+
+
+it('does not grade a digit typed into another contenteditable control', () => {
+    const h = harness({ categoryId: 'add_1d_1', correctAnswer: '3', inputType: 'number', hissanVersion: undefined });
+    h.render({ deferSubmission: false });
+    h.key('3', { tagName: 'DIV', isContentEditable: true });
+    expect(h.key('3', { tagName: 'DIV', isContentEditable: true }, true).defaultPrevented).toBe(false);
+    expect(h.props.onAnswer).not.toHaveBeenCalled();
+    h.key('3');
+    expect(h.props.onAnswer).toHaveBeenCalledTimes(1);
+});
+
+
+it('Backspace returns to the last edited field after automatic wraparound', () => {
+    const h = harness({ categoryId: 'frac_mixed', correctAnswer: ['1','2','7'], inputType: 'multi-number', hissanVersion: undefined,
+        inputConfig: { fields: [{label:'整数',length:1},{label:'分子',length:1},{label:'分母',length:1}] } });
+    h.render({ deferSubmission: false });
+    h.key('ArrowRight'); h.key('ArrowRight'); h.key('7'); h.key('Backspace');
+    h.key('7'); h.key('1'); h.key('2');
+    expect(h.props.onAnswer).toHaveBeenCalledTimes(1);
+    expect(h.props.onAnswer).toHaveBeenCalledWith(['1','2','7']);
+});
+
+
+it('a clamped arrow preserves the last edited field for Backspace', () => {
+    const h = harness({ categoryId: 'frac_mixed', correctAnswer: ['1','2','3'], inputType: 'multi-number', hissanVersion: undefined,
+        inputConfig: { fields: [{label:'整数',length:1},{label:'分子',length:1},{label:'分母',length:1}] } });
+    h.render({ deferSubmission: false });
+    h.key('ArrowRight'); h.key('2'); h.key('ArrowLeft'); h.key('ArrowLeft'); h.key('1');
+    h.key('ArrowRight'); h.key('Backspace'); h.key('1'); h.key('3');
+    expect(h.props.onAnswer).toHaveBeenCalledWith(['1','2','3']);
 });

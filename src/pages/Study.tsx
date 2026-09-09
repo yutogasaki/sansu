@@ -28,7 +28,7 @@ import { getDevStudyAdjacentSelection, getDevStudySelectionSummary } from "../co
 import { reachPwaUpdateCheckpoint } from "../pwa";
 import { COLD_OPEN_FIXED_TEN_ID } from "../domain/benchmark/coldOpenFixedTen";
 import { studyLearningEvidence } from '../domain/learning/attemptContext';
-import { canConfirmNumberFields, mathAnswerShape, appendAnswerDigit, isAnswerShapeComplete } from '../domain/math/answerCompletion';
+import { canConfirmNumberFields, mathAnswerShape, appendAnswerDigit, removeAnswerDigit, isAnswerShapeComplete } from '../domain/math/answerCompletion';
 import { acknowledgeAnswerConfirmation } from '../components/domain/answerConfirmGuidance';
 
 type FixedSessionStats = {
@@ -111,8 +111,8 @@ const StudyContent: React.FC = () => {
     useLayoutEffect(() => { numberDraft.current = userInput; }, [userInput]);
     const [userInputs, setUserInputs] = useState<string[]>([]);             // Multi input
     const [activeFieldIndex, setActiveFieldIndex] = useState(0);            // Focus for multi
-    const fieldDraft = React.useRef({ values: userInputs, active: activeFieldIndex });
-    useLayoutEffect(() => { fieldDraft.current = { values: userInputs, active: activeFieldIndex }; }, [userInputs, activeFieldIndex]);
+    const fieldDraft = React.useRef<{ values: string[]; active: number; lastEdited?: number }>({ values: userInputs, active: activeFieldIndex });
+    useLayoutEffect(() => { fieldDraft.current = { ...fieldDraft.current, values: userInputs, active: activeFieldIndex }; }, [userInputs, activeFieldIndex]);
 
     const [feedback, setFeedback] = useState<"none" | "correct" | "incorrect" | "skipped">("none");
     const [showCorrection, setShowCorrection] = useState(false);
@@ -154,6 +154,7 @@ const StudyContent: React.FC = () => {
     const [isDevSwitcherOpen, setIsDevSwitcherOpen] = useState(false);
 
     const currentProblem = queue[currentIndex];
+    useLayoutEffect(() => { fieldDraft.current.lastEdited = undefined; }, [currentProblem]);
 
     useEffect(() => {
         learningAssistanceRef.current = 'independent';
@@ -451,13 +452,13 @@ const StudyContent: React.FC = () => {
 
         if (currentProblem?.inputType === 'multi-number') {
             const current = fieldDraft.current;
-            const active = !current.values[current.active] ? Math.max(0, current.active - 1) : current.active;
-            const values = current.values.map((value, index) => index === active ? value.slice(0, -1) : value);
+            const active = !current.values[current.active] ? current.lastEdited ?? Math.max(0, current.active - 1) : current.active;
+            const values = current.values.map((value, index) => index === active ? (mathAnswerShape(currentProblem) ? removeAnswerDigit(value) : value.slice(0, -1)) : value);
             fieldDraft.current = { values, active };
             setUserInputs(values);
             setActiveFieldIndex(active);
         } else {
-            numberDraft.current = numberDraft.current.slice(0, -1);
+            numberDraft.current = mathAnswerShape(currentProblem) ? removeAnswerDigit(numberDraft.current) : numberDraft.current.slice(0, -1);
             setUserInput(numberDraft.current);
         }
     }, [completionPresentation, feedback, currentProblem, hissan]);
@@ -475,7 +476,7 @@ const StudyContent: React.FC = () => {
         if (currentProblem?.inputType === 'multi-number') {
             const current = fieldDraft.current;
             const values = current.values.map((value, i) => i === current.active ? '' : value);
-            fieldDraft.current = { ...current, values };
+            fieldDraft.current = { ...current, values, lastEdited: undefined };
             setUserInputs(values);
         } else {
             numberDraft.current = '';
@@ -483,7 +484,7 @@ const StudyContent: React.FC = () => {
         }
     }, [completionPresentation, feedback, currentProblem, hissan]);
 
-    const handleCursorMove = useCallback((direction: "left" | "right") => {
+    const handleCursorMove = useCallback((direction: "left" | "right", separator = false) => {
         if (
             completionPresentation !== "none"
             || fixedSessionCompletionInFlightRef.current
@@ -494,12 +495,14 @@ const StudyContent: React.FC = () => {
             return;
         }
         if (currentProblem?.inputType === 'multi-number' && currentProblem.inputConfig?.fields) {
+            const current = fieldDraft.current;
+            const shape = mathAnswerShape(currentProblem);
+            if (separator && shape && !isAnswerShapeComplete([current.values[current.active]], [shape[current.active]])) return;
             const maxIndex = currentProblem.inputConfig.fields.length - 1;
-            if (direction === "right") {
-                setActiveFieldIndex(prev => Math.min(prev + 1, maxIndex));
-            } else {
-                setActiveFieldIndex(prev => Math.max(prev - 1, 0));
-            }
+            const active = Math.max(0, Math.min(maxIndex, current.active + (direction === 'right' ? 1 : -1)));
+            if (active === current.active) return;
+            fieldDraft.current = { ...current, active, lastEdited: undefined };
+            setActiveFieldIndex(active);
         }
     }, [completionPresentation, feedback, currentProblem, hissan]);
 
@@ -665,7 +668,7 @@ const StudyContent: React.FC = () => {
             const draft = multi ? fieldDraft.current : { values: [numberDraft.current], active: 0 };
             const next = appendAnswerDigit(draft.values, draft.active, valStr, shape);
             if (multi) {
-                fieldDraft.current = next;
+                fieldDraft.current = { ...next, lastEdited: draft.active };
                 setUserInputs(next.values);
                 setActiveFieldIndex(next.active);
             } else {
@@ -774,7 +777,7 @@ const StudyContent: React.FC = () => {
                 e.preventDefault();
             }
             else if (e.key === '/' && currentProblem?.inputType === 'multi-number') {
-                handleCursorMove('right');
+                handleCursorMove('right', true);
                 e.preventDefault();
             }
             else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
@@ -920,7 +923,11 @@ const StudyContent: React.FC = () => {
                 onEnter={() => handleSubmit()}
                 onCursorMove={handleCursorMove}
                 onSubmitChoice={(val) => handleSubmit(val)}
-                onFocusField={setActiveFieldIndex}
+                onFocusField={index => {
+                    if (isProcessingRef.current || index === fieldDraft.current.active) return;
+                    fieldDraft.current = { ...fieldDraft.current, active: index, lastEdited: undefined };
+                    setActiveFieldIndex(index);
+                }}
                 swipeHandlers={swipeHandlers}
                 englishAutoRead={englishAutoRead && !listening.isOpen}
                 listeningEntry={listening.sentence ? <EnglishListeningEntry disabled={loading || feedback !== 'none' || listening.isOpen} onOpen={listening.open} /> : undefined}

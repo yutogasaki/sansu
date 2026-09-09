@@ -7,7 +7,7 @@ import { HissanGrid } from './HissanGrid';
 import { parkHissanGrid } from '../../domain/park/learning';
 import type { LearningSlot } from '../../domain/park/types';
 import type { ChoiceOption, Problem } from '../../domain/types';
-import { canConfirmNumberFields, mathAnswerShape, isAnswerShapeComplete, appendAnswerDigit, isWrittenStepComplete } from '../../domain/math/answerCompletion';
+import { canConfirmNumberFields, mathAnswerShape, isAnswerShapeComplete, appendAnswerDigit, removeAnswerDigit, isWrittenStepComplete } from '../../domain/math/answerCompletion';
 import { acknowledgeAnswerConfirmation } from './answerConfirmGuidance';
 import { nextWrittenInput, writtenRetryValues, writtenInputOrder, writtenAutomaticValues } from '../../domain/math/writtenInput';
 
@@ -94,8 +94,8 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
     const remove = () => {
         if (!disabled && !submitting.current) updateInput(current => {
             queuedSubmit.current = undefined;
-            const cursor = !current.values[current.active] ? step ? current.lastEdited ?? inputOrder[Math.max(0, inputOrder.indexOf(current.active) - 1)] : problem.inputType === 'multi-number' ? Math.max(0, current.active - 1) : current.active : current.active;
-            return { active: cursor, values: current.values.map((value, i) => i === cursor ? value.slice(0, -1) : value), lastEdited: undefined };
+            const cursor = !current.values[current.active] ? step ? current.lastEdited ?? inputOrder[Math.max(0, inputOrder.indexOf(current.active) - 1)] : problem.inputType === 'multi-number' ? current.lastEdited ?? Math.max(0, current.active - 1) : current.active : current.active;
+            return { active: cursor, values: current.values.map((value, i) => i === cursor ? (!step && answerShape ? removeAnswerDigit(value) : value.slice(0, -1)) : value), lastEdited: undefined };
         });
     };
     const clear = () => {
@@ -103,9 +103,10 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
         queuedSubmit.current = undefined;
         updateInput(current => ({ values: step ? automaticValues : Array<string>(fieldCount).fill(''), active: step ? inputOrder[0] : resetCursorOnClear ? 0 : current.active, lastEdited: undefined }));
     };
-    const moveCursor = (direction: 'left' | 'right') => {
+    const moveCursor = (direction: 'left' | 'right', separator = false) => {
         if (disabled) return;
         updateInput(current => {
+            if (separator && answerShape && !step && !isAnswerShapeComplete([current.values[current.active]], [answerShape[current.active]])) return current;
             const order = step ? inputOrder : current.values.map((_, i) => i);
             const position = Math.max(0, order.indexOf(current.active));
             const next = Math.max(0, Math.min(order.length - 1, position + (direction === 'left' ? -1 : 1)));
@@ -123,12 +124,12 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
     });
     useLayoutEffect(() => {
         const handle = (event: KeyboardEvent) => {
-            if (event.repeat && (/^[0-9.]$/.test(event.key) || event.key === 'Enter')) { event.preventDefault(); return; }
             if (disabled || submitting.current || problem.inputType === 'choice' || event.isComposing || event.altKey || event.ctrlKey || event.metaKey) return;
             const target = event.target as HTMLElement;
-            if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
+            if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return;
+            if (event.repeat && (/^[0-9.]$/.test(event.key) || event.key === 'Enter')) { event.preventDefault(); return; }
             if (/^[0-9.]$/.test(event.key)) { event.preventDefault(); input(event.key); }
-            if (event.key === '/' && problem.inputType === 'multi-number') { event.preventDefault(); moveCursor('right'); }
+            if (event.key === '/' && problem.inputType === 'multi-number') { event.preventDefault(); moveCursor('right', true); }
             if (event.key === 'Backspace') { event.preventDefault(); remove(); }
             if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); moveCursor(event.key === 'ArrowLeft' ? 'left' : 'right'); }
             if (event.key === 'Enter' && (target.tagName !== 'BUTTON' || target.closest('.park-keypad, .park-inputs, [data-written-input]'))) { event.preventDefault(); submit(); }
