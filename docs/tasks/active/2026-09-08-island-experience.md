@@ -6,7 +6,7 @@
 
 ## Goal
 
-2026-09-09 継続: [学習ヘッダーの大きな節目](../../design/audits/2026-09-09-island-learning-milestones/README.md)を固定39へ退避し、302 files / 3327 tests・型/lint/build/assetsを確認。新ヘッダーの7実経路・追加操作0/寸法不変/支援優先/非再演、同版DEV正式80run（正答P95 206.8/206.3ms）・Island PWA8保護/実offline・classic31経路が限定PASS。4地区全巡回は続けて検証する。直前の保存地点 `d4d157f` はVerify Core / Docs CheckともPASS。共有仕事の短い明示復元診断では同じカワウソによる1運搬が実frame・可視後のnative保存まで通過したが、次のウサギは安全経路拒否で、3仕事の全体PASSや真正新規取得の証拠にはしない。
+2026-09-09 継続: [学習ヘッダーの大きな節目](../../design/audits/2026-09-09-island-learning-milestones/README.md)を固定39へ退避し、302 files / 3327 tests・型/lint/build/assetsを確認。新ヘッダーの7実経路・追加操作0/寸法不変/支援優先/非再演、同版DEV正式80run（正答P95 206.8/206.3ms）・Island PWA8保護/実offline・classic31経路が限定PASS。同app39の別DEV全成長巡回も両幅（49区間264問／48区間270問）と10追加経路がPASS。原run01の戻り先期待FAILを残し、仕様43どおりアルバムへ戻るQA02で確認した。保存地点 `0b20566` はVerify Core / Docs CheckともPASS。共有仕事の短い明示復元診断では同じカワウソによる1運搬が実frame・可視後のnative保存まで通過したが、次のウサギは安全経路拒否で、3仕事の全体PASSや真正新規取得の証拠にはしない。
 
 2026-09-09 訂正: 固定37の初解放4経路で通知が不可視だった点は、当時の仕様30が学習中の通知を隠す方針だったため、実装不具合ではない。以下の旧FAIL整理は仕様の照合不足だった。原report・画面・入力/成長の測定は保持し、[訂正記録](../../design/2026-09-09-island-renewal/connected-v17/first-unlock/README.md)へ理由を残す。今回、仕様28/30を更新し、実保存された大きな節目のみ既存ヘッダーへ最大6秒・2行で知らせる。問題/キーの位置を保持し、誤答・支援・保存エラーを優先する新しい表示は、別の固定39・7実経路で限定確認した。原37の測定は変更しない。
 

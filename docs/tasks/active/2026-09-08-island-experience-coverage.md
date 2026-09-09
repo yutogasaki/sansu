@@ -1,5 +1,7 @@
 # 島の体験全体とベンチマークの対応表
 
+2026-09-09追補: 同app39の[全成長巡回](../../design/audits/2026-09-09-island-learning-milestones/growth-verification.json)は別DEVで両幅PASS（49区間264問／48区間270問）、4地区成熟・東西解放・配置編集・学習再開と10追加経路を確認。既習memoryのDEV fixtureから通常plannerを実回答した7store範囲であり、production/非空写真/子どもの意欲の証拠と区別する。原run01の戻り先期待FAILは保持。Source A全体HOLD・Human N=0・全Goal ACTIVEは変わらない。
+
 2026-09-09追加: [固定39の新ヘッダー監査](../../design/audits/2026-09-09-island-learning-milestones/README.md)で7ケース・21正答＋追加誤答1/ヒント2、寸法不変・可視/消失・同予約復帰を限定確認した。正式80runとIsland PWAは別の同版証拠としてPASS。過去20/41区間の取得、4地区全巡回、子どもの意欲をこの結果に含めない。
 
 - Date: 2026-09-08

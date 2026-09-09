@@ -16,7 +16,7 @@
 
 固定39は302 files / 3327 tests、型・lint・build・assets PASS。lintの既存Fast Refresh warning 1件を保持。通知hookのcontrolled lifecycle検査と実 `useIslandActions` の重複入力回帰は、実ブラウザの描画・支援操作とは別の証拠。
 
-新しいproduction通知QAは7/7ケースPASS、session66473は終了コード0。7contextとブラウザの終了、1089入力・QA runtime closure490ファイルの前後一致を確認した。固定39の[正式80run](throughput-verification.json)も全15gate・eligible/PASS、終了コード0。Island PWAの8保護経路と実SW offlineもPASS。classicのスモーク31経路もPASSで、classic PWA4経路もPASS。4地区の全成長巡回は続けて確認する。
+新しいproduction通知QAは7/7ケースPASS、session66473は終了コード0。7contextとブラウザの終了、1089入力・QA runtime closure490ファイルの前後一致を確認した。固定39の[正式80run](throughput-verification.json)も全15gate・eligible/PASS、終了コード0。Island PWAの8保護経路と実SW offlineもPASS。classicのスモーク31経路もPASSで、classic PWA4経路もPASS。4地区の全成長巡回も両幅PASS（後述）。
 
 [検証値と原データのSHA](verification.json)と[実経路の画像一覧](contact-sheet.html)を保存した。選定16枚は実PNGと同じbytesで、拡大・切抜き・描き直しはしていない。
 
@@ -56,8 +56,20 @@
 |---|---|
 | 視覚・動き | 新ヘッダーの上記7ケースと実PNGを確認。島全体のSource Aとの造形一致はHOLD |
 | 意味・学習への非干渉 | 上記の追加操作0・通知寿命・支援優先・再開保持はPASS。子どもの無説明理解・意欲はHuman N=0 |
-| 実装整合 | 固定39のコード検査とproduction7ケースの実配信・保存・再開、別DEVの正式80runはPASS。Island PWAもPASS。classicスモーク31経路もPASS。classic PWA4経路もPASS。4地区全巡回は別途確認中 |
+| 実装整合 | 固定39のコード検査とproduction7ケースの実配信・保存・再開、別DEVの正式80runはPASS。Island PWAもPASS。classicスモーク31経路もPASS。classic PWA4経路もPASS。4地区全巡回と10追加経路もPASS |
 
 全GoalはACTIVE。この通知の完了を、仲間の3仕事・暮らしと収集の接続・造形全体・子どもの意欲の完了にしない。
 
-[classicの回帰記録](regression-verification.json)は両ゲームflagを無効にした別構成。スモーク31経路とproduction PWA4経路は終了コード0、source/QA/dist前後一致。4地区全巡回は次の検証であり、この保存地点を最終受入にしない。
+[classicの回帰記録](regression-verification.json)は両ゲームflagを無効にした別構成。スモーク31経路とproduction PWA4経路は終了コード0、source/QA/dist前後一致。4地区全巡回は下記の別DEV検証で確認した。全Goalの最終受入とは区別する。
+
+## 4地区の全成長と入力の回帰
+
+同じapp39の専用DEV5275で、[全成長巡回と10追加経路](growth-verification.json)がPASS（session86930、終了コード0）。phoneは49区間264問、tabletは48区間270問をUIで進め、4地区の成熟・東西解放・7家具・過去の姿の保持・発見再演・以前の外見への編集・東の土地への配置・学習再開・reloadを確認した。新ヘッダーの大きな節目は各4回確認した。学習の受取/確認操作は追加していない。
+
+全11scenarioにはWebGLの実context loss/復旧、初回設定、およびkeyboard/touch/分数/筆算/選択/英語/reduced/初学習の8入力経路を含む。113画面から[6枚の実画面](growth-contact-sheet.html)を選び、原bytesとSHAを保持する。初期の庭と本人が選んだ全景は異なるカメラで、同一画角の比較とは呼ばない。横に長い骨格・全体の造形は引き続きHOLD。
+
+DEVのプロフィールと既習memoryは明示fixture。島の成長や通貨を注入せず通常plannerの問題を回答した検証であり、実利用者の学習履歴やproductionの全取得経路ではない。保存比較は7storeに限定し、非空写真や全table保存をこのrunで確認したとはしない。正式な入力速度・production通知・実SW offlineは前述の独立記録を参照する。
+
+最初のrun01はphone258問で4地区が成熟した後、再演を閉じてホームへ戻るという旧QA期待でFAIL。実画面は仕様43どおり呼び出し元のアルバムだった。原FAILを保持し、QAだけを「アルバムへ戻る→本人が閉じてホームへ」に直したqa02で新規に全経路を通した。app1089入力・QA115ファイル・distの開始終了一致、context/browserの終了をawaitしたrunnerの成功終了と専用DEVの停止を確認。
+
+main保存地点 `0b20566` のVerify Core（34312542982）とDocs Check（34312543041）もPASS。今回の差分はテストの戻り先と検証記録で、製品仕様やappの変更はない。

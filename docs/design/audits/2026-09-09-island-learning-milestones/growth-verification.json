@@ -1,0 +1,377 @@
+{
+  "status": "PASS_WITH_EXPLICIT_SCOPE",
+  "target": "http://127.0.0.1:5275",
+  "revision": "workshop-20260909-b3f96489e126",
+  "version": "workshop-20260909-b3f96489e126:c37759a7-84fe-447f-85f0-d2ea56d3e06b",
+  "sourceHash": "b3f96489e126f2ed3f4465ae9beb4d28b4a5b32d8b5ad14bb2d09fccc432c33d",
+  "inputCount": 1089,
+  "qaBundleSHA": "230e9618db7518183f2c27f7660737c999b16e607f9d916aaefa873eb4b05da7",
+  "qaManifestSHA": "1a83f1d55e1e369d35b25536f7e7d756998537119332398072419eeacc5f360d",
+  "qaOverlay": [
+    "tools/island-e2e-progression.mjs"
+  ],
+  "runtimeCandidate": "mystic-island-shore-garden-v17",
+  "delivery": "mystic-island-v1",
+  "flags": {
+    "island": true,
+    "buildPlay": true,
+    "park": "legacy"
+  },
+  "environment": "Dedicated DEV5275; Chromium; phone normal motion and tablet reduced motion; sound off; no service-worker control. Production/PWA are separate records.",
+  "fixture": "DEV seedDev creates a profile and familiar math/vocabulary memory. Island growth, plans, answers, currency, items, discoveries and growth memories are not injected. Normal planner questions are answered through the UI.",
+  "growth": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "completedSets": 49,
+      "earnedQuestions": 264,
+      "discoveries": [
+        {
+          "id": "flower-scent",
+          "itemId": "starter-flower",
+          "discoveredAt": 1788929981890
+        }
+      ],
+      "passed": true,
+      "finalGrowth": {
+        "garden": 6,
+        "waterside": 6,
+        "grove": 6,
+        "village": 6
+      },
+      "maturitySections": [
+        13,
+        24,
+        35,
+        48
+      ]
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "completedSets": 48,
+      "earnedQuestions": 270,
+      "discoveries": [
+        {
+          "id": "flower-scent",
+          "itemId": "starter-flower",
+          "discoveredAt": 1788930169601
+        }
+      ],
+      "passed": true,
+      "finalGrowth": {
+        "garden": 6,
+        "waterside": 6,
+        "grove": 6,
+        "village": 6
+      },
+      "maturitySections": [
+        14,
+        25,
+        36,
+        47
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "east-and-growth",
+      "passed": true
+    },
+    {
+      "name": "renderer-recovery",
+      "passed": true
+    },
+    {
+      "name": "onboarding",
+      "passed": true
+    },
+    {
+      "name": "phone-keyboard",
+      "passed": true
+    },
+    {
+      "name": "phone-touch",
+      "passed": true
+    },
+    {
+      "name": "tablet-fraction",
+      "passed": true
+    },
+    {
+      "name": "phone-hissan",
+      "passed": true
+    },
+    {
+      "name": "phone-math-choice",
+      "passed": true
+    },
+    {
+      "name": "tablet-vocabulary",
+      "passed": true
+    },
+    {
+      "name": "tablet-reduced",
+      "passed": true
+    },
+    {
+      "name": "phone-first-learning",
+      "passed": true
+    }
+  ],
+  "captureCount": 113,
+  "selectedScreens": [
+    {
+      "file": "screens/growth-phone-initial.png",
+      "sha256": "55d2b32222338ff45fc5b343aa541f5ea8a9170d536e164bc61821575824fb02",
+      "label": "phone 初期の庭",
+      "actual": {
+        "file": "growth-phone-initial.png",
+        "revision": "workshop-20260909-b3f96489e126",
+        "version": "workshop-20260909-b3f96489e126:c37759a7-84fe-447f-85f0-d2ea56d3e06b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v17",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 86,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "screens/growth-phone-district-しまぜんぶ.png",
+      "sha256": "a4464539f86cb64c49b0ab14916a5d4e7380655c958dda6ad035b9c4e2b9ff29",
+      "label": "phone 4地区成熟後の全景",
+      "actual": {
+        "file": "growth-phone-district-しまぜんぶ.png",
+        "revision": "workshop-20260909-b3f96489e126",
+        "version": "workshop-20260909-b3f96489e126:c37759a7-84fe-447f-85f0-d2ea56d3e06b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v17",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 170,
+        "expanded": "true",
+        "residentAction": "sniff",
+        "residentItemId": "starter-flower",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "screens/growth-phone-customized-learning-resumed.png",
+      "sha256": "85e9ac02ff4ebb9f754d4f53967fb098991b484bf468bad7728cf5d4fd871138",
+      "label": "phone 配置編集後の学習再開",
+      "actual": {
+        "file": "growth-phone-customized-learning-resumed.png",
+        "revision": "workshop-20260909-b3f96489e126",
+        "version": "workshop-20260909-b3f96489e126:c37759a7-84fe-447f-85f0-d2ea56d3e06b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v17",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 172,
+        "expanded": "true",
+        "residentAction": "rest",
+        "residentItemId": "living-mushroom",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "screens/growth-tablet-initial.png",
+      "sha256": "8d7141d2706aa71ae95f594b55ebd63ef70ef0ba58c25f41655dedca76465d62",
+      "label": "tablet 初期の庭",
+      "actual": {
+        "file": "growth-tablet-initial.png",
+        "revision": "workshop-20260909-b3f96489e126",
+        "version": "workshop-20260909-b3f96489e126:c37759a7-84fe-447f-85f0-d2ea56d3e06b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v17",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 86,
+        "expanded": "false",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "file": "screens/growth-tablet-district-しまぜんぶ.png",
+      "sha256": "580a00b981f3dbb82211d1ce10631a7e023737fd9c5773554b63cb9a34829621",
+      "label": "tablet 4地区成熟後の全景",
+      "actual": {
+        "file": "growth-tablet-district-しまぜんぶ.png",
+        "revision": "workshop-20260909-b3f96489e126",
+        "version": "workshop-20260909-b3f96489e126:c37759a7-84fe-447f-85f0-d2ea56d3e06b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v17",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 170,
+        "expanded": "true",
+        "residentAction": "sniff",
+        "residentItemId": "starter-flower",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    },
+    {
+      "file": "screens/growth-tablet-customized-learning-resumed.png",
+      "sha256": "f092ddce0a414eb62ce89e872610de5f5f1e77de11808a8820a015f9213af339",
+      "label": "tablet 配置編集後の学習再開",
+      "actual": {
+        "file": "growth-tablet-customized-learning-resumed.png",
+        "revision": "workshop-20260909-b3f96489e126",
+        "version": "workshop-20260909-b3f96489e126:c37759a7-84fe-447f-85f0-d2ea56d3e06b",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v17",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "learning",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 175,
+        "expanded": "true",
+        "residentAction": "rest",
+        "residentItemId": "living-mushroom",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true
+      }
+    }
+  ],
+  "verification": {
+    "terminal": {
+      "code": 0,
+      "signal": null
+    },
+    "serverTerminal": {
+      "code": 143,
+      "signal": null
+    },
+    "sourceAndDistStable": true,
+    "browserCleanup": "Successful runner terminal follows awaited context.close() and browser.close() in finally; dedicated DEV was terminated by wrapper.",
+    "nativeScope": [
+      "islands",
+      "islandPlans",
+      "islandEvents",
+      "logs",
+      "memoryMath",
+      "memoryVocab",
+      "exploreRuns"
+    ]
+  },
+  "raw": {
+    "output/island-experience/milestone-island-39-02/report.json": {
+      "sha256": "365f9858b3f537738a1c926c272155aaf27ddf624aa19845cc2fcf13b466ebd0",
+      "bytes": 126059
+    },
+    "output/island-experience/milestone-island-39-02/verification.json": {
+      "sha256": "f71f64b055b682da11b8c1141500cfecd4ffc73a815b8863a2aa492d1545c941",
+      "bytes": 73492
+    },
+    "output/island-experience/milestone-island-39-02/runner.log": {
+      "sha256": "fe35fffdb24099c918eb84d45aee4642cc7ec4a3d19e350b7c35e8457df3f1e3",
+      "bytes": 1330
+    },
+    "output/island-experience/milestone-island-39-01/report.json": {
+      "sha256": "c1cab73f538eef86a341b98cf3fc811dccdcf4208550eca12a14621688369965",
+      "bytes": 21611
+    },
+    "output/island-experience/milestone-island-39-01/verification.json": {
+      "sha256": "d6a73ac0a3b808d009f7b8b37ad831a9fcaa8f35160ae14353c0bd170f1a6e58",
+      "bytes": 73493
+    },
+    "output/island-experience/milestone-island-39-01/failure-review.json": {
+      "sha256": "0c6dfb03c360638a0fdbe4de85c3f2ad6846d9d38f5b625cbbc535af4f754395",
+      "bytes": 1319
+    }
+  },
+  "originalFailure": {
+    "status": "ORIGINAL_RUN_FAIL_RETAINED",
+    "target": "fixed39 dedicated DEV5275",
+    "sourceHash": "b3f96489e126f2ed3f4465ae9beb4d28b4a5b32d8b5ad14bb2d09fccc432c33d",
+    "wrapperSession": 28995,
+    "terminal": 1,
+    "sourceAndDistStable": true,
+    "completedBeforeFailure": {
+      "viewport": "phone390x844",
+      "realAnswerReceipts": 258,
+      "realCompletedSections": 46,
+      "growth": {
+        "garden": 6,
+        "waterside": 6,
+        "grove": 6,
+        "village": 6
+      },
+      "growthMemories": 5,
+      "observedDiscoveries": 1,
+      "fourMajorNoticesRendered": true
+    },
+    "firstFailure": "After actual discovery replay, the QA expected home on closing play and timed out. The retained screenshot shows the album, its actual caller.",
+    "sourceFinding": "Fixed39 Island.tsx home() calls navigation.back(); spec43 says close returns to the screen that opened it. The observed album return satisfies that contract.",
+    "action": "Change only the progression QA to wait for album, then explicitly close the album to home. A fresh qa02 bundle keeps the fixed39 app and all other QA unchanged.",
+    "limits": "This original run is not full growth-tour acceptance. The subsequent extra section, editing/reload/expanded-land placement, tablet and core scenarios were not reached. The actual saved seven-store failure snapshot is not an all-table capture."
+  },
+  "codeChange": "QA-only caller return correction: play closes to album, then album closes to home, as existing spec43 prescribes. Application unchanged from fixed39.",
+  "review": {
+    "visual": "Author reviewed all six selected unmodified screenshots. Mature full-island view fits both viewports. Initial uses garden camera, mature uses explicit all-island camera; they are not same-camera geometry proof. Long horizontal footprint and overall Source A parity remain HOLD.",
+    "learning": "All four maturities earn growth without claims; saved appearance/position remains through resumed learning and reload. The seven-store comparison is not all-table/photo-byte coverage.",
+    "runtime": "11 scenarios PASS including the two-width full growth tour, actual WebGL loss/recovery, onboarding and 8 input scenarios. Opportunistic timings do not replace formal80.",
+    "humanN": 0,
+    "goal": "ACTIVE"
+  },
+  "ci": {
+    "commit": "0b20566640cdd577a55195c808f05ce00be63118",
+    "core": {
+      "run": 34312542982,
+      "conclusion": "success"
+    },
+    "docs": {
+      "run": 34312543041,
+      "conclusion": "success"
+    }
+  }
+}

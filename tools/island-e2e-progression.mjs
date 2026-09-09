@@ -174,7 +174,9 @@ export async function verifyIslandProgression(browser, base, capture, { producti
                 return life?.discoveryId === id && life.arrivedAt > 0;
             }, discoveryId, { timeout: 60000 });
             await capture(page, `${prefix}-discovery-replay`);
-            await button(page, 'あそびを とじる').click(); await waitMode(page, 'home');
+            // Replay closes to its actual caller before the album closes home.
+            await button(page, 'あそびを とじる').click(); await waitMode(page, 'album');
+            await button(page, 'アルバムを とじる').click(); await waitMode(page, 'home');
             const matured = (await readNative(page, profileId)).island;
             await page.locator('.island-start').click(); await waitMode(page, 'learning');
             state = await readNative(page, profileId);
