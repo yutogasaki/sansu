@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>芝の実画面比較 — 固定28→33</title>
+<style>body{margin:0;padding:24px;background:#f7f4ec;color:#202b44;font:16px/1.6 system-ui,sans-serif}main{max-width:1640px;margin:auto}h1{font-size:28px}h2{font-size:22px;margin-top:40px}a{color:#1754a2}p{max-width:1100px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:18px}figure{margin:0;background:white;padding:16px;border:1px solid #dad7d0}img{display:block;width:auto;max-width:100%;height:auto;margin:12px auto}figcaption{font-size:14px}code{overflow-wrap:anywhere}details{font-size:12px}pre{white-space:pre-wrap;overflow-wrap:anywhere}.note{border-left:4px solid #b79240;padding-left:16px}@media(max-width:600px){body{padding:12px}.pair{grid-template-columns:1fr}}</style>
+<main><h1>芝面の局所改善 — 固定28→33</h1>
+<p class="note">材質 island-grass-surface-v5 / 全体 mystic-island-shore-garden-v13。rootの作者視覚判断で小葉の起伏と足元・道の可読性を局所採用。source A全面parity HOLD、Human N=0、Full Goal未完了。</p>
+<p>明示した成熟3土地の保存fixture。実獲得・通常planner・子どもの挙動・正式性能の証拠ではない。8枚は元stage PNGと同じbytesで、画像の再生成/加工なし。両幅reduced motion、home、Three renderer、SW制御あり。4行PASS、全capture152 draw、全objectStore保持、source/QA前後一致、browser終了。</p>
+<p>両buildの VITE_ISLAND_ENABLED=true / VITE_BUILD_PLAY_ENABLED=true は固定manifestと保存versionへ帰属。GPU32の診断を33へ転用せず、materialSignatureもbump保持証拠に使わない。固定33の295 files / 3264 testsと型/build/assetsはPASS、lint/docsは後続確認待ち。新たな正式80run・通常smokeも固定33で予定しており未実行。ローカル素材採用と統合検査完了は別で、旧26の合格を転用しない。</p>
+<p><a href="README.md">監査本文</a> · <a href="verification.json">版・SHA・camera・原report</a> · <a href="../shore-garden-a.png">source A</a></p>
+<p>別版の証拠: <a href="../../audits/2026-09-09-island-home-checkpoint.md">固定23の家・実獲得・学習復帰</a> / <a href="../../audits/2026-09-09-island-panel-layout/README.md">固定28の家の写真・操作配置</a>。この芝比較では再実行していない。</p>
+
+<h2>phone — 全景</h2><div class="pair">
+<figure><figcaption><strong>前・固定28</strong><br>mystic-island-shore-garden-v8<br><code>workshop-20260909-cef819587f14</code><br>viewport 390×844 / draw 152</figcaption><a href="phone-before-overview.png"><img src="phone-before-overview.png" alt="phone 前・固定28 芝のoverview" loading="lazy"></a><details><summary>実metadata / source・PNG SHA / camera</summary><pre>{
+  &quot;sourceHash&quot;: &quot;cef819587f147af1879d904abf5ae96bb8c6da1c414b0beca56ee730481c389a&quot;,
+  &quot;pngSha256&quot;: &quot;0623c2f84e5ea0b2374a15e3058847c5ed1695ad86c4a422b7cecee45974655b&quot;,
+  &quot;metadata&quot;: {
+    &quot;revision&quot;: &quot;workshop-20260909-cef819587f14&quot;,
+    &quot;version&quot;: &quot;workshop-20260909-cef819587f14:51a4a079-fc7b-4768-9dcb-fe1b1a6239e5&quot;,
+    &quot;delivery&quot;: &quot;mystic-island-v1&quot;,
+    &quot;candidate&quot;: &quot;mystic-island-shore-garden-v8&quot;,
+    &quot;learningCandidate&quot;: &quot;mystic-island-learning-v2&quot;,
+    &quot;mode&quot;: &quot;home&quot;,
+    &quot;renderer&quot;: &quot;three&quot;,
+    &quot;artDirection&quot;: &quot;moon-garden&quot;,
+    &quot;drawCalls&quot;: 152,
+    &quot;expanded&quot;: &quot;true&quot;,
+    &quot;residentAction&quot;: &quot;idle&quot;,
+    &quot;residentItemId&quot;: &quot;&quot;,
+    &quot;viewport&quot;: {
+      &quot;width&quot;: 390,
+      &quot;height&quot;: 844
+    },
+    &quot;serviceWorkerControlled&quot;: true,
+    &quot;reducedMotion&quot;: true
+  },
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.08377,0.00000,0.00000,0.00000,0.00000,0.09666,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00842,0.06913,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure><figcaption><strong>後・固定33</strong><br>mystic-island-shore-garden-v13<br><code>workshop-20260909-37fdc4e0b49b</code><br>viewport 390×844 / draw 152</figcaption><a href="phone-after-overview.png"><img src="phone-after-overview.png" alt="phone 後・固定33 芝のoverview" loading="lazy"></a><details><summary>実metadata / source・PNG SHA / camera</summary><pre>{
+  &quot;sourceHash&quot;: &quot;37fdc4e0b49b2513f1210dc89315e3cf70afc2a2d4eb59634075fb76524b6877&quot;,
+  &quot;pngSha256&quot;: &quot;e580f9a631ed6e7a53271bf7bbdfc74eab879916f42323d43d31a6a078015009&quot;,
+  &quot;metadata&quot;: {
+    &quot;revision&quot;: &quot;workshop-20260909-37fdc4e0b49b&quot;,
+    &quot;version&quot;: &quot;workshop-20260909-37fdc4e0b49b:89a7e8a9-3fc7-46ad-bff5-36fd91a7168f&quot;,
+    &quot;delivery&quot;: &quot;mystic-island-v1&quot;,
+    &quot;candidate&quot;: &quot;mystic-island-shore-garden-v13&quot;,
+    &quot;learningCandidate&quot;: &quot;mystic-island-learning-v2&quot;,
+    &quot;mode&quot;: &quot;home&quot;,
+    &quot;renderer&quot;: &quot;three&quot;,
+    &quot;artDirection&quot;: &quot;moon-garden&quot;,
+    &quot;drawCalls&quot;: 152,
+    &quot;expanded&quot;: &quot;true&quot;,
+    &quot;residentAction&quot;: &quot;idle&quot;,
+    &quot;residentItemId&quot;: &quot;&quot;,
+    &quot;viewport&quot;: {
+      &quot;width&quot;: 390,
+      &quot;height&quot;: 844
+    },
+    &quot;serviceWorkerControlled&quot;: true,
+    &quot;reducedMotion&quot;: true
+  },
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.08377,0.00000,0.00000,0.00000,0.00000,0.09666,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00842,0.06913,-1.00200,1.00000&quot;
+}</pre></details></figure>
+</div>
+<h2>phone — 近景</h2><div class="pair">
+<figure><figcaption><strong>前・固定28</strong><br>mystic-island-shore-garden-v8<br><code>workshop-20260909-cef819587f14</code><br>viewport 390×844 / draw 152</figcaption><a href="phone-before-near.png"><img src="phone-before-near.png" alt="phone 前・固定28 芝のnear" loading="lazy"></a><details><summary>実metadata / source・PNG SHA / camera</summary><pre>{
+  &quot;sourceHash&quot;: &quot;cef819587f147af1879d904abf5ae96bb8c6da1c414b0beca56ee730481c389a&quot;,
+  &quot;pngSha256&quot;: &quot;9e17130dba3216788835cdd2b5991c5ed1dd91b32fac42c0ca90df3dba752fd8&quot;,
+  &quot;metadata&quot;: {
+    &quot;revision&quot;: &quot;workshop-20260909-cef819587f14&quot;,
+    &quot;version&quot;: &quot;workshop-20260909-cef819587f14:51a4a079-fc7b-4768-9dcb-fe1b1a6239e5&quot;,
+    &quot;delivery&quot;: &quot;mystic-island-v1&quot;,
+    &quot;candidate&quot;: &quot;mystic-island-shore-garden-v8&quot;,
+    &quot;learningCandidate&quot;: &quot;mystic-island-learning-v2&quot;,
+    &quot;mode&quot;: &quot;home&quot;,
+    &quot;renderer&quot;: &quot;three&quot;,
+    &quot;artDirection&quot;: &quot;moon-garden&quot;,
+    &quot;drawCalls&quot;: 152,
+    &quot;expanded&quot;: &quot;true&quot;,
+    &quot;residentAction&quot;: &quot;idle&quot;,
+    &quot;residentItemId&quot;: &quot;&quot;,
+    &quot;viewport&quot;: {
+      &quot;width&quot;: 390,
+      &quot;height&quot;: 844
+    },
+    &quot;serviceWorkerControlled&quot;: true,
+    &quot;reducedMotion&quot;: true
+  },
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.13089,0.00000,0.00000,0.00000,0.00000,0.15103,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01316,0.10802,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure><figcaption><strong>後・固定33</strong><br>mystic-island-shore-garden-v13<br><code>workshop-20260909-37fdc4e0b49b</code><br>viewport 390×844 / draw 152</figcaption><a href="phone-after-near.png"><img src="phone-after-near.png" alt="phone 後・固定33 芝のnear" loading="lazy"></a><details><summary>実metadata / source・PNG SHA / camera</summary><pre>{
+  &quot;sourceHash&quot;: &quot;37fdc4e0b49b2513f1210dc89315e3cf70afc2a2d4eb59634075fb76524b6877&quot;,
+  &quot;pngSha256&quot;: &quot;f9bd81147607cb1fcd3e5deeb5a5d1ff77e97ebf34657eb89e650d1e8aa12267&quot;,
+  &quot;metadata&quot;: {
+    &quot;revision&quot;: &quot;workshop-20260909-37fdc4e0b49b&quot;,
+    &quot;version&quot;: &quot;workshop-20260909-37fdc4e0b49b:89a7e8a9-3fc7-46ad-bff5-36fd91a7168f&quot;,
+    &quot;delivery&quot;: &quot;mystic-island-v1&quot;,
+    &quot;candidate&quot;: &quot;mystic-island-shore-garden-v13&quot;,
+    &quot;learningCandidate&quot;: &quot;mystic-island-learning-v2&quot;,
+    &quot;mode&quot;: &quot;home&quot;,
+    &quot;renderer&quot;: &quot;three&quot;,
+    &quot;artDirection&quot;: &quot;moon-garden&quot;,
+    &quot;drawCalls&quot;: 152,
+    &quot;expanded&quot;: &quot;true&quot;,
+    &quot;residentAction&quot;: &quot;idle&quot;,
+    &quot;residentItemId&quot;: &quot;&quot;,
+    &quot;viewport&quot;: {
+      &quot;width&quot;: 390,
+      &quot;height&quot;: 844
+    },
+    &quot;serviceWorkerControlled&quot;: true,
+    &quot;reducedMotion&quot;: true
+  },
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.13089,0.00000,0.00000,0.00000,0.00000,0.15103,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01316,0.10802,-1.00200,1.00000&quot;
+}</pre></details></figure>
+</div>
+<h2>tablet — 全景</h2><div class="pair">
+<figure><figcaption><strong>前・固定28</strong><br>mystic-island-shore-garden-v8<br><code>workshop-20260909-cef819587f14</code><br>viewport 768×1024 / draw 152</figcaption><a href="tablet-before-overview.png"><img src="tablet-before-overview.png" alt="tablet 前・固定28 芝のoverview" loading="lazy"></a><details><summary>実metadata / source・PNG SHA / camera</summary><pre>{
+  &quot;sourceHash&quot;: &quot;cef819587f147af1879d904abf5ae96bb8c6da1c414b0beca56ee730481c389a&quot;,
+  &quot;pngSha256&quot;: &quot;a56fb0ec28c95a7dad17656abac51938453030a8cfff32e0367f27e510234eff&quot;,
+  &quot;metadata&quot;: {
+    &quot;revision&quot;: &quot;workshop-20260909-cef819587f14&quot;,
+    &quot;version&quot;: &quot;workshop-20260909-cef819587f14:51a4a079-fc7b-4768-9dcb-fe1b1a6239e5&quot;,
+    &quot;delivery&quot;: &quot;mystic-island-v1&quot;,
+    &quot;candidate&quot;: &quot;mystic-island-shore-garden-v8&quot;,
+    &quot;learningCandidate&quot;: &quot;mystic-island-learning-v2&quot;,
+    &quot;mode&quot;: &quot;home&quot;,
+    &quot;renderer&quot;: &quot;three&quot;,
+    &quot;artDirection&quot;: &quot;moon-garden&quot;,
+    &quot;drawCalls&quot;: 152,
+    &quot;expanded&quot;: &quot;true&quot;,
+    &quot;residentAction&quot;: &quot;idle&quot;,
+    &quot;residentItemId&quot;: &quot;&quot;,
+    &quot;viewport&quot;: {
+      &quot;width&quot;: 768,
+      &quot;height&quot;: 1024
+    },
+    &quot;serviceWorkerControlled&quot;: true,
+    &quot;reducedMotion&quot;: true
+  },
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.08377,0.00000,0.00000,0.00000,0.00000,0.15692,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00842,0.11223,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure><figcaption><strong>後・固定33</strong><br>mystic-island-shore-garden-v13<br><code>workshop-20260909-37fdc4e0b49b</code><br>viewport 768×1024 / draw 152</figcaption><a href="tablet-after-overview.png"><img src="tablet-after-overview.png" alt="tablet 後・固定33 芝のoverview" loading="lazy"></a><details><summary>実metadata / source・PNG SHA / camera</summary><pre>{
+  &quot;sourceHash&quot;: &quot;37fdc4e0b49b2513f1210dc89315e3cf70afc2a2d4eb59634075fb76524b6877&quot;,
+  &quot;pngSha256&quot;: &quot;db4f9dfbb671752d455fa2b4557a9ad62b512dd317726065de33a0008b4f7c7d&quot;,
+  &quot;metadata&quot;: {
+    &quot;revision&quot;: &quot;workshop-20260909-37fdc4e0b49b&quot;,
+    &quot;version&quot;: &quot;workshop-20260909-37fdc4e0b49b:89a7e8a9-3fc7-46ad-bff5-36fd91a7168f&quot;,
+    &quot;delivery&quot;: &quot;mystic-island-v1&quot;,
+    &quot;candidate&quot;: &quot;mystic-island-shore-garden-v13&quot;,
+    &quot;learningCandidate&quot;: &quot;mystic-island-learning-v2&quot;,
+    &quot;mode&quot;: &quot;home&quot;,
+    &quot;renderer&quot;: &quot;three&quot;,
+    &quot;artDirection&quot;: &quot;moon-garden&quot;,
+    &quot;drawCalls&quot;: 152,
+    &quot;expanded&quot;: &quot;true&quot;,
+    &quot;residentAction&quot;: &quot;idle&quot;,
+    &quot;residentItemId&quot;: &quot;&quot;,
+    &quot;viewport&quot;: {
+      &quot;width&quot;: 768,
+      &quot;height&quot;: 1024
+    },
+    &quot;serviceWorkerControlled&quot;: true,
+    &quot;reducedMotion&quot;: true
+  },
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.08377,0.00000,0.00000,0.00000,0.00000,0.15692,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00842,0.11223,-1.00200,1.00000&quot;
+}</pre></details></figure>
+</div>
+<h2>tablet — 近景</h2><div class="pair">
+<figure><figcaption><strong>前・固定28</strong><br>mystic-island-shore-garden-v8<br><code>workshop-20260909-cef819587f14</code><br>viewport 768×1024 / draw 152</figcaption><a href="tablet-before-near.png"><img src="tablet-before-near.png" alt="tablet 前・固定28 芝のnear" loading="lazy"></a><details><summary>実metadata / source・PNG SHA / camera</summary><pre>{
+  &quot;sourceHash&quot;: &quot;cef819587f147af1879d904abf5ae96bb8c6da1c414b0beca56ee730481c389a&quot;,
+  &quot;pngSha256&quot;: &quot;da27f49fbc965ff6890bda2cd342c576c040c1d78e10a9e2ae9040aedd19fcc0&quot;,
+  &quot;metadata&quot;: {
+    &quot;revision&quot;: &quot;workshop-20260909-cef819587f14&quot;,
+    &quot;version&quot;: &quot;workshop-20260909-cef819587f14:51a4a079-fc7b-4768-9dcb-fe1b1a6239e5&quot;,
+    &quot;delivery&quot;: &quot;mystic-island-v1&quot;,
+    &quot;candidate&quot;: &quot;mystic-island-shore-garden-v8&quot;,
+    &quot;learningCandidate&quot;: &quot;mystic-island-learning-v2&quot;,
+    &quot;mode&quot;: &quot;home&quot;,
+    &quot;renderer&quot;: &quot;three&quot;,
+    &quot;artDirection&quot;: &quot;moon-garden&quot;,
+    &quot;drawCalls&quot;: 152,
+    &quot;expanded&quot;: &quot;true&quot;,
+    &quot;residentAction&quot;: &quot;idle&quot;,
+    &quot;residentItemId&quot;: &quot;&quot;,
+    &quot;viewport&quot;: {
+      &quot;width&quot;: 768,
+      &quot;height&quot;: 1024
+    },
+    &quot;serviceWorkerControlled&quot;: true,
+    &quot;reducedMotion&quot;: true
+  },
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.13089,0.00000,0.00000,0.00000,0.00000,0.24518,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01316,0.17536,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure><figcaption><strong>後・固定33</strong><br>mystic-island-shore-garden-v13<br><code>workshop-20260909-37fdc4e0b49b</code><br>viewport 768×1024 / draw 152</figcaption><a href="tablet-after-near.png"><img src="tablet-after-near.png" alt="tablet 後・固定33 芝のnear" loading="lazy"></a><details><summary>実metadata / source・PNG SHA / camera</summary><pre>{
+  &quot;sourceHash&quot;: &quot;37fdc4e0b49b2513f1210dc89315e3cf70afc2a2d4eb59634075fb76524b6877&quot;,
+  &quot;pngSha256&quot;: &quot;22cdb12523cb575291ee0ad7653551caffaf7237d9c3cf58c8132e2f781e4c11&quot;,
+  &quot;metadata&quot;: {
+    &quot;revision&quot;: &quot;workshop-20260909-37fdc4e0b49b&quot;,
+    &quot;version&quot;: &quot;workshop-20260909-37fdc4e0b49b:89a7e8a9-3fc7-46ad-bff5-36fd91a7168f&quot;,
+    &quot;delivery&quot;: &quot;mystic-island-v1&quot;,
+    &quot;candidate&quot;: &quot;mystic-island-shore-garden-v13&quot;,
+    &quot;learningCandidate&quot;: &quot;mystic-island-learning-v2&quot;,
+    &quot;mode&quot;: &quot;home&quot;,
+    &quot;renderer&quot;: &quot;three&quot;,
+    &quot;artDirection&quot;: &quot;moon-garden&quot;,
+    &quot;drawCalls&quot;: 152,
+    &quot;expanded&quot;: &quot;true&quot;,
+    &quot;residentAction&quot;: &quot;idle&quot;,
+    &quot;residentItemId&quot;: &quot;&quot;,
+    &quot;viewport&quot;: {
+      &quot;width&quot;: 768,
+      &quot;height&quot;: 1024
+    },
+    &quot;serviceWorkerControlled&quot;: true,
+    &quot;reducedMotion&quot;: true
+  },
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.13089,0.00000,0.00000,0.00000,0.00000,0.24518,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01316,0.17536,-1.00200,1.00000&quot;
+}</pre></details></figure>
+</div>
+</main></html>

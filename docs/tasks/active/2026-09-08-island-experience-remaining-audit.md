@@ -185,7 +185,7 @@ F01/F04の交流は「関係の数値を上げるために毎日世話する」�
 
 2026-09-09追記: 以下は採用前の履歴。現在の契約は[仕様41](../../product/41_island_expression_collection_spec.md)へ採用済みで、10品のdomain/storage、取得と装備の分離、実rig/足跡/環境/旗、単一音engine、写真外装/旧履歴を固定13へ統合した。全268files/2916testsとbuild/assetsはPASS。実画面・X01〜X14全体は未合格で、現在の範囲別根拠は[全体タスク](2026-09-08-island-experience.md)と[対応表](2026-09-08-island-experience-coverage.md)で追う。下記の候補時点の「次の仕様」を新たな未採用扱いへ読み替えない。
 
-旧保存互換の証拠整理（2026-09-09）: 本走03は同一originの実06→12→20で両幅各150通常回答から旧none/v1保存、当時写真/共有記憶、旧初期memory1件の表示、4資格品とnonnull v2/null復元まで通過後、配置画面の「しまへ」待機というQA前提でFAIL。別のcheckpoint02はその実保存17store/原PNGを明示復元し、20で後発家具/展示の全体拒否→本人修正→同予約1回答/reloadを両幅PASSした。exact app/QA・元FAIL・復元限界は[全体タスクの互換記録](2026-09-08-island-experience.md#身支度41の次の実証と残差)を正本とし、新しい重複監査は作らない。現行固定版への限定した診断復元・旧表示/3形式適用・現在の権利等の保持は未実施で、旧通常回答/資格取得を全再走する残差ではない。全履歴/v1 growth memoryの実表示、連続全経路、実SW更新、実音、人の理解へ合格を広げない。
+旧保存互換の証拠整理（2026-09-09）: 本走03は同一originの実06→12→20で両幅各150通常回答から旧none/v1保存、当時写真/共有記憶、旧初期memory1件の表示、4資格品とnonnull v2/null復元まで通過後、配置画面の「しまへ」待機というQA前提でFAIL。別のcheckpoint02はその実保存17store/原PNGを明示復元し、20で後発家具/展示の全体拒否→本人修正→同予約1回答/reloadを両幅PASSした。現行32のcurrent01は旧表示引数と本文収集のQA問題でFAILを保持し、修正QA02のcurrent02は固定33で両幅限定PASS（各26全DB、旧実img/同bytes出力、3形式の試用取消/適用、既存権利/同予約1回答、source/QA不変、8所有PID終了）。exact provenance・原FAIL・4枚の実画面は[互換監査](../../design/audits/2026-09-09-island-scene-compatibility/README.md)と[検証値](../../design/audits/2026-09-09-island-scene-compatibility/verification.json)へ耐久化した。目標/keepsakesは元データで省略され、非空状態の保持は未実証。旧通常回答/資格取得の全再走は不要で、全履歴/v1 growth memoryの実表示、連続全経路、実SW更新、実音、人の理解（N=0）へ合格を広げない。
 
 2026-09-08の追加読取。これは採用仕様・価格・実装完了を表さず、F04の実画面検証と並行して次の責務を確かめた記録である。
 

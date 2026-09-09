@@ -66,7 +66,7 @@ function land(m: IslandMaterials, x: number, z: number, rx: number, rz: number, 
     const grass = m.surface('#72ab50', .98).clone();
     grass.vertexColors = true; grass.userData.islandOwned = true;
     const groundGeometry = islandGroundGeometry(rx, rz, profile);
-    if (grass.map) {
+    if (grass.map || grass.bumpMap) {
         const positions = groundGeometry.getAttribute('position'), uv = new Float32Array(positions.count * 2);
         for (let i = 0; i < positions.count; i++) {
             uv[i * 2] = positions.getX(i) / 1.15 + .5;

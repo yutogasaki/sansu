@@ -30,3 +30,5 @@
 raw PCM、WAV、native全DB、実画像、browser traceは `output/island-experience/audio-focused-03`、`audio-focused-04`、`audio-focused-05`、`audio-focused-06` に保持する。各 `report.json`、`cleanup.json`、05の `first-failure-diagnostic.json`、immutable `audio-focused-qa-03`〜`06` と各preparationを参照する。大きなrawをこの監査へ複製していない。05・06はbrowser終了、focus driver復元、sourceStableを確認し、各8 PID／両process groupの残存0・一時profile削除も記録した。
 
 **Runtime integrityは上記範囲のみPASS。** 実スピーカー・音量・音色の好み・学習回答cueの実聴、未収録onset、blocked writer／profile race、他版の動作はこの証拠では未検証。視覚の画風一致・全場面の洗練度を音の成功で代替しない。Silent comprehension／楽しさ／学習意欲はHuman N=0で未確認。全仕様41・全Goalの完了ではない。
+
+検証コードと記録をmain `61ebc80711f3a6bdded7a615697e63cc7c3153f2` に保存した。同commitの[Verify Core](https://github.com/yutogasaki/sansu/actions/runs/34299397678)は294 files / 3,255 tests・型/build/assets PASS、[Docs Check](https://github.com/yutogasaki/sansu/actions/runs/34299397642)もPASS。これは検証コードを含む保存地点のCIであり、上記の実音対象は固定20のまま。

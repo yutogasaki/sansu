@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { getIslandAppearanceStyle, type IslandAppearanceSlotId, type IslandAppearanceStyleId } from '../../../domain/island/appearance';
 import { batch, disposeGeometry, IslandMaterials } from './primitives';
 import { createBiscuitGroundSurface } from './appearanceGround';
+import { createIslandGrassSurface } from './grassSurface';
 
 /** A builder retains only its named surface. Existing authored builders without
  * a selection keep their original mesh order and palette for legacy rendering. */
@@ -31,6 +32,7 @@ const colors = {
 export class IslandPartMaterials extends IslandMaterials {
     readonly style;
     private biscuitGround?: ReturnType<typeof createBiscuitGroundSurface>;
+    private grassGround?: ReturnType<typeof createIslandGrassSurface>;
     constructor(readonly styleId: IslandAppearanceStyleId) {
         const style = getIslandAppearanceStyle(styleId);
         super(style.family); this.style = style;
@@ -40,10 +42,15 @@ export class IslandPartMaterials extends IslandMaterials {
             && this.style.slot === 'ground' && color.toLowerCase() === '#72ab50') {
             return (this.biscuitGround ??= createBiscuitGroundSurface()).material;
         }
-        return super.surface(color, roughness, metalness, glow);
+        const base = super.surface(color, roughness, metalness, glow);
+        if (this.styleId === 'legacy-v1:moon-garden:ground' && color.toLowerCase() === '#72ab50') {
+            return (this.grassGround ??= createIslandGrassSurface(base, this.styleId))?.material ?? base;
+        }
+        return base;
     }
     override dispose() {
         this.biscuitGround?.dispose(); this.biscuitGround = undefined;
+        this.grassGround?.dispose(); this.grassGround = undefined;
         super.dispose();
     }
     override color(source: string) {

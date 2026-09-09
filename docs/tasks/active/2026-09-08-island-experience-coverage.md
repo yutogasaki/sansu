@@ -22,6 +22,8 @@
 
 ## Classification and evidence
 
+2026-09-09追加: W01/W08の素材差は、[固定33の芝v13](../../design/2026-09-09-island-renewal/grass-v13/README.md)で局所改善。既定groundだけの短葉bump面をphone/tabletの同画角で比較し、足元・道の読みやすさと全storeを保持した。実取得ではない明示成熟fixtureの4比較経路、295 suites/3264 testsの範囲であり、全104行・視覚全体・動機の実証へ拡張しない。旧29〜32の見た目HOLDとHuman N=0を保持する。
+
 2026-09-09追加: 固定24の[衣装・模様と家具利用の有限確認](../../design/audits/2026-09-09-island-expression-matrix/README.md)は、両幅それぞれ残25組のportrait・選定9場面の利用が通過した。復元と明示注入を含む診断fixtureの項目単位の合成で、実取得・単一連続run・全直積・固定26の合格ではない。到達不可の元FAILと、実収納/再配置から同じ住民が再開する操作を保持。画面の重なりは[固定28](../../design/audits/2026-09-09-island-panel-layout/README.md)で解消。W01/W07/W08/W10とR13の音は、同app20の主音QA05＋停止/同予約回答QA06を[限定記録](../../design/audits/2026-09-09-island-audio/README.md)に集約した。元のFAIL、未収録onset・実聴、造形全体とHuman N=0を分けて保持する。
 
 2026-09-09追加採用: [仕様42](../../product/42_island_learning_keepsakes_spec.md)は、本人の完了区間を根拠にした賞状3点/トロフィー13点を暮らす家の一角へ飾る。島の実家の玄関から同じSceneの家内へ入り、生活空間のoverviewから実アルバム/かざりと記憶・お知らせ・学習の棚を選ぶ。外側のopen cutawayは採用しない。これは元の報酬16分類を16品へ縮める変更ではなく、本人の成果・収集・愛着への追加接続である。固定23 app（`../../../output/island-experience/workshop-snapshot-23/build-source.json`）＋QAのみの修正版（`../../../output/island-experience/keepsakes-qa-23-02/qa-source.json`）のgenuine検証23-02（`../../../output/island-experience/keepsakes-23-02/report.json`）は両幅PASS。実5区間から得る最初の2品の展示/収納/再読込、実写真、0件掲示板、同予約の非最終回答後の全islands保持を確認した。元01のQA FAIL（`../../../output/island-experience/keepsakes-23-01/report.json`）は保持する。全16品の実取得や全機能の受入へ拡張せず、固定23の正式80runは合格（自動keyboard固定問題、通常plannerや子どもの実速度とは区別）、art parity HOLD、Human N=0、元Goal進行中/全Goal未完了を維持する。2枠/専用記念室の案を現在の正本として扱わない。

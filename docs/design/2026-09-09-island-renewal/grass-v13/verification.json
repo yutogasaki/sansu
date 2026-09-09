@@ -1,0 +1,866 @@
+{
+  "date": "2026-09-09",
+  "candidate": "mystic-island-shore-garden-v13",
+  "materialCandidate": "island-grass-surface-v5",
+  "decision": {
+    "localMaterial": "ACCEPTED by root author visual review of fixed33 phone near/overview, tablet near and source A",
+    "sourceAOverallParity": "HOLD",
+    "humanN": 0,
+    "fullGoalPassed": false,
+    "remaining": [
+      "Black roof seams divide the house surfaces",
+      "Uniform sand band and cliff edges",
+      "Overall material/shape/composition difference from source A"
+    ],
+    "integratedCandidate": "VERIFICATION_PENDING; local material acceptance is not a release/full-goal decision."
+  },
+  "scope": "Matched static mature-island fixture, two items stored. Fixed28 versus fixed33 default-ground material comparison only; no genuine acquisition, maximum-growth acquisition or timing evidence.",
+  "fixture": {
+    "source": "output/island-experience/camera-23-03/phone-mature-fixture-declared-fixture.json",
+    "sha256": "7f91c523195460efd12a072dc831d53ae70fc3673dd67391d1f5c4bd8f0c812f",
+    "completedSets": 24,
+    "growth": {
+      "version": 1,
+      "expansionLevel": 2,
+      "progress": {
+        "garden": 6,
+        "waterside": 6,
+        "grove": 6,
+        "village": 6
+      },
+      "focus": "garden",
+      "memories": [
+        {
+          "id": "island-growth-initial",
+          "kind": "initial",
+          "capturedAt": 1788908892233,
+          "completedSets": 0,
+          "expansionLevel": 0,
+          "progress": {
+            "garden": 0,
+            "waterside": 0,
+            "grove": 0,
+            "village": 0
+          },
+          "focus": "garden",
+          "items": [
+            {
+              "id": "starter-flower",
+              "kind": "flower",
+              "position": {
+                "x": 1.5,
+                "z": 0.8
+              },
+              "rotation": 0,
+              "habitatId": "garden",
+              "growthLevel": 0
+            },
+            {
+              "id": "starter-lantern",
+              "kind": "lantern",
+              "position": {
+                "x": -1,
+                "z": 0.25
+              },
+              "rotation": 0,
+              "habitatId": "village",
+              "growthLevel": 0
+            }
+          ],
+          "cosmetics": {
+            "themeId": "moon-garden",
+            "accentId": null,
+            "appearance": {
+              "version": 1,
+              "slots": {
+                "sky": "legacy-v1:moon-garden:sky",
+                "ground": "legacy-v1:moon-garden:ground",
+                "shore": "legacy-v1:moon-garden:shore",
+                "path": "legacy-v1:moon-garden:path",
+                "water": "legacy-v1:moon-garden:water",
+                "houseBody": "legacy-v1:moon-garden:houseBody",
+                "houseRoof": "legacy-v1:moon-garden:houseRoof",
+                "houseWindows": "legacy-v1:moon-garden:houseWindows",
+                "tree": "legacy-v1:moon-garden:tree",
+                "flower": "legacy-v1:moon-garden:flower",
+                "mushroom": "legacy-v1:moon-garden:mushroom",
+                "bridge": "legacy-v1:moon-garden:bridge"
+              }
+            }
+          },
+          "sceneStyle": {
+            "version": 2,
+            "residentLooks": {
+              "otter": "original",
+              "rabbit": "original",
+              "fox": "original"
+            },
+            "ambience": "off",
+            "emblem": "leaf",
+            "expression": {
+              "version": 1,
+              "residents": {
+                "otter": {
+                  "outfit": null,
+                  "pattern": null,
+                  "trail": null
+                },
+                "rabbit": {
+                  "outfit": null,
+                  "pattern": null,
+                  "trail": null
+                },
+                "fox": {
+                  "outfit": null,
+                  "pattern": null,
+                  "trail": null
+                }
+              },
+              "soundscape": null,
+              "environment": {
+                "period": null,
+                "season": null
+              },
+              "album": {
+                "cover": null,
+                "stamp": null
+              },
+              "flagTrim": null
+            }
+          }
+        }
+      ],
+      "discoveries": []
+    },
+    "items": [
+      {
+        "id": "starter-flower",
+        "kind": "flower",
+        "rotation": 0,
+        "habitatId": "garden",
+        "growthLevel": 0
+      },
+      {
+        "id": "starter-lantern",
+        "kind": "lantern",
+        "rotation": 0,
+        "habitatId": "village",
+        "growthLevel": 0
+      }
+    ],
+    "genuineAcquisition": false,
+    "maximumGrowthAcquisition": false,
+    "ordinaryPlannerEvidence": false,
+    "method": "Profile initialized, then explicitly declared saved mature three-land island fixture copied with profileId changed. Captures are static home overview and two zoom-button increments; no learning or acquisition replay."
+  },
+  "sources": [
+    {
+      "revision": "workshop-20260909-cef819587f14",
+      "sourceHash": "cef819587f147af1879d904abf5ae96bb8c6da1c414b0beca56ee730481c389a",
+      "snapshot": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-28",
+      "inputs": 1072,
+      "flags": {
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_BUILD_PLAY_ENABLED": "true"
+      },
+      "flagEvidence": "Frozen build-source.json plus saved dist/version.json; captured runtime version/revision match this build.",
+      "buildManifestSha256": "f8fa4d8699aedf604262568fbbd9411cb8513ce49663bdba18236dd2e84ee74c",
+      "savedVersion": {
+        "version": "workshop-20260909-cef819587f14:51a4a079-fc7b-4768-9dcb-fe1b1a6239e5",
+        "revision": "workshop-20260909-cef819587f14",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": true,
+          "renderer": "legacy"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v8",
+          "learningCandidate": "mystic-island-learning-v2",
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      }
+    },
+    {
+      "revision": "workshop-20260909-37fdc4e0b49b",
+      "sourceHash": "37fdc4e0b49b2513f1210dc89315e3cf70afc2a2d4eb59634075fb76524b6877",
+      "snapshot": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-33",
+      "inputs": 1074,
+      "flags": {
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_BUILD_PLAY_ENABLED": "true"
+      },
+      "flagEvidence": "Frozen build-source.json plus saved dist/version.json; captured runtime version/revision match this build.",
+      "buildManifestSha256": "d10c2e7eebf33d2bf464b6b86bb650dae025b7eceee359f6e995db389d39303e",
+      "savedVersion": {
+        "version": "workshop-20260909-37fdc4e0b49b:89a7e8a9-3fc7-46ad-bff5-36fd91a7168f",
+        "revision": "workshop-20260909-37fdc4e0b49b",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": true,
+          "renderer": "legacy"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v13",
+          "learningCandidate": "mystic-island-learning-v2",
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "rows": 4,
+    "passedRows": 4,
+    "captures": 8,
+    "drawCalls": [
+      152
+    ],
+    "allStoresPreserved": true,
+    "errors": 0,
+    "cameraMatches": {
+      "phone": true,
+      "tablet": true
+    },
+    "sourceStable": true,
+    "qaStable": true,
+    "browserClosed": true
+  },
+  "verificationBoundary": {
+    "core": "PARTIAL: fixed33 unit suites, type/build/assets PASS. Lint and docs checks pending root; no overall core PASS claim yet.",
+    "formalTiming": "PENDING_ROOT: new formal80 run planned on fixed33; fixed26 evidence is not transferred.",
+    "newBrowserOrTestsByDocumentationTask": false,
+    "allStoresScope": "Every objectStore returned by the actual database before/after capture in each isolated context. Schema migration, reload compatibility and learning reservation are not exercised by this visual runner.",
+    "renderBoundary": "Captured mode home, Three renderer, reduced motion true and service-worker controlled in all rows. Normal-motion and other owned surface combinations are not re-proven here.",
+    "materialDiagnostic": "Current materialSignature covers map but not bumpMap/bumpScale/repeat. It is not evidence of bump preservation. Passive GPU evidence belongs to fixed32; fixed33 evidence is its actual images/four report rows and immutable source."
+  },
+  "change": {
+    "style": "legacy-v1:moon-garden:ground",
+    "bumpScale": 1.2,
+    "scaleMeaning": "Normal response from adjacent screen-space height samples; not world displacement.",
+    "repeat": [
+      0.25,
+      0.25
+    ],
+    "heightTexture": {
+      "size": [
+        128,
+        128
+      ],
+      "format": "R8",
+      "unchangedFromFixed32": true
+    },
+    "preserved": "Existing UVs, base color, roughness, geometry, walking floor, saved coordinates and other owned palettes/maps."
+  },
+  "preservedHistory": [
+    {
+      "snapshot": 29,
+      "material": "v1",
+      "visual": "HOLD",
+      "reason": "Fine detail filtered out; only about 1/255 color difference remained.",
+      "artifact": "output/playwright/island-renewal/grass-review-29-01/report.json"
+    },
+    {
+      "snapshot": 30,
+      "material": "v2",
+      "visual": "HOLD",
+      "reason": "Horizontal albedo mottling looked like water; color-noise tuning ended.",
+      "artifact": "output/playwright/island-renewal/grass-review-30-01/report.json"
+    },
+    {
+      "snapshot": 31,
+      "material": "v3",
+      "visual": "HOLD",
+      "reason": "Bump surface appeared smooth; leaf projection was small.",
+      "artifact": "output/playwright/island-renewal/grass-review-31-01/report.json"
+    },
+    {
+      "snapshot": 32,
+      "material": "v4",
+      "visual": "HOLD",
+      "reason": "Larger projected leaves remained nearly invisible; image maximum difference 1/255.",
+      "artifact": "output/playwright/island-renewal/grass-review-32-01/report.json"
+    },
+    {
+      "snapshot": 32,
+      "qa": "GPU01",
+      "result": "FAIL",
+      "reason": "Harness clicked zoom after maximum; original report retained.",
+      "artifact": "output/playwright/island-renewal/grass-gpu-32-01/report.json"
+    },
+    {
+      "snapshot": 32,
+      "qa": "GPU02",
+      "result": "PASS",
+      "visual": "HOLD",
+      "reason": "Passive actual draw confirmed USE_BUMPMAP, scale approximately .035, repeat .25 and 128² R8 texture binding. This proves the material path, not visual appeal.",
+      "artifact": "output/playwright/island-renewal/grass-gpu-32-02/report.json"
+    }
+  ],
+  "originReport": {
+    "path": "output/playwright/island-renewal/grass-review-33-01/report.json",
+    "sha256": "1ca608db96e9853d098dae63c87516db44cedae4e4acb145ee4c0c4e1bf1c65c",
+    "report": {
+      "scope": "Matched static mature-island fixture, two items stored. Fixed28 versus fixed33 default-ground material comparison only; no genuine acquisition, maximum-growth acquisition or timing evidence.",
+      "humanN": 0,
+      "sources": [
+        {
+          "revision": "workshop-20260909-cef819587f14",
+          "sourceHash": "cef819587f147af1879d904abf5ae96bb8c6da1c414b0beca56ee730481c389a",
+          "snapshot": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-28",
+          "inputs": 1072
+        },
+        {
+          "revision": "workshop-20260909-37fdc4e0b49b",
+          "sourceHash": "37fdc4e0b49b2513f1210dc89315e3cf70afc2a2d4eb59634075fb76524b6877",
+          "snapshot": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-33",
+          "inputs": 1074
+        }
+      ],
+      "initialQa": [
+        {
+          "path": "file:///Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/grass-review-33-01.mjs",
+          "sha256": "93668e8edbdbd9b795946bb95941fe28df7e7f92fae5cac85bd6a848bc15dc37"
+        },
+        {
+          "path": "file:///Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-33/tools/island-e2e-helpers.mjs",
+          "sha256": "a0292a63673289acf5dab3d4d28d3cd992801b11e64c4be7f3a610be01c97169"
+        }
+      ],
+      "rows": [
+        {
+          "lane": "phone",
+          "target": {
+            "name": "before",
+            "base": "http://127.0.0.1:5414",
+            "candidate": "mystic-island-shore-garden-v8"
+          },
+          "errors": [],
+          "captures": [
+            {
+              "filename": "phone-before-overview.png",
+              "metadata": {
+                "revision": "workshop-20260909-cef819587f14",
+                "version": "workshop-20260909-cef819587f14:51a4a079-fc7b-4768-9dcb-fe1b1a6239e5",
+                "delivery": "mystic-island-v1",
+                "candidate": "mystic-island-shore-garden-v8",
+                "learningCandidate": "mystic-island-learning-v2",
+                "mode": "home",
+                "renderer": "three",
+                "artDirection": "moon-garden",
+                "drawCalls": 152,
+                "expanded": "true",
+                "residentAction": "idle",
+                "residentItemId": "",
+                "viewport": {
+                  "width": 390,
+                  "height": 844
+                },
+                "serviceWorkerControlled": true,
+                "reducedMotion": true
+              },
+              "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.08377,0.00000,0.00000,0.00000,0.00000,0.09666,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00842,0.06913,-1.00200,1.00000"
+            },
+            {
+              "filename": "phone-before-near.png",
+              "metadata": {
+                "revision": "workshop-20260909-cef819587f14",
+                "version": "workshop-20260909-cef819587f14:51a4a079-fc7b-4768-9dcb-fe1b1a6239e5",
+                "delivery": "mystic-island-v1",
+                "candidate": "mystic-island-shore-garden-v8",
+                "learningCandidate": "mystic-island-learning-v2",
+                "mode": "home",
+                "renderer": "three",
+                "artDirection": "moon-garden",
+                "drawCalls": 152,
+                "expanded": "true",
+                "residentAction": "idle",
+                "residentItemId": "",
+                "viewport": {
+                  "width": 390,
+                  "height": 844
+                },
+                "serviceWorkerControlled": true,
+                "reducedMotion": true
+              },
+              "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.13089,0.00000,0.00000,0.00000,0.00000,0.15103,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01316,0.10802,-1.00200,1.00000"
+            }
+          ],
+          "allStoresPreserved": true,
+          "pass": true
+        },
+        {
+          "lane": "phone",
+          "target": {
+            "name": "after",
+            "base": "http://127.0.0.1:5419",
+            "candidate": "mystic-island-shore-garden-v13"
+          },
+          "errors": [],
+          "captures": [
+            {
+              "filename": "phone-after-overview.png",
+              "metadata": {
+                "revision": "workshop-20260909-37fdc4e0b49b",
+                "version": "workshop-20260909-37fdc4e0b49b:89a7e8a9-3fc7-46ad-bff5-36fd91a7168f",
+                "delivery": "mystic-island-v1",
+                "candidate": "mystic-island-shore-garden-v13",
+                "learningCandidate": "mystic-island-learning-v2",
+                "mode": "home",
+                "renderer": "three",
+                "artDirection": "moon-garden",
+                "drawCalls": 152,
+                "expanded": "true",
+                "residentAction": "idle",
+                "residentItemId": "",
+                "viewport": {
+                  "width": 390,
+                  "height": 844
+                },
+                "serviceWorkerControlled": true,
+                "reducedMotion": true
+              },
+              "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.08377,0.00000,0.00000,0.00000,0.00000,0.09666,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00842,0.06913,-1.00200,1.00000"
+            },
+            {
+              "filename": "phone-after-near.png",
+              "metadata": {
+                "revision": "workshop-20260909-37fdc4e0b49b",
+                "version": "workshop-20260909-37fdc4e0b49b:89a7e8a9-3fc7-46ad-bff5-36fd91a7168f",
+                "delivery": "mystic-island-v1",
+                "candidate": "mystic-island-shore-garden-v13",
+                "learningCandidate": "mystic-island-learning-v2",
+                "mode": "home",
+                "renderer": "three",
+                "artDirection": "moon-garden",
+                "drawCalls": 152,
+                "expanded": "true",
+                "residentAction": "idle",
+                "residentItemId": "",
+                "viewport": {
+                  "width": 390,
+                  "height": 844
+                },
+                "serviceWorkerControlled": true,
+                "reducedMotion": true
+              },
+              "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.13089,0.00000,0.00000,0.00000,0.00000,0.15103,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01316,0.10802,-1.00200,1.00000"
+            }
+          ],
+          "allStoresPreserved": true,
+          "pass": true
+        },
+        {
+          "lane": "tablet",
+          "target": {
+            "name": "before",
+            "base": "http://127.0.0.1:5414",
+            "candidate": "mystic-island-shore-garden-v8"
+          },
+          "errors": [],
+          "captures": [
+            {
+              "filename": "tablet-before-overview.png",
+              "metadata": {
+                "revision": "workshop-20260909-cef819587f14",
+                "version": "workshop-20260909-cef819587f14:51a4a079-fc7b-4768-9dcb-fe1b1a6239e5",
+                "delivery": "mystic-island-v1",
+                "candidate": "mystic-island-shore-garden-v8",
+                "learningCandidate": "mystic-island-learning-v2",
+                "mode": "home",
+                "renderer": "three",
+                "artDirection": "moon-garden",
+                "drawCalls": 152,
+                "expanded": "true",
+                "residentAction": "idle",
+                "residentItemId": "",
+                "viewport": {
+                  "width": 768,
+                  "height": 1024
+                },
+                "serviceWorkerControlled": true,
+                "reducedMotion": true
+              },
+              "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.08377,0.00000,0.00000,0.00000,0.00000,0.15692,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00842,0.11223,-1.00200,1.00000"
+            },
+            {
+              "filename": "tablet-before-near.png",
+              "metadata": {
+                "revision": "workshop-20260909-cef819587f14",
+                "version": "workshop-20260909-cef819587f14:51a4a079-fc7b-4768-9dcb-fe1b1a6239e5",
+                "delivery": "mystic-island-v1",
+                "candidate": "mystic-island-shore-garden-v8",
+                "learningCandidate": "mystic-island-learning-v2",
+                "mode": "home",
+                "renderer": "three",
+                "artDirection": "moon-garden",
+                "drawCalls": 152,
+                "expanded": "true",
+                "residentAction": "idle",
+                "residentItemId": "",
+                "viewport": {
+                  "width": 768,
+                  "height": 1024
+                },
+                "serviceWorkerControlled": true,
+                "reducedMotion": true
+              },
+              "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.13089,0.00000,0.00000,0.00000,0.00000,0.24518,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01316,0.17536,-1.00200,1.00000"
+            }
+          ],
+          "allStoresPreserved": true,
+          "pass": true
+        },
+        {
+          "lane": "tablet",
+          "target": {
+            "name": "after",
+            "base": "http://127.0.0.1:5419",
+            "candidate": "mystic-island-shore-garden-v13"
+          },
+          "errors": [],
+          "captures": [
+            {
+              "filename": "tablet-after-overview.png",
+              "metadata": {
+                "revision": "workshop-20260909-37fdc4e0b49b",
+                "version": "workshop-20260909-37fdc4e0b49b:89a7e8a9-3fc7-46ad-bff5-36fd91a7168f",
+                "delivery": "mystic-island-v1",
+                "candidate": "mystic-island-shore-garden-v13",
+                "learningCandidate": "mystic-island-learning-v2",
+                "mode": "home",
+                "renderer": "three",
+                "artDirection": "moon-garden",
+                "drawCalls": 152,
+                "expanded": "true",
+                "residentAction": "idle",
+                "residentItemId": "",
+                "viewport": {
+                  "width": 768,
+                  "height": 1024
+                },
+                "serviceWorkerControlled": true,
+                "reducedMotion": true
+              },
+              "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.08377,0.00000,0.00000,0.00000,0.00000,0.15692,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00842,0.11223,-1.00200,1.00000"
+            },
+            {
+              "filename": "tablet-after-near.png",
+              "metadata": {
+                "revision": "workshop-20260909-37fdc4e0b49b",
+                "version": "workshop-20260909-37fdc4e0b49b:89a7e8a9-3fc7-46ad-bff5-36fd91a7168f",
+                "delivery": "mystic-island-v1",
+                "candidate": "mystic-island-shore-garden-v13",
+                "learningCandidate": "mystic-island-learning-v2",
+                "mode": "home",
+                "renderer": "three",
+                "artDirection": "moon-garden",
+                "drawCalls": 152,
+                "expanded": "true",
+                "residentAction": "idle",
+                "residentItemId": "",
+                "viewport": {
+                  "width": 768,
+                  "height": 1024
+                },
+                "serviceWorkerControlled": true,
+                "reducedMotion": true
+              },
+              "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.13089,0.00000,0.00000,0.00000,0.00000,0.24518,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01316,0.17536,-1.00200,1.00000"
+            }
+          ],
+          "allStoresPreserved": true,
+          "pass": true
+        }
+      ],
+      "browserClosed": true,
+      "sourceStable": true,
+      "qaStable": true
+    }
+  },
+  "images": [
+    {
+      "file": "phone-before-overview.png",
+      "source": "output/playwright/island-renewal/grass-review-33-01/phone-before-overview.png",
+      "sha256": "0623c2f84e5ea0b2374a15e3058847c5ed1695ad86c4a422b7cecee45974655b",
+      "lane": "phone",
+      "side": "before",
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.08377,0.00000,0.00000,0.00000,0.00000,0.09666,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00842,0.06913,-1.00200,1.00000",
+      "metadata": {
+        "revision": "workshop-20260909-cef819587f14",
+        "version": "workshop-20260909-cef819587f14:51a4a079-fc7b-4768-9dcb-fe1b1a6239e5",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v8",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 152,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true
+      }
+    },
+    {
+      "file": "phone-before-near.png",
+      "source": "output/playwright/island-renewal/grass-review-33-01/phone-before-near.png",
+      "sha256": "9e17130dba3216788835cdd2b5991c5ed1dd91b32fac42c0ca90df3dba752fd8",
+      "lane": "phone",
+      "side": "before",
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.13089,0.00000,0.00000,0.00000,0.00000,0.15103,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01316,0.10802,-1.00200,1.00000",
+      "metadata": {
+        "revision": "workshop-20260909-cef819587f14",
+        "version": "workshop-20260909-cef819587f14:51a4a079-fc7b-4768-9dcb-fe1b1a6239e5",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v8",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 152,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true
+      }
+    },
+    {
+      "file": "phone-after-overview.png",
+      "source": "output/playwright/island-renewal/grass-review-33-01/phone-after-overview.png",
+      "sha256": "e580f9a631ed6e7a53271bf7bbdfc74eab879916f42323d43d31a6a078015009",
+      "lane": "phone",
+      "side": "after",
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.08377,0.00000,0.00000,0.00000,0.00000,0.09666,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00842,0.06913,-1.00200,1.00000",
+      "metadata": {
+        "revision": "workshop-20260909-37fdc4e0b49b",
+        "version": "workshop-20260909-37fdc4e0b49b:89a7e8a9-3fc7-46ad-bff5-36fd91a7168f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v13",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 152,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true
+      }
+    },
+    {
+      "file": "phone-after-near.png",
+      "source": "output/playwright/island-renewal/grass-review-33-01/phone-after-near.png",
+      "sha256": "f9bd81147607cb1fcd3e5deeb5a5d1ff77e97ebf34657eb89e650d1e8aa12267",
+      "lane": "phone",
+      "side": "after",
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.13089,0.00000,0.00000,0.00000,0.00000,0.15103,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01316,0.10802,-1.00200,1.00000",
+      "metadata": {
+        "revision": "workshop-20260909-37fdc4e0b49b",
+        "version": "workshop-20260909-37fdc4e0b49b:89a7e8a9-3fc7-46ad-bff5-36fd91a7168f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v13",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 152,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true
+      }
+    },
+    {
+      "file": "tablet-before-overview.png",
+      "source": "output/playwright/island-renewal/grass-review-33-01/tablet-before-overview.png",
+      "sha256": "a56fb0ec28c95a7dad17656abac51938453030a8cfff32e0367f27e510234eff",
+      "lane": "tablet",
+      "side": "before",
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.08377,0.00000,0.00000,0.00000,0.00000,0.15692,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00842,0.11223,-1.00200,1.00000",
+      "metadata": {
+        "revision": "workshop-20260909-cef819587f14",
+        "version": "workshop-20260909-cef819587f14:51a4a079-fc7b-4768-9dcb-fe1b1a6239e5",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v8",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 152,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true
+      }
+    },
+    {
+      "file": "tablet-before-near.png",
+      "source": "output/playwright/island-renewal/grass-review-33-01/tablet-before-near.png",
+      "sha256": "da27f49fbc965ff6890bda2cd342c576c040c1d78e10a9e2ae9040aedd19fcc0",
+      "lane": "tablet",
+      "side": "before",
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.13089,0.00000,0.00000,0.00000,0.00000,0.24518,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01316,0.17536,-1.00200,1.00000",
+      "metadata": {
+        "revision": "workshop-20260909-cef819587f14",
+        "version": "workshop-20260909-cef819587f14:51a4a079-fc7b-4768-9dcb-fe1b1a6239e5",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v8",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 152,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true
+      }
+    },
+    {
+      "file": "tablet-after-overview.png",
+      "source": "output/playwright/island-renewal/grass-review-33-01/tablet-after-overview.png",
+      "sha256": "db4f9dfbb671752d455fa2b4557a9ad62b512dd317726065de33a0008b4f7c7d",
+      "lane": "tablet",
+      "side": "after",
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.08377,0.00000,0.00000,0.00000,0.00000,0.15692,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00842,0.11223,-1.00200,1.00000",
+      "metadata": {
+        "revision": "workshop-20260909-37fdc4e0b49b",
+        "version": "workshop-20260909-37fdc4e0b49b:89a7e8a9-3fc7-46ad-bff5-36fd91a7168f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v13",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 152,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true
+      }
+    },
+    {
+      "file": "tablet-after-near.png",
+      "source": "output/playwright/island-renewal/grass-review-33-01/tablet-after-near.png",
+      "sha256": "22cdb12523cb575291ee0ad7653551caffaf7237d9c3cf58c8132e2f781e4c11",
+      "lane": "tablet",
+      "side": "after",
+      "camera": "0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.13089,0.00000,0.00000,0.00000,0.00000,0.24518,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.01316,0.17536,-1.00200,1.00000",
+      "metadata": {
+        "revision": "workshop-20260909-37fdc4e0b49b",
+        "version": "workshop-20260909-37fdc4e0b49b:89a7e8a9-3fc7-46ad-bff5-36fd91a7168f",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v13",
+        "learningCandidate": "mystic-island-learning-v2",
+        "mode": "home",
+        "renderer": "three",
+        "artDirection": "moon-garden",
+        "drawCalls": 152,
+        "expanded": "true",
+        "residentAction": "idle",
+        "residentItemId": "",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true
+      }
+    }
+  ],
+  "checks": {
+    "unit": {
+      "status": "PASS",
+      "files": 295,
+      "tests": 3264,
+      "durationSeconds": 61.03,
+      "artifact": "output/playwright/island-renewal/integration-tests-33.log",
+      "sha256": "6b2a412047899abe76abf9c52253b41d21ebec549a64e6cf6b0e510e3a5e9b52"
+    },
+    "typeBuildAssets": {
+      "status": "PASS",
+      "artifact": "output/playwright/island-renewal/integration-build-33.log",
+      "sha256": "7d5240545d17a82c475532e9762754c365269a543dedbb60983d541cee1b9ec6"
+    },
+    "lint": {
+      "status": "PASS",
+      "warnings": 1,
+      "errors": 0,
+      "warningScope": "Pre-existing IslandMilestone.tsx Fast Refresh warning",
+      "artifact": "output/playwright/island-renewal/integration-lint-33.log",
+      "sha256": "dc92ae2532ccafe980e97d049444b8160e7184c119a03b30321ca56ea6e919c1"
+    },
+    "docs": {
+      "status": "PASS",
+      "trackedFiles": 4710,
+      "preExistingWarnings": 7,
+      "evidence": "output/playwright/island-renewal/checkpoint-33-clean-docs.json",
+      "record": {
+        "scope": "Tracked current file contents only, outside watched repository; ignored output excluded",
+        "directory": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-grass-checkpoint-docs-axo1m48v",
+        "files": 4710,
+        "exitCode": 0,
+        "log": "output/playwright/island-renewal/checkpoint-33-clean-docs.log",
+        "logSha256": "5072f36f4c7f61c0116858a3fabd596acddf145b2e549b6ec6661375d320acb1"
+      }
+    },
+    "formal80": "RUNNING",
+    "ordinarySmoke": "PENDING_ROOT"
+  },
+  "separateEvidence": [
+    {
+      "kind": "House, genuine keepsakes and learning return",
+      "snapshot": 23,
+      "document": "../../audits/2026-09-09-island-home-checkpoint.md",
+      "scope": "Earlier version only; not fixed33 grass proof."
+    },
+    {
+      "kind": "Panel layout and house photo",
+      "snapshot": 28,
+      "document": "../../audits/2026-09-09-island-panel-layout/README.md",
+      "scope": "Earlier fixed28 photo/UI evidence; not rerun by the grass comparison."
+    }
+  ]
+}

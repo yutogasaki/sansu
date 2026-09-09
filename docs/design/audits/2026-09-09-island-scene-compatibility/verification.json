@@ -1,0 +1,396 @@
+{
+  "status": "PASS-current-restored-checkpoint-only",
+  "date": "2026-09-09",
+  "goalStatus": "ACTIVE",
+  "scope": "Saved-format compatibility, not DB schema migration; original UI acquisition and checkpoint restoration remain separate evidence",
+  "current": {
+    "status": "pass-current-restored-checkpoint-only",
+    "session": 34790,
+    "terminalExitCode": 0,
+    "revision": "workshop-20260909-37fdc4e0b49b",
+    "sourceHash": "37fdc4e0b49b2513f1210dc89315e3cf70afc2a2d4eb59634075fb76524b6877",
+    "sourceInputCount": 1074,
+    "qaHash": "fe702f2cfc1e8e68d64678f4869538ac2418190c0855bf555d2c665ab70b4d9d",
+    "sourceStable": true,
+    "qaStable": true,
+    "runtimeHelper": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-33/tools/island-e2e-helpers.mjs",
+      "sha256": "a0292a63673289acf5dab3d4d28d3cd992801b11e64c4be7f3a610be01c97169"
+    },
+    "browserClosed": true,
+    "cleanup": {
+      "ownedPids": [
+        32726,
+        32734,
+        32742,
+        32743,
+        32744,
+        32746,
+        32747,
+        32752
+      ],
+      "remainingOwnedPs": "",
+      "runnerAndBrowserPidsGone": true,
+      "contextsClosed": true,
+      "browserClosed": true,
+      "temporaryProfiles": [
+        {
+          "path": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/playwright_chromiumdev_profile-FLiFll",
+          "exists": false
+        }
+      ],
+      "externalServer": "http://127.0.0.1:5419 left running",
+      "externalServerVersionUnchanged": true
+    },
+    "humanGate": "N0",
+    "old01AndRun03": "FAIL retained; restored-checkpoint evidence only",
+    "cases": [
+      {
+        "name": "phone",
+        "status": "pass-current-restored-checkpoint-only",
+        "answers": 1,
+        "dbChecks": 26,
+        "dbChecksAllPass": true,
+        "captures": 16,
+        "imgReads": 4,
+        "exports": [
+          "phone-current-old-photo-export-0.png",
+          "phone-current-old-photo-export-1.png"
+        ],
+        "pageErrors": [],
+        "assetErrors": [],
+        "servedAssets": 83,
+        "coverage": {
+          "restore": "pass-exact-17-stores-and-original-image-thumbnail",
+          "oldArchive": "pass-actual-old-initial-memory-image-thumbnail-and-export",
+          "none": "pass-whole-state-preview-cancel-apply",
+          "v1": "pass-whole-state-preview-cancel-apply",
+          "v2": "pass-existing-rights-qualified-nonnull-and-null",
+          "samePlanReload": "pass-real-one-nonfinal-answer-and-exact-reload"
+        },
+        "memoryRead": {
+          "renderedMemoryIds": [
+            "island-growth-initial"
+          ],
+          "notExposedByTimeline": [],
+          "preservedMemoryIds": [
+            "island-growth-initial"
+          ],
+          "photoExport": "phone-current-old-photo-export-1.png",
+          "sameFullAndThumbnailBytes": true
+        },
+        "originalImageSHA": "c442541c332550ae56837c790d8be490ed9a3ba36cab0051478563ae04924ce6",
+        "thumbnailSHA": "b3e95199d248468ce23329ef4b3b43ce65de650cadf0a4322813a7e1ca397535",
+        "optionalState": {
+          "rewardGoalPresent": false,
+          "learningKeepsakesPresent": false
+        }
+      },
+      {
+        "name": "tablet",
+        "status": "pass-current-restored-checkpoint-only",
+        "answers": 1,
+        "dbChecks": 26,
+        "dbChecksAllPass": true,
+        "captures": 16,
+        "imgReads": 4,
+        "exports": [
+          "tablet-current-old-photo-export-0.png",
+          "tablet-current-old-photo-export-1.png"
+        ],
+        "pageErrors": [],
+        "assetErrors": [],
+        "servedAssets": 83,
+        "coverage": {
+          "restore": "pass-exact-17-stores-and-original-image-thumbnail",
+          "oldArchive": "pass-actual-old-initial-memory-image-thumbnail-and-export",
+          "none": "pass-whole-state-preview-cancel-apply",
+          "v1": "pass-whole-state-preview-cancel-apply",
+          "v2": "pass-existing-rights-qualified-nonnull-and-null",
+          "samePlanReload": "pass-real-one-nonfinal-answer-and-exact-reload"
+        },
+        "memoryRead": {
+          "renderedMemoryIds": [
+            "island-growth-initial"
+          ],
+          "notExposedByTimeline": [],
+          "preservedMemoryIds": [
+            "island-growth-initial"
+          ],
+          "photoExport": "tablet-current-old-photo-export-1.png",
+          "sameFullAndThumbnailBytes": true
+        },
+        "originalImageSHA": "b6e52dcbb956431b29133f6f72d110d063626f9295347d8c7594505b3cd5f2c7",
+        "thumbnailSHA": "170f307886144580dc0d959a52c4f5cc6834f5107a6cd9b362459263a486ac77",
+        "optionalState": {
+          "rewardGoalPresent": false,
+          "learningKeepsakesPresent": false
+        }
+      }
+    ],
+    "reportSha256": "ffe0e6783be74cb28991bd4e569909489373143a62971091a901a6c91cba8732",
+    "pngCount": 40
+  },
+  "manifestHash": "d10c2e7eebf33d2bf464b6b86bb650dae025b7eceee359f6e995db389d39303e",
+  "distHash": "a5d7b08e604dfb53b424be45299c49c69fb09e4f0784018dd16e1d2c3652bc8f",
+  "version": {
+    "version": "workshop-20260909-37fdc4e0b49b:89a7e8a9-3fc7-46ad-bff5-36fd91a7168f",
+    "revision": "workshop-20260909-37fdc4e0b49b",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "legacy"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v13",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "actualTarget": "http://127.0.0.1:5419",
+  "rawReport": "output/island-experience/scene-compatibility-current-02/report.json",
+  "rawSummary": "output/island-experience/scene-compatibility-current-02/summary.json",
+  "priorRuns": [
+    {
+      "rawReport": "output/island-experience/scene-compatibility-03/report.json",
+      "reportSha256": "4d301c483bbd799b430b59c8fc2e436af70bf732414833312f7dd32cee190f44",
+      "status": "failed",
+      "scope": "Actual uninterrupted 06→12→20 creation/read/apply through v2; final placement-exit QA failure retained",
+      "builds": {
+        "none": {
+          "revision": "workshop-20260908-9039d0105c7d",
+          "sourceHash": "9039d0105c7dd2e32c2a1c55e97b663b0fa4e42b5d9978a31f3ac86e3658b360",
+          "manifestHash": "a415f31a3ad6c2d8c718a8ee5ef076807d88e76eea994b892a5e88936cb3e474",
+          "distHash": "a28dd973dc8109b68358eae5d0d6660d757884ac63908623d6eb134ab733850f"
+        },
+        "v1": {
+          "revision": "workshop-20260909-3023b69183f8",
+          "sourceHash": "3023b69183f80dec0ed3b11e78a6d5f61822d21ba0364295f7ba8f4feac3aa71",
+          "manifestHash": "140362b1099ddb51c60bfa463fb9f0972efcd4f41ea44bdc5f893aa6f9fd064b",
+          "distHash": "a4615638a6705cd81fd60acbed283c694fa16a1cdc4aca35f312b04a041073cf"
+        },
+        "current": {
+          "revision": "workshop-20260909-0db80c949ca3",
+          "sourceHash": "0db80c949ca3eebc5efb410e05846c2f48da2f1d678c45aef4ab559d5b341d61",
+          "manifestHash": "0a0cb94b80b7ce47208dde955c3bfcef4cf7270a96f03fa43e37342e5a17affa",
+          "distHash": "54f8ef20527da2bff19b4877fe68157ac71c58794f19d40e140d8770624ff158"
+        }
+      },
+      "qaHash": "449fe1521d1476df97175014df9a3b592b860994c12dd878745b749ab79f4a42",
+      "sourceStable": true,
+      "qaStable": true,
+      "cases": [
+        {
+          "name": "phone",
+          "status": "failed",
+          "answerCount": 150,
+          "coverage": {
+            "oldWriters": "pass-real-06-none-and-12-v1-with-unchanged-photos-and-memories",
+            "realQualification": "pass-real-visible-observations-and-explicit-zero-price-acquisitions",
+            "noneAndV1": "pass-exact-preview-cancel-apply-and-actual-render",
+            "v2": "pass-nonnull-qualified-and-paid-selection-with-null-restoration-and-reediting",
+            "laterCollisions": "not-run",
+            "samePlanReload": "not-run"
+          },
+          "failure": "locator.tap: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'しまへ', exact: true })\u001b[22m\n",
+          "assetErrors": []
+        },
+        {
+          "name": "tablet",
+          "status": "failed",
+          "answerCount": 150,
+          "coverage": {
+            "oldWriters": "pass-real-06-none-and-12-v1-with-unchanged-photos-and-memories",
+            "realQualification": "pass-real-visible-observations-and-explicit-zero-price-acquisitions",
+            "noneAndV1": "pass-exact-preview-cancel-apply-and-actual-render",
+            "v2": "pass-nonnull-qualified-and-paid-selection-with-null-restoration-and-reediting",
+            "laterCollisions": "not-run",
+            "samePlanReload": "not-run"
+          },
+          "failure": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'しまへ', exact: true })\u001b[22m\n",
+          "assetErrors": []
+        }
+      ]
+    },
+    {
+      "rawReport": "output/island-experience/scene-compatibility-checkpoint-02/report.json",
+      "reportSha256": "9c28beab8971b418ef2063701fc7c4f6c41a7fbd55772a97620ed06d7ad429a2",
+      "status": "pass-checkpoint-remainder-only",
+      "scope": "Disclosed restoration of run03 data on20; later collisions/correction/reserved answer only",
+      "builds": {
+        "none": {
+          "revision": "workshop-20260908-9039d0105c7d",
+          "sourceHash": "9039d0105c7dd2e32c2a1c55e97b663b0fa4e42b5d9978a31f3ac86e3658b360",
+          "manifestHash": "a415f31a3ad6c2d8c718a8ee5ef076807d88e76eea994b892a5e88936cb3e474",
+          "distHash": "a28dd973dc8109b68358eae5d0d6660d757884ac63908623d6eb134ab733850f"
+        },
+        "v1": {
+          "revision": "workshop-20260909-3023b69183f8",
+          "sourceHash": "3023b69183f80dec0ed3b11e78a6d5f61822d21ba0364295f7ba8f4feac3aa71",
+          "manifestHash": "140362b1099ddb51c60bfa463fb9f0972efcd4f41ea44bdc5f893aa6f9fd064b",
+          "distHash": "a4615638a6705cd81fd60acbed283c694fa16a1cdc4aca35f312b04a041073cf"
+        },
+        "current": {
+          "revision": "workshop-20260909-0db80c949ca3",
+          "sourceHash": "0db80c949ca3eebc5efb410e05846c2f48da2f1d678c45aef4ab559d5b341d61",
+          "manifestHash": "0a0cb94b80b7ce47208dde955c3bfcef4cf7270a96f03fa43e37342e5a17affa",
+          "distHash": "54f8ef20527da2bff19b4877fe68157ac71c58794f19d40e140d8770624ff158"
+        }
+      },
+      "qaHash": "c1e98e89dbed611645b90ce3727171a39c12e3d4f0bfbef90f662b0c3f49e8d7",
+      "sourceStable": true,
+      "qaStable": true,
+      "cases": [
+        {
+          "name": "phone",
+          "status": "pass-checkpoint-remainder-only",
+          "answerCount": 1,
+          "coverage": {
+            "restore": "pass-17-native-stores-exact-original-and-thumbnail-bytes",
+            "placementExit": "pass-real-owned-placement-cancel-with-exact-native-DB",
+            "laterCollisions": "pass-two-whole-rejections-then-explicit-user-corrections",
+            "samePlanReload": "pass-real-one-answer-and-same-plan-reload"
+          },
+          "failure": null,
+          "assetErrors": []
+        },
+        {
+          "name": "tablet",
+          "status": "pass-checkpoint-remainder-only",
+          "answerCount": 1,
+          "coverage": {
+            "restore": "pass-17-native-stores-exact-original-and-thumbnail-bytes",
+            "placementExit": "pass-real-owned-placement-cancel-with-exact-native-DB",
+            "laterCollisions": "pass-two-whole-rejections-then-explicit-user-corrections",
+            "samePlanReload": "pass-real-one-answer-and-same-plan-reload"
+          },
+          "failure": null,
+          "assetErrors": []
+        }
+      ]
+    },
+    {
+      "rawReport": "output/island-experience/scene-compatibility-current-01/report.json",
+      "reportSha256": "978068608de7897e6021fbb88caa12d509c8f40d75ffc68c84dbc1a3539b4269",
+      "status": "failed",
+      "scope": "Current32 restored checkpoint; old renderer received later v2 records; tablet native response body read errors also retained",
+      "builds": {
+        "none": {
+          "revision": "workshop-20260908-9039d0105c7d",
+          "sourceHash": "9039d0105c7dd2e32c2a1c55e97b663b0fa4e42b5d9978a31f3ac86e3658b360",
+          "manifestHash": "a415f31a3ad6c2d8c718a8ee5ef076807d88e76eea994b892a5e88936cb3e474",
+          "distHash": "a28dd973dc8109b68358eae5d0d6660d757884ac63908623d6eb134ab733850f"
+        },
+        "v1": {
+          "revision": "workshop-20260909-3023b69183f8",
+          "sourceHash": "3023b69183f80dec0ed3b11e78a6d5f61822d21ba0364295f7ba8f4feac3aa71",
+          "manifestHash": "140362b1099ddb51c60bfa463fb9f0972efcd4f41ea44bdc5f893aa6f9fd064b",
+          "distHash": "a4615638a6705cd81fd60acbed283c694fa16a1cdc4aca35f312b04a041073cf"
+        },
+        "current": {
+          "revision": "workshop-20260909-b3b75c1e7153",
+          "sourceHash": "b3b75c1e71537f68f6a8f32a164697c401b4ff0eeb0113257a72ed832e091baa",
+          "manifestHash": "4323784ea1491513f88d170d60cdbe896084d8280e8df6fd20d74f728974444e",
+          "distHash": "95385c18e0a93168418315c013a65fe6be8f4f66b908b0c547a4710ddfcfc8ae"
+        }
+      },
+      "qaHash": "9c67944bd6f9cb5f9c3f15cbfee854ae294e5545e626f4dc2c67b45d3a2b4bfc",
+      "sourceStable": true,
+      "qaStable": true,
+      "cases": [
+        {
+          "name": "phone",
+          "status": "failed",
+          "answerCount": 0,
+          "coverage": {
+            "restore": "pass-exact-17-stores-and-original-image-thumbnail",
+            "oldArchive": "not-run",
+            "none": "not-run",
+            "v1": "not-run",
+            "v2": "not-run",
+            "samePlanReload": "not-run"
+          },
+          "failure": "Only genuinely old records are tested by this branch",
+          "assetErrors": []
+        },
+        {
+          "name": "tablet",
+          "status": "failed",
+          "answerCount": 0,
+          "coverage": {
+            "restore": "pass-exact-17-stores-and-original-image-thumbnail",
+            "oldArchive": "not-run",
+            "none": "not-run",
+            "v1": "not-run",
+            "v2": "not-run",
+            "samePlanReload": "not-run"
+          },
+          "failure": "Only genuinely old records are tested by this branch",
+          "assetErrors": [
+            "Error: response.body: Protocol error (Network.getResponseBody): No resource with given identifier found",
+            "Error: response.body: Protocol error (Network.getResponseBody): No resource with given identifier found"
+          ]
+        }
+      ]
+    }
+  ],
+  "selectedScreens": [
+    {
+      "file": "screens/phone-old-memory.png",
+      "source": "output/island-experience/scene-compatibility-current-02/phone-current-002-old-memory-1.png",
+      "sha256": "308146a17cf55cb3fe9e1b37e1868023270043ff838441c7f9eb7d35eed53652",
+      "viewport": "phone",
+      "caption": "旧06/12由来の初期memoryを現行33で閲覧。現在の名前/身支度を後付けしない。",
+      "unmodified": true,
+      "appRevision": "workshop-20260909-37fdc4e0b49b",
+      "candidate": "mystic-island-shore-garden-v13",
+      "provenance": "actual current33 UI after disclosed exact restoration of originally genuine 06/12/20 saved records"
+    },
+    {
+      "file": "screens/phone-old-photo.png",
+      "source": "output/island-experience/scene-compatibility-current-02/phone-current-003-old-photo-current-read-export.png",
+      "sha256": "358661c8114fcb367522b2937da99e21be6241545d75ae468ae21a7f63a9b24d",
+      "viewport": "phone",
+      "caption": "旧06で撮った元PNGを33の実galleryで閲覧・出力。外側の蝶印はPNGへ混入しない。",
+      "unmodified": true,
+      "appRevision": "workshop-20260909-37fdc4e0b49b",
+      "candidate": "mystic-island-shore-garden-v13",
+      "provenance": "actual current33 UI after disclosed exact restoration of originally genuine 06/12/20 saved records"
+    },
+    {
+      "file": "screens/tablet-v2-applied.png",
+      "source": "output/island-experience/scene-compatibility-current-02/tablet-current-012-v2-qualified-and-paid-restored-with-fox-null.png",
+      "sha256": "004484c8a0083c5ed2c59136a1db1245469c8c335caf901b18377ecefbd84194",
+      "viewport": "tablet",
+      "caption": "資格品/取得済み衣装を含む保存v2を適用。保存されたfoxのnullも復元。",
+      "unmodified": true,
+      "appRevision": "workshop-20260909-37fdc4e0b49b",
+      "candidate": "mystic-island-shore-garden-v13",
+      "provenance": "actual current33 UI after disclosed exact restoration of originally genuine 06/12/20 saved records"
+    },
+    {
+      "file": "screens/phone-same-plan-answer.png",
+      "source": "output/island-experience/scene-compatibility-current-02/phone-current-015-same-reserved-actual-answer.png",
+      "sha256": "981c3adcbe03fa0744c41879b01cbd5c6c8110f6499fbe4e6a75be8487815d62",
+      "viewport": "phone",
+      "caption": "同じ学習予約の非最終1問を実入力。150問の再獲得ではない。",
+      "unmodified": true,
+      "appRevision": "workshop-20260909-37fdc4e0b49b",
+      "candidate": "mystic-island-shore-garden-v13",
+      "provenance": "actual current33 UI after disclosed exact restoration of originally genuine 06/12/20 saved records"
+    }
+  ],
+  "limits": [
+    "Original continuous run03 remains whole FAIL; restored runs do not replace it",
+    "Current run restores exact17stores/rawPNG from real prior UI data; native key-generator internals and transient actor poses are not restored",
+    "Actual old memory rendering is initial1record; full retained growth archive has3records plus1sharedmemory, but no all-history rendering claim",
+    "Original06/12 did not produce a v1 growth-memory record; no synthetic v1 memory is inserted",
+    "rewardGoal and learningKeepsakes absent in source checkpoint; absence preservation is not a nonempty-state proof",
+    "SW blocked; no new actualSW/PWA/offline/audio/fault/collision/performance run",
+    "Visual appeal/art parity and participant comprehension remain separate; N0"
+  ]
+}

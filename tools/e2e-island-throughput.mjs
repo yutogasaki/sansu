@@ -413,7 +413,7 @@ function summarize() {
         phoneAndTablet: layouts.length === 2,
         noBrowserErrors: report.runs.every(run => run.errors.length === 0),
         oneRenderedBuildAndCandidate: report.runtime.revisions.length === 1 && report.runtime.versions.length === 1
-            && report.runtime.candidates.length === 1 && report.runtime.candidates[0] === 'mystic-island-shore-garden-v8'
+            && report.runtime.candidates.length === 1 && report.runtime.candidates[0] === 'mystic-island-shore-garden-v13'
             && report.runtime.learningCandidates.length === 1 && report.runtime.learningCandidates[0] === 'mystic-island-learning-v2',
         sourceFilesUnchangedDuringBenchmark: report.sourceSnapshotStart.hash === report.sourceSnapshotEnd.hash,
     };

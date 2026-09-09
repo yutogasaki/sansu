@@ -61,3 +61,29 @@ runtime candidateは `mystic-island-shore-garden-v7`、固定24は `workshop-202
 葉の輪郭と谷の陰影が読める局所改善として採用する。source Aの素材感・構図全体との差、初期phone画面で上部操作が樹冠に重なる点は残る。視覚全体parity HOLD・独立した理解/動機の観察 N=0・Full Goal Activeを維持する。
 
 mainの保存地点は樹冠 `2ef39b7` と有限表現QA `7473e7b`。[Verify Core](https://github.com/yutogasaki/sansu/actions/runs/34294942951)・[Docs Check](https://github.com/yutogasaki/sansu/actions/runs/34294942954) は同じ `7473e7b` で合格。これは上記の局所改善の保存地点であり、Full Goalは継続する。
+
+## 芝面の試作履歴
+
+固定28のphoneでは、住民の足元から手前の岸までのミント色が一様で、広場が硬い板のように見える。次の局所prototype `island-grass-surface-v1` は、既定moon-gardenの地面上面（`legacy-v1:moon-garden:ground`）へ、静止した世界座標の穏やかな濃淡と細かな短い斑を加える。既存の色・頂点色・粗さ・影を保ち、`parts-v1`の明示部位、mapを持つ面や他テーマへ適用しない。追加texture・時間uniform・毎frameのCPU処理を使わず、全geometry、歩行床y=0、保存位置、岸と海、石道、住民、カメラを維持する。
+
+固定28を前として同じphone/tablet画角で比較し、住民周辺と手前の広場で芝の細かさが読めること、全景では大柄なノイズや反復タイルに見えないこと、足先と石道を邪魔しないことを実画像で判断する。帯状の砂浜と岩の薄さはこの試作の残差として保持する。実WebGL描画・局所的な見た目の採否は次版で確認し、source A全面とのparity、子どもの理解と動機N=0、Full Goalの未完了を技術検査だけで変更しない。
+
+第一試作・固定29は見た目HOLD。固定28との同camera・両幅・全景/近景の4比較で描画152回と全store/source保持は通過したが、芝はほぼ無変化に見えた。保存PNGの地面色に近い色域では、各RGB成分の平均絶対差が0.94〜0.99/255しかない。実fixtureは既定styleでguard対象だった。保存カメラから算出した平面の細模様fwidthは1.88〜5.78で、消去閾値1.2を全構図で越え、22×48の細模様が消えて弱い大きな濃淡だけ残っていた。これは描画成功と素材の魅力を分ける不採用記録として保持する。原証拠は `output/playwright/island-renewal/grass-review-29-01/report.json` と同フォルダの前後PNG。
+
+第二試作 `island-grass-surface-v2` は世界座標の周波数を4×7へ下げる。ちらつき防止の閾値0.45〜1.2とbroad振幅0.035を維持し、fine振幅を0.10にする。実phone投影でも細模様が残ることを幾何計算で確認したうえで、繊維状の柔らかさ、足と道の可読性を次の実画像で判断する。汚れ・大柄なノイズ・反復タイルに見える場合はHOLDを維持し、この数値だけで採用しない。
+
+第二試作・固定30も見た目HOLD。実phone/tabletの近景では横長の色の斑が流れ、芝の繊維より水面に見える。原証拠 `output/playwright/island-renewal/grass-review-30-01` は保持し、色noiseの係数調整を終了する。
+
+第三試作 `island-grass-surface-v3` はalbedoへの濃淡shaderを廃止する。既定ground専用に小さなmipmap付きDataTextureを一度生成し、不規則な向きの短い葉の丸い起伏をbumpMapとして実照明へ反映する。base color・頂点色・roughness・geometry・歩行床は維持する。IslandPartMaterialsがtextureと原材質を所有し、3土地のcapは原材質のcloneを使う。mapを持つ本人の部位、`parts-v1`、他テーマ、岸・道・家は変えない。UVはbumpMapでも生成・batch後に保持し、取得品への切替/退出で共有textureを一度だけ解放する。時間uniformや毎frameの更新を作らず、細い葉の柔らかさが読めるか、格子状の繰返し・水面・汚れに見えないかを次版の実画像で判定する。
+
+第三試作・固定31もほぼ平滑で見た目HOLD（原証拠 `output/playwright/island-renewal/grass-review-31-01`）。128pxのheightタイルをworld1.15幅に詰めた結果、保存カメラで各葉を独立に投影した長辺中央値はphone全景1.06px、近景1.66pxだった。第四試作 `island-grass-surface-v4` は既存UVを変えず、芝textureのrepeatだけを0.25にし、world4.6幅へ広げる。同じ投影で長辺中央値4.25px/6.64px、短辺中央値1.26px/1.96pxを見込む。全景の最小2枚は長辺約1.97pxであり、全葉2px保証とは呼ばない。これは形の投影寸法で、照明下で実際に読める面積の証明ではない。bumpの方法・高さ・色・geometry・他textureを保持し、次の実画像で柔らかい草に見えるか判断する。
+
+第四試作・固定32もほぼ無変化で見た目HOLD。原画像 `output/playwright/island-renewal/grass-review-32-01` の地面近似色域は固定28から平均RGB差0.043〜0.050/255、v3からも0.049〜0.072/255で、全画像の最大差は1/255に留まる。受動診断 `output/playwright/island-renewal/grass-gpu-32-02/report.json` は実drawArrays 960頂点でUSE_BUMPMAP、bumpScale約0.035、transformの対角0.25/0.25/1、128² R8 texture（16384bytes、最小31/最大197/平均50.0047）のbindingを確認した。原診断01の上限zoom操作によるFAILは別に保持する。第五試作 `island-grass-surface-v5` は、この実GPU入力とThreeのscreen微分に対する応答量の不足を根拠にbumpScaleだけ1.2へ変更する。world高さの追加ではなく法線応答の修正であり、repeat0.25・height bytes・base color・roughness・geometry・全物理境界は同じ。色noiseの調整へ戻らず、次の固定33の実画像で柔らかい短葉として読めるか採否する。これは試作で、公開品質/source A全面parity/人N=0の判定は進めない。
+
+## 芝面の局所改善・固定33
+
+`island-grass-surface-v5`、全体candidate `mystic-island-shore-garden-v13` を採用。固定33 `workshop-20260909-37fdc4e0b49b` のphone全景/近景・tablet近景をsource Aと実画像で比較し、小葉の丸い起伏が読め、足元と石道を妨げない局所素材改善と判断した。repeat0.25とheight bytesを維持し、実GPU入力が届いていた固定32からbumpScaleだけ1.2にした。これは法線応答で、world高さ・geometry・歩行床を追加したものではない。
+
+[前後8画像と監査](grass-v13/README.md)・[集計と帰属](grass-v13/verification.json)に固定28→33、両flag、revision/source hash/QA hashを保存した。phone 390×844 / tablet 768×1024の明示成熟3土地fixtureで4行PASS、対応camera一致、全capture152 draw、全store不変、error 0、source/QA保持、browser終了。実獲得・通常planner・子どもの体験・正式性能の証拠ではない。固定33の295 files / 3264 testsと型/build/assetsは親担当の検査でPASS。lint/docsは後続確認待ちで、core全体PASSは未宣言。既存materialSignatureはbumpMap/scale/repeatを含まず、bump保持の証明には使わない。GPU32の限定診断と33の実画像・sourceを区別する。固定33の正式80run・通常smokeは新たに予定しており未実行で、旧26の合格を転用しない。
+
+屋根の黒い継ぎ目、一様な砂帯/崖、source Aとの素材・形・構図全体の差は残る。原29〜32のHOLD、GPU01のQA FAIL、GPU02の材質経路の限定PASSを維持し、source A全面parity HOLD・独立した理解/動機の観察 N=0・Full Goal未完了を変えない。

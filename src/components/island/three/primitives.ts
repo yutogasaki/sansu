@@ -98,7 +98,7 @@ export function batch(group: THREE.Group, painted?: THREE.MeshStandardMaterial) 
         if (!(object instanceof THREE.Mesh) || Array.isArray(object.material)) return;
         const geometry = object.geometry.clone().applyMatrix4(worldInverse.clone().multiply(object.matrixWorld));
         // Solid pieces need no UVs. Authored procedural paint keeps its coordinates when batched.
-        const mapped = object.material instanceof THREE.MeshStandardMaterial && object.material.map;
+        const mapped = object.material instanceof THREE.MeshStandardMaterial && (object.material.map || object.material.bumpMap);
         if (!mapped) geometry.deleteAttribute('uv');
         else if (!geometry.attributes.uv) {
             geometry.computeBoundingBox();
@@ -114,7 +114,7 @@ export function batch(group: THREE.Group, painted?: THREE.MeshStandardMaterial) 
         if (flat !== geometry) geometry.dispose();
         let material = object.material;
         if (painted && material instanceof THREE.MeshStandardMaterial && material.emissive.getHex() === 0
-            && !material.map && material.roughness === painted.roughness && material.metalness === painted.metalness) {
+            && !material.map && !material.bumpMap && material.roughness === painted.roughness && material.metalness === painted.metalness) {
             // Solid color multiplication is identical in the shader. Bake the original
             // linear material color into vertices so one item needs one solid draw call.
             // Emissive bulbs remain separate to preserve their actual light response.
