@@ -126,7 +126,7 @@ body.app-mode-island-shell .app-container {
     z-index: 50;
     display: grid;
     flex-shrink: 0;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     align-items: center;
     gap: 10px;
     width: 100%;
@@ -240,10 +240,10 @@ body.app-mode-island-shell .app-container { max-width: 1120px; }
 .island-shell-mark { width: 40px; height: 40px; padding: 2px; border-radius: 13px; box-shadow: none; }
 .island-shell-mark img { border-radius: 10px; }
 .island-shell-eyebrow { font-size: 10px; }
-.island-shell-nav { grid-template-columns: 1fr minmax(96px, 140px) 1fr; gap: 12px; }
+.island-shell-nav { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
 .island-shell-tab { position: relative; font-size: 12px; }
 .island-shell-tab[aria-current=page] { background: transparent; }
 .island-shell-tab[aria-current=page]::before { content: ''; position: absolute; width: 24px; height: 3px; top: -5px; border-radius: 3px; background: var(--island-shell-blue); }
-.island-shell-tab--learn { flex-direction: row; gap: 6px; box-shadow: none; border: 0; border-radius: 14px; background: #e4ebfa; color: var(--island-shell-blue); font-size: 13px; }
+.island-shell-tab--learn { flex-direction: column; gap: 1px; box-shadow: none; border: 0; border-radius: 14px; background: #e4ebfa; color: var(--island-shell-blue); font-size: 13px; }
 .island-shell-tab--learn:active { transform: none; box-shadow: none; background: #d7e3fa; }
 .island-shell .utility-layout-content { max-width: 980px; }

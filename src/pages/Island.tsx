@@ -142,6 +142,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const [portraitResident, setPortraitResident] = useState<'otter' | 'rabbit' | 'fox'>();
     const [keepsakeFocus, setKeepsakeFocus] = useState<IslandLearningKeepsakeId>();
     const [houseSection, setHouseSection] = useState<'home' | 'keepsakes' | 'notices'>('home');
+    useLayoutEffect(() => { setHouseSection('home'); setKeepsakeFocus(undefined); }, [navigation?.houseEntry]);
     const [returnToHouse, setReturnToHouse] = useState(false);
     const [expressionResident, setExpressionResident] = useState<IslandResidentId>();
     const [expressionEntryItem, setExpressionEntryItem] = useState<IslandExpressionItemId>('raincoat');
@@ -579,7 +580,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 <button className="island-text-button island-learning-pause" disabled={busy || preparingLearning} onClick={() => {
                     if (navigation) navigation.back(); else home();
                 }}><X size={20} />とじる</button></div>
-                : navigation?.focus ? null : <button className="island-icon-button" aria-label="せってい" disabled={busy} onClick={() => navigation ? navigation.open('/settings') : navigate('/settings')}><Settings2 size={20} /></button>}</div>
+                : navigation ? null : <button className="island-icon-button" aria-label="せってい" disabled={busy} onClick={() => navigate('/settings')}><Settings2 size={20} /></button>}</div>
         </header>}
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}

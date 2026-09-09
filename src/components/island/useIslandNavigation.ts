@@ -3,7 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { islandFocusScreen, islandLearningRequested, islandParentUrl, islandScreenFromSearch, islandViewUrl, withoutIslandLearning, type IslandScreen } from '../../domain/island/navigation';
 import { warmUpTTS } from '../../utils/tts';
 
-type NavigationState = { islandParent?: { href: string; key: string }; islandTab?: 'island' | 'stats' };
+export type IslandTab = 'island' | 'house' | 'stats' | 'settings';
+type NavigationState = { islandParent?: { href: string; key: string }; islandTab?: IslandTab };
+export const islandTabUrl = (tab: IslandTab) => tab === 'house' ? islandViewUrl('keepsakes') : `/${tab}`;
 
 /** One live Island instance serves both its ordinary pages and focused learning.
  * Learning adds a query parameter to the current route, so its source page stays mounted. */
@@ -21,7 +23,11 @@ export function useIslandNavigationState(enabled: boolean) {
     const [learningBlocked, setLearningBlocked] = useState(false);
     const [visited, setVisited] = useState(active);
     const state = location.state as NavigationState | null;
-    const tab = isIsland ? 'island' : location.pathname === '/stats' ? 'stats' : state?.islandTab ?? 'island';
+    const tab: IslandTab = isIsland
+        ? view === 'keepsakes' ? 'house' : view === 'home' ? 'island' : state?.islandTab ?? 'island'
+        : location.pathname === '/stats' ? 'stats'
+        : /^\/(settings(?:\/|$)|parents$|dev$)/.test(location.pathname) ? 'settings' : state?.islandTab ?? 'island';
+    const [houseEntry, setHouseEntry] = useState(0);
     const photoId = isIsland ? query.get('photo') : null;
     const focus = active && (learning || islandFocusScreen(view, photoId));
     const href = location.pathname + location.search;
@@ -74,19 +80,20 @@ export function useIslandNavigationState(enabled: boolean) {
         if (replace) navigate('/island', { replace: true, state: { islandTab: 'island' } });
         else if (islandViewUrl(screen) !== href) open(islandViewUrl(screen));
     }, [startLearning, navigate, href, open]);
-    const selectTab = useCallback((next: 'island' | 'stats') => {
+    const selectTab = useCallback((next: IslandTab) => {
         if (blocked) return;
-        const target = next === 'island' ? '/island' : '/stats';
+        const target = islandTabUrl(next);
+        if (next === 'house') setHouseEntry(value => value + 1);
         scrollPositions.current.delete(target);
         scrollSurfaces().forEach(element => { element.scrollTop = 0; element.scrollLeft = 0; });
         navigate(target, { state: { islandTab: next } });
-    }, [blocked, navigate]);
+    }, [blocked, navigate, setHouseEntry]);
 
-    return useMemo(() => ({ enabled, active, isIsland, learning, view, focus, tab, photoId, blocked, learningBlocked,
+    return useMemo(() => ({ enabled, active, isIsland, learning, view, focus, tab, houseEntry, photoId, blocked, learningBlocked,
         mounted: enabled && (visited || active), targetProfile,
         open, back, startLearning, setView, selectTab, setBlocked, setLearningBlocked,
         ordinaryHref: withoutIslandLearning(location.pathname, location.search),
-    }), [enabled, active, isIsland, learning, view, focus, tab, photoId, blocked, learningBlocked, visited, targetProfile, open, back, startLearning, setView, selectTab, setBlocked, setLearningBlocked, location.pathname, location.search]);
+    }), [enabled, active, isIsland, learning, view, focus, tab, houseEntry, photoId, blocked, learningBlocked, visited, targetProfile, open, back, startLearning, setView, selectTab, setBlocked, setLearningBlocked, location.pathname, location.search]);
 }
 
 export type IslandNavigation = ReturnType<typeof useIslandNavigationState>;

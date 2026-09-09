@@ -10,7 +10,7 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 
 | Command | Purpose |
 |---|---|
-| `npm run e2e:island-navigation` | 島有効のDEV/productionを `SANSU_ISLAND_BASE_URL` で指定。phone/tabletでトップ訪問、3項目ナビ、設定詳細の保持、回答下書き・7store不変、履歴の戻る/進む、島再読込で自動開始しないこと、配置取消/保存、実撮影/写真拡大、直リンクfallback、学習後の記録更新を検査。出力先は `SANSU_NAVIGATION_OUTPUT`。nativeプロフィールfixtureのみを作り、学習予約・回答・写真は実UIで行う |
+| `npm run e2e:island-navigation` | 島有効のDEV/productionを `SANSU_ISLAND_BASE_URL` で指定。phone/tabletでトップ訪問、5項目ナビ、設定詳細の保持、回答下書き・7store不変、履歴の戻る/進む、島再読込で自動開始しないこと、配置取消/保存、実撮影/写真拡大、直リンクfallback、学習後の記録更新を検査。出力先は `SANSU_NAVIGATION_OUTPUT`。nativeプロフィールfixtureのみを作り、学習予約・回答・写真は実UIで行う |
 | `npm run e2e:launch` | `SANSU_LAUNCH_BASE_URL` と `SANSU_LAUNCH_MODE=island/park/classic` を指定。未登録・登録済みのトップ、実探索のactive checkpointを残したトップ/再読込/初回設定再訪、不明URLと残留query、明示的な探索再開を検査する。出力先は `SANSU_LAUNCH_OUTPUT` |
 | `node tools/e2e-island-keepsakes.mjs` | 空の学習履歴を持つnativeプロフィールfixtureから実初回3問/累計5区間を回答し、賞状/最初のトロフィーの無料展示・収納・一括展示、家内overview/棚/掲示板の往復と実通知件数、近景/全体、実写真PNG、再読込、同予約の非最終回答による全islands保持をphone/tabletで確認する。`SANSU_ISLAND_PRODUCTION_URL`、新しい `SANSU_ISLAND_KEEPSAKES_OUTPUT`、固定 `SANSU_ISLAND_BUILD_SOURCE` が必須。native全storeとcanonical receipt、app/QA closureの前後hash、visibleな実frameとcameraを保存する。16品盛景fixture、家の直接tap/実おくりもの通知の全入口、故障/PWA/実参加者は別検証。`--plan`は準備のみで実画面合格ではない |
 | `node tools/e2e-island-reward-goals.mjs` | 固定productionの両幅で、無料の横断目標選択/解除/再表示、未資格0ほしの条件、通常学習で35ほし分を得た3カテゴリの実取得時解除、試用保持、同予約への1回答/reloadを確認。固定manifest・production URL・新しい `SANSU_ISLAND_REWARD_GOALS_OUTPUT` が必須。appと明示QA overlayの前後hash、native全table差分を保存する。写真は空store保持、音/故障/PWA/実参加者は別範囲。`--plan`はブラウザ未起動 |

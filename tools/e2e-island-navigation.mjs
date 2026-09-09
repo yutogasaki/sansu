@@ -8,7 +8,7 @@ const base = process.env.SANSU_ISLAND_BASE_URL || 'http://127.0.0.1:5219';
 const out = process.env.SANSU_NAVIGATION_OUTPUT || 'output/playwright/island-navigation';
 await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch();
-const report = { target: base, navigationCandidate: 'island-navigation-v1', fixture: 'Native profile only; UI reserves and answers learning, moves starter furniture, and captures a real photo.', captures: [], scenarios: [], pass: false };
+const report = { target: base, navigationCandidate: 'island-navigation-five-tabs-v2', fixture: 'Native profile only; UI reserves and answers learning, moves starter furniture, and captures a real photo.', captures: [], scenarios: [], pass: false };
 try {
     for (const viewport of [{ width: 390, height: 844 }, { width: 768, height: 1024 }]) {
         const context = await browser.newContext({ viewport, reducedMotion: 'reduce' });
@@ -31,7 +31,7 @@ try {
         const ordinary = async expected => {
             await nav.waitFor();
             assert.equal(hash(), expected);
-            assert.deepEqual(await nav.getByRole('button').allTextContents(), ['しま', 'まなぶ', 'きろく']);
+            assert.deepEqual(await nav.getByRole('button').allTextContents(), ['しま', 'いえ', 'まなぶ', 'きろく', '設定']);
         };
         const focus = async mode => {
             await waitMode(page, mode);
@@ -67,7 +67,22 @@ try {
                 assert.equal((await readNative(page, id)).plan, undefined, `${entry} cannot start questions`);
             }
             await capture('home');
-            await button(page, 'せってい').click();
+            await nav.getByRole('button', { name: 'いえ', exact: true }).click();
+            await waitMode(page, 'keepsakes'); await ordinary('#/island?view=keepsakes');
+            assert.equal(await nav.locator('[aria-current="page"]').innerText(), 'いえ');
+            await capture('house');
+            await page.locator('[data-keepsake-action="album"]').click();
+            await waitMode(page, 'album'); await ordinary('#/island?view=album');
+            assert.equal(await nav.locator('[aria-current="page"]').innerText(), 'いえ');
+            await learn.click(); await focus('learning'); await waitReady(page);
+            await button(page, 'とじる').click(); await waitMode(page, 'album');
+            await ordinary('#/island?view=album');
+            await nav.getByRole('button', { name: 'いえ', exact: true }).click();
+            await waitMode(page, 'keepsakes');
+            await page.locator('[data-keepsake-action="album"]').waitFor();
+            await nav.getByRole('button', { name: 'しま', exact: true }).click();
+            await waitMode(page, 'home');
+            await nav.getByRole('button', { name: '設定', exact: true }).click();
             await page.getByRole('button', { name: /^学習 / }).click();
             await ordinary('#/settings?section=learning');
             await capture('settings-detail');

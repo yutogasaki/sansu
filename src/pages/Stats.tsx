@@ -350,9 +350,7 @@ export const Stats: React.FC = () => {
     const vocabRecent = vocabLevelState?.recentAnswersNonReview || [];
     const mathRecentCorrect = mathRecent.filter(Boolean).length;
     const vocabRecentCorrect = vocabRecent.filter(Boolean).length;
-    const closeAction = navigation ? <Button variant="secondary" size="sm" aria-label="せってい" onClick={() => navigation.open('/settings')}>
-        <Icons.Settings className="w-5 h-5" />
-    </Button> : (
+    const closeAction = navigation ? undefined : (
         <Button variant="secondary" size="sm" onClick={() => navigate("/")}>
             <Icons.Close className="w-6 h-6" />
         </Button>

@@ -4,13 +4,14 @@ import { Icons } from "./icons";
 import { warmUpTTS } from "../utils/tts";
 import { islandEnabled } from "../domain/island/feature";
 import { IslandMark } from "./island/IslandMark";
-import { useIslandNavigation } from './island/useIslandNavigation';
+import { islandTabUrl, type IslandTab, useIslandNavigation } from './island/useIslandNavigation';
 
 type TabItem = {
     to: string;
     label: string;
     icon: React.FC<React.SVGProps<SVGSVGElement> & { strokeWidth?: number }>;
     activePaths?: string[];
+    tab?: IslandTab;
 };
 
 export const Footer: React.FC = () => {
@@ -22,15 +23,17 @@ export const Footer: React.FC = () => {
 
     if (islandHome) {
         const tabs: TabItem[] = [
-            { to: "/island", icon: IslandMark, label: "しま", activePaths: ["/", "/island"] },
+            { to: "/island", icon: IslandMark, label: "しま", tab: "island" },
+            { to: islandTabUrl("house"), icon: Icons.Home, label: "いえ", tab: "house" },
             { to: "/study", icon: Icons.Study, label: "まなぶ" },
-            { to: "/stats", icon: Icons.Stats, label: "きろく" },
+            { to: "/stats", icon: Icons.Stats, label: "きろく", tab: "stats" },
+            { to: "/settings", icon: Icons.Settings, label: "設定", tab: "settings" },
         ];
 
         return (
             <nav className="island-shell-nav" aria-label="メインメニュー">
                 {tabs.map(item => {
-                    const active = navigation ? item.to === `/${navigation.tab}` : currentPath === item.to;
+                    const active = navigation ? item.tab === navigation.tab : currentPath === item.to;
                     const primary = item.to === "/study";
                     return (
                         <button
@@ -43,7 +46,7 @@ export const Footer: React.FC = () => {
                             onClick={() => {
                                 if (navigation) {
                                     if (primary) navigation.startLearning();
-                                    else navigation.selectTab(item.to === '/island' ? 'island' : 'stats');
+                                    else if (item.tab) navigation.selectTab(item.tab);
                                 } else { if (primary) warmUpTTS(); navigate(item.to); }
                             }}
                         >
