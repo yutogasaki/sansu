@@ -46,7 +46,7 @@ describe('explicit first learning setup', () => {
             const d = database();
             const chosen = { ...selection, name: 'あおい', grade, mathRange };
             const result = await completeOnboardingProfile(chosen, 'new-profile', intent, d);
-            expect(result.profile).toMatchObject({ grade, mathStartLevel: start, mathMainLevel: main,
+            expect(result.profile).toMatchObject({ islandTutorialVersion: 1, grade, mathStartLevel: start, mathMainLevel: main,
                 mathMaxUnlocked: main, todayCount: 0, recentAttempts: [] });
             const rows = await d.memoryMath.toArray();
             expect(rows.map(row => row.id).sort()).toEqual([...getAvailableSkills(start)].sort());

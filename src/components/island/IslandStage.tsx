@@ -11,7 +11,7 @@ const DEFAULT_CAPTION = 'カワウソと ウサギが くらす しま';
 const deliveredState = (props: IslandStageProps, sharedId?: string): IslandStageProps => ({ ...props,
     sharedRequest: props.sharedRequest?.command.type === 'stop' || props.sharedRequest?.id === sharedId ? props.sharedRequest : undefined });
 
-export function IslandStage(props: IslandStageProps & { compactCameraControls?: boolean; milestoneNotice?: ReactNode; expressionCaptionKey?: string }) {
+export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready: boolean) => void; onCameraPractice?: () => void; compactCameraControls?: boolean; milestoneNotice?: ReactNode; expressionCaptionKey?: string }) {
     const host = useRef<HTMLDivElement>(null);
     const runtime = useRef<IslandScene | null>(null);
     const current = useRef(props);
@@ -27,6 +27,8 @@ export function IslandStage(props: IslandStageProps & { compactCameraControls?: 
     const [attempt, setAttempt] = useState(0);
     const [cameraView, setCameraView] = useState<IslandCameraView>(initialIslandCameraView);
     const cameraEnabled = canControlIslandCamera(props);
+    const onTutorialReady = props.onTutorialReady;
+    useEffect(() => { onTutorialReady?.(ready && !failed); return () => onTutorialReady?.(false); }, [ready, failed, onTutorialReady]);
     const workshopActive = Boolean(props.workshop?.active && !failed);
     const sharedActive = Boolean(props.shared?.active && !failed);
     const { sharedRequest, onSharedFeedback } = props;
@@ -137,7 +139,7 @@ export function IslandStage(props: IslandStageProps & { compactCameraControls?: 
                     sharedFeedback: value => current.current.onSharedFeedback?.(value),
                     caption: value => { if (!disposed && !failedThisAttempt) setCaption({ text: value, context: current.current.expressionCaptionKey }); },
                     failure: fail,
-                    cameraView: setCameraView,
+                    cameraView: view => { setCameraView(view); if (view.manual) current.current.onCameraPractice?.(); },
                     ready: () => {
                         if (disposed || failedThisAttempt) return;
                         setReady(true);

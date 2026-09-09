@@ -1,4 +1,4 @@
-export const ISLAND_SCREENS = ['home', 'learning', 'reward', 'inventory', 'placement', 'play', 'growth', 'album', 'customization', 'guide', 'experience', 'expression', 'showcase', 'workshop', 'camera', 'photos', 'shared', 'furniture', 'keepsakes'] as const;
+export const ISLAND_SCREENS = ['home', 'help', 'learning', 'reward', 'inventory', 'placement', 'play', 'growth', 'album', 'customization', 'guide', 'experience', 'expression', 'showcase', 'workshop', 'camera', 'photos', 'shared', 'furniture', 'keepsakes'] as const;
 export type IslandScreen = typeof ISLAND_SCREENS[number];
 
 export function islandScreenFromSearch(search: string): IslandScreen {

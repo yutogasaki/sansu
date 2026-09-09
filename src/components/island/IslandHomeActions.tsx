@@ -4,6 +4,7 @@ import './IslandHomeActions.css';
 
 export interface IslandHomeActionsProps {
     active?: boolean;
+    onHelp?: () => void;
     children?: ReactNode;
     onOpenChange?: (open: boolean) => void;
     busy: boolean;
@@ -56,7 +57,7 @@ type IslandHomeMenuContentsProps = Omit<IslandHomeActionsProps, 'active' | 'onOp
 
 /** The action catalog is independent of the native dialog's focus lifecycle. */
 export function IslandHomeMenuContents({ busy, comparisonDisabled, workshopUnlocked, pendingRewards,
-    onPlay, onGuide, onWorkshop, onInventory, onCustomization, onExperience, onRewards, onAlbum, onShared, onKeepsakes, onOtherGames, children, onChoose }: IslandHomeMenuContentsProps) {
+    onPlay, onGuide, onWorkshop, onInventory, onCustomization, onExperience, onRewards, onAlbum, onShared, onKeepsakes, onOtherGames, onHelp, children, onChoose }: IslandHomeMenuContentsProps) {
     const actions = [
         { id: 'play', label: 'あそぶ', name: 'どうぶつと あそぶ', Icon: PawPrint, onClick: onPlay, disabled: busy },
         { id: 'guide', label: 'みつける', name: 'みつける', Icon: Search, onClick: onGuide, disabled: comparisonDisabled },
@@ -94,6 +95,7 @@ export function IslandHomeMenuContents({ busy, comparisonDisabled, workshopUnloc
                 <PackageOpen size={19} aria-hidden="true" />かざりと きおく
             </button>}
         </div>
+        {onHelp && <button className="island-secondary island-home-record" disabled={comparisonDisabled} onClick={() => onChoose(onHelp)} data-home-action="help"><BookOpen size={19} aria-hidden="true" />あそびかた</button>}
         {children}
     </div>;
 }

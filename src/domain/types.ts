@@ -467,6 +467,8 @@ export interface AppData {
 }
 
 export interface UserProfile {
+    /** New profiles opt into contextual help; absent preserves existing users. */
+    islandTutorialVersion?: 1;
     id: string;
     name: string;
     grade: GradeLevel | number; // Allow number for flexibility

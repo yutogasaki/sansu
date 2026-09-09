@@ -1,0 +1,17 @@
+.island-tutorial { display:flex; align-items:center; flex-wrap:wrap; gap:8px; padding:10px 12px; margin:8px 0; background:var(--pokomoko-paper); color:var(--pokomoko-ink); border:2px solid var(--pokomoko-blue); border-radius:16px; flex-shrink:0; }
+.island-tutorial > svg { flex-shrink:0; }
+.island-tutorial p { flex:1 1 150px; margin:0; font-size:14px; line-height:1.6; }
+.island-tutorial button, .island-help button { min-width:44px; min-height:44px; }
+.island-help { overflow-y:auto; }
+.island-help h2 { display:flex; align-items:center; gap:8px; }
+.island-help-topics { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.island-help-topics button { justify-content:flex-start; text-align:left; white-space:normal; gap:8px; }
+.island-help-topics button[aria-pressed=true] { outline:2px solid var(--pokomoko-blue); outline-offset:1px; }
+.island-help-detail { margin-top:20px; padding:16px; border-radius:16px; background:var(--pokomoko-paper); }
+.island-help-detail p { line-height:1.8; }
+@media (min-width:700px) { .island-help-topics { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+
+.island-page[data-tutorial-topic=view] .island-camera,
+.island-page[data-tutorial-topic=view] .island-view-tools > summary,
+.island-page[data-tutorial-topic=play] .island-play-choices,
+.island-page[data-tutorial-topic=customization] .island-customization-rails { outline:2px solid var(--pokomoko-blue); outline-offset:3px; border-radius:14px; }

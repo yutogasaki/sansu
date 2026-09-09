@@ -14,6 +14,11 @@ describe('island navigation contract', () => {
         for (const view of ['learning', 'placement', 'camera', 'showcase', 'workshop'] as const) expect(islandFocusScreen(view)).toBe(true);
         expect(islandFocusScreen('photos', 'stored-photo')).toBe(true);
     });
+    it('keeps the handbook addressable and returns learning to that same page', () => {
+        expect(islandScreenFromSearch('?view=help')).toBe('help');
+        expect(islandFocusScreen('help')).toBe(false);
+        expect(islandParentUrl('/island', '?view=help&learn=1')).toBe('/island?view=help');
+    });
     it('removes learning intent without losing settings depth or selected island page', () => {
         expect(withoutIslandLearning('/settings', '?section=learning&learn=1')).toBe('/settings?section=learning');
         expect(withoutIslandLearning('/island', '?view=album&learn=1')).toBe('/island?view=album');

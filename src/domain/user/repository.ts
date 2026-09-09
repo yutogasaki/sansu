@@ -1,3 +1,4 @@
+import { clearProfileTutorial } from '../island/tutorialState';
 import { db, type SansuDatabase } from "../../db";
 import { AppData, UserProfile } from "../types";
 import { clearProfileStorageData, profileStorage } from "../../utils/storage";
@@ -232,6 +233,7 @@ export const deleteProfile = async (id: string) => {
     );
 
     clearProfileStorageData(id);
+    clearProfileTutorial(id);
 
     if (nextActive) {
         profileStorage.setActiveId(nextActive);

@@ -1,3 +1,6 @@
+import { IslandHelp, IslandTutorial, TUTORIAL_TOPICS } from '../components/island/tutorial/IslandTutorial';
+import { useIslandTutorial } from '../components/island/tutorial/useIslandTutorial';
+import type { TutorialId } from '../domain/island/tutorialState';
 import HomeJourneyPreview from '../components/island/homeJourney/HomeJourneyPreview';
 import { homeJourneyEnabled } from '../domain/island/homeJourney';
 import { crossedHomeJourneyStep } from '../components/island/homeJourney/growthReveal';
@@ -177,6 +180,11 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const milestoneNotice = useIslandMilestoneNotice(profile.id, active && screen === 'learning' && !preparingLearning,
         Boolean(error || loadError || nextPlanError));
     const comparisonDisabled = busy && busyKind !== 'discovery';
+    const [tutorialStageReady, setTutorialStageReady] = useState(false);
+    const tutorial = useIslandTutorial({ profileId: profile.id, eligible: profile.islandTutorialVersion === 1 && (screen !== 'play' || Boolean(island?.items.some(item => item.position))), screen, active,
+        allowed: !opening && !busy && !preparingLearning && !error && !loadError && !nextPlanError && !homeMenuOpen
+            && (tutorialStageReady || screen === 'inventory' || screen === 'home' && homeJourneyEnabled()) && !homeJourneyGrowthAt && !(screen === 'play' && playMessage),
+        grown: Boolean(island?.completedSets), canView: !homeJourneyEnabled() });
     const customization = useIslandCustomization(island, active && screen === 'customization', run, setSnapshot);
     const furniture = useIslandFurniture(island, active && screen === 'furniture', run, setSnapshot);
     const experience = useIslandExperience(island, active && screen === 'experience', run, setSnapshot);
@@ -533,6 +541,17 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         setFeedback(store ? 'もちものに とっておくよ' : `${ISLAND_ITEMS[preview.kind].name}を おいたよ`);
     };
     const slot = plan?.slots[plan.cursor];
+    const tryTutorial = (id: TutorialId) => {
+        const topic = TUTORIAL_TOPICS.find(topic => topic.id === id)!;
+        const target = id === 'view' ? 'play' : topic.screen;
+        if (id === 'view' || id === 'play') { setPlayRequest(undefined); setPlayMessage(undefined); setPreview(undefined); }
+        tutorial.start(id, target);
+        if (id === 'photo') photograph();
+        else if (id === 'customization') openCustomization();
+        else if (id === 'growth') {
+            setGrowthViewHabitat(plan?.growthTarget ?? island?.growth?.focus ?? 'garden'); setScreen('growth');
+        } else setScreen(target);
+    };
     const learning = screen === 'learning';
     // Reserve one crop for the entire section, including later diagrams and their help.
     const complex = Boolean(plan?.slots.some(candidate => candidate.problem.inputType === 'multi-number'
@@ -562,7 +581,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const cancelPlacement = navigation ? home : returnToFurniture ? () => {
         setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPreview(undefined); setScreen('furniture');
     } : home;
-    return <main className="island-page" data-layout-version="display-v1" data-game-id="mystic-island-v1" data-mode={screen} data-home-layout={screen === 'home' ? 'world-first-v2' : undefined} data-complex={Boolean(learning && complex)}
+    return <main className="island-page" data-tutorial-topic={tutorial.current?.id} data-layout-version="display-v1" data-game-id="mystic-island-v1" data-mode={screen} data-home-layout={screen === 'home' ? 'world-first-v2' : undefined} data-complex={Boolean(learning && complex)}
         data-visual-candidate-id={ISLAND_VISUAL_CANDIDATE} data-delivery-id={ISLAND_DELIVERY_ID}
         data-learning-candidate={ISLAND_LEARNING_CANDIDATE}
         data-island-revision={island.revision} data-discovery-count={island.growth?.discoveries.length ?? 0}
@@ -586,7 +605,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
         {active && screen === 'home' && homeJourneyEnabled() && <HomeJourneyPreview state={island.homeJourney}
             growthAt={homeJourneyGrowthAt} onGrowthShown={() => setHomeJourneyGrowthAt(undefined)} />}
-        {active && !(screen === 'home' && homeJourneyEnabled()) && !['album', 'photos', 'inventory'].includes(screen) && <IslandStage closeHomeView={screen === 'home'} compactCameraControls={screen === 'home'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
+        {active && !(screen === 'home' && homeJourneyEnabled()) && !['help', 'album', 'photos', 'inventory'].includes(screen) && <IslandStage onTutorialReady={setTutorialStageReady} onCameraPractice={() => tutorial.practice('view')} closeHomeView={screen === 'home'} compactCameraControls={screen === 'home'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
             learningKeepsakes={keepsakeRoomActive ? { state: island.learningKeepsakes, selectedId: keepsakeFocus } : undefined}
             onHomeEnter={!busy && ['home', 'play'].includes(screen) ? enterHouse : undefined}
             onHomeAction={!busy && screen === 'keepsakes' ? action => {
@@ -660,6 +679,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             onRendererRecovered={() => { setPlayMessage(message => message === RENDERER_RECOVERY_HINT ? undefined : message); setWorkshopRequest(undefined); setSharedRequest(undefined); }}
             onPlayResult={result => {
                 if (result.requestId !== playRequest?.id) return;
+                if (result.status === 'playing') tutorial.practice('play');
                 if (screen === 'furniture') {
                     setPlayMessage(result.status === 'playing' ? 'なかまと ためしているよ。'
                         : result.reason === 'renderer' ? RENDERER_RECOVERY_HINT
@@ -686,12 +706,17 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                 if (screen === 'play') play(id);
                 else { const item = island.items.find(candidate => candidate.id === id); if (item) select(item); }
             } : undefined} />}
+        {tutorial.current && !customization.error && <IslandTutorial id={tutorial.current.id} onShown={tutorial.shown} onClose={tutorial.dismiss}
+            text={tutorial.current.id === 'growth' && screen === 'home' ? '学んだぶん、しまが 育ったよ。育った すがたを みてみよう。' : undefined}
+            action={tutorial.current.id === 'growth' && screen === 'home' ? 'みにいく' : undefined}
+            onAction={() => { tutorial.practice('growth'); setAlbumComparison(latestMilestone?.habitats[0] ?? island.growth?.focus ?? 'garden'); setScreen('album'); }} />}
         {(screen === 'play' || screen === 'placement') && <IslandDistricts island={island} value={district} disabled={busy} onChange={setDistrict} />}
         {learning && nextPlanError ? <section className="island-sheet island-learning-retry">
             <p role="status">{plan?.status === 'completed' ? 'ここまで といたぶんは のこっているよ。' : 'まだ もんだいを ひらけなかったよ。'}</p>
             <button className="island-primary" disabled={busy} onClick={() => void begin()}>つづきの もんだいを ひらく</button>
         </section>
             : learning ? null
+            : screen === 'help' ? <IslandHelp island={island} disabled={busy} onClose={home} onTry={tryTutorial} />
             : screen === 'reward' && island.pendingRewards.length ? <IslandRewards island={island} intro={island.completedSets === 1 && Boolean(plan && isFirstIslandPlan(plan))} disabled={busy} onChoose={(id, kind) => void claim(id, kind)} onContinue={() => void begin()} onClose={home} />
             : screen === 'play' ? <IslandPlay items={island.items} disabled={busy} selectedId={playRequest?.itemId} message={playMessage}
                 onSelect={play} onMove={select} onInventory={() => setScreen('inventory')} onContinue={() => void begin()} onClose={home} onGuide={openGuide} onPhoto={photograph} />
@@ -784,7 +809,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     preview={customization.preview ?? getIslandCosmetics(island)} celebration={customization.celebration} disabled={busy}
                     selectedSlot={customization.selectedSlot} selectionReady={customization.selectionReady} restore={customization.restore}
                     error={customization.error} onRetry={customization.retry ? () => { void customization.retry?.(); } : undefined}
-                    onSelect={customization.select} onBrowse={customization.browse} onRestore={customization.selectRestore} onUndoPart={customization.undoPart}
+                    onSelect={(id, slot) => { customization.select(id, slot); tutorial.practice('customization'); }} onBrowse={customization.browse} onRestore={customization.selectRestore} onUndoPart={customization.undoPart}
                     onResetPreview={customization.reset} onSaveScene={() => { openExperience(); setExperienceEntryTab('layouts'); }}
                     onFurniture={openFurniture} onFocus={setCosmeticFocus}
                     onAction={action => void customization.act(action)} onClose={home} />
@@ -822,7 +847,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     }} />}
                     {!navigation && <button className="island-primary island-start" disabled={busy} onClick={() => void begin()}>{island.pendingPlanId ? 'つづきから とく' : 'まなぶ'}<ArrowRight size={22} /></button>}
 
-                    <IslandHomeActions active={active} onOpenChange={setHomeMenuOpen} busy={busy} comparisonDisabled={comparisonDisabled} workshopUnlocked={island.completedSets >= 1}
+                    <IslandHomeActions onHelp={() => setScreen('help')} active={active} onOpenChange={setHomeMenuOpen} busy={busy} comparisonDisabled={comparisonDisabled} workshopUnlocked={island.completedSets >= 1}
                         pendingRewards={island.pendingRewards.length} onPlay={() => {
                         setPlayRequest(undefined); setPlayMessage(undefined); setReaction(undefined); setPreview(undefined); setScreen('play');
                     }} onGuide={openGuide} onWorkshop={openWorkshop} onInventory={() => setScreen('inventory')}
