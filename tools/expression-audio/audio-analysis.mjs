@@ -36,6 +36,46 @@ function tone(samples, rate, frequency) {
     return Math.hypot(real, imaginary) / Math.max(1, samples.length);
 }
 
+// Independent second-order band-pass measurement. Bilinear prewarping places
+// the half-power edges at the stated Hz even at the supported 8 kHz minimum.
+// It neither regenerates the source nor searches for a favourable time offset.
+function bandPass(samples, rate, lowHz, highHz) {
+    assert(rate > highHz * 2 && lowHz > 0 && highHz > lowHz);
+    const low = Math.tan(Math.PI * lowHz / rate), high = Math.tan(Math.PI * highHz / rate);
+    const width = high - low, centerSquared = low * high, denominator = 1 + width + centerSquared;
+    const b0 = width / denominator, a1 = 2 * (centerSquared - 1) / denominator, a2 = (1 - width + centerSquared) / denominator;
+    const output = new Float32Array(samples.length); let x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+    for (let i = 0; i < samples.length; i++) {
+        const y = b0 * (samples[i] - x2) - a1 * y1 - a2 * y2;
+        output[i] = y; x2 = x1; x1 = samples[i]; y2 = y1; y1 = y;
+    }
+    return output;
+}
+function insectEnvelope(samples, rate) {
+    // The existing evening source combines a continuous low background with
+    // a 2700 Hz insect carrier (27 Hz FM and 17 Hz chirps), voiced during the
+    // first .64 s of each 2 s period. Whole-band RMS mixes those two roles;
+    // the prior >2 test rejected the unchanged 48 kHz source at 1.983896.
+    const bands = { insect: [2400, 3000], lower: [1500, 2100], upper: [3300, 3900] };
+    const filtered = Object.fromEntries(Object.entries(bands).map(([name, [low, high]]) => [name, bandPass(samples, rate, low, high)]));
+    const thresholds = { minimumCallRms: .001, callToQuiet: 4, callToAdjacent: 2 };
+    // Fixed windows lie inside the voiced (.08–.50) and unvoiced (.90–1.60)
+    // parts, away from loop-edge/filter transients. Require all three cycles.
+    // 4x in-band contrast and 2x adjacent-band contrast reject continuous tones,
+    // broadband pulses and background-only sound, not a product loudness target.
+    const cycles = [0, 2, 4].map(onset => {
+        const callWindow = [onset + .08, onset + .5], quietWindow = [onset + .9, onset + 1.6];
+        const rms = (band, window) => statistics(range(filtered[band], rate, ...window), rate).rms;
+        const call = rms('insect', callWindow), quiet = rms('insect', quietWindow);
+        const lower = rms('lower', callWindow), upper = rms('upper', callWindow);
+        assert(call > thresholds.minimumCallRms, 'Evening must contain the insect band in every 2-second cycle');
+        assert(call > quiet * thresholds.callToQuiet, 'Evening insect band must become quiet between its 2-second calls');
+        assert(call > Math.max(lower, upper) * thresholds.callToAdjacent, 'Evening calls must occupy the insect band, not broadband or adjacent tones');
+        return { onset, callWindow, quietWindow, callRms: call, quietRms: quiet, adjacentRms: { lower, upper } };
+    });
+    return { periodSeconds: 2, bands, thresholds, cycles };
+}
+
 /** Independent waveform properties; no app generator imported or re-synthesized. */
 export function assertShellPCM(samples, rate, seconds) {
     const summary = statistics(samples, rate); assert.equal(summary.seconds, seconds);
@@ -59,13 +99,12 @@ export function assertFreePCM(samples, rate, kind) {
     const crossingsPerSecond = summary.crossings / summary.seconds;
     if (kind === 'breeze') assert(summary.rms > .01 && summary.crossings / samples.length < .09, 'Wind must remain predominantly low frequency');
     if (kind === 'brook') assert(summary.rms > .008 && summary.crossings / samples.length > .1, 'Brook must contain its brighter ripple');
+    let envelope;
     if (kind === 'evening') {
         assert(summary.rms < .008, 'Evening has its quiet background');
-        const call = statistics(range(samples, rate, .08, .5), rate).rms;
-        const gap = statistics(range(samples, rate, .9, 1.6), rate).rms;
-        assert(call > gap * 2, 'Evening has an insect-call envelope');
+        envelope = insectEnvelope(samples, rate);
     }
-    return { ...summary, crossingsPerSecond };
+    return { ...summary, crossingsPerSecond, ...(envelope ? { insectEnvelope: envelope } : {}) };
 }
 
 /** Source scheduling and context release are separate from signal loudness. */

@@ -7,6 +7,9 @@ import path from 'node:path';
 import { assertShellPCM, assertFreePCM, assertDeliveredShell, floatWav, decodePCM, joinOutput, assertNoStack, assertHiddenRetirement, assertNoPreviewResume, assertOutletIsolation, assertMeasuredWindow, assertSoundDelta } from './audio-analysis.mjs';
 import { installProbeInDocument } from './audio-probe.mjs';
 import { createExpressionAudioPhase, persistAudioEvidence, withAudioFailureEvidence } from './expression-audio-phase.mjs';
+// Test-only positive control: the independent QA must accept the unchanged
+// native source generator. Browser qualification never imports this function.
+import { createIslandAmbienceSamples } from '../../src/components/island/islandAmbienceAudio';
 
 // Synthetic isolated test signal only. It is deliberately simpler than the
 // product's three-harmonic sound and cannot be filed as app/browser evidence.
@@ -47,6 +50,48 @@ test('a free buffer accepts both exact signed zeros but rejects any nonzero endp
         const nonzero = samples.slice(); nonzero[endpoint] = 1e-12;
         assert.throws(() => assertFreePCM(nonzero, rate, 'brook'));
     }
+});
+function syntheticInsectScene(rate, { period = 2, frequency = 2700, missingCycle = -1, continuous = false, insect = true, broadband = false } = {}) {
+    let seed = 52917;
+    const samples = Float32Array.from({ length: rate * 6 }, (_, i) => {
+        const t = i / rate, age = t % period, cycle = Math.floor(t / period);
+        // Independent trapezoidal calls, with a low sinusoidal background; this
+        // deliberately does not reproduce the app's sin²/FM/chirping formula.
+        const pulse = continuous ? 1 : Math.max(0, Math.min((age - .02) / .02, (.62 - age) / .02, 1));
+        seed = (Math.imul(seed, 1103515245) + 12345) >>> 0;
+        const carrier = broadband ? seed / 0xffffffff * 2 - 1 : Math.sin(2 * Math.PI * frequency * t);
+        return .002 * Math.sin(2 * Math.PI * 140 * t) + (insect && cycle !== missingCycle ? carrier * pulse * .007 : 0);
+    });
+    samples[0] = 0; samples[samples.length - 1] = 0; return samples;
+}
+test('evening acceptance measures its insect band and all three 2-second calls at native sample rates', () => {
+    for (const rate of [8000, 12000, 44100, 48000]) {
+        const actual = createIslandAmbienceSamples('evening', rate), before = actual.slice();
+        const result = assertFreePCM(actual, rate, 'evening');
+        assert.deepEqual(actual, before); assert.equal(result.insectEnvelope.periodSeconds, 2);
+        assert.deepEqual(result.insectEnvelope.cycles.map(x => x.onset), [0, 2, 4]);
+        for (const cycle of result.insectEnvelope.cycles) {
+            assert(cycle.callRms > cycle.quietRms * 4);
+            assert(cycle.callRms > Math.max(...Object.values(cycle.adjacentRms)) * 2);
+        }
+    }
+    assertFreePCM(syntheticInsectScene(12000), 12000, 'evening');
+});
+test('insect-band classification rejects absent insects and actual wind or water even when made quiet', () => {
+    assert.throws(() => assertFreePCM(syntheticInsectScene(12000, { insect: false }), 12000, 'evening'), /insect band/);
+    for (const kind of ['breeze', 'brook']) {
+        const actual = createIslandAmbienceSamples(kind, 48000);
+        for (const gain of [1, .2]) assert.throws(() => assertFreePCM(Float32Array.from(actual, x => x * gain), 48000, 'evening'));
+    }
+});
+test('an uninterrupted high tone, wrong cadence or missing call cannot impersonate evening insects', () => {
+    assert.throws(() => assertFreePCM(syntheticInsectScene(12000, { continuous: true }), 12000, 'evening'), /become quiet/);
+    for (const period of [1, 1.5, 2.4, 3, 4]) assert.throws(() => assertFreePCM(syntheticInsectScene(12000, { period }), 12000, 'evening'), /2-second/);
+    for (const missingCycle of [0, 1, 2]) assert.throws(() => assertFreePCM(syntheticInsectScene(12000, { missingCycle }), 12000, 'evening'), /every 2-second cycle/);
+});
+test('periodic broadband noise or adjacent high tones fail even with the expected call windows', () => {
+    assert.throws(() => assertFreePCM(syntheticInsectScene(12000, { broadband: true }), 12000, 'evening'), /insect band/);
+    for (const frequency of [1900, 3500]) assert.throws(() => assertFreePCM(syntheticInsectScene(12000, { frequency }), 12000, 'evening'), /insect band/);
 });
 test('delivered-output test rejects silence, missing repeated phrase and an audible phrase gap', () => {
     const rate = 12000, result = new Float32Array(rate * 16), phrase = syntheticShell(rate);
@@ -319,7 +364,8 @@ const nativeFixture = `
     }
   }
   const window = new Target(), document = new Target(); Object.assign(document, {hidden: false, visibilityState: 'visible', hasFocus: () => true});
-  const navigator = { userActivation: { isActive: true } }, btoa = value => Buffer.from(value, 'binary').toString('base64');
+  const encodedLengths = [];
+  const navigator = { userActivation: { isActive: true } }, btoa = value => { encodedLengths.push(value.length); return Buffer.from(value, 'binary').toString('base64'); };
   (${installProbeInDocument.toString()})();
   const probe = window.__expressionAudioProbe;
   function makeSource(context, seconds = 2) { const source = new AudioBufferSourceNode(context); source.loop = false;
@@ -469,6 +515,65 @@ test('asynchronous worklet readiness attaches only the passive branch without to
     assert.deepEqual(result.data.errors, []); assert.equal(result.sourceEdges,1); assert.equal(result.direct,1);
     assert.deepEqual(result.startArgs, []); assert.equal(result.data.outputs[0].readyAudioTime,.04);
     assert.equal(result.data.outputs[0].blocks[0].renderFrame,480); assert.equal(result.revoked.length,1);
+});
+test('source start copies original bits but defers long PCM encoding until the first real render block', async () => {
+    const result = await runNative(`
+      const context = new AudioContext(); context.deferModule = true;
+      const source = makeSource(context,14), values = source.buffer.getChannelData(0), gain = context.createGain(); values.set(signal);
+      source.connect(gain); gain.connect(context.destination); probe.begin('capture');
+      const returned = source.start(.125) === source;
+      const before = {data:probe.snapshot(),encoded:[...encodedLengths]};
+      values.fill(0); const polled = {data:probe.snapshot(),encoded:[...encodedLengths]};
+      context.resolveModule(); const readyEncoded = [...encodedLengths];
+      block(context.processors[0],.125);
+      const after = probe.snapshot(true); source.stop(); gain.disconnect(); await context.close(); probe.dispose();
+      return {before,polled,readyEncoded,after,returned,args:source.startArgs,encodedLengths};
+    `);
+    assert(result.returned); assert.deepEqual(result.args, [.125]);
+    assert.deepEqual(result.before.encoded, []); assert.deepEqual(result.polled.encoded, []); assert.deepEqual(result.readyEncoded, []);
+    assert.equal(result.before.data.pcm.length, 0); assert.equal(result.polled.data.pcm.length, 0);
+    assert.equal(result.before.data.sources[0].pcmCapture.state, 'pending');
+    assert.deepEqual(result.after.errors, []); assert.equal(result.after.sources[0].pcmCapture.finalizedBy, 'first-render-block');
+    assert(result.after.sources[0].ambienceCandidate);
+    const expected = new Float32Array(14 * 12000); expected.set(syntheticShell(12000));
+    assert.deepEqual(decodePCM(result.after.pcm[0].base64), expected, 'later app buffer mutation cannot change the once-copied source');
+    assert.deepEqual(result.encodedLengths, [1024 * 4, 14 * 12000 * 4]);
+    assert(result.after.sources[0].pcmCapture.finalizedAt > result.after.outputs[0].firstValidBlock.at);
+});
+test('a source retired before sampler readiness retains its copied PCM for explicit raw evidence without resurrecting audio', async () => {
+    const result = await runNative(`
+      const context = new AudioContext(); context.deferModule = true;
+      const source = makeSource(context), gain=context.createGain(); source.connect(gain);gain.connect(context.destination);source.start();
+      signal.fill(0); source.stop();gain.disconnect();await context.close();context.resolveModule();
+      const before={data:probe.snapshot(),encoded:[...encodedLengths],processors:context.processors.length};
+      const raw=probe.snapshot(true);probe.dispose();return {before,raw,processors:context.processors.length};
+    `);
+    assert.deepEqual(result.before.encoded, []); assert.equal(result.before.data.sources[0].pcmCapture.state, 'pending');
+    assert.equal(result.processors, 0); assert.deepEqual(result.raw.errors, []);
+    assert.equal(result.raw.sources[0].pcmCapture.finalizedBy, 'raw-snapshot');
+    assert.deepEqual(decodePCM(result.raw.pcm[0].base64), syntheticShell(12000));
+    assert(result.raw.sources[0].stopAt); assert.equal(result.raw.contexts[0].state, 'closed');
+});
+test('deferred exact deduplication still preserves source identities and never borrows a later mutated buffer', async () => {
+    const result = await runNative(`
+      const context = new AudioContext(), source = makeSource(context), gain=context.createGain();source.connect(gain);gain.connect(context.destination);source.start();source.stop();
+      const next=makeSource(context);next.connect(gain);next.start();signal.fill(0);
+      const before=probe.snapshot();block(context.processors[0],0);const after=probe.snapshot(true);next.stop();gain.disconnect();await context.close();probe.dispose();return {before,after};
+    `);
+    assert.equal(result.before.pcm.length, 0); assert.equal(result.before.sources.length, 2);
+    assert.equal(result.after.pcm.length, 1); assert.equal(result.after.sources[0].pcmId, result.after.sources[1].pcmId);
+    assert.notEqual(result.after.sources[0].id, result.after.sources[1].id);
+    assert.deepEqual(decodePCM(result.after.pcm[0].base64), syntheticShell(12000));
+});
+test('the pending PCM budget is reserved before copying and cannot prevent native playback or retirement', async () => {
+    const result = await runNative(`
+      const context=new AudioContext(),source=makeSource(context,14);let bufferRead=false;
+      source.buffer.getChannelData=()=>({byteLength:128*1024*1024+4,get buffer(){bufferRead=true;throw Error('must not allocate');}});
+      const returned=source.start()===source;const stopped=source.stop()===stopReturn;await context.close();const data=probe.snapshot(true);probe.dispose();return {returned,stopped,bufferRead,data};
+    `);
+    assert(result.returned && result.stopped); assert.equal(result.bufferRead, false);
+    assert.deepEqual(result.data.errors, ['Error: Audio probe PCM bound exceeded']);
+    assert.equal(result.data.pcm.length, 0); assert.equal(result.data.contexts[0].state, 'closed');
 });
 test('the probe keeps unmeasured gaps through later windows and snapshots without suppressing measured gaps', async () => {
     const result = await runNative(`

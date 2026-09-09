@@ -7,7 +7,7 @@ export function installProbeInDocument() {
     if (window.__expressionAudioProbe) return;
     const native = { connect: AudioNode.prototype.connect, disconnect: AudioNode.prototype.disconnect,
         start: AudioBufferSourceNode.prototype.start, stop: AudioBufferSourceNode.prototype.stop, close: AudioContext.prototype.close };
-    const ids = new WeakMap(), contexts = new WeakMap(), sources = new WeakMap(), taps = new Map(), edges = new Map(), listeners = new Map(), endedListeners = new Map(), modules = new WeakMap();
+    const ids = new WeakMap(), contexts = new WeakMap(), sources = new WeakMap(), taps = new Map(), edges = new Map(), listeners = new Map(), endedListeners = new Map(), modules = new WeakMap(), pendingPCM = new Map();
     // The qualified caller performs 153 real answers before this audio phase.
     // Retain their native provenance too: 256 sources could be exhausted by
     // ordinary learning cues alone. Limits remain explicit, finite and fatal
@@ -72,30 +72,52 @@ export function installProbeInDocument() {
         }
         return contexts.get(value);
     };
-    const encoded = samples => {
+    const reservePCM = byteLength => {
+        if (!Number.isSafeInteger(byteLength) || byteLength < 0 || bytes + byteLength > limits.pcmBytes) throw new Error('Audio probe PCM bound exceeded');
+        bytes += byteLength;
+    };
+    const encoded = (samples, reserved = false) => {
         const view = new Uint8Array(samples.buffer, samples.byteOffset, samples.byteLength);
-        bytes += view.byteLength; if (bytes > limits.pcmBytes) throw new Error('Audio probe PCM bound exceeded');
+        if (!reserved) reservePCM(view.byteLength);
         let binary = ''; for (let i = 0; i < view.length; i += 8192) binary += String.fromCharCode(...view.subarray(i, i + 8192)); return btoa(binary);
     };
-    const pcm = buffer => {
-        const values = buffer.getChannelData(0), bits = new Uint32Array(values.buffer, values.byteOffset, values.length);
+    const pcm = captured => {
+        const { bits, sampleRate, length, channels } = captured, values = new Float32Array(bits.buffer);
         let hash = 2166136261; for (const value of bits) hash = Math.imul(hash ^ value, 16777619) >>> 0;
-        const key = `${buffer.sampleRate}:${buffer.length}:${hash}`;
+        const key = `${sampleRate}:${length}:${hash}`;
         // Fast lookup is never proof of equality: compare every raw bit too.
         const old = data.pcm.find(entry => entry.key === key && entry.bits.every((value, index) => value === bits[index]));
         if (old) return old.id;
-        const shellShape = [2, 14].includes(buffer.duration)
-            && values.subarray(Math.ceil(1.3 * buffer.sampleRate)).every(value => value === 0)
+        const shellShape = [2, 14].includes(length / sampleRate)
+            && values.subarray(Math.ceil(1.3 * sampleRate)).every(value => value === 0)
             && [0, .36, .72].every((time, index) => {
-                const begin = Math.floor((time + .025) * buffer.sampleRate), end = Math.floor((time + .15) * buffer.sampleRate), hz = [540, 675, 810][index];
+                const begin = Math.floor((time + .025) * sampleRate), end = Math.floor((time + .15) * sampleRate), hz = [540, 675, 810][index];
                 let real = 0, imaginary = 0;
-                for (let i = begin; i < end; i++) { const phase = 2 * Math.PI * hz * (i - begin) / buffer.sampleRate;
+                for (let i = begin; i < end; i++) { const phase = 2 * Math.PI * hz * (i - begin) / sampleRate;
                     real += values[i] * Math.cos(phase); imaginary += values[i] * Math.sin(phase); }
                 return Math.hypot(real, imaginary) / (end - begin) > .001;
             });
-        const entry = { id: `pcm-${data.pcm.length + 1}`, key, sampleRate: buffer.sampleRate, channels: buffer.numberOfChannels,
-            length: buffer.length, shellShape, bits: new Uint32Array(bits), base64: encoded(values) };
+        const entry = { id: `pcm-${data.pcm.length + 1}`, key, sampleRate, channels,
+            length, shellShape, bits, base64: encoded(values, true) };
         data.pcm.push(entry); return entry.id;
+    };
+    const capturePCM = (entry, buffer) => {
+        const values = buffer.getChannelData(0);
+        // Reserve every captured copy, even if it later deduplicates. This is
+        // a cumulative bound; deferred work cannot conceal retained memory.
+        reservePCM(values.byteLength);
+        const bits = new Uint32Array(new Uint32Array(values.buffer, values.byteOffset, values.length));
+        pendingPCM.set(entry, { bits, sampleRate: buffer.sampleRate, length: buffer.length, channels: buffer.numberOfChannels });
+        entry.pcmCapture = { state: 'pending', capturedAt: now(), finalizedAt: null, finalizedBy: null };
+    };
+    const finalizePCM = (entry, reason) => {
+        const captured = pendingPCM.get(entry); if (!captured) return;
+        attempt(() => {
+            entry.pcmId = pcm(captured);
+            entry.ambienceCandidate = Boolean(entry.loop && entry.duration === 6 || data.pcm.find(value => value.id === entry.pcmId)?.shellShape);
+            entry.pcmCapture.state = 'complete'; entry.pcmCapture.finalizedAt = now(); entry.pcmCapture.finalizedBy = reason;
+            pendingPCM.delete(entry);
+        });
     };
     const outletIds = nodeId => {
         const found = new Set(), visited = new Set();
@@ -185,14 +207,19 @@ export function installProbeInDocument() {
                             // structural validation or global probe failures.
                             output.firstValidBlock ??= { messageOrder, at: now(), window: activeWindow,
                                 renderFrame: block.frame, sequence: block.sequence, frameCount: block.samples.length, sampleRate: block.sampleRate };
-                            if (!activeWindow) return;
-                            const begin = block.frame / block.sampleRate, end = (block.frame + block.samples.length) / block.sampleRate;
-                            const sourceIds = data.sources.filter(source => source.contextId === owner.id
-                                && source.scheduledStartAudioTime < end && (source.endAudioTime ?? Infinity) > begin
-                                && source.routes.some(route => route.outletId === output.id && route.startAudioTime < end && (route.endAudioTime ?? Infinity) > begin))
-                                .map(source => source.id);
-                            output.blocks.push({ window: activeWindow, at: now(), playbackTime: begin, renderFrame: block.frame,
-                                sequence: block.sequence, messageOrder, sourceIds, pcm: encoded(block.samples) });
+                            if (activeWindow) {
+                                const begin = block.frame / block.sampleRate, end = (block.frame + block.samples.length) / block.sampleRate;
+                                const sourceIds = data.sources.filter(source => source.contextId === owner.id
+                                    && source.scheduledStartAudioTime < end && (source.endAudioTime ?? Infinity) > begin
+                                    && source.routes.some(route => route.outletId === output.id && route.startAudioTime < end && (route.endAudioTime ?? Infinity) > begin))
+                                    .map(source => source.id);
+                                output.blocks.push({ window: activeWindow, at: now(), playbackTime: begin, renderFrame: block.frame,
+                                    sequence: block.sequence, messageOrder, sourceIds, pcm: encoded(block.samples) });
+                            }
+                            // Do not spend tens of milliseconds hashing/encoding a
+                            // long source while addModule/attach is still waiting.
+                            // The real render thread has now produced its first block.
+                            for (const entry of pendingPCM.keys()) if (entry.contextId === owner.id) finalizePCM(entry, 'first-render-block');
                         });
                         native.connect.call(this, processor, outputIndex, 0); native.connect.call(processor, silent); native.connect.call(silent, destination);
                         output.readyAt = now(); output.readyAudioTime = this.context.currentTime;
@@ -231,9 +258,10 @@ export function installProbeInDocument() {
                 stopAt: null, disconnectAt: null, endedAt: null, pcmId: null };
             if (data.sources.length >= limits.sources) throw new Error('Audio probe source bound exceeded');
             sources.set(this, entry); data.sources.push(entry); updateRoutes(this.context);
-            // Track *all* sources before copying/classifying bounded raw PCM.
-            if (this.buffer?.numberOfChannels === 1 && [2, 6, 14].some(n => Math.abs(this.buffer.duration - n) < 1 / this.buffer.sampleRate)) entry.pcmId = pcm(this.buffer);
-            entry.ambienceCandidate = Boolean(entry.pcmId && (entry.loop && entry.duration === 6 || data.pcm.find(value => value.id === entry.pcmId)?.shellShape));
+            // Snapshot the original bits once; no hashing, classification or
+            // Base64 conversion may delay the pending Worklet attachment here.
+            if (this.buffer?.numberOfChannels === 1 && [2, 6, 14].some(n => Math.abs(this.buffer.duration - n) < 1 / this.buffer.sampleRate)) capturePCM(entry, this.buffer);
+            entry.ambienceCandidate = false;
             event('start', { sourceId: entry.id, contextId: owner.id });
             const ended = () => attempt(() => {
                 entry.endedAt ??= now(); entry.endAudioTime = Math.min(entry.endAudioTime ?? Infinity, this.context.currentTime);
@@ -273,9 +301,13 @@ export function installProbeInDocument() {
         begin(label) { if (disposed) throw new Error('Audio probe disposed'); if (activeWindow) throw new Error('Audio capture already active'); if (data.windows.some(value => value.label === label)) throw new Error('Duplicate capture label');
             activeWindow = label; const marker = { label, at: now(), sourceCount: data.sources.length }; data.windows.push(marker); return marker; },
         end() { const label = activeWindow; activeWindow = null; return label; },
-        snapshot(raw = false) { return { ...data, receivedPortMessages, limits: { ...limits }, errors: [...data.errors], events: data.events.map(value => ({ ...value })), windows: data.windows.map(value => ({ ...value })),
+        snapshot(raw = false) {
+            // Explicit raw evidence also preserves sources that stopped before
+            // a sampler was ready. Ordinary readiness polling stays lightweight.
+            if (raw) for (const entry of pendingPCM.keys()) finalizePCM(entry, 'raw-snapshot');
+            return { ...data, receivedPortMessages, limits: { ...limits }, errors: [...data.errors], events: data.events.map(value => ({ ...value })), windows: data.windows.map(value => ({ ...value })),
             live: { taps: taps.size, edges: [...edges.values()].reduce((n, list) => n + list.length, 0), contexts: listeners.size, sourceListeners: endedListeners.size, disposed },
-            contexts: data.contexts.map(value => ({ ...value })), sources: data.sources.map(value => ({ ...value, outlets: [...value.outlets], routes: value.routes.map(route => ({ ...route })) })),
+            contexts: data.contexts.map(value => ({ ...value })), sources: data.sources.map(value => ({ ...value, ...(value.pcmCapture ? { pcmCapture: { ...value.pcmCapture } } : {}), outlets: [...value.outlets], routes: value.routes.map(route => ({ ...route })) })),
             pcm: data.pcm.map(({ bits: _bits, base64, ...entry }) => ({ ...entry, ...(raw ? { base64 } : {}) })),
             outputs: data.outputs.map(output => ({ ...output, firstValidBlock: output.firstValidBlock ? { ...output.firstValidBlock } : null, discontinuities: output.discontinuities.map(gap => ({...gap})),
                 blocks: output.blocks.map(({ pcm, ...block }) => ({ ...block, sourceIds: [...block.sourceIds], ...(raw ? { pcm } : {}) })) })) }; },

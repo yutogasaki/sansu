@@ -1,0 +1,661 @@
+{
+  "version": 1,
+  "createdAt": "2026-09-09T01:26:47.343Z",
+  "scope": "Fixed20 selected main digital evidence from05 plus remaining boundary evidence from06; no retroactive run PASS",
+  "application": {
+    "revision": "workshop-20260909-0db80c949ca3",
+    "sourceHash": "0db80c949ca3eebc5efb410e05846c2f48da2f1d678c45aef4ab559d5b341d61",
+    "url": "http://127.0.0.1:5406/",
+    "candidate": "mystic-island-living-v5",
+    "islandEnabled": true,
+    "originalInputs": 1032,
+    "appInputs": 929
+  },
+  "runtime": {
+    "node": "v22.22.3",
+    "chromium": "145.0.7632.6",
+    "externalPinnedInputs": 558,
+    "sharedHelpersUnchanged": true
+  },
+  "runs": [
+    {
+      "run": "03",
+      "path": "output/island-experience/audio-focused-03",
+      "reportSha256": "bb86304a410b26da90d6ffbed7b0715555a78d8c7a0def61909c5fd0abce2e26",
+      "revision": "workshop-20260909-0db80c949ca3",
+      "sourceHash": "0db80c949ca3eebc5efb410e05846c2f48da2f1d678c45aef4ab559d5b341d61",
+      "qaClosureHash": "4e639713e8c05678d9c2db8dcae8a07713f945a51984d1711f83a0c6fa9e8329",
+      "originalPass": false,
+      "sourceStable": true,
+      "finishedAt": "2026-09-09T00:34:23.723Z",
+      "scope": "main-and-boundaries",
+      "browser": {
+        "version": "145.0.7632.6",
+        "headed": true
+      },
+      "cleanup": {
+        "browserClosed": true,
+        "focusDriverRestored": true,
+        "separateProcessAudit": null,
+        "remainingProcessCount": null,
+        "profileExists": null
+      },
+      "layouts": [
+        {
+          "name": "phone",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "touch": true,
+          "reducedMotion": "no-preference",
+          "pass": false,
+          "firstFailure": "AssertionError [ERR_ASSERTION]: Native pitch/silence window is outside retained PCM; missing samples cannot be inferred",
+          "genuineAnswers": 3,
+          "completedSets": 1,
+          "callerDBChecks": 44,
+          "nativeAudioPairs": 7,
+          "mainDigitalAudioExecuted": true,
+          "mainPassed": false,
+          "boundaries": {
+            "main": {
+              "status": "failed-or-unverified"
+            },
+            "save": {
+              "status": "passed"
+            }
+          },
+          "loop": null,
+          "learning": null
+        },
+        {
+          "name": "tablet",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "touch": false,
+          "reducedMotion": "reduce",
+          "pass": false,
+          "firstFailure": "AssertionError [ERR_ASSERTION]: Native pitch/silence window is outside retained PCM; missing samples cannot be inferred",
+          "genuineAnswers": 3,
+          "completedSets": 1,
+          "callerDBChecks": 44,
+          "nativeAudioPairs": 7,
+          "mainDigitalAudioExecuted": true,
+          "mainPassed": false,
+          "boundaries": {
+            "main": {
+              "status": "failed-or-unverified"
+            },
+            "save": {
+              "status": "passed"
+            }
+          },
+          "loop": null,
+          "learning": null
+        }
+      ]
+    },
+    {
+      "run": "04",
+      "path": "output/island-experience/audio-focused-04",
+      "reportSha256": "c121b8c4bace031c048dcd10509c1d07dc1be83dbd0cda28bccc06b75b42c341",
+      "revision": "workshop-20260909-0db80c949ca3",
+      "sourceHash": "0db80c949ca3eebc5efb410e05846c2f48da2f1d678c45aef4ab559d5b341d61",
+      "qaClosureHash": "c9bceb821214b9fb91986311d8605d5a032b07505b79bf76cbbd60e38e918b56",
+      "originalPass": false,
+      "sourceStable": true,
+      "finishedAt": "2026-09-09T00:51:18.699Z",
+      "scope": "main-and-boundaries",
+      "browser": {
+        "version": "145.0.7632.6",
+        "headed": true
+      },
+      "cleanup": {
+        "browserClosed": true,
+        "focusDriverRestored": true,
+        "separateProcessAudit": "output/island-experience/audio-focused-04/cleanup.json",
+        "remainingProcessCount": null,
+        "profileExists": false
+      },
+      "layouts": [
+        {
+          "name": "phone",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "touch": true,
+          "reducedMotion": "no-preference",
+          "pass": false,
+          "firstFailure": "AssertionError [ERR_ASSERTION]: Evening has an insect-call envelope",
+          "genuineAnswers": 3,
+          "completedSets": 1,
+          "callerDBChecks": 44,
+          "nativeAudioPairs": 16,
+          "mainDigitalAudioExecuted": true,
+          "mainPassed": false,
+          "boundaries": {
+            "main": {
+              "status": "failed-or-unverified"
+            },
+            "save": {
+              "status": "passed"
+            }
+          },
+          "loop": {
+            "unmeasuredOnsetSeconds": 0.029333333333333336,
+            "pitchWindowCount": 6,
+            "sourceCorrespondence": [
+              {
+                "sourceOnsetSeconds": 0,
+                "sourceOffsetFrames": 1408,
+                "sourceRange": [
+                  18480,
+                  53760
+                ],
+                "outputRange": [
+                  17072,
+                  52352
+                ],
+                "gain": 0.3499999948970171,
+                "similarity": 0.9999999999999807,
+                "residual": 1.9617977527345377e-7
+              },
+              {
+                "sourceOnsetSeconds": 14,
+                "sourceOffsetFrames": 1408,
+                "sourceRange": [
+                  18480,
+                  53760
+                ],
+                "outputRange": [
+                  689072,
+                  724352
+                ],
+                "gain": 0.3499999948970171,
+                "similarity": 0.9999999999999807,
+                "residual": 1.9617977527345377e-7
+              }
+            ],
+            "firstRenderFrame": 2176,
+            "sourceStartAudioTime": 0.016,
+            "measuredBlocks": {
+              "firstRenderFrame": 2176,
+              "lastRenderFrameExclusive": 772224,
+              "firstSequence": 0,
+              "lastSequence": 751,
+              "blocks": 752
+            },
+            "startupGaps": [
+              {
+                "at": 44369.5,
+                "contextId": "context-5",
+                "outletId": "outlet-9",
+                "window": "shell-loop-two-phrases",
+                "messageOrder": 1,
+                "expectedFrame": 896,
+                "actualFrame": 2176
+              }
+            ]
+          },
+          "learning": null
+        },
+        {
+          "name": "tablet",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "touch": false,
+          "reducedMotion": "reduce",
+          "pass": false,
+          "firstFailure": "AssertionError [ERR_ASSERTION]: Evening has an insect-call envelope",
+          "genuineAnswers": 3,
+          "completedSets": 1,
+          "callerDBChecks": 44,
+          "nativeAudioPairs": 16,
+          "mainDigitalAudioExecuted": true,
+          "mainPassed": false,
+          "boundaries": {
+            "main": {
+              "status": "failed-or-unverified"
+            },
+            "save": {
+              "status": "passed"
+            }
+          },
+          "loop": {
+            "unmeasuredOnsetSeconds": 0.024,
+            "pitchWindowCount": 6,
+            "sourceCorrespondence": [
+              {
+                "sourceOnsetSeconds": 0,
+                "sourceOffsetFrames": 1152,
+                "sourceRange": [
+                  18480,
+                  53760
+                ],
+                "outputRange": [
+                  17328,
+                  52608
+                ],
+                "gain": 0.3499999948970171,
+                "similarity": 0.9999999999999807,
+                "residual": 1.9617977527345377e-7
+              },
+              {
+                "sourceOnsetSeconds": 14,
+                "sourceOffsetFrames": 1152,
+                "sourceRange": [
+                  18480,
+                  53760
+                ],
+                "outputRange": [
+                  689328,
+                  724608
+                ],
+                "gain": 0.3499999948970171,
+                "similarity": 0.9999999999999807,
+                "residual": 1.9617977527345377e-7
+              }
+            ],
+            "firstRenderFrame": 1664,
+            "sourceStartAudioTime": 0.010666666666666666,
+            "measuredBlocks": {
+              "firstRenderFrame": 1664,
+              "lastRenderFrameExclusive": 770688,
+              "firstSequence": 0,
+              "lastSequence": 750,
+              "blocks": 751
+            },
+            "startupGaps": [
+              {
+                "at": 24693.400000035763,
+                "contextId": "context-5",
+                "outletId": "outlet-7",
+                "window": "shell-loop-two-phrases",
+                "messageOrder": 1,
+                "expectedFrame": 640,
+                "actualFrame": 1664
+              }
+            ]
+          },
+          "learning": null
+        }
+      ]
+    },
+    {
+      "run": "05",
+      "path": "output/island-experience/audio-focused-05",
+      "reportSha256": "ec6b25d0fed89c69e2f95a939cf7819d29bd35f82e8af0ddbc67c7b3ba0c39f6",
+      "revision": "workshop-20260909-0db80c949ca3",
+      "sourceHash": "0db80c949ca3eebc5efb410e05846c2f48da2f1d678c45aef4ab559d5b341d61",
+      "qaClosureHash": "b87b52d35734f3d1051a62052c672f9397644f561e35b86ad5638788149a1304",
+      "originalPass": false,
+      "sourceStable": true,
+      "finishedAt": "2026-09-09T01:11:51.499Z",
+      "scope": "main-and-boundaries",
+      "browser": {
+        "version": "145.0.7632.6",
+        "headed": true
+      },
+      "cleanup": {
+        "browserClosed": true,
+        "focusDriverRestored": true,
+        "separateProcessAudit": "output/island-experience/audio-focused-05/cleanup.json",
+        "remainingProcessCount": 0,
+        "profileExists": false
+      },
+      "layouts": [
+        {
+          "name": "phone",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "touch": true,
+          "reducedMotion": "no-preference",
+          "pass": false,
+          "firstFailure": "AssertionError [ERR_ASSERTION]: An unverified UI roundtrip cannot replace the baseline",
+          "genuineAnswers": 3,
+          "completedSets": 1,
+          "callerDBChecks": 44,
+          "nativeAudioPairs": 20,
+          "mainDigitalAudioExecuted": true,
+          "mainPassed": true,
+          "boundaries": {
+            "main": {
+              "status": "passed"
+            },
+            "save": {
+              "status": "passed"
+            }
+          },
+          "loop": {
+            "unmeasuredOnsetSeconds": 0.029333333333333336,
+            "pitchWindowCount": 6,
+            "sourceCorrespondence": [
+              {
+                "sourceOnsetSeconds": 0,
+                "sourceOffsetFrames": 1408,
+                "sourceRange": [
+                  18480,
+                  53760
+                ],
+                "outputRange": [
+                  17072,
+                  52352
+                ],
+                "gain": 0.3499999948970171,
+                "similarity": 0.9999999999999807,
+                "residual": 1.9617977527345377e-7
+              },
+              {
+                "sourceOnsetSeconds": 14,
+                "sourceOffsetFrames": 1408,
+                "sourceRange": [
+                  18480,
+                  53760
+                ],
+                "outputRange": [
+                  689072,
+                  724352
+                ],
+                "gain": 0.3499999948970171,
+                "similarity": 0.9999999999999807,
+                "residual": 1.9617977527345377e-7
+              }
+            ],
+            "firstRenderFrame": 1920,
+            "sourceStartAudioTime": 0.010666666666666666,
+            "measuredBlocks": {
+              "firstRenderFrame": 1920,
+              "lastRenderFrameExclusive": 770944,
+              "firstSequence": 0,
+              "lastSequence": 750,
+              "blocks": 751
+            },
+            "startupGaps": [
+              {
+                "at": 44535.80000001192,
+                "contextId": "context-5",
+                "outletId": "outlet-9",
+                "window": "shell-loop-two-phrases",
+                "messageOrder": 1,
+                "expectedFrame": 896,
+                "actualFrame": 1920
+              }
+            ]
+          },
+          "learning": null
+        },
+        {
+          "name": "tablet",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "touch": false,
+          "reducedMotion": "reduce",
+          "pass": false,
+          "firstFailure": "AssertionError [ERR_ASSERTION]: An unverified UI roundtrip cannot replace the baseline",
+          "genuineAnswers": 3,
+          "completedSets": 1,
+          "callerDBChecks": 44,
+          "nativeAudioPairs": 20,
+          "mainDigitalAudioExecuted": true,
+          "mainPassed": true,
+          "boundaries": {
+            "main": {
+              "status": "passed"
+            },
+            "save": {
+              "status": "passed"
+            }
+          },
+          "loop": {
+            "unmeasuredOnsetSeconds": 0.024,
+            "pitchWindowCount": 6,
+            "sourceCorrespondence": [
+              {
+                "sourceOnsetSeconds": 0,
+                "sourceOffsetFrames": 1152,
+                "sourceRange": [
+                  18480,
+                  53760
+                ],
+                "outputRange": [
+                  17328,
+                  52608
+                ],
+                "gain": 0.3499999948970171,
+                "similarity": 0.9999999999999807,
+                "residual": 1.9617977527345377e-7
+              },
+              {
+                "sourceOnsetSeconds": 14,
+                "sourceOffsetFrames": 1152,
+                "sourceRange": [
+                  18480,
+                  53760
+                ],
+                "outputRange": [
+                  689328,
+                  724608
+                ],
+                "gain": 0.3499999948970171,
+                "similarity": 0.9999999999999807,
+                "residual": 1.9617977527345377e-7
+              }
+            ],
+            "firstRenderFrame": 1664,
+            "sourceStartAudioTime": 0.010666666666666666,
+            "measuredBlocks": {
+              "firstRenderFrame": 1664,
+              "lastRenderFrameExclusive": 771712,
+              "firstSequence": 0,
+              "lastSequence": 751,
+              "blocks": 752
+            },
+            "startupGaps": [
+              {
+                "at": 24552.5,
+                "contextId": "context-5",
+                "outletId": "outlet-7",
+                "window": "shell-loop-two-phrases",
+                "messageOrder": 1,
+                "expectedFrame": 896,
+                "actualFrame": 1664
+              }
+            ]
+          },
+          "learning": null
+        }
+      ]
+    },
+    {
+      "run": "06",
+      "path": "output/island-experience/audio-focused-06",
+      "reportSha256": "fda8e80a161bb504ade93e9834ec21e843827be2e46b6bb2db442277faa62bfb",
+      "revision": "workshop-20260909-0db80c949ca3",
+      "sourceHash": "0db80c949ca3eebc5efb410e05846c2f48da2f1d678c45aef4ab559d5b341d61",
+      "qaClosureHash": "1584d364bbf00a177ea32cd93c088169c22a011ec5633a4175fbfe4d5f198806",
+      "originalPass": true,
+      "sourceStable": true,
+      "finishedAt": "2026-09-09T01:22:04.980Z",
+      "scope": "boundaries-only",
+      "browser": {
+        "version": "145.0.7632.6",
+        "headed": true
+      },
+      "cleanup": {
+        "browserClosed": true,
+        "focusDriverRestored": true,
+        "separateProcessAudit": "output/island-experience/audio-focused-06/cleanup.json",
+        "remainingProcessCount": 0,
+        "profileExists": false
+      },
+      "layouts": [
+        {
+          "name": "phone",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "touch": true,
+          "reducedMotion": "no-preference",
+          "pass": true,
+          "firstFailure": null,
+          "genuineAnswers": 3,
+          "completedSets": 1,
+          "callerDBChecks": 49,
+          "nativeAudioPairs": 9,
+          "mainDigitalAudioExecuted": false,
+          "mainPassed": false,
+          "boundaries": {
+            "prepare": {
+              "status": "passed"
+            },
+            "hidden": {
+              "status": "passed",
+              "visibility": {
+                "hidden": true,
+                "state": "hidden",
+                "focused": false
+              },
+              "oneShotNotReplayed": true,
+              "equippedLoopResumesCurrentSelection": true
+            },
+            "exit": {
+              "status": "passed"
+            },
+            "learning": {
+              "status": "passed"
+            },
+            "save": {
+              "status": "passed"
+            }
+          },
+          "loop": null,
+          "learning": {
+            "sameReservedPlan": true,
+            "fromRevision": 0,
+            "answeredRevision": 1,
+            "fixture": false,
+            "actualAnswerCueAudibility": "UNVERIFIED; island source retirement is checked independently"
+          }
+        },
+        {
+          "name": "tablet",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "touch": false,
+          "reducedMotion": "reduce",
+          "pass": true,
+          "firstFailure": null,
+          "genuineAnswers": 3,
+          "completedSets": 1,
+          "callerDBChecks": 49,
+          "nativeAudioPairs": 9,
+          "mainDigitalAudioExecuted": false,
+          "mainPassed": false,
+          "boundaries": {
+            "prepare": {
+              "status": "passed"
+            },
+            "hidden": {
+              "status": "passed",
+              "visibility": {
+                "hidden": true,
+                "state": "hidden",
+                "focused": false
+              },
+              "oneShotNotReplayed": true,
+              "equippedLoopResumesCurrentSelection": true
+            },
+            "exit": {
+              "status": "passed"
+            },
+            "learning": {
+              "status": "passed"
+            },
+            "save": {
+              "status": "passed"
+            }
+          },
+          "loop": null,
+          "learning": {
+            "sameReservedPlan": true,
+            "fromRevision": 0,
+            "answeredRevision": 1,
+            "fixture": false,
+            "actualAnswerCueAudibility": "UNVERIFIED; island source retirement is checked independently"
+          }
+        }
+      ]
+    }
+  ],
+  "composition": {
+    "mainRun": "05",
+    "boundariesRun": "06",
+    "mainRerunIn06": false,
+    "sameApp": true,
+    "sameProbeAndAnalysis": [
+      {
+        "name": "audio-probe.mjs",
+        "sha256": "066045273164dd66c9f44bbe5a6971f9fba951df4f7dc87af33f994c8afbc5f8"
+      },
+      {
+        "name": "audio-analysis.mjs",
+        "sha256": "c8558d6eb85b6cff94ae9f46f4b727b77b6021c4a305acd6e5402401cb57aa6a"
+      }
+    ],
+    "qa06IncrementalOverlays": [
+      {
+        "relative": "tools/e2e-island-expression-audio-focused.mjs",
+        "sourcePath": "/Users/yutogasaki/Projects/sansu/tools/e2e-island-expression-audio-focused.mjs",
+        "from": "1032b70334545e8d045b12d1e7cc663ccfe35d7190768eda7a8558c1ac2205da",
+        "to": "f287b20774f485960924eb5f5d968149c3733eec4670f06e231e5b7d9babb4cc"
+      },
+      {
+        "relative": "tools/expression-audio/expression-audio-phase.mjs",
+        "sourcePath": "/Users/yutogasaki/Projects/sansu/tools/expression-audio/expression-audio-phase.mjs",
+        "from": "6dc74db510523b1bc716455394543696f3a6b1e95780c1ebf8ebd04a5e8d09f2",
+        "to": "9296cb48cc809d6432a05da64502ae6b51b3954ba606b2c12147e90617cfc470"
+      },
+      {
+        "relative": "tools/island-expression-audio-focused-audit.test.mjs",
+        "sourcePath": "/Users/yutogasaki/Projects/sansu/tools/island-expression-audio-focused-audit.test.mjs",
+        "from": "7e58530a42a4207ab2722c5a1b378aac2a6584c3d4e89a35442ed296d121d8dc",
+        "to": "3531440cc1135ab05d1f381835b364d7c4d48df5305d0e8b5f4e1e3845d89f05"
+      }
+    ]
+  },
+  "validation": {
+    "audioPureAndFakeNative": 53,
+    "focusedOracle": 12,
+    "total": 65,
+    "pass": true,
+    "terminalExitCode": 0,
+    "sessionId": 78648,
+    "log": "output/island-experience/audio-focused-preparation-06/tests.log",
+    "logSha256": "5eac9a79792a337ee5de0a2fb631298e3873b8ad134a9799d214df7fcfcdab1c",
+    "syntax": true,
+    "lintErrors": 0
+  },
+  "gates": {
+    "selectedDigitalRuntime": "PASS-composed-only",
+    "physicalSpeaker": "UNVERIFIED",
+    "unrecordedOnset": "UNVERIFIED",
+    "answerCueListening": "UNVERIFIED",
+    "visualArtParity": "HOLD-separate",
+    "humanN": 0,
+    "silentComprehension": "UNVERIFIED",
+    "wholeSpec41Passed": false,
+    "wholeGoalComplete": false
+  }
+}

@@ -40,6 +40,26 @@ export async function withAudioFailureEvidence(operation, options) {
     }
 }
 
+/** JSON evidence is for inspection, never a lossless native baseline. Keep
+ * verified pairs in bounded memory, preserving own undefined fields and bytes.
+ * Both insertion and reads copy so neither app readers nor callers can mutate
+ * a previously verified transition. A limit failure never discards old pairs. */
+export function createVerifiedAudioDBHistory(owner, limit = 128) {
+    assert(owner && Number.isSafeInteger(limit) && limit > 0);
+    const pairs = [];
+    return {
+        record({ label, file, before, after, action }) {
+            assert(pairs.length < limit, 'Verified native DB history limit exceeded');
+            assertSoundDelta(before, after, owner, action);
+            pairs.push(structuredClone({ index: pairs.length, label, file, before, after, action }));
+        },
+        since(cursor = 0) {
+            assert(Number.isSafeInteger(cursor) && cursor >= 0 && cursor <= pairs.length, 'Invalid native DB history cursor');
+            return structuredClone(pairs.slice(cursor));
+        },
+    };
+}
+
 /** No browser/server is created. Qualified caller supplies its existing page,
  * native all-table reader (including Blob hashes) and frozen-build evidence. */
 export async function createExpressionAudioPhase({ page, owner, name, touch, output, provenance, tables }) {
@@ -56,6 +76,7 @@ async function createPhase({ page, owner, name, touch, output, provenance, table
     // Persist the previous/current read pair even if a locator fails before its
     // explicit delta check. This never writes anything back to the application.
     let previousTables = null, currentTables = null;
+    const nativeHistory = createVerifiedAudioDBHistory(owner);
     const tables = async target => { const value = await nativeTables(target); previousTables = currentTables; currentTables = value; return value; };
     evidenceOptions.readTables = async () => ({ previousRead: previousTables, currentRead: currentTables, nativeNow: await nativeTables(page) });
     const checkpoint = async label => persistAudioEvidence({ ...evidenceOptions, label,
@@ -87,7 +108,7 @@ async function createPhase({ page, owner, name, touch, output, provenance, table
         const file = `${name}-db-${String(report.db.length + 1).padStart(2, '0')}-${label}.json`;
         await fs.writeFile(path.join(output, file), JSON.stringify({ before, after, action: action ?? null }, null, 2));
         const entry = { label, file, exact: false }; report.db.push(entry);
-        assertSoundDelta(before, after, owner, action); entry.exact = true; return after;
+        nativeHistory.record({ label, file, before, after, action }); entry.exact = true; return after;
     };
     const currentSources = value => value.sources.filter(source => source.ambienceCandidate);
     const alive = (value, source) => !source.stopAt && !source.disconnectAt && !source.endedAt && !value.contexts.find(context => context.id === source.contextId)?.closedAt;
@@ -210,6 +231,22 @@ async function createPhase({ page, owner, name, touch, output, provenance, table
 
     const api = {
         report,
+        getVerifiedDBPairs(cursor = 0) {
+            const pairs = nativeHistory.since(cursor);
+            assert.equal(pairs.length + cursor, report.db.length, 'Every reported DB pair must be verified before adoption');
+            return pairs;
+        },
+        /** Minimal real-UI setup for a separate stop-boundary run. This does
+         * not execute or claim the main PCM/pitch/free-sound acceptance route. */
+        async prepareBoundaries() {
+            report.mainDigitalAudio = { status: 'not-run', separateEvidence: 'audio-focused-05, fixed20, both viewports' };
+            await free('off'); await header(true);
+            const before = await tables(page); await selectShell();
+            const after = await recordDB('boundary-ready', before);
+            assert.equal(islandFor(after, owner).expression.selection.soundscape, null);
+            assert.equal(after.profiles.find(profile => profile.id === owner).soundEnabled, true);
+            report.status = 'boundary-only; main-digital-audio-not-run';
+        },
         /** Ends in expression with shell equipped, sound enabled, one loop. */
         async runMain() {
             try {
@@ -294,7 +331,7 @@ async function createPhase({ page, owner, name, touch, output, provenance, table
             const after = await tables(page), file = `${name}-db-exit.json`;
             await fs.writeFile(path.join(output, file), JSON.stringify({ before, after, action: null }, null, 2));
             const entry = { label: 'exit', file, exact: false }; report.db.push(entry);
-            assertSoundDelta(before, after, owner); entry.exact = true;
+            nativeHistory.record({ label: 'exit', file, before, after }); entry.exact = true;
             report.boundaries.exit = { passed: true, sourceIds: active.map(source => source.id) }; await save();
         },
         /** Ends at the same normal learning input; caller can answer/reload using
@@ -317,7 +354,7 @@ async function createPhase({ page, owner, name, touch, output, provenance, table
         },
         save,
     };
-    for (const [method, label] of [['runMain', 'main'], ['runHidden', 'hidden'], ['runExit', 'exit'], ['runLearning', 'learning'], ['save', 'save']]) {
+    for (const [method, label] of [['prepareBoundaries', 'prepare'], ['runMain', 'main'], ['runHidden', 'hidden'], ['runExit', 'exit'], ['runLearning', 'learning'], ['save', 'save']]) {
         const run = api[method];
         api[method] = async options => {
             report.boundaries[label] = { status: 'running' };

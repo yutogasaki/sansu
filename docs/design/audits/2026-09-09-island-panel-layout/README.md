@@ -38,3 +38,5 @@ Status: Checkpoint / Full Goal Active。家は閉じた外観から入り、生�
 ![保存済み写真の一覧から同じ家へ戻った実画面](screens/phone-returned-house.png)
 
 原QA01はprofile seed後にlearningを固定期待し、QA02はgalleryの再mount後もGPU UUIDが続くと期待してFAIL。元結果を保持し、固定app28を変えずQA03で上の実契約を確認した。ブラウザ終了・全source前後一致。原結果は `output/island-experience/house-photo-28-03`。
+
+main保存地点 `e7ad86f` の[Verify Core](https://github.com/yutogasaki/sansu/actions/runs/34296780669)・[Docs Check](https://github.com/yutogasaki/sansu/actions/runs/34296780691) は同commitで合格した。継続中の芝面や音QAの変更とは別の保存地点である。

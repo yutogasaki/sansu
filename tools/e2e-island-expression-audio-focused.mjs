@@ -7,6 +7,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { assertWorkshopDelta, assertSettingsSoundDelta, assertDiscoveryDelta } from './island-qualified-audit.mjs';
 import { assertFocusedAcquisition, assertFocusedBellObservation, assertFocusedReservation, assertFocusedBaseline, assertFocusedAnswerIslands, assertNoLearningAmbienceStart, focusedSelection, SHELL_ITEM } from './island-expression-audio-focused-audit.mjs';
 
+assert([undefined, '0', '1'].includes(process.env.SANSU_AUDIO_FOCUSED_BOUNDARIES_ONLY));
+const boundariesOnly = process.env.SANSU_AUDIO_FOCUSED_BOUNDARIES_ONLY === '1';
 const viewports = [
     { name: 'phone', viewport: { width: 390, height: 844 }, touch: true, reducedMotion: 'no-preference' },
     { name: 'tablet', viewport: { width: 768, height: 1024 }, touch: false, reducedMotion: 'reduce' },
@@ -19,7 +21,9 @@ const scenarios = [
     'Fresh isolated DB -> real setup -> first ordinary learning section (normally 3 answers), no state restore or injected qualification.',
     'Real Settings sound OFF -> clean the three required specimens and observe only their identity result -> assemble/place straight, wheel and bell -> real visible flow and native bell receipt.',
     'Unqualified preview and connected-but-not-run negative -> actual zero-star acquire only shell -> owned but unequipped.',
-    'Same document: existing audio phase checks native source PCM, gain output, absolute frame correspondence, full ports/gaps/routes, preview/replace, two loop phrases, header OFF/ON, same free OFF, three free sounds and removal.',
+    boundariesOnly
+        ? 'Main digital audio is not rerun. Separate fixed20 audio-focused-05 proves that route. Real free OFF/header ON/shell selection are exact-DB-audited setup for the remaining boundaries.'
+        : 'Same document: existing audio phase checks native source PCM, gain output, absolute frame correspondence, full ports/gaps/routes, preview/replace, two loop phrases, header OFF/ON, same free OFF, three free sounds and removal.',
     'Headed same-window native hidden, no one-shot replay, active loop retirement/restart, Settings SPA exit/reentry and learning retirement -> same reserved actual answer -> save raw evidence before reload.',
 ];
 const remaining = ['No 150-answer visitor route, butterfly/leaf-bird qualification, other purchases or populated-photo preservation; those remain in qualified QA.',
@@ -28,7 +32,9 @@ const remaining = ['No 150-answer visitor route, butterfly/leaf-bird qualificati
 if (process.argv.includes('--plan')) {
     console.log(JSON.stringify({ preparedOnly: true, browserStarted: false, serverStarted: false, applicationDataInjected: false,
         viewports, scenarios, remaining, requiredEnvironment: ['SANSU_AUDIO_FOCUSED_URL', 'SANSU_AUDIO_FOCUSED_OUTPUT', 'SANSU_AUDIO_FOCUSED_BUILD_SOURCE', 'SANSU_AUDIO_FOCUSED_QA_ROOT', 'SANSU_AUDIO_FOCUSED_HEADED=1'],
-        optionalEnvironment: { SANSU_AUDIO_FOCUSED_VIEWPORT: 'phone or tablet; single width is partial' },
+        optionalEnvironment: { SANSU_AUDIO_FOCUSED_VIEWPORT: 'phone or tablet; single width is partial',
+            SANSU_AUDIO_FOCUSED_BOUNDARIES_ONLY: '1 skips main measurements; verifies only genuine preparation and hidden/exit/learning boundaries' },
+        scope: boundariesOnly ? 'boundaries-only' : 'main-and-boundaries',
         source: { fixedRevision: 'workshop-20260909-0db80c949ca3', app: 'All fixed20 manifest inputs and overlay app copies hash before/after',
             unchangedHelpers: frozenHelperFiles, explicitOverlay: overlayFiles, externalRuntime: 'qa-runtime.json pins Node and complete installed Playwright/core package files; verify before/after' },
         estimatedMinutes: { eachViewport: '3–5, unmeasured estimate; fail-fast at the real failing gate', both: '6–10' },
@@ -68,6 +74,8 @@ for (const relative of frozenHelperFiles) {
 }
 await fs.mkdir(path.dirname(out), { recursive: true }); await fs.mkdir(out);
 const report = { target, revision: manifest.revision, sourceHash: manifest.sourceHash, startedAt: new Date().toISOString(), pass: false,
+    scope: boundariesOnly ? 'boundaries-only' : 'main-and-boundaries', mainDigitalAudioExecuted: !boundariesOnly,
+    separateMainEvidence: boundariesOnly ? 'audio-focused-05; fixed20; both viewports main passed, caller-chain FAIL preserved' : null,
     fullSpec41Passed: false, humanN: 0, applicationDataInjected: false, timingEvidenceEligible: false, scenarios, remaining,
     sources: { application: { root: manifest.snapshot, revision: manifest.revision, sourceHash: manifest.sourceHash },
         qa: { root: sourceRoot, closureHash: sha(JSON.stringify({ qa: initialSource.qa, runtime: initialSource.runtime })), explicitOverlay: overlayFiles,
@@ -261,10 +269,13 @@ async function audioWindow(context, page) {
 }
 async function adoptAudioDBChain(page, row, phase, label) {
     let previous = row.baseline;
-    const entries = phase.report.db.slice(row.audioDBCursor ?? 0);
-    for (const entry of entries) {
+    const cursor = row.audioDBCursor ?? 0, entries = phase.report.db.slice(cursor);
+    const pairs = phase.getVerifiedDBPairs(cursor);
+    assert.equal(pairs.length, entries.length, 'Every audio DB transition must have a native verified pair');
+    for (const [index, entry] of entries.entries()) {
         assert(entry.exact, 'Audio module must pass its own exact oracle');
-        const pair = JSON.parse(await fs.readFile(path.join(out, 'audio', row.name, entry.file), 'utf8'));
+        const pair = pairs[index];
+        assert.equal(pair.index, cursor + index); assert.equal(pair.file, entry.file); assert.equal(pair.label, entry.label);
         assertFocusedBaseline(previous, pair.before, row.owner, row.expectedPlan);
         assertFocusedReservation(pair.after, row.owner, row.expectedPlan); previous = pair.after;
     }
@@ -283,7 +294,9 @@ async function qualifiedAudio(context, page, row, createPhase) {
     const originalDocument = await page.evaluate(() => performance.timeOrigin), reserved = structuredClone(row.earned.reservedPlan);
     let background;
     try {
-        await phase.runMain(); await adoptAudioDBChain(page, row, phase, 'audio-main');
+        if (boundariesOnly) await phase.prepareBoundaries();
+        else await phase.runMain();
+        await adoptAudioDBChain(page, row, phase, boundariesOnly ? 'audio-boundary-preparation' : 'audio-main');
         const main = await audioWindow(context, page); background = await context.newPage();
         const other = await audioWindow(context, background);
         row.audioCaller = { pass: false, originalDocument, sameWindow: { main, other }, reentry: null };
@@ -328,7 +341,9 @@ async function qualifiedAudio(context, page, row, createPhase) {
         await phase.save();
         await answerAndReload(page, row, { plan, before: beforeLearning, saved: savedExpression(islandFor(beforeLearning, row.owner)).selection });
         row.audioCaller.pass = true; row.audioCaller.actualAnswerAndReload = row.learning;
-        row.coverage.actualAudio = 'pass-selected-digital-source-output-native-hidden-SPA-exit-learning; physical-speaker-and-human-unverified';
+        row.coverage.actualAudio = boundariesOnly
+            ? 'pass-selected-native-hidden-SPA-exit-learning; main-not-rerun; separate-fixed20-audio-focused-05; physical-speaker-and-human-unverified'
+            : 'pass-selected-digital-source-output-native-hidden-SPA-exit-learning; physical-speaker-and-human-unverified';
     } catch (error) {
         row.audioCaller ??= { pass: false, originalDocument };
         row.audioCaller.failure = error.stack;
@@ -636,7 +651,7 @@ try {
             await qualifiedAudio(context, page, row, createExpressionAudioPhase);
             assert(row.bellObservation?.pass && row.acquisition && row.audioCaller.pass && row.learning);
             assert.deepEqual(row.errors, []); row.pass = true;
-            row.coverage.selectedGenuineBellAndAudio = 'PASS';
+            row.coverage.selectedGenuineBellAndAudio = boundariesOnly ? 'PASS-boundaries-only; main-not-rerun' : 'PASS';
             await fs.writeFile(`${out}/${row.name}-native-final.json`, JSON.stringify(await tables(page), null, 2));
         } catch (error) {
             row.failure = error.stack; process.exitCode = 1;

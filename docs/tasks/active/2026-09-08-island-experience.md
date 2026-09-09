@@ -6,9 +6,9 @@
 
 ## Goal
 
-2026-09-09追加: [島と操作の領域分離](../../design/audits/2026-09-09-island-panel-layout/README.md)を固定28で確認。3幅の6画面でスクロール中の戻る遮蔽が37/72位置から0へ改善、canvas実高と全storeを保持。固定28は294 suites/3244 tests・型/build/assets PASS。音QA03は録音先頭が不足して元FAILを保持し、採取コードの同期負荷を修正中。
+2026-09-09追加: [島と操作の領域分離](../../design/audits/2026-09-09-island-panel-layout/README.md)を固定28で確認。3幅の6画面でスクロール中の戻る遮蔽が37/72位置から0へ改善、canvas実高と全storeを保持。固定28は294 suites/3244 tests・型/build/assets PASS。main保存地点 `e7ad86f` のVerify Core/Docs Checkも合格。音QA03の採取負荷を修正し、同app20のQA05では両幅の必須50〜150ms窓・三音2周・無料音/解除復帰を通過。直後のQAのJSON変換でundefinedフィールドを落とす比較に失敗したため元05 FAILを保持し、停止境界は別の短いQA06で両幅PASS。同じ予約への実非最終1回答/reloadまで確認し、[音の検証記録](../../design/audits/2026-09-09-island-audio/README.md)へ分割した証拠と限界を残した。
 
-2026-09-09追加: 固定24の[衣装・模様と家具利用の有限確認](../../design/audits/2026-09-09-island-expression-matrix/README.md)は、両幅それぞれ残25組のportrait・選定9場面の利用が通過した。復元と明示注入を含む診断fixtureの項目単位の合成で、実取得・単一連続run・全直積・固定26の合格ではない。到達不可の元FAILと、実収納/再配置から同じ住民が再開する操作を保持。音の未計測prefix、画面の重なり、造形全体とHuman N=0は別の残差として追う。
+2026-09-09追加: 固定24の[衣装・模様と家具利用の有限確認](../../design/audits/2026-09-09-island-expression-matrix/README.md)は、両幅それぞれ残25組のportrait・選定9場面の利用が通過した。復元と明示注入を含む診断fixtureの項目単位の合成で、実取得・単一連続run・全直積・固定26の合格ではない。到達不可の元FAILと、実収納/再配置から同じ住民が再開する操作を保持。画面の重なりは固定28で解消し、音の必須窓は同app20のQA05で採取した。停止境界はQA06で通過し、未収録onset・実聴、造形全体とHuman N=0を別々に追う。
 
 このセッションの7作品104項目と追加12作品の分析全体を、学習を阻害せず自発的に遊び・学びたくなる島へつなぐ。仕様35のきせかえは一部分。18観点、12の気持ちよさ、10デザイン、8成長、8欲求、16報酬、24比較項目を対応表で追跡し、採用項目を仕様化・実装・実画面検証する。
 
@@ -42,7 +42,7 @@
 
 ## Verification
 
-2026-09-09保存地点: 樹冠 `2ef39b7`・有限表現QA `7473e7b` をmainへpush。後者のVerify Core/Docs CheckはPASS、固定26sourceのclassic smoke31経路も合格。次は島と操作帯の占有領域、任意パネルの戻るボタンの重なりを修正し、既存の音の未計測窓を限定検証する。
+2026-09-09保存地点: 樹冠 `2ef39b7`・有限表現QA `7473e7b`・画面の重なり修正 `e7ad86f` をmainへpush、`7473e7b`と`e7ad86f`のVerify Core/Docs CheckはPASS。固定26sourceのclassic smoke31経路も合格。音の主音05＋停止06は[版を分けた限定記録](../../design/audits/2026-09-09-island-audio/README.md)へ集約。次は芝の素材と現行画面での保存互換を限定検証する。芝の固定29/30は実画面で弱く、前者は縮小で細模様が消失、後者は横に流れる斑となったため両者HOLD。full testsの反復より先に材質の方式を変える。
 
 仕様36の受入項目、104件と横断索引の網羅、実際のphone/tabletの初回・成長・発見・再演・編集・再学習。verify:core、smoke、classic PWA、Island/living/PWA、正式fixed-ten。保存の失敗/競合/再送、旧データ、別profile、実offline、音off、reduced motion。最終固定版の画面とmanifest、視覚・意味/安全・runtimeの別判定。
 
@@ -73,10 +73,14 @@
 1. 有料6品/実試歩/全景v2/同学習復帰を修正版で完走し、追加衣装を着た同住民のF04実利用も確認する。
 2. 実通常学習→蝶/葉鳥の実来訪記録、入江の実制作→音offのbell記録→4資格品の明示取得/装備は資格03で両幅通過。来訪の顔・輪郭はHOLDで、修正後の同一buildによる実画面確認を残す。
 3. 追加衣装→改名で保持→同じ無料capへ戻る、三音→同じoff/無料3音へ戻る実操作・実音・hidden/学習/退出の停止。従来DEVの無料3音やPCM単体は新三音の実音証拠ではない。
-4. 旧版実UIから作るsceneStyleなし/v1の更新閲覧/適用、旧memoryと当時写真の保持、後発家具/展示による全景適用の全体拒否。旧appearance QAのv1期待値を新F05へそのまま接続しない。
+4. 旧版実UI由来のsceneStyleなし/v1、旧memory/当時写真、資格付きv2と後発家具/展示衝突は、固定20までを本走03と明示checkpoint02の分割した証拠で確認した（下記）。現行版への限定した互換確認は未実施。旧appearance QAのv1期待値を新F05へそのまま接続しない。
 5. 残る別機能購入との同revision競合、古い無料cap receipt再送、学習開始待ち中の遅い成功、通知順序。実写真を持つ2profileの保持は保存03で異なる被写体の元画像/thumbnailまで通過した。旧版生成写真やPWA更新時の保持は別途確認する。
 
-旧景色の実生成元は、固定06（`../../../output/island-experience/workshop-snapshot-06/build-source.json`）（`workshop-20260908-9039d0105c7d`、sceneStyleなし）と固定12（`../../../output/island-experience/workshop-snapshot-12/build-source.json`）（`workshop-20260909-3023b69183f8`、v1 writer）をsource/distで確認した。両者ともDB v8/写真3storeを持つため、DB version移行とoptional保存形式の前方互換を区別する。同一originで06の配置/実写真/記憶→12で別枠v1→17以降で旧閲覧/試用/取消/適用と新v2保存、後発家具/展示衝突を実操作するまとまりが未実施。資格品を含むnon-null v2も既存身支度06のnull中心snapshotと別に必要。旧noneは現無料設定/F05を保持、v1は当時無料設定を復元し追加衣装/収集音だけ解除、v2はnullも含め復元する。読取だけで旧保存を書き換えない。
+旧景色互換の既存証拠は次の2実行を合わせた範囲とする。本走03（`../../../output/island-experience/scene-compatibility-03/report.json`）はphone/tablet各150通常回答を使い、同一originの固定06 `workshop-20260908-9039d0105c7d` → 固定12 `workshop-20260909-3023b69183f8` → 固定20 `workshop-20260909-0db80c949ca3` で実UI由来のslot-1（sceneStyleなし）/slot-2（v1）、元写真/thumbnail/共有記憶の保持、旧閲覧/試用/取消/適用、4品の実観察資格と明示取得、資格品・有料衣装/模様を含むslot-3（v2）のnull復元/再編集まで通過した。旧成長memoryの実表示は `island-growth-initial` の1件で、全履歴の実表示やv1 growth memoryの生成を示さない。最後は購入後の配置画面で存在しない「しまへ」を待つQA前提により両幅FAIL。元判定は保持する。
+
+checkpoint02（`../../../output/island-experience/scene-compatibility-checkpoint-02/report.json`）は本走03の実保存17storeと元PNG/thumbnail bytesを隔離環境へ明示復元し、固定20で配置取消の全DB不変、後発の望遠鏡/展示それぞれによる全景適用の全体拒否→本人の実矢印による修正→適用、同じ予約の非最終1回答→reloadを両幅PASS。合成資格/通貨を足していないが、native key-generator内部値と実行中の身体姿勢は復元対象外で、連続した06→12→20の全経路PASSとは呼ばない。両実行のapp source/dist・QA前後hashは一致。QA closureは03が `449fe1521d1476df97175014df9a3b592b860994c12dd878745b749ab79f4a42`、checkpoint02が `c1e98e89dbed611645b90ce3727171a39c12e3d4f0bfbef90f662b0c3f49e8d7`。3版ともDB v8/写真3storeで、SWをblockした保存形式互換の証拠であり、DB version移行・実2build SW更新・実音・人の理解（N=0）は対象外。
+
+残る最短の受入は、この実保存と出所を再利用した**現行固定版への診断復元**として区別し、旧memory/元写真の閲覧と同bytes出力、none/v1/v2の試用取消/適用、現在の所有権・財布・目標・家の展示選択の保持、同予約1回答/reloadに絞る。2026-09-09の読取時点で `experience.ts` / `sceneStyle.ts` / `expression.ts` / `islandAlbumPresentation.ts` は固定20と同bytes。現行の家/写真の戻り先と操作面へQAを合わせる必要があり、まだ実行していない。通常回答150問・資格4品の再獲得・音・PWAを重複して必須にしない。noneは現在の無料設定/F05を保持、v1は当時の無料設定を復元して追加衣装/収集音だけ解除、v2は所有権を新たに付与せずnullも含め選択を復元する。旧保存行は書き換えず、既存の全DB oracleを用いて想定外の変更を拒否する。
 
 ## 現在の固定版と追加実装（2026-09-09）
 

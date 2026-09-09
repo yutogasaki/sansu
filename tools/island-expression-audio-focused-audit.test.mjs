@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'vitest';
 import { emptyWorkshop } from './island-qualified-audit.mjs';
+import { createVerifiedAudioDBHistory } from './expression-audio/expression-audio-phase.mjs';
 import { assertFocusedAcquisition, assertFocusedBellObservation, assertFocusedBaseline, assertFocusedReservation,
     assertFocusedAnswerIslands, assertNoLearningAmbienceStart, focusedSelection, SHELL_ITEM } from './island-expression-audio-focused-audit.mjs';
 
@@ -99,4 +100,42 @@ test('all native learning history rejects a short ambience that already stopped,
     assert.throws(() => assertNoLearningAmbienceStart(before, forgedOld), /No new island ambience/);
     const reset = structuredClone(after); reset.probe.sources.shift();
     assert.throws(() => assertNoLearningAmbienceStart(before, reset), /history cannot disappear/);
+});
+
+function nativePairFixture() {
+    const plan = { id: 'native-plan', profileId: owner, status: 'active', revision: 1, inputConfig: undefined };
+    return { islands: [{ profileId: owner, pendingPlanId: plan.id, nextSubjectChoice: undefined,
+        expression: { ownedItemIds: [SHELL_ITEM], selection: focusedSelection() } }], islandPlans: [plan],
+        logs: [{ result: 'correct', skipped: undefined, timeMs: undefined }], islandPhotoBlobs: [{ id: 'photo', bytes: [0, 255] }] };
+}
+test('native audio pair preserves undefined and isolates insertion and returned copies', () => {
+    const before = nativePairFixture(), after = structuredClone(before), history = createVerifiedAudioDBHistory(owner);
+    history.record({ label: 'unchanged', file: 'native.json', before, after });
+    const pair = history.since()[0]; assert.deepEqual(pair.before, before); assert.deepEqual(pair.after, after);
+    assert(Object.hasOwn(pair.after.logs[0], 'timeMs'));
+    before.logs[0].result = 'mutated-reader'; after.islandPhotoBlobs[0].bytes[0] = 23;
+    pair.before.islandPlans[0].revision++; pair.after.logs[0].timeMs = 10;
+    assert.deepEqual(history.since()[0].before, nativePairFixture());
+    assert.deepEqual(history.since()[0].after, nativePairFixture());
+});
+test('native audio pair rejects JSON loss, changed actual values and reservation differences', () => {
+    const original = nativePairFixture(), plan = original.islandPlans[0], history = createVerifiedAudioDBHistory(owner);
+    history.record({ label: 'kept', file: 'native.json', before: original, after: structuredClone(original) });
+    const pair = history.since()[0]; assertFocusedBaseline(original, pair.before, owner, plan);
+    assert.throws(() => assertFocusedBaseline(original, JSON.parse(JSON.stringify(pair.before)), owner, plan));
+    for (const mutate of [data => { delete data.logs[0].timeMs; }, data => { data.logs[0].timeMs = 0; },
+        data => { data.islandPlans[0].revision++; }, data => { data.islandPhotoBlobs[0].bytes[0] = 1; }]) {
+        const after = structuredClone(original); mutate(after);
+        assert.throws(() => history.record({ label: 'corrupt', file: 'corrupt.json', before: original, after }));
+        assert.throws(() => assertFocusedBaseline(original, after, owner, plan));
+        assert.equal(history.since().length, 1, 'Failed assertions cannot become adoptable pairs');
+    }
+});
+test('native audio pair bounds and cursor never discard, skip or normalize the history', () => {
+    const before = nativePairFixture(), history = createVerifiedAudioDBHistory(owner, 1);
+    history.record({ label: 'one', file: 'one.json', before, after: structuredClone(before) });
+    assert.deepEqual(history.since(1), []); assert.equal(history.since(0)[0].index, 0);
+    for (const cursor of [-1, 2, 0.5, NaN, Infinity, '0']) assert.throws(() => history.since(cursor), /cursor/);
+    assert.throws(() => history.record({ label: 'two', file: 'two.json', before, after: before }), /limit/);
+    assert.equal(history.since().length, 1);
 });
