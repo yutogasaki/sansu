@@ -98,7 +98,6 @@
 .stats-layout { display: grid; gap: 20px; }
 .stats-overview, .stats-details-grid { display: grid; gap: 16px; }
 .stats-details-grid { align-items: start; }
-.stats-details-toggle { display: flex; justify-content: center; }
 .stats-first-record { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-height: 194px; }
 .utility-layout-screen .stats-metric { padding: 10px; border: 0; background: var(--pokomoko-canvas); box-shadow: none; }
 .utility-layout-screen .stats-metric > div:first-child { font-size: 25px; }

@@ -645,7 +645,8 @@ const scenarioLegacyAlbumHidden = async (browser) => {
 
   await navigateHash(page, "/stats", /#\/stats/);
 
-  await page.getByRole("button", { name: /もっと(?:\s*みる|見る)/ }).click();
+  await page.getByRole("heading", { name: /せいちょう グラフ|成長グラフ/ }).waitFor();
+  assert(await page.getByRole("button", { name: /もっと(?:\s*みる|見る)/ }).count() === 0, "records should show all sections without an expand button");
   assert(
     await page.getByText(/ふわふわ アルバム/).count() === 0,
     "legacy fuwafuwa album should stay out of the child-facing records screen until art integration is complete",
