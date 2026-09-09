@@ -1263,7 +1263,10 @@ export class IslandScene {
 
     private applyCameraPan(bounds: THREE.Box3, regions: readonly (readonly CameraPanPoint[])[], aspect: number) {
         if (!canControlIslandCamera(this.state)) return;
+        const matrix = this.camera.matrixWorldInverse.elements;
         const frame = this.cameraControls.setFrame({
+            ground: { origin: { x: matrix[12], y: matrix[13] },
+                x: { x: matrix[0], y: matrix[1] }, z: { x: matrix[8], y: matrix[9] } },
             center: { x: (this.camera.left + this.camera.right) / 2, y: (this.camera.top + this.camera.bottom) / 2 },
             height: this.camera.top - this.camera.bottom, aspect,
             bounds: { minX: bounds.min.x, maxX: bounds.max.x, minY: bounds.min.y, maxY: bounds.max.y },

@@ -4,7 +4,7 @@ import type { IslandScene } from './three/runtime';
 import type { IslandStageProps } from './three/types';
 import type { ReactNode } from 'react';
 import { IslandCameraToolbar } from './IslandCameraToolbar';
-import { canControlIslandCamera, initialIslandCameraView, type IslandCameraView } from './three/islandCameraControls';
+import { canControlIslandCamera, hasChangedIslandCameraView, initialIslandCameraView, type IslandCameraView } from './three/islandCameraControls';
 import './IslandStage.css';
 
 const DEFAULT_CAPTION = 'カワウソと ウサギが くらす しま';
@@ -172,6 +172,9 @@ export function IslandStage(props: IslandStageProps & { compactCameraControls?: 
                 <button type="button" className="island-stage__retry" onClick={() => { setCaption({ text: 'しまを ひらいているよ', context: props.expressionCaptionKey }); setFailed(false); setAttempt(value => value + 1); }}>もういちど みる</button>
             </div>}
             {!failed && props.milestoneNotice}
+            {!failed && cameraEnabled && hasChangedIslandCameraView(cameraView) && <button type="button"
+                className="island-stage__quick-reset" disabled={props.photographing}
+                onClick={() => runtime.current?.controlCamera('reset')}>もとの ながめ</button>}
         </div>
         {!failed && cameraEnabled && <div className={`island-stage__controls${props.compactCameraControls ? ' island-stage__controls--compact' : ''}`}>
             {props.compactCameraControls ? <details className="island-view-tools"><summary>ながめ</summary>
