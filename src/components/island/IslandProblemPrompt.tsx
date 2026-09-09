@@ -5,15 +5,17 @@ import { IslandGlyph } from './IslandGlyph';
 import { splitIslandLabel } from './islandGlyphs';
 import { islandReferenceChoices } from './islandReferenceChoices';
 import { IslandProsePrompt } from './IslandProsePrompt';
+import { useIslandPromptSize } from './useIslandPromptSize';
 
 const renderItem = (item: ProblemVisualItem) => <IslandGlyph symbol={item.emoji} label={item.label} />;
 
 export function IslandProblemPrompt({ problem, speechControl }: { problem: Problem; speechControl?: ReactNode }) {
+    const promptRef = useIslandPromptSize(problem);
     const reference = islandReferenceChoices(problem) && problem.questionVisual?.kind === 'reference-choice-grid'
         ? problem.questionVisual : undefined;
     const prose = problem.subject === 'math' && !problem.questionVisual && /[ぁ-んァ-ヶ一-龠]/.test(problem.questionText ?? '');
     const plainProse = prose && !problem.categoryId?.startsWith('frac_') && !/\d+\s*\/\s*\d+/.test(problem.questionText ?? '');
-    return <div className="island-problem-prompt" data-problem-visual={problem.questionVisual?.kind ?? 'symbolic'} data-subject={problem.subject}
+    return <div ref={promptRef} className="island-problem-prompt" data-problem-visual={problem.questionVisual?.kind ?? 'symbolic'} data-subject={problem.subject}
         data-problem-prose={prose}>
         {problem.subject === 'vocab' && <svg className="island-word-seal" viewBox="0 0 48 36" aria-hidden="true" focusable="false">
             <rect x="4" y="4" width="40" height="28" rx="4" fill="#eadbb8" />
