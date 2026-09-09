@@ -1,0 +1,38 @@
+/* Shared by Island and Study, with the stored field order left intact. */
+[data-number-layout][data-number-layout] {
+    display: grid;
+    grid-template-columns: max-content;
+    grid-template-rows: auto auto;
+    justify-content: center;
+    align-items: center;
+    gap: 10px 14px;
+    padding-inline: 40px;
+}
+[data-number-layout="mixed"][data-number-layout] { grid-template-columns: max-content max-content; }
+[data-number-layout] > * { position: relative; margin: 0; }
+[data-number-layout="mixed"] > :first-child { grid-area: 1 / 1 / 3 / 2; }
+[data-number-layout] > :nth-last-child(2) { grid-area: 1 / -2 / 2 / -1; }
+[data-number-layout] > :last-child { grid-area: 2 / -2 / 3 / -1; }
+[data-number-layout] > :last-child::before {
+    content: '';
+    position: absolute;
+    inset: -6px 0 auto;
+    border-top: 2px solid currentColor;
+    pointer-events: none;
+}
+[data-number-layout] > * > small,
+[data-number-layout] [data-number-label] {
+    position: absolute;
+    left: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    font-size: 11px;
+}
+[data-number-layout="mixed"] > :first-child > small,
+[data-number-layout="mixed"] > :first-child > [data-number-label] {
+    left: 50%;
+    top: -18px;
+    transform: translateX(-50%);
+}
+[data-number-layout] > .park-input { min-height: 44px; }

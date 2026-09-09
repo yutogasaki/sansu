@@ -1,3 +1,4 @@
+import { NumberFieldsLayout } from './NumberFieldsLayout';
 import { allowsDecimalEntry, appendNumberField } from '../../domain/math/numberEntry';
 import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { MathProblemPrompt } from './MathProblemPrompt';
@@ -162,15 +163,15 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
                 aria-label={renderChoiceLabel ? choice.label : undefined}
                 onClick={() => { if (!disabled) { onInteraction?.(); onAnswer(choice.value); } }}>{renderChoiceLabel ? renderChoiceLabel(choice, problem) : choice.label}</button>)}
         </div> : <>
-            {!grid && <div className="park-inputs">
+            {!grid && <NumberFieldsLayout fields={problem.inputConfig?.fields} className="park-inputs">
                 {values.map((value, i) => <button key={i} className="park-input" aria-label={problem.inputConfig?.fields?.[i]?.label ?? 'こたえ'}
                     aria-pressed={active === i} disabled={disabled} onClick={() => setActive(i)}>
                     {problem.inputConfig?.fields?.[i]?.label && <small>{problem.inputConfig.fields[i].label}</small>}
                     {answerShape ? <AnswerCells shape={answerShape[i]} value={value} active={active === i && !disabled} /> : <span>{value || '□'}</span>}
                 </button>)}
-            </div>}
+            </NumberFieldsLayout>}
             <div className="park-keypad"><TenKey onInput={input} onDelete={remove} onClear={clear} onEnter={() => submit()}
-                disabled={disabled} enterDisabled={!canSubmit || (automatic && !hasSubmitted)} showDecimal={!grid && !answerShape && allowsDecimalEntry(problem)} nextFieldLabel={problem.inputType === 'multi-number' ? 'つぎの欄へ' : undefined} minRowHeight={44}
+                disabled={disabled} enterDisabled={!canSubmit || (automatic && !hasSubmitted)} showDecimal={!grid && !answerShape && allowsDecimalEntry(problem)} nextFieldLabel={problem.inputType === 'multi-number' ? 'つぎの欄へ' : undefined} nextFieldDisabled={problem.inputType === 'multi-number' && active === fieldCount - 1} minRowHeight={44}
                 confirmationMode={automatic && !hasSubmitted ? 'automatic' : 'manual'}
                 writtenInput={Boolean(step)}
                 enterLabel={grid?.writtenLayout && (slot.hissanStep ?? 0) < grid.steps.length - 1 ? 'このだんを たしかめる' : undefined}

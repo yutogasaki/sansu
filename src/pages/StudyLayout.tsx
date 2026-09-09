@@ -848,6 +848,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             writtenInput={hissanActive}
                             showDecimal={!hissanActive && !answerShape && allowsDecimalEntry(currentProblem)}
                             nextFieldLabel={currentProblem.inputType === 'multi-number' ? 'つぎの欄へ' : undefined}
+                            nextFieldDisabled={currentProblem.inputType === 'multi-number' && activeFieldIndex === userInputs.length - 1}
                             onCursorMove={showCursorButtons ? onCursorMove : undefined}
                             compact={shouldCompactTenKey}
                         />

@@ -149,7 +149,13 @@ describe('ordinary numeric entry', () => {
             inputConfig: {fields:[{label:'分子',length:2},{label:'分母',length:2}]} });
         h.render({deferSubmission:false});
         expect(h.keypad().showDecimal).toBe(false);
-        h.key('1'); h.key('.'); h.key('2'); h.key('Backspace'); h.key('2');
+        expect(h.keypad().nextFieldDisabled).toBe(false);
+        h.key('1'); h.key('.'); h.key('2');
+        expect(h.keypad().nextFieldDisabled).toBe(true);
+        h.key('Backspace');
+        expect(h.keypad().nextFieldDisabled).toBe(false);
+        h.key('2');
+        expect(h.keypad().nextFieldDisabled).toBe(true);
         expect(h.props.onAnswer).not.toHaveBeenCalled();
         h.key('7');
         expect(h.props.onAnswer).toHaveBeenCalledWith(['12','7']);

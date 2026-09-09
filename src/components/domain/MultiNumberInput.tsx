@@ -1,3 +1,4 @@
+import { NumberFieldsLayout } from './NumberFieldsLayout';
 import React from "react";
 import { AnswerCells } from "./AnswerCells";
 
@@ -24,7 +25,7 @@ export const MultiNumberInput: React.FC<MultiNumberInputProps> = ({
     readOnly = false
 }) => {
     return (
-        <div className="flex items-center justify-center gap-4 py-2 land:py-4">
+        <NumberFieldsLayout fields={fields} className="flex items-center justify-center gap-4 py-2 land:py-4">
             {fields.map((field, idx) => {
                 const val = values[idx] || "";
                 // Base width of 4rem (approx 64px) + 1rem per character (approx 16px)
@@ -34,7 +35,7 @@ export const MultiNumberInput: React.FC<MultiNumberInputProps> = ({
                 return (
                     <div key={idx} className="flex flex-col items-center gap-2">
                         {/* Label */}
-                        <span className="text-sm font-bold text-slate-500">{field.label}</span>
+                        <span data-number-label className="text-sm font-bold text-slate-500">{field.label}</span>
 
                         {/* Input Box - Auto expanding width */}
                         <div
@@ -58,6 +59,6 @@ export const MultiNumberInput: React.FC<MultiNumberInputProps> = ({
                     </div>
                 );
             })}
-        </div>
+        </NumberFieldsLayout>
     );
 };
