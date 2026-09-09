@@ -69,7 +69,7 @@ export class IslandCameraControls {
         if (this.pointers.size > 1) this.pointers.forEach(pointer => { pointer.moved = true; });
     }
 
-    private zoomAndMove(zoom: number, before?: Point, after?: Point, viewport?: IslandCameraViewport) {
+    private zoomAndMove(zoom: number, before?: Point, after?: Point, viewport?: IslandCameraViewport, rotation = 0) {
         zoom = Math.max(ISLAND_MIN_ZOOM, Math.min(ISLAND_MAX_ZOOM, zoom));
         const pan = { ...this.view.pan };
         if (this.framing && before && after && viewport && viewport.width > 0 && viewport.height > 0) {
@@ -80,7 +80,7 @@ export class IslandCameraControls {
             pan.y += (.5 - (before.y - viewport.top) / viewport.height) * height
                 - (.5 - (after.y - viewport.top) / viewport.height) * height * ratio;
         }
-        this.change(this.view.azimuth, zoom, pan);
+        this.change(this.view.azimuth + rotation, zoom, pan);
     }
 
     move(id: number, point: Point, viewport: IslandCameraViewport) {
@@ -89,12 +89,17 @@ export class IslandCameraControls {
         const pair = [...this.pointers.values()].slice(0, 2);
         const distance = () => Math.hypot(pair[1].x - pair[0].x, pair[1].y - pair[0].y);
         const midpoint = () => ({ x: (pair[0].x + pair[1].x) / 2, y: (pair[0].y + pair[1].y) / 2 });
+        const angle = () => Math.atan2(pair[1].y - pair[0].y, pair[1].x - pair[0].x);
+        const oldAngle = pair.length === 2 ? angle() : 0;
         const oldDistance = pair.length === 2 ? distance() : 0;
         const before = pair.length === 2 ? midpoint() : { x: pointer.x, y: pointer.y };
         pointer.x = point.x; pointer.y = point.y;
         if (pair.length === 2) {
-            if (pair.includes(pointer)) this.zoomAndMove(oldDistance > 12 && distance() > 12 ? this.view.zoom * distance() / oldDistance : this.view.zoom,
-                before, midpoint(), viewport);
+            if (pair.includes(pointer)) {
+                const stablePair = oldDistance > 12 && distance() > 12;
+                this.zoomAndMove(stablePair ? this.view.zoom * distance() / oldDistance : this.view.zoom,
+                    before, midpoint(), viewport, stablePair ? wrapAngle(angle() - oldAngle) : 0);
+            }
             return;
         }
         const totalX = point.x - pointer.start.x, totalY = point.y - pointer.start.y;

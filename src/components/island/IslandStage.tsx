@@ -176,9 +176,9 @@ export function IslandStage(props: IslandStageProps & { compactCameraControls?: 
         {!failed && cameraEnabled && <div className={`island-stage__controls${props.compactCameraControls ? ' island-stage__controls--compact' : ''}`}>
             {props.compactCameraControls ? <details className="island-view-tools"><summary>ながめ</summary>
                 <div className="island-view-tools-panel"><IslandCameraToolbar view={cameraView} disabled={props.photographing} onAction={action => runtime.current?.controlCamera(action)} />
-                <p className="island-camera-hint">ひろげて 拡大・なぞって 移動</p></div>
+                <p className="island-camera-hint">なぞって 移動・2本指で 拡大と回転</p></div>
             </details> : <><IslandCameraToolbar view={cameraView} disabled={props.photographing} onAction={action => runtime.current?.controlCamera(action)} />
-            <p className="island-camera-hint">ひろげて 拡大・なぞって 移動</p></>}
+            <p className="island-camera-hint">なぞって 移動・2本指で 拡大と回転</p></>}
         </div>}
         <figcaption hidden={workshopActive || sharedActive || Boolean(props.preview) || Boolean(props.expressionCaptionKey) && caption === DEFAULT_CAPTION} className={`island-stage__caption${caption === DEFAULT_CAPTION ? ' island-stage__caption--quiet' : ''}`} aria-live="polite" aria-atomic="true">{caption}</figcaption>
     </figure>;

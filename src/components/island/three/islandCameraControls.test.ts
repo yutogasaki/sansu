@@ -48,14 +48,46 @@ describe('island view gestures', () => {
         expect(controls.up(1, { x: 100, y: 100 })).toBe(false);
     });
 
-    it('does not turn a pinch twist into rotation; buttons still rotate', () => {
+    it('twists smoothly across the angle boundary; buttons still rotate', () => {
         const controls = camera();
         controls.down(1, { x: 200, y: 200 });
         controls.down(2, { x: 100, y: 201 });
         controls.move(2, { x: 100, y: 199 }, viewport);
-        expect(controls.view.azimuth).toBe(0);
+        expect(controls.view.azimuth).toBeCloseTo(2 * Math.atan(.01));
         expect(controls.view.zoom).toBeCloseTo(1);
+        controls.action('reset');
         controls.action('right'); expect(controls.view.azimuth).toBeCloseTo(Math.PI / 6);
+    });
+
+
+    it.each([390, 768])('rotates with two fingers at %ipx and consumes both releases', width => {
+        const controls = camera();
+        const screen = { ...viewport, width, height: width };
+        controls.down(1, { x: 100, y: 100 });
+        controls.down(2, { x: 200, y: 100 });
+        controls.move(2, { x: 100, y: 250 }, screen);
+        expect(controls.view.azimuth).toBeCloseTo(Math.PI / 2);
+        expect(controls.view.zoom).toBeCloseTo(1.5);
+        expect(controls.up(2, { x: 100, y: 250 })).toBe(false);
+        controls.move(1, { x: 110, y: 100 }, screen);
+        expect(controls.view.azimuth).toBeCloseTo(Math.PI / 2);
+        expect(controls.up(1, { x: 110, y: 100 })).toBe(false);
+    });
+
+    it('ignores an extra finger and suppresses unstable rotation through coincident fingers', () => {
+        const controls = camera();
+        controls.down(1, { x: 100, y: 100 });
+        controls.down(2, { x: 200, y: 100 });
+        controls.down(3, { x: 300, y: 100 });
+        controls.move(3, { x: 300, y: 200 }, viewport);
+        expect(controls.view.azimuth).toBe(0);
+        controls.move(2, { x: 100, y: 100 }, viewport);
+        controls.move(2, { x: 0, y: 100 }, viewport);
+        expect(controls.view.azimuth).toBe(0);
+        expect(controls.view.zoom).toBe(1);
+        controls.cancel();
+        controls.move(2, { x: 100, y: 200 }, viewport);
+        expect(controls.view.azimuth).toBe(0);
     });
 
     it('bounds wheel and button zoom, releases outward scrolling at limits, and resets safely', () => {
