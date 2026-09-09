@@ -1,3 +1,4 @@
+import { integerFractionProblem, restoreFractionAnswer } from '../../domain/math/fractionInput';
 import { NumberFieldsLayout } from './NumberFieldsLayout';
 import { allowsDecimalEntry, appendNumberField } from '../../domain/math/numberEntry';
 import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
@@ -30,8 +31,8 @@ export interface LearningAnswerFormProps {
 }
 
 // Presentation may change; the frozen slot and its input/submit contract do not.
-export function LearningAnswerForm({ slot, disabled, deferSubmission = false, onAnswer, onInteraction, renderPrompt, renderChoiceLabel, renderSupportAnswer, renderSupport, resetCursorOnClear = false, retryAnswer, className }: LearningAnswerFormProps) {
-    const problem = slot.problem;
+export function LearningAnswerForm({ slot, disabled, deferSubmission = false, onAnswer, onInteraction, renderPrompt, renderChoiceLabel, renderSupportAnswer, renderSupport, retryAnswer, className }: LearningAnswerFormProps) {
+    const problem = useMemo(() => integerFractionProblem(slot.problem), [slot.problem]);
     const grid = useMemo(() => parkHissanGrid(problem), [problem]);
     const step = grid?.steps[slot.hissanStep ?? 0];
     const inputOrder = step ? writtenInputOrder(step) : [];
@@ -41,7 +42,7 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
     const fieldCount = step ? step.correctValues.length : problem.inputType === 'multi-number' ? problem.inputConfig!.fields!.length : 1;
     const [inputState, setInputState] = useState(() => {
         const values = step ? (retryAnswer ? writtenRetryValues(retryAnswer, step.correctValues) : automaticValues).map((value, i) => automaticValues[i] || value) : Array<string>(fieldCount).fill('');
-        return { values, active: step ? nextWrittenInput(values, -1, inputOrder) : 0, lastEdited: undefined as number | undefined };
+        return { replaceOnInput: false, values, active: step ? nextWrittenInput(values, -1, inputOrder) : 0, lastEdited: undefined as number | undefined };
     });
     const pendingInput = useRef(inputState);
     const submitting = useRef(false);
@@ -55,13 +56,16 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
     // value and cursor together so the next event never uses a stale field/value.
     const updateInput = (update: (current: typeof inputState) => typeof inputState) => {
         const next = update(pendingInput.current);
-        if (next.active === pendingInput.current.active && next.values.every((value, index) => value === pendingInput.current.values[index])) return false;
+        if (next.replaceOnInput === pendingInput.current.replaceOnInput && next.active === pendingInput.current.active && next.values.every((value, index) => value === pendingInput.current.values[index])) return false;
         pendingInput.current = next;
         setInputState(next);
         onInteraction?.();
         return true;
     };
-    const setActive = (index: number) => updateInput(current => ({ ...current, active: index, lastEdited: undefined }));
+    const setActive = (index: number) => {
+        if (disabled || submitting.current) return;
+        updateInput(current => ({ ...current, active: index, replaceOnInput: !step && Boolean(current.values[index]), lastEdited: undefined }));
+    };
     const canSubmit = step ? isWrittenStepComplete(values) : answerShape ? isAnswerShapeComplete(values, answerShape) : canConfirmNumberFields(values);
     const submit = (auto = false) => {
         const current = pendingInput.current.values;
@@ -72,23 +76,24 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
         setSubmissionCount(count => count + 1);
         if (!auto) acknowledgeAnswerConfirmation();
         onInteraction?.();
-        onAnswer(step || problem.inputType === 'multi-number' ? current : current[0]);
+        onAnswer(restoreFractionAnswer(slot.problem, step || problem.inputType === 'multi-number' ? current : current[0]));
     };
     const input = (value: number | string) => {
         if (disabled || submitting.current || queuedSubmit.current !== undefined) return;
         const text = String(value);
         if (!/^[0-9.]$/.test(text)) return;
-        if (text === '.' && (grid || !allowsDecimalEntry(problem))) return;
-        const changed = updateInput(current => {
+        if (text === '.' && (grid || answerShape || !allowsDecimalEntry(problem))) return;
+        const changed = updateInput(previous => {
+            const current = previous.replaceOnInput ? { ...previous, values: previous.values.map((value, i) => i === previous.active ? '' : value), replaceOnInput: false } : previous;
             if (step && (step.correctValues[current.active] === '.' ? text !== '.' : !/^[0-9]$/.test(text))) return current;
-            if (!step && answerShape) return { ...appendAnswerDigit(current.values, current.active, text, answerShape), lastEdited: current.active };
+            if (!step && answerShape) return { replaceOnInput: false, ...appendAnswerDigit(current.values, current.active, text, answerShape), lastEdited: current.active };
             if (!step && problem.inputType === 'multi-number') {
-                return { ...appendNumberField(current.values, current.active, text, problem.inputConfig?.fields?.map(field => field.length) ?? []), lastEdited: current.active };
+                return { replaceOnInput: false, ...appendNumberField(current.values, current.active, text, problem.inputConfig?.fields?.map(field => field.length) ?? []), lastEdited: current.active };
             }
             if (text === '.' && current.values[current.active].includes('.')) return current;
             const limit = step ? 1 : problem.inputConfig?.fields?.[current.active]?.length ?? 8;
             const values = current.values.map((value, i) => i === current.active ? (step ? text : (value + text).slice(0, limit)) : value);
-            return { values, active: step ? nextWrittenInput(values, current.active, inputOrder) : current.active, lastEdited: current.active };
+            return { replaceOnInput: false, values, active: step ? nextWrittenInput(values, current.active, inputOrder) : current.active, lastEdited: current.active };
         });
         if (changed && automatic && (step ? isWrittenStepComplete(pendingInput.current.values) : Boolean(answerShape && isAnswerShapeComplete(pendingInput.current.values, answerShape)))) submit(true);
     };
@@ -96,13 +101,13 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
         if (!disabled && !submitting.current) updateInput(current => {
             queuedSubmit.current = undefined;
             const cursor = !current.values[current.active] ? step ? current.lastEdited ?? inputOrder[Math.max(0, inputOrder.indexOf(current.active) - 1)] : problem.inputType === 'multi-number' ? current.lastEdited ?? Math.max(0, current.active - 1) : current.active : current.active;
-            return { active: cursor, values: current.values.map((value, i) => i === cursor ? (!step && answerShape ? removeAnswerDigit(value) : value.slice(0, -1)) : value), lastEdited: undefined };
+            return { replaceOnInput: false, active: cursor, values: current.values.map((value, i) => i === cursor ? (!step && answerShape ? removeAnswerDigit(value) : value.slice(0, -1)) : value), lastEdited: undefined };
         });
     };
     const clear = () => {
         if (disabled || submitting.current) return;
         queuedSubmit.current = undefined;
-        updateInput(current => ({ values: step ? automaticValues : Array<string>(fieldCount).fill(''), active: step ? inputOrder[0] : resetCursorOnClear ? 0 : current.active, lastEdited: undefined }));
+        updateInput(() => ({ replaceOnInput: false, values: step ? automaticValues : Array<string>(fieldCount).fill(''), active: step ? inputOrder[0] : 0, lastEdited: undefined }));
     };
     const moveCursor = (direction: 'left' | 'right', separator = false) => {
         if (disabled) return;
@@ -111,7 +116,7 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
             const order = step ? inputOrder : current.values.map((_, i) => i);
             const position = Math.max(0, order.indexOf(current.active));
             const next = Math.max(0, Math.min(order.length - 1, position + (direction === 'left' ? -1 : 1)));
-            return { ...current, active: order[next], lastEdited: undefined };
+            return { ...current, replaceOnInput: false, active: order[next], lastEdited: undefined };
         });
     };
     // Flush against the newest receipt/revision and callback, never the closure
@@ -165,7 +170,7 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
         </div> : <>
             {!grid && <NumberFieldsLayout fields={problem.inputConfig?.fields} className="park-inputs">
                 {values.map((value, i) => <button key={i} className="park-input" aria-label={problem.inputConfig?.fields?.[i]?.label ?? 'こたえ'}
-                    aria-pressed={active === i} disabled={disabled} onClick={() => setActive(i)}>
+                    aria-pressed={active === i} data-replace-selected={active === i && inputState.replaceOnInput} disabled={disabled} onClick={() => setActive(i)}>
                     {problem.inputConfig?.fields?.[i]?.label && <small>{problem.inputConfig.fields[i].label}</small>}
                     {answerShape ? <AnswerCells shape={answerShape[i]} value={value} active={active === i && !disabled} /> : <span>{value || '□'}</span>}
                 </button>)}

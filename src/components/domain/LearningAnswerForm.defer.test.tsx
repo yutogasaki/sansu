@@ -58,16 +58,20 @@ function harness(problemOverride: Partial<LearningAnswerFormProps['slot']['probl
         }
         throw new Error('Render did not settle');
     };
-    const find = (element: ReactElement): ReactElement | undefined => {
-        if (element.type === TenKey) return element;
+    const find = (element: ReactElement, match: (element: ReactElement) => boolean = element => element.type === TenKey): ReactElement | undefined => {
+        if (match(element)) return element;
         const children = (element.props as { children?: unknown }).children;
         for (const child of [children].flat(Infinity)) {
-            if (child && typeof child === 'object' && 'type' in child) { const result = find(child as ReactElement); if (result) return result; }
+            if (child && typeof child === 'object' && 'type' in child) { const result = find(child as ReactElement, match); if (result) return result; }
         }
     };
     const keypad = () => find(tree)!.props as Parameters<typeof TenKey>[0];
     render();
-    return { render, keypad, get props() { return props; }, key(key: string, target?: Partial<HTMLElement>, repeat = false) {
+    return { render, keypad, select(label: string) {
+        const button = find(tree, element => element.type === 'button' && (element.props as { 'aria-label'?: string })['aria-label'] === label);
+        if (!button) throw new Error('No field: ' + label);
+        (button.props as { onClick: () => void }).onClick(); render();
+    }, get props() { return props; }, key(key: string, target?: Partial<HTMLElement>, repeat = false) {
         const event = Object.assign(new Event('keydown', { cancelable: true }), { key, repeat });
         if (target) Object.defineProperty(event, 'target', { value: target });
         window.dispatchEvent(event); render(); return event;
@@ -239,7 +243,7 @@ describe('answer-cell editing edge cases', () => {
             inputConfig: { fields: [{label:'分子',length:1},{label:'分母',length:1}] } });
         h.render({ deferSubmission: false });
         h.key('ArrowRight'); h.keypad().onClear(); h.render();
-        h.key('2'); h.key('1');
+        h.key('1'); h.key('2');
         expect(h.props.onAnswer).toHaveBeenCalledWith(['1','2']);
     });
 });
@@ -274,4 +278,41 @@ it('a clamped arrow preserves the last edited field for Backspace', () => {
     h.key('ArrowRight'); h.key('2'); h.key('ArrowLeft'); h.key('ArrowLeft'); h.key('1');
     h.key('ArrowRight'); h.key('Backspace'); h.key('1'); h.key('3');
     expect(h.props.onAnswer).toHaveBeenCalledWith(['1','2','3']);
+});
+
+
+describe('natural fraction correction', () => {
+    const fraction = { categoryId: 'frac_add_same', questionText: '5/7 + 7/7 =', correctAnswer: ['12', '7'], inputType: 'multi-number' as const, hissanVersion: undefined,
+        inputConfig: { fields: [{ label: '分子', length: 2 }, { label: '分母', length: 2 }] } };
+    it('selects a filled field without erasing it, then replaces it with new digits', () => {
+        const h = harness(fraction); h.render({ deferSubmission: false });
+        h.key('1'); h.key('2'); h.select('分子'); h.key('.');
+        expect(h.props.onAnswer).not.toHaveBeenCalled();
+        h.key('9'); h.key('8'); h.key('7');
+        expect(h.props.onAnswer).toHaveBeenCalledTimes(1);
+        expect(h.props.onAnswer).toHaveBeenCalledWith(['98', '7']);
+    });
+    it('keeps another filled field while replacing a selected numerator', () => {
+        const h = harness(fraction); h.render({ deferSubmission: false });
+        h.key('1'); h.select('分母'); h.key('7'); h.select('分子');
+        h.key('1'); h.key('2');
+        expect(h.props.onAnswer).toHaveBeenCalledTimes(1);
+        expect(h.props.onAnswer).toHaveBeenCalledWith(['12', '7']);
+    });
+    it('clears every field and returns to the first field', () => {
+        const h = harness(fraction); h.render({ deferSubmission: false });
+        h.key('1'); h.key('2'); h.keypad().onClear(); h.render();
+        expect(h.keypad().nextFieldDisabled).toBe(false);
+        h.key('9'); h.key('8'); h.key('7');
+        expect(h.props.onAnswer).toHaveBeenCalledTimes(1);
+        expect(h.props.onAnswer).toHaveBeenCalledWith(['98', '7']);
+    });
+    it.each(['1', '2'])('accepts a single integer %s for a frozen 1/1 answer', digit => {
+        const h = harness({ ...fraction, questionText: '1/2 + 1/2 =', correctAnswer: ['1', '1'] });
+        h.render({ deferSubmission: false }); h.key(digit);
+        expect(h.props.onAnswer).toHaveBeenCalledTimes(1);
+        expect(h.props.onAnswer).toHaveBeenCalledWith([digit, '1']);
+        expect(h.props.slot.problem.correctAnswer).toEqual(['1', '1']);
+        expect(h.props.slot.problem.inputConfig?.fields).toHaveLength(2);
+    });
 });

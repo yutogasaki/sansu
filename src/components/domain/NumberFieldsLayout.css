@@ -36,3 +36,9 @@
     transform: translateX(-50%);
 }
 [data-number-layout] > .park-input { min-height: 44px; }
+
+[data-replace-selected=true] .answer-cell {
+    background: color-mix(in srgb, currentColor 14%, transparent);
+    outline: 2px solid currentColor;
+    outline-offset: 1px;
+}

@@ -14,6 +14,7 @@ interface MultiNumberInputProps {
     onFocus: (index: number) => void;
     readOnly?: boolean;
     answerShape?: string[];
+    replaceIndex?: number;
 }
 
 export const MultiNumberInput: React.FC<MultiNumberInputProps> = ({
@@ -22,6 +23,7 @@ export const MultiNumberInput: React.FC<MultiNumberInputProps> = ({
     activeIndex,
     onFocus,
     answerShape,
+    replaceIndex,
     readOnly = false
 }) => {
     return (
@@ -38,7 +40,12 @@ export const MultiNumberInput: React.FC<MultiNumberInputProps> = ({
                         <span data-number-label className="text-sm font-bold text-slate-500">{field.label}</span>
 
                         {/* Input Box - Auto expanding width */}
-                        <div
+                        <button
+                            type="button"
+                            aria-label={field.label}
+                            aria-pressed={activeIndex === idx}
+                            data-replace-selected={replaceIndex === idx}
+                            disabled={readOnly}
                             onClick={() => !readOnly && onFocus(idx)}
                             style={widthStyle}
                             className={`
@@ -55,7 +62,7 @@ export const MultiNumberInput: React.FC<MultiNumberInputProps> = ({
                             {!answerShape && activeIndex === idx && !readOnly && (
                                 <span className="absolute right-2 top-1/2 h-[60%] w-0.5 -translate-y-1/2 animate-pulse rounded-full bg-cyan-500" />
                             )}
-                        </div>
+                        </button>
                     </div>
                 );
             })}

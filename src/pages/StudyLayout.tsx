@@ -29,6 +29,7 @@ import { cn } from "../utils/cn";
 type SessionKind = "normal" | "review" | "weak" | "check-normal" | "check-event" | "weak-review" | "periodic-test" | "dev";
 
 interface StudyLayoutProps {
+    replaceFieldIndex?: number;
     listeningEntry?: React.ReactNode;
     emptyReview?: boolean;
     loading: boolean;
@@ -122,6 +123,7 @@ const ResultMetric: React.FC<ResultMetricProps> = ({ label, value, tone = "defau
 );
 
 export const StudyLayout: React.FC<StudyLayoutProps> = ({
+    replaceFieldIndex,
     listeningEntry,
     emptyReview = false,
     loading,
@@ -768,6 +770,12 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                 </div>
                                 {/* Input Preview */}
                                 <div
+                                    role="button"
+                                    tabIndex={0}
+                                    aria-label="こたえ"
+                                    data-replace-selected={replaceFieldIndex === 0}
+                                    onClick={() => onFocusField(0)}
+                                    onKeyDown={event => { if (event.key === ' ') { event.preventDefault(); onFocusField(0); } }}
                                     className="app-glass flex h-20 shrink-0 items-center justify-center rounded-[22px] px-4 text-5xl font-mono text-slate-700 transition-all ipadland:h-32 ipadland:min-w-[200px] ipadland:text-7xl mobile:h-12 mobile:min-w-[80px] mobile:px-2 mobile:text-3xl"
                                     style={{ width: `${Math.max(3, answerShape?.[0].length ?? userInput.length) * 2.5}rem` }}
                                 >
@@ -815,6 +823,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                             fields={currentProblem.inputConfig.fields.map(f => ({ ...f, label: f.label || "" }))}
                                             values={userInputs}
                                             activeIndex={activeFieldIndex}
+                                            replaceIndex={replaceFieldIndex}
                                             onFocus={onFocusField}
                                             readOnly={feedback !== "none"}
                                         />

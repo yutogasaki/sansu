@@ -1,3 +1,4 @@
+import { integerFractionProblem } from '../domain/math/fractionInput';
 import { useLearningSessionLease } from '../hooks/useLearningSessionLease';
 import { allowsDecimalEntry, appendNumberField } from '../domain/math/numberEntry';
 import React, { useState, useEffect, useLayoutEffect, useCallback, useMemo } from "react";
@@ -111,7 +112,8 @@ const StudyContent: React.FC = () => {
     useLayoutEffect(() => { numberDraft.current = userInput; }, [userInput]);
     const [userInputs, setUserInputs] = useState<string[]>([]);             // Multi input
     const [activeFieldIndex, setActiveFieldIndex] = useState(0);            // Focus for multi
-    const fieldDraft = React.useRef<{ values: string[]; active: number; lastEdited?: number }>({ values: userInputs, active: activeFieldIndex });
+    const [replaceFieldIndex, setReplaceFieldIndex] = useState<number | undefined>();
+    const fieldDraft = React.useRef<{ values: string[]; active: number; lastEdited?: number; replaceOnInput?: boolean }>({ values: userInputs, active: activeFieldIndex });
     useLayoutEffect(() => { fieldDraft.current = { ...fieldDraft.current, values: userInputs, active: activeFieldIndex }; }, [userInputs, activeFieldIndex]);
 
     const [feedback, setFeedback] = useState<"none" | "correct" | "incorrect" | "skipped">("none");
@@ -153,8 +155,9 @@ const StudyContent: React.FC = () => {
     const recordListeningAnswer = listening.record;
     const [isDevSwitcherOpen, setIsDevSwitcherOpen] = useState(false);
 
-    const currentProblem = queue[currentIndex];
-    useLayoutEffect(() => { fieldDraft.current.lastEdited = undefined; }, [currentProblem]);
+    const storedProblem = queue[currentIndex];
+    const currentProblem = useMemo(() => integerFractionProblem(storedProblem), [storedProblem]);
+    useLayoutEffect(() => { fieldDraft.current.lastEdited = undefined; fieldDraft.current.replaceOnInput = false; setReplaceFieldIndex(undefined); }, [currentProblem]);
 
     useEffect(() => {
         learningAssistanceRef.current = 'independent';
@@ -233,6 +236,8 @@ const StudyContent: React.FC = () => {
         // form before its first operable paint, never after a child has typed.
         if (!currentProblem || profileSettingsStatus !== "ready") return;
         clearPendingUiTimeouts();
+        fieldDraft.current.replaceOnInput = false;
+        setReplaceFieldIndex(undefined);
         setUserInput("");
         if (currentProblem.inputType === 'multi-number' && currentProblem.inputConfig?.fields) {
             setUserInputs(new Array(currentProblem.inputConfig.fields.length).fill(""));
@@ -444,6 +449,8 @@ const StudyContent: React.FC = () => {
             || isInputLocked(feedback, isProcessingRef.current)
         ) return;
         playSound("tap");
+        setReplaceFieldIndex(undefined);
+        fieldDraft.current.replaceOnInput = false;
 
         if (hissan.isHissanActive) {
             hissan.handleHissanBackspace();
@@ -474,11 +481,14 @@ const StudyContent: React.FC = () => {
             return;
         }
         if (currentProblem?.inputType === 'multi-number') {
-            const current = fieldDraft.current;
-            const values = current.values.map((value, i) => i === current.active ? '' : value);
-            fieldDraft.current = { ...current, values, lastEdited: undefined };
+            const values = fieldDraft.current.values.map(() => '');
+            fieldDraft.current = { values, active: 0 };
+            setReplaceFieldIndex(undefined);
+            setActiveFieldIndex(0);
             setUserInputs(values);
         } else {
+            setReplaceFieldIndex(undefined);
+            fieldDraft.current.replaceOnInput = false;
             numberDraft.current = '';
             setUserInput('');
         }
@@ -501,7 +511,8 @@ const StudyContent: React.FC = () => {
             const maxIndex = currentProblem.inputConfig.fields.length - 1;
             const active = Math.max(0, Math.min(maxIndex, current.active + (direction === 'right' ? 1 : -1)));
             if (active === current.active) return;
-            fieldDraft.current = { ...current, active, lastEdited: undefined };
+            fieldDraft.current = { ...current, active, replaceOnInput: false, lastEdited: undefined };
+            setReplaceFieldIndex(undefined);
             setActiveFieldIndex(active);
         }
     }, [completionPresentation, feedback, currentProblem, hissan]);
@@ -552,7 +563,7 @@ const StudyContent: React.FC = () => {
                 playSound("correct");
                 let saved = false;
                 try {
-                    saved = await handleResult(currentProblem, 'correct', timeMs,
+                    saved = await handleResult(storedProblem, 'correct', timeMs,
                         studyLearningEvidence(currentProblem, learningAssistanceRef.current, true, learningRepresentationChangedRef.current));
                     if (saved) {
                         setCorrectCount(prev => prev + 1);
@@ -590,7 +601,7 @@ const StudyContent: React.FC = () => {
             playSound("correct");
             let saved = false;
             try {
-                saved = await handleResult(currentProblem, 'correct', timeMs,
+                saved = await handleResult(storedProblem, 'correct', timeMs,
                     studyLearningEvidence(currentProblem, learningAssistanceRef.current, false, learningRepresentationChangedRef.current));
                 if (saved) {
                     setCorrectCount(prev => prev + 1);
@@ -611,7 +622,7 @@ const StudyContent: React.FC = () => {
             try {
                 const evidence = studyLearningEvidence(currentProblem, learningAssistanceRef.current, false, learningRepresentationChangedRef.current);
                 learningAssistanceRef.current = 'assisted';
-                const saved = await handleResult(currentProblem, 'incorrect', timeMs, evidence);
+                const saved = await handleResult(storedProblem, 'incorrect', timeMs, evidence);
                 if (saved) {
                     setShowCorrection(true);
                 } else {
@@ -627,6 +638,7 @@ const StudyContent: React.FC = () => {
         completionPresentation,
         feedback,
         currentProblem,
+        storedProblem,
         userInput,
         userInputs,
         handleResult,
@@ -653,7 +665,6 @@ const StudyContent: React.FC = () => {
             || isInputLocked(feedback, isProcessingRef.current)
         ) return;
         playSound("tap");
-
         if (hissan.isHissanActive) {
             if (hissan.handleHissanInput(valStr)) {
                 automaticBoundaryRef.current = true;
@@ -665,8 +676,12 @@ const StudyContent: React.FC = () => {
         const shape = mathAnswerShape(currentProblem);
         if (shape) {
             const multi = currentProblem.inputType === 'multi-number';
-            const draft = multi ? fieldDraft.current : { values: [numberDraft.current], active: 0 };
-            const next = appendAnswerDigit(draft.values, draft.active, valStr, shape);
+            const draft = multi ? fieldDraft.current : { values: [numberDraft.current], active: 0, replaceOnInput: fieldDraft.current.replaceOnInput };
+            if (!/^\d$/.test(valStr)) return;
+            const values = draft.replaceOnInput ? draft.values.map((value, i) => i === draft.active ? '' : value) : draft.values;
+            const next = appendAnswerDigit(values, draft.active, valStr, shape);
+            fieldDraft.current.replaceOnInput = false;
+            setReplaceFieldIndex(undefined);
             if (multi) {
                 fieldDraft.current = { ...next, lastEdited: draft.active };
                 setUserInputs(next.values);
@@ -717,7 +732,7 @@ const StudyContent: React.FC = () => {
             const evidence = hissan.isHissanActive ? undefined
                 : studyLearningEvidence(currentProblem, learningAssistanceRef.current, false, learningRepresentationChangedRef.current);
             learningAssistanceRef.current = 'assisted';
-            const saved = await handleResult(currentProblem, 'skipped', undefined, evidence);
+            const saved = await handleResult(storedProblem, 'skipped', undefined, evidence);
             if (saved) {
                 setShowCorrection(true);
             } else {
@@ -729,7 +744,7 @@ const StudyContent: React.FC = () => {
         }
 
         // Auto-advance removed. User must click Next.
-    }, [completionPresentation, feedback, currentProblem, handleResult, hissan.isHissanActive]);
+    }, [completionPresentation, feedback, currentProblem, storedProblem, handleResult, hissan.isHissanActive]);
 
     // 左スワイプでスキップ
     const swipeHandlers = useSwipeable({
@@ -809,6 +824,7 @@ const StudyContent: React.FC = () => {
         loading,
         feedback,
         currentProblem,
+        storedProblem,
         handleTenKeyInput,
         handleBackspace,
         handleClear,
@@ -923,9 +939,12 @@ const StudyContent: React.FC = () => {
                 onEnter={() => handleSubmit()}
                 onCursorMove={handleCursorMove}
                 onSubmitChoice={(val) => handleSubmit(val)}
+                replaceFieldIndex={replaceFieldIndex}
                 onFocusField={index => {
-                    if (isProcessingRef.current || index === fieldDraft.current.active) return;
-                    fieldDraft.current = { ...fieldDraft.current, active: index, lastEdited: undefined };
+                    if (isProcessingRef.current || feedback !== 'none') return;
+                    const value = currentProblem?.inputType === 'multi-number' ? fieldDraft.current.values[index] : numberDraft.current;
+                    fieldDraft.current = { ...fieldDraft.current, active: index, replaceOnInput: Boolean(value), lastEdited: undefined };
+                    setReplaceFieldIndex(value ? index : undefined);
                     setActiveFieldIndex(index);
                 }}
                 swipeHandlers={swipeHandlers}
