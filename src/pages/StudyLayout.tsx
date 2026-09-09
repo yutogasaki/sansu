@@ -9,13 +9,14 @@ import { Badge } from "../components/ui/Badge";
 import { Card } from "../components/ui/Card";
 import { ChoiceGroup } from "../components/domain/ChoiceGroup";
 import { TenKey } from "../components/domain/TenKey";
+import { AnswerCells } from '../components/domain/AnswerCells';
 import { MultiNumberInput } from "../components/domain/MultiNumberInput";
 import { Icons } from "../components/icons";
 import { Button } from "../components/ui/Button";
 import { InsetPanel, SurfacePanel, SurfacePanelHeader } from "../components/ui/SurfacePanel";
 import { Problem } from "../domain/types";
 import { hasStudySingleNumberInput } from '../domain/math/studyPresentation';
-import { canConfirmNumberFields, isSingleDigitMathInput } from '../domain/math/answerCompletion';
+import { canConfirmNumberFields, mathAnswerShape, isAnswerShapeComplete } from '../domain/math/answerCompletion';
 import { LayoutDebugOverlay } from "../components/LayoutDebugOverlay";
 import { MathRenderer } from "../components/domain/MathRenderer";
 import { MathProblemPrompt } from "../components/domain/MathProblemPrompt";
@@ -432,10 +433,11 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
         currentProblem.categoryId.startsWith("frac_") ||
         (currentProblem.questionText?.length ?? 0) >= 14;
     const showCursorButtons = currentProblem.inputType === "multi-number" || hissanActive;
-    const automaticAnswer = hissanActive || isSingleDigitMathInput(currentProblem);
+    const answerShape = mathAnswerShape(currentProblem);
+    const automaticAnswer = hissanActive || Boolean(answerShape);
     const confirmReady = !automaticAnswer
         ? canConfirmNumberFields(currentProblem.inputType === 'multi-number' ? userInputs : [userInput])
-        : saveError;
+        : saveError && (hissanActive || Boolean(answerShape && isAnswerShapeComplete(currentProblem.inputType === 'multi-number' ? userInputs : [userInput], answerShape)));
     const timerBadgeClass = cn(
         "app-pill inline-flex items-center rounded-full px-3 py-1 text-sm font-black tracking-[0.08em]",
         showTestTimer && testRemainingSeconds <= 60
@@ -767,10 +769,10 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                 {/* Input Preview */}
                                 <div
                                     className="app-glass flex h-20 shrink-0 items-center justify-center rounded-[22px] px-4 text-5xl font-mono text-slate-700 transition-all ipadland:h-32 ipadland:min-w-[200px] ipadland:text-7xl mobile:h-12 mobile:min-w-[80px] mobile:px-2 mobile:text-3xl"
-                                    style={{ width: `${Math.max(3, userInput.length) * 2.5}rem` }}
+                                    style={{ width: `${Math.max(3, answerShape?.[0].length ?? userInput.length) * 2.5}rem` }}
                                 >
-                                    {userInput}
-                                    {!userInput && <span className="animate-pulse w-1 h-10 bg-slate-400/60 ml-1 mobile:h-6"></span>}
+                                    {answerShape ? <AnswerCells shape={answerShape[0]} value={userInput} active={feedback === 'none'} /> : userInput}
+                                    {!answerShape && !userInput && <span className="animate-pulse w-1 h-10 bg-slate-400/60 ml-1 mobile:h-6"></span>}
                                 </div>
                             </div>
                         ) : (
@@ -809,6 +811,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                 {currentProblem.inputType === "multi-number" && currentProblem.inputConfig?.fields && (
                                     <div className="shrink-0 ipadland:mt-0">
                                         <MultiNumberInput
+                                            answerShape={answerShape}
                                             fields={currentProblem.inputConfig.fields.map(f => ({ ...f, label: f.label || "" }))}
                                             values={userInputs}
                                             activeIndex={activeFieldIndex}
@@ -843,7 +846,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             disabled={feedback !== 'none' || hissanStepFeedback !== 'none'}
                             enterLabel={hissanActive && hissanGridData?.writtenLayout && hissanStepIndex < hissanGridData.steps.length - 1 ? 'このだんを たしかめる' : undefined}
                             writtenInput={hissanActive}
-                            showDecimal={!hissanActive && allowsDecimalEntry(currentProblem)}
+                            showDecimal={!hissanActive && !answerShape && allowsDecimalEntry(currentProblem)}
                             nextFieldLabel={currentProblem.inputType === 'multi-number' ? 'つぎの欄へ' : undefined}
                             onCursorMove={showCursorButtons ? onCursorMove : undefined}
                             compact={shouldCompactTenKey}

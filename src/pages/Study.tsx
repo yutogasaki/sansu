@@ -28,7 +28,7 @@ import { getDevStudyAdjacentSelection, getDevStudySelectionSummary } from "../co
 import { reachPwaUpdateCheckpoint } from "../pwa";
 import { COLD_OPEN_FIXED_TEN_ID } from "../domain/benchmark/coldOpenFixedTen";
 import { studyLearningEvidence } from '../domain/learning/attemptContext';
-import { canConfirmNumberFields, isSingleDigitMathInput } from '../domain/math/answerCompletion';
+import { canConfirmNumberFields, mathAnswerShape, appendAnswerDigit, isAnswerShapeComplete } from '../domain/math/answerCompletion';
 import { acknowledgeAnswerConfirmation } from '../components/domain/answerConfirmGuidance';
 
 type FixedSessionStats = {
@@ -107,6 +107,8 @@ const StudyContent: React.FC = () => {
     // State
     const [currentIndex, setCurrentIndex] = useState(0);                    // 0-4
     const [userInput, setUserInput] = useState("");                         // Single input
+    const numberDraft = React.useRef(userInput);
+    useLayoutEffect(() => { numberDraft.current = userInput; }, [userInput]);
     const [userInputs, setUserInputs] = useState<string[]>([]);             // Multi input
     const [activeFieldIndex, setActiveFieldIndex] = useState(0);            // Focus for multi
     const fieldDraft = React.useRef({ values: userInputs, active: activeFieldIndex });
@@ -455,7 +457,8 @@ const StudyContent: React.FC = () => {
             setUserInputs(values);
             setActiveFieldIndex(active);
         } else {
-            setUserInput(prev => prev.slice(0, -1));
+            numberDraft.current = numberDraft.current.slice(0, -1);
+            setUserInput(numberDraft.current);
         }
     }, [completionPresentation, feedback, currentProblem, hissan]);
 
@@ -470,15 +473,15 @@ const StudyContent: React.FC = () => {
             return;
         }
         if (currentProblem?.inputType === 'multi-number') {
-            setUserInputs(prev => {
-                const newInputs = [...prev];
-                newInputs[activeFieldIndex] = "";
-                return newInputs;
-            });
+            const current = fieldDraft.current;
+            const values = current.values.map((value, i) => i === current.active ? '' : value);
+            fieldDraft.current = { ...current, values };
+            setUserInputs(values);
         } else {
-            setUserInput("");
+            numberDraft.current = '';
+            setUserInput('');
         }
-    }, [completionPresentation, feedback, currentProblem, activeFieldIndex, hissan]);
+    }, [completionPresentation, feedback, currentProblem, hissan]);
 
     const handleCursorMove = useCallback((direction: "left" | "right") => {
         if (
@@ -520,16 +523,18 @@ const StudyContent: React.FC = () => {
     }, [completionPresentation, currentProblem, currentIndex, blockSize, feedback, recordListeningAnswer]);
 
     // Submitting - useEffectより前に定義
-    const handleSubmit = useCallback(async (choiceValue?: string, numericValue?: string, automatic = false) => {
+    const handleSubmit = useCallback(async (choiceValue?: string, numericValue?: string, automatic = false, numericFields?: string[]) => {
         if (
             completionPresentation !== "none"
             || fixedSessionCompletionInFlightRef.current
             || isInputLocked(feedback, isProcessingRef.current)
             || !currentProblem
         ) return;
-        if (!automatic && (hissan.isHissanActive || isSingleDigitMathInput(currentProblem)) && !saveError) return;
+        const shape = mathAnswerShape(currentProblem);
+        if (!automatic && (hissan.isHissanActive || shape) && !saveError) return;
+        const submittedValues = currentProblem.inputType === 'multi-number' ? (numericFields ?? userInputs) : [numericValue ?? userInput];
         if (!hissan.isHissanActive && currentProblem.inputType !== 'choice'
-            && !canConfirmNumberFields(currentProblem.inputType === 'multi-number' ? userInputs : [numericValue ?? userInput])) return;
+            && !(shape ? isAnswerShapeComplete(submittedValues, shape) : canConfirmNumberFields(submittedValues))) return;
         if (!automatic && currentProblem.inputType !== 'choice') acknowledgeAnswerConfirmation();
         setSaveError(false);
 
@@ -571,7 +576,7 @@ const StudyContent: React.FC = () => {
             currentProblem.inputType as "number" | "choice" | "multi-number",
             currentProblem.correctAnswer,
             numericValue ?? userInput,
-            userInputs,
+            numericFields ?? userInputs,
             choiceValue,
         );
 
@@ -654,10 +659,23 @@ const StudyContent: React.FC = () => {
             return;
         }
 
-        if (isSingleDigitMathInput(currentProblem)) {
-            setUserInput(valStr);
-            automaticBoundaryRef.current = true;
-            void handleSubmit(undefined, valStr, true);
+        const shape = mathAnswerShape(currentProblem);
+        if (shape) {
+            const multi = currentProblem.inputType === 'multi-number';
+            const draft = multi ? fieldDraft.current : { values: [numberDraft.current], active: 0 };
+            const next = appendAnswerDigit(draft.values, draft.active, valStr, shape);
+            if (multi) {
+                fieldDraft.current = next;
+                setUserInputs(next.values);
+                setActiveFieldIndex(next.active);
+            } else {
+                numberDraft.current = next.values[0];
+                setUserInput(next.values[0]);
+            }
+            if (next.values.some((value, i) => value !== draft.values[i]) && isAnswerShapeComplete(next.values, shape)) {
+                automaticBoundaryRef.current = true;
+                void handleSubmit(undefined, next.values[0], true, next.values);
+            }
             return;
         }
 

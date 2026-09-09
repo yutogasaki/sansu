@@ -142,20 +142,69 @@ describe('Study digit-only written session', () => {
 
 
 describe('ordinary numeric entry', () => {
-    it('advances at the field limit, Backspace returns, and slash moves a short field without grading', () => {
+    it('advances at the visible field size, Backspace returns, and the final digit grades', () => {
         const h = harness({ categoryId: 'frac_add_same', questionText: '1/7 + 11/7 =', correctAnswer: ['12','7'], inputType: 'multi-number', hissanVersion: undefined,
             inputConfig: {fields:[{label:'分子',length:2},{label:'分母',length:2}]} });
         h.render({deferSubmission:false});
         expect(h.keypad().showDecimal).toBe(false);
-        h.key('1'); h.key('.'); h.key('2'); h.key('Backspace'); h.key('2'); h.key('7');
+        h.key('1'); h.key('.'); h.key('2'); h.key('Backspace'); h.key('2');
         expect(h.props.onAnswer).not.toHaveBeenCalled();
-        h.key('Enter');
+        h.key('7');
         expect(h.props.onAnswer).toHaveBeenCalledWith(['12','7']);
     });
     it('uses slash for a short numerator and rejects a physical decimal point', () => {
         const h = harness({ categoryId: 'frac_add_same', questionText: '1/4 + 1/4 =', correctAnswer: ['1','2'], inputType: 'multi-number', hissanVersion: undefined,
             inputConfig: {fields:[{label:'分子',length:2},{label:'分母',length:2}]} });
-        h.render({deferSubmission:false}); h.key('1'); h.key('/'); h.key('.'); h.key('2'); h.key('Enter');
+        h.render({deferSubmission:false}); h.key('1'); h.key('.'); h.key('2');
         expect(h.props.onAnswer).toHaveBeenCalledWith(['1','2']);
+    });
+});
+
+
+describe('automatic ordinary answer events', () => {
+    it.each(['3', '12', '123'])('grades %s at the last cell, even when the supplied answer is wrong', correctAnswer => {
+        const h = harness({ categoryId: 'add_1d_1', questionText: '2 + 1 =', correctAnswer, inputType: 'number', hissanVersion: undefined });
+        h.render({ deferSubmission: false });
+        for (let i = 0; i < correctAnswer.length - 1; i++) { h.key('9'); expect(h.props.onAnswer).not.toHaveBeenCalled(); }
+        h.key('Enter'); expect(h.props.onAnswer).not.toHaveBeenCalled();
+        h.key('9');
+        expect(h.props.onAnswer).toHaveBeenCalledTimes(1);
+        expect(h.props.onAnswer).toHaveBeenCalledWith('9'.repeat(correctAnswer.length));
+    });
+    it('fills a decimal with digits only and permits correction before completion', () => {
+        const h = harness({ categoryId: 'dec_add', correctAnswer: '12.3', inputType: 'number', hissanVersion: undefined });
+        h.render({ deferSubmission: false });
+        expect(h.keypad().showDecimal).toBe(false);
+        h.key('1'); h.key('9'); h.key('Backspace'); h.key('2');
+        expect(h.props.onAnswer).not.toHaveBeenCalled();
+        h.key('3');
+        expect(h.props.onAnswer).toHaveBeenCalledWith('12.3');
+    });
+    it('keeps the completed ordinary draft queued until the hint receipt settles', () => {
+        const h = harness({ categoryId: 'add_1d_1', correctAnswer: '12', inputType: 'number', hissanVersion: undefined });
+        h.key('1'); h.key('2'); h.key('9');
+        expect(h.props.onAnswer).not.toHaveBeenCalled();
+        h.key('Backspace'); h.render({ deferSubmission: false });
+        expect(h.props.onAnswer).not.toHaveBeenCalled();
+        h.key('3');
+        expect(h.props.onAnswer).toHaveBeenCalledTimes(1);
+        expect(h.props.onAnswer).toHaveBeenCalledWith('13');
+    });
+});
+
+
+describe('automatic numeric save boundary', () => {
+    it('latches before a second same-event digit and permits a failed-save resend', () => {
+        const h = harness({ categoryId: 'add_1d_1', correctAnswer: '12', inputType: 'number', hissanVersion: undefined });
+        h.render({ deferSubmission: false });
+        const keys = h.keypad();
+        keys.onInput('1'); keys.onInput('2'); keys.onInput('3'); keys.onEnter();
+        expect(h.props.onAnswer).toHaveBeenCalledTimes(1);
+        expect(h.props.onAnswer).toHaveBeenCalledWith('12');
+        h.render({ disabled: true }); h.render({ disabled: false });
+        expect(h.keypad().enterDisabled).toBe(false);
+        h.key('Enter');
+        expect(h.props.onAnswer).toHaveBeenCalledTimes(2);
+        expect(h.props.onAnswer).toHaveBeenLastCalledWith('12');
     });
 });

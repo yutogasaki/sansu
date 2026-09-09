@@ -1,34 +1,60 @@
 import { describe, expect, it } from 'vitest';
-import { canConfirmNumberFields, isSingleDigitMathInput, isWrittenStepComplete } from './answerCompletion';
+import { canConfirmNumberFields, mathAnswerShape, appendAnswerDigit, isAnswerShapeComplete, isWrittenStepComplete } from './answerCompletion';
 import { MATH_GENERATORS } from './index';
 import { createSeededRandom } from '../../utils/random';
 import { createInitialProfile } from '../user/profile';
 
-describe('answer completion without answer-derived hints', () => {
-    it('uses the full curriculum range even when the current answer happens to be one digit', () => {
-        for (const categoryId of ['add_5', 'add_1d_1', 'count_10', 'count_next_10', 'mul_99_rand', 'dec_add', 'frac_add_same', 'unknown']) {
-            expect(isSingleDigitMathInput({ subject: 'math', inputType: 'number', categoryId })).toBe(false);
+describe('immediate answer-cell completion', () => {
+    it('gives the same automatic rule to one- and multi-digit answers across curricula', () => {
+        for (const correctAnswer of ['3', '12', '105', '0.25']) {
+            expect(mathAnswerShape({ subject: 'math', inputType: 'number', correctAnswer }))
+                .toEqual([correctAnswer.replace(/\d/g, '□')]);
         }
-        expect(isSingleDigitMathInput({ subject: 'math', inputType: 'number', categoryId: 'sub_1d1d_nc' })).toBe(true);
-        expect(isSingleDigitMathInput({ subject: 'vocab', inputType: 'number', categoryId: 'sub_1d1d_nc' })).toBe(false);
-        expect(isSingleDigitMathInput({ subject: 'math', inputType: 'choice', categoryId: 'sub_1d1d_nc' })).toBe(false);
-        expect(isSingleDigitMathInput(undefined)).toBe(false);
+        expect(mathAnswerShape({ subject: 'vocab', inputType: 'number', correctAnswer: '3' })).toBeUndefined();
+        expect(mathAnswerShape({ subject: 'math', inputType: 'choice', correctAnswer: '3' })).toBeUndefined();
+        expect(mathAnswerShape(undefined)).toBeUndefined();
     });
 
-    it('keeps every enabled curriculum within one digit across introduction and full-range generators', () => {
-        const enabled = Object.keys(MATH_GENERATORS).filter(categoryId => isSingleDigitMathInput({ subject: 'math', inputType: 'number', categoryId }));
-        expect(enabled).toHaveLength(12);
-        for (const categoryId of enabled) {
-            for (const progress of [undefined, 0, 4, 12, 30, 100]) {
-                const profile = createInitialProfile('fixture', 1, 1, 1, 'math');
-                profile.mathSkills[categoryId] = { totalAnswers: progress ?? 0, correctAnswers: progress ?? 0, independentCorrectAnswers: progress ?? 0 };
-                for (let seed = 0; seed < 80; seed++) {
-                    const generated = MATH_GENERATORS[categoryId]({ random: createSeededRandom(`${categoryId}:${progress}:${seed}`), profile: progress === undefined ? undefined : profile });
-                    expect(generated.inputType, categoryId).toBe('number');
-                    expect(generated.correctAnswer, categoryId).toMatch(/^[0-9]$/);
+    it('can fill every generated numeric shape without Enter or knowing the right digits', () => {
+        const profile = createInitialProfile('fixture', 1, 1, 1, 'math');
+        for (const [categoryId, generate] of Object.entries(MATH_GENERATORS)) {
+            for (let seed = 0; seed < 30; seed++) {
+                const problem = generate({ random: createSeededRandom(`${categoryId}:${seed}`), profile });
+                if (problem.inputType === 'choice') continue;
+                const shape = mathAnswerShape({ ...problem, subject: 'math' });
+                expect(shape, categoryId).toBeDefined();
+                let draft = { values: shape!.map(() => ''), active: 0 };
+                const count = shape!.join('').replace(/\./g, '').length;
+                for (let i = 0; i < count; i++) {
+                    expect(isAnswerShapeComplete(draft.values, shape!), categoryId).toBe(false);
+                    draft = appendAnswerDigit(draft.values, draft.active, '9', shape!);
                 }
+                expect(isAnswerShapeComplete(draft.values, shape!), categoryId).toBe(true);
             }
         }
+    });
+
+    it('inserts the printed decimal point and keeps an incomplete prefix ungraded', () => {
+        const shape = ['□□.□'];
+        let draft = { values: [''], active: 0 };
+        draft = appendAnswerDigit(draft.values, 0, '1', shape);
+        expect(isAnswerShapeComplete(draft.values, shape)).toBe(false);
+        draft = appendAnswerDigit(draft.values, 0, '2', shape);
+        expect(draft.values).toEqual(['12']);
+        draft = appendAnswerDigit(draft.values, 0, '.', shape);
+        expect(draft.values).toEqual(['12']);
+        draft = appendAnswerDigit(draft.values, 0, '8', shape);
+        expect(draft.values).toEqual(['12.8']);
+        expect(isAnswerShapeComplete(draft.values, shape)).toBe(true);
+        expect(appendAnswerDigit(draft.values, 0, '9', shape).values).toEqual(['12.8']);
+    });
+
+    it('auto advances fractions and remainders without overwriting a filled neighbour', () => {
+        const shape = ['□□', '□'];
+        expect(appendAnswerDigit(['1', ''], 0, '2', shape)).toEqual({ values: ['12', ''], active: 1 });
+        expect(appendAnswerDigit(['1', '7'], 0, '8', shape)).toEqual({ values: ['18', '7'], active: 0 });
+        expect(isAnswerShapeComplete(['18', '7'], shape)).toBe(true);
+        expect(isAnswerShapeComplete(['1', '7'], shape)).toBe(false);
     });
 
     it('accepts any filled written row, including incorrect digits, and never a partial row', () => {

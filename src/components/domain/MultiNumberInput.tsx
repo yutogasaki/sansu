@@ -1,4 +1,5 @@
 import React from "react";
+import { AnswerCells } from "./AnswerCells";
 
 interface FieldConfig {
     label: string;
@@ -11,6 +12,7 @@ interface MultiNumberInputProps {
     activeIndex: number;
     onFocus: (index: number) => void;
     readOnly?: boolean;
+    answerShape?: string[];
 }
 
 export const MultiNumberInput: React.FC<MultiNumberInputProps> = ({
@@ -18,6 +20,7 @@ export const MultiNumberInput: React.FC<MultiNumberInputProps> = ({
     values,
     activeIndex,
     onFocus,
+    answerShape,
     readOnly = false
 }) => {
     return (
@@ -26,7 +29,7 @@ export const MultiNumberInput: React.FC<MultiNumberInputProps> = ({
                 const val = values[idx] || "";
                 // Base width of 4rem (approx 64px) + 1rem per character (approx 16px)
                 // This simulates "auto-expand" while keeping a minimum size
-                const widthStyle = { minWidth: "4rem", width: `${Math.max(2, val.length) * 1.5 + 2}rem` };
+                const widthStyle = { minWidth: "4rem", width: `${Math.max(2, answerShape?.[idx].length ?? val.length) * 1.5 + 2}rem` };
 
                 return (
                     <div key={idx} className="flex flex-col items-center gap-2">
@@ -46,9 +49,9 @@ export const MultiNumberInput: React.FC<MultiNumberInputProps> = ({
                                 }
                             `}
                         >
-                            {val}
+                            {answerShape ? <AnswerCells shape={answerShape[idx]} value={val} active={activeIndex === idx && !readOnly} /> : val}
                             {/* Cursor Blinker */}
-                            {activeIndex === idx && !readOnly && (
+                            {!answerShape && activeIndex === idx && !readOnly && (
                                 <span className="absolute right-2 top-1/2 h-[60%] w-0.5 -translate-y-1/2 animate-pulse rounded-full bg-cyan-500" />
                             )}
                         </div>
