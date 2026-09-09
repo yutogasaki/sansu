@@ -1,3 +1,4 @@
+import type { IslandDirectTarget, IslandDirectMarker } from '../islandDirectTargets';
 import type { IslandItemKind } from '../../../domain/island/types';
 export type { IslandItemKind } from '../../../domain/island/types';
 export interface IslandStageItem {
@@ -36,6 +37,7 @@ export interface IslandSharedSceneRequest {
 export interface IslandStageState {
     /** Repository-validated challenge selection, separate from the legacy sixteen keepsakes. */
     challengeDisplayed?: readonly ('certificate' | 'trophy')[];
+    directInteractions?: boolean;
     learningKeepsakes?: { state?: IslandLearningKeepsakesState; selectedId?: IslandLearningKeepsakeId };
     shared?: IslandSharedStageState;
     sharedRequest?: IslandSharedSceneRequest;
@@ -76,6 +78,8 @@ export interface IslandStageState {
     selectedId?: string;
 }
 export interface IslandStageProps extends IslandStageState {
+    onDirectSelect?: (target: IslandDirectTarget) => void;
+    onDirectMarkers?: (markers: IslandDirectMarker[]) => void;
     onHomeEnter?: () => void;
     onHomeAction?: (action: { type: 'keepsake'; id: IslandLearningKeepsakeId } | { type: 'album' } | { type: 'notices' }) => void;
     onFurniturePlacement?: (result: IslandFurniturePlacementResult) => void;

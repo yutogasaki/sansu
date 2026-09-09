@@ -1,3 +1,6 @@
+import { Flower2, House, PawPrint } from 'lucide-react';
+import { visibleDirectMarkers, type IslandDirectMarker } from './islandDirectTargets';
+import './IslandDirectActions.css';
 import { ISLAND_VISUAL_CANDIDATE } from '../../domain/island/feature';
 import { useEffect, useRef, useState } from 'react';
 import type { IslandScene } from './three/runtime';
@@ -11,7 +14,8 @@ const DEFAULT_CAPTION = 'カワウソと ウサギが くらす しま';
 const deliveredState = (props: IslandStageProps, sharedId?: string): IslandStageProps => ({ ...props,
     sharedRequest: props.sharedRequest?.command.type === 'stop' || props.sharedRequest?.id === sharedId ? props.sharedRequest : undefined });
 
-export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready: boolean) => void; onCameraPractice?: () => void; compactCameraControls?: boolean; milestoneNotice?: ReactNode; expressionCaptionKey?: string }) {
+export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready: boolean) => void; onCameraPractice?: () => void; compactCameraControls?: boolean; directPanel?: ReactNode; milestoneNotice?: ReactNode; expressionCaptionKey?: string }) {
+    const markerGesture = useRef<{ id: number; x: number; y: number; active: boolean; cancelled: boolean } | undefined>(undefined);
     const host = useRef<HTMLDivElement>(null);
     const runtime = useRef<IslandScene | null>(null);
     const current = useRef(props);
@@ -22,6 +26,7 @@ export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready
     const deliveredSharedId = useRef<string | undefined>(undefined);
     const [captionState, setCaption] = useState<{ text: string; context?: string }>({ text: DEFAULT_CAPTION });
     const caption = captionState.context === props.expressionCaptionKey ? captionState.text : DEFAULT_CAPTION;
+    const [directMarkers, setDirectMarkers] = useState<IslandDirectMarker[]>([]);
     const [failed, setFailed] = useState(false);
     const [ready, setReady] = useState(false);
     const [attempt, setAttempt] = useState(0);
@@ -122,6 +127,11 @@ export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready
             try {
                 setCaption({ text: DEFAULT_CAPTION, context: current.current.expressionCaptionKey });
                 const scene = new Scene(host.current, {
+                    directSelect: target => current.current.onDirectSelect?.(target),
+                    directMarkers: markers => {
+                        const visible = visibleDirectMarkers(markers, host.current?.clientWidth ?? 0, host.current?.clientHeight ?? 0);
+                        setDirectMarkers(previous => JSON.stringify(previous) === JSON.stringify(visible) ? previous : visible);
+                    },
                     home: () => current.current.onHomeEnter?.(),
                     homeAction: action => current.current.onHomeAction?.(action),
                     ground: point => current.current.onGroundPoint?.(point),
@@ -161,7 +171,7 @@ export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready
         data-art-candidate={ISLAND_VISUAL_CANDIDATE} data-visual-candidate={ISLAND_VISUAL_CANDIDATE}
         data-island-theme={props.cosmetics?.themeId ?? 'moon-garden'} data-island-accent={props.cosmetics?.accentId ?? 'none'}
         data-customization-candidate="island-cosmetics-parts-v2" data-experience-candidate="island-experience-v1"
-        data-expression-candidate="island-expression-v1"
+        data-expression-candidate="island-expression-v1" data-direct-interface="island-direct-actions-v1"
         data-keepsake-room={props.learningKeepsakes && !props.learning ? 'true' : undefined}
         data-flag-focus={props.expressionFlagFocus && !props.learning ? 'true' : undefined}
         data-workshop-candidate={props.workshop?.active ? 'island-workshop-v1' : undefined}>
@@ -180,6 +190,27 @@ export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready
                 <button type="button" className="island-stage__retry" onClick={() => { setCaption({ text: 'しまを ひらいているよ', context: props.expressionCaptionKey }); setFailed(false); setAttempt(value => value + 1); }}>もういちど みる</button>
             </div>}
             {!failed && props.milestoneNotice}
+            {!failed && ready && props.directInteractions && !props.directPanel && <div className="island-direct-markers" aria-label="しまの ものに さわる">
+                {directMarkers.map(marker => {
+                    const Icon = marker.target.kind === 'home' ? House : marker.target.kind === 'garden' ? Flower2 : PawPrint;
+                    const label = marker.target.kind === 'home' ? 'いえ' : marker.target.kind === 'garden' ? 'にわ' : 'あそぶ';
+                    return <button type="button" key={marker.target.kind} className="island-direct-marker" data-direct-target={marker.target.kind}
+                        style={{ left: marker.x, top: marker.y }}
+                        onPointerDown={event => {
+                            const previous = markerGesture.current;
+                            markerGesture.current = { id: event.pointerId, x: event.clientX, y: event.clientY, active: true, cancelled: Boolean(previous?.active && previous.id !== event.pointerId) };
+                            event.currentTarget.setPointerCapture(event.pointerId);
+                        }}
+                        onPointerMove={event => { const gesture = markerGesture.current; if (gesture && Math.hypot(event.clientX - gesture.x, event.clientY - gesture.y) >= 8) gesture.cancelled = true; }}
+                        onPointerUp={() => { if (markerGesture.current) markerGesture.current.active = false; }}
+                        onPointerCancel={() => { if (markerGesture.current) { markerGesture.current.cancelled = true; markerGesture.current.active = false; } }}
+                        onClick={event => {
+                            const cancelled = markerGesture.current?.cancelled; markerGesture.current = undefined;
+                            if (event.detail === 0 || !cancelled) current.current.onDirectSelect?.(marker.target);
+                        }}><Icon size={17} aria-hidden="true" />{label}</button>;
+                })}
+            </div>}
+            {!failed && props.directPanel}
             {!failed && cameraEnabled && hasChangedIslandCameraView(cameraView) && <button type="button"
                 className="island-stage__quick-reset" disabled={props.photographing}
                 onClick={() => runtime.current?.controlCamera('reset')}>もとの ながめ</button>}
@@ -191,7 +222,7 @@ export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready
             </details> : <><IslandCameraToolbar view={cameraView} disabled={props.photographing} onAction={action => runtime.current?.controlCamera(action)} />
             <p className="island-camera-hint">なぞって 移動・2本指で 拡大と回転</p></>}
         </div>}
-        <figcaption hidden={workshopActive || sharedActive || Boolean(props.preview) || Boolean(props.expressionCaptionKey) && caption === DEFAULT_CAPTION} className={`island-stage__caption${caption === DEFAULT_CAPTION ? ' island-stage__caption--quiet' : ''}`} aria-live="polite" aria-atomic="true">{caption}</figcaption>
+        <figcaption hidden={Boolean(props.directPanel) || workshopActive || sharedActive || Boolean(props.preview) || Boolean(props.expressionCaptionKey) && caption === DEFAULT_CAPTION} className={`island-stage__caption${caption === DEFAULT_CAPTION ? ' island-stage__caption--quiet' : ''}`} aria-live="polite" aria-atomic="true">{caption}</figcaption>
     </figure>;
 }
 

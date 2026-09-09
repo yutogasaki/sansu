@@ -1,3 +1,4 @@
+import type { IslandDirectMarker } from '../islandDirectTargets';
 import * as THREE from 'three';
 import { OptionalFurnitureController } from './optionalFurnitureController';
 import { isOptionalFurniture, OPTIONAL_FURNITURE_CANDIDATE } from './optionalFurnitureGeometry';
@@ -58,6 +59,8 @@ import { learningBeat, normalizedLearningProgress, reconcileLearningProgress, sa
     type LearningReactionKind, type LearningReactionPhase } from './learningReaction';
 
 interface RuntimeCallbacks {
+    directSelect?: IslandStageProps['onDirectSelect'];
+    directMarkers?: IslandStageProps['onDirectMarkers'];
     home?: () => void;
     homeAction?: IslandStageProps['onHomeAction'];
     sharedAction?: IslandStageProps['onSharedAction'];
@@ -179,6 +182,7 @@ export class IslandScene {
     private readonly placementPreview = new IslandPlacementPreview(this.materials);
     private readonly placementOcclusion = new IslandPlacementOcclusion();
     private previewItem?: IslandStageItem;
+    private lastDirectMarkersAt = 0;
     private raycaster = new THREE.Raycaster();
     private frame = 0;
     private idleTimer = 0;
@@ -722,6 +726,12 @@ export class IslandScene {
                 : result.reason === 'partner-unavailable' ? 'いっしょに すごす なかまを えらぼう' : 'どうぶつが とおれる すきまを あけて みよう');
             if (!autonomous) this.resize();
         }
+        else if (play.residentId && item) {
+            const available = this.residents.some(resident => resident.group.visible && resident.species === play.residentId);
+            const resident = available ? this.visitItem(item, this.motion.matches, true, play.residentId) : undefined;
+            result = resident ? { requestId: play.id, itemId: play.itemId, status: 'playing', resident: resident.species }
+                : { requestId: play.id, itemId: play.itemId, status: available ? 'blocked' : 'unavailable', reason: available ? 'unreachable' : 'resident-unavailable' };
+        }
         else if (play.discoveryId && !requestedVisit) {
             result = { requestId: play.id, itemId: play.itemId, status: 'blocked', reason: 'unreachable' };
             this.callbacks.caption('ばしょや そだちを たしかめて、また ためそう');
@@ -970,11 +980,11 @@ export class IslandScene {
             species: resident.species, itemId: resident.itemId, departingId: resident.departingId }));
     }
 
-    private visitItem(item: IslandStageItem, reduced = this.motion.matches, continueWalking = false) {
+    private visitItem(item: IslandStageItem, reduced = this.motion.matches, continueWalking = false, requestedSpecies?: IslandStageState['residentPortraitId']) {
         const items = this.state?.items ?? [], landAccess = this.landAccess;
         const now = performance.now();
         const walking = continueWalking && !this.sharedActivity.plan && this.residents.find(resident => resident.group.visible
-            && resident.itemId === item.id && resident.action === 'walk');
+            && (!requestedSpecies || resident.species === requestedSpecies) && resident.itemId === item.id && resident.action === 'walk');
         if (walking) {
             this.lastResident = walking;
             return walking;
@@ -983,7 +993,7 @@ export class IslandScene {
         this.sharedActivity.cancel(now);
         if (this.sharedCamera) { this.sharedCamera = undefined; this.resize(); }
         this.residents.forEach(resident => resident.stopWalking(now));
-        const choice = chooseReachableResident(this.residentCandidates(), item, items, landAccess, this.lastChosenResident, this.state?.shared ? sharedDisplayObstacles(this.state.shared.island) : []);
+        const choice = chooseReachableResident(this.residentCandidates(), item, items, landAccess, this.lastChosenResident, this.state?.shared ? sharedDisplayObstacles(this.state.shared.island) : [], requestedSpecies);
         if (!choice) { this.callbacks.caption('どうぶつが とおれる すきまを あけて みよう'); return undefined; }
         const resident = this.residents[choice.index];
         const visiting = choice.replay ? resident.replayUse(now, reduced)
@@ -1551,6 +1561,7 @@ export class IslandScene {
         if (this.renderer.domElement.hasPointerCapture(event.pointerId)) this.renderer.domElement.releasePointerCapture(event.pointerId);
         if (event.button !== 0 || !this.state || this.state.furnitureTrial || this.state.readOnly || this.state.learning) return;
         if (!cameraTap && (!start || start.id !== event.pointerId)) return;
+        if (this.state.directInteractions && !cameraTap) return;
         if (this.state.preview) { this.movePreviewToPointer(event); return; }
         if (start && Math.hypot(event.clientX - start.x, event.clientY - start.y) > 9) return;
         const rect = this.renderer.domElement.getBoundingClientRect();
@@ -1559,18 +1570,35 @@ export class IslandScene {
         const hits = this.raycaster.intersectObjects([...this.items.values()].map(model => model.group), true);
         if (this.state.shared?.preview) { this.movePreviewToPointer(event); return; }
         const display = this.sharedDisplays.selectHit(this.raycaster.ray);
+        let homeHit: THREE.Intersection | undefined;
         if (cameraTap && this.callbacks.home) {
             const shells: THREE.Object3D[] = [];
             this.world.scenery.traverseVisible(object => { if (object.name === 'island-home-shell') shells.push(object); });
-            const home = this.raycaster.intersectObjects(shells, true).find(hit => {
+            homeHit = this.raycaster.intersectObjects(shells, true).find(hit => {
                 for (let object: THREE.Object3D | null = hit.object; object; object = object.parent) if (!object.visible) return false;
                 return true;
             });
-            if (home && home.distance < Math.min(hits[0]?.distance ?? Infinity, display?.distance ?? Infinity)) { this.callbacks.home(); return; }
         }
+        if (cameraTap && this.state.directInteractions) {
+            const residentHits = this.residents.filter(resident => resident.group.visible).flatMap(resident =>
+                this.raycaster.intersectObject(resident.group, true).slice(0, 1).map(hit => ({ ...hit, resident })));
+            residentHits.sort((a, b) => a.distance - b.distance);
+            const residentHit = residentHits[0];
+            if (residentHit && residentHit.distance < Math.min(homeHit?.distance ?? Infinity, hits[0]?.distance ?? Infinity, display?.distance ?? Infinity)) {
+                this.callbacks.directSelect?.({ kind: 'resident', id: residentHit.resident.species }); return;
+            }
+        }
+
+        if (homeHit && homeHit.distance < Math.min(hits[0]?.distance ?? Infinity, display?.distance ?? Infinity)) { this.callbacks.home?.(); return; }
         if (display && (!hits[0] || display.distance <= hits[0].distance)) { this.callbacks.sharedDisplaySelect?.(display.displayId); return; }
         const id = hits[0]?.object.userData.itemId as string | undefined;
-        if (id) { this.callbacks.select(id); return; }
+        if (id) {
+            if (cameraTap && this.state.directInteractions) {
+                const item = this.items.get(id)?.item;
+                this.callbacks.directSelect?.(item?.habitatId === 'garden' ? { kind: 'garden' } : { kind: 'item', id });
+            } else this.callbacks.select(id);
+            return;
+        }
         this.movePreviewToPointer(event);
     };
 
@@ -1854,6 +1882,26 @@ export class IslandScene {
                     heightPx: (bounds.max.y - bounds.min.y) * this.host.clientHeight / 2 };
             })() : undefined,
             birdPerched: this.livingVisit.nature === 'leaf-bird' ? this.nature.birdPerched : undefined } : null);
+        if (this.state?.directInteractions && now - this.lastDirectMarkersAt >= 120) {
+            this.lastDirectMarkersAt = now;
+            const markers: IslandDirectMarker[] = [];
+            const add = (target: IslandDirectMarker['target'], object: THREE.Object3D) => {
+                if (!object.visible) return;
+                const box = new THREE.Box3().setFromObject(object);
+                if (box.isEmpty()) return;
+                const point = box.getCenter(new THREE.Vector3()); point.y = box.max.y + .18;
+                point.project(this.camera);
+                if (point.z < -1 || point.z > 1) return;
+                markers.push({ target, x: Math.round((point.x + 1) / 2 * this.host.clientWidth), y: Math.round((1 - point.y) / 2 * this.host.clientHeight) - 26 });
+            };
+            let homeMarked = false;
+            this.world.scenery.traverseVisible(object => { if (!homeMarked && object.name === 'island-home-shell') { homeMarked = true; add({ kind: 'home' }, object); } });
+            const garden = [...this.items.values()].find(model => model.item.habitatId === 'garden' && model.group.visible);
+            if (garden) add({ kind: 'garden' }, garden.group);
+            const resident = this.residents.find(resident => resident.group.visible);
+            if (resident) add({ kind: 'resident', id: resident.species }, resident.group);
+            this.callbacks.directMarkers?.(markers);
+        }
         this.host.dataset.residents = String(this.residents.filter(resident => resident.group.visible).length);
         this.host.dataset.personalScenery = JSON.stringify({ visible: this.personal.group.visible,
             name: this.personal.group.userData.islandName, emblem: this.personal.group.userData.emblem });

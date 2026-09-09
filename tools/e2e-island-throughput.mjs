@@ -62,7 +62,7 @@ const report = {
         setup: 'Wait for the empty-profile Island welcome to commit before inserting each disposable profile; retain the same document for fixture hooks and navigate only after that lookup has resolved.',
         input: 'physical-keyboard digits and Enter, identical answers and ordinary actions in both lanes',
         order: 'Study/Island alternates by repetition and scenario within each viewport',
-        timing: 'Browser performance.now; answer delay begins at actual Enter keydown. Total includes typing and automated observation overhead. Q6 ends only when the exact next plan is operable; no continuation action is performed.',
+        timing: 'Browser performance.now; answer delay begins at the final digit keydown for automatic completion, or Enter for explicit completion. Total includes typing and automated observation overhead. Q6 ends only when the exact next plan is operable; no continuation action is performed.',
         fixtureScope: 'Isolated disposable browser profiles only. Before timing, one explicitly synthetic existing-island completion bypasses the introduction. Island creates real six-slot plans, with a test-only Dexie creating hook replacing newly created slots before display; existing reservations are never changed.',
         plannerTruth: 'Not production planner evidence. All fixed slots are explicit test-fixture main assignments with no review or maintenance flags.',
         learningDifference: 'Island records the real atomic writer and reward receipts in its disposable profile. Study uses its existing nonrecording DEV fixture. Neither lane reads or changes a real user profile.',
@@ -148,8 +148,8 @@ async function assertLayout(page, lane) {
     return controls;
 }
 
-async function armAnswer(page, lane, index, wrong) {
-    await page.evaluate(({ lane, index, wrong, fixture }) => {
+async function armAnswer(page, lane, index, wrong, automatic, digitCount) {
+    await page.evaluate(({ lane, index, wrong, fixture, automatic, digitCount }) => {
         window.__islandThroughputSample = undefined;
         const root = document.querySelector(lane === 'island' ? '[data-island-plan-revision]' : `[data-benchmark-id="${fixture}"]`);
         const revision = Number(root?.getAttribute('data-island-plan-revision'));
@@ -157,10 +157,12 @@ async function armAnswer(page, lane, index, wrong) {
         const boundary = lane === 'island' && index === 5 && !wrong;
         const expectedNextPlanId = boundary ? JSON.stringify(['island-plan-v1', JSON.parse(planId)[1], JSON.parse(planId)[2] + 1]) : undefined;
         const input = lane === 'island' ? document.querySelector('.park-input span') : document.querySelector('.app-glass.font-mono');
-        if (!input || !['', '□'].includes(input.textContent.trim())) throw new Error('Input leaked from the previous answer');
+        if (!input || !/^[□\s]*$/.test(input.textContent)) throw new Error('Input leaked from the previous answer');
+        let remainingDigits = digitCount;
         const onKey = event => {
             if (/^[0-9]$/.test(event.key) && window.__islandThroughputStarted === undefined) window.__islandThroughputStarted = performance.now();
-            if (event.key !== 'Enter') return;
+            const submits = automatic ? /^[0-9]$/.test(event.key) && --remainingDigits === 0 : event.key === 'Enter';
+            if (!submits) return;
             document.removeEventListener('keydown', onKey, true);
             const started = performance.now();
             window.__islandThroughputPending = { lane, index, wrong, started, revision, planId,
@@ -185,8 +187,8 @@ async function armAnswer(page, lane, index, wrong) {
                 }
                 if (!ready) { requestAnimationFrame(tick); return; }
                 const nextInput = lane === 'island' ? document.querySelector('.park-input span') : document.querySelector('.app-glass.font-mono');
-                const empty = terminal || (lane === 'study' && wrong) || ['', '□'].includes(nextInput?.textContent.trim());
-                window.__islandThroughputSample = { question: index + 1, wrong, ms: performance.now() - started, terminal, inputEmpty: empty,
+                const empty = terminal || (lane === 'study' && wrong) || Boolean(nextInput && /^[□\s]*$/.test(nextInput.textContent));
+                window.__islandThroughputSample = { question: index + 1, wrong, automatic, ms: performance.now() - started, terminal, inputEmpty: empty,
                     revision, planId, boundary, expectedNextPlanId,
                     nextPlanId: current?.getAttribute('data-island-plan-id'), nextRevision: Number(current?.getAttribute('data-island-plan-revision')),
                     endedAt: performance.now() };
@@ -195,13 +197,16 @@ async function armAnswer(page, lane, index, wrong) {
             requestAnimationFrame(tick);
         };
         document.addEventListener('keydown', onKey, true);
-    }, { lane, index, wrong, fixture: FIXTURE });
+    }, { lane, index, wrong, fixture: FIXTURE, automatic, digitCount });
 }
 
 async function submit(page, lane, index, wrong = false) {
-    await armAnswer(page, lane, index, wrong);
-    await page.keyboard.type(String(answers[index] + (wrong ? 1 : 0)));
-    await page.keyboard.press('Enter');
+    const digits = String(answers[index] + (wrong ? 1 : 0));
+    const automatic = await page.locator('[data-keypad-submit]').getAttribute('data-confirmation-mode') === 'automatic'
+        || lane === 'island' && await page.locator('.park-answer').getAttribute('data-answer-completion') === 'automatic';
+    await armAnswer(page, lane, index, wrong, automatic, digits.length);
+    await page.keyboard.type(digits);
+    if (!automatic) await page.keyboard.press('Enter');
     await page.waitForFunction(() => Boolean(window.__islandThroughputSample));
     const sample = await page.evaluate(() => window.__islandThroughputSample);
     assert(sample.inputEmpty, `${lane} Q${index + 1}: prior input must not leak`);
@@ -312,7 +317,7 @@ async function runLane(browser, lane, scenario, repetition, layout) {
             assert.equal(new Set(actionEvents.map(event => event.learningLogId)).size, expectedAttempts);
             assert(actionEvents.every(event => state.logs.some(log => log.id === event.learningLogId)), 'Every answer receipt must identify its learning log');
             assert.equal(state.logs.filter(log => log.result === 'correct').length, 10);
-            assert.equal(normalFlow.actions.filter(action => action.key === 'Enter').length, expectedAttempts);
+            assert.equal(normalFlow.actions.filter(action => action.key === 'Enter').length, samples.filter(sample => !sample.automatic).length);
             assert.equal(state.island.completedSets, INITIAL_COMPLETED_SETS + 1);
             assert.equal(state.island.pendingRewards.length, 0, 'The section grows its place without a deferred gift');
             assert(firstPlan.growthTarget, 'The benchmark exercises the current automatic growth contract');

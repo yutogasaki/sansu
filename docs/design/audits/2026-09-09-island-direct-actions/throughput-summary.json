@@ -1,0 +1,111 @@
+{
+  "target": "http://127.0.0.1:5340",
+  "startedAt": "2026-09-09T12:27:58.540Z",
+  "finishedAt": "2026-09-09T12:37:26.669Z",
+  "git": {
+    "revision": "f984d55a34e4ef007eb5feed4762a5df6aec5d08",
+    "dirty": true
+  },
+  "buildSource": {
+    "path": "/tmp/sansu-direct-final-source-qa.json",
+    "manifestSHA": "a9aac2c4f7078a1b80037165a7f7f6d41755e487b205af7f4e780c96a3bb80a0",
+    "sourceHash": "dd8e86ac48d16e2172339a144573523c78674dde8461928d9d05439c698e69c0",
+    "revision": "f984d55a34e4ef007eb5feed4762a5df6aec5d08",
+    "flags": {
+      "VITE_ISLAND_ENABLED": "true"
+    }
+  },
+  "method": {
+    "setup": "Wait for the empty-profile Island welcome to commit before inserting each disposable profile; retain the same document for fixture hooks and navigate only after that lookup has resolved.",
+    "input": "physical-keyboard digits and Enter, identical answers and ordinary actions in both lanes",
+    "order": "Study/Island alternates by repetition and scenario within each viewport",
+    "timing": "Browser performance.now; answer delay begins at the final digit keydown for automatic completion, or Enter for explicit completion. Total includes typing and automated observation overhead. Q6 ends only when the exact next plan is operable; no continuation action is performed.",
+    "fixtureScope": "Isolated disposable browser profiles only. Before timing, one explicitly synthetic existing-island completion bypasses the introduction. Island creates real six-slot plans, with a test-only Dexie creating hook replacing newly created slots before display; existing reservations are never changed.",
+    "plannerTruth": "Not production planner evidence. All fixed slots are explicit test-fixture main assignments with no review or maintenance flags.",
+    "learningDifference": "Island records the real atomic writer and reward receipts in its disposable profile. Study uses its existing nonrecording DEV fixture. Neither lane reads or changes a real user profile.",
+    "islandTail": "Six slots in each of two newly saved sets, after the declared synthetic existing-island baseline. Only the first four slots of the second new set are answered. Two repeated fixture tail slots remain pending and unsubmitted.",
+    "missDifference": "Island retries and corrects Q4/Q8 on the same saved Problem. Study retains its correction panel and explicit next action. Only all-correct throughput is compared for the >=1.0 gate.",
+    "rendering": "Both lanes use reduced-motion and sound off. Before timed input, every initial Island keypad control must fit and preserve a 44px target; active digit/edit keys must receive a center hit, while empty submit must remain disabled. Normal-motion, touch and full-input fidelity are separate Island E2E gates."
+  },
+  "runtime": {
+    "revisions": [
+      "f984d55a34e4ef007eb5feed4762a5df6aec5d08"
+    ],
+    "versions": [
+      "f984d55a34e4ef007eb5feed4762a5df6aec5d08:03219439-6d23-4a35-a307-ba5a56cb3764"
+    ],
+    "candidates": [
+      "mystic-island-shore-garden-v18"
+    ],
+    "learningCandidates": [
+      "mystic-island-learning-v2"
+    ],
+    "deliveryIds": [
+      "mystic-island-v1"
+    ],
+    "flag": "VITE_ISLAND_ENABLED=true",
+    "evidenceSource": "Actual rendered Island data attributes on the shared Vite target; Study fixture runs against the same server."
+  },
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 125.63216389212556,
+      "islandMedianProblemsPerMinute": 291.2129471746547,
+      "allCorrectIslandToStudyRatio": 2.3179808271447553,
+      "correctOperableP95Ms": 207.09999999962747,
+      "incorrectRetryP95Ms": 206.39999999850988,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 202.29999999981374,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 209.7999999988824,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4775.8499999996275,
+      "rawIslandDurationMedianMs": 2060.4999999990687
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 127.51442750265733,
+      "islandMedianProblemsPerMinute": 297.3093503789871,
+      "allCorrectIslandToStudyRatio": 2.331574208516847,
+      "correctOperableP95Ms": 205.59999999962747,
+      "incorrectRetryP95Ms": 205.80000000074506,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 198.6499999994412,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 205,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4705.350000000559,
+      "rawIslandDurationMedianMs": 2018.1000000005588
+    }
+  ],
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "evidence": {
+    "eligible": true,
+    "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "pass": true,
+  "runCount": 80,
+  "sourceFingerprintStart": "d1119aced52042e6fce5f76d2106b6774e0b9fcaac5c0732e548019b170c56a1",
+  "sourceFingerprintEnd": "d1119aced52042e6fce5f76d2106b6774e0b9fcaac5c0732e548019b170c56a1",
+  "scope": "Before the final panel-only Escape handler fix. Learning sources unchanged. Other local UI/build work ran concurrently; not exclusive-GPU timing."
+}

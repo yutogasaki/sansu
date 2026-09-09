@@ -1,3 +1,5 @@
+import { IslandDirectActions } from '../components/island/IslandDirectActions';
+import type { IslandDirectTarget } from '../components/island/islandDirectTargets';
 import { IslandHelp, IslandTutorial, TUTORIAL_TOPICS } from '../components/island/tutorial/IslandTutorial';
 import { useIslandTutorial } from '../components/island/tutorial/useIslandTutorial';
 import type { TutorialId } from '../domain/island/tutorialState';
@@ -10,7 +12,7 @@ import { crossedHomeJourneyStep } from '../components/island/homeJourney/growthR
 import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ArrowRight, Camera, Gift, Leaf, Settings2, X } from 'lucide-react';
+import { ArrowRight, Camera, Gift, Leaf, PackageOpen, Settings2, X } from 'lucide-react';
 import { useIslandNavigation } from '../components/island/useIslandNavigation';
 import type { IslandScreen } from '../domain/island/navigation';
 import { db } from '../db';
@@ -135,6 +137,14 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const learningScreen = plan?.status === 'completed' && isFirstIslandPlan(plan) && !plan.growthTarget ? 'reward' : 'learning';
     const screen = navigation ? navigation.learning ? learningScreen : navigation.view : localScreen;
     const setScreen = navigation?.setView ?? setLocalScreen;
+    const [directSelection, setDirectSelection] = useState<{ target: IslandDirectTarget; entry: string; preview: boolean }>();
+    useEffect(() => { if (screen !== 'home' || !active) setDirectSelection(undefined); }, [screen, active]);
+    const directEntry = `${location.key}:${screen}`;
+    const direct = screen === 'home' && directSelection?.entry === directEntry ? directSelection : undefined;
+    const closeDirect = () => {
+        setDirectSelection(undefined);
+        requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('[data-direct-target]')?.focus({ preventScroll: true }));
+    };
     const listening = useEnglishListening(profile.id, active && screen === 'learning' && profile.subjectMode !== 'math', profile.vocabLevels ?? [], plan?.slots[plan.cursor]?.problem);
     const learningLease = useLearningSessionLease(profile.id, active && screen === 'learning');
     useEffect(() => { if (screen === 'challenge') setChallengeStartIntent(false); }, [screen]);
@@ -526,6 +536,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         const updated = await run(() => selectIslandGrowthTarget(profile.id, island.revision, habitatId));
         if (!updated) return;
         setSnapshot(updated); setGrowthPreviewHabitat(undefined); setScreen('home');
+        return updated;
     };
     const appearance = async (level: number) => {
         if (!island || !preview) return;
@@ -573,7 +584,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     if (loadError) return <div className="island-loading" role="alert">しまを ひらけなかったよ。<button className="island-primary" onClick={() => window.location.reload()}>もういちど ひらく</button></div>;
     if (opening || !island) return <div className="island-loading" role="status">しまを ひらいているよ…</div>;
     const valid = Boolean(preview?.position && isValidIslandPlacement(island, preview.id, preview.position, preview.rotation));
-    const growthLook = screen === 'growth' && growthPreviewHabitat ? islandGrowthPreview(island, growthPreviewHabitat) : undefined;
+    const growthLook = direct?.preview ? islandGrowthPreview(island, 'garden') : screen === 'growth' && growthPreviewHabitat ? islandGrowthPreview(island, growthPreviewHabitat) : undefined;
     const stageIsland = growthLook?.island ?? (screen === 'experience' ? experience.previewIsland : undefined) ?? island;
     const furnitureTrial = screen === 'furniture' && !busy && !furniture.pendingKind ? islandFurnitureTrial(island, furnitureKind) : undefined;
     const furniturePlacementChoice = screen === 'placement' && preview && isIslandOptionalFurnitureKind(preview.kind) && !busy
@@ -631,6 +642,21 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             growthAt={homeJourneyGrowthAt} onGrowthShown={() => setHomeJourneyGrowthAt(undefined)} />}
         {active && !homeJourneyScene && !['help', 'album', 'photos', 'inventory', 'challenge'].includes(screen) && <IslandStage onTutorialReady={setTutorialStageReady} onCameraPractice={() => tutorial.practice('view')} closeHomeView={screen === 'home'} compactCameraControls={screen === 'home'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
             challengeDisplayed={challengeSummary?.displayed}
+            directInteractions={screen === 'home' && !busy && !homeMenuOpen && !tutorial.current && !direct?.preview}
+            onDirectSelect={target => {
+                if (screen !== 'home' || busy || homeMenuOpen) return;
+                if (target.kind === 'home') { enterHouse(); return; }
+                setDirectSelection({ target, entry: directEntry, preview: false });
+            }}
+            directPanel={direct && !homeMenuOpen ? <IslandDirectActions target={direct.target} island={island} plan={plan} disabled={busy}
+                preview={direct.preview} onPreview={() => setDirectSelection({ ...direct, preview: !direct.preview })}
+                onGrow={() => { void chooseGrowth('garden').then(updated => { if (updated) setDirectSelection(undefined); }); }}
+                onPlay={(itemId, residentId) => {
+                    if (busy) return;
+                    setDirectSelection(undefined); setPreview(undefined); setReaction(undefined); setPlayMessage(undefined);
+                    setScreen('play'); setPlayRequest({ id: crypto.randomUUID(), itemId, residentId });
+                }} onMove={item => { setDirectSelection(undefined); select(item); }}
+                onInventory={() => { setDirectSelection(undefined); setScreen('inventory'); }} onClose={closeDirect} /> : undefined}
             learningKeepsakes={keepsakeRoomActive ? { state: island.learningKeepsakes, selectedId: keepsakeFocus } : undefined}
             onHomeEnter={!busy && ['home', 'play'].includes(screen) ? enterHouse : undefined}
             onHomeAction={!busy && screen === 'keepsakes' ? action => {
@@ -682,14 +708,14 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             photoRequestId={screen === 'camera' ? photos.requestId : undefined} onPhoto={photos.consume}
             milestoneNotice={screen === 'furniture' && furnitureTrial ? <aside className="island-growth-preview-notice" role="status"><strong>どうぐの おためし</strong>いまの しまは そのまま。</aside>
                 : screen === 'customization' ? <IslandCustomizationPreviewNotice saved={getIslandCosmetics(island)} preview={customization.preview ?? getIslandCosmetics(island)} />
-                : <>{growthLook && <aside className="island-growth-preview-notice" role="status"><strong>つぎに 育つ すがた・おためし</strong>{growthLook.description}</aside>}
+                : <>{growthLook && !direct && <aside className="island-growth-preview-notice" role="status"><strong>つぎに 育つ すがた・おためし</strong>{growthLook.description}</aside>}
                     {screen === 'experience' && experience.previewIsland && <aside className="island-growth-preview-notice" role="status"><strong>けしきの おためし</strong>いまの しまは そのまま。</aside>}
                     {screen === 'expression' && expression.previewAction && <aside className="island-growth-preview-notice" role="status"><strong>むりょうの おためし</strong>いまの しまは そのまま。</aside>}
                     {(learning || screen === 'reward') && starReceipt && <IslandStarReceipt key={starReceipt.id} receiptId={starReceipt.id} stars={starReceipt.stars} />}</>}
             growth={stageIsland.growth} growthTarget={plan?.status === 'active' ? plan.growthTarget : undefined}
-            comparisonHabitat={screen === 'growth' ? growthViewHabitat : undefined}
-            districtFocus={learning || screen === 'shared' || screen === 'customization' || screen === 'expression' || screen === 'furniture' || screen === 'camera' && photoTargetId !== 'current' ? 'all' : district} readOnly={keepsakeRoomActive || ['growth', 'inventory', 'reward', 'customization', 'guide', 'experience', 'expression'].includes(screen)}
-            onDiscovery={!homeMenuOpen && ['home', 'play', 'showcase'].includes(screen) ? discoveries.capture : undefined}
+            comparisonHabitat={direct?.target.kind === 'garden' ? 'garden' : screen === 'growth' ? growthViewHabitat : undefined}
+            districtFocus={learning || screen === 'shared' || screen === 'customization' || screen === 'expression' || screen === 'furniture' || screen === 'camera' && photoTargetId !== 'current' ? 'all' : district} readOnly={Boolean(direct?.target.kind === 'garden') || keepsakeRoomActive || ['growth', 'inventory', 'reward', 'customization', 'guide', 'experience', 'expression'].includes(screen)}
+            onDiscovery={!direct && !homeMenuOpen && ['home', 'play', 'showcase'].includes(screen) ? discoveries.capture : undefined}
             reaction={reaction} learningProgress={(learning || screen === 'reward') && plan
                 ? { sectionId: plan.id, completed: plan.cursor, total: plan.slots.length } : undefined}
             preview={preview} previewValid={valid} selectedId={screen === 'play' ? playRequest?.itemId : preview?.id}
@@ -878,6 +904,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     {latestMilestone ? <IslandMilestoneReturn milestone={latestMilestone} island={island} disabled={comparisonDisabled} onCompare={() => {
                         setAlbumComparison(latestMilestone.expansion ? 'all' : latestMilestone.habitats[0] ?? 'garden'); setScreen('album');
                     }} /> : null}
+                    <button className="island-secondary island-home-inventory" disabled={busy} onClick={() => setScreen('inventory')}><PackageOpen size={20} />もちもの</button>
                     <IslandHomeActions onHelp={() => setScreen('help')} active={active} onOpenChange={setHomeMenuOpen} busy={busy} comparisonDisabled={comparisonDisabled} workshopUnlocked={island.completedSets >= 1}
                         pendingRewards={island.pendingRewards.length} onPlay={() => {
                         setPlayRequest(undefined); setPlayMessage(undefined); setReaction(undefined); setPreview(undefined); setScreen('play');

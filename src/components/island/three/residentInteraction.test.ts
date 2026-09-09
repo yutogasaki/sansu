@@ -17,6 +17,15 @@ const enclosedBench = () => {
 };
 
 describe('reachable, replayable island furniture', () => {
+    it('honors an explicit resident without falling back or taking an occupied seat', () => {
+        const target = bench(0, 0);
+        const candidates = residents().map((resident, index) => ({ ...resident, species: (['otter', 'rabbit', 'fox'] as const)[index] }));
+        expect(chooseReachableResident(candidates, target, [target], 4, -1, [], 'rabbit')?.index).toBe(1);
+        candidates[1].visible = false;
+        expect(chooseReachableResident(candidates, target, [target], 4, -1, [], 'rabbit')).toBeUndefined();
+        candidates[1].visible = true; candidates[0].itemId = target.id;
+        expect(chooseReachableResident(candidates, target, [target], 4, -1, [], 'rabbit')).toBeUndefined();
+    });
     it('invites the reachable unused rabbit to flowers, otter to water and fox to lights', () => {
         const candidates: ResidentCandidate[] = [
             { species: 'otter', visible: true, position: { x: 1.2, z: 1.8 } },

@@ -41,7 +41,7 @@ export function savedResidentLayoutChanged(previous: readonly IslandStageItem[],
 /** Fair turns among reachable residents. An occupied object keeps its current
  * user for a replay, so two bodies never share the same seat or viewing point. */
 export function chooseReachableResident(residents: readonly ResidentCandidate[], target: IslandStageItem,
-    items: IslandStageItem[], landAccess: IslandLandAccess, afterIndex = -1, obstacles: readonly { x: number; z: number; radius: number }[] = []): ResidentVisitChoice | undefined {
+    items: IslandStageItem[], landAccess: IslandLandAccess, afterIndex = -1, obstacles: readonly { x: number; z: number; radius: number }[] = [], requestedSpecies?: ResidentCandidate['species']): ResidentVisitChoice | undefined {
     const occupant = residents.findIndex(resident => resident.visible && resident.itemId === target.id);
     const order = occupant >= 0 ? [occupant] : Array.from({ length: residents.length }, (_, i) =>
         (Math.max(-1, afterIndex) + 1 + i) % residents.length);
@@ -55,7 +55,7 @@ export function chooseReachableResident(residents: readonly ResidentCandidate[],
     }
     for (const index of order) {
         const resident = residents[index];
-        if (!resident.visible) continue;
+        if (!resident.visible || requestedSpecies && resident.species !== requestedSpecies) continue;
         const occupied = residents.filter((other, otherIndex) => otherIndex !== index && other.visible).map(other => other.position);
         let route: ResidentRoute | undefined;
         if (isOptionalFurniture(target.kind) && target.position) {

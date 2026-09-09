@@ -1,0 +1,14 @@
+.island-direct-markers { position: absolute; inset: 0; pointer-events: none; }
+.island-direct-marker { position: absolute; transform: translate(-50%, -50%); pointer-events: auto; display: flex; align-items: center; justify-content: center; gap: 5px; min-height: 44px; padding: 6px 10px; border: 2px solid var(--island-ink); border-radius: 18px; background: var(--island-paper); color: var(--island-ink); font-size: 13px; font-weight: 800; box-shadow: 0 3px 0 var(--pokomoko-edge); white-space: nowrap; }
+.island-direct-marker::after { content: ''; position: absolute; top: 100%; left: calc(50% - 4px); width: 8px; height: 8px; background: var(--island-paper); border-right: 2px solid var(--island-ink); border-bottom: 2px solid var(--island-ink); transform: rotate(45deg); }
+.island-direct-marker:focus-visible { outline: 3px solid var(--island-primary); outline-offset: 4px; }
+.island-direct-panel { position: absolute; bottom: 8px; left: 8px; right: 8px; max-height: 55%; overflow-y: auto; padding: 8px 12px 12px; border: 1px solid var(--pokomoko-edge); border-radius: 20px; background: var(--island-paper); color: var(--island-ink); }
+.island-direct-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.island-direct-heading h2 { display: flex; gap: 8px; align-items: center; margin: 0; font-size: 17px; }
+.island-direct-panel p { margin: 0 0 8px; font-size: 14px; }
+.island-direct-panel .island-direct-note { font-size: 12px; }
+.island-direct-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.island-direct-buttons > button { flex: 1; min-height: 44px; white-space: nowrap; font-size: 14px; }
+.island-direct-play-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.island-direct-play-list > button { min-height: 44px; font-size: 14px; }
+.island-home-inventory { min-height: 44px; margin-bottom: 8px; }
