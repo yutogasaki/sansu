@@ -30,6 +30,7 @@ import { DEFAULT_ISLAND_COSMETICS, ISLAND_CUSTOMIZATION_CANDIDATE, IslandCosmeti
 import { IslandPersonalScenery } from './personalScenery';
 import { IslandLearningKeepsakeScenery } from './learningKeepsakeScenery';
 import { IslandHomePresentation, ISLAND_HOME_INTERIOR } from './homePresentation';
+import { HomeResident } from './homeResident';
 import { fitIslandHomeInteriorCamera } from './homeInteriorCamera';
 import { IslandExpressionEnvironment } from './expressionEnvironment';
 import { canRunLivingActivities, canStartGrownSharing, livingCandidates, livingVisitHasSetting, livingVisitsForItem, sharedLivingDiscovery, type LivingVisit } from './livingActivities';
@@ -121,6 +122,7 @@ export function fitIslandComparisonCamera(camera: THREE.OrthographicCamera,
 
 export class IslandScene {
     private readonly scene = new THREE.Scene();
+    private readonly homeResident = new HomeResident();
     private readonly keepsakeRoom = new IslandLearningKeepsakeScenery();
     private readonly homePresentation = new IslandHomePresentation();
     private readonly camera = new THREE.OrthographicCamera(-7, 7, 5, -5, .1, 100);
@@ -428,6 +430,10 @@ export class IslandScene {
         if (state.learning) this.homePresentation.cancel();
         const keepsakesChanged = this.keepsakeRoom.update(state.learningKeepsakes?.state, state.completedSets,
             this.keepsakeRoomActive, state.learningKeepsakes?.selectedId, state.challengeDisplayed);
+        if (this.keepsakeRoomActive && !state.learningKeepsakes?.selectedId) {
+            this.homeResident.show(this.keepsakeRoom.group);
+            if (!this.homeResident.group.parent) this.scene.add(this.homeResident.group);
+        } else this.homeResident.hide();
         this.sharedJobs.beforeUpdate(state.shared ? { ...state.shared,
             active: state.shared.active && !state.learning && !state.readOnly && !this.workshopActive && !state.preview } : undefined);
         let sharedGeometryChanged = false;
@@ -1466,6 +1472,11 @@ export class IslandScene {
         const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? this.host.clientHeight : 1);
         if (this.cameraControls.wheel(delta, { x: event.clientX, y: event.clientY }, this.renderer.domElement.getBoundingClientRect())) event.preventDefault();
     };
+    walkHomeResident(dx: number, dz: number) {
+        if (!this.keepsakeRoomActive || this.state?.photographing || this.state?.learningKeepsakes?.selectedId) return;
+        const position = this.homeResident.describe().position;
+        if (position && this.homeResident.walkTo({ x: position[0] + dx, z: position[2] + dz }, performance.now(), this.motion.matches)) this.requestFrame();
+    }
     controlCamera(action: IslandCameraAction) {
         if (!this.disposed && !this.lost && !this.state?.photographing && canControlIslandCamera(this.state)) {
             this.homePresentation.cancel(); this.cameraControls.action(action);
@@ -1505,6 +1516,16 @@ export class IslandScene {
                 -(event.clientY - rect.top) / rect.height * 2 + 1), this.homeCamera);
             const action = this.keepsakeRoom.selectHit(this.raycaster.ray);
             if (action) this.callbacks.homeAction?.(action);
+            else if (!this.state?.learningKeepsakes?.selectedId) {
+                const hit = this.raycaster.intersectObject(this.keepsakeRoom.group, true).find(hit => {
+                    for (let node: THREE.Object3D | null = hit.object; node; node = node.parent) if (!node.visible) return false;
+                    return true;
+                });
+                if (hit) {
+                    const point = this.keepsakeRoom.group.worldToLocal(hit.point.clone());
+                    if (Math.abs(point.y) < .09 && this.homeResident.walkTo(point, performance.now(), this.motion.matches)) this.requestFrame();
+                }
+            }
             return;
         }
         if (this.state?.photographing) {
@@ -1739,9 +1760,11 @@ export class IslandScene {
         this.frameCosmeticFocus();
         this.frameExpressionFlag();
         this.frameKeepsakeRoom();
+        const homeWalking = this.keepsakeRoomActive && !this.state?.photographing && this.homeResident.update(now);
         const homeMoving = this.homePresentation.animate(this.camera, now, this.motion.matches);
         const renderedCamera = this.keepsakeRoomActive ? this.homeCamera : this.camera;
         this.renderer.render(this.scene, renderedCamera);
+        this.host.dataset.homeResident = JSON.stringify(this.homeResident.describe());
         this.host.dataset.keepsakeRoom = JSON.stringify(this.keepsakeRoom.describe());
         this.host.dataset.homeTargets = JSON.stringify(this.keepsakeRoomActive ? [
             { name: 'home-album', type: 'album' }, { name: 'home-notice-board', type: 'notices' },
@@ -1897,7 +1920,7 @@ export class IslandScene {
         this.host.dataset.cameraView = JSON.stringify(this.cameraControls.view);
         this.host.dataset.frameCpuMs = (performance.now() - drawStarted).toFixed(3);
         if (this.drawCount === 1) this.callbacks.ready?.();
-        if (homeMoving) this.requestFrame();
+        if (homeWalking || homeMoving) this.requestFrame();
         else if ((moving || this.trialSearch || this.optionalPlacement.busy) && (this.expressionWalk.moving || trailsMoving || this.workshopActive || this.sharedJobs.active || this.optionalFurniture.active || this.trialSearch || this.optionalPlacement.busy || !this.motion.matches)
             && (!this.state?.readOnly || this.expressionWalk.moving || trailsMoving)) this.requestFrame();
         else if ((!this.optionalFurniture.active || this.optionalAutonomousUntil) && !this.workshopActive && !this.sharedJobs.active && !this.state?.learning && !this.state?.readOnly && !this.explicitNatureObservation && (!this.motion.matches || this.state?.growth)) {
@@ -2110,7 +2133,7 @@ export class IslandScene {
         this.sharedVisuals.dispose();
         this.nature.dispose();
         this.personal.dispose();
-        this.homePresentation.dispose(); this.keepsakeRoom.dispose();
+        this.homeResident.hide(); this.homeResident.group.removeFromParent(); this.homePresentation.dispose(); this.keepsakeRoom.dispose();
         this.residents.forEach(resident => resident.disposeAppearance());
         this.world.dispose();
         const materials = new Set<THREE.Material>();

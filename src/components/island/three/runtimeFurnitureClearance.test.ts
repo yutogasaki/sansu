@@ -11,6 +11,7 @@ import { IslandExpressionEnvironment } from './expressionEnvironment';
 import { IslandPersonalScenery } from './personalScenery';
 import { IslandPlacementOcclusion } from './placementOcclusion';
 import { IslandHomePresentation, ISLAND_HOME_INTERIOR } from './homePresentation';
+import { HomeResident } from './homeResident';
 import { IslandLearningKeepsakeScenery } from './learningKeepsakeScenery';
 import { IslandMaterials, disposeGeometry } from './primitives';
 import { createIsland, getIslandLandAccess, ISLAND_ITEMS } from '../../../domain/island/catalog';
@@ -49,7 +50,7 @@ function fixture() {
     const sun = new THREE.DirectionalLight(), hemisphere = new THREE.HemisphereLight(); scene.add(sun, hemisphere);
     const environment = new IslandExpressionEnvironment(scene, sun, hemisphere), occlusion = new IslandPlacementOcclusion();
     const personal = new IslandPersonalScenery(() => ({ getContext: () => null } as unknown as HTMLCanvasElement)); scene.add(personal.group);
-    const homePresentation = new IslandHomePresentation(), keepsakeRoom = new IslandLearningKeepsakeScenery();
+    const homeResident = new HomeResident(), homePresentation = new IslandHomePresentation(), keepsakeRoom = new IslandLearningKeepsakeScenery();
     keepsakeRoom.group.position.set(...ISLAND_HOME_INTERIOR.position); keepsakeRoom.group.scale.setScalar(ISLAND_HOME_INTERIOR.scale);
     scene.add(keepsakeRoom.group);
     const residents = [new IslandResident('otter', materials, [-1, 0, 2], vi.fn()),
@@ -60,7 +61,7 @@ function fixture() {
     const runtime = Object.create(IslandScene.prototype) as RuntimeBoundary;
     const groupController = () => ({ group: new THREE.Group(), update: vi.fn() });
     const items = new Map<string, { item: IslandStageItem; group: THREE.Group }>();
-    Object.assign(runtime, { scene, materials, world, residents, personal, homePresentation, keepsakeRoom, expressionEnvironment: environment, placementOcclusion: occlusion,
+    Object.assign(runtime, { scene, materials, world, residents, personal, homeResident, homePresentation, keepsakeRoom, expressionEnvironment: environment, placementOcclusion: occlusion,
         state, camera, host: { dataset: {} }, renderer: { shadowMap: { needsUpdate: false } },
         tree: world.tree, scenery: world.scenery, expansion: world.expansion, westExpansion: world.westExpansion, lighthouse: world.lighthouse,
         motion: { matches: false }, onscreen: true, clearanceDirty: false, furnitureClearance: clearance, optionalFurniture: optional,
@@ -84,7 +85,7 @@ function fixture() {
             expect(runtime.trialSearch).toBeUndefined();
         },
         clean() {
-            optional.cancel(30000); clearance.cancel(30000); occlusion.restore(); environment.dispose(); homePresentation.dispose(); keepsakeRoom.dispose(); personal.dispose(); world.dispose();
+            optional.cancel(30000); clearance.cancel(30000); occlusion.restore(); environment.dispose(); homeResident.hide(); homePresentation.dispose(); keepsakeRoom.dispose(); personal.dispose(); world.dispose();
             residents.forEach(resident => { resident.disposeAppearance(); disposeGeometry(resident.group); });
             items.forEach(model => disposeGeometry(model.group)); if (runtime.furnitureTrial) disposeGeometry(runtime.furnitureTrial.group); materials.dispose();
         } };

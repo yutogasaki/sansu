@@ -35,7 +35,7 @@ export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready
     const sharedEnabled = props.shared?.active;
     const sceneLabel = workshopActive
         ? props.workshop?.mode === 'build' ? 'みぞと 水車を つなぐ いりえ' : 'ものを しらべる いりえ'
-        : props.learningKeepsakes && !props.learning ? 'しまの いえ。だいじなものと まなびの きねん'
+        : props.learningKeepsakes && !props.learning ? 'しまの いえ。ゆかを タップ、または やじるしキーで カワウソが あるくよ'
         : sharedActive ? 'しまの かざりと なかま'
         : props.expressionFlagFocus && !props.learning ? 'しまの はたと かざり'
         : props.preview ? 'しまの ものを おく ばしょを えらんでいるよ'
@@ -167,6 +167,12 @@ export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready
         data-workshop-candidate={props.workshop?.active ? 'island-workshop-v1' : undefined}>
         <div className="island-stage__viewport">
             <div className="island-stage__canvas" ref={host} role="img" aria-label={sceneLabel}
+                tabIndex={props.learningKeepsakes && !props.learning ? 0 : undefined}
+                onKeyDown={event => {
+                    if (!props.learningKeepsakes || props.learning) return;
+                    const step: Record<string, [number, number]> = { ArrowLeft: [-.4, 0], ArrowRight: [.4, 0], ArrowUp: [0, -.4], ArrowDown: [0, .4] };
+                    if (step[event.key]) { event.preventDefault(); runtime.current?.walkHomeResident(...step[event.key]); }
+                }}
                 data-testid="island-stage" data-renderer={failed ? 'fallback' : 'loading'} hidden={failed} />
             {failed && <div className="island-stage__fallback" role="img" aria-label={caption}>
                 <span className="island-stage__fallback-land" aria-hidden="true">⌂</span>

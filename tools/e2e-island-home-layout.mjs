@@ -94,7 +94,7 @@ try {
 
             await openMenu(); await dock.getByRole('button', { name: 'いえ', exact: true }).click();
             await waitMode(page, 'keepsakes');
-            await button(page, 'いえを とじる').click(); await waitMode(page, 'home');
+            await page.locator('[data-keepsake-action="close"]').click(); await waitMode(page, 'home');
             await openMenu(); await dock.getByRole('button', { name: 'もちもの', exact: true }).click();
             await waitMode(page, 'inventory');
             await button(page, 'もちものから もどる').click(); await waitMode(page, 'home');

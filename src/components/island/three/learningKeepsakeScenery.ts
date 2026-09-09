@@ -49,9 +49,9 @@ export class IslandLearningKeepsakeScenery {
         const fill = new THREE.PointLight('#fff5e6', 3, 9, 2);
         fill.name = 'home-interior-fill'; fill.position.set(0, 3.55, 2.45);
         this.group.add(fill);
-        mesh(this.group, roundedBoxGeometry([6.8, 4.1, .13], .035), plum, [0, 2.05, -.35]).name = 'keepsake-room-wall';
+        mesh(this.group, roundedBoxGeometry([6.8, 4.1, .13], .035, 1), plum, [0, 2.05, -.35]).name = 'keepsake-room-wall';
         mesh(this.group, new THREE.BoxGeometry(.14, 4.1, 5.3), blue, [-3.38, 2.05, 2.2]).name = 'keepsake-room-side-wall';
-        mesh(this.group, roundedBoxGeometry([6.85, .13, 5.3], .04), floor, [0, -.07, 2.2]).name = 'keepsake-room-floor';
+        mesh(this.group, roundedBoxGeometry([6.85, .13, 5.3], .04, 1), floor, [0, -.07, 2.2]).name = 'keepsake-room-floor';
         mesh(this.group, new THREE.BoxGeometry(.14, 4.16, 5.3), ivory, [3.38, 2.05, 2.2]).name = 'home-right-wall';
         mesh(this.group, new THREE.BoxGeometry(6.85, .14, 5.36), paper, [0, 4.15, 2.2]).name = 'home-ceiling';
         mesh(this.group, new THREE.BoxGeometry(6.85, 4.16, .14), blue, [0, 2.05, 4.84]).name = 'home-entry-wall';
@@ -68,7 +68,7 @@ export class IslandLearningKeepsakeScenery {
         // shelf boards. The available space stays finite even when empty.
         for (const x of [-.88, 3.08]) mesh(this.group, roundedBoxGeometry([.1, 3.69, .58], .018), cabinet, [x, 1.845, .10]);
         for (const y of [.06, .54, 1.66, 2.78, 3.70]) {
-            mesh(this.group, roundedBoxGeometry([4.06, .06, .65], .018), wood, [1.1, y, .10]).name = 'keepsake-room-shelf-board';
+            mesh(this.group, roundedBoxGeometry([4.06, .06, .65], .018, 1), wood, [1.1, y, .10]).name = 'keepsake-room-shelf-board';
         }
         for (let i = 0; i < 6; i++) mesh(this.group, new THREE.BoxGeometry(.016, .004, 5.12), wood, [-2.75 + i * 1.08, .001, 2.2]);
         // The awards live in a furnished home: a reading seat, a book on the
@@ -103,7 +103,7 @@ export class IslandLearningKeepsakeScenery {
         const details = this.group.children.slice(detailStart).filter((object): object is THREE.Mesh => object instanceof THREE.Mesh);
         for (const material of new Set(details.map(object => object.material))) {
             const objects = details.filter(object => object.material === material);
-            const geometries = objects.map(object => { object.updateMatrix(); return object.geometry.clone().applyMatrix4(object.matrix); });
+            const geometries = objects.map(object => { object.updateMatrix(); return (object.geometry.index ? object.geometry.toNonIndexed() : object.geometry.clone()).applyMatrix4(object.matrix); });
             const combined = mergeGeometries(geometries);
             geometries.forEach(geometry => geometry.dispose());
             if (combined) {
