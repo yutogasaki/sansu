@@ -358,16 +358,19 @@ describe('one side view contains the complete shared delivery', () => {
                     residents: actors, completedSets: 6, viewportWidth: phone ? 390 : 768, occluders: [...scenery, actors[0].group] },
                 phone ? 1.0103642189236905 : 1.6340638092168869);
             });
-            expect(result.attemptedPlans).toBe(phone ? 1 : scenario === 'tablet' ? 2 : 3);
+            // The sculpted crown opens the first legal tablet view; the fully
+            // opaque enclosure must still exhaust all three real plans.
+            expect(result.attemptedPlans).toBe(scenario === 'obstructed' ? 3 : 1);
             expect(attempted).toEqual(plans.slice(0, result.attemptedPlans));
-            expect(result.plan).toBe(scenario === 'tablet' ? plans[1] : current);
+            expect(result.plan).toBe(current);
             expect(result.satisfied).toBe(scenario !== 'obstructed');
             expect(result.frame.visibilityDiagnostics!.readabilitySatisfied).toBe(result.satisfied);
             if (result.satisfied) {
                 expect(result.frame.visibilityDiagnostics!.minimumPhaseVisibility).toBeGreaterThanOrEqual(.5);
                 expect(result.frame.visibilityDiagnostics!.minimumCompositionVisibility).toBeGreaterThanOrEqual(.5);
                 expect(result.frame.visibilityDiagnostics!.bodySeparationPx).toBeGreaterThanOrEqual(60);
-                expect(result.frame.visibilityDiagnostics!.cameraHeight).toBe(phone ? 13 : 8);
+                expect(result.frame.visibilityDiagnostics!.cameraHeight).toBe(13);
+                boundedCameraSearch(result.frame.visibilityDiagnostics!);
             } else expect(result.frame.visibilityDiagnostics!.minimumCompositionVisibility).toBe(0);
             expect(JSON.stringify({ plans, roots: actors.map(actor => actor.group.position.toArray()) })).toBe(before);
         } finally {
@@ -488,19 +491,19 @@ describe('recorded 5d7 subjects cannot borrow visibility from later poses', () =
             } else { expect(diagnostic.cameraCandidates).toBe(6); expect(diagnostic.cameraHeight).toBe(8); }
             for (const object of [source, seat, objects.carrier, objects.receiver]) visible(object, camera(selected.frame));
             if (fixture.name === 'tablet-fox-flower') {
-                expect(plans).toHaveLength(3); expect(selected.attemptedPlans).toBe(3);
-                const rejected = frames[1].visibilityDiagnostics!;
-                expect(rejected.compositionVisibility.gather!.carrierHead).toBeCloseTo(19 / 36);
-                expect(rejected.compositionVisibility.gather!.carrierBody).toBeCloseTo(20 / 36);
-                expect(rejected.minimumPoseIdentityVisibility).toBeCloseTo(3 / 9);
+                expect(plans).toHaveLength(3); expect(selected.attemptedPlans).toBe(2);
+                // The first plan still hides the actual source. The new crown
+                // exposes the carrier in the second plan, which may now be used
+                // only because every individual pose clears the same .5 gate.
+                const rejected = frames[0].visibilityDiagnostics!;
+                expect(rejected.compositionVisibility.gather!.source).toBeCloseTo(1 / 3);
                 expect(rejected.readabilitySatisfied).toBe(false);
-                expect(rejected.poseIdentityVisibility.filter(pose => pose.phase === 'gather').map(pose => pose.visibility.carrierHead))
-                    .toEqual([5 / 9, 5 / 9, 6 / 9, 3 / 9]);
-                expect(selected.plan).toBe(plans[2]);
+                expect(selected.plan).toBe(plans[1]);
                 expect(selected.plan.handoffPoint.x).toBeCloseTo(1.4747909327039002);
-                expect(selected.plan.handoffPoint.z).toBeCloseTo(2.182555959257745);
-                expect(diagnostic.minimumPoseIdentityVisibility).toBe(1);
-                expect(selected.frame.presentationHands).toEqual({ carrier: 'left', receiver: 'left' });
+                expect(selected.plan.handoffPoint.z).toBeCloseTo(.8174440407422551);
+                expect(diagnostic.compositionVisibility.gather!.source).toBe(1);
+                expect(diagnostic.minimumPoseIdentityVisibility).toBeCloseTo(2 / 3);
+                expect(selected.frame.presentationHands).toEqual({ carrier: 'left', receiver: 'right' });
             } else {
                 expect(selected.plan).toBe(plan); expect(selected.attemptedPlans).toBe(1); expect(frames).toHaveLength(1);
                 expect(selected.frame.presentationHands).toEqual(fixture.hands);

@@ -25,7 +25,7 @@ await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch();
 const report = { target: base, flag: 'VITE_ISLAND_ENABLED=true', scope, bootstrapChecks: [], hookChecks: [], offline: null, pass: false };
 async function waitReady(page) {
-    const island = page.locator('.island-page[data-visual-candidate-id="mystic-island-shore-garden-v7"]');
+    const island = page.locator('.island-page[data-visual-candidate-id="mystic-island-shore-garden-v8"]');
     await island.waitFor();
     if (await island.getAttribute('data-mode') === 'learning') {
         // The learning focus layout keeps the scene mounted but intentionally

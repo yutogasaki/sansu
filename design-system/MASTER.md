@@ -47,7 +47,7 @@ If a design rule changes, update the SSOT docs first and then refresh this file.
 
 ### Living Island Override
 
-2026-09-09 local candidate `mystic-island-shore-garden-v6`: follow 28 for asymmetric outer shores, a broad sandy edge, low rock relief and shallows while keeping every saved placement ellipse and level walking floor. Follow 07 for a compact home learning action, six play/create entries and a separate archive row; optional panels share clear selected/preview/equipped states. This direction does not imply release approval or replace learning inputs.
+2026-09-09 local candidate `mystic-island-shore-garden-v8`: follow 28 for asymmetric outer shores, a broad sandy edge, low rock relief and shallows while keeping every saved placement ellipse and level walking floor. Follow 07 for a compact home learning action, six play/create entries and a separate archive row; optional panels share clear selected/preview/equipped states. The water has static tonal variation; the default moon-garden crown uses rounded connected lobes with its lower branch-support volume preserved. Owned colors/patterns and other themes stay distinct. This direction does not imply release approval or replace learning inputs.
 
 Specification 36 adds an optional discovery guide, physical experiments and visitors, next-growth preview, personal names/flags/outfits/ambience, and saved scenery/photos. Use actual rendered results as evidence. Explicit observations frame the target and its partner visibly; learning restores its fixed input/camera contract. Compare current and next growth at the same scale. Keep material character, resident faces/ears and real contact points readable. Stop optional ambience during learning, global sound-off and backgrounding.
 

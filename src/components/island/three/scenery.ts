@@ -9,6 +9,7 @@ import type { IslandAppearanceSlotId } from '../../../domain/island/appearance';
 import { ScenerySlotBuild } from './appearanceParts';
 import { appearanceFamily } from './appearanceMotifs';
 import { createIslandWaterSurfaceMaterial } from './waterSurface';
+import { treeCanopyGeometry } from './treeCanopyGeometry';
 import { ISLAND_MAIN_TERRAIN_STONES, ISLAND_TERRAIN_SEGMENTS, terrainContour, terrainEdgePoint, terrainRocks,
     type IslandTerrainProfile, type TerrainEdge } from './terrainProfile';
 
@@ -241,7 +242,8 @@ export function makeStarTree(m: IslandMaterials) {
     ];
     const crown = new THREE.Group(); crown.name = 'tree-canopy'; crown.position.y = 2.2;
     if (!addThemeCanopy(crown, m)) clumps.forEach(({ at, size, color }, i) => {
-        const clump = mesh(crown, organicEllipsoidGeometry(size, i * .9), m.surface(color, .91), [at[0], at[1] - 2.2, at[2]]);
+        const geometry = m.artDirection === 'moon-garden' ? treeCanopyGeometry(size, i * .9) : organicEllipsoidGeometry(size, i * .9);
+        const clump = mesh(crown, geometry, m.surface(color, .91), [at[0], at[1] - 2.2, at[2]]);
         clump.name = `tree-crown-${i}`;
     });
     batch(structure);

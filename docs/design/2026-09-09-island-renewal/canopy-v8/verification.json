@@ -1,0 +1,151 @@
+{
+  "candidate": "mystic-island-shore-garden-v8",
+  "target": "http://127.0.0.1:5411",
+  "revision": "workshop-20260909-88c3f5357ac2",
+  "sourceHash": "88c3f5357ac25bb5c27820c983ccd5cbf6f97653d7f29b763f87d42399cc0b3a",
+  "inputs": 1072,
+  "flags": {
+    "VITE_ISLAND_ENABLED": "true",
+    "VITE_BUILD_PLAY_ENABLED": "true"
+  },
+  "humanN": 0,
+  "fullGoalPassed": false,
+  "change": "Default moon-garden only: six authored leaf masses become 12-lobed closed geometry, with lower support volume retained. Same palette, UV/dots, clump positions, crown identity, growth scale, root/light anchor and saved data.",
+  "limits": {
+    "visual": "Local silhouette improvement accepted; source-A overall shape/material/composition parity HOLD. Phone toolbar/hint still covers part of the initial crown.",
+    "understanding": "No independent observers; no claim of motivation or silent comprehension.",
+    "runtime": "Core, selected actual journeys and formal26 fixed-fixture timing PASS. Broader PWA results belong to fixed23, not fixed26. Formal keyboard timing is not ordinary planner or child behavior evidence."
+  },
+  "checks": {
+    "unit": {
+      "suites": 294,
+      "tests": 3244,
+      "pass": true
+    },
+    "lint": {
+      "errors": 0,
+      "existingWarnings": 1
+    },
+    "typecheck": "PASS in production build",
+    "build": "PASS",
+    "assets": {
+      "precacheMiB": 10.73,
+      "precacheBudgetMiB": 12,
+      "artMiB": 4.92,
+      "artBudgetMiB": 8
+    },
+    "sharedFraming": "26 tests pass; exact scene-dependent plan choices updated while per-pose .5 visibility, 60px body separation, bounded search, and opaque enclosure rejection remain.",
+    "formalTiming": {
+      "runs": 80,
+      "repetitions": 10,
+      "eligible": true,
+      "pass": true,
+      "extraOrdinaryActions": 0,
+      "phoneCorrectP95Ms": 200.2,
+      "tabletCorrectP95Ms": 199.6,
+      "artifact": "throughput-verification.json",
+      "sha256": "e3518a6ae3e4b117a29971a8ac13dffcfe1c2eabc8ae14ed7c1de1f898b206b9"
+    }
+  },
+  "scopes": {
+    "genuine": "Profile-only initialization, each lane/target answers 18 real UI questions (3/3/6/6) through four sections. Ten matched camera/growth comparisons. All native stores unchanged by return/capture/resume; same reservation. grove progress/level remains 0 throughout.",
+    "mature": "Explicit pre-existing three-land native fixture, not acquisition. Both widths, same camera and 152 draw calls; all stores unchanged.",
+    "intermediate": "Separate explicit three-land fixture with current grove progress=1/pending=0. Actual UI rotation/zoom, all stores unchanged. Does not claim this level was earned during the walkthrough."
+  },
+  "preservedFailures": {
+    "prototype01": "Geometry perturbation too weak at phone scale; visual HOLD retained.",
+    "snapshot25": "Prototype02 lost actual central trunk-cap contact at growth1. Lower volume fixed in26; original25 untouched. First broad25 check: 5 failures, including one overstrict center-in-crown predicate and four changed fixed framing expectations.",
+    "genuine01": "QA serviceWorkers:block registration errors; fixed by normal SW allow, without relaxing error/data/version gates."
+  },
+  "reports": [
+    {
+      "name": "canopy-review-26-01",
+      "path": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/canopy-review-26-01/report.json",
+      "sha256": "b69b118c11c3deab51dc1e64dc7286ba976ac2efd7d75a7209761571f95270c4",
+      "pass": true,
+      "sourceStable": true,
+      "browserClosed": true
+    },
+    {
+      "name": "canopy-growth-review-03",
+      "path": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/canopy-growth-review-03/report.json",
+      "sha256": "5e6b476842d656a6041af6b458c720347247924e6426d3996c19eba3533d3d5e",
+      "pass": true,
+      "sourceStable": true,
+      "browserClosed": true
+    },
+    {
+      "name": "canopy-support-26-01",
+      "path": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/canopy-support-26-01/report.json",
+      "sha256": "4d3eb96b0e0064506dc2417f276b63b512f303f7f01de77a2d02146c3a687fa1",
+      "pass": true,
+      "sourceStable": true,
+      "browserClosed": true
+    }
+  ],
+  "screens": [
+    {
+      "file": "phone-before-overview.png",
+      "sha256": "d0874a6ba1052a302208975524c6dfda0e19a837667f5512d62306d8d7d1da99",
+      "original": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/canopy-review-26-01/phone-before-overview.png",
+      "run": "canopy-review-26-01",
+      "type": "unprocessed actual browser screenshot"
+    },
+    {
+      "file": "phone-after-overview.png",
+      "sha256": "36b832602d43af84108e15577307df9801237f560e62c069fa40989027e21040",
+      "original": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/canopy-review-26-01/phone-after-overview.png",
+      "run": "canopy-review-26-01",
+      "type": "unprocessed actual browser screenshot"
+    },
+    {
+      "file": "tablet-before-near.png",
+      "sha256": "3e79f3532f94532c7fcaf06c8af9d636f6a7ee9c78513e7566aa2c93f08a104f",
+      "original": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/canopy-review-26-01/tablet-before-near.png",
+      "run": "canopy-review-26-01",
+      "type": "unprocessed actual browser screenshot"
+    },
+    {
+      "file": "tablet-after-near.png",
+      "sha256": "9a05dc97984f4a0bb3122708d5ae2727774615cf3fad7c31d8584cab26f73602",
+      "original": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/canopy-review-26-01/tablet-after-near.png",
+      "run": "canopy-review-26-01",
+      "type": "unprocessed actual browser screenshot"
+    },
+    {
+      "file": "phone-before-set-1-world.png",
+      "sha256": "867610fc98993e61da4aa9d9d7f80a17fea2375b74d51595b3e4d6cce0168c67",
+      "original": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/canopy-growth-review-03/phone-before-set-1-world.png",
+      "run": "canopy-growth-review-03",
+      "type": "unprocessed actual browser screenshot"
+    },
+    {
+      "file": "phone-after-set-1-world.png",
+      "sha256": "08381d310bb72f5ae5a2bd7e2e95ed24bbb28aca242e743f823bcd72d53fb6de",
+      "original": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/canopy-growth-review-03/phone-after-set-1-world.png",
+      "run": "canopy-growth-review-03",
+      "type": "unprocessed actual browser screenshot"
+    },
+    {
+      "file": "tablet-before-set-1-world.png",
+      "sha256": "df69059c257225c0d1947e10c0505e81010875aef730c1701b96c70d67a5e794",
+      "original": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/canopy-growth-review-03/tablet-before-set-1-world.png",
+      "run": "canopy-growth-review-03",
+      "type": "unprocessed actual browser screenshot"
+    },
+    {
+      "file": "tablet-after-set-1-world.png",
+      "sha256": "e6cd30904db1fb7015ac518838ff638ce81121a3506fff2483f04d10360db14e",
+      "original": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/canopy-growth-review-03/tablet-after-set-1-world.png",
+      "run": "canopy-growth-review-03",
+      "type": "unprocessed actual browser screenshot"
+    },
+    {
+      "file": "grove-1-tablet-after-near.png",
+      "sha256": "ce22e55d17409a6071deb0f1875b1c1ebd9b21b22c4ac25af2c40b3024954b50",
+      "original": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/canopy-support-26-01/tablet-after-near.png",
+      "run": "canopy-support-26-01",
+      "type": "unprocessed actual browser screenshot"
+    }
+  ]
+}

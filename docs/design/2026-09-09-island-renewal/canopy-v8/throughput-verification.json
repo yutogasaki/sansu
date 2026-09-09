@@ -1,0 +1,104 @@
+{
+  "scope": "Fixed26 dedicated DEV formal fixed-ten timing, 80 alternating runs. Explicit disposable existing-island and fixed-problem fixtures; not ordinary planner or child-behavior evidence. N=0.",
+  "output": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-26-01",
+  "revision": "workshop-20260909-88c3f5357ac2",
+  "manifestSourceHash": "88c3f5357ac25bb5c27820c983ccd5cbf6f97653d7f29b763f87d42399cc0b3a",
+  "manifestInputs": 1072,
+  "manifestMismatches": [],
+  "reportSHA": "8707b46bb44897f6349e921055493cc7dd86a4080692079053f762419880b7a1",
+  "runs": 80,
+  "repetitions": 10,
+  "startedAt": "2026-09-09T00:13:13.436Z",
+  "finishedAt": "2026-09-09T00:20:48.985Z",
+  "runtime": {
+    "revisions": [
+      "workshop-20260909-88c3f5357ac2"
+    ],
+    "versions": [
+      "workshop-20260909-88c3f5357ac2:56ac43a2-d34f-44f3-ba8a-beb6bf092429"
+    ],
+    "candidates": [
+      "mystic-island-shore-garden-v8"
+    ],
+    "learningCandidates": [
+      "mystic-island-learning-v2"
+    ],
+    "deliveryIds": [
+      "mystic-island-v1"
+    ],
+    "flag": "VITE_ISLAND_ENABLED=true",
+    "evidenceSource": "Actual rendered Island data attributes on the shared Vite target; Study fixture runs against the same server."
+  },
+  "sourceSnapshotStart": "b51d3ff9234a1eb7a2e9b69cc4184d34b8f8704eb2acc77b2796e4905f2dcf15",
+  "sourceSnapshotEnd": "b51d3ff9234a1eb7a2e9b69cc4184d34b8f8704eb2acc77b2796e4905f2dcf15",
+  "sourceSnapshotPathEntries": 1902,
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 121.97849435238402,
+      "islandMedianProblemsPerMinute": 287.58359235719024,
+      "allCorrectIslandToStudyRatio": 2.3576581583831424,
+      "correctOperableP95Ms": 200.20000004768372,
+      "incorrectRetryP95Ms": 197.89999997615814,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 195.7000000178814,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 198,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4918.9000000059605,
+      "rawIslandDurationMedianMs": 2086.3499999940395
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 121.76698576518729,
+      "islandMedianProblemsPerMinute": 288.6697945871053,
+      "allCorrectIslandToStudyRatio": 2.370673732071923,
+      "correctOperableP95Ms": 199.60000002384186,
+      "incorrectRetryP95Ms": 198.5,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 195.25,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 198.5,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4927.449999988079,
+      "rawIslandDurationMedianMs": 2078.5
+    }
+  ],
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "evidence": {
+    "eligible": true,
+    "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "pass": true,
+  "browserClosed": true,
+  "benchmarkTerminalExitCode": 0,
+  "serverCleanup": {
+    "closed": true,
+    "port": 5412,
+    "listenerCount": 0,
+    "requestedInterrupt": true,
+    "serverSession": 5754,
+    "terminalExitCode": 1,
+    "scope": "Dedicated Vite server stopped intentionally by Ctrl-C after benchmark browserClosed=true."
+  }
+}

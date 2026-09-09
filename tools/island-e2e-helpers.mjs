@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 
-export const ISLAND_CANDIDATE = 'mystic-island-shore-garden-v7';
+export const ISLAND_CANDIDATE = 'mystic-island-shore-garden-v8';
 export const button = (page, name) => page.getByRole('button', { name, exact: true });
 export const activate = (locator, touch = false) => touch ? locator.tap() : locator.click();
 
