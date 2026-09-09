@@ -10,8 +10,9 @@
 .app-container .island-page[data-mode=learning] > .island-workbench {
     --island-workbench-paper: var(--pokomoko-paper);
     width: calc(100% - 24px);
-    max-height: 680px;
-    margin-block: auto;
+    max-height: none;
+    max-width: 1200px;
+    margin-block: 8px;
     border-color: var(--pokomoko-edge);
     border-top: 6px solid var(--pokomoko-lavender);
     border-radius: 28px 28px 22px 22px;
@@ -67,7 +68,7 @@
 .island-workbench .island-learning-count { flex: none; white-space: nowrap; }
 .island-workbench .island-learning-count small { color: var(--pokomoko-muted); }
 .island-page[data-mode=learning] .island-problem-prompt[data-problem-visual=symbolic]:not([data-problem-prose=true]) {
-    max-width: 420px;
+    max-width: 100%;
     padding: 12px 10px;
     border-radius: 22px;
     background: var(--pokomoko-canvas);
@@ -147,6 +148,9 @@
     }
 }
 @media (max-height: 700px) {
+    .app-container .island-page[data-mode=learning] > .island-workbench {
+        margin-block: 0;
+    }
     .island-page[data-mode=learning] .island-problem-prompt[data-problem-visual=symbolic]:not([data-problem-prose=true]) {
         padding-block: 6px;
     }

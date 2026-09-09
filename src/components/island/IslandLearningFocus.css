@@ -59,15 +59,7 @@
         min-height: 0;
         max-height: none;
     }
-    /* A short equation and its controls form one unit. Rich diagrams and
-       written work still use the flexible, independently scrolling question. */
-    .island-page[data-mode=learning] .island-answer:has(.island-problem-prompt[data-problem-visual=symbolic]) {
-        justify-content: safe center;
-    }
-    .island-page[data-mode=learning] .island-workbench .island-answer:has(.island-problem-prompt[data-problem-visual=symbolic]) .park-question {
-        flex: 0 1 auto;
-        margin-bottom: 16px;
-    }
+
 }
 
 /* Choice prompts need no full-height worksheet or distant second column.
@@ -128,7 +120,7 @@
     }
     .island-page[data-mode=learning] .island-workbench .island-answer:not([data-input-type=choice]) {
         width: 100%;
-        max-width: 880px;
+        max-width: none;
         margin-inline: auto;
         grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
         column-gap: 24px;

@@ -14,7 +14,9 @@ export function useIslandPromptSize(contentKey: unknown) {
         };
         const fit = () => {
             reset();
-            if (!landscape.matches || !question.clientHeight) return;
+            // Choice layouts size their question from content; avoid a sizing loop.
+            const choice = prompt.closest('[data-input-type=choice]');
+            if ((choice && !landscape.matches) || !question.clientHeight) return;
             const style = getComputedStyle(question);
             const width = question.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight) - 2;
             const height = question.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom) - 2;
@@ -23,12 +25,17 @@ export function useIslandPromptSize(contentKey: unknown) {
                 prompt.style.zoom = String(scale);
                 prompt.style.width = `${width / scale}px`;
             };
+            let baseHeight = Infinity;
+            const symbolic = prompt.dataset.problemVisual === 'symbolic' && prompt.dataset.problemProse !== 'true';
             const fits = () => prompt.getBoundingClientRect().height <= height
-                && prompt.scrollWidth <= prompt.clientWidth + 1;
+                && prompt.scrollWidth <= prompt.clientWidth + 1
+                && question.scrollHeight <= question.clientHeight + 1
+                && (!symbolic || prompt.getBoundingClientRect().height <= baseHeight * Number(prompt.style.zoom) + 1);
             apply(1);
             if (!fits()) { reset(); return; }
+            baseHeight = prompt.getBoundingClientRect().height;
             let low = 1;
-            let high = 1.6;
+            let high = 2;
             apply(high);
             if (fits()) return;
             // Measure wrapped text and fixed-size diagrams together, without
