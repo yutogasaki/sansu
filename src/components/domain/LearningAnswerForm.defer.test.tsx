@@ -42,10 +42,10 @@ import { useHissanSession } from '../../hooks/useHissanSession';
 
 beforeEach(() => { hooks.reset(); vi.stubGlobal('window', new EventTarget()); });
 afterEach(() => { hooks.unmount(); vi.unstubAllGlobals(); });
-function harness() {
+function harness(problemOverride: Partial<LearningAnswerFormProps['slot']['problem']> = {}) {
     let props: LearningAnswerFormProps = {
         slot: { problem: { id: 'written', subject: 'math', categoryId: 'mul_2d1d', questionText: '23 × 4 =',
-            correctAnswer: '92', inputType: 'hissan', hissanVersion: 2, isReview: false },
+            correctAnswer: '92', inputType: 'hissan', hissanVersion: 2, isReview: false, ...problemOverride },
         source: 'main', assisted: false, completed: false, countsTowardReviewCap: false },
         disabled: false, deferSubmission: true, onAnswer: vi.fn(),
     };
@@ -137,5 +137,25 @@ describe('Study digit-only written session', () => {
         expect(session.handleHissanInput('6')).toBe(false);
         expect(session.handleHissanInput('3')).toBe(true);
         expect(session.handleHissanEnter()).toBe('all-correct');
+    });
+});
+
+
+describe('ordinary numeric entry', () => {
+    it('advances at the field limit, Backspace returns, and slash moves a short field without grading', () => {
+        const h = harness({ categoryId: 'frac_add_same', questionText: '1/7 + 11/7 =', correctAnswer: ['12','7'], inputType: 'multi-number', hissanVersion: undefined,
+            inputConfig: {fields:[{label:'分子',length:2},{label:'分母',length:2}]} });
+        h.render({deferSubmission:false});
+        expect(h.keypad().showDecimal).toBe(false);
+        h.key('1'); h.key('.'); h.key('2'); h.key('Backspace'); h.key('2'); h.key('7');
+        expect(h.props.onAnswer).not.toHaveBeenCalled();
+        h.key('Enter');
+        expect(h.props.onAnswer).toHaveBeenCalledWith(['12','7']);
+    });
+    it('uses slash for a short numerator and rejects a physical decimal point', () => {
+        const h = harness({ categoryId: 'frac_add_same', questionText: '1/4 + 1/4 =', correctAnswer: ['1','2'], inputType: 'multi-number', hissanVersion: undefined,
+            inputConfig: {fields:[{label:'分子',length:2},{label:'分母',length:2}]} });
+        h.render({deferSubmission:false}); h.key('1'); h.key('/'); h.key('.'); h.key('2'); h.key('Enter');
+        expect(h.props.onAnswer).toHaveBeenCalledWith(['1','2']);
     });
 });

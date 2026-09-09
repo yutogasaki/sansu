@@ -1,3 +1,4 @@
+import { allowsDecimalEntry, appendNumberField } from '../../domain/math/numberEntry';
 import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { MathProblemPrompt } from './MathProblemPrompt';
 import { TenKey } from './TenKey';
@@ -75,9 +76,13 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
         if (disabled || submitting.current || queuedSubmit.current !== undefined) return;
         const text = String(value);
         if (!/^[0-9.]$/.test(text)) return;
-        if (singleDigit && text === '.') return;
+        if (text === '.' && (grid || !allowsDecimalEntry(problem))) return;
         const changed = updateInput(current => {
             if (step && (step.correctValues[current.active] === '.' ? text !== '.' : !/^[0-9]$/.test(text))) return current;
+            if (!step && problem.inputType === 'multi-number') {
+                return { ...appendNumberField(current.values, current.active, text, problem.inputConfig?.fields?.map(field => field.length) ?? []), lastEdited: current.active };
+            }
+            if (text === '.' && current.values[current.active].includes('.')) return current;
             const limit = step || singleDigit ? 1 : problem.inputConfig?.fields?.[current.active]?.length ?? 8;
             const values = current.values.map((value, i) => i === current.active ? (step ? text : (value + text).slice(0, limit)) : value);
             return { values, active: step ? nextWrittenInput(values, current.active, inputOrder) : current.active, lastEdited: current.active };
@@ -87,7 +92,7 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
     const remove = () => {
         if (!disabled && !submitting.current) updateInput(current => {
             queuedSubmit.current = undefined;
-            const cursor = step && !current.values[current.active] ? current.lastEdited ?? inputOrder[Math.max(0, inputOrder.indexOf(current.active) - 1)] : current.active;
+            const cursor = !current.values[current.active] ? step ? current.lastEdited ?? inputOrder[Math.max(0, inputOrder.indexOf(current.active) - 1)] : problem.inputType === 'multi-number' ? Math.max(0, current.active - 1) : current.active : current.active;
             return { active: cursor, values: current.values.map((value, i) => i === cursor ? value.slice(0, -1) : value), lastEdited: undefined };
         });
     };
@@ -121,6 +126,7 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
             const target = event.target as HTMLElement;
             if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
             if (/^[0-9.]$/.test(event.key)) { event.preventDefault(); input(event.key); }
+            if (event.key === '/' && problem.inputType === 'multi-number') { event.preventDefault(); moveCursor('right'); }
             if (event.key === 'Backspace') { event.preventDefault(); remove(); }
             if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); moveCursor(event.key === 'ArrowLeft' ? 'left' : 'right'); }
             if (event.key === 'Enter' && (target.tagName !== 'BUTTON' || target.closest('.park-keypad, .park-inputs, [data-written-input]'))) { event.preventDefault(); submit(); }
@@ -161,7 +167,7 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
                 </button>)}
             </div>}
             <div className="park-keypad"><TenKey onInput={input} onDelete={remove} onClear={clear} onEnter={() => submit()}
-                disabled={disabled} enterDisabled={!canSubmit || (automatic && !hasSubmitted)} showDecimal={!singleDigit && !grid} minRowHeight={44}
+                disabled={disabled} enterDisabled={!canSubmit || (automatic && !hasSubmitted)} showDecimal={!grid && allowsDecimalEntry(problem)} nextFieldLabel={problem.inputType === 'multi-number' ? 'つぎの欄へ' : undefined} minRowHeight={44}
                 confirmationMode={automatic && !hasSubmitted ? 'automatic' : 'manual'}
                 writtenInput={Boolean(step)}
                 enterLabel={grid?.writtenLayout && (slot.hissanStep ?? 0) < grid.steps.length - 1 ? 'このだんを たしかめる' : undefined}

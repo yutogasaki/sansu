@@ -1,3 +1,4 @@
+import { allowsDecimalEntry, appendNumberField } from '../domain/math/numberEntry';
 import React, { useState, useEffect, useLayoutEffect, useCallback, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
@@ -92,6 +93,8 @@ export const Study: React.FC = () => {
     const [userInput, setUserInput] = useState("");                         // Single input
     const [userInputs, setUserInputs] = useState<string[]>([]);             // Multi input
     const [activeFieldIndex, setActiveFieldIndex] = useState(0);            // Focus for multi
+    const fieldDraft = React.useRef({ values: userInputs, active: activeFieldIndex });
+    useLayoutEffect(() => { fieldDraft.current = { values: userInputs, active: activeFieldIndex }; }, [userInputs, activeFieldIndex]);
 
     const [feedback, setFeedback] = useState<"none" | "correct" | "incorrect" | "skipped">("none");
     const [showCorrection, setShowCorrection] = useState(false);
@@ -425,15 +428,16 @@ export const Study: React.FC = () => {
         }
 
         if (currentProblem?.inputType === 'multi-number') {
-            setUserInputs(prev => {
-                const newInputs = [...prev];
-                newInputs[activeFieldIndex] = newInputs[activeFieldIndex].slice(0, -1);
-                return newInputs;
-            });
+            const current = fieldDraft.current;
+            const active = !current.values[current.active] ? Math.max(0, current.active - 1) : current.active;
+            const values = current.values.map((value, index) => index === active ? value.slice(0, -1) : value);
+            fieldDraft.current = { values, active };
+            setUserInputs(values);
+            setActiveFieldIndex(active);
         } else {
             setUserInput(prev => prev.slice(0, -1));
         }
-    }, [completionPresentation, feedback, currentProblem, activeFieldIndex, hissan]);
+    }, [completionPresentation, feedback, currentProblem, hissan]);
 
     const handleClear = useCallback(() => {
         if (
@@ -613,7 +617,7 @@ export const Study: React.FC = () => {
     const handleTenKeyInput = useCallback((val: string | number) => {
         const valStr = val.toString();
         if (!/^[0-9.]$/.test(valStr) || automaticBoundaryRef.current) return;
-        if (isSingleDigitMathInput(currentProblem) && valStr === '.') return;
+        if (valStr === '.' && (hissan.isHissanActive || !allowsDecimalEntry(currentProblem))) return;
         if (
             completionPresentation !== "none"
             || fixedSessionCompletionInFlightRef.current
@@ -637,39 +641,17 @@ export const Study: React.FC = () => {
         }
 
         if (currentProblem?.inputType === 'multi-number' && currentProblem.inputConfig?.fields) {
-            const fields = currentProblem.inputConfig.fields;
-            const currentFieldLength = fields[activeFieldIndex]?.length || 3;
-
-            setUserInputs(prev => {
-                const newInputs = [...prev];
-                if (newInputs[activeFieldIndex].length < currentFieldLength) {
-                    newInputs[activeFieldIndex] += valStr;
-
-                    if (newInputs[activeFieldIndex].length >= currentFieldLength) {
-                        if (activeFieldIndex < fields.length - 1) {
-                            const currentFieldIndex = activeFieldIndex;
-                            scheduleUiTimeout(() => {
-                                setActiveFieldIndex(prev => (
-                                    prev === currentFieldIndex ? currentFieldIndex + 1 : prev
-                                ));
-                            }, 50);
-                        }
-                    }
-                }
-                return newInputs;
-            });
+            const next = appendNumberField(fieldDraft.current.values, fieldDraft.current.active, valStr, currentProblem.inputConfig.fields.map(field => field.length));
+            fieldDraft.current = next;
+            setUserInputs(next.values);
+            setActiveFieldIndex(next.active);
         } else {
-            if (userInput.length < 8) {
-                setUserInput(prev => prev + valStr);
-            }
+            setUserInput(prev => prev.length >= 8 || (valStr === '.' && prev.includes('.')) ? prev : prev + valStr);
         }
     }, [
         completionPresentation,
         feedback,
         currentProblem,
-        activeFieldIndex,
-        userInput.length,
-        scheduleUiTimeout,
         hissan,
         handleSubmit,
     ]);
@@ -750,6 +732,10 @@ export const Study: React.FC = () => {
             // Delete (クリア)
             else if (e.key === 'Delete') {
                 handleClear();
+                e.preventDefault();
+            }
+            else if (e.key === '/' && currentProblem?.inputType === 'multi-number') {
+                handleCursorMove('right');
                 e.preventDefault();
             }
             else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {

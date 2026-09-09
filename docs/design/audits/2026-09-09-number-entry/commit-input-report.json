@@ -1,0 +1,846 @@
+{
+  "build": "working-tree nonwritten implementation",
+  "target": "http://127.0.0.1:5696",
+  "scope": "Native profile fixtures, actual planner, touchscreen/keyboard inputs. No overridden questions.",
+  "cases": [
+    {
+      "width": 390,
+      "skill": "sub_tiny",
+      "type": "number",
+      "name": "single",
+      "checks": [
+        "wrong answer saves once without advancing",
+        "correct answer advances",
+        "reload retains progress"
+      ],
+      "errors": [],
+      "question": "いちご 2こ あります\n1こ なくなると いくつ？",
+      "actualSkill": "sub_tiny",
+      "actualType": "number",
+      "completion": "automatic",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"acdafb42-716e-468f-b787-d93a6e3b0ba2\",\"[\\\"island-plan-v1\\\",\\\"acdafb42-716e-468f-b787-d93a6e3b0ba2\\\",0]\",2]",
+        "profileId": "acdafb42-716e-468f-b787-d93a6e3b0ba2",
+        "planId": "[\"island-plan-v1\",\"acdafb42-716e-468f-b787-d93a6e3b0ba2\",0]",
+        "timestamp": 1788951727703,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": "1"
+        },
+        "slotIndex": 0,
+        "result": "assisted-correct",
+        "learningEvidence": {
+          "completion": "whole-problem",
+          "assistance": "assisted",
+          "problem": {
+            "catalogVersion": "curriculum-v1",
+            "subject": "math",
+            "itemId": "sub_tiny",
+            "unitId": "math.remove-small",
+            "representation": "concrete",
+            "inputType": "number",
+            "variant": "default",
+            "problemKey": "{\"answer\":\"1\",\"inputType\":\"number\",\"item\":\"sub_tiny\",\"question\":\"いちご 2こ あります\\n1こ なくなると いくつ？\",\"visual\":{\"actionLabel\":\"なくなる\",\"group\":{\"count\":2,\"crossedOutCount\":1,\"emoji\":\"🍓\",\"label\":\"いちご\"},\"kind\":\"subtraction-items\",\"prompt\":\"のこりは いくつ？\",\"takenAwayCount\":1}}"
+          }
+        },
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"acdafb42-716e-468f-b787-d93a6e3b0ba2\",0]:slot-0",
+          "revisionBefore": 2,
+          "supportBefore": "hint",
+          "answerScope": "whole",
+          "wholeCompleted": true,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788951727690,
+          "presentation": {
+            "id": "e53a41f0-a0c6-4c46-b5ea-d59d077b7cf5",
+            "documentId": "cb6f2921-b0e2-4729-9a12-02a0d91de80b",
+            "observedAt": 1788951726882,
+            "inputVersion": "island-input-v1",
+            "inputMode": "number",
+            "referenceVisual": "present"
+          },
+          "observedSupport": {
+            "hintAt": 1788951727639
+          },
+          "elapsedSincePresentationMs": 807.9000000003725,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 390,
+      "skill": "add_2d1d_nc",
+      "type": "number",
+      "name": "integer",
+      "checks": [
+        "Backspace and clear",
+        "wrong answer saves once without advancing",
+        "hint preserves draft",
+        "correct answer advances",
+        "reload retains progress"
+      ],
+      "errors": [],
+      "question": "93 + 4 =",
+      "actualSkill": "add_2d1d_nc",
+      "actualType": "number",
+      "completion": "manual",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"f5ffcd6a-5a86-4587-8333-e14791bfc834\",\"[\\\"island-plan-v1\\\",\\\"f5ffcd6a-5a86-4587-8333-e14791bfc834\\\",0]\",2]",
+        "profileId": "f5ffcd6a-5a86-4587-8333-e14791bfc834",
+        "planId": "[\"island-plan-v1\",\"f5ffcd6a-5a86-4587-8333-e14791bfc834\",0]",
+        "timestamp": 1788951754046,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": "97"
+        },
+        "slotIndex": 0,
+        "result": "assisted-correct",
+        "learningEvidence": {
+          "completion": "whole-problem",
+          "assistance": "assisted",
+          "problem": {
+            "catalogVersion": "curriculum-v1",
+            "subject": "math",
+            "itemId": "add_2d1d_nc",
+            "unitId": "math.add-two-one-no-regroup",
+            "representation": "symbol",
+            "inputType": "number",
+            "variant": "default",
+            "problemKey": "{\"answer\":\"97\",\"inputType\":\"number\",\"item\":\"add_2d1d_nc\",\"question\":\"93 + 4 =\"}"
+          }
+        },
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"f5ffcd6a-5a86-4587-8333-e14791bfc834\",0]:slot-0",
+          "revisionBefore": 2,
+          "supportBefore": "hint",
+          "answerScope": "whole",
+          "wholeCompleted": true,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788951754033,
+          "presentation": {
+            "id": "c97e92eb-e526-4ddc-b749-4cf390c8b498",
+            "documentId": "79b21e31-a7d3-4ebf-a319-6a219de215f1",
+            "observedAt": 1788951753104,
+            "inputVersion": "island-input-v1",
+            "inputMode": "number",
+            "referenceVisual": "absent"
+          },
+          "observedSupport": {
+            "hintAt": 1788951753838
+          },
+          "elapsedSincePresentationMs": 928.9000000003725,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 390,
+      "skill": "dec_add",
+      "type": "number",
+      "name": "decimal",
+      "checks": [
+        "Backspace and clear",
+        "wrong answer saves once without advancing",
+        "hint preserves draft",
+        "correct answer advances",
+        "reload retains progress"
+      ],
+      "errors": [],
+      "question": "5.4 + 0.3 =",
+      "actualSkill": "dec_add",
+      "actualType": "number",
+      "completion": "manual",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"ee8f932a-99ee-4b71-b2c2-f8de94af76ce\",\"[\\\"island-plan-v1\\\",\\\"ee8f932a-99ee-4b71-b2c2-f8de94af76ce\\\",0]\",2]",
+        "profileId": "ee8f932a-99ee-4b71-b2c2-f8de94af76ce",
+        "planId": "[\"island-plan-v1\",\"ee8f932a-99ee-4b71-b2c2-f8de94af76ce\",0]",
+        "timestamp": 1788951781203,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": "5.7"
+        },
+        "slotIndex": 0,
+        "result": "assisted-correct",
+        "learningEvidence": {
+          "completion": "whole-problem",
+          "assistance": "assisted",
+          "problem": {
+            "catalogVersion": "curriculum-v1",
+            "subject": "math",
+            "itemId": "dec_add",
+            "unitId": "math.decimal-add",
+            "representation": "symbol",
+            "inputType": "number",
+            "variant": "default",
+            "problemKey": "{\"answer\":\"5.7\",\"inputType\":\"number\",\"item\":\"dec_add\",\"question\":\"5.4 + 0.3 =\"}"
+          }
+        },
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"ee8f932a-99ee-4b71-b2c2-f8de94af76ce\",0]:slot-0",
+          "revisionBefore": 2,
+          "supportBefore": "hint",
+          "answerScope": "whole",
+          "wholeCompleted": true,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788951781190,
+          "presentation": {
+            "id": "f3dfe32e-9521-4c92-b8f5-4dd4319b963e",
+            "documentId": "d63dffe4-6032-4b82-a309-1d16af907634",
+            "observedAt": 1788951780005,
+            "inputVersion": "island-input-v1",
+            "inputMode": "number",
+            "referenceVisual": "absent"
+          },
+          "observedSupport": {
+            "hintAt": 1788951780861
+          },
+          "elapsedSincePresentationMs": 1185.5999999996275,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 390,
+      "skill": "frac_add_same",
+      "type": "multi-number",
+      "name": "fraction",
+      "checks": [
+        "Backspace and clear",
+        "automatic field advance and Backspace return",
+        "wrong answer saves once without advancing",
+        "hint preserves draft",
+        "correct answer advances",
+        "reload retains progress"
+      ],
+      "errors": [],
+      "question": "9/12 + 3/12 =",
+      "actualSkill": "frac_add_same",
+      "actualType": "multi-number",
+      "completion": "manual",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"60d19415-b72b-4f28-9ea8-78e90ddf03a3\",\"[\\\"island-plan-v1\\\",\\\"60d19415-b72b-4f28-9ea8-78e90ddf03a3\\\",0]\",2]",
+        "profileId": "60d19415-b72b-4f28-9ea8-78e90ddf03a3",
+        "planId": "[\"island-plan-v1\",\"60d19415-b72b-4f28-9ea8-78e90ddf03a3\",0]",
+        "timestamp": 1788951806707,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": [
+            "1",
+            "1"
+          ]
+        },
+        "slotIndex": 0,
+        "result": "assisted-correct",
+        "learningEvidence": {
+          "completion": "whole-problem",
+          "assistance": "assisted",
+          "problem": {
+            "catalogVersion": "curriculum-v1",
+            "subject": "math",
+            "itemId": "frac_add_same",
+            "unitId": "math.fraction-add-same",
+            "representation": "symbol",
+            "inputType": "multi-number",
+            "variant": "default",
+            "problemKey": "{\"answer\":[\"1\",\"1\"],\"input\":{\"fields\":[{\"label\":\"分子\",\"length\":2},{\"label\":\"分母\",\"length\":2}]},\"inputType\":\"multi-number\",\"item\":\"frac_add_same\",\"question\":\"9/12 + 3/12 =\"}"
+          }
+        },
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"60d19415-b72b-4f28-9ea8-78e90ddf03a3\",0]:slot-0",
+          "revisionBefore": 2,
+          "supportBefore": "hint",
+          "answerScope": "whole",
+          "wholeCompleted": true,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788951806693,
+          "presentation": {
+            "id": "325eeabc-3d73-4bc1-bb32-032266852332",
+            "documentId": "d85b0b68-5eb9-4e02-91a6-7c5cfefade13",
+            "observedAt": 1788951805526,
+            "inputVersion": "island-input-v1",
+            "inputMode": "multi-number",
+            "referenceVisual": "absent"
+          },
+          "observedSupport": {
+            "hintAt": 1788951806430
+          },
+          "elapsedSincePresentationMs": 1167.2000000001863,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 390,
+      "skill": "count_shape",
+      "type": "choice",
+      "name": "choice",
+      "checks": [
+        "wrong answer saves once without advancing",
+        "correct answer advances",
+        "reload retains progress"
+      ],
+      "errors": [],
+      "question": "この かたちは なに？",
+      "actualSkill": "count_shape",
+      "actualType": "choice",
+      "completion": "manual",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"1e080830-3d27-4f96-97fc-dd75f45ec868\",\"[\\\"island-plan-v1\\\",\\\"1e080830-3d27-4f96-97fc-dd75f45ec868\\\",0]\",2]",
+        "profileId": "1e080830-3d27-4f96-97fc-dd75f45ec868",
+        "planId": "[\"island-plan-v1\",\"1e080830-3d27-4f96-97fc-dd75f45ec868\",0]",
+        "timestamp": 1788951823220,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": "まる"
+        },
+        "slotIndex": 0,
+        "result": "assisted-correct",
+        "learningEvidence": {
+          "completion": "whole-problem",
+          "assistance": "assisted",
+          "problem": {
+            "catalogVersion": "curriculum-v1",
+            "subject": "math",
+            "itemId": "count_shape",
+            "unitId": "math.shape-recognition",
+            "representation": "concrete",
+            "inputType": "choice",
+            "variant": "default",
+            "problemKey": "{\"answer\":\"まる\",\"input\":{\"choices\":[{\"label\":\"🔴 まる\",\"value\":\"まる\"},{\"label\":\"🟦 しかく\",\"value\":\"しかく\"}]},\"inputType\":\"choice\",\"item\":\"count_shape\",\"question\":\"この かたちは なに？\",\"visual\":{\"grid\":{\"choices\":[{\"emoji\":\"🟦\",\"label\":\"しかく\"},{\"emoji\":\"🔴\",\"label\":\"まる\"}],\"columns\":2,\"reference\":{\"emoji\":\"🔴\",\"label\":\"まる\"}},\"kind\":\"reference-choice-grid\",\"prompt\":\"この かたちは なに？\"}}"
+          }
+        },
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"1e080830-3d27-4f96-97fc-dd75f45ec868\",0]:slot-0",
+          "revisionBefore": 2,
+          "supportBefore": "hint",
+          "answerScope": "whole",
+          "wholeCompleted": true,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788951823207,
+          "presentation": {
+            "id": "bafed6e1-3f99-4aa4-af9a-063e03e23627",
+            "documentId": "9e071350-c734-4a89-85fc-a95f851254d4",
+            "observedAt": 1788951822793,
+            "inputVersion": "island-input-v1",
+            "inputMode": "choice",
+            "referenceVisual": "present"
+          },
+          "observedSupport": {
+            "hintAt": 1788951823156
+          },
+          "elapsedSincePresentationMs": 413.59999999962747,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 390,
+      "skill": "",
+      "subject": "vocab",
+      "type": "choice",
+      "name": "english",
+      "checks": [
+        "wrong answer saves once without advancing",
+        "correct answer advances",
+        "reload retains progress"
+      ],
+      "errors": [],
+      "question": "fruit",
+      "actualSkill": "fruit",
+      "actualType": "choice",
+      "completion": "manual",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"53cdfcce-a6cc-4a05-a9fa-42c22d6d038a\",\"[\\\"island-plan-v1\\\",\\\"53cdfcce-a6cc-4a05-a9fa-42c22d6d038a\\\",0]\",2]",
+        "profileId": "53cdfcce-a6cc-4a05-a9fa-42c22d6d038a",
+        "planId": "[\"island-plan-v1\",\"53cdfcce-a6cc-4a05-a9fa-42c22d6d038a\",0]",
+        "timestamp": 1788951839293,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": "fruit"
+        },
+        "slotIndex": 0,
+        "result": "assisted-correct",
+        "learningEvidence": {
+          "completion": "whole-problem",
+          "assistance": "assisted",
+          "problem": {
+            "catalogVersion": "curriculum-v1",
+            "subject": "vocab",
+            "itemId": "fruit",
+            "unitId": "vocab.recognition.fruit",
+            "representation": "recognition",
+            "inputType": "choice",
+            "variant": "default",
+            "problemKey": "{\"answer\":\"fruit\",\"input\":{\"choices\":[{\"label\":\"くだもの\",\"value\":\"fruit\"},{\"label\":\"さかな\",\"value\":\"fish\"},{\"label\":\"ねずみ\",\"value\":\"mouse\"},{\"label\":\"わるい\",\"value\":\"bad\"}]},\"inputType\":\"choice\",\"item\":\"fruit\",\"question\":\"fruit\"}"
+          }
+        },
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"53cdfcce-a6cc-4a05-a9fa-42c22d6d038a\",0]:slot-0",
+          "revisionBefore": 2,
+          "supportBefore": "hint",
+          "answerScope": "whole",
+          "wholeCompleted": true,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788951839280,
+          "presentation": {
+            "id": "78a94719-a79a-4872-bb8e-f474914cdc89",
+            "documentId": "e36665a0-88c8-4536-b7d2-f240173e7a25",
+            "observedAt": 1788951838765,
+            "inputVersion": "island-input-v1",
+            "inputMode": "choice",
+            "referenceVisual": "absent"
+          },
+          "observedSupport": {
+            "hintAt": 1788951839203
+          },
+          "elapsedSincePresentationMs": 515.1000000005588,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "skill": "sub_tiny",
+      "type": "number",
+      "name": "single",
+      "checks": [
+        "wrong answer saves once without advancing",
+        "correct answer advances",
+        "reload retains progress"
+      ],
+      "errors": [],
+      "question": "みかん 2こ あります\n1こ なくなると いくつ？",
+      "actualSkill": "sub_tiny",
+      "actualType": "number",
+      "completion": "automatic",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"270e0cbe-f493-441d-a506-1af7ee2ae766\",\"[\\\"island-plan-v1\\\",\\\"270e0cbe-f493-441d-a506-1af7ee2ae766\\\",0]\",2]",
+        "profileId": "270e0cbe-f493-441d-a506-1af7ee2ae766",
+        "planId": "[\"island-plan-v1\",\"270e0cbe-f493-441d-a506-1af7ee2ae766\",0]",
+        "timestamp": 1788951858468,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": "1"
+        },
+        "slotIndex": 0,
+        "result": "assisted-correct",
+        "learningEvidence": {
+          "completion": "whole-problem",
+          "assistance": "assisted",
+          "problem": {
+            "catalogVersion": "curriculum-v1",
+            "subject": "math",
+            "itemId": "sub_tiny",
+            "unitId": "math.remove-small",
+            "representation": "concrete",
+            "inputType": "number",
+            "variant": "default",
+            "problemKey": "{\"answer\":\"1\",\"inputType\":\"number\",\"item\":\"sub_tiny\",\"question\":\"みかん 2こ あります\\n1こ なくなると いくつ？\",\"visual\":{\"actionLabel\":\"なくなる\",\"group\":{\"count\":2,\"crossedOutCount\":1,\"emoji\":\"🍊\",\"label\":\"みかん\"},\"kind\":\"subtraction-items\",\"prompt\":\"のこりは いくつ？\",\"takenAwayCount\":1}}"
+          }
+        },
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"270e0cbe-f493-441d-a506-1af7ee2ae766\",0]:slot-0",
+          "revisionBefore": 2,
+          "supportBefore": "hint",
+          "answerScope": "whole",
+          "wholeCompleted": true,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788951858465,
+          "presentation": {
+            "id": "95fecae1-c2a7-46af-8eac-11a6a1703b16",
+            "documentId": "c29439f0-7fd7-479a-b640-efbb382730ac",
+            "observedAt": 1788951858069,
+            "inputVersion": "island-input-v1",
+            "inputMode": "number",
+            "referenceVisual": "present"
+          },
+          "observedSupport": {
+            "hintAt": 1788951858438
+          },
+          "elapsedSincePresentationMs": 396.5,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "skill": "add_2d1d_nc",
+      "type": "number",
+      "name": "integer",
+      "checks": [
+        "Backspace and clear",
+        "wrong answer saves once without advancing",
+        "hint preserves draft",
+        "correct answer advances",
+        "reload retains progress"
+      ],
+      "errors": [],
+      "question": "62 + 6 =",
+      "actualSkill": "add_2d1d_nc",
+      "actualType": "number",
+      "completion": "manual",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"c1d140ad-b51b-4015-8bee-40f467239848\",\"[\\\"island-plan-v1\\\",\\\"c1d140ad-b51b-4015-8bee-40f467239848\\\",0]\",2]",
+        "profileId": "c1d140ad-b51b-4015-8bee-40f467239848",
+        "planId": "[\"island-plan-v1\",\"c1d140ad-b51b-4015-8bee-40f467239848\",0]",
+        "timestamp": 1788951872786,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": "68"
+        },
+        "slotIndex": 0,
+        "result": "assisted-correct",
+        "learningEvidence": {
+          "completion": "whole-problem",
+          "assistance": "assisted",
+          "problem": {
+            "catalogVersion": "curriculum-v1",
+            "subject": "math",
+            "itemId": "add_2d1d_nc",
+            "unitId": "math.add-two-one-no-regroup",
+            "representation": "symbol",
+            "inputType": "number",
+            "variant": "default",
+            "problemKey": "{\"answer\":\"68\",\"inputType\":\"number\",\"item\":\"add_2d1d_nc\",\"question\":\"62 + 6 =\"}"
+          }
+        },
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"c1d140ad-b51b-4015-8bee-40f467239848\",0]:slot-0",
+          "revisionBefore": 2,
+          "supportBefore": "hint",
+          "answerScope": "whole",
+          "wholeCompleted": true,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788951872774,
+          "presentation": {
+            "id": "57504ef4-2836-474a-a50f-1b540ce4c043",
+            "documentId": "df67315f-3fd6-41de-8f52-6abc021d5c7a",
+            "observedAt": 1788951872222,
+            "inputVersion": "island-input-v1",
+            "inputMode": "number",
+            "referenceVisual": "absent"
+          },
+          "observedSupport": {
+            "hintAt": 1788951872682
+          },
+          "elapsedSincePresentationMs": 551,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "skill": "dec_add",
+      "type": "number",
+      "name": "decimal",
+      "checks": [
+        "Backspace and clear",
+        "wrong answer saves once without advancing",
+        "hint preserves draft",
+        "correct answer advances",
+        "reload retains progress"
+      ],
+      "errors": [],
+      "question": "3.7 + 4.8 =",
+      "actualSkill": "dec_add",
+      "actualType": "number",
+      "completion": "manual",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"adcd71f5-98b1-45f4-8136-8713d0f2aed5\",\"[\\\"island-plan-v1\\\",\\\"adcd71f5-98b1-45f4-8136-8713d0f2aed5\\\",0]\",2]",
+        "profileId": "adcd71f5-98b1-45f4-8136-8713d0f2aed5",
+        "planId": "[\"island-plan-v1\",\"adcd71f5-98b1-45f4-8136-8713d0f2aed5\",0]",
+        "timestamp": 1788951887378,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": "8.5"
+        },
+        "slotIndex": 0,
+        "result": "assisted-correct",
+        "learningEvidence": {
+          "completion": "whole-problem",
+          "assistance": "assisted",
+          "problem": {
+            "catalogVersion": "curriculum-v1",
+            "subject": "math",
+            "itemId": "dec_add",
+            "unitId": "math.decimal-add",
+            "representation": "symbol",
+            "inputType": "number",
+            "variant": "default",
+            "problemKey": "{\"answer\":\"8.5\",\"inputType\":\"number\",\"item\":\"dec_add\",\"question\":\"3.7 + 4.8 =\"}"
+          }
+        },
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"adcd71f5-98b1-45f4-8136-8713d0f2aed5\",0]:slot-0",
+          "revisionBefore": 2,
+          "supportBefore": "hint",
+          "answerScope": "whole",
+          "wholeCompleted": true,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788951887366,
+          "presentation": {
+            "id": "619f16b9-f5a9-4a74-a6ae-60301b8c3adb",
+            "documentId": "83decf52-42cd-41f9-a594-130f6c850234",
+            "observedAt": 1788951886824,
+            "inputVersion": "island-input-v1",
+            "inputMode": "number",
+            "referenceVisual": "absent"
+          },
+          "observedSupport": {
+            "hintAt": 1788951887275
+          },
+          "elapsedSincePresentationMs": 541.9000000003725,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "skill": "frac_add_same",
+      "type": "multi-number",
+      "name": "fraction",
+      "checks": [
+        "Backspace and clear",
+        "automatic field advance and Backspace return",
+        "wrong answer saves once without advancing",
+        "hint preserves draft",
+        "correct answer advances",
+        "reload retains progress"
+      ],
+      "errors": [],
+      "question": "1/3 + 2/3 =",
+      "actualSkill": "frac_add_same",
+      "actualType": "multi-number",
+      "completion": "manual",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"c90ae1e1-267d-4f2d-9728-11d90037ce7e\",\"[\\\"island-plan-v1\\\",\\\"c90ae1e1-267d-4f2d-9728-11d90037ce7e\\\",0]\",2]",
+        "profileId": "c90ae1e1-267d-4f2d-9728-11d90037ce7e",
+        "planId": "[\"island-plan-v1\",\"c90ae1e1-267d-4f2d-9728-11d90037ce7e\",0]",
+        "timestamp": 1788951901010,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": [
+            "1",
+            "1"
+          ]
+        },
+        "slotIndex": 0,
+        "result": "assisted-correct",
+        "learningEvidence": {
+          "completion": "whole-problem",
+          "assistance": "assisted",
+          "problem": {
+            "catalogVersion": "curriculum-v1",
+            "subject": "math",
+            "itemId": "frac_add_same",
+            "unitId": "math.fraction-add-same",
+            "representation": "symbol",
+            "inputType": "multi-number",
+            "variant": "default",
+            "problemKey": "{\"answer\":[\"1\",\"1\"],\"input\":{\"fields\":[{\"label\":\"分子\",\"length\":2},{\"label\":\"分母\",\"length\":2}]},\"inputType\":\"multi-number\",\"item\":\"frac_add_same\",\"question\":\"1/3 + 2/3 =\"}"
+          }
+        },
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"c90ae1e1-267d-4f2d-9728-11d90037ce7e\",0]:slot-0",
+          "revisionBefore": 2,
+          "supportBefore": "hint",
+          "answerScope": "whole",
+          "wholeCompleted": true,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788951900998,
+          "presentation": {
+            "id": "92bf7e5f-fa53-4324-be93-fc7a45b5d6a7",
+            "documentId": "10cb3b0d-04a6-4d69-b880-68fd9f3d9f0d",
+            "observedAt": 1788951900239,
+            "inputVersion": "island-input-v1",
+            "inputMode": "multi-number",
+            "referenceVisual": "absent"
+          },
+          "observedSupport": {
+            "hintAt": 1788951900855
+          },
+          "elapsedSincePresentationMs": 758.4000000003725,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "skill": "count_shape",
+      "type": "choice",
+      "name": "choice",
+      "checks": [
+        "wrong answer saves once without advancing",
+        "correct answer advances",
+        "reload retains progress"
+      ],
+      "errors": [],
+      "question": "この かたちは なに？",
+      "actualSkill": "count_shape",
+      "actualType": "choice",
+      "completion": "manual",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"a5a67ec9-eea1-4eeb-80e4-2541ea855840\",\"[\\\"island-plan-v1\\\",\\\"a5a67ec9-eea1-4eeb-80e4-2541ea855840\\\",0]\",2]",
+        "profileId": "a5a67ec9-eea1-4eeb-80e4-2541ea855840",
+        "planId": "[\"island-plan-v1\",\"a5a67ec9-eea1-4eeb-80e4-2541ea855840\",0]",
+        "timestamp": 1788951914749,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": "まる"
+        },
+        "slotIndex": 0,
+        "result": "assisted-correct",
+        "learningEvidence": {
+          "completion": "whole-problem",
+          "assistance": "assisted",
+          "problem": {
+            "catalogVersion": "curriculum-v1",
+            "subject": "math",
+            "itemId": "count_shape",
+            "unitId": "math.shape-recognition",
+            "representation": "concrete",
+            "inputType": "choice",
+            "variant": "default",
+            "problemKey": "{\"answer\":\"まる\",\"input\":{\"choices\":[{\"label\":\"🔴 まる\",\"value\":\"まる\"},{\"label\":\"🟦 しかく\",\"value\":\"しかく\"}]},\"inputType\":\"choice\",\"item\":\"count_shape\",\"question\":\"この かたちは なに？\",\"visual\":{\"grid\":{\"choices\":[{\"emoji\":\"🟦\",\"label\":\"しかく\"},{\"emoji\":\"🔴\",\"label\":\"まる\"}],\"columns\":2,\"reference\":{\"emoji\":\"🔴\",\"label\":\"まる\"}},\"kind\":\"reference-choice-grid\",\"prompt\":\"この かたちは なに？\"}}"
+          }
+        },
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"a5a67ec9-eea1-4eeb-80e4-2541ea855840\",0]:slot-0",
+          "revisionBefore": 2,
+          "supportBefore": "hint",
+          "answerScope": "whole",
+          "wholeCompleted": true,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788951914737,
+          "presentation": {
+            "id": "33f553e4-2913-4d81-95db-4da607c6ce85",
+            "documentId": "e007c0da-7484-426d-8f07-dddff3079552",
+            "observedAt": 1788951914306,
+            "inputVersion": "island-input-v1",
+            "inputMode": "choice",
+            "referenceVisual": "present"
+          },
+          "observedSupport": {
+            "hintAt": 1788951914699
+          },
+          "elapsedSincePresentationMs": 430.20000000018626,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "skill": "",
+      "subject": "vocab",
+      "type": "choice",
+      "name": "english",
+      "checks": [
+        "wrong answer saves once without advancing",
+        "correct answer advances",
+        "reload retains progress"
+      ],
+      "errors": [],
+      "question": "thousand",
+      "actualSkill": "thousand",
+      "actualType": "choice",
+      "completion": "manual",
+      "receipt": {
+        "id": "[\"island-action-v1\",\"242c34a3-cdf8-4cbe-aec1-65faa0b5b990\",\"[\\\"island-plan-v1\\\",\\\"242c34a3-cdf8-4cbe-aec1-65faa0b5b990\\\",0]\",2]",
+        "profileId": "242c34a3-cdf8-4cbe-aec1-65faa0b5b990",
+        "planId": "[\"island-plan-v1\",\"242c34a3-cdf8-4cbe-aec1-65faa0b5b990\",0]",
+        "timestamp": 1788951922712,
+        "type": "answer",
+        "action": {
+          "type": "answer",
+          "answer": "thousand"
+        },
+        "slotIndex": 0,
+        "result": "assisted-correct",
+        "learningEvidence": {
+          "completion": "whole-problem",
+          "assistance": "assisted",
+          "problem": {
+            "catalogVersion": "curriculum-v1",
+            "subject": "vocab",
+            "itemId": "thousand",
+            "unitId": "vocab.recognition.thousand",
+            "representation": "recognition",
+            "inputType": "choice",
+            "variant": "default",
+            "problemKey": "{\"answer\":\"thousand\",\"input\":{\"choices\":[{\"label\":\"うれしい\",\"value\":\"happy\"},{\"label\":\"せん\",\"value\":\"thousand\"},{\"label\":\"ぶた\",\"value\":\"pig\"},{\"label\":\"パン\",\"value\":\"bread\"}]},\"inputType\":\"choice\",\"item\":\"thousand\",\"question\":\"thousand\"}"
+          }
+        },
+        "observation": {
+          "version": 1,
+          "problemId": "[\"island-plan-v1\",\"242c34a3-cdf8-4cbe-aec1-65faa0b5b990\",0]:slot-0",
+          "revisionBefore": 2,
+          "supportBefore": "hint",
+          "answerScope": "whole",
+          "wholeCompleted": true,
+          "adapterVersion": "island-dom-v1",
+          "eventAt": 1788951922704,
+          "presentation": {
+            "id": "411e7584-7ea2-49cc-94ea-9a61911914cf",
+            "documentId": "815ab0f0-8894-4c35-a25f-f4dfa608b786",
+            "observedAt": 1788951922299,
+            "inputVersion": "island-input-v1",
+            "inputMode": "choice",
+            "referenceVisual": "absent"
+          },
+          "observedSupport": {
+            "hintAt": 1788951922661
+          },
+          "elapsedSincePresentationMs": 404.5,
+          "coverage": "current-presentation",
+          "gaps": []
+        }
+      },
+      "pass": true
+    }
+  ],
+  "pass": true
+}

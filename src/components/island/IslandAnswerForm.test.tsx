@@ -221,7 +221,7 @@ describe('shared answer input compatibility', () => {
     it('retains all number keys and action labels in their existing order', () => {
         const html = renderToStaticMarkup(<IslandAnswerForm slot={slot()} disabled={false} onAnswer={noop} />);
         const buttons = [...html.matchAll(/<button[^>]*aria-label="([^"]+)"/g)].map(match => match[1]);
-        expect(buttons).toEqual(['こたえ', '7', '8', '9', 'こたえを けす', '4', '5', '6', 'ひとつ もどす', '1', '2', '3', 'しょうすうてん', '0', 'こたえる']);
+        expect(buttons).toEqual(['こたえ', '7', '8', '9', 'こたえを けす', '4', '5', '6', 'ひとつ もどす', '1', '2', '3', '0', 'こたえる']);
         expect(html).toContain('data-input-type="number"');
         expect(html).toContain('data-problem-id="reserved-1"');
     });
@@ -234,7 +234,8 @@ describe('shared answer input compatibility', () => {
         expect(labels).toEqual(['分子', '分母']);
         expect(html.indexOf('aria-label="分子"')).toBeLessThan(html.indexOf('aria-label="分母"'));
         expect(html).toContain('aria-label="カーソルを ひだりへ"');
-        expect(html).toContain('aria-label="カーソルを みぎへ"');
+        expect(html).toContain('aria-label="つぎの欄へ"');
+        expect(html).not.toContain('aria-label="しょうすうてん"');
     });
 
     it('keeps forced Hissan and persisted support on the same input surface', () => {

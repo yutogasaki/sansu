@@ -1,3 +1,4 @@
+import { shiftWrittenDecimal } from '../../domain/math/writtenPlaceValue';
 import type { Problem } from '../../domain/types';
 import { visualLearningHint } from './visualLearningGuidance';
 
@@ -8,6 +9,8 @@ export function islandLearningGuidance(problem: Problem): IslandGuidance | undef
     if (problem.subject === 'vocab') return { text: 'ことばと いみを、いっしょに たしかめよう。' };
     const visualHint = visualLearningHint(problem);
     if (visualHint) return { text: visualHint };
+    const decimal = decimalGuidance(problem);
+    if (decimal) return decimal;
     const fraction = fractionGuidance(problem);
     if (fraction) return fraction;
     // These are deliberately narrow templates, never a parser for arbitrary lesson text.
@@ -48,4 +51,29 @@ function fractionGuidance(problem: Problem): IslandGuidance | undefined {
         || answerD <= 0 || numerator * answerD !== denominator * answerN) return undefined;
     if (d === e) return { text: `下の数（分母）は ${d}のまま。上の数（分子）を ${a} ${sign === 1 ? '+' : '−'} ${b}で 計算し、約分しよう。` };
     return { text: 'まず 下の数（分母）を そろえよう。上下に 同じ数を かけると、同じ大きさの 分数に なるよ。' };
+}
+
+
+function decimalGuidance(problem: Problem): IslandGuidance | undefined {
+    if (!problem.categoryId.startsWith('dec_') || typeof problem.correctAnswer !== 'string') return undefined;
+    const match = problem.questionText?.match(/^(\d+(?:\.\d+)?)\s*([+＋−×÷-])\s*(\d+(?:\.\d+)?)\s*=\s*$/);
+    if (!match) return undefined;
+    const [, left, op, right] = match, a = Number(left), b = Number(right);
+    const calculated = ['+', '＋'].includes(op) ? a + b : ['-', '−'].includes(op) ? a - b : op === '×' ? a * b : a / b;
+    if (!Number.isFinite(calculated) || calculated < 0 || !/^\d+(?:\.\d+)?$/.test(problem.correctAnswer)
+        || Math.abs(calculated - Number(problem.correctAnswer)) > 1e-8) return undefined;
+    const places = (text: string) => text.split('.')[1]?.length ?? 0;
+    if (op === '×') {
+        const count = places(left) + places(right);
+        if (!count) return { text: `${a}が ${b}つ分。整数の かけ算で 計算しよう。` };
+        return { text: `小数点を はずして ${shiftWrittenDecimal(left, places(left))} × ${shiftWrittenDecimal(right, places(right))} を 計算しよう。答えは 右から${count}けたの ところに 小数点を もどすよ。` };
+    }
+    if (op === '÷') {
+        const count = places(right);
+        return { text: count ? `両方の数を ${10 ** count}倍すると、${shiftWrittenDecimal(left, count)} ÷ ${shiftWrittenDecimal(right, count)}。わる数を 整数にしても、商は かわらないよ。`
+            : '整数の わり算と 同じように 計算しよう。商の小数点は、わられる数の 小数点の 真上に つけるよ。' };
+    }
+    const count = Math.max(places(left), places(right));
+    const unit = count ? `0.${'0'.repeat(count - 1)}1` : '1';
+    return { text: `小数点を そろえよう。${unit}を 1こ分と みると、${shiftWrittenDecimal(left, count)} ${['+', '＋'].includes(op) ? '+' : '−'} ${shiftWrittenDecimal(right, count)}。同じ位どうしを 計算しよう。` };
 }

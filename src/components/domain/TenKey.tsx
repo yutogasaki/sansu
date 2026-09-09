@@ -11,6 +11,7 @@ interface TenKeyProps {
     onEnter: () => void;
     onClear: () => void;
     showDecimal?: boolean;
+    nextFieldLabel?: string;
     onCursorMove?: (direction: "left" | "right") => void;
     compact?: boolean;
     disabled?: boolean;
@@ -28,6 +29,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
     onEnter,
     onClear,
     showDecimal = false,
+    nextFieldLabel,
     onCursorMove,
     compact = false,
     disabled = false,
@@ -116,12 +118,12 @@ export const TenKey: React.FC<TenKeyProps> = ({
                     <Button disabled={disabled} aria-label="0" onClick={() => onInput(0)} className={baseBtnClass} variant="ghost">0</Button>
                     <Button
                         disabled={disabled}
-                        aria-label="カーソルを みぎへ"
+                        aria-label={nextFieldLabel ?? "カーソルを みぎへ"}
                         onClick={() => onCursorMove("right")}
                         className={actionBtnClass}
                         variant="ghost"
                     >
-                        <Icons.ArrowRight className={iconClass} />
+                        {nextFieldLabel ? <span className="text-sm">つぎ</span> : <Icons.ArrowRight className={iconClass} />}
                     </Button>
                 </>
             ) : (

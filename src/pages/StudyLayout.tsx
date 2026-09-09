@@ -1,3 +1,4 @@
+import { allowsDecimalEntry } from '../domain/math/numberEntry';
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { speakEnglish } from "../utils/tts";
@@ -169,7 +170,6 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
     hissanUserValues = new Map(),
     hissanStepFeedback = 'none',
     hissanCorrecting = false,
-    hissanCanInputDecimal = false,
     onHissanCellClick,
     onHissanToggle,
 }) => {
@@ -839,7 +839,8 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             disabled={feedback !== 'none' || hissanStepFeedback !== 'none'}
                             enterLabel={hissanActive && hissanGridData?.writtenLayout && hissanStepIndex < hissanGridData.steps.length - 1 ? 'このだんを たしかめる' : undefined}
                             writtenInput={hissanActive}
-                            showDecimal={currentProblem.subject === 'math' && !isSingleDigitMathInput(currentProblem) && (!hissanActive || hissanCanInputDecimal)}
+                            showDecimal={!hissanActive && allowsDecimalEntry(currentProblem)}
+                            nextFieldLabel={currentProblem.inputType === 'multi-number' ? 'つぎの欄へ' : undefined}
                             onCursorMove={showCursorButtons ? onCursorMove : undefined}
                             compact={shouldCompactTenKey}
                         />

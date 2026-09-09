@@ -40,3 +40,16 @@ describe('island worked guidance', () => {
         expect(JSON.stringify(item)).toBe(before);
     });
 });
+
+describe('decimal calculation hints', () => {
+    it.each([
+        ['9.7 + 0.2 =','9.9','同じ位'],['3.5 - 0.78 =','2.72','350 − 78'],
+        ['1.2 × 0.3 =','0.36','右から2けた'],['1.2 ÷ 0.3 =','4','12 ÷ 3'],
+        ['2 × 3 =','6','整数の かけ算'],['0.2 × 0.3 =','0.06','2 × 3'],['4.8 ÷ 2 =','2.4','真上'],['1 + 2 =','3','同じ位'],
+    ])('gives a method for %s, without revealing the final answer', (question,answer,text) => {
+        const p={...problem(question,answer),categoryId:'dec_add'};
+        expect(islandLearningGuidance(p)?.text).toContain(text);
+        expect(islandLearningGuidance(p)?.example).toBeUndefined();
+        expect(islandLearningGuidance({...p,correctAnswer:'999'})).toBeUndefined();
+    });
+});
