@@ -52,10 +52,12 @@ runtime candidateは `mystic-island-shore-garden-v7`、固定24は `workshop-202
 
 最初の微弱な変形は実phone画面で弱く、採用を保留した。次の固定25ではgrowth1で幹先と葉の接触が失われたため、26で下側volumeを修正した。中心点だけが葉の中にあることと、実capが接触することを分け、旧版で接触する枝を全4成長段階で保持する検査へ直した。過去のFAILと固定25は残す。葉の変化で住民の共有動作を遮る範囲も変わるため、選択される画角の固定期待を更新し、各poseの可視率・身体の分離・見えない場面の拒否条件を保持した。
 
-[実画面と検証の集計](canopy-v8/verification.json)に、294 suites / 3,244 tests、型/lint/build/assets、同画角の成熟fixture比較、両幅各18実回答の0〜4区間・同予約復帰・全store保持、別のgrove1診断fixtureを記録した。実回答経路のgroveは常に0であり、4区間目を木の成熟とは呼ばない。固定26の[正式80run](canopy-v8/throughput-verification.json)もPASS。入力再開P95はphone 200.2ms / tablet 199.6ms、通常連問の追加操作0。明示した固定問題・自動keyboardの計測であり、通常plannerや子どもの速度を示さない。既存PWAの固定23合格と、この26の証拠は分ける。
+[実画面と検証の集計](canopy-v8/verification.json)に、294 suites / 3,244 tests、型/lint/build/assets、同画角の成熟fixture比較、両幅各18実回答の0〜4区間・同予約復帰・全store保持、別のgrove1診断fixtureを記録した。実回答経路のgroveは常に0であり、4区間目を木の成熟とは呼ばない。固定26の[正式80run](canopy-v8/throughput-verification.json)もPASS。入力再開P95はphone 200.2ms / tablet 199.6ms、通常連問の追加操作0。明示した固定問題・自動keyboardの計測であり、通常plannerや子どもの速度を示さない。同sourceの[classic smoke31経路](canopy-v8/smoke-summary.json)も合格（両flag無効の専用DEV）。既存PWAの固定23合格と、この26の証拠は分ける。
 
 | phone・固定24 | phone・固定26 | tablet近景・固定24 | tablet近景・固定26 |
 | --- | --- | --- | --- |
 | ![前の樹冠](canopy-v8/phone-before-overview.png) | ![丸い起伏のある樹冠](canopy-v8/phone-after-overview.png) | ![前の近景](canopy-v8/tablet-before-near.png) | ![修正後の近景](canopy-v8/tablet-after-near.png) |
 
 葉の輪郭と谷の陰影が読める局所改善として採用する。source Aの素材感・構図全体との差、初期phone画面で上部操作が樹冠に重なる点は残る。視覚全体parity HOLD・独立した理解/動機の観察 N=0・Full Goal Activeを維持する。
+
+mainの保存地点は樹冠 `2ef39b7` と有限表現QA `7473e7b`。[Verify Core](https://github.com/yutogasaki/sansu/actions/runs/34294942951)・[Docs Check](https://github.com/yutogasaki/sansu/actions/runs/34294942954) は同じ `7473e7b` で合格。これは上記の局所改善の保存地点であり、Full Goalは継続する。

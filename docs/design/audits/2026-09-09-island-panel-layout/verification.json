@@ -1,0 +1,130 @@
+{
+  "scope": "Isolated three-land diagnostic fixture. Selected layout/scroll/return controls only; not genuine acquisition, all save boundaries, human comprehension or timing.",
+  "humanN": 0,
+  "fullGoalPassed": false,
+  "target": "http://127.0.0.1:5414",
+  "revision": "workshop-20260909-cef819587f14",
+  "sourceHash": "cef819587f147af1879d904abf5ae96bb8c6da1c414b0beca56ee730481c389a",
+  "inputs": 1072,
+  "flags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_BUILD_PLAY_ENABLED": true
+  },
+  "candidate": "mystic-island-shore-garden-v8",
+  "rawReport": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/panel-layout-28-01/report.json",
+  "rawSHA256": "08a26d372ed1b7fae65478b75bd0165b2ae3dc93826dfe62ed4c55c38bd5baa0",
+  "sourceStable": true,
+  "browserClosed": true,
+  "pass": true,
+  "rows": [
+    {
+      "name": "small-phone-before",
+      "pass": true,
+      "initialCanvasHeight": 324.796875,
+      "hiddenHeaderSamples": 16,
+      "samples": 24,
+      "firstCloseAll": true
+    },
+    {
+      "name": "small-phone-after",
+      "pass": true,
+      "initialCanvasHeight": 324.796875,
+      "hiddenHeaderSamples": 0,
+      "samples": 24,
+      "firstCloseAll": true
+    },
+    {
+      "name": "phone-before",
+      "pass": true,
+      "initialCanvasHeight": 337.59375,
+      "hiddenHeaderSamples": 15,
+      "samples": 24,
+      "firstCloseAll": true
+    },
+    {
+      "name": "phone-after",
+      "pass": true,
+      "initialCanvasHeight": 337.59375,
+      "hiddenHeaderSamples": 0,
+      "samples": 24,
+      "firstCloseAll": true
+    },
+    {
+      "name": "tablet-before",
+      "pass": true,
+      "initialCanvasHeight": 409.59375,
+      "hiddenHeaderSamples": 6,
+      "samples": 24,
+      "firstCloseAll": true
+    },
+    {
+      "name": "tablet-after",
+      "pass": true,
+      "initialCanvasHeight": 409.59375,
+      "hiddenHeaderSamples": 0,
+      "samples": 24,
+      "firstCloseAll": true
+    }
+  ],
+  "core": {
+    "suites": 294,
+    "tests": 3244,
+    "pass": true,
+    "typecheck": "PASS",
+    "build": "PASS",
+    "pwaPrecacheMiB": 10.73,
+    "artMiB": 4.92
+  },
+  "screens": [
+    {
+      "file": "screens/phone-before-home.png",
+      "original": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/panel-layout-28-01/phone-before-home.png",
+      "sha256": "b0fa97d6b195334c89999bf2011fba433d24f0b780a6354f9e739d167eeb8680"
+    },
+    {
+      "file": "screens/phone-after-home.png",
+      "original": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/panel-layout-28-01/phone-after-home.png",
+      "sha256": "cba7ef9534af3449f284353a73de1ab8d780587c3296183c6649e4b0f46eee63"
+    },
+    {
+      "file": "screens/phone-before-expression-scrolled.png",
+      "original": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/panel-layout-28-01/phone-before-expression-scrolled.png",
+      "sha256": "076bc657ee50999529fec4cacab6a7599a2073f6a50bb60132249eac430ac035"
+    },
+    {
+      "file": "screens/phone-after-expression-scrolled.png",
+      "original": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/panel-layout-28-01/phone-after-expression-scrolled.png",
+      "sha256": "7f1e8d46a68ed300f593b9a9ae888aa2e3d4854ac97f0dffc6616a70af5a7099"
+    },
+    {
+      "file": "screens/phone-after-camera-house-scrolled.png",
+      "original": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/panel-layout-28-01/phone-after-camera-house-scrolled.png",
+      "sha256": "44b63bf25959a10b2a40b467e2fe5c460d1b9d252c43839aa2f943863c04e87e"
+    },
+    {
+      "file": "screens/tablet-after-workshop-scrolled.png",
+      "original": "/Users/yutogasaki/Projects/sansu/output/playwright/island-renewal/panel-layout-28-01/tablet-after-workshop-scrolled.png",
+      "sha256": "ece6fbf048c3fdf979293c6180b3c1a538d391f04fda21e68bb3f430450f73ab"
+    },
+    {
+      "file": "screens/phone-returned-house.png",
+      "original": "/Users/yutogasaki/Projects/sansu/output/island-experience/house-photo-28-03/phone-returned-house.png",
+      "sha256": "c41958efb18eefe22131548a388f224b62844d8e46e51707acfd8b21ea83753c"
+    }
+  ],
+  "limits": [
+    "Fixture, not genuine acquisition or child observation.",
+    "Formal timing belongs to fixed26, PWA to fixed23.",
+    "Pan/zoom/real question route belongs to fixed27 camera-27-01.",
+    "Home controls add 78px on phone / 58px on tablet; lower record links may require ordinary page scrolling.",
+    "Source-A overall art parity remains HOLD."
+  ],
+  "housePhoto": {
+    "artifact": "photo-summary.json",
+    "sha256": "857bee24a381951a38a7ddf561f30a4d27b044504fef2b655a8042fc3116c787",
+    "scope": "Fixed28 explicit24-section three-land fixture with two displayed awards; actual one photo per width, not acquisition",
+    "pass": true,
+    "browserClosed": true,
+    "sourceStable": true
+  }
+}

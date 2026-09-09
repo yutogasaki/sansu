@@ -1,5 +1,4 @@
 .island-page[data-mode=workshop] { overflow-x:hidden; }
-.island-page[data-mode=workshop] .island-stage { --island-stage-height:clamp(300px,43dvh,490px); position:sticky; top:0; z-index:2; }
 .island-stage--workshop .island-stage__canvas canvas { touch-action:none; }
 .island-workshop { min-width:0; width:100%; }
 .island-workshop .island-sheet-title h2 { display:flex; align-items:center; gap:7px; margin:0; font-size:18px; }

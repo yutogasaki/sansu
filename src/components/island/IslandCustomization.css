@@ -1,5 +1,4 @@
 .island-page[data-mode=customization] { overflow-x:hidden; }
-.island-page[data-mode=customization] .island-stage { --island-stage-height:clamp(220px,30dvh,340px); position:sticky; top:0; z-index:2; }
 .island-customization-stage-label { position:absolute; top:12px; right:18px; display:inline-flex; align-items:center; gap:5px; padding:6px 10px; border:1px solid var(--island-ink); border-radius:13px; color:var(--island-ink); background:var(--island-paper); font-size:12px; font-weight:650; pointer-events:none; }
 .island-customization { padding-top:8px; min-width:0; width:100%; }
 .island-customization-heading { display:flex; align-items:center; gap:10px; }

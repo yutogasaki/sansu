@@ -2,16 +2,30 @@
     position: relative;
     isolation: isolate;
     width: 100%;
-    height: var(--island-stage-height, clamp(330px, 99vw, 470px));
+    height: auto;
     margin: 0;
     overflow: hidden;
     border-radius: 26px;
-    background: #76cdd3;
+    background: var(--island-paper, #fff9e8);
+}
+.island-stage:has(> .island-stage__controls) {
+    --island-stage-controls-height: var(--island-camera-controls-height, 78px);
 }
 
 .island-stage--learning {
-    height: var(--island-stage-height, clamp(220px, 58vw, 270px));
     border-radius: 20px;
+}
+
+.island-stage__viewport {
+    position: relative;
+    height: var(--island-stage-height, clamp(330px, 99vw, 470px));
+    overflow: hidden;
+    border-radius: inherit;
+    background: #76cdd3;
+}
+
+.island-stage--learning .island-stage__viewport {
+    height: var(--island-stage-height, clamp(220px, 58vw, 270px));
 }
 
 .island-stage__canvas,
@@ -23,10 +37,6 @@
 
 .island-stage__canvas[hidden] { display: none; }
 .island-stage[data-keepsake-room=true] {
-    --island-stage-height: clamp(255px, 35dvh, 390px);
-    position: sticky;
-    top: 0;
-    z-index: 2;
     background: var(--island-paper, #fff9e8);
 }
 .island-stage[data-keepsake-room=true] .island-stage__caption { display: none; }
@@ -38,7 +48,7 @@
 
 /* The actual flag occupies the left half of its fixed close-up. Retain both
    preview lines in the other half; ordinary island notices keep their full width. */
-.island-stage[data-flag-focus="true"] > .island-growth-preview-notice {
+.island-stage[data-flag-focus="true"] > .island-stage__viewport > .island-growth-preview-notice {
     left: auto;
     right: 12px;
     width: min(164px, calc(50% - 24px));
@@ -53,12 +63,20 @@
 .island-stage--viewing .island-stage__canvas { cursor: grab; }
 .island-stage--viewing .island-stage__canvas:active { cursor: grabbing; }
 
-.island-camera {
-    position: absolute;
-    z-index: 2;
-    top: 8px;
-    right: 8px;
+.island-stage__controls {
+    box-sizing: border-box;
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 2px;
+    height: var(--island-stage-controls-height, 78px);
+    padding: 4px 8px;
+    background: var(--island-paper, #fff9e8);
+}
+.island-camera {
+    display: flex;
+    flex: none;
     align-items: center;
     padding: 2px;
     border: 1px solid var(--pokomoko-edge, #d5c9e0);
@@ -72,6 +90,7 @@
     justify-content: center;
     min-width: 44px;
     min-height: 44px;
+    height: 44px;
     border-radius: 12px;
 }
 .island-camera button:hover:not(:disabled) { background: var(--park-mint, #e7edf8); }
@@ -79,17 +98,11 @@
 .island-camera__divider { width: 1px; height: 20px; background: var(--island-muted, #4c5c66); opacity: .3; }
 .island-camera__reset { gap: 5px; padding: 0 8px; font-size: 11px; font-weight: 600; }
 .island-camera-hint {
-    position: absolute;
-    top: 62px;
-    right: 12px;
-    z-index: 1;
+    flex: none;
     margin: 0;
-    padding: 3px 8px;
-    border-radius: 12px;
-    background: var(--island-paper, #fff9e8);
     color: var(--island-ink, #263145);
     font-size: 11px;
-    line-height: 1.5;
+    line-height: 18px;
     pointer-events: none;
 }
 
@@ -97,12 +110,15 @@
     .island-camera__reset span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
     .island-camera__reset { padding: 0; }
 }
+@media (min-width: 600px) {
+    .island-stage__controls { flex-direction: row; align-items: center; justify-content: flex-end; gap: 12px; }
+}
 
 .island-stage__caption {
     position: absolute;
     z-index: 1;
     left: 50%;
-    bottom: 12px;
+    bottom: calc(12px + var(--island-stage-controls-height, 0px));
     width: max-content;
     max-width: calc(100% - 24px);
     padding: 6px 12px;

@@ -17,5 +17,4 @@
 .island-furniture-preview-actions span { font-size:.8rem; }
 .island-furniture-price { margin:.8rem 0 .4rem; font-weight:700; }
 .island-furniture-footer { display:flex; justify-content:space-between; gap:.5rem; margin-top:1rem; }
-.island-page[data-mode="furniture"] .island-stage { --island-stage-height:clamp(240px,35dvh,380px); position:sticky; top:0; z-index:2; }
 @media(min-width:700px) { .island-furniture-choices { gap:.8rem; } .island-furniture-choices .island-reward strong { font-size:1rem; } }

@@ -1,5 +1,4 @@
 .island-page[data-mode=experience] { overflow-x:hidden; }
-.island-page[data-mode=experience] .island-stage { --island-stage-height:clamp(210px,29dvh,330px); position:sticky; top:0; z-index:2; }
 .island-experience { width:100%; min-width:0; padding-top:6px; }
 .island-experience .island-sheet-title { margin-bottom:7px; }
 .island-experience .island-sheet-title h2 { font-size:20px; margin:0; }

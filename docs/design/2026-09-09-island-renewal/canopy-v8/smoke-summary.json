@@ -1,0 +1,40 @@
+{
+  "result": "PASS",
+  "scenarios": 31,
+  "failed": [],
+  "runnerExitCode": 0,
+  "target": "http://127.0.0.1:4173",
+  "targetScope": "Fixed26 source classic flags DEV smoke, not production5411 Island/v8 visual evidence or throughput",
+  "revision": "workshop-20260909-88c3f5357ac2",
+  "sourceHash": "88c3f5357ac25bb5c27820c983ccd5cbf6f97653d7f29b763f87d42399cc0b3a",
+  "manifestInputs": 1072,
+  "manifestFileHash": "11452787d40aaf9419d9929325994f04a26a56ca00b7636b81b224c56cdb0aaa",
+  "harnessHash": "650ad7f0df3eafca0aed78873920cf66776b0903147a02e913afc4585dc5718a",
+  "sourceStable": true,
+  "preview5411Unchanged": true,
+  "preview5411IslandCandidate": "mystic-island-shore-garden-v8",
+  "preview5411NotStopped": true,
+  "allScenarioContextsClosed": true,
+  "browserClosed": true,
+  "browserClosureEvidence": {
+    "observedOwnedPidCount": 10,
+    "remainingOwnedPidsOrGroups": [],
+    "temporaryBrowserProfile": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/playwright_chromiumdev_profile-oephe4",
+    "temporaryBrowserProfileRemoved": true
+  },
+  "ownedDev4173Closed": true,
+  "sourceOrRunnerEdits": false,
+  "storageBoundary": "Fresh Playwright browser contexts; native fixture/clear writes only in disposable contexts. No persistent user data directory.",
+  "startedAt": 1788913664.056471,
+  "finishedAt": 1788913750.4587688,
+  "rawEvidenceExternalPath": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-smoke-26-01-zhhznqa4",
+  "rawReportSha256": "726071f1e2a32b0020f8885b30e689663de10d315925c6783d9f393525f5f6f9",
+  "warnings": [
+    "Browserslist caniuse-lite data age warning; no dependency update performed."
+  ],
+  "limitations": [
+    "Native seed/clear operations occur only in disposable browser contexts.",
+    "Classic flags override production26 Island/Play flags; preview5411 identity is separate read-only attestation.",
+    "Not a new formal timing, visual appeal, human motivation, or real-user learning evidence run."
+  ]
+}

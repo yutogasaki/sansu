@@ -41,7 +41,7 @@ body:has(.island-page), body:has(.island-page) #root { background: var(--pokomok
 .app-container .island-welcome > header { border-radius: 0 0 24px 24px; }
 
 /* A compact home keeps the world, the next question and the places to play together. */
-.app-container .island-page[data-mode=home] > .island-stage {
+.app-container .island-page[data-mode=home] {
     --island-stage-height: clamp(300px, 40dvh, 440px);
 }
 .app-container .island-page[data-mode=home] .island-home-controls {

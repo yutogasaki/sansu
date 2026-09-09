@@ -23,5 +23,4 @@
 .island-expression-free legend { font-weight:700; margin-bottom:.5rem; }
 .island-expression-free fieldset > div { display:flex; flex-wrap:wrap; gap:.5rem; }
 .island-expression-footer { display:flex; justify-content:space-between; gap:.5rem; margin-top:1.4rem; }
-.island-page[data-mode="expression"] .island-stage { --island-stage-height:clamp(240px,35dvh,380px); position:sticky; top:0; z-index:2; }
 @media(min-width:700px) { .island-expression-catalog { grid-template-columns:repeat(3,minmax(0,1fr)); } .island-expression-tabs button { font-size:.95rem; } }

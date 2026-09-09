@@ -163,18 +163,20 @@ export function IslandStage(props: IslandStageProps & { milestoneNotice?: ReactN
         data-keepsake-room={props.learningKeepsakes && !props.learning ? 'true' : undefined}
         data-flag-focus={props.expressionFlagFocus && !props.learning ? 'true' : undefined}
         data-workshop-candidate={props.workshop?.active ? 'island-workshop-v1' : undefined}>
-        <div className="island-stage__canvas" ref={host} role="img" aria-label={sceneLabel}
-            data-testid="island-stage" data-renderer={failed ? 'fallback' : 'loading'} hidden={failed} />
-        {failed && <div className="island-stage__fallback" role="img" aria-label={caption}>
-            <span className="island-stage__fallback-land" aria-hidden="true">⌂</span>
-            <p>しまが うまく みえないよ。<br />もんだいと もちものは つかえるよ。</p>
-            <button type="button" className="island-stage__retry" onClick={() => { setCaption({ text: 'しまを ひらいているよ', context: props.expressionCaptionKey }); setFailed(false); setAttempt(value => value + 1); }}>もういちど みる</button>
-        </div>}
-        {!failed && props.milestoneNotice}
-        {!failed && cameraEnabled && <>
+        <div className="island-stage__viewport">
+            <div className="island-stage__canvas" ref={host} role="img" aria-label={sceneLabel}
+                data-testid="island-stage" data-renderer={failed ? 'fallback' : 'loading'} hidden={failed} />
+            {failed && <div className="island-stage__fallback" role="img" aria-label={caption}>
+                <span className="island-stage__fallback-land" aria-hidden="true">⌂</span>
+                <p>しまが うまく みえないよ。<br />もんだいと もちものは つかえるよ。</p>
+                <button type="button" className="island-stage__retry" onClick={() => { setCaption({ text: 'しまを ひらいているよ', context: props.expressionCaptionKey }); setFailed(false); setAttempt(value => value + 1); }}>もういちど みる</button>
+            </div>}
+            {!failed && props.milestoneNotice}
+        </div>
+        {!failed && cameraEnabled && <div className="island-stage__controls">
             <IslandCameraToolbar view={cameraView} disabled={props.photographing} onAction={action => runtime.current?.controlCamera(action)} />
             <p className="island-camera-hint">ひろげて 拡大・なぞって 移動</p>
-        </>}
+        </div>}
         <figcaption hidden={workshopActive || sharedActive || Boolean(props.preview) || Boolean(props.expressionCaptionKey) && caption === DEFAULT_CAPTION} className={`island-stage__caption${caption === DEFAULT_CAPTION ? ' island-stage__caption--quiet' : ''}`} aria-live="polite" aria-atomic="true">{caption}</figcaption>
     </figure>;
 }

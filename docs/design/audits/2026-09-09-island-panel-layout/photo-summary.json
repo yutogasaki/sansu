@@ -1,0 +1,152 @@
+{
+  "pass": true,
+  "revision": "workshop-20260909-cef819587f14",
+  "sourceHash": "cef819587f147af1879d904abf5ae96bb8c6da1c414b0beca56ee730481c389a",
+  "manifestInputs": 1072,
+  "qa": {
+    "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/house-photo-28-qa-03/runner.mjs",
+    "sha256": "f1fc25e3910fdbac10e4a9fbb7a4d1ed732c5d487665dc8942d8f8be913f8ecb"
+  },
+  "browserClosed": true,
+  "allOwnedProcessesClosed": true,
+  "temporaryProfileRemoved": true,
+  "serverNotOwnedOrStopped": true,
+  "sourceStable": true,
+  "pngCount": 12,
+  "priorFailures": [
+    {
+      "run": "house-photo-28-01",
+      "cause": "QA required learning after profile seed; actual valid home/no reservation"
+    },
+    {
+      "run": "house-photo-28-02",
+      "cause": "QA incorrectly required GPU UUID to survive gallery Stage unmount"
+    }
+  ],
+  "lanes": [
+    {
+      "name": "phone",
+      "pass": true,
+      "checks": [
+        "house entry all stores unchanged",
+        "exact all-store photo write",
+        "native actual frame matches all original and thumbnail pixels",
+        "download exact stored bytes, no writes",
+        "gallery close returns same house and preserves every store"
+      ],
+      "pageErrors": [],
+      "fixtureCompletedSets": 24,
+      "fixtureDisplay": [
+        "first-completion",
+        "completed-5"
+      ],
+      "photo": {
+        "id": "[\"island-photo:v1\",\"house-photo28-phone-1788914843985\",\"d92db68a-78c7-4a6a-b20b-cff03a97efa7\"]",
+        "profileId": "house-photo28-phone-1788914843985",
+        "version": 1,
+        "capturedAt": 1788914847773,
+        "islandName": "わたしの しま",
+        "targetName": "いえ",
+        "composition": "island",
+        "image": {
+          "mime": "image/png",
+          "width": 390,
+          "height": 354,
+          "bytes": 76097,
+          "sha256": "9b633f573b24445c84005ea5f8e4d5026ccc772f67875b6ae9a688ebd1f2134a"
+        },
+        "thumbnail": {
+          "mime": "image/png",
+          "width": 320,
+          "height": 290,
+          "bytes": 68970,
+          "sha256": "82508ffb0bcd16b97891aa79c681cd2082b7b2755450f0ce771a4fcd0674f603"
+        }
+      },
+      "pixels": {
+        "image": {
+          "width": 390,
+          "height": 354,
+          "different": 0,
+          "samples": 552240,
+          "nonzero": 552238
+        },
+        "thumbnail": {
+          "width": 320,
+          "height": 290,
+          "different": 0,
+          "samples": 371200,
+          "nonzero": 371200
+        }
+      },
+      "cameraHeight": 354.46875,
+      "returnedHouseHeight": 295.390625,
+      "galleryRemount": {
+        "beforeUuid": "dc033f4b-467b-4a55-a09a-821aacb37277",
+        "afterUuid": "ae519a75-71ff-49b0-8cfa-f7b32a176ede"
+      }
+    },
+    {
+      "name": "tablet",
+      "pass": true,
+      "checks": [
+        "house entry all stores unchanged",
+        "exact all-store photo write",
+        "native actual frame matches all original and thumbnail pixels",
+        "download exact stored bytes, no writes",
+        "gallery close returns same house and preserves every store"
+      ],
+      "pageErrors": [],
+      "fixtureCompletedSets": 24,
+      "fixtureDisplay": [
+        "first-completion",
+        "completed-5"
+      ],
+      "photo": {
+        "id": "[\"island-photo:v1\",\"house-photo28-tablet-1788914850806\",\"77b291c7-e793-439b-bee6-4fb5cde88f23\"]",
+        "profileId": "house-photo28-tablet-1788914850806",
+        "version": 1,
+        "capturedAt": 1788914854655,
+        "islandName": "わたしの しま",
+        "targetName": "いえ",
+        "composition": "island",
+        "image": {
+          "mime": "image/png",
+          "width": 768,
+          "height": 430,
+          "bytes": 110004,
+          "sha256": "5a48e11960ddbff2c475d741baa4c26365d595161b1bfb741bdc4aa8acc29182"
+        },
+        "thumbnail": {
+          "mime": "image/png",
+          "width": 320,
+          "height": 179,
+          "bytes": 43892,
+          "sha256": "c7a8f92d7fe518a59c996094ab1d926fcb699caead5256891baa0fd02373feae"
+        }
+      },
+      "pixels": {
+        "image": {
+          "width": 768,
+          "height": 430,
+          "different": 0,
+          "samples": 1320960,
+          "nonzero": 1320949
+        },
+        "thumbnail": {
+          "width": 320,
+          "height": 179,
+          "different": 0,
+          "samples": 229120,
+          "nonzero": 229120
+        }
+      },
+      "cameraHeight": 430.078125,
+      "returnedHouseHeight": 358.390625,
+      "galleryRemount": {
+        "beforeUuid": "b0119be4-e403-4244-812a-b69e53042770",
+        "afterUuid": "e4f08bae-ade0-4518-ae00-b3031c879859"
+      }
+    }
+  ]
+}

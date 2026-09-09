@@ -45,6 +45,15 @@
       "tabletCorrectP95Ms": 199.6,
       "artifact": "throughput-verification.json",
       "sha256": "e3518a6ae3e4b117a29971a8ac13dffcfe1c2eabc8ae14ed7c1de1f898b206b9"
+    },
+    "classicSmoke": {
+      "scenarios": 31,
+      "pass": true,
+      "sourceStable": true,
+      "browserClosed": true,
+      "artifact": "smoke-summary.json",
+      "sha256": "b042e29a7a4f3d989c98b9aaa90812c9120402f34c83788bd8e12bc8c578c3fe",
+      "scope": "Fixed26 source / dedicated classic-flags DEV; not production5411 Island visual or PWA evidence."
     }
   },
   "scopes": {

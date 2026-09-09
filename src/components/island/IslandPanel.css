@@ -17,6 +17,17 @@
     gap: 8px 12px;
     margin-bottom: 14px;
 }
+/* Keep the whole return target below the actual sticky scene, including the
+   taller workshop and the house camera. Only the heading covers scrolled copy. */
+.island-page:has(> .island-stage) > .island-sheet > :is(.island-sheet-title, .island-customization-heading) {
+    position: sticky;
+    top: calc(var(--island-sticky-stage-height, 0px) + 8px);
+    z-index: 3;
+    align-self: start;
+    padding-block: 8px;
+    background: var(--pokomoko-paper, var(--island-paper));
+    box-shadow: 0 -8px 0 var(--pokomoko-paper, var(--island-paper)), 0 4px 0 var(--pokomoko-paper, var(--island-paper));
+}
 .island-page .island-panel :is(.island-sheet-title, .island-customization-heading) h2 {
     flex: 1 1 150px;
     min-width: 0;
