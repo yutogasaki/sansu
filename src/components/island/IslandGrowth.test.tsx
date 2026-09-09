@@ -24,7 +24,7 @@ describe('living island choices', () => {
     it('shows the frozen current destination while offering the actual next reservation target', () => {
         const summary = renderToStaticMarkup(<IslandGrowthSummary island={island} plan={plan} disabled={false} onChoose={noop} />);
         expect(summary).toContain('data-growth-target="garden"');
-        expect(summary).toContain('にわが 育っているよ');
+        expect(summary).toContain('いま 育てる ばしょ：にわ');
         const choices = renderToStaticMarkup(<IslandGrowthChoices island={island} plan={plan} disabled={false} onSelect={noop} onClose={noop} />);
         expect(choices).toContain('いまの もんだいは にわへ。');
         expect(choices).toContain('えらぶと、つぎから 育つよ');

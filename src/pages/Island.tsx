@@ -334,7 +334,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         if (hasShell && active && !opening && !navigation?.blocked && !placementWasPrepared.current) recoverPlacement();
     }, [hasShell, active, opening, screen, preview, navigation?.blocked]);
     const enterHouse = () => {
-        if (busy) return;
+        if (comparisonDisabled) return;
         setReturnToHouse(false);
         setHouseSection('home');
         setKeepsakeFocus(undefined); setPreview(undefined); setReaction(undefined); setPlayRequest(undefined); setScreen('keepsakes');
@@ -776,10 +776,10 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     onView={view => { setWorkshopView(view); if (view.mode !== workshopView.mode || view.residentId !== workshopView.residentId) setWorkshopRequest({ id: crypto.randomUUID(), command: { type: 'stop' } }); }}
                     onCommand={command => setWorkshopRequest({ id: crypto.randomUUID(), command })}
                     onAction={workshopActions.act} error={workshopActions.error} onRetry={workshopActions.retry} onClose={home} onLearn={() => void begin()} />
-                : screen === 'keepsakes' ? <IslandLearningKeepsakes island={island} controls={keepsakes} disabled={busy}
+                : screen === 'keepsakes' ? <IslandLearningKeepsakes island={island} controls={keepsakes} disabled={busy} comparisonDisabled={comparisonDisabled}
                     section={houseSection} onSectionChange={section => { setHouseSection(section); setKeepsakeFocus(undefined); }}
                     onSelect={setKeepsakeFocus} onShowRoom={() => setKeepsakeFocus(undefined)}
-                    onClose={home} onLearn={() => void begin()} onPhoto={photograph}
+                    onClose={home} onLearn={() => void begin()} onPhoto={photograph} onPhotos={openPhotos}
                     onAlbum={() => { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }}
                     onShared={island.completedSets >= 1 ? () => { setReturnToHouse(true); openShared(); } : undefined}
                     onRewards={() => { setReturnToHouse(true); setScreen('reward'); }} />
@@ -848,11 +848,11 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     onCancel={cancelPlacement} onAppearance={level => void appearance(level)} /> : <section className="island-home-controls">
                     {feedback && <p className="island-home-feedback" role="status">{feedback}</p>}
 
-                    {!homeJourneyEnabled() && <IslandGrowthSummary island={island} plan={plan} disabled={busy} onChoose={() => {
-                        setGrowthViewHabitat(plan?.growthTarget ?? island.growth?.focus ?? 'garden'); setScreen('growth');
-                    }} />}
                     {!navigation && <button className="island-primary island-start" disabled={busy} onClick={() => void begin()}>{island.pendingPlanId ? 'つづきから とく' : 'まなぶ'}<ArrowRight size={22} /></button>}
 
+                    {latestMilestone ? <IslandMilestoneReturn milestone={latestMilestone} island={island} disabled={comparisonDisabled} onCompare={() => {
+                        setAlbumComparison(latestMilestone.expansion ? 'all' : latestMilestone.habitats[0] ?? 'garden'); setScreen('album');
+                    }} /> : null}
                     <IslandHomeActions onHelp={() => setScreen('help')} active={active} onOpenChange={setHomeMenuOpen} busy={busy} comparisonDisabled={comparisonDisabled} workshopUnlocked={island.completedSets >= 1}
                         pendingRewards={island.pendingRewards.length} onPlay={() => {
                         setPlayRequest(undefined); setPlayMessage(undefined); setReaction(undefined); setPreview(undefined); setScreen('play');
@@ -862,11 +862,11 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                         onOtherGames={() => navigate('/battle')}
                         onShared={() => openShared()} onAlbum={() => { setAlbumComparison('garden'); setScreen('album'); }}>
                         <div className="island-menu-progress">
-                            <h3>しまのようす</h3>
+                            {!homeJourneyEnabled() && <IslandGrowthSummary island={island} plan={plan} disabled={busy} onChoose={() => {
+                                setGrowthViewHabitat(plan?.growthTarget ?? island.growth?.focus ?? 'garden'); setScreen('growth');
+                            }} />}
+                            <h3>ながめる ばしょ</h3>
                             <IslandDistricts island={island} value={district} disabled={busy} onChange={setDistrict} />
-                            {latestMilestone ? <IslandMilestoneReturn milestone={latestMilestone} island={island} disabled={comparisonDisabled} onCompare={() => {
-                        setAlbumComparison(latestMilestone.expansion ? 'all' : latestMilestone.habitats[0] ?? 'garden'); setScreen('album');
-                    }} /> : null}
                             <IslandRewardGoal island={island} disabled={busy} onOpen={openRewardGoal} />
                             <IslandRewardGoalFeedback controls={rewardGoal} disabled={busy} />
                         </div>

@@ -15,3 +15,17 @@
 .island-home-arrival > svg { margin-left: auto; flex-shrink: 0; }
 .island-home-arrival small { display: block; font-size: 12px; line-height: 1.6; color: var(--pokomoko-muted); }
 .island-home-actions button:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; }
+.island-menu-group { margin: 14px 0; border: 1px solid var(--pokomoko-edge); border-radius: 16px; background: var(--island-paper); }
+.island-menu-group > summary { display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 12px 14px; cursor: pointer; color: var(--pokomoko-ink); font-size: 14px; font-weight: 600; list-style: none; }
+.island-menu-group > summary::-webkit-details-marker { display: none; }
+.island-menu-group > summary > span { flex: 1; }
+.island-menu-group > summary > svg { flex-shrink: 0; color: var(--pokomoko-blue); }
+.island-menu-group[open] > summary > svg:last-child { transform: rotate(180deg); }
+.island-menu-group small, .island-home-house small { display: block; margin-top: 4px; font-size: 12px; font-weight: 400; line-height: 1.5; color: var(--pokomoko-muted); }
+.island-menu-group > .island-home-action-grid, .island-menu-group > .island-menu-progress { margin: 0 12px 14px; }
+.island-menu-group summary:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; border-radius: 16px; }
+.island-home-house { width: 100%; min-height: 68px; padding: 12px 14px; gap: 12px; text-align: left; }
+.island-home-house > span { flex: 1; }
+.island-menu section[aria-label="しまを たのしむ"] > .island-home-action-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.island-menu-group[data-home-group="arrange"] > .island-home-action-grid { grid-template-columns: minmax(0, 1fr); }
+.island-menu-group[data-home-group="arrange"] .island-home-tile { flex-direction: row; justify-content: flex-start; min-height: 52px; padding: 10px 14px; gap: 12px; text-align: left; }

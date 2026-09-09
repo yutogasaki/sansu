@@ -14,11 +14,13 @@ export interface IslandLearningKeepsakesProps {
     island: IslandRecord;
     controls: ReturnType<typeof useIslandLearningKeepsakes>;
     disabled: boolean;
+    comparisonDisabled?: boolean;
     onClose: () => void;
     onLearn: () => void;
     onPhoto?: () => void;
     onSelect?: (id: IslandLearningKeepsakeId) => void;
     onShowRoom?: () => void;
+    onPhotos?: () => void;
     onAlbum?: () => void;
     onShared?: () => void;
     onRewards?: () => void;
@@ -31,8 +33,8 @@ function displayAction(keepsakeId: IslandLearningKeepsakeId, displayed: boolean)
 
 /** The page supplies the actual house. Reading an award never places one;
  * only the explicit display controls save the person's display selection. */
-export function IslandLearningKeepsakes({ island, controls, disabled, onClose, onLearn, onPhoto, onSelect, onShowRoom,
-    onAlbum, onShared, onRewards, section, onSectionChange }: IslandLearningKeepsakesProps) {
+export function IslandLearningKeepsakes({ island, controls, disabled, onClose, onLearn, onPhoto, onSelect, onShowRoom, comparisonDisabled = disabled,
+    onPhotos, onAlbum, onShared, onRewards, section, onSectionChange }: IslandLearningKeepsakesProps) {
     const [localSection, setLocalSection] = useState<IslandHouseSection>('home');
     const currentSection = section ?? localSection;
     const changeSection = (next: IslandHouseSection) => {
@@ -61,15 +63,17 @@ export function IslandLearningKeepsakes({ island, controls, disabled, onClose, o
     return <section className="island-sheet island-panel island-learning-keepsakes" aria-label="いえ"
         data-testid="island-learning-keepsakes" data-keepsake-section={currentSection} data-keepsake-selected={selected.id}>
         <div className="island-sheet-title"><h2><House size={22} aria-hidden="true" />いえ</h2>
-            <button className="island-icon-button island-panel-back" data-keepsake-action="close" disabled={disabled} aria-label="いえを とじる" onClick={onClose}>
+            <button className="island-icon-button island-panel-back" data-keepsake-action="close" disabled={comparisonDisabled} aria-label="いえを とじる" onClick={onClose}>
                 <X size={20} aria-hidden="true" /><span>もどる</span></button></div>
         {currentSection !== 'home' && <button className="island-secondary island-house-back" data-keepsake-action="home"
             disabled={disabled} onClick={() => changeSection('home')}><ArrowLeft size={17} aria-hidden="true" />いえの なかへ</button>}
         {currentSection === 'home' && <div className="island-house-overview">
             <p>だいじなものを みたり、きねんを かざったり。</p>
             <nav className="island-house-destinations" aria-label="いえの なかで みるもの">
-                {onAlbum && <button className="island-secondary" data-keepsake-action="album" disabled={disabled} onClick={onAlbum}>
+                {onAlbum && <button className="island-secondary" data-keepsake-action="album" disabled={comparisonDisabled} onClick={onAlbum}>
                     <BookOpen size={26} aria-hidden="true" /><strong>アルバム</strong><small>おもいでを ひらく</small></button>}
+                {onPhotos && <button className="island-secondary" data-keepsake-action="photos" disabled={disabled} onClick={onPhotos}>
+                    <Camera size={26} aria-hidden="true" /><strong>しゃしん</strong><small>とった しゃしんを みる</small></button>}
                 {onShared && <button className="island-secondary" data-keepsake-action="shared" disabled={disabled} onClick={onShared}>
                     <Sparkles size={26} aria-hidden="true" /><strong>かざりと きおく</strong><small>だいじなものを みる</small></button>}
                 <button className="island-secondary" data-keepsake-action="open-keepsakes" disabled={disabled} onClick={() => changeSection('keepsakes')}>

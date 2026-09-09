@@ -14,6 +14,17 @@ function props(completedSets = 0): IslandLearningKeepsakesProps {
 const action = (html: string, value: string) => html.match(new RegExp(`<button[^>]*data-keepsake-action="${value}"[^>]*>`))?.[0];
 const choice = (html: string, value: string) => html.match(new RegExp(`<button[^>]*data-keepsake-choice="${value}"[^>]*>`))?.[0];
 describe('real learning keepsake record and display choices', () => {
+    it('keeps album reading and returning available during a background discovery save', () => {
+        const p = props(1); p.section = 'home'; p.disabled = true; p.comparisonDisabled = false;
+        p.onAlbum = vi.fn(); p.onPhotos = vi.fn();
+        const html = renderToStaticMarkup(<IslandLearningKeepsakes {...p} />);
+        expect(action(html, 'album')).not.toContain('disabled');
+        expect(action(html, 'close')).not.toContain('disabled');
+        expect(action(html, 'photos')).toContain('disabled');
+        expect(action(html, 'open-keepsakes')).toContain('disabled');
+        expect(p.controls.act).not.toHaveBeenCalled();
+    });
+
     it('keeps all 16 future milestones readable with no award claim or invented old date', () => {
         const p = props(), before = structuredClone(p.island), html = renderToStaticMarkup(<IslandLearningKeepsakes {...p} />);
         expect(html.match(/data-keepsake-choice=/g)).toHaveLength(16);
