@@ -6,7 +6,11 @@
 
 ## Goal
 
+2026-09-09追加: 固定24の[衣装・模様と家具利用の有限確認](../../design/audits/2026-09-09-island-expression-matrix/README.md)は、両幅それぞれ残25組のportrait・選定9場面の利用が通過した。復元と明示注入を含む診断fixtureの項目単位の合成で、実取得・単一連続run・全直積・固定26の合格ではない。到達不可の元FAILと、実収納/再配置から同じ住民が再開する操作を保持。音の未計測prefix、画面の重なり、造形全体とHuman N=0は別の残差として追う。
+
 このセッションの7作品104項目と追加12作品の分析全体を、学習を阻害せず自発的に遊び・学びたくなる島へつなぐ。仕様35のきせかえは一部分。18観点、12の気持ちよさ、10デザイン、8成長、8欲求、16報酬、24比較項目を対応表で追跡し、採用項目を仕様化・実装・実画面検証する。
+
+2026-09-09追加: [樹冠v8の局所改善](../../design/2026-09-09-island-renewal/direction.md#樹冠の局所改善固定26)を固定26（`workshop-20260909-88c3f5357ac2`）で確認。丸い葉塊と枝を支える厚み、成長/所有/identityを保持し、294 suites/3244 tests・型/lint/build/assetsが合格。両幅の各18実回答、0〜4区間の同予約復帰・全store保持と、別のgrove1診断fixtureを確認した。grove0の実回答を中間/最大成長の取得証拠にせず、固定26の正式80runもPASS（入力再開P95 200.2/199.6ms、追加操作0、固定問題・Human N=0）。PWAは固定23の版別記録を参照する。初期phoneの操作と樹冠の重なり、source A全体の造形/素材差、Human N=0を残す。
 
 2026-09-09追加: [仕様42](../../product/42_island_learning_keepsakes_spec.md)の閉じた家内、実アルバム／掲示板／学習の棚と、島のpinch・pan・zoomを[固定23のチェックポイント](../../design/audits/2026-09-09-island-home-checkpoint.md)へ記録した。固定23は `workshop-20260909-ecdb5041e7c4`（1068入力）、実配信guard・292 suites/3232 tests・型/lint/build/assets/docs・Island PWA8保護経路が合格。家のDEV実画像、実物タップ、戻り先2経路は両幅で確認し、明示fixtureと実獲得を区別した。21準備版、22配信revision不一致FAIL、23初回camera/写真QAのFAILは保持。同app23＋修正QA overlayの実獲得／写真は両幅各25実回答・5区間、展示/収納/reload/実PNG/同予約保持まで合格。カメラ23-03も真正新規2経路＋明示成熟fixture2経路の計4経路が合格。Island core補助QA10経路と、保存地点後の正式80runも同チェックポイントへ合格を追記した。Goalを継続する。source A-v6 art parity HOLD、Human N=0、Full Goal Activeを維持し、この保存地点を全体完了・公開としない。
 

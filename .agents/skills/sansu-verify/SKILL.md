@@ -23,6 +23,7 @@ description: Run and interpret Sansu's required verification flow after substant
 - During implementation, reproduce a failure with the smallest check that covers its cause. Use saved timestamps, source data and a focused regression before repeating an expensive browser journey; do not make an unrelated feature wait for that diagnosis.
 - Assign independent implementation owners and share one typecheck for the integrated changes. Run the full required matrix on a stable integration candidate after the focused checks pass. Repeat a broad check when its inputs changed or an unresolved result requires it, and retain the earlier result with its exact source.
 - Keep focused checks and explicit diagnostic fixtures separate from end-to-end evidence. A short reproduction can guide a fix; it does not prove real acquisition, offline recovery, learning throughput, visual appeal or child motivation. Final acceptance still follows the verification matrix.
+- For normal production-preview journeys, allow service workers; explicitly blocking them is a separate fault diagnostic and can itself produce registration errors. For a static/on-demand WebGL view, capture the visible canvas with a browser screenshot after a real rendered frame; a later `toDataURL()` may read an already-cleared drawing buffer. Before touch navigation beside a sticky canvas, scroll the whole control into the unobscured area and verify the actual hit target. Keep the first failed trace when correcting these harness assumptions.
 
 ## Common Commands
 

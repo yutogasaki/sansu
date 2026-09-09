@@ -9,11 +9,11 @@ import { PAIRS, USES, EXISTING_PAIRS, RESIDENTS, pairKey, islandFor, makeVisualF
 
 const viewports = [{ name: 'phone', viewport: { width: 390, height: 844 }, touch: true, reducedMotion: 'no-preference' },
     { name: 'tablet', viewport: { width: 768, height: 1024 }, touch: false, reducedMotion: 'reduce' }];
-const fixedRevision = 'workshop-20260909-0db80c949ca3';
+const fixedRevision = 'workshop-20260909-a285ab860033';
 const overlay = ['tools/e2e-island-expression-visual-matrix.mjs', 'tools/island-expression-visual-matrix-audit.mjs'];
 const helpers = ['tools/island-e2e-helpers.mjs', 'tools/island-learning-checks.mjs', 'tools/island-learning-fixtures.mjs'];
 const remaining = ['Isolated injected visual state is not genuine acquisition, qualification, spontaneous replay or child behavior (human N=0).',
-    'Acquisition/save/trail/old-state boundaries remain bounded by expression-06/furniture-06 and their fixed17 build; this run does not re-prove them on fixed20.',
+    'Acquisition/save/trail/old-state boundaries remain bounded by expression-06/furniture-06 and their fixed17 build; this run does not re-prove them on fixed24.',
     'Visual appeal and silent comprehension/safety require separate review of the actual images. Technical completion alone never closes X04/X12.',
     'No extra clothing x furniture x partner Cartesian product, automatic home-use matrix, every interrupt, audio, performance or populated-photo preservation claim.'];
 if (process.argv.includes('--plan')) {
@@ -22,7 +22,7 @@ if (process.argv.includes('--plan')) {
         fixture: 'Complete furniture-06 final native state per width, unchanged furniture poses/learning history/reservation; only four explicit expression rights, neutral expression/experience defaults, and sound OFF are injected once into an empty isolated context.',
         requiredEnvironment: ['SANSU_VISUAL_MATRIX_URL', 'SANSU_VISUAL_MATRIX_OUTPUT', 'SANSU_VISUAL_MATRIX_BUILD_SOURCE', 'SANSU_VISUAL_MATRIX_QA_ROOT', 'SANSU_VISUAL_MATRIX_FIXTURES'],
         optionalEnvironment: ['SANSU_VISUAL_MATRIX_VIEWPORT=phone|tablet (partial)', 'SANSU_VISUAL_MATRIX_HEADED=1'],
-        source: { application: 'Immutable fixed20 all inputs plus matching overlay app inputs', qa: overlay, unchangedHelpers: helpers,
+        source: { application: 'Immutable fixed24 all inputs plus matching overlay app inputs', qa: overlay, unchangedHelpers: helpers,
             external: 'qa-runtime.json pins Node/Playwright; fixture manifest pins source reports, native originals and generated states; all hashed before/after' },
         measurements: ['25 actual portrait PNGs/UI captures per width; same real rig and visible cloth groups; unchanged non-look state',
             '9 owned-model uses per width; trusted UI, selected real actor, contacts/cup identity, every actual phase PNG and frame/camera trace',
@@ -38,6 +38,14 @@ assert.equal(await fs.realpath(root), await fs.realpath(process.env.SANSU_VISUAL
 assert.notEqual(await fs.realpath(root), await fs.realpath(manifest.origin), 'Run an explicit immutable QA overlay, never live source');
 const fixtureManifestPath = path.join(fixturesRoot, 'fixtures.json'), runtimeManifestPath = path.join(root, 'qa-runtime.json');
 const fixtures = JSON.parse(await fs.readFile(fixtureManifestPath, 'utf8')), runtime = JSON.parse(await fs.readFile(runtimeManifestPath, 'utf8'));
+const casesPath = process.env.SANSU_VISUAL_MATRIX_CASES;
+const cases = casesPath ? JSON.parse(await fs.readFile(casesPath, 'utf8')) : null;
+if (cases) for (const row of cases.layouts) {
+    assert(viewports.some(viewport => viewport.name === row.name));
+    assert(row.pairs.every(key => PAIRS.some(pair => pairKey(pair) === key)));
+    assert(row.uses.every(key => USES.some(use => `${use.kind}-${use.residentId}` === key)));
+    assert.equal(new Set(row.pairs).size, row.pairs.length); assert.equal(new Set(row.uses).size, row.uses.length);
+}
 assert.equal(fixtures.version, 1); assert.equal(fixtures.acquisitionEvidence, false); assert.equal(fixtures.layouts.length, 2);
 assert(runtime.files?.length && runtime.localRuntimeImports?.length);
 assert.deepEqual(runtime.localRuntimeImports.find(entry => entry.from === overlay[0])?.to.slice().sort(),
@@ -51,7 +59,7 @@ const fixtureFiles = fixtures.layouts.flatMap(layout => [path.join(fixturesRoot,
 const evidenceFiles = fixtures.evidence.map(entry => entry.path);
 const fingerprint = async () => ({ app: await hashFiles(manifest.files.map(file => file.path)), overlayApp: await hashFiles(appFiles.map(file => path.join(root, file.relative))),
     qa: await hashFiles([...overlay, ...helpers].map(file => path.join(root, file))),
-    fixtures: await hashFiles([fixtureManifestPath, ...fixtureFiles, ...evidenceFiles]), runtime: await hashFiles([runtimeManifestPath, ...runtime.files.map(file => file.path)]) });
+    fixtures: await hashFiles([fixtureManifestPath, ...fixtureFiles, ...evidenceFiles, ...(casesPath ? [casesPath, ...cases.evidence.map(file => file.path)] : [])]), runtime: await hashFiles([runtimeManifestPath, ...runtime.files.map(file => file.path)]) });
 const initial = await fingerprint();
 const pinned = (list, file, expected) => assert.equal(list.find(entry => entry.path === file)?.sha256, expected, `Changed source: ${file}`);
 for (const file of manifest.files) pinned(initial.app, file.path, file.sha256);
@@ -60,10 +68,11 @@ for (const file of helpers) pinned(initial.qa, path.join(root, file), manifest.f
 for (const file of runtime.files) pinned(initial.runtime, file.path, file.sha256);
 for (const item of fixtures.layouts) { pinned(initial.fixtures, path.join(fixturesRoot, item.file), item.sha256); pinned(initial.fixtures, item.source.path, item.source.sha256); }
 for (const item of fixtures.evidence) pinned(initial.fixtures, item.path, item.sha256);
+if (cases) for (const item of cases.evidence) pinned(initial.fixtures, item.path, item.sha256);
 await fs.mkdir(path.dirname(out), { recursive: true }); await fs.mkdir(out);
 const report = { target, revision: manifest.revision, sourceHash: manifest.sourceHash, startedAt: new Date().toISOString(), pass: false,
     fullSpec41Passed: false, humanN: 0, applicationDataInjected: true, acquisitionEvidence: false, timingEvidenceEligible: false,
-    scope: { pairsPerViewport: PAIRS, existingPairs: EXISTING_PAIRS, usesPerViewport: USES }, fixture: fixtures, fingerprints: initial,
+    scope: { pairsPerViewport: PAIRS, existingPairs: EXISTING_PAIRS, usesPerViewport: USES, selectedCases: cases, fullMatrixInThisRun: !cases }, fixture: fixtures, fingerprints: initial,
     sources: { app: manifest.snapshot, qa: root, fixtures: fixturesRoot }, remaining, captures: [], layouts: [],
     gates: { runtimeIntegrity: 'not-run', visualAppeal: 'requires-image-review', silentComprehensionAndSafety: 'requires-human-review' } };
 const stage = page => page.getByTestId('island-stage'), panel = page => page.locator('.island-expression'), experience = page => page.getByTestId('island-experience');
@@ -71,6 +80,43 @@ const shop = page => page.locator('section[aria-label="くらしの どうぐ"]'
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 async function idle(page) { await page.waitForFunction(() => document.querySelector('.island-page')?.dataset.busy === 'false'); }
 async function press(page, row, label, scope = page) { await idle(page); await activate(button(scope, label), row.touch); }
+async function closeExpression(page, row) {
+    const control = button(panel(page), 'みじたくを とじる');
+    await page.evaluate(() => {
+        window.__visualClose = { events: [] };
+        const record = event => {
+            const button = document.querySelector('.island-expression button[aria-label="みじたくを とじる"]');
+            if (!button) return;
+            const box = button.getBoundingClientRect(), canvas = document.querySelector('[data-testid="island-stage"] canvas');
+            const hit = document.elementFromPoint(event.clientX, event.clientY);
+            window.__visualClose.events.push({ type: event.type, at: performance.now(), trusted: event.isTrusted,
+                x: event.clientX, y: event.clientY, target: event.target.tagName, hit: hit?.tagName,
+                buttonReceives: button.contains(event.target), buttonHit: button.contains(hit), box: box.toJSON(),
+                canvasBox: canvas?.getBoundingClientRect().toJSON(), scrollTop: document.querySelector('.island-page').scrollTop });
+        };
+        for (const type of ['pointerdown', 'pointerup', 'click']) document.addEventListener(type, record, { capture: true, once: true });
+    });
+    await activate(control, row.touch);
+    let navigated = true;
+    await page.waitForFunction(() => document.querySelector('.island-page')?.dataset.mode === 'experience', null, { timeout: 2000 }).catch(() => { navigated = false; });
+    const diagnosis = await page.evaluate(() => window.__visualClose);
+    diagnosis.firstTapNavigated = navigated;
+    if (!navigated) {
+        diagnosis.originalFailureImage = `${row.name}-close-${row.navigation.length}-first-tap.png`;
+        await page.screenshot({ path: path.join(out, diagnosis.originalFailureImage) });
+        // A normal scroll makes the complete button visible; no app action,
+        // camera, time or storage state is changed by the QA.
+        await control.evaluate(node => node.scrollIntoView({ block: 'center', behavior: 'instant' }));
+        await control.evaluate(node => {
+            const b = node.getBoundingClientRect();
+            if (![.1, .5, .9].every(t => node.contains(document.elementFromPoint(b.x + b.width / 2, b.y + b.height * t)))) throw new Error('Close button remains obscured after scrolling');
+        });
+        await activate(control, row.touch); await waitMode(page, 'experience');
+        diagnosis.explicitScrollRetapNavigated = true;
+    }
+    row.navigation.push(diagnosis);
+    await fs.writeFile(`${out}/${row.name}-navigation.json`, JSON.stringify(row.navigation, null, 2));
+}
 async function world(page) {
     await waitReady(page); await stage(page).scrollIntoViewIfNeeded();
     await page.waitForFunction(() => {
@@ -145,6 +191,10 @@ async function observe(page, label, phases) {
         };
         probe.observer = new MutationObserver(sample); probe.observer.observe(host, { attributes: true, attributeFilter: ['data-frame-timestamp'] });
         probe.sample = sample;
+        // An idle scene may already have rendered its last frame before this
+        // observer is installed. Read that actual canvas once without driving
+        // the app; later action/phase checks still require their real request.
+        sample();
     }, { label, phases });
 }
 async function latest(page) { return page.evaluate(() => window.__visualMatrix?.latest); }
@@ -158,13 +208,13 @@ async function saveProbe(page, row, captureCurrent = false) {
         const value = window.__visualMatrix; if (!value || value.closed) return null;
         value.closed = true; value.observer.disconnect();
         if (captureCurrent && value.latest && !value.latest.hidden && value.latest.canvas.visible) {
-            value.images.push({ key: 'portrait', frame: value.latest, png: document.querySelector('[data-testid="island-stage"] canvas').toDataURL('image/png') });
+            value.images.push({ key: 'portrait', frame: value.latest, compositorScreenshot: true });
         }
         return { label: value.label, gesture: value.gesture, frames: value.frames, images: value.images, errors: value.errors };
     }, captureCurrent);
     if (!probe) return null;
     for (const image of probe.images) {
-        const bytes = Buffer.from(image.png.split(',')[1], 'base64'); delete image.png;
+        const bytes = image.compositorScreenshot ? await stage(page).locator('canvas').screenshot() : Buffer.from(image.png.split(',')[1], 'base64'); delete image.png;
         image.file = `${row.name}-${probe.label}-${image.key}.png`; image.sha256 = sha(bytes);
         await fs.writeFile(path.join(out, image.file), bytes);
         report.captures.push({ name: `${probe.label}-${image.key}`, file: image.file, sha256: image.sha256, actual: image.frame,
@@ -227,7 +277,7 @@ async function wear(page, row, pair) {
     const current = islandFor(row.baseline, row.owner), selected = current.expression.selection.residents[pair.residentId];
     if (['original', 'scarf', 'cap'].includes(pair.look)) {
         if (selected.outfit !== null || current.experience.residents[pair.residentId].look !== pair.look) {
-            await press(page, row, 'みじたくを とじる', panel(page)); await waitMode(page, 'experience');
+            await closeExpression(page, row);
             await press(page, row, 'なかま', experience(page)); await activate(experience(page).locator(`[data-resident-id="${pair.residentId}"]`), row.touch);
             await mutate(page, row, `look-${pair.residentId}-${pair.look}`, { type: 'resident-look', residentId: pair.residentId, look: pair.look }, experience(page).locator(`[data-resident-look="${pair.look}"]`));
             await activate(experience(page).locator('[data-experience-action="expression"]'), row.touch); await waitMode(page, 'expression');
@@ -243,6 +293,11 @@ async function wear(page, row, pair) {
     }
 }
 async function portrait(page, row, pair) {
+    // The saved clothes remain on the same rig. The friends tab exposes the
+    // actual portrait camera diagnostic; expression uses a separate camera route.
+    await closeExpression(page, row);
+    await press(page, row, 'なかま', experience(page));
+    await activate(experience(page).locator(`[data-resident-id="${pair.residentId}"]`), row.touch);
     await world(page); await observe(page, pairKey(pair), false);
     const outfit = ['raincoat', 'star-beret'].includes(pair.look) ? pair.look : null;
     const frame = await waitFrame(page, frame => frame.portrait?.id === pair.residentId && frame.canvas.visible
@@ -253,6 +308,99 @@ async function portrait(page, row, pair) {
     const uiFile = `${row.name}-${pairKey(pair)}-ui.png`; await page.screenshot({ path: path.join(out, uiFile), fullPage: true });
     await check(page, row, `portrait-${pairKey(pair)}`);
     row.pairs.push({ ...pair, frame: probe.images[0], uiFile, runtimePass: true, visualReview: 'pending' });
+    await activate(experience(page).locator('[data-experience-action="expression"]'), row.touch); await waitMode(page, 'expression');
+    await check(page, row, `portrait-${pairKey(pair)}-exit`);
+}
+async function repairFurniture(page, row, use) {
+    const before = structuredClone(row.baseline), itemId = `optional-${use.kind}`;
+    const placement = page.locator('section[aria-label="おく ばしょを えらぶ"]');
+    const repair = { itemId, residentId: use.residentId, partnerId: use.partnerId, pass: false };
+    row.repairs.push(repair);
+    await press(page, row, 'おく ばしょを かえる', shop(page)); await waitMode(page, 'placement'); await world(page);
+    await check(page, row, `repair-${use.kind}-${use.residentId}-preview`);
+    const search = button(placement, 'つかえる ばしょを さがす');
+    await search.evaluate(node => {
+        const host = document.querySelector('[data-testid="island-stage"]');
+        const probe = window.__visualPlacement = { states: [] };
+        probe.observer = new MutationObserver(() => {
+            if (!probe.gesture || probe.states.length >= 1024) return;
+            const value = JSON.parse(host.dataset.furniturePlacement || 'null');
+            if (value) probe.states.push({ value, timestamp: host.dataset.frameTimestamp });
+        });
+        probe.observer.observe(host, { attributes: true, attributeFilter: ['data-furniture-placement'] });
+        node.addEventListener('click', event => { probe.gesture = { trusted: event.isTrusted, hidden: document.hidden }; }, { once: true, capture: true });
+    });
+    try {
+        await activate(search, row.touch);
+        const terminalHandle = await page.waitForFunction(({ itemId, residentId, partnerId }) => {
+            const states = window.__visualPlacement.states;
+            const matches = value => value.itemId === itemId && value.residentId === residentId && value.partnerId === partnerId;
+            const start = states.findIndex(state => matches(state.value) && state.value.status === 'searching');
+            return start >= 0 && states.slice(start + 1).find(state => matches(state.value)
+                && (state.value.status === 'no-space' || state.value.status === 'ready' && state.value.suggestion?.requestId));
+        }, { itemId, residentId: use.residentId, partnerId: use.partnerId }, { timeout: 45000 });
+        repair.terminal = await terminalHandle.jsonValue(); await terminalHandle.dispose();
+        await check(page, row, `repair-${use.kind}-${use.residentId}-search-unsaved`);
+        await page.screenshot({ path: `${out}/${row.name}-repair-${use.kind}-${use.residentId}-search.png` });
+        assert.equal(repair.terminal.value.status, 'ready', 'Explicit same-resident search must find an actual usable pose; no-space remains failed');
+        const suggestion = repair.terminal.value.suggestion;
+        await page.waitForFunction(({ itemId, kind, residentId, partnerId, suggestion }) => {
+            const host = document.querySelector('[data-testid="island-stage"]');
+            const value = JSON.parse(host.dataset.furniturePlacement || 'null'), preview = JSON.parse(host.dataset.previewState || 'null');
+            return value?.itemId === itemId && value.residentId === residentId && value.partnerId === partnerId && value.status === 'ready'
+                && preview?.id === itemId && preview.position[0] === suggestion.position.x && preview.position[2] === suggestion.position.z
+                && Math.abs(preview.rotationY - suggestion.rotation) < 1e-8
+                && value.key === JSON.stringify([itemId, kind, preview.position[0], preview.position[2], preview.rotationY, residentId, partnerId]);
+        }, { itemId, kind: use.kind, residentId: use.residentId, partnerId: use.partnerId, suggestion });
+        repair.action = { type: 'place', itemId, position: suggestion.position, rotation: suggestion.rotation };
+        await press(page, row, 'ここに おく', placement); await waitMode(page, 'furniture'); await idle(page);
+        const after = await tables(page), expected = structuredClone(before), old = islandFor(before, row.owner), island = islandFor(expected, row.owner);
+        island.revision++; island.updatedAt = islandFor(after, row.owner).updatedAt;
+        assert(Number.isSafeInteger(island.updatedAt) && island.updatedAt >= old.updatedAt);
+        const item = island.items.find(item => item.id === itemId); item.position = { ...suggestion.position };
+        item.rotation = ((suggestion.rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI); item.autoPlacementBlocked = undefined;
+        expected.islandEvents.push({ id: JSON.stringify(['island-edit-v1', row.owner, old.revision]), profileId: row.owner,
+            type: 'item_edited', timestamp: island.updatedAt, itemId, action: repair.action });
+        expected.islandEvents.sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+        await fs.writeFile(`${out}/${row.name}-repair-${use.kind}-${use.residentId}-native.json`, JSON.stringify({ before, after, expected }, null, 2));
+        assert.deepEqual(after, expected, 'Only the explicitly confirmed furniture pose and canonical edit receipt may change');
+        row.baseline = after; repair.saved = true;
+        assert.equal(await shop(page).locator(`[data-furniture-resident="${use.residentId}"]`).getAttribute('aria-pressed'), 'true');
+        if (use.partnerId) assert.equal(await shop(page).locator(`[data-furniture-partner="${use.partnerId}"]`).getAttribute('aria-pressed'), 'true');
+    } finally {
+        repair.probe = await page.evaluate(() => { const p = window.__visualPlacement; p.observer.disconnect(); return { gesture: p.gesture, states: p.states }; });
+        await fs.writeFile(`${out}/${row.name}-repair-${use.kind}-${use.residentId}.json`, JSON.stringify(repair, null, 2));
+        assert(repair.probe.gesture?.trusted && !repair.probe.gesture.hidden);
+    }
+    return repair;
+}
+async function storeNearbySwing(page, row, use) {
+    const before = structuredClone(row.baseline), itemId = 'living-swing', old = islandFor(before, row.owner);
+    const index = old.items.findIndex(item => item.id === itemId); assert(index >= 0 && old.items[index].position);
+    const placement = page.locator('section[aria-label="おく ばしょを えらぶ"]');
+    await press(page, row, 'まわりの ものを うごかす', placement); await waitMode(page, 'inventory');
+    await check(page, row, 'surroundings-inventory-unchanged');
+    await press(page, row, `ブランコ ${index + 1}を うごかす`, page.locator('section[aria-label="しまの もちもの"]'));
+    await waitMode(page, 'placement'); await world(page); await check(page, row, 'surroundings-swing-preview-unchanged');
+    await page.screenshot({ path: `${out}/${row.name}-surroundings-swing-before.png` });
+    const action = { type: 'store', itemId };
+    await press(page, row, 'いまは しまっておく', placement); await waitMode(page, 'home'); await idle(page);
+    const after = await tables(page), expected = structuredClone(before), island = islandFor(expected, row.owner);
+    island.revision++; island.updatedAt = islandFor(after, row.owner).updatedAt;
+    assert(Number.isSafeInteger(island.updatedAt) && island.updatedAt >= old.updatedAt);
+    island.items[index] = { ...island.items[index], position: undefined, autoPlacementBlocked: undefined };
+    expected.islandEvents.push({ id: JSON.stringify(['island-edit-v1', row.owner, old.revision]), profileId: row.owner,
+        type: 'item_edited', timestamp: island.updatedAt, itemId, action });
+    expected.islandEvents.sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+    await fs.writeFile(`${out}/${row.name}-surroundings-swing-native.json`, JSON.stringify({ before, after, expected, action }, null, 2));
+    assert.deepEqual(after, expected, 'Only the explicit nearby swing storage and its canonical receipt may change');
+    row.baseline = after; row.surroundings = { action, pass: true, originalPosition: old.items[index].position };
+    await press(page, row, 'もちもの'); await waitMode(page, 'inventory');
+    await press(page, row, 'くらしの どうぐを みる'); await waitMode(page, 'furniture');
+    assert.equal(await shop(page).getAttribute('data-furniture-kind'), use.kind);
+    assert.equal(await shop(page).locator(`[data-furniture-resident="${use.residentId}"]`).getAttribute('aria-pressed'), 'true');
+    if (use.partnerId) assert.equal(await shop(page).locator(`[data-furniture-partner="${use.partnerId}"]`).getAttribute('aria-pressed'), 'true');
+    await check(page, row, 'surroundings-same-actors-return');
 }
 async function furniture(page, row, use) {
     await wear(page, row, use);
@@ -261,7 +409,7 @@ async function furniture(page, row, use) {
         const partner = USES.find(value => value.kind === 'tea-table' && value.residentId === use.partnerId);
         await wear(page, row, partner);
     }
-    await press(page, row, 'みじたくを とじる', panel(page)); await waitMode(page, 'experience');
+    await closeExpression(page, row);
     await press(page, row, 'しまへ もどる', experience(page)); await waitMode(page, 'home');
     await press(page, row, 'もちもの'); await waitMode(page, 'inventory');
     await press(page, row, 'くらしの どうぐを みる'); await waitMode(page, 'furniture');
@@ -271,14 +419,30 @@ async function furniture(page, row, use) {
     await check(page, row, `${use.kind}-${use.residentId}-selected`);
     assert.equal(await shop(page).locator(`[data-furniture-resident="${use.residentId}"]`).getAttribute('aria-pressed'), 'true');
     if (use.partnerId) assert.equal(await shop(page).locator(`[data-furniture-partner="${use.partnerId}"]`).getAttribute('aria-pressed'), 'true');
-    await world(page); const label = `use-${use.kind}-${use.residentId}`; await observe(page, label, true);
-    const old = await waitFrame(page, frame => frame.canvas.visible, 'Before use frame');
-    const control = button(shop(page), 'ここで ためす');
-    await control.evaluate(node => node.addEventListener('click', event => {
-        window.__visualMatrix.gesture = { trusted: event.isTrusted, hidden: document.hidden, at: performance.now() };
-    }, { once: true, capture: true }));
-    await activate(control, row.touch);
-    const started = await waitFrame(page, frame => frame.requestId && frame.requestId !== old.requestId, 'New real use request');
+    const label = `use-${use.kind}-${use.residentId}`;
+    const start = async suffix => {
+        await world(page); await observe(page, `${label}${suffix}`, true);
+        const old = await waitFrame(page, frame => frame.canvas.visible, 'Before use frame');
+        const control = button(shop(page), 'ここで ためす');
+        await control.evaluate(node => node.addEventListener('click', event => {
+            window.__visualMatrix.gesture = { trusted: event.isTrusted, hidden: document.hidden, at: performance.now() };
+        }, { once: true, capture: true }));
+        await activate(control, row.touch);
+        return waitFrame(page, frame => frame.requestId && frame.requestId !== old.requestId, 'New real use request');
+    };
+    let started = await start(''), repair;
+    if (started.status === 'blocked' && process.env.SANSU_VISUAL_MATRIX_REPAIR === '1') {
+        await saveProbe(page, row); await check(page, row, `${label}-original-refusal-unchanged`);
+        await page.screenshot({ path: `${out}/${row.name}-${label}-original-refusal.png` });
+        row.refusals.push({ ...use, request: started });
+        try { repair = await repairFurniture(page, row, use); started = await start('-repaired'); }
+        catch (error) {
+            if (process.env.SANSU_VISUAL_MATRIX_SURROUNDINGS !== '1' || row.surroundings
+                || row.repairs.at(-1)?.terminal?.value.status !== 'no-space') throw error;
+            await storeNearbySwing(page, row, use);
+            started = await start('-after-surroundings');
+        }
+    }
     assert.equal(started.status, 'playing', `Selected resident could not use the saved fixture: ${started.reason}`);
     await waitFrame(page, frame => frame.optional?.requestId === started.requestId && frame.optional.phase === 'settled', 'Actual settled result');
     const probe = await saveProbe(page, row); const result = assertFurnitureUse(probe, use, row.rigs, started.requestId);
@@ -287,6 +451,7 @@ async function furniture(page, row, use) {
         for (const frame of probe.frames.filter(frame => frame.optional?.requestId === started.requestId)) assertRenderedPair(frame, partner, row.rigs, false);
     }
     await check(page, row, label); row.uses.push({ ...use, ...result });
+    if (repair) { repair.pass = true; repair.result = result; await fs.writeFile(`${out}/${row.name}-repair-${use.kind}-${use.residentId}.json`, JSON.stringify(repair, null, 2)); }
     await press(page, row, 'どうぐを とじる', shop(page)); await waitMode(page, 'home');
     await press(page, row, 'しまづくり'); await waitMode(page, 'experience');
     await activate(experience(page).locator('[data-experience-action="expression"]'), row.touch); await waitMode(page, 'expression');
@@ -294,6 +459,9 @@ async function furniture(page, row, use) {
 }
 let browser;
 try {
+    report.servedVersion = await (await fetch(`${target}/version.json`)).json();
+    assert.equal(report.servedVersion.revision, fixedRevision, 'Actual served app must match the frozen build');
+    assert.equal(report.servedVersion.island?.candidate, 'mystic-island-shore-garden-v7');
     const { chromium } = await import('playwright'); browser = await chromium.launch({ headless: process.env.SANSU_VISUAL_MATRIX_HEADED !== '1' });
     report.browser = { version: browser.version(), headed: process.env.SANSU_VISUAL_MATRIX_HEADED === '1' };
     const selected = viewports.filter(value => !process.env.SANSU_VISUAL_MATRIX_VIEWPORT || value.name === process.env.SANSU_VISUAL_MATRIX_VIEWPORT); assert(selected.length);
@@ -301,17 +469,38 @@ try {
         const context = await browser.newContext({ viewport: layout.viewport, hasTouch: layout.touch, reducedMotion: layout.reducedMotion, serviceWorkers: 'allow' });
         await context.tracing.start({ screenshots: true, snapshots: true, sources: false });
         const page = await context.newPage(); page.setDefaultTimeout(20000);
-        const row = { ...layout, pass: false, errors: [], pairs: [], uses: [], traces: [], db: [] }; report.layouts.push(row);
+        const selectedCases = cases?.layouts.find(value => value.name === layout.name);
+        const pairs = selectedCases ? PAIRS.filter(pair => selectedCases.pairs.includes(pairKey(pair))) : PAIRS;
+        const uses = selectedCases ? selectedCases.uses.map(key => USES.find(use => `${use.kind}-${use.residentId}` === key)) : USES;
+        const row = { ...layout, selectedCases, pass: false, errors: [], pairs: [], uses: [], useFailures: [], repairs: [], refusals: [], navigation: [], traces: [], db: [] }; report.layouts.push(row);
         page.on('pageerror', error => row.errors.push(error.message));
         try {
             await seed(page, row);
-            for (const pair of PAIRS) { await wear(page, row, pair); await portrait(page, row, pair); }
-            for (const use of USES) await furniture(page, row, use);
-            assert.equal(row.pairs.length, 25); assert.equal(row.uses.length, 9); assert.deepEqual(row.errors, []);
+            for (const pair of pairs) { await wear(page, row, pair); await portrait(page, row, pair); }
+            for (const use of uses) {
+                try { await furniture(page, row, use); }
+                catch (error) {
+                    row.useFailures.push({ ...use, error: error.stack });
+                    await saveProbe(page, row);
+                    await page.screenshot({ path: `${out}/${row.name}-use-${use.kind}-${use.residentId}-failure.png` });
+                    await check(page, row, `failed-${use.kind}-${use.residentId}-unchanged`);
+                    console.error(`${row.name} ${use.kind}/${use.residentId}: ${error.message}`);
+                    // Retain this failed case and continue the finite list through
+                    // the ordinary close route; never absorb a changed baseline.
+                    if (await page.locator('.island-page').getAttribute('data-mode') === 'placement') {
+                        await press(page, row, 'いどうを やめる', page.locator('section[aria-label="おく ばしょを えらぶ"]')); await waitMode(page, 'furniture');
+                    }
+                    await press(page, row, 'どうぐを とじる', shop(page)); await waitMode(page, 'home');
+                    await press(page, row, 'しまづくり'); await waitMode(page, 'experience');
+                    await activate(experience(page).locator('[data-experience-action="expression"]'), row.touch); await waitMode(page, 'expression');
+                    await check(page, row, `failed-${use.kind}-${use.residentId}-exit`);
+                }
+            }
+            assert.equal(row.pairs.length, pairs.length); assert.equal(row.uses.length + row.useFailures.length, uses.length); assert.deepEqual(row.errors, []);
             await check(page, row, 'final-world');
             await fs.writeFile(`${out}/${row.name}-native-final.json`, JSON.stringify(row.baseline, null, 2));
-            row.finalTables = digest(row.baseline); row.pass = true;
-            console.log(`${row.name}: 25 portrait pairs and 9 actual uses; image review remains separate`);
+            row.finalTables = digest(row.baseline); row.pass = row.useFailures.length === 0;
+            console.log(`${row.name}: ${row.pairs.length} portraits, ${row.uses.length} uses passed, ${row.useFailures.length} failed; selected scope and image review remain separate`);
         } catch (error) {
             row.error = error.stack; await saveProbe(page, row).catch(error => { row.probeError = String(error); });
             if (row.baseline) await fs.writeFile(`${out}/${row.name}-verified-baseline-failure.json`, JSON.stringify(row.baseline, null, 2));
