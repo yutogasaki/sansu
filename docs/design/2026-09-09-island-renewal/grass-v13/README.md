@@ -21,7 +21,7 @@ phone 390×844 / tablet 768×1024、両幅ともreduced motion、service worker�
 
 ここでの実ブラウザ合格は静止比較の範囲に限る。親担当の固定33検査は295 files / 3264 tests（61.03秒）と型/build/assetsがPASS。元ログは `output/playwright/island-renewal/integration-tests-33.log` / `integration-build-33.log`、SHAは集計へ保存した。lintもerror 0（既存Fast Refresh警告1）でPASS。docsもtracked 4710 filesだけをリポジトリ外へ写した検査でPASS（既存期限警告7）。これで型・lint・全unit・build/assets・docsのcore構成検査は合格。この文書作業では新しいテスト・build・ブラウザを実行していない。正式throughput、PWA/移行、normal motion、他の所持部位全組合せの既存証拠を固定33へ読み替えない。
 
-**ローカル素材の採用と、image-led統合候補の検査完了は別。** 固定33で追加の正式80runを実行中で、通常smokeも続けて確認する。旧固定26の合格を33へ転用しない。
+**ローカル素材の採用と、image-led統合候補の検査完了は別。** 固定33の[正式80run](throughput-verification.json)もPASS。正答後の入力再開P95はphone199.9ms / tablet199.8ms、通常連問の追加操作0。固定問題の自動keyboard・音off/reduced motionの計測で、通常plannerや子どもの実速度ではない。同じ固定33 sourceの[classic smoke](smoke-summary.json)も31/31 PASS。専用DEVでIsland/build-play両flagsを無効にした保護経路の確認であり、Island PWAの合格とは呼ばない。旧固定26の合格を33へ転用しない。
 
 既存のmaterialSignatureはmapのみを含み、bumpMap/scale/repeatの保持を証明しない。GPU診断は固定32へ帰属し、固定33の4行・実画像・source保持とは分ける。
 
@@ -52,3 +52,5 @@ phone 390×844 / tablet 768×1024、両幅ともreduced motion、service worker�
 | 32 GPU02 / `output/playwright/island-renewal/grass-gpu-32-02` | 材質経路の限定PASS。実drawArrays 960頂点でUSE_BUMPMAP、bumpScale約0.035、transform対角0.25/0.25/1、128² R8・16384bytes・最小31/最大197/平均50.0047のtexture bindingを観測。材質が届くことと視覚採用を分けた。 |
 
 原report/PNGは不変で保持し、[制作経緯](../direction.md)に詳細を残す。固定33の採用は芝材質の局所判断であり、これらのHOLDやsource A全体との差を消さない。
+
+main保存地点は `7e533d3`。[Verify Core](https://github.com/yutogasaki/sansu/actions/runs/34301924112)（295 files / 3264 tests）と[Docs Check](https://github.com/yutogasaki/sansu/actions/runs/34301924111)も同じcommitでPASS。これは芝v13の保存地点で、後続の屋根試作は含まない。

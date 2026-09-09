@@ -44,7 +44,7 @@
 
 ## Verification
 
-2026-09-09保存地点: 樹冠 `2ef39b7`・有限表現QA `7473e7b`・画面の重なり修正 `e7ad86f`・音のQA改善 `61ebc80` をmainへpush。`61ebc80`のVerify Core（294 suites/3255 tests）とDocs CheckもPASS。固定26sourceのclassic smoke31経路も合格。音の主音05＋停止06は[版を分けた限定記録](../../design/audits/2026-09-09-island-audio/README.md)へ集約。芝は色noiseの方式をやめ、実GPU入力の確認を経た固定33で局所採用した。固定33への旧景色・元写真の診断復元も両幅で限定PASS。新しい正式80runと通常smokeは保存地点の後も継続する。PWAや正式80runの以前の合格は各固定版へ帰属させ、今回へ転用しない。
+2026-09-09保存地点: 樹冠 `2ef39b7`・有限表現QA `7473e7b`・画面の重なり修正 `e7ad86f`・音のQA改善 `61ebc80` をmainへpush。`61ebc80`のVerify Core（294 suites/3255 tests）とDocs CheckもPASS。固定26sourceのclassic smoke31経路も合格。音の主音05＋停止06は[版を分けた限定記録](../../design/audits/2026-09-09-island-audio/README.md)へ集約。芝は色noiseの方式をやめ、実GPU入力の確認を経た固定33で局所採用した。固定33への旧景色・元写真の診断復元も両幅で限定PASS。芝v13の保存地点 `7e533d3` もVerify Core/Docs Checkが合格し、同じ固定33の正式80run（入力P95 199.9/199.8ms、追加0操作）とclassic smoke31経路もPASS。PWAや正式80runの以前の合格は各固定版へ帰属させ、今回へ転用しない。
 
 仕様36の受入項目、104件と横断索引の網羅、実際のphone/tabletの初回・成長・発見・再演・編集・再学習。verify:core、smoke、classic PWA、Island/living/PWA、正式fixed-ten。保存の失敗/競合/再送、旧データ、別profile、実offline、音off、reduced motion。最終固定版の画面とmanifest、視覚・意味/安全・runtimeの別判定。
 

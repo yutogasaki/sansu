@@ -1,0 +1,228 @@
+{
+  "scope": "Fixed33 dedicated DEV formal fixed-ten timing, 80 alternating runs. Explicit disposable existing-island and fixed-problem fixtures; not ordinary planner, visual parity, physical-device or child-behavior evidence. Human N=0.",
+  "generatedAt": "2026-09-09T02:11:49.705470+00:00",
+  "output": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-33-01",
+  "revision": "workshop-20260909-37fdc4e0b49b",
+  "manifestPath": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-33/build-source.json",
+  "manifestSHA": "d10c2e7eebf33d2bf464b6b86bb650dae025b7eceee359f6e995db389d39303e",
+  "manifestSourceHash": "37fdc4e0b49b2513f1210dc89315e3cf70afc2a2d4eb59634075fb76524b6877",
+  "manifestInputs": 1074,
+  "manifestMismatchesBefore": [],
+  "manifestMismatchesAfter": [],
+  "flags": {
+    "VITE_ISLAND_ENABLED": "true",
+    "VITE_BUILD_PLAY_ENABLED": "true"
+  },
+  "target": "http://127.0.0.1:5223",
+  "actualServed": {
+    "base": "http://127.0.0.1:5223",
+    "revision": "workshop-20260909-37fdc4e0b49b",
+    "version": "workshop-20260909-37fdc4e0b49b:896b7f34-1321-4a91-9b85-0005c05c7bd7",
+    "candidate": "mystic-island-shore-garden-v13",
+    "flags": {
+      "VITE_ISLAND_ENABLED": "true",
+      "VITE_BUILD_PLAY_ENABLED": "true"
+    },
+    "modules": [
+      {
+        "file": "served-0.js",
+        "sha256": "c792900a27e196c42df606c99b7cd580dd3e2162cedce93a1ace7b4592b37769"
+      },
+      {
+        "file": "served-1.js",
+        "sha256": "40e96d1e3756a351ce8ca0fed2ae2f2225d03d3b73a79f18f9dbc665a181068d"
+      },
+      {
+        "file": "served-2.js",
+        "sha256": "408b95305cae2d0918b8b9edfbf199d5a26e1ad54a45b68745b7abd52860daa0"
+      },
+      {
+        "file": "served-3.js",
+        "sha256": "c21ac78041af2a75e337b65688ef90dd79b27613015407afba011b3f1399d978"
+      }
+    ]
+  },
+  "runner": {
+    "cwd": "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-33",
+    "command": [
+      "/Users/yutogasaki/.hermes/node/bin/node",
+      "/Users/yutogasaki/Projects/sansu/output/island-experience/workshop-snapshot-33/tools/e2e-island-throughput.mjs"
+    ]
+  },
+  "runnerInputs": {
+    "tools/e2e-island-throughput.mjs": "9aaa1c714b9055f66d3b89c94bfa257f77b0f0be57553eb43c07b34bd963be89",
+    "tools/island-e2e-helpers.mjs": "a0292a63673289acf5dab3d4d28d3cd992801b11e64c4be7f3a610be01c97169",
+    "package.json": "1674df6b514eaf598c109e8da3b21adcb844cfa7e8a41786cf0d53ed7de26865",
+    "package-lock.json": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d"
+  },
+  "nodePath": "/Users/yutogasaki/.hermes/node/bin/node",
+  "nodeVersion": "v22.22.3",
+  "runtimePackages": {
+    "playwright": "1.58.1"
+  },
+  "browser": {
+    "name": "chromium",
+    "version": "145.0.7632.6"
+  },
+  "reportSHA": "fcbd72dc033c7d1593735c62b6c4215ff6401ed46499a0a1031856324c1a5677",
+  "rawArtifacts": {
+    "report.json": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-33-01/report.json",
+      "sha256": "fcbd72dc033c7d1593735c62b6c4215ff6401ed46499a0a1031856324c1a5677"
+    },
+    "run.log": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-33-01/run.log",
+      "sha256": "e855d46e9aecd40eceb1fe704a7301d64adb174e54ab860fcf3122eb501c70f3"
+    },
+    "preflight.json": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-33-01/preflight.json",
+      "sha256": "a325833cbcf7f64df05ef59390f9e2c3f581dd5f167a1d21eeed0cc1c3d4ccfa"
+    },
+    "postflight.json": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-33-01/postflight.json",
+      "sha256": "50fd3864550c91ba024565b97d9e721826f5e58cd1bf6b5926084d514c302b45"
+    },
+    "cleanup.json": {
+      "path": "/Users/yutogasaki/Projects/sansu/output/island-experience/throughput-33-01/cleanup.json",
+      "sha256": "2cd125baa2594318c5988f14113376a2983c1db64594299e87ca0f00a4cf640e"
+    }
+  },
+  "runs": 80,
+  "repetitions": 10,
+  "startedAt": "2026-09-09T02:02:37.455Z",
+  "finishedAt": "2026-09-09T02:10:19.324Z",
+  "runtime": {
+    "revisions": [
+      "workshop-20260909-37fdc4e0b49b"
+    ],
+    "versions": [
+      "workshop-20260909-37fdc4e0b49b:896b7f34-1321-4a91-9b85-0005c05c7bd7"
+    ],
+    "candidates": [
+      "mystic-island-shore-garden-v13"
+    ],
+    "learningCandidates": [
+      "mystic-island-learning-v2"
+    ],
+    "deliveryIds": [
+      "mystic-island-v1"
+    ],
+    "flag": "VITE_ISLAND_ENABLED=true",
+    "evidenceSource": "Actual rendered Island data attributes on the shared Vite target; Study fixture runs against the same server."
+  },
+  "fixtureId": "cold-open-fixed-ten-v1",
+  "fixtureHash": "959267b8827be99953db083012013bbbb47101ce88950d4829930220f1acaee3",
+  "islandSetup": {
+    "id": "normal-existing-island-v1",
+    "initialCompletedSets": 1,
+    "synthetic": true,
+    "scope": "A disposable existing-island fixture, not a real first-time child or an observed completed introduction. No fabricated answer logs or completed-plan receipts."
+  },
+  "sourceSnapshotStart": "55a7bf53094a8b3ec5da81b874f6d05d3eb4b37e600733ffc67ef999be9e752c",
+  "sourceSnapshotEnd": "55a7bf53094a8b3ec5da81b874f6d05d3eb4b37e600733ffc67ef999be9e752c",
+  "sourceSnapshotPathEntries": 1906,
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 122.05169173141135,
+      "islandMedianProblemsPerMinute": 287.33598451681075,
+      "allCorrectIslandToStudyRatio": 2.3542155003400222,
+      "correctOperableP95Ms": 199.89999997615814,
+      "incorrectRetryP95Ms": 198.39999997615814,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 196.25000002980232,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 197.5,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4915.949999988079,
+      "rawIslandDurationMedianMs": 2088.1500000059605
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 122.28801657921684,
+      "islandMedianProblemsPerMinute": 288.14355751079154,
+      "allCorrectIslandToStudyRatio": 2.356269776639441,
+      "correctOperableP95Ms": 199.80000001192093,
+      "incorrectRetryP95Ms": 199.29999995231628,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 195.6500000357628,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 198.19999998807907,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4906.449999988079,
+      "rawIslandDurationMedianMs": 2082.300000011921
+    }
+  ],
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "evidence": {
+    "eligible": true,
+    "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "pass": true,
+  "browserClosed": true,
+  "benchmarkTerminalExitCode": 0,
+  "serverCleanup": {
+    "checkedAt": "2026-09-09T02:11:03.487092+00:00",
+    "ownedPids": [
+      33952,
+      34028,
+      34037,
+      34041,
+      34042,
+      34044,
+      34200
+    ],
+    "ownedProcessGroups": [
+      34028,
+      34037
+    ],
+    "remainingOwnedProcesses": [],
+    "temporaryProfiles": [
+      {
+        "path": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/playwright_chromiumdev_profile-IGrUwt",
+        "exists": false
+      }
+    ],
+    "port": 5223,
+    "remainingListeners": "",
+    "serverSession": 28079,
+    "serverTerminalExitCode": 1,
+    "intentionalServerInterrupt": true,
+    "benchmarkSession": 48493,
+    "benchmarkTerminalExitCode": 0,
+    "browserClosed": true,
+    "pass": true
+  },
+  "auxiliaryPreflightCorrection": {
+    "pass": false,
+    "reason": "Auxiliary read-only preflight expected candidate literal in Welcome module, but Welcome imports it from feature.ts. Raw served modules retained. Correct values verified in feature.ts and /@vite/env; source and formal runner unchanged. Runner was launched after source SHA guard before this auxiliary assertion was corrected.",
+    "scope": "No benchmark gate was changed; final runtime assertions remain mandatory."
+  },
+  "limits": [
+    "Both lanes use automated physical-keyboard events, reduced motion and sound off. This is not normal-motion/touch input or human learning speed evidence.",
+    "Production planner slots are intentionally replaced only when creating isolated new fixed-problem plans; ordinary saved reservations are not edited.",
+    "Island writes real atomic answer receipts in the disposable profile; Study uses its existing nonrecording DEV fixture.",
+    "This evidence belongs to frozen33 only. Earlier fixed26 PASS and later live-source changes are not substituted or combined.",
+    "Human N=0, source A visual parity and overall Goal completion remain outside this result."
+  ]
+}

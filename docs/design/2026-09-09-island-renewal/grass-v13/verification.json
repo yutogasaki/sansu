@@ -12,7 +12,7 @@
       "Uniform sand band and cliff edges",
       "Overall material/shape/composition difference from source A"
     ],
-    "integratedCandidate": "VERIFICATION_PENDING; local material acceptance is not a release/full-goal decision."
+    "integratedCandidate": "Core component checks, matched visual comparison, bounded old-scene/photo compatibility, formal80 and classic smoke PASS. Overall source-A parity/Human N=0/Full Goal remain separate; current Island PWA is not claimed."
   },
   "scope": "Matched static mature-island fixture, two items stored. Fixed28 versus fixed33 default-ground material comparison only; no genuine acquisition, maximum-growth acquisition or timing evidence.",
   "fixture": {
@@ -846,8 +846,32 @@
         "logSha256": "5072f36f4c7f61c0116858a3fabd596acddf145b2e549b6ec6661375d320acb1"
       }
     },
-    "formal80": "RUNNING",
-    "ordinarySmoke": "PENDING_ROOT"
+    "formal80": {
+      "status": "PASS",
+      "summary": "throughput-verification.json",
+      "scope": "Fixed33 source DEV; 80 repeated runs, keyboard/reduced motion; not ordinary planner or child observation"
+    },
+    "ordinarySmoke": {
+      "status": "PASS",
+      "scenarios": 31,
+      "summary": "smoke-summary.json",
+      "scope": "Fixed33 source, dedicated classic DEV, both flags false; not Island PWA proof"
+    },
+    "checkpointCI": {
+      "commit": "7e533d3f7aaf9bcb18ad9a8925ec74e2d8d0be13",
+      "verifyCore": {
+        "status": "PASS",
+        "files": 295,
+        "tests": 3264,
+        "url": "https://github.com/yutogasaki/sansu/actions/runs/34301924112"
+      },
+      "docs": {
+        "status": "PASS",
+        "url": "https://github.com/yutogasaki/sansu/actions/runs/34301924111"
+      },
+      "evidence": "output/island-experience/ci-7e533d3-01/summary.json",
+      "scope": "Committed grass v13; excludes the later uncommitted roof prototype"
+    }
   },
   "separateEvidence": [
     {

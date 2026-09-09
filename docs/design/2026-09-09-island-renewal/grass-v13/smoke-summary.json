@@ -1,0 +1,96 @@
+{
+  "result": "PASS",
+  "scenarios": 31,
+  "failed": [],
+  "runnerExitCode": 0,
+  "target": "http://127.0.0.1:4173",
+  "targetScope": "Fixed33 source, classic flags dedicated DEV smoke. Not production5419 Island/v13 visual evidence or formal throughput.",
+  "revision": "workshop-20260909-37fdc4e0b49b",
+  "sourceHash": "37fdc4e0b49b2513f1210dc89315e3cf70afc2a2d4eb59634075fb76524b6877",
+  "manifestInputs": 1074,
+  "manifestFileHash": "d10c2e7eebf33d2bf464b6b86bb650dae025b7eceee359f6e995db389d39303e",
+  "harnessHash": "650ad7f0df3eafca0aed78873920cf66776b0903147a02e913afc4585dc5718a",
+  "qaClosure": "968e96eb14a2e91dc353989ef243b0f2f0a63ab28ac9b09d882b577d877d05e5",
+  "sourceStable": true,
+  "actualRuntime": {
+    "__APP_VERSION__": "workshop-20260909-37fdc4e0b49b:904c5dc1-7d8e-4318-bff3-2395205ebb39",
+    "__BUILD_REVISION__": "workshop-20260909-37fdc4e0b49b",
+    "__DELIVERY_ID__": "classic-v1",
+    "__VISUAL_LINEAGE_ID__": "legacy-mixed-v0"
+  },
+  "flags": {
+    "VITE_ISLAND_ENABLED": false,
+    "VITE_BUILD_PLAY_ENABLED": false
+  },
+  "preview5419Unchanged": true,
+  "preview5419NotStopped": true,
+  "allScenarioContextsClosed": true,
+  "browserClosed": true,
+  "ownedPidCount": 39,
+  "remainingOwnedPids": [],
+  "ownedDev4173Closed": true,
+  "profileCleanup": [
+    {
+      "path": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/playwright_chromiumdev_profile-gx7IoI",
+      "removed": true
+    }
+  ],
+  "sourceOrRunnerEdits": false,
+  "rawEvidenceExternalPath": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-smoke-33-01-v9lrg3d4",
+  "rawReportHash": "bcd36fcbf9c2bbd12272d1ca4e57ed61e38f3442d48f7128155ba3eb5103a581",
+  "captureCount": 30,
+  "limitations": [
+    "Classic DEV flags override production manifest flags intentionally.",
+    "Native fixtures occur only in isolated disposable scenario contexts; no real-user profile accessed.",
+    "No new Island learning, art parity, human N0, PWA, or formal timing claim."
+  ],
+  "error": null,
+  "evidence": {
+    "summary.json": {
+      "path": "output/island-experience/smoke-33-01/summary.json",
+      "sha256": "33888c157d6c49ea0697c3b6987c997720e69143cd8cfeac988d7339a3ddf1a4"
+    },
+    "preflight.json": {
+      "path": "output/island-experience/smoke-33-01/preflight.json",
+      "sha256": "81d49e23378fe8401c668379dd2a9198307ce3fecfeabed1dc35c928fc99129b"
+    },
+    "runtime-attestation.json": {
+      "path": "output/island-experience/smoke-33-01/runtime-attestation.json",
+      "sha256": "fa63e4b5337ee38eeb63f3640b0e46407a9794259a2e93816ce9f70e23dc88c0"
+    },
+    "qa-closure.json": {
+      "path": "output/island-experience/smoke-33-01/qa-closure.json",
+      "sha256": "c2d2ad6b1cdf9a96e93fa478485216984d21e70f3673b9112daa02c529d03447"
+    },
+    "verification.json": {
+      "path": "output/island-experience/smoke-33-01/verification.json",
+      "sha256": "ed4db1b0a79c665a2d9fcc0a5e1dcf0c6159cfb833c8f5052612507de5d16f81"
+    },
+    "owned-processes.json": {
+      "path": "output/island-experience/smoke-33-01/owned-processes.json",
+      "sha256": "3e832ff99b755311b1fd2619732718886a293f3248932e0210f647f39bb9155e"
+    },
+    "runner.log": {
+      "path": "output/island-experience/smoke-33-01/runner.log",
+      "sha256": "4688ef8c9fc7a85bc13df50a36fedc39a79f140f8e27ef845f303319ac23f3b6"
+    },
+    "diagnostics/smoke-report.json": {
+      "path": "output/island-experience/smoke-33-01/diagnostics/smoke-report.json",
+      "sha256": "bcd36fcbf9c2bbd12272d1ca4e57ed61e38f3442d48f7128155ba3eb5103a581"
+    }
+  },
+  "runnerSession": 36396,
+  "runnerPid": 36270,
+  "verificationScope": "Existing unchanged 31-scenario classic smoke only, executed from frozen33. The Island candidate v13 exists in source but is not the delivery exercised here.",
+  "warnings": [
+    "Browserslist caniuse-lite database age warning; no application/test failure."
+  ],
+  "preparation": {
+    "note": "Two external wrapper preflight mistakes were corrected before any smoke server or browser started; fixed app/runner unchanged.",
+    "path": "output/island-experience/smoke-33-qa-01/preparation-note.txt"
+  },
+  "rawObservation": {
+    "runtimeAttestation": "Actual dedicated DEV modules captured during this runner process; source and original runner checked again after terminal/cleanup. No separate post-close runtime response is claimed.",
+    "sourceStartEndEntries": 1074
+  }
+}
