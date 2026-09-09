@@ -31,7 +31,7 @@ const limitations = [
 if (process.argv.includes('--plan')) {
     console.log(JSON.stringify({ preparedOnly: true, browserStarted: false, applicationDataInjected: false, viewports, scenarios, limitations,
         requiredEnvironment: ['SANSU_ISLAND_PRODUCTION_URL', 'SANSU_ISLAND_SHARED_JOBS_OUTPUT', 'SANSU_ISLAND_BUILD_SOURCE'],
-        headedDefault: true, optionalEnvironment: { SANSU_ISLAND_SHARED_JOBS_HEADED: '0 permits headless debugging but native background remains unverified', SANSU_ISLAND_SHARED_JOBS_VIEWPORT: 'phone or tablet for a bounded diagnostic; default runs both' },
+        headedDefault: true, optionalEnvironment: { SANSU_ISLAND_SHARED_JOBS_HEADED: '0 permits headless debugging but native background remains unverified', SANSU_ISLAND_SHARED_JOBS_VIEWPORT: 'phone or tablet for a bounded diagnostic; default runs both', SANSU_ISLAND_SHARED_JOBS_DIAGNOSTIC_NATIVE: 'Explicit retained all-store JSON from a previous real run. Restored into an empty isolated context; never genuine acquisition evidence. Runs three jobs, revisit/interruption and learning return; M05 omitted.', SANSU_ISLAND_SHARED_JOBS_DIAGNOSTIC_CORE: '1 requires diagnostic native restoration and runs only driftwood carry, real self placement, gather, real self placement, illuminate and one saved carry-memory revisit. No acquisition, interruptions, capacity or learning-return pass.' },
         sourceRule: 'Fresh output only; immutable manifest files and exact QA dependencies fingerprinted before and after.',
         instrumentation: ['readonly all-store native IDB snapshots', 'transparent native put/add observer for shared receipts', 'MutationObserver samples of rendered host plus exact current canvas PNG', 'driver focus-emulation true to false without dependency file changes'],
         mutationRule: 'Only actual UI buttons, native pointer/key input and tab visibility. No page imports of app modules, app function calls, geometry/progress injection or persistence fault injection.',
@@ -44,15 +44,36 @@ assert(target && out && process.env.SANSU_ISLAND_BUILD_SOURCE, 'Set frozen produ
 const manifest = JSON.parse(await fs.readFile(process.env.SANSU_ISLAND_BUILD_SOURCE, 'utf8'));
 assert(manifest.revision && manifest.sourceHash && manifest.files?.length, 'Actual frozen source manifest required');
 const sha = value => createHash('sha256').update(value).digest('hex');
+const diagnosticPath = process.env.SANSU_ISLAND_SHARED_JOBS_DIAGNOSTIC_NATIVE;
+const diagnosticBytes = diagnosticPath ? await fs.readFile(diagnosticPath) : undefined;
+const diagnosticNative = diagnosticBytes ? JSON.parse(diagnosticBytes) : undefined;
+const diagnosticCore = process.env.SANSU_ISLAND_SHARED_JOBS_DIAGNOSTIC_CORE === '1';
+assert(!diagnosticCore || diagnosticNative, 'The short core mode requires an explicitly declared restored native fixture');
 const qaFiles = ['tools/e2e-island-shared-jobs.mjs', 'tools/island-e2e-helpers.mjs', 'tools/island-learning-checks.mjs', 'tools/island-learning-fixtures.mjs'];
 const fingerprint = async () => Promise.all([...manifest.files.map(file => file.path), ...qaFiles].map(async file => ({ path: file, sha256: sha(await fs.readFile(file)) })));
 const initialSource = await fingerprint();
 assert.deepEqual(initialSource.slice(0, manifest.files.length), manifest.files.map(({ path: file, sha256 }) => ({ path: file, sha256 })));
 await fs.mkdir(path.dirname(out), { recursive: true }); await fs.mkdir(out);
 const report = { target, revision: manifest.revision, sourceHash: manifest.sourceHash, startedAt: new Date().toISOString(), pass: false,
-    fullSpec38Passed: false, humanN: 0, applicationDataInjected: false, timingEvidenceEligible: false, scenarios, limitations,
+    fullSpec38Passed: false, humanN: 0, applicationDataInjected: Boolean(diagnosticNative), timingEvidenceEligible: false, scenarios, limitations,
     gates: { runtimeIntegrity: 'not-run', visualAppeal: 'requires-human-review', silentComprehensionAndSafety: 'requires-human-review' },
     fingerprints: initialSource, captures: [], layouts: [] };
+if (diagnosticNative) {
+    report.diagnosticFixture = { path: diagnosticPath, sha256: sha(diagnosticBytes),
+        scope: 'Retained real-run native data restored into a fresh context. Current interactions are real; this is not empty-DB earning or a full M05 run.', omitted: ['M01/M02 fresh earning', 'M05 12-memory capacity'] };
+}
+if (diagnosticCore) {
+    report.scenarios = ['Declared original 63-answer native restoration; no new earning', 'Actual carry -> self reposition -> gather -> self reposition/rotate -> illuminate', 'Self restore rotation -> existing carry memory revisit, read-only all 17 stores'];
+    report.diagnosticFixture.omitted.push('M03 interruptions/reload/optional-return negative paths', 'M04 other resident memories/rename/storage/reload', 'M12 learning return');
+    report.diagnosticCore = { status: 'PENDING', planningEvidence: ['shared-jobs-carry-destinations09', 'shared-jobs-gather-light-diagnostic10', 'shared-jobs-memory-plan11'] };
+}
+const fingerprintDist = async () => {
+    if (!manifest.dist) return null;
+    const files = await Promise.all(manifest.dist.map(async file => ({ relative: file.relative,
+        sha256: sha(await fs.readFile(path.join(manifest.distDirectory, file.relative))) })));
+    assert.deepEqual(files, manifest.dist, 'Retained production dist must match the immutable handoff');
+    return files;
+};
 const stage = page => page.getByTestId('island-stage');
 const shared = page => page.locator('section[aria-label="かざりと なかまの きおく"]');
 const displayIds = ['display-1', 'display-2', 'display-3'];
@@ -180,7 +201,25 @@ async function capture(page, row, name) {
         sharedCandidate: await stage(page).getAttribute('data-shared-candidate'),
         scene: learning ? null : await scene(page), sceneOmittedReason: learning ? 'Learning intentionally hides its retained canvas; no world screenshot is claimed.' : undefined });
 }
-async function goHome(page, touch) { await press(page, 'しまへ', touch); await waitMode(page, 'home'); await waitWorld(page); }
+async function goHome(page, touch) {
+    // Learning closes onto its real caller; optional work then has its own
+    // home action. Do not replace either gesture with a direct URL change.
+    if (await page.locator('.island-page').getAttribute('data-mode') === 'learning') {
+        const [route, search = ''] = new URL(page.url()).hash.split('?');
+        const query = new URLSearchParams(search);
+        query.delete('learn'); query.delete('start'); query.delete('profile');
+        const caller = route + (query.size ? `?${query}` : '');
+        await press(page, 'とじる', touch);
+        await page.waitForURL(url => url.hash === caller);
+        await page.waitForFunction(() => {
+            const mode = document.querySelector('.island-page')?.getAttribute('data-mode');
+            return mode && mode !== 'learning';
+        });
+        await waitReady(page);
+    }
+    if (await page.locator('.island-page').getAttribute('data-mode') !== 'home') await press(page, 'しまへ', touch);
+    await waitMode(page, 'home'); await waitWorld(page);
+}
 async function openWorkshop(page, touch) { await press(page, 'おためしの いりえ', touch); await waitMode(page, 'workshop'); await idle(page); await waitWorld(page); }
 async function openShared(page, touch, slot) {
     await press(page, 'かざりと きおく', touch); await waitMode(page, 'shared');
@@ -254,11 +293,15 @@ async function armProbe(page, label) {
     await page.evaluate(label => {
         window.__sharedJobProbe?.observer?.disconnect();
         const host = document.querySelector('[data-testid="island-stage"]');
-        const probe = window.__sharedJobProbe = { label, started: performance.now(), closed: false, frames: [], images: [], writes: [] };
-        const images = new Set(); let last = '', carryOrigin;
+        const initialJob = host.getAttribute('data-shared-job');
+        const baseline = { frameTimestamp: Number(host.dataset.frameTimestamp), jobId: initialJob ? JSON.parse(initialJob)?.id : null };
+        if (!Number.isFinite(baseline.frameTimestamp) || baseline.frameTimestamp <= 0) throw new Error('An actual baseline draw timestamp is required');
+        const probe = window.__sharedJobProbe = { label, started: performance.now(), baseline, closed: false, frames: [], images: [], writes: [] };
+        const images = new Set(), carryOrigins = new Map(); let last = baseline.frameTimestamp;
         const sample = () => {
             if (probe.closed || probe.frames.length >= 6000) return;
-            const timestamp = host.dataset.frameTimestamp; if (!timestamp || timestamp === last) return; last = timestamp;
+            const timestamp = Number(host.dataset.frameTimestamp);
+            if (!Number.isFinite(timestamp) || timestamp <= last) return; last = timestamp;
             const read = key => { const value = host.getAttribute(key); return value ? JSON.parse(value) : null; };
             const canvas = host.querySelector('canvas'), box = canvas?.getBoundingClientRect(), job = read('data-shared-job');
             const cx = box ? box.x + box.width / 2 : -1, cy = box ? box.y + box.height / 2 : -1;
@@ -269,43 +312,51 @@ async function armProbe(page, label) {
                     && box.bottom > 0 && box.right > 0 && box.top < innerHeight && box.left < innerWidth),
                     centerVisible: cx > 0 && cy > 0 && cx < innerWidth && cy < innerHeight && document.elementFromPoint(cx, cy) === canvas } };
             probe.frames.push(frame);
-            if (!job || !frame.canvas.visible || document.hidden) return;
+            if (!job?.id || job.id === baseline.jobId || !frame.canvas.visible || document.hidden) return;
             const keys = [job.phase];
             if (job.phase === 'pickup-contact' && job.gripDistances?.every(distance => distance < .045)) keys.push('actual-both-hands');
             if (job.phase === 'carrying') {
-                carryOrigin ??= job.targetPosition;
+                if (!carryOrigins.has(job.id)) carryOrigins.set(job.id, job.targetPosition);
+                const carryOrigin = carryOrigins.get(job.id);
                 if (Math.hypot(...job.targetPosition.map((n, i) => n - carryOrigin[i])) > .3) keys.push('carrying-along-route');
             }
             if (job.phase === 'hands-released' && job.gripDistances?.every(distance => distance > .06)) keys.push('actual-hands-released');
             if (job.light) keys.push('actual-light-surface-receiver');
             if (job.emitted) keys.push('visible-result-emitted');
-            for (const key of keys) if (!images.has(key) && probe.images.length < 40) {
-                images.add(key); probe.images.push({ key, frame, png: canvas.toDataURL('image/png') });
+            for (const key of keys) if (!images.has(`${job.id}:${key}`) && probe.images.length < 40) {
+                images.add(`${job.id}:${key}`); probe.images.push({ actionId: job.id, key, frame, png: canvas.toDataURL('image/png') });
             }
         };
         const observer = new MutationObserver(sample); observer.observe(host, { attributes: true, attributeFilter: ['data-frame-timestamp'] });
-        probe.observer = observer; sample();
+        // Arming is not a draw. The previous default framebuffer may already
+        // have been discarded, even though its composited scene is visible.
+        probe.observer = observer;
     }, label);
 }
 async function saveProbe(page, row, label) {
     const probe = await page.evaluate(() => {
         const value = window.__sharedJobProbe; if (!value) return null;
         value.closed = true; value.observer.disconnect();
-        return { label: value.label, frames: value.frames, images: value.images, writes: value.writes, visibility: window.__sharedJobVisibility };
+        return { label: value.label, baseline: value.baseline, frames: value.frames, images: value.images, writes: value.writes, visibility: window.__sharedJobVisibility };
     });
     if (!probe) return;
-    const images = probe.images; delete probe.images;
+    const images = probe.images.map(image => ({ ...image, bytes: Buffer.from(image.png.split(',')[1], 'base64'),
+        file: `${row.name}-${label}-${sha(image.actionId).slice(0, 12)}-${image.key}.png` }));
+    delete probe.images;
+    probe.imageEvidence = images.map(image => ({ file: image.file, key: image.key, actionId: image.actionId,
+        bytes: image.bytes.length, sha256: sha(image.bytes), frame: image.frame }));
     const file = `${row.name}-${label}-trace.json`;
     await fs.writeFile(`${out}/${file}`, JSON.stringify(probe, null, 2));
     row.traces.push({ label, file, frames: probe.frames.length, writes: probe.writes.length });
     for (const image of images) {
-        const file = `${row.name}-${label}-${image.key}.png`, bytes = Buffer.from(image.png.split(',')[1], 'base64');
-        assert(bytes.length > 10000, `${file}: an actual renderer image is required`);
+        const { file, bytes } = image;
         await fs.writeFile(`${out}/${file}`, bytes);
         report.captures.push({ name: label, file, sha256: sha(bytes), frameKind: 'actual-rendered-canvas',
             revision: manifest.revision, delivery: row.metadata.delivery, candidate: row.metadata.candidate, viewport: row.viewport,
-            reducedMotion: row.currentMotion, actual: image.frame });
+            reducedMotion: row.currentMotion, actionId: image.actionId, actual: image.frame });
     }
+    // Every original image and its frame metadata must survive the first FAIL.
+    for (const image of images) assert(image.bytes.length > 10000, `${image.file}: an actual renderer image is required`);
     return probe;
 }
 async function waitJob(page, predicate, label, timeout = 45000) {
@@ -325,7 +376,7 @@ async function stop(page, row, label = 'うごきを とめる') {
     await waitJob(page, job => job === null, 'explicit stop restores idle');
 }
 async function chooseResident(page, row, species) {
-    const control = shared(page).locator('.island-shared-residents').getByRole('button', { name: new RegExp(`^${speciesNames[species]}`) });
+    const control = shared(page).locator('.island-shared-residents button[aria-pressed]').filter({ hasText: new RegExp(`^${speciesNames[species]}`) });
     assert.equal(await control.count(), 1, `${species}: only an actually available resident can be selected`);
     await activate(control, row.touch); await idle(page);
 }
@@ -405,12 +456,18 @@ async function runJob(page, row, species, label, { optionalReturn = true } = {})
     }
     const saved = (await scene(page)).displays.find(display => display.displayId === request.destination.displayId);
     assert(saved && !saved.carried && saved.targetKey === request.target.targetKey);
+    const frameBeforeScreenshot = Number(await stage(page).getAttribute('data-frame-timestamp'));
+    await capture(page, row, `${label}-result`);
+    const resultScreenshot = report.captures.at(-1), captured = resultScreenshot.scene.displays.find(display => display.displayId === request.destination.displayId);
+    resultScreenshot.savedRequestId = request.requestId;
+    resultScreenshot.frameAroundScreenshot = { before: frameBeforeScreenshot, after: Number(await stage(page).getAttribute('data-frame-timestamp')) };
+    assert(captured && !captured.carried && captured.targetUuid === saved.targetUuid && captured.targetKey === request.target.targetKey
+        && captured.displayKey === saved.displayKey, 'The browser result screenshot retains the actual saved object and pose');
     const probe = await saveProbe(page, row, label);
     const source = initial.displays.find(display => display.targetKey === request.target.targetKey);
     const evidence = validateJob(probe, result.island.sharedMemories.activeRequest, saved, source?.targetUuid, request.source.kind === 'tray');
     await checkDB(page, row, label, before, ['shared']);
     row.jobs.push({ label, request: result.island.sharedMemories.activeRequest, selection, ...evidence, pass: true });
-    await capture(page, row, `${label}-result`);
     return result.island.sharedMemories.activeRequest;
 }
 
@@ -465,8 +522,7 @@ async function interruption(page, row, kind, species, phase) {
         await goHome(page, row.touch); await openShared(page, row.touch, 'display-1');
     } else if (kind === 'reload') {
         await saveProbe(page, row, `${label}-before-reload`); await page.reload();
-        if (await page.locator('.island-page[data-mode="learning"]').count()) { await waitLearningInput(page, reservation); await goHome(page, row.touch); }
-        else await waitWorld(page);
+        await waitReady(page); await goHome(page, row.touch);
         await openShared(page, row.touch, 'display-1');
     } else await press(page, 'いったん とめる', row.touch, shared(page));
     await waitWorld(page); await waitJob(page, job => job === null, `${label} restores actual objects`);
@@ -518,6 +574,79 @@ async function showSource(page, row, index) {
         assert(legal, 'Real preview arrow controls must find a legal placement; no helper or geometry injection is used');
     }
     return (await scene(page)).preview[0];
+}
+async function movePreviewControls(page, row, destination, rotation) {
+    const initial = (await scene(page)).preview[0]; assert(initial, 'Actual placement preview required');
+    const origin = JSON.parse(initial.displayKey), realActions = [];
+    for (const axis of ['x', 'z']) {
+        const amount = (destination[axis] - origin.position[axis]) / .25, count = Math.round(Math.abs(amount));
+        assert(Math.abs(Math.abs(amount) - count) < 1e-6, 'The position must be reachable by real quarter-step controls');
+        const label = axis === 'x' ? amount < 0 ? 'ひだりへ' : 'みぎへ' : amount < 0 ? 'おくへ' : 'てまえへ';
+        for (let i = 0; i < count; i++) {
+            await press(page, label, row.touch, shared(page));
+            const expected = origin.position[axis] + Math.sign(amount) * .25 * (i + 1);
+            await page.waitForFunction(({ axis, expected }) => {
+                const raw = document.querySelector('[data-testid="island-stage"]')?.getAttribute('data-shared-preview');
+                const display = raw && JSON.parse(raw)[0], position = display && JSON.parse(display.displayKey).position;
+                return position && Math.abs(position[axis] - expected) < 1e-6;
+            }, { axis, expected });
+        }
+        realActions.push({ label, count });
+    }
+    const quarters = ((rotation - origin.rotation) / (Math.PI / 2) + 4) % 4, turns = Math.round(quarters);
+    assert(Math.abs(quarters - turns) < 1e-6, 'Real quarter rotations required');
+    for (let i = 0; i < turns; i++) {
+        await press(page, 'まわす', row.touch, shared(page));
+        const expected = origin.rotation + (i + 1) * Math.PI / 2;
+        await page.waitForFunction(expected => {
+            const raw = document.querySelector('[data-testid="island-stage"]')?.getAttribute('data-shared-preview');
+            const display = raw && JSON.parse(raw)[0], rotation = display && JSON.parse(display.displayKey).rotation;
+            return Number.isFinite(rotation) && Math.abs(Math.atan2(Math.sin(rotation - expected), Math.cos(rotation - expected))) < 1e-6;
+        }, expected);
+    }
+    realActions.push({ label: 'まわす', count: turns });
+    return { origin, realActions };
+}
+async function selfReposition(page, row, label, destination, rotation) {
+    await stop(page, row); await selectSlot(page, row.touch, 'display-1');
+    const pending = (await readNative(page)).island.sharedMemories.activeRequest;
+    if (pending?.status === 'prepared') {
+        const beforeCancel = await tables(page);
+        await press(page, 'この おねがいを やめる', row.touch, shared(page));
+        await waitNative(page, island => !island.sharedMemories.activeRequest, `${label} explicit request cancellation`);
+        await checkDB(page, row, `${label}-explicit-cancel`, beforeCancel, ['shared']);
+    }
+    const before = await tables(page), source = (await scene(page)).displays.find(display => display.displayId === 'display-1');
+    assert(source && !source.carried, 'The saved actual displayed object is needed for self placement');
+    await press(page, 'ばしょを かえる', row.touch, shared(page));
+    await page.locator('.island-shared-preview').waitFor();
+    const movement = await movePreviewControls(page, row, destination, rotation);
+    assert(await button(shared(page), 'じぶんで おく').isEnabled(), 'The planned candidate must be legal through real UI');
+    await checkDB(page, row, `${label}-preview-read-only`, before);
+    const preview = (await scene(page)).preview[0], expected = JSON.parse(preview.displayKey);
+    await armProbe(page, `${label}-self-place`);
+    await press(page, 'じぶんで おく', row.touch, shared(page)); await waitWorld(page);
+    await waitNative(page, island => {
+        const display = island.sharedMemories.displays['display-1'];
+        return island.revision > before.islands[0].revision && display.position.x === expected.position.x && display.position.z === expected.position.z && display.rotation === expected.rotation;
+    }, `${label} actual self placement saved`);
+    await waitJob(page, job => job?.phase === 'settled', `${label} real placement completed`);
+    const after = await checkDB(page, row, `${label}-self-place-only-shared`, before, ['shared']);
+    const old = before.islands[0].sharedMemories, current = after.islands[0].sharedMemories;
+    const expectedShared = structuredClone(old);
+    expectedShared.displays['display-1'] = { ...expectedShared.displays['display-1'], position: expected.position, rotation: expected.rotation, placedAt: current.displays['display-1'].placedAt };
+    assert.deepEqual(current, expectedShared, 'Self placement changes only the selected display pose/time, preserving memories, requests and other displays');
+    const saved = (await scene(page)).displays.find(display => display.displayId === 'display-1');
+    assert.equal(saved.targetUuid, source.targetUuid, 'Self placement retains the same actual object');
+    await capture(page, row, `${label}-self-place-result`);
+    const probe = await saveProbe(page, row, `${label}-self-place`), frames = probe.frames.filter(frame => frame.job);
+    assert(frames.some(frame => frame.job.phase === 'person-placing'), 'Observe actual self placement');
+    assert(frames.every(frame => frame.job.targetUuid === source.targetUuid), 'The original object persists through every placement frame');
+    const emitted = frames.find(frame => frame.job.emitted), write = probe.writes.find(write => write.store === 'islands');
+    assert(emitted && write && emitted.ms <= write.ms && emitted.visibility === 'visible' && emitted.canvas.visible && emitted.canvas.centerVisible,
+        'An actually visible placement result precedes the native save');
+    row.selfPlacements ??= [];
+    row.selfPlacements.push({ label, targetUuid: source.targetUuid, from: movement.origin, to: expected, realActions: movement.realActions, emittedMs: emitted.ms, nativeWriteMs: write.ms, pass: true });
 }
 async function memoryRevisit(page, row, memory, label, { store = false } = {}) {
     await stop(page, row); await selectSlot(page, row.touch, 'display-1');
@@ -605,7 +734,7 @@ async function prepareEarnedIsland(page, row) {
     row.owner = native.plan.profileId;
     while (native.island.completedSets < 1) { native = (await answerUI(page, native.plan, { touch: row.touch, dev: false })).state; assert(++answers < 200); }
     await goHome(page, row.touch); await openShared(page, row.touch, 'display-1'); await showSource(page, row, 0);
-    assert.equal(await shared(page).locator('.island-shared-residents').getByRole('button', { name: /^キツネ/ }).count(), 0, 'First earned section cannot use an unavailable fox');
+    assert.equal(await shared(page).locator('.island-shared-residents button[aria-pressed]').filter({ hasText: /^キツネ/ }).count(), 0, 'First earned section cannot use an unavailable fox');
     const unavailable = await tables(page); await press(page, 'まなぶ', row.touch, shared(page)); await waitLearningInput(page, native.plan);
     unchanged(unavailable, await tables(page));
     while (native.island.completedSets < 4 || (native.island.growth?.expansionLevel ?? 0) < 1) {
@@ -623,6 +752,37 @@ async function prepareEarnedIsland(page, row) {
     await capture(page, row, 'earned-three-residents-and-actual-specimens');
 }
 
+async function restoreDiagnostic(page, row) {
+    assert.equal(diagnosticNative.profiles.length, 1); assert.equal(diagnosticNative.islands.length, 1);
+    assert.equal(diagnosticNative.islandPhotoBlobs.length, 0, 'This narrow fixture restorer cannot synthesize retained Blob bytes');
+    const checkPlain = value => {
+        if (!value || typeof value !== 'object') return;
+        assert(!('nativeDate' in value) && !('nativeBinary' in value) && !(value.mime && value.sha256), 'Encoded non-JSON native values need their original bytes; do not fake them');
+        for (const child of Object.values(value)) checkPlain(child);
+    };
+    checkPlain(diagnosticNative);
+    const empty = await tables(page); assert.equal(empty.profiles.length, 0); assert.equal(empty.islands.length, 0); assert.equal(empty.logs.length, 0);
+    assert.deepEqual(Object.keys(empty).sort(), Object.keys(diagnosticNative).sort());
+    await page.evaluate(async data => {
+        const open = indexedDB.open('SansuDatabase');
+        const db = await new Promise((resolve, reject) => { open.onsuccess = () => resolve(open.result); open.onerror = () => reject(open.error); });
+        try {
+            const tx = db.transaction(Object.keys(data), 'readwrite');
+            const done = new Promise((resolve, reject) => { tx.oncomplete = resolve; tx.onabort = () => reject(tx.error); tx.onerror = () => reject(tx.error); });
+            for (const [name, rows] of Object.entries(data)) { const store = tx.objectStore(name); store.clear(); for (const value of rows) store.put(value); }
+            await done;
+            localStorage.setItem('sansu_active_profile', data.profiles[0].id);
+        } finally { db.close(); }
+    }, diagnosticNative);
+    assert.deepEqual(await tables(page), diagnosticNative, 'The declared restored native state must match every original store exactly');
+    row.fixture = { ...report.diagnosticFixture, restoredTables: digestTables(diagnosticNative),
+        historicalAnswers: diagnosticNative.islandEvents.filter(event => event.type === 'answer').length };
+    row.owner = diagnosticNative.profiles[0].id;
+    await page.reload(); await waitReady(page); await goHome(page, row.touch); await openShared(page, row.touch, 'display-1');
+    assert.deepEqual((await readNative(page)).plan, diagnosticNative.islandPlans.find(plan => plan.id === diagnosticNative.islands[0].pendingPlanId));
+    await capture(page, row, 'restored-diagnostic-three-residents-and-specimens');
+}
+
 const { chromium } = await import('playwright');
 const require = createRequire(import.meta.url);
 const { CRSession } = require(path.join(path.dirname(require.resolve('playwright-core/package.json')), 'lib/server/chromium/crConnection.js'));
@@ -638,6 +798,10 @@ CRSession.prototype.send = function (method, params) {
 };
 let browser;
 try {
+    report.initialDist = await fingerprintDist();
+    const versionResponse = await fetch(`${target}/version.json`, { cache: 'no-store' }); assert(versionResponse.ok);
+    report.actualVersion = await versionResponse.json(); assert.equal(report.actualVersion.revision, manifest.revision);
+    if (manifest.flags?.revision) assert.deepEqual(report.actualVersion, manifest.flags);
     browser = await chromium.launch({ headless: process.env.SANSU_ISLAND_SHARED_JOBS_HEADED === '0' });
     report.browser = { version: browser.version(), headed: process.env.SANSU_ISLAND_SHARED_JOBS_HEADED !== '0' };
     const selectedViewports = viewports.filter(row => !process.env.SANSU_ISLAND_SHARED_JOBS_VIEWPORT || row.name === process.env.SANSU_ISLAND_SHARED_JOBS_VIEWPORT);
@@ -648,20 +812,50 @@ try {
         const page = await context.newPage(); page.setDefaultTimeout(25000);
         const row = { ...layout, currentMotion: layout.reducedMotion, pass: false, errors: [], databaseChecks: [], learningReturns: [], jobs: [], memories: [], placementTrials: [], optionalReturns: [], cancellations: [], traces: [] };
         report.layouts.push(row); page.on('pageerror', error => row.errors.push(error.message));
+        if (diagnosticNative && process.env.SANSU_ISLAND_SHARED_JOBS_CAPTURE_EXCEPTIONS === '1') {
+            const debuggerSession = await context.newCDPSession(page); row.caughtExceptionDiagnostic = [];
+            debuggerSession.on('Debugger.paused', event => {
+                row.caughtExceptionDiagnostic.push({ reason: event.reason, data: event.data,
+                    frames: event.callFrames.slice(0, 6).map(frame => ({ functionName: frame.functionName, location: frame.location, url: frame.url })) });
+                void debuggerSession.send('Debugger.resume').catch(error => { row.debuggerResumeFailure = error.message; });
+            });
+            await debuggerSession.send('Debugger.enable'); await debuggerSession.send('Debugger.setPauseOnExceptions', { state: 'all' });
+        }
         try {
             await page.goto(`${target}/#/island`); await waitReady(page); row.metadata = await runtimeMetadata(page);
             assert.equal(row.metadata.revision, manifest.revision); console.log(`${row.name}: actual onboarding and earned resident unlock`);
-            await prepareEarnedIsland(page, row);
+            if (diagnosticNative) await restoreDiagnostic(page, row); else await prepareEarnedIsland(page, row);
             const firstMemories = [];
-            for (const [index, id] of ['driftwood', 'seaglass', 'striped-shell'].entries()) {
+            for (const [index, id] of (diagnosticNative ? ['driftwood'] : ['driftwood', 'seaglass', 'striped-shell']).entries()) {
                 await showSource(page, row, index);
+                if ((!diagnosticNative || diagnosticCore || process.env.SANSU_ISLAND_SHARED_JOBS_ALTERNATE_PREVIEW === '1') && index === 0) {
+                    const before = await tables(page), initial = (await scene(page)).preview[0];
+                    const { realActions } = await movePreviewControls(page, row, { x: -3.05, z: .65 }, 0);
+                    assert(await button(shared(page), 'じぶんで おく').isEnabled(), 'One declared alternative must be legal through the real preview UI');
+                    row.alternativePreview = { from: initial, to: (await scene(page)).preview[0], realActions, candidateCount: 1,
+                        basis: 'Retained-controller diagnostic09, 46 legal destinations in a bounded grid, first complete plan at candidate37. Existing safety rules unchanged.' };
+                    await checkDB(page, row, 'single-alternative-preview-no-save', before);
+                }
                 for (const species of ['otter', 'rabbit', 'fox']) {
+                    if (diagnosticCore && species === 'rabbit') await selfReposition(page, row, 'before-gather', { x: -3.05, z: 1.15 }, 0);
+                    if (diagnosticCore && species === 'fox') await selfReposition(page, row, 'before-illuminate', { x: -3.05, z: .65 }, Math.PI);
                     console.log(`${row.name}: ${id} / ${species}`);
                     const result = await runJob(page, row, species, `${id}-${species}`, { optionalReturn: species !== 'rabbit' || id === 'driftwood' });
                     if (id === 'driftwood') firstMemories.push((await readNative(page)).island.sharedMemories.memories.find(memory => memory.memoryKey === result.memoryKey));
                 }
             }
-            assert.equal((await readNative(page)).island.sharedMemories.memories.length, 9);
+            assert.equal((await readNative(page)).island.sharedMemories.memories.length, diagnosticNative ? 3 : 9);
+            if (diagnosticCore) {
+                console.log(`${row.name}: three actual jobs saved; preparing one read-only carry-memory revisit`);
+                await fs.writeFile(`${out}/progress.json`, JSON.stringify(report, null, 2));
+                await selfReposition(page, row, 'before-carry-memory', { x: -3.05, z: .65 }, 0);
+                await memoryRevisit(page, row, firstMemories[0], 'core-remember-carry');
+                assert.equal(row.jobs.length, 3); assert.equal(row.memories.length, 1);
+                assert.deepEqual(row.errors, [], 'No browser exceptions in the bounded actual core');
+                row.coreDiagnostic = { pass: true, jobs: 3, realSelfPlacements: row.selfPlacements.length, carryMemoryRevisits: 1, otherScenarios: 'NOT_RUN' };
+                row.pass = true;
+                continue;
+            }
             // Repeat an existing combination and check the actual first receipt.
             await showSource(page, row, 0); const previousFacts = (await readNative(page)).island.sharedMemories.memories;
             await runJob(page, row, 'otter', 'repeat-same-memory');
@@ -670,7 +864,7 @@ try {
             for (const memory of firstMemories) await memoryRevisit(page, row, memory, `remember-${memory.residentId}`);
             // A document restart must preserve the immutable memory key and require
             // an explicit memory gesture; UUID equality is only within a scene lifetime.
-            await page.reload(); await waitLearningInput(page); await goHome(page, row.touch); await openShared(page, row.touch, 'display-1');
+            await page.reload(); await waitReady(page); await goHome(page, row.touch); await openShared(page, row.touch, 'display-1');
             assert.equal((await scene(page)).job, null);
             await memoryRevisit(page, row, firstMemories[0], 'remember-after-reload-and-storage', { store: true });
             await showSource(page, row, 0); await runJob(page, row, 'otter', 'restore-existing-memory-target');
@@ -681,10 +875,15 @@ try {
             for (const [kind, species, phase] of cancellationCases) {
                 console.log(`${row.name}: ${kind} during ${species}/${phase}`); await interruption(page, row, kind, species, phase);
             }
-            const beforeWorks = await tables(page); await setupWorks(page, row); await checkDB(page, row, 'two-actual-snapshot-works', beforeWorks, ['workshop']);
-            await showSource(page, row, 3);
-            for (const species of ['otter', 'rabbit', 'fox']) await runJob(page, row, species, `work-A-${species}`);
-            await shelfCapacity(page, row);
+            row.coreBeforeShelf = { jobs: row.jobs.length, memoryRevisits: row.memories.length, cancellations: row.cancellations.length, learningReturns: row.learningReturns.length };
+            console.log(JSON.stringify({ name: row.name, checkpoint: 'three-jobs-revisit-interruption-before-M05', ...row.coreBeforeShelf, diagnosticFixture: Boolean(diagnosticNative) }));
+            await fs.writeFile(`${out}/progress.json`, JSON.stringify(report, null, 2));
+            if (!diagnosticNative) {
+                const beforeWorks = await tables(page); await setupWorks(page, row); await checkDB(page, row, 'two-actual-snapshot-works', beforeWorks, ['workshop']);
+                await showSource(page, row, 3);
+                for (const species of ['otter', 'rabbit', 'fox']) await runJob(page, row, species, `work-A-${species}`);
+                await shelfCapacity(page, row);
+            }
             const finalOptional = await tables(page), plan = (await readNative(page)).plan;
             await press(page, 'まなぶ', row.touch, shared(page)); await resumeLearningAnswer(page, row, 'full-shared-flow', finalOptional, plan);
             assert.deepEqual(row.errors, [], 'No browser exceptions during the real critical path');
@@ -696,21 +895,26 @@ try {
             await fs.writeFile(`${out}/${row.name}-failure-native.json`, JSON.stringify(await tables(page).catch(() => null), null, 2));
             throw error;
         } finally {
-            await context.tracing.stop({ path: `${out}/${row.name}-playwright-trace.zip` }).catch(() => {}); await context.close();
+            await context.tracing.stop({ path: `${out}/${row.name}-playwright-trace.zip` }).catch(() => {}); await context.close(); row.contextClosed = true;
         }
     }
     report.sourceUnchanged = JSON.stringify(await fingerprint()) === JSON.stringify(initialSource);
     assert(report.sourceUnchanged, 'Immutable app source or QA harness changed during the run');
-    report.pass = report.layouts.length === 2 && report.layouts.every(row => row.pass);
-    report.gates.runtimeIntegrity = report.pass ? 'PASS' : 'PARTIAL: a bounded viewport subset ran';
+    report.diagnosticPass = Boolean(diagnosticNative) && report.layouts.length === selectedViewports.length && report.layouts.every(row => row.pass);
+    report.pass = !diagnosticNative && report.layouts.length === 2 && report.layouts.every(row => row.pass);
+    if (diagnosticCore) report.diagnosticCore.status = report.diagnosticPass ? 'PASS: restored three-job and one-memory subset' : 'INCOMPLETE';
+    report.gates.runtimeIntegrity = report.pass ? 'PASS' : report.diagnosticPass ? 'PASS: declared diagnostic subset only' : 'PARTIAL: a bounded viewport subset ran';
 } catch (error) { report.failure = error.stack; report.gates.runtimeIntegrity = 'FAIL'; process.exitCode = 1; }
 finally {
-    await browser?.close(); CRSession.prototype.send = driverSend;
+    try { await browser?.close(); report.browserClosed = true; } finally { CRSession.prototype.send = driverSend; }
     report.finishedAt = new Date().toISOString();
     report.finalFingerprints = await fingerprint(); report.sourceUnchanged = JSON.stringify(report.finalFingerprints) === JSON.stringify(initialSource);
     if (!report.sourceUnchanged) { report.pass = false; report.gates.runtimeIntegrity = 'FAIL: source changed'; process.exitCode = 1; }
+    try { report.finalDist = await fingerprintDist(); assert.deepEqual(report.finalDist, report.initialDist); report.distUnchanged = true;
+        if (diagnosticPath) assert.equal(sha(await fs.readFile(diagnosticPath)), report.diagnosticFixture.sha256);
+    } catch (error) { report.distOrFixtureFailure = error.stack; report.pass = false; report.diagnosticPass = false; process.exitCode = 1; }
     await fs.writeFile(`${out}/report.json`, JSON.stringify(report, null, 2));
     const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
-    await fs.writeFile(`${out}/contact-sheet.html`, `<!doctype html><html lang="ja"><meta charset="utf-8"><title>Shared actual jobs</title><style>body{font:14px system-ui;margin:24px;background:#f8f0de;color:#173b40}main{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}figure{margin:0}img{width:100%;height:420px;object-fit:contain;background:#eee4cc}figcaption{overflow-wrap:anywhere}</style><h1>Shared work ${report.pass ? 'PASS' : 'FAIL / INCOMPLETE'}</h1><p>${escape(target)} · ${escape(report.revision)} · actual UI earning; no application-data injection · human N=0 · visual review required</p><main>${report.captures.map(item => `<figure><a href="${escape(item.file)}"><img src="${escape(item.file)}"></a><figcaption>${escape(item.file)}<br>${escape(item.frameKind)}<br>SHA256 ${escape(item.sha256)}</figcaption></figure>`).join('')}</main>`);
+    await fs.writeFile(`${out}/contact-sheet.html`, `<!doctype html><html lang="ja"><meta charset="utf-8"><title>Shared actual jobs</title><style>body{font:14px system-ui;margin:24px;background:#f8f0de;color:#173b40}main{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}figure{margin:0}img{width:100%;height:420px;object-fit:contain;background:#eee4cc}figcaption{overflow-wrap:anywhere}</style><h1>Shared work ${report.pass ? 'PASS' : report.diagnosticPass ? 'DIAGNOSTIC SUBSET PASS' : 'FAIL / INCOMPLETE'}</h1><p>${escape(target)} · ${escape(report.revision)} · ${diagnosticNative ? 'explicit restored fixture; no fresh acquisition claim' : 'actual UI earning; no application-data injection'} · human N=0 · visual review required</p><main>${report.captures.map(item => `<figure><a href="${escape(item.file)}"><img src="${escape(item.file)}"></a><figcaption>${escape(item.file)}<br>${escape(item.frameKind)}<br>SHA256 ${escape(item.sha256)}</figcaption></figure>`).join('')}</main>`);
     console.log(JSON.stringify({ pass: report.pass, gates: report.gates, layouts: report.layouts.map(row => ({ name: row.name, pass: row.pass, jobs: row.jobs.length, cancellations: row.cancellations.length })), report: `${out}/report.json` }));
 }

@@ -1,0 +1,625 @@
+{
+  "status": "BOUNDED_RUNTIME_PASS_VISUAL_HOLD",
+  "date": "2026-09-09",
+  "target": "http://127.0.0.1:5433",
+  "source": {
+    "revision": "workshop-20260909-b3f96489e126",
+    "sha256": "b3f96489e126f2ed3f4465ae9beb4d28b4a5b32d8b5ad14bb2d09fccc432c33d",
+    "inputs": 1089
+  },
+  "actualServedBefore": {
+    "version": "workshop-20260909-b3f96489e126:4f47503e-33f0-4488-aa48-4b335131c04d",
+    "revision": "workshop-20260909-b3f96489e126",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": true,
+      "renderer": "legacy"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v17",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "flags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_BUILD_PLAY_ENABLED": true,
+    "parkRenderer": "legacy"
+  },
+  "actualIslandDelivery": "mystic-island-v1",
+  "candidate": "mystic-island-shore-garden-v17",
+  "environment": {
+    "browser": "Chromium headless via Playwright",
+    "phone": {
+      "width": 390,
+      "height": 844,
+      "reducedMotion": false
+    },
+    "tablet": {
+      "width": 768,
+      "height": 1024,
+      "reducedMotion": true
+    },
+    "soundEnabled": false,
+    "serviceWorkerControlled": true,
+    "offlineTested": false
+  },
+  "fixture": {
+    "oldSource": "3e077cc21848eedd4f56852c5a34850d08d5351eec96e562cc5fc1d07d00e77b",
+    "savedStores": [
+      "islands",
+      "islandPlans",
+      "islandEvents",
+      "logs",
+      "memoryMath",
+      "memoryVocab",
+      "exploreRuns"
+    ],
+    "originalCapturedStores": 7,
+    "oldProfileCaptured": false,
+    "newQAProfileGenerated": true,
+    "originalIDsUnchanged": true,
+    "oldAnswers": 66,
+    "oldCompletedSets": 16,
+    "newAnswers": 0,
+    "newAcquisition": false,
+    "oldArtifactIsNotAllDatabase": true,
+    "seedGuard": "Exactly one appData row {id:app,schemaVersion:1,activeProfileId:null,profiles:{}}; every other current store empty; seed seven old stores unchanged."
+  },
+  "result": {
+    "terminal": 0,
+    "session": 57176,
+    "startedAt": "2026-09-09T05:11:49.076Z",
+    "finishedAt": "2026-09-09T05:12:18.502Z",
+    "pass": true,
+    "sourceStable": true,
+    "qaStable": true,
+    "browserClosed": true,
+    "allContextClosed": true,
+    "serverChanged": false,
+    "pageErrors": [],
+    "checkpointCount": 22,
+    "currentComparedStores": [
+      "appData",
+      "exploreDiscoveries",
+      "exploreRunEvents",
+      "exploreRuns",
+      "islandEvents",
+      "islandPhotoAlbums",
+      "islandPhotoBlobs",
+      "islandPhotos",
+      "islandPlans",
+      "islands",
+      "logs",
+      "memoryMath",
+      "memoryVocab",
+      "parkEvents",
+      "parkPlans",
+      "parks",
+      "profiles"
+    ],
+    "originalCapturedImageCount": 20,
+    "selectedImageCount": 6
+  },
+  "scenarios": [
+    {
+      "name": "phone",
+      "pass": true,
+      "contextClosed": true,
+      "pageErrors": [],
+      "actorUuid": "bb08d909-b15a-405d-8595-8eb830d94caf",
+      "sameChoice": {
+        "phase": "watching",
+        "uuid": "bb08d909-b15a-405d-8595-8eb830d94caf",
+        "oldWaitWouldNotResolve": true
+      },
+      "cancellations": [
+        {
+          "kind": "reselect",
+          "pass": true,
+          "actorPhase": "waiting",
+          "mode": "workshop"
+        },
+        {
+          "kind": "learning",
+          "pass": true,
+          "actorPhase": null,
+          "mode": "learning"
+        },
+        {
+          "kind": "exit",
+          "pass": true,
+          "actorPhase": null,
+          "mode": "home"
+        }
+      ],
+      "frameCount": 164,
+      "walkingFrames": 49,
+      "phases": [
+        "waiting",
+        "walking",
+        "contact",
+        "operating",
+        "watching"
+      ],
+      "firstRun": {
+        "ms": 2204.2000000476837,
+        "phase": "run-flow",
+        "actorPhase": "operating",
+        "handDistance": 0.026763673645093994
+      },
+      "workshopPhases": [
+        "idle",
+        "run-flow",
+        "run-wheel",
+        "run-bell",
+        "run-end"
+      ]
+    },
+    {
+      "name": "tablet",
+      "pass": true,
+      "contextClosed": true,
+      "pageErrors": [],
+      "actorUuid": "08ba1a49-602d-4ad2-9bf9-a39714665ca9",
+      "sameChoice": {
+        "phase": "watching",
+        "uuid": "08ba1a49-602d-4ad2-9bf9-a39714665ca9",
+        "oldWaitWouldNotResolve": true
+      },
+      "cancellations": [
+        {
+          "kind": "reselect",
+          "pass": true,
+          "actorPhase": "waiting",
+          "mode": "workshop"
+        },
+        {
+          "kind": "learning",
+          "pass": true,
+          "actorPhase": null,
+          "mode": "learning"
+        },
+        {
+          "kind": "exit",
+          "pass": true,
+          "actorPhase": null,
+          "mode": "home"
+        }
+      ],
+      "frameCount": 50,
+      "walkingFrames": 6,
+      "phases": [
+        "waiting",
+        "walking",
+        "contact",
+        "operating",
+        "watching"
+      ],
+      "firstRun": {
+        "ms": 322.40000009536743,
+        "phase": "run-flow",
+        "actorPhase": "operating",
+        "handDistance": 1.227537204523176e-15
+      },
+      "workshopPhases": [
+        "idle",
+        "run-flow",
+        "run-wheel",
+        "run-bell",
+        "run-end"
+      ]
+    }
+  ],
+  "handContactEvidence": [
+    {
+      "viewport": "phone",
+      "source": "output/island-experience/workshop-residents-nav39-02/phone-otter-A-frames.json",
+      "sourceSHA256": "2cadab5e96927a2a0dbf0166660e1ce8a5853529570859681805845b5b02ae7a",
+      "timestamp": 5087.6,
+      "msFromProbeStart": 2204.2000000476837,
+      "actor": {
+        "species": "otter",
+        "uuid": "bb08d909-b15a-405d-8595-8eb830d94caf",
+        "visible": true,
+        "phase": "operating",
+        "position": [
+          -3.1878304268967383,
+          0,
+          -0.059830064418250783
+        ],
+        "handSide": "left",
+        "hand": [
+          -2.743532299763004,
+          1.069505881199538,
+          -0.3559516198305377
+        ],
+        "handTarget": [
+          -2.75,
+          1.09,
+          -0.34
+        ],
+        "handDistance": 0.026763673645093994,
+        "interestTarget": [
+          -2.75,
+          1.09,
+          -0.34
+        ]
+      },
+      "workshopPhase": "run-flow",
+      "cameraFrameSHA256": "ed678c08e79a0d7d2753aba16306882a9a51ab40401aecadc1b42b60e9dbb01e",
+      "evidence": "Actual post-render diagnostic at first run dispatch; no PNG/video of this instant was captured. Distance is in scene coordinates, not pixel visibility proof."
+    },
+    {
+      "viewport": "tablet",
+      "source": "output/island-experience/workshop-residents-nav39-02/tablet-otter-A-frames.json",
+      "sourceSHA256": "021a804e4046530d8a27a6ea8f8f8de27d4be1fe19c37a57925c7bdfc027f2ba",
+      "timestamp": 3222,
+      "msFromProbeStart": 322.40000009536743,
+      "actor": {
+        "species": "otter",
+        "uuid": "08ba1a49-602d-4ad2-9bf9-a39714665ca9",
+        "visible": true,
+        "phase": "operating",
+        "position": [
+          -3.1878304268967383,
+          0,
+          -0.059830064418250783
+        ],
+        "handSide": "left",
+        "hand": [
+          -2.749999999999999,
+          1.0900000000000005,
+          -0.3399999999999993
+        ],
+        "handTarget": [
+          -2.75,
+          1.09,
+          -0.34
+        ],
+        "handDistance": 1.227537204523176e-15,
+        "interestTarget": [
+          -2.75,
+          1.09,
+          -0.34
+        ]
+      },
+      "workshopPhase": "run-flow",
+      "cameraFrameSHA256": "a990c9ab3278df8b4d0170d4c106a7c055aa61c4343fc2fef42105493092a00f",
+      "evidence": "Actual post-render diagnostic at first run dispatch; no PNG/video of this instant was captured. Distance is in scene coordinates, not pixel visibility proof."
+    }
+  ],
+  "review": {
+    "visual": "HOLD: final board/resident bodies are visible at both widths, but waiting residents after reselection/learning return appear over blue background, separated from the sand support. No contact or intermediate causal-phase PNG exists. Whole source-art parity not evaluated.",
+    "meaning": "HOLD / unverified: rendered trace contains walking/contact/operating/watching and flow/wheel/bell/end, but stills do not demonstrate the continuous causal action or silent understanding. Human N=0; author review only.",
+    "storage": "PASS only for no-change: 22 checkpoints compare all 17 current native stores after explicit fixture seeding. New workshop save/creation acquisition, nonempty photo bytes, question answering and native hidden were not exercised.",
+    "release": "Not accepted as full spec37, whole Goal or production visual completion."
+  },
+  "untested": [
+    "new genuine acquisition/63 more answers",
+    "B alternate arrangement/all three species current visual matrix",
+    "native hidden and secondary touch",
+    "one-answer continuation",
+    "silent comprehension/child motivation Human N=0",
+    "full spec37 completion",
+    "New save-work transaction",
+    "New specimen/creation receipt",
+    "Contact and moving-result PNGs",
+    "Nonempty photos/Blob preservation",
+    "PWA offline/update",
+    "Formal timing/throughput"
+  ],
+  "originalFailures": [
+    {
+      "path": "output/island-experience/workshop-residents-02/report.json",
+      "status": "FAIL_RETAINED",
+      "reason": "Old genuine phone run completed resident/source A paths, then same-selected-otter watching -> waiting assumption stalled; not full matrix/acceptance."
+    },
+    {
+      "path": "output/island-experience/workshop-residents-nav39-01/report.json",
+      "status": "FAIL_RETAINED",
+      "reason": "QA pre-seed empty-database guard rejected canonical default appData row in both widths; no fixture/controller action executed."
+    }
+  ],
+  "raw": [
+    {
+      "path": "output/island-experience/workshop-residents-nav39-02/report.json",
+      "sha256": "c8a3cc7d519e650df0963da1472752f6940cbf8c6cc03825b5166c216b0ac4cc",
+      "bytes": 331968
+    },
+    {
+      "path": "output/island-experience/workshop-residents-nav39-02/summary.json",
+      "sha256": "88d27be3aab2f9ba21b8b59ec98692650c3dd5a51e7dec1ee3b2e1706707325f",
+      "bytes": 4454
+    },
+    {
+      "path": "output/playwright/island-renewal/workshop-residents-nav39-02.mjs",
+      "sha256": "f4f4b1bcf003942dd9a81299ffe56ed3827f5fe4ca81f565219eede1036e10ed",
+      "bytes": 23626
+    },
+    {
+      "path": "output/playwright/island-renewal/workshop-residents-nav39-02.log",
+      "sha256": "0674bfcd64cfe308bb983a4423a3a84ce058790545e0bca962b254b1155092a8",
+      "bytes": 313
+    },
+    {
+      "path": "output/island-experience/workshop-residents-nav39-02-preparation/preparation.json",
+      "sha256": "2a5f2370f10f2aed3bed434e2a031dd1367c060684fb0cf50d6f6e2d716b57f6",
+      "bytes": 897
+    },
+    {
+      "path": "output/island-experience/workshop-residents-nav39-01/report.json",
+      "sha256": "66e49433921dab6471c941c1bec96349721370e205caf83d19a6ecbf5887ae8a",
+      "bytes": 8118
+    },
+    {
+      "path": "output/island-experience/workshop-residents-02/report.json",
+      "sha256": "66de25a9ec0691e7d8586496be62f2387a321b26774e57f00bfcb83484ac1a27",
+      "bytes": 3373652
+    },
+    {
+      "path": "output/island-experience/workshop-residents-02/phone-native.json",
+      "sha256": "7b95cb8e31e3997ead10e14a3d18e56f066458ffec331262083773db944b0827",
+      "bytes": 392684
+    },
+    {
+      "path": "output/island-experience/workshop-residents-02/visual-review.json",
+      "sha256": "9feba356f2626c5a034df5984e0b5bf94683907c2a6eacf6d3ad4cb10f3812b9",
+      "bytes": 1707
+    },
+    {
+      "path": "output/island-experience/workshop-snapshot-39/build-source.json",
+      "sha256": "b41aa4dbbd1fce924e40126001c160f7d4564028c0beea73714abee1b5a4133b",
+      "bytes": 440697
+    }
+  ],
+  "screens": [
+    {
+      "file": "screens/phone-otter-A-finished-world.png",
+      "sha256": "662247508f90116fecc5fab4ccfee145ce136fc0b675c1205c737343cda738b2",
+      "original": "output/island-experience/workshop-residents-nav39-02/phone-otter-A-finished-world.png",
+      "label": "phone A実行後：カワウソが結果を見る",
+      "note": "終了姿。手接点・流れが動く途中のPNGではない。",
+      "metadata": {
+        "revision": "workshop-20260909-b3f96489e126",
+        "version": "workshop-20260909-b3f96489e126:4f47503e-33f0-4488-aa48-4b335131c04d",
+        "candidate": "mystic-island-shore-garden-v17",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "mode": "workshop",
+        "reducedMotion": false,
+        "serviceWorkerControlled": true
+      },
+      "actorBefore": {
+        "species": "otter",
+        "uuid": "bb08d909-b15a-405d-8595-8eb830d94caf",
+        "phase": "watching",
+        "position": [
+          -3.1405031283658533,
+          0,
+          -0.08072322909868335
+        ]
+      },
+      "actorAfter": {
+        "species": "otter",
+        "uuid": "bb08d909-b15a-405d-8595-8eb830d94caf",
+        "phase": "watching",
+        "position": [
+          -3.1405031283658533,
+          0,
+          -0.08072322909868335
+        ]
+      }
+    },
+    {
+      "file": "screens/tablet-otter-A-finished-world.png",
+      "sha256": "963dd8da6f01c239a64a6b1e7a749b457d4ebfc122c9ac6e9e1ae87cf09303be",
+      "original": "output/island-experience/workshop-residents-nav39-02/tablet-otter-A-finished-world.png",
+      "label": "tablet A実行後：カワウソが結果を見る",
+      "note": "終了姿。手接点・流れが動く途中のPNGではない。",
+      "metadata": {
+        "revision": "workshop-20260909-b3f96489e126",
+        "version": "workshop-20260909-b3f96489e126:4f47503e-33f0-4488-aa48-4b335131c04d",
+        "candidate": "mystic-island-shore-garden-v17",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "mode": "workshop",
+        "reducedMotion": true,
+        "serviceWorkerControlled": true
+      },
+      "actorBefore": {
+        "species": "otter",
+        "uuid": "08ba1a49-602d-4ad2-9bf9-a39714665ca9",
+        "phase": "watching",
+        "position": [
+          -3.237674746212276,
+          0,
+          -0.02222385025752449
+        ]
+      },
+      "actorAfter": {
+        "species": "otter",
+        "uuid": "08ba1a49-602d-4ad2-9bf9-a39714665ca9",
+        "phase": "watching",
+        "position": [
+          -3.237674746212276,
+          0,
+          -0.02222385025752449
+        ]
+      }
+    },
+    {
+      "file": "screens/phone-reselect-returned-world.png",
+      "sha256": "0299b7d94427951493a8a4161c551431b8a86e835b560677fbc7febedcff9464",
+      "original": "output/island-experience/workshop-residents-nav39-02/phone-reselect-returned-world.png",
+      "label": "phone 歩行中の住民選び直し：ウサギ待機",
+      "note": "足元が砂面から離れ、青背景上に浮いて見える。視覚HOLD。",
+      "metadata": {
+        "revision": "workshop-20260909-b3f96489e126",
+        "version": "workshop-20260909-b3f96489e126:4f47503e-33f0-4488-aa48-4b335131c04d",
+        "candidate": "mystic-island-shore-garden-v17",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "mode": "workshop",
+        "reducedMotion": false,
+        "serviceWorkerControlled": true
+      },
+      "actorBefore": {
+        "species": "rabbit",
+        "uuid": "17066461-628f-4905-beb4-476603cc0363",
+        "phase": "waiting",
+        "position": [
+          -3.0500000000000003,
+          0,
+          2.68
+        ]
+      },
+      "actorAfter": {
+        "species": "rabbit",
+        "uuid": "17066461-628f-4905-beb4-476603cc0363",
+        "phase": "waiting",
+        "position": [
+          -3.0500000000000003,
+          0,
+          2.68
+        ]
+      }
+    },
+    {
+      "file": "screens/tablet-reselect-returned-world.png",
+      "sha256": "4fd847bdaadc26208b1fe1b111b3dff7f7119f1c02818820c7f5e65c00e9e7d2",
+      "original": "output/island-experience/workshop-residents-nav39-02/tablet-reselect-returned-world.png",
+      "label": "tablet 歩行中の住民選び直し：ウサギ待機",
+      "note": "足元が砂面から離れ、青背景上に浮いて見える。視覚HOLD。",
+      "metadata": {
+        "revision": "workshop-20260909-b3f96489e126",
+        "version": "workshop-20260909-b3f96489e126:4f47503e-33f0-4488-aa48-4b335131c04d",
+        "candidate": "mystic-island-shore-garden-v17",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "mode": "workshop",
+        "reducedMotion": true,
+        "serviceWorkerControlled": true
+      },
+      "actorBefore": {
+        "species": "rabbit",
+        "uuid": "9b86612e-1869-4258-a149-f917aca79718",
+        "phase": "waiting",
+        "position": [
+          -3.0500000000000003,
+          0,
+          2.68
+        ]
+      },
+      "actorAfter": {
+        "species": "rabbit",
+        "uuid": "9b86612e-1869-4258-a149-f917aca79718",
+        "phase": "waiting",
+        "position": [
+          -3.0500000000000003,
+          0,
+          2.68
+        ]
+      }
+    },
+    {
+      "file": "screens/phone-learning-returned.png",
+      "sha256": "80d572f65a294bb3b4c70e917796d9d8e8f32420be259f28bd34893b73116a76",
+      "original": "output/island-experience/workshop-residents-nav39-02/phone-learning-returned.png",
+      "label": "phone 学習を閉じ、呼出元の工房へ復帰",
+      "note": "同じ予約を保持して復帰。待機カワウソの足元は青背景上に見える。",
+      "metadata": {
+        "revision": "workshop-20260909-b3f96489e126",
+        "version": "workshop-20260909-b3f96489e126:4f47503e-33f0-4488-aa48-4b335131c04d",
+        "candidate": "mystic-island-shore-garden-v17",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "mode": "workshop",
+        "reducedMotion": false,
+        "serviceWorkerControlled": true
+      },
+      "actorBefore": {
+        "species": "otter",
+        "uuid": "bb08d909-b15a-405d-8595-8eb830d94caf",
+        "phase": "waiting",
+        "position": [
+          -3.0500000000000003,
+          0,
+          2.68
+        ]
+      },
+      "actorAfter": {
+        "species": "otter",
+        "uuid": "bb08d909-b15a-405d-8595-8eb830d94caf",
+        "phase": "waiting",
+        "position": [
+          -3.0500000000000003,
+          0,
+          2.68
+        ]
+      }
+    },
+    {
+      "file": "screens/tablet-learning-returned.png",
+      "sha256": "ae276d0b63817f34347826ba3058df6242adc5be606890dbd2bb134fc148030c",
+      "original": "output/island-experience/workshop-residents-nav39-02/tablet-learning-returned.png",
+      "label": "tablet 学習を閉じ、呼出元の工房へ復帰",
+      "note": "同じ予約を保持して復帰。待機カワウソの足元は青背景上に見える。",
+      "metadata": {
+        "revision": "workshop-20260909-b3f96489e126",
+        "version": "workshop-20260909-b3f96489e126:4f47503e-33f0-4488-aa48-4b335131c04d",
+        "candidate": "mystic-island-shore-garden-v17",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "mode": "workshop",
+        "reducedMotion": true,
+        "serviceWorkerControlled": true
+      },
+      "actorBefore": {
+        "species": "otter",
+        "uuid": "08ba1a49-602d-4ad2-9bf9-a39714665ca9",
+        "phase": "waiting",
+        "position": [
+          -3.0500000000000003,
+          0,
+          2.68
+        ]
+      },
+      "actorAfter": {
+        "species": "otter",
+        "uuid": "08ba1a49-602d-4ad2-9bf9-a39714665ca9",
+        "phase": "waiting",
+        "position": [
+          -3.0500000000000003,
+          0,
+          2.68
+        ]
+      }
+    }
+  ],
+  "humanN": 0,
+  "goal": "ACTIVE",
+  "actualServedAfterEqualsBefore": true,
+  "samePlan": {
+    "id": "[\"island-plan-v1\",\"0861c585-259b-46c6-b611-d30c0fbdcf6b\",16]",
+    "revision": 0,
+    "cursor": 0,
+    "answered": false
+  }
+}

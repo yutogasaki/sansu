@@ -1,0 +1,494 @@
+{
+  "schemaVersion": 1,
+  "status": "LIMITED_DIAGNOSTIC_RUNTIME_PASS_FULL_GOAL_ACTIVE",
+  "date": "2026-09-09",
+  "sourceReport": {
+    "path": "output/island-experience/shared-jobs-nav38-diagnostic09/report.json",
+    "sha256": "b17ad0a55c3c7bd4c4f6aac8201527c0fcccc4e2787e083d6a6da35921e9c27e",
+    "diagnosticPass": true,
+    "reportPass": false,
+    "fullSpec38Passed": false
+  },
+  "actualTarget": {
+    "url": "http://127.0.0.1:5292",
+    "version": {
+      "version": "nav-v17-main-candidate:7eef7bea-60de-4786-af39-0f978a0ca3a5",
+      "revision": "nav-v17-main-candidate",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": true,
+        "renderer": "three"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v17",
+        "learningCandidate": "mystic-island-learning-v2",
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    "gitCommit": "8e366127e6c07105972fe1410386af4eb883105b",
+    "sourceHash": "d2b44e9f066784d5547d792a9d6a377981e5d1962f1b94341e836e465c5714ba",
+    "appInputCount": 963,
+    "distFiles": 151,
+    "distSha256": "db367a281259b17af0a426e8e4f6f4178484bab17b91707c30492bbd038dcc75",
+    "manifestPath": "output/island-experience/shared-jobs-nav38-qa09/build-source.json",
+    "manifestSha256": "428a98a8f7ae984b6e9b17fd6164702f4388e7ad416f09224bda8e0f40d5fb21",
+    "scope": "Retained nav-v17 production Island route. Park enabled/renderer three is the served configuration, not a Park gameplay check. Not header39, not classic flags."
+  },
+  "qa": {
+    "overlay": "shared-jobs-nav38-qa09",
+    "files": [
+      {
+        "file": "tools/e2e-island-shared-jobs.mjs",
+        "sha256": "24807387ce2c1c0664a42f1f65d4fa841f9683df61c633fafc29772e57f7c42d"
+      },
+      {
+        "file": "tools/island-e2e-helpers.mjs",
+        "sha256": "d6892d1b32a9abdd541bd94ac1b2603a22359a58b2e5a5cddd6b157c863c7526"
+      },
+      {
+        "file": "tools/island-learning-checks.mjs",
+        "sha256": "9460a3802107f09a37160e0db67b42ce8e18142a12a61c70cc884e11396c2220"
+      },
+      {
+        "file": "tools/island-learning-fixtures.mjs",
+        "sha256": "6dda4730b390b5b062cf8fd3de8376da8c917ff29b3844ae2e6e5f8f56656f87"
+      }
+    ],
+    "sourceAndQaUnchanged": true,
+    "distUnchanged": true,
+    "checks": "node --check, dedicated ESLint, --plan; six fake-DOM/storage boundary checks; no application change"
+  },
+  "fixture": {
+    "path": "output/island-experience/shared-jobs-nav38-03/phone-failure-native.json",
+    "sha256": "e7cfb2ff579570169ce6be419e1f4384123e0ab1fa181176acddb35e83f0c7f8",
+    "restoredStoreCount": 17,
+    "restoredHistoricalAnswers": 63,
+    "completedSets": 15,
+    "realUiAfterRestoration": true,
+    "newlyEarnedAnswers": 0,
+    "firstUseSetup": "Fresh isolated context, exact native restore then real UI; initial profiles/islands/logs empty; source has no photo Blob rows",
+    "noGenuineAcquisitionClaim": true
+  },
+  "run": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "touch": true,
+    "reducedMotion": "no-preference",
+    "serviceWorkerControlledAtEntry": true,
+    "startedAt": "2026-09-09T05:06:55.373Z",
+    "finishedAt": "2026-09-09T05:08:38.997Z",
+    "sessionId": 45258,
+    "terminalExit": 0,
+    "pageErrors": [],
+    "browserClosed": true,
+    "contextClosed": true,
+    "serverStartedByThisRun": false,
+    "rootServerStopped": false,
+    "captureRecords": 57,
+    "originalPngCount": 65,
+    "selectedUnmodifiedPngCount": 8
+  },
+  "jobs": [
+    {
+      "species": "otter",
+      "job": "carry",
+      "result": {
+        "kind": "placed"
+      },
+      "actualFrames": 115,
+      "targetUuid": "3d67dbb6-bd48-4caf-abf9-4822da671b45",
+      "actorUuid": "b218eb87-5cab-45d8-a39b-cd0e631d2b68",
+      "emittedMs": 11144.299999952316,
+      "nativeWriteMs": 11255.699999928474,
+      "visibleBeforeNativeWrite": true,
+      "stages": [
+        "walking",
+        "pickup-contact",
+        "lifting",
+        "carrying",
+        "lowering",
+        "hands-released",
+        "result-visible",
+        "together-resting",
+        "settled"
+      ],
+      "pass": true
+    },
+    {
+      "species": "rabbit",
+      "job": "gather",
+      "result": {
+        "kind": "petals-arranged",
+        "count": 3
+      },
+      "actualFrames": 322,
+      "targetUuid": "3d67dbb6-bd48-4caf-abf9-4822da671b45",
+      "actorUuid": "27a7fbdb-a174-4b0f-ad39-bd3e1cc4d19d",
+      "emittedMs": 29849,
+      "nativeWriteMs": 29946.399999976158,
+      "visibleBeforeNativeWrite": true,
+      "stages": [
+        "walking",
+        "petal-1-pickup",
+        "petal-1-placing",
+        "petal-2-pickup",
+        "petal-2-placing",
+        "petal-3-pickup",
+        "petal-3-placing",
+        "three-petals-visible",
+        "result-visible",
+        "snack-contact",
+        "snack-offered",
+        "settled"
+      ],
+      "pass": true
+    },
+    {
+      "species": "fox",
+      "job": "illuminate",
+      "result": {
+        "kind": "illuminated",
+        "effect": "shadow"
+      },
+      "actualFrames": 373,
+      "targetUuid": "3d67dbb6-bd48-4caf-abf9-4822da671b45",
+      "actorUuid": "b0bde30c-182a-488c-bd6f-c6651e123f72",
+      "emittedMs": 64552.89999997616,
+      "nativeWriteMs": 64770.89999997616,
+      "visibleBeforeNativeWrite": true,
+      "stages": [
+        "walking",
+        "lamp-pickup",
+        "surface-illuminated",
+        "result-visible",
+        "looking-together",
+        "settled"
+      ],
+      "pass": true
+    }
+  ],
+  "selfPlacements": [
+    {
+      "before": "before-gather",
+      "from": {
+        "x": -3.05,
+        "z": 0.6499999999999999
+      },
+      "to": {
+        "x": -3.05,
+        "z": 1.15
+      },
+      "rotation": 0,
+      "realControls": [
+        {
+          "label": "みぎへ",
+          "count": 0
+        },
+        {
+          "label": "てまえへ",
+          "count": 2
+        },
+        {
+          "label": "まわす",
+          "count": 0
+        }
+      ],
+      "pass": true
+    },
+    {
+      "before": "before-illuminate",
+      "from": {
+        "x": -3.05,
+        "z": 1.15
+      },
+      "to": {
+        "x": -3.05,
+        "z": 0.6499999999999999
+      },
+      "rotation": 3.141592653589793,
+      "realControls": [
+        {
+          "label": "みぎへ",
+          "count": 0
+        },
+        {
+          "label": "おくへ",
+          "count": 2
+        },
+        {
+          "label": "まわす",
+          "count": 2
+        }
+      ],
+      "pass": true
+    },
+    {
+      "before": "before-carry-memory",
+      "from": {
+        "x": -3.05,
+        "z": 0.6499999999999999
+      },
+      "to": {
+        "x": -3.05,
+        "z": 0.6499999999999999
+      },
+      "rotation": 0,
+      "realControls": [
+        {
+          "label": "みぎへ",
+          "count": 0
+        },
+        {
+          "label": "てまえへ",
+          "count": 0
+        },
+        {
+          "label": "まわす",
+          "count": 2
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "memory": {
+    "revisited": "actual newly saved carry memory",
+    "count": 1,
+    "firstFactsUnchanged": true,
+    "sameTargetUuid": "3d67dbb6-bd48-4caf-abf9-4822da671b45",
+    "allStoresUnchanged": true
+  },
+  "database": {
+    "comparisons": 11,
+    "storesPerComparison": 17,
+    "readOnlyExactComparisons": [
+      "single-alternative-preview-no-save",
+      "before-gather-preview-read-only",
+      "before-illuminate-preview-read-only",
+      "before-carry-memory-preview-read-only",
+      "core-remember-carry"
+    ],
+    "writeComparisons": [
+      {
+        "name": "driftwood-otter",
+        "allowedBranches": [
+          "shared"
+        ],
+        "changedStores": [
+          "islandEvents",
+          "islands"
+        ],
+        "pass": true
+      },
+      {
+        "name": "before-gather-self-place-only-shared",
+        "allowedBranches": [
+          "shared"
+        ],
+        "changedStores": [
+          "islandEvents",
+          "islands"
+        ],
+        "pass": true
+      },
+      {
+        "name": "driftwood-rabbit",
+        "allowedBranches": [
+          "shared"
+        ],
+        "changedStores": [
+          "islandEvents",
+          "islands"
+        ],
+        "pass": true
+      },
+      {
+        "name": "before-illuminate-self-place-only-shared",
+        "allowedBranches": [
+          "shared"
+        ],
+        "changedStores": [
+          "islandEvents",
+          "islands"
+        ],
+        "pass": true
+      },
+      {
+        "name": "driftwood-fox",
+        "allowedBranches": [
+          "shared"
+        ],
+        "changedStores": [
+          "islandEvents",
+          "islands"
+        ],
+        "pass": true
+      },
+      {
+        "name": "before-carry-memory-self-place-only-shared",
+        "allowedBranches": [
+          "shared"
+        ],
+        "changedStores": [
+          "islandEvents",
+          "islands"
+        ],
+        "pass": true
+      }
+    ],
+    "writeRule": "Every store checked; only sharedMemories and its existing event/revision/time writes permitted. Self placement additionally compares all shared fields except selected display position/rotation/placedAt. Learning plans/logs/memory/profiles/items remain unchanged. Photo stores are empty here: this is not nonempty photo-byte preservation evidence."
+  },
+  "separateGates": {
+    "runtime": "PASS only for restored phone three jobs, three self placements, one carry-memory revisit, physical/crop/visible-before-native and declared DB checks",
+    "visualAppeal": "HOLD: author review sees the target/result, but contact can be behind the actor and light payoff is close to the table pattern; no full benchmark comparison or visual score",
+    "silentComprehensionSafety": "HOLD: Human N=0; no independent silent understanding or desire test. Physical collision checks do not establish perceived safety.",
+    "learningNonObstruction": "PARTIAL: all learning data unchanged across optional actions; no same-reservation answer, input timing, native hidden or learning exit exercise in this short run",
+    "wholeAppContinuity": "NOT_ASSESSED: short Island phone slice, no launch-to-next-learning full sheet",
+    "overallRelease": "HOLD"
+  },
+  "retainedFailures": [
+    {
+      "path": "output/island-experience/shared-jobs-nav38-03/report.json",
+      "sha256": "4b65514bb4d7d578ea9548f719eeb3da3a0287e604fb5655b4c9e48b13a1d691",
+      "pass": false,
+      "firstFailure": "AssertionError [ERR_ASSERTION]: otter: only an actually available resident can be selected",
+      "scopeAndCause": "Genuine 63 answers / 15 sections and three cleaned/observed specimens; first resident selector matched both chip and action, stopping before jobs."
+    },
+    {
+      "path": "output/island-experience/shared-jobs-nav38-diagnostic07/report.json",
+      "sha256": "dd1a2c624b82bb22c3e8dc8b8b54459e5fc73f7f42cf0cbf0be6c856b0b608ca",
+      "pass": false,
+      "firstFailure": "AssertionError [ERR_ASSERTION]: driftwood-rabbit actual renderer started: actual controller could not find a safe route; ばしょを かえて ためそう",
+      "scopeAndCause": "Explicit restoration; one carry passed, then the original rabbit placement had no safe pickup route. Safe refusal is allowed by spec38; no universal-delivery contract is inferred."
+    },
+    {
+      "path": "output/island-experience/shared-jobs-nav38-diagnostic08/report.json",
+      "sha256": "d61cbae9fc4a657e5b05dfdc9afbcf7e6b74069646ade114426816675ee047f9",
+      "pass": false,
+      "firstFailure": "AssertionError [ERR_ASSERTION]: phone-driftwood-rabbit-settled.png: an actual renderer image is required",
+      "scopeAndCause": "Carry and self placement passed; rabbit reached result-seen/settled, but QA sampled the previous placement action at arming, 207ms after its last draw. Original transparent 3318-byte 375x287 PNG recovered from trace. The shared phase key also suppressed the new settled/emitted captures; whole run stays FAIL."
+    }
+  ],
+  "pending": [
+    "M01/M02 fresh earning",
+    "M05 12-memory capacity",
+    "M03 interruptions/reload/optional-return negative paths",
+    "M04 other resident memories/rename/storage/reload",
+    "M12 learning return",
+    "tablet/reduced motion core",
+    "other specimens and user-created work combinations",
+    "actual WebAudio",
+    "nonempty photo persistence",
+    "CAS/unknown retry",
+    "offline/update flows",
+    "formal learning speed",
+    "full source-A visual parity",
+    "independent child replay desire"
+  ],
+  "screens": [
+    {
+      "id": "carry-contact",
+      "file": "screens/carry-contact.png",
+      "source": "output/island-experience/shared-jobs-nav38-diagnostic09/phone-driftwood-otter-b4b4ca0c323c-actual-both-hands.png",
+      "sha256": "eb78b3fde3fac706df1dd5d9cd66a31dbc3bf82b6d8eb178d1be1a2cb4c1a5af",
+      "bytes": 131759,
+      "title": "運搬: 実両手接触",
+      "authorObservation": "点の接触は実測で成立。身体の奥の手は静止画で読みにくい。",
+      "captureType": "actual-rendered-canvas",
+      "stageTimestamp": 7828.9,
+      "actionId": "04139dae-5823-4882-81b3-bc4032f7abc5"
+    },
+    {
+      "id": "carry-result",
+      "file": "screens/carry-result.png",
+      "source": "output/island-experience/shared-jobs-nav38-diagnostic09/phone-driftwood-otter-result-world.png",
+      "sha256": "98142d369404f0828812dd8581546c0cc6360754b63974f7db4cb081ff5b0065",
+      "bytes": 88833,
+      "title": "運搬: 置いた結果",
+      "authorObservation": "同じながれぎを別の台へ運び、手を離して保存。",
+      "captureType": "actual-world",
+      "stageTimestamp": null,
+      "actionId": null
+    },
+    {
+      "id": "gather-contact",
+      "file": "screens/gather-contact.png",
+      "source": "output/island-experience/shared-jobs-nav38-diagnostic09/phone-driftwood-rabbit-c6dae98a159a-petal-2-pickup.png",
+      "sha256": "52746f296fca79c31cdcff55a3de41aab9f2fd3a0f78a0cca0d72f331fbe67b8",
+      "bytes": 115086,
+      "title": "花並べ: 2枚目を取る",
+      "authorObservation": "本人が台を手前へ2回動かした後、同じウサギが接触。",
+      "captureType": "actual-rendered-canvas",
+      "stageTimestamp": 23213.3,
+      "actionId": "27b6995d-5ae2-434b-be7b-67ac4d545f24"
+    },
+    {
+      "id": "gather-result",
+      "file": "screens/gather-result.png",
+      "source": "output/island-experience/shared-jobs-nav38-diagnostic09/phone-driftwood-rabbit-result-world.png",
+      "sha256": "4b30ed9b0ff22b289f3a22c8fb97ce5783e5c751f7336e39011f7444c2b45ab3",
+      "bytes": 80568,
+      "title": "花並べ: 3枚とお返し",
+      "authorObservation": "3つの異なる花の配置、保存、お返しまで実行。",
+      "captureType": "actual-world",
+      "stageTimestamp": null,
+      "actionId": null
+    },
+    {
+      "id": "light-pickup",
+      "file": "screens/light-pickup.png",
+      "source": "output/island-experience/shared-jobs-nav38-diagnostic09/phone-driftwood-fox-45743869f2be-lamp-pickup.png",
+      "sha256": "6bffefc8eb0bda166ed6b60395c7375c9baf20badb962ba3912ca89192fab714",
+      "bytes": 108590,
+      "title": "照射: 灯りを取る",
+      "authorObservation": "本人が台を奥へ2回・半回転させた後、同じキツネが接触。",
+      "captureType": "actual-rendered-canvas",
+      "stageTimestamp": 50463.3,
+      "actionId": "76a2fc7b-fcaa-4dab-9a16-c537c3df533b"
+    },
+    {
+      "id": "light-result",
+      "file": "screens/light-result.png",
+      "source": "output/island-experience/shared-jobs-nav38-diagnostic09/phone-driftwood-fox-45743869f2be-actual-light-surface-receiver.png",
+      "sha256": "2737f4c261bd49427232eaef37c5a414c1c5d5c1e5c049353aa0512d0cd152e0",
+      "bytes": 134950,
+      "title": "照射: 表面から台へ影",
+      "authorObservation": "光源・表面・受け面は実測成立。影は通常の台模様と区別しにくい。",
+      "captureType": "actual-rendered-canvas",
+      "stageTimestamp": 63130,
+      "actionId": "76a2fc7b-fcaa-4dab-9a16-c537c3df533b"
+    },
+    {
+      "id": "carry-memory",
+      "file": "screens/carry-memory.png",
+      "source": "output/island-experience/shared-jobs-nav38-diagnostic09/phone-core-remember-carry-6c37aceca716-together-resting.png",
+      "sha256": "dd1da588538a99fa80096795cf4abe1711a58f42ec5c41d8b34e6b72b76f257e",
+      "bytes": 125028,
+      "title": "記憶: 同じながれぎを再訪",
+      "authorObservation": "向きを元へ戻し、実保存した運搬記憶を明示再訪。全17store不変。",
+      "captureType": "actual-rendered-canvas",
+      "stageTimestamp": 96046.7,
+      "actionId": "2b24ffc3-fa01-44f9-9397-93ce1c1fa7b7"
+    },
+    {
+      "id": "carry-memory-ui",
+      "file": "screens/carry-memory-ui.png",
+      "source": "output/island-experience/shared-jobs-nav38-diagnostic09/phone-core-remember-carry.png",
+      "sha256": "73478ea25371d9b8909695965a8743393c46e461ea55f23f449704a97508ac57",
+      "bytes": 128856,
+      "title": "再訪後の実画面",
+      "authorObservation": "実ブラウザ画面。今回はまなぶボタンの先の回答は実行していない。",
+      "captureType": "actual-world",
+      "stageTimestamp": null,
+      "actionId": null
+    }
+  ],
+  "humanN": 0,
+  "fullGoal": "ACTIVE",
+  "noStageCommitOrSourceEditByThisAudit": true
+}
