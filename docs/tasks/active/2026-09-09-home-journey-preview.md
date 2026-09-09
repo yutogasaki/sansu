@@ -1,5 +1,7 @@
 # 家から店への接続試作
 
+2026-09-09統合実施：[47](../../product/47_home_island_integration_spec.md)を採用し、公開範囲・成長方式・引継ぎ境界を整理。同じ家の外/室内/実写真/学習をDEVで接続し、成長表示直後の退出を検査した。[v7実画面と検証](../../design/2026-09-09-pokomoko-growth-keyvisual/implementation-v7/README.md)は両幅の実経路、型/build、全3376テスト、smoke31項目が通過。本番移行、全メニューの新景観への統合、21通常＋3レアの全制作は継続課題。
+
 依頼：最小構成を実装し、通常学習からテラスへの配達まで確認する。
 
 仕様：[45](../../product/45_home_journey_preview_spec.md)。DEV限定。新しい通常学習予約から45問分までの追加進行を同じtransactionで保存する。既存の島・所持・旧予約を保持する。

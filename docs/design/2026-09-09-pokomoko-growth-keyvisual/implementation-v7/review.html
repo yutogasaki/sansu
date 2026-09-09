@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>同じ家の外と中 — 接続検証 v7</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#23395c;background:#f5f2e9}body{margin:0;padding:32px;max-width:1500px;margin-inline:auto}h1{font-size:28px}p{line-height:1.8}nav{display:flex;gap:20px;flex-wrap:wrap;margin:24px 0}a{color:#255fbe}section{margin:36px 0}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}figure{margin:0;background:white;border:1px solid #d4d8df;border-radius:12px;overflow:hidden}img{width:100%;height:auto;display:block}figcaption{padding:12px;line-height:1.6}.compare{grid-template-columns:repeat(3,minmax(0,1fr))}.gate{padding:16px;background:#fff5d6;border-radius:12px}code{overflow-wrap:anywhere}@media(max-width:800px){body{padding:16px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.compare{grid-template-columns:1fr}}
+</style>
+<h1>同じ家の外と中</h1>
+<p>学習で育った家へ入り、ぽこもこと本人の記念を見る。実際の部屋を写真に残し、同じ学習の続きへ戻る。</p>
+<p class="gate">DEV経路の検証：phone / tabletとも通過。<br>最終アート：HOLD。子どもの無説明理解・意欲：未検証。本番移行・全メニューの新景観への統合：未完。</p>
+<p><code>home-journey-connected-house-v7</code> / 固定DEV <code>127.0.0.1:5218</code> / runtime revision <code>development-local</code>。正確な入力版は<a href="source.json">source.json</a>の957ファイルとfingerprintで識別。<a href="browser-report.json">ブラウザ結果</a>。</p>
+<nav><a href="#phone">スマホの一周</a><a href="#tablet">タブレット・動きを減らす</a><a href="#reference">基準画像との比較</a><a href="../../../product/47_home_island_integration_spec.md">統合仕様47</a></nav>
+<section id="phone"><h2>スマホ 390 × 844</h2><div class="grid">
+<figure><img src="phone-initial.png" alt="初期の家と庭"><figcaption>1. 家と庭から始める</figcaption></figure>
+<figure><img src="phone-growth.png" alt="45問後の配達箱"><figcaption>2. 学習の成果が現れる</figcaption></figure>
+<figure><img src="phone-delivery.png" alt="テラスへ届いた荷物"><figcaption>3. 家と店の暮らし</figcaption></figure>
+<figure><img src="phone-wide.png" alt="育った島の全景"><figcaption>4. 任意の全景</figcaption></figure>
+<figure><img src="phone-room.png" alt="同じ家の部屋で座るぽこもこ"><figcaption>5. 同じ家の中へ</figcaption></figure>
+<figure><img src="phone-award.png" alt="獲得した学習の記念を飾る"><figcaption>6. 本人の実際の記念</figcaption></figure>
+<figure><img src="phone-photo.png" alt="室内の写真を保存"><figcaption>7. 実景を写真に残す</figcaption></figure>
+<figure><img src="phone-resume.png" alt="保存済みの問題へ再開"><figcaption>8. 同じ予約で学習再開</figcaption></figure>
+</div></section>
+<section id="tablet"><h2>タブレット 768 × 1024・動きを減らす</h2><div class="grid">
+<figure><img loading="lazy" src="tablet-reduced-initial.png" alt="タブレット初期"><figcaption>初期</figcaption></figure>
+<figure><img loading="lazy" src="tablet-reduced-growth.png" alt="静止で示す成長"><figcaption>静止の成長表示</figcaption></figure>
+<figure><img loading="lazy" src="tablet-reduced-delivery.png" alt="静止の配達結果"><figcaption>配達の結果</figcaption></figure>
+<figure><img loading="lazy" src="tablet-reduced-wide.png" alt="タブレット全景"><figcaption>全景</figcaption></figure>
+<figure><img loading="lazy" src="tablet-reduced-room.png" alt="タブレットの同じ部屋"><figcaption>室内</figcaption></figure>
+<figure><img loading="lazy" src="tablet-reduced-award.png" alt="タブレットの実記念"><figcaption>本人の記念</figcaption></figure>
+<figure><img loading="lazy" src="tablet-reduced-photo.png" alt="タブレットの保存写真"><figcaption>実写真の保存</figcaption></figure>
+<figure><img loading="lazy" src="tablet-reduced-resume.png" alt="タブレットの学習再開"><figcaption>同じ学習の続き</figcaption></figure>
+</div></section>
+<section id="reference"><h2>基準画像と実画面</h2><p>家の青い扉、生成りの壁、色分けした屋根、布の主役を継承。海・植栽・素材の豊かさと立体感は基準未達。室内は既存の機能をつないだ段階で、最終アートの合格ではない。</p><div class="grid compare">
+<figure><img loading="lazy" src="../initial-v1.png" alt="制作のキービジュアル"><figcaption>制作基準・アプリ画面ではない</figcaption></figure>
+<figure><img loading="lazy" src="phone-initial.png" alt="同じ候補のアプリ外景"><figcaption>v7 実画面・外</figcaption></figure>
+<figure><img loading="lazy" src="phone-room.png" alt="同じ候補のアプリ室内"><figcaption>v7 実画面・中</figcaption></figure>
+</div></section></html>

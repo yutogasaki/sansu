@@ -1,0 +1,59 @@
+
+> pokko-fushigi-zukan-app@0.0.0 build
+> tsc -b && vite build && npm run assets:check
+
+vite v7.3.1 building client environment for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 3584 modules transformed.
+Generated an empty chunk: "pdf".
+rendering chunks...
+computing gzip size...
+dist/version.json                                   0.42 kB │ gzip:   0.25 kB
+dist/index.html                                     1.58 kB │ gzip:   0.72 kB
+dist/assets/NotoSansJP-C_ziqpoc.woff2              13.06 kB
+dist/assets/IslandWelcome-BJp8Sa-m.css              2.05 kB │ gzip:   0.72 kB
+dist/assets/Island-DldxCEPA.css                    23.59 kB │ gzip:   4.86 kB
+dist/assets/Island-B_5-2egu.css                    81.34 kB │ gzip:  13.30 kB
+dist/assets/index-BMoti81C.css                    245.13 kB │ gzip:  41.78 kB
+dist/assets/pdf-l0sNRNKZ.js                         0.00 kB │ gzip:   0.02 kB
+dist/assets/IslandWelcome-D0RgwAhE.js               1.94 kB │ gzip:   1.04 kB
+dist/assets/IslandOnboarding-CuuEqpuU.js            3.45 kB │ gzip:   1.50 kB
+dist/assets/ThreeParkStage-Is0QFeC7.js             15.55 kB │ gzip:   6.82 kB
+dist/assets/Park-BI2FgTLw.js                       16.40 kB │ gzip:   5.76 kB
+dist/assets/LearningAnswerForm-DL55te-W.js         16.81 kB │ gzip:   6.86 kB
+dist/assets/icons-Cj3P4wa0.js                      26.09 kB │ gzip:   9.71 kB
+dist/assets/audio-DwtSHwBT.js                      36.13 kB │ gzip:   9.75 kB
+dist/assets/islandFurniturePlacement-DA80XvKT.js   42.09 kB │ gzip:  12.15 kB
+dist/assets/react-DcHpdqMy.js                      48.53 kB │ gzip:  17.24 kB
+dist/assets/Island-Bsqc5SDz.js                     63.98 kB │ gzip:  19.88 kB
+dist/assets/data-DHx4MMMe.js                       96.36 kB │ gzip:  32.45 kB
+dist/assets/motion-iLBaTeAD.js                    119.65 kB │ gzip:  39.54 kB
+dist/assets/Island-6MRTrhRC.js                    270.20 kB │ gzip:  78.03 kB
+dist/assets/charts-Dqb-tBNT.js                    371.57 kB │ gzip: 108.42 kB
+dist/assets/runtime-DBsq2R9i.js                   393.72 kB │ gzip: 126.98 kB
+dist/assets/RoundedBoxGeometry-8dcnrx7K.js        571.97 kB │ gzip: 145.61 kB
+dist/assets/index-q25Uk6Wy.js                     986.94 kB │ gzip: 277.41 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 4.13s
+
+PWA v1.2.0
+mode      generateSW
+precache  145 entries (4481.38 KiB)
+files generated
+  dist/sw.js
+  dist/workbox-7c1cd82a.js
+
+> pokko-fushigi-zukan-app@0.0.0 assets:check
+> node tools/check-asset-budget.mjs
+
+PASS assets:check
+- PWA precache: 145 unique files, 10.80 MiB / 12.00 MiB
+- Explore artwork: 27 production files, 4.92 MiB / 8.00 MiB
+- Production-input contract: docs/design only; absent from public and precache

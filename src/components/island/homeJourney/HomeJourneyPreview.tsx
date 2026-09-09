@@ -6,14 +6,23 @@ import * as T from 'three';
 import { HOME_JOURNEY_CANDIDATE, homeJourneyView, type HomeJourneyState } from '../../../domain/island/homeJourney';
 import { buildHomeJourney } from './scene';
 import { growthDeliverySeconds, growthRevealScale, homeJourneyGrowthTarget } from './growthReveal';
+import { createHomeJourneyInterior, type HomeJourneyRoomState } from './interior';
+import type { IslandHomeHit } from '../three/learningKeepsakeScenery';
 
-export default function HomeJourneyPreview({ state, growthAt, onGrowthShown }: {
+export default function HomeJourneyPreview({ state, growthAt, onGrowthShown, room, onHomeEnter, onHomeAction, photoRequestId, onPhoto, photographing = false }: {
     state?: HomeJourneyState; growthAt?: number; onGrowthShown?: () => void;
+    room?: HomeJourneyRoomState; onHomeEnter?: () => void; onHomeAction?: (hit: IslandHomeHit) => void;
+    photoRequestId?: string; onPhoto?: (requestId: string, frame?: string) => void;
+    photographing?: boolean;
 }) {
     const host = useRef<HTMLDivElement>(null), [failed, setFailed] = useState(false);
     const view = homeJourneyView(state);
+    const answers = state?.answers;
     const [wide, setWide] = useState(false);
     const frameCamera = useRef<((wide: boolean) => void) | null>(null);
+    const roomRef = useRef(room), actionRef = useRef(onHomeAction);
+    const photoRef = useRef({ id: photoRequestId, consume: onPhoto });
+    useEffect(() => { roomRef.current = room; actionRef.current = onHomeAction; photoRef.current = { id: photoRequestId, consume: onPhoto }; }, [room, onHomeAction, photoRequestId, onPhoto]);
     const growthAtRef = useRef(growthAt), onGrowthShownRef = useRef(onGrowthShown);
     useEffect(() => { growthAtRef.current=growthAt; onGrowthShownRef.current=onGrowthShown; }, [growthAt,onGrowthShown]);
     useEffect(() => {
@@ -22,9 +31,14 @@ export default function HomeJourneyPreview({ state, growthAt, onGrowthShown }: {
         let renderer: T.WebGLRenderer;
         try { renderer = new T.WebGLRenderer({ antialias: true, alpha: false }); }
         catch { setFailed(true); return; }
-        const content = buildHomeJourney(state), scene = new T.Scene(); scene.background = new T.Color('#72c9de');
+        const content = buildHomeJourney(answers === undefined ? undefined : { version: 1, answers }), scene = new T.Scene(); scene.background = new T.Color('#72c9de');
+        const house = content.world.getObjectByName('home')!;
+        const interior = createHomeJourneyInterior(house);
+        node.dataset.worldId = content.world.uuid;
+        node.dataset.houseId = house.uuid;
         const revealAt = growthAtRef.current;
-        const revealTarget = content.world.getObjectByName(homeJourneyGrowthTarget(revealAt) ?? '');
+        const targetName = homeJourneyGrowthTarget(revealAt);
+        const revealTarget = targetName ? content.world.getObjectByName(targetName) : undefined;
         const revealBaseScale = revealTarget?.scale.clone();
         scene.add(content.world, new T.HemisphereLight('#fff9e9', '#779480', 2));
         const sun = new T.DirectionalLight('#fff6de', 3); sun.position.set(-3, 8, 6); sun.castShadow=true; sun.shadow.mapSize.set(1024,1024);
@@ -48,18 +62,31 @@ export default function HomeJourneyPreview({ state, growthAt, onGrowthShown }: {
                 camera.left=-halfWidth; camera.right=halfWidth; camera.top=halfWidth/aspect; camera.bottom=-camera.top;
             }
             node.dataset.cameraView=wholeIsland?'island':'home';
+            if (roomRef.current) node.dataset.cameraView = 'room';
+            interior.update(roomRef.current, aspect);
             camera.updateProjectionMatrix(); renderer.setSize(width, height);
         };
         frameCamera.current = (value) => { wholeIsland=value; resize(); };
         const observer = new ResizeObserver(resize); observer.observe(node); resize();
         const media = matchMedia('(prefers-reduced-motion: reduce)');
         let elapsed = 0, last = performance.now(), frame = 0, disposed = false, growthReported = false;
+        let capturedPhoto: string | undefined;
+        const tap = (event: PointerEvent) => {
+            if (!roomRef.current || !actionRef.current) return;
+            const rect = renderer.domElement.getBoundingClientRect();
+            const ray = new T.Raycaster();
+            ray.setFromCamera(new T.Vector2((event.clientX - rect.left) / rect.width * 2 - 1, 1 - (event.clientY - rect.top) / rect.height * 2), interior.camera);
+            const hit = interior.room.selectHit(ray.ray);
+            if (hit) actionRef.current(hit);
+        };
+        renderer.domElement.addEventListener('pointerup', tap);
         const animate = (now: number) => {
             if (disposed) return;
             const dt = Math.max(0, Math.min(50, now - last)); last = now;
             if (!document.hidden) {
-                elapsed += dt;
+                if (!roomRef.current) elapsed += dt;
                 const { hero, heroBody, heroFeet, rabbit, otter, parcel, view: v } = content;
+                hero.scale.setScalar(1);
                 const t = media.matches ? 12 : (elapsed / 1000) % 35;
                 hero.position.set(-.55, 0, 1.25); rabbit.pose.position.set(.5, 0, 1.6);
                 rabbit.body.position.y = 0; heroBody.position.y = 0; hero.rotation.set(0, .42, 0);
@@ -113,29 +140,49 @@ export default function HomeJourneyPreview({ state, growthAt, onGrowthShown }: {
                     if (!media.matches && revealSeconds < 1.6) hero.position.y += Math.sin(Math.PI * Math.min(1,revealSeconds/1.6)) * .09;
                     node.dataset.growthAt=String(revealAt);
                     node.dataset.growthPhase=media.matches || revealSeconds >= 1.6 ? 'settled' : 'revealing';
-                    if (!growthReported && revealSeconds >= 2.5) { growthReported=true; onGrowthShownRef.current?.(); }
                 }
-                renderer.render(scene, camera);
+                if (roomRef.current) {
+                    hero.scale.setScalar(.35);
+                    hero.position.copy(interior.room.group.localToWorld(new T.Vector3(-2.13, .76, 2.1)));
+                    hero.position.y -= HERO_SEATED_CONTACT * .35;
+                    hero.rotation.set(0, .2, 0);
+                    heroBody.position.y = -.07;
+                    heroFeet.forEach(foot => { foot.rotation.x = -.7; foot.position.z = .2; });
+                }
+                renderer.render(scene, roomRef.current ? interior.camera : camera);
                 node.dataset.rendered = 'true';
+                // Consume only after a real exterior frame. The local animation
+                // finishes independently; an early exit cannot re-arm it.
+                if (revealTarget && !roomRef.current && !growthReported) {
+                    growthReported = true; onGrowthShownRef.current?.();
+                }
+                const photo = photoRef.current;
+                if (photo.id && photo.id !== capturedPhoto && photo.consume) {
+                    capturedPhoto = photo.id;
+                    let frame: string | undefined;
+                    try { frame = renderer.domElement.toDataURL('image/png'); } catch { /* Existing photo UI handles capture failure. */ }
+                    photo.consume(photo.id, frame);
+                }
             }
             frame = requestAnimationFrame(animate);
         };
         const lost = (event: Event) => { event.preventDefault(); setFailed(true); };
         renderer.domElement.addEventListener('webglcontextlost', lost);
         frame = requestAnimationFrame(animate);
-        return () => { disposed = true; frameCamera.current=null; cancelAnimationFrame(frame); observer.disconnect(); renderer.domElement.removeEventListener('webglcontextlost', lost); renderer.dispose(); content.dispose(); renderer.domElement.remove(); };
-    }, [state]);
-    useEffect(() => { frameCamera.current?.(wide); }, [wide, state]);
+        return () => { disposed = true; frameCamera.current=null; cancelAnimationFrame(frame); observer.disconnect(); renderer.domElement.removeEventListener('pointerup', tap); renderer.domElement.removeEventListener('webglcontextlost', lost); interior.dispose(); renderer.dispose(); content.dispose(); renderer.domElement.remove(); };
+    }, [answers]);
+    useEffect(() => { frameCamera.current?.(wide || photographing); }, [wide, answers, room, photographing]);
     return <section data-home-journey={HOME_JOURNEY_CANDIDATE} data-home-answers={view.answers} style={{ background: '#f4f1e6', borderRadius: 20, overflow: 'hidden' }}>
-        <p style={{ margin: '10px 16px', fontSize: 12 }}>開発用の模型：新しい家と庭。メニュー内は従来の島です。</p>
-        <div role="group" aria-label="景色の切り替え" style={{display:'flex',gap:8,padding:'0 16px 8px'}}>
+        <p style={{ margin: '10px 16px', fontSize: 12 }}>開発用：家と庭・室内を接続。工作・きせかえ・過去の景色は従来の島です。</p>
+        {!room && !photographing && <div role="group" aria-label="景色の切り替え" style={{display:'flex',gap:8,padding:'0 16px 8px',flexWrap:'wrap'}}>
             <button type="button" className="island-text-button" aria-pressed={!wide} onClick={()=>setWide(false)} style={{minHeight:44}}>家の近く</button>
             <button type="button" className="island-text-button" aria-pressed={wide} onClick={()=>setWide(true)} style={{minHeight:44}}>島全体</button>
-        </div>
-        <div ref={host} style={{ width: '100%', height: 'min(55vh, 540px)' }} />
+            {onHomeEnter && <button type="button" className="island-text-button" onClick={onHomeEnter} style={{minHeight:44}}>いえに はいる</button>}
+        </div>}
+        <div ref={host} style={{ width: '100%', height: room ? 'min(38vh, 380px)' : 'min(55vh, 540px)' }} />
         {growthAt && <p role="status" className="sr-only">{view.latest?.title}</p>}
         {failed && <p role="status">景色を表示できません。学習は下のボタンから続けられます。</p>}
-        <p style={{ padding: '0 16px 12px' }}>{view.latest?.title ?? 'ぽこもこの おうち'}<br />
-            {view.next ? `つぎは「${view.next.title}」・あと ${view.next.at - view.answers}問分` : 'テラスと おみせが できたよ。学習は つづけられるよ。'}</p>
+        {!room && <p style={{ padding: '0 16px 12px' }}>{view.latest?.title ?? 'ぽこもこの おうち'}<br />
+            {view.next ? `つぎは「${view.next.title}」・あと ${view.next.at - view.answers}問分` : 'テラスと おみせが できたよ。学習は つづけられるよ。'}</p>}
     </section>;
 }

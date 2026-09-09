@@ -1,5 +1,9 @@
 # Documentation Index
 
+実装する統合方針と引継ぎ境界は[家から育つ島47](product/47_home_island_integration_spec.md)。DEVの外/室内/学習の接続と、本番移行・公開の未完を区別する。
+
+家・学習・島の次の作業と統合上の論点は[2026-09-09の全体整合監査](design/2026-09-09-home-island-consistency-audit.md)を参照。採用済み仕様、DEV試作、検討案、並行実装と検証範囲を分け、実行順を整理している。
+
 家から一操作で始める[学習チャレンジ46](product/46_home_learning_challenge_spec.md)は初版仕様のみ。1分たしざんの出題・採点・中断・記録・追加の賞・学習整合・受入条件を定義し、アプリ実装と子どもの体験検証は未実施。
 
 ## Purpose

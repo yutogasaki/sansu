@@ -1,0 +1,85 @@
+{
+  "target": "http://127.0.0.1:5218",
+  "flag": "DEV + VITE_HOME_JOURNEY_PREVIEW=true",
+  "candidate": "home-journey-connected-house-v7",
+  "kind": "DEV normal-planner integration; not production/art approval",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": "no-preference",
+      "answers": 45,
+      "normalAttempts": 48,
+      "earlyExitNoReplay": true,
+      "sameHouseRoomPhoto": true,
+      "photo": {
+        "id": "[\"island-photo:v1\",\"6890bca0-bf94-4bfa-8f46-88ad999a540e\",\"5897cd42-187e-4d5f-8bfe-71c952f5b597\"]",
+        "profileId": "6890bca0-bf94-4bfa-8f46-88ad999a540e",
+        "version": 1,
+        "capturedAt": 1788955956185,
+        "islandName": "わたしの しま",
+        "targetName": "いえ",
+        "composition": "island",
+        "image": {
+          "mime": "image/png",
+          "width": 390,
+          "height": 321,
+          "bytes": 85629,
+          "sha256": "d1b8408a6028af57d9e0366562835b96d0dcd5eb90991b247014934f2b07601a"
+        },
+        "thumbnail": {
+          "mime": "image/png",
+          "width": 320,
+          "height": 263,
+          "bytes": 74492,
+          "sha256": "9091bd20eb205febb0d2a304b84fd5905d6dc1522ce9b1681268116d81b87584"
+        }
+      },
+      "checkedStores": 7,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "name": "tablet-reduced",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": "reduce",
+      "answers": 45,
+      "normalAttempts": 45,
+      "earlyExitNoReplay": true,
+      "sameHouseRoomPhoto": true,
+      "photo": {
+        "id": "[\"island-photo:v1\",\"bf8c2d44-15ad-412f-b4ea-341ce1886280\",\"2528f5c7-c4bd-4006-83c7-0a3b2d9cf9bd\"]",
+        "profileId": "bf8c2d44-15ad-412f-b4ea-341ce1886280",
+        "version": 1,
+        "capturedAt": 1788956020827,
+        "islandName": "わたしの しま",
+        "targetName": "いえ",
+        "composition": "island",
+        "image": {
+          "mime": "image/png",
+          "width": 768,
+          "height": 380,
+          "bytes": 132672,
+          "sha256": "cee996dac88e79469840c4efdebd7130fc372cec0776cab770057a1393ad17de"
+        },
+        "thumbnail": {
+          "mime": "image/png",
+          "width": 320,
+          "height": 158,
+          "bytes": 45781,
+          "sha256": "cd920278db981c2d873f6e7d8113a7c470626438ab9f95d9950cc0417734d81a"
+        }
+      },
+      "checkedStores": 7,
+      "errors": [],
+      "pass": true
+    }
+  ]
+}

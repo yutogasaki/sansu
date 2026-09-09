@@ -1,6 +1,6 @@
 /** Development-only parallel progression. No retrospective or render-time credit. */
 export interface HomeJourneyState { version: 1; answers: number }
-export const HOME_JOURNEY_CANDIDATE = 'home-journey-growth-reveal-v6';
+export const HOME_JOURNEY_CANDIDATE = 'home-journey-connected-house-v7';
 export const HOME_JOURNEY_STEPS = [
     { at: 3, title: 'おはなが さいた' }, { at: 9, title: 'おうちに ひさしが できた' },
     { at: 15, title: 'ちいさな やたいが できた' }, { at: 21, title: 'ベンチが ふかふかに なった' },

@@ -1,0 +1,48 @@
+{
+  "sourceFingerprint": "f42966e5bd747f2e61b21a4dbc69371da96e471efe496c9fa5761ce0021a429a",
+  "inputsUnchangedAfterChecks": true,
+  "candidate": "home-journey-connected-house-v7",
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run build",
+      "result": "PASS"
+    },
+    {
+      "command": "eslint homeJourney + IslandLearningKeepsakes + Island.tsx + e2e-home-journey.mjs",
+      "result": "PASS"
+    },
+    {
+      "command": "vitest targeted home journey and keepsakes --maxWorkers=1 --no-file-parallelism",
+      "result": "PASS",
+      "files": 7,
+      "tests": 31
+    },
+    {
+      "command": "npm run test:run -- --minWorkers=1 --maxWorkers=4",
+      "result": "PASS",
+      "files": 314,
+      "tests": 3376
+    },
+    {
+      "command": "VITE_ISLAND_ENABLED=false VITE_BUILD_PLAY_ENABLED=false npm run e2e:smoke",
+      "result": "PASS",
+      "scenarios": 31
+    },
+    {
+      "command": "node tools/e2e-home-journey.mjs",
+      "result": "PASS",
+      "viewports": [
+        "390x844",
+        "768x1024 reduced motion"
+      ]
+    }
+  ],
+  "limits": [
+    "DEV home integration, not production rollout",
+    "PWA/offline/full migration and child observation not performed for v7"
+  ]
+}

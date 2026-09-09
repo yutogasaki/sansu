@@ -553,6 +553,8 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const photoDisplayId = SHARED_DISPLAY_IDS.find(id => photoTargetId === `display-${id}` && island.sharedMemories?.displays[id]);
     const photoDisplay = photoDisplayId ? island.sharedMemories?.displays[photoDisplayId] : undefined;
     const keepsakeRoomActive = !preparingLearning && (screen === 'keepsakes' || screen === 'camera' && photoTargetId === 'keepsakes');
+    const homeJourneyScene = homeJourneyEnabled() && (screen === 'home' || screen === 'keepsakes'
+        || screen === 'camera' && (photoOrigin === 'home' || photoOrigin === 'keepsakes'));
     const photoTargets = [{ id: 'island', label: 'しまぜんぶ' }, ...photoResidents.map(id => ({ id: `resident-${id}`, label: experienceState.residents[id].name })),
         ...(['play', 'showcase'].includes(photoOrigin) ? [{ id: 'current', label: 'いまの けしき' }] : []),
         ...SHARED_DISPLAY_IDS.flatMap(id => island.sharedMemories?.displays[id] ? [{ id: `display-${id}`, label: sharedTargetName(island, island.sharedMemories.displays[id]!.target) }] : []),
@@ -584,9 +586,17 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         </header>}
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
-        {active && screen === 'home' && homeJourneyEnabled() && <HomeJourneyPreview state={island.homeJourney}
+        {active && homeJourneyScene && <HomeJourneyPreview key={profile.id} state={island.homeJourney}
+            room={keepsakeRoomActive ? { state: island.learningKeepsakes, completedSets: island.completedSets, selectedId: keepsakeFocus } : undefined}
+            onHomeEnter={!busy && screen === 'home' ? enterHouse : undefined}
+            onHomeAction={!busy && screen === 'keepsakes' ? action => {
+                if (action.type === 'album') { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }
+                else if (action.type === 'notices') { setKeepsakeFocus(undefined); setHouseSection('notices'); }
+                else { keepsakes.select(action.id); setKeepsakeFocus(action.id); setHouseSection('keepsakes'); }
+            } : undefined}
+            photographing={screen === 'camera'} photoRequestId={screen === 'camera' ? photos.requestId : undefined} onPhoto={photos.consume}
             growthAt={homeJourneyGrowthAt} onGrowthShown={() => setHomeJourneyGrowthAt(undefined)} />}
-        {active && !(screen === 'home' && homeJourneyEnabled()) && !['album', 'photos', 'inventory'].includes(screen) && <IslandStage closeHomeView={screen === 'home'} compactCameraControls={screen === 'home'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
+        {active && !homeJourneyScene && !['album', 'photos', 'inventory'].includes(screen) && <IslandStage closeHomeView={screen === 'home'} compactCameraControls={screen === 'home'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
             learningKeepsakes={keepsakeRoomActive ? { state: island.learningKeepsakes, selectedId: keepsakeFocus } : undefined}
             onHomeEnter={!busy && ['home', 'play'].includes(screen) ? enterHouse : undefined}
             onHomeAction={!busy && screen === 'keepsakes' ? action => {
@@ -711,7 +721,9 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                             residentId: furnitureResident, ...(furnitureKind === 'tea-table' ? { partnerId: furniturePartner } : {}) }); }}
                     onPurchase={() => { void receiveFurniture(); }} onRetry={furniture.retry ? () => { void receiveFurniture(true); } : undefined}
                     onPlace={select} onInventory={() => { setPlayRequest(undefined); setScreen('inventory'); }} onClose={home} onLearn={() => void begin()} />
-                : screen === 'camera' ? <IslandPhotoCamera photos={photos} targets={photoTargets} targetId={photoTargetId} disabled={busy}
+                : screen === 'camera' ? <IslandPhotoCamera photos={photos} targets={homeJourneyScene
+                    ? [{ id: 'island', label: 'しまぜんぶ' }, ...(photoOrigin === 'keepsakes' ? [{ id: 'keepsakes', label: 'いえ' }] : [])]
+                    : photoTargets} targetId={photoTargetId} disabled={busy}
                     onTarget={id => { photos.cancel(); setPhotoTargetId(id); }}
                     onCapture={() => photos.capture({ islandName: experienceState.islandName,
                         composition: cameraInlet ? workshopView.mode === 'build' ? 'work' : 'specimen' : photoDisplay ? 'display' : photoResident ? 'resident' : 'island',
