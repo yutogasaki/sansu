@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import { Leaf } from 'lucide-react';
+import { Lightbulb, BookOpen } from 'lucide-react';
 import type { IslandLearningAction, IslandPlan } from '../../domain/island/types';
 import { ISLAND_LEARNING_CANDIDATE } from '../../domain/island/feature';
 import { islandSupportStage } from '../../domain/island/learningSupport';
@@ -11,6 +11,7 @@ import { islandObservationBinding } from '../../domain/island/learningObservatio
 import { readIslandLearningDOM, type IslandLearningObserver } from './useIslandLearningObservation';
 import './IslandLearningPanel.css';
 import './IslandLearningFocus.css';
+import './IslandLearningTheme.css';
 
 function LightSeed({ filled, current }: { filled: boolean; current: boolean }) {
     return <span className="island-light-seed" data-filled={filled} data-current={current} aria-hidden="true">
@@ -51,8 +52,11 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
         data-island-plan-id={plan.id} data-island-plan-revision={plan.revision} data-input-ready={!busy}
         data-learning-feedback={feedback?.kind ?? 'ready'} data-learning-reaction-id={feedback?.id ?? ''}>
         <div className="island-learning-progress">
-            {subjectChoice ? <IslandSubjectChoice subject={plan.subject} selected={subjectChoice.selected} disabled={busy} onChange={subjectChoice.onChange} />
-                : <span className="island-learning-subject"><Leaf size={15} aria-hidden="true" />{plan.subject === 'math' ? 'さんすう' : 'えいたんご'}</span>}
+            <div className="island-learning-label">
+                <img className="island-learning-patch" src="/icons/icon-192.png" width="28" height="28" alt="" aria-hidden="true" draggable="false" />
+                {subjectChoice ? <IslandSubjectChoice subject={plan.subject} selected={subjectChoice.selected} disabled={busy} onChange={subjectChoice.onChange} />
+                    : <span className="island-learning-subject">{plan.subject === 'math' ? 'さんすう' : 'えいたんご'}</span>}
+            </div>
             <div className="island-light-trail" aria-label={`${plan.cursor + 1}もんめ、ぜんぶで${plan.slots.length}もん`}>
                 {plan.slots.map((_, index) => <LightSeed key={index} filled={index < plan.cursor} current={index === plan.cursor} />)}
             </div>
@@ -65,10 +69,10 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
             onAnswer={answer => onAction({ type: 'answer', answer })} />
         <div className="island-learning-actions">
             {!stage ? <>
-                <button className="island-text-button" disabled={busy} onClick={() => onAction({ type: 'support_opened' })}>ヒントを みる</button>
+                <button className="island-text-button" disabled={busy} onClick={() => onAction({ type: 'support_opened' })}><Lightbulb size={16} aria-hidden="true" />ヒントを みる</button>
                 <button className="island-text-button" disabled={busy} onClick={() => onAction({ type: 'skipped' })}>わからない</button>
             </> : stage === 'hint'
-                ? <button className="island-text-button" disabled={busy} onClick={() => onAction({ type: 'model_opened' })}>おてほんを みる</button>
+                ? <button className="island-text-button" disabled={busy} onClick={() => onAction({ type: 'model_opened' })}><BookOpen size={16} aria-hidden="true" />おてほんを みる</button>
                 : <button className="island-primary" disabled={busy} onClick={() => onAction({ type: 'supported_completed' })}>つぎへ すすむ</button>}
         </div>
     </section>;

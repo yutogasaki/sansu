@@ -1,0 +1,165 @@
+/* Charter: a matte reading tile and a softly padded input tray.
+   Long content still scrolls inside the existing focus layout. */
+.app-container .island-page[data-layout-version][data-mode=learning] {
+    background: var(--pokomoko-canvas) var(--pokomoko-dot-field) 14px 6px / 430px 430px repeat;
+}
+.app-container .island-page[data-mode=learning] > .island-header {
+    background: var(--pokomoko-paper);
+    border-bottom: 1px solid var(--pokomoko-edge);
+}
+.app-container .island-page[data-mode=learning] > .island-workbench {
+    --island-workbench-paper: var(--pokomoko-paper);
+    width: calc(100% - 24px);
+    max-height: 680px;
+    margin-block: auto;
+    border-color: var(--pokomoko-edge);
+    border-top: 6px solid var(--pokomoko-lavender);
+    border-radius: 28px 28px 22px 22px;
+    box-shadow: inset 0 -4px 0 var(--pokomoko-canvas), 0 4px 0 var(--pokomoko-stitch);
+}
+.island-workbench .island-learning-progress {
+    position: relative;
+    padding: 3px 9px;
+    gap: 4px;
+    border-radius: 10px 18px 18px 10px;
+    background: var(--pokomoko-lavender);
+    color: var(--pokomoko-ink);
+    box-shadow: inset 0 1px 0 var(--pokomoko-paper), 0 2px 0 var(--pokomoko-edge);
+}
+.island-workbench .island-learning-progress::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 1px dashed var(--pokomoko-stitch);
+    border-radius: 7px 15px 15px 7px;
+    pointer-events: none;
+}
+.island-learning-label { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.island-learning-patch {
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--pokomoko-paper);
+    border-radius: 9px;
+    box-shadow: 0 1px 0 var(--pokomoko-stitch);
+    pointer-events: none;
+}
+.island-workbench .island-learning-subject { white-space: nowrap; }
+.island-page[data-mode=learning] [data-problem-prose=true] .island-prose-prompt {
+    display: block;
+    font-size: clamp(24px, 5.5vw, 30px);
+    line-height: 1.65;
+    font-weight: 650;
+    white-space: pre-wrap;
+    text-wrap: balance;
+}
+.island-prose-chunk {
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+}
+.island-workbench .island-light-trail {
+    border-radius: 20px;
+    padding-inline: 8px;
+    background: var(--pokomoko-paper);
+}
+.island-workbench .island-learning-count { flex: none; white-space: nowrap; }
+.island-workbench .island-learning-count small { color: var(--pokomoko-muted); }
+.island-page[data-mode=learning] .island-problem-prompt[data-problem-visual=symbolic]:not([data-problem-prose=true]) {
+    max-width: 420px;
+    padding: 12px 10px;
+    border-radius: 22px;
+    background: var(--pokomoko-canvas);
+    box-shadow: inset 0 1px 0 var(--pokomoko-edge), inset 0 -2px 0 var(--pokomoko-paper);
+}
+.island-page[data-mode=learning] .island-problem-prompt[data-problem-visual=symbolic]:not([data-problem-prose=true]) .island-prompt-content {
+    font-size: clamp(36px, 8vw, 48px);
+    line-height: 1.35;
+    color: var(--pokomoko-ink);
+}
+.island-page[data-mode=learning] .island-answer .park-keypad > div {
+    position: relative;
+    background: var(--pokomoko-lavender);
+    border-color: var(--pokomoko-stitch);
+    border-radius: 24px;
+    box-shadow: inset 0 3px 2px var(--pokomoko-paper), inset 0 -3px 2px var(--pokomoko-stitch), 0 4px 0 var(--pokomoko-stitch);
+}
+.island-page[data-mode=learning] .island-answer .park-keypad > div::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 1px dashed var(--pokomoko-muted);
+    border-radius: 20px;
+    opacity: .45;
+    pointer-events: none;
+}
+.island-page[data-mode=learning] .island-answer .park-keypad button,
+.island-page[data-mode=learning] .island-answer .park-choices button {
+    background: var(--pokomoko-paper);
+    color: var(--pokomoko-ink);
+    border-color: var(--pokomoko-stitch);
+    border-bottom-color: var(--pokomoko-muted);
+    border-radius: 16px;
+    box-shadow: inset 0 -3px 0 var(--pokomoko-canvas), inset 0 2px 0 white;
+}
+.island-page[data-mode=learning] .island-answer .park-keypad button[data-keypad-submit]:not([data-confirmation-mode]) {
+    background: var(--pokomoko-blue);
+    color: white;
+    border-color: var(--pokomoko-blue-deep);
+    box-shadow: inset 0 2px 0 rgb(255 255 255 / 20%);
+}
+.island-page[data-mode=learning] .island-answer .park-keypad button[aria-label="こたえを けす"],
+.island-page[data-mode=learning] .island-answer .park-keypad button[aria-label="ひとつ もどす"] {
+    background: var(--pokomoko-canvas);
+    color: var(--pokomoko-muted);
+    box-shadow: inset 0 2px 0 var(--pokomoko-paper);
+}
+.island-page[data-mode=learning] .island-answer .park-input {
+    background: var(--pokomoko-paper);
+    color: var(--pokomoko-ink);
+    border-color: var(--pokomoko-blue);
+    border-radius: 16px;
+    box-shadow: inset 0 2px 2px var(--pokomoko-edge);
+}
+.island-page[data-mode=learning] .island-answer .park-input[aria-pressed=true] {
+    background: var(--park-mint);
+    outline-color: var(--pokomoko-blue);
+}
+.island-workbench .island-learning-actions {
+    border-top: 1px solid var(--pokomoko-edge);
+}
+.island-workbench .island-learning-actions .island-text-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 13px;
+}
+.island-workbench .island-learning-actions .island-text-button:first-child {
+    color: var(--pokomoko-blue-deep);
+    background: var(--park-mint);
+    border-radius: 14px;
+}
+@media (min-width: 700px) {
+    .app-container .island-page[data-mode=learning] > .island-workbench {
+        border-top-width: 8px;
+    }
+}
+@media (max-height: 700px) {
+    .island-page[data-mode=learning] .island-problem-prompt[data-problem-visual=symbolic]:not([data-problem-prose=true]) {
+        padding-block: 6px;
+    }
+    .island-workbench .island-learning-progress { padding-block: 0; }
+    .island-learning-patch { width: 24px; height: 24px; }
+    .island-page[data-mode=learning] [data-problem-prose=true] .island-prose-prompt { font-size: 22px; line-height: 1.5; }
+}
+@media (max-width: 699px) {
+    .island-workbench .island-light-trail { padding-inline: 5px; gap: 2px; }
+    .island-workbench .island-light-trail:has(> :nth-child(6)) .island-light-seed { width: 18px; }
+    .island-workbench .island-subject-choice { min-width: 84px; padding-inline: 4px; }
+}
+@media (max-width: 399px) {
+    .island-learning-patch { width: 24px; height: 24px; }
+    .island-learning-label { gap: 4px; }
+}

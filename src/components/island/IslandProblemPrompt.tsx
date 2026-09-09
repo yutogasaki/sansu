@@ -4,13 +4,17 @@ import { MathProblemPrompt } from '../domain/MathProblemPrompt';
 import { IslandGlyph } from './IslandGlyph';
 import { splitIslandLabel } from './islandGlyphs';
 import { islandReferenceChoices } from './islandReferenceChoices';
+import { IslandProsePrompt } from './IslandProsePrompt';
 
 const renderItem = (item: ProblemVisualItem) => <IslandGlyph symbol={item.emoji} label={item.label} />;
 
 export function IslandProblemPrompt({ problem, speechControl }: { problem: Problem; speechControl?: ReactNode }) {
     const reference = islandReferenceChoices(problem) && problem.questionVisual?.kind === 'reference-choice-grid'
         ? problem.questionVisual : undefined;
-    return <div className="island-problem-prompt" data-problem-visual={problem.questionVisual?.kind ?? 'symbolic'} data-subject={problem.subject}>
+    const prose = problem.subject === 'math' && !problem.questionVisual && /[ぁ-んァ-ヶ一-龠]/.test(problem.questionText ?? '');
+    const plainProse = prose && !problem.categoryId?.startsWith('frac_') && !/\d+\s*\/\s*\d+/.test(problem.questionText ?? '');
+    return <div className="island-problem-prompt" data-problem-visual={problem.questionVisual?.kind ?? 'symbolic'} data-subject={problem.subject}
+        data-problem-prose={prose}>
         {problem.subject === 'vocab' && <svg className="island-word-seal" viewBox="0 0 48 36" aria-hidden="true" focusable="false">
             <rect x="4" y="4" width="40" height="28" rx="4" fill="#eadbb8" />
             <path d="m5 6 19 15L43 6M5 31l13-12m25 12L30 19" fill="none" stroke="#c1a879" strokeWidth="2" />
@@ -24,7 +28,8 @@ export function IslandProblemPrompt({ problem, speechControl }: { problem: Probl
             <p data-visual-caption>{reference.prompt || 'おなじ ものは？'}</p>
         </div> : problem.subject === 'vocab' ? <div className="island-spoken-word">
             <MathProblemPrompt problem={problem} className="island-prompt-content" renderItem={renderItem} />{speechControl}
-        </div> : <MathProblemPrompt problem={problem} className="island-prompt-content" renderItem={renderItem} />}
+        </div> : plainProse ? <IslandProsePrompt text={problem.questionText ?? ''} />
+            : <MathProblemPrompt problem={problem} className="island-prompt-content" renderItem={renderItem} />}
     </div>;
 }
 
