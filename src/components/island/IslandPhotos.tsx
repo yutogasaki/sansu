@@ -7,6 +7,7 @@ import type { useIslandPhotos } from './useIslandPhotos';
 import { IslandAlbumBinding, IslandAlbumStamp, type IslandAlbumDecoration } from './IslandAlbumDecoration';
 import './IslandPhotos.css';
 import './IslandPanel.css';
+import { useIslandNavigation } from './useIslandNavigation';
 
 type PhotoState = ReturnType<typeof useIslandPhotos>;
 
@@ -32,7 +33,7 @@ export function IslandPhotoCamera({ photos, targets, targetId, disabled, onTarge
 }) {
     return <section className="island-sheet island-panel island-photo-camera" data-testid="island-photo-camera" data-photo-status={photos.status}>
         <div className="island-sheet-title"><h2>しゃしんを とろう</h2>
-            <button className="island-icon-button island-panel-back" aria-label="カメラを とじる" disabled={disabled} onClick={onClose}><X size={20} /><span>もどる</span></button></div>
+            <button className="island-icon-button island-panel-back" aria-label="カメラを とじる" disabled={disabled} onClick={onClose}><X size={20} /><span>とじる</span></button></div>
         <div className="island-photo-targets island-panel-choices" role="group" aria-label="うつす もの">{targets.map(target =>
             <button key={target.id} className="island-secondary" aria-pressed={targetId === target.id}
                 disabled={disabled || photos.processing} onClick={() => onTarget(target.id)}>{target.label}</button>)}</div>
@@ -82,7 +83,7 @@ function PhotoDetail({ photo, photos, decoration, disabled, onBack }: { photo: I
         return () => { alive = false; };
     }, [photo.profileId, photo.id]);
     return <article className="island-photo-detail" data-photo-id={photo.id}>
-        <button className="island-text-button" onClick={onBack}><ArrowLeft size={17} />しゃしんの いちらんへ</button>
+        <button className="island-text-button" onClick={onBack}><X size={20} />とじる</button>
         <figure>{exportBlob ? <PhotoPreview blob={exportBlob} name={photo.targetName ?? photo.islandName} />
             : <p role="status">{downloadError ? 'しゃしんを ひらけなかったよ' : 'ひらいているよ…'}</p>}<figcaption><strong>{photo.targetName ?? photo.islandName}</strong>
             <span>{photo.islandName} · {new Date(photo.capturedAt).toLocaleDateString('ja-JP', { month: 'long', day: 'numeric' })}</span></figcaption><IslandAlbumStamp decoration={decoration} /></figure>
@@ -106,22 +107,29 @@ export function IslandPhotoAlbumPreview({ photo, decoration }: { photo?: IslandP
 export function IslandPhotoGallery({ photos, decoration, disabled, onCamera, onClose, onLearn }: {
     photos: PhotoState; decoration?: IslandAlbumDecoration; disabled: boolean; onCamera: () => void; onClose: () => void; onLearn: () => void;
 }) {
-    const [selectedId, setSelectedId] = useState<string>();
+    const navigation = useIslandNavigation();
+    const [localSelectedId, setLocalSelectedId] = useState<string>();
+    const selectedId = navigation ? navigation.photoId : localSelectedId;
+    const setSelectedId = (id?: string) => {
+        if (navigation) { if (id) navigation.open(`/island?view=photos&photo=${encodeURIComponent(id)}`); else navigation.back(); }
+        else setLocalSelectedId(id);
+    };
     const selected = photos.snapshot?.photos.find(photo => photo.id === selectedId);
     return <section className="island-sheet island-panel island-photo-gallery" data-testid="island-photo-gallery">
-        <div className="island-sheet-title"><h2>しゃしんの アルバム</h2>
-            <button className="island-icon-button island-panel-back" disabled={disabled} aria-label="しゃしんの アルバムを とじる" onClick={onClose}><X size={20} /><span>もどる</span></button></div>
+        {!selectedId && <div className="island-sheet-title"><h2>しゃしんの アルバム</h2>
+            <button className="island-icon-button island-panel-back" disabled={disabled} aria-label="しゃしんの アルバムから もどる" onClick={onClose}><ArrowLeft size={20} /><span>もどる</span></button></div>}
         {photos.error && <p className="island-photo-error" role="alert">{photos.error}</p>}
         {photos.canRetry && <button className="island-secondary" disabled={disabled || photos.processing} onClick={photos.retry}>もういちど ためす</button>}
         <IslandAlbumBinding decoration={decoration}>{photos.readError ? <p role="alert">{photos.readError}<button className="island-text-button" onClick={photos.retryRead}>もういちど ひらく</button></p>
             : !photos.snapshot ? <p role="status">アルバムを ひらいているよ…</p>
                 : selected ? <PhotoDetail key={selected.id} photo={selected} photos={photos} decoration={decoration} disabled={disabled} onBack={() => setSelectedId(undefined)} />
+                    : selectedId ? <div role="alert"><p>この しゃしんを ひらけなかったよ。</p><button className="island-secondary" onClick={() => setSelectedId(undefined)}><X size={20} />とじる</button></div>
                     : photos.snapshot.photos.length ? <><p className="island-photo-count">{photos.snapshot.photos.length} / 12まい</p>
                         <div className="island-photo-grid">{photos.snapshot.photos.map(photo => <button key={photo.id} className="island-photo-card"
                             data-photo-id={photo.id} onClick={() => setSelectedId(photo.id)}><PhotoImage photo={photo} />
                             <span>{photo.targetName ?? photo.islandName}</span><small>{new Date(photo.capturedAt).toLocaleDateString('ja-JP', { month: 'short', day: 'numeric' })}</small><IslandAlbumStamp decoration={decoration} /></button>)}</div></>
                         : <div className="island-photo-empty"><Camera size={42} aria-hidden="true" /><p>すきな けしきを とって<br />ここに のこそう。</p><IslandAlbumStamp decoration={decoration} /></div>}</IslandAlbumBinding>
-        <div className="island-photo-actions"><button className="island-secondary" disabled={disabled} onClick={onCamera}><Camera size={18} />しゃしんを とる</button>
-            <button className="island-primary" disabled={disabled} onClick={onLearn}>まなぶ<ArrowRight size={18} /></button></div>
+        {!selectedId && <div className="island-photo-actions"><button className="island-secondary" disabled={disabled} onClick={onCamera}><Camera size={18} />しゃしんを とる</button>
+            {!navigation && <button className="island-primary" disabled={disabled} onClick={onLearn}>まなぶ<ArrowRight size={18} /></button>}</div>}
     </section>;
 }

@@ -213,6 +213,10 @@ function App() {
                         />
                     )}
                     <Route path="/onboarding" element={<Onboarding />} />
+                    {/* Resolve launch before mounting the shell, so stale learning
+                        queries cannot create a session during the redirect. */}
+                    <Route path="/" element={<LaunchRoute />} />
+                    <Route path="*" element={<Navigate to="/" replace />} />
 
                     <Route path="/battle" element={<Layout />}>
                         <Route path="play" element={
@@ -228,13 +232,12 @@ function App() {
                     </Route>
 
                     <Route element={<Layout />}>
-                        <Route path="/" element={<LaunchRoute />} />
                         <Route path="/park" element={BUILD_PLAY_AVAILABLE ?
                             <PrivateRoute><Suspense fallback={<Spinner fullScreen message="ゆうえんちを じゅんびちゅう…" />}><Park /></Suspense></PrivateRoute>
                             : <Navigate to="/" replace />
                         } />
                         <Route path="/island" element={islandAvailable() ?
-                            <PrivateRoute><Suspense fallback={<Spinner fullScreen message="しまを じゅんびちゅう…" />}><Island /></Suspense></PrivateRoute>
+                            <PrivateRoute>{islandEnabled() ? null : <Suspense fallback={<Spinner fullScreen message="しまを じゅんびちゅう…" />}><Island /></Suspense>}</PrivateRoute>
                             : <Navigate to="/" replace />
                         } />
                         <Route path="/study" element={

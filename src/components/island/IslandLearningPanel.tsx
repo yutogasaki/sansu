@@ -20,8 +20,9 @@ function LightSeed({ filled, current }: { filled: boolean; current: boolean }) {
 }
 
 /** Help preserves the current draft; saved answers and new slots reset it. */
-export function IslandLearningPanel({ plan, intro = false, busy, feedback, onAction, observation, englishAutoRead = false, subjectChoice }: {
+export function IslandLearningPanel({ plan, active = true, intro = false, busy, feedback, onAction, observation, englishAutoRead = false, subjectChoice }: {
     plan: IslandPlan;
+    active?: boolean;
     intro?: boolean;
     busy: boolean;
     feedback?: IslandLearningFeedback;
@@ -44,7 +45,7 @@ export function IslandLearningPanel({ plan, intro = false, busy, feedback, onAct
     if (!slot) return null;
     const stage = islandSupportStage(slot);
     const answerReceiptId = feedback && ['correct', 'retry', 'step'].includes(feedback.kind) ? feedback.id : undefined;
-    return <section ref={section} className="island-learning island-workbench" aria-label="しまへ ひかりを とどけよう"
+    return <section ref={section} hidden={!active} inert={!active || undefined} className="island-learning island-workbench" aria-label="しまへ ひかりを とどけよう"
         data-learning-candidate={ISLAND_LEARNING_CANDIDATE}
         data-intro={intro}
         data-island-plan-id={plan.id} data-island-plan-revision={plan.revision} data-input-ready={!busy}

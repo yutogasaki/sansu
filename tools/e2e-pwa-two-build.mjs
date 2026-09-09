@@ -110,6 +110,8 @@ async function finishProfile(page) {
     await page.getByRole('button', { name: /さんすう だけ/ }).click();
     await page.getByRole('button', { name: /足し算まで/ }).click();
     // Wait through the transient root redirect before the next navigation.
+    await page.waitForURL(url => url.hash === '#/battle');
+    await page.getByRole('button', { name: 'すぐ たんけんを はじめる', exact: true }).click();
     await page.waitForURL(url => url.hash === '#/explore');
     await page.getByRole('button', { name: '1', exact: true }).first().waitFor();
 }

@@ -4,6 +4,7 @@ import { Icons } from "./icons";
 import { warmUpTTS } from "../utils/tts";
 import { islandEnabled } from "../domain/island/feature";
 import { IslandMark } from "./island/IslandMark";
+import { useIslandNavigation } from './island/useIslandNavigation';
 
 type TabItem = {
     to: string;
@@ -17,35 +18,36 @@ export const Footer: React.FC = () => {
     const navigate = useNavigate();
     const currentPath = location.pathname;
     const islandHome = islandEnabled();
+    const navigation = useIslandNavigation();
 
     if (islandHome) {
         const tabs: TabItem[] = [
-            { to: "/stats", icon: Icons.Stats, label: "きろく" },
             { to: "/island", icon: IslandMark, label: "しま", activePaths: ["/", "/island"] },
-            { to: "/settings", icon: Icons.Settings, label: "せってい", activePaths: ["/settings", "/parents", "/dev"] },
+            { to: "/study", icon: Icons.Study, label: "まなぶ" },
+            { to: "/stats", icon: Icons.Stats, label: "きろく" },
         ];
 
         return (
             <nav className="island-shell-nav" aria-label="メインメニュー">
                 {tabs.map(item => {
-                    const active = (item.activePaths ?? [item.to]).some(path => currentPath === path
-                        || (path !== "/" && currentPath.startsWith(`${path}/`)));
-                    const primary = item.to === "/island";
+                    const active = navigation ? item.to === `/${navigation.tab}` : currentPath === item.to;
+                    const primary = item.to === "/study";
                     return (
                         <button
                             key={item.to}
                             type="button"
-                            className={`island-shell-tab${primary ? " island-shell-tab--home" : ""}`}
+                            className={`island-shell-tab${primary ? " island-shell-tab--learn island-start" : ""}`}
                             aria-label={item.label}
                             aria-current={active ? "page" : undefined}
+                            disabled={navigation?.blocked}
                             onClick={() => {
-                                if (item.to === currentPath) return;
-                                if (primary) warmUpTTS();
-                                navigate(item.to);
+                                if (navigation) {
+                                    if (primary) navigation.startLearning();
+                                    else navigation.selectTab(item.to === '/island' ? 'island' : 'stats');
+                                } else { if (primary) warmUpTTS(); navigate(item.to); }
                             }}
                         >
-                            {primary ? <img className="island-shell-home-bear" src="/icons/icon-192.png" alt="" aria-hidden="true" />
-                                : <item.icon width={24} height={24} strokeWidth={active ? 2.5 : 2} aria-hidden="true" />}
+                            <item.icon width={24} height={24} strokeWidth={active ? 2.5 : 2} aria-hidden="true" />
                             <span>{item.label}</span>
                         </button>
                     );

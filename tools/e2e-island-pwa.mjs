@@ -7,6 +7,27 @@ import { assertExploreCheckpoint, waitForExploreNumericReady, waitForPageState }
 const base = process.env.SANSU_ISLAND_PRODUCTION_URL || 'http://127.0.0.1:5298';
 const out = process.env.SANSU_ISLAND_OUTPUT || 'output/playwright/island';
 const comparisonStores = ['islands', 'islandPlans', 'islandEvents', 'logs', 'memoryMath', 'memoryVocab', 'exploreRuns'];
+// Closing now really visits home before an explicit resume. That visible home
+// can complete a natural discovery; only its exact atomic receipt may differ.
+function assertHomeCheckpointRestored(before, after) {
+    const previousIds = new Set(before.islandEvents.map(event => event.id));
+    const added = after.islandEvents.filter(event => !previousIds.has(event.id)).sort((a, b) => a.timestamp - b.timestamp);
+    assert.deepEqual(after.islandEvents.filter(event => previousIds.has(event.id)), before.islandEvents);
+    const expected = structuredClone(before.island);
+    for (const event of added) {
+        assert.equal(event.type, 'discovery_observed');
+        assert.equal(event.profileId, expected.profileId);
+        assert.equal(event.id, JSON.stringify(['island-discovery-v1', expected.profileId, event.discoveryId]));
+        assert(!expected.growth.discoveries.some(item => item.id === event.discoveryId));
+        assert(expected.items.some(item => item.id === event.itemId));
+        expected.growth.discoveries.push({ id: event.discoveryId, itemId: event.itemId, discoveredAt: event.timestamp });
+        expected.revision += 1; expected.updatedAt = event.timestamp;
+    }
+    assert.deepEqual(after.island, expected);
+    assert.deepEqual(after.islands, before.islands.map(island => island.profileId === expected.profileId ? expected : island));
+    for (const store of comparisonStores.filter(store => store !== 'islands' && store !== 'islandEvents')) assert.deepEqual(after[store], before[store]);
+    assert.deepEqual(after.plan, before.plan);
+}
 const scope = {
     comparisonStores, bootstrapOwnerStores: ['profiles', 'appData'],
     fixture: 'Native profile only; real UI creates reservations/answers. Legacy additionally omits growth and reward-pacing fields from its actual first reservation.',
@@ -136,18 +157,18 @@ try {
         assert.equal(manifest.version, report.runtime.version);
         assert.equal(manifest.revision, report.runtime.revision);
         report.manifest = manifest;
-        await page.locator('.island-page[data-mode="home"] .island-start').click();
+        await page.locator('.island-shell-tab--learn').click();
         await waitMode(page, 'learning');
         let before = await readNative(page, id);
         const protectedMarker = 'island-active-learning';
         await noReloadWhile(page, protectedMarker, () => dispatch(page, 'sansu:pwa-e2e-reload', { version: protectedMarker }));
         const checkpointNavigation = markerRequest(page, protectedMarker);
         const checkpointLoaded = page.waitForEvent('domcontentloaded');
-        await button(page, 'しまへ').click();
+        await button(page, 'とじる').click();
         await checkpointNavigation;
         await checkpointLoaded;
-        await waitReady(page);
-        await waitMode(page, 'learning');
+        await waitReady(page); await waitMode(page, 'home');
+        await page.locator('.island-start').click(); await waitMode(page, 'learning');
         assert.deepEqual((await readNative(page, id)).plan, before.plan);
         assert.deepEqual((await readNative(page, id)).logs, before.logs);
         report.hookChecks.push('active learning defers update; user home checkpoint reloads with reserved plan preserved');
@@ -172,9 +193,8 @@ try {
 
         await page.goto(`${base}/#/island`);
         await waitReady(page);
-        await button(page, 'しまへ').click();
         await waitMode(page, 'home');
-        await button(page, 'つづきから とく').click();
+        await page.locator('.island-start').click();
         await waitMode(page, 'learning');
         const freshMarker = 'island-fresh-checkpoint-session';
         await noReloadWhile(page, freshMarker, () => dispatch(page, 'sansu:pwa-e2e-reload', { version: freshMarker }));
@@ -185,11 +205,11 @@ try {
         const answered = answer.state.plan;
         const answerCheckpoint = markerRequest(page, freshMarker);
         const answerLoaded = page.waitForEvent('domcontentloaded');
-        await button(page, 'しまへ').click();
+        await button(page, 'とじる').click();
         await answerCheckpoint;
         await answerLoaded;
-        await waitReady(page);
-        await waitMode(page, 'learning');
+        await waitReady(page); await waitMode(page, 'home');
+        await page.locator('.island-start').click(); await waitMode(page, 'learning');
         assert.deepEqual((await readNative(page, id)).plan, answered);
         report.hookChecks.push('continue pointer protects fresh session; answer receipt survives next user checkpoint');
 
@@ -218,12 +238,11 @@ try {
         assert.notEqual(continuous.plan.id, firstPlanId);
         assert.equal(continuous.plan.cursor, 0);
         const firstNavigation = markerRequest(page, firstMarker), firstLoaded = page.waitForEvent('domcontentloaded');
-        await button(page, 'しまへ').click();
-        await firstNavigation; await firstLoaded; await waitReady(page); await waitMode(page, 'learning');
+        await button(page, 'とじる').click();
+        await firstNavigation; await firstLoaded; await waitReady(page); await waitMode(page, 'home');
+        await page.locator('.island-start').click(); await waitMode(page, 'learning');
         const firstRestored = await readNative(page, id);
-        assert.deepEqual(firstRestored.plan, continuous.plan);
-        assert.deepEqual(firstRestored.island, continuous.island);
-        assert.deepEqual(firstRestored.logs, continuous.logs);
+        assertHomeCheckpointRestored(continuous, firstRestored);
         report.hookChecks.push('first automatic growth defers update; growth, auto placement and next reservation survive user checkpoint');
         report.firstBoundary = { saved: continuous, restored: firstRestored };
         continuous = firstRestored;
@@ -253,12 +272,11 @@ try {
         assert.equal(continuous.logs.length, boundaryBefore.logs.length + 1);
         const boundaryNavigation = markerRequest(page, boundaryMarker);
         const boundaryLoaded = page.waitForEvent('domcontentloaded');
-        await button(page, 'しまへ').click();
-        await boundaryNavigation; await boundaryLoaded; await waitReady(page); await waitMode(page, 'learning');
+        await button(page, 'とじる').click();
+        await boundaryNavigation; await boundaryLoaded; await waitReady(page); await waitMode(page, 'home');
+        await page.locator('.island-start').click(); await waitMode(page, 'learning');
         const boundaryRestored = await readNative(page, id);
-        assert.deepEqual(boundaryRestored.plan, continuous.plan);
-        assert.deepEqual(boundaryRestored.island, continuous.island);
-        assert.deepEqual(boundaryRestored.logs, continuous.logs);
+        assertHomeCheckpointRestored(continuous, boundaryRestored);
         report.hookChecks.push('ordinary second section keeps update deferred; minor growth, unchanged land and album, and next reservation survive the voluntary checkpoint');
         report.automaticBoundary = { before: boundaryBefore, saved: continuous, restored: boundaryRestored };
 
@@ -285,12 +303,11 @@ try {
         assert.equal(continuous.island.items.length, 5);
         assert(continuous.island.items.some(item => item.kind === 'swing' && item.position));
         const matureNavigation = markerRequest(page, matureMarker), matureLoaded = page.waitForEvent('domcontentloaded');
-        await button(page, 'しまへ').click();
-        await matureNavigation; await matureLoaded; await waitReady(page); await waitMode(page, 'learning');
+        await button(page, 'とじる').click();
+        await matureNavigation; await matureLoaded; await waitReady(page); await waitMode(page, 'home');
+        await page.locator('.island-start').click(); await waitMode(page, 'learning');
         const matureRestored = await readNative(page, id);
-        assert.deepEqual(matureRestored.plan, continuous.plan);
-        assert.deepEqual(matureRestored.island, continuous.island);
-        assert.deepEqual(matureRestored.logs, continuous.logs);
+        assertHomeCheckpointRestored(continuous, matureRestored);
         report.hookChecks.push('first maturity defers update; east expansion, combined album record, stable items and next reservation survive the voluntary checkpoint');
         report.matureBoundary = { before: matureBefore, saved: continuous, restored: matureRestored };
 
@@ -313,7 +330,7 @@ try {
         assertExploreCheckpoint(old, id, oldReady);
         await page.goto(`${base}/#/`);
         await page.waitForURL('**/#/island'); await waitReady(page);
-        if (await button(page, 'しまへ').isVisible()) { await button(page, 'しまへ').click(); await waitMode(page, 'home'); }
+        if (await button(page, 'とじる').isVisible()) { await button(page, 'とじる').click(); await waitMode(page, 'home'); }
         await button(page, 'ほかの あそび').click();
         await page.getByRole('button', { name: /ポッコの たんけん/ }).click();
         await page.waitForURL('**/#/explore');
@@ -347,7 +364,7 @@ try {
         const id = await seedNative(legacyPage, 'island-legacy-gift-checkpoint');
         await legacyPage.goto(`${base}/#/island`); await waitSeededHome(legacyPage, id);
         report.bootstrapChecks.push({ scenario: 'legacy', profileId: id, emptyWelcome: true, seededHome: true, reservedPlanBeforeStart: false });
-        await legacyPage.locator('.island-page[data-mode="home"] .island-start').click(); await waitMode(legacyPage, 'learning');
+        await legacyPage.locator('.island-shell-tab--learn').click(); await waitMode(legacyPage, 'learning');
         const generated = await readNative(legacyPage, id);
         assert.equal(generated.plan.rewardPacing, 'answers-v1');
         await legacyPage.evaluate(async ({ profileId, planId }) => {
@@ -444,7 +461,7 @@ try {
         await offlineContext.setOffline(true);
         await offlinePage.reload();
         assert.deepEqual(await waitSeededHome(offlinePage, id), offlineHome, 'Offline home reload preserves the seven-store pre-reservation fixture');
-        await offlinePage.locator('.island-page[data-mode="home"] .island-start').click();
+        await offlinePage.locator('.island-shell-tab--learn').click();
         await waitMode(offlinePage, 'learning');
         let state = await readNative(offlinePage, id);
         const firstPlanId = state.plan.id;

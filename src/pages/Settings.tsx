@@ -15,7 +15,8 @@ import {
 } from "../components/ui/SurfacePanel";
 import { Icons } from "../components/icons";
 import { PaperTestScoreModal } from "../components/domain/PaperTestScoreModal";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useIslandNavigation } from '../components/island/useIslandNavigation';
 import { UserProfile } from "../domain/types";
 import { getActiveProfile, deleteProfile, getAllProfiles, updateProfileAtomically, setActiveProfileId } from "../domain/user/repository";
 import { setSoundEnabled } from "../utils/audio";
@@ -29,6 +30,9 @@ import storage from "../utils/storage";
 
 export const Settings: React.FC = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const navigation = useIslandNavigation();
+    const learningOverlay = navigation?.learning ?? false;
     const [sound, setSound] = useState(true);
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [profiles, setProfiles] = useState<UserProfile[]>([]);
@@ -52,11 +56,16 @@ export const Settings: React.FC = () => {
     const [deleteTarget, setDeleteTarget] = useState<UserProfile | null>(null);
     const [showPaperTestModal, setShowPaperTestModal] = useState(false);
     const [pendingPaperTest, setPendingPaperTest] = useState<{ id: string; subject: "math" | "vocab"; level: number } | null>(null);
-    const [openSection, setOpenSection] = useState<string | null>(null);
+    const [legacySection, setOpenSection] = useState<string | null>(null);
+    const section = new URLSearchParams(location.search).get('section');
+    const openSection = navigation ? ['profile', 'learning', 'display', 'parent'].includes(section ?? '') ? section : null : legacySection;
     const isEasy = profile?.uiTextMode === "easy";
     const t = (easy: string, standard: string) => (isEasy ? easy : standard);
     const TEST_TIMER_OPTIONS = [0, 5, 10, 15, 20] as const;
-    const toggleSection = (key: string) => setOpenSection(prev => prev === key ? null : key);
+    const toggleSection = (key: string) => {
+        if (navigation) navigation.open(`/settings?section=${key}`);
+        else setOpenSection(prev => prev === key ? null : key);
+    };
 
     const syncProfileState = useCallback((nextProfile: UserProfile | null) => {
         if (profileIdRef.current !== (nextProfile?.id ?? null)) {
@@ -93,6 +102,7 @@ export const Settings: React.FC = () => {
     }, [profile, syncProfileState]);
 
     useEffect(() => {
+        if (learningOverlay) return;
         let cancelled = false;
 
         const load = async () => {
@@ -114,7 +124,7 @@ export const Settings: React.FC = () => {
             cancelled = true;
             profileIdRef.current = null;
         };
-    }, [syncProfileState]);
+    }, [syncProfileState, learningOverlay]);
 
     const handleSoundToggle = async () => {
         if (!profile) return;
@@ -356,6 +366,7 @@ export const Settings: React.FC = () => {
 
     const sectionIcons = { profile: UserRound, learning: BookOpen, display: Volume2, parent: ShieldCheck };
     const accordionHeader = (key: keyof typeof sectionIcons, title: string, summary: string) => {
+        if (navigation && openSection) return null;
         const SectionIcon = sectionIcons[key];
         return (
         <button
@@ -379,7 +390,9 @@ export const Settings: React.FC = () => {
 
     return (
         <ScreenScaffold
-            title={t("せってい", "設定")}
+            title={navigation && openSection ? ({ profile: 'プロフィール', learning: t('がくしゅう', '学習'), display: t('ひょうじと おと', '表示とサウンド'), parent: t('ほごしゃ', 'テスト・保護者') }[openSection] ?? t('せってい', '設定')) : t("せってい", "設定")}
+            showBack={Boolean(navigation)}
+            onBack={navigation?.back}
             contentClassName="px-6 pt-2"
         >
             <ParentGateModal
@@ -454,7 +467,7 @@ export const Settings: React.FC = () => {
 
             <div className="island-utility-content mx-auto w-full max-w-[22rem] space-y-3 pb-2">
                 {/* ── プロフィール ── */}
-                <SurfacePanel className="overflow-hidden rounded-[28px] p-0">
+                <SurfacePanel hidden={Boolean(navigation && openSection && openSection !== "profile")} className="overflow-hidden rounded-[28px] p-0">
                     {accordionHeader("profile", t("プロフィール", "プロフィール"), `${profile?.name || "ゲスト"} · ${GRADES[profile?.grade ?? 1] || "???"}`)}
                     <AnimatePresence>
                         {openSection === "profile" && (
@@ -488,7 +501,7 @@ export const Settings: React.FC = () => {
                 </SurfacePanel>
 
                 {/* ── 学習 ── */}
-                <SurfacePanel className="overflow-hidden rounded-[28px] p-0">
+                <SurfacePanel hidden={Boolean(navigation && openSection && openSection !== "learning")} className="overflow-hidden rounded-[28px] p-0">
                     {accordionHeader("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel} · Lv.${profile?.mathMainLevel ?? 1}/${profile?.vocabMainLevel ?? 1}`)}
                     <AnimatePresence>
                         {openSection === "learning" && (
@@ -525,7 +538,7 @@ export const Settings: React.FC = () => {
                                         ].map((item) => (
                                             <InsetPanel key={item.label} className="flex items-center justify-between px-4 py-3">
                                                 <div className="font-bold text-slate-600">{item.label} <span className="text-lg font-black text-slate-800">Lv.{item.level}</span></div>
-                                                <Button variant="secondary" size="sm" onClick={() => navigate("/settings/curriculum")}>{t("かえる", "変更")}</Button>
+                                                <Button variant="secondary" size="sm" onClick={() => navigation ? navigation.open("/settings/curriculum") : navigate("/settings/curriculum")}>{t("かえる", "変更")}</Button>
                                             </InsetPanel>
                                         ))}
                                     </div>
@@ -536,7 +549,7 @@ export const Settings: React.FC = () => {
                 </SurfacePanel>
 
                 {/* ── 表示とサウンド ── */}
-                <SurfacePanel className="overflow-hidden rounded-[28px] p-0">
+                <SurfacePanel hidden={Boolean(navigation && openSection && openSection !== "display")} className="overflow-hidden rounded-[28px] p-0">
                     {accordionHeader("display", t("みため と おと", "表示とサウンド"), `${soundLabel} · ${textLabel} · ${kanjiLabel}`)}
                     <AnimatePresence>
                         {openSection === "display" && (
@@ -558,7 +571,7 @@ export const Settings: React.FC = () => {
                 </SurfacePanel>
 
                 {/* ── テスト・保護者 ── */}
-                <SurfacePanel className="overflow-hidden rounded-[28px] p-0">
+                <SurfacePanel hidden={Boolean(navigation && openSection && openSection !== "parent")} className="overflow-hidden rounded-[28px] p-0">
                     {accordionHeader("parent", t("テスト・おとなむけ", "テスト・保護者"), t("ていきテスト · ほごしゃメニュー", "定期テスト · 保護者メニュー"))}
                     <AnimatePresence>
                         {openSection === "parent" && (
@@ -613,7 +626,7 @@ export const Settings: React.FC = () => {
                                     <PanelDivider />
                                     <SettingRow title={t("ほごしゃ メニュー", "保護者メニュー")} description={t("おとなの ひとが みる ページ", "大人向けページ")} action={<Button size="sm" variant="secondary" onClick={() => withParentGuard(() => navigate('/parents', { state: { parentGatePassed: true } }))}>{t("ひらく", "開く")}</Button>} />
                                     <PanelDivider />
-                                    <SettingRow title="開発者モード" description="内部状態や検証用の画面を開く" action={<Button size="sm" variant="secondary" onClick={() => navigate("/dev")}>{t("ひらく", "開く")}</Button>} />
+                                    <SettingRow title="開発者モード" description="内部状態や検証用の画面を開く" action={<Button size="sm" variant="secondary" onClick={() => navigation ? navigation.open("/dev") : navigate("/dev")}>{t("ひらく", "開く")}</Button>} />
                                 </div>
                             </motion.div>
                         )}
@@ -621,7 +634,7 @@ export const Settings: React.FC = () => {
                 </SurfacePanel>
 
                 {/* ── リセット ── */}
-                <div className="pt-4">
+                <div hidden={Boolean(navigation && openSection && openSection !== "parent")} className="pt-4">
                     <button
                         type="button"
                         onClick={handleReset}

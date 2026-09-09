@@ -39,15 +39,16 @@ async function finishSet(page, profileId, samples, touch) {
 async function verifyOwnedLoop(page, profileId, state, samples, touch, prefix) {
     const firstCompleted = state.island.completedSets;
     const reserved = state.plan;
-    await activate(button(page, 'しまへ'), touch); await waitMode(page, 'home');
-    await page.reload(); await waitReady(page); await waitMode(page, 'learning');
+    await activate(button(page, 'とじる'), touch); await waitMode(page, 'home');
+    await page.reload(); await waitReady(page); await waitMode(page, 'home');
+    await activate(page.locator('.island-start'), touch); await waitMode(page, 'learning');
     state = await readNative(page, profileId);
     assert.deepEqual(state.plan, reserved, 'Reload preserves the automatically reserved section');
     state = await finishSet(page, profileId, samples, touch);
     assert.equal(state.island.completedSets, firstCompleted + 1);
     assert.equal(state.island.growth.expansionLevel, 0);
     assert.equal(state.island.items.length, 3);
-    await activate(button(page, 'しまへ'), touch); await waitMode(page, 'home');
+    await activate(button(page, 'とじる'), touch); await waitMode(page, 'home');
     await page.locator('[data-renderer="three"][data-expanded="false"]').waitFor();
     await capture(page, `${prefix}-second-section-growing`);
     const bench = state.island.items.find(item => item.id === 'living-bench');
@@ -68,9 +69,10 @@ async function verifyOwnedLoop(page, profileId, state, samples, touch, prefix) {
     assert.deepEqual(moved.position, { x: bench.position.x + .25, z: bench.position.z });
     assert.equal(moved.rotation, bench.rotation + Math.PI / 2);
     assert.equal(moved.appearanceLevel, 0); assert.equal(moved.growthLevel, bench.growthLevel);
-    await page.reload(); await waitReady(page); await waitMode(page, 'learning');
+    await page.reload(); await waitReady(page); await waitMode(page, 'home');
+    await activate(page.locator('.island-start'), touch); await waitMode(page, 'learning');
     assert.deepEqual((await readNative(page, profileId)).island.items.find(item => item.id === bench.id), moved);
-    await activate(button(page, 'しまへ'), touch); await waitMode(page, 'home');
+    await activate(button(page, 'とじる'), touch); await waitMode(page, 'home');
     await activate(button(page, 'もちもの'), touch);
     await activate(page.getByRole('button', { name: /^ベンチ \d+を うごかす$/ }), touch);
     await waitMode(page, 'placement');
@@ -130,7 +132,7 @@ try {
             await capture(page, 'renderer-context-loss-learning');
             const during = await answerUI(page, before.plan);
             assert.equal(during.state.plan.cursor, before.plan.cursor + 1, 'Fallback keeps learning operational');
-            await button(page, 'しまへ').click(); await waitMode(page, 'home');
+            await button(page, 'とじる').click(); await waitMode(page, 'home');
             await button(page, 'もういちど みる').click();
             await waitReady(page);
             await page.locator('.island-start').click(); await waitMode(page, 'learning');
@@ -156,7 +158,7 @@ try {
             await button(page, '年中').click();
             await button(page, 'さんすう').click();
             await page.getByRole('button', { name: /数をかぞえる・くらべる/ }).click();
-            await page.waitForURL('**/#/island');
+            await page.waitForURL(/#\/island\?start=learn&profile=/);
             await waitReady(page);
             const initial = await readNative(page);
             assert.equal(initial.islands.length, 1);

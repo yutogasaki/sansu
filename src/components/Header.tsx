@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Icons } from "./icons";
 import { islandEnabled } from "../domain/island/feature";
 import { cn } from "../utils/cn";
+import { useIslandNavigation } from './island/useIslandNavigation';
 
 interface HeaderProps {
     title?: string;
@@ -15,12 +16,15 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ title, subtitle, showBack, onBack, rightAction, center }) => {
     const navigate = useNavigate();
+    const navigation = useIslandNavigation();
     const { pathname } = useLocation();
     const isIslandHeader = islandEnabled() && !["/onboarding", "/explore", "/park", "/island"].includes(pathname)
         && !pathname.startsWith("/battle/play");
 
     const handleBack = () => {
-        if (onBack) {
+        if (navigation) {
+            navigation.back();
+        } else if (onBack) {
             onBack();
         } else {
             navigate(-1);

@@ -22,7 +22,7 @@ export async function verifyIslandProgression(browser, base, capture, { producti
                 await page.getByRole('button', { name: /数をかぞえる・くらべる/ }).click();
                 await waitReady(page); await waitMode(page, 'learning');
                 profileId = (await readNative(page)).island.profileId;
-                await button(page, 'しまへ').click(); await waitMode(page, 'home');
+                await button(page, 'とじる').click(); await waitMode(page, 'home');
             } else {
                 profileId = await seedDev(page);
                 await page.goto(`${base}/#/island`); await waitReady(page);
@@ -82,7 +82,7 @@ export async function verifyIslandProgression(browser, base, capture, { producti
                     assert.deepEqual(await page.locator('.island-learning').boundingBox(), panelBefore, 'Milestone overlay leaves input geometry stable');
                 } else assert.equal(await page.locator(`[data-growth-milestone='${reservationId}']`).count(), 0, 'Small steps do not replay the major announcement');
                 if ([1, 2, 3].includes(sequence) || major || nearExpansion) {
-                    await button(page, 'しまへ').click(); await waitMode(page, 'home');
+                    await button(page, 'とじる').click(); await waitMode(page, 'home');
                     await capture(page, `${prefix}-${sequence}-sections`);
                     const preview = page.locator('[data-island-expansion-preview]');
                     if (nearExpansion) {
@@ -185,7 +185,7 @@ export async function verifyIslandProgression(browser, base, capture, { producti
             assert.deepEqual(resumed.plan, state.plan); assert.deepEqual(resumed.island, state.island);
             // Optional customization is checked after maturity, so it cannot
             // supply the placements or growth the normal loop just proved.
-            await button(page, 'しまへ').click(); await waitMode(page, 'home');
+            await button(page, 'とじる').click(); await waitMode(page, 'home');
             await button(page, 'もちもの').click(); await waitMode(page, 'inventory');
             await page.getByRole('button', { name: /^ひかる おはな \d+を うごかす$/ }).click();
             await waitMode(page, 'placement');
@@ -198,11 +198,12 @@ export async function verifyIslandProgression(browser, base, capture, { producti
             assert.deepEqual(flower.position, { x: 1.25, z: .8 }); assert.equal(flower.rotation, Math.PI / 2);
             assert.equal(flower.appearanceLevel, 0); assert.equal(flower.growthLevel, 3);
             assert.deepEqual(edited.island.growth.memories, state.island.growth.memories);
-            await page.reload(); await waitReady(page); await waitMode(page, 'learning');
+            await page.reload(); await waitReady(page); await waitMode(page, 'home');
+            await page.locator('.island-start').click(); await waitMode(page, 'learning');
             assert.deepEqual((await readNative(page, profileId)).island.items, edited.island.items);
             await capture(page, `${prefix}-customized-learning-resumed`);
             // The expanded shoreline is usable land, not only a larger drawing.
-            await button(page, 'しまへ').click(); await waitMode(page, 'home');
+            await button(page, 'とじる').click(); await waitMode(page, 'home');
             await button(page, 'もちもの').click(); await waitMode(page, 'inventory');
             await page.getByRole('button', { name: /^ひかる おはな \d+を うごかす$/ }).click();
             await waitMode(page, 'placement');

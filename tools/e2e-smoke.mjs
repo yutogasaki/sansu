@@ -482,6 +482,10 @@ const completeOnboarding = async (
   await page.getByRole("button", { name: gradeCheck }).click();
   await page.getByRole("button", { name: /さんすう だけ/ }).click();
   await page.getByRole("button", { name: mathCheck }).click();
+  await waitForHash(page, /#\/battle$/);
+  await page.locator('.game-hub').waitFor();
+  assert(await countIndexedDbRows(page, 'exploreRuns') === 0, 'Top entry must wait for an explicit exploration start');
+  await page.getByRole('button', { name: 'すぐ たんけんを はじめる', exact: true }).click();
   await waitForHash(page, /#\/explore$/);
 };
 
@@ -5590,7 +5594,10 @@ const runVisualAuditViewport = async (
       page,
       new URL(activeBaseUrl).origin,
     );
+    // This audit captures the exploration opening after deliberate entry.
     await page.goto("/#/", { waitUntil: "domcontentloaded" });
+    await waitForHash(page, /#\/battle$/);
+    await page.getByRole('button', { name: 'すぐ たんけんを はじめる', exact: true }).click();
     await waitForHash(page, /#\/explore$/);
 
     const captures = [];

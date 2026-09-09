@@ -36,6 +36,7 @@ import { buildWeeklyTrend, buildRadarData, type RadarCategoryPoint, type WeeklyT
 import { WeeklyTrendChart } from "../components/charts/WeeklyTrendChart";
 import { SkillRadarChart } from "../components/charts/SkillRadarChart";
 import { ScreenScaffold } from "../components/ScreenScaffold";
+import { useIslandNavigation } from '../components/island/useIslandNavigation';
 import { logInDev } from "../utils/debug";
 
 type SubjectType = "math" | "vocab";
@@ -205,6 +206,8 @@ const MetricTile: React.FC<MetricTileProps> = ({ label, value }) => (
 
 export const Stats: React.FC = () => {
     const navigate = useNavigate();
+    const navigation = useIslandNavigation();
+    const learningOverlay = navigation?.learning ?? false;
 
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [todayStats, setTodayStats] = useState<DailyStats>({ count: 0, correct: 0 });
@@ -230,6 +233,7 @@ export const Stats: React.FC = () => {
     }, [sections]);
 
     useEffect(() => {
+        if (learningOverlay) return;
         let cancelled = false;
 
         const load = async () => {
@@ -370,7 +374,7 @@ export const Stats: React.FC = () => {
         return () => {
             cancelled = true;
         };
-    }, []);
+    }, [learningOverlay]);
 
     const todayAccuracy = todayStats.count > 0 ? Math.round((todayStats.correct / todayStats.count) * 100) : 0;
     const weekMinutes = weeklyDays.reduce((acc, day) => acc + day.minutes, 0);
@@ -394,7 +398,9 @@ export const Stats: React.FC = () => {
     const vocabRecent = vocabLevelState?.recentAnswersNonReview || [];
     const mathRecentCorrect = mathRecent.filter(Boolean).length;
     const vocabRecentCorrect = vocabRecent.filter(Boolean).length;
-    const closeAction = (
+    const closeAction = navigation ? <Button variant="secondary" size="sm" aria-label="せってい" onClick={() => navigation.open('/settings')}>
+        <Icons.Settings className="w-5 h-5" />
+    </Button> : (
         <Button variant="secondary" size="sm" onClick={() => navigate("/")}>
             <Icons.Close className="w-6 h-6" />
         </Button>

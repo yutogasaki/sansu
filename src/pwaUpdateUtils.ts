@@ -31,6 +31,10 @@ export const stripReloadMarker = (currentUrl: string) => {
 export const getUpdateProtectedRouteKey = (hash: string) => {
     const hashPath = normalizeHashPath(hash)
 
+    // Island learning can cover Settings/Stats without unmounting its source.
+    const query = new URLSearchParams(hash.replace(/^#/, '').split('?')[1] ?? '')
+    if (query.get('learn') === '1') return '/island'
+
     return UPDATE_PROTECTED_HASH_ROUTES.find((route) => (
         hashPath === route || hashPath.startsWith(`${route}/`)
     )) ?? null

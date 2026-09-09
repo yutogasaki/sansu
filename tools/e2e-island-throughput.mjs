@@ -226,6 +226,7 @@ async function runLane(browser, lane, scenario, repetition, layout) {
             firstPlan = await installIslandFixture(page, profileId);
             await page.evaluate(() => { location.hash = '/island'; });
             await waitReady(page);
+            await page.locator('.island-shell-tab--learn').click();
             await waitMode(page, 'learning');
             metadata = await runtimeMetadata(page);
             metadata.islandEnabled = await page.evaluate(async () => (await import('/src/domain/island/feature.ts')).islandEnabled());

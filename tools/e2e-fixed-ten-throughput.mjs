@@ -199,6 +199,8 @@ const completeOnboarding = async (page) => {
   await page.getByRole("button", { name: /小学 1 年生/ }).click();
   await page.getByRole("button", { name: /さんすう だけ/ }).click();
   await page.getByRole("button", { name: /足し算まで/ }).click();
+  await waitForHash(page, /#\/battle$/);
+  await page.getByRole('button', { name: 'すぐ たんけんを はじめる', exact: true }).click();
   await waitForHash(page, /#\/explore$/);
   await page.getByTestId("explore-attempt").waitFor({ timeout: STEP_TIMEOUT_MS });
   await page.locator('.snap-root-opening-art[data-asset-state="ready"]')

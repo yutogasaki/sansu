@@ -104,7 +104,7 @@ export function IslandInventory({ items, disabled, onSelect, onClose, onFurnitur
 }) {
     return <section className="island-sheet" aria-label="しまの もちもの">
         <div className="island-sheet-title"><div><p className="island-eyebrow">じぶんの しまを ととのえよう</p><h2>どれを うごかす？</h2></div>
-            <button className="island-icon-button" aria-label="もちものを とじる" onClick={onClose}><X size={20} /></button></div>
+            <button className="island-icon-button" aria-label="もちものから もどる" disabled={disabled} onClick={onClose}><ArrowLeft size={20} /><span>もどる</span></button></div>
         <div className="island-inventory">{items.map((item, index) => <button key={item.id} disabled={disabled} className="island-reward"
             aria-label={`${ISLAND_ITEMS[item.kind].name} ${index + 1}を うごかす`} onClick={() => onSelect(item)}>
             <ItemPicture kind={item.kind} /><strong>{ISLAND_ITEMS[item.kind].name}</strong><small>{item.position ? 'しまに ある' : item.autoPlacementBlocked ? 'おく ばしょを えらべるよ' : 'しまって ある'}</small>
@@ -149,7 +149,7 @@ export function IslandPlacement({ item, valid, disabled, onPoint, onRotate, onSa
     const move = (x: number, z: number) => onPoint({ x: point.x + x, z: point.z + z });
     return <section className="island-sheet island-placement" aria-label="おく ばしょを えらぶ">
         <div className="island-sheet-title"><div><p className="island-eyebrow">{ISLAND_ITEMS[item.kind].name}</p><h2>どこに おこう？</h2></div>
-            <button className="island-icon-button" aria-label="いどうを やめる" disabled={disabled} onClick={onCancel}><X size={20} /></button></div>
+            <button className="island-icon-button" aria-label="いどうを とじる" disabled={disabled} onClick={onCancel}><X size={20} /><span>とじる</span></button></div>
         <p className="island-placement-hint" role="status">{valid ? 'にわを タッチ。やじるしでも うごかせるよ。' : 'もうすこし ひろい ばしょへ うごかそう。'}</p>
         {onFindUsable && <div className="island-placement-availability" data-furniture-placement={availability?.status ?? 'checking'}>
             <p role="status">{availability?.status === 'ready' ? 'えらんだ なかまが、ここで つかえるよ。'

@@ -12,6 +12,12 @@ import {
 } from './pwaUpdateUtils'
 
 describe('pwaUpdateUtils', () => {
+    it('protects learning over a utility route until its layer closes', () => {
+        expect(getUpdateProtectedRouteKey('#/settings?section=learning&learn=1')).toBe('/island');
+        expect(getUpdateProtectedRouteKey('#/stats?learn=1')).toBe('/island');
+        expect(getUpdateProtectedRouteKey('#/settings?section=learning')).toBeNull();
+        expect(getUpdateProtectedRouteKey('#/stats')).toBeNull();
+    });
     it('adds a stable update marker without dropping existing query params or hashes', () => {
         const url = buildReloadUrl(
             'https://example.com/study?mode=math#question-3',

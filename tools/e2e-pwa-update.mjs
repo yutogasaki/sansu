@@ -207,7 +207,7 @@ const verifyOnboardingSafeHandoff = async (page, markerRequests) => {
     { countKey: LOAD_COUNT_KEY, expected: loadCountBefore + 1 },
     { timeout: STEP_TIMEOUT_MS },
   );
-  await page.waitForFunction(() => location.hash === "#/explore", undefined, {
+  await page.waitForFunction(() => location.hash === "#/battle", undefined, {
     timeout: STEP_TIMEOUT_MS,
   });
 
@@ -437,7 +437,7 @@ const main = async () => {
     await serviceWorkerPage.getByRole("button", { name: /小学 1 年生/ }).click();
     await serviceWorkerPage.getByRole("button", { name: /さんすう だけ/ }).click();
     await serviceWorkerPage.getByRole("button", { name: /足し算まで/ }).click();
-    await serviceWorkerPage.waitForFunction(() => location.hash === "#/explore", undefined, {
+    await serviceWorkerPage.waitForFunction(() => location.hash === "#/battle", undefined, {
       timeout: STEP_TIMEOUT_MS,
     });
 

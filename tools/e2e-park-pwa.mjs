@@ -99,6 +99,10 @@ try {
     const old = beforeLaunch.runs.find(r => r.runId === oldReady.runId && r.profileId === profileId && r.status === 'active');
     assertExploreCheckpoint(old, profileId, oldReady);
     await page.goto(`${base}/#/`);
+    await page.waitForURL('**/#/park');
+    await page.locator('.park-page[data-visual-mode="toy-course"]').waitFor();
+    assert.deepEqual((await stored()).runs, beforeLaunch.runs, 'Top opens the course without resuming an old exploration');
+    await page.goto(`${base}/#/explore`);
     await page.waitForURL('**/#/explore');
     const sameReady = await waitForExploreNumericReady(page, { runId: old.runId, problemId: oldReady.problemId, timeout: 30000 });
     const restored = await stored();
@@ -106,11 +110,11 @@ try {
     const same = restored.runs.find(r => r.runId === old.runId && r.profileId === profileId && r.status === 'active');
     assertExploreCheckpoint(same, profileId, sameReady);
     assert.equal(same.runId, old.runId);
-    assert.deepEqual(same, old, 'Root launch preserves the complete ready Explore run');
+    assert.deepEqual(same, old, 'Explicit exploration preserves the complete ready Explore run');
     assert.deepEqual(restored.plans, before.plans);
     assert.deepEqual(errors, []);
     await fs.writeFile('output/playwright/park/production-report.json', JSON.stringify({ target: base, revision,
         flag: 'VITE_BUILD_PLAY_ENABLED=true', candidate, legacy,
-        passed: ['pending learning checkpoint', 'critical persistence navigation hold', 'old active run precedence'] }, null, 2));
+        passed: ['pending learning checkpoint', 'critical persistence navigation hold', 'ordinary top with explicit old-run resume'] }, null, 2));
     console.log('PASS production old run remains the launch priority');
 } finally { await context.close(); await browser.close(); }

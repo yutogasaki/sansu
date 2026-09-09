@@ -2,6 +2,8 @@
 
 地形は[一続きの岸として育つ島](../design/2026-09-09-island-renewal/connected-shore-direction.md)に従う。東西の解放時に母島とのくびれへ半径3.65×3.35の配置/歩行可能な地面をつなぎ、ground/shore/waterを一続きの外岸へまとめる。既存の全配置楕円・保存された物・橋・床は保ち、地区一覧と接続床の判定を分ける。3形の実モデル比較後、[固定37の実画面](../design/2026-09-09-island-renewal/connected-v17/README.md)で両幅の初期/東/東西、近景/全景、実配置の取消・保存・再読込・同予約復帰を局所確認した。成熟/家具は明示fixture、Human N=0、横幅とsource A全体の品質差・最終正式速度/PWAは未完了であり、Goal全体の完成とはしない。
 
+> 2026-09-09: 通常ナビを「しま / まなぶ / きろく」へ変更する。タブ・設定階層・学習の開始前への復帰は[仕様43](43_island_navigation_spec.md)に従い、以下の旧3項目ナビの記述を置き換える。未完了予約があるだけでは島訪問時に学習を開かない。
+
 成長時の既定表示は未ロード・初期・東西解放後とも同じ庭の画角を使う。[成長する島の輪郭と見渡し方](../design/2026-09-09-island-renewal/island-growth-shape-direction.md)に従い、東西の余分な岸の膨らみを抑え、本人が選んだ全景を斜めの奥行きある構図にする。全景は装備した遠景も収め、近景・歩行/pan境界へは広げない。旧配置楕円・保存座標・橋・歩行床を保つ。[固定36の実画面と検証](../design/2026-09-09-island-renewal/growth-v16/README.md)で局所改善を確認し、横に三つの土地が並ぶ骨格とsource A全体の品質差は残す。
 
 既定屋根は `island-roof-surface-v1` を使う。[屋根の素材方針](../design/2026-09-09-island-renewal/roof-material-direction.md)に従い、既定 `legacy-v1:moon-garden:houseRoof` の面だけを大きな丸端の色瓦へ、4継ぎ目色だけを暖かな黄土/クリームへ変える。既存の閉じたshell・UV・door・旗・窓、他テーマと本人の明示部位を保持し、実立体瓦の追加とはしない。[固定33→34の実画像](../design/2026-09-09-island-renewal/roof-v14/README.md)で二重の黒線を減らす局所改善を採用した。
