@@ -1,9 +1,9 @@
 import type { HissanStep } from './hissanTypes';
 
-/** Keep only digits the child supplied correctly in a graded, failed row. */
+/** A failed row is retried as a whole; never reveal which digits were correct. */
 export function writtenRetryValues(answer: readonly string[], expected: readonly string[]): string[] {
-    if (answer.length !== expected.length) return expected.map(() => '');
-    return answer.map((value, index) => value === expected[index] ? value : '');
+    void answer; // Kept in the API for saved retry answers.
+    return expected.map(() => '');
 }
 
 /** Follow the row's calculation order, skipping filled cells and wrapping to holes. */
@@ -23,9 +23,9 @@ export function writtenInputOrder(step: HissanStep): number[] {
         .sort((a, b) => step.inputCellIndices[a] - step.inputCellIndices[b]);
 }
 
-/** Formatting, not answers: fixed points and optional fractional trailing zeros. */
+/** Formatting only: optional trailing and redundant leading zeros. Points are entered. */
 export function writtenAutomaticValues(step: HissanStep): string[] {
-    const values: string[] = step.correctValues.map(value => value === '.' ? '.' : '');
+    const values: string[] = step.correctValues.map(() => '');
     const order = step.inputCellIndices.map((_, i) => i).sort((a, b) => step.inputCellIndices[a] - step.inputCellIndices[b]);
     const point = order.findIndex(i => step.correctValues[i] === '.');
     if (point >= 0) {

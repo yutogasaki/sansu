@@ -82,11 +82,15 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
         if (disabled || submitting.current || queuedSubmit.current !== undefined) return;
         const text = String(value);
         if (!/^[0-9.]$/.test(text)) return;
-        if (text === '.' && (grid || answerShape || !allowsDecimalEntry(problem))) return;
+        if (text === '.' && !(step ? step.correctValues.includes('.') : allowsDecimalEntry(problem))) return;
         const changed = updateInput(previous => {
             const current = previous.replaceOnInput ? { ...previous, values: previous.values.map((value, i) => i === previous.active ? '' : value), replaceOnInput: false } : previous;
             if (step && (step.correctValues[current.active] === '.' ? text !== '.' : !/^[0-9]$/.test(text))) return current;
-            if (!step && answerShape) return { replaceOnInput: false, ...appendAnswerDigit(current.values, current.active, text, answerShape), lastEdited: current.active };
+            if (!step && answerShape) {
+                const next = appendAnswerDigit(current.values, current.active, text, answerShape);
+                if (previous.replaceOnInput && !next.values[current.active]) return previous;
+                return { replaceOnInput: false, ...next, lastEdited: current.active };
+            }
             if (!step && problem.inputType === 'multi-number') {
                 return { replaceOnInput: false, ...appendNumberField(current.values, current.active, text, problem.inputConfig?.fields?.map(field => field.length) ?? []), lastEdited: current.active };
             }
@@ -101,7 +105,7 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
         if (!disabled && !submitting.current) updateInput(current => {
             queuedSubmit.current = undefined;
             const cursor = !current.values[current.active] ? step ? current.lastEdited ?? inputOrder[Math.max(0, inputOrder.indexOf(current.active) - 1)] : problem.inputType === 'multi-number' ? current.lastEdited ?? Math.max(0, current.active - 1) : current.active : current.active;
-            return { replaceOnInput: false, active: cursor, values: current.values.map((value, i) => i === cursor ? (!step && answerShape ? removeAnswerDigit(value) : value.slice(0, -1)) : value), lastEdited: undefined };
+            return { replaceOnInput: false, active: cursor, values: current.values.map((value, i) => i === cursor ? (current.replaceOnInput ? '' : !step && answerShape ? removeAnswerDigit(value) : value.slice(0, -1)) : value), lastEdited: undefined };
         });
     };
     const clear = () => {
@@ -138,7 +142,7 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
             if (event.key === '/' && problem.inputType === 'multi-number') { event.preventDefault(); moveCursor('right', true); }
             if (event.key === 'Backspace') { event.preventDefault(); remove(); }
             if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); moveCursor(event.key === 'ArrowLeft' ? 'left' : 'right'); }
-            if (event.key === 'Enter' && (target.tagName !== 'BUTTON' || target.closest('.park-keypad, .park-inputs, [data-written-input]'))) { event.preventDefault(); submit(); }
+            if (event.key === 'Enter' && target.tagName !== 'BUTTON' && target.tagName !== 'A' && target.getAttribute?.('role') !== 'button') { event.preventDefault(); submit(); }
         };
         // Install the current problem's handler in the same commit that enables
         // its controls, before paint exposes those controls as ready.
@@ -176,7 +180,7 @@ export function LearningAnswerForm({ slot, disabled, deferSubmission = false, on
                 </button>)}
             </NumberFieldsLayout>}
             <div className="park-keypad"><TenKey onInput={input} onDelete={remove} onClear={clear} onEnter={() => submit()}
-                disabled={disabled} enterDisabled={!canSubmit || (automatic && !hasSubmitted)} showDecimal={!grid && !answerShape && allowsDecimalEntry(problem)} nextFieldLabel={problem.inputType === 'multi-number' ? 'つぎの欄へ' : undefined} nextFieldDisabled={problem.inputType === 'multi-number' && active === fieldCount - 1} minRowHeight={44}
+                disabled={disabled} enterDisabled={!canSubmit || (automatic && !hasSubmitted)} showDecimal={step ? step.correctValues.includes('.') : allowsDecimalEntry(problem)} nextFieldLabel={problem.inputType === 'multi-number' ? 'つぎの欄へ' : undefined} nextFieldDisabled={problem.inputType === 'multi-number' && active === fieldCount - 1} minRowHeight={44}
                 confirmationMode={automatic && !hasSubmitted ? 'automatic' : 'manual'}
                 writtenInput={Boolean(step)}
                 enterLabel={grid?.writtenLayout && (slot.hissanStep ?? 0) < grid.steps.length - 1 ? 'このだんを たしかめる' : undefined}

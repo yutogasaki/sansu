@@ -775,7 +775,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                     aria-label="こたえ"
                                     data-replace-selected={replaceFieldIndex === 0}
                                     onClick={() => onFocusField(0)}
-                                    onKeyDown={event => { if (event.key === ' ') { event.preventDefault(); onFocusField(0); } }}
+                                    onKeyDown={event => { if (event.key === ' ' || event.key === 'Enter') { event.preventDefault(); onFocusField(0); } }}
                                     className="app-glass flex h-20 shrink-0 items-center justify-center rounded-[22px] px-4 text-5xl font-mono text-slate-700 transition-all ipadland:h-32 ipadland:min-w-[200px] ipadland:text-7xl mobile:h-12 mobile:min-w-[80px] mobile:px-2 mobile:text-3xl"
                                     style={{ width: `${Math.max(3, answerShape?.[0].length ?? userInput.length) * 2.5}rem` }}
                                 >
@@ -855,7 +855,7 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                             disabled={feedback !== 'none' || hissanStepFeedback !== 'none'}
                             enterLabel={hissanActive && hissanGridData?.writtenLayout && hissanStepIndex < hissanGridData.steps.length - 1 ? 'このだんを たしかめる' : undefined}
                             writtenInput={hissanActive}
-                            showDecimal={!hissanActive && !answerShape && allowsDecimalEntry(currentProblem)}
+                            showDecimal={hissanActive ? Boolean(hissanGridData?.steps[hissanStepIndex]?.correctValues.includes('.')) : allowsDecimalEntry(currentProblem)}
                             nextFieldLabel={currentProblem.inputType === 'multi-number' ? 'つぎの欄へ' : undefined}
                             nextFieldDisabled={currentProblem.inputType === 'multi-number' && activeFieldIndex === userInputs.length - 1}
                             onCursorMove={showCursorButtons ? onCursorMove : undefined}

@@ -1,6 +1,6 @@
 import type { HissanGridData } from './hissanTypes';
 
-export interface PlaceDigit { value: string; column: number; sourceColumn?: number; point: boolean; padding: boolean }
+export interface PlaceDigit { value: string; column: number; sourceColumn?: number; pointSourceColumn?: number; point: boolean; padding: boolean }
 const fractionLength = (value: string) => value.split('.')[1]?.length ?? 0;
 /** Decimal shifting is string based, so 0.29 never becomes 28.999… . */
 export function shiftWrittenDecimal(value: string, places: number): string {
@@ -28,8 +28,9 @@ export function writtenPlaceValue(grid: HissanGridData) {
         const content = integer + fraction;
         const start = alignPoint ? columns - fractions - integer.length : columns - content.length;
         const source = ordered.filter(cell => cell.value !== '.');
-        const cells = [...content].map((value, index) => ({ value, column: start + index,
+        const cells: PlaceDigit[] = [...content].map((value, index) => ({ value, column: start + index,
             sourceColumn: result ? source[index]?.column : undefined,
+            pointSourceColumn: result && index === integer.length - 1 ? ordered.find(cell => cell.value === '.')?.column : undefined,
             point: index === integer.length - 1 && (alignPoint ? fractions > 0 : fraction.length > 0), padding: false }));
         if (alignPoint) for (let index = fraction.length; index < fractions; index++) cells.push({ value: '0', column: columns - fractions + index, sourceColumn: undefined, point: false, padding: true });
         return cells;

@@ -87,6 +87,6 @@ export function WrittenArithmeticGrid({ gridData, currentStepIndex, activeCellPo
             </div>
         </div>
         <div className="written-input-guide"><span>{direction}</span>
-            <span>{correcting ? 'あいたマスを なおそう' : stepFeedback === 'incorrect' ? 'このだんを もういちど' : 'マスを おすと なおせるよ'}</span></div>
+            <span>{correcting ? 'このだんを もういちど' : stepFeedback === 'incorrect' ? 'このだんを もういちど' : 'マスを おすと なおせるよ'}</span></div>
     </section>;
 }

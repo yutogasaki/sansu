@@ -139,7 +139,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
             {/* Enter Key */}
             {writtenInput && confirmationMode === 'automatic' ? <div aria-hidden="true" data-written-auto-confirm /> : <Button
                 disabled={disabled || enterDisabled}
-                aria-label={enterLabel}
+                aria-label={enterLabel ?? 'こたえる'}
                 data-keypad-submit
                 data-confirmation-mode={confirmationMode}
                 data-confirmation-state={confirmationMode ? confirmReady ? 'ready' : 'idle' : undefined}
@@ -156,7 +156,7 @@ export const TenKey: React.FC<TenKeyProps> = ({
                 variant="ghost"
             >
                 <Icons.Check className={enterIconClass} strokeWidth={3} />
-                {enterLabel !== 'こたえる' && <span className="text-[10px] leading-none">つぎへ</span>}
+                <span className={cn("text-[10px] leading-none", enterLabel === 'こたえる' && "whitespace-nowrap")}>{enterLabel ?? 'こたえる'}</span>
             </Button>}
         </div>
     );

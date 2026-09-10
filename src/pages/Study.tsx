@@ -449,6 +449,7 @@ const StudyContent: React.FC = () => {
             || isInputLocked(feedback, isProcessingRef.current)
         ) return;
         playSound("tap");
+        const replaceSelection = fieldDraft.current.replaceOnInput;
         setReplaceFieldIndex(undefined);
         fieldDraft.current.replaceOnInput = false;
 
@@ -460,12 +461,12 @@ const StudyContent: React.FC = () => {
         if (currentProblem?.inputType === 'multi-number') {
             const current = fieldDraft.current;
             const active = !current.values[current.active] ? current.lastEdited ?? Math.max(0, current.active - 1) : current.active;
-            const values = current.values.map((value, index) => index === active ? (mathAnswerShape(currentProblem) ? removeAnswerDigit(value) : value.slice(0, -1)) : value);
+            const values = current.values.map((value, index) => index === active ? (replaceSelection ? '' : mathAnswerShape(currentProblem) ? removeAnswerDigit(value) : value.slice(0, -1)) : value);
             fieldDraft.current = { values, active };
             setUserInputs(values);
             setActiveFieldIndex(active);
         } else {
-            numberDraft.current = mathAnswerShape(currentProblem) ? removeAnswerDigit(numberDraft.current) : numberDraft.current.slice(0, -1);
+            numberDraft.current = replaceSelection ? '' : mathAnswerShape(currentProblem) ? removeAnswerDigit(numberDraft.current) : numberDraft.current.slice(0, -1);
             setUserInput(numberDraft.current);
         }
     }, [completionPresentation, feedback, currentProblem, hissan]);
@@ -658,7 +659,7 @@ const StudyContent: React.FC = () => {
     const handleTenKeyInput = useCallback((val: string | number) => {
         const valStr = val.toString();
         if (!/^[0-9.]$/.test(valStr) || automaticBoundaryRef.current) return;
-        if (valStr === '.' && (hissan.isHissanActive || !allowsDecimalEntry(currentProblem))) return;
+        if (valStr === '.' && !(hissan.isHissanActive ? hissan.canInputDecimal : allowsDecimalEntry(currentProblem))) return;
         if (
             completionPresentation !== "none"
             || fixedSessionCompletionInFlightRef.current
@@ -677,9 +678,9 @@ const StudyContent: React.FC = () => {
         if (shape) {
             const multi = currentProblem.inputType === 'multi-number';
             const draft = multi ? fieldDraft.current : { values: [numberDraft.current], active: 0, replaceOnInput: fieldDraft.current.replaceOnInput };
-            if (!/^\d$/.test(valStr)) return;
             const values = draft.replaceOnInput ? draft.values.map((value, i) => i === draft.active ? '' : value) : draft.values;
             const next = appendAnswerDigit(values, draft.active, valStr, shape);
+            if (draft.replaceOnInput && !next.values[draft.active]) return;
             fieldDraft.current.replaceOnInput = false;
             setReplaceFieldIndex(undefined);
             if (multi) {
@@ -801,16 +802,17 @@ const StudyContent: React.FC = () => {
             }
             // Enter (決定)
             else if (e.key === 'Enter') {
+                if (target.tagName === 'BUTTON' || target.tagName === 'A' || target.getAttribute?.('role') === 'button') return;
                 handleSubmit();
                 e.preventDefault();
             }
-            // S or Escape (スキップ)
-            else if (e.key === 's' || e.key === 'S' || e.key === 'Escape') {
+            // Explicit skip shortcut. Escape must never record a skipped answer.
+            else if (e.key === 's' || e.key === 'S') {
                 handleSkip();
                 e.preventDefault();
             }
             // 小数点
-            else if (e.key === '.' && currentProblem.categoryId.startsWith("dec_")) {
+            else if (e.key === '.' && (hissan.isHissanActive ? hissan.canInputDecimal : allowsDecimalEntry(currentProblem))) {
                 handleTenKeyInput('.');
                 e.preventDefault();
             }
@@ -821,6 +823,8 @@ const StudyContent: React.FC = () => {
     }, [
         completionPresentation,
         profileSettingsStatus,
+        hissan.isHissanActive,
+        hissan.canInputDecimal,
         loading,
         feedback,
         currentProblem,

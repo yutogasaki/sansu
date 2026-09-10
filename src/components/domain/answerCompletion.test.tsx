@@ -41,12 +41,21 @@ describe('nonverbal answer confirmation', () => {
         expect(retrySave).toContain('data-confirmation-state="ready"');
     });
 
-    it('starts a saved written retry with only the correctly supplied digits', () => {
+    it('starts a saved written retry with the whole current row blank', () => {
         const problem = { ...slot.problem, categoryId: 'mul_3d1d', questionText: '123 × 4 =', correctAnswer: '492', hissanVersion: 2 as const, inputType: 'hissan' as const };
         const html = renderToStaticMarkup(<LearningAnswerForm slot={{ ...slot, problem }} disabled={false} onAnswer={noop} retryAnswer={['7', '9', '5']} />);
         expect(html).toContain('data-written-correction="true"');
-        expect(html).toContain('あいたマスを なおそう');
-        expect(html).toMatch(/data-written-input="2-2"[^>]*>9<\/button>/);
+        expect(html).toContain('このだんを もういちど');
+        expect(html).not.toMatch(/data-written-input="2-2"[^>]*>9<\/button>/);
         expect(html).toMatch(/data-active="true"[^>]*data-written-input="2-1"/);
     });
+});
+
+
+it('labels answer confirmation by its action rather than navigation', () => {
+    const props = { onInput: noop, onDelete: noop, onClear: noop, onEnter: noop };
+    const html = renderToStaticMarkup(<TenKey {...props} />);
+    expect(html).toContain('aria-label="こたえる"');
+    expect(html).not.toContain('つぎへ');
+    expect(renderToStaticMarkup(<TenKey {...props} enterLabel="このだんを たしかめる" />)).toContain('このだんを たしかめる');
 });

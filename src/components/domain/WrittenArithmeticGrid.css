@@ -53,9 +53,15 @@ button.written-cell:disabled { cursor:default; }
 .written-place { position:relative; min-width:0; }
 .written-decimal { position:absolute; right:-4px; bottom:3px; z-index:2; font:700 24px/1 ui-monospace,monospace; pointer-events:none; }
 .written-place[data-padding=true] { color:#74808b; }
-.written-place-value .written-paper { width:calc(var(--written-columns) * 44px + var(--written-label-width,42px) + 14px); overflow:visible; }
+.written-place-value .written-paper { width:calc(var(--written-columns) * 44px + var(--written-point-space,0px) + var(--written-label-width,42px) + 14px); overflow:visible; }
 .written-place-value .written-row { grid-template-columns:var(--written-label-width,42px) minmax(0,1fr); }
 .written-place-value .written-digits { padding-right:4px; }
 .written-place-value [data-dividend=true] .written-digits { border-left:2px solid var(--written-ink); }
 .written-normalization { text-align:center; font-size:15px; margin-bottom:8px; }
 .written-normalization small { display:block; font-size:11px; color:#586a77; }
+
+.written-place[data-point-space=true] { padding-right:24px; }
+.written-place[data-point-space=true] > .written-decimal { right:7px; }
+.written-place > button.written-point-input { right:0; bottom:0; width:24px; height:44px; pointer-events:auto; border:1px solid #9dadc4; border-radius:5px; background:var(--written-paper); color:var(--written-ink); font-size:20px; cursor:pointer; }
+button.written-point-input[data-active=true] { outline:2px solid var(--written-accent); outline-offset:-2px; background:#e7eefb; }
+button.written-point-input:focus-visible { outline:3px solid var(--written-accent); }

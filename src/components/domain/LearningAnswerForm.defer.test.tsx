@@ -42,12 +42,12 @@ import { useHissanSession } from '../../hooks/useHissanSession';
 
 beforeEach(() => { hooks.reset(); vi.stubGlobal('window', new EventTarget()); });
 afterEach(() => { hooks.unmount(); vi.unstubAllGlobals(); });
-function harness(problemOverride: Partial<LearningAnswerFormProps['slot']['problem']> = {}) {
+function harness(problemOverride: Partial<LearningAnswerFormProps['slot']['problem']> = {}, initial: Partial<LearningAnswerFormProps> = {}) {
     let props: LearningAnswerFormProps = {
         slot: { problem: { id: 'written', subject: 'math', categoryId: 'mul_2d1d', questionText: '23 × 4 =',
             correctAnswer: '92', inputType: 'hissan', hissanVersion: 2, isReview: false, ...problemOverride },
         source: 'main', assisted: false, completed: false, countsTowardReviewCap: false },
-        disabled: false, deferSubmission: true, onAnswer: vi.fn(),
+        disabled: false, deferSubmission: true, onAnswer: vi.fn(), ...initial,
     };
     let tree: ReactElement;
     const render = (update: Partial<LearningAnswerFormProps> = {}) => {
@@ -67,7 +67,11 @@ function harness(problemOverride: Partial<LearningAnswerFormProps['slot']['probl
     };
     const keypad = () => find(tree)!.props as Parameters<typeof TenKey>[0];
     render();
-    return { render, keypad, select(label: string) {
+    return { render, keypad, fieldValue(label: string) {
+        const button = find(tree, element => element.type === 'button' && (element.props as { 'aria-label'?: string })['aria-label'] === label)!;
+        const cells = find(button, element => 'shape' in (element.props as object))!;
+        return (cells.props as { value: string }).value;
+    }, select(label: string) {
         const button = find(tree, element => element.type === 'button' && (element.props as { 'aria-label'?: string })['aria-label'] === label);
         if (!button) throw new Error('No field: ' + label);
         (button.props as { onClick: () => void }).onClick(); render();
@@ -116,31 +120,38 @@ describe('written draft during a hint save', () => {
 });
 
 
-describe('Study digit-only written session', () => {
-    it('keeps decimal formatting through corrections, clear and consecutive native events', () => {
+describe('Study manual decimal written session', () => {
+    it('clears the whole failed decimal row and accepts a fresh answer without Enter', () => {
         const RenderHarness = () => { hooks.begin(); return useHissanSession(); };
         let session = RenderHarness();
         session.resetHissan({ id: 'decimal', subject: 'math', categoryId: 'dec_add', questionText: '12.3 + 4 =', correctAnswer: '16.3', inputType: 'hissan', isReview: false }, true);
         session = RenderHarness();
-        expect(session.canInputDecimal).toBe(false);
+        expect(session.canInputDecimal).toBe(true);
         expect(session.handleHissanInput('1')).toBe(false);
         expect(session.handleHissanInput('.')).toBe(false);
         expect(session.handleHissanInput('9')).toBe(false);
+        expect(session.handleHissanInput('.')).toBe(false);
         expect(session.handleHissanInput('3')).toBe(true);
         expect(session.handleHissanEnter()).toBe('incorrect');
         session = RenderHarness();
-        expect([...session.userValues.values()].sort()).toEqual(['.', '1', '3']);
-        expect(session.handleHissanInput('6')).toBe(true);
+        expect([...session.userValues.values()]).toEqual([]);
+        expect(session.handleHissanInput('1')).toBe(false);
+        expect(session.handleHissanInput('6')).toBe(false);
+        expect(session.handleHissanInput('.')).toBe(false);
+        expect(session.handleHissanInput('3')).toBe(true);
         expect(session.handleHissanEnter()).toBe('all-correct');
         session.resetHissan({ id: 'decimal2', subject: 'math', categoryId: 'dec_add', questionText: '12.3 + 4 =', correctAnswer: '16.3', inputType: 'hissan', isReview: false }, true);
         session.handleHissanInput('8');
         session.handleHissanClear();
         session = RenderHarness();
-        expect([...session.userValues.values()]).toEqual(['.']);
+        expect([...session.userValues.values()]).toEqual([]);
         expect(session.handleHissanInput('1')).toBe(false);
         session.handleHissanBackspace();
         expect(session.handleHissanInput('1')).toBe(false);
         expect(session.handleHissanInput('6')).toBe(false);
+        expect(session.handleHissanInput('.')).toBe(false);
+        session.handleHissanBackspace();
+        expect(session.handleHissanInput('.')).toBe(false);
         expect(session.handleHissanInput('3')).toBe(true);
         expect(session.handleHissanEnter()).toBe('all-correct');
     });
@@ -183,13 +194,15 @@ describe('automatic ordinary answer events', () => {
         expect(h.props.onAnswer).toHaveBeenCalledTimes(1);
         expect(h.props.onAnswer).toHaveBeenCalledWith('9'.repeat(correctAnswer.length));
     });
-    it('fills a decimal with digits only and permits correction before completion', () => {
+    it('requires decimal input and permits deleting and entering the point before completion', () => {
         const h = harness({ categoryId: 'dec_add', correctAnswer: '12.3', inputType: 'number', hissanVersion: undefined });
         h.render({ deferSubmission: false });
-        expect(h.keypad().showDecimal).toBe(false);
+        expect(h.keypad().showDecimal).toBe(true);
         h.key('1'); h.key('9'); h.key('Backspace'); h.key('2');
         expect(h.props.onAnswer).not.toHaveBeenCalled();
         h.key('3');
+        expect(h.props.onAnswer).not.toHaveBeenCalled();
+        h.key('.'); h.key('Backspace'); h.key('.'); h.key('3');
         expect(h.props.onAnswer).toHaveBeenCalledWith('12.3');
     });
     it('keeps the completed ordinary draft queued until the hint receipt settles', () => {
@@ -223,11 +236,11 @@ describe('automatic numeric save boundary', () => {
 
 
 describe('answer-cell editing edge cases', () => {
-    it('Backspace crosses the printed point without spending a key on punctuation', () => {
+    it('Backspace removes the entered point as a separate character', () => {
         const h = harness({ categoryId: 'dec_add', correctAnswer: '12.34', inputType: 'number', hissanVersion: undefined });
         h.render({ deferSubmission: false });
-        h.key('1'); h.key('2'); h.key('3'); h.key('Backspace'); h.key('Backspace');
-        h.key('9'); h.key('8'); h.key('7');
+        h.key('1'); h.key('2'); h.key('.'); h.key('3'); h.key('Backspace'); h.key('Backspace'); h.key('Backspace');
+        h.key('9'); h.key('.'); h.key('8'); h.key('7');
         expect(h.props.onAnswer).toHaveBeenCalledTimes(1);
         expect(h.props.onAnswer).toHaveBeenCalledWith('19.87');
     });
@@ -315,4 +328,63 @@ describe('natural fraction correction', () => {
         expect(h.props.slot.problem.correctAnswer).toEqual(['1', '1']);
         expect(h.props.slot.problem.inputConfig?.fields).toHaveLength(2);
     });
+});
+
+
+describe('whole-row retries in the shared form', () => {
+    it('requires both digits again when just one of two was correct', () => {
+        const h = harness({}, { retryAnswer: ['7', '9'], deferSubmission: false });
+        h.key('9');
+        expect(h.props.onAnswer).not.toHaveBeenCalled();
+        h.key('2');
+        expect(h.props.onAnswer).toHaveBeenCalledWith(['2', '9']);
+    });
+    it('does not retain a correct decimal point or digits from a failed row', () => {
+        const h = harness({ categoryId: 'dec_add', questionText: '12.3 + 4 =', correctAnswer: '16.3', hissanVersion: undefined },
+            { retryAnswer: ['3', '.', '9', '1'], deferSubmission: false });
+        expect(h.keypad().showDecimal).toBe(true);
+        h.key('1'); h.key('6'); h.key('.');
+        expect(h.props.onAnswer).not.toHaveBeenCalled();
+        h.key('3');
+        expect(h.props.onAnswer).toHaveBeenCalledWith(['3', '.', '6', '1']);
+    });
+});
+
+
+it('does not erase a selected decimal field when a leading point is rejected', () => {
+    const h = harness({ categoryId: 'dec_add', correctAnswer: '12.3', inputType: 'number', hissanVersion: undefined }, { deferSubmission: false });
+    h.key('1'); h.key('2');
+    h.select('こたえ'); h.key('.');
+    expect(h.fieldValue('こたえ')).toBe('12');
+    h.key('1'); h.key('2'); h.key('.'); h.key('3');
+    expect(h.props.onAnswer).toHaveBeenCalledWith('12.3');
+});
+
+
+it('Backspace deletes a selected field as a whole, then ordinary deletion removes one character', () => {
+    const h = harness({ categoryId: 'dec_add', correctAnswer: '12.34', inputType: 'number', hissanVersion: undefined });
+    h.key('1'); h.key('2'); h.key('.');
+    h.select('こたえ'); h.key('Backspace');
+    expect(h.fieldValue('こたえ')).toBe('');
+    h.key('1'); h.key('2'); h.key('Backspace');
+    expect(h.fieldValue('こたえ')).toBe('1');
+});
+it('deleting a selected fraction field preserves its neighbour', () => {
+    const h = harness({ categoryId: 'frac_add_same', correctAnswer: ['12','7'], inputType: 'multi-number', hissanVersion: undefined,
+        inputConfig: { fields: [{label:'分子',length:2},{label:'分母',length:1}] } });
+    h.key('1'); h.key('2'); h.key('7');
+    h.select('分子'); h.key('Backspace');
+    expect(h.fieldValue('分子')).toBe('');
+    expect(h.fieldValue('分母')).toBe('7');
+    h.render({ deferSubmission: false });
+    expect(h.props.onAnswer).not.toHaveBeenCalled();
+});
+it.each(['BUTTON', 'A'])('leaves Enter on a focused %s to the native action', tagName => {
+    const h = harness({ subject: 'vocab', inputType: 'number', correctAnswer: '12', hissanVersion: undefined });
+    h.render({ deferSubmission: false }); h.key('1'); h.key('2');
+    const event = h.key('Enter', { tagName });
+    expect(event.defaultPrevented).toBe(false);
+    expect(h.props.onAnswer).not.toHaveBeenCalled();
+    h.key('Enter');
+    expect(h.props.onAnswer).toHaveBeenCalledWith('12');
 });

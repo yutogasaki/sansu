@@ -1,0 +1,14 @@
+
+ RUN  v2.1.9 /private/tmp/sansu-fraction-entry
+
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ✓ src/components/domain/answerCompletion.test.tsx (5 tests) 19ms
+ ✓ src/components/domain/LearningAnswerForm.defer.test.tsx (31 tests) 22ms
+
+ Test Files  2 passed (2)
+      Tests  36 passed (36)
+   Start at  22:32:21
+   Duration  924ms (transform 241ms, setup 0ms, collect 1.57s, tests 40ms, environment 0ms, prepare 53ms)
+

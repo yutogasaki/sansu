@@ -24,25 +24,29 @@ describe('immediate answer-cell completion', () => {
                 const shape = mathAnswerShape({ ...problem, subject: 'math' });
                 expect(shape, categoryId).toBeDefined();
                 let draft = { values: shape!.map(() => ''), active: 0 };
-                const count = shape!.join('').replace(/\./g, '').length;
+                const characters = shape!.join('').replace(/□/g, '9');
+                const count = characters.length;
                 for (let i = 0; i < count; i++) {
                     expect(isAnswerShapeComplete(draft.values, shape!), categoryId).toBe(false);
-                    draft = appendAnswerDigit(draft.values, draft.active, '9', shape!);
+                    draft = appendAnswerDigit(draft.values, draft.active, characters[i], shape!);
                 }
                 expect(isAnswerShapeComplete(draft.values, shape!), categoryId).toBe(true);
             }
         }
     });
 
-    it('inserts the printed decimal point and keeps an incomplete prefix ungraded', () => {
+    it('requires an entered decimal point and keeps an incomplete prefix ungraded', () => {
         const shape = ['□□.□'];
         let draft = { values: [''], active: 0 };
         draft = appendAnswerDigit(draft.values, 0, '1', shape);
         expect(isAnswerShapeComplete(draft.values, shape)).toBe(false);
         draft = appendAnswerDigit(draft.values, 0, '2', shape);
         expect(draft.values).toEqual(['12']);
-        draft = appendAnswerDigit(draft.values, 0, '.', shape);
+        draft = appendAnswerDigit(draft.values, 0, '8', shape);
         expect(draft.values).toEqual(['12']);
+        draft = appendAnswerDigit(draft.values, 0, '.', shape);
+        expect(draft.values).toEqual(['12.']);
+        expect(isAnswerShapeComplete(draft.values, shape)).toBe(false);
         draft = appendAnswerDigit(draft.values, 0, '8', shape);
         expect(draft.values).toEqual(['12.8']);
         expect(isAnswerShapeComplete(draft.values, shape)).toBe(true);
@@ -65,7 +69,7 @@ describe('immediate answer-cell completion', () => {
     });
 
     it.each([
-        ['', ''], ['1', ''], ['12.34', '12.3'], ['12.3', '12'], ['12.', '1'], ['0.5', '0'],
+        ['', ''], ['1', ''], ['12.34', '12.3'], ['12.3', '12.'], ['12.', '12'], ['0.5', '0.'],
     ])('removes one digit from %s, leaving %s', (value, expected) => {
         expect(removeAnswerDigit(value)).toBe(expected);
     });

@@ -7,7 +7,7 @@ function fixture(question: string, answer: string) {
     const grid = generateHissanGrid('dec_add', question, answer)!;
     return { grid, model: writtenPlaceValue(grid), step: grid.steps[0] };
 }
-describe('place value and digit-only input', () => {
+describe('place value and manual decimal input', () => {
     it.each([['12.3 + 4 =', '16.3'], ['3.5 - 0.78 =', '2.72'], ['0.9 + 0.1 =', '1']])('aligns %s at the decimal axis, preserving full operands', (q, a) => {
         const { model } = fixture(q, a);
         const points = [...model.operands, model.result].map(row => row.find(cell => cell.point)?.column);
@@ -25,7 +25,7 @@ describe('place value and digit-only input', () => {
         expect(shiftWrittenDecimal('0.29', 2)).toBe('29');
         expect(shiftWrittenDecimal('3', 2)).toBe('300');
     });
-    it.each([['12.3 + 0 =', '12.3', '123'], ['0.05 + 0 =', '0.05', '005'], ['0.5 + 0 =', '0.50', '05'], ['1000 - 999 =', '1', '1']])('enters %s without dots or redundant zeros and keeps the saved format', (q, a, entry) => {
+    it.each([['12.3 + 0 =', '12.3', '12.3'], ['0.05 + 0 =', '0.05', '0.05'], ['0.5 + 0 =', '0.50', '0.5'], ['1000 - 999 =', '1', '1']])('enters %s with a manual dot and without redundant zeros and keeps the saved format', (q, a, entry) => {
         const { step } = fixture(q, a);
         const values = writtenAutomaticValues(step), order = writtenInputOrder(step);
         let cursor = nextWrittenInput(values, -1, order);

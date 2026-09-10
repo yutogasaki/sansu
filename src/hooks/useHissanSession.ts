@@ -125,7 +125,8 @@ export const useHissanSession = () => {
         }
         const correct = step.correctValues.every((value, i) => current.userValues.get(`${step.rowIndex}-${step.inputCellIndices[i]}`) === value);
         if (!correct) {
-            const values = writtenRetryValues(step.inputCellIndices.map(col => current.userValues.get(`${step.rowIndex}-${col}`) ?? ''), step.correctValues);
+            const automatic = writtenAutomaticValues(step);
+            const values = writtenRetryValues(step.inputCellIndices.map(col => current.userValues.get(`${step.rowIndex}-${col}`) ?? ''), step.correctValues).map((value, i) => automatic[i] || value);
             const userValues = new Map(current.userValues);
             step.inputCellIndices.forEach((col, index) => {
                 if (!values[index]) userValues.delete(`${step.rowIndex}-${col}`);
@@ -168,7 +169,7 @@ export const useHissanSession = () => {
     return {
         ...state,
         canToggleHissanMode: state.isHissanEligibleSkill && !state.isForcedHissanSkill,
-        canInputDecimal: false,
+        canInputDecimal: Boolean(state.gridData?.steps[state.currentStepIndex]?.correctValues.includes('.')),
         handleHissanInput,
         handleHissanBackspace,
         handleHissanClear,

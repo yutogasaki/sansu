@@ -79,7 +79,7 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 
 ## Matrix
 
-筆算の部分訂正・Enterなし連続入力は `node tools/e2e-written-input.mjs` で検査する。`SANSU_WRITTEN_URL`に島有効の固定build、`SANSU_WRITTEN_PARK_URL`に遊園地有効build、`SANSU_WRITTEN_OUTPUT`に新しい出力先を指定。Study/Island/Parkのphone・横向きtabletで、離れた2マスの訂正、正しい数字の保持、戻す、支援中の下書き、保存abort/再送、35ms間隔の物理入力、数字キー位置と学習証拠を確認する。明示fixture・abort診断と子どもの理解を区別する。
+小数点の手入力・誤答行の全消去は `node tools/e2e-manual-decimal.mjs` で検査する。`SANSU_MANUAL_DECIMAL_URL` に島有効production、`SANSU_MANUAL_DECIMAL_OUTPUT` に新しい出力先を指定。Study/Islandのphone・tabletで、小数点キー/物理キー、小数点の削除と再入力、2桁の一方だけ正解した誤答行の全消去、Enterなし再回答を確認する。明示プロフィールfixtureから通常plannerを通す。旧 `e2e-written-input.mjs` は部分訂正とParkを含む過去契約用で、現行の合格証拠にはしない。
 
 | Change Type | Required Checks | Manual Checks | Notes |
 |---|---|---|---|

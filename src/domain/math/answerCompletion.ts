@@ -15,13 +15,13 @@ export function isAnswerShapeComplete(values: readonly string[], shape: readonly
             cell === '.' ? values[i][j] === '.' : /^\d$/.test(values[i][j])));
 }
 
-/** Advance on filled slots, including wrong digits. A point is printed scaffolding. */
+/** Advance on filled slots, including wrong digits. Decimal points require input. */
 export function appendAnswerDigit(values: readonly string[], active: number, digit: string, shape: readonly string[]) {
     const next = [...values];
-    if (!/^\d$/.test(digit) || !shape[active]) return { values: next, active };
+    if (!/^[0-9.]$/.test(digit) || !shape[active]) return { values: next, active };
     const field = shape[active];
-    let value = next[active] ?? '';
-    if (field[value.length] === '.') value += '.';
+    const value = next[active] ?? '';
+    if (field[value.length] === '.' ? digit !== '.' : digit === '.') return { values: next, active };
     if (value.length >= field.length) return { values: next, active };
     next[active] = value + digit;
     const following = Array.from({ length: shape.length }, (_, offset) => (active + 1 + offset) % shape.length)
@@ -29,9 +29,9 @@ export function appendAnswerDigit(values: readonly string[], active: number, dig
     return { values: next, active: next[active].length === field.length && following !== undefined ? following : active };
 }
 
-/** A printed decimal point never consumes a deletion keystroke. */
+/** Delete the last entered character, including a decimal point. */
 export function removeAnswerDigit(value: string): string {
-    return value.replace(/\.$/, '').slice(0, -1).replace(/\.$/, '');
+    return value.slice(0, -1);
 }
 
 /** Every existing Hissan input cell holds exactly one digit or decimal point. */
