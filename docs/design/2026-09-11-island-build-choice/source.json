@@ -11,6 +11,11 @@
     "directory": "/tmp/sansu-learning-cue-build-3",
     "revision": "development-local:b7abe739-a247-4788-a648-9eab6a44959e"
   },
+  "live": {
+    "target": "https://sansu-seven.vercel.app",
+    "revision": "e700e6591004dae89613d77eff6e0f9ae18d70fd",
+    "appVisualCandidate": "mystic-island-shore-garden-v18"
+  },
   "files": [
     { "path": "src/components/island/life/IslandLife.tsx", "sha256": "80b5c4da8d4647456a024360de65438713d668d1700e4ce53bccb33e7f8ec898" },
     { "path": "src/components/island/life/life.css", "sha256": "734d1a6932acda867471379c9b56fedd58dab2d40109c5e7e1f6496c38d95182" },

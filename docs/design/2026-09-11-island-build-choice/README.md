@@ -11,7 +11,7 @@
 
 ## 検証
 
-`report.json` は production preview の phone/tablet（390×844 / 768×1024）で、空の制作メニュー、不足数、実3問による6しずく、学習後通知、花購入、reload、実サービスワーカー制御下のオフライン回答と再起動を一周した結果である。`phone-build-empty.png` と `tablet-build-empty.png` は、島を縮めずに案内と不足数を重ねた実画面。`phone-earned.png` と `tablet-earned.png` は学習後通知の実画面である。
+`report.json` は production preview の phone/tablet（390×844 / 768×1024）で、空の制作メニュー、不足数、実3問による6しずく、学習後通知、花購入、reload、実サービスワーカー制御下のオフライン回答と再起動を一周した結果である。`phone-build-empty.png` と `tablet-build-empty.png` は、島を縮めずに案内と不足数を重ねた実画面。`phone-earned.png` と `tablet-earned.png` は学習後通知の実画面である。公開版 revision `e700e6591004dae89613d77eff6e0f9ae18d70fd` に対する同じ結果は [`live-report.json`](live-report.json)、画像は [`live-phone-build-empty.png`](live-phone-build-empty.png) / [`live-tablet-build-empty.png`](live-tablet-build-empty.png) / [`live-phone-earned.png`](live-phone-earned.png) / [`live-tablet-earned.png`](live-tablet-earned.png) に残している。
 
 - **視覚**: 水面・島全景・下部ナビを残したまま、制作パネルの案内と不足数が読めることを確認。最終アート評価と子どもの再訪意欲は未実施（N=0）。
 - **無説明理解・安全**: 作れない理由が「あと N しずく」と読め、学習で増えることを案内する。購入・報酬・学習記録に副作用はない。子どもによる無説明理解は未観察。
