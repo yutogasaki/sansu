@@ -1,0 +1,25 @@
+{
+  "previous": "75cb124601fa624208d2d7214ae1cd0b9181a636243acc099ce1e37853e9665d",
+  "current": "0730258f83e36ff64a4249b3549ac9edbbfcb91d9f2caf4cb071719497fd4401",
+  "changedInputs": [
+    "src/components/island/life/IslandLife.tsx",
+    "src/components/island/life/useIslandLife.test.ts",
+    "src/components/island/life/useIslandLife.ts",
+    "tools/e2e-island-life-interactions.mjs",
+    "tools/e2e-island-life.mjs",
+    "tools/e2e-island.mjs",
+    "tools/island-e2e-helpers.mjs"
+  ],
+  "runtimeChanges": [
+    "src/components/island/life/useIslandLife.ts",
+    "src/components/island/life/IslandLife.tsx"
+  ],
+  "qaNotes": "Prior v3 QA overlays are included in this fixed snapshot. Baseline used the same held-read and down/up conditions before extending the corrected-run branches.",
+  "finalSourceHash": "100de24714efa14643bf4504f02fe167f0256fe276e178ba80969a88168fa387",
+  "closingChanges": [
+    "src/components/island/life/useIslandLife.test.ts",
+    "src/components/island/life/useIslandLife.ts",
+    "tools/e2e-island-life-interactions.mjs"
+  ],
+  "closingReason": "Cancel queued purchase also when the preceding read fails after leave/return. One runtime condition plus one unit case and the matching browser diagnostic."
+}

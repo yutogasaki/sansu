@@ -1,0 +1,47 @@
+{
+  "target": "http://127.0.0.1:4173",
+  "harnessHash": "0d86e9b424e6b0f6686f8548b1ae5e71e1871d7ab09e70f4322f894103214f58",
+  "pass": true,
+  "scenarios": [
+    {
+      "name": "keeps the root tangle playable at 390x844",
+      "startedAt": "2026-09-10T05:45:36.606Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 6900,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable at 768x1024",
+      "startedAt": "2026-09-10T05:45:43.508Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 5473,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable at 1024x768",
+      "startedAt": "2026-09-10T05:45:48.984Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 5630,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable at 1024x1366",
+      "startedAt": "2026-09-10T05:45:54.615Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 5609,
+      "remainingNewContexts": 0
+    },
+    {
+      "name": "keeps the root tangle playable at 1080x1920",
+      "startedAt": "2026-09-10T05:46:00.225Z",
+      "pass": true,
+      "pages": [],
+      "durationMs": 5594,
+      "remainingNewContexts": 0
+    }
+  ]
+}

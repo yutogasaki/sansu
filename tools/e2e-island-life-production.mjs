@@ -1,0 +1,74 @@
+import { chromium } from 'playwright';
+import { mkdir, writeFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import { readNative } from './island-e2e-helpers.mjs';
+import { attempt } from './island-learning-checks.mjs';
+const base = process.env.SANSU_ISLAND_PRODUCTION_URL, out = process.env.SANSU_ISLAND_OUTPUT;
+assert(base && out, 'Specify a production URL and fresh output directory');
+await mkdir(out, { recursive: true });
+const report = { target: base, flag: 'VITE_ISLAND_LIFE_ENABLED=true; production', humanN: 0, scenarios: [], pass: false };
+const browser = await chromium.launch();
+try {
+ for (const [name, viewport] of [['phone', { width: 390, height: 844 }], ['tablet', { width: 768, height: 1024 }]]) {
+    const context = await browser.newContext({ viewport, hasTouch: true, reducedMotion: name === 'tablet' ? 'reduce' : 'no-preference' });
+    const page = await context.newPage(); page.setDefaultTimeout(30000);
+    const errors = []; page.on('pageerror', e => errors.push(e.message));
+    try {
+      await page.goto(base);
+      await page.getByRole('button', { name: 'まなぶ', exact: true }).first().click();
+      await page.getByRole('button', { name: '小学 1 年生', exact: true }).click();
+      await page.getByRole('button', { name: 'さんすう', exact: true }).click();
+      await page.getByRole('button', { name: '足し算まで', exact: true }).click();
+      await page.locator('.island-learning[data-input-ready="true"]').waitFor();
+      await page.getByRole('button', { name: 'とじる', exact: true }).click();
+      await page.locator('.life-world[data-rendered="true"]').waitFor();
+      assert.equal(await page.locator('.life-dev').count(), 0);
+      assert.equal(await page.locator('[data-life-items]').getAttribute('data-life-items'), '0');
+      assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'), '0');
+      const databaseNames = await page.evaluate(async () => (await indexedDB.databases()).map(d => d.name));
+      assert(databaseNames.includes('SansuIslandLifeV1')); assert(!databaseNames.includes('SansuIslandLifePreviewV1'));
+      await page.screenshot({ path: `${out}/${name}-initial.png` });
+      await page.locator('.life-learn').click();
+      let native = await readNative(page), answers = 0; const start = native.island.completedSets;
+      while (native.island.completedSets === start && answers++ < 20) native = (await attempt(page, native)).after;
+      assert(answers < 20);
+      await page.getByRole('button', { name: 'とじる', exact: true }).click();
+      await page.waitForFunction(() => Number(document.querySelector('[data-life-drops]')?.dataset.lifeDrops) >= 6);
+      const earned = Number(await page.locator('[data-life-drops]').getAttribute('data-life-drops'));
+      await page.locator('[data-life-buy="flower"]').click();
+      await page.locator('.life-placement details summary').click();
+      await page.locator('[data-life-cell="0,2"]').click();
+      await page.getByRole('button', { name: 'ここに おく', exact: true }).click();
+      await page.locator('.life-placement').waitFor({ state: 'hidden' });
+      assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'), String(earned - 2));
+      const before = await readNative(page);
+      await page.evaluate(async () => { await navigator.serviceWorker.ready; });
+      await page.reload(); await page.locator('.life-world[data-rendered="true"]').waitFor();
+      assert.equal(await page.locator('[data-life-items]').getAttribute('data-life-items'), '1');
+      assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'), String(earned - 2));
+      const after = await readNative(page);
+      for (const key of ['logs', 'memoryMath', 'memoryVocab', 'islandPlans']) assert.deepEqual(after[key], before[key]);
+      assert(await page.evaluate(() => Boolean(navigator.serviceWorker.controller)), 'Real SW control');
+      await context.setOffline(true);
+      await page.reload(); await page.locator('.life-world[data-rendered="true"]').waitFor();
+      await page.locator('.life-learn').click();
+      await page.locator('.island-learning[data-input-ready="true"]').waitFor();
+      const offlineBefore = await readNative(page);
+      await attempt(page, offlineBefore);
+      await page.getByRole('button', { name: 'とじる', exact: true }).click();
+      await page.locator('.life-world[data-rendered="true"]').waitFor();
+      const offlineAfter = await readNative(page);
+      assert(offlineAfter.islandEvents.length > offlineBefore.islandEvents.length);
+      await page.reload(); await page.locator('.life-world[data-rendered="true"]').waitFor();
+      assert.deepEqual((await readNative(page)).islandPlans, offlineAfter.islandPlans);
+      assert.equal(await page.locator('[data-life-items]').getAttribute('data-life-items'), '1');
+      assert.equal(await page.locator('.life-dev').count(), 0);
+      await page.screenshot({ path: `${out}/${name}-offline.png` });
+      assert.deepEqual(errors, []);
+      report.scenarios.push({ name, pass: true, answers, earned, savedItems: 1, offlineAnswerAndReload: true });
+    } catch (e) { await page.screenshot({ path: `${out}/${name}-failure.png` }); throw e; }
+    finally { await context.close(); }
+ }
+ report.pass = true;
+} finally { await writeFile(`${out}/report.json`, JSON.stringify(report, null, 2)); await browser.close(); }
+console.log(JSON.stringify(report, null, 2));

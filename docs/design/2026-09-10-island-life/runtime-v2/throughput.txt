@@ -1,0 +1,141 @@
+Island throughput phone 1/10 all-correct study
+Island throughput phone 1/10 all-correct island
+Island throughput phone 1/10 miss-at-q4-q8 island
+Island throughput phone 1/10 miss-at-q4-q8 study
+Island throughput phone 2/10 all-correct island
+Island throughput phone 2/10 all-correct study
+Island throughput phone 2/10 miss-at-q4-q8 study
+Island throughput phone 2/10 miss-at-q4-q8 island
+Island throughput phone 3/10 all-correct study
+Island throughput phone 3/10 all-correct island
+Island throughput phone 3/10 miss-at-q4-q8 island
+Island throughput phone 3/10 miss-at-q4-q8 study
+Island throughput phone 4/10 all-correct island
+Island throughput phone 4/10 all-correct study
+Island throughput phone 4/10 miss-at-q4-q8 study
+Island throughput phone 4/10 miss-at-q4-q8 island
+Island throughput phone 5/10 all-correct study
+Island throughput phone 5/10 all-correct island
+Island throughput phone 5/10 miss-at-q4-q8 island
+Island throughput phone 5/10 miss-at-q4-q8 study
+Island throughput phone 6/10 all-correct island
+Island throughput phone 6/10 all-correct study
+Island throughput phone 6/10 miss-at-q4-q8 study
+Island throughput phone 6/10 miss-at-q4-q8 island
+Island throughput phone 7/10 all-correct study
+Island throughput phone 7/10 all-correct island
+Island throughput phone 7/10 miss-at-q4-q8 island
+Island throughput phone 7/10 miss-at-q4-q8 study
+Island throughput phone 8/10 all-correct island
+Island throughput phone 8/10 all-correct study
+Island throughput phone 8/10 miss-at-q4-q8 study
+Island throughput phone 8/10 miss-at-q4-q8 island
+Island throughput phone 9/10 all-correct study
+Island throughput phone 9/10 all-correct island
+Island throughput phone 9/10 miss-at-q4-q8 island
+Island throughput phone 9/10 miss-at-q4-q8 study
+Island throughput phone 10/10 all-correct island
+Island throughput phone 10/10 all-correct study
+Island throughput phone 10/10 miss-at-q4-q8 study
+Island throughput phone 10/10 miss-at-q4-q8 island
+Island throughput tablet 1/10 all-correct study
+Island throughput tablet 1/10 all-correct island
+Island throughput tablet 1/10 miss-at-q4-q8 island
+Island throughput tablet 1/10 miss-at-q4-q8 study
+Island throughput tablet 2/10 all-correct island
+Island throughput tablet 2/10 all-correct study
+Island throughput tablet 2/10 miss-at-q4-q8 study
+Island throughput tablet 2/10 miss-at-q4-q8 island
+Island throughput tablet 3/10 all-correct study
+Island throughput tablet 3/10 all-correct island
+Island throughput tablet 3/10 miss-at-q4-q8 island
+Island throughput tablet 3/10 miss-at-q4-q8 study
+Island throughput tablet 4/10 all-correct island
+Island throughput tablet 4/10 all-correct study
+Island throughput tablet 4/10 miss-at-q4-q8 study
+Island throughput tablet 4/10 miss-at-q4-q8 island
+Island throughput tablet 5/10 all-correct study
+Island throughput tablet 5/10 all-correct island
+Island throughput tablet 5/10 miss-at-q4-q8 island
+Island throughput tablet 5/10 miss-at-q4-q8 study
+Island throughput tablet 6/10 all-correct island
+Island throughput tablet 6/10 all-correct study
+Island throughput tablet 6/10 miss-at-q4-q8 study
+Island throughput tablet 6/10 miss-at-q4-q8 island
+Island throughput tablet 7/10 all-correct study
+Island throughput tablet 7/10 all-correct island
+Island throughput tablet 7/10 miss-at-q4-q8 island
+Island throughput tablet 7/10 miss-at-q4-q8 study
+Island throughput tablet 8/10 all-correct island
+Island throughput tablet 8/10 all-correct study
+Island throughput tablet 8/10 miss-at-q4-q8 study
+Island throughput tablet 8/10 miss-at-q4-q8 island
+Island throughput tablet 9/10 all-correct study
+Island throughput tablet 9/10 all-correct island
+Island throughput tablet 9/10 miss-at-q4-q8 island
+Island throughput tablet 9/10 miss-at-q4-q8 study
+Island throughput tablet 10/10 all-correct island
+Island throughput tablet 10/10 all-correct study
+Island throughput tablet 10/10 miss-at-q4-q8 study
+Island throughput tablet 10/10 miss-at-q4-q8 island
+{
+  "output": "/tmp/island-life-v2-final/throughput.json",
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 123.1199070010419,
+      "islandMedianProblemsPerMinute": 278.8752762449765,
+      "allCorrectIslandToStudyRatio": 2.2650705563204863,
+      "correctOperableP95Ms": 221.79999999701977,
+      "incorrectRetryP95Ms": 229.09999999403954,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 215.10000000149012,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 216.8999999910593,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4873.30000000447,
+      "rawIslandDurationMedianMs": 2151.4999999925494
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 123.14639599071272,
+      "islandMedianProblemsPerMinute": 278.84305546634386,
+      "allCorrectIslandToStudyRatio": 2.2643216898314527,
+      "correctOperableP95Ms": 220.1000000089407,
+      "incorrectRetryP95Ms": 228.70000000298023,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 215.25000000745058,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 217.40000000596046,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4872.25,
+      "rawIslandDurationMedianMs": 2151.7499999925494
+    }
+  ],
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "evidence": {
+    "eligible": true,
+    "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "pass": true
+}

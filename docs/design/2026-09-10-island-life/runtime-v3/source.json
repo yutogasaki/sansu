@@ -1,0 +1,4366 @@
+{
+  "revision": "70ad92c15a976ae9be2c9513cd4825ea961e4dc0",
+  "workingTree": true,
+  "sourceHash": "75cb124601fa624208d2d7214ae1cd0b9181a636243acc099ce1e37853e9665d",
+  "candidate": "island-life-placement-v3",
+  "flags": {
+    "DEV": true,
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_ISLAND_LIFE_PREVIEW": true
+  },
+  "root": "/tmp/sansu-island-life-v3",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "2c928f50689568d3dee5730efffd51e9bc9c6fc3b43d19ded9c51b562ec2296b"
+    },
+    {
+      "path": ".nvmrc",
+      "sha256": "f14b4987904bcb5814e4459a057ed4d20f58a633152288a761214dcd28780b56"
+    },
+    {
+      "path": "eslint.config.js",
+      "sha256": "ac840ea42b24b81a6a4652ba4b81bc874b7b674290571029f0ed968f3e2a7b98"
+    },
+    {
+      "path": "index.html",
+      "sha256": "34eeba342e4d941c8903032b9c1993a2357513e07fc6981753000c0d5218df4b"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d"
+    },
+    {
+      "path": "package.json",
+      "sha256": "0b719af6561a11d2d3e75fc9ac479d59a2264982328f103c8278a0218427885a"
+    },
+    {
+      "path": "postcss.config.js",
+      "sha256": "ffe8fde94df3d00186c1c193681faee15d4ec037ab39579bfa7c348a5e171caf"
+    },
+    {
+      "path": "public/_headers",
+      "sha256": "b25111b3e4371fd5ef7367f726e14b205d2135cdef9c3a61dfe376915fc48bc7"
+    },
+    {
+      "path": "public/assets/explore/firefly-flower/scene-dew-trail-stumble-bloom-pokko-v5.jpg",
+      "sha256": "9bacadb8e625da373b4cee014d2f5725f1f8e3c1f7126c60fff7db4e32394293"
+    },
+    {
+      "path": "public/assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.jpg",
+      "sha256": "200e4c9502318a2bd6aefe62bde641c855480c27855ee5f8681f225376a91ce4"
+    },
+    {
+      "path": "public/assets/explore/firefly-flower/scene-ringing-petals-stumble-bloom-pokko-v5.jpg",
+      "sha256": "5d95d253530ab2ea8761b21bc1fe6793123939109e021b24e3b76025822341a3"
+    },
+    {
+      "path": "public/assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.jpg",
+      "sha256": "79b4b69f5843e1927d1f2bc6dd693a68dc003f92cdf7fd094712bcb67d7ffeae"
+    },
+    {
+      "path": "public/assets/explore/firefly-flower/scene-warm-bud-stumble-bloom-pokko-v5.jpg",
+      "sha256": "86c4d34264f72ce3d7a247b739cde31c0c55b3fc4598d5fcf2160d83df8e9cf6"
+    },
+    {
+      "path": "public/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.jpg",
+      "sha256": "f1fdfad9425bb535705518570427f1ca0563aefc0333fc3eabe344bda903e3f5"
+    },
+    {
+      "path": "public/assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.jpg",
+      "sha256": "abab4542ddddacb1dd485eff7c6d3927d8ac9f3a471235c528eab4146941086b"
+    },
+    {
+      "path": "public/assets/explore/light-bridge/scene-idle-leaf-carry-bloom-pokko-v7.jpg",
+      "sha256": "a9f985178feb7911b73eec42b9e3ace657df036e8700937b55aea48d80422afa"
+    },
+    {
+      "path": "public/assets/explore/opening-root-pull-v1/payoff.jpg",
+      "sha256": "3ecf2c6cc39eb4b1545dbacff75e2d9ce7f742554e33641441a32b748ca25fbb"
+    },
+    {
+      "path": "public/assets/explore/opening-root-pull-v1/pull-one.jpg",
+      "sha256": "ea69d741857ea45c5676d9f97f05363721413fe5edc9704c317b809cd104a4c2"
+    },
+    {
+      "path": "public/assets/explore/opening-root-pull-v1/pull-two.jpg",
+      "sha256": "e178fc1db0995cba75cdfc045d552b5fef3837247d862275eab56953c4d45338"
+    },
+    {
+      "path": "public/assets/explore/opening-root-pull-v1/ready.jpg",
+      "sha256": "6e659c352784380208650ee8980ca58367e9c823f30e5d8d1c759a157c77a311"
+    },
+    {
+      "path": "public/assets/explore/opening-root-pull-v2/payoff-dirt-hat.jpg",
+      "sha256": "d2a1ef24f7e6392a77867b34b0baf75fb5fcdf18c1994c2e41b699e63db8b62f"
+    },
+    {
+      "path": "public/assets/explore/opening-root-pull-v2/payoff-leaf-hat.jpg",
+      "sha256": "603dba678500ae93e316b13e0387e77043e6038da7f90516f9dfd6feeb57843d"
+    },
+    {
+      "path": "public/assets/explore/opening-root-pull-v2/pull-one.jpg",
+      "sha256": "a722d84e23cfa85707c9f244fc8d2246fe5375092bf6f7697513e10b571a3dfd"
+    },
+    {
+      "path": "public/assets/explore/opening-root-pull-v2/pull-two.jpg",
+      "sha256": "5a57d458e212a578da633c353dfb4ed6ca6abd09ec5467183dc7b30fa4bef438"
+    },
+    {
+      "path": "public/assets/explore/opening-root-pull-v2/ready.jpg",
+      "sha256": "d0b31e5d6495b4371bb7cc5705b5050e5e5dd43792f3c410d2d6477656ed1d78"
+    },
+    {
+      "path": "public/assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-one.jpg",
+      "sha256": "cc3f19cbb88591a5caad738ec83d57c908bffed77e44f3bc8ab8230997e9d72e"
+    },
+    {
+      "path": "public/assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-two.jpg",
+      "sha256": "5fdca23b5d3ae174fc8459a854e2cee263a82bb5634a863f0be6536e587f4929"
+    },
+    {
+      "path": "public/assets/explore/opening-snap-root-carry-bloom-v3/scene-popped.jpg",
+      "sha256": "3c2ed5cf890f3be30698da900d8ffba17a051f3c0ebb17f3fe4e5047b43c233c"
+    },
+    {
+      "path": "public/assets/explore/opening-snap-root-carry-bloom-v3/scene-ready.jpg",
+      "sha256": "d7f338adbe08f219e2f8721394f4cb81be985378b3c2f13d682f870ebaaa7ac2"
+    },
+    {
+      "path": "public/assets/explore/rapid-trail/scene-run-pop-v1.webp",
+      "sha256": "2270f0e9833ebc3772a9338d6699a5334d8f2bfdeaa697edcb84af198e454a92"
+    },
+    {
+      "path": "public/assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg",
+      "sha256": "17d265e09b1c576bc9ff4ff2c93fe38fd267b62dab65d21accf849bc18faa9b9"
+    },
+    {
+      "path": "public/assets/explore/root-tangle/scene-open-carry-bloom-pokko-v7.jpg",
+      "sha256": "0e57a38bedc079f23904b2991efa34649eb4e402db851d13eaae7a468c2fcca4"
+    },
+    {
+      "path": "public/assets/explore/root-tangle/scene-tangled-carry-bloom-pokko-v7.jpg",
+      "sha256": "62c0b3306ad834b250f9f7ef33becfa1e5f34994b353a69b13c6acba9618187b"
+    },
+    {
+      "path": "public/assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.jpg",
+      "sha256": "43b29df9ea4b6ac0025341565224d60d7b4596ec97eb483a41a48ac057af7d99"
+    },
+    {
+      "path": "public/assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.jpg",
+      "sha256": "7587c7e460a587fcecff2da7e8ddea73520d68cf4ecaa8141657ac0086809041"
+    },
+    {
+      "path": "public/fonts/NotoSansJP-Japanese.woff2",
+      "sha256": "34e66dbbac2ded91b36d9ba6154573a4e9576842559e466cd1fdb84370cb45a3"
+    },
+    {
+      "path": "public/fonts/NotoSansJP-Regular.otf",
+      "sha256": "c2f3b4d463500a2ddcd3849cded1fceeb9fd6d1c32e6cbecd568453ba50fc68f"
+    },
+    {
+      "path": "public/fonts/NotoSansJP.woff2",
+      "sha256": "539b381a6e0a5a49d299867d9ab722ad7e41d01f07bbcb6bed4518b63f8d4b0a"
+    },
+    {
+      "path": "public/icons/apple-touch-icon.png",
+      "sha256": "724e49b978468741ec8f2dee5a00def26d671ba463453f84a8c50c249364ac11"
+    },
+    {
+      "path": "public/icons/favicon-32.png",
+      "sha256": "73189d40ecfeb2e31c129870b6515a05c11895b86219fc2ddac37d796b013446"
+    },
+    {
+      "path": "public/icons/icon-192.png",
+      "sha256": "ffa0a900a780e0705653222f351724ff2492dfe40d9204d61d7ad7792b00b3ef"
+    },
+    {
+      "path": "public/icons/icon-512.png",
+      "sha256": "f214ae4c26ae2bc1b9f0bea16f7811b202077a4d46cbc1301e3e3f91276ad9da"
+    },
+    {
+      "path": "public/icons/icon-maskable-192.png",
+      "sha256": "ffa0a900a780e0705653222f351724ff2492dfe40d9204d61d7ad7792b00b3ef"
+    },
+    {
+      "path": "public/icons/icon-maskable-512.png",
+      "sha256": "f214ae4c26ae2bc1b9f0bea16f7811b202077a4d46cbc1301e3e3f91276ad9da"
+    },
+    {
+      "path": "public/ikimono/0-1.webp",
+      "sha256": "6e17ecaa5504ff8249e5f9129644f6abb10d75deea06d3a9e8d19e6bafa3efa4"
+    },
+    {
+      "path": "public/ikimono/0-2.webp",
+      "sha256": "ffb392499691ed94295f26f5edd367ca9794c8731a55a8d981559a23a4be2f97"
+    },
+    {
+      "path": "public/ikimono/0-3.webp",
+      "sha256": "c942d64bf2135f67fa042f5214516e57f302c111af8cd2adaacb786cc901959a"
+    },
+    {
+      "path": "public/ikimono/1-1.webp",
+      "sha256": "6f9f343439d2f11d29b271321ca2b16062309ca12aaa5c0fb3e135c3e22cf0d3"
+    },
+    {
+      "path": "public/ikimono/1-2.webp",
+      "sha256": "7b7f6581b3d8b9cd6b3acb4578805cc09f90682a1f1262e06cbd634d1020bd69"
+    },
+    {
+      "path": "public/ikimono/1-3.webp",
+      "sha256": "1eaf7d4fe203654f4748603af16346144a742b51e31d4a661fe257699a39f569"
+    },
+    {
+      "path": "public/ikimono/2-1.webp",
+      "sha256": "6008b85651c8ffb7ae506ff53dc8d6ca80ea4582cb16c170e6b0f80d09edf590"
+    },
+    {
+      "path": "public/ikimono/2-2.webp",
+      "sha256": "50981e44b30fd6a19f645418a24cd5eede5c5514b23ebb9dc890be931bad9adf"
+    },
+    {
+      "path": "public/ikimono/2-3.webp",
+      "sha256": "1bec305e07e22e690022b22229318e7392be3b02d6c1ead7b2d4701e518f2421"
+    },
+    {
+      "path": "public/ikimono/3-1.webp",
+      "sha256": "f082e7bb85bdf4fe6d605bd779848cbcb35f763c27f30809aaf251d1acb33a54"
+    },
+    {
+      "path": "public/ikimono/3-2.webp",
+      "sha256": "35c19ab1f385ada73bd3c3bb1c709870e6a5670a61b1fff0b698ebe451d07991"
+    },
+    {
+      "path": "public/ikimono/3-3.webp",
+      "sha256": "76ffe75a7d84494e3edc4db617ee2e54d93bbb02e69f82a8f4320179ccf02595"
+    },
+    {
+      "path": "public/ikimono/4-1.webp",
+      "sha256": "6f32026280134a5e915b6a4103416fb5ddf594bbda6ddbf8791b7eac310ac5d9"
+    },
+    {
+      "path": "public/ikimono/4-2.webp",
+      "sha256": "2dd61bf84420d850aed2bcefd32a094d8deed88e9aa2678e55ae401c9749dbdb"
+    },
+    {
+      "path": "public/ikimono/4-3.webp",
+      "sha256": "80c1ab09c8e18655e5c9bab65f6cad81e4dbf51836bda249ac5dea3ca38ac503"
+    },
+    {
+      "path": "public/ikimono/5-1.webp",
+      "sha256": "d58f9f7031e25b0d017552676ce16a59aa165e8bb5e7ad7a14ba224b4ed07efa"
+    },
+    {
+      "path": "public/ikimono/5-2.webp",
+      "sha256": "5c27dffbe2fb5e1a9052bc835a4cad9ae39810ac244bc749b9397d2a8acc6c0f"
+    },
+    {
+      "path": "public/ikimono/5-3.webp",
+      "sha256": "a1bd69372312f66c393dc9f167c6657af5d3e5adcdfd8a14cb4e7a72ef8336aa"
+    },
+    {
+      "path": "public/ikimono/6-1.webp",
+      "sha256": "a0de35d28429821d3ce24afa25ce7d1f00d19ec1923805c8e114e2a7e62eaf7d"
+    },
+    {
+      "path": "public/ikimono/6-2.webp",
+      "sha256": "11ac8b5ad043dfbe628809c705d0521c8b70b33ad073d9bc0c0053b9c9e015c8"
+    },
+    {
+      "path": "public/ikimono/6-3.webp",
+      "sha256": "1ada091a861dd01e87dfb86b8d4c7e2483a1807810436f28812a2c44f2cbd8f6"
+    },
+    {
+      "path": "public/ikimono/7-1.webp",
+      "sha256": "d8dfa91fbf5bd1d89c53f7803f78d00dcd86581e711abbfafd6f03831fd6a188"
+    },
+    {
+      "path": "public/ikimono/7-2.webp",
+      "sha256": "991215ab59d39d944aad3b8b9e16ccc30472c9e2364f603a57914919ea518301"
+    },
+    {
+      "path": "public/ikimono/7-3.webp",
+      "sha256": "4298f18ad748728fc3ce06be86f43dc8b8481ca31847ed05ced243689eaa8a67"
+    },
+    {
+      "path": "public/ikimono/8-1.webp",
+      "sha256": "683ee1b25a0daeff7d39f54c53179c69b5e2e4b18df7845e76d757b795ee454c"
+    },
+    {
+      "path": "public/ikimono/8-2.webp",
+      "sha256": "631d9a4bcf8889e029990d8a7d31576dcb54810a522ff352720d9b52f0f3a69a"
+    },
+    {
+      "path": "public/ikimono/8-3.webp",
+      "sha256": "1c4a1522563f27e7799dd7659ccd802d5dd45f63f773611040e14c9a849f096c"
+    },
+    {
+      "path": "public/ikimono/9-1.webp",
+      "sha256": "82200a9764c82295a8c5c7766b3fd640d6c03360e081b858bbd41bff65ab7026"
+    },
+    {
+      "path": "public/ikimono/9-2.webp",
+      "sha256": "b8f8abf4f9f4abc096ef7b8a2026b88f6e563911c21cc3873c0d9faeb81c623d"
+    },
+    {
+      "path": "public/ikimono/9-3.webp",
+      "sha256": "565beffc5578b79331d21eef0f13af8d96079c88b0c3d3ea7ccc39d78acafd36"
+    },
+    {
+      "path": "public/manifest.json",
+      "sha256": "29f6ca25896786e705d2a1bdc8b987b028cdcc08b8a5fae3685792b27f151de9"
+    },
+    {
+      "path": "public/sounds/bgm_menu.mp3",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "public/sounds/bgm_study.mp3",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "public/sounds/clear.mp3",
+      "sha256": "d55fdb2be713093eaba2923038c0f5ea46afd59746cbb4b3f0144df14cf06206"
+    },
+    {
+      "path": "public/sounds/correct.mp3",
+      "sha256": "1cace7ca4862c4b7e72719428a4bbf4e22bfee29b30bf3e743db3a6558534704"
+    },
+    {
+      "path": "public/sounds/incorrect.mp3",
+      "sha256": "efa8df6ae4841704f07b15bb48f2efede2f0cabedcac3118d6cb0c7ddc6eec4a"
+    },
+    {
+      "path": "public/sounds/level_up.mp3",
+      "sha256": "0bf7cfbe918d44ffb5e591a0aa3cf880d2d9474ecba77ec11561fbcb28d91705"
+    },
+    {
+      "path": "public/sounds/start.mp3",
+      "sha256": "f018b912b2acbc0295c49e3332974a6f252b2570e2eb2eb577ddc52cefe51ae8"
+    },
+    {
+      "path": "public/sounds/step.mp3",
+      "sha256": "1ad1175c08f4b65a430cd8ffc5eeb3c0850f5089e31b9793367860ceaceb6131"
+    },
+    {
+      "path": "public/sounds/tap.mp3",
+      "sha256": "98b7bc75fe330840d2f2924b72ee36b7a8f0c5115599087563e25c4789b3ff82"
+    },
+    {
+      "path": "src/App.tsx",
+      "sha256": "4af53a1d4fcacf229338974d1f9cf452cb57b2dc3ce75f77cfef3989bcc2d019"
+    },
+    {
+      "path": "src/assets/fonts/NotoSansJP.woff2",
+      "sha256": "539b381a6e0a5a49d299867d9ab722ad7e41d01f07bbcb6bed4518b63f8d4b0a"
+    },
+    {
+      "path": "src/components/Footer.test.tsx",
+      "sha256": "5bd7876f97e7fe3cf44fd07e19f7137d96815d37c3da478c520277931f871554"
+    },
+    {
+      "path": "src/components/Footer.tsx",
+      "sha256": "caf01daff73fc654cf780634776eec006e22fe3cdc07b761f1fb785d308e3e4e"
+    },
+    {
+      "path": "src/components/Header.tsx",
+      "sha256": "2513464d12c0e59ec8e4059e4e8f78b271e803bf1a574bf03a6a8cf8ad2c834e"
+    },
+    {
+      "path": "src/components/LaunchRoute.test.tsx",
+      "sha256": "ec8ed1b54ab27cd49f54b2c4d13829320af0dbfaa883cb98c0b0d330cefee46a"
+    },
+    {
+      "path": "src/components/LaunchRoute.tsx",
+      "sha256": "9328ae8bf13c3403c542180becf544f563d1028021aa8d8c1e6cae0c4f88fa35"
+    },
+    {
+      "path": "src/components/Layout.tsx",
+      "sha256": "17b50ca6e5f036892ba1ac55edd2460f3294f9460c2eaef599f083ee93c66b33"
+    },
+    {
+      "path": "src/components/LayoutDebugOverlay.tsx",
+      "sha256": "8aef14404c07efdc52c7984b86312ca86ffacdf16123b2771eb7a6722ad32ec0"
+    },
+    {
+      "path": "src/components/ScreenScaffold.tsx",
+      "sha256": "9e8b2482a6bce4bb6c2e966066609861f68530d9852bdf68159aefd0460e316e"
+    },
+    {
+      "path": "src/components/battle/BattleArena.tsx",
+      "sha256": "4033b8f0e07845d55e7c79ad96722e37350f486883f6a7361bd223a4191a143e"
+    },
+    {
+      "path": "src/components/battle/BattleCountdown.tsx",
+      "sha256": "ecd9bdc4a5bea60581d6d80cc6cfd6997898a503e688c3ddc22df2f29ada3fc3"
+    },
+    {
+      "path": "src/components/battle/BattleResult.tsx",
+      "sha256": "aff8d5c2e5bb7a2830278acbae8d119c0937c64f97f6da078790f0fabd0027ae"
+    },
+    {
+      "path": "src/components/battle/BattleSetup.tsx",
+      "sha256": "9abfbcff1b72ffe92a68a1cc88687cce3cccb26ad2d7eb67d6dbed98b046603b"
+    },
+    {
+      "path": "src/components/battle/BattleTenKey.tsx",
+      "sha256": "6be6877438616d6f1bd4896000a421d471d63e56b8438d4cdc6ca2f3c7770e03"
+    },
+    {
+      "path": "src/components/battle/BossCoopBar.tsx",
+      "sha256": "43a98d6c29f85cb55c41febd2bf6ef667f21196b3a70e1ae13c4ca46046911d1"
+    },
+    {
+      "path": "src/components/battle/OrientationGate.tsx",
+      "sha256": "5d7c573b6202017b0526e4cbbc3894c6f09867f77bbf5c123dedcf95f9bc2813"
+    },
+    {
+      "path": "src/components/battle/PlayerPanel.tsx",
+      "sha256": "84d5b76d461cfbf9e1bed346f813b42356e69e30b1edca2689ab0a0fa0a4b87d"
+    },
+    {
+      "path": "src/components/battle/TugOfWarBar.tsx",
+      "sha256": "a81d4bbf9c58fc4a9735bfde238866b875746e410d017dd5fa5f5ee2d51d21cc"
+    },
+    {
+      "path": "src/components/challenge/Challenge.css",
+      "sha256": "774fcc360804fec04ed47d66c604995f95b7f4b29510b777e6d53afe5fe369f4"
+    },
+    {
+      "path": "src/components/challenge/ChallengeHomeCard.tsx",
+      "sha256": "24d0157abf4f24300d368d98eca9082b3f5aa87ab5f4a36f2c6621682db84f3d"
+    },
+    {
+      "path": "src/components/challenge/ChallengePanel.tsx",
+      "sha256": "bfe8864d6f4ff229e570fab07d0baeb0abadf04765165337a5fe743a26a5af96"
+    },
+    {
+      "path": "src/components/challenge/useChallengeSession.test.tsx",
+      "sha256": "11c6f00302b006ff3774209365d4684b2e4981aaba28f5ae013915159dd1cb2b"
+    },
+    {
+      "path": "src/components/challenge/useChallengeSession.ts",
+      "sha256": "239092d5ad6d23d4ea4b66abac0c91401f1591f757be565d6717f550cff09ffd"
+    },
+    {
+      "path": "src/components/charts/SkillRadarChart.tsx",
+      "sha256": "31d928333e082e25dfbcdd32d05e4a4b4385b8a840b85a4ad51d8952b1362ce6"
+    },
+    {
+      "path": "src/components/charts/WeeklyTrendChart.tsx",
+      "sha256": "4b93dec1d08b1987b2ab5f11bc96356b960199a0b1849231e92f90988f0336e0"
+    },
+    {
+      "path": "src/components/dev/DevConstantsTab.tsx",
+      "sha256": "62f2f1f9eef670f76e3dd287ffb3c20f776a78e258e57172c263a053118fe7e6"
+    },
+    {
+      "path": "src/components/dev/DevFieldRow.tsx",
+      "sha256": "8f52cd518d53b05e607f29f4440c22967dc770e920196b45be7a05dd98402e16"
+    },
+    {
+      "path": "src/components/dev/DevHistoryTab.tsx",
+      "sha256": "b31356f86e2728b737c18fe4a61e8a41c0e3252dc6543b0dd1f1c395deea27eb"
+    },
+    {
+      "path": "src/components/dev/DevIkimonoTab.tsx",
+      "sha256": "3ab164c94932cad82f71905c76b493178a1aff0686ad9ecf0e727263a86c94fb"
+    },
+    {
+      "path": "src/components/dev/DevMathTab.tsx",
+      "sha256": "ba8b22f31d2fcdf941fa6dbb3a2c811d3a5c9321151e7679aea2d95964e00d19"
+    },
+    {
+      "path": "src/components/dev/DevPanelTabs.tsx",
+      "sha256": "be913cf6209f301579d6c2fc4b4b90522d7c9aaa6fabc471c24a42845c3152d9"
+    },
+    {
+      "path": "src/components/dev/DevProfileTab.tsx",
+      "sha256": "466ccd73b147fe09d05cd9ca214636685effd0a05808f611813ad5dbbebdcdad"
+    },
+    {
+      "path": "src/components/dev/DevProgressTab.tsx",
+      "sha256": "73e0c1a552e577ea25a05cdca989c5505db79f1d521e2bdba7832eee24544d4d"
+    },
+    {
+      "path": "src/components/dev/DevStudySwitcher.tsx",
+      "sha256": "b4e4c8bff31c800be53e3e92d9460cf2438434a385dda6ac486da9a71f78a67f"
+    },
+    {
+      "path": "src/components/dev/DevVocabTab.tsx",
+      "sha256": "eab70fcec926d24b00d138c12baf1b9416ee2fa3d6da521c6dc845e78bca9c14"
+    },
+    {
+      "path": "src/components/dev/devStudySelection.test.ts",
+      "sha256": "d28c078e22ad9ff0071562d56f899147dc8b980a443eab88b61b68d32960c493"
+    },
+    {
+      "path": "src/components/dev/devStudySelection.ts",
+      "sha256": "54b4fb20aaa460b87369bdec6abcb52f8f7676b192617726a78b4c065ca7a8c5"
+    },
+    {
+      "path": "src/components/domain/AnswerCells.css",
+      "sha256": "4258e68a2dd6f754fa46f21fafe7e0a7f5011d33c286f06fe388b9608c74f63e"
+    },
+    {
+      "path": "src/components/domain/AnswerCells.tsx",
+      "sha256": "2594023e3fa83fa711e1ce853528e7686e08eefe91a398c5f4e5acf5bf5a5feb"
+    },
+    {
+      "path": "src/components/domain/ChoiceGroup.tsx",
+      "sha256": "1582db25588543ef184e92ac6d7d1f3d7a88e06c248f233748cdae467ea53b8f"
+    },
+    {
+      "path": "src/components/domain/EnglishListening.css",
+      "sha256": "dca1bd25fec8ded921cdc0b848c8f53ac4fa80dd2fd8e69cf9e08feb3a93b869"
+    },
+    {
+      "path": "src/components/domain/EnglishListening.tsx",
+      "sha256": "500efa092a4c830dce4ea5b74d82d2c0e82b858e1bc7618c8967e0409ff84484"
+    },
+    {
+      "path": "src/components/domain/EventModal.tsx",
+      "sha256": "864efadecf2a0c5648244bd7b1f3f13937d9fd6ebff3de9a06b3c5a93883e2eb"
+    },
+    {
+      "path": "src/components/domain/HissanCell.tsx",
+      "sha256": "4d80a2719ac789b2989f88e51c0d38a471ff2cac552f3691342b8f547c8edaf6"
+    },
+    {
+      "path": "src/components/domain/HissanGrid.tsx",
+      "sha256": "ee91cc72762ddc356032d5c3e891b6216a0c61e8def3ca130a7c99c00b996045"
+    },
+    {
+      "path": "src/components/domain/LearningAnswerForm.css",
+      "sha256": "e705e9f74c158e9011be6dbedb264f287102369b8a010969e17b130bb70835dc"
+    },
+    {
+      "path": "src/components/domain/LearningAnswerForm.defer.test.tsx",
+      "sha256": "68f22568f0846d14fe38c1ce57d8c268dee4e230731f60b02a12c1b0aa81d50f"
+    },
+    {
+      "path": "src/components/domain/LearningAnswerForm.tsx",
+      "sha256": "889979df14468f25e376e3db2a9d62ad8654a673af3be28b72ae5198519d6a1f"
+    },
+    {
+      "path": "src/components/domain/MathComparisonDiagrams.css",
+      "sha256": "5815d02ba93cc1ae35969b4aca53edf34b385f86f3a899ddd37c3e56ce31934f"
+    },
+    {
+      "path": "src/components/domain/MathComparisonDiagrams.test.tsx",
+      "sha256": "45fc4f00de9724f101bf9893812777357cdb681f56811367114b7623f5700075"
+    },
+    {
+      "path": "src/components/domain/MathProblemPrompt.tsx",
+      "sha256": "d16abca39dc985dbef4e84779ac41e89eba21c6f9aa6a10ebf3cb8a188a4b44a"
+    },
+    {
+      "path": "src/components/domain/MathRelationDiagrams.css",
+      "sha256": "0f9de68b18985380a73597798b29a55720361096e947c50966cd416529193c38"
+    },
+    {
+      "path": "src/components/domain/MathRelationDiagrams.test.tsx",
+      "sha256": "2e347fe6bf6fe6d0ea79912f64e02235b22637d8e5a8bb48477e95b00e87cbb6"
+    },
+    {
+      "path": "src/components/domain/MathRelationDiagrams.tsx",
+      "sha256": "cf26048a180e02969bd8be6b44d6368c5a9e428ee39e46f23db96f50ff35f022"
+    },
+    {
+      "path": "src/components/domain/MathRenderer.tsx",
+      "sha256": "22036ede71af24508294c3f41027fd418ee6e11fc0c0b22e5feb9b8281e68573"
+    },
+    {
+      "path": "src/components/domain/MultiNumberInput.tsx",
+      "sha256": "cd0f0793923af9bd1d155e74ad144a2a468dc372db47b09389d14d205e75dc41"
+    },
+    {
+      "path": "src/components/domain/NumberFieldsLayout.css",
+      "sha256": "e0db1fea2705767df47f4c7ae38f7688d85df8ad865479ee0817f2a87318b2d3"
+    },
+    {
+      "path": "src/components/domain/NumberFieldsLayout.test.tsx",
+      "sha256": "f6c741f09a362d371abdc23379dcb21e063d99923f6e28727eae2de342ea3bbb"
+    },
+    {
+      "path": "src/components/domain/NumberFieldsLayout.tsx",
+      "sha256": "44e866d771cf6f1812f2397da08a5adf41d892b76bbba2372491575613ac0701"
+    },
+    {
+      "path": "src/components/domain/PaperTestScoreModal.tsx",
+      "sha256": "09761bee9b987a7f0e898ef84cf059bab6638f958d541294fddc0c2a0ac4119a"
+    },
+    {
+      "path": "src/components/domain/ParentGuard.tsx",
+      "sha256": "fd50490bc03ba6c0a51bc5601bc5d9a5e0ca286530d56956da3d88e429716f37"
+    },
+    {
+      "path": "src/components/domain/PlaceValueArithmeticGrid.tsx",
+      "sha256": "0b490b9f252fc86a817dbedbc431b541e5278d76a5442a935f6cf5c56ff3a87f"
+    },
+    {
+      "path": "src/components/domain/PrintableTestPreview.css",
+      "sha256": "3dc759431e79c5cb3013e3014d6ae8530048b755adb1f116a94a08b988a01ffc"
+    },
+    {
+      "path": "src/components/domain/PrintableTestPreview.test.tsx",
+      "sha256": "e825bee6390664e56892f18c8a6114ffa9c0874ffcb1b69b06e8530261c0e9ab"
+    },
+    {
+      "path": "src/components/domain/PrintableTestPreview.tsx",
+      "sha256": "380f444f7cc38ee84862b7ff609b008f8b215a50deb8f62cb7e3f4ae02bbf722"
+    },
+    {
+      "path": "src/components/domain/TenKey.css",
+      "sha256": "11df484a33edc885db89399a75856a32fd44fa90873e82e23b3feeb91deffd57"
+    },
+    {
+      "path": "src/components/domain/TenKey.tsx",
+      "sha256": "016f3aa25c1fc5e4c48d13961cebc21db9c7645b7bd4ec310c5272ebef6b691c"
+    },
+    {
+      "path": "src/components/domain/WrittenArithmeticGrid.css",
+      "sha256": "8ddcbce74193fbc2eb61e0cf4157f86403476e2b94a0351771f5408ab716f39d"
+    },
+    {
+      "path": "src/components/domain/WrittenArithmeticGrid.test.tsx",
+      "sha256": "490198ebe60313965def534ec87f3c2d31f362707713d90654a4b3881ea4a625"
+    },
+    {
+      "path": "src/components/domain/WrittenArithmeticGrid.tsx",
+      "sha256": "b923e97e4d07833d5ad7b9a432f2effc5908447ff3ca3f3bc06ae3701532bf21"
+    },
+    {
+      "path": "src/components/domain/answerCompletion.test.tsx",
+      "sha256": "5fb4e19f862e98d073363c5280937b70ddacdebf0ca0737980116bda56c3a1d6"
+    },
+    {
+      "path": "src/components/domain/answerConfirmGuidance.test.ts",
+      "sha256": "7312c4237c255e7b439186de782c160642c9c650092a6f5b7944922ff8228430"
+    },
+    {
+      "path": "src/components/domain/answerConfirmGuidance.ts",
+      "sha256": "17e1780107335b6d8c27cd2bb91108e3d6d359b1dceef7e67fa9692dd6eeebfe"
+    },
+    {
+      "path": "src/components/explore/AuthoredEncounterArt.css",
+      "sha256": "812af3f3a4d7b6d4f7985a39376db8128e89769cc15890723192a2c0fefe9b2d"
+    },
+    {
+      "path": "src/components/explore/AuthoredEncounterArt.test.tsx",
+      "sha256": "1fb48cf0b61f2b9528ae9028a2e2e75ba57f6b84908eafd3df80a572d16d5904"
+    },
+    {
+      "path": "src/components/explore/AuthoredEncounterArt.tsx",
+      "sha256": "26e33cee0d386d65e7b6145bcec8e2134eacdd82cc2518e5cb98c6c32fcceccb"
+    },
+    {
+      "path": "src/components/explore/BridgeChoicePanel.tsx",
+      "sha256": "927db0e39701dd69c484580454abe1a8ebabca714ab93dca6a1edeac5838966d"
+    },
+    {
+      "path": "src/components/explore/DiscoveryPageArt.test.tsx",
+      "sha256": "3e94506d75440554eef5295af7248983a46b3cf3ac9400ea9bc2aafc6c52501b"
+    },
+    {
+      "path": "src/components/explore/DiscoveryPageArt.tsx",
+      "sha256": "e626bb736887d14734514eaebc2bf36bd22e8cedecb8f0d13f93491604c56982"
+    },
+    {
+      "path": "src/components/explore/DiscoveryResearchReveal.tsx",
+      "sha256": "4839fd3913f1770daf9bc56020684b38622b376554bd9f723d0a290fc094756a"
+    },
+    {
+      "path": "src/components/explore/DiscoveryReveal.test.ts",
+      "sha256": "33c4aa01ce44044020547e5aa693eafa1e908b52fd244169cb65d3b71bf5b0cf"
+    },
+    {
+      "path": "src/components/explore/DiscoveryReveal.tsx",
+      "sha256": "e9ab9d042d305563c9cf4c8f6ab65b5dbbafae0fbabad03a00cb5c1082167b32"
+    },
+    {
+      "path": "src/components/explore/ExploreActionResult.tsx",
+      "sha256": "43f670a183ece12263a42a4f098c43da3446e131042c328cf3b9833e16689f06"
+    },
+    {
+      "path": "src/components/explore/ExploreAnswerPad.tsx",
+      "sha256": "5149c3b9147ff208b4cfa0bc78246fed1e3589cfe29b662c241cbd877b55e6dd"
+    },
+    {
+      "path": "src/components/explore/ExploreEncounterStage.tsx",
+      "sha256": "5fd9bcd64d1491800d5ecf0b42397c1b16578c45e2218b27cfc52508722b485c"
+    },
+    {
+      "path": "src/components/explore/ExploreGlyph.tsx",
+      "sha256": "d6d873a70c0874fc44cb9dbd6f4c304c0e346d5dc98dd54d7905788834625dda"
+    },
+    {
+      "path": "src/components/explore/ExploreHud.tsx",
+      "sha256": "39e44da105f0b953aa192d17376828f96b6802b6e480d49e70c70ac38c0834d5"
+    },
+    {
+      "path": "src/components/explore/ExploreIntro.tsx",
+      "sha256": "6cb20ffb0998aa490e3b60094f86e6afe2f94538480b969ba91f47eb255d861e"
+    },
+    {
+      "path": "src/components/explore/ExploreMap.tsx",
+      "sha256": "853c1f9c436d6a3d791d69f78e2a1c601e3ac90f5fa0a07088a3037629b7416f"
+    },
+    {
+      "path": "src/components/explore/ExplorePathChoice.test.tsx",
+      "sha256": "1e1430aaab01993d0415c89ce323bc39fe2d71de3ffe92268dd6af8aa7147925"
+    },
+    {
+      "path": "src/components/explore/ExplorePathChoice.tsx",
+      "sha256": "c0a46774bf3b56471efcf2171608ea15cac21479d9245998f28ae0c5de158d4a"
+    },
+    {
+      "path": "src/components/explore/ExploreProblemPanel.test.tsx",
+      "sha256": "46fb5efeae3f18f65ff4eeeacfc92e38fa3f6ba82278b7c827350a2f2acd321c"
+    },
+    {
+      "path": "src/components/explore/ExploreProblemPanel.tsx",
+      "sha256": "31645c0ea056f465cbb09e33b1fcaebb8bf9b9a1def10a4cc730b139d8c5780f"
+    },
+    {
+      "path": "src/components/explore/ExploreRouteForkArt.tsx",
+      "sha256": "805ba2067643757f0eb2088f66a1fbaadd98f7b7c38449cb8a40079a692938f8"
+    },
+    {
+      "path": "src/components/explore/ExploreWorldBackdrop.tsx",
+      "sha256": "52978e8fc99a40fa61ccdf51b740b8cdec2d0c0ffedfd010b77fb79ed640143e"
+    },
+    {
+      "path": "src/components/explore/FireflyFlowerEncounterArt.css",
+      "sha256": "146e75cac072965144dc82365515502c6f0749977f8ce2832df848f3fef16b81"
+    },
+    {
+      "path": "src/components/explore/FireflyFlowerEncounterArt.test.tsx",
+      "sha256": "b328fce2d68e54921a4775795ad67516224c3537a6b259fbeb3fadcd592e623d"
+    },
+    {
+      "path": "src/components/explore/FireflyFlowerEncounterArt.tsx",
+      "sha256": "7a4f6fd3711ecd1826bd8151ca6d5db83d0ce12d19863114330408f16d91188d"
+    },
+    {
+      "path": "src/components/explore/FireflyFlowerResearchArt.tsx",
+      "sha256": "e0c1be45fa448ca82e52edfcf5f0223326961f1e75eea109d5b706d44f318d55"
+    },
+    {
+      "path": "src/components/explore/ImmersiveEncounter.tsx",
+      "sha256": "624cd5dff405ab10c782bea504f009692436e44127763118ebd49afaf404df59"
+    },
+    {
+      "path": "src/components/explore/LightBridgeEncounter.tsx",
+      "sha256": "521d78b0912b33218d2ff9bf9db61ce80230da200f978ba9c6833e92a2c095b9"
+    },
+    {
+      "path": "src/components/explore/MakimodonEncounterArt.css",
+      "sha256": "8b9b7f49c468cd328c6ba127e778afc8b9912847dc418fe6c77ab56f93bd1891"
+    },
+    {
+      "path": "src/components/explore/MakimodonEncounterArt.test.tsx",
+      "sha256": "579e592657a6786256252508a95022017bff58462d0af5e92b7572a92e86c51d"
+    },
+    {
+      "path": "src/components/explore/MakimodonEncounterArt.tsx",
+      "sha256": "29d963621c3e3919f9eccf49721bc4a9f2e8ba1dbd2a2c9a5a822d45cf456e13"
+    },
+    {
+      "path": "src/components/explore/MakimodonResearchArt.css",
+      "sha256": "d7f769266a701264241f7355c769f94f7e5119ff7ad429ab7e37d976d3781b29"
+    },
+    {
+      "path": "src/components/explore/MakimodonResearchArt.test.tsx",
+      "sha256": "c4e253f112f6d28fac4e657226957ee151180a5b95c61f391a7ef80b58ff3627"
+    },
+    {
+      "path": "src/components/explore/MakimodonResearchArt.tsx",
+      "sha256": "ed95540dd47d7c35952ae8203cbb6a78ba0aad670a7af8b8233cccd28b4f7002"
+    },
+    {
+      "path": "src/components/explore/PaintedEncounterLineage.test.tsx",
+      "sha256": "e73e0288009383745439172daa53ea271afc54f624c4e957729c40e535813ea1"
+    },
+    {
+      "path": "src/components/explore/PokkoBaseArt.test.tsx",
+      "sha256": "64127440b0fcfb5f319e339b9cc1a2c456fe28713c38afaf6e8afbd11a442a1a"
+    },
+    {
+      "path": "src/components/explore/PokkoBaseArt.tsx",
+      "sha256": "c67a103c4f1bd0623aec2ef22f93dc4813f7b8917bf2d1f032d19ad1c054a990"
+    },
+    {
+      "path": "src/components/explore/PokkoVisualLineage.test.tsx",
+      "sha256": "126d5f2033077a27a27dce62e99b131e3d0d275f33c5e4ac16594e2cb4f2a55b"
+    },
+    {
+      "path": "src/components/explore/ResearchBookStage.test.tsx",
+      "sha256": "7f0ee7b69ba1295fcb4bb17c52b3941c509fe88e0c865978e59cf9a018472492"
+    },
+    {
+      "path": "src/components/explore/ResearchBookStage.tsx",
+      "sha256": "f68491353ab20cb5f39d67d4943a812a4be5f075a96180523b9ec2a1f83a67a3"
+    },
+    {
+      "path": "src/components/explore/ResearchClueStampRail.tsx",
+      "sha256": "6a118111f2391622dc72f89b70e53e42b44c75670d1b96c55eb3a8bdafe0bb96"
+    },
+    {
+      "path": "src/components/explore/ResearchLibraryScene.tsx",
+      "sha256": "c01a2196b28310e381f34e034f4dfc20ade8c776ebfc4d0a141e84ff7dd28964"
+    },
+    {
+      "path": "src/components/explore/ResearchPageSummary.tsx",
+      "sha256": "dd35ba3e5fe72a0b26963f209d1852e0e25953163d490b5bc6ff536638bb7185"
+    },
+    {
+      "path": "src/components/explore/ResearchRouteLever.tsx",
+      "sha256": "6511d7a3d4559be57f1cdc6649f8fda363d78ae422c6ed2a53fd3c85dc722313"
+    },
+    {
+      "path": "src/components/explore/ReturnSummary.test.tsx",
+      "sha256": "483f1494a2167b8920cf2543a7a1f179d799fcca646580c9001eb2c80cc8dc9c"
+    },
+    {
+      "path": "src/components/explore/ReturnSummary.tsx",
+      "sha256": "e0d5d84db373524fbd31dc3d9c0180f2e790ffb97504f7dd59056dec882633c0"
+    },
+    {
+      "path": "src/components/explore/RibbonAntennaCompanion.tsx",
+      "sha256": "e7f1fbd8dfbf6d6f022d8f20f555d623864f1681a8df0c3a8af9622e9f4390db"
+    },
+    {
+      "path": "src/components/explore/RootPullDiscoveryReveal.test.tsx",
+      "sha256": "c820d4305ba12c7a62526466c994eb08612b6014e142e760f266db463789f106"
+    },
+    {
+      "path": "src/components/explore/RootPullDiscoveryReveal.tsx",
+      "sha256": "f5f524f4ec608248cd5d98821cd5c13e1aec66c6261d2e9323044c95bc83432f"
+    },
+    {
+      "path": "src/components/explore/RootPullOpeningArt.css",
+      "sha256": "71758ec47b518e85d2083c97858bd6c0dbb680a3ec3605afabeecdc2978c13d3"
+    },
+    {
+      "path": "src/components/explore/RootPullOpeningArt.test.tsx",
+      "sha256": "b1b2f0de056d76dbb2e5755e87f54ec86be96d15121268472094e2f278815170"
+    },
+    {
+      "path": "src/components/explore/RootPullOpeningArt.tsx",
+      "sha256": "0a43e09522262946ef2c725f7a3bd2f76ab7bdfcbb852062d2f99a7235356c67"
+    },
+    {
+      "path": "src/components/explore/RootTangleEncounter.tsx",
+      "sha256": "b66ccf9d2c748c4d135f25c6a1d811cafc4a8cd44047752ba4eb46a27473a596"
+    },
+    {
+      "path": "src/components/explore/SnapRootOpeningArt.css",
+      "sha256": "2b5dfe672bacebf4baea353f1611277362134b41f0278354f90809a06cc67839"
+    },
+    {
+      "path": "src/components/explore/SnapRootOpeningArt.tsx",
+      "sha256": "78ec7eed7fc431c4788f4f88b84f099fdc9e40a9e3736f0f8381ac2b11728b1d"
+    },
+    {
+      "path": "src/components/explore/exploreAnswerInput.test.ts",
+      "sha256": "7e549697732913083d2f477c8906bde3c2a04f5e2857891994fb9468023f6491"
+    },
+    {
+      "path": "src/components/explore/exploreAnswerInput.ts",
+      "sha256": "caeb757973379e2901e2959c11cbe4c8d760d8c23bda599cd71bf376c69166f3"
+    },
+    {
+      "path": "src/components/explore/fireflyFlowerSceneCatalog.ts",
+      "sha256": "595252ab09010adeaafe0124c16829cbb6e3d64c9f123e97f12051cb42ad55c1"
+    },
+    {
+      "path": "src/components/explore/makimodonPresentation.test.ts",
+      "sha256": "961e254eca073d99af303340f298b1913fd61ba612f2e11f2ab6c3c6e37178ec"
+    },
+    {
+      "path": "src/components/explore/makimodonPresentation.ts",
+      "sha256": "50313575bf401f8a9b886780bce333f4eeab31285d64b6fcaf4ec0d947d743af"
+    },
+    {
+      "path": "src/components/explore/rapidTrailPresentation.test.ts",
+      "sha256": "5c199af26355d3b56444fcfd4f77a37a2ebc4545e9153db390dc958cc4b95ff0"
+    },
+    {
+      "path": "src/components/explore/rapidTrailPresentation.ts",
+      "sha256": "79f53227503b32f7f01564a579b5ff1f09c0e5fcb813851962577b4485b7ee45"
+    },
+    {
+      "path": "src/components/explore/rootPullPresentation.test.ts",
+      "sha256": "29444ca78f5080df3c6c050c2f528591b30610c1ffd3fa5194ca21539384a77d"
+    },
+    {
+      "path": "src/components/explore/rootPullPresentation.ts",
+      "sha256": "65efa7cdf87ff50e927cc5cdf0015f290113509b9b4da8dc86abd1e53ef055a4"
+    },
+    {
+      "path": "src/components/explore/snapRootPresentation.test.ts",
+      "sha256": "3e9147b530172fcb8f658984ff4d5c865caa367c911878fb3393662e83eac5c1"
+    },
+    {
+      "path": "src/components/explore/snapRootPresentation.ts",
+      "sha256": "3656f620457b8c2564360eac4649929df4104363812928a5c28a0c2494696bd6"
+    },
+    {
+      "path": "src/components/explore/useExploreStageFocus.ts",
+      "sha256": "2d348325c59dfefd68cec57a1ce8a94398e6553df0a2a8588d85597146d90651"
+    },
+    {
+      "path": "src/components/gate/ArithmeticGateModal.tsx",
+      "sha256": "93e9afbcc4838bfcece896ca9497c2861d26cb7f8ef49fc533e350644508f4f7"
+    },
+    {
+      "path": "src/components/gate/ParentGateModal.tsx",
+      "sha256": "498383b2f9e68722565c3bf17da370f73c36ab73f6ec789405b786a8d0200905"
+    },
+    {
+      "path": "src/components/gate/arithmeticGate.test.ts",
+      "sha256": "a48f311a64f70f02d8bbd474a9c346c1fc8698b791dd4469355458685bde7e95"
+    },
+    {
+      "path": "src/components/gate/arithmeticGate.ts",
+      "sha256": "116d54a211b9d6027e3391ebbcd5da352cf6391e73d595de76825588a8b91a10"
+    },
+    {
+      "path": "src/components/home/HomeAnimatedBackground.tsx",
+      "sha256": "c06a4514c3e470a3440db4869ade6867c8b9fc0f2b9e7068e497caab4759be58"
+    },
+    {
+      "path": "src/components/home/MagicTank.tsx",
+      "sha256": "e64d97e02b7f3c6c13594bfd83bad9c2d7f3e7a15d36ba08ca65d598e46b3340"
+    },
+    {
+      "path": "src/components/home/homeMagicEnergy.test.ts",
+      "sha256": "0e55766e23ffff35d805e4c87a73b4497736f6da44152fbba6e84e4baf20bf9f"
+    },
+    {
+      "path": "src/components/home/homeMagicEnergy.ts",
+      "sha256": "f40c1a3aee2bd8d3b76e479cf05beba8b12aafabcb489d5ebb4918dd6f2eca50"
+    },
+    {
+      "path": "src/components/icons.tsx",
+      "sha256": "61bb3216c20129cf5d6d68a42114c3fb1832bcfb75f2391688dc5bcc1a7e3aa2"
+    },
+    {
+      "path": "src/components/ikimono/FuwafuwaSpeechBubble.tsx",
+      "sha256": "e6de5a0a0d83db1bf1beb195f81eb58cb1d4abec5f42819c7e6748d187d6d067"
+    },
+    {
+      "path": "src/components/ikimono/FuwafuwaTransitionModal.tsx",
+      "sha256": "aa92f339f9f43ec373e72ba4e4d718620acc0ec49421264ed85268a63be04af3"
+    },
+    {
+      "path": "src/components/ikimono/Ikimono.tsx",
+      "sha256": "e7a4e0ab3e73abc53810c0e6c9dbca9e70cb790939f104343f00e51eea0bb56d"
+    },
+    {
+      "path": "src/components/ikimono/IkimonoArtwork.test.tsx",
+      "sha256": "960e24ac464828993db863881ad24c6585e7952317ef6ea2df888a2e73d18df1"
+    },
+    {
+      "path": "src/components/ikimono/IkimonoArtwork.tsx",
+      "sha256": "019704a416e71143edb4868265ea8bac1105a5bf14ea57946e36d983aa943358"
+    },
+    {
+      "path": "src/components/ikimono/IkimonoGallery.tsx",
+      "sha256": "740e9582fd3ccb3bea922f63dbdd9a7a5caf3c837121c0624fa79e2e5bb5ba02"
+    },
+    {
+      "path": "src/components/ikimono/IkimonoSvg.tsx",
+      "sha256": "ae99328c6cea4d815f124499591476a1db3f52508ea64e01029e774f68f7f79c"
+    },
+    {
+      "path": "src/components/ikimono/NameModal.tsx",
+      "sha256": "44e163fdf184116614c6302aac7b5565ae0c63fe13e169f2e61a58d7f51e9202"
+    },
+    {
+      "path": "src/components/ikimono/fuwafuwaAlbumCopy.test.ts",
+      "sha256": "4b5d34d53b295a2111978291c98c4b3f6df38d3a38d3002cc39ce06e137c043a"
+    },
+    {
+      "path": "src/components/ikimono/fuwafuwaAlbumCopy.ts",
+      "sha256": "f5f472523afdadd513f4b8929b479c91c3dd70e43cf1dd99db1e822aac03fb2e"
+    },
+    {
+      "path": "src/components/ikimono/fuwafuwaDailyConversation.test.ts",
+      "sha256": "1570ae3dacb66c0558484305d7f7a02306a9997cd77831937f2d4481b48eeda7"
+    },
+    {
+      "path": "src/components/ikimono/fuwafuwaDailyConversation.ts",
+      "sha256": "27d7c7dd0ca0f8b4ecdef9f6e8349dbfcafe106174fa27020941141995d63f76"
+    },
+    {
+      "path": "src/components/ikimono/fuwafuwaMilestones.test.ts",
+      "sha256": "ef96e9280f91971c736ce0a78092b31c4767fe580e5551f30b78d97521318772"
+    },
+    {
+      "path": "src/components/ikimono/fuwafuwaMilestones.ts",
+      "sha256": "ff5f7a7db8ef325ab3bfd2c8ffb76fd7f55e14a01fd69bc53e380e62a194a333"
+    },
+    {
+      "path": "src/components/ikimono/fuwafuwaSpeech.test.ts",
+      "sha256": "6f4fe3a96792604b6a96fa12d0013a9c27dc772e51b7a30cf935d49f9b831397"
+    },
+    {
+      "path": "src/components/ikimono/fuwafuwaSpeech.ts",
+      "sha256": "735a1d3f6b7d0aab726c3a51718dfafddd8b1c6e566f5eb08214cdfc11b22879"
+    },
+    {
+      "path": "src/components/ikimono/fuwafuwaVisuals.ts",
+      "sha256": "1018f3d5e7a93981f9d4dfc4431bd8fc8a73eea361e65c870b7df722d50c299d"
+    },
+    {
+      "path": "src/components/ikimono/hitokoto.test.ts",
+      "sha256": "efb6253a9ef6fdea00c1ad91ac32be85d2eb801d49fcc06406265150c4ad8863"
+    },
+    {
+      "path": "src/components/ikimono/hitokoto.ts",
+      "sha256": "4d6d6decc1821829a952417b94f2bb12b02156885094c27800d8b63de4bf862c"
+    },
+    {
+      "path": "src/components/ikimono/hitokotoData.ts",
+      "sha256": "b890d03fa5bce16e4a36be7b137a883414ce4dd3b0b39f8cd3aaee169e008174"
+    },
+    {
+      "path": "src/components/ikimono/ikimonoMotion.test.ts",
+      "sha256": "58f8b84381ea7b7c07e405cbae9f2157da3aaff22fbd3152c628710c921a6aa5"
+    },
+    {
+      "path": "src/components/ikimono/ikimonoMotion.ts",
+      "sha256": "cbf50c558101badaf42eaa9a92b39e6b7c3f62a75fe67cafab609d7f586ac086"
+    },
+    {
+      "path": "src/components/ikimono/lifecycle.test.ts",
+      "sha256": "33f555ae888aced79b00818d6781884005e80da144394764db8427aaccdd05a5"
+    },
+    {
+      "path": "src/components/ikimono/lifecycle.ts",
+      "sha256": "3c56c604962ca600da5a905e80664ef8abdbe3195c9240ebacc62b643f039d6f"
+    },
+    {
+      "path": "src/components/ikimono/sceneText.test.ts",
+      "sha256": "7dd57c2f6dc024e96763993e25669f4dafdeef4e218cd16af178d315cbc208c7"
+    },
+    {
+      "path": "src/components/ikimono/sceneText.ts",
+      "sha256": "dede100f3e04201eaea6d5c0aea85181252bc461f79700c22c703094f3eab3f2"
+    },
+    {
+      "path": "src/components/ikimono/types.ts",
+      "sha256": "fd448459df838d3363b208ce8627039ab0ea7c2b172c9c2063e0dfe03c6636f2"
+    },
+    {
+      "path": "src/components/island/Island.css",
+      "sha256": "5338827f35364682538f3daea0c4144030577e36516b143950ff95d2f5579dc4"
+    },
+    {
+      "path": "src/components/island/IslandAlbum.test.tsx",
+      "sha256": "91c2d66b18a7d88e327cf3847e52778ab93c33baf4590dae720565e5a29d9fe0"
+    },
+    {
+      "path": "src/components/island/IslandAlbum.tsx",
+      "sha256": "cf81ad66319a630123f65d306cfc5372fcea5d9eb98982e24fe0cb0af46bc1dc"
+    },
+    {
+      "path": "src/components/island/IslandAlbumDecoration.css",
+      "sha256": "8d5f5df542c926d5f3630d131676486751f24e54d43c5fc612e5ce3e79b6eb83"
+    },
+    {
+      "path": "src/components/island/IslandAlbumDecoration.tsx",
+      "sha256": "1d24b420af29fb65380e97036de37a15500d1d39303d059b11bc7bca328b983c"
+    },
+    {
+      "path": "src/components/island/IslandAnswerFeedback.tsx",
+      "sha256": "700c2d7bddbbc0106f76f51b62f318b1d36bc03d9efe4a89f0e393d89319fc48"
+    },
+    {
+      "path": "src/components/island/IslandAnswerForm.css",
+      "sha256": "78ec4eb61ad746422f3ce155bc594083ce0aaa614f722cbbff174c06dbae43b9"
+    },
+    {
+      "path": "src/components/island/IslandAnswerForm.test.tsx",
+      "sha256": "27a3fb76c3a5a0a3daf75a9372a8337f16da08f59c782b8c87256c6ad78d7955"
+    },
+    {
+      "path": "src/components/island/IslandAnswerForm.tsx",
+      "sha256": "60294bfa5971f2e687c93d6bee2469ae5618f7c9d0ed01c703414dcc669b474d"
+    },
+    {
+      "path": "src/components/island/IslandCameraToolbar.tsx",
+      "sha256": "fe2ff6a8edc515c9441b79f4c325fa86e8c2bdb6fba0f8391e2704ce5f750406"
+    },
+    {
+      "path": "src/components/island/IslandCatalogArt.css",
+      "sha256": "e7605e2400da47e0d27efa9f4a1422ae88f6277375ac30a93ce3c2536604b8e8"
+    },
+    {
+      "path": "src/components/island/IslandCatalogArt.tsx",
+      "sha256": "a246ecaa80f6860fe842504f5fd66dd96fc7166ad6146d9495a06d604f4e233a"
+    },
+    {
+      "path": "src/components/island/IslandCustomization.css",
+      "sha256": "681897ff7e947d657068ea8269ea3fa7129178e16a1e35160833c50b084ca76e"
+    },
+    {
+      "path": "src/components/island/IslandCustomization.test.tsx",
+      "sha256": "79b13ccfa7a4c2afcb3fc563b924d939a9201d4fc6d16d422dbefda6f4e95654"
+    },
+    {
+      "path": "src/components/island/IslandCustomization.tsx",
+      "sha256": "d052e2d9767dd1433aed60347e177e7a26da4a9c76244607f63c1ecd2bb500b1"
+    },
+    {
+      "path": "src/components/island/IslandDirectActions.css",
+      "sha256": "e85bbcf10fd97a3d1cc83688b2f6537336880fad60824038ad5d4371f017ac30"
+    },
+    {
+      "path": "src/components/island/IslandDirectActions.test.tsx",
+      "sha256": "ef98cf4b316950057c25a371fe422e49e18a1ce0d55162ec3b91ae6f3d1768f0"
+    },
+    {
+      "path": "src/components/island/IslandDirectActions.tsx",
+      "sha256": "98c8cb5dd22266ed2d0225f9120729724a2058d157fb459b56f5700ec828560e"
+    },
+    {
+      "path": "src/components/island/IslandDiscoveryGuide.css",
+      "sha256": "db3829f6e1f3e4e5c17b3e93c67ec0151af20816cc20bd9ccb2012f615b4bf47"
+    },
+    {
+      "path": "src/components/island/IslandDiscoveryGuide.tsx",
+      "sha256": "754fcc29b074cce057a6e7f32caefe5700bbbc69e0ac366c1433509768c89259"
+    },
+    {
+      "path": "src/components/island/IslandDisplayLayout.css",
+      "sha256": "4b70a3136e866167a3e92ebfaec0414fbfee228f81eeaef7756cbdc84f101a53"
+    },
+    {
+      "path": "src/components/island/IslandExperiencePanel.css",
+      "sha256": "c08818d9631c45bb6eecef2a59e1fd8273d9ade7988cc86392322be2294a77db"
+    },
+    {
+      "path": "src/components/island/IslandExperiencePanel.tsx",
+      "sha256": "ce137edc6ed37d9636986411a70481d45f7e99ab499d1e106c12a5bfce046772"
+    },
+    {
+      "path": "src/components/island/IslandExpression.css",
+      "sha256": "42e669458f92ee47059bbcd6341edf8d72b6c254d37f749ba3f9530425ff80fe"
+    },
+    {
+      "path": "src/components/island/IslandExpression.test.tsx",
+      "sha256": "a2bbfdc9fae54ebfb3fbf243ddd8792fee416a378d28b7eae07954633b7f10d2"
+    },
+    {
+      "path": "src/components/island/IslandExpression.tsx",
+      "sha256": "5b0e8376616a4b694b4c8982b1442d7292f1e61bbffff97fa518d2d2e929217c"
+    },
+    {
+      "path": "src/components/island/IslandExpressionFlag.test.tsx",
+      "sha256": "b26124ca8e71773071c856a4c41662c94b6b2063d58684adb18200c3a031c9f2"
+    },
+    {
+      "path": "src/components/island/IslandFurniture.css",
+      "sha256": "23e36f9072eee58b1db99edbebcfc183a23c3dd5b82aecb18688d82571e6578d"
+    },
+    {
+      "path": "src/components/island/IslandFurniture.tsx",
+      "sha256": "9cba444c2517ab6af08125d6852c82d74ca1a54904dfca968abbc764c7012b8e"
+    },
+    {
+      "path": "src/components/island/IslandFurniturePlacement.test.tsx",
+      "sha256": "51a0aa66921b35741022fddf92f49740bae5d7a47dad4d9256d0e2951ff301ea"
+    },
+    {
+      "path": "src/components/island/IslandGlyph.tsx",
+      "sha256": "64888b34b7637b3927e2271454fb76b1e9a1bba6fb0f47a95284a99b7b7878ed"
+    },
+    {
+      "path": "src/components/island/IslandGrowth.css",
+      "sha256": "8667ffabbdd336624d0fd6339fc04bd456d4bcff567c4ae7c634f131520de9fa"
+    },
+    {
+      "path": "src/components/island/IslandGrowth.test.tsx",
+      "sha256": "b0983c488c8c4a8ec946c4b8f6fb590ac92315aa5459414c7f5cbaef8d336ca5"
+    },
+    {
+      "path": "src/components/island/IslandGrowth.tsx",
+      "sha256": "11d96df3982c2ea88f3de29cfcecd78a2ea115ccd7f1aeb5baffd60f1015cb2b"
+    },
+    {
+      "path": "src/components/island/IslandHomeActions.css",
+      "sha256": "fec2a73743bdcf64d8f3e476392996eb3e786f8c410cd73c3549694632dd0c0b"
+    },
+    {
+      "path": "src/components/island/IslandHomeActions.test.tsx",
+      "sha256": "c0723de61823e2c6b1a6c8cdc9b1b51c694dd387a56c61fbf6cd843ff0966c8e"
+    },
+    {
+      "path": "src/components/island/IslandHomeActions.tsx",
+      "sha256": "7e929831f04139e7b39ec02c0e8e9aadb5c92c9d024c003b3b397ca07c3e6abf"
+    },
+    {
+      "path": "src/components/island/IslandItems.tsx",
+      "sha256": "fcbca58185b7c1961f34979e275898d9d48c9dea11c3e2940cb491fdcc282833"
+    },
+    {
+      "path": "src/components/island/IslandLearningCompact.css",
+      "sha256": "40103d9eae495cb07e0bcab397e51a953d0016f00fe2bb6d955a879bc03c263b"
+    },
+    {
+      "path": "src/components/island/IslandLearningFocus.css",
+      "sha256": "f8e97fa895f779febb21d029235f20073291861fc9bef1c4ec1d742f8f3c3423"
+    },
+    {
+      "path": "src/components/island/IslandLearningKeepsakes.css",
+      "sha256": "975c27b356204b455733c2ccf56fa0433fd41ffc44a268507cdecc3f8be82495"
+    },
+    {
+      "path": "src/components/island/IslandLearningKeepsakes.test.tsx",
+      "sha256": "d5e49f6aa2ccbd2aad091802482ab549d91973902dbec0cc9d26bda56b70b43b"
+    },
+    {
+      "path": "src/components/island/IslandLearningKeepsakes.tsx",
+      "sha256": "2d5bd4503da69c09eca1cb2a31a96cf0bcf0f3a17714fc59a82e265bc1c0aa2f"
+    },
+    {
+      "path": "src/components/island/IslandLearningPanel.css",
+      "sha256": "9180f84de40aa1a6d7e0d75113d2070a92137d3403a07ad293cf7db385dd6517"
+    },
+    {
+      "path": "src/components/island/IslandLearningPanel.tsx",
+      "sha256": "f372b594300e94b9d49106aa5cba5c578a99ec00fa77e138b262707ec368ba86"
+    },
+    {
+      "path": "src/components/island/IslandLearningSupport.test.tsx",
+      "sha256": "88cbcb243724066fa1f1189d6437a4468392793ce70c0b3ec003f7a80cbc35e8"
+    },
+    {
+      "path": "src/components/island/IslandLearningSupport.tsx",
+      "sha256": "4bc81314680afef0eaeb6c5ae2a319363b9953c78fef1085e3e012a2e42cabd2"
+    },
+    {
+      "path": "src/components/island/IslandLearningTheme.css",
+      "sha256": "50f0952a3c766ac4a01299cc0fdf275e6f581471bb730e54291c28bdff9e9cb3"
+    },
+    {
+      "path": "src/components/island/IslandMark.tsx",
+      "sha256": "c13cb28475e7935e632699b4ddbc1ad0e5ed3c192fbed44cf67899ee3cfb9c3b"
+    },
+    {
+      "path": "src/components/island/IslandMilestone.css",
+      "sha256": "a0ed983446d6dfa9fc928095b471658e099cee6cde14dae1ca6dc4d753aaf36d"
+    },
+    {
+      "path": "src/components/island/IslandMilestone.test.tsx",
+      "sha256": "cd297284c9134ea888ce9b50826690c28e6607b92159cd01da54a5a389a2ee1d"
+    },
+    {
+      "path": "src/components/island/IslandMilestone.tsx",
+      "sha256": "f2ec2d28fb81aae35a08ed1c0f18f324c7dac68967b18801c59e4ff706438a29"
+    },
+    {
+      "path": "src/components/island/IslandOnboarding.css",
+      "sha256": "206178e73ae22774d28da7c8a7caa4e949bdf80a1c80d97dd527f15bca90e870"
+    },
+    {
+      "path": "src/components/island/IslandOnboarding.tsx",
+      "sha256": "0d3df7ff90f341830cced16f3abebadddb381f551731d2209a87b0414322c8be"
+    },
+    {
+      "path": "src/components/island/IslandPanel.css",
+      "sha256": "5a479a28f4c35fe47830492daea3e8ee7bdc22395bff3d224a58ac23e06ec7d1"
+    },
+    {
+      "path": "src/components/island/IslandPanelHeading.css",
+      "sha256": "3c33c7850bd5e0db181c80b6a7d11140bb0f072ccd5a40c2b79fe1c863453f31"
+    },
+    {
+      "path": "src/components/island/IslandPanelHeading.tsx",
+      "sha256": "dae29fc11dbd6e155199226016469a4e6a95a2488a784f6d2e963965f0c52ce1"
+    },
+    {
+      "path": "src/components/island/IslandPhotos.css",
+      "sha256": "564cd8ca4ec9d0db85937c05c0b764626ae196c3b05b5707298a840260b052fa"
+    },
+    {
+      "path": "src/components/island/IslandPhotos.test.tsx",
+      "sha256": "b92f848fc9fdc372b910a71972528777ab22d3135a38504a55a789593d88d085"
+    },
+    {
+      "path": "src/components/island/IslandPhotos.tsx",
+      "sha256": "2cccf692ce4c194c947d584f71c1e16c163ab19d6b9383693e7916e419f6fc95"
+    },
+    {
+      "path": "src/components/island/IslandProblemPrompt.tsx",
+      "sha256": "0969e55ac1dc70ac83566a3d0ed1591f38f2fcb8803f3cd9a65234f63f2ddc98"
+    },
+    {
+      "path": "src/components/island/IslandProsePrompt.test.tsx",
+      "sha256": "87e7ac3903a959a170db752b04f961d6fe886a5c137c35a451f3166e3582b058"
+    },
+    {
+      "path": "src/components/island/IslandProsePrompt.tsx",
+      "sha256": "77cb26664a90d2f9843f6a6635871bf581f1609235caa550e5730829f736425b"
+    },
+    {
+      "path": "src/components/island/IslandRewardGoal.css",
+      "sha256": "f2ffcd3d66543578432a34db5243cd0c4fdb6470c5aa66c7bde612434b3becb9"
+    },
+    {
+      "path": "src/components/island/IslandRewardGoal.test.tsx",
+      "sha256": "0f564d639b01312608b39d46ed2b9d438b7662749e61ed977e72d4dbce6eb9e1"
+    },
+    {
+      "path": "src/components/island/IslandRewardGoal.tsx",
+      "sha256": "6771ea8b295913fd601b87b3ef4fe502ed70bbf5f502e60246702f8a03bfec89"
+    },
+    {
+      "path": "src/components/island/IslandRewards.test.tsx",
+      "sha256": "761162dcfd7e29df81cfc5154f37e9363e059c670d6dc2b860f2b937e89b9b25"
+    },
+    {
+      "path": "src/components/island/IslandSharedMemories.css",
+      "sha256": "a7e7818c0dfdbcf51ac15585581a2d98584dee44182ec50829f8a705951f28e0"
+    },
+    {
+      "path": "src/components/island/IslandSharedMemories.tsx",
+      "sha256": "99904c83df0b42cdfec81e20929701e968b3264bc183eaa452a0fa41c61371dd"
+    },
+    {
+      "path": "src/components/island/IslandShell.css",
+      "sha256": "10c214653009d6eb475b1dcc54704b0f0c695bdb198827f8a092aa3b41f9dfa1"
+    },
+    {
+      "path": "src/components/island/IslandSoundControl.css",
+      "sha256": "4b8c0a26b1ecc16a6854973262915bb6ed163aa853e8fe4239323a64f92a67a4"
+    },
+    {
+      "path": "src/components/island/IslandSoundControl.tsx",
+      "sha256": "cd7e94f4d13b7cf69439e70ed8a15f134d9de221ef2101ad82f286eee1a38d43"
+    },
+    {
+      "path": "src/components/island/IslandSpeechControl.tsx",
+      "sha256": "89e67181d52de5296cc8b1f79b9c8bdd47d14ce7a583f391f059aed1ece48422"
+    },
+    {
+      "path": "src/components/island/IslandStage.css",
+      "sha256": "cd2cd3aa269f9e6ba34d001f150c452fca479aba58843f9f65743d5c21393f0c"
+    },
+    {
+      "path": "src/components/island/IslandStage.tsx",
+      "sha256": "8ec5374d94cdc5ce19fe53ef92ae9340e991422f56d7c8943e840689b0df0dbe"
+    },
+    {
+      "path": "src/components/island/IslandStarReceipt.css",
+      "sha256": "691cd85a94219a799d351219229ba573f8222fbb75e25fc36b7a9b529b0a2905"
+    },
+    {
+      "path": "src/components/island/IslandStarReceipt.tsx",
+      "sha256": "df7caa246754a6e178d48cdc53113219be681a5b24f40d90d287d604bc87c733"
+    },
+    {
+      "path": "src/components/island/IslandSubjectChoice.css",
+      "sha256": "9d6c2a32b1033f6784edf30caabbb64fac9967233b4efd3f4774c040882cd221"
+    },
+    {
+      "path": "src/components/island/IslandSubjectChoice.tsx",
+      "sha256": "a3e1d1fb1e4e364d47341d59ddb898c3fb9db342c0d5c4e03928b53fefcc0510"
+    },
+    {
+      "path": "src/components/island/IslandToyIcon.css",
+      "sha256": "0019ce21781beb234c53f55e24ba395877b41b394584e687f15bf3f25b05aec2"
+    },
+    {
+      "path": "src/components/island/IslandToyIcon.tsx",
+      "sha256": "affc94393a980b1bb23e1d0b7449a2591150b61c0b51f6a1ad9b02479883af1f"
+    },
+    {
+      "path": "src/components/island/IslandWelcome.test.tsx",
+      "sha256": "73c8913ab9731b710ffae74f2e3224f926defd72b04a4d6a90b8c63ae57635c9"
+    },
+    {
+      "path": "src/components/island/IslandWelcome.tsx",
+      "sha256": "c738b456eba456d083dc6e226b82f858b3620a6779ae74c6bc518ffc23af4878"
+    },
+    {
+      "path": "src/components/island/IslandWideWorkspace.css",
+      "sha256": "622e07b20163c1c031e176cde75d5c3a952a9b0d16c2c46592450e480e3bce51"
+    },
+    {
+      "path": "src/components/island/IslandWorkReplay.tsx",
+      "sha256": "f20db63ff63dc12ca0d224cb2736450679b54841814de8af721eb6558be58dab"
+    },
+    {
+      "path": "src/components/island/IslandWorkshop.css",
+      "sha256": "0f4a34ca7b6037be0402fcc7cbcf4a04346fc52035866ed0f356c5aeeed90c81"
+    },
+    {
+      "path": "src/components/island/IslandWorkshop.tsx",
+      "sha256": "909b1b382033f116a82c4b216098c33218d91d908f2eb4d412498778ef3ca748"
+    },
+    {
+      "path": "src/components/island/IslandWorkspacePanels.css",
+      "sha256": "5d1abd179927a9d128cc1b91758289dea9e439ed641fefb9d3f1f2308967557e"
+    },
+    {
+      "path": "src/components/island/OtherGames.tsx",
+      "sha256": "2a5ea7938067ee8cd3afd4033aec2dc5732ae80844758b7b13a0da1afc53886c"
+    },
+    {
+      "path": "src/components/island/PokomokoWorld.css",
+      "sha256": "8ab03707262fde2289810ca3dd49a994d693620ec685ef1438bcc3540bb8b09f"
+    },
+    {
+      "path": "src/components/island/homeJourney/HomeJourneyPreview.tsx",
+      "sha256": "d9746f186144134d5d8a99f5278a2d5eb68ee647693b250e2602445a5d1bc2a5"
+    },
+    {
+      "path": "src/components/island/homeJourney/contacts.test.ts",
+      "sha256": "ebf610ef863e9d9b7af0528c816e0a0e62941dc4a68b26bb0d31c9b6d37bdbc3"
+    },
+    {
+      "path": "src/components/island/homeJourney/contacts.ts",
+      "sha256": "dcff568d274d8d447e5b2be69cac609c22523f6cfd3598bcae558230777e4f87"
+    },
+    {
+      "path": "src/components/island/homeJourney/delivery.test.ts",
+      "sha256": "4c7f6b70883f87cbd7c687ecf011a550bbef7a8e3b365be734e2e9fdc4c74546"
+    },
+    {
+      "path": "src/components/island/homeJourney/delivery.ts",
+      "sha256": "ca248f67e5323a3b879a92d2bab16a8714c7c5f18bc8fe5d8f898ae31d9b759b"
+    },
+    {
+      "path": "src/components/island/homeJourney/growthReveal.test.ts",
+      "sha256": "56daddd431ab7db1783ddb9f530aebaff3291b78a184ad072f0bc8fb41a7750a"
+    },
+    {
+      "path": "src/components/island/homeJourney/growthReveal.ts",
+      "sha256": "c60705e4372b0d165194a5c7d018cd3d0c12ed24058f8f228654228a5ff855b7"
+    },
+    {
+      "path": "src/components/island/homeJourney/interior.test.ts",
+      "sha256": "336b8679d3ed1466eda1d94e20f4f515ef47441675da8a081ac4498233c3c4fc"
+    },
+    {
+      "path": "src/components/island/homeJourney/interior.ts",
+      "sha256": "ffb42aae04db57788d666af82cc266714da239d2ef6891d30634131bae790b6f"
+    },
+    {
+      "path": "src/components/island/homeJourney/scene.test.ts",
+      "sha256": "bd2974144eaacd27c4c9295b64be6b1c9b552af025799f5ca2f613f00e7ed7ca"
+    },
+    {
+      "path": "src/components/island/homeJourney/scene.ts",
+      "sha256": "a4c842d754e76251f72196e0217ff94b441e23ddf1a4631bf156d145b5517f8f"
+    },
+    {
+      "path": "src/components/island/islandAlbumMemory.test.ts",
+      "sha256": "484ccc89d419654c665c0fa708cb96029467811afea3bc0f8e155479732f008c"
+    },
+    {
+      "path": "src/components/island/islandAlbumMemory.ts",
+      "sha256": "a73a3d0904069e56f4f5db6f14266ec4b66e2c1a6bb388aa8f8fefaae07a663b"
+    },
+    {
+      "path": "src/components/island/islandAlbumPresentation.test.tsx",
+      "sha256": "0ed35766e209a8e9114e69c6799f469d1e049e6276bc50853b3b8ee8170dd251"
+    },
+    {
+      "path": "src/components/island/islandAlbumPresentation.ts",
+      "sha256": "5acb4b0eeb8012be7345d3b412b50869cab27f5326bc05ea60dbda5396c5291f"
+    },
+    {
+      "path": "src/components/island/islandAmbienceAudio.test.ts",
+      "sha256": "86587a71679ea5f1976cc74db2ba142c4e990d66c764132df61d2064aba2fd13"
+    },
+    {
+      "path": "src/components/island/islandAmbienceAudio.ts",
+      "sha256": "a2b50f6c6d9a575c442ee1dea5452cffbe9e808916ce42e5c4ecaaa2d9799381"
+    },
+    {
+      "path": "src/components/island/islandCustomizationPreview.test.ts",
+      "sha256": "713540bfd860da05f577fa8711b58c75d93eb3e1a28c5ada7bab26df0715cab4"
+    },
+    {
+      "path": "src/components/island/islandCustomizationPreview.ts",
+      "sha256": "06c9a5360a99c02f7dba80ecc310687be8debaef3929de9a0fdebda0fc448d56"
+    },
+    {
+      "path": "src/components/island/islandCustomizationRequest.test.ts",
+      "sha256": "c841f9fc2300b9e07ff5246d8a7bfc6a82010975247451e774f06eb7da9aa3af"
+    },
+    {
+      "path": "src/components/island/islandCustomizationRequest.ts",
+      "sha256": "007f486392f6d2773a5ac37097e82f319b551d4f99a2f3d4dfd2e2ad80d3b119"
+    },
+    {
+      "path": "src/components/island/islandDirectTargets.test.ts",
+      "sha256": "9ab5924683a7bca516da448f9ea2c5f98bf132a3e8ad4c434be558f2486c124a"
+    },
+    {
+      "path": "src/components/island/islandDirectTargets.ts",
+      "sha256": "ee229d88a9ca9dd0379438fb6a3f9e3932084e42ea10c7bb9fdff0666dbaf5be"
+    },
+    {
+      "path": "src/components/island/islandDiscoveryGuide.test.ts",
+      "sha256": "b2518030f81e4927794b006e3401c91bf5180825d526183eb7bdc3289c4b9238"
+    },
+    {
+      "path": "src/components/island/islandDiscoveryHints.ts",
+      "sha256": "141d466f7bf92de70758e520878704323a0d5edf9ab61a60cb493c915586bd59"
+    },
+    {
+      "path": "src/components/island/islandDistrictView.test.ts",
+      "sha256": "f24a6d3c5280cb007b398cef81b4130701b9ec9d6023ae84c8eab0038c29ee80"
+    },
+    {
+      "path": "src/components/island/islandDistrictView.ts",
+      "sha256": "ee2fc4f27d445b6b02c58b51a48265db1b629597290e07d468df2a44f863a6c6"
+    },
+    {
+      "path": "src/components/island/islandExpansionPreview.test.ts",
+      "sha256": "9939eff8dc969716eb1c77ac9bf7dce5a76ee449e10ccee4e90ba840a7d88cd1"
+    },
+    {
+      "path": "src/components/island/islandExpansionPreview.ts",
+      "sha256": "17bd7aa8d166599ff476f8b3bfde40a5d364f9a232febc81efbfb96454261424"
+    },
+    {
+      "path": "src/components/island/islandExperienceRequest.test.ts",
+      "sha256": "35ac7298ac502e6e535867f820672fb3dacbf9abe17ef13660bc2445a18bcd7d"
+    },
+    {
+      "path": "src/components/island/islandExperienceRequest.ts",
+      "sha256": "e36e6b8d5370a61b8bda3cbbfadad3e5adbc13532a06d14abadcc1468adac52d"
+    },
+    {
+      "path": "src/components/island/islandFurniturePlacement.ts",
+      "sha256": "6f0e990d753aedda9676c16e13b4a01581804dc5281a1bc6ea9f1e0a2157d30b"
+    },
+    {
+      "path": "src/components/island/islandFurnitureTrial.test.ts",
+      "sha256": "6e55bb809cc2dcfef5c397e7005233807e119dd123efafb65e11d2d0eabbc391"
+    },
+    {
+      "path": "src/components/island/islandFurnitureTrial.ts",
+      "sha256": "5287acc073a2c1482051c75327626b8d5d9bea8dfd0b17a0c007b2f92baf3c32"
+    },
+    {
+      "path": "src/components/island/islandGlyphs.ts",
+      "sha256": "b36492fdcaa3290eb77ce59e7559bcc7aeba69ca1497b65621a5dda7fe15af04"
+    },
+    {
+      "path": "src/components/island/islandGrowthPreview.test.ts",
+      "sha256": "f7b0ce8bc6d67ce034b2946522eba189eaabab5d1962a756a237ac118903db13"
+    },
+    {
+      "path": "src/components/island/islandGrowthPreview.ts",
+      "sha256": "0f6c214d24a20619dd5fc6afac1daa88033d67d087acc1c3492a07f9ffc64abd"
+    },
+    {
+      "path": "src/components/island/islandObjectKinds.ts",
+      "sha256": "69076e275e44470b87f97a7ac24cd74f0c50d332d3319f5c307c647700ea69f5"
+    },
+    {
+      "path": "src/components/island/islandPhoto.ts",
+      "sha256": "512c6326beafc59e6d462322b971c27ab49acccf848c46c77cd6eae3ebd9f59f"
+    },
+    {
+      "path": "src/components/island/islandPhotoCapture.test.ts",
+      "sha256": "1dd40c384b9e533145283c22fe0fb0b693a12f0f52b1b0b189e942c3b3991c25"
+    },
+    {
+      "path": "src/components/island/islandPhotoCapture.ts",
+      "sha256": "8183ee5a70fb62d7e29b44d6653ee171103a0b9b3911f5844e581d893290a2c8"
+    },
+    {
+      "path": "src/components/island/islandReferenceChoices.ts",
+      "sha256": "f050abb8b396d6f562509acb1ae34ab0f196783605a8d1974ccc09aae1a41262"
+    },
+    {
+      "path": "src/components/island/islandSharedPlacement.ts",
+      "sha256": "bc6fffcf6c57972afed99065f96f4fd41888f1e1e85e4ef88def18ae1bdb0fe6"
+    },
+    {
+      "path": "src/components/island/islandStarReceiptEligibility.test.ts",
+      "sha256": "8cecff22156bf01b7d98aeb5c5e88267e768b7cf99f1d3691cb63468f8d92a85"
+    },
+    {
+      "path": "src/components/island/islandStarReceiptEligibility.ts",
+      "sha256": "6ccdc286a708afd54b3dac344caaad5f27ee22afd70515d98c81ea011cd959e8"
+    },
+    {
+      "path": "src/components/island/islandWorkshopAudio.test.ts",
+      "sha256": "2a3c3c851dbfe42b3ef221ee413950a7e5f184e577726d3f01d2ee0b89c0029e"
+    },
+    {
+      "path": "src/components/island/islandWorkshopAudio.ts",
+      "sha256": "a161b22daea514f4b5d33d99061c3ffe9f7c91af8b6f90969a50cb0a5e73c6f0"
+    },
+    {
+      "path": "src/components/island/islandWorkshopQueue.test.ts",
+      "sha256": "796e914be8b8eb73467d9d91f0b9a34465aa2a840e833385c485addb2981d013"
+    },
+    {
+      "path": "src/components/island/islandWorkshopQueue.ts",
+      "sha256": "bd97b1094fd12d37a0f87991cff720b732cca13b89f6fb046a53e9645090d75c"
+    },
+    {
+      "path": "src/components/island/islandWorkshopRequest.test.ts",
+      "sha256": "5006c88ba74bf893cf48b9e667ea1db18d61c2311d960a4d4307fe209cfa34d6"
+    },
+    {
+      "path": "src/components/island/islandWorkshopRequest.ts",
+      "sha256": "cb1745c17a07e5830123014c8a18380321a2c1e55d71772faf2eaf9e7d56af07"
+    },
+    {
+      "path": "src/components/island/learningFeedback.test.ts",
+      "sha256": "e31e915051d52af417972db193086b8de4bb769f3007546f8554e8e68ae21dbd"
+    },
+    {
+      "path": "src/components/island/learningFeedback.ts",
+      "sha256": "a64a7259980ad4374f33638130b15d03fb9ce2977cde98f467c3eef86169c510"
+    },
+    {
+      "path": "src/components/island/learningGuidance.test.ts",
+      "sha256": "6c7b756d64c14fc294acd43f3e3b832e02bd5f7f4e9460eb388e634cfc7d7185"
+    },
+    {
+      "path": "src/components/island/learningGuidance.ts",
+      "sha256": "ddaa178e657dab56bb1f55085267aedc55683151aabd699488848141658953dc"
+    },
+    {
+      "path": "src/components/island/life/IslandLife.tsx",
+      "sha256": "18db10b007a88e9f54c3e89d4b1ccb9b6c47f103d905653805d62b40c3cc46db"
+    },
+    {
+      "path": "src/components/island/life/LifeWorld.tsx",
+      "sha256": "2e6e8c033cbac24257343d048ef1284513cb3b4281b685f328e6a56e264e21d6"
+    },
+    {
+      "path": "src/components/island/life/life.css",
+      "sha256": "aa5491ef7481d0b75bb127a5bc12baa0236ecbb9c49de4c7314e99aeeda0b955"
+    },
+    {
+      "path": "src/components/island/life/placement.test.ts",
+      "sha256": "0a89e5dd9a21f2ee03ac8505c31a5286b521c19ae7dc7b7fd34afdbddf762693"
+    },
+    {
+      "path": "src/components/island/life/placement.ts",
+      "sha256": "699092bb91ceccd778670f87ce3c13d6dc569751b836ec2dcc4740e8f9f2af9e"
+    },
+    {
+      "path": "src/components/island/life/residentMotion.test.ts",
+      "sha256": "4d6d599727b9c151513e8a18dc32b8aed68bdfb5799c641c7414a0ff66f66df8"
+    },
+    {
+      "path": "src/components/island/life/residentMotion.ts",
+      "sha256": "08d8558aec648db83f5e0bb8a2cd0346f161df17c68416cd31dae3ce7d619e18"
+    },
+    {
+      "path": "src/components/island/life/scene.ts",
+      "sha256": "18735714d4cab6f84640c15d9b975fcb726e18ad85ebeecbfc697e05da00f422"
+    },
+    {
+      "path": "src/components/island/life/useIslandLife.ts",
+      "sha256": "8bf5c0b19b591f55218ac5b6d157f1271f64bddcd7a3f51f1fb8644f3820239d"
+    },
+    {
+      "path": "src/components/island/three/animals.ts",
+      "sha256": "bac94d0ec0bc8fdc88a99b208a0075ddff40afb1c184107671ae98c180ce55e6"
+    },
+    {
+      "path": "src/components/island/three/appearanceDiagnostics.ts",
+      "sha256": "bff811aed2702874535375a42aba5a4efb8a58c5f8c42e7b630f4df5e0db05f4"
+    },
+    {
+      "path": "src/components/island/three/appearanceFraming.test.ts",
+      "sha256": "23d955c9268be622d74bb499183eabd41be75ca380290041cb6f3da35edca8b2"
+    },
+    {
+      "path": "src/components/island/three/appearanceFraming.ts",
+      "sha256": "db8bec6ccc6908f09fdc914863c4f6d7c49b7ed825624c447328320580b69192"
+    },
+    {
+      "path": "src/components/island/three/appearanceGround.ts",
+      "sha256": "f60946dafa66466f2f710fad82e9cdb26bfaead505c0b2c7ac72d90eb8e0990d"
+    },
+    {
+      "path": "src/components/island/three/appearanceMotifs.ts",
+      "sha256": "08d868863a5cacfe93dd212ac388ff2a3413a6a4ba2b0c09de030bae2610e88e"
+    },
+    {
+      "path": "src/components/island/three/appearanceParts.ts",
+      "sha256": "d4e4eed4c4ac335a7d5bcbd12e299a354a77461124b522dd5b4b68860b56cd88"
+    },
+    {
+      "path": "src/components/island/three/appearanceRendering.test.ts",
+      "sha256": "dd1abc232730e8f30b871a274b59bb2c336a4e0bf77398eec4b37fe3060c427f"
+    },
+    {
+      "path": "src/components/island/three/cameraPanFraming.test.ts",
+      "sha256": "2e38bb2d8e01794e24ae590f4c4d43d8ce2547b673016eb875a67bd7429f4d76"
+    },
+    {
+      "path": "src/components/island/three/cameraPanFraming.ts",
+      "sha256": "cdd39dd14ec4ca715d3c6f52b217ddfc8fb39cef43dcb9f95e5b5ce836656ffd"
+    },
+    {
+      "path": "src/components/island/three/connectedScenery.test.ts",
+      "sha256": "7083db88de2a7e80c79817811a021c1accb45b06292876d4d638641eaf17148d"
+    },
+    {
+      "path": "src/components/island/three/connectedTerrain.test.ts",
+      "sha256": "3f3849265828932f1bc399042ba0388d035558f74a1f1cfabe0748e5b356ab23"
+    },
+    {
+      "path": "src/components/island/three/connectedTerrain.ts",
+      "sha256": "56b8140ec7135d70c843f11354f8b24bff28c1724e7a1e3d9dfd6635ac806235"
+    },
+    {
+      "path": "src/components/island/three/cosmeticScenery.test.ts",
+      "sha256": "ffb607514335474771069b8d6dfa31427bbf7dd551def4a068531b7eba367577"
+    },
+    {
+      "path": "src/components/island/three/cosmeticScenery.ts",
+      "sha256": "3c865d54a59653618f305371753d51d252a4871ec5bbeb9da79d0845333fcbdf"
+    },
+    {
+      "path": "src/components/island/three/expressionEnvironment.test.ts",
+      "sha256": "9b230553748a16ccd69714137f8dc38f23f8bf7df50234e79a050256a896c3c8"
+    },
+    {
+      "path": "src/components/island/three/expressionEnvironment.ts",
+      "sha256": "a50b74a2603649f54c0464add3d4f709209e0299c4631ecf6fbc5914ad6f3054"
+    },
+    {
+      "path": "src/components/island/three/expressionFootTrails.test.ts",
+      "sha256": "8c34df3e6d9e2476f5e801105d7230a3ef40fa10c4b22f97b5567d0c19a7320c"
+    },
+    {
+      "path": "src/components/island/three/expressionFootTrails.ts",
+      "sha256": "3e7d309ea14389bf33db4b581aefd22eaec338995e3ddd31e2bec260ea341f94"
+    },
+    {
+      "path": "src/components/island/three/expressionResidentDeparture.ts",
+      "sha256": "e3b44ed31255fc4bfd251c42b2b496e8a831e5cbb6de1990d5176f298fc797b9"
+    },
+    {
+      "path": "src/components/island/three/expressionResidentVisuals.test.ts",
+      "sha256": "75692df0bc88e6061b977c83431d1c731f51bb500c2396ea4cb37fa3f1699296"
+    },
+    {
+      "path": "src/components/island/three/expressionResidentVisuals.ts",
+      "sha256": "66be875840c8cdc5af98387b19b894754e2929c07318448423e292f3b0f4ea75"
+    },
+    {
+      "path": "src/components/island/three/expressionResidentWalk.test.ts",
+      "sha256": "f579a58a83615507d98a4b470945a2ae781ad6225dd0eaedfb19685bf3a57a4e"
+    },
+    {
+      "path": "src/components/island/three/expressionResidentWalk.ts",
+      "sha256": "4664d024e29263499bd3fdfd0f96cf97d0e341316212edb85b54a47cb0ecdaa0"
+    },
+    {
+      "path": "src/components/island/three/flagFraming.test.ts",
+      "sha256": "f901915567898575b07d71053f98ef53fe500fa2cdf689cd75bb0e6c975491b2"
+    },
+    {
+      "path": "src/components/island/three/flagFraming.ts",
+      "sha256": "30152422a06eb90386a8a2d5662ba4b34b90038bb14b515a81f688dab5b9e78d"
+    },
+    {
+      "path": "src/components/island/three/furniture.test.ts",
+      "sha256": "40a40e62954dfcd70dcba4f67a1900822f5f8da55e3152f849959c494d271697"
+    },
+    {
+      "path": "src/components/island/three/furniture.ts",
+      "sha256": "f51dbb0d727bb7c6ed5e87f7515a04a6c6ce46959562d38009e23161bda98d3e"
+    },
+    {
+      "path": "src/components/island/three/furnitureAppearance.ts",
+      "sha256": "c1e3fc56f80ffb8b953d011f56b48a8596084c30bd49099d196c8825fff9d1b0"
+    },
+    {
+      "path": "src/components/island/three/furnitureClearance.test.ts",
+      "sha256": "23afa3be784d78d2fa48832702659e7b41d60afb55bbabe84d99ac90d99ce923"
+    },
+    {
+      "path": "src/components/island/three/furnitureClearance.ts",
+      "sha256": "7548eaf15dc9d02496f40f5ef02bfb4ba68b276316ac0160ce09a7ae5fbf5c6a"
+    },
+    {
+      "path": "src/components/island/three/furnitureClearanceController.test.ts",
+      "sha256": "0cce3307b4d0e05064a384f925f21598e57eb775ca1dc776db23b42db1f3d0ee"
+    },
+    {
+      "path": "src/components/island/three/furnitureClearanceController.ts",
+      "sha256": "7c0ca300f9de92e024ba6c811e4c5902ecf82ef81fed436de22d0d35af4baf76"
+    },
+    {
+      "path": "src/components/island/three/furnitureVisuals.ts",
+      "sha256": "ab3ba871d49e94268c768cd3d8d56d5aadbedba3a6b1496bbe431d4d8910c456"
+    },
+    {
+      "path": "src/components/island/three/geometry.test.ts",
+      "sha256": "a9978e8875eeaa64b9aab6c884337df9999b05bed67868f27a7c7a217833dd2f"
+    },
+    {
+      "path": "src/components/island/three/geometry.ts",
+      "sha256": "8f2ad271bb3ee13fbb1ea785d3375ebd04d6c04bb9c02a5c4e00610761f8a612"
+    },
+    {
+      "path": "src/components/island/three/grassSurface.test.ts",
+      "sha256": "5db3100f2c9fa2d2233722624200cf43d3b68b3ff3d334ddd95d62bf0c1fab8a"
+    },
+    {
+      "path": "src/components/island/three/grassSurface.ts",
+      "sha256": "42c8b70f04a81b77cddd46748ed6dd6c69d4a8232444f350f7a95c587ef14e3d"
+    },
+    {
+      "path": "src/components/island/three/growthNavigation.test.ts",
+      "sha256": "665e4f316fc39543b08ade47ef989bd25a5f1ba2661b751b5c3c55740a330001"
+    },
+    {
+      "path": "src/components/island/three/growthVisuals.test.ts",
+      "sha256": "ba8b3d739b57c7070eda588b756b728bb574a2daee013e3e74ce0eab8baaa37d"
+    },
+    {
+      "path": "src/components/island/three/growthVisuals.ts",
+      "sha256": "e400fe94be3a2c65098113cfb9c55438bdf74af19ac67fe61689ebfface1c8fe"
+    },
+    {
+      "path": "src/components/island/three/homeInteriorCamera.test.ts",
+      "sha256": "93f4bb063c1ec2e2e548f21759e8f96cd6a72487b35fa24eaf8e3e88a23e7cb9"
+    },
+    {
+      "path": "src/components/island/three/homeInteriorCamera.ts",
+      "sha256": "cea49e0d91e8dcc5bcbaf2d5aaf2da01a5c34b91cd24b626d0455a83cad6a32d"
+    },
+    {
+      "path": "src/components/island/three/homePresentation.test.ts",
+      "sha256": "132a1814b508faea1d6e0e7357bb9222df2ad1a50d64f3bd82fb5f449a512f71"
+    },
+    {
+      "path": "src/components/island/three/homePresentation.ts",
+      "sha256": "0cd8a365003bd0d456294c2d60fcacda48184abb80a732cc53b6771a51bfcbd2"
+    },
+    {
+      "path": "src/components/island/three/homeResident.ts",
+      "sha256": "59f35df77c0c4d239a1e11a2e564d4048400e5db401506809f29b7dbc376e4fa"
+    },
+    {
+      "path": "src/components/island/three/homeViewFraming.test.ts",
+      "sha256": "920fecab55df00d1dfe88b629271e7126d1fdb410ce9d54a997bc8bc55b1be60"
+    },
+    {
+      "path": "src/components/island/three/homeWalk.test.ts",
+      "sha256": "3ee7df5b6c591d5369d08691d6f80badcd4a64913ccd6d91536f97ac7996d7fd"
+    },
+    {
+      "path": "src/components/island/three/homeWalk.ts",
+      "sha256": "800d9f9977c63e6221473035a72af691e95f3e55f4ed4ee98c4160b44474fb4d"
+    },
+    {
+      "path": "src/components/island/three/islandCameraAnchor.test.ts",
+      "sha256": "0528b277b7c9535ac63b23ba692a3a78b222ae4df8eddbe65b0dcb5e831f5a12"
+    },
+    {
+      "path": "src/components/island/three/islandCameraControls.test.ts",
+      "sha256": "e57b6566144613f10a21e6b5bfbdd8d28d333fa84fed551f7822e65a4f460d24"
+    },
+    {
+      "path": "src/components/island/three/islandCameraControls.ts",
+      "sha256": "5596bef02a697bd236d97b50eacace30b0e4f198a15710a8499eaf3acb93d683"
+    },
+    {
+      "path": "src/components/island/three/learningKeepsakeScenery.test.ts",
+      "sha256": "f238f5c653a4f226b03458a5a67f7ba494158edea48b05b3fb5579a3208b2be2"
+    },
+    {
+      "path": "src/components/island/three/learningKeepsakeScenery.ts",
+      "sha256": "10ca6a602925549872af1b12fab3c08be35d564873838e685cd23edb3c7864b0"
+    },
+    {
+      "path": "src/components/island/three/learningReaction.test.ts",
+      "sha256": "565c35aa9110a10bcd1bc6c799db72970e841ac4daf5d93748416b638be36251"
+    },
+    {
+      "path": "src/components/island/three/learningReaction.ts",
+      "sha256": "acd527b7fb5718e6505b524ba9488cc4e41e0200c3b111b267a746244cefb9d6"
+    },
+    {
+      "path": "src/components/island/three/livingActivities.test.ts",
+      "sha256": "b460a082b6b0da66b8c26b121e179aa07fc3d46cdbcd6a06999d7237e1e37b57"
+    },
+    {
+      "path": "src/components/island/three/livingActivities.ts",
+      "sha256": "a48bed9213922fdcff8245f46bc5a15c6e3c6f6d8349796ab7c940034cfd352f"
+    },
+    {
+      "path": "src/components/island/three/livingRuntime.test.ts",
+      "sha256": "5ed00b9ff43995010c33fd71674b7301d5a9a2a66229b896516d8276c3d49b32"
+    },
+    {
+      "path": "src/components/island/three/natureObservationFrame.test.ts",
+      "sha256": "f312908996cf8822e844524e44b665b28997184eceb7040204f2085328e8268f"
+    },
+    {
+      "path": "src/components/island/three/natureObservationFrame.ts",
+      "sha256": "d072c771c4f3a83f6993cd8c538a0489fc6e0ea078546c07e6c28fc4a951f2f5"
+    },
+    {
+      "path": "src/components/island/three/natureVisuals.test.ts",
+      "sha256": "8487fd057faab6901659002d7db2748e9230bcf3a8a96dd56772a7c4c450858d"
+    },
+    {
+      "path": "src/components/island/three/natureVisuals.ts",
+      "sha256": "7ba50d6db8894d69e1d9d80b6d327618b3056d22a3bb33b9b5b48ab980cd47b3"
+    },
+    {
+      "path": "src/components/island/three/navigation.test.ts",
+      "sha256": "c7be97c0a6ba181cdfeda62e4814c882c6c3cc766b46ca88f9758e6efa387a76"
+    },
+    {
+      "path": "src/components/island/three/navigation.ts",
+      "sha256": "20c30ed1cec1fa1fb0d8c4300c1ed468ed9258bc963176a20f93ce05146a0faf"
+    },
+    {
+      "path": "src/components/island/three/optionalFurnitureController.test.ts",
+      "sha256": "32553052fb038e9d52e7ce80657e53ba5f31dc512d454b20559ccc054c75c1e9"
+    },
+    {
+      "path": "src/components/island/three/optionalFurnitureController.ts",
+      "sha256": "9e61eadd28a79743f7707cafe1e8c298afdab2cf2aba2d7fac0b3fda2b0a5720"
+    },
+    {
+      "path": "src/components/island/three/optionalFurnitureFraming.test.ts",
+      "sha256": "8f0006187891c63c493b0bfb5e8d8832aa2343fd0252a8ea0904fb3c8ee68d0d"
+    },
+    {
+      "path": "src/components/island/three/optionalFurnitureFraming.ts",
+      "sha256": "6ef3e1aee83d3b8c96e44520af6127e73092c9f03d8f79fbc8dec278b9249111"
+    },
+    {
+      "path": "src/components/island/three/optionalFurnitureGeometry.ts",
+      "sha256": "4e08cdf978f5f081b66f4c4c11015820f3ece8164b2fb36b51d5faa142d79e52"
+    },
+    {
+      "path": "src/components/island/three/optionalFurnitureNavigation.ts",
+      "sha256": "bbeacdfb3d5e465c234381606cb43922d0aa9a8ed3fc273a0b2b3ad8cccfaaa7"
+    },
+    {
+      "path": "src/components/island/three/optionalFurniturePlacement.ts",
+      "sha256": "813147857d282d5b65e23b50cdf4ca05e5902c9bb4e26e4ed419b0f45a7e1603"
+    },
+    {
+      "path": "src/components/island/three/optionalFurnitureRuntime.test.ts",
+      "sha256": "a54c8ce7408ccba8138b1030941a485e47474c2d87f39fe81dc496ff308cb824"
+    },
+    {
+      "path": "src/components/island/three/optionalFurnitureTrial.test.ts",
+      "sha256": "bd42234fcc8ea77efc4f3818d114c685229018dc5b404ff7fe7406b3e6481c6a"
+    },
+    {
+      "path": "src/components/island/three/optionalFurnitureTrial.ts",
+      "sha256": "27c196a87d098e67580a89f018d9092e04291489f7b7dfb600e3ecf509e25ed8"
+    },
+    {
+      "path": "src/components/island/three/personalScenery.test.ts",
+      "sha256": "f3d3ed91090a01871ae7d29bd4e7c136007d400f6ef0480e7a94dce9682a0490"
+    },
+    {
+      "path": "src/components/island/three/personalScenery.ts",
+      "sha256": "01c55b9add2b6fbed59e1f8301a8626eea62e8de03110d2a82ddcd2ec0305f89"
+    },
+    {
+      "path": "src/components/island/three/placementOcclusion.test.ts",
+      "sha256": "1454958d9055781590fd9211b2573065bc67f45a1d58a22497c05fabe623863c"
+    },
+    {
+      "path": "src/components/island/three/placementOcclusion.ts",
+      "sha256": "c91d9bf01759979a20a8d2abbde73eed743e2f6749384aed88fa83159f577f78"
+    },
+    {
+      "path": "src/components/island/three/placementPreview.test.ts",
+      "sha256": "6c408fef6985081649418280bf1445a5f79643588889c8bdd187125c2c5951b2"
+    },
+    {
+      "path": "src/components/island/three/placementPreview.ts",
+      "sha256": "58c636f13801e9beb8e54aab599cdcddbb9f5b288fcaca6d4e5e14ba1c7e7356"
+    },
+    {
+      "path": "src/components/island/three/primitives.ts",
+      "sha256": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24"
+    },
+    {
+      "path": "src/components/island/three/residentFabric.test.ts",
+      "sha256": "531b118014dff5a49c063f006cd405e8b447fbff9653345087371f4ff970ed81"
+    },
+    {
+      "path": "src/components/island/three/residentFabric.ts",
+      "sha256": "94aac1f3650bb7ffe82f395519370e91664d173efa868c97b95b943144ea0f87"
+    },
+    {
+      "path": "src/components/island/three/residentInteraction.test.ts",
+      "sha256": "085e13c9ee584fd32a5bcb99ddb588b5bcb443ed0930a03ef36edf058d4ed116"
+    },
+    {
+      "path": "src/components/island/three/residentInteraction.ts",
+      "sha256": "80685f9fd0991abea2d2db91f007c77bb1fa915c40028166e96cb58197cd9e39"
+    },
+    {
+      "path": "src/components/island/three/residentInterest.test.ts",
+      "sha256": "32004f3c4b1cb4cbb6530db923b2e86b733ef9191cabd49cd1b99a88c9b74955"
+    },
+    {
+      "path": "src/components/island/three/residentInterest.ts",
+      "sha256": "e069a30cbbe41a86d791ceed04dd9248bbaee1e90ddd85f39d64aa4358c20aef"
+    },
+    {
+      "path": "src/components/island/three/residentOutfit.test.ts",
+      "sha256": "ec16b8138818b3980ec493faf433c25a908fdd4db46c2301ed8ca08f79adebcf"
+    },
+    {
+      "path": "src/components/island/three/residentOutfit.ts",
+      "sha256": "c635763479eb896ddfdd2407598ec3619f01d1cbf1e163a29de5586a4bce2296"
+    },
+    {
+      "path": "src/components/island/three/residentPortraitFraming.test.ts",
+      "sha256": "dab80ff85dd8a8c9b5036d60a6461ffe6dd6f4b88c048edab2d8c854fb29e74d"
+    },
+    {
+      "path": "src/components/island/three/residentPortraitFraming.ts",
+      "sha256": "313f8c1db563e4e61dfe2c0f9fa691e8d71b84ce2e9859c2d26cffeebe23621c"
+    },
+    {
+      "path": "src/components/island/three/residentRig.test.ts",
+      "sha256": "dfefcf7dc11c5e1b3d58d4ea50b6150cb1ff7c62aba4fb9be876acb7d1e37ece"
+    },
+    {
+      "path": "src/components/island/three/residentRig.ts",
+      "sha256": "849b1293c6f001a7c9a8874df11864e1de11e51f751f36aa0e4dc76ea4577405"
+    },
+    {
+      "path": "src/components/island/three/residentTail.test.ts",
+      "sha256": "07d5a5b13bc6ba451ddda33d4ab3097f7adcb75d216965b9a189bb05df45b0f1"
+    },
+    {
+      "path": "src/components/island/three/roofSurface.test.ts",
+      "sha256": "f964c1f68a0d3d95e46f7eacc0b61b43ac416d7ae34479da2793c42e886ca200"
+    },
+    {
+      "path": "src/components/island/three/roofSurface.ts",
+      "sha256": "181619b3eebe8fe6a0cc7304d93530f6d60485b211177ebf00a3d9c174e65f33"
+    },
+    {
+      "path": "src/components/island/three/runtime.ts",
+      "sha256": "dd06e21b737b7a71e988d908e4a3c7adbfc6ef16f3d466c23da524e399d593ea"
+    },
+    {
+      "path": "src/components/island/three/runtimeExpressionEnvironment.test.ts",
+      "sha256": "39f8f091353ef8263e4635b91435c4e270d88960ba5cdab3cd03d571e2f658fe"
+    },
+    {
+      "path": "src/components/island/three/runtimeExpressionResidents.test.ts",
+      "sha256": "656d88970572c910211ea13c27ba500ed46923105f19b97aa6b7292181587cbc"
+    },
+    {
+      "path": "src/components/island/three/runtimeFurnitureClearance.test.ts",
+      "sha256": "65e7b52a8c622fac7dfba15af0b64222e8f5b16ee96b5b8ae458b6f59430c33d"
+    },
+    {
+      "path": "src/components/island/three/runtimePhotography.test.ts",
+      "sha256": "136eb0d2ff39a47bc857d6dec251ddb483bf16b2001588a479822924885f77c3"
+    },
+    {
+      "path": "src/components/island/three/sceneFraming.test.ts",
+      "sha256": "98e6c413e7839209d8cba26e4b14f9574d70b5c19a9034615caf023661554877"
+    },
+    {
+      "path": "src/components/island/three/sceneFraming.ts",
+      "sha256": "b0f872f99951a58491223bd2fec3fadb38b387ddced991d4c6426cd5fa383996"
+    },
+    {
+      "path": "src/components/island/three/scenery.ts",
+      "sha256": "19d17fb586d1a123eaa56e807285075013be6a8a23799a0ccdd176efc3a7242a"
+    },
+    {
+      "path": "src/components/island/three/sharedActivities.test.ts",
+      "sha256": "5abd087221f798ecd3fd2a7d594d703b7295ba98c9746a53cd4a60c8dde3424e"
+    },
+    {
+      "path": "src/components/island/three/sharedActivities.ts",
+      "sha256": "43a07356e7fefd58dcf6ad1a4465074c294c90f6a4dec6819a733b78edc9cb51"
+    },
+    {
+      "path": "src/components/island/three/sharedActivityContinuity.test.ts",
+      "sha256": "6c1bf4de454060374d1651766be3de991ec952d2f4b4e622362cbffb011e0fd9"
+    },
+    {
+      "path": "src/components/island/three/sharedActivityController.test.ts",
+      "sha256": "f22b3b5da544a4dd60cafb50510f3825d3894eeb2f5ff414713bafbe678a6c00"
+    },
+    {
+      "path": "src/components/island/three/sharedActivityController.ts",
+      "sha256": "c129e761117be0b66f554d9ee2c6af7f9462dbd5d43325ce66a020c6e2ae573d"
+    },
+    {
+      "path": "src/components/island/three/sharedActivityFraming.test.ts",
+      "sha256": "40752d844dd3ea6a2b4d208206f038aaa6874251f325fc3e78ba66d51b8846f6"
+    },
+    {
+      "path": "src/components/island/three/sharedActivityFraming.ts",
+      "sha256": "043a690db133eedb49762c8879db28951fc998f4bda167c6b04df7feacfd2a34"
+    },
+    {
+      "path": "src/components/island/three/sharedActivityOcclusion.test.ts",
+      "sha256": "6605cd63498ecb1d5f80ae897c7912725b1e58da3c52c169dd38cd098a778d6f"
+    },
+    {
+      "path": "src/components/island/three/sharedActivityOcclusion.ts",
+      "sha256": "51cc020cd272b2d7673f1c2fa9ce163d7247dbb25e03e8c953ba03f51d689cd9"
+    },
+    {
+      "path": "src/components/island/three/sharedActivityPoseSamples.ts",
+      "sha256": "b3a0c77798b76e3ff2c25c874043879399a4f394b01da08e6e3ef3a247cb96f3"
+    },
+    {
+      "path": "src/components/island/three/sharedActivityVisuals.test.ts",
+      "sha256": "b14cdeebec71c259a75ec249479602787520ddefef440846bdb6959b15543ce2"
+    },
+    {
+      "path": "src/components/island/three/sharedActivityVisuals.ts",
+      "sha256": "7b6de923ac05b885374d7ed8b8c7bdf1e4fe31f231bd5736871d547eb144b78c"
+    },
+    {
+      "path": "src/components/island/three/sharedCarryRoute.test.ts",
+      "sha256": "86982a3b6276402e267757df02fd9ac4cbba06aa552135df88334a3c59838b87"
+    },
+    {
+      "path": "src/components/island/three/sharedCarryRoute.ts",
+      "sha256": "e9b7460225685c83e9ca6e29eca4b11435025ec56726a54605bf57b1da5bbe71"
+    },
+    {
+      "path": "src/components/island/three/sharedDisplayFrameBoundary.test.ts",
+      "sha256": "046bff9126e00c97023d2044a5dd2791881b4f9eddfd32af9b34ad13b83042ba"
+    },
+    {
+      "path": "src/components/island/three/sharedDisplayFraming.test.ts",
+      "sha256": "3d8094e555ecab1f9c3379bf05aa2fa72a7a30a7f05035bbc6aa5346fc8f47d4"
+    },
+    {
+      "path": "src/components/island/three/sharedDisplayFraming.ts",
+      "sha256": "eac3d6b2186758ee97c40e9061ab23f9d8d56271daf6df7199805dada8b0d97a"
+    },
+    {
+      "path": "src/components/island/three/sharedDisplayScene.test.ts",
+      "sha256": "911f4458e137a328c95ea59977fa74bbbe1ac9d9255828fa7cc5a2f07bc04455"
+    },
+    {
+      "path": "src/components/island/three/sharedDisplayScene.ts",
+      "sha256": "02fdf62792c6e18c6a5600ffac4bbed78b509df950704680ae6f809894e2343f"
+    },
+    {
+      "path": "src/components/island/three/sharedJobActor.test.ts",
+      "sha256": "39c8036bdc54bcb1662344337e2b9e9e80c9f0afc2996e2baa8e2c944c70328c"
+    },
+    {
+      "path": "src/components/island/three/sharedJobActor.ts",
+      "sha256": "692ccfe09dd0c7f02bce876b07743c007de113bdd64bcd0a7516f117ef8c43ce"
+    },
+    {
+      "path": "src/components/island/three/sharedJobController.test.ts",
+      "sha256": "f7dbb9e5d73d1d239643be2c8766b05531029b34a51e118203cbae2e1762335d"
+    },
+    {
+      "path": "src/components/island/three/sharedJobController.ts",
+      "sha256": "d21c112e9100e95311b5f83b7ff1562360d2f7e6ca716c269dfe02c8090c73d0"
+    },
+    {
+      "path": "src/components/island/three/sharedJobFraming.test.ts",
+      "sha256": "4190550657ace128d607e0a4e57b63d5bdf6121ef24d0df0e29f13dc36b1dacc"
+    },
+    {
+      "path": "src/components/island/three/sharedJobVisuals.ts",
+      "sha256": "c062b99cc04f0d37f4e5a7329fed9801d7e042d3c264017d655f385cfbfba4c9"
+    },
+    {
+      "path": "src/components/island/three/terrainProfile.test.ts",
+      "sha256": "5fbcc8e3d1605194b74141bfaec662bc7e9f4b228d6270a57c329c9c63a03a14"
+    },
+    {
+      "path": "src/components/island/three/terrainProfile.ts",
+      "sha256": "6debaea94e55f6894e9f8a136244f598eb21c975f6bbda07b703e50b6c701efa"
+    },
+    {
+      "path": "src/components/island/three/themeMotifs.ts",
+      "sha256": "999552b2693ab141acb3c4a8728955dc57d672af0e5464dc39cedf4b14795016"
+    },
+    {
+      "path": "src/components/island/three/treeCanopyGeometry.test.ts",
+      "sha256": "eb001c214970abeb50380bc686c2cc94bf4dee353d9b36a1fa746129cd0c03f1"
+    },
+    {
+      "path": "src/components/island/three/treeCanopyGeometry.ts",
+      "sha256": "0c0d3eab23579dc9bea58294932b25fa47f356705c6c3489286a56f29b11fda6"
+    },
+    {
+      "path": "src/components/island/three/types.ts",
+      "sha256": "dd536ae89f9ae35c01b2bae4dec1de2807621e7240808ee769669d612f5e8491"
+    },
+    {
+      "path": "src/components/island/three/waterSurface.test.ts",
+      "sha256": "53d569587e7a8d5c352aabc15a4f8209697a31642f2d1f86b0ac2fd5cad82eaa"
+    },
+    {
+      "path": "src/components/island/three/waterSurface.ts",
+      "sha256": "aa5a6df03040390bc8b39d725913fbba41b2766ede71785bd20bc30fea5a8f21"
+    },
+    {
+      "path": "src/components/island/three/westNavigation.test.ts",
+      "sha256": "24ee66d2167e63853c144d2d8018d2683a65bb772230715c96e25781dd380635"
+    },
+    {
+      "path": "src/components/island/three/westScenery.test.ts",
+      "sha256": "fd983e99bbc57058823912f779236e92285c8f32a7d3ccd1e36a867a6dfda9c7"
+    },
+    {
+      "path": "src/components/island/three/westScenery.ts",
+      "sha256": "e1c6714a28af0d9b39ab92297a1adc569924c3d504aae20ce26624cc46639f9c"
+    },
+    {
+      "path": "src/components/island/three/workshopGeometry.ts",
+      "sha256": "034a76fe05bd5cc46a62c9e77b9126548f6f24e6c9aeecb3234ee9fdf02b2071"
+    },
+    {
+      "path": "src/components/island/three/workshopGround.test.ts",
+      "sha256": "360544098a361cdb8b9ac1caa5a2dace4ad4bbcc51bde5919f60e13fedbaa7be"
+    },
+    {
+      "path": "src/components/island/three/workshopGround.ts",
+      "sha256": "69a276755a27fb0e06829cc414e4217b228a8bfb900e4b2426968e7d517bac82"
+    },
+    {
+      "path": "src/components/island/three/workshopPresentation.test.ts",
+      "sha256": "728bafaf86ae447bc87d8c8ff6bfd5244f66b6ea851b8f3dc234ea5420f0a81b"
+    },
+    {
+      "path": "src/components/island/three/workshopPresentation.ts",
+      "sha256": "a7146d99c3580518d394f5e946af1ee85e7588b7e48be6717a4c996fff955a5e"
+    },
+    {
+      "path": "src/components/island/three/workshopResidentFraming.test.ts",
+      "sha256": "038e7dc8a3b9a4af80556fd0977024f80397ae36e3767d84027dd9acbdad7171"
+    },
+    {
+      "path": "src/components/island/three/workshopResidentFraming.ts",
+      "sha256": "5d8593a4606beacabf9515b2f3731346c76818005a4de1f8d9c7adfbaccdd62e"
+    },
+    {
+      "path": "src/components/island/three/workshopScene.test.ts",
+      "sha256": "c37e45f8265fdad723ebabcbf8ba5f873133a81466af7f079c67d3af3bce93bf"
+    },
+    {
+      "path": "src/components/island/three/workshopScene.ts",
+      "sha256": "228d2ffdaaed56e33b830fd9bf75bcdf5dc4854ca4444a80f4b2dc0aa0a7c9e5"
+    },
+    {
+      "path": "src/components/island/three/worldPalette.test.ts",
+      "sha256": "e5c2768986fe046d0a5e178129dbe1f038178cc95abe63956e798c927a656f4e"
+    },
+    {
+      "path": "src/components/island/three/worldPalette.ts",
+      "sha256": "00ad2759a32e5664ab88d4bde483fa261d54401ce37228368763a41b4c8b24e6"
+    },
+    {
+      "path": "src/components/island/tutorial/IslandTutorial.css",
+      "sha256": "f719789eab6f80d7aff8bf14f3e3e7abe55ecead0414a0bb5943d4814afaa6ba"
+    },
+    {
+      "path": "src/components/island/tutorial/IslandTutorial.tsx",
+      "sha256": "10f0ae31061a210ffc094a93ed47a31136bb8e1f487ec2db03ef2cc74ddd14dc"
+    },
+    {
+      "path": "src/components/island/tutorial/useIslandTutorial.test.ts",
+      "sha256": "a2910a7f76a5416c3ebcca59559bbea96a903f35ff08514d1ce40ef72470a5c1"
+    },
+    {
+      "path": "src/components/island/tutorial/useIslandTutorial.ts",
+      "sha256": "24fc4c1f4ef65649617fefbf3649aca74b703c72fb3ed312ca7f7c817ca26ebc"
+    },
+    {
+      "path": "src/components/island/useIslandActions.ts",
+      "sha256": "129b85fd899551bdaf2c750a229ff49424d52270dc10dae32ff0ecbd1b3871e0"
+    },
+    {
+      "path": "src/components/island/useIslandAmbience.ts",
+      "sha256": "67d55c494a1be8bc084dde83cec301a74859b8276f7b8c93afa5dddaa611f35b"
+    },
+    {
+      "path": "src/components/island/useIslandCustomization.test.ts",
+      "sha256": "a47c5ac6c71cfb655adfcbb49943e1759e83f41eb3a94f1eac9268c4196f8e2c"
+    },
+    {
+      "path": "src/components/island/useIslandCustomization.ts",
+      "sha256": "bef7dc963e249ec14cb08c49060ff983ed364b32d7a4e6470d372cb394b9fe56"
+    },
+    {
+      "path": "src/components/island/useIslandDiscoveries.test.ts",
+      "sha256": "e0be35740942165c7c53037cd29f7699fe5e8dda141072ddfc1970482122f930"
+    },
+    {
+      "path": "src/components/island/useIslandDiscoveries.ts",
+      "sha256": "ebc23af6a052e436d99c8fa49c3f3d478cbd9017011ef477acc046bc2c49222d"
+    },
+    {
+      "path": "src/components/island/useIslandExperience.test.ts",
+      "sha256": "d5595a14e262fffcbd36c84b6446a20a83d7d62e4cab68337e46a2415c2e47e2"
+    },
+    {
+      "path": "src/components/island/useIslandExperience.ts",
+      "sha256": "fbe5845ad17d1df1c90c5ab88bcb6ab96745fa696cc4c1ccd931dfe883b4d677"
+    },
+    {
+      "path": "src/components/island/useIslandExpression.test.ts",
+      "sha256": "192b2b2f5e17f433012cc350fe9e90030839040ea79327cfd3360f2675277cfd"
+    },
+    {
+      "path": "src/components/island/useIslandExpression.ts",
+      "sha256": "a64cbcdcdfdcc9e9347909e1377cbd28da42ff18bdf7536a962ab2930f0e5967"
+    },
+    {
+      "path": "src/components/island/useIslandFurniture.test.ts",
+      "sha256": "5dae7b3abd54f0a3c7e663b7e6504875b37afd4e44048ab59aadb843cdc1b697"
+    },
+    {
+      "path": "src/components/island/useIslandFurniture.ts",
+      "sha256": "a07846786ba8dd1fdb35d3a8ef2328b95993478fa5686a5a373ddb055d865aed"
+    },
+    {
+      "path": "src/components/island/useIslandLearningKeepsakes.test.ts",
+      "sha256": "f3db45e86c4d7520cd4df88c931fd66913a7475731dfcb9826dccb2a0ef3e408"
+    },
+    {
+      "path": "src/components/island/useIslandLearningKeepsakes.ts",
+      "sha256": "36dada489dd70d39dfea64aaa4a2c7c30cba10cd9d73739d51af991f3884e11e"
+    },
+    {
+      "path": "src/components/island/useIslandLearningObservation.test.ts",
+      "sha256": "249996d2b16b89153a3d9d7e805cbf2d55700a8295fdd2fe15127cc12881a789"
+    },
+    {
+      "path": "src/components/island/useIslandLearningObservation.ts",
+      "sha256": "ba126412182c5f8ddee0442827db7f57d65573e2ac4578c9fcb9229acd35dfed"
+    },
+    {
+      "path": "src/components/island/useIslandMilestoneNotice.test.ts",
+      "sha256": "a1ace779fb60b8f93029614854663f5ac57208da7a0b0498cc68a7382bd907c8"
+    },
+    {
+      "path": "src/components/island/useIslandMilestoneNotice.ts",
+      "sha256": "8b08fa58a383cd9d1a16de7b36dec7631ed616bc164f89ef2f319c7358c09b1c"
+    },
+    {
+      "path": "src/components/island/useIslandNavigation.ts",
+      "sha256": "370f9012e3ad2b143cf72cd0f75d07204a44e02f367d8394c4f82239c3695995"
+    },
+    {
+      "path": "src/components/island/useIslandPhotos.test.ts",
+      "sha256": "ca5adafda96fc46a24695e7a4ad00676b9c047c4d50bee6b01b27eda50be746f"
+    },
+    {
+      "path": "src/components/island/useIslandPhotos.ts",
+      "sha256": "38177a2d3d1ff9162eb9539f4ff66637b80ea88ba2ffaa14036fcd682be6fbb7"
+    },
+    {
+      "path": "src/components/island/useIslandPromptSize.ts",
+      "sha256": "64c997e88519b83cdb7468c102c56cdf39df40f9ec653d3bc315e9ec67d14093"
+    },
+    {
+      "path": "src/components/island/useIslandRewardGoal.test.ts",
+      "sha256": "02654acddc341986c402785c6740e3f5340a8b9ff2cb837971e36daa92a48cc7"
+    },
+    {
+      "path": "src/components/island/useIslandRewardGoal.ts",
+      "sha256": "1b93004bab3094cae3760ed72534f3f592fc6ffe33bdc8b886b4c07d03edf7e7"
+    },
+    {
+      "path": "src/components/island/useIslandSharedMemories.test.ts",
+      "sha256": "b21a6993faf9d53bef25e3498090a45406d99d65068dd9e68310d4494945ee85"
+    },
+    {
+      "path": "src/components/island/useIslandSharedMemories.ts",
+      "sha256": "764bfd7bf7cfd8f580c3abeebd99f79f9ae829553632e54c6460dbd9a1d98dab"
+    },
+    {
+      "path": "src/components/island/useIslandSpeech.ts",
+      "sha256": "d16cf7fb1c72baf19a0ce5b2df4387de401b99e3a58ac7b5e74a081dcf84fdc0"
+    },
+    {
+      "path": "src/components/island/useIslandWorkshop.ts",
+      "sha256": "fe6be12577a92beaecb7c9992cc29a4c336f7471c6214889508afaf16e2a748c"
+    },
+    {
+      "path": "src/components/island/useIslandWorkshopAudio.ts",
+      "sha256": "fd69fccd5ee9301c47ed22992af7a65b1b31e3ee2ded543c9bb85ca3c6c5efd6"
+    },
+    {
+      "path": "src/components/island/visualLearningGuidance.test.ts",
+      "sha256": "8a9dcee5b06bdeb9eeab1bec598280dcc2be9e7fd90b26b39ca2d2fa5253cd28"
+    },
+    {
+      "path": "src/components/island/visualLearningGuidance.ts",
+      "sha256": "cfda25b7157cdfa8a02c843285835767ffea04e7adbb682e9690eda2f1971c97"
+    },
+    {
+      "path": "src/components/ui/Badge.tsx",
+      "sha256": "6814c7752702ccf3c3164e33527307c38a95a8c13937272577d651caa23e6d08"
+    },
+    {
+      "path": "src/components/ui/Button.tsx",
+      "sha256": "629208769851c64b2619bb5056fd7fcb6a5867628215a10ea8522b730c844a67"
+    },
+    {
+      "path": "src/components/ui/Card.tsx",
+      "sha256": "18dad61c1323d36ae2f43bcddc5ca2a1fb474ec4a6160c7ad5f01c8666f414e9"
+    },
+    {
+      "path": "src/components/ui/EmptyState.tsx",
+      "sha256": "4b2e014095ab3015e44b6a4af0a33947fb60cc55dc904428bf18f0e02e5361c9"
+    },
+    {
+      "path": "src/components/ui/Modal.tsx",
+      "sha256": "f6c3304b547406cbfcf7ef84ef0d9522f646ec2c8bb1c12d696f08c93c5b5c39"
+    },
+    {
+      "path": "src/components/ui/ProgressBar.tsx",
+      "sha256": "0abcf27ec86010aa64b55109c9e67dbf87b0c20b4474e879a766a1fa65460ee7"
+    },
+    {
+      "path": "src/components/ui/Spinner.tsx",
+      "sha256": "38067451ba9a0d5fcff418c1724e910f565d2877c644af06f2d97981dca3afe5"
+    },
+    {
+      "path": "src/components/ui/SurfacePanel.tsx",
+      "sha256": "854e4f4998eb86c987a16797778e91290e93abf6811ed90c36427b1934e4f34c"
+    },
+    {
+      "path": "src/components/ui/modalLayerManager.test.ts",
+      "sha256": "83f65f2c9e5d6f522f42ee31cf324150ab4d8fb556122c9bcc6d753e611d9c28"
+    },
+    {
+      "path": "src/components/ui/modalLayerManager.ts",
+      "sha256": "dd7a85e0873db16fa4b89a1bad8f2445ef97ceffe936868611f8466fd57d727f"
+    },
+    {
+      "path": "src/db/index.ts",
+      "sha256": "95ffd6dafae239f26c8a26ccf5c5a427e7ae9cab2bef31b85b0f32f3bd3ee6bd"
+    },
+    {
+      "path": "src/domain/algorithms/srs.test.ts",
+      "sha256": "a47744055549fd97bea43c9be3c73cc2b12711374082882e90e5513854cb9f97"
+    },
+    {
+      "path": "src/domain/algorithms/srs.ts",
+      "sha256": "5ef96eaa9576c16cfb9836c971937acaa996afa65687d43ed2d354eaf56afaef"
+    },
+    {
+      "path": "src/domain/battle/engine.test.ts",
+      "sha256": "54ab45d786d662ff4983987c08981b7c7f381f604ab2227d5567c046605475af"
+    },
+    {
+      "path": "src/domain/battle/engine.ts",
+      "sha256": "bb975f0ee179805cf55b17f9a1a48b7b1c7a62fb58527f85234c5f3b47906bb4"
+    },
+    {
+      "path": "src/domain/battle/gradeMapping.ts",
+      "sha256": "d54e37996408ca2b9843dec75a9f3496ff9dedf90dc594c265ba465b5b400a4c"
+    },
+    {
+      "path": "src/domain/battle/types.ts",
+      "sha256": "57809308191c77d6b4a61ca16d3091dcb8abef663d4aae84a5a52b1caa96f9eb"
+    },
+    {
+      "path": "src/domain/benchmark/coldOpenFixedTen.test.ts",
+      "sha256": "5aa1bb228b95083df079cd6f1669c74c2e47409f21ca1d827316f8919320d44b"
+    },
+    {
+      "path": "src/domain/benchmark/coldOpenFixedTen.ts",
+      "sha256": "89d3ebb23c9543cb9744b3da7b4cf7b22d3011b8b7e11e814cdacfc203239ca6"
+    },
+    {
+      "path": "src/domain/challenge/engine.test.ts",
+      "sha256": "7b9b83ec3ec074cee74968303f6e17627815bf60e2832c65f956df4911e5def6"
+    },
+    {
+      "path": "src/domain/challenge/engine.ts",
+      "sha256": "7d77abf5089ab06e3e6aac60c8240e6b3251c1eee72697bfa3189a055c5c7a79"
+    },
+    {
+      "path": "src/domain/challenge/feature.ts",
+      "sha256": "1139943a3d046a09edd7d8b30960eb0b7fd18add62f193fe39592565ebaa574d"
+    },
+    {
+      "path": "src/domain/challenge/repository.test.ts",
+      "sha256": "310df19c838f071ea4be585bb0106031978e8622880d06a68cf7df5d327f38ed"
+    },
+    {
+      "path": "src/domain/challenge/repository.ts",
+      "sha256": "b44f8c4e399040588742417dae87d9788abfffd42337ab61eaf5d5167c53095f"
+    },
+    {
+      "path": "src/domain/challenge/types.ts",
+      "sha256": "0d52bf062551f8987c4bacded331043e78d5eeb1f9bbb4c02099c444c14a23bd"
+    },
+    {
+      "path": "src/domain/english/generator.test.ts",
+      "sha256": "d960f59ed69ccbdebf2cf073d526a6d762713e534dc55b71a12b0a938eca9969"
+    },
+    {
+      "path": "src/domain/english/generator.ts",
+      "sha256": "f2574f054d6e0dbb184835402d2d03e37a8319ced6c7568c044d92f3bbba01c2"
+    },
+    {
+      "path": "src/domain/english/listening.test.ts",
+      "sha256": "31d3abff296dea4ccb13c730a1d1557d27f74692fdc85c7e8047f9fac5b69ee8"
+    },
+    {
+      "path": "src/domain/english/listening.ts",
+      "sha256": "4783674472aec40f052e85c93be45c17111ec186912646cabbff6164a1d2d7d4"
+    },
+    {
+      "path": "src/domain/english/planner.test.ts",
+      "sha256": "ab9212dd2018f4f0ff874bf62899c23cbbb861bd3ef77c698ab2ee6087c18539"
+    },
+    {
+      "path": "src/domain/english/planner.ts",
+      "sha256": "179896c1157a97500078528096212fde5fae266da8f3c80f6dddd835d953ba6b"
+    },
+    {
+      "path": "src/domain/english/selection.ts",
+      "sha256": "fa05448f36ddc65651903ca7e3a53292f3f98f7d8f316c8a302261533f8a09df"
+    },
+    {
+      "path": "src/domain/english/service.ts",
+      "sha256": "b882217ae3241e43a94d75b6ebae58b2a74865d56e9d8b6c47f0deb9c310aeea"
+    },
+    {
+      "path": "src/domain/english/types.ts",
+      "sha256": "7784a56a2a23bab367020e6055cfe1afccacdde7e5b11f970c8c4df58b65ed70"
+    },
+    {
+      "path": "src/domain/english/words.ts",
+      "sha256": "030a8754b28bcc2bb6a474ba95a2ecc2d98be356539accb2dfa52f6f96bd529c"
+    },
+    {
+      "path": "src/domain/explore/__tests__/attemptIdentity.test.ts",
+      "sha256": "f7fc9c113351114278edf65a6ba3ffa0d01b2ceeb03ccd3c8d8e39b574e92b10"
+    },
+    {
+      "path": "src/domain/explore/__tests__/discoveryPage.test.ts",
+      "sha256": "0e4698294e09630e4a38c8b9e6dbb911d65275a4c7f4370af3d2cf34ff5f4b49"
+    },
+    {
+      "path": "src/domain/explore/__tests__/encounterPhase.test.ts",
+      "sha256": "173dc0daea9695b099699398b84a993a8cadbfe471fc5f78561ea09187c9087e"
+    },
+    {
+      "path": "src/domain/explore/__tests__/encounters.test.ts",
+      "sha256": "f1170c9d2ade5fa789bcbb0f5f893d6078eafd88541c5268347a9f60c7ae17b3"
+    },
+    {
+      "path": "src/domain/explore/__tests__/fixedTenBenchmark.test.ts",
+      "sha256": "10381b0bce436c3b229f0843606c0e66dd492477fb7d7af87b8108ee3703cb66"
+    },
+    {
+      "path": "src/domain/explore/__tests__/generator.test.ts",
+      "sha256": "9c25718da13281f4067b3cd6f36e84958bc9efbb32dfbac89dd92b777f54ac3b"
+    },
+    {
+      "path": "src/domain/explore/__tests__/learningPlanner.test.ts",
+      "sha256": "670a3ec3039b06be18f89c2734de20725df2cf18bf54efb5b64f173e159e0d0a"
+    },
+    {
+      "path": "src/domain/explore/__tests__/learningPlannerSegment.test.ts",
+      "sha256": "7509b89a780d17e70474a11c15aec70691a9eb07bd01e3587b7ca0af2d370935"
+    },
+    {
+      "path": "src/domain/explore/__tests__/learningSegment.test.ts",
+      "sha256": "b090f6887870736ffcbb07573ac8f5db27b746fb597b08c20781ecfdf3a974b2"
+    },
+    {
+      "path": "src/domain/explore/__tests__/learningSegmentPersistence.test.ts",
+      "sha256": "521c42deb737cfd821cdef0205ca758f9ca0a2e825018cd0a92b3e9f7657cdfa"
+    },
+    {
+      "path": "src/domain/explore/__tests__/observation.test.ts",
+      "sha256": "9eacb6291f548e3042e2144e3ea2ee1859d1ab92825f3b1ea0f95c84a304e2ef"
+    },
+    {
+      "path": "src/domain/explore/__tests__/openingExperience.test.ts",
+      "sha256": "af1f3c56a5e552892c2752d8a85cf5348dd735e039af647ac29afd1ca0ea26dc"
+    },
+    {
+      "path": "src/domain/explore/__tests__/persistenceRepository.test.ts",
+      "sha256": "6f8e8af6c36647a5ef8a61bfd34a83a56457a275335beb1d253c4f45d2569234"
+    },
+    {
+      "path": "src/domain/explore/__tests__/problemAdapter.test.ts",
+      "sha256": "61ddb5689eb17d41e1c4a5bc682053d23b1c4ad0dff681e2721be910d5cd7478"
+    },
+    {
+      "path": "src/domain/explore/__tests__/rapidLoop.test.ts",
+      "sha256": "09d0c83fa36309e2dc5fe231555c1a8df16ec3fc0ff5b373da1876801e6f43f9"
+    },
+    {
+      "path": "src/domain/explore/__tests__/rapidLoopEligibility.test.ts",
+      "sha256": "4638282fbc5b17481115a7f94be237171beae8dd1edac71bce493efaeb43459f"
+    },
+    {
+      "path": "src/domain/explore/__tests__/reducer.test.ts",
+      "sha256": "2163092908df40286cbaa99a03bc184e9ea7619dc359f13ba36e0781c9c2c144"
+    },
+    {
+      "path": "src/domain/explore/__tests__/replay.test.ts",
+      "sha256": "901b28ffa02e3ce9d22731ba16b6413a45dd356fd5e7532fda532ed56f477a01"
+    },
+    {
+      "path": "src/domain/explore/__tests__/rewardPresentation.test.ts",
+      "sha256": "2b0ca41c06219c29b6128c20ef851b46716c2d6b23bc96a3703f132b4b5bbef1"
+    },
+    {
+      "path": "src/domain/explore/__tests__/rewards.test.ts",
+      "sha256": "596040343e210f0b61e91d21fd871d15fe5883555b8bd5f18465aebe7f4598c0"
+    },
+    {
+      "path": "src/domain/explore/__tests__/runCheckpoint.test.ts",
+      "sha256": "fcb4bd66ad76512843ff314c732698a9653f0a8263d500e8eb66157281b8c57f"
+    },
+    {
+      "path": "src/domain/explore/__tests__/runStructure.test.ts",
+      "sha256": "d80d0b80eca22f6a10bc080af41ee8718286ad7c0c7cfc970b36c96351130aad"
+    },
+    {
+      "path": "src/domain/explore/attemptIdentity.ts",
+      "sha256": "f9ac0ebdd5c9da42d2b0d780cb24427a1c2bf4441ba48f632ca58e3fd1e2e754"
+    },
+    {
+      "path": "src/domain/explore/discoveryPage.ts",
+      "sha256": "a81ce383056c1e4b83ad4ebe0319c6489e6db2ecc2f2a06155efa2a54c054070"
+    },
+    {
+      "path": "src/domain/explore/discoveryPageCatalog.ts",
+      "sha256": "9d70e71cc2ed058c53b0a7c92e2978ec49f7d801cdc2ec8e71dbccbbfc21fb01"
+    },
+    {
+      "path": "src/domain/explore/encounterPhase.ts",
+      "sha256": "6f988da72e68b5eadd8bba0b74c9d03950adef1f0af7087886a7bf5ffb364a9c"
+    },
+    {
+      "path": "src/domain/explore/encounters.ts",
+      "sha256": "f897d4bdeef90b9b7eb9dd79b14b255578cb625670a5980f1e273b842b3ad5bb"
+    },
+    {
+      "path": "src/domain/explore/generator.ts",
+      "sha256": "5248bc96c57a0a16c540ab7d2dc528f9f4a40f3fbf3552b219c432199ed4065e"
+    },
+    {
+      "path": "src/domain/explore/index.ts",
+      "sha256": "88b3ac8647a40a05028b4d71a8cea8a4284f24dcd4e4b087cbbb906029062546"
+    },
+    {
+      "path": "src/domain/explore/learningAssignment.ts",
+      "sha256": "ba021fe45f92427696470cce9bf766e7fe67195ad4d567fd263c7201e1c346e4"
+    },
+    {
+      "path": "src/domain/explore/learningEvidence.ts",
+      "sha256": "7172a35893f47be7cb47903553ebb3cf9a0399363ebb239dbf9a60e61eb5c1a5"
+    },
+    {
+      "path": "src/domain/explore/learningPlanner.ts",
+      "sha256": "d0c850225cc42bb3e9ad6240721309cd028c11c24455f10dc64fa1b756ce267d"
+    },
+    {
+      "path": "src/domain/explore/learningSegment.ts",
+      "sha256": "f399039c992d3c65eb7ed493c41a57969c6b23563b0749b101d33d33cc0a40eb"
+    },
+    {
+      "path": "src/domain/explore/learningSegmentPersistence.ts",
+      "sha256": "bb48a5cb9432ca2a6f5ce6dceaa8adb574ce5f2be20670668b55b7695d164628"
+    },
+    {
+      "path": "src/domain/explore/observation.ts",
+      "sha256": "98c861409588db6969e7d8936f0ee4925320ac200c3c8ef29dc3df96a9c14a97"
+    },
+    {
+      "path": "src/domain/explore/observationCatalog.ts",
+      "sha256": "4a3346b4a8e8f6dbee0e7ec35fc0e8d7f9e461366c493b546d6e91ad22c774d1"
+    },
+    {
+      "path": "src/domain/explore/openingExperience.ts",
+      "sha256": "50a7e8f9b51324ab9ca64d7c275729b897216aea4155c84ba4add72dd20899d7"
+    },
+    {
+      "path": "src/domain/explore/persistenceClient.ts",
+      "sha256": "7d236d3b8ece7137ffcc0bbacfbcf77a4e1b311113f1add9a4a1f26d75b975a3"
+    },
+    {
+      "path": "src/domain/explore/persistenceRepository.ts",
+      "sha256": "5f6679ba704f81146c4649bcff5fbc90884c809ec28d78d5d72535adf541ddcb"
+    },
+    {
+      "path": "src/domain/explore/persistenceTypes.ts",
+      "sha256": "06e2fa909d03d4875346e55b865dd4b46fc291c7e6dfdb13d7545fbf7951ca6a"
+    },
+    {
+      "path": "src/domain/explore/problemAdapter.ts",
+      "sha256": "9e4b2c27c42eeb3281f0c311729c19e40143d769027f9a2413df87083a97ece3"
+    },
+    {
+      "path": "src/domain/explore/rapidLoop.ts",
+      "sha256": "167123d9f84c100d8ec130e7897c9aba5df973db3227de128d047b6c74ddfbcc"
+    },
+    {
+      "path": "src/domain/explore/rapidLoopEligibility.ts",
+      "sha256": "2ebc9b1349d77f46b24fc2719bca6e7f8f22f7c11f57f329d27bb3e539cd68fd"
+    },
+    {
+      "path": "src/domain/explore/reducer.ts",
+      "sha256": "7a0afb55eff524051c8a9da4b917a0e5950b2b656751b1cf4c15f4e45796ee76"
+    },
+    {
+      "path": "src/domain/explore/replay.ts",
+      "sha256": "61c1ebe0f6d8207f6b6b8c253826cb8663ac3a23ebe1cc5f18ebf2f6d7f04cb2"
+    },
+    {
+      "path": "src/domain/explore/rewardPresentation.ts",
+      "sha256": "e1f4358754eef6a77cc079241c4b54325ceab7dee7b52b7da2962999669acc9d"
+    },
+    {
+      "path": "src/domain/explore/rewards.ts",
+      "sha256": "927d361823f37961ec0cc4f91194149f6caaf09fa72f01a960bbab4fad4d981b"
+    },
+    {
+      "path": "src/domain/explore/rootTangleObservation.ts",
+      "sha256": "275a0ee35a4cc06b67993e96f6eafbdbd8c20d72c98effc895bc6e89e0cea373"
+    },
+    {
+      "path": "src/domain/explore/runCheckpoint.ts",
+      "sha256": "5cbd954ad6b7a4dc18c8539b43f0fbb6a07a2c16a81ce190d77e392f15b6c61f"
+    },
+    {
+      "path": "src/domain/explore/runStructure.ts",
+      "sha256": "a7f520e2195b936c5ae84cfac8a6cf05d21d9ff167de87baea860c7d467611c0"
+    },
+    {
+      "path": "src/domain/explore/types.ts",
+      "sha256": "611ac64bf305a77138405972e66982738ab540f8fb1be893889b339cf4dac258"
+    },
+    {
+      "path": "src/domain/explore/visualIdentity.ts",
+      "sha256": "ca8f4ad8d7713517c2666a21662153f36e499463adc1ced397aff645974bbd6f"
+    },
+    {
+      "path": "src/domain/island/appearance.test.ts",
+      "sha256": "79e5a14d671015811c8a8558900446ae8facd9b41f805cb3815ecc8879bd1f5f"
+    },
+    {
+      "path": "src/domain/island/appearance.ts",
+      "sha256": "82b2b15ad08ff9af312ed46e822b3c867e6901749c58b93c27ebad695734697c"
+    },
+    {
+      "path": "src/domain/island/catalog.ts",
+      "sha256": "b8f9b8f1158837e5ef42ed2655a8040f0d17ace886a87284af946af32b7ac875"
+    },
+    {
+      "path": "src/domain/island/catalogExpansion.test.ts",
+      "sha256": "bde3daaffb8a0bd246816021f9dfe5eba8ed90d47cecb596a1e60454422e22a6"
+    },
+    {
+      "path": "src/domain/island/commit.ts",
+      "sha256": "2aa08f8da31f1ebd9b661abc3685a5773b62db4905414d95aa63c0ab40008545"
+    },
+    {
+      "path": "src/domain/island/customization.test.ts",
+      "sha256": "6ad598df97ffa6b076db89b38cbda52aa57e002ff71d0ed51c0906641160f450"
+    },
+    {
+      "path": "src/domain/island/customization.ts",
+      "sha256": "9f96c54d351140134f535109a3442197daf3355f5adae06fbcd7889ddb75930f"
+    },
+    {
+      "path": "src/domain/island/customizationAppearanceRepository.test.ts",
+      "sha256": "8eb316759c0c38c2b0371a4a927fec9f852825901adb101296eb5cedac3da4dd"
+    },
+    {
+      "path": "src/domain/island/customizationRepository.test.ts",
+      "sha256": "809e593e41ef494a6162fdc5fa82d2cfd0eef44b79ef9e1048b8aec4bd8a60e2"
+    },
+    {
+      "path": "src/domain/island/customizationRepository.ts",
+      "sha256": "ec8debb09240bcfee299ef27b619e5583404be47e1aeaa99b22f117cd47cf49c"
+    },
+    {
+      "path": "src/domain/island/expansion.test.ts",
+      "sha256": "2fb821401cd64b6127248630a890c10444a29cd409f12ccaac0fb9691fd1eccc"
+    },
+    {
+      "path": "src/domain/island/expansion.ts",
+      "sha256": "c796fa922d4cfdaa7434db896ca65ad3615a3d5b2abb2b577d736c5cbcf3f74a"
+    },
+    {
+      "path": "src/domain/island/experience.test.ts",
+      "sha256": "5b16b7e2081078bd69503409ce423fad12b66722670eda573183394647574cd1"
+    },
+    {
+      "path": "src/domain/island/experience.ts",
+      "sha256": "b404d022565c4c2fd8553415b82ea8f4722e971412f19738c4e326e115659126"
+    },
+    {
+      "path": "src/domain/island/experienceAppearance.test.ts",
+      "sha256": "26b5c13f66c9b0b183d88c1df35e65d12a781a5a0eadfa144079335ddf5cbd06"
+    },
+    {
+      "path": "src/domain/island/experienceRepository.test.ts",
+      "sha256": "948881e14a1d0271326eb67fc87db5d2b7d00a6e4588c45cc944daaeaf3ee870"
+    },
+    {
+      "path": "src/domain/island/experienceRepository.ts",
+      "sha256": "f942851d20ef84f817a7c40e76724bd2ce0e64a03b82a66d7583e893292163ce"
+    },
+    {
+      "path": "src/domain/island/expression.test.ts",
+      "sha256": "cfa33ac4f91ac0d71d77e85953d63997e7aa4b4f820fe552e41edd357e15216a"
+    },
+    {
+      "path": "src/domain/island/expression.ts",
+      "sha256": "87c519ce3712125c17c3b70b2e28c1f30bfdb04f7fdddbd2dadca0c81a9350ce"
+    },
+    {
+      "path": "src/domain/island/expressionRepository.test.ts",
+      "sha256": "a556e93fb225a014758da34273799642318375d7ae1be9a3a0c1301ba1f9759e"
+    },
+    {
+      "path": "src/domain/island/expressionRepository.ts",
+      "sha256": "67ccfedc7a6995efc792703a4704ab4b0417b56d0d2b80311fef551e982a44ab"
+    },
+    {
+      "path": "src/domain/island/feature.test.ts",
+      "sha256": "bce32f74158d303f660312193bc474ee3b069b80eced8e6abde1b55a506cc7a0"
+    },
+    {
+      "path": "src/domain/island/feature.ts",
+      "sha256": "68c38abe7fddfa366c8252782a931bd199195be49f409b620f832fc82da56b36"
+    },
+    {
+      "path": "src/domain/island/furniture.test.ts",
+      "sha256": "5609e59fd6de82f0dd8f908b941a93b75fb34a8a0d23d2e9e2b5af5b6c128d71"
+    },
+    {
+      "path": "src/domain/island/furniture.ts",
+      "sha256": "a96384bafc01d321bc79fa1c626dce824a3d9bef7347aa3fd07872552b57f7e6"
+    },
+    {
+      "path": "src/domain/island/furnitureRepository.test.ts",
+      "sha256": "0cc05c28f8e2950f1a798b096a590c2c09a1ce559a7b76372b7930c4f6e08aaa"
+    },
+    {
+      "path": "src/domain/island/furnitureRepository.ts",
+      "sha256": "d780590e9d1829a6a623a3c438ae064a4558e3361a79040a322ac092ef89e478"
+    },
+    {
+      "path": "src/domain/island/growth.test.ts",
+      "sha256": "f4a4f3f8b6794001790ac27a023223aa093dff37a381a185a5661cbe68fc5cd6"
+    },
+    {
+      "path": "src/domain/island/growth.ts",
+      "sha256": "c1f928de79a56ee8625bcfe21905c32b3c4f2fa4fc6025b6e6bd865019b033bf"
+    },
+    {
+      "path": "src/domain/island/growthRepository.test.ts",
+      "sha256": "d83ddbf6f34e7886882f96f4b30d17dd77ea59086068ef54cca1f8077cb79c42"
+    },
+    {
+      "path": "src/domain/island/growthRepository.ts",
+      "sha256": "64606dbae3d094b6c7f62a4e999ce2996cf367cc1d2e8413c81e7533c2e25286"
+    },
+    {
+      "path": "src/domain/island/growthValidation.ts",
+      "sha256": "f67c32e7dd6fcb8aed689702fe13d524a642aafad195bdc314d99006114d0813"
+    },
+    {
+      "path": "src/domain/island/homeJourney.test.ts",
+      "sha256": "6ce19c0b10e3ebaa8d0461d6ba1741c8547a1711edb59f1be210d435b0f56be8"
+    },
+    {
+      "path": "src/domain/island/homeJourney.ts",
+      "sha256": "396f5a5c453c9af0654d438f26422611e506a27d7bbf54b68cbaf411e54e5ea2"
+    },
+    {
+      "path": "src/domain/island/island.test.ts",
+      "sha256": "35585d1b8dd9a9a5ed436aecdd3085cb51dfef41cbcd636532f8e169fdb132ec"
+    },
+    {
+      "path": "src/domain/island/landGeometry.test.ts",
+      "sha256": "a7df93e991d4e0d8563d2606badfc173b27d1bf9457b5f46bc48ab5736f47e7a"
+    },
+    {
+      "path": "src/domain/island/landGeometry.ts",
+      "sha256": "74eade9917f0dc64e481add10391c933b043f15f54a714fdc087b4313197d73f"
+    },
+    {
+      "path": "src/domain/island/learningChecks.test.ts",
+      "sha256": "bc9542694b15686302bbf8497fe2bb91382592329b2e964e8824f47447a7e106"
+    },
+    {
+      "path": "src/domain/island/learningChecks.ts",
+      "sha256": "1acb98230db0db81b25d7b438617fa51b0372577f6efe09a57a76b537e898b13"
+    },
+    {
+      "path": "src/domain/island/learningContinuity.test.ts",
+      "sha256": "6892ed20623e92557304d9ffbc70cf8c7484a6252cfe28f28823ad29da549aec"
+    },
+    {
+      "path": "src/domain/island/learningKeepsakeSummary.ts",
+      "sha256": "4a675c4037eb1b8adcf7b9d3e4080cd84a0722d93d61f8318016062100e1434a"
+    },
+    {
+      "path": "src/domain/island/learningKeepsakes.test.ts",
+      "sha256": "8edda0bda45e2f51bfa7efea3acf3e380e05f225746e44e3e3378788e32ad699"
+    },
+    {
+      "path": "src/domain/island/learningKeepsakes.ts",
+      "sha256": "ba7bfa43fcd71de2db09eaf4528ea7915b5711c1c417c2f852b1a2298da54e1b"
+    },
+    {
+      "path": "src/domain/island/learningKeepsakesRepository.test.ts",
+      "sha256": "892c5d7d32afd73a196ba979c19636f79765cc0a629eb40196d2cdb0e371ef1e"
+    },
+    {
+      "path": "src/domain/island/learningKeepsakesRepository.ts",
+      "sha256": "1f7216009e5d0bd42bd4ddc9eb2c45cf94299094bd9db77806110367014f8d13"
+    },
+    {
+      "path": "src/domain/island/learningObservation.test.ts",
+      "sha256": "cca3a94b1c9dd48cd2778171d76afbf3d53d2a8de40d8edddc49f1b555447889"
+    },
+    {
+      "path": "src/domain/island/learningObservation.ts",
+      "sha256": "9c78a9fcb85690ad88e5e5d338a256091f761ca71042d489c42ab246de0855a3"
+    },
+    {
+      "path": "src/domain/island/learningObservationCommit.test.ts",
+      "sha256": "0ac8bc27847b3e4cbaa9d4689ec04f7edbec67a72ed715fef6a3914088ede381"
+    },
+    {
+      "path": "src/domain/island/learningSession.test.ts",
+      "sha256": "456f932b3e79354a8fe07eb9244fd8516df20267daa72ee586538fd2400656b8"
+    },
+    {
+      "path": "src/domain/island/learningSession.ts",
+      "sha256": "e24420a385f90d6e6738be8c405d1dd245a551c6ec7e3d79b79905920984f1c7"
+    },
+    {
+      "path": "src/domain/island/learningSupport.ts",
+      "sha256": "fd23aa8fe952dc168260de1a71191b5df3625fb99c1755e4e8b39be04bf5b2ff"
+    },
+    {
+      "path": "src/domain/island/livingSettings.test.ts",
+      "sha256": "a8e273323bad72be67399bab67dd7f84e7f96b63e5f6300d10b1c4408355f570"
+    },
+    {
+      "path": "src/domain/island/livingSettings.ts",
+      "sha256": "77a4ff96b2a948ff8d462135668245ea1c924df31189789c26da0fbc626b11a4"
+    },
+    {
+      "path": "src/domain/island/navigation.test.ts",
+      "sha256": "0fed29ab8c6774fa242f7683898caa9982ca13afe98cd8e5d92e37c7d3fa0e2c"
+    },
+    {
+      "path": "src/domain/island/navigation.ts",
+      "sha256": "85a489e88b108e72d70a1c19b5681ef368d3c22b5cc10a10eb1153dca6b35347"
+    },
+    {
+      "path": "src/domain/island/pacing.test.ts",
+      "sha256": "fe2b7de9bab5be3e3d62225a2b4a0c84de8ce8fcd863df7f098412a365cc2d18"
+    },
+    {
+      "path": "src/domain/island/pacing.ts",
+      "sha256": "0a8d92902558f2e3922002ee2c22ce92b2ec4126e9c9854afcfb64e14fc88c86"
+    },
+    {
+      "path": "src/domain/island/photos.test.ts",
+      "sha256": "2ee5e55d21f031e199d716fac9e34d57cba61fdebec60d8c6b582ae978372d70"
+    },
+    {
+      "path": "src/domain/island/photos.testSupport.ts",
+      "sha256": "bb6c70dc4c9ea1b8645691e4b2485ad36be3628b4c7637f14d364aa800bdae1e"
+    },
+    {
+      "path": "src/domain/island/photos.ts",
+      "sha256": "f5b459a95ab6f26500d412dafa4127c36bb04c95a9edf28589e25853047347b1"
+    },
+    {
+      "path": "src/domain/island/photosRepository.test.ts",
+      "sha256": "882b2c186ee4e491c45279c727f616100aa2ff753d27cef1f91ea8d896df5952"
+    },
+    {
+      "path": "src/domain/island/photosRepository.ts",
+      "sha256": "f81b988d3189f86e7c075ed3063297c09f9247a27b37576b0adbda6daa8ef613"
+    },
+    {
+      "path": "src/domain/island/progressiveSupport.test.ts",
+      "sha256": "b60e70a499f40316ff4301bc16a6928502990e938b451a231b6dcb866f97f278"
+    },
+    {
+      "path": "src/domain/island/repository.ts",
+      "sha256": "6546f64f05299dcfa4984abda41cd891cd70da85cd99b68ac030180177bfd899"
+    },
+    {
+      "path": "src/domain/island/residentIdentity.ts",
+      "sha256": "38fd155108acaf88b4236e3bdb2bc09492bc962413b908a19d20cf18c8797a0e"
+    },
+    {
+      "path": "src/domain/island/rewardGoal.test.ts",
+      "sha256": "8a8f04ef17778c496bf354b55c638ad4e0231549fb92fd26eaf5e2ced1002535"
+    },
+    {
+      "path": "src/domain/island/rewardGoal.ts",
+      "sha256": "e97c06160d5d4a1e6274dbece2edf4ef5d92fc6102620fe4eac4f9af8ec2179e"
+    },
+    {
+      "path": "src/domain/island/rewardGoalRepository.test.ts",
+      "sha256": "937f25a15cf31885989e99bf02ca3e5fbd77b84760c9421b733f4a2b9b30ee30"
+    },
+    {
+      "path": "src/domain/island/rewardGoalRepository.ts",
+      "sha256": "eb48e92ca5042115389b57750f64e5dbb6db72e10a7304651166ea16a130ea9d"
+    },
+    {
+      "path": "src/domain/island/rewardGoalTypes.ts",
+      "sha256": "478a1611bc7f9445d1bba0002d1d13c51ff8bcb1bc82457949a0e89aff83ece1"
+    },
+    {
+      "path": "src/domain/island/sceneStyle.test.ts",
+      "sha256": "2ede2a5dff9c62d603190418a206a59b0e94b8d8a74fd93aa724c183ea0bffb4"
+    },
+    {
+      "path": "src/domain/island/sceneStyle.ts",
+      "sha256": "00b421bce926fc58343d2d99f298717ea2d321671dac97311c5bdc98e4135e1d"
+    },
+    {
+      "path": "src/domain/island/sharedDisplayGeometry.ts",
+      "sha256": "1dfd7ceecbfb63cdf65ad11b9ac102796979afc4d4809d801a183435c06e71ba"
+    },
+    {
+      "path": "src/domain/island/sharedMemories.test.ts",
+      "sha256": "88c0db4ef0000c064d6c207d3b56d86cd8555954076f5141e1ca4f0490809236"
+    },
+    {
+      "path": "src/domain/island/sharedMemories.ts",
+      "sha256": "5a684b5d6b9a77ab2c8e99ef1e9f4d85237f24669f4c324f6067b4ef584d607f"
+    },
+    {
+      "path": "src/domain/island/sharedMemoriesRepository.test.ts",
+      "sha256": "1fa735f9c32970fd3aa09b4879ff959925b1797644f2a7070e061a6a0aa7eab2"
+    },
+    {
+      "path": "src/domain/island/sharedMemoriesRepository.ts",
+      "sha256": "252e3da0da5ff2fb4922479a0cb493b929b16bdffbeede51905d3cd782fe6d15"
+    },
+    {
+      "path": "src/domain/island/sharedSettings.ts",
+      "sha256": "769d7101f0b95fdd30d9660f5cda4efb48af8a9745473a4474e1e38ba7615489"
+    },
+    {
+      "path": "src/domain/island/studyRoute.test.ts",
+      "sha256": "96f834a85bb602fc6bb60b2d0329113acbef97a9003a2080ddd1fe56d49cc601"
+    },
+    {
+      "path": "src/domain/island/studyRoute.ts",
+      "sha256": "3de4bff970e3e19903141cbd23ac018e9be497c54f5f2438635413e2e6d6fe43"
+    },
+    {
+      "path": "src/domain/island/subjectPreference.test.ts",
+      "sha256": "3a38ced383cb06b4d5366a0ae1bddb60297c1979397bd350f9212c4c17aeb958"
+    },
+    {
+      "path": "src/domain/island/subjectPreference.ts",
+      "sha256": "563315b3b98188403da269396bbad39cab67d738dda9dc521a58c5c62d970f30"
+    },
+    {
+      "path": "src/domain/island/subjectSelection.test.ts",
+      "sha256": "535c5dc37a7934356d3f608d5c2f6ec09d4ad6e624e2473644405dfaf3ba2fde"
+    },
+    {
+      "path": "src/domain/island/subjectSelection.ts",
+      "sha256": "04370ca780d669b42994e7f47e58b5878b1dee2ac577cbd03db85812bb456108"
+    },
+    {
+      "path": "src/domain/island/tutorialState.test.ts",
+      "sha256": "feabcecc4ec47c08b577a88d49557ff79f1afb51cf515163d420deb5a7e6b365"
+    },
+    {
+      "path": "src/domain/island/tutorialState.ts",
+      "sha256": "d43ec75496d17503aa673aa31bd209adeac6427b2dec5079e0496b1d183a0638"
+    },
+    {
+      "path": "src/domain/island/types.ts",
+      "sha256": "05295f8028d03bc6aeade4ee112b825f602cf244377943ba93bafccdf09ce05f"
+    },
+    {
+      "path": "src/domain/island/visitors.test.ts",
+      "sha256": "43bb246e8abac2f29e64e8e261ab5f6835a881d6bfe5cf3a92d5bdcd68d89730"
+    },
+    {
+      "path": "src/domain/island/visitors.ts",
+      "sha256": "5f4c7ea864931ab43d0b63f1b3f6248f2eb5d0757425a1525f41a82b3f084901"
+    },
+    {
+      "path": "src/domain/island/workshop.test.ts",
+      "sha256": "da9c599aa106fc40f86fa77d9f30e592b8b9fa9066106d2e893a05d9eca4cd80"
+    },
+    {
+      "path": "src/domain/island/workshop.ts",
+      "sha256": "f6590956ef66dc48f49f9ff7b2b93cfd308a65c4a9be55aa8ceb7afb7b34b2ef"
+    },
+    {
+      "path": "src/domain/island/workshopLayout.test.ts",
+      "sha256": "80cac9ec05dc8073ce0c5b2c08d7d292937c3407e874275ca7788e992d7a4444"
+    },
+    {
+      "path": "src/domain/island/workshopLayout.ts",
+      "sha256": "7d43a0f4f92dcda19f9223b29f20599a23e2559c41f7463c928936cf1b7b38e2"
+    },
+    {
+      "path": "src/domain/island/workshopRepository.test.ts",
+      "sha256": "b0fd3255b35c001fec28bce8013db839f09e122093131280b462f12aa736d0da"
+    },
+    {
+      "path": "src/domain/island/workshopRepository.ts",
+      "sha256": "5b4996eb419b961d853e1a85c9ab22ea8a56ec090b062222061c5d91dcf2c045"
+    },
+    {
+      "path": "src/domain/islandLife/activities.test.ts",
+      "sha256": "1cfa270ad9b3d98068b08d01693bd18ec5e066975e408f00eafecff93e6c6497"
+    },
+    {
+      "path": "src/domain/islandLife/activity.ts",
+      "sha256": "1a60f372f98fa679e05cecfdb000a4a1aa4f101b5de6bb613b9f4864afdbd9cd"
+    },
+    {
+      "path": "src/domain/islandLife/model.ts",
+      "sha256": "c5b56a27edf246775a06ebea859912dfbf0b6d275cb65cf7d39f41c8c23a2db8"
+    },
+    {
+      "path": "src/domain/islandLife/repository.test.ts",
+      "sha256": "b742eadaebd35f9d6f038755d47163fae4843be343421e065292a4292282d29e"
+    },
+    {
+      "path": "src/domain/islandLife/repository.ts",
+      "sha256": "243547aa1a8c9a18e5c93f92120f38b79c40d209d8575f53356460570799104b"
+    },
+    {
+      "path": "src/domain/islandLife/simulation.test.ts",
+      "sha256": "5275b39797ddcbac04ab4dfac63e218f8c5824fae252eedb5972f2c2f1ab6802"
+    },
+    {
+      "path": "src/domain/islandLife/simulation.ts",
+      "sha256": "d9cf6fb1c1bbbbf74eb1061fc6041f9f5a914ca23b9a58997925463a7df6191d"
+    },
+    {
+      "path": "src/domain/islandLife/space.ts",
+      "sha256": "9e617086bf7b3bfcd37c857f708d32cf6f6842df5cba1dd040b1f40b3daa323c"
+    },
+    {
+      "path": "src/domain/islandLife/terminalFacts.test.ts",
+      "sha256": "ed466c92d9c2a934ed79077f3cb38cd0a4c30572d5ec988ed11e04c73147a653"
+    },
+    {
+      "path": "src/domain/learning/attemptContext.ts",
+      "sha256": "0304947ac0f7be95ad9c31eac39b1e3d5f6c5c52d1a97c08de36f4831fe6c0fd"
+    },
+    {
+      "path": "src/domain/learning/attemptPersistence.test.ts",
+      "sha256": "dff8e74cea6cb721b94fe0926ca0eef2c4e5c6a870231b43c2ee2cd5a7b6ff29"
+    },
+    {
+      "path": "src/domain/learning/catalog.ts",
+      "sha256": "5fca27d2147b3e937bea36d9fa010765038c29b39eb24a1899397d97b24a7423"
+    },
+    {
+      "path": "src/domain/learning/context.test.ts",
+      "sha256": "eb5007c8bf79145e2d0137da78baf231fc2cde7d41c516055cb1989def5c6acd"
+    },
+    {
+      "path": "src/domain/learning/context.ts",
+      "sha256": "730fc4e244fce882d5bb3558794809daa0a1fc25bb417dd024b9ae8929af665f"
+    },
+    {
+      "path": "src/domain/learning/englishCatalog.test.ts",
+      "sha256": "7e41b4b7a393e393e5b2d0d9af7e1fd4a99f6ea483b392ba6f2ac26cdb76a601"
+    },
+    {
+      "path": "src/domain/learning/englishCatalog.ts",
+      "sha256": "486729a3c889c052f0f24670437ea7b4559be09231d1d2a9ae66a62c1de82e24"
+    },
+    {
+      "path": "src/domain/learning/evidence.test.ts",
+      "sha256": "c7757c64bf65855a49b0805df995973f8e84f7006e84848e85fc4f3086b79640"
+    },
+    {
+      "path": "src/domain/learning/evidence.ts",
+      "sha256": "fc9fe93af60efed4eb768c4b634a998de255196687049f24cbc56949efb60593"
+    },
+    {
+      "path": "src/domain/learning/independentProgress.integration.test.ts",
+      "sha256": "15c757ffdabdffaa0e461de4c896c3f3a2da7aa74280a81b37d5a92000f73089"
+    },
+    {
+      "path": "src/domain/learning/independentProgress.test.ts",
+      "sha256": "c04d82bd3d62efa4bef533491b81ccbb978a68b453a7d5b803a8938a89345002"
+    },
+    {
+      "path": "src/domain/learning/independentProgress.ts",
+      "sha256": "ae3d767f63fec476513b076c97ab30801b326af90d2b23df16954c9d5f336953"
+    },
+    {
+      "path": "src/domain/learning/mathCatalog.test.ts",
+      "sha256": "66a5d37c6f426e6c871dc10f351e12ac953a25ec9478dc5f027f9139da471145"
+    },
+    {
+      "path": "src/domain/learning/mathCatalog.ts",
+      "sha256": "d01c5d3673a0712ff914f5cebd6107ca1113ed2468a018f158b5efb24883eba2"
+    },
+    {
+      "path": "src/domain/learning/pilotReport.ts",
+      "sha256": "a189c6bfbd67d2e56ec39e83f5b8730e0e5c57f895f3ddf6e62e2bcee184f92b"
+    },
+    {
+      "path": "src/domain/learning/pilotRepository.test.ts",
+      "sha256": "97b4b7d9aafc5c5afcbfdcf95613b33b8c555d4e30d8cf81ce3d234bb788dedd"
+    },
+    {
+      "path": "src/domain/learning/pilotRepository.ts",
+      "sha256": "0d79610b010f0501f905d40007c793b3e50c56e5470246c5c4fa30478b34d675"
+    },
+    {
+      "path": "src/domain/learning/reservationConflict.ts",
+      "sha256": "3a6375bb546fdbd40b6ab97bfff040700b666c1bf1375133956fb93dbe35a7db"
+    },
+    {
+      "path": "src/domain/learning/reviewBudget.test.ts",
+      "sha256": "da8b9750416e077c4148eed2d882a2d1fb2d8481bb4e2a2f19f08c08df7ea00a"
+    },
+    {
+      "path": "src/domain/learning/reviewBudget.ts",
+      "sha256": "25a82e358d6eeaee5adc21f27c08d92c7266eb871b1a56d54c9ef92d0cecc929"
+    },
+    {
+      "path": "src/domain/learning/reviewPolicy.test.ts",
+      "sha256": "9e4c1ca031ece6a01b93e30493144e2e4544395a2c8d91a832ecbb41c2f17fc6"
+    },
+    {
+      "path": "src/domain/learning/reviewPolicy.ts",
+      "sha256": "dbcc1f2fcdee1659c2d28139acf06dc7dc10b784b57801e8de8a206c67bc30bc"
+    },
+    {
+      "path": "src/domain/learning/runtimeUnitPractice.test.ts",
+      "sha256": "2c978d5fc8e6493f25dcd4d85d0be9adf56c17c563522b5c016daca3735bd2d3"
+    },
+    {
+      "path": "src/domain/learning/runtimeUnitPractice.ts",
+      "sha256": "a5bdd6dfa6c59707d482aee04415073074d700cd7dbcae4db81ea237f31fd1ab"
+    },
+    {
+      "path": "src/domain/learning/types.ts",
+      "sha256": "5a05c0af5e3100b39420dfb45684f90f827a42fc87ca25e54209b415c429156a"
+    },
+    {
+      "path": "src/domain/learning/unitPlanning.integration.test.ts",
+      "sha256": "a573433173504c3ff438042c0eab94fffa9e6a2b4ab3effcbeaaf7ab26d702d5"
+    },
+    {
+      "path": "src/domain/learning/unitPractice.test.ts",
+      "sha256": "011e77ed539f62093f6ead1fb052ffd4ee9fd57b7d649445b55392fe83cdcdd2"
+    },
+    {
+      "path": "src/domain/learning/unitPractice.ts",
+      "sha256": "f551444d4159eb862a9062d3b0a80e1646a595e04ae125e146f19939a7539e24"
+    },
+    {
+      "path": "src/domain/learningAttemptWriter.ts",
+      "sha256": "dc1d682141c1ea950207d5ef58d8f00fc66a5bea069543fee9aa341354fe870f"
+    },
+    {
+      "path": "src/domain/learningRepository.test.ts",
+      "sha256": "4a1ff1656c238eacf17b7c4a264b2b0b3d74bd1003e635b6a5297fe45787a890"
+    },
+    {
+      "path": "src/domain/learningRepository.ts",
+      "sha256": "b3844cd98238a9ee9b2926f61d60c9c0243ec7362363bf18bbfd666856e1f254"
+    },
+    {
+      "path": "src/domain/levelProgression.test.ts",
+      "sha256": "deb7bef06f3b75e37a82df334246fe6ae8187bddcbf6ff38d08bc6448efded20"
+    },
+    {
+      "path": "src/domain/levelProgression.ts",
+      "sha256": "76f5441945ab115f65277632b1d7da67700e62be3ea9226d8a02d6b2a97358a3"
+    },
+    {
+      "path": "src/domain/logic.test.ts",
+      "sha256": "e4bc631abd415cfd7cba3609f4a4833d75d40e12a5201a5849fc581a391f24a7"
+    },
+    {
+      "path": "src/domain/math/additionProgress.test.ts",
+      "sha256": "0df69837dc49091d70f988f1bb7ce459db27f08db5ba819409dd532c49f21c7a"
+    },
+    {
+      "path": "src/domain/math/additionProgress.ts",
+      "sha256": "8791640ccd6193fc4d2c5513f59d532ddafbf536a184bc2a0d75499fe7a4171f"
+    },
+    {
+      "path": "src/domain/math/answerCompletion.test.ts",
+      "sha256": "6da072e3a4516c5a9b2f002209bb51d98b6456797398eac91cb0e88ee72ab730"
+    },
+    {
+      "path": "src/domain/math/answerCompletion.ts",
+      "sha256": "9831fed2cb2348f7180367b6377c574ed4fe681cc258d6afbdebb77ed6195645"
+    },
+    {
+      "path": "src/domain/math/comparisonProgress.test.ts",
+      "sha256": "5ac1b7729fbf33355bcf3a8e2ec417a41c5fad44bb34746c7662426d763dd508"
+    },
+    {
+      "path": "src/domain/math/comparisonProgress.ts",
+      "sha256": "815b870b09cbea125f03c47a5f913138de99bc824e9dfacef5642274bb2479a3"
+    },
+    {
+      "path": "src/domain/math/core.ts",
+      "sha256": "b5313900c859c3ced6505d7f6e6868b5c4fe1e66f340dce10e1ca2b868281295"
+    },
+    {
+      "path": "src/domain/math/curriculum.ts",
+      "sha256": "07d6633415006470aff366febbeb337f56b67a87ff91e16ac7aeb346593b1b70"
+    },
+    {
+      "path": "src/domain/math/deterministicGeneration.test.ts",
+      "sha256": "6d400d06803bb4a03578cc6a38d283049e267bdead742e6080f43e359d960273"
+    },
+    {
+      "path": "src/domain/math/followups.ts",
+      "sha256": "2c90f507cda7cf3e65edde8fda0ae69110090c54db74f3d2213344273abbde01"
+    },
+    {
+      "path": "src/domain/math/fractionInput.test.ts",
+      "sha256": "1d378ea01e1dc8b12515f376623d88c740f7551d9137deef5b755cccea089c83"
+    },
+    {
+      "path": "src/domain/math/fractionInput.ts",
+      "sha256": "fd53a7088b202db63f0de8179f80634757213d7f85b60a7798d147f82bca6ed0"
+    },
+    {
+      "path": "src/domain/math/generators/addition.test.ts",
+      "sha256": "a01688ffc3eb717f2c2ca32d3a359dfe47fda7d5fac72709e04f53715a0dcf68"
+    },
+    {
+      "path": "src/domain/math/generators/addition.ts",
+      "sha256": "948c276cf9f12c2f90b1cec829e362bd07d8fb5bae0dfd2e3a8d14f7d6475f9b"
+    },
+    {
+      "path": "src/domain/math/generators/advanced.test.ts",
+      "sha256": "b0311290f13e02d1b2c4cd2e3c2efbfcb34b5510eeb7547986b1a15eef46bdc0"
+    },
+    {
+      "path": "src/domain/math/generators/advanced.ts",
+      "sha256": "16c13f0f3fddaf8daf69cdc16a225878b66e40bba0b9d7386353513ada8e1ba2"
+    },
+    {
+      "path": "src/domain/math/generators/counting.test.ts",
+      "sha256": "a4a194e351c4d0c9a3374bbb2ea36128cc88e422ea91ce151c3ffcc52462bd50"
+    },
+    {
+      "path": "src/domain/math/generators/counting.ts",
+      "sha256": "c006d117b04f08b21bfce7a3296828e540e289f222c631f93a997b6e64b264d4"
+    },
+    {
+      "path": "src/domain/math/generators/decimal.ts",
+      "sha256": "193463ecad15bdb8bd004e933b273980d37751da62d48380f79a2fa9c5ec7778"
+    },
+    {
+      "path": "src/domain/math/generators/division.test.ts",
+      "sha256": "777ca75858da2c4aa6be3220421dac1e60fa8899f9ce4c0d8566c92eadfc401d"
+    },
+    {
+      "path": "src/domain/math/generators/division.ts",
+      "sha256": "e0f63b776130cd80e6c41e69254b1dcf8345f105edcdc9b81e55a9e8fa36995f"
+    },
+    {
+      "path": "src/domain/math/generators/fraction.test.ts",
+      "sha256": "997a26639cbdaae48225be94a4848e74bf3616a9353bebe2ac150acaa637f3b9"
+    },
+    {
+      "path": "src/domain/math/generators/fraction.ts",
+      "sha256": "900ccd148808fc424da5e77f31224c886132de28d9661e1c30ddbc2f64e59bb8"
+    },
+    {
+      "path": "src/domain/math/generators/multiplication.ts",
+      "sha256": "05f4704d25e98c49de7de326092c3b5c6a2eae7625756ae79e9386e7d140fa72"
+    },
+    {
+      "path": "src/domain/math/generators/subtraction.test.ts",
+      "sha256": "c44ef51a92a9a33bb3e10759f3840e3761a27d4d4da987de438324b5c9208e53"
+    },
+    {
+      "path": "src/domain/math/generators/subtraction.ts",
+      "sha256": "8a0daa87e3b9aa37397e3176192b8cab8528f4f2e29e2fa48f053b574c97f69c"
+    },
+    {
+      "path": "src/domain/math/hissanEngine.test.ts",
+      "sha256": "67e2845221a58f8ea89dad413878857c5b0908c171dd5a3579ded946f7e32347"
+    },
+    {
+      "path": "src/domain/math/hissanEngine.ts",
+      "sha256": "7dbe21378c9a6ca901284f5b9677cc05faae3292215f35e94d9c9d8ff5429748"
+    },
+    {
+      "path": "src/domain/math/hissanTypes.test.ts",
+      "sha256": "27177752587d717fd5bf8ae9321f5551d58d11516241a720ae32d4120700ea36"
+    },
+    {
+      "path": "src/domain/math/hissanTypes.ts",
+      "sha256": "a801cebee4dcb7ff41038b5acf154fce1fdd5568e2c814020642fd32d9822001"
+    },
+    {
+      "path": "src/domain/math/index.ts",
+      "sha256": "5d11aa10e64280f6648f89ea00599050dae41e718d57a49ef1b06a883c2c4061"
+    },
+    {
+      "path": "src/domain/math/labels.ts",
+      "sha256": "7a01822431f797a03ef3b3821974ce78019433228a765178667e8053775155d6"
+    },
+    {
+      "path": "src/domain/math/numberEntry.test.ts",
+      "sha256": "c4def9596f3819d037622e1e7f8abdcdf70f37886afd4fea1250e7af829989e1"
+    },
+    {
+      "path": "src/domain/math/numberEntry.ts",
+      "sha256": "3c67945c540850066232ad783bb6c741dad62fb9615966abe6a29a27fa7151a0"
+    },
+    {
+      "path": "src/domain/math/numberSenseProgress.test.ts",
+      "sha256": "d94ef7de6c244dfc5d123cadc11cad0568ac164d0db59486db24e4d7462e3032"
+    },
+    {
+      "path": "src/domain/math/numberSenseProgress.ts",
+      "sha256": "33876c63866471ec3f6e481c14fc40edbef7771749ef35782eaac35b5a343f02"
+    },
+    {
+      "path": "src/domain/math/planner.test.ts",
+      "sha256": "716ecf95bec433b6cbbe39d54efd416c58c5c9fbad02c6964538bf6dfeafbf76"
+    },
+    {
+      "path": "src/domain/math/planner.ts",
+      "sha256": "e8e5cfac12753e418c4a5faa8ad28fa6d0bc6f2c4c6fe684cd2157546bf08fcd"
+    },
+    {
+      "path": "src/domain/math/problemVisuals.ts",
+      "sha256": "a6591e06be557b024b6312f2d795c58ea7c312157261e828d1b69eeca6c6b07f"
+    },
+    {
+      "path": "src/domain/math/profileProgress.test.ts",
+      "sha256": "c96737aeee72a62133abaf47fcb30b6f161ac2ea647b086cb973ad9b2a71e253"
+    },
+    {
+      "path": "src/domain/math/sequenceProgress.test.ts",
+      "sha256": "f1bfbe29e06c2fab6376b4fb9233f0023b64dd85f9abefdcf44fe2da58636a22"
+    },
+    {
+      "path": "src/domain/math/sequenceProgress.ts",
+      "sha256": "280cd94f273e7b31cf0e1f247b63d59b51efe73a2556c683f7f7b20fc170c1cc"
+    },
+    {
+      "path": "src/domain/math/service.ts",
+      "sha256": "d0e66b0c5027e0224bd9abcc87987422def97c562b92c229e7180241f1197405"
+    },
+    {
+      "path": "src/domain/math/studyPresentation.test.ts",
+      "sha256": "4fb3b3c3352400b017ac87f99f545cecc765d665607ebb9c4ca9c0ad1579b326"
+    },
+    {
+      "path": "src/domain/math/studyPresentation.ts",
+      "sha256": "f719bab4670908afe4e6db41113bc6bf41a1d4f021f2c1126c0841fd0ed13a4c"
+    },
+    {
+      "path": "src/domain/math/subtractionProgress.test.ts",
+      "sha256": "f862da837263d83233de20dc722a449a2c159456439089d0c60114c81b6229e0"
+    },
+    {
+      "path": "src/domain/math/subtractionProgress.ts",
+      "sha256": "9578eb2d82c6dbdc088e5312af4832490cffc86e102d0aa99136894d348050fd"
+    },
+    {
+      "path": "src/domain/math/testFixtures.ts",
+      "sha256": "ab3e1ea395de9f0083554151be277d74ca5289b798303a55cb9e8be159d19183"
+    },
+    {
+      "path": "src/domain/math/writtenArithmetic.test.ts",
+      "sha256": "b7570b9db5376cc8b9404d107272a99f6167e18fd6580397de3e47a9cce586cc"
+    },
+    {
+      "path": "src/domain/math/writtenArithmetic.ts",
+      "sha256": "ab447958c7cb1ba1322adf6efe6da401c856ae423583d93edae0bf426081072c"
+    },
+    {
+      "path": "src/domain/math/writtenInput.test.ts",
+      "sha256": "6edf34cb61190c07d7b238050aea3501c6982c6ccce4b1eef44742231bb4a9bf"
+    },
+    {
+      "path": "src/domain/math/writtenInput.ts",
+      "sha256": "f1e93a629c9b3d89938e00be70002935fea19ab7a2d28ed40e53e489054264a1"
+    },
+    {
+      "path": "src/domain/math/writtenPlaceValue.test.ts",
+      "sha256": "8e4072dc60fa7a4435469b410cf8aa0470a636cfc1b786304956cd1865af4e3b"
+    },
+    {
+      "path": "src/domain/math/writtenPlaceValue.ts",
+      "sha256": "dc6b7389cafee4a1ae26fe012a4f3c86f45fe16226e0ccd99589f7e795958c6e"
+    },
+    {
+      "path": "src/domain/park/commit.ts",
+      "sha256": "2be15cb2f02b241d3530ef267fd9eecef8d8a9c7af341721fefff0cce3aa35bd"
+    },
+    {
+      "path": "src/domain/park/course.ts",
+      "sha256": "adf6060b7fcfa77cb15286ca31cea2f4408a3382bd893a897deb1027f3894952"
+    },
+    {
+      "path": "src/domain/park/englishPlanning.test.ts",
+      "sha256": "39d2b4b46d574e447df2bede40a17a351187277196373950ebaf6e953fe68a58"
+    },
+    {
+      "path": "src/domain/park/learning.ts",
+      "sha256": "c611c98d40a617cb94cf553a54f009f8dfb8e9fa4940f016e887a28ad9a670a1"
+    },
+    {
+      "path": "src/domain/park/learningContinuation.test.ts",
+      "sha256": "78dc8dc72aa62f58026fad7dd9188c9651e52881c967d5c3d040e9b3e63d0d6e"
+    },
+    {
+      "path": "src/domain/park/learningHistory.ts",
+      "sha256": "ba632af6811c7921f07b656d996c8fcb5023dfe55e70d1c4cd8bdb14c8f36a65"
+    },
+    {
+      "path": "src/domain/park/park.test.ts",
+      "sha256": "0a34edb17d3460917f969c9328f02e1d3de7fb476cb013d6b352dc2ba3763173"
+    },
+    {
+      "path": "src/domain/park/repository.ts",
+      "sha256": "1a3c15386697fa4a6fcdc67ed4e5ea9fefb5cf6da1ff430647aed14c4ef6a0e6"
+    },
+    {
+      "path": "src/domain/park/simulation.ts",
+      "sha256": "fb5cc505a1dfb2caef203c8389002d47c10761683fef14ab05f86d62d25fd5d8"
+    },
+    {
+      "path": "src/domain/park/types.ts",
+      "sha256": "5cbd44c72a4c38d601049fa9f5bcd573351d22e4c10a1d2ce48282979f325f4e"
+    },
+    {
+      "path": "src/domain/park/writtenArithmeticIntegration.test.ts",
+      "sha256": "6fd1e34c87a3cca137951929932632ac9f9a1cc7520a212413420b33b9f290e6"
+    },
+    {
+      "path": "src/domain/sessionManager.ts",
+      "sha256": "be13bb74b5a7ed5bcee2963e3d1eca2ef3d802a01502823e288901e0a83436a6"
+    },
+    {
+      "path": "src/domain/stats/aggregation.test.ts",
+      "sha256": "d917475c5cf4891dc828990bddda08aaefdff3d8c9e1e4b532e38afd59ec3321"
+    },
+    {
+      "path": "src/domain/stats/aggregation.ts",
+      "sha256": "6b591e6e147dcafc26c4fa1afd13596f9479c7e1bf14ac64ec016cd6c593a66c"
+    },
+    {
+      "path": "src/domain/stats/repository.test.ts",
+      "sha256": "5ddb3698cf3c43c9198882233cb0f32ce94b6a698f9f0fa9decf209a44cb27f2"
+    },
+    {
+      "path": "src/domain/stats/repository.ts",
+      "sha256": "43cf8cf0f1463de20944c67c30c8eb0fa6208348b156f346628f90113dbaa13b"
+    },
+    {
+      "path": "src/domain/test/paperTest.test.ts",
+      "sha256": "3ac9c51e52f9aa5c6793cbf62bfe3878e93472470a4751e102eaf99ba549fa58"
+    },
+    {
+      "path": "src/domain/test/paperTest.ts",
+      "sha256": "a7342e85fee4e2b22a840bfb3cbfd97c942c73842529af038aa0d09485893653"
+    },
+    {
+      "path": "src/domain/test/paperTestRepository.test.ts",
+      "sha256": "0ae84b1e679078ae28bf952186626ef8f00ec3ac202c27877e1b04cfda9ab907"
+    },
+    {
+      "path": "src/domain/test/paperTestRepository.ts",
+      "sha256": "0723fc6c6c08c88e73bb3815314cc2d1c49f594f30ebbbb8bf9e6e18c391e4bf"
+    },
+    {
+      "path": "src/domain/test/printability.test.ts",
+      "sha256": "b1bc6a511adef47de0076bc4e332053e8b22e62d4ae8a8d9ce9ae83bbb67a500"
+    },
+    {
+      "path": "src/domain/test/printability.ts",
+      "sha256": "b5784ddfedd233d875c8c554fb24109752dd6a0a4725b6266fe8c64baa2b88e0"
+    },
+    {
+      "path": "src/domain/test/testSet.test.ts",
+      "sha256": "2d08f89e057a909e1fa20adb4966f15eae5f0c119ba3bb6e6b3253e05937f435"
+    },
+    {
+      "path": "src/domain/test/testSet.ts",
+      "sha256": "4ead676f030682f3742816555423d434c4c27a3d663ce9ac1416bfecfa99ff39"
+    },
+    {
+      "path": "src/domain/test/trigger.test.ts",
+      "sha256": "98211c15a92908ea24249bd24cc555f664e4d37a842d46dd8080ded17cadd5aa"
+    },
+    {
+      "path": "src/domain/test/trigger.ts",
+      "sha256": "f6fb2afdad19b39c5fb8a4cacee9488148e044e02bc2bbd92c25a2153a726549"
+    },
+    {
+      "path": "src/domain/types.ts",
+      "sha256": "ddcdae98d700a4011862a21504038731383334bcadc0c8e127d3934c7f627021"
+    },
+    {
+      "path": "src/domain/user/onboarding.test.ts",
+      "sha256": "f17bcec687c0614e679a4d29ef2b380ec7b2d3db757da1c86c85a9036c5af088"
+    },
+    {
+      "path": "src/domain/user/onboarding.ts",
+      "sha256": "46b2174045cef9634eafc2d8affb4fd96631a33f2516076b60cfe27bcd80de47"
+    },
+    {
+      "path": "src/domain/user/profile.ts",
+      "sha256": "317fb9cb1b0eccb1bc0dbef962b5f5aae64445c487691d36e075e123827439f5"
+    },
+    {
+      "path": "src/domain/user/repository.test.ts",
+      "sha256": "211ed5bdb475d8751c5b38e7f9c0ee5c901d5f9d6b11c583153e755cb990c39e"
+    },
+    {
+      "path": "src/domain/user/repository.ts",
+      "sha256": "4235fe3f4fc5f9e4bc2fb0527f72a097c0ab16bfdf35ed0894b556e934782029"
+    },
+    {
+      "path": "src/hooks/blockGenerators.progression.test.ts",
+      "sha256": "0d4e3ddae9edf97dd1a63df74fcbf08145bb81c1b06443d55c5dcffb279ad8a2"
+    },
+    {
+      "path": "src/hooks/blockGenerators.test.ts",
+      "sha256": "39ad52744d5ac4c4aa58ba3d400c65cd361df811fca3febe047fc7c616cffee7"
+    },
+    {
+      "path": "src/hooks/blockGenerators.ts",
+      "sha256": "781f6bd2ca00534f15f8e0e39ea07592c86f1a40b9f722d03574d3e82bc82705"
+    },
+    {
+      "path": "src/hooks/learningProgression.integration.test.ts",
+      "sha256": "9feb1f436400dc870cf5e27b1aa4e48f52848f6bd7d6a782872a14249eede643"
+    },
+    {
+      "path": "src/hooks/useDevPanel.ts",
+      "sha256": "45cdc73517ac81ca4e5aeac6d67377558cabc35c31cd57e4f5c70be7cbf656e6"
+    },
+    {
+      "path": "src/hooks/useEnglishListening.ts",
+      "sha256": "ba04faac49db21c8a3e43897f854452e55064cd31371c97c3d3789407db32807"
+    },
+    {
+      "path": "src/hooks/useHissanSession.ts",
+      "sha256": "8b1a57e183c41af1d7fe9dc44175857998e5e76f849d6f6b05fa83af2208dcfe"
+    },
+    {
+      "path": "src/hooks/useLearningSessionLease.test.ts",
+      "sha256": "71ffc0ae5d95ffb2e11b5c75668f50b0f6f5d5fa0b13dee5e4564f89d57e11d7"
+    },
+    {
+      "path": "src/hooks/useLearningSessionLease.ts",
+      "sha256": "257118095191c90360dda919facf266c22f4c93e2486d3067e7f2d5e6b5e8af2"
+    },
+    {
+      "path": "src/hooks/useStudySession.logic.test.ts",
+      "sha256": "604b627ae9f186e09fc1de3017706ca76743ec239b24c55cdd083a8988cee1cb"
+    },
+    {
+      "path": "src/hooks/useStudySession.logic.ts",
+      "sha256": "83c95f0bf2a9a8549233f4802b9f8c63c60c2e96334c908be95e09f235cf4f7f"
+    },
+    {
+      "path": "src/hooks/useStudySession.ts",
+      "sha256": "9deb68b4a184652f71437373644cd539fcd680e9d5a4a200ab341dd755b5beba"
+    },
+    {
+      "path": "src/hooks/useTimeoutScheduler.ts",
+      "sha256": "ec573a79b78343bbefde728f84f3e9a82c71c92cb0482ab577806bef92832d35"
+    },
+    {
+      "path": "src/hooks/useTransientState.ts",
+      "sha256": "3c97ccfcb5fc01e4830450df81210c5464532fd17df59fe7d5deab50a7a3ca4f"
+    },
+    {
+      "path": "src/index.css",
+      "sha256": "0dcbc8ddf3c454a0ae87a0d5ddf712f2abb39076cd18c1e9e6839fa5e1a5b82a"
+    },
+    {
+      "path": "src/main.tsx",
+      "sha256": "ece25444878f4e2150fbda87551ebcd69d2e95b1457215693726446daadc3c08"
+    },
+    {
+      "path": "src/pages/Battle.tsx",
+      "sha256": "fb70cfe3850c042d16f1268d80412b076f162753fccd75499bf23a99fe6ea298"
+    },
+    {
+      "path": "src/pages/CurriculumSettings.tsx",
+      "sha256": "ee4154b85b1efa1de319ea4dce153a8e1f88de34c7da713eefe088a4f2b2b9ba"
+    },
+    {
+      "path": "src/pages/DevMode.tsx",
+      "sha256": "4654424d2f734abe48163d6882472bd875fb3436192d361f6d959bfeb1e3dcbd"
+    },
+    {
+      "path": "src/pages/Explore.test.ts",
+      "sha256": "daec296ae3857ad75a666fae5040f644fafe9c379be6a47da20cbeb780c17161"
+    },
+    {
+      "path": "src/pages/Explore.tsx",
+      "sha256": "2acb86b6faa50b0e599f674f01e356d32585d7003c4695e07f8c34a897995313"
+    },
+    {
+      "path": "src/pages/GameHub.tsx",
+      "sha256": "795e3043082e10f72f80c8346112017c81cc5c678a742d177f5554a6c804fa98"
+    },
+    {
+      "path": "src/pages/Home.tsx",
+      "sha256": "4eea42bdb82bd4a0ad8662062a719d818a81b420cb306ad02e83f1d71fb60a85"
+    },
+    {
+      "path": "src/pages/Island.tsx",
+      "sha256": "bcf4028cde2a8da142c18ba6ff89ef9dc2a47a37d12847b0e0f3212d1adaface"
+    },
+    {
+      "path": "src/pages/Onboarding.tsx",
+      "sha256": "4d3ae7a4bfa91bafb3c201821c1e495033f4d5edf8d9fa2e69946be37e3c048c"
+    },
+    {
+      "path": "src/pages/Settings.tsx",
+      "sha256": "9c1b697d0271d1f6d58213e0a7801975ce5361872596594a99f2802be3a95427"
+    },
+    {
+      "path": "src/pages/Stats.tsx",
+      "sha256": "f45e229341e081a67b7544fe83918cf7a216ce162263f542a3aaf20774f89c3c"
+    },
+    {
+      "path": "src/pages/Study.tsx",
+      "sha256": "187ae0d12b65935309fcacff6f4e3b2339a6985e1f5d637ace16f390c61340f2"
+    },
+    {
+      "path": "src/pages/StudyLayout.tsx",
+      "sha256": "f86b786721a370fd9dc2fd1e95cfcc442952aa980caa83727aa8c8ab745745bf"
+    },
+    {
+      "path": "src/pages/UtilityLayout.css",
+      "sha256": "0390e4822f948555a1e50dc4abb488db956d54b31f0765898d2d24acd7d3628b"
+    },
+    {
+      "path": "src/pages/parents/ParentsPage.tsx",
+      "sha256": "f29df4941978ff8854a433a6f5c26625b377f730ad06e7ca6d4e51e3658f8c54"
+    },
+    {
+      "path": "src/pwa.test.ts",
+      "sha256": "ca7fb3aaaac72d88bdf5a4acd6cf0c743458d1d055ab70b47e904f9363e8d023"
+    },
+    {
+      "path": "src/pwa.ts",
+      "sha256": "d5d89838ed55f4666bae13a3f88823534686657abadd985d895e9449607779cb"
+    },
+    {
+      "path": "src/pwaUpdateRecovery.test.ts",
+      "sha256": "2bc30b179c9a379ad2118b5c7aa66e67a54064e18741142705a22480e1511757"
+    },
+    {
+      "path": "src/pwaUpdateRecovery.ts",
+      "sha256": "5ed380536b85da0de55f27c1b58858864720ed981595dc181a56e65e2b0af22e"
+    },
+    {
+      "path": "src/pwaUpdateUtils.test.ts",
+      "sha256": "95797c724b91ba2d16467cda8e178c5235305423419817e6a792be0400cd7aa0"
+    },
+    {
+      "path": "src/pwaUpdateUtils.ts",
+      "sha256": "86320964f923f18e5ef4c24b648bd3a89d4cb00c2e53a34f2a60c8662ac01cc7"
+    },
+    {
+      "path": "src/utils/assets.ts",
+      "sha256": "10399a476523a1b6c7e1c3ba1af0d58be796ccad59faa2f23013ae95c03dd01f"
+    },
+    {
+      "path": "src/utils/audio.test.ts",
+      "sha256": "c7cca7acdbc1a07e3a7517b89f6bbc4db5fceb23041ba5e46242b817d142b69a"
+    },
+    {
+      "path": "src/utils/audio.ts",
+      "sha256": "8295ab1ccba028b09e1794a41e4764792d36bf30bd2955668babe827b07511cb"
+    },
+    {
+      "path": "src/utils/cn.ts",
+      "sha256": "3075aa77cadcd019a1ec91c7edaf1364ecf6ecebf315b68e417dc56f24dd9d71"
+    },
+    {
+      "path": "src/utils/debug.ts",
+      "sha256": "0f65d02339382f6bc5ce15c119d1be88bd69b5a2314232f661b34f8b1adc31bb"
+    },
+    {
+      "path": "src/utils/learningDay.test.ts",
+      "sha256": "635efd5014836e692f7f407f6739bf475a9b54f4e5403cdd4d0e5f9d7a4f750e"
+    },
+    {
+      "path": "src/utils/learningDay.ts",
+      "sha256": "acb67bee4e8dd7f0e4672a76e72e519547d67b0d0f4cc874abaa81d9cc25a292"
+    },
+    {
+      "path": "src/utils/pdfGenerator.test.ts",
+      "sha256": "bacf3e34125f09cbb264bf81a463bba6e46c48d06e8e40d3744c32d98b348e6c"
+    },
+    {
+      "path": "src/utils/pdfGenerator.ts",
+      "sha256": "f61b4bf4ba8a3941ca18295781dce332d196bcf6840b734f4235c4551e5cbebc"
+    },
+    {
+      "path": "src/utils/random.ts",
+      "sha256": "402bba39d7cae5cd71b437bd6bcfda29446a833b300800604feb96afc5744597"
+    },
+    {
+      "path": "src/utils/shuffle.ts",
+      "sha256": "783514297e0f3d7387238a349befc00464629429af2b84b9817789d2e1077b0b"
+    },
+    {
+      "path": "src/utils/storage.ts",
+      "sha256": "234a077fd8ed114dcfb3be6def41a41a90648eeaa42dfbbe4bfc3e1b7e201928"
+    },
+    {
+      "path": "src/utils/theme.test.ts",
+      "sha256": "1a6f2512ce8788e71326e7454e514a66ff1ddef91b23eb70062f02531000ccc6"
+    },
+    {
+      "path": "src/utils/theme.ts",
+      "sha256": "189baa638e6c7f94dbf9dbc5b50c657aace80385a320eb03b9c159e2868a248f"
+    },
+    {
+      "path": "src/utils/tts.test.ts",
+      "sha256": "d9d2e59d7ec8c6cea8afa575a43dd54da4f5257ed44e7cc5b75d95f072950a4c"
+    },
+    {
+      "path": "src/utils/tts.ts",
+      "sha256": "9ac7f4389dcc6cf8de7bab9e081b2287872991131cc36a2a1bc51d32766f7c59"
+    },
+    {
+      "path": "src/vite-env.d.ts",
+      "sha256": "04d4f051b3d5e6814565caded3a2eefcc8f871a0ec73f38306d855553e195409"
+    },
+    {
+      "path": "tailwind.config.js",
+      "sha256": "5230663361532a48fb506256c9037bcf3c760235ffa2fa59b484ed1412916175"
+    },
+    {
+      "path": "tools/asset-policy.mjs",
+      "sha256": "b48bb264961be51da8dfaf50ed00cf979db92b5903ef34da47c1ad63b64e5ab9"
+    },
+    {
+      "path": "tools/asset-policy.test.mjs",
+      "sha256": "bd2535ee5386e50b3956451bc413b54a13255961fa7e79146bc0b8dd7cc3208a"
+    },
+    {
+      "path": "tools/async-state-checks.mjs",
+      "sha256": "1b653540a5854c00f43c4bb07b8a1c8ebbfea63f441da41076574a1f8fb761db"
+    },
+    {
+      "path": "tools/audit-math-viewport.mjs",
+      "sha256": "41d90e6618f403ebeb6e65a127543abe23bb04f85cf04b74bfb63dfa917da151"
+    },
+    {
+      "path": "tools/check-asset-budget.mjs",
+      "sha256": "108db31e3faa2d8e77b3099ab8c1fc3feac96f4d021a631bcb294a545c7ccb07"
+    },
+    {
+      "path": "tools/check-docs.mjs",
+      "sha256": "614327a88052bc9c8095f1ad07cc515cae9c8cb7a230abfe6f94255fa21dd6c4"
+    },
+    {
+      "path": "tools/e2e-answer-completion.mjs",
+      "sha256": "1d621d886347cf90a0d2adf433a652a81321bdf4d63517b3219cea26db6c9b4f"
+    },
+    {
+      "path": "tools/e2e-decimal-input.mjs",
+      "sha256": "fac505174025673027cc1713448f035181c3660a33cf8c67540ff7771991179a"
+    },
+    {
+      "path": "tools/e2e-english-listening.mjs",
+      "sha256": "db428ef1449bea4e25c1268a9599543e9cc6c8a444a28541b88fd9409cf5b536"
+    },
+    {
+      "path": "tools/e2e-entry-correction.mjs",
+      "sha256": "3187a8e96346aedd9f14ab7d96d2bf41097ed143eaa119d1e898c4cd115fcea0"
+    },
+    {
+      "path": "tools/e2e-fixed-ten-throughput.mjs",
+      "sha256": "8b3e5e6a7501e1f29192fab35f92ce9e9c4c253d3339fe85fa776a61ad8af0a7"
+    },
+    {
+      "path": "tools/e2e-fraction-entry.mjs",
+      "sha256": "41d5e50b828dc3125cac8582db744b8a601d25f63f5312da087e005f134a83cb"
+    },
+    {
+      "path": "tools/e2e-hint-input.mjs",
+      "sha256": "222f29602d981fa279e1b16c5108f7906591ea1c6185890ad71f028ff640a931"
+    },
+    {
+      "path": "tools/e2e-home-challenge.mjs",
+      "sha256": "e9eb2d00f6232f22dd4dc3e30439384f24b5068516319cf683dfe58d34e689cd"
+    },
+    {
+      "path": "tools/e2e-home-journey.mjs",
+      "sha256": "cd0c50e702e6d75740d74cb8681a93bf16b463a9a17d9785c30a52b0e47f0fbb"
+    },
+    {
+      "path": "tools/e2e-island-appearance.mjs",
+      "sha256": "00c32bf9bc8e8e3ab14b0e6700bd57a54d5418548933b681114b2256b1e170e4"
+    },
+    {
+      "path": "tools/e2e-island-camera.mjs",
+      "sha256": "7527b796037ea8050ba628e4e31fdfa19399197c3e99249db5c27f35e15e994f"
+    },
+    {
+      "path": "tools/e2e-island-chapters.mjs",
+      "sha256": "5c3b7dcab02acaccc2f6739d1eca85214ccfe00bd5f1cba1648c43a91be60d5a"
+    },
+    {
+      "path": "tools/e2e-island-customization.mjs",
+      "sha256": "5bb5de29705ac0f35c050729b55faa2c7301f340099924e112ff34b06c6f2fff"
+    },
+    {
+      "path": "tools/e2e-island-discovery-navigation.mjs",
+      "sha256": "4f30824dca692d4495a86bb025d068a2688ff5082cb2e852fab47ae02d6e0cac"
+    },
+    {
+      "path": "tools/e2e-island-display-workspaces.mjs",
+      "sha256": "ba5d990564a94ae6f8a1e00d1d4f1d0e00ba4a8aff91ae749951ff726b19b650"
+    },
+    {
+      "path": "tools/e2e-island-entry-timing.mjs",
+      "sha256": "93c81ec52e5f024a8374dd42998251dc9c4a6ccc50f91261be53642251e40ca1"
+    },
+    {
+      "path": "tools/e2e-island-expression-audio-focused.mjs",
+      "sha256": "b7019afd2e837c2fbcd70d64552ddf2c4ac7f48750d3183ea0a061d3a34ac013"
+    },
+    {
+      "path": "tools/e2e-island-expression-persistence.mjs",
+      "sha256": "9cbe10c081b67fb0d9068f212c07f5eee72d1a91d61f2fbf4dcde15b82f2c065"
+    },
+    {
+      "path": "tools/e2e-island-expression-qualified.mjs",
+      "sha256": "24179c2bf4d34ef46bc030ed8497fb2917b83b682469623d956417f81d17c9a8"
+    },
+    {
+      "path": "tools/e2e-island-expression-visual-matrix.mjs",
+      "sha256": "7dae74734656987d9e2034712b1fcaf87f34702b2b0967638fa95b14f359d642"
+    },
+    {
+      "path": "tools/e2e-island-expression.mjs",
+      "sha256": "afe02623a45c92b2ad9744f7e5e0813c1dc7d748cc30b84bd84e16bf66844582"
+    },
+    {
+      "path": "tools/e2e-island-feedback.mjs",
+      "sha256": "0660df03afd317439f0d9505084a2efd8f5e8080cb5c937cf15b96b130f86cef"
+    },
+    {
+      "path": "tools/e2e-island-furniture.mjs",
+      "sha256": "02be11a945ef516f0e4fbc9e565ba73c5d94890959ea38901222724eccbf9372"
+    },
+    {
+      "path": "tools/e2e-island-guide.mjs",
+      "sha256": "526e06fbf1c506b289b4ae2e67985c5be223922f0e1938b95ecb008b0e04a0df"
+    },
+    {
+      "path": "tools/e2e-island-home-layout.mjs",
+      "sha256": "becb21f439f1b4bbbac8c8550a04b3b07273a56b7357ed37f3ec74c3963e1817"
+    },
+    {
+      "path": "tools/e2e-island-home-walk.mjs",
+      "sha256": "347808ffd33f126765a1de1651a1a96f338c98c5b21533ea3ace7c7b22d9a20b"
+    },
+    {
+      "path": "tools/e2e-island-home.mjs",
+      "sha256": "2f8ccf2e88d862ff5eb923f20101c2902c520cc67071a87bc20ee9a5452c5807"
+    },
+    {
+      "path": "tools/e2e-island-house-edges.mjs",
+      "sha256": "5e484424b7437010056e4ae1407e12a1b247ffdd3e37c44052ce7164b3b9d9fd"
+    },
+    {
+      "path": "tools/e2e-island-keepsakes.mjs",
+      "sha256": "1f64e0524fe3f7d99b3e1f29ef9dc200227054732d0c8a638dc3c22e07f4589f"
+    },
+    {
+      "path": "tools/e2e-island-landscape.mjs",
+      "sha256": "f2d9a3e264c52403e3b0d37d007271118802c4f049043e8a0ad63309fb9abb60"
+    },
+    {
+      "path": "tools/e2e-island-learning-layout.mjs",
+      "sha256": "39921b4ecee51ab59900360a5138cb24276996732a962790f1f54779500f472e"
+    },
+    {
+      "path": "tools/e2e-island-learning.mjs",
+      "sha256": "bc73a849824666c8e6cb5d325e9fecb6a99eae60e29254e7bddc9317e26ad0d1"
+    },
+    {
+      "path": "tools/e2e-island-life.mjs",
+      "sha256": "d098c7188981577bf3c1dd65f1dce787b361ec5323e8f5ff51346aa4a46cac34"
+    },
+    {
+      "path": "tools/e2e-island-living.mjs",
+      "sha256": "db0e3e7ddefc81744d1c6b594ab48a964f3b109a79c087c744b9cefe7abc23f2"
+    },
+    {
+      "path": "tools/e2e-island-navigation.mjs",
+      "sha256": "465746a5efc090ba277a0b68366e53aa3778b7656a2cd04733965dcd48adda5c"
+    },
+    {
+      "path": "tools/e2e-island-observation.mjs",
+      "sha256": "a866f183923e0d2e3b27832d9f75028c5535042a30f2651b3bdeaf7ad654e309"
+    },
+    {
+      "path": "tools/e2e-island-onboarding.mjs",
+      "sha256": "9eaed29c7447c173a6e6f874b9559281b4c09753f9195e3e16a2bdf09658ef24"
+    },
+    {
+      "path": "tools/e2e-island-patchwork.mjs",
+      "sha256": "708040f718df53fb7ec6515e0e0f0e1822178eb0649604045595baa09a86caa3"
+    },
+    {
+      "path": "tools/e2e-island-personalization.mjs",
+      "sha256": "58c08c734c8cc915cba8d07a8bdc7e23e33d1adae30048454d7c2a5dbb0f81a6"
+    },
+    {
+      "path": "tools/e2e-island-photo-exits.mjs",
+      "sha256": "690364ab5c29dda3f3806f3ce6aeb1e516bdee6f8d384262d9c2385dc4efa1cd"
+    },
+    {
+      "path": "tools/e2e-island-photo-persistence.mjs",
+      "sha256": "b1b32179e285350c70fba922a75dc3947fad1c83595fbbd09b4d50843a5f78e8"
+    },
+    {
+      "path": "tools/e2e-island-photos.mjs",
+      "sha256": "d586651672a6df3b9c322fe66ab504e44cdedadd2145333f67ca6c7edf56f01c"
+    },
+    {
+      "path": "tools/e2e-island-production-capture.mjs",
+      "sha256": "8b3f9340fe04c5e5c5dab69c2e642badeb668d2b6ce65d11218d153632f28763"
+    },
+    {
+      "path": "tools/e2e-island-production-inputs.mjs",
+      "sha256": "accd1d082c6fce4b34a339dac0fb2f9cee7ae0d59c11ab2c9fc3d6c85c027f1e"
+    },
+    {
+      "path": "tools/e2e-island-pwa.mjs",
+      "sha256": "327bfc10bd02bdbc8514f02007b108dd586ab7a2b05cab8edb582d0a3adbb991"
+    },
+    {
+      "path": "tools/e2e-island-recovery.mjs",
+      "sha256": "feac85c964a6d30fe61a3f3d27e46a2cb567e4565b6dfc17619a01c24232db33"
+    },
+    {
+      "path": "tools/e2e-island-reward-goals.mjs",
+      "sha256": "fd9b95437b8078a979cfc98cdf0db98016badb36497050dafbd677e12ede6e40"
+    },
+    {
+      "path": "tools/e2e-island-rhythm-recovery.mjs",
+      "sha256": "e97858e56294d246754dce96c9af0f04087fec8dc87b257fd1f5de3977448ba7"
+    },
+    {
+      "path": "tools/e2e-island-rhythm.mjs",
+      "sha256": "1fd7213c193326abff6a9db2d704413693dbfcb4eff6aa0943b1c8eefe92f936"
+    },
+    {
+      "path": "tools/e2e-island-shared-jobs.mjs",
+      "sha256": "24807387ce2c1c0664a42f1f65d4fa841f9683df61c633fafc29772e57f7c42d"
+    },
+    {
+      "path": "tools/e2e-island-shared-memories.mjs",
+      "sha256": "27c3bba93a18275851399519a9f85c8ecafa3f26c2af74c92ec0008451c8874b"
+    },
+    {
+      "path": "tools/e2e-island-shell.mjs",
+      "sha256": "53ba863921c9fad3d3807c1d8388ad5f457f707f2068c0a1ca694170fa149f95"
+    },
+    {
+      "path": "tools/e2e-island-sound-control.mjs",
+      "sha256": "4d18479809698552cb5dddb9c323eaf99d6fa4fb1d32b30ffc34beb0bde91cee"
+    },
+    {
+      "path": "tools/e2e-island-subjects.mjs",
+      "sha256": "cb0389452a483b1feeac290552f2ee13da0312e4d135aa8b92a02f4811ce2a08"
+    },
+    {
+      "path": "tools/e2e-island-support.mjs",
+      "sha256": "0192b059d6ffcde8d46e4640a7fd836a9278ee25182b9eaa8dafad6a3bc20327"
+    },
+    {
+      "path": "tools/e2e-island-throughput.mjs",
+      "sha256": "820e73feab3a662e02f14d2fb90f85899f81815fc9bbfe7b623ef474e324901e"
+    },
+    {
+      "path": "tools/e2e-island-tutorial-ui.mjs",
+      "sha256": "e8cba4e419344019b889e9c164fd17d20ba71e4320af4e058beb5d0fac9a1437"
+    },
+    {
+      "path": "tools/e2e-island-tutorial.mjs",
+      "sha256": "5758b0c6990274ed178ebe27117c89957dcafec071837f896f8725d65edb2b10"
+    },
+    {
+      "path": "tools/e2e-island-workshop-gestures.mjs",
+      "sha256": "9e90cba0fab96802a3527c41adc501e163447762ab467d4be9155f4cb289c54a"
+    },
+    {
+      "path": "tools/e2e-island-workshop-persistence.mjs",
+      "sha256": "3caed1c4d2053b76f52370c91c90c233fa38bee55b83dd842286fa00eab3e5c7"
+    },
+    {
+      "path": "tools/e2e-island-workshop-residents.mjs",
+      "sha256": "0caaf417f276fa7d10a03bf590dde6b8eaa75901ba1b4560f1f599854daf742a"
+    },
+    {
+      "path": "tools/e2e-island-workshop.mjs",
+      "sha256": "ea6b9b963bfc84321426ae8c80c82578be6e867373e1c9a25ad0d23b3f1c5039"
+    },
+    {
+      "path": "tools/e2e-island-world-discoveries.mjs",
+      "sha256": "7f5cb8ab119c041f807783b2107290b63fbda536ed66d596ef257a193eb21df8"
+    },
+    {
+      "path": "tools/e2e-island.mjs",
+      "sha256": "40a14ae2184f7b4a504287f52189c799a07042fbd422fd72574263b949dee5c8"
+    },
+    {
+      "path": "tools/e2e-launch.mjs",
+      "sha256": "7e7215fe60c3a6e170bba1f5c802860af441ec8218e5569e6481b6a7eee380d1"
+    },
+    {
+      "path": "tools/e2e-learning-input-readiness.mjs",
+      "sha256": "1d2eba685e4f52c7940209e10f2b8fec80e809827e9dffae35f717f43df98aa3"
+    },
+    {
+      "path": "tools/e2e-learning-progress.mjs",
+      "sha256": "cb9cb9b88bdcc4c508475d9556c6c9aec3bb6816fcc70b7616c1013c339e5ce5"
+    },
+    {
+      "path": "tools/e2e-learning-reinforcement.mjs",
+      "sha256": "d9b0426f864dbc6b13e6d2073836a64726820ab7350d98792b2a95037dc5f529"
+    },
+    {
+      "path": "tools/e2e-manual-decimal.mjs",
+      "sha256": "b73ec21af880fad9c48066e7f546f1539062c477866ed701863f84b45c1df602"
+    },
+    {
+      "path": "tools/e2e-math-diagrams.mjs",
+      "sha256": "2e5965563736a0d1fefef56112d0242cb7c648a8e0fc7b2f885ff65bfa5a748b"
+    },
+    {
+      "path": "tools/e2e-math-relations.mjs",
+      "sha256": "c3d9c6b8180f6b600ded8405069450e8755e89645b5dca6ba84f6cba2cc2e0d1"
+    },
+    {
+      "path": "tools/e2e-natural-input.mjs",
+      "sha256": "7d2800af657e54cb4dc82a5d009bd110ea2793fc75a0314598ce7a9877463047"
+    },
+    {
+      "path": "tools/e2e-place-input.mjs",
+      "sha256": "c14148be8d945758a5bb2b813202358a9d46a9eca8eb9f50b617f1c1fc724147"
+    },
+    {
+      "path": "tools/e2e-print-tests.mjs",
+      "sha256": "2829dd53be3b950bd0dea1e5192fcb63a900b1fe27c2d9bbdaaec3775c04c5ab"
+    },
+    {
+      "path": "tools/e2e-pwa-two-build.mjs",
+      "sha256": "8f2650d87d5e297ea0c0c6d7ad00287b86db71fcc708105d015cd442bb9934d4"
+    },
+    {
+      "path": "tools/e2e-pwa-update.mjs",
+      "sha256": "2435bc1d51a414d605da5b4bb0ac24a1492d961653c98cf8ec7a2de8fda77e7e"
+    },
+    {
+      "path": "tools/e2e-retired-modes.mjs",
+      "sha256": "46066966f19738d61996ffb42e6ede56271ea489ca3f0c93af984ea4598df70d"
+    },
+    {
+      "path": "tools/e2e-smoke.mjs",
+      "sha256": "0d86e9b424e6b0f6686f8548b1ae5e71e1871d7ab09e70f4322f894103214f58"
+    },
+    {
+      "path": "tools/e2e-study-input-settings.mjs",
+      "sha256": "11b21a4667b7079f8f4c8aa6c9144c1b593a4504d2d1cb34272e4e40d511e94f"
+    },
+    {
+      "path": "tools/e2e-written-arithmetic.mjs",
+      "sha256": "72d2266b4c551c607ff06dfd7c7f145ee7a262551d5728431c536ef81083721e"
+    },
+    {
+      "path": "tools/e2e-written-hissan-hook.mjs",
+      "sha256": "683e9d8394a830ed5b23c0ecf486e26e6e01e9bab16bf8ff6fbaa10a3cd41bb1"
+    },
+    {
+      "path": "tools/e2e-written-input.mjs",
+      "sha256": "9d0aacd9abb7cf9c437f59ca601dccfe6848d555031cc2e75b457e604f5f81ad"
+    },
+    {
+      "path": "tools/e2e-written-routes.mjs",
+      "sha256": "3eba512be0c9067c4e0e0e4a70705639893663278b577a0d8e999140d7aa15cb"
+    },
+    {
+      "path": "tools/expression-audio/audio-analysis.mjs",
+      "sha256": "c8558d6eb85b6cff94ae9f46f4b727b77b6021c4a305acd6e5402401cb57aa6a"
+    },
+    {
+      "path": "tools/expression-audio/audio-analysis.test.mjs",
+      "sha256": "4006c10b4ecf13a041bd9e9e1f5c4568709abf81cb322a182e007559f3672582"
+    },
+    {
+      "path": "tools/expression-audio/audio-probe.mjs",
+      "sha256": "066045273164dd66c9f44bbe5a6971f9fba951df4f7dc87af33f994c8afbc5f8"
+    },
+    {
+      "path": "tools/expression-audio/expression-audio-phase.mjs",
+      "sha256": "9296cb48cc809d6432a05da64502ae6b51b3954ba606b2c12147e90617cfc470"
+    },
+    {
+      "path": "tools/generate-sounds.py",
+      "sha256": "abc85eceee817d4e680e4558ec9602cf5ced36f3005a7d9ecfcfc1b688b2a28f"
+    },
+    {
+      "path": "tools/import_english.cjs",
+      "sha256": "fc4e11154b5dfc05345b7e3f1d594c7320fa97b49c807196f9c68371e07c7cbe"
+    },
+    {
+      "path": "tools/island-e2e-helpers.mjs",
+      "sha256": "f30b66bafb2b59ea48da87360ea22711e8cc44d66731687b3b4df8c0250466d1"
+    },
+    {
+      "path": "tools/island-e2e-progression.mjs",
+      "sha256": "40a6fae5cc8b5f03e828ce05ea539e1e2d380343b25f8bd04709ac414a381895"
+    },
+    {
+      "path": "tools/island-expression-audio-focused-audit.mjs",
+      "sha256": "40a7b117eec2b539bf18abf220d8ae271cdf776cce056a6b3a5528b8bcef5eab"
+    },
+    {
+      "path": "tools/island-expression-audio-focused-audit.test.mjs",
+      "sha256": "3531440cc1135ab05d1f381835b364d7c4d48df5305d0e8b5f4e1e3845d89f05"
+    },
+    {
+      "path": "tools/island-expression-visual-matrix-audit.mjs",
+      "sha256": "97e267a8d2f854a8cdf09c0283f6789e44424734b6c159695823469b4065fb17"
+    },
+    {
+      "path": "tools/island-expression-visual-matrix-audit.test.mjs",
+      "sha256": "811f63d3ebe83893c10ec5fa1550116095513950850bfe5b3fd0232eaf3414aa"
+    },
+    {
+      "path": "tools/island-learning-checks.mjs",
+      "sha256": "aa3becfbf753e31839df5162d2e30ddbdfc516e804250248423fa0d723dd4905"
+    },
+    {
+      "path": "tools/island-learning-fixtures.mjs",
+      "sha256": "a787fa26c4de5602e78fdc44cccf160954630c204a3d14e6503923e17d69b03f"
+    },
+    {
+      "path": "tools/island-menu-checks.mjs",
+      "sha256": "1c807644b1205d1ebd619eeff0333ba31c508a2b6e4b377e989266b469832c69"
+    },
+    {
+      "path": "tools/island-onboarding-checks.mjs",
+      "sha256": "f318bb1cf5f5c5887ceb388f9b70380ddb23f5c3681d625407296828e805d2f4"
+    },
+    {
+      "path": "tools/island-qualified-audit.mjs",
+      "sha256": "329bd36cc6508c74473ff93e6fe0093818a5a82a83a7be0a6ce58c61f5354714"
+    },
+    {
+      "path": "tools/island-qualified-audit.test.mjs",
+      "sha256": "1f8a44a0750ec29dd40a3ec1fa6dbc414eee75a329111d3286c0042362338df2"
+    },
+    {
+      "path": "tools/island-reward-goal-audit.mjs",
+      "sha256": "51c6b436d2c48141b2dc536004ee650c7f769d68ddd3ec2e5cf5cc8b496b6112"
+    },
+    {
+      "path": "tools/island-reward-goal-audit.test.mjs",
+      "sha256": "9340a6b6de14c19af035fd77f548bff46dc61d67b5441a7afa81874b22cf620d"
+    },
+    {
+      "path": "tools/island-support-checks.mjs",
+      "sha256": "020411a517e62288acdb9fae69d7ffa34103d83d3a592fb25997d950988ced71"
+    },
+    {
+      "path": "tools/learning-answer-readiness-probe.tsx",
+      "sha256": "e267181977b4b46d9b190d7520e936dfa0236f7bfb4e7332166a0d98f2c37007"
+    },
+    {
+      "path": "tools/learning-unit-report.mjs",
+      "sha256": "ffeedc37e44fd2d5fd887b3f80a79e8f93eb6c9d7a4cdcd56e1f426592bf788f"
+    },
+    {
+      "path": "tools/learning-unit-report.test.mjs",
+      "sha256": "1e4069e0403c801a1d0479b1e29b0a6527ddfe44a85d5673d06029ebe6cbe59f"
+    },
+    {
+      "path": "tools/run-local-visual-audit.mjs",
+      "sha256": "4a2f9cca4658d83972c1f00d0c3254953b3f540cd10a66761c3f7c56788a4616"
+    },
+    {
+      "path": "tools/study-input-settings-probe.tsx",
+      "sha256": "fce9a2d3aab366d2eb67b1fd13c145946959aa25d716f3739b9c2e48a5479fe8"
+    },
+    {
+      "path": "tools/written-hissan-hook-probe.tsx",
+      "sha256": "68f512b4c4b6366e8ce4d7ce368194a413c6a950fb74de472d22928039ceee7e"
+    },
+    {
+      "path": "tsconfig.app.json",
+      "sha256": "2a72792ef92b9fa0e1f5873450d98f0b3584d0ffe924af131d71c5a74b736e47"
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "9ecd7170825f3ba28faa0014d7ef13ca0e891a3fc580debf65011d5b9aab5ee7"
+    },
+    {
+      "path": "tsconfig.node.json",
+      "sha256": "8786ac1429c85cec32d21aaa4c36633faee202e1d7e3e2868fc3fb456952fd20"
+    },
+    {
+      "path": "vite.config.ts",
+      "sha256": "88b1ff63d53a60a952572fb26f2eedb2dfff663a04f22bfdaefb11ff318cd722"
+    }
+  ]
+}

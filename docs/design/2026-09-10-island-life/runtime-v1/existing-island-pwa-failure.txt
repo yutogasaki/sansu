@@ -1,0 +1,13 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('button', { name: 'ほかの あそび', exact: true })[22m
+
+    at /private/tmp/sansu-island-life-final-v1/tools/e2e-island-pwa.mjs:335:39 {
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0

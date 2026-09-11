@@ -1,0 +1,13 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5243/
+Call log:
+[2m  - navigating to "http://127.0.0.1:5243/", waiting until "load"[22m
+
+    at /Users/yutogasaki/Projects/sansu/tools/e2e-island-life-interactions.mjs:32:15 {
+  name: 'Error'
+}
+
+Node.js v22.22.3

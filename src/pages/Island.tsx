@@ -1,3 +1,6 @@
+import { lazy, Suspense } from 'react';
+import { useIslandLife } from '../components/island/life/useIslandLife';
+import { lifeEnabled } from '../domain/islandLife/model';
 import { IslandDirectActions } from '../components/island/IslandDirectActions';
 import type { IslandDirectTarget } from '../components/island/islandDirectTargets';
 import { IslandHelp, IslandTutorial, TUTORIAL_TOPICS } from '../components/island/tutorial/IslandTutorial';
@@ -107,6 +110,8 @@ function sharingHint(items: IslandItem[], selectedId: string) {
     return pair?.hint;
 }
 
+const IslandLife = lazy(() => import('../components/island/life/IslandLife'));
+
 function IslandSession({ profile }: { profile: UserProfile }) {
     const navigate = useNavigate();
     const location = useLocation();
@@ -136,6 +141,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     // the route here would incorrectly allow a deferred PWA reload mid-receipt.
     const learningScreen = plan?.status === 'completed' && isFirstIslandPlan(plan) && !plan.growthTarget ? 'reward' : 'learning';
     const screen = navigation ? navigation.learning ? learningScreen : navigation.view : localScreen;
+    const lifeControls = useIslandLife(profile.id, active && screen === 'home');
     const setScreen = navigation?.setView ?? setLocalScreen;
     const [directSelection, setDirectSelection] = useState<{ target: IslandDirectTarget; entry: string; preview: boolean }>();
     useEffect(() => { if (screen !== 'home' || !active) setDirectSelection(undefined); }, [screen, active]);
@@ -206,7 +212,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         Boolean(error || loadError || nextPlanError));
     const comparisonDisabled = busy && busyKind !== 'discovery';
     const [tutorialStageReady, setTutorialStageReady] = useState(false);
-    const tutorial = useIslandTutorial({ profileId: profile.id, eligible: profile.islandTutorialVersion === 1 && (screen !== 'play' || Boolean(island?.items.some(item => item.position))), screen, active,
+    const tutorial = useIslandTutorial({ profileId: profile.id, eligible: !lifeEnabled() && profile.islandTutorialVersion === 1 && (screen !== 'play' || Boolean(island?.items.some(item => item.position))), screen, active,
         allowed: !opening && !busy && !preparingLearning && !error && !loadError && !nextPlanError && !homeMenuOpen
             && (tutorialStageReady || screen === 'inventory' || screen === 'home' && homeJourneyEnabled()) && !homeJourneyGrowthAt && !(screen === 'play' && playMessage),
         grown: Boolean(island?.completedSets), canView: !homeJourneyEnabled() });
@@ -610,7 +616,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const photoDisplayId = SHARED_DISPLAY_IDS.find(id => photoTargetId === `display-${id}` && island.sharedMemories?.displays[id]);
     const photoDisplay = photoDisplayId ? island.sharedMemories?.displays[photoDisplayId] : undefined;
     const keepsakeRoomActive = !preparingLearning && (screen === 'keepsakes' || screen === 'camera' && photoTargetId === 'keepsakes');
-    const homeJourneyScene = homeJourneyEnabled() && (screen === 'home' || screen === 'keepsakes'
+    const homeJourneyScene = !lifeEnabled() && homeJourneyEnabled() && (screen === 'home' || screen === 'keepsakes'
         || screen === 'camera' && (photoOrigin === 'home' || photoOrigin === 'keepsakes'));
     const photoTargets = [{ id: 'island', label: 'しまぜんぶ' }, ...photoResidents.map(id => ({ id: `resident-${id}`, label: experienceState.residents[id].name })),
         ...(['play', 'showcase'].includes(photoOrigin) ? [{ id: 'current', label: 'いまの けしき' }] : []),
@@ -643,6 +649,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         </header>}
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
+        {active && screen === 'home' && lifeEnabled() && <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandLife controls={lifeControls} onLearn={() => void begin()} onHome={enterHouse} disabled={busy || preparingLearning} /></Suspense>}
         {active && homeJourneyScene && <HomeJourneyPreview key={profile.id} state={island.homeJourney}
             room={keepsakeRoomActive ? { state: island.learningKeepsakes, completedSets: island.completedSets, selectedId: keepsakeFocus, challengeDisplayed: challengeSummary?.displayed } : undefined}
             onHomeEnter={!busy && screen === 'home' ? enterHouse : undefined}
@@ -653,7 +660,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
             } : undefined}
             photographing={screen === 'camera'} photoRequestId={screen === 'camera' ? photos.requestId : undefined} onPhoto={photos.consume}
             growthAt={homeJourneyGrowthAt} onGrowthShown={() => setHomeJourneyGrowthAt(undefined)} />}
-        {active && !homeJourneyScene && !['help', 'album', 'photos', 'inventory', 'challenge'].includes(screen) && <IslandStage onTutorialReady={setTutorialStageReady} onCameraPractice={() => tutorial.practice('view')} closeHomeView={screen === 'home'} compactCameraControls={screen === 'home' || screen === 'play'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
+        {active && !(lifeEnabled() && screen === 'home') && !homeJourneyScene && !['help', 'album', 'photos', 'inventory', 'challenge'].includes(screen) && <IslandStage onTutorialReady={setTutorialStageReady} onCameraPractice={() => tutorial.practice('view')} closeHomeView={screen === 'home'} compactCameraControls={screen === 'home' || screen === 'play'} items={stageIsland.items} completedSets={island.completedSets} pulse={pulse} learning={learning}
             challengeDisplayed={challengeSummary?.displayed}
             directInteractions={screen === 'home' && !busy && !homeMenuOpen && !tutorial.current && !direct?.preview}
             directPlaySelection={direct?.target.kind === 'resident'}
@@ -911,7 +918,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
                     onPoint={point => { setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPlacementSuggestionId(undefined); setPreview({ ...preview, position: point }); }}
                     onRotate={() => { setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPlacementSuggestionId(undefined); setPreview({ ...preview, rotation: preview.rotation + Math.PI / 2 }); }}
                     onSave={savePlacement} onStore={() => { setFurniturePlacementSearch(undefined); void place(true); }}
-                    onCancel={cancelPlacement} onAppearance={level => void appearance(level)} /> : direct && !homeMenuOpen && navigation ? null : <section className="island-home-controls">
+                    onCancel={cancelPlacement} onAppearance={level => void appearance(level)} /> : lifeEnabled() || direct && !homeMenuOpen && navigation ? null : <section className="island-home-controls">
                     {feedback && <p className="island-home-feedback" role="status">{feedback}</p>}
 
                     {!navigation && <button className="island-primary island-start" disabled={busy} onClick={() => void begin()}>{island.pendingPlanId ? 'つづきから とく' : 'まなぶ'}<ArrowRight size={22} /></button>}

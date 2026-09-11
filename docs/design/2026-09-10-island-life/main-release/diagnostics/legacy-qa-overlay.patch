@@ -1,0 +1,179 @@
+--- a/tools/e2e-island.mjs
++++ b/tools/e2e-island.mjs
+@@ -1,3 +1,4 @@
++import { openIslandMenu } from './island-menu-checks.mjs';
+ import { chromium } from 'playwright';
+ import { promises as fs } from 'node:fs';
+ import assert from 'node:assert/strict';
+@@ -53,8 +54,8 @@
+     await capture(page, `${prefix}-second-section-growing`);
+     const bench = state.island.items.find(item => item.id === 'living-bench');
+     assert(bench?.position, 'A usable bench is placed automatically');
+-    await activate(button(page, 'しまのメニュー'), touch);
+-    await activate(button(page, 'もちもの'), touch); await waitMode(page, 'inventory');
++    await openIslandMenu(page, 'arrange', touch);
++    await activate(button(page, 'もちものを おく'), touch); await waitMode(page, 'inventory');
+     await capture(page, `${prefix}-inventory`);
+     await activate(page.getByRole('button', { name: /^ベンチ \d+を うごかす$/ }), touch);
+     await waitMode(page, 'placement');
+@@ -74,8 +75,8 @@
+     await activate(page.locator('.island-start'), touch); await waitMode(page, 'learning');
+     assert.deepEqual((await readNative(page, profileId)).island.items.find(item => item.id === bench.id), moved);
+     await activate(button(page, 'とじる'), touch); await waitMode(page, 'home');
+-    await activate(button(page, 'しまのメニュー'), touch);
+-    await activate(button(page, 'もちもの'), touch);
++    await openIslandMenu(page, 'arrange', touch);
++    await activate(button(page, 'もちものを おく'), touch);
+     await activate(page.getByRole('button', { name: /^ベンチ \d+を うごかす$/ }), touch);
+     await waitMode(page, 'placement');
+     await activate(button(page, 'いまは しまっておく'), touch); await waitMode(page, 'home');
+@@ -227,7 +228,12 @@
+             assert.equal(state.island.completedSets, 0);
+             assert.equal(state.plan.slots.length, 3, 'A new island reserves three real introductory problems before answering');
+             if (scenario.skill) assert.equal(state.plan.slots[0].problem.categoryId, scenario.skill, 'The real planner respects Due');
+-            assert.equal(await page.locator('.park-answer').getAttribute('data-input-type'), scenario.type);
++            if (scenario.type === 'multi-number') assert.equal(state.plan.slots[0].problem.inputType, 'multi-number');
++            const presentedType = scenario.type === 'multi-number' ? await page.evaluate(async problem => {
++                const { integerFractionProblem } = await import('/src/domain/math/fractionInput.ts');
++                return integerFractionProblem(problem).inputType;
++            }, state.plan.slots[0].problem) : scenario.type;
++            assert.equal(await page.locator('.park-answer').getAttribute('data-input-type'), presentedType);
+             await assertKeypad(page, !scenario.complex);
+             await capture(page, `${scenario.name}-learning`);
+             const wrong = await answerUI(page, state.plan, { incorrect: true, touch: scenario.touch });
+@@ -280,6 +286,7 @@
+             console.log(`PASS ${scenario.name}: ${JSON.stringify(metrics)}`);
+         } catch (error) {
+             await page.screenshot({ path: `${out}/${scenario.name}-failure.png`, animations: 'disabled' }).catch(() => undefined);
++            await fs.writeFile(`${out}/${scenario.name}-failure-state.json`, JSON.stringify(await readNative(page).catch(() => null), null, 2));
+             report.scenarios.push({ ...scenario, passed: false, error: error.stack, pageErrors: errors });
+             throw error;
+         } finally { await context.close(); }
+--- a/tools/island-e2e-progression.mjs
++++ b/tools/island-e2e-progression.mjs
+@@ -1,5 +1,6 @@
+ import assert from 'node:assert/strict';
+ import { writeFile } from 'node:fs/promises';
++import { openIslandMenu, closeIslandAlbumHome } from './island-menu-checks.mjs';
+ import { attempt } from './island-learning-checks.mjs';
+ import { answerUI, button, readNative, runtimeMetadata, seedDev, waitMode, waitReady } from './island-e2e-helpers.mjs';
+ 
+@@ -95,13 +96,12 @@
+                         assert.match(await preview.innerText(), /しまが ひろがるよ/);
+                     } else assert.equal(await preview.count(), 0, 'Expansion is previewed only one section before a maturity that opens land');
+                     if (major) {
+-                        await button(page, 'しまのメニュー').click();
+                         await page.locator('.island-growth-return').click(); await waitMode(page, 'album');
+                         const habitat = mature <= 2 ? 'all' : targetHabitat;
+                         assert.equal(await page.locator('.island-album-compare').getAttribute('data-comparison-habitat'), habitat);
+                         await page.locator('[data-memory-current] [data-renderer="three"]').waitFor();
+                         await capture(page, `${prefix}-${sequence}-major-comparison`);
+-                        await button(page, 'アルバムを とじる').click(); await waitMode(page, 'home');
++                        await closeIslandAlbumHome(page);
+                     }
+                     const stage = page.locator('[data-renderer="three"]');
+                     assert.equal(await stage.getAttribute('data-expanded'), String(mature >= 1));
+@@ -130,7 +130,7 @@
+             assert.deepEqual(state.island.growth.progress, beforeVisit.island.growth.progress);
+             await capture(page, `${prefix}-autonomous-life`);
+             for (const name of ['ひがし', 'にし', 'にわ', 'しまぜんぶ']) {
+-                await button(page, 'しまのメニュー').click();
++                await openIslandMenu(page, 'arrange');
+                 await button(page, name).click();
+                 await button(page, 'しまのメニューを とじる').click();
+                 await capture(page, `${prefix}-district-${name}`);
+@@ -138,8 +138,9 @@
+             state = await readNative(page, profileId);
+             assert(state.island.growth.discoveries.length > 0, 'District viewing preserves observed facts');
+             await page.locator(`.island-page[data-discovery-count="${state.island.growth.discoveries.length}"]`).waitFor();
+-            await button(page, 'しまのメニュー').click();
+-            await button(page, 'アルバム').click(); await waitMode(page, 'album');
++            await openIslandMenu(page);
++            await page.locator('[data-home-action=keepsakes]').click(); await waitMode(page, 'keepsakes');
++            await page.locator('[data-keepsake-action=album]').click(); await waitMode(page, 'album');
+             await page.locator('[data-memory-id] [data-renderer="three"]').waitFor();
+             await page.locator('[data-memory-current] [data-renderer="three"]').waitFor();
+             assert.equal(await page.locator('[data-renderer="three"]').count(), 2);
+@@ -180,8 +181,8 @@
+             }, discoveryId, { timeout: 60000 });
+             await capture(page, `${prefix}-discovery-replay`);
+             // Replay closes to its actual caller before the album closes home.
+-            await button(page, 'あそびを とじる').click(); await waitMode(page, 'album');
+-            await button(page, 'アルバムを とじる').click(); await waitMode(page, 'home');
++            await button(page, 'あそびから もどる').click(); await waitMode(page, 'album');
++            await closeIslandAlbumHome(page);
+             const matured = (await readNative(page, profileId)).island;
+             await page.locator('.island-start').click(); await waitMode(page, 'learning');
+             state = await readNative(page, profileId);
+@@ -198,8 +199,8 @@
+             // Optional customization is checked after maturity, so it cannot
+             // supply the placements or growth the normal loop just proved.
+             await button(page, 'とじる').click(); await waitMode(page, 'home');
+-            await button(page, 'しまのメニュー').click();
+-            await button(page, 'もちもの').click(); await waitMode(page, 'inventory');
++            await openIslandMenu(page, 'arrange');
++            await button(page, 'もちものを おく').click(); await waitMode(page, 'inventory');
+             await page.getByRole('button', { name: /^ひかる おはな \d+を うごかす$/ }).click();
+             await waitMode(page, 'placement');
+             await button(page, 'はじめの すがた').click();
+@@ -217,15 +218,15 @@
+             await capture(page, `${prefix}-customized-learning-resumed`);
+             // The expanded shoreline is usable land, not only a larger drawing.
+             await button(page, 'とじる').click(); await waitMode(page, 'home');
+-            await button(page, 'しまのメニュー').click();
+-            await button(page, 'もちもの').click(); await waitMode(page, 'inventory');
++            await openIslandMenu(page, 'arrange');
++            await button(page, 'もちものを おく').click(); await waitMode(page, 'inventory');
+             await page.getByRole('button', { name: /^ひかる おはな \d+を うごかす$/ }).click();
+             await waitMode(page, 'placement');
+             for (let step = 0; step < 32; step++) await button(page, 'みぎへ').click();
+             await button(page, 'ここに おく').click(); await waitMode(page, 'home');
+             const expandedPlacement = await readNative(page, profileId);
+             assert.deepEqual(expandedPlacement.island.items.find(item => item.id === 'starter-flower').position, { x: 9.25, z: .8 });
+-            await button(page, 'しまのメニュー').click(); await button(page, 'ひがし').click();
++            await openIslandMenu(page, 'arrange'); await button(page, 'ひがし').click();
+             await button(page, 'しまのメニューを とじる').click(); await capture(page, `${prefix}-expanded-land-placement`);
+             await page.reload(); await waitReady(page);
+             assert.deepEqual((await readNative(page, profileId)).island.items, expandedPlacement.island.items);
+--- a/tools/island-e2e-helpers.mjs
++++ b/tools/island-e2e-helpers.mjs
+@@ -104,8 +104,11 @@
+     const slot = plan.slots[plan.cursor];
+     const answer = dev ? await page.evaluate(async slot => {
+         const { parkHissanGrid } = await import('/src/domain/park/learning.ts');
++        const { writtenInputOrder } = await import('/src/domain/math/writtenInput.ts');
++        const { integerFractionProblem } = await import('/src/domain/math/fractionInput.ts');
+         const grid = parkHissanGrid(slot.problem);
+-        return grid ? grid.steps[slot.hissanStep || 0].correctValues : slot.problem.correctAnswer;
++        const step = grid?.steps[slot.hissanStep || 0];
++        return step ? writtenInputOrder(step).map(index => step.correctValues[index]) : integerFractionProblem(slot.problem).correctAnswer;
+     }, slot) : slot.problem.correctAnswer;
+     const inputType = await page.locator('.park-answer').getAttribute('data-input-type');
+     const automatic = await page.locator('.park-answer').getAttribute('data-answer-completion') === 'automatic';
+@@ -163,6 +166,7 @@
+     assert.deepEqual(saved.slots.map(slot => slot.problem), plan.slots.map(slot => slot.problem));
+     const events = next.islandEvents.filter(event => event.type === 'answer' && !before.islandEvents.some(old => old.id === event.id));
+     assert.equal(events.length, 1); assert.equal(events[0].id, JSON.stringify(['island-action-v1', plan.profileId, plan.id, plan.revision]));
++    assert.equal(events[0].result === 'incorrect', incorrect, 'The entered UI answer must have the intended correctness');
+     if (timing.autoContinued) {
+         assert.equal(saved.status, 'completed'); assert.equal(saved.cursor, saved.slots.length);
+         assert.equal(next.island.completedSets, before.island.completedSets + 1);
+--- /dev/null
++++ b/tools/island-menu-checks.mjs
+@@ -0,0 +1,16 @@
++import { button, waitMode } from './island-e2e-helpers.mjs';
++
++/** Open actual disclosure controls before choosing an action; never force a covered click. */
++export async function openIslandMenu(page, group, touch = false) {
++    const activate = control => touch ? control.tap() : control.click();
++    await activate(button(page, 'しまのメニュー'));
++    if (group) {
++        const details = page.locator(`dialog[open] [data-home-group="${group}"]`);
++        if (!await details.evaluate(element => element.open)) await activate(details.locator('summary'));
++    }
++}
++export async function closeIslandAlbumHome(page) {
++    await button(page, 'アルバムから もどる').click();
++    if (await page.locator('.island-page[data-mode="keepsakes"]').count()) await button(page, 'しまへ もどる').click();
++    await waitMode(page, 'home');
++}

@@ -1,0 +1,97 @@
+{
+  "candidate": "island-life-placement-v3",
+  "implementation": "interaction-v4-closed",
+  "appSourceHash": "100de24714efa14643bf4504f02fe167f0256fe276e178ba80969a88168fa387",
+  "rootApplicationInputsMatch": true,
+  "core": {
+    "passed": true,
+    "files": 327,
+    "tests": 3478
+  },
+  "focused": {
+    "passed": true,
+    "cases": 11
+  },
+  "interactions": {
+    "passed": true,
+    "scenarios": 2,
+    "failureAfterExitCovered": true,
+    "fixture": "Explicit credits and delayed/failed read in disposable DEV preview database"
+  },
+  "life": {
+    "passed": true,
+    "scenarios": 2,
+    "humanN": 0,
+    "time": "Explicit DEV advance, not overnight"
+  },
+  "productionGuard": {
+    "passed": true
+  },
+  "priorIntegrationRegression": {
+    "sourceHash": "0730258f83e36ff64a4249b3549ac9edbbfcb91d9f2caf4cb071719497fd4401",
+    "changesToFinal": "One ownership condition after failed preceding read; corresponding unit and diagnostic tests. See source-boundary.json.",
+    "legacyIsland": {
+      "passed": true,
+      "scenarios": 11
+    },
+    "smoke": {
+      "passed": true,
+      "scenarios": 31
+    },
+    "classicPwa": {
+      "passed": true,
+      "scenarios": 4
+    },
+    "islandPwa": {
+      "passed": true,
+      "protected": 8,
+      "realOffline": true
+    },
+    "throughput": {
+      "passed": true,
+      "runs": 80,
+      "eligible": true,
+      "comparisons": [
+        {
+          "layout": "phone",
+          "studyMedianProblemsPerMinute": 127.44943060260766,
+          "islandMedianProblemsPerMinute": 298.00338398795407,
+          "allCorrectIslandToStudyRatio": 2.338208829799643,
+          "correctOperableP95Ms": 209.30000001192093,
+          "incorrectRetryP95Ms": 216.40000000596046,
+          "correctSamples": 200,
+          "incorrectSamples": 20,
+          "automaticSectionTransitionMedianMs": 206.05000000447035,
+          "automaticSectionTransitionSamples": 10,
+          "sectionBoundaryP95Ms": 209,
+          "sectionBoundarySamples": 20,
+          "rawStudyDurationMedianMs": 4707.75,
+          "rawIslandDurationMedianMs": 2013.3999999985099
+        },
+        {
+          "layout": "tablet",
+          "studyMedianProblemsPerMinute": 125.5431124723744,
+          "islandMedianProblemsPerMinute": 289.416429805965,
+          "allCorrectIslandToStudyRatio": 2.3053150754857277,
+          "correctOperableP95Ms": 218.90000000596046,
+          "incorrectRetryP95Ms": 228.90000000596046,
+          "correctSamples": 200,
+          "incorrectSamples": 20,
+          "automaticSectionTransitionMedianMs": 207.89999999850988,
+          "automaticSectionTransitionSamples": 10,
+          "sectionBoundaryP95Ms": 216.1000000089407,
+          "sectionBoundarySamples": 20,
+          "rawStudyDurationMedianMs": 4779.25,
+          "rawIslandDurationMedianMs": 2073.1999999955297
+        }
+      ]
+    }
+  },
+  "visual": "HOLD: unchanged v3 candidate, prior author review 25/60",
+  "silentUnderstanding": "HOLD: child N=0",
+  "runtime": "PASS for scoped DEV interactions; regression versions separate",
+  "productionRelease": "HOLD: migration, art and balance pending",
+  "docs": {
+    "passed": true
+  }
+}

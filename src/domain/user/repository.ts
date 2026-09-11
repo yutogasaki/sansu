@@ -196,6 +196,8 @@ export const deleteProfileOwnedIndexedDbRows = async (
 ]);
 
 export const deleteProfile = async (id: string) => {
+    const { deleteLifeOwner } = await import('../islandLife/repository');
+    await deleteLifeOwner(id);
     let nextActive: string | null = null;
 
     await db.transaction(

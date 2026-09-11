@@ -1,0 +1,38 @@
+PASS growth-phone: 48 real UI sections, all four mature habitats, stable7items, autonomous discovery, 3D history and replay
+PASS growth-tablet: 48 real UI sections, all four mature habitats, stable7items, autonomous discovery, 3D history and replay
+PASS actual WebGL loss, learning in fallback, Three retry and subsequent answer
+PASS normal Island signup and first automatic growth
+PASS phone-keyboard: {"correctP95Ms":217.79999999701977,"incorrectP95Ms":198.20000000298023,"correctSamples":21,"incorrectSamples":1}
+PASS phone-touch: {"correctP95Ms":216.40000000596046,"incorrectP95Ms":196.09999999403954,"correctSamples":21,"incorrectSamples":1}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'number'
+- 'multi-number'
+
+    at file:///private/tmp/sansu-island-life-v3/tools/e2e-island.mjs:231:20 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'number',
+  expected: 'multi-number',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.0
+
+PASS tablet-fraction: {"correctP95Ms":null,"incorrectP95Ms":200.5,"correctSamples":0,"incorrectSamples":1}
+
+PASS phone-hissan: {"correctP95Ms":null,"incorrectP95Ms":204.79999999701977,"correctSamples":0,"incorrectSamples":1}
+
+PASS phone-math-choice: {"correctP95Ms":209.20000000298023,"incorrectP95Ms":208,"correctSamples":1,"incorrectSamples":1}
+
+PASS tablet-vocabulary: {"correctP95Ms":null,"incorrectP95Ms":208.40000000596046,"correctSamples":0,"incorrectSamples":1}
+
+PASS tablet-reduced: {"correctP95Ms":229.20000000298023,"incorrectP95Ms":210.09999999403954,"correctSamples":3,"incorrectSamples":1}
+
+PASS phone-first-learning: {"correctP95Ms":223.5,"incorrectP95Ms":212,"correctSamples":3,"incorrectSamples":1}

@@ -1,0 +1,37 @@
+import { createRequire } from 'node:module';
+import { writeFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const { chromium } = createRequire('/Users/yutogasaki/Projects/sansu/package.json')('playwright');
+const out = '/Users/yutogasaki/Projects/sansu/docs/design/2026-09-10-island-life/runtime-v3';
+const browser = await chromium.launch();
+try {
+ const page = await browser.newPage({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
+ await page.goto('http://127.0.0.1:5243/');
+ for (const name of ['まなぶ','小学 1 年生','さんすう','足し算まで']) await page.getByRole('button',{name,exact:true}).first().click();
+ await page.locator('.island-learning[data-input-ready="true"]').waitFor();
+ await page.getByRole('button',{name:'とじる',exact:true}).click();
+ await page.locator('.life-world[data-rendered="true"]').waitFor();
+ await page.evaluate(async()=>{
+  const {lifeDb}=await import('/src/domain/islandLife/repository.ts');
+  const {learningDay}=await import('/src/domain/islandLife/model.ts');
+  const r=await lifeDb.worlds.toCollection().first();
+  r.credits=Array.from({length:4},(_,i)=>({id:`explicit-keyboard-fixture-${i}`,at:r.now,day:learningDay(r.now)}));
+  await lifeDb.worlds.put(r);
+ });
+ await page.reload(); await page.locator('.life-world[data-rendered="true"]').waitFor();
+ const bench=page.locator('[data-life-buy="bench"]');await bench.focus();await bench.press('Enter');
+ await page.locator('.life-placement').waitFor();
+ await page.locator('.life-world canvas').evaluate(c=>c.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext());
+ await page.getByText('景色をひらけなかったよ。下の一覧から選べるよ。',{exact:true}).waitFor();
+ const summary=page.locator('.life-placement summary');await summary.focus();await summary.press('Enter');
+ assert(await page.locator('[data-life-cell="4,4"]').isDisabled());
+ const cell=page.locator('[data-life-cell="4,2"]');await cell.focus();await cell.press('Enter');
+ const confirm=page.getByRole('button',{name:'ここに おく',exact:true});assert(await confirm.isEnabled());
+ const cancel=page.locator('.life-placement').getByRole('button',{name:'やめる',exact:true});await cancel.focus();await cancel.press('Enter');
+ assert.equal(await page.locator('.life-placement').count(),0);
+ assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'),'8');
+ const actions=await page.evaluate(async()=>{const {lifeDb}=await import('/src/domain/islandLife/repository.ts');return (await lifeDb.worlds.toCollection().first()).actions.length;});
+ assert.equal(actions,0);
+ await writeFile(`${out}/keyboard-fallback.json`,JSON.stringify({target:page.url(),viewport:{width:390,height:844},fixture:'Explicit four credits in a disposable DEV preview only; no normal learning acquisition claim.',contextLoss:'WEBGL_lose_context fault injection',keyboard:'Focused native controls then Enter: catalog, details, available cell, cancel',invalidCellDisabled:true,cancelPreservesCurrencyAndActions:true,pass:true},null,2));
+ console.log('PASS keyboard placement and cancel with actual WebGL context loss; explicit fixture');
+} finally {await browser.close();}

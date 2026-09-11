@@ -1,0 +1,14 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('button', { name: 'アルバムを とじる', exact: true })[22m
+
+    at verifyIslandProgression (/private/tmp/sansu-release-qa/tools/island-e2e-progression.mjs:104:57)
+    at async file:///private/tmp/sansu-release-qa/tools/e2e-island.mjs:110:31 {
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0

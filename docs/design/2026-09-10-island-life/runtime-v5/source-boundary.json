@@ -1,0 +1,13 @@
+{
+  "previousSource": "100de24714efa14643bf4504f02fe167f0256fe276e178ba80969a88168fa387",
+  "source": "2fb2c93bf7b3be9d11e29c3ced14d7eef32429b408ca3ccfdf34dffca21aa9ab",
+  "changes": [
+    "src/components/island/life/LifeWorld.tsx",
+    "src/components/island/life/landscape.test.ts",
+    "src/components/island/life/landscape.ts",
+    "src/components/island/life/scene.ts",
+    "src/domain/islandLife/model.ts",
+    "tools/e2e-island-life.mjs"
+  ],
+  "unchanged": "Learning, routes, storage, rewards, simulation, resident movement and seating. Camera and surface presentation changed; QA projects using the actual camera matrices."
+}

@@ -1,0 +1,33 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ❯ src/components/island/life/useIslandLife.test.ts (11 tests | 1 failed) 602ms
+   × island life background refresh and explicit choices > does not restore a canceled purchase to retry when the background read fails after leaving and returning 57ms
+     → expected [ { …(3) } ] to have a length of +0 but got 1
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > does not restore a canceled purchase to retry when the background read fails after leaving and returning
+AssertionError: expected [ { …(3) } ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/components/island/life/useIslandLife.test.ts:82:54
+     80|         expect(await read).toBe(false); expect(await save).toBe(false);
+     81|         expect(await h.api.retry()).toBe(true);
+     82|         expect((await h.d.worlds.get('a'))!.actions).toHaveLength(0);
+       |                                                      ^
+     83|     });
+     84|     it.each(['leave', 'leave-and-return', 'profile', 'unmount'] as con…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 10 passed (11)
+   Start at  14:05:12
+   Duration  924ms (transform 52ms, setup 0ms, collect 76ms, tests 602ms, environment 0ms, prepare 38ms)
+

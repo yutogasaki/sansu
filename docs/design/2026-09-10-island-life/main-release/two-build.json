@@ -1,0 +1,51 @@
+{
+  "target": "http://127.0.0.1:59392",
+  "oldVersion": {
+    "version": "development-local:73a0082c-b603-4166-b7bb-910c33d9d9d7",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": false,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "newVersion": {
+    "version": "development-local:28b5a2d4-d911-4d31-b0eb-986a4536be2a",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": false,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "browser": "145.0.7632.6",
+  "scenarios": [
+    {
+      "name": "real worker old→new; protected form; stored data; one reload",
+      "pass": true
+    },
+    {
+      "name": "stale SW; disconnect after detection; offline reload; network recovery; caches retained",
+      "pass": true
+    }
+  ],
+  "pass": true
+}

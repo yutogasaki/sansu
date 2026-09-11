@@ -1,0 +1,23 @@
+PASS growth-phone: 48 real UI sections, all four mature habitats, stable7items, autonomous discovery, 3D history and replay
+PASS growth-tablet: 47 real UI sections, all four mature habitats, stable7items, autonomous discovery, 3D history and replay
+PASS actual WebGL loss, learning in fallback, Three retry and subsequent answer
+PASS normal Island signup and first automatic growth
+PASS phone-keyboard: {"correctP95Ms":212.5,"incorrectP95Ms":195.20000000298023,"correctSamples":21,"incorrectSamples":1}
+PASS phone-touch: {"correctP95Ms":212.39999999850988,"incorrectP95Ms":196.19999999552965,"correctSamples":21,"incorrectSamples":1}
+PASS tablet-fraction: {"correctP95Ms":null,"incorrectP95Ms":198.10000000149012,"correctSamples":0,"incorrectSamples":1}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Learning section must terminate
+    at finishSet (file:///private/tmp/sansu-island-life-qa-v2/tools/e2e-island.mjs:25:9)
+    at async file:///private/tmp/sansu-island-life-qa-v2/tools/e2e-island.mjs:265:21 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

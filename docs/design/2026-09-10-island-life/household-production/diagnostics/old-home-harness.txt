@@ -1,0 +1,10 @@
+Island throughput phone 1/10 all-correct study
+Island throughput phone 1/10 all-correct island
+{
+  "output": "/tmp/sansu-life-household-throughput.json",
+  "comparisons": [],
+  "gates": {},
+  "evidence": {},
+  "pass": false,
+  "error": "page.waitForFunction: Timeout 15000ms exceeded.\n    at waitReady (/private/tmp/sansu-life-household-v1/tools/island-e2e-helpers.mjs:71:16)\n    at async runLane (/private/tmp/sansu-life-household-v1/tools/e2e-island-throughput.mjs:230:13)\n    at async file:///private/tmp/sansu-life-household-v1/tools/e2e-island-throughput.mjs:441:38"
+}

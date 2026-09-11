@@ -1,3 +1,4 @@
+import 'fake-indexeddb/auto';
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { AppData, MemoryState, UserProfile } from "../types";
 
@@ -343,7 +344,13 @@ describe("getActiveProfile", () => {
         mocks.storedAppData = appData([removed, kept], removed.id);
         mocks.localActiveId = removed.id;
 
+        const { lifeDb } = await import('../islandLife/repository');
+        const { newLife } = await import('../islandLife/model');
+        await lifeDb.worlds.bulkPut([newLife(removed.id, 100), newLife(kept.id, 100)]);
         await deleteProfile(removed.id);
+        expect(await lifeDb.worlds.get(removed.id)).toBeUndefined();
+        expect(await lifeDb.worlds.get(kept.id)).toBeDefined();
+        await lifeDb.delete();
 
         expect(mocks.appDataPut).toHaveBeenCalledWith(expect.objectContaining({
             activeProfileId: kept.id,

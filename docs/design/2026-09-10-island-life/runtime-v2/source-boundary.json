@@ -1,0 +1,10 @@
+{
+  "activitiesSource": "812edf6a957f6dfc6c8f4e4f9a31dea99cc8a16112c9dcac3f949892c35e5726",
+  "legacyRegressionSource": "a8fc5bb276c4ce314f875a0f8ad265cac42d1a3d53703f97fa86614973e4f4a9",
+  "differences": [
+    "src/components/island/life/IslandLife.tsx",
+    "src/components/island/life/life.css",
+    "tools/e2e-island-life.mjs"
+  ],
+  "scope": "Later differences are the DEV-only return-to-world scroll and its short-expression observation harness. The shared learning, legacy Island, production routing and writers are identical. Keep both sources; do not claim one shared build."
+}

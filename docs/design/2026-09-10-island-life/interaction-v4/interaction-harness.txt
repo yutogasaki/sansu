@@ -1,0 +1,100 @@
+import { chromium } from 'playwright';
+import { mkdir, writeFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import { readNative } from './island-e2e-helpers.mjs';
+const base = process.env.SANSU_ISLAND_LIFE_URL, out = process.env.SANSU_ISLAND_LIFE_OUTPUT;
+const baseline = process.env.SANSU_LIFE_INTERACTION_BASELINE === '1';
+assert(base && out, 'Specify the DEV target and fresh output directory');
+await mkdir(out, { recursive: true });
+const browser = await chromium.launch();
+const report = { target: base, baseline, fixture: 'Four explicit credits in disposable preview database, not earned learning evidence', fault: 'Hold terminalFacts before its transaction; invoke the registered 15-second callback between real mouse down/up', scenarios: [] };
+try {
+ for (const [name, viewport, reducedMotion] of [['phone', { width: 390, height: 844 }, 'no-preference'], ['tablet-reduced', { width: 768, height: 1024 }, 'reduce']]) {
+  const context = await browser.newContext({ viewport, reducedMotion }); const page = await context.newPage(); page.setDefaultTimeout(15000);
+  await page.addInitScript(() => {
+   const interval = window.setInterval.bind(window);
+   window.setInterval = (callback, delay, ...args) => { if (delay === 15000) window.__lifePoll = callback; return interval(callback, delay, ...args); };
+   window.__lifeReadHold = async () => {
+    if (!window.__armLifeRead) return;
+    window.__armLifeRead = false; window.__lifeReadHeld = true;
+    await new Promise(resolve => { window.__releaseLifeRead = resolve; });
+    window.__lifeReadHeld = false;
+    if (window.__failLifeRead) { window.__failLifeRead = false; throw new Error('診断：読み込みを再試行'); }
+   };
+  });
+  let overlayCount = 0;
+  await page.route('**/src/domain/islandLife/repository.ts', async route => {
+   const response = await route.fetch(), original = await response.text();
+   const pattern = /async function terminalFacts\(profileId, database = db\) \{/;
+   assert(pattern.test(original), 'Diagnostic must wrap only the known terminalFacts entry'); overlayCount++;
+   await route.fulfill({ response, body: original.replace(pattern, '$&\n  await window.__lifeReadHold?.();') });
+  });
+  try {
+   await page.goto(base);
+   for (const name of ['まなぶ', '小学 1 年生', 'さんすう', '足し算まで']) await page.getByRole('button', { name, exact: true }).first().click();
+   await page.locator('.island-learning[data-input-ready="true"]').waitFor();
+   await page.getByRole('button', { name: 'とじる', exact: true }).click(); await page.locator('.life-world[data-rendered="true"]').waitFor();
+   await page.evaluate(async () => {
+    const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); const { learningDay } = await import('/src/domain/islandLife/model.ts');
+    const record = await lifeDb.worlds.toCollection().first();
+    record.credits = Array.from({ length: 4 }, (_, i) => ({ id: `explicit-interaction-fixture-${i}`, at: record.now, day: learningDay(record.now) }));
+    await lifeDb.worlds.put(record);
+   });
+   await page.reload(); await page.locator('.life-world[data-rendered="true"]').waitFor();
+   const nativeBefore = await readNative(page);
+   const candidate = await page.locator('[data-life-candidate]').getAttribute('data-life-candidate');
+   const bench = page.locator('[data-life-buy="bench"]'); await bench.scrollIntoViewIfNeeded();
+   const box = await bench.boundingBox(); await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2); await page.mouse.down();
+   await page.evaluate(() => { window.__armLifeRead = true; window.__lifePoll(); });
+   await page.waitForFunction(() => window.__lifeReadHeld);
+   const enabledDuringRead = await bench.isEnabled(); await page.mouse.up();
+   if (baseline) {
+    assert.equal(enabledDuringRead, false); assert.equal(await page.locator('.life-placement').count(), 0);
+    await page.screenshot({ path: `${out}/${name}-missed-click.png` });
+    await page.evaluate(() => window.__releaseLifeRead()); await page.waitForFunction(() => !window.__lifeReadHeld);
+    assert.equal(await page.locator('.life-placement').count(), 0);
+    report.scenarios.push({ name, candidate, overlayCount, bugReproduced: true, enabledDuringRead });
+   } else {
+    assert.equal(enabledDuringRead, true); await page.locator('.life-placement').waitFor();
+    await page.locator('.life-placement summary').click(); await page.locator('[data-life-cell="4,2"]').click();
+    await page.getByRole('button', { name: 'ここに おく', exact: true }).dblclick();
+    const beforeRelease = await page.evaluate(async () => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return (await lifeDb.worlds.toCollection().first()).actions.length; });
+    assert.equal(beforeRelease, 0, 'Command waits for the earlier refresh');
+    await page.evaluate(() => window.__releaseLifeRead()); await page.locator('.life-placement').waitFor({ state: 'hidden' });
+    const saved = await page.evaluate(async () => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return lifeDb.worlds.toCollection().first(); });
+    assert.equal(saved.actions.length, 1); assert.equal(saved.actions[0].command.kind, 'bench');
+    assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'), '4'); assert.equal(await page.locator('.life-error').count(), 0);
+    await page.locator('.life-wallet').scrollIntoViewIfNeeded(); await page.screenshot({ path: `${out}/${name}-placed.png` });
+    assert.deepEqual(await readNative(page), nativeBefore);
+    const beginFlower = async () => {
+     await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'つくる', exact: true }).click();
+     await page.locator('[data-life-buy="flower"]').click(); await page.locator('.life-placement summary').click(); await page.locator('[data-life-cell="0,2"]').click();
+     await page.evaluate(() => { window.__armLifeRead = true; window.__lifePoll(); }); await page.waitForFunction(() => window.__lifeReadHeld);
+     await page.getByRole('button', { name: 'ここに おく', exact: true }).click();
+    };
+    await beginFlower(); await page.locator('.life-learn').click(); await page.locator('.island-learning[data-input-ready="true"]').waitFor();
+    await page.evaluate(() => window.__releaseLifeRead()); await page.waitForFunction(() => !window.__lifeReadHeld);
+    await page.getByRole('button', { name: 'とじる', exact: true }).click(); await page.locator('.life-world[data-rendered="true"]').waitFor();
+    const countAfterExit = await page.evaluate(async () => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return (await lifeDb.worlds.toCollection().first()).actions.length; });
+    assert.equal(countAfterExit, 1, 'Leaving for learning cancels the unstarted queued flower');
+    await beginFlower(); await page.locator('.life-learn').click(); await page.locator('.island-learning[data-input-ready="true"]').waitFor();
+    await page.getByRole('button', { name: 'とじる', exact: true }).click(); await page.locator('.life-world[data-rendered="true"]').waitFor();
+    await page.evaluate(() => { window.__failLifeRead = true; window.__releaseLifeRead(); });
+    await page.locator('.life-error').waitFor(); await page.getByRole('button', { name: 'もういちど', exact: true }).click(); await page.locator('.life-error').waitFor({ state: 'hidden' });
+    const countAfterCanceledRetry = await page.evaluate(async () => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return (await lifeDb.worlds.toCollection().first()).actions.length; });
+    assert.equal(countAfterCanceledRetry, 1, 'A failed read after leaving and returning must not resurrect the canceled flower on retry');
+    await beginFlower(); await page.evaluate(() => { window.__failLifeRead = true; window.__releaseLifeRead(); });
+    await page.locator('.life-error').waitFor(); await page.getByRole('button', { name: 'もういちど', exact: true }).click();
+    await page.locator('.life-placement').waitFor({ state: 'hidden' }); assert.equal(await page.locator('.life-error').count(), 0);
+    const countAfterRetry = await page.evaluate(async () => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return (await lifeDb.worlds.toCollection().first()).actions.length; });
+    assert.equal(countAfterRetry, 2); assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'), '2');
+    assert.deepEqual(await readNative(page), nativeBefore); await page.locator('.life-wallet').scrollIntoViewIfNeeded(); await page.screenshot({ path: `${out}/${name}-retry-completed.png` });
+    report.scenarios.push({ name, candidate, overlayCount, enabledDuringRead, queuedOnce: true, queuedDoubleClick: true, exitCancelsQueuedPurchase: true, failedReadDoesNotRestoreCanceledPurchase: true, retryCompletesPlacement: true, nativeStoresUnchanged: true, pass: true });
+   }
+   console.log(`${name}: ${baseline ? 'missed click reproduced' : 'selection and queued purchase PASS'}`);
+  } catch (error) {
+   await page.screenshot({ path: `${out}/${name}-failure.png` });
+   await writeFile(`${out}/${name}-failure.json`, JSON.stringify({ error: String(error), body: await page.locator('body').innerText() }, null, 2)); throw error;
+  } finally { await context.close(); }
+ }
+} finally { await writeFile(`${out}/report.json`, JSON.stringify(report, null, 2)); await browser.close(); }

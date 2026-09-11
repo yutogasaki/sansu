@@ -1,0 +1,132 @@
+{
+  "candidate": "island-life-garden-v5",
+  "appSourceHash": "2fb2c93bf7b3be9d11e29c3ced14d7eef32429b408ca3ccfdf34dffca21aa9ab",
+  "rootApplicationInputsMatch": true,
+  "core": {
+    "passed": true,
+    "files": 328,
+    "tests": 3481
+  },
+  "focused": {
+    "passed": true,
+    "files": 3,
+    "tests": 8
+  },
+  "life": {
+    "passed": true,
+    "scenarios": 2,
+    "normalLearning": true,
+    "growth": "Explicit DEV clock, not overnight"
+  },
+  "interactions": {
+    "passed": true,
+    "scenarios": 2
+  },
+  "visualResourceDiagnostic": {
+    "renderBefore": {
+      "calls": 338,
+      "triangles": 271400,
+      "geometries": 206,
+      "textures": 5
+    },
+    "renderAfter": {
+      "calls": 338,
+      "triangles": 271400,
+      "geometries": 206,
+      "textures": 5
+    },
+    "target": "http://127.0.0.1:5253/",
+    "candidate": "island-life-garden-v5",
+    "fixture": "Explicit preview credits/actions and 8 hours, not earned learning evidence",
+    "errors": []
+  },
+  "legacyIsland": {
+    "passed": true,
+    "scenarios": 11
+  },
+  "smoke": {
+    "initialPassed": 30,
+    "initialFailed": 1,
+    "focusedRetryPassed": 5,
+    "passedAfterFocusedRetry": true,
+    "firstTimeoutCauseUnresolved": true,
+    "timeoutMs": 1500,
+    "failingInitialScenario": "Root Tangle 1080x1920 next problem"
+  },
+  "classicPwa": {
+    "passed": true,
+    "scenarios": 4
+  },
+  "islandPwa": {
+    "passed": true,
+    "protected": 8,
+    "realOffline": true
+  },
+  "productionGuard": {
+    "passed": true
+  },
+  "throughput": {
+    "passed": true,
+    "runs": 80,
+    "eligible": true,
+    "comparisons": [
+      {
+        "layout": "phone",
+        "studyMedianProblemsPerMinute": 126.51556189496569,
+        "islandMedianProblemsPerMinute": 292.3481172578273,
+        "allCorrectIslandToStudyRatio": 2.310768042120678,
+        "correctOperableP95Ms": 212.6000000089407,
+        "incorrectRetryP95Ms": 210.6000000089407,
+        "correctSamples": 200,
+        "incorrectSamples": 20,
+        "automaticSectionTransitionMedianMs": 212,
+        "automaticSectionTransitionSamples": 10,
+        "sectionBoundaryP95Ms": 215.5,
+        "sectionBoundarySamples": 20,
+        "rawStudyDurationMedianMs": 4742.5,
+        "rawIslandDurationMedianMs": 2052.35000000149
+      },
+      {
+        "layout": "tablet",
+        "studyMedianProblemsPerMinute": 126.76020531744047,
+        "islandMedianProblemsPerMinute": 294.6376412302993,
+        "allCorrectIslandToStudyRatio": 2.324370179840354,
+        "correctOperableP95Ms": 212.20000000298023,
+        "incorrectRetryP95Ms": 221.90000000596046,
+        "correctSamples": 200,
+        "incorrectSamples": 20,
+        "automaticSectionTransitionMedianMs": 208.79999999701977,
+        "automaticSectionTransitionSamples": 10,
+        "sectionBoundaryP95Ms": 214.19999998807907,
+        "sectionBoundarySamples": 20,
+        "rawStudyDurationMedianMs": 4733.3499999940395,
+        "rawIslandDurationMedianMs": 2036.3999999910593
+      }
+    ]
+  },
+  "visual": {
+    "verdict": "HOLD",
+    "score": 33,
+    "axes": [
+      6,
+      5,
+      5,
+      6,
+      6,
+      5
+    ],
+    "evidence": "Final runtime screenshots, author review, 390x844 / 768x1024, 2026-09-10"
+  },
+  "silentUnderstanding": {
+    "verdict": "HOLD",
+    "childN": 0
+  },
+  "runtime": {
+    "devScope": "PASS",
+    "legacySmoke": "PASS on focused retry; initial timeout unresolved"
+  },
+  "productionRelease": "HOLD: art, child observation, balance and migration pending",
+  "docs": {
+    "passed": true
+  }
+}

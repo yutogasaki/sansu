@@ -1,0 +1,100 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ❯ src/components/island/life/useIslandLife.test.ts (9 tests | 9 failed) 13ms
+   × island life background refresh and explicit choices > keeps choices enabled, queues one purchase and adopts only its own background revision 9ms
+     → MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+     → Cannot read properties of undefined (reading 'deleteDatabase')
+   × island life background refresh and explicit choices > accepts an old displayed revision across completed own refreshes before React paints 1ms
+     → MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+     → Cannot read properties of undefined (reading 'deleteDatabase')
+   × island life background refresh and explicit choices > does not rebase over an external writer picked up by its background refresh 0ms
+     → MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+     → Cannot read properties of undefined (reading 'deleteDatabase')
+   × island life background refresh and explicit choices > retains an unknown committed intent through automatic refresh and retries it once 0ms
+     → MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+     → Cannot read properties of undefined (reading 'deleteDatabase')
+   × island life background refresh and explicit choices > cancels the unstarted queued purchase on leave 0ms
+     → MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+     → Cannot read properties of undefined (reading 'deleteDatabase')
+   × island life background refresh and explicit choices > cancels the unstarted queued purchase on leave-and-return 1ms
+     → MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+     → Cannot read properties of undefined (reading 'deleteDatabase')
+   × island life background refresh and explicit choices > cancels the unstarted queued purchase on profile 0ms
+     → MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+     → Cannot read properties of undefined (reading 'deleteDatabase')
+   × island life background refresh and explicit choices > cancels the unstarted queued purchase on unmount 0ms
+     → MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+     → Cannot read properties of undefined (reading 'deleteDatabase')
+   × island life background refresh and explicit choices > finishes an already-started save for its owner without returning a placement continuation after leaving 0ms
+     → MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+     → Cannot read properties of undefined (reading 'deleteDatabase')
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > keeps choices enabled, queues one purchase and adopts only its own background revision
+DatabaseClosedError: MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/18]⎯
+
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > keeps choices enabled, queues one purchase and adopts only its own background revision
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > accepts an old displayed revision across completed own refreshes before React paints
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > does not rebase over an external writer picked up by its background refresh
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > retains an unknown committed intent through automatic refresh and retries it once
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > cancels the unstarted queued purchase on leave
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > cancels the unstarted queued purchase on leave-and-return
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > cancels the unstarted queued purchase on profile
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > cancels the unstarted queued purchase on unmount
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > finishes an already-started save for its owner without returning a placement continuation after leaving
+TypeError: Cannot read properties of undefined (reading 'deleteDatabase')
+ ❯ doDelete node_modules/dexie/src/classes/dexie/dexie.ts:375:40
+ ❯ node_modules/dexie/src/classes/dexie/dexie.ts:388:9
+ ❯ executePromiseTask node_modules/dexie/src/helpers/promise.js:348:9
+ ❯ new DexiePromise node_modules/dexie/src/helpers/promise.js:134:5
+ ❯ IslandLifeDatabase.Dexie.delete node_modules/dexie/src/classes/dexie/dexie.ts:372:12
+ ❯ src/components/island/life/useIslandLife.test.ts:26:100
+     24| const databases: IslandLifeDatabase[] = [];
+     25| beforeEach(() => { hooks.reset(); hooks.facts.mockReset().mockResolved…
+     26| afterEach(async () => { hooks.unmount(); for (const d of databases.spl…
+       |                                                                                                    ^
+     27| async function harness() {
+     28|     const d = new IslandLifeDatabase(`life-controls-${crypto.randomUUI…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/18]⎯
+
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > accepts an old displayed revision across completed own refreshes before React paints
+DatabaseClosedError: MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/18]⎯
+
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > does not rebase over an external writer picked up by its background refresh
+DatabaseClosedError: MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/18]⎯
+
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > retains an unknown committed intent through automatic refresh and retries it once
+DatabaseClosedError: MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/18]⎯
+
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > cancels the unstarted queued purchase on leave
+DatabaseClosedError: MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/18]⎯
+
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > cancels the unstarted queued purchase on leave-and-return
+DatabaseClosedError: MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/18]⎯
+
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > cancels the unstarted queued purchase on profile
+DatabaseClosedError: MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/18]⎯
+
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > cancels the unstarted queued purchase on unmount
+DatabaseClosedError: MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/18]⎯
+
+ FAIL  src/components/island/life/useIslandLife.test.ts > island life background refresh and explicit choices > finishes an already-started save for its owner without returning a placement continuation after leaving
+DatabaseClosedError: MissingAPIError IndexedDB API missing. Please visit https://tinyurl.com/y2uuvskb
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/18]⎯
+
+ Test Files  1 failed (1)
+      Tests  9 failed (9)
+   Start at  13:49:49
+   Duration  250ms (transform 44ms, setup 0ms, collect 70ms, tests 13ms, environment 0ms, prepare 29ms)
+

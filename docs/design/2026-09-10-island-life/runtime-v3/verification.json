@@ -1,0 +1,86 @@
+{
+  "candidate": "island-life-placement-v3",
+  "appSourceHash": "75cb124601fa624208d2d7214ae1cd0b9181a636243acc099ce1e37853e9665d",
+  "applicationInputsUnchanged": true,
+  "qaOverlayFiles": [
+    "tools/e2e-island-life.mjs",
+    "tools/e2e-island.mjs",
+    "tools/island-e2e-helpers.mjs"
+  ],
+  "core": {
+    "passed": true,
+    "files": 326,
+    "tests": 3467
+  },
+  "life": {
+    "passed": true,
+    "scenarios": 2,
+    "firstRunTimeoutUnresolved": true
+  },
+  "legacyIsland": {
+    "passed": true,
+    "scenarios": 11,
+    "separateCorrectedQaRuns": true
+  },
+  "smoke": {
+    "passed": true,
+    "scenarios": 31
+  },
+  "classicPwa": {
+    "passed": true,
+    "scenarios": 4
+  },
+  "islandPwa": {
+    "passed": true,
+    "protected": 8,
+    "realOffline": true
+  },
+  "productionGuard": {
+    "passed": true
+  },
+  "throughput": {
+    "passed": true,
+    "runs": 80,
+    "eligible": true,
+    "comparisons": [
+      {
+        "layout": "phone",
+        "studyMedianProblemsPerMinute": 126.92503921476163,
+        "islandMedianProblemsPerMinute": 295.6264767620748,
+        "allCorrectIslandToStudyRatio": 2.3291422921041165,
+        "correctOperableP95Ms": 213.29999999701977,
+        "incorrectRetryP95Ms": 225.40000000596046,
+        "correctSamples": 200,
+        "incorrectSamples": 20,
+        "automaticSectionTransitionMedianMs": 208.04999999701977,
+        "automaticSectionTransitionSamples": 10,
+        "sectionBoundaryP95Ms": 216.70000000298023,
+        "sectionBoundarySamples": 20,
+        "rawStudyDurationMedianMs": 4727.20000000298,
+        "rawIslandDurationMedianMs": 2029.6000000014901
+      },
+      {
+        "layout": "tablet",
+        "studyMedianProblemsPerMinute": 125.77512022268866,
+        "islandMedianProblemsPerMinute": 290.80957457830004,
+        "allCorrectIslandToStudyRatio": 2.3121391103694666,
+        "correctOperableP95Ms": 218.20000000298023,
+        "incorrectRetryP95Ms": 227.6000000089407,
+        "correctSamples": 200,
+        "incorrectSamples": 20,
+        "automaticSectionTransitionMedianMs": 208.20000000298023,
+        "automaticSectionTransitionSamples": 10,
+        "sectionBoundaryP95Ms": 216.29999999701977,
+        "sectionBoundarySamples": 20,
+        "rawStudyDurationMedianMs": 4770.60000000149,
+        "rawIslandDurationMedianMs": 2063.25
+      }
+    ]
+  },
+  "visual": "HOLD: functional prototype 25/60 author review",
+  "silentUnderstanding": "HOLD: child N=0",
+  "productionRelease": "HOLD: migration, art and balance pending",
+  "docs": {
+    "passed": true
+  }
+}

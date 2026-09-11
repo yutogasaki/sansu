@@ -1,0 +1,47 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/domain/islandLife/repository.test.ts (3 tests) 29ms
+ ✓ src/domain/islandLife/simulation.test.ts (11 tests) 145ms
+ ❯ src/domain/islandLife/activities.test.ts (5 tests | 2 failed) 139ms
+   × resident activities and expressions > creates different daily use from the same learning budget, without consuming the flowers 50ms
+     → actual value must be number or bigint, received "undefined"
+   × resident activities and expressions > makes the same bench more attractive to the rabbit when moved beside flowers 2ms
+     → そこには おけないよ。みちを あけてね。
+ ✓ src/components/island/life/residentMotion.test.ts (2 tests) 224ms
+ ✓ src/domain/islandLife/terminalFacts.test.ts (1 test) 67ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/domain/islandLife/activities.test.ts > resident activities and expressions > creates different daily use from the same learning budget, without consuming the flowers
+TypeError: actual value must be number or bigint, received "undefined"
+ ❯ src/domain/islandLife/activities.test.ts:72:48
+     70|         expect(districts(a)[0].label).toBe('おはなばたけ'); expect(dis…
+     71|         expect(a.residents[1].enjoyedBy.flower).toBeGreaterThan(20);
+     72|         expect(b.residents[2].enjoyedBy.swing).toBeGreaterThan(20);
+       |                                                ^
+     73|         expect(a.residents[1].enjoyedBy.swing).toBeUndefined();
+     74|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/domain/islandLife/activities.test.ts > resident activities and expressions > makes the same bench more attractive to the rabbit when moved beside flowers
+Error: そこには おけないよ。みちを あけてね。
+ ❯ fail src/domain/islandLife/simulation.ts:62:47
+     60|     }
+     61| }
+     62| function fail(message: string): never { throw new Error(message); }
+       |                                               ^
+     63| export function applyCommand(s: LifeState, event: LifeAction) {
+     64|     const c = event.command;
+ ❯ applyCommand src/domain/islandLife/simulation.ts:111:76
+ ❯ Module.commandLife src/domain/islandLife/simulation.ts:156:45
+ ❯ src/domain/islandLife/activities.test.ts:78:54
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  2 failed | 20 passed (22)
+   Start at  12:27:12
+   Duration  1.28s (transform 479ms, setup 0ms, collect 1.31s, tests 604ms, environment 0ms, prepare 207ms)
+

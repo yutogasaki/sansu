@@ -1,0 +1,46 @@
+Starting dev server on http://127.0.0.1:4173...
+
+> pokko-fushigi-zukan-app@0.0.0 dev
+> vite --host 127.0.0.1 --port 4173 --strictPort
+
+10:11:07 AM [vite] (client) Re-optimizing dependencies because vite config has changed
+
+  VITE v7.3.1  ready in 117 ms
+
+  ➜  Local:   http://127.0.0.1:4173/
+Dev server ready on http://127.0.0.1:4173.
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+PASS redirects to onboarding when no profile (1225ms)
+PASS completes onboarding, chooses a route, and opens Makimodon (1507ms)
+PASS keeps the classic opening playable with expanded mobile browser chrome (1479ms)
+PASS keeps the direct study route working (2041ms)
+PASS keeps the direct review route working (1285ms)
+PASS keeps the direct settings route working (1282ms)
+PASS keeps legacy fuwafuwa album out of child records (1262ms)
+PASS completes periodic test from stats and opens results (27183ms)
+PASS launches explore immediately and safely returns at a route break (2622ms)
+PASS keeps the 390x800 route boundary fully visible (2477ms)
+PASS runs Root Pull v2 inline with reduced motion and the numeric keypad (2412ms)
+Snap Root measured ms { firstIncorrect: 431, secondIncorrect: 541, correct: [ 121, 116 ] }
+PASS runs the Snap Root breakthrough loop at 390px (4566ms)
+PASS keeps the Snap Root breakthrough loop playable on tablet (2539ms)
+PASS can exit safely after explore start persistence fails (1166ms)
+PASS safely exits and retries from a pending explore problem (1565ms)
+PASS commits one explore answer under rapid double submit (1597ms)
+PASS retries the same explore attempt after a save failure (1555ms)
+PASS resumes fixed-ten explore across retry, route, discovery, and partial-input boundaries (5186ms)
+PASS finishes last-light rescue without blocking on an ordinary clue (1561ms)
+PASS retries voluntary return without early terminal progress (2568ms)
+PASS grows the immersive light bridge from an addition answer (4165ms)
+PASS keeps the light bridge playable on tablet (4278ms)
+PASS keeps the light bridge connected on a landscape tablet (4305ms)
+PASS keeps the light bridge playable on a 1024px portrait tablet (4219ms)
+PASS keeps the light bridge playable on a wide portrait tablet (4428ms)
+PASS opens the root tangle with profile-near subtraction (5539ms)
+PASS keeps the root tangle playable on tablet (5724ms)
+PASS keeps the root tangle playable on a landscape tablet (5946ms)
+PASS keeps the root tangle playable on a 1024px portrait tablet (5518ms)
+PASS keeps the root tangle playable on a wide portrait tablet (5309ms)
+PASS guards /parents route behind parent gate (1383ms)

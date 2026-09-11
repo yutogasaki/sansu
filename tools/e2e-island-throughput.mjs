@@ -230,7 +230,9 @@ async function runLane(browser, lane, scenario, repetition, layout) {
         if (lane === 'island') {
             firstPlan = await installIslandFixture(page, profileId);
             await page.evaluate(() => { location.hash = '/island'; });
-            await waitReady(page);
+            const life = await page.evaluate(async () => (await import('/src/domain/islandLife/model.ts')).lifeEnabled());
+            if (life) await page.locator('.life-world[data-rendered="true"]').waitFor();
+            else await waitReady(page);
             await page.locator('.island-shell-tab--learn').click();
             await waitMode(page, 'learning');
             metadata = await runtimeMetadata(page);

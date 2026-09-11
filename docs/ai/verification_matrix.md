@@ -118,3 +118,7 @@ If a task spans more than one change type, use the stricter row.
 - Use `npm run verify:core` when a change touches code across multiple layers.
   It already includes `npm run docs:check`.
 - Use `npm run verify:release` for release-sensitive changes.
+
+## 暮らす島の家庭内本番切替（2026-09-11）
+
+`node tools/e2e-island-life-production.mjs` は `SANSU_ISLAND_PRODUCTION_URL` と新しい `SANSU_ISLAND_OUTPUT` を指定し、本番の空所有物→実回答→しずく→花購入→reload→実SW制御のオフライン回答と再起動を390/768幅で検査する。DEVの時間送りがなく、preview DBを作らず、保存された学習と所有が残ることを確認する。所有物移行はユーザー承認により省略。PWA保存holdの待機・完了・失敗と、プロフィール削除の所有者隔離は単体で別検査する。実機iOS、実参加者、長期の経済調整の証拠ではない。旧島専用E2Eは新flagをfalseにして残存導線の回帰として分離し、throughputは新しいホームにも対応して同じ通常学習を測る。

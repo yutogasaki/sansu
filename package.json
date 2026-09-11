@@ -9,6 +9,7 @@
     "scripts": {
         "dev": "vite",
         "dev:home-journey": "VITE_ISLAND_ENABLED=true VITE_HOME_JOURNEY_PREVIEW=true vite --host 127.0.0.1 --port 5213",
+        "dev:island-life": "VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_PREVIEW=true vite --host 127.0.0.1 --port 5223 --strictPort",
         "dev:island": "VITE_ISLAND_ENABLED=true vite --host 127.0.0.1 --port 5198",
         "e2e:island": "node tools/e2e-island.mjs",
         "e2e:island-navigation": "node tools/e2e-island-navigation.mjs",

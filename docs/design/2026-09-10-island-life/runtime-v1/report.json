@@ -1,0 +1,37 @@
+{
+  "target": "http://127.0.0.1:5224",
+  "flag": "DEV + VITE_ISLAND_LIFE_PREVIEW=true",
+  "candidate": "island-life-choices-v1",
+  "humanN": 0,
+  "clock": "explicit DEV time advance; not real overnight evidence",
+  "scenarios": [
+    {
+      "name": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": "no-preference",
+      "normalAttempts": 27,
+      "completedSections": 6,
+      "sourceStoresUnchanged": true,
+      "items": 11,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "name": "tablet-reduced",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": "reduce",
+      "normalAttempts": 30,
+      "completedSections": 6,
+      "sourceStoresUnchanged": true,
+      "items": 11,
+      "errors": [],
+      "pass": true
+    }
+  ]
+}

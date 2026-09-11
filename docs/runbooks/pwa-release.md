@@ -1,5 +1,7 @@
 # PWA Release Runbook
 
+2026-09-11: 家庭内利用のユーザー承認により、main配信は `VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_ENABLED=true` を使用する。新しい島は `SansuIslandLifeV1` に空の所有物から開始し、学習記録は保持。時間送りは本番で無効。新島のみ戻す場合は `VITE_ISLAND_LIFE_ENABLED=false` で再配信し、保存DBを削除しない。採用仕様は[48](../product/48_island_life_spec.md)、統合版の検証は[main release](../design/2026-09-10-island-life/main-release/README.md)。
+
 > 2026-09-09: 遊園地は公開終了。旧BuildPlay/renderer flagは再有効化しない。公開版では `park.enabled=false` / `park.renderer=retired` と一覧からの除去、旧 `/park` のホーム復帰を確認する。以下の旧遊園地の公開・復帰手順は適用しない。
 
 ## When To Use

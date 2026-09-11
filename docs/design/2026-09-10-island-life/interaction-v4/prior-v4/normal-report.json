@@ -1,0 +1,113 @@
+{
+  "target": "http://127.0.0.1:5247/",
+  "flag": "DEV + VITE_ISLAND_LIFE_PREVIEW=true",
+  "candidate": "island-life-placement-v3",
+  "humanN": 0,
+  "clock": "explicit DEV time advance; not real overnight evidence",
+  "scenarios": [
+    {
+      "name": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": "no-preference",
+      "normalAttempts": 30,
+      "completedSections": 6,
+      "sourceStoresUnchanged": true,
+      "items": 11,
+      "placement": {
+        "touch": true,
+        "frontAccessBlocked": true,
+        "existingPathProtected": true,
+        "cancelPreservesOwnership": true,
+        "confirmInViewport": true
+      },
+      "reactions": {
+        "newFavorite": "!",
+        "enjoyedFavorite": "♪",
+        "reducedMotionRespected": true
+      },
+      "swingContact": {
+        "seated": {
+          "id": "pokomoko",
+          "itemId": "f6573269-bbea-4829-ab69-42106fee3735",
+          "phase": "swing",
+          "position": [
+            1,
+            0.3263562737352015,
+            0.9005218521459986
+          ],
+          "seatGap": 1.1102230246251565e-16,
+          "hop": 0
+        },
+        "swung": {
+          "id": "pokomoko",
+          "itemId": "f6573269-bbea-4829-ab69-42106fee3735",
+          "phase": "swing",
+          "position": [
+            1,
+            0.3232317566084326,
+            1.0529335509525868
+          ],
+          "seatGap": 0,
+          "hop": 0
+        }
+      },
+      "errors": [],
+      "pass": true
+    },
+    {
+      "name": "tablet-reduced",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": "reduce",
+      "normalAttempts": 27,
+      "completedSections": 6,
+      "sourceStoresUnchanged": true,
+      "items": 11,
+      "placement": {
+        "touch": true,
+        "frontAccessBlocked": true,
+        "existingPathProtected": true,
+        "cancelPreservesOwnership": true,
+        "confirmInViewport": true
+      },
+      "reactions": {
+        "newFavorite": "!",
+        "enjoyedFavorite": "♪",
+        "reducedMotionRespected": true
+      },
+      "swingContact": {
+        "seated": {
+          "id": "pokomoko",
+          "itemId": "7d9a56cb-8ff3-4710-a76c-ae8860e0da49",
+          "phase": "swing",
+          "position": [
+            1,
+            0.32200000000000006,
+            1
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "hop": 0
+        },
+        "swung": {
+          "id": "pokomoko",
+          "itemId": "7d9a56cb-8ff3-4710-a76c-ae8860e0da49",
+          "phase": "swing",
+          "position": [
+            1,
+            0.32200000000000006,
+            1
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "hop": 0
+        }
+      },
+      "errors": [],
+      "pass": true
+    }
+  ]
+}

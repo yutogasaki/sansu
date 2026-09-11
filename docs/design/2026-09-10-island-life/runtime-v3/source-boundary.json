@@ -1,0 +1,30 @@
+{
+  "priorSource": "812edf6a957f6dfc6c8f4e4f9a31dea99cc8a16112c9dcac3f949892c35e5726",
+  "changedInputs": [
+    "src/components/island/life/IslandLife.tsx",
+    "src/components/island/life/LifeWorld.tsx",
+    "src/components/island/life/life.css",
+    "src/components/island/life/placement.test.ts",
+    "src/components/island/life/placement.ts",
+    "src/components/island/life/scene.ts",
+    "src/domain/islandLife/model.ts",
+    "tools/e2e-island-life.mjs"
+  ],
+  "domainBehaviorUnchanged": true,
+  "qaOverlay": {
+    "path": "tools/e2e-island-life.mjs",
+    "sha256": "e335579ef285f8283a16ad7e21e81be7e6401ba7d147913a40b6fa330c00427d",
+    "difference": "Only diagnostic console logging and failure screenshot/state capture; assertions and application remain identical."
+  },
+  "regressionQaOverlay": [
+    {
+      "path": "tools/e2e-island.mjs",
+      "sha256": "5f28157021d6ac245e5021f2d45a882bcb02f3c05c178f624604309329a3d351"
+    },
+    {
+      "path": "tools/island-e2e-helpers.mjs",
+      "sha256": "092352225ed217ab6b9fa57618c78f5aca4680f2344f2575bba4f7e6cabe04c2"
+    }
+  ],
+  "regressionQaReason": "Honor integer fraction presentation while preserving the reserved fraction question; original failing question replayed separately."
+}

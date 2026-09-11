@@ -1,0 +1,14 @@
+{
+  "target": "http://127.0.0.1:5226/",
+  "buildFlags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_ISLAND_LIFE_PREVIEW": true
+  },
+  "DEV": false,
+  "previewAbsent": true,
+  "previewDatabaseAbsent": true,
+  "names": [
+    "SansuDatabase"
+  ],
+  "pass": true
+}

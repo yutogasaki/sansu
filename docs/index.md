@@ -1,5 +1,7 @@
 # Documentation Index
 
+暮らす島の家庭内利用は[仕様48](product/48_island_life_spec.md)と[検証記録](design/2026-09-10-island-life/main-release/README.md)を参照。
+
 写真の読込失敗・削除中断・撮影後の戻り先・空のおくりものは[写真とおくりものの復帰](design/audits/2026-09-09-photo-exits/README.md)で改善と実画面を記録。4サイズ、実撮影/保存、障害注入、学習保存の不変を確認した。
 
 家の履歴・空の棚・保存失敗・短い横画面の改善は[家のUI/UXと復帰の検証](design/audits/2026-09-09-house-edges/README.md)を参照。4サイズ、実初回3問、展示と再試行、オフライン再表示を確認した。

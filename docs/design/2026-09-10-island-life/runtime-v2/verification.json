@@ -1,0 +1,135 @@
+{
+  "completedAt": "2026-09-10T03:59:52.283928+00:00",
+  "candidate": "island-life-activities-v2",
+  "sourceHash": "812edf6a957f6dfc6c8f4e4f9a31dea99cc8a16112c9dcac3f949892c35e5726",
+  "sourceFiles": 1086,
+  "workspaceMatchesTestedInputs": true,
+  "commitVerified": false,
+  "sourceBoundary": "source-boundary.json",
+  "commands": {
+    "verify:core": {
+      "result": "PASS",
+      "files": 325,
+      "tests": 3464,
+      "lifeDomainAndGeometryTests": 24,
+      "source": "source.json",
+      "log": "core.txt"
+    },
+    "e2e:island-life": {
+      "result": "PASS",
+      "scenarios": 2,
+      "source": "source.json",
+      "report": "report.json"
+    },
+    "e2e:island": {
+      "result": "PASS",
+      "scenarios": 11,
+      "source": "regression-source.json",
+      "report": "island-report.json"
+    },
+    "e2e:smoke": {
+      "result": "PASS",
+      "scenarios": 31,
+      "source": "regression-source.json",
+      "log": "smoke.txt"
+    },
+    "e2e:pwa-update": {
+      "result": "PASS",
+      "scenarios": 4,
+      "source": "regression-source.json",
+      "log": "classic-pwa.txt"
+    },
+    "e2e:island-pwa": {
+      "result": "PASS",
+      "hookChecks": 8,
+      "realOffline": true,
+      "source": "regression-source.json",
+      "report": "island-pwa-report.json"
+    },
+    "productionGuard": {
+      "result": "PASS",
+      "source": "regression-source.json",
+      "report": "production-guard.json"
+    },
+    "benchmark:island-fixed-ten": {
+      "result": "PASS",
+      "runs": 80,
+      "eligible": true,
+      "source": "source.json (DEV life flag false)",
+      "report": "throughput.json",
+      "comparisons": [
+        {
+          "layout": "phone",
+          "studyMedianProblemsPerMinute": 123.1199070010419,
+          "islandMedianProblemsPerMinute": 278.8752762449765,
+          "allCorrectIslandToStudyRatio": 2.2650705563204863,
+          "correctOperableP95Ms": 221.79999999701977,
+          "incorrectRetryP95Ms": 229.09999999403954,
+          "correctSamples": 200,
+          "incorrectSamples": 20,
+          "automaticSectionTransitionMedianMs": 215.10000000149012,
+          "automaticSectionTransitionSamples": 10,
+          "sectionBoundaryP95Ms": 216.8999999910593,
+          "sectionBoundarySamples": 20,
+          "rawStudyDurationMedianMs": 4873.30000000447,
+          "rawIslandDurationMedianMs": 2151.4999999925494
+        },
+        {
+          "layout": "tablet",
+          "studyMedianProblemsPerMinute": 123.14639599071272,
+          "islandMedianProblemsPerMinute": 278.84305546634386,
+          "allCorrectIslandToStudyRatio": 2.2643216898314527,
+          "correctOperableP95Ms": 220.1000000089407,
+          "incorrectRetryP95Ms": 228.70000000298023,
+          "correctSamples": 200,
+          "incorrectSamples": 20,
+          "automaticSectionTransitionMedianMs": 215.25000000745058,
+          "automaticSectionTransitionSamples": 10,
+          "sectionBoundaryP95Ms": 217.40000000596046,
+          "sectionBoundarySamples": 20,
+          "rawStudyDurationMedianMs": 4872.25,
+          "rawIslandDurationMedianMs": 2151.7499999925494
+        }
+      ],
+      "gates": {
+        "tenAlternatingRepetitions": true,
+        "allCorrectIslandThroughputNotBelowStudy": true,
+        "correctP95AtMost650Ms": true,
+        "incorrectP95AtMost550Ms": true,
+        "sectionBoundaryP95AtMost650Ms": true,
+        "twentySameQuestionIncorrectSamplesPerLayout": true,
+        "noExtraOrdinaryQuestionActions": true,
+        "automaticSectionBoundaryIncluded": true,
+        "emptyInputAfterEveryTransition": true,
+        "initialIslandControlsUsable": true,
+        "exactFixtureAndAtomicReceipts": true,
+        "phoneAndTablet": true,
+        "noBrowserErrors": true,
+        "oneRenderedBuildAndCandidate": true,
+        "sourceFilesUnchangedDuringBenchmark": true
+      }
+    },
+    "docs:check": {
+      "result": "PASS",
+      "scope": "final shared working-tree documentation, not staged index",
+      "log": "docs.txt"
+    }
+  },
+  "gates": {
+    "runtime": "PASS for the scoped DEV activities plus separately identified legacy regressions",
+    "visualAppeal": "HOLD: functional geometry remains below the approved key visual",
+    "silentComprehensionAndReturnMotivation": "UNTESTED: human N=0",
+    "release": "HOLD: art, child observation, production migration and economy remain"
+  },
+  "review": {
+    "dataAndLearning": "Previous preview balances and old placements preserved; normal writer/SRS unchanged",
+    "specAlignment": "Matches specification 48 within DEV scope",
+    "tone": "Brief positive expressions with no collection or extra currency",
+    "remaining": "Full art, human observations, production migration and long-term data/economy"
+  },
+  "warnings": [
+    "Existing IslandMilestone fast-refresh warning",
+    "Existing large build chunks",
+    "Old document review dates"
+  ]
+}

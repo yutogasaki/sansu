@@ -1,0 +1,34 @@
+{
+  "target": "http://127.0.0.1:5253/",
+  "baseline": false,
+  "fixture": "Four explicit credits in disposable preview database, not earned learning evidence",
+  "fault": "Hold terminalFacts before its transaction; invoke the registered 15-second callback between real mouse down/up",
+  "scenarios": [
+    {
+      "name": "phone",
+      "candidate": "island-life-garden-v5",
+      "overlayCount": 2,
+      "enabledDuringRead": true,
+      "queuedOnce": true,
+      "queuedDoubleClick": true,
+      "exitCancelsQueuedPurchase": true,
+      "failedReadDoesNotRestoreCanceledPurchase": true,
+      "retryCompletesPlacement": true,
+      "nativeStoresUnchanged": true,
+      "pass": true
+    },
+    {
+      "name": "tablet-reduced",
+      "candidate": "island-life-garden-v5",
+      "overlayCount": 2,
+      "enabledDuringRead": true,
+      "queuedOnce": true,
+      "queuedDoubleClick": true,
+      "exitCancelsQueuedPurchase": true,
+      "failedReadDoesNotRestoreCanceledPurchase": true,
+      "retryCompletesPlacement": true,
+      "nativeStoresUnchanged": true,
+      "pass": true
+    }
+  ]
+}

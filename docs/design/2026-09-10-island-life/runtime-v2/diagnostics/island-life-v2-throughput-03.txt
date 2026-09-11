@@ -1,0 +1,69 @@
+Island throughput phone 1/1 all-correct study
+Island throughput phone 1/1 all-correct island
+Island throughput phone 1/1 miss-at-q4-q8 island
+Island throughput phone 1/1 miss-at-q4-q8 study
+Island throughput tablet 1/1 all-correct study
+Island throughput tablet 1/1 all-correct island
+Island throughput tablet 1/1 miss-at-q4-q8 island
+Island throughput tablet 1/1 miss-at-q4-q8 study
+{
+  "output": "/tmp/island-life-v2-diagnostic/throughput-03.json",
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 123.05672915221434,
+      "islandMedianProblemsPerMinute": 278.0481023218937,
+      "allCorrectIslandToStudyRatio": 2.259511562167101,
+      "correctOperableP95Ms": 218.39999999850988,
+      "incorrectRetryP95Ms": 224.5,
+      "correctSamples": 20,
+      "incorrectSamples": 2,
+      "automaticSectionTransitionMedianMs": 216.79999999701977,
+      "automaticSectionTransitionSamples": 1,
+      "sectionBoundaryP95Ms": 216.79999999701977,
+      "sectionBoundarySamples": 2,
+      "rawStudyDurationMedianMs": 4875.79999999702,
+      "rawIslandDurationMedianMs": 2157.89999999851
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 123.00627332001447,
+      "islandMedianProblemsPerMinute": 277.08506511518095,
+      "allCorrectIslandToStudyRatio": 2.252609217696673,
+      "correctOperableP95Ms": 220.09999999403954,
+      "incorrectRetryP95Ms": 226.69999999552965,
+      "correctSamples": 20,
+      "incorrectSamples": 2,
+      "automaticSectionTransitionMedianMs": 213,
+      "automaticSectionTransitionSamples": 1,
+      "sectionBoundaryP95Ms": 216.30000000447035,
+      "sectionBoundarySamples": 2,
+      "rawStudyDurationMedianMs": 4877.79999999702,
+      "rawIslandDurationMedianMs": 2165.39999999851
+    }
+  ],
+  "gates": {
+    "tenAlternatingRepetitions": false,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": false,
+    "twentySameQuestionIncorrectSamplesPerLayout": false,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "evidence": {
+    "eligible": false,
+    "confidence": "diagnostic below ten repetitions",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "pass": false
+}

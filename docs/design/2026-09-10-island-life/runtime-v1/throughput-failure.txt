@@ -1,0 +1,13 @@
+
+> pokko-fushigi-zukan-app@0.0.0 benchmark:island-fixed-ten
+> node tools/e2e-island-throughput.mjs
+
+Island throughput phone 1/10 all-correct study
+{
+  "output": "/tmp/island-life-final-throughput-02.json",
+  "comparisons": [],
+  "gates": {},
+  "evidence": {},
+  "pass": false,
+  "error": "AssertionError [ERR_ASSERTION]: study Q5: prior input must not leak\n    at submit (file:///private/tmp/sansu-island-life-final-v1/tools/e2e-island-throughput.mjs:207:5)\n    at async runLane (file:///private/tmp/sansu-island-life-final-v1/tools/e2e-island-throughput.mjs:295:26)\n    at async file:///private/tmp/sansu-island-life-final-v1/tools/e2e-island-throughput.mjs:438:38"
+}

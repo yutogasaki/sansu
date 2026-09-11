@@ -1,0 +1,1531 @@
+{
+  "target": "http://127.0.0.1:5244/",
+  "appSourceHash": "75cb124601fa624208d2d7214ae1cd0b9181a636243acc099ce1e37853e9665d",
+  "scope": "Original completed growth/renderer/onboarding/phone scenarios plus separately rerun remaining scenarios after fraction QA correction; not one uninterrupted PASS run.",
+  "scenarios": [
+    {
+      "name": "east-and-growth",
+      "passed": true,
+      "results": [
+        {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "completedSets": 48,
+          "earnedQuestions": 270,
+          "milestones": [
+            {
+              "completedSets": 1,
+              "progress": {
+                "garden": 1,
+                "waterside": 0,
+                "grove": 0,
+                "village": 0
+              },
+              "expansionLevel": 0,
+              "itemCount": 3,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 89,
+              "expanded": "false",
+              "residentAction": "idle",
+              "residentItemId": "",
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": false
+            },
+            {
+              "completedSets": 2,
+              "progress": {
+                "garden": 2,
+                "waterside": 0,
+                "grove": 0,
+                "village": 0
+              },
+              "expansionLevel": 0,
+              "itemCount": 3,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 89,
+              "expanded": "false",
+              "residentAction": "idle",
+              "residentItemId": "",
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": false
+            },
+            {
+              "completedSets": 3,
+              "progress": {
+                "garden": 2,
+                "waterside": 0,
+                "grove": 0,
+                "village": 0
+              },
+              "expansionLevel": 0,
+              "itemCount": 3,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 89,
+              "expanded": "false",
+              "residentAction": "idle",
+              "residentItemId": "",
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": false
+            },
+            {
+              "completedSets": 13,
+              "progress": {
+                "garden": 5,
+                "waterside": 0,
+                "grove": 0,
+                "village": 0
+              },
+              "expansionLevel": 0,
+              "itemCount": 3,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 89,
+              "expanded": "false",
+              "residentAction": "idle",
+              "residentItemId": "",
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": false
+            },
+            {
+              "completedSets": 14,
+              "progress": {
+                "garden": 6,
+                "waterside": 0,
+                "grove": 0,
+                "village": 0
+              },
+              "expansionLevel": 1,
+              "itemCount": 5,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 100,
+              "expanded": "true",
+              "residentAction": "sit",
+              "residentItemId": "living-bench",
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": false
+            },
+            {
+              "completedSets": 24,
+              "progress": {
+                "garden": 6,
+                "waterside": 5,
+                "grove": 0,
+                "village": 0
+              },
+              "expansionLevel": 1,
+              "itemCount": 5,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 103,
+              "expanded": "true",
+              "residentAction": "sit",
+              "residentItemId": "living-bench",
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": false
+            },
+            {
+              "completedSets": 25,
+              "progress": {
+                "garden": 6,
+                "waterside": 6,
+                "grove": 0,
+                "village": 0
+              },
+              "expansionLevel": 2,
+              "itemCount": 7,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 94,
+              "expanded": "true",
+              "residentAction": "rest",
+              "residentItemId": "living-mushroom",
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": false
+            },
+            {
+              "completedSets": 36,
+              "progress": {
+                "garden": 6,
+                "waterside": 6,
+                "grove": 6,
+                "village": 0
+              },
+              "expansionLevel": 2,
+              "itemCount": 7,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 100,
+              "expanded": "true",
+              "residentAction": "rest",
+              "residentItemId": "living-mushroom",
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": false
+            },
+            {
+              "completedSets": 47,
+              "progress": {
+                "garden": 6,
+                "waterside": 6,
+                "grove": 6,
+                "village": 6
+              },
+              "expansionLevel": 2,
+              "itemCount": 7,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 107,
+              "expanded": "true",
+              "residentAction": "rest",
+              "residentItemId": "living-mushroom",
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": false
+            }
+          ],
+          "discoveries": [
+            {
+              "id": "flower-scent",
+              "itemId": "starter-flower",
+              "discoveredAt": 1789014410611
+            }
+          ],
+          "passed": true
+        },
+        {
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "completedSets": 48,
+          "earnedQuestions": 270,
+          "milestones": [
+            {
+              "completedSets": 1,
+              "progress": {
+                "garden": 1,
+                "waterside": 0,
+                "grove": 0,
+                "village": 0
+              },
+              "expansionLevel": 0,
+              "itemCount": 3,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 152,
+              "expanded": "false",
+              "residentAction": "idle",
+              "residentItemId": "",
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": true
+            },
+            {
+              "completedSets": 2,
+              "progress": {
+                "garden": 2,
+                "waterside": 0,
+                "grove": 0,
+                "village": 0
+              },
+              "expansionLevel": 0,
+              "itemCount": 3,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 152,
+              "expanded": "false",
+              "residentAction": "idle",
+              "residentItemId": "",
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": true
+            },
+            {
+              "completedSets": 3,
+              "progress": {
+                "garden": 2,
+                "waterside": 0,
+                "grove": 0,
+                "village": 0
+              },
+              "expansionLevel": 0,
+              "itemCount": 3,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 90,
+              "expanded": "false",
+              "residentAction": "idle",
+              "residentItemId": "",
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": true
+            },
+            {
+              "completedSets": 13,
+              "progress": {
+                "garden": 5,
+                "waterside": 0,
+                "grove": 0,
+                "village": 0
+              },
+              "expansionLevel": 0,
+              "itemCount": 3,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 152,
+              "expanded": "false",
+              "residentAction": "idle",
+              "residentItemId": "",
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": true
+            },
+            {
+              "completedSets": 14,
+              "progress": {
+                "garden": 6,
+                "waterside": 0,
+                "grove": 0,
+                "village": 0
+              },
+              "expansionLevel": 1,
+              "itemCount": 5,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 121,
+              "expanded": "true",
+              "residentAction": "sit",
+              "residentItemId": "living-bench",
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": true
+            },
+            {
+              "completedSets": 24,
+              "progress": {
+                "garden": 6,
+                "waterside": 5,
+                "grove": 0,
+                "village": 0
+              },
+              "expansionLevel": 1,
+              "itemCount": 5,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 210,
+              "expanded": "true",
+              "residentAction": "sit",
+              "residentItemId": "living-bench",
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": true
+            },
+            {
+              "completedSets": 25,
+              "progress": {
+                "garden": 6,
+                "waterside": 6,
+                "grove": 0,
+                "village": 0
+              },
+              "expansionLevel": 2,
+              "itemCount": 7,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 143,
+              "expanded": "true",
+              "residentAction": "rest",
+              "residentItemId": "living-mushroom",
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": true
+            },
+            {
+              "completedSets": 36,
+              "progress": {
+                "garden": 6,
+                "waterside": 6,
+                "grove": 6,
+                "village": 0
+              },
+              "expansionLevel": 2,
+              "itemCount": 7,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 151,
+              "expanded": "true",
+              "residentAction": "rest",
+              "residentItemId": "living-mushroom",
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": true
+            },
+            {
+              "completedSets": 47,
+              "progress": {
+                "garden": 6,
+                "waterside": 6,
+                "grove": 6,
+                "village": 6
+              },
+              "expansionLevel": 2,
+              "itemCount": 7,
+              "revision": "development-local",
+              "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "learningCandidate": "mystic-island-learning-v2",
+              "mode": "home",
+              "renderer": "three",
+              "artDirection": "moon-garden",
+              "drawCalls": 158,
+              "expanded": "true",
+              "residentAction": "rest",
+              "residentItemId": "living-mushroom",
+              "viewport": {
+                "width": 768,
+                "height": 1024
+              },
+              "serviceWorkerControlled": false,
+              "reducedMotion": true
+            }
+          ],
+          "discoveries": [
+            {
+              "id": "flower-scent",
+              "itemId": "starter-flower",
+              "discoveredAt": 1789014604509
+            }
+          ],
+          "passed": true
+        }
+      ],
+      "evidenceScope": "Phone/tablet normal planner through all four maturities plus another UI section; every whole-problem credit checked. Full finite growth, stable items, observed life, districts, immutable production-rendered history, discovery replay and resumed learning.",
+      "run": "original fixed QA"
+    },
+    {
+      "name": "renderer-recovery",
+      "revision": "development-local",
+      "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 88,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "passed": true,
+      "evidenceScope": "Actual WebGL context loss keeps learning usable while the world stays hidden; an answer persists during fallback, then visible home retry restores Three and the identical reservation accepts another answer.",
+      "run": "original fixed QA"
+    },
+    {
+      "name": "onboarding",
+      "revision": "development-local",
+      "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 143,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "passed": true,
+      "evidenceScope": "Actual profile-free Welcome, optional nickname in the grade screen, explicit preschool grade/math/range and first reserved section; no profile fixture injected. Dedicated production onboarding QA verifies play, storage boundaries, all subjects and retry.",
+      "run": "original fixed QA"
+    },
+    {
+      "name": "phone-keyboard",
+      "width": 390,
+      "height": 844,
+      "skill": "add_1d_1",
+      "type": "number",
+      "full": true,
+      "revision": "development-local",
+      "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 151,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "metrics": {
+        "correctP95Ms": 217.79999999701977,
+        "incorrectP95Ms": 198.20000000298023,
+        "correctSamples": 21,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 198.20000000298023,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": true,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 215,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 200.29999999701977,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 4,
+          "afterRevision": 5
+        },
+        {
+          "ms": 200.70000000298023,
+          "completed": false,
+          "autoContinued": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 5,
+          "afterRevision": 6
+        },
+        {
+          "ms": 199.29999999701977,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 199.09999999403954,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 201.5,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 195.5,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        },
+        {
+          "ms": 204.09999999403954,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 4,
+          "afterRevision": 5
+        },
+        {
+          "ms": 216.09999999403954,
+          "completed": false,
+          "autoContinued": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 5,
+          "afterRevision": 6
+        },
+        {
+          "ms": 187.90000000596046,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 196.80000001192093,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 217.79999999701977,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 198.29999999701977,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        },
+        {
+          "ms": 202.29999999701977,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 4,
+          "afterRevision": 5
+        },
+        {
+          "ms": 211,
+          "completed": false,
+          "autoContinued": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 5,
+          "afterRevision": 6
+        },
+        {
+          "ms": 206.09999999403954,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 216.1000000089407,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 228.40000000596046,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 215.79999999701977,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        },
+        {
+          "ms": 194.59999999403954,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 4,
+          "afterRevision": 5
+        },
+        {
+          "ms": 205.69999998807907,
+          "completed": false,
+          "autoContinued": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 5,
+          "afterRevision": 6
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison.",
+      "run": "original fixed QA"
+    },
+    {
+      "name": "phone-touch",
+      "width": 390,
+      "height": 844,
+      "skill": "add_1d_1",
+      "type": "number",
+      "touch": true,
+      "full": true,
+      "revision": "development-local",
+      "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 151,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "metrics": {
+        "correctP95Ms": 216.40000000596046,
+        "incorrectP95Ms": 196.09999999403954,
+        "correctSamples": 21,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 196.09999999403954,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": true,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 212.20000000298023,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 206.70000000298023,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 4,
+          "afterRevision": 5
+        },
+        {
+          "ms": 210.40000000596046,
+          "completed": false,
+          "autoContinued": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 5,
+          "afterRevision": 6
+        },
+        {
+          "ms": 197.5,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 212.09999999403954,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 202,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 196.5,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        },
+        {
+          "ms": 206.20000000298023,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 4,
+          "afterRevision": 5
+        },
+        {
+          "ms": 210.79999999701977,
+          "completed": false,
+          "autoContinued": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 5,
+          "afterRevision": 6
+        },
+        {
+          "ms": 186,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 195.20000000298023,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 201.79999999701977,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 207.29999999701977,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        },
+        {
+          "ms": 204.20000000298023,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 4,
+          "afterRevision": 5
+        },
+        {
+          "ms": 215.29999999701977,
+          "completed": false,
+          "autoContinued": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 5,
+          "afterRevision": 6
+        },
+        {
+          "ms": 214,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 216.40000000596046,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 198.40000000596046,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 225.79999999701977,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        },
+        {
+          "ms": 199,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 4,
+          "afterRevision": 5
+        },
+        {
+          "ms": 215.09999999403954,
+          "completed": false,
+          "autoContinued": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 5,
+          "afterRevision": 6
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison.",
+      "run": "original fixed QA"
+    },
+    {
+      "name": "tablet-fraction",
+      "width": 768,
+      "height": 1024,
+      "skill": "frac_add_same",
+      "type": "multi-number",
+      "complex": true,
+      "revision": "development-local",
+      "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 85,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "metrics": {
+        "correctP95Ms": null,
+        "incorrectP95Ms": 200.5,
+        "correctSamples": 0,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 200.5,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": true,
+          "inputType": "multi-number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 199.29999999701977,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "multi-number",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 201,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "multi-number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 209.29999999701977,
+          "completed": false,
+          "autoContinued": true,
+          "incorrect": false,
+          "inputType": "multi-number",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison.",
+      "run": "corrected QA overlay"
+    },
+    {
+      "name": "phone-hissan",
+      "width": 390,
+      "height": 844,
+      "skill": "add_2d1d_hissan_c",
+      "type": "hissan",
+      "complex": true,
+      "revision": "development-local",
+      "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 85,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "metrics": {
+        "correctP95Ms": null,
+        "incorrectP95Ms": 204.79999999701977,
+        "correctSamples": 0,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 204.79999999701977,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": true,
+          "inputType": "hissan",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 209.79999999701977,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "hissan",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 206.90000000596046,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "hissan",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 231.20000000298023,
+          "completed": false,
+          "autoContinued": true,
+          "incorrect": false,
+          "inputType": "hissan",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison.",
+      "run": "corrected QA overlay"
+    },
+    {
+      "name": "phone-math-choice",
+      "width": 390,
+      "height": 844,
+      "skill": "compare_2d",
+      "type": "choice",
+      "revision": "development-local",
+      "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 85,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "metrics": {
+        "correctP95Ms": 209.20000000298023,
+        "incorrectP95Ms": 208,
+        "correctSamples": 1,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 208,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": true,
+          "inputType": "choice",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 233.70000000298023,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 209.20000000298023,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 218.40000000596046,
+          "completed": false,
+          "autoContinued": true,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison.",
+      "run": "corrected QA overlay"
+    },
+    {
+      "name": "tablet-vocabulary",
+      "width": 768,
+      "height": 1024,
+      "skill": "",
+      "subject": "vocab",
+      "type": "choice",
+      "revision": "development-local",
+      "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 85,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "metrics": {
+        "correctP95Ms": null,
+        "incorrectP95Ms": 208.40000000596046,
+        "correctSamples": 0,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 208.40000000596046,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": true,
+          "inputType": "choice",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 212.59999999403954,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 209.30000001192093,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 215.80000001192093,
+          "completed": false,
+          "autoContinued": true,
+          "incorrect": false,
+          "inputType": "choice",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison.",
+      "run": "corrected QA overlay"
+    },
+    {
+      "name": "tablet-reduced",
+      "width": 768,
+      "height": 1024,
+      "skill": "add_1d_1",
+      "type": "number",
+      "reduced": true,
+      "revision": "development-local",
+      "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 85,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": true,
+      "metrics": {
+        "correctP95Ms": 229.20000000298023,
+        "incorrectP95Ms": 210.09999999403954,
+        "correctSamples": 3,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 210.09999999403954,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": true,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 229.20000000298023,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 208.8999999910593,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 219.09999999403954,
+          "completed": false,
+          "autoContinued": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison.",
+      "run": "corrected QA overlay"
+    },
+    {
+      "name": "phone-first-learning",
+      "width": 390,
+      "height": 844,
+      "skill": "add_1d_1",
+      "type": "number",
+      "familiar": false,
+      "complex": true,
+      "revision": "development-local",
+      "version": "development-local:d56cd1b3-a807-447d-8fea-62324387a966",
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "mode": "learning",
+      "renderer": "three",
+      "artDirection": "moon-garden",
+      "drawCalls": 85,
+      "expanded": "false",
+      "residentAction": "idle",
+      "residentItemId": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": false,
+      "reducedMotion": false,
+      "metrics": {
+        "correctP95Ms": 223.5,
+        "incorrectP95Ms": 212,
+        "correctSamples": 3,
+        "incorrectSamples": 1
+      },
+      "samples": [
+        {
+          "ms": 212,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": true,
+          "inputType": "number",
+          "beforeRevision": 0,
+          "afterRevision": 1
+        },
+        {
+          "ms": 223.5,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 1,
+          "afterRevision": 2
+        },
+        {
+          "ms": 209.80000001192093,
+          "completed": false,
+          "autoContinued": false,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 2,
+          "afterRevision": 3
+        },
+        {
+          "ms": 218.20000000298023,
+          "completed": false,
+          "autoContinued": true,
+          "incorrect": false,
+          "inputType": "number",
+          "beforeRevision": 3,
+          "afterRevision": 4
+        }
+      ],
+      "passed": true,
+      "evidenceScope": "Normal reserved planner and UI integration; latency samples are diagnostic, not the fixed-ten comparison.",
+      "run": "corrected QA overlay"
+    }
+  ],
+  "pass": true
+}
