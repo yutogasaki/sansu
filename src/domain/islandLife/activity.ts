@@ -30,7 +30,11 @@ export function residentReaction(state: LifeState, resident: LifeResident, now: 
     const discovered = resident.discovery;
     if (discovered && now >= discovered.at && now < discovered.at + 1600
         && state.items.some(i => i.id === discovered.itemId && i.cell)) {
-        return { symbol: discovered.mood === 'notice' ? '!' : '?', label: discovered.mood === 'notice' ? 'あっ、あたらしいもの！' : 'あれは なんだろう？', hop: 0 };
+        const elapsed = now - discovered.at;
+        // A notice gets one small, earned bounce; curiosity stays a question
+        // mark so it does not look like a completed reaction.
+        const hop = discovered.mood === 'notice' && elapsed < 650 ? Math.sin(elapsed / 650 * Math.PI) * .09 : 0;
+        return { symbol: discovered.mood === 'notice' ? '!' : '?', label: discovered.mood === 'notice' ? 'あっ、あたらしいもの！' : 'あれは なんだろう？', hop };
     }
     const item = state.items.find(i => i.id === resident.visit?.itemId && i.cell);
     const elapsed = favoriteReactionElapsed(state, resident, now);

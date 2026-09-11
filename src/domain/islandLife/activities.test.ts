@@ -57,7 +57,9 @@ describe('resident activities and expressions', () => {
         let r = buy(funded(), 'flower', 'new-flower', { x: 0, z: 2 });
         const s = replayLife(r), rabbit = s.residents[1], v = rabbit.visit!;
         expect(rabbit.discovery?.itemId).toBe('new-flower');
-        expect(residentReaction(s, rabbit, s.now)?.symbol).toBe('!');
+        expect(residentReaction(s, rabbit, s.now)).toMatchObject({ symbol: '!', hop: 0 });
+        expect(residentReaction(s, rabbit, s.now + 325)).toMatchObject({ symbol: '!', hop: .09 });
+        expect(residentReaction(s, rabbit, s.now + 700)).toMatchObject({ symbol: '!', hop: 0 });
         const arrival = v.start + (v.path.length - 1) * LIFE_STEP_MS + 400;
         expect(activityPhase(s, rabbit, arrival - 1)).toBe('walking');
         expect(residentReaction(s, rabbit, arrival + 275)).toMatchObject({ symbol: '♪', label: 'におい すき', hop: .13 });

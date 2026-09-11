@@ -78,6 +78,10 @@ try {
       await observationCue.waitFor();
       assert.match(await observationCue.innerText(), /うさぎが おはなを/);
       assert.match(await observationCue.innerText(), /みつけたよ|みているよ/);
+      await page.waitForFunction(reduced => {
+        const pose = JSON.parse(document.querySelector('.life-world')?.dataset.lifePoses || '[]').find(p => p.id === 'rabbit');
+        return pose?.reaction === '!' && (reduced ? pose.hop === 0 : pose.hop > .02);
+      }, name === 'tablet');
       await page.screenshot({ path: `${out}/${name}-observation.png` });
       await page.waitForFunction(() => document.querySelector('[data-life-resident="rabbit"] em')?.textContent === 'におい すき');
       assert.match(await page.locator('[data-life-resident="rabbit"]').innerText(), /におい すき/);
@@ -120,7 +124,7 @@ try {
       assert.equal(await page.locator('.life-dev').count(), 0);
       await page.screenshot({ path: `${out}/${name}-offline.png` });
       assert.deepEqual(errors, []);
-      report.scenarios.push({ name, pass: true, answers, earned, earnedCue: 6, earnedCueBox, residentFavorites, residentReply: 'におい すき', rabbitHeadTilt: true, lightMeaning: true, lightStylePrice: 4,
+      report.scenarios.push({ name, pass: true, answers, earned, earnedCue: 6, earnedCueBox, residentFavorites, discoveryBounce: true, residentReply: 'におい すき', rabbitHeadTilt: true, lightMeaning: true, lightStylePrice: 4,
         growthStageVisible: true, growthNextHint: 'あと 2じかんで つぼみ', savedItems: 1, offlineAnswerAndReload: true });
     } catch (e) { await page.screenshot({ path: `${out}/${name}-failure.png` }); throw e; }
     finally { await context.close(); }
