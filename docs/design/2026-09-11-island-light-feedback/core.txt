@@ -1,0 +1,9 @@
+source revision: d22a450
+build: SANSU_BUILD_REVISION=d22a450 VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_ENABLED=true npm run build — PASS (assets:check PASS)
+docs: npm run docs:check — PASS (existing stale-date warnings only)
+lint: npm run lint -- --quiet — PASS
+typecheck: npm run typecheck — PASS
+focused tests: rewardCue + island simulation + island activities — 3 files / 20 tests PASS
+diagnostic UI: DEV preview, real flower placement, 6-hour advance — phone/tablet light=24, cue=24, style route PASS
+production UI: node tools/e2e-island-life-production.mjs — phone/tablet PASS; 3 answers, 6 drops cue, resident favorites, light meaning, style price 4, reload, offline answer/reload PASS
+human observation: N=0; visual approval, silent comprehension, and long-term learning/revisit effects remain unverified
