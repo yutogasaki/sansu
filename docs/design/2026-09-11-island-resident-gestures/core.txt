@@ -1,0 +1,5 @@
+Focused: npm test -- --run src/domain/islandLife/activities.test.ts src/components/island/life/residentMotion.test.ts (10 tests PASS)
+Core: npm run verify:core (docs PASS with 8 existing past-date warnings; lint 0 errors + 1 existing react-refresh warning; typecheck PASS; 344 files / 3,625 tests PASS; build/assets PASS, 98 precache files, 10.64 MiB)
+Production candidate: VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_ENABLED=true SANSU_BUILD_REVISION=resident-gesture-v1 npm run build (PASS; 98 precache files, 10.63 MiB)
+Production harness: SANSU_ISLAND_PRODUCTION_URL=http://127.0.0.1:5228 SANSU_ISLAND_OUTPUT=<this directory> node tools/e2e-island-life-production.mjs (phone/tablet PASS; rabbit head tilt asserted, reduced motion static pose asserted, real learning/reload/offline path PASS)
+Visual check: latest phone/tablet reply frames viewed beside the previous resident-reply candidate; island framing, resident readability and bottom learning navigation remain continuous. Human visual appeal and child wordless comprehension are unmeasured (N=0).

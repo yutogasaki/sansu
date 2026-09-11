@@ -13,6 +13,8 @@
 [島の直接操作の実装記録](design/2026-09-09-island-direct-actions.md)：庭・動物・家から操作し、予告と保存結果を区別する。
 住人の好みを短い返事へつなぐ[実画面・検証](design/2026-09-11-island-resident-replies/README.md)：配置後の気づきから、好きな家具へ着いた時の一言までをphone/tabletで確認した。
 
+好きな家具への返事を種族ごとのしぐさへつなぐ[実画面・検証](design/2026-09-11-island-resident-gestures/README.md)：うさぎの首かしげ、reduced motionの静止姿勢、同じ時計での復帰をproductionで確認した。
+
 英語の[短い文章を聞く体験](product/03_english_skills.md#7-短い文章を聞く)は、絵・英文・日本語文を見ながら任意に再生し、回答なしで終えてよい。Study通常学習とIslandに10文の初版を実装。単語練習と併存し、再生を習得や報酬に数えない。
 
 島の機能を「学習・変化・任意操作」に整理した[UI優先順位の実装記録](design/2026-09-09-island-ui-hierarchy.md)。育成先と編集を折り畳み、思い出の入口を家へまとめた。
