@@ -81,6 +81,10 @@ try {
       await page.screenshot({ path: `${out}/${name}-observation.png` });
       await page.waitForFunction(() => document.querySelector('[data-life-resident="rabbit"] em')?.textContent === 'におい すき');
       assert.match(await page.locator('[data-life-resident="rabbit"]').innerText(), /におい すき/);
+      await page.waitForFunction(reduced => {
+        const pose = JSON.parse(document.querySelector('.life-world')?.dataset.lifePoses || '[]').find(p => p.id === 'rabbit');
+        return pose?.reaction === '♪' && (reduced ? pose.headRoll >= .1 : pose.headRoll > .03);
+      }, name === 'tablet');
       await page.screenshot({ path: `${out}/${name}-resident-reply.png` });
       await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'もちもの', exact: true }).click();
       const flowerItem = page.locator('[data-life-item]').first();
@@ -116,7 +120,7 @@ try {
       assert.equal(await page.locator('.life-dev').count(), 0);
       await page.screenshot({ path: `${out}/${name}-offline.png` });
       assert.deepEqual(errors, []);
-      report.scenarios.push({ name, pass: true, answers, earned, earnedCue: 6, earnedCueBox, residentFavorites, residentReply: 'におい すき', lightMeaning: true, lightStylePrice: 4,
+      report.scenarios.push({ name, pass: true, answers, earned, earnedCue: 6, earnedCueBox, residentFavorites, residentReply: 'におい すき', rabbitHeadTilt: true, lightMeaning: true, lightStylePrice: 4,
         growthStageVisible: true, growthNextHint: 'あと 2じかんで つぼみ', savedItems: 1, offlineAnswerAndReload: true });
     } catch (e) { await page.screenshot({ path: `${out}/${name}-failure.png` }); throw e; }
     finally { await context.close(); }

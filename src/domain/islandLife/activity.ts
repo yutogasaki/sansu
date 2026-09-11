@@ -14,6 +14,17 @@ export function residentFavoriteReply(resident: LifeResident) {
     return favoriteReplies[favorite(resident)];
 }
 
+/** Returns the elapsed time inside a favorite-use reaction, or undefined when
+ * the resident is still walking, is using another item, or the short window
+ * has ended. The renderer uses this same clock for its species-specific pose. */
+export function favoriteReactionElapsed(state: LifeState, resident: LifeResident, now: number) {
+    const visit = resident.visit, item = state.items.find(i => i.id === visit?.itemId && i.cell);
+    if (!visit || !item || item.kind !== favorite(resident)) return;
+    const arrived = visit.start + (visit.path.length - 1) * LIFE_STEP_MS + (item.kind === 'flower' ? 400 : 900);
+    const elapsed = now - arrived;
+    return elapsed >= 0 && elapsed < 2400 ? elapsed : undefined;
+}
+
 /** Brief, clock-based expressions. They never award currency or need collecting. */
 export function residentReaction(state: LifeState, resident: LifeResident, now: number) {
     const discovered = resident.discovery;
@@ -21,11 +32,9 @@ export function residentReaction(state: LifeState, resident: LifeResident, now: 
         && state.items.some(i => i.id === discovered.itemId && i.cell)) {
         return { symbol: discovered.mood === 'notice' ? '!' : '?', label: discovered.mood === 'notice' ? 'あっ、あたらしいもの！' : 'あれは なんだろう？', hop: 0 };
     }
-    const visit = resident.visit, item = state.items.find(i => i.id === visit?.itemId && i.cell);
-    if (!visit || !item || item.kind !== favorite(resident)) return;
-    const arrived = visit.start + (visit.path.length - 1) * LIFE_STEP_MS + (item.kind === 'flower' ? 400 : 900);
-    const elapsed = now - arrived;
-    if (elapsed < 0 || elapsed >= 2400) return;
+    const item = state.items.find(i => i.id === resident.visit?.itemId && i.cell);
+    const elapsed = favoriteReactionElapsed(state, resident, now);
+    if (!item || elapsed === undefined) return;
     // Two small hops beside a flower; seated residents keep their seat contact.
     const hop = item.kind === 'flower' && elapsed < 1100 ? Math.abs(Math.sin(elapsed / 550 * Math.PI)) * .13 : 0;
     return { symbol: '♪', label: residentFavoriteReply(resident), hop };

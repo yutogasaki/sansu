@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { HOUR, LIFE_STEP_MS, learningDay, newLife, type Cell, type LifeRecord } from './model';
 import { arrangeVisits, commandLife, replayLife } from './simulation';
-import { activityPhase, residentFavoriteLabel, residentFavoriteReply, residentReaction } from './activity';
+import { activityPhase, favoriteReactionElapsed, residentFavoriteLabel, residentFavoriteReply, residentReaction } from './activity';
 import { districts } from './space';
 
 const time = new Date(2026, 8, 10, 10).getTime();
@@ -79,6 +79,9 @@ describe('resident activities and expressions', () => {
             const resident = state.residents.find(current => current.id === residentId)!;
             const visit = resident.visit!;
             const arrival = visit.start + (visit.path.length - 1) * LIFE_STEP_MS + (kind === 'flower' ? 400 : 900);
+            expect(favoriteReactionElapsed(state, resident, arrival - 1)).toBeUndefined();
+            expect(favoriteReactionElapsed(state, resident, arrival + 275)).toBe(275);
+            expect(favoriteReactionElapsed(state, resident, arrival + 2400)).toBeUndefined();
             expect(residentReaction(state, resident, arrival + 275)).toMatchObject({ symbol: '♪', label });
         }
     });

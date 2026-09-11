@@ -40,4 +40,23 @@ describe('rendered activity geometry', () => {
             expect(reduced.reaction).toBe('♪'); expect(reduced.position).toEqual(landed.position);
         } finally { scene.dispose(); }
     });
+    it('uses the same reply clock for a rabbit tilt and keeps the reduced pose still', () => {
+        let r = newLife('gesture', 1); r.now = 100;
+        r.credits = [{ id: 'c', at: 100, day: learningDay(100) }];
+        r = commandLife(r, { type: 'buy', kind: 'flower', cell: { x: 0, z: 2 } }, 'f', 100);
+        const state = replayLife(r), visit = state.residents[1].visit!, scene = buildLifeScene(state);
+        const arrived = visit.start + (visit.path.length - 1) * LIFE_STEP_MS + 400;
+        try {
+            scene.animate(arrived + 1056, false);
+            const active = scene.audit()[1];
+            expect(active.reaction).toBe('♪');
+            expect(active.headRoll).toBeCloseTo(.21, 4);
+            scene.animate(arrived + 1056, true);
+            const reduced = scene.audit()[1];
+            expect(reduced.reaction).toBe('♪');
+            expect(reduced.headRoll).toBeCloseTo(.105, 4);
+            scene.animate(arrived + 2056, true);
+            expect(scene.audit()[1].headRoll).toBeCloseTo(reduced.headRoll, 8);
+        } finally { scene.dispose(); }
+    });
 });

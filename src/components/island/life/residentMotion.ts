@@ -2,7 +2,8 @@ import * as T from 'three';
 import type { buildHomeJourney } from '../homeJourney/scene';
 import { poseResidentTail, residentSeatContactY } from '../three/residentRig';
 import { LIFE_STEP_MS, type Cell, type LifeState } from '../../../domain/islandLife/model';
-import { activityPhase, residentReaction } from '../../../domain/islandLife/activity';
+import { activityPhase, favoriteReactionElapsed, residentReaction } from '../../../domain/islandLife/activity';
+import { sampleResidentInterest } from '../three/residentInterest';
 
 export type LifeSeat = { seat: T.Mesh; pivot?: T.Group };
 export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, state: LifeState,
@@ -11,7 +12,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
     const bodies = [content.heroBody, content.rabbit.body, content.otter.body];
     const feet = [content.heroFeet, content.rabbit.feet, content.otter.feet];
     const neutralFeet = feet.map(pair => pair.map(foot => foot.position.clone()));
-    let audit: { id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number }[] = [];
+    let audit: { id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number }[] = [];
     return {
         audit: () => audit,
         animate(now: number, reduced: boolean) {
@@ -73,10 +74,21 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                 const reaction = residentReaction(state, resident, now), hop = reduced ? 0 : reaction?.hop ?? 0;
                 position.y += hop;
                 actor.position.copy(position);
-                if (rig && !reduced && phase !== 'walking') rig.head.rotation.z = Math.sin(now / 1800 + index) * .035;
+                if (rig) {
+                    const elapsed = reaction?.symbol === '♪' ? favoriteReactionElapsed(state, resident, now) : undefined;
+                    const interest = elapsed === undefined ? undefined
+                        : sampleResidentInterest(index === 1 ? 'rabbit' : 'otter', elapsed / 2400, reduced);
+                    if (interest) {
+                        rig.head.rotation.x = interest.headPitch;
+                        rig.head.rotation.z = interest.headRoll;
+                    } else if (!reduced && phase !== 'walking') {
+                        rig.head.rotation.z = Math.sin(now / 1800 + index) * .035;
+                    }
+                }
                 const scarf = content.hero.getObjectByName('life-scarf');
                 if (index === 0 && scarf) scarf.position.y = .59 + body.position.y;
-                return { id: resident.id, itemId: visit?.itemId, phase, position: actor.position.toArray(), seatGap, reaction: reaction?.symbol, hop };
+                return { id: resident.id, itemId: visit?.itemId, phase, position: actor.position.toArray(), seatGap, reaction: reaction?.symbol, hop,
+                    headPitch: rig?.head.rotation.x ?? 0, headRoll: rig?.head.rotation.z ?? 0 };
             });
         },
     };
