@@ -3,8 +3,8 @@ import { ENGLISH_EXAMPLE_SENTENCES, getEnglishExampleSentence } from './examples
 import { ENGLISH_WORDS } from './words';
 
 describe('vocabulary example catalog', () => {
-    it('covers every level 1–12 vocabulary item with a short fixed English sentence', () => {
-        const coveredWords = ENGLISH_WORDS.filter(word => word.level <= 12);
+    it('covers every vocabulary item with a short fixed English sentence', () => {
+        const coveredWords = ENGLISH_WORDS;
         const coveredWordIds = new Set(coveredWords.map(word => word.id));
         const wordIds = new Set(ENGLISH_WORDS.map(word => word.id));
 
