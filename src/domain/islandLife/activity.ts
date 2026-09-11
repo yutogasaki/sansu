@@ -2,10 +2,16 @@ import { LIFE_STEP_MS, type LifeResident, type LifeState } from './model';
 import { favorite } from './simulation';
 
 const favoriteLabels = { flower: 'おはな', bench: 'ベンチ', swing: 'ブランコ' } as const;
+const favoriteReplies = { flower: 'おはなの におい すき', bench: 'ここで ひとやすみ', swing: 'ゆらゆら たのしい' } as const;
 
 /** Short, stable copy for the passive resident trait shown beside the island. */
 export function residentFavoriteLabel(resident: LifeResident) {
     return favoriteLabels[favorite(resident)];
+}
+
+/** A short, favorite-specific line that makes the resident's personality legible during use. */
+export function residentFavoriteReply(resident: LifeResident) {
+    return favoriteReplies[favorite(resident)];
 }
 
 /** Brief, clock-based expressions. They never award currency or need collecting. */
@@ -22,7 +28,7 @@ export function residentReaction(state: LifeState, resident: LifeResident, now: 
     if (elapsed < 0 || elapsed >= 2400) return;
     // Two small hops beside a flower; seated residents keep their seat contact.
     const hop = item.kind === 'flower' && elapsed < 1100 ? Math.abs(Math.sin(elapsed / 550 * Math.PI)) * .13 : 0;
-    return { symbol: '♪', label: 'すきな ばしょで うれしいね', hop };
+    return { symbol: '♪', label: residentFavoriteReply(resident), hop };
 }
 
 export function activityPhase(state: LifeState, resident: LifeResident, now: number) {
