@@ -12,7 +12,7 @@
 
 ## 検証
 
-`report.json` は本番フラグの production preview を、空の所有物から実際の3問、6しずく、花の購入、リロード、実サービスワーカー制御下のオフライン回答と再起動まで実行した結果である。390×844 と 768×1024 の両方で、通知値、通知からのメニュー遷移、ワールド矩形の不変性、再読込時の重複非表示を確認した。`phone-earned.png` と `tablet-earned.png` は通知が水面上部に出た実画面である。公開 URL へ同じ検査を行った結果は [`live-report.json`](live-report.json)、画像は [`live-phone-earned.png`](live-phone-earned.png) / [`live-tablet-earned.png`](live-tablet-earned.png) に残している。
+`report.json` は本番フラグの production preview を、空の所有物から実際の3問、6しずく、花の購入、リロード、実サービスワーカー制御下のオフライン回答と再起動まで実行した結果である。390×844 と 768×1024 の両方で、通知値、通知からのメニュー遷移、ワールド矩形の不変性、再読込時の重複非表示を確認した。`phone-earned.png` と `tablet-earned.png` は通知が水面上部に出た実画面である。公開 URL（revision `8c09c66580cd34742036f2cad3751c4914675ad8`）へ同じ検査を行った結果は [`live-report.json`](live-report.json)、画像は [`live-phone-earned.png`](live-phone-earned.png) / [`live-tablet-earned.png`](live-tablet-earned.png) に残している。
 
 - **視覚**: 実画面で通知の文字、青いしずく差分、島の全景、下部ナビの可読性を確認。子どもによる意欲評価は未実施（N=0）。
 - **無説明理解・安全**: 「学んだぶん」「つくるものを えらぶ」を任意ボタンで提示し、学習記録・報酬計算・所有物を通知処理から変更しないことを確認。子どもによる無説明理解は未観察。
