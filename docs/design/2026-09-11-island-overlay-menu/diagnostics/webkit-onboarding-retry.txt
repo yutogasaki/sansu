@@ -1,0 +1,13 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('button', { name: '小学 1 年生', exact: true })[22m
+
+    at /Users/yutogasaki/Projects/sansu/tools/e2e-island-life-overlay.mjs:20:72 {
+  name: 'TimeoutError'
+}
+
+Node.js v22.22.3

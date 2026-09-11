@@ -1,4 +1,4 @@
-import { chromium } from 'playwright';
+import { chromium, webkit } from 'playwright';
 import { mkdir, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import { readNative } from './island-e2e-helpers.mjs';
@@ -7,9 +7,10 @@ const base = process.env.SANSU_ISLAND_PRODUCTION_URL, out = process.env.SANSU_IS
 assert(base && out, 'Specify a production URL and fresh output directory');
 await mkdir(out, { recursive: true });
 const report = { target: base, flag: 'VITE_ISLAND_LIFE_ENABLED=true; production', humanN: 0, scenarios: [], pass: false };
-const browser = await chromium.launch();
+const browser = await (process.env.SANSU_OVERLAY_BROWSER === 'webkit' ? webkit : chromium).launch();
 try {
- for (const [name, viewport] of [['phone', { width: 390, height: 844 }], ['tablet', { width: 768, height: 1024 }]]) {
+ for (const [name, viewport] of [['small', { width: 320, height: 568 }], ['phone', { width: 390, height: 844 }], ['tablet', { width: 768, height: 1024 }]]) {
+    if (process.env.SANSU_OVERLAY_WIDTH && viewport.width !== Number(process.env.SANSU_OVERLAY_WIDTH)) continue;
     const context = await browser.newContext({ viewport, hasTouch: true, reducedMotion: name === 'tablet' ? 'reduce' : 'no-preference' });
     const page = await context.newPage(); page.setDefaultTimeout(30000);
     const errors = []; page.on('pageerror', e => errors.push(e.message));
@@ -28,6 +29,23 @@ try {
       const databaseNames = await page.evaluate(async () => (await indexedDB.databases()).map(d => d.name));
       assert(databaseNames.includes('SansuIslandLifeV1')); assert(!databaseNames.includes('SansuIslandLifePreviewV1'));
       await page.screenshot({ path: `${out}/${name}-initial.png` });
+      const world = page.locator('.life-world'), beforeWorld = await world.boundingBox(), camera = await world.getAttribute('data-life-camera');
+      const tap = async (label) => {
+        const button = page.getByRole('button', { name: label, exact: true });
+        const b = await button.boundingBox(); assert(b && b.y >= 0 && b.y + b.height <= viewport.height);
+        const hit = await button.evaluate(el => { const r = el.getBoundingClientRect(); return el.contains(document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2)); });
+        assert(hit, label + ' must be reachable without scrolling');
+        await page.touchscreen.tap(b.x + b.width / 2, b.y + b.height / 2);
+      };
+      for (const label of ['つくる', 'もちもの', 'いろ', 'ひろげる']) {
+        await tap(label);
+        assert.deepEqual(await world.boundingBox(), beforeWorld);
+        assert.equal(await world.getAttribute('data-life-camera'), camera);
+        await page.screenshot({ path: `${out}/${name}-${label}.png` });
+        if (label === 'つくる') { await tap('つぎの ページ'); await page.screenshot({path:`${out}/${name}-catalog-2.png`}); }
+        await tap('メニューを とじる');
+      }
+      assert.equal(await page.locator('.island-page').evaluate(el=>el.scrollTop),0);
       await page.getByRole('navigation', { name: 'メインメニュー' }).getByRole('button', { name: 'まなぶ', exact: true }).click();
       let native = await readNative(page), answers = 0; const start = native.island.completedSets;
       while (native.island.completedSets === start && answers++ < 20) native = (await attempt(page, native)).after;
@@ -44,6 +62,23 @@ try {
       await page.getByRole('button', { name: 'ここに おく', exact: true }).click();
       await page.locator('.life-placement').waitFor({ state: 'hidden' });
       assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'), String(earned - 2));
+      await tap('もちもの');
+      await page.locator('[data-life-item]').first().click();
+      await page.screenshot({path:`${out}/${name}-item.png`});
+      await tap('とりのぞく');
+      await page.screenshot({path:`${out}/${name}-remove.png`});
+      await tap('やめる');
+      await tap('うごかす');
+      assert.deepEqual(await world.boundingBox(), beforeWorld);
+      assert.equal(await world.getAttribute('data-life-camera'), camera);
+      await page.screenshot({path:`${out}/${name}-placement.png`});
+      await tap('やめる');
+      await tap('つくる'); await tap('メニューを とじる');
+      assert.equal(await page.getByRole('button', { name: 'まなぶ', exact: true }).count(), 1);
+      if (process.env.SANSU_OVERLAY_UI_ONLY === '1' || name === 'small' || process.env.SANSU_OVERLAY_BROWSER === 'webkit') {
+        report.scenarios.push({ name, pass: true, scope: 'touch menu, fixed world/camera, real learning/purchase, placement and removal cancellation; offline not measured in this browser run' });
+        continue;
+      }
       const before = await readNative(page);
       await page.evaluate(async () => { await navigator.serviceWorker.ready; });
       await page.reload(); await page.locator('.life-world[data-rendered="true"]').waitFor();

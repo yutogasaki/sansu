@@ -1,0 +1,23 @@
+{
+  "target": "http://127.0.0.1:5280",
+  "flag": "VITE_ISLAND_LIFE_ENABLED=true; production",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "small",
+      "pass": true,
+      "scope": "touch menu, fixed world/camera, real learning/purchase, placement and removal cancellation; offline not measured in this browser run"
+    },
+    {
+      "name": "phone",
+      "pass": true,
+      "scope": "touch menu, fixed world/camera, real learning/purchase, placement and removal cancellation; offline not measured in this browser run"
+    },
+    {
+      "name": "tablet",
+      "pass": true,
+      "scope": "touch menu, fixed world/camera, real learning/purchase, placement and removal cancellation; offline not measured in this browser run"
+    }
+  ],
+  "pass": true
+}

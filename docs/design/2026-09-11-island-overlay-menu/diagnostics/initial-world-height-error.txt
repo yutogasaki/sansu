@@ -1,0 +1,28 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  {
++   height: 470.984375,
+-   height: 486.984375,
+    width: 390,
+    x: 0,
+    y: 104
+  }
+
+    at file:///Users/yutogasaki/Projects/sansu/tools/e2e-island-life-overlay.mjs:72:14
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at process.processImmediate (node:internal/timers:452:9)
+    at process.callbackTrampoline (node:internal/async_hooks:130:17) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: { x: 0, y: 104, width: 390, height: 470.984375 },
+  expected: { x: 0, y: 104, width: 390, height: 486.984375 },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.22.3

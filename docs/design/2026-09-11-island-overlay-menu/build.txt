@@ -1,0 +1,51 @@
+vite v7.3.1 building client environment for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 3604 modules transformed.
+
+(!) outDir /tmp/sansu-overlay-release is not inside project root and will not be emptied.
+Use --emptyOutDir to override.
+
+Generated an empty chunk: "pdf".
+rendering chunks...
+computing gzip size...
+../../../../tmp/sansu-overlay-release/version.json                                   0.42 kB │ gzip:   0.25 kB
+../../../../tmp/sansu-overlay-release/index.html                                     1.58 kB │ gzip:   0.72 kB
+../../../../tmp/sansu-overlay-release/assets/NotoSansJP-C_ziqpoc.woff2              13.06 kB
+../../../../tmp/sansu-overlay-release/assets/IslandWelcome-BJp8Sa-m.css              2.05 kB │ gzip:   0.72 kB
+../../../../tmp/sansu-overlay-release/assets/IslandLife-o9mMN6o-.css                 9.58 kB │ gzip:   2.36 kB
+../../../../tmp/sansu-overlay-release/assets/Island-DyYOUQ1e.css                    28.98 kB │ gzip:   5.63 kB
+../../../../tmp/sansu-overlay-release/assets/Island-C5sLXVBh.css                    91.56 kB │ gzip:  15.05 kB
+../../../../tmp/sansu-overlay-release/assets/index-B4fybUhV.css                    239.12 kB │ gzip:  40.69 kB
+../../../../tmp/sansu-overlay-release/assets/pdf-l0sNRNKZ.js                         0.00 kB │ gzip:   0.02 kB
+../../../../tmp/sansu-overlay-release/assets/IslandWelcome-CpPxaCYB.js               1.94 kB │ gzip:   1.04 kB
+../../../../tmp/sansu-overlay-release/assets/IslandOnboarding-CIW9iovj.js            3.45 kB │ gzip:   1.51 kB
+../../../../tmp/sansu-overlay-release/assets/repository-CB_7s2s_.js                 12.72 kB │ gzip:   5.22 kB
+../../../../tmp/sansu-overlay-release/assets/icons-sg4J3rxV.js                      26.87 kB │ gzip:   9.92 kB
+../../../../tmp/sansu-overlay-release/assets/IslandLife-COAgUdRm.js                 31.20 kB │ gzip:  12.97 kB
+../../../../tmp/sansu-overlay-release/assets/audio-DwtSHwBT.js                      36.13 kB │ gzip:   9.75 kB
+../../../../tmp/sansu-overlay-release/assets/islandFurniturePlacement-CukfT54L.js   42.09 kB │ gzip:  12.16 kB
+../../../../tmp/sansu-overlay-release/assets/react-DcHpdqMy.js                      48.53 kB │ gzip:  17.24 kB
+../../../../tmp/sansu-overlay-release/assets/Island-CEfQCALR.js                     68.10 kB │ gzip:  21.40 kB
+../../../../tmp/sansu-overlay-release/assets/data-DHx4MMMe.js                       96.36 kB │ gzip:  32.45 kB
+../../../../tmp/sansu-overlay-release/assets/motion-iLBaTeAD.js                    119.65 kB │ gzip:  39.54 kB
+../../../../tmp/sansu-overlay-release/assets/Island-lD-CJGN9.js                    299.32 kB │ gzip:  88.59 kB
+../../../../tmp/sansu-overlay-release/assets/charts-Dqb-tBNT.js                    371.57 kB │ gzip: 108.42 kB
+../../../../tmp/sansu-overlay-release/assets/runtime-CoI065db.js                   384.89 kB │ gzip: 123.23 kB
+../../../../tmp/sansu-overlay-release/assets/RoundedBoxGeometry-Dn1WrtWt.js        587.10 kB │ gzip: 152.35 kB
+../../../../tmp/sansu-overlay-release/assets/index-iFn2p9So.js                     999.11 kB │ gzip: 282.37 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 4.87s
+
+PWA v1.2.0
+mode      generateSW
+precache  98 entries (4546.65 KiB)
+files generated
+  ../../../../tmp/sansu-overlay-release/sw.js
+  ../../../../tmp/sansu-overlay-release/workbox-1d305bb8.js

@@ -627,7 +627,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
     const cancelPlacement = navigation ? home : returnToFurniture ? () => {
         setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPreview(undefined); setScreen('furniture');
     } : home;
-    return <main className="island-page" data-tutorial-topic={tutorial.current?.id} data-layout-version="display-v1" data-game-id="mystic-island-v1" data-mode={screen} data-home-layout={screen === 'home' ? 'world-first-v2' : undefined} data-complex={Boolean(learning && complex)}
+    return <main className="island-page" data-tutorial-topic={tutorial.current?.id} data-layout-version="display-v1" data-game-id="mystic-island-v1" data-mode={screen} data-life-home={screen === 'home' && lifeEnabled() ? 'true' : undefined} data-home-layout={screen === 'home' ? 'world-first-v2' : undefined} data-complex={Boolean(learning && complex)}
         data-visual-candidate-id={ISLAND_VISUAL_CANDIDATE} data-delivery-id={ISLAND_DELIVERY_ID}
         data-learning-candidate={ISLAND_LEARNING_CANDIDATE}
         data-island-revision={island.revision} data-discovery-count={island.growth?.discoveries.length ?? 0}
@@ -649,7 +649,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         </header>}
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
-        {active && screen === 'home' && lifeEnabled() && <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandLife controls={lifeControls} onLearn={() => void begin()} onHome={enterHouse} disabled={busy || preparingLearning} /></Suspense>}
+        {active && screen === 'home' && lifeEnabled() && <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandLife controls={lifeControls} onHome={enterHouse} disabled={busy || preparingLearning} /></Suspense>}
         {active && homeJourneyScene && <HomeJourneyPreview key={profile.id} state={island.homeJourney}
             room={keepsakeRoomActive ? { state: island.learningKeepsakes, completedSets: island.completedSets, selectedId: keepsakeFocus, challengeDisplayed: challengeSummary?.displayed } : undefined}
             onHomeEnter={!busy && screen === 'home' ? enterHouse : undefined}
