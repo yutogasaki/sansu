@@ -58,23 +58,24 @@ function makeOtterTail(parent: THREE.Group, material: THREE.Material) {
 
 /** One cloth otter lives beside the established rabbit and fox. Articulated
  * pieces and all navigation/seat/hand proportions retain their shared contract. */
-export function makeResidentRig(species: ResidentSpecies, m: IslandMaterials) {
+export function makeResidentRig(species: ResidentSpecies, m: IslandMaterials, otterAppearance: 'patchwork' | 'natural' = 'patchwork') {
     const pose = new THREE.Group(), body = new THREE.Group(), head = new THREE.Group();
     pose.name = 'resident-pose'; body.name = 'resident-body'; head.name = 'resident-head';
     pose.add(body); body.add(head);
     const rabbit = species === 'rabbit', otter = species === 'otter', fox = species === 'fox';
+    const patchwork = otter && otterAppearance === 'patchwork';
     const cloth = (object: THREE.Mesh, panel: FabricPanel) => {
-        if (!otter) return object;
+        if (!patchwork) return object;
         if (object.geometry instanceof THREE.SphereGeometry) {
             object.geometry.dispose(); object.geometry = new THREE.SphereGeometry(1, 32, 24);
         }
         return applyFabricPanel(object, panel, m.residentFabric());
     };
-    if (otter) pose.userData.visualCandidate = RESIDENT_VISUAL_CANDIDATE;
+    if (otter) pose.userData.visualCandidate = patchwork ? RESIDENT_VISUAL_CANDIDATE : 'natural-otter-v1';
     const fur = m.get(rabbit ? '#f3ead4' : fox ? '#d99753' : '#b38154');
     const cream = m.get('#fff0d4'), dark = m.get('#493e32');
     cloth(ellipsoid(body, fur, [0, proportions[species].bodyY, 0], rabbit ? [.245, .34, .22] : otter ? [.305, .4, .255] : [.33, .37, .265]), 'body');
-    if (!otter) ellipsoid(body, cream, [0, .47, .21], rabbit ? [.16, .22, .055] : [.23, .25, .067]);
+    if (!patchwork) ellipsoid(body, cream, [0, .47, .21], rabbit ? [.16, .22, .055] : [.23, .25, .067]);
     batch(body);
     // Keep the existing shape/material at its exact standing transform, but
     // retain one joint instead of baking the tail into the torso material batch.

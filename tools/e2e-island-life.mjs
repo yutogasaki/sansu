@@ -8,7 +8,7 @@ const base = process.env.SANSU_ISLAND_LIFE_URL, out = process.env.SANSU_ISLAND_L
 assert(base && out, 'Specify the DEV island life target and fresh output directory');
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ headless: true });
-const report = { target: base, flag: 'DEV + VITE_ISLAND_LIFE_PREVIEW=true', candidate: 'island-life-garden-v5', humanN: 0, clock: 'explicit DEV time advance; not real overnight evidence', scenarios: [] };
+const report = { target: base, flag: 'DEV + VITE_ISLAND_LIFE_PREVIEW=true', candidate: 'island-life-garden-v6', humanN: 0, clock: 'explicit DEV time advance; not real overnight evidence', scenarios: [] };
 try {
  for (const [name, viewport, reducedMotion] of [['phone', { width: 390, height: 844 }, 'no-preference'], ['tablet-reduced', { width: 768, height: 1024 }, 'reduce']]) {
     const context = await browser.newContext({ viewport, reducedMotion, hasTouch: true }); const page = await context.newPage(); page.setDefaultTimeout(30000);

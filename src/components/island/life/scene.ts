@@ -1,5 +1,6 @@
 import { makeLifeMotion, type LifeSeat } from './residentMotion';
 import * as T from 'three';
+import { makeResidentRig } from '../three/residentRig';
 import { buildHomeJourney } from '../homeJourney/scene';
 import { batch, cylinder, disposeGeometry, ellipsoid } from '../three/primitives';
 import { growthStage, type Cell, type LifeState, type Style } from '../../../domain/islandLife/model';
@@ -10,6 +11,9 @@ import { buildLandscape } from './landscape';
 export const tint = (style: Style) => style === 'sunshine' ? '#f5bf60' : style === 'starlight' ? '#a998d8' : '#eb8f9e';
 export function buildLifeScene(state: LifeState, selected?: string, selectedCell?: Cell, placement?: PlacementPreview) {
     const content = buildHomeJourney(), root = content.world;
+    // Pokomoko alone keeps the patchwork identity. The discarded legacy otter
+    // stays in root and is disposed with the unused home-journey scenery.
+    content.otter = makeResidentRig('otter', content.m, 'natural');
     const house = root.getObjectByName('home')!;
     const actors = [content.hero, content.rabbit.pose, content.otter.pose];
     house.removeFromParent(); actors.forEach(a => a.removeFromParent());
