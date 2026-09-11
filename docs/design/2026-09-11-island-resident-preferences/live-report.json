@@ -1,0 +1,48 @@
+{
+  "target": "https://sansu-seven.vercel.app",
+  "flag": "VITE_ISLAND_LIFE_ENABLED=true; production",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "phone",
+      "pass": true,
+      "answers": 3,
+      "earned": 6,
+      "earnedCue": 6,
+      "earnedCueBox": {
+        "x": 12,
+        "y": 111.99015045166016,
+        "width": 291.546875,
+        "height": 43.99999237060547
+      },
+      "residentFavorites": {
+        "pokomoko": "ベンチ",
+        "rabbit": "おはな",
+        "otter": "ブランコ"
+      },
+      "savedItems": 1,
+      "offlineAnswerAndReload": true
+    },
+    {
+      "name": "tablet",
+      "pass": true,
+      "answers": 3,
+      "earned": 6,
+      "earnedCue": 6,
+      "earnedCueBox": {
+        "x": 12,
+        "y": 112,
+        "width": 291.546875,
+        "height": 44
+      },
+      "residentFavorites": {
+        "pokomoko": "ベンチ",
+        "rabbit": "おはな",
+        "otter": "ブランコ"
+      },
+      "savedItems": 1,
+      "offlineAnswerAndReload": true
+    }
+  ],
+  "pass": true
+}

@@ -1,0 +1,18 @@
+{
+  "sourceRevision": "7e9afef",
+  "buildRevision": "7e9afef",
+  "target": "http://127.0.0.1:5293",
+  "publicTarget": "https://sansu-seven.vercel.app",
+  "deliveryFlag": "VITE_ISLAND_ENABLED=true; VITE_ISLAND_LIFE_ENABLED=true",
+  "candidate": "island-life-garden-v6",
+  "servedIslandCandidate": "mystic-island-shore-garden-v18",
+  "servedVersion": "7e9afef:eeae67ba-7e1d-4d76-8237-a750c4a6b3fd",
+  "publicRevision": "7e9afefdb5b5a9517c59aa5775c6e1ad887988e0",
+  "publicVersion": "7e9afefdb5b5a9517c59aa5775c6e1ad887988e0:9febf704-e554-40c5-9e9a-9285fdd9e3cc",
+  "viewports": [
+    { "name": "phone", "width": 390, "height": 844, "reducedMotion": false },
+    { "name": "tablet", "width": 768, "height": 1024, "reducedMotion": true }
+  ],
+  "humanN": 0,
+  "notes": "Fixed local production preview of the exact main revision. The public URL was still serving 10e8298 when this evidence was captured."
+}
