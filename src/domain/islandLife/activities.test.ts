@@ -18,7 +18,7 @@ describe('resident activities and expressions', () => {
     it('keeps each resident preference visible as a stable island trait', () => {
         const state = replayLife(funded());
         expect(state.residents.map(residentFavoriteLabel)).toEqual(['ベンチ', 'おはな', 'ブランコ']);
-        expect(state.residents.map(residentFavoriteReply)).toEqual(['ここで ひとやすみ', 'おはなの におい すき', 'ゆらゆら たのしい']);
+        expect(state.residents.map(residentFavoriteReply)).toEqual(['ひとやすみ', 'におい すき', 'ゆらゆら']);
     });
 
     it('preserves earned v1 light, purchases and old edge placements across the v2 cutover', () => {
@@ -60,7 +60,7 @@ describe('resident activities and expressions', () => {
         expect(residentReaction(s, rabbit, s.now)?.symbol).toBe('!');
         const arrival = v.start + (v.path.length - 1) * LIFE_STEP_MS + 400;
         expect(activityPhase(s, rabbit, arrival - 1)).toBe('walking');
-        expect(residentReaction(s, rabbit, arrival + 275)).toMatchObject({ symbol: '♪', label: 'おはなの におい すき', hop: .13 });
+        expect(residentReaction(s, rabbit, arrival + 275)).toMatchObject({ symbol: '♪', label: 'におい すき', hop: .13 });
         expect(residentReaction(s, rabbit, arrival + 2500)).toBeUndefined();
         expect(residentReaction(replayLife(r, arrival + 2500), replayLife(r, arrival + 2500).residents[1], arrival + 2500)).toBeUndefined();
         r = commandLife(r, { type: 'move', itemId: 'new-flower', cell: { x: 1, z: 2 } }, 'move', arrival + 3000);
@@ -69,9 +69,9 @@ describe('resident activities and expressions', () => {
     });
     it('shows each resident a reply that matches their own favorite when they arrive', () => {
         const cases = [
-            ['pokomoko', 'bench', { x: 4, z: 1 }, 'ここで ひとやすみ'],
-            ['rabbit', 'flower', { x: 0, z: 2 }, 'おはなの におい すき'],
-            ['otter', 'swing', { x: 4, z: 3 }, 'ゆらゆら たのしい'],
+            ['pokomoko', 'bench', { x: 4, z: 1 }, 'ひとやすみ'],
+            ['rabbit', 'flower', { x: 0, z: 2 }, 'におい すき'],
+            ['otter', 'swing', { x: 4, z: 3 }, 'ゆらゆら'],
         ] as const;
         for (const [residentId, kind, cell, label] of cases) {
             const record = buy(funded(), kind, `${residentId}-favorite`, cell);

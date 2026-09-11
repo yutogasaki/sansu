@@ -2,7 +2,7 @@ import { LIFE_STEP_MS, type LifeResident, type LifeState } from './model';
 import { favorite } from './simulation';
 
 const favoriteLabels = { flower: 'おはな', bench: 'ベンチ', swing: 'ブランコ' } as const;
-const favoriteReplies = { flower: 'おはなの におい すき', bench: 'ここで ひとやすみ', swing: 'ゆらゆら たのしい' } as const;
+const favoriteReplies = { flower: 'におい すき', bench: 'ひとやすみ', swing: 'ゆらゆら' } as const;
 
 /** Short, stable copy for the passive resident trait shown beside the island. */
 export function residentFavoriteLabel(resident: LifeResident) {
