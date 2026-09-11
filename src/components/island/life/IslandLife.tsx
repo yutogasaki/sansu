@@ -10,6 +10,7 @@ import { previewPlacement } from './placement';
 import { rewardDelta } from './rewardCue';
 import { growthSnapshot, growthTransitions, type GrowthTransition } from './growthCue';
 import { lifeGrowthStatus, type LifeGrowthStatus } from './growthStatus';
+import { observationSnapshot, observationTransitions, type LifeObservationCue } from './observationCue';
 import './life.css';
 import './life-feedback.css';
 import './life-growth.css';
@@ -33,11 +34,13 @@ export default function IslandLife({ controls, onHome, disabled }: {
     const lastObservedDrops = useRef<number | undefined>(undefined);
     const lastObservedLight = useRef<number | undefined>(undefined);
     const lastObservedGrowth = useRef<Record<string, number> | undefined>(undefined);
+    const lastObservedObservation = useRef<Record<string, string> | undefined>(undefined);
     const state = useMemo(() => record ? replayLife(record) : undefined, [record]);
     const [elapsed, setElapsed] = useState(0);
     const [earnedDrops, setEarnedDrops] = useState<number>();
     const [earnedLight, setEarnedLight] = useState<number>();
     const [grownItems, setGrownItems] = useState<GrowthTransition[]>([]);
+    const [observationCues, setObservationCues] = useState<LifeObservationCue[]>([]);
     useEffect(() => {
         const start = performance.now(); setElapsed(0);
         const timer = window.setInterval(() => setElapsed(performance.now() - start), 1000);
@@ -64,10 +67,12 @@ export default function IslandLife({ controls, onHome, disabled }: {
         let previousDrops = lastObservedDrops.current;
         let previousLight = lastObservedLight.current;
         let previousGrowth = lastObservedGrowth.current;
+        let previousObservation = lastObservedObservation.current;
         try {
             const savedDrops = window.sessionStorage.getItem(`sansu:island-life-seen-drops:${record.profileId}`);
             const savedLight = window.sessionStorage.getItem(`sansu:island-life-seen-light:${record.profileId}`);
             const savedGrowth = window.sessionStorage.getItem(`sansu:island-life-seen-growth:${record.profileId}`);
+            const savedObservation = window.sessionStorage.getItem(`sansu:island-life-seen-observation:${record.profileId}`);
             if (previousDrops === undefined && savedDrops !== null && Number.isFinite(Number(savedDrops))) previousDrops = Number(savedDrops);
             if (previousLight === undefined && savedLight !== null && Number.isFinite(Number(savedLight))) previousLight = Number(savedLight);
             if (previousGrowth === undefined && savedGrowth !== null) {
@@ -77,25 +82,36 @@ export default function IslandLife({ controls, onHome, disabled }: {
                     previousGrowth = Object.fromEntries(valid);
                 }
             }
+            if (previousObservation === undefined && savedObservation !== null) {
+                const parsed: unknown = JSON.parse(savedObservation);
+                if (parsed && typeof parsed === 'object') {
+                    const valid = Object.entries(parsed).filter((entry): entry is [string, string] => typeof entry[0] === 'string' && typeof entry[1] === 'string');
+                    previousObservation = Object.fromEntries(valid);
+                }
+            }
             window.sessionStorage.setItem(`sansu:island-life-seen-drops:${record.profileId}`, String(current.drops));
             window.sessionStorage.setItem(`sansu:island-life-seen-light:${record.profileId}`, String(current.light));
             window.sessionStorage.setItem(`sansu:island-life-seen-growth:${record.profileId}`, JSON.stringify(growthSnapshot(current.items)));
+            window.sessionStorage.setItem(`sansu:island-life-seen-observation:${record.profileId}`, JSON.stringify(observationSnapshot(current)));
         } catch { /* Private browsing or storage denial should not block the island. */ }
         lastObservedDrops.current = current.drops;
         lastObservedLight.current = current.light;
         lastObservedGrowth.current = growthSnapshot(current.items);
+        lastObservedObservation.current = observationSnapshot(current);
         const dropsGain = rewardDelta(current.drops, previousDrops);
         const lightGain = rewardDelta(current.light, previousLight);
         if (dropsGain !== undefined) setEarnedDrops(dropsGain);
         if (lightGain !== undefined) setEarnedLight(lightGain);
         const transitions = growthTransitions(current.items, previousGrowth);
         if (transitions.length) setGrownItems(transitions);
+        const observations = observationTransitions(current, previousObservation);
+        if (observations.length) setObservationCues(observations);
     }, [record]);
     useEffect(() => {
-        if (earnedDrops === undefined && earnedLight === undefined && !grownItems.length) return;
-        const id = window.setTimeout(() => { setEarnedDrops(undefined); setEarnedLight(undefined); setGrownItems([]); }, 7000);
+        if (earnedDrops === undefined && earnedLight === undefined && !grownItems.length && !observationCues.length) return;
+        const id = window.setTimeout(() => { setEarnedDrops(undefined); setEarnedLight(undefined); setGrownItems([]); setObservationCues([]); }, 7000);
         return () => window.clearTimeout(id);
-    }, [earnedDrops, earnedLight, grownItems]);
+    }, [earnedDrops, earnedLight, grownItems, observationCues]);
     if (!state || !record) return <section className="life-controls"><p role="status">{error ?? 'しまを ひらいているよ…'}</p>
         <button className="island-secondary" onClick={() => void refresh()}>もういちど</button></section>;
     const locked = disabled || busy;
@@ -126,7 +142,7 @@ export default function IslandLife({ controls, onHome, disabled }: {
         if (found) { setSelected(found.id); setTab('items'); setMenuOpen(true); setRemoving(false); }
         else if (isHouse(next)) onHome();
     };
-    const switchTab = (next: typeof tab) => { setEarnedDrops(undefined); setEarnedLight(undefined); setGrownItems([]); setMenuOpen(next !== tab || !menuOpen); setPage(0); if (next !== 'style') setSelected(undefined); setTab(next); setKind(undefined); setCell(undefined); setMoving(false); setRemoving(false); };
+    const switchTab = (next: typeof tab) => { setEarnedDrops(undefined); setEarnedLight(undefined); setGrownItems([]); setObservationCues([]); setMenuOpen(next !== tab || !menuOpen); setPage(0); if (next !== 'style') setSelected(undefined); setTab(next); setKind(undefined); setCell(undefined); setMoving(false); setRemoving(false); };
     const products = Object.keys(CATALOG) as ItemKind[];
     const pageCount = Math.max(1, Math.ceil((tab === 'build' ? products.length : state.items.length) / 2));
     const currentPage = Math.min(page, pageCount - 1);
@@ -138,13 +154,14 @@ export default function IslandLife({ controls, onHome, disabled }: {
             <span title={`いぶき ${vigor(state) * 100}%`}><Sprout size={18} />{vigor(state) === 1 ? 'すくすく' : 'ゆっくり そだつ'}</span></div>
         <div className="life-viewport">
         <LifeWorld state={state} selected={selected} cell={cell} placement={placement} onCell={chooseCell} />
-        {(earnedDrops !== undefined || earnedLight !== undefined || grownItems.length > 0) && <button className="life-earned" data-life-earned={earnedDrops} data-life-light-earned={earnedLight}
-            data-life-growth-earned={grownItems.map(item => item.id).join(',') || undefined} aria-live="polite"
-            onClick={() => switchTab(grownItems.length ? 'items' : earnedLight !== undefined ? 'style' : 'build')}>
+        {(earnedDrops !== undefined || earnedLight !== undefined || grownItems.length > 0 || observationCues.length > 0) && <button className="life-earned" data-life-earned={earnedDrops} data-life-light-earned={earnedLight}
+            data-life-growth-earned={grownItems.map(item => item.id).join(',') || undefined} data-life-observation-earned={observationCues.map(item => item.id).join(',') || undefined} aria-live="polite"
+            onClick={() => switchTab(grownItems.length || observationCues.length ? 'items' : earnedLight !== undefined ? 'style' : 'build')}>
             {earnedDrops !== undefined && <span className="life-earned-message">学んだぶん <strong>+{earnedDrops} しずく</strong></span>}
             {earnedLight !== undefined && <span className="life-earned-message">みんなが あそんだ <strong>+{earnedLight} ひかり</strong></span>}
             {grownItems.map(item => <span className="life-earned-message" key={item.id}>おはなが <strong>{item.message}</strong></span>)}
-            <span className="life-earned-action">{grownItems.length ? 'そだちを みる →' : earnedLight !== undefined ? 'いろを えらぶ →' : 'つくるものを えらぶ →'}</span>
+            {observationCues.map(item => <span className="life-earned-message" key={item.id}><strong>{item.message}</strong> <span aria-hidden="true">{item.symbol}</span></span>)}
+            <span className="life-earned-action">{grownItems.length ? 'そだちを みる →' : observationCues.length ? 'ようすを みる →' : earnedLight !== undefined ? 'いろを えらぶ →' : 'つくるものを えらぶ →'}</span>
         </button>}
         {placement && <div className="life-placement life-controls" data-life-placement-valid={placement.valid} data-life-placement-cell={cell && cellKey(cell)}>
             <h3>{CATALOG[placement.item.kind].label}を {moving ? 'うごかす' : 'おく'}</h3>

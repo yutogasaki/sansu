@@ -1,0 +1,33 @@
+Verification run after the observation-cue implementation
+Date: 2026-09-11 (Asia/Tokyo)
+
+PASS  npm run verify:core
+      docs:check PASS (8 existing past-review-date warnings)
+      lint PASS (1 existing react-refresh warning, 0 errors)
+      typecheck PASS
+      test:run PASS — 345 files, 3,626 tests
+      build PASS — 3,615 modules
+      assets:check PASS — PWA 98 files, 10.65 MiB / 12.00 MiB
+
+PASS  focused Vitest
+      observationCue.test.ts, growthCue.test.ts, growthStatus.test.ts,
+      simulation.test.ts, activities.test.ts — 5 files, 26 tests
+
+PASS  flagged build
+      VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_ENABLED=true
+      SANSU_BUILD_REVISION=observation-cue-v1 npm run build
+      version: observation-cue-v1:66d89272-2dce-4f34-91a6-185ebb423c19
+      delivery: mystic-island-v1
+      candidate: mystic-island-shore-garden-v18
+      PWA precache: 98 files, 10.64 MiB / 12.00 MiB
+
+PASS  production interaction trace
+      SANSU_ISLAND_PRODUCTION_URL=http://127.0.0.1:5226
+      node tools/e2e-island-life-production.mjs
+      phone 390x844 and tablet 768x1024 (reduced motion)
+      real learning answers -> flower purchase -> placement -> one-time resident
+      observation cue -> inventory growth marker -> reload -> offline answer/reload
+      report: production-report.json
+
+Limitations: no independent child silent-comprehension sample (human N=0), no
+real-device iOS run, and no long-term economy or retention measurement.

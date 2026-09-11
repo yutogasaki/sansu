@@ -74,6 +74,11 @@ try {
       await page.getByRole('button', { name: 'ここに おく', exact: true }).click();
       await page.locator('.life-placement').waitFor({ state: 'hidden' });
       assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'), String(earned - 2));
+      const observationCue = page.locator('[data-life-observation-earned]');
+      await observationCue.waitFor();
+      assert.match(await observationCue.innerText(), /うさぎが おはなを/);
+      assert.match(await observationCue.innerText(), /みつけたよ|みているよ/);
+      await page.screenshot({ path: `${out}/${name}-observation.png` });
       await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'もちもの', exact: true }).click();
       const flowerItem = page.locator('[data-life-item]').first();
       assert.equal(await flowerItem.getAttribute('data-life-growth-stage'), '0');

@@ -1,0 +1,19 @@
+{
+  "sourceRevision": "1b6ecaaeb495cfc547f5660d0be282874c2fa8fc",
+  "buildRevision": "observation-cue-v1",
+  "buildVersion": "observation-cue-v1:66d89272-2dce-4f34-91a6-185ebb423c19",
+  "productionTarget": "http://127.0.0.1:5226",
+  "deliveryFlag": "VITE_ISLAND_ENABLED=true; VITE_ISLAND_LIFE_ENABLED=true",
+  "delivery": "mystic-island-v1",
+  "candidate": "mystic-island-shore-garden-v18",
+  "learningCandidate": "mystic-island-learning-v2",
+  "residentCandidate": "patchwork-otter-v1",
+  "artDirection": "moon-garden",
+  "visualLineage": "pokko-field-v1",
+  "viewports": [
+    { "name": "phone", "width": 390, "height": 844, "reducedMotion": false },
+    { "name": "tablet", "width": 768, "height": 1024, "reducedMotion": true }
+  ],
+  "humanN": 0,
+  "notes": "Production harness places a flower through real learning, verifies the one-time resident observation cue and existing growth marker, reloads, then verifies offline answer and service-worker restart."
+}
