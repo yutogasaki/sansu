@@ -1,6 +1,13 @@
 import { LIFE_STEP_MS, type LifeResident, type LifeState } from './model';
 import { favorite } from './simulation';
 
+const favoriteLabels = { flower: 'おはな', bench: 'ベンチ', swing: 'ブランコ' } as const;
+
+/** Short, stable copy for the passive resident trait shown beside the island. */
+export function residentFavoriteLabel(resident: LifeResident) {
+    return favoriteLabels[favorite(resident)];
+}
+
 /** Brief, clock-based expressions. They never award currency or need collecting. */
 export function residentReaction(state: LifeState, resident: LifeResident, now: number) {
     const discovered = resident.discovery;

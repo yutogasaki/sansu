@@ -3,7 +3,7 @@ import { Droplets, Sparkles, Sprout, Flower2, Armchair, FerrisWheel, Lamp, Home,
 import { CATALOG, LIFE_CANDIDATE, LIFE_RULES, growthStage, learningDay, vigor, type Cell, type ItemKind, type LifeCommand, type Style } from '../../../domain/islandLife/model';
 import { cellKey, districts, isHouse, landCells } from '../../../domain/islandLife/space';
 import { replayLife } from '../../../domain/islandLife/simulation';
-import { activityLabel, activityPhase, residentReaction } from '../../../domain/islandLife/activity';
+import { activityLabel, activityPhase, residentFavoriteLabel, residentReaction } from '../../../domain/islandLife/activity';
 import type { useIslandLife } from './useIslandLife';
 import LifeWorld from './LifeWorld';
 import { previewPlacement } from './placement';
@@ -150,7 +150,12 @@ export default function IslandLife({ controls, onHome, disabled }: {
         <div className="life-residents" aria-label="みんなのようす">{state.residents.map(r => {
             const target = state.items.find(i => i.id === r.visit?.itemId);
             const reaction = residentReaction(state, r, state.now + elapsed);
-            return <span key={r.id} data-life-resident={r.id} data-life-target={target?.kind ?? 'home'} data-life-activity={activityPhase(state, r, state.now + elapsed)}><b>{residentNames[r.id]}</b>{reaction?.label ?? activityLabel(state, r, state.now + elapsed)}</span>;
+            const activity = reaction?.label ?? activityLabel(state, r, state.now + elapsed);
+            const favorite = residentFavoriteLabel(r);
+            return <span key={r.id} data-life-resident={r.id} data-life-target={target?.kind ?? 'home'} data-life-activity={activityPhase(state, r, state.now + elapsed)} data-life-favorite={favorite}
+                title={`${residentNames[r.id]}。${favorite}が すき。${activity}`}>
+                <b>{residentNames[r.id]}</b><small>すき: {favorite}</small><em>{activity}</em>
+            </span>;
         })}</div>
             <p className="life-goal">{goal === LIFE_RULES.dailyGoal ? 'きょうの いぶきが みちたよ' : `きょうの いぶき ${goal} / ${LIFE_RULES.dailyGoal} といたぶんは のこるよ`}</p>
             <div className="life-tabs" role="group" aria-label="しまの ていれ">{([['build', 'つくる'], ['items', 'もちもの'], ['style', 'いろ'], ['land', 'ひろげる']] as const).map(([id, name]) =>

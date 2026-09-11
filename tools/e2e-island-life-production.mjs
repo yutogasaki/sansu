@@ -27,6 +27,12 @@ try {
       assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'), '0');
       const databaseNames = await page.evaluate(async () => (await indexedDB.databases()).map(d => d.name));
       assert(databaseNames.includes('SansuIslandLifeV1')); assert(!databaseNames.includes('SansuIslandLifePreviewV1'));
+      const residentFavorites = { pokomoko: 'ベンチ', rabbit: 'おはな', otter: 'ブランコ' };
+      for (const [id, label] of Object.entries(residentFavorites)) {
+        const resident = page.locator(`[data-life-resident="${id}"]`);
+        assert.equal(await resident.getAttribute('data-life-favorite'), label);
+        assert.match(await resident.innerText(), new RegExp(`すき: ${label}`));
+      }
       await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'つくる', exact: true }).click();
       assert.equal(await page.locator('[data-life-build-hint]').textContent(), 'まなぶと しずくが ふえるよ。');
       assert.equal(await page.locator('[data-life-buy="flower"]').isDisabled(), true);
@@ -89,7 +95,7 @@ try {
       assert.equal(await page.locator('.life-dev').count(), 0);
       await page.screenshot({ path: `${out}/${name}-offline.png` });
       assert.deepEqual(errors, []);
-      report.scenarios.push({ name, pass: true, answers, earned, earnedCue: 6, earnedCueBox, savedItems: 1, offlineAnswerAndReload: true });
+      report.scenarios.push({ name, pass: true, answers, earned, earnedCue: 6, earnedCueBox, residentFavorites, savedItems: 1, offlineAnswerAndReload: true });
     } catch (e) { await page.screenshot({ path: `${out}/${name}-failure.png` }); throw e; }
     finally { await context.close(); }
  }

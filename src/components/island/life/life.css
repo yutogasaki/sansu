@@ -20,8 +20,10 @@
 .life-dock .life-eyebrow { display:none; }
 .life-dock .life-caption > button { min-height:44px; padding:2px 8px; display:flex; gap:4px; align-items:center; }
 .life-dock .life-residents { padding:0 0 4px; gap:5px; overflow:hidden; }
-.life-dock .life-residents span { padding:2px 5px; font-size:10px; min-width:0; flex-shrink:1; }
-.life-dock .life-residents b { display:inline; margin-right:4px; }
+.life-dock .life-residents > span { display:flex; align-items:center; gap:3px; flex:1 1 0; padding:2px 5px; font-size:10px; min-width:0; overflow:hidden; }
+.life-dock .life-residents b { display:inline; flex:0 0 auto; margin-right:1px; }
+.life-dock .life-residents small { flex:0 0 auto; color:var(--pokomoko-blue); font-size:9px; }
+.life-dock .life-residents em { min-width:0; overflow:hidden; color:var(--pokomoko-muted); font-size:9px; font-style:normal; text-overflow:ellipsis; white-space:nowrap; }
 .life-dock .life-learn { min-height:44px; padding:6px; margin:0; }
 .life-dock .life-goal { margin:3px 0; font-size:10px; }
 .life-dock .life-tabs { margin:0; }

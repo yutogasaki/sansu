@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { HOUR, LIFE_STEP_MS, learningDay, newLife, type Cell, type LifeRecord } from './model';
 import { arrangeVisits, commandLife, replayLife } from './simulation';
-import { activityPhase, residentReaction } from './activity';
+import { activityPhase, residentFavoriteLabel, residentReaction } from './activity';
 import { districts } from './space';
 
 const time = new Date(2026, 8, 10, 10).getTime();
@@ -15,6 +15,11 @@ function buy(r: LifeRecord, kind: 'flower' | 'bench' | 'swing', id: string, cell
     return commandLife(r, { type: 'buy', kind, cell }, id, r.now);
 }
 describe('resident activities and expressions', () => {
+    it('keeps each resident preference visible as a stable island trait', () => {
+        const state = replayLife(funded());
+        expect(state.residents.map(residentFavoriteLabel)).toEqual(['ベンチ', 'おはな', 'ブランコ']);
+    });
+
     it('preserves earned v1 light, purchases and old edge placements across the v2 cutover', () => {
         let old = buy(funded(true), 'bench', 'edge', { x: 5, z: 4 });
         old = buy(old, 'flower', 'f', { x: 0, z: 2 });
