@@ -15,6 +15,8 @@
 
 好きな家具への返事を種族ごとのしぐさへつなぐ[実画面・検証](design/2026-09-11-island-resident-gestures/README.md)：うさぎの首かしげ、reduced motionの静止姿勢、同じ時計での復帰をproductionで確認した。
 
+発見した瞬間の[小さな反応の実画面・検証](design/2026-09-12-island-discovery-bounce/README.md)：`!`の一度だけの跳ね、`?`の静かな表示、reduced motionの静止姿勢を同じproduction buildで確認した。
+
 英語の[短い文章を聞く体験](product/03_english_skills.md#7-短い文章を聞く)は、絵・英文・日本語文を見ながら任意に再生し、回答なしで終えてよい。Study通常学習とIslandに10文の初版を実装。単語練習と併存し、再生を習得や報酬に数えない。
 
 島の機能を「学習・変化・任意操作」に整理した[UI優先順位の実装記録](design/2026-09-09-island-ui-hierarchy.md)。育成先と編集を折り畳み、思い出の入口を家へまとめた。

@@ -1,0 +1,20 @@
+Focused tests:
+  npm test -- --run src/domain/islandLife/activities.test.ts src/components/island/life/residentMotion.test.ts
+  PASS 10 tests
+
+Core verification:
+  npm run verify:core
+  PASS 344 test files / 3,625 tests; default build and assets:check passed.
+  The run also completed the repository core checks from a clean worktree at sourceRevision.
+
+Flagged production candidate:
+  VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_ENABLED=true SANSU_BUILD_REVISION=resident-discovery-v1 npm run build
+  PASS assets:check (98 precache files, 10.63 MiB / 12.00 MiB)
+
+Production harness:
+  SANSU_ISLAND_PRODUCTION_URL=http://127.0.0.1:5228 node tools/e2e-island-life-production.mjs
+  PASS phone and tablet; discoveryBounce=true, rabbitHeadTilt=true, growth/reload/offline=true; humanN=0.
+
+Docs index check:
+  node tools/check-docs.mjs on the staged index snapshot
+  PASS (8 existing past-date warnings only).

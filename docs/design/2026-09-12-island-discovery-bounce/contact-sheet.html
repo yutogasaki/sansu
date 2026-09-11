@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>発見した瞬間の小さな反応 — production contact sheet</title>
+<style>
+  :root { color-scheme: light; font: 14px/1.5 system-ui, sans-serif; background: #f5f2e9; color: #173b40; }
+  body { max-width: 1180px; margin: 24px auto; padding: 0 18px 40px; }
+  h1 { font-size: 24px; }
+  p { max-width: 90ch; }
+  main { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; align-items: start; }
+  figure { margin: 0; padding: 10px; background: #fffdf8; border: 1px solid #d8cdb8; border-radius: 14px; }
+  img { display: block; width: 100%; height: auto; border-radius: 9px; background: #e9e2cb; }
+  figcaption { margin-top: 8px; overflow-wrap: anywhere; }
+  small { display: block; color: #53656a; }
+  .benchmark { border-color: #88a6b0; }
+</style>
+<h1>発見した瞬間の小さな反応 — production</h1>
+<p>Source <code>676dc39cbfe75498de38783df4e13bb59caa104b</code> · Build <code>resident-discovery-v1:d80b7d07-d8bb-4ea0-983d-b433b89feba1</code> · <code>mystic-island-v1</code> · candidate <code>mystic-island-shore-garden-v18</code> · Human N=0</p>
+<p>同じ実buildのクリティカルパス。phoneはmotion、tabletはreduced motion。発見の `!` と、返事中の最新画面を前候補と並べて作者が確認した。</p>
+<main>
+  <figure><img src="phone-build-empty.png" alt="phone 空の島"><figcaption>phone / build empty<small>390×844 · motion</small></figcaption></figure>
+  <figure><img src="phone-initial.png" alt="phone 初期の島"><figcaption>phone / initial<small>390×844 · motion</small></figcaption></figure>
+  <figure><img src="phone-earned.png" alt="phone 学習報酬"><figcaption>phone / earned<small>390×844 · motion</small></figcaption></figure>
+  <figure><img src="phone-observation.png" alt="phone 発見のびっくり反応"><figcaption>phone / discovery ! bounce<small>390×844 · motion · changed frame</small></figcaption></figure>
+  <figure><img src="phone-resident-reply.png" alt="phone うさぎの返事と首かしげ"><figcaption>phone / favorite reply + tilt<small>390×844 · motion</small></figcaption></figure>
+  <figure><img src="phone-growth-inventory.png" alt="phone 成長表示"><figcaption>phone / growth inventory<small>390×844 · motion</small></figcaption></figure>
+  <figure><img src="phone-offline.png" alt="phone offline再起動"><figcaption>phone / offline resume<small>390×844 · motion</small></figcaption></figure>
+  <figure><img src="tablet-build-empty.png" alt="tablet 空の島"><figcaption>tablet / build empty<small>768×1024 · reduced</small></figcaption></figure>
+  <figure><img src="tablet-initial.png" alt="tablet 初期の島"><figcaption>tablet / initial<small>768×1024 · reduced</small></figcaption></figure>
+  <figure><img src="tablet-earned.png" alt="tablet 学習報酬"><figcaption>tablet / earned<small>768×1024 · reduced</small></figcaption></figure>
+  <figure><img src="tablet-observation.png" alt="tablet 発見の静止したびっくり反応"><figcaption>tablet / discovery ! reduced pose<small>768×1024 · reduced · changed frame</small></figcaption></figure>
+  <figure><img src="tablet-resident-reply.png" alt="tablet うさぎの返事と静止姿勢"><figcaption>tablet / favorite reply + reduced pose<small>768×1024 · reduced</small></figcaption></figure>
+  <figure><img src="tablet-growth-inventory.png" alt="tablet 成長表示"><figcaption>tablet / growth inventory<small>768×1024 · reduced</small></figcaption></figure>
+  <figure><img src="tablet-offline.png" alt="tablet offline再起動"><figcaption>tablet / offline resume<small>768×1024 · reduced</small></figcaption></figure>
+  <figure class="benchmark"><img src="../2026-09-11-island-resident-replies/tablet-resident-reply.png" alt="前候補のtablet返事画面"><figcaption>benchmark / previous resident-reply candidate<small>前候補 · 768×1024 · comparison only</small></figcaption></figure>
+</main>
+</html>
