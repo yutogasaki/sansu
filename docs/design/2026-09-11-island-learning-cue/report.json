@@ -1,0 +1,40 @@
+{
+  "target": "http://127.0.0.1:5283",
+  "buildRevision": "development-local:dff154ad-ffd4-4280-af5d-1c138e7ec5ef",
+  "candidate": "island-life-learning-cue-v1",
+  "flag": "VITE_ISLAND_LIFE_ENABLED=true; production",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "phone",
+      "pass": true,
+      "answers": 3,
+      "earned": 6,
+      "earnedCue": 6,
+      "earnedCueBox": {
+        "x": 12,
+        "y": 111.99005889892578,
+        "width": 291.546875,
+        "height": 44.00000762939453
+      },
+      "savedItems": 1,
+      "offlineAnswerAndReload": true
+    },
+    {
+      "name": "tablet",
+      "pass": true,
+      "answers": 3,
+      "earned": 6,
+      "earnedCue": 6,
+      "earnedCueBox": {
+        "x": 12,
+        "y": 112,
+        "width": 291.546875,
+        "height": 44
+      },
+      "savedItems": 1,
+      "offlineAnswerAndReload": true
+    }
+  ],
+  "pass": true
+}

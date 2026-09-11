@@ -35,6 +35,17 @@ try {
       await page.getByRole('button', { name: 'とじる', exact: true }).click();
       await page.waitForFunction(() => Number(document.querySelector('[data-life-drops]')?.dataset.lifeDrops) >= 6);
       const earned = Number(await page.locator('[data-life-drops]').getAttribute('data-life-drops'));
+      const earnedCue = page.locator('[data-life-earned]');
+      await earnedCue.waitFor();
+      assert.equal(await earnedCue.getAttribute('data-life-earned'), '6');
+      const earnedCueBox = await earnedCue.boundingBox();
+      assert(earnedCueBox && earnedCueBox.width > 0 && earnedCueBox.height > 0);
+      await page.screenshot({ path: `${out}/${name}-earned.png` });
+      const cueWorld = await page.locator('.life-world').boundingBox();
+      await earnedCue.click();
+      await page.locator('.life-menu').waitFor();
+      assert.deepEqual(await page.locator('.life-world').boundingBox(), cueWorld);
+      await page.getByRole('button', { name: 'メニューを とじる', exact: true }).click();
       await page.getByRole('button', { name: 'つくる', exact: true }).click();
       await page.locator('[data-life-buy="flower"]').click();
       await page.getByRole('button', { name: 'マスから えらぶ', exact: true }).click();
@@ -49,6 +60,7 @@ try {
       await page.reload(); await page.locator('.life-world[data-rendered="true"]').waitFor();
       assert.equal(await page.locator('[data-life-items]').getAttribute('data-life-items'), '1');
       assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'), String(earned - 2));
+      assert.equal(await page.locator('[data-life-earned]').count(), 0);
       const after = await readNative(page);
       for (const key of ['logs', 'memoryMath', 'memoryVocab', 'islandPlans']) assert.deepEqual(after[key], before[key]);
       assert(await page.evaluate(() => Boolean(navigator.serviceWorker.controller)), 'Real SW control');
@@ -68,7 +80,7 @@ try {
       assert.equal(await page.locator('.life-dev').count(), 0);
       await page.screenshot({ path: `${out}/${name}-offline.png` });
       assert.deepEqual(errors, []);
-      report.scenarios.push({ name, pass: true, answers, earned, savedItems: 1, offlineAnswerAndReload: true });
+      report.scenarios.push({ name, pass: true, answers, earned, earnedCue: 6, earnedCueBox, savedItems: 1, offlineAnswerAndReload: true });
     } catch (e) { await page.screenshot({ path: `${out}/${name}-failure.png` }); throw e; }
     finally { await context.close(); }
  }

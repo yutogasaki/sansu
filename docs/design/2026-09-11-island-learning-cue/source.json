@@ -1,0 +1,22 @@
+{
+  "candidate": "island-life-learning-cue-v1",
+  "baseRevision": "f6a1779660d9b790a0d326cfb1baca7e4c5e89f9",
+  "workingTree": true,
+  "flags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_ISLAND_LIFE_ENABLED": true,
+    "mode": "production preview"
+  },
+  "build": {
+    "directory": "/tmp/sansu-learning-cue-build-2",
+    "revision": "development-local:dff154ad-ffd4-4280-af5d-1c138e7ec5ef"
+  },
+  "files": [
+    { "path": "src/components/island/life/IslandLife.tsx", "sha256": "c6def22fd71eb374c47ffb5ee425a269a070e116e49797d3b7e113102107211c" },
+    { "path": "src/components/island/life/life.css", "sha256": "db7dab226e0a4e0ef28a00638d5d734040d53c028407ad1c7ff028ab406ef297" },
+    { "path": "docs/product/48_island_life_spec.md", "sha256": "8e1548e53c2d067a1b0f9c0095195265e9d9de9d9c7657584c7a0a0d2180b53f" },
+    { "path": "docs/ai/verification_matrix.md", "sha256": "4edd16dce15eb28908bb72bfd093e585327f23c9b204f5a0ec188d76ab4af9bb" },
+    { "path": "tools/e2e-island-life-production.mjs", "sha256": "51854235ee477fa05cf2857bc442417087273a95f4ce654e2da0ef84037ccee8" }
+  ],
+  "unrelatedWorkingTreeChanges": "Present outside the files listed above; not staged by this change."
+}

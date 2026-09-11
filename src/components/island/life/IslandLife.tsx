@@ -20,8 +20,10 @@ export default function IslandLife({ controls, onHome, disabled }: {
     const [gridOpen, setGridOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
     const actionRunning = useRef(false), retryCompletion = useRef<(() => void) | undefined>(undefined);
+    const lastObservedDrops = useRef<number | undefined>(undefined);
     const state = useMemo(() => record ? replayLife(record) : undefined, [record]);
     const [elapsed, setElapsed] = useState(0);
+    const [earnedDrops, setEarnedDrops] = useState<number>();
     useEffect(() => {
         const start = performance.now(); setElapsed(0);
         const timer = window.setInterval(() => setElapsed(performance.now() - start), 1000);
@@ -42,6 +44,23 @@ export default function IslandLife({ controls, onHome, disabled }: {
         window.addEventListener('keydown', close);
         return () => window.removeEventListener('keydown', close);
     }, [menuOpen]);
+    useEffect(() => {
+        if (!record) return;
+        const current = replayLife(record).drops;
+        let previous = lastObservedDrops.current;
+        try {
+            const saved = window.sessionStorage.getItem(`sansu:island-life-seen-drops:${record.profileId}`);
+            if (previous === undefined && saved !== null && Number.isFinite(Number(saved))) previous = Number(saved);
+            window.sessionStorage.setItem(`sansu:island-life-seen-drops:${record.profileId}`, String(current));
+        } catch { /* Private browsing or storage denial should not block the island. */ }
+        lastObservedDrops.current = current;
+        if (previous !== undefined && current > previous) setEarnedDrops(current - previous);
+    }, [record]);
+    useEffect(() => {
+        if (earnedDrops === undefined) return;
+        const id = window.setTimeout(() => setEarnedDrops(undefined), 7000);
+        return () => window.clearTimeout(id);
+    }, [earnedDrops]);
     if (!state || !record) return <section className="life-controls"><p role="status">{error ?? 'しまを ひらいているよ…'}</p>
         <button className="island-secondary" onClick={() => void refresh()}>もういちど</button></section>;
     const locked = disabled || busy;
@@ -72,7 +91,7 @@ export default function IslandLife({ controls, onHome, disabled }: {
         if (found) { setSelected(found.id); setTab('items'); setMenuOpen(true); setRemoving(false); }
         else if (isHouse(next)) onHome();
     };
-    const switchTab = (next: typeof tab) => { setMenuOpen(next !== tab || !menuOpen); setPage(0); if (next !== 'style') setSelected(undefined); setTab(next); setKind(undefined); setCell(undefined); setMoving(false); setRemoving(false); };
+    const switchTab = (next: typeof tab) => { setEarnedDrops(undefined); setMenuOpen(next !== tab || !menuOpen); setPage(0); if (next !== 'style') setSelected(undefined); setTab(next); setKind(undefined); setCell(undefined); setMoving(false); setRemoving(false); };
     const products = Object.keys(CATALOG) as ItemKind[];
     const pageCount = Math.max(1, Math.ceil((tab === 'build' ? products.length : state.items.length) / 2));
     const currentPage = Math.min(page, pageCount - 1);
@@ -84,6 +103,9 @@ export default function IslandLife({ controls, onHome, disabled }: {
             <span title={`いぶき ${vigor(state) * 100}%`}><Sprout size={18} />{vigor(state) === 1 ? 'すくすく' : 'ゆっくり そだつ'}</span></div>
         <div className="life-viewport">
         <LifeWorld state={state} selected={selected} cell={cell} placement={placement} onCell={chooseCell} />
+        {earnedDrops !== undefined && <button className="life-earned" data-life-earned={earnedDrops} aria-live="polite" onClick={() => switchTab('build')}>
+            学んだぶん <strong>+{earnedDrops} しずく</strong><span>つくるものを えらぶ →</span>
+        </button>}
         {placement && <div className="life-placement life-controls" data-life-placement-valid={placement.valid} data-life-placement-cell={cell && cellKey(cell)}>
             <h3>{CATALOG[placement.item.kind].label}を {moving ? 'うごかす' : 'おく'}</h3>
             <p role="status">{cell && (placement.valid ? <Check size={18} /> : <X size={18} />)}{placement.reason}</p>

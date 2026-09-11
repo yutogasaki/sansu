@@ -66,3 +66,11 @@
 .life-dock .life-caption h2 { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .life-dock .life-residents { height:24px; }
 .life-dock .life-residents span { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.life-earned { position:absolute; z-index:7; top:8px; left:12px; display:flex; align-items:center; gap:6px; min-height:44px; max-width:calc(100% - 24px); padding:7px 11px; border:1px solid var(--pokomoko-edge); border-radius:14px; color:var(--pokomoko-ink); background:var(--pokomoko-paper); box-shadow:0 4px 12px #26314522; font:inherit; font-size:12px; cursor:pointer; }
+.life-earned strong { color:var(--pokomoko-blue); font-size:14px; white-space:nowrap; }
+.life-earned span { color:var(--pokomoko-muted); white-space:nowrap; }
+.life-earned:focus-visible { outline:3px solid var(--pokomoko-blue); outline-offset:2px; }
+@media (prefers-reduced-motion:no-preference) {
+ .life-earned { animation:life-earned-in 180ms ease-out both; }
+}
+@keyframes life-earned-in { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
