@@ -1,0 +1,22 @@
+resident-reply-v2 verification record
+source: 17fff50f07066794a290de09c7abe62f8b39bb48
+
+Focused:
+- npx vitest run src/domain/islandLife/activities.test.ts: PASS (7 tests)
+- npx vitest run src/domain/islandLife/*.test.ts: PASS (5 files, 25 tests)
+- npm run typecheck: PASS
+- eslint changed files: PASS
+- npm run docs:check: PASS (8 existing past-review-date warnings)
+
+Integrated clean worktree at the source revision:
+- npm run verify:core: PASS
+- lint: 0 errors, 1 existing react-refresh warning
+- typecheck: PASS
+- Vitest: 344 files / 3,624 tests passed
+- build + assets:check: PASS; PWA 98 files, 10.64 MiB / 12.00 MiB
+
+Flagged production candidate:
+- VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_ENABLED=true SANSU_BUILD_REVISION=resident-reply-v2 npm run build: PASS
+- PWA 98 files, 10.63 MiB / 12.00 MiB
+- node tools/e2e-island-life-production.mjs: PASS for phone 390x844 and tablet 768x1024 (tablet reduced motion)
+- report: production-report.json

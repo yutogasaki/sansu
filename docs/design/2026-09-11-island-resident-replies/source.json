@@ -1,0 +1,19 @@
+{
+  "sourceRevision": "17fff50f07066794a290de09c7abe62f8b39bb48",
+  "buildRevision": "resident-reply-v2",
+  "buildVersion": "resident-reply-v2:3c3cded7-a652-4db5-ba7d-423f2a2acf06",
+  "productionTarget": "http://127.0.0.1:5228",
+  "deliveryFlag": "VITE_ISLAND_ENABLED=true; VITE_ISLAND_LIFE_ENABLED=true",
+  "delivery": "mystic-island-v1",
+  "candidate": "mystic-island-shore-garden-v18",
+  "learningCandidate": "mystic-island-learning-v2",
+  "residentCandidate": "patchwork-otter-v1",
+  "artDirection": "moon-garden",
+  "visualLineage": "pokko-field-v1",
+  "viewports": [
+    { "name": "phone", "width": 390, "height": 844, "reducedMotion": false },
+    { "name": "tablet", "width": 768, "height": 1024, "reducedMotion": true }
+  ],
+  "humanN": 0,
+  "notes": "Production harness places a flower through real learning, verifies the one-time observation cue and the rabbit's favorite reply, verifies the growth marker, then reloads and answers offline under real service-worker control."
+}
