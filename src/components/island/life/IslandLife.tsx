@@ -119,9 +119,12 @@ export default function IslandLife({ controls, onHome, disabled }: {
             <div className="life-menu-heading"><b>{{ build: 'つくる', items: 'もちもの', style: 'いろ', land: 'ひろげる' }[tab]}</b>{(tab === 'build' || tab === 'items' && !item) && pageCount > 1 && pager}<button aria-label="メニューを とじる" onClick={() => setMenuOpen(false)}><X size={18} /></button></div>
             {error && <div className="life-error" role="alert"><p>{error}</p><button onClick={() => void retryAction()} disabled={locked}>もういちど</button><button onClick={() => { retryCompletion.current = undefined; controls.clearError(); }} disabled={locked}>よみなおす</button></div>}
             {notice && !error && <p role="status" className="life-notice">{notice}</p>}
-            {tab === 'build' && <div className="life-catalog">{products.slice(currentPage * 2, currentPage * 2 + 2).map(k => { const Icon = icons[k]; return <button key={k} data-life-buy={k} aria-pressed={kind === k}
-                disabled={locked || state.drops < CATALOG[k].price} onClick={() => { setKind(k); setCell(undefined); setSelected(undefined); setNotice(''); showWorld(); }}>
-                <Icon size={26} /><b>{CATALOG[k].label}</b><span>しずく {CATALOG[k].price}</span></button>; })}</div>}
+            {tab === 'build' && <>
+                {!products.some(k => state.drops >= CATALOG[k].price) && <p className="life-menu-hint" data-life-build-hint role="status">まなぶと しずくが ふえるよ。</p>}
+                <div className="life-catalog">{products.slice(currentPage * 2, currentPage * 2 + 2).map(k => { const Icon = icons[k]; const missing = CATALOG[k].price - state.drops; return <button key={k} data-life-buy={k} aria-pressed={kind === k}
+                    disabled={locked || missing > 0} onClick={() => { setKind(k); setCell(undefined); setSelected(undefined); setNotice(''); showWorld(); }}>
+                    <Icon size={26} /><b>{CATALOG[k].label}</b><span>{missing > 0 ? `あと ${missing} しずく` : `しずく ${CATALOG[k].price}`}</span></button>; })}</div>
+            </>}
             {tab === 'items' && <>
                 <div className="life-items">{!item && state.items.slice(currentPage * 2, currentPage * 2 + 2).map((i, index) => <button key={i.id} data-life-item={i.id} aria-pressed={selected === i.id} onClick={() => { setSelected(i.id); setMoving(false); setRemoving(false); setCell(undefined); }} disabled={locked}>
                     {CATALOG[i.kind].label} {currentPage * 2 + index + 1}<small>{!i.cell ? 'しまってある' : i.kind === 'flower' ? ['めが でた', 'つぼみ', 'さいた'][growthStage(i)] : 'おいてある'}</small></button>)}</div>

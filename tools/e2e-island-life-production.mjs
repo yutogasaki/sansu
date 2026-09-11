@@ -27,6 +27,12 @@ try {
       assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'), '0');
       const databaseNames = await page.evaluate(async () => (await indexedDB.databases()).map(d => d.name));
       assert(databaseNames.includes('SansuIslandLifeV1')); assert(!databaseNames.includes('SansuIslandLifePreviewV1'));
+      await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'つくる', exact: true }).click();
+      assert.equal(await page.locator('[data-life-build-hint]').textContent(), 'まなぶと しずくが ふえるよ。');
+      assert.equal(await page.locator('[data-life-buy="flower"]').isDisabled(), true);
+      assert.match(await page.locator('[data-life-buy="flower"]').innerText(), /あと 2 しずく/);
+      await page.screenshot({ path: `${out}/${name}-build-empty.png` });
+      await page.getByRole('button', { name: 'メニューを とじる', exact: true }).click();
       await page.screenshot({ path: `${out}/${name}-initial.png` });
       await page.getByRole('navigation', { name: 'メインメニュー' }).getByRole('button', { name: 'まなぶ', exact: true }).click();
       let native = await readNative(page), answers = 0; const start = native.island.completedSets;
@@ -47,6 +53,9 @@ try {
       assert.deepEqual(await page.locator('.life-world').boundingBox(), cueWorld);
       await page.getByRole('button', { name: 'メニューを とじる', exact: true }).click();
       await page.getByRole('button', { name: 'つくる', exact: true }).click();
+      await page.getByRole('button', { name: 'つぎの ページ', exact: true }).click();
+      assert.match(await page.locator('[data-life-buy="lantern"]').innerText(), /あと 2 しずく/);
+      await page.getByRole('button', { name: 'まえの ページ', exact: true }).click();
       await page.locator('[data-life-buy="flower"]').click();
       await page.getByRole('button', { name: 'マスから えらぶ', exact: true }).click();
       await page.getByRole('button', { name: 'つぎの マス' }).click();

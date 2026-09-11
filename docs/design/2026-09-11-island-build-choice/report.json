@@ -1,0 +1,40 @@
+{
+  "target": "http://127.0.0.1:5284",
+  "buildRevision": "development-local:b7abe739-a247-4788-a648-9eab6a44959e",
+  "candidate": "island-life-build-choice-v1",
+  "flag": "VITE_ISLAND_LIFE_ENABLED=true; production",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "phone",
+      "pass": true,
+      "answers": 3,
+      "earned": 6,
+      "earnedCue": 6,
+      "earnedCueBox": {
+        "x": 12,
+        "y": 112,
+        "width": 291.546875,
+        "height": 44
+      },
+      "savedItems": 1,
+      "offlineAnswerAndReload": true
+    },
+    {
+      "name": "tablet",
+      "pass": true,
+      "answers": 3,
+      "earned": 6,
+      "earnedCue": 6,
+      "earnedCueBox": {
+        "x": 12,
+        "y": 112,
+        "width": 291.546875,
+        "height": 44
+      },
+      "savedItems": 1,
+      "offlineAnswerAndReload": true
+    }
+  ],
+  "pass": true
+}
