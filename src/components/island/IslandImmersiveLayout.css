@@ -1,0 +1,356 @@
+/*
+ * Island-first layout (2026-09-11)
+ *
+ * A live island is the content surface. Controls may sit above it, or open a
+ * paper surface over it, but they do not permanently split the world into a
+ * lower shelf or a desktop sidebar. Learning remains a separate focused mode.
+ */
+
+/* The ordinary island home gives its whole available surface to the world. */
+.app-container .island-page[data-home-layout="world-first-v2"] {
+    position: relative;
+    display: block;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+.island-page[data-home-layout="world-first-v2"] > .island-header {
+    position: absolute;
+    z-index: 8;
+    inset: 0 0 auto;
+    width: 100%;
+    max-width: none;
+    min-height: 60px;
+    padding: max(6px, env(safe-area-inset-top)) 16px 14px;
+    background: linear-gradient(180deg, rgb(255 253 249 / 96%) 0%, rgb(255 253 249 / 82%) 70%, rgb(255 253 249 / 0%) 100%);
+    pointer-events: none;
+}
+
+.island-page[data-home-layout="world-first-v2"] > .island-header :is(button, a),
+.island-page[data-home-layout="world-first-v2"] > .island-header .island-header-actions {
+    pointer-events: auto;
+}
+
+.island-page[data-home-layout="world-first-v2"] > .island-stage {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    border-radius: 0;
+}
+
+.island-page[data-home-layout="world-first-v2"] > .island-stage > .island-stage__viewport {
+    height: 100%;
+    border-radius: 0;
+}
+
+.island-page[data-home-layout="world-first-v2"] > .island-stage > .island-stage__controls--compact {
+    top: calc(60px + env(safe-area-inset-top) + 6px);
+    right: 12px;
+}
+
+.island-page[data-home-layout="world-first-v2"] > .island-stage .island-stage__caption {
+    bottom: calc(96px + env(safe-area-inset-bottom));
+}
+
+.island-page[data-home-layout="world-first-v2"] > .island-home-controls {
+    position: absolute;
+    z-index: 6;
+    inset: auto 0 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: end;
+    gap: 8px;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 28px 12px max(10px, env(safe-area-inset-bottom));
+    background: linear-gradient(180deg, rgb(255 253 249 / 0%) 0%, rgb(255 253 249 / 76%) 32%, rgb(255 253 249 / 96%) 72%);
+    pointer-events: none;
+}
+
+.island-page[data-home-layout="world-first-v2"] > .island-home-controls > * {
+    pointer-events: auto;
+}
+
+.island-page[data-home-layout="world-first-v2"] > .island-home-controls .island-home-feedback,
+.island-page[data-home-layout="world-first-v2"] > .island-home-controls .island-milestone {
+    grid-column: 1 / -1;
+}
+
+.island-page[data-home-layout="world-first-v2"] > .island-home-controls .island-start {
+    grid-column: 1;
+    width: 100%;
+}
+
+.island-page[data-home-layout="world-first-v2"] > .island-home-controls .island-home-inventory,
+.island-page[data-home-layout="world-first-v2"] > .island-home-controls .island-home-actions {
+    grid-row: auto;
+    margin: 0;
+}
+
+.island-page[data-home-layout="world-first-v2"] > .island-home-controls .island-home-inventory {
+    grid-column: 2;
+    white-space: nowrap;
+}
+
+.island-page[data-home-layout="world-first-v2"] > .island-home-controls .island-home-actions {
+    grid-column: 3;
+}
+
+/* A production household island uses the same immersive world surface. */
+.app-container .island-page[data-life-home="true"] {
+    position: relative;
+    display: block;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+.island-page[data-life-home="true"] > .island-header {
+    position: absolute;
+    z-index: 10;
+    inset: 0 0 auto;
+    width: 100%;
+    max-width: none;
+    min-height: 60px;
+    padding: max(6px, env(safe-area-inset-top)) 16px 14px;
+    background: linear-gradient(180deg, rgb(248 247 242 / 96%) 0%, rgb(248 247 242 / 82%) 70%, rgb(248 247 242 / 0%) 100%);
+    pointer-events: none;
+}
+
+.island-page[data-life-home="true"] > .island-header :is(button, a),
+.island-page[data-life-home="true"] > .island-header .island-header-actions {
+    pointer-events: auto;
+}
+
+.island-page[data-life-home="true"] > .island-life {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.island-page[data-life-home="true"] .life-wallet {
+    position: absolute;
+    z-index: 4;
+    top: calc(58px + env(safe-area-inset-top));
+    left: 12px;
+    right: 12px;
+    width: auto;
+    padding: 5px 10px;
+    border: 1px solid rgb(207 197 218 / 82%);
+    border-radius: 14px;
+    background: rgb(255 253 249 / 90%);
+    box-shadow: 0 4px 14px rgb(38 49 69 / 12%);
+}
+
+.island-page[data-life-home="true"] .life-viewport {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.island-page[data-life-home="true"] .life-dock {
+    position: absolute;
+    z-index: 8;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 42px 12px max(8px, env(safe-area-inset-bottom));
+    background: linear-gradient(180deg, rgb(255 253 249 / 0%) 0%, rgb(255 253 249 / 76%) 32%, rgb(255 253 249 / 96%) 70%);
+    pointer-events: none;
+}
+
+.island-page[data-life-home="true"] .life-dock > * {
+    pointer-events: auto;
+}
+
+.island-page[data-life-home="true"] .life-menu,
+.island-page[data-life-home="true"] .life-viewport > .life-placement.life-controls {
+    bottom: calc(104px + env(safe-area-inset-bottom));
+    z-index: 12;
+}
+
+.island-page[data-life-home="true"] .life-earned {
+    top: calc(108px + env(safe-area-inset-top));
+}
+
+/* Every live-world subpage keeps the scene full-bleed and floats its tools. */
+.app-container .island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) {
+    position: relative;
+    display: block;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+.island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-header {
+    position: absolute;
+    z-index: 8;
+    inset: 0 0 auto;
+    width: 100%;
+    max-width: none;
+    min-height: 60px;
+    padding: max(6px, env(safe-area-inset-top)) 16px 14px;
+    background: linear-gradient(180deg, rgb(248 247 242 / 96%) 0%, rgb(248 247 242 / 82%) 70%, rgb(248 247 242 / 0%) 100%);
+    pointer-events: none;
+}
+
+.island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-header :is(button, a),
+.island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-header .island-header-actions {
+    pointer-events: auto;
+}
+
+.island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-stage {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    border-radius: 0;
+}
+
+.island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-stage > .island-stage__viewport {
+    height: 100%;
+    min-height: 0;
+    border-radius: 0;
+}
+
+.island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-stage > .island-stage__controls {
+    position: absolute;
+    z-index: 5;
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    width: auto;
+    height: auto;
+    padding: 0;
+    background: transparent;
+}
+
+.island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-stage .island-camera-hint {
+    padding: 4px 8px;
+    border-radius: 10px;
+    background: rgb(255 253 249 / 88%);
+}
+
+.island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-sheet,
+.island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-showcase-controls {
+    position: absolute;
+    z-index: 7;
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    width: min(470px, calc(100% - 24px));
+    max-width: none;
+    max-height: calc(100% - 104px);
+    min-height: 0;
+    margin: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 1px solid var(--pokomoko-edge);
+    border-radius: 22px;
+    background: rgb(255 253 249 / 95%);
+    box-shadow: 0 12px 36px rgb(38 49 69 / 20%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-sheet {
+    padding: 16px 16px max(20px, env(safe-area-inset-bottom));
+}
+
+.island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-sheet > :is(.island-sheet-title, .island-customization-heading) {
+    top: 0;
+    position: sticky;
+    z-index: 2;
+    padding-block: 4px 8px;
+    background: rgb(255 253 249 / 95%);
+    box-shadow: 0 -8px 0 rgb(255 253 249 / 95%), 0 4px 0 rgb(255 253 249 / 95%);
+}
+
+/* Placement has two small floating action strips, never a second layout column. */
+.island-page[data-mode="placement"] > .island-placement-toolbar {
+    position: absolute;
+    z-index: 9;
+    top: max(8px, env(safe-area-inset-top));
+    right: 12px;
+    left: 12px;
+    width: auto;
+    padding: 0;
+    background: transparent;
+}
+
+.island-page[data-mode="placement"] > .island-placement {
+    bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+/* Direct actions are already contextual; float them over the live scene too. */
+.island-stage[data-direct-open="true"] {
+    display: block;
+}
+
+.island-stage[data-direct-open="true"] > .island-stage__viewport {
+    height: 100%;
+}
+
+.island-stage[data-direct-open="true"] > .island-direct-panel {
+    position: absolute;
+    z-index: 8;
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    left: 12px;
+    width: auto;
+    max-width: 520px;
+    max-height: min(48dvh, 320px);
+    margin: 0 auto;
+    border: 1px solid var(--pokomoko-edge);
+    border-radius: 20px;
+    box-shadow: 0 12px 32px rgb(38 49 69 / 20%);
+}
+
+@media (min-width: 700px) {
+    .island-page[data-home-layout="world-first-v2"] > .island-home-controls {
+        padding-inline: 24px;
+    }
+
+    .island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-sheet,
+    .island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-showcase-controls {
+        right: 20px;
+        bottom: 20px;
+        width: min(470px, 46vw);
+        max-height: calc(100% - 124px);
+    }
+}
+
+@media (max-width: 699px) {
+    .island-page[data-home-layout="world-first-v2"] > .island-home-controls {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+    }
+
+    .island-page[data-home-layout="world-first-v2"] > .island-home-controls .island-home-actions {
+        grid-column: 3;
+    }
+
+    .island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-sheet,
+    .island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-showcase-controls {
+        right: 10px;
+        bottom: 10px;
+        left: 10px;
+        width: auto;
+        max-height: calc(100% - 96px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-sheet,
+    .island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-showcase-controls {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+}

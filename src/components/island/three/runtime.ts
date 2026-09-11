@@ -48,7 +48,8 @@ import { IslandResident, RESIDENT_NAMES } from './animals';
 import { canShowOrdinaryInterest, isResidentInterestItem, residentInterestVerb, sampleResidentInterest,
     type ResidentInterestSample } from './residentInterest';
 import { chooseReachableResident, preferredIslandResident, residentNeedsInitialSpawn, savedResidentLayoutChanged, suggestReachablePlacement } from './residentInteraction';
-import { findSafeResidentSpawn, planResidentPointRoute, planResidentRoute } from './navigation';
+import { findSafeResidentSpawn, planResidentPointRoute, planResidentRoute, type ResidentRoute } from './navigation';
+import { planResidentRoam } from './residentRoaming';
 import { chooseSharedActivity, sharedActivityDeliveryPlans, type SharedActivityPlan, type SharedActivityReplayPreference } from './sharedActivities';
 import { SharedActivityVisuals } from './sharedActivityVisuals';
 import { SharedActivityController } from './sharedActivityController';
@@ -231,6 +232,9 @@ export class IslandScene {
     }
     private livingTurn = 0;
     private nextLivingAt = 0;
+    private freeRoam?: { resident: IslandResident; route: ResidentRoute };
+    private freeRoamTurn = 0;
+    private nextRoamAt = 0;
     private readonly reportedDiscoveries = new Set<string>();
 
     private readonly workshop = new IslandWorkshopScene({
@@ -395,7 +399,11 @@ export class IslandScene {
             this.world.updateAppearance(state.cosmetics ?? DEFAULT_ISLAND_COSMETICS);
             this.scene.background = this.world.background;
         }
-        if (!previous) this.nextLivingAt = performance.now() + 1500;
+        if (!previous) {
+            const now = performance.now();
+            this.nextLivingAt = now + 1500;
+            this.nextRoamAt = now + 2600;
+        }
         const layoutChanged = Boolean(previous && savedResidentLayoutChanged(previous.items, state.items));
         const displaysChanged = JSON.stringify(previous?.shared?.island.sharedMemories?.displays) !== JSON.stringify(state.shared?.island.sharedMemories?.displays);
         const trialChanged = Boolean(previous?.furnitureTrial) !== Boolean(state.furnitureTrial)
@@ -406,10 +414,14 @@ export class IslandScene {
             || !this.optionalAutonomousUntil && previous?.playRequest && (!state.playRequest || previous.playRequest.id !== state.playRequest.id)) {
             this.optionalFurniture.cancel(performance.now(), state.items, getIslandLandAccess(state), state.shared ? sharedDisplayObstacles(state.shared.island) : []); this.optionalAutonomousUntil = 0;
         }
-        if (state.furnitureTrial) { this.cancelLivingActivity(performance.now()); this.clearOrdinaryInterest(); }
+        if (state.furnitureTrial) {
+            this.cancelLivingActivity(performance.now()); this.cancelFreeRoaming(performance.now()); this.clearOrdinaryInterest();
+        }
 
         if (state.learning || state.preview || state.readOnly || state.workshop?.active || state.shared?.active || layoutChanged
-            || previous?.districtFocus !== state.districtFocus) this.cancelLivingActivity(performance.now());
+            || previous?.districtFocus !== state.districtFocus) {
+            this.cancelLivingActivity(performance.now()); this.cancelFreeRoaming(performance.now());
+        }
         if (state.learning || state.preview || state.readOnly || state.workshop?.active || state.shared?.active || layoutChanged || (previous?.playRequest && !state.playRequest)) this.clearOrdinaryInterest();
         if (layoutChanged || state.preview) {
             this.clearanceDirty ||= layoutChanged || this.furnitureClearance.active;
@@ -702,7 +714,10 @@ export class IslandScene {
             this.optionalFurniture.cancel(performance.now(), state.items, this.landAccess, state.shared ? sharedDisplayObstacles(state.shared.island) : []);
             this.optionalAutonomousUntil = 0;
         }
-        if (!autonomous) this.cancelLivingActivity(performance.now());
+        if (!autonomous) {
+            this.cancelLivingActivity(performance.now());
+            this.cancelFreeRoaming(performance.now());
+        }
         this.deferredPlay = undefined;
         this.pendingVisitId = undefined;
         const item = this.furnitureTrial?.item.id === play.itemId ? this.furnitureTrial.item : state.items.find(candidate => candidate.id === play.itemId);
@@ -838,6 +853,50 @@ export class IslandScene {
         this.livingVisit = undefined; this.livingResidents = []; this.livingHomeVisit = false; this.homePending = undefined; this.livingArrivedAt = 0;
         this.nature.clear(); this.natureFramedAt = 0; this.natureCaptionAt = 0; this.nextLivingAt = now + 2500;
         if (restoreNatureFrame) this.resize();
+    }
+
+    private cancelFreeRoaming(now: number) {
+        this.freeRoam?.resident.stopWalking(now);
+        this.freeRoam = undefined;
+        this.nextRoamAt = now + 2200;
+    }
+
+    private updateFreeRoaming(now: number) {
+        const state = this.state;
+        const canRoam = Boolean(state && canRunLivingActivities(state, !document.hidden && this.onscreen)
+            && !state.playRequest && !this.livingVisit && !state.furnitureTrial
+            && !this.optionalFurniture.active && !this.sharedActivity.active && !this.furnitureClearance.active);
+        if (!state || !canRoam) {
+            if (this.freeRoam) this.cancelFreeRoaming(now);
+            return false;
+        }
+        if (this.freeRoam) {
+            if (this.freeRoam.resident.action === 'walk') return true;
+            this.freeRoam = undefined;
+            this.nextRoamAt = now + 1800;
+        }
+        if (now < this.nextRoamAt || this.residents.some(resident => resident.action === 'walk')) return false;
+        this.clearOrdinaryInterest();
+        for (const [index, resident] of this.residents.entries()) {
+            if (!resident.group.visible || resident.action === 'walk') continue;
+            const occupied = this.residents.filter(other => other !== resident && other.group.visible).map(other => other.group.position);
+            const departingId = resident.itemId || resident.departingId;
+            const plan = planResidentRoam(resident.group.position, index, this.freeRoamTurn++, state.items, this.landAccess, {
+                occupied, obstacles: state.shared ? sharedDisplayObstacles(state.shared.island) : [], district: state.districtFocus, departingId,
+            });
+            if (plan) {
+                // A resident may still be settled on the last visited object.
+                // Roaming is the quiet moment where that real actor leaves it;
+                // explicit furniture use never takes this shortcut.
+                if (resident.itemId || resident.action !== 'idle') resident.release(now);
+            }
+            if (plan && resident.walkToPoint(plan.route, now, this.motion.matches, this.landAccess)) {
+                this.freeRoam = { resident, route: plan.route };
+                return true;
+            }
+        }
+        this.nextRoamAt = now + 1200;
+        return false;
     }
 
     private updateLivingActivity(now: number) {
@@ -1639,7 +1698,7 @@ export class IslandScene {
         this.optionalPlacement?.cancel();
         if (this.furnitureTrial) this.furnitureTrial.group.visible = false;
         this.pointerCancel(); this.sharedJobs.stop(); clearSharedJobCamera(this.camera); this.workshop.stop(); this.workshopPresentation.restore();
-        this.cancelLivingActivity(performance.now()); this.clearOrdinaryInterest();
+        this.cancelLivingActivity(performance.now()); this.cancelFreeRoaming(performance.now()); this.clearOrdinaryInterest();
         cancelAnimationFrame(this.frame); this.frame = 0; window.clearTimeout(this.idleTimer);
     }
     private requestFrame = () => {
@@ -1718,6 +1777,7 @@ export class IslandScene {
         }
         const ordinaryInterestActive = this.applyOrdinaryInterest();
         moving = this.updateLivingActivity(now) || moving;
+        moving = this.updateFreeRoaming(now) || moving;
         if (this.reaction) {
             const reaction = this.reaction;
             const sampled = sampleLearningReaction(reaction.kind, now - reaction.startedAt, this.motion.matches, reaction.beat);
@@ -1973,7 +2033,7 @@ export class IslandScene {
             && (!this.state?.readOnly || this.expressionWalk.moving || trailsMoving)) this.requestFrame();
         else if ((!this.optionalFurniture.active || this.optionalAutonomousUntil) && !this.workshopActive && !this.sharedJobs.active && !this.state?.learning && !this.state?.readOnly && !this.explicitNatureObservation && (!this.motion.matches || this.state?.growth)) {
             const due = this.optionalAutonomousUntil || (this.livingVisit ? this.livingArrivedAt ? this.livingArrivedAt + 6100 : performance.now() + 200
-                : this.state?.growth ? this.nextLivingAt : performance.now() + 9000);
+                : this.state?.growth ? Math.min(this.nextLivingAt, this.nextRoamAt) : performance.now() + 9000);
             this.idleTimer = window.setTimeout(() => { this.idleStart = performance.now(); this.requestFrame(); }, Math.max(100, due - performance.now()));
         }
     };

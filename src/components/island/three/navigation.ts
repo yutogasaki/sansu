@@ -5,9 +5,15 @@ import type { IslandStageItem } from './types';
 export interface GroundPoint { x: number; z: number }
 interface Obstacle extends GroundPoint { radius: number }
 export interface ResidentRoute { points: GroundPoint[]; yaw: number }
-export interface ResidentRouteOptions { occupied?: readonly GroundPoint[]; obstacles?: readonly { x: number; z: number; radius: number }[] }
+export type ResidentNavigationMode = 'physical' | 'roam';
+export interface ResidentRouteOptions {
+    occupied?: readonly GroundPoint[];
+    obstacles?: readonly { x: number; z: number; radius: number }[];
+}
 export interface ResidentPointRouteOptions extends ResidentRouteOptions {
     departingId?: string; departingIds?: readonly string[]; yaw?: number;
+    /** Autonomous strolling may soften placed furniture only as an escape fallback. */
+    navigation?: ResidentNavigationMode;
     /** Independent real geometry such as displays; never fake catalog furniture. */
     obstacles?: readonly { x: number; z: number; radius: number }[];
     /** A caller with actual articulated geometry may reject a segment beyond
@@ -36,12 +42,13 @@ export function residentGroundHeight(point: GroundPoint, expanded: IslandLandAcc
     return .19 + Math.sin((x - 4) / 1.44 * Math.PI) * .15;
 }
 
-export function residentObstacles(items: readonly IslandStageItem[], targetId: string, departingId?: string): Obstacle[] {
+export function residentObstacles(items: readonly IslandStageItem[], targetId: string, departingId?: string,
+    navigation: ResidentNavigationMode = 'physical'): Obstacle[] {
     // The bridge is reserved against furnishing; it is deliberately walkable.
-    return [
-        ...ISLAND_RESERVED_AREAS.filter(area => !(Math.abs(area.x) > 4 && Math.abs(area.x) < 5.5)),
-        ...items.filter(item => item.id !== targetId && item.id !== departingId && item.position).map(item => ({ ...item.position!, radius: ISLAND_ITEMS[item.kind].radius })),
-    ];
+    const fixed = ISLAND_RESERVED_AREAS.filter(area => !(Math.abs(area.x) > 4 && Math.abs(area.x) < 5.5));
+    if (navigation === 'roam') return [...fixed];
+    return [...fixed, ...items.filter(item => item.id !== targetId && item.id !== departingId && item.position)
+        .map(item => ({ ...item.position!, radius: ISLAND_ITEMS[item.kind].radius }))];
 }
 
 export function residentPointIsClear(point: GroundPoint, expanded: IslandLandAccess, obstacles: Obstacle[]) {
@@ -166,13 +173,22 @@ export function planResidentPointRoute(origin: GroundPoint, destination: GroundP
         .map(id => departureAt(origin, items, id)).filter((id): id is string => Boolean(id)));
     const extra = options.obstacles ?? [];
     if (extra.some(obstacle => ![obstacle.x, obstacle.z, obstacle.radius].every(Number.isFinite) || obstacle.radius < 0)) return undefined;
-    const obstacles = [...residentObstacles(items.filter(item => !departingIds.has(item.id)), ''), ...occupied, ...extra];
-    // A departing seat may be crossed only to leave it, never to choose a new
-    // standing point within its footprint or another resident's body.
-    const arrivalObstacles = [...residentObstacles(items, ''), ...occupied, ...extra];
-    if (!residentPointIsClear(origin, expanded, obstacles) || !residentPointIsClear(destination, expanded, arrivalObstacles)) return undefined;
-    const points = connectGroundRoute(origin, destination, expanded, obstacles, options.segmentIsClear);
-    return points ? { points, yaw: options.yaw ?? Math.atan2(destination.x - origin.x, destination.z - origin.z) } : undefined;
+    const navigation = options.navigation ?? 'physical';
+    const routeFor = (obstacles: Obstacle[], arrivalObstacles: Obstacle[]) => {
+        // A departing seat may be crossed only to leave it, never to choose a
+        // new standing point within its footprint or another resident's body.
+        if (!residentPointIsClear(origin, expanded, obstacles) || !residentPointIsClear(destination, expanded, arrivalObstacles)) return undefined;
+        const points = connectGroundRoute(origin, destination, expanded, obstacles, options.segmentIsClear);
+        return points ? { points, yaw: options.yaw ?? Math.atan2(destination.x - origin.x, destination.z - origin.z) } : undefined;
+    };
+    const obstacles = [...residentObstacles(items.filter(item => !departingIds.has(item.id)), '', undefined, 'physical'), ...occupied, ...extra];
+    // The arrival still respects every saved object, even when a roaming
+    // resident needs a soft passage out of a furniture-made pocket.
+    const arrivalObstacles = [...residentObstacles(items, '', undefined, 'physical'), ...occupied, ...extra];
+    const physicalRoute = routeFor(obstacles, arrivalObstacles);
+    if (physicalRoute || navigation !== 'roam') return physicalRoute;
+    const roamObstacles = [...residentObstacles([], '', undefined, 'roam'), ...occupied, ...extra];
+    return routeFor(roamObstacles, arrivalObstacles);
 }
 
 export function planResidentRoute(origin: GroundPoint, target: IslandStageItem, items: readonly IslandStageItem[], landAccess: IslandLandAccess,

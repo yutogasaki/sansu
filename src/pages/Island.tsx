@@ -95,6 +95,7 @@ import '../components/domain/LearningAnswerForm.css';
 import '../components/island/Island.css';
 import '../components/island/IslandDisplayLayout.css';
 import '../components/island/IslandWideWorkspace.css';
+import '../components/island/IslandImmersiveLayout.css';
 
 type Screen = IslandScreen;
 const RENDERER_RECOVERY_HINT = '「もういちど みる」で、しまを ひらこう。';

@@ -104,8 +104,11 @@ export async function answerUI(page, plan, { incorrect = false, touch = false, d
     const slot = plan.slots[plan.cursor];
     const answer = dev ? await page.evaluate(async slot => {
         const { parkHissanGrid } = await import('/src/domain/park/learning.ts');
+        const { writtenInputOrder } = await import('/src/domain/math/writtenInput.ts');
+        const { integerFractionProblem } = await import('/src/domain/math/fractionInput.ts');
         const grid = parkHissanGrid(slot.problem);
-        return grid ? grid.steps[slot.hissanStep || 0].correctValues : slot.problem.correctAnswer;
+        const step = grid?.steps[slot.hissanStep || 0];
+        return step ? writtenInputOrder(step).map(index => step.correctValues[index]) : integerFractionProblem(slot.problem).correctAnswer;
     }, slot) : slot.problem.correctAnswer;
     const inputType = await page.locator('.park-answer').getAttribute('data-input-type');
     const automatic = await page.locator('.park-answer').getAttribute('data-answer-completion') === 'automatic';

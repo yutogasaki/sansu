@@ -54,7 +54,8 @@ async function verifyOwnedLoop(page, profileId, state, samples, touch, prefix) {
     const bench = state.island.items.find(item => item.id === 'living-bench');
     assert(bench?.position, 'A usable bench is placed automatically');
     await activate(button(page, 'しまのメニュー'), touch);
-    await activate(button(page, 'もちもの'), touch); await waitMode(page, 'inventory');
+    await activate(page.locator('details[data-home-group="arrange"] > summary'), touch);
+    await activate(button(page, 'もちものを おく'), touch); await waitMode(page, 'inventory');
     await capture(page, `${prefix}-inventory`);
     await activate(page.getByRole('button', { name: /^ベンチ \d+を うごかす$/ }), touch);
     await waitMode(page, 'placement');
@@ -75,7 +76,8 @@ async function verifyOwnedLoop(page, profileId, state, samples, touch, prefix) {
     assert.deepEqual((await readNative(page, profileId)).island.items.find(item => item.id === bench.id), moved);
     await activate(button(page, 'とじる'), touch); await waitMode(page, 'home');
     await activate(button(page, 'しまのメニュー'), touch);
-    await activate(button(page, 'もちもの'), touch);
+    await activate(page.locator('details[data-home-group="arrange"] > summary'), touch);
+    await activate(button(page, 'もちものを おく'), touch);
     await activate(page.getByRole('button', { name: /^ベンチ \d+を うごかす$/ }), touch);
     await waitMode(page, 'placement');
     await activate(button(page, 'いまは しまっておく'), touch); await waitMode(page, 'home');
@@ -227,7 +229,12 @@ try {
             assert.equal(state.island.completedSets, 0);
             assert.equal(state.plan.slots.length, 3, 'A new island reserves three real introductory problems before answering');
             if (scenario.skill) assert.equal(state.plan.slots[0].problem.categoryId, scenario.skill, 'The real planner respects Due');
-            assert.equal(await page.locator('.park-answer').getAttribute('data-input-type'), scenario.type);
+            if (scenario.type === 'multi-number') assert.equal(state.plan.slots[0].problem.inputType, 'multi-number');
+            const presentedType = scenario.type === 'multi-number' ? await page.evaluate(async problem => {
+                const { integerFractionProblem } = await import('/src/domain/math/fractionInput.ts');
+                return integerFractionProblem(problem).inputType;
+            }, state.plan.slots[0].problem) : scenario.type;
+            assert.equal(await page.locator('.park-answer').getAttribute('data-input-type'), presentedType);
             await assertKeypad(page, !scenario.complex);
             await capture(page, `${scenario.name}-learning`);
             const wrong = await answerUI(page, state.plan, { incorrect: true, touch: scenario.touch });

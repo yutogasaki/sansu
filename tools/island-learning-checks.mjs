@@ -289,6 +289,14 @@ export async function expectedAnswer(page, slot) {
     return expectedLearningAnswer(slot, await page.locator('.park-answer').getAttribute('data-input-type'));
 }
 
+async function renderedInputValues(page) {
+    return page.locator('.park-input').evaluateAll(inputs => inputs.flatMap(input => {
+        const cells = [...input.querySelectorAll('.answer-cell')];
+        if (cells.length) return cells.map(cell => cell.textContent?.trim() ?? '');
+        return [input.querySelector(':scope > span')?.textContent?.trim() ?? ''];
+    }));
+}
+
 async function prepareAnswer(page, slot, { wrong, touch }) {
     const expected = await expectedAnswer(page, slot);
     const type = await page.locator('.park-answer').getAttribute('data-input-type');
@@ -481,7 +489,7 @@ export async function attempt(page, before, { wrong = false, touch = false, doub
         }
     }
     if (!timing.terminal && (await page.locator('.park-input span').count())) {
-        assert((await page.locator('.park-input span').allTextContents()).every(value => ['', '□'].includes(value.trim())), 'No previous digits leak into the next revision');
+        assert((await renderedInputValues(page)).every(value => ['', '□'].includes(value)), 'No previous digits leak into the next revision');
     }
     return { after, saved, receipt: receipts[0], contactFrame, reactionFrames, sample: { ...timing, wrong, completed, double, keyboardDouble, inputType: slot.problem.inputType } };
 }

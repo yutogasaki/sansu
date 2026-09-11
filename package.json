@@ -28,7 +28,7 @@
         "test": "vitest",
         "test:run": "vitest run",
         "verify:core": "npm run docs:check && npm run lint && npm run typecheck && npm run test:run && npm run build",
-        "verify:release": "npm run verify:core && npm run e2e:smoke && npm run e2e:pwa-update && npm run e2e:pwa-two-build",
+        "verify:release": "VITE_ISLAND_ENABLED=false VITE_BUILD_PLAY_ENABLED=false npm run verify:core && npm run e2e:smoke && npm run e2e:pwa-update && npm run e2e:pwa-two-build",
         "preview": "vite preview",
         "e2e:smoke": "node tools/e2e-smoke.mjs",
         "e2e:print": "node tools/e2e-print-tests.mjs",
