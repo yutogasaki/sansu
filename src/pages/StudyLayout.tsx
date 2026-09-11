@@ -20,6 +20,7 @@ import { canConfirmNumberFields, mathAnswerShape, isAnswerShapeComplete } from '
 import { LayoutDebugOverlay } from "../components/LayoutDebugOverlay";
 import { MathRenderer } from "../components/domain/MathRenderer";
 import { MathProblemPrompt } from "../components/domain/MathProblemPrompt";
+import { EnglishExampleSentence } from "../components/domain/EnglishExampleSentence";
 import { Spinner } from "../components/ui/Spinner";
 import { EmptyState } from "../components/ui/EmptyState";
 import { HissanGrid } from "../components/domain/HissanGrid";
@@ -790,27 +791,33 @@ export const StudyLayout: React.FC<StudyLayoutProps> = ({
                                 <div className="mb-2 flex w-full min-h-0 items-center justify-center gap-2 ipadland:mb-0 mobile:mb-0 mobile:min-w-0 mobile:flex-1">
                                     <div className={promptScrollerClass}>
                                         <div className="md:flex md:min-h-full md:items-center md:justify-center">
-                                            <div className="flex items-center justify-center gap-2 text-center">
-                                                <MathProblemPrompt
-                                                    problem={currentProblem}
-                                                    className={isFractionPrompt
-                                                        ? "text-[clamp(24px,6vw,56px)] ipadland:text-7xl text-slate-800 font-black tracking-wider"
-                                                        : "text-[clamp(28px,8vw,64px)] ipadland:text-7xl mobile:text-4xl text-slate-800 font-black tracking-wider"
-                                                    }
-                                                />
-                                                {/* TTS Button for English */}
-                                                {currentProblem.subject === 'vocab' && (
-                                                    <button
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            speakEnglish(currentProblem.questionText || "");
-                                                        }}
-                                                        className="app-pill ml-2 shrink-0 p-2 text-slate-500 transition-colors hover:text-slate-700 active:scale-95"
-                                                        title="読み上げ"
-                                                    >
-                                                        <HiSpeakerWave className="w-6 h-6 mobile:w-5 mobile:h-5" />
-                                                    </button>
-                                                )}
+                                            <div className={cn(
+                                                "flex items-center justify-center gap-2 text-center",
+                                                currentProblem.subject === "vocab" && "flex-col gap-1",
+                                            )}>
+                                                <div className="flex items-center justify-center gap-2">
+                                                    <MathProblemPrompt
+                                                        problem={currentProblem}
+                                                        className={isFractionPrompt
+                                                            ? "text-[clamp(24px,6vw,56px)] ipadland:text-7xl text-slate-800 font-black tracking-wider"
+                                                            : "text-[clamp(28px,8vw,64px)] ipadland:text-7xl mobile:text-4xl text-slate-800 font-black tracking-wider"
+                                                        }
+                                                    />
+                                                    {/* TTS Button for English */}
+                                                    {currentProblem.subject === 'vocab' && (
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                speakEnglish(currentProblem.questionText || "");
+                                                            }}
+                                                            className="app-pill ml-2 shrink-0 p-2 text-slate-500 transition-colors hover:text-slate-700 active:scale-95"
+                                                            title="読み上げ"
+                                                        >
+                                                            <HiSpeakerWave className="w-6 h-6 mobile:w-5 mobile:h-5" />
+                                                        </button>
+                                                    )}
+                                                </div>
+                                                <EnglishExampleSentence problem={currentProblem} />
                                             </div>
                                         </div>
                                     </div>

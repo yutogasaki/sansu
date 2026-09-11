@@ -150,10 +150,16 @@ describe('Island problem semantic presentation', () => {
     });
 
     it('does not add object clues or answer-derived illustrations to words and symbolic arithmetic', () => {
-        const vocab: Problem = { ...base, subject: 'vocab', questionText: 'apple', correctAnswer: 'apple', displayAnswer: 'りんご', inputType: 'choice', inputConfig: { choices: [{ label: 'りんご', value: 'apple' }, { label: 'はな', value: 'flower' }] } };
+        const vocab: Problem = { ...base, subject: 'vocab', categoryId: 'apple', questionText: 'apple', correctAnswer: 'apple', displayAnswer: 'りんご', inputType: 'choice', inputConfig: { choices: [{ label: 'りんご', value: 'apple' }, { label: 'はな', value: 'flower' }] } };
         const html = renderToStaticMarkup(<IslandAnswerForm slot={slot(vocab)} disabled={false} onAnswer={noop} />);
         expect(glyphs(html)).toEqual([]);
         expect(html).toContain('>apple</span>');
+        expect(html).toContain('data-english-example-sentence="This is an apple."');
+        expect(html).toContain('class="english-example-play"');
+        expect(html).toContain('aria-label="ぶんを きく"');
+        expect(html).toContain('lang="en"');
+        const uncatalogued = renderToStaticMarkup(<IslandProblemPrompt problem={{ ...vocab, categoryId: 'uncatalogued-word' }} />);
+        expect(uncatalogued).not.toContain('data-english-example-sentence');
         expect(glyphs(renderToStaticMarkup(<IslandProblemPrompt problem={base} />))).toEqual([]);
     });
 

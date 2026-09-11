@@ -1,0 +1,64 @@
+.english-example-sentence-row {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 10px;
+}
+
+.english-example-sentence {
+    max-width: min(100%, 34rem);
+    margin: 0;
+    color: var(--pokomoko-muted, #606980);
+    font-size: clamp(16px, 3.4vw, 22px);
+    font-weight: 650;
+    line-height: 1.45;
+    letter-spacing: .01em;
+    overflow-wrap: anywhere;
+}
+
+.english-example-play {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    flex-shrink: 0;
+    padding: 5px 10px;
+    border: 1px solid var(--pokomoko-blue, #315fb5);
+    border-radius: 999px;
+    background: var(--pokomoko-paper, #fffdf9);
+    color: var(--pokomoko-blue-deep, #25488c);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.english-example-play:hover:not(:disabled) { background: var(--pokomoko-mint, #dcece6); }
+.english-example-play:active:not(:disabled) { transform: translateY(1px); }
+.english-example-play:focus-visible { outline: 3px solid var(--app-accent-strong, #315fb5); outline-offset: 3px; }
+.english-example-play:disabled { cursor: not-allowed; opacity: .48; }
+
+.island-vocab-prompt {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.island-vocab-prompt .english-example-sentence {
+    max-width: min(100%, 30rem);
+    color: var(--island-muted, #56664c);
+    font-size: clamp(14px, 3.2vw, 19px);
+    line-height: 1.45;
+}
+
+.island-vocab-prompt .english-example-play {
+    border-color: var(--island-leaf, #245bbd);
+    background: var(--island-paper, #fff9e8);
+    color: var(--island-leaf, #245bbd);
+}
+
+.island-vocab-prompt .english-example-play:hover:not(:disabled) { background: #fff0b6; }

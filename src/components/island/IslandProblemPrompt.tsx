@@ -6,6 +6,7 @@ import { splitIslandLabel } from './islandGlyphs';
 import { islandReferenceChoices } from './islandReferenceChoices';
 import { IslandProsePrompt } from './IslandProsePrompt';
 import { useIslandPromptSize } from './useIslandPromptSize';
+import { EnglishExampleSentence } from '../domain/EnglishExampleSentence';
 
 const renderItem = (item: ProblemVisualItem) => <IslandGlyph symbol={item.emoji} label={item.label} />;
 
@@ -28,8 +29,11 @@ export function IslandProblemPrompt({ problem, speechControl }: { problem: Probl
                 <span>おてほん</span>
             </div>
             <p data-visual-caption>{reference.prompt || 'おなじ ものは？'}</p>
-        </div> : problem.subject === 'vocab' ? <div className="island-spoken-word">
-            <MathProblemPrompt problem={problem} className="island-prompt-content" renderItem={renderItem} />{speechControl}
+        </div> : problem.subject === 'vocab' ? <div className="island-vocab-prompt">
+            <div className="island-spoken-word">
+                <MathProblemPrompt problem={problem} className="island-prompt-content" renderItem={renderItem} />{speechControl}
+            </div>
+            <EnglishExampleSentence problem={problem} />
         </div> : plainProse ? <IslandProsePrompt text={problem.questionText ?? ''} />
             : <MathProblemPrompt problem={problem} className="island-prompt-content" renderItem={renderItem} />}
     </div>;
