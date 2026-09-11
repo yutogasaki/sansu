@@ -6,4 +6,5 @@ typecheck: npm run typecheck — PASS
 focused tests: rewardCue + island simulation + island activities — 3 files / 20 tests PASS
 diagnostic UI: DEV preview, real flower placement, 6-hour advance — phone/tablet light=24, cue=24, style route PASS
 production UI: node tools/e2e-island-life-production.mjs — phone/tablet PASS; 3 answers, 6 drops cue, resident favorites, light meaning, style price 4, reload, offline answer/reload PASS
+public UI: https://sansu-seven.vercel.app (revision d13af6381c5cc84e02ca59d9a7927105c86602b4) — same production harness phone/tablet PASS
 human observation: N=0; visual approval, silent comprehension, and long-term learning/revisit effects remain unverified
