@@ -1,0 +1,12 @@
+.life-item-growth { display:flex; flex-direction:column; align-items:flex-start; gap:2px; min-width:0; }
+.life-growth-dots { display:inline-flex; align-items:center; gap:3px; min-height:10px; }
+.life-growth-dot { width:9px; height:7px; border:1px solid var(--pokomoko-edge); border-radius:5px; background:transparent; }
+.life-growth-dot[data-grown=true] { border-color:var(--pokomoko-blue); background:var(--pokomoko-blue); }
+.life-growth-dot[data-current=true] { box-shadow:0 0 0 2px var(--pokomoko-lavender); }
+.life-growth-next { color:var(--pokomoko-blue)!important; font-size:10px!important; line-height:1.35; }
+.life-item-growth-detail { display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%; margin:4px 0 2px; padding:8px 10px; border-radius:12px; background:var(--pokomoko-mint); }
+.life-item-growth-detail > div { display:flex; align-items:center; gap:7px; min-width:0; }
+.life-item-growth-detail strong { font-size:12px; }
+.life-item-growth-detail small { color:var(--pokomoko-blue); font-size:11px; text-align:right; }
+.life-earned[data-life-growth-earned] { border-color:var(--pokomoko-leaf, var(--pokomoko-blue)); }
+.life-earned[data-life-growth-earned] strong { color:var(--pokomoko-blue-deep); }

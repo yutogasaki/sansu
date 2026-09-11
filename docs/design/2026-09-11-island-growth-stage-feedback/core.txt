@@ -1,0 +1,16 @@
+npm run verify:core
+PASS docs:check (existing stale-date warnings only)
+PASS lint (1 existing react-refresh warning, 0 errors)
+PASS typecheck
+PASS vitest: 344 files / 3,623 tests
+PASS build + assets:check
+
+VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_ENABLED=true SANSU_BUILD_REVISION=growth-stage-v1 npm run build
+PASS 3614 modules, PWA precache 98 files, 10.64 MiB / 12.00 MiB
+
+SANSU_ISLAND_PRODUCTION_URL=http://127.0.0.1:5226 node tools/e2e-island-life-production.mjs
+PASS phone 390x844 / tablet 768x1024
+PASS growth stage marker, next-stage hint, learning cue, reload and offline answer
+
+DEV diagnostic
+PASS 24-hour advance, one-time "おはなが さいたよ" cue, inventory return, page errors 0

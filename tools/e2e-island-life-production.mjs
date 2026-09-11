@@ -74,6 +74,15 @@ try {
       await page.getByRole('button', { name: 'ここに おく', exact: true }).click();
       await page.locator('.life-placement').waitFor({ state: 'hidden' });
       assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'), String(earned - 2));
+      await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'もちもの', exact: true }).click();
+      const flowerItem = page.locator('[data-life-item]').first();
+      assert.equal(await flowerItem.getAttribute('data-life-growth-stage'), '0');
+      assert.equal(await flowerItem.getAttribute('data-life-growth-next-hours'), '2');
+      assert.match(await flowerItem.innerText(), /めが でた/);
+      assert.match(await flowerItem.innerText(), /あと 2じかんで つぼみ/);
+      assert.equal(await page.getByRole('img', { name: 'そだち 1 / 3' }).count(), 1);
+      await page.screenshot({ path: `${out}/${name}-growth-inventory.png` });
+      await page.getByRole('button', { name: 'メニューを とじる', exact: true }).click();
       const before = await readNative(page);
       await page.evaluate(async () => { await navigator.serviceWorker.ready; });
       await page.reload(); await page.locator('.life-world[data-rendered="true"]').waitFor();
@@ -99,7 +108,8 @@ try {
       assert.equal(await page.locator('.life-dev').count(), 0);
       await page.screenshot({ path: `${out}/${name}-offline.png` });
       assert.deepEqual(errors, []);
-      report.scenarios.push({ name, pass: true, answers, earned, earnedCue: 6, earnedCueBox, residentFavorites, lightMeaning: true, lightStylePrice: 4, savedItems: 1, offlineAnswerAndReload: true });
+      report.scenarios.push({ name, pass: true, answers, earned, earnedCue: 6, earnedCueBox, residentFavorites, lightMeaning: true, lightStylePrice: 4,
+        growthStageVisible: true, growthNextHint: 'あと 2じかんで つぼみ', savedItems: 1, offlineAnswerAndReload: true });
     } catch (e) { await page.screenshot({ path: `${out}/${name}-failure.png` }); throw e; }
     finally { await context.close(); }
  }

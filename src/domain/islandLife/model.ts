@@ -44,7 +44,7 @@ export function vigor(s: LifeState, at = s.now) {
     const elapsed = at - s.lastAchievement;
     return elapsed < 24 * HOUR ? 1 : elapsed < 72 * HOUR ? .5 : .1;
 }
-export function growthStage(item: LifeItem) { return item.kind !== 'flower' ? 2 : item.growth >= LIFE_RULES.bloomHours ? 2 : item.growth >= LIFE_RULES.budHours ? 1 : 0; }
+export function growthStage(item: Pick<LifeItem, 'kind' | 'growth'>) { return item.kind !== 'flower' ? 2 : item.growth >= LIFE_RULES.bloomHours ? 2 : item.growth >= LIFE_RULES.budHours ? 1 : 0; }
 export function newLife(profileId: string, now: number): LifeRecord {
     return { profileId, version: 1, revision: 0, createdAt: now, realAt: now, now, credits: [], actions: [], offsets: [{ at: now, offset: 0 }], clockIntents: [], activitiesV2At: now, activitiesV2After: 0 };
 }

@@ -1,0 +1,19 @@
+{
+  "sourceRevision": "2550a14fa8b8e361998ba8000081a59589859c85",
+  "buildRevision": "growth-stage-v1",
+  "buildVersion": "growth-stage-v1:1d7025de-0047-4e99-a401-ea888f69b12a",
+  "productionTarget": "http://127.0.0.1:5226",
+  "diagnosticTarget": "http://127.0.0.1:5223",
+  "deliveryFlag": "VITE_ISLAND_ENABLED=true; VITE_ISLAND_LIFE_ENABLED=true",
+  "diagnosticFlag": "VITE_ISLAND_ENABLED=true; VITE_ISLAND_LIFE_PREVIEW=true",
+  "delivery": "mystic-island-v1",
+  "candidate": "mystic-island-shore-garden-v18",
+  "learningCandidate": "mystic-island-learning-v2",
+  "visualLineage": "pokko-field-v1",
+  "viewports": [
+    { "name": "phone", "width": 390, "height": 844, "reducedMotion": false },
+    { "name": "tablet", "width": 768, "height": 1024, "reducedMotion": true }
+  ],
+  "humanN": 0,
+  "notes": "Production report includes the growth marker and next-stage hint. Diagnostic report uses one explicit 24-hour DEV advance to confirm the one-time stage transition cue; it is not overnight evidence."
+}
