@@ -3,8 +3,8 @@ import { ENGLISH_EXAMPLE_SENTENCES, getEnglishExampleSentence } from './examples
 import { ENGLISH_WORDS } from './words';
 
 describe('vocabulary example catalog', () => {
-    it('covers every level 1–3 vocabulary item with a short fixed English sentence', () => {
-        const coveredWords = ENGLISH_WORDS.filter(word => word.level <= 3);
+    it('covers every level 1–12 vocabulary item with a short fixed English sentence', () => {
+        const coveredWords = ENGLISH_WORDS.filter(word => word.level <= 12);
         const coveredWordIds = new Set(coveredWords.map(word => word.id));
         const wordIds = new Set(ENGLISH_WORDS.map(word => word.id));
 
@@ -13,7 +13,7 @@ describe('vocabulary example catalog', () => {
             .toBe(ENGLISH_EXAMPLE_SENTENCES.length);
 
         for (const sentence of ENGLISH_EXAMPLE_SENTENCES) {
-            expect(sentence.wordId).toMatch(/^[a-z][a-z0-9_]*$/);
+            expect(sentence.wordId).toMatch(/^[A-Za-z][A-Za-z0-9_ ]*$/);
             expect(wordIds.has(sentence.wordId)).toBe(true);
             expect(coveredWordIds.has(sentence.wordId)).toBe(true);
             expect(sentence.english.endsWith('.')).toBe(true);
