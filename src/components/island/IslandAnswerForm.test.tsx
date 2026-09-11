@@ -160,6 +160,8 @@ describe('Island problem semantic presentation', () => {
         expect(html).toContain('lang="en"');
         const water = renderToStaticMarkup(<IslandProblemPrompt problem={{ ...vocab, categoryId: 'water', questionText: 'water' }} />);
         expect(water).toContain('data-english-example-sentence="I drink water."');
+        const orange = renderToStaticMarkup(<IslandProblemPrompt problem={{ ...vocab, categoryId: 'orange_lv2', questionText: 'orange' }} />);
+        expect(orange).toContain('data-english-example-sentence="The ball is orange."');
         const uncatalogued = renderToStaticMarkup(<IslandProblemPrompt problem={{ ...vocab, categoryId: 'uncatalogued-word' }} />);
         expect(uncatalogued).not.toContain('data-english-example-sentence');
         expect(glyphs(renderToStaticMarkup(<IslandProblemPrompt problem={base} />))).toEqual([]);
