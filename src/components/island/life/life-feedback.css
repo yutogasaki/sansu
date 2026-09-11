@@ -1,0 +1,4 @@
+.life-earned[data-life-light-earned] { z-index:11; border-color:var(--pokomoko-lavender); }
+.life-earned[data-life-light-earned] strong { color:var(--pokomoko-blue-deep); }
+.life-earned[data-life-earned][data-life-light-earned] { flex-wrap:wrap; }
+.life-earned[data-life-earned][data-life-light-earned] .life-earned-action { flex-basis:100%; }

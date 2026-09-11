@@ -25,6 +25,8 @@ try {
       assert.equal(await page.locator('.life-dev').count(), 0);
       assert.equal(await page.locator('[data-life-items]').getAttribute('data-life-items'), '0');
       assert.equal(await page.locator('[data-life-drops]').getAttribute('data-life-drops'), '0');
+      assert.equal(await page.locator('[data-life-light]').getAttribute('data-life-light'), '0');
+      assert.equal(await page.locator('.life-wallet span[title="みんなが たのしむと ふえるよ"]').count(), 1);
       const databaseNames = await page.evaluate(async () => (await indexedDB.databases()).map(d => d.name));
       assert(databaseNames.includes('SansuIslandLifeV1')); assert(!databaseNames.includes('SansuIslandLifePreviewV1'));
       const residentFavorites = { pokomoko: 'ベンチ', rabbit: 'おはな', otter: 'ブランコ' };
@@ -38,6 +40,8 @@ try {
       assert.equal(await page.locator('[data-life-buy="flower"]').isDisabled(), true);
       assert.match(await page.locator('[data-life-buy="flower"]').innerText(), /あと 2 しずく/);
       await page.screenshot({ path: `${out}/${name}-build-empty.png` });
+      await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'いろ', exact: true }).click();
+      assert.match(await page.locator('[data-life-style="sunshine"]').innerText(), /ひかり 4/);
       await page.getByRole('button', { name: 'メニューを とじる', exact: true }).click();
       await page.screenshot({ path: `${out}/${name}-initial.png` });
       await page.getByRole('navigation', { name: 'メインメニュー' }).getByRole('button', { name: 'まなぶ', exact: true }).click();
@@ -95,7 +99,7 @@ try {
       assert.equal(await page.locator('.life-dev').count(), 0);
       await page.screenshot({ path: `${out}/${name}-offline.png` });
       assert.deepEqual(errors, []);
-      report.scenarios.push({ name, pass: true, answers, earned, earnedCue: 6, earnedCueBox, residentFavorites, savedItems: 1, offlineAnswerAndReload: true });
+      report.scenarios.push({ name, pass: true, answers, earned, earnedCue: 6, earnedCueBox, residentFavorites, lightMeaning: true, lightStylePrice: 4, savedItems: 1, offlineAnswerAndReload: true });
     } catch (e) { await page.screenshot({ path: `${out}/${name}-failure.png` }); throw e; }
     finally { await context.close(); }
  }
