@@ -47,9 +47,10 @@ import { ISLAND_VISUAL_CANDIDATE } from '../../../domain/island/feature';
 import { IslandResident, RESIDENT_NAMES } from './animals';
 import { canShowOrdinaryInterest, isResidentInterestItem, residentInterestVerb, sampleResidentInterest,
     type ResidentInterestSample } from './residentInterest';
-import { chooseReachableResident, preferredIslandResident, residentNeedsInitialSpawn, savedResidentLayoutChanged, suggestReachablePlacement } from './residentInteraction';
-import { findSafeResidentSpawn, planResidentPointRoute, planResidentRoute, type ResidentRoute } from './navigation';
-import { planResidentRoam } from './residentRoaming';
+import { chooseReachableResident, chooseUsualPlaceInvitation, preferredIslandResident, residentNeedsInitialSpawn, savedResidentLayoutChanged,
+    suggestReachablePlacement, type ResidentSpecies } from './residentInteraction';
+import { findSafeResidentSpawn, planResidentPointRoute, planResidentRoute, type GroundPoint, type ResidentRoute } from './navigation';
+import { planResidentRoam, residentRoamOrder, residentRoamStyle } from './residentRoaming';
 import { chooseSharedActivity, sharedActivityDeliveryPlans, type SharedActivityPlan, type SharedActivityReplayPreference } from './sharedActivities';
 import { SharedActivityVisuals } from './sharedActivityVisuals';
 import { SharedActivityController } from './sharedActivityController';
@@ -167,6 +168,9 @@ export class IslandScene {
     private clearanceDirty = false;
     private clearanceCaptionPending = false;
     private pendingVisitId?: string;
+    /** One ephemeral invitation created by a saved placement. It is consumed
+     * after furniture clearance or the next idle frame and is never persisted. */
+    private pendingUsualPlace?: { itemId: string; residentSpecies: ResidentSpecies };
     private deferredPlay?: IslandStageState['playRequest'];
     private sharedCamera?: { pairId: string; startedAt: number; from: SharedActivityFrame; to: SharedActivityFrame };
     private sharedPresentation?: { pairId: string; attemptedPlans: number; satisfied: boolean;
@@ -234,6 +238,10 @@ export class IslandScene {
     private nextLivingAt = 0;
     private freeRoam?: { resident: IslandResident; route: ResidentRoute };
     private freeRoamTurn = 0;
+    private freeRoamResidentTurn = 0;
+    /** The last few points are display-only memory. Avoiding them gives each
+     * resident a little tour instead of bouncing between the same two cells. */
+    private readonly freeRoamHistory = new Map<number, GroundPoint[]>();
     private nextRoamAt = 0;
     private readonly reportedDiscoveries = new Set<string>();
 
@@ -405,6 +413,15 @@ export class IslandScene {
             this.nextRoamAt = now + 2600;
         }
         const layoutChanged = Boolean(previous && savedResidentLayoutChanged(previous.items, state.items));
+        const profileChanged = previous?.shared?.island.profileId !== state.shared?.island.profileId;
+        // Automatic growth can add or annotate managed furniture in the same
+        // state update as a layout diff. The usual-place cue belongs to a
+        // child's saved placement/return, so keep milestone growth quiet here.
+        const growthChanged = Boolean(previous && (previous.completedSets !== state.completedSets
+            || JSON.stringify(previous.growth) !== JSON.stringify(state.growth)));
+        if (layoutChanged || profileChanged || state.learning || state.preview || state.readOnly || state.workshop?.active || state.shared?.active || state.furnitureTrial) {
+            this.pendingUsualPlace = undefined;
+        }
         const displaysChanged = JSON.stringify(previous?.shared?.island.sharedMemories?.displays) !== JSON.stringify(state.shared?.island.sharedMemories?.displays);
         const trialChanged = Boolean(previous?.furnitureTrial) !== Boolean(state.furnitureTrial)
             || Boolean(previous?.furnitureTrial && state.furnitureTrial && !samePlacement(previous.furnitureTrial, state.furnitureTrial));
@@ -572,6 +589,11 @@ export class IslandScene {
             }
             this.liftedResidents = undefined;
         }
+        if (layoutChanged && !growthChanged && previous && !state.learning && !state.preview && !state.readOnly && !state.workshop?.active
+            && !state.shared?.active && !state.furnitureTrial) {
+            this.pendingUsualPlace = chooseUsualPlaceInvitation(previous.items, state.items, this.residentCandidates(), this.landAccess,
+                this.lastChosenResident, state.shared ? sharedDisplayObstacles(state.shared.island) : []);
+        }
         if (visit && previous && !state.learning && !state.readOnly && !state.growth) this.pendingVisitId = visit.id;
         if (this.clearanceDirty && !state.preview) {
             this.clearanceDirty = false;
@@ -703,6 +725,7 @@ export class IslandScene {
         const state = this.state;
         if (!state) return;
         if (state.readOnly) return;
+        if (!autonomous) this.pendingUsualPlace = undefined;
         if (this.trialSearch && this.furnitureTrial?.item.id === play.itemId) {
             this.deferredPlay = play;
             this.callbacks.caption('ばしょを さがしているよ。みつかったら ためそう');
@@ -877,12 +900,15 @@ export class IslandScene {
         }
         if (now < this.nextRoamAt || this.residents.some(resident => resident.action === 'walk')) return false;
         this.clearOrdinaryInterest();
-        for (const [index, resident] of this.residents.entries()) {
+        const turn = this.freeRoamTurn++;
+        for (const index of residentRoamOrder(this.freeRoamResidentTurn, this.residents.length)) {
+            const resident = this.residents[index];
             if (!resident.group.visible || resident.action === 'walk') continue;
             const occupied = this.residents.filter(other => other !== resident && other.group.visible).map(other => other.group.position);
             const departingId = resident.itemId || resident.departingId;
-            const plan = planResidentRoam(resident.group.position, index, this.freeRoamTurn++, state.items, this.landAccess, {
+            const plan = planResidentRoam(resident.group.position, index, turn, state.items, this.landAccess, {
                 occupied, obstacles: state.shared ? sharedDisplayObstacles(state.shared.island) : [], district: state.districtFocus, departingId,
+                style: residentRoamStyle(index, turn), avoidTargets: this.freeRoamHistory.get(index),
             });
             if (plan) {
                 // A resident may still be settled on the last visited object.
@@ -891,6 +917,9 @@ export class IslandScene {
                 if (resident.itemId || resident.action !== 'idle') resident.release(now);
             }
             if (plan && resident.walkToPoint(plan.route, now, this.motion.matches, this.landAccess)) {
+                this.freeRoamResidentTurn = (index + 1) % Math.max(1, this.residents.length);
+                const history = this.freeRoamHistory.get(index) ?? [];
+                this.freeRoamHistory.set(index, [...history, { ...plan.target }].slice(-3));
                 this.freeRoam = { resident, route: plan.route };
                 return true;
             }
@@ -1029,7 +1058,22 @@ export class IslandScene {
             this.performPlay(play);
             return;
         }
-        const item = this.state?.items.find(candidate => candidate.id === this.pendingVisitId && candidate.position);
+        // `performPlay` clears the legacy pending id as part of starting any
+        // invitation. Keep the id locally so a blocked usual-place cue cannot
+        // discard an older saved-furniture visit.
+        const pendingVisitId = this.pendingVisitId;
+        const usual = this.pendingUsualPlace;
+        this.pendingUsualPlace = undefined;
+        const usualItem = this.state?.items.find(candidate => candidate.id === usual?.itemId && candidate.position);
+        if (usual && usualItem && this.state && !this.state.learning && !this.state.preview && !this.state.readOnly
+            && !this.state.workshop?.active && !this.state.shared?.active && !this.state.furnitureTrial) {
+            const result = this.performPlay({ id: `usual-place-${usual.itemId}`, itemId: usual.itemId, residentId: usual.residentSpecies }, true);
+            if (result?.status === 'playing') {
+                this.callbacks.caption(`${RESIDENT_NAMES[usual.residentSpecies]}が いつもの ばしょへ とことこ`);
+                return;
+            }
+        }
+        const item = this.state?.items.find(candidate => candidate.id === pendingVisitId && candidate.position);
         this.pendingVisitId = undefined;
         if (item) this.visitItem(item);
     }
@@ -1663,7 +1707,7 @@ export class IslandScene {
 
     private contextLost = (event: Event) => {
         event.preventDefault(); this.sharedActivity.cancel(performance.now()); this.furnitureClearance.cancel(performance.now());
-        this.deferredPlay = undefined; this.lost = true; this.pause();
+        this.deferredPlay = undefined; this.pendingUsualPlace = undefined; this.lost = true; this.pause();
         this.host.dataset.renderer = 'fallback'; this.callbacks.failure();
     };
     private motionChanged = () => this.updateMotionPreference();
@@ -1690,7 +1734,7 @@ export class IslandScene {
     private pause() {
         this.expressionWalk?.cancel(); this.expressionTrails?.clear();
         if (this.host?.dataset && this.expressionTrails) this.writeExpressionResidentDiagnostics();
-        this.deferredPlay = undefined; this.pendingVisitId = undefined;
+        this.deferredPlay = undefined; this.pendingVisitId = undefined; this.pendingUsualPlace = undefined;
         this.optionalFurniture.cancel(performance.now(), this.state?.items, this.landAccess,
             this.state?.shared ? sharedDisplayObstacles(this.state.shared.island) : []);
         this.optionalAutonomousUntil = 0;

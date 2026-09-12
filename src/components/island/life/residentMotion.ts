@@ -1,7 +1,7 @@
 import * as T from 'three';
 import type { buildHomeJourney } from '../homeJourney/scene';
 import { poseResidentTail, residentSeatContactY } from '../three/residentRig';
-import { LIFE_STEP_MS, type Cell, type LifeState } from '../../../domain/islandLife/model';
+import { isRoamVisit, LIFE_STEP_MS, type Cell, type LifeState } from '../../../domain/islandLife/model';
 import { activityPhase, favoriteReactionElapsed, residentReaction } from '../../../domain/islandLife/activity';
 import { sampleResidentInterest } from '../three/residentInterest';
 
@@ -27,7 +27,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                 const rig = index === 1 ? content.rabbit : index === 2 ? content.otter : undefined;
                 if (rig) { rig.head.rotation.set(0, 0, 0); poseResidentTail(rig.tail, index === 1 ? 'rabbit' : 'otter', 0); }
                 let position = point(resident.cell), seatGap: number | undefined;
-                if (visit && item) {
+                if (visit && (item || isRoamVisit(visit))) {
                     const step = Math.max(0, (now - visit.start) / LIFE_STEP_MS), n = Math.min(visit.path.length - 1, Math.floor(step));
                     const a = point(visit.path[n]), b = point(visit.path[Math.min(n + 1, visit.path.length - 1)]);
                     position = a.clone().lerp(b, step - Math.floor(step));
@@ -38,7 +38,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                             foot.position.y += Math.max(0, stride) * .07;
                             foot.position.z += stride * .08;
                         });
-                    } else {
+                    } else if (item) {
                         const target = point(item.cell!), walkedAt = visit.start + (visit.path.length - 1) * LIFE_STEP_MS;
                         const duration = item.kind === 'flower' ? 400 : 900;
                         const settling = Math.max(0, Math.min(1, (now - walkedAt) / duration));

@@ -1,5 +1,5 @@
-import { CATALOG, HOUR, LIFE_RULES, LIFE_STEP_MS, vigor, type LifeAction, type LifeCommand, type LifeRecord, type LifeState, type LifeResident, type Cell } from './model';
-import { districts, homeCell, sameCell, usablePlacement, pathToActivity } from './space';
+import { CATALOG, HOUR, LIFE_RULES, LIFE_STEP_MS, ROAM_VISIT_PREFIX, isRoamVisit, vigor, type LifeAction, type LifeCommand, type LifeRecord, type LifeState, type LifeResident, type Cell } from './model';
+import { cellKey, districts, homeCell, isHouse, landCells, route, sameCell, usablePlacement, pathToActivity } from './space';
 
 function initial(now: number): LifeState {
     return { now, activityVersion: 1, drops: 0, light: 0, items: [], styles: ['original'], heroStyle: 'original', days: {},
@@ -11,6 +11,79 @@ export const favorite = (r: LifeResident) => r.id === 'rabbit' ? 'flower' : r.id
 export function residentCell(r: LifeResident, now: number) {
     return r.visit ? r.visit.path[Math.min(r.visit.path.length - 1, Math.max(0, Math.floor((now - r.visit.start) / LIFE_STEP_MS)))] : r.cell;
 }
+
+/**
+ * Quiet ground walks are deliberately derived from the current state. They do
+ * not become commands or saved objects, so replaying an island at the same
+ * clock still produces the same visible walk without creating another reward
+ * source. The style only changes where we look first; route() remains the
+ * single authority for legal ground movement.
+ */
+export type LifeRoamStyle = 'nearby' | 'wide' | 'crossing';
+export function lifeRoamStyle(residentIndex: number, turn: number): LifeRoamStyle {
+    if (![residentIndex, turn].every(Number.isFinite)) return 'nearby';
+    return (['nearby', 'wide', 'crossing'] as const)[Math.abs(Math.trunc(residentIndex + turn)) % 3];
+}
+
+function roamDestinationScore(origin: Cell, target: Cell, style: LifeRoamStyle) {
+    const targetDistance = distance(origin, target);
+    const preferredDistance = style === 'nearby' ? 2 : style === 'wide' ? 6 : 4;
+    let score = Math.abs(targetDistance - preferredDistance);
+    if (style === 'crossing') {
+        const crossesCenter = origin.x <= 2 && target.x >= 3 || origin.x >= 3 && target.x <= 2 || target.x === 2 || target.x === 3;
+        if (!crossesCenter) score += 3;
+    }
+    return score;
+}
+
+/** Pick a vacant ground cell for one resident's non-interactive stroll. */
+export function planLifeResidentRoam(state: LifeState, resident: LifeResident, turn: number) {
+    if (state.activityVersion !== 2 || !Number.isFinite(turn)) return undefined;
+    const origin = residentCell(resident, state.now);
+    const residentIndex = Math.max(0, state.residents.indexOf(resident));
+    const occupied = new Set<string>();
+    for (const other of state.residents) if (other !== resident) {
+        occupied.add(cellKey(residentCell(other, state.now)));
+        other.visit?.path.forEach(point => occupied.add(cellKey(point)));
+    }
+    const candidates = landCells(state).filter(target => {
+        const key = cellKey(target);
+        return !isHouse(target) && !occupied.has(key) && !state.items.some(item => item.cell && sameCell(item.cell, target))
+            && distance(origin, target) >= 2;
+    });
+    if (!candidates.length) return undefined;
+    const style = lifeRoamStyle(residentIndex, turn);
+    const ranked = candidates.map((target, index) => ({ target, index, score: roamDestinationScore(origin, target, style) }))
+        .sort((a, b) => a.score - b.score || a.target.z - b.target.z || a.target.x - b.target.x || a.index - b.index);
+    const offset = Math.abs(Math.trunc(turn * 7 + residentIndex * 11)) % ranked.length;
+    for (let i = 0; i < ranked.length; i++) {
+        const target = ranked[(offset + i) % ranked.length].target;
+        const path = route(state, origin, target);
+        if (path && path.length >= 2 && path.every(point => sameCell(point, origin)
+            || !isHouse(point) && !occupied.has(cellKey(point)))) return { target, path, style };
+    }
+    return undefined;
+}
+
+function arrangeRoam(state: LifeState) {
+    if (state.activityVersion !== 2 || state.residents.some(resident => resident.visit && isRoamVisit(resident.visit))) return;
+    const turn = Math.floor(state.now / LIFE_RULES.activityMs);
+    const count = state.residents.length;
+    if (!count) return;
+    const start = ((turn % count) + count) % count;
+    for (let offset = 0; offset < count; offset++) {
+        const resident = state.residents[(start + offset) % count];
+        // An explicitly chosen destination keeps Pokomoko available to wait
+        // for that place; another resident can still take the quiet walk.
+        if (resident.visit || resident.id === 'pokomoko' && state.target) continue;
+        const plan = planLifeResidentRoam(state, resident, turn);
+        if (!plan) continue;
+        resident.visit = { itemId: `${ROAM_VISIT_PREFIX}${resident.id}:${turn}`, path: plan.path,
+            from: { ...resident.cell }, start: state.now, end: state.now + LIFE_RULES.activityMs };
+        return;
+    }
+}
+
 export function arrangeVisits(s: LifeState) {
     const developed = s.activityVersion === 2 ? new Set(districts(s).flatMap(d => d.ids)) : new Set<string>();
     // A fixed assignment order lets the first two residents monopolize two seats.
@@ -24,7 +97,7 @@ export function arrangeVisits(s: LifeState) {
             || hash(`${a.id}:${Math.floor(s.now / LIFE_RULES.activityMs)}`) - hash(`${b.id}:${Math.floor(s.now / LIFE_RULES.activityMs)}`);
     });
     for (const r of order) {
-        if (r.visit && !s.items.some(i => i.id === r.visit!.itemId && i.cell)) { r.visit = undefined; r.cell = { ...homeCell }; }
+        if (r.visit && !isRoamVisit(r.visit) && !s.items.some(i => i.id === r.visit!.itemId && i.cell)) { r.visit = undefined; r.cell = { ...homeCell }; }
         if (r.visit) continue;
         const choices = s.items.filter(i => i.cell && i.kind !== 'lantern').flatMap(i => {
             const reserved = s.activityVersion === 2 ? s.residents.filter(other => other !== r && other.visit).map(other => other.visit!.path[other.visit!.path.length - 1]) : [];
@@ -50,6 +123,7 @@ export function arrangeVisits(s: LifeState) {
             : choices.find(c => (dice -= c.weight) <= 0) ?? choices[0];
         r.visit = { itemId: chosen.item.id, path: chosen.path, from: { ...r.cell }, start: s.now, end: s.now + LIFE_RULES.activityMs };
     }
+    arrangeRoam(s);
 }
 function advance(s: LifeState, to: number) {
     if (!Number.isFinite(to) || to < s.now) throw new Error('Invalid world time');
@@ -62,9 +136,11 @@ function advance(s: LifeState, to: number) {
         for (const i of s.items) if (i.kind === 'flower' && i.cell) i.growth = Math.min(LIFE_RULES.bloomHours, i.growth + hours);
         s.now = next;
         for (const r of s.residents) if (r.visit && r.visit.end <= next) {
-            const kind = s.items.find(i => i.id === r.visit!.itemId)?.kind;
+            const visit = r.visit, kind = s.items.find(i => i.id === visit.itemId)?.kind;
+            r.cell = visit.path[visit.path.length - 1]; r.visit = undefined;
+            if (isRoamVisit(visit)) continue;
             if (kind) r.enjoyedBy[kind] = (r.enjoyedBy[kind] ?? 0) + 1;
-            r.cell = r.visit.path[r.visit.path.length - 1]; r.visit = undefined; r.enjoyed++; s.light++;
+            r.enjoyed++; s.light++;
         }
         arrangeVisits(s);
     }

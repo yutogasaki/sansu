@@ -41,7 +41,7 @@ describe('island life: time, choice and learning remain separate', () => {
         r = commandLife(r, { type: 'buy', kind: 'swing', cell: { x: 5, z: 3 } }, 's', r.now);
         const s = replayLife(r);
         const hero = s.residents[0], otter = s.residents[2];
-        const occupiedVisit = s.residents.find(r => r.visit)!.visit;
+        const occupiedVisit = s.residents.find(r => r.visit?.itemId === 's')!.visit;
         s.residents.forEach(r => { r.visit = r === otter ? occupiedVisit : undefined; });
         applyCommand(s, { id: 'choose', at: s.now, command: { type: 'visit', itemId: 's' } });
         expect(s.target).toBe('s'); expect(hero.visit).toBeUndefined(); expect(s.light).toBe(0);

@@ -1,10 +1,25 @@
 import { describe, expect, it } from 'vitest';
 import { Box3 } from 'three';
-import { HOUR, LIFE_STEP_MS, learningDay, newLife } from '../../../domain/islandLife/model';
+import { HOUR, isRoamVisit, LIFE_STEP_MS, learningDay, newLife } from '../../../domain/islandLife/model';
 import { commandLife, replayLife } from '../../../domain/islandLife/simulation';
 import { buildLifeScene } from './scene';
 
 describe('rendered activity geometry', () => {
+    it('renders a derived ground walk without requiring a furniture mesh', () => {
+        const state = replayLife(newLife('roam-motion', 1)), walker = state.residents.find(resident => isRoamVisit(resident.visit))!;
+        const scene = buildLifeScene(state), visit = walker.visit!;
+        try {
+            scene.animate(visit.start + 50, false);
+            const first = scene.audit().find(pose => pose.id === walker.id)!;
+            expect(first.phase).toBe('walking'); expect(first.itemId).toMatch(/^roam:/); expect(first.seatGap).toBeUndefined();
+            scene.animate(visit.start + Math.min(800, (visit.path.length - 1) * LIFE_STEP_MS - 50), false);
+            const moving = scene.audit().find(pose => pose.id === walker.id)!;
+            expect(moving.phase).toBe('walking'); expect(moving.position).not.toEqual(first.position);
+            scene.animate(visit.start + (visit.path.length - 1) * LIFE_STEP_MS + 1, false);
+            expect(scene.audit().find(pose => pose.id === walker.id)!.phase).toBe('roaming');
+        } finally { scene.dispose(); }
+    });
+
     it('keeps bodies on their moving seat and disables the motion in reduced mode', () => {
         let r = newLife('motion', 1); r.now = 100;
         r.credits = Array.from({ length: 12 }, (_, i) => ({ id: `c${i}`, at: 100, day: learningDay(100) }));

@@ -24,6 +24,12 @@ export interface LifeRecord {
     activitiesV2After?: number;
 }
 export interface Visit { itemId: string; from: Cell; path: Cell[]; start: number; end: number }
+/** Synthetic visits let the renderer show quiet ground walks without turning
+ * them into a furniture use or a persisted command. */
+export const ROAM_VISIT_PREFIX = 'roam:';
+export function isRoamVisit(visit?: Pick<Visit, 'itemId'>) {
+    return Boolean(visit?.itemId.startsWith(ROAM_VISIT_PREFIX));
+}
 export interface LifeResident {
     id: ResidentId; cell: Cell; visit?: Visit; enjoyed: number; enjoyedBy: Partial<Record<ItemKind, number>>;
     discovery?: { itemId: string; at: number; mood: 'notice' | 'curious' };

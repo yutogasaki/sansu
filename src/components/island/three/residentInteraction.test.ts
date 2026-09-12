@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { createIsland, getIslandLandAccess, isValidIslandPlacement } from '../../../domain/island/catalog';
 import { findSafeResidentSpawn, planResidentRoute, residentObstacles, residentPointIsClear } from './navigation';
-import { chooseReachableResident, residentNeedsInitialSpawn, savedResidentLayoutChanged, suggestReachablePlacement, type ResidentCandidate } from './residentInteraction';
+import { chooseReachableResident, chooseUsualPlaceInvitation, residentNeedsInitialSpawn, savedResidentLayoutChanged, savedResidentLayoutItems,
+    suggestReachablePlacement, type ResidentCandidate } from './residentInteraction';
 import type { IslandStageItem } from './types';
 
 const residents = (): ResidentCandidate[] => [
@@ -125,6 +126,31 @@ describe('reachable, replayable island furniture', () => {
     it('does not invent a suggestion if there is no available resident', () => {
         const target = bench(), island = createIsland('test', 0);
         expect(suggestReachablePlacement(island, target, residents().map(resident => ({ ...resident, visible: false })))).toBeUndefined();
+    });
+
+    it('invites the preferred resident once for a newly saved favorite place', () => {
+        const previous: IslandStageItem[] = [], current: IslandStageItem[] = [
+            { id: 'new-flower', kind: 'flower', position: { x: 0, z: 0 }, rotation: 0 },
+            { id: 'unplaced', kind: 'lantern', rotation: 0 },
+        ];
+        const candidates: ResidentCandidate[] = [
+            { species: 'otter', position: { x: 1.2, z: 1.8 }, visible: true },
+            { species: 'rabbit', position: { x: -1.5, z: 2 }, visible: true },
+            { species: 'fox', position: { x: 2.5, z: 2 }, visible: true },
+        ];
+        expect(savedResidentLayoutItems(previous, current)).toHaveLength(1);
+        expect(chooseUsualPlaceInvitation(previous, current, candidates, 4)).toEqual({ itemId: 'new-flower', residentSpecies: 'rabbit' });
+    });
+
+    it('does not invite a resident for removal, a no-op save, or an unavailable favorite', () => {
+        const flower: IslandStageItem = { id: 'flower', kind: 'flower', position: { x: 0, z: 0 }, rotation: 0 };
+        const candidates: ResidentCandidate[] = [
+            { species: 'otter', position: { x: 1.2, z: 1.8 }, visible: true },
+            { species: 'rabbit', position: { x: -1.5, z: 2 }, visible: false },
+        ];
+        expect(savedResidentLayoutItems([flower], [])).toEqual([]);
+        expect(savedResidentLayoutItems([flower], [{ ...flower }])).toEqual([]);
+        expect(chooseUsualPlaceInvitation([flower], [{ ...flower, position: { x: 1, z: 0 } }], candidates, 4)).toBeUndefined();
     });
 });
 

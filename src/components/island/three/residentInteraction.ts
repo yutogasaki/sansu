@@ -14,6 +14,8 @@ export interface ResidentCandidate {
     departingId?: string;
 }
 export interface ResidentVisitChoice { index: number; route: ResidentRoute; replay: boolean }
+export type ResidentSpecies = Exclude<ResidentCandidate['species'], undefined>;
+export interface UsualPlaceInvitation { itemId: string; residentSpecies: ResidentSpecies }
 
 export function preferredIslandResident(target: IslandStageItem): ResidentCandidate['species'] {
     const kind = target.kind === 'swing' ? 'fountain' : target.kind;
@@ -36,6 +38,34 @@ export function savedResidentLayoutChanged(previous: readonly IslandStageItem[],
         return !old || old.kind !== item.kind || old.rotation !== item.rotation
             || old.position!.x !== item.position!.x || old.position!.z !== item.position!.z;
     });
+}
+
+/** Return only the currently placed objects that were newly saved or moved.
+ * Removing/storing an object has no destination to invite a resident toward. */
+export function savedResidentLayoutItems(previous: readonly IslandStageItem[], current: readonly IslandStageItem[]) {
+    const before = new Map(previous.filter(item => item.position).map(item => [item.id, item]));
+    return current.filter(item => {
+        if (!item.position) return false;
+        const old = before.get(item.id);
+        return !old || old.kind !== item.kind || old.rotation !== item.rotation
+            || old.position!.x !== item.position.x || old.position!.z !== item.position.z;
+    });
+}
+
+/** Invite one preferred resident after a saved placement. This is deliberately
+ * ephemeral: it chooses an existing route and never changes learning, rewards,
+ * discoveries, or the saved island. A single invitation keeps a multi-item
+ * save calm while a later ordinary turn can still use the other objects. */
+export function chooseUsualPlaceInvitation(previous: readonly IslandStageItem[], current: readonly IslandStageItem[],
+    residents: readonly ResidentCandidate[], landAccess: IslandLandAccess, afterIndex = -1,
+    obstacles: readonly { x: number; z: number; radius: number }[] = []): UsualPlaceInvitation | undefined {
+    for (const item of savedResidentLayoutItems(previous, current)) {
+        const preferred = preferredIslandResident(item);
+        if (!preferred) continue;
+        const choice = chooseReachableResident(residents, item, [...current], landAccess, afterIndex, obstacles, preferred);
+        if (choice && residents[choice.index].species === preferred) return { itemId: item.id, residentSpecies: preferred };
+    }
+    return undefined;
 }
 
 /** Fair turns among reachable residents. An occupied object keeps its current

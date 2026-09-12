@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { planResidentPointRoute, planResidentRoute, residentObstacles, residentPointIsClear } from './navigation';
-import { planResidentRoam } from './residentRoaming';
+import { planResidentRoam, residentRoamOrder, residentRoamStyle } from './residentRoaming';
 import type { IslandStageItem } from './types';
 
 const bench = (id: string, x: number, z: number): IslandStageItem => ({ id, kind: 'bench', position: { x, z }, rotation: 0 });
@@ -36,5 +36,25 @@ describe('resident autonomous roaming', () => {
         expect(plan).toBeDefined();
         expect(residentPointIsClear(plan!.target, 0, residentObstacles(items, ''))).toBe(true);
         expect(Math.hypot(plan!.target.x + 2, plan!.target.z - 1.5)).toBeGreaterThanOrEqual(.84 - 1e-8);
+    });
+
+    it('gives each resident a different strolling pattern and avoids the last point when space allows', () => {
+        expect(residentRoamStyle(0, 0)).toBe('nearby');
+        expect(residentRoamStyle(1, 0)).toBe('wide');
+        expect(residentRoamStyle(2, 0)).toBe('crossing');
+        expect(residentRoamStyle(0, 3)).toBe('nearby');
+
+        const first = planResidentRoam({ x: 0, z: 1.5 }, 0, 0, [], 0, { style: 'nearby' });
+        const next = planResidentRoam({ x: 0, z: 1.5 }, 0, 1, [], 0, { style: 'nearby', avoidTargets: first ? [first.target] : [] });
+        expect(first).toBeDefined(); expect(next).toBeDefined();
+        expect(next?.target).not.toEqual(first?.target);
+    });
+
+    it('rotates the resident turn order while keeping one complete round fair', () => {
+        expect(residentRoamOrder(0, 3)).toEqual([0, 1, 2]);
+        expect(residentRoamOrder(1, 3)).toEqual([1, 2, 0]);
+        expect(residentRoamOrder(4, 3)).toEqual([1, 2, 0]);
+        expect(residentRoamOrder(-1, 3)).toEqual([2, 0, 1]);
+        expect(residentRoamOrder(0, 0)).toEqual([]);
     });
 });
