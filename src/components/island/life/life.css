@@ -89,3 +89,355 @@
 .life-camera-tools-panel .island-camera-hint { margin:0 3px; white-space:nowrap; }
 .island-page[data-life-home=true] .life-camera-tools,
 .island-page[data-life-home=true] .island-stage__quick-reset { bottom:calc(192px + env(safe-area-inset-bottom)); z-index:9; }
+
+/*
+ * Island life polish: keep the 3D world untouched and make the controls feel
+ * like small sewn-on patches around it. The live world remains the visual
+ * hero; these accents only clarify what can be touched next.
+ */
+.island-page[data-life-home="true"] .life-wallet {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    padding: 6px;
+    border: 0;
+    border-radius: 20px;
+    background: transparent;
+    box-shadow: none;
+}
+.island-page[data-life-home="true"] .life-wallet-item {
+    display: flex;
+    min-width: 0;
+    min-height: 36px;
+    align-items: center;
+    gap: 5px !important;
+    padding: 6px 9px;
+    border: 1px solid color-mix(in srgb, var(--pokomoko-stitch) 65%, var(--pokomoko-paper));
+    border-radius: 15px 15px 13px 13px;
+    box-shadow: 0 2px 0 color-mix(in srgb, var(--pokomoko-edge) 58%, transparent);
+    color: var(--pokomoko-ink);
+}
+.island-page[data-life-home="true"] .life-wallet-item > span {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    color: inherit;
+    font-size: 11px;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.island-page[data-life-home="true"] .life-wallet-item strong {
+    margin-left: auto;
+    color: var(--pokomoko-ink);
+    font-size: 18px;
+    line-height: 1;
+}
+.island-page[data-life-home="true"] .life-wallet-item svg { flex: 0 0 auto; }
+.island-page[data-life-home="true"] .life-wallet-item--drops {
+    background: color-mix(in srgb, var(--pokomoko-mint) 78%, var(--pokomoko-paper));
+}
+.island-page[data-life-home="true"] .life-wallet-item--drops svg { color: #3b7c72; }
+.island-page[data-life-home="true"] .life-wallet-item--light {
+    background: color-mix(in srgb, var(--pokomoko-lavender) 76%, var(--pokomoko-paper));
+}
+.island-page[data-life-home="true"] .life-wallet-item--light svg { color: #795aa0; }
+.island-page[data-life-home="true"] .life-wallet-item--growth {
+    grid-column: 1 / -1;
+    justify-content: center;
+    min-height: 30px;
+    padding-block: 4px;
+    background: color-mix(in srgb, var(--pokomoko-rose) 60%, var(--pokomoko-paper));
+    color: #725266;
+    box-shadow: none;
+}
+.island-page[data-life-home="true"] .life-wallet-item--growth svg { color: #ad6b8b; }
+
+.island-page[data-life-home="true"] .life-dock {
+    right: 10px;
+    bottom: max(8px, env(safe-area-inset-bottom));
+    left: 10px;
+    padding: 11px 10px max(9px, env(safe-area-inset-bottom));
+    border: 2px solid color-mix(in srgb, var(--pokomoko-stitch) 72%, var(--pokomoko-paper));
+    border-radius: 26px;
+    background: var(--pokomoko-paper);
+    box-shadow: 0 4px 0 color-mix(in srgb, var(--pokomoko-edge) 62%, transparent), 0 14px 30px rgb(38 49 69 / 16%);
+}
+.island-page[data-life-home="true"] .life-dock::before {
+    position: absolute;
+    top: -5px;
+    left: 24px;
+    width: 44px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--pokomoko-stitch);
+    content: '';
+    opacity: .78;
+}
+.island-page[data-life-home="true"] .life-dock .life-caption {
+    min-height: 38px;
+    padding: 0 2px 4px;
+}
+.island-page[data-life-home="true"] .life-caption-title {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 7px;
+}
+.island-page[data-life-home="true"] .life-caption-mark {
+    display: grid;
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border: 1px solid #c5ddd4;
+    border-radius: 11px 12px 9px 13px;
+    background: var(--pokomoko-mint);
+    color: #3b7c72;
+}
+.island-page[data-life-home="true"] .life-dock .life-caption .life-eyebrow {
+    display: block;
+    margin: 0 0 1px;
+    color: var(--pokomoko-muted);
+    font-size: 9px;
+    letter-spacing: .08em;
+    line-height: 1.2;
+}
+.island-page[data-life-home="true"] .life-dock .life-caption h2 {
+    font-size: 15px;
+    line-height: 1.2;
+}
+.island-page[data-life-home="true"] .life-dock .life-caption > .island-text-button {
+    min-height: 38px;
+    padding: 3px 8px;
+    border: 1px solid var(--pokomoko-edge);
+    border-radius: 12px;
+    background: var(--pokomoko-paper);
+    box-shadow: none;
+    font-size: 11px;
+}
+
+.island-page[data-life-home="true"] .life-dock .life-residents {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+    height: auto;
+    padding: 0 2px 5px;
+    overflow: visible;
+}
+.island-page[data-life-home="true"] .life-dock .life-residents > span {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    min-width: 0;
+    min-height: 46px;
+    align-content: center;
+    padding: 4px 5px 4px 21px;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--pokomoko-edge) 72%, var(--pokomoko-paper));
+    border-radius: 13px 13px 11px 11px;
+    background: color-mix(in srgb, var(--pokomoko-mint) 62%, var(--pokomoko-paper));
+    box-shadow: 0 2px 0 color-mix(in srgb, var(--pokomoko-edge) 48%, transparent);
+}
+.island-page[data-life-home="true"] .life-dock .life-residents > span:nth-child(2) {
+    background: color-mix(in srgb, var(--pokomoko-rose) 58%, var(--pokomoko-paper));
+}
+.island-page[data-life-home="true"] .life-dock .life-residents > span:nth-child(3) {
+    background: color-mix(in srgb, var(--pokomoko-lavender) 58%, var(--pokomoko-paper));
+}
+.island-page[data-life-home="true"] .life-resident-dot {
+    position: absolute;
+    top: 8px;
+    left: 7px;
+    width: 9px;
+    height: 9px;
+    border: 1px solid rgb(255 255 255 / 78%);
+    border-radius: 50%;
+    background: #d49868;
+}
+.island-page[data-life-home="true"] .life-dock .life-residents > span:nth-child(2) .life-resident-dot { background: #d9a1bd; }
+.island-page[data-life-home="true"] .life-dock .life-residents > span:nth-child(3) .life-resident-dot { background: #b786c7; }
+.island-page[data-life-home="true"] .life-dock .life-residents b,
+.island-page[data-life-home="true"] .life-dock .life-residents small,
+.island-page[data-life-home="true"] .life-dock .life-residents em {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.island-page[data-life-home="true"] .life-dock .life-residents b { font-size: 10px; }
+.island-page[data-life-home="true"] .life-dock .life-residents small {
+    color: var(--pokomoko-blue);
+    font-size: 9px;
+    line-height: 1.2;
+}
+.island-page[data-life-home="true"] .life-dock .life-residents em {
+    color: var(--pokomoko-muted);
+    font-size: 9px;
+    line-height: 1.2;
+}
+.island-page[data-life-home="true"] .life-dock .life-goal {
+    margin: 2px 0 7px;
+    padding-top: 4px;
+    border-top: 1px dashed color-mix(in srgb, var(--pokomoko-stitch) 70%, transparent);
+    font-size: 10px;
+}
+
+.island-page[data-life-home="true"] .life-dock .life-tabs {
+    gap: 5px;
+}
+.island-page[data-life-home="true"] .life-dock .life-tabs button {
+    display: flex;
+    min-height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 5px 3px;
+    border: 1px solid color-mix(in srgb, var(--life-tab-tint) 58%, var(--pokomoko-edge));
+    border-radius: 15px;
+    background: color-mix(in srgb, var(--life-tab-tint) 34%, var(--pokomoko-paper));
+    box-shadow: 0 2px 0 color-mix(in srgb, var(--life-tab-tint) 30%, var(--pokomoko-edge));
+    color: var(--pokomoko-ink);
+    font-size: 11px;
+    font-weight: 700;
+}
+.island-page[data-life-home="true"] .life-dock .life-tabs button[data-life-tab="build"] { --life-tab-tint: var(--pokomoko-mint); }
+.island-page[data-life-home="true"] .life-dock .life-tabs button[data-life-tab="items"] { --life-tab-tint: var(--pokomoko-rose); }
+.island-page[data-life-home="true"] .life-dock .life-tabs button[data-life-tab="style"] { --life-tab-tint: var(--pokomoko-lavender); }
+.island-page[data-life-home="true"] .life-dock .life-tabs button[data-life-tab="land"] { --life-tab-tint: #f0dfbd; }
+.island-page[data-life-home="true"] .life-dock .life-tabs button[aria-pressed="true"] {
+    border-color: var(--pokomoko-blue);
+    background: color-mix(in srgb, var(--life-tab-tint) 68%, var(--pokomoko-paper));
+    box-shadow: inset 0 0 0 1px var(--pokomoko-blue), 0 2px 0 color-mix(in srgb, var(--pokomoko-blue) 30%, transparent);
+    color: var(--pokomoko-blue-deep);
+}
+.island-page[data-life-home="true"] .life-dock .life-tabs button svg { flex: 0 0 auto; }
+
+.island-page[data-life-home="true"] .life-menu,
+.island-page[data-life-home="true"] .life-viewport > .life-placement.life-controls {
+    border: 2px solid color-mix(in srgb, var(--pokomoko-stitch) 72%, var(--pokomoko-paper));
+    border-radius: 22px;
+    box-shadow: 0 4px 0 color-mix(in srgb, var(--pokomoko-edge) 58%, transparent), 0 12px 30px rgb(38 49 69 / 18%);
+}
+.island-page[data-life-home="true"] .life-menu-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--pokomoko-blue-deep);
+}
+.island-page[data-life-home="true"] .life-menu-title svg { color: var(--pokomoko-blue); }
+.island-page[data-life-home="true"] .life-menu .life-catalog button {
+    grid-template-columns: 36px minmax(0, 1fr);
+    min-height: 68px;
+    column-gap: 8px;
+    padding: 7px 8px;
+    border: 1px solid color-mix(in srgb, var(--life-catalog-tint) 65%, var(--pokomoko-edge));
+    border-radius: 17px;
+    background: color-mix(in srgb, var(--life-catalog-tint) 34%, var(--pokomoko-paper));
+    box-shadow: 0 2px 0 color-mix(in srgb, var(--life-catalog-tint) 28%, var(--pokomoko-edge));
+}
+.island-page[data-life-home="true"] .life-catalog button[data-life-kind="flower"] { --life-catalog-tint: var(--pokomoko-mint); }
+.island-page[data-life-home="true"] .life-catalog button[data-life-kind="bench"] { --life-catalog-tint: #f0dfbd; }
+.island-page[data-life-home="true"] .life-catalog button[data-life-kind="swing"] { --life-catalog-tint: var(--pokomoko-rose); }
+.island-page[data-life-home="true"] .life-catalog button[data-life-kind="lantern"] { --life-catalog-tint: var(--pokomoko-lavender); }
+.island-page[data-life-home="true"] .life-menu .life-catalog button:disabled { opacity: .68; }
+.island-page[data-life-home="true"] .life-catalog-icon {
+    display: grid;
+    grid-row: 1 / 3;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--life-catalog-tint) 70%, var(--pokomoko-edge));
+    border-radius: 12px 13px 10px 13px;
+    background: color-mix(in srgb, var(--life-catalog-tint) 68%, var(--pokomoko-paper));
+    color: var(--pokomoko-blue-deep);
+}
+.island-page[data-life-home="true"] .life-menu .life-catalog button > b { align-self: end; }
+.island-page[data-life-home="true"] .life-menu .life-catalog button > span { align-self: start; }
+.island-page[data-life-home="true"] .life-menu .life-menu-hint {
+    border-left: 3px solid #7cae9e;
+    border-radius: 11px;
+}
+.island-page[data-life-home="true"] .life-earned {
+    border: 2px solid color-mix(in srgb, var(--pokomoko-stitch) 72%, var(--pokomoko-paper));
+    border-radius: 18px;
+    box-shadow: 0 3px 0 color-mix(in srgb, var(--pokomoko-edge) 58%, transparent), 0 8px 18px rgb(38 49 69 / 14%);
+}
+.island-page[data-life-home="true"] .life-camera-tools > summary {
+    border: 2px solid color-mix(in srgb, var(--pokomoko-stitch) 72%, var(--pokomoko-paper));
+    box-shadow: 0 3px 0 color-mix(in srgb, var(--pokomoko-edge) 58%, transparent), 0 8px 16px rgb(38 49 69 / 12%);
+}
+.island-page[data-life-home="true"] .life-camera-tools-panel {
+    border: 2px solid color-mix(in srgb, var(--pokomoko-stitch) 72%, var(--pokomoko-paper));
+    box-shadow: 0 4px 0 color-mix(in srgb, var(--pokomoko-edge) 58%, transparent), 0 10px 22px rgb(38 49 69 / 14%);
+}
+.island-page[data-life-home="true"] .life-camera-tools,
+.island-page[data-life-home="true"] .island-stage__quick-reset {
+    bottom: calc(224px + env(safe-area-inset-bottom));
+}
+
+/* The preview-only clock controls stay available, but no longer compete with the island. */
+.island-life > .life-dev {
+    top: calc(108px + env(safe-area-inset-top));
+    right: 12px;
+    max-width: 52px;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    opacity: .38;
+}
+.island-life > .life-dev > summary {
+    min-height: 26px;
+    padding: 3px 7px;
+    border: 1px dashed var(--pokomoko-stitch);
+    border-radius: 10px;
+    background: rgb(255 253 249 / 72%);
+    color: var(--pokomoko-muted);
+    font-size: 10px;
+    text-align: center;
+}
+.island-life > .life-dev[open] {
+    max-width: 300px;
+    padding: 10px;
+    border: 1px solid var(--pokomoko-edge);
+    border-radius: 16px;
+    background: var(--pokomoko-paper);
+    box-shadow: 0 8px 20px rgb(38 49 69 / 14%);
+    opacity: 1;
+}
+
+@media (min-width: 700px) {
+    .island-page[data-life-home="true"] .life-wallet {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .island-page[data-life-home="true"] .life-wallet-item--growth {
+        grid-column: auto;
+    }
+    .island-page[data-life-home="true"] .life-dock {
+        right: 18px;
+        left: 18px;
+        padding-inline: 14px;
+    }
+    .island-page[data-life-home="true"] .life-camera-tools,
+    .island-page[data-life-home="true"] .island-stage__quick-reset {
+        bottom: calc(198px + env(safe-area-inset-bottom));
+    }
+}
+
+@media (max-height: 700px) {
+    .island-page[data-life-home="true"] .life-dock {
+        padding-top: 8px;
+        padding-bottom: max(6px, env(safe-area-inset-bottom));
+    }
+    .island-page[data-life-home="true"] .life-dock .life-caption {
+        min-height: 32px;
+    }
+    .island-page[data-life-home="true"] .life-dock .life-tabs button {
+        min-height: 44px;
+    }
+    .island-page[data-life-home="true"] .life-camera-tools,
+    .island-page[data-life-home="true"] .island-stage__quick-reset {
+        bottom: calc(154px + env(safe-area-inset-bottom));
+    }
+}
