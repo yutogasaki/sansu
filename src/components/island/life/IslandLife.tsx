@@ -33,9 +33,11 @@ export default function IslandLife({ controls, onHome, disabled }: {
 }) {
     const { record, error, busy, refresh } = controls;
     const [menuOpen, setMenuOpen] = useState(false);
+    const [dockOpen, setDockOpen] = useState(false);
     const [page, setPage] = useState(0), [cellPage, setCellPage] = useState(0);
     const [gridOpen, setGridOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
+    const dockRef = useRef<HTMLDivElement>(null);
     const actionRunning = useRef(false), retryCompletion = useRef<(() => void) | undefined>(undefined);
     const lastObservedDrops = useRef<number | undefined>(undefined);
     const lastObservedLight = useRef<number | undefined>(undefined);
@@ -59,14 +61,16 @@ export default function IslandLife({ controls, onHome, disabled }: {
     const item = state?.items.find(i => i.id === selected);
     const placement = useMemo(() => state && (kind || moving && item)
         ? previewPlacement(state, kind ?? item!, cell) : undefined, [state, kind, moving, item, cell]);
-    const showWorld = () => { setMenuOpen(false); setGridOpen(false); };
+    const showWorld = () => { setMenuOpen(false); setDockOpen(false); setGridOpen(false); };
     useEffect(() => {
-        if (!menuOpen) return;
-        menuRef.current?.focus();
-        const close = (event: KeyboardEvent) => { if (event.key === 'Escape') setMenuOpen(false); };
+        if (!menuOpen && !dockOpen) return;
+        (menuOpen ? menuRef : dockRef).current?.focus();
+        const close = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') { setMenuOpen(false); setDockOpen(false); }
+        };
         window.addEventListener('keydown', close);
         return () => window.removeEventListener('keydown', close);
-    }, [menuOpen]);
+    }, [menuOpen, dockOpen]);
     useEffect(() => {
         if (!record) return;
         const current = replayLife(record);
@@ -145,17 +149,32 @@ export default function IslandLife({ controls, onHome, disabled }: {
         if (locked) return;
         if (kind || moving) { setCell(next); return; }
         const found = state.items.find(i => i.cell && cellKey(i.cell) === cellKey(next));
-        if (found) { setSelected(found.id); setTab('items'); setMenuOpen(true); setRemoving(false); }
+        if (found) { setSelected(found.id); setTab('items'); setDockOpen(false); setMenuOpen(true); setRemoving(false); }
         else if (isHouse(next)) onHome();
     };
-    const switchTab = (next: typeof tab) => { setEarnedDrops(undefined); setEarnedLight(undefined); setGrownItems([]); setObservationCues([]); setMenuOpen(next !== tab || !menuOpen); setPage(0); if (next !== 'style') setSelected(undefined); setTab(next); setKind(undefined); setCell(undefined); setMoving(false); setRemoving(false); };
+    const resetPanelForTab = (next: typeof tab) => {
+        setEarnedDrops(undefined); setEarnedLight(undefined); setGrownItems([]); setObservationCues([]);
+        setPage(0); if (next !== 'style') setSelected(undefined); setTab(next);
+        setKind(undefined); setCell(undefined); setMoving(false); setRemoving(false);
+    };
+    const switchTab = (next: typeof tab) => {
+        const willOpen = next !== tab || !menuOpen;
+        resetPanelForTab(next); setMenuOpen(willOpen); setDockOpen(false);
+    };
+    const openMenuTab = (next: typeof tab) => {
+        resetPanelForTab(next); setMenuOpen(true); setDockOpen(false);
+    };
+    const openLifeControls = () => {
+        if (error) { setMenuOpen(true); setDockOpen(false); return; }
+        setDockOpen(true);
+    };
     const products = Object.keys(CATALOG) as ItemKind[];
     const pageCount = Math.max(1, Math.ceil((tab === 'build' ? products.length : state.items.length) / 2));
     const currentPage = Math.min(page, pageCount - 1);
     const cells = landCells(state), cellPages = Math.ceil(cells.length / 6);
     const pager = <div className="life-pager"><button aria-label="まえの ページ" disabled={currentPage === 0} onClick={() => setPage(currentPage - 1)}>←</button><span>{currentPage + 1} / {pageCount}</span><button aria-label="つぎの ページ" disabled={currentPage + 1 === pageCount} onClick={() => setPage(currentPage + 1)}>→</button></div>;
     const goal = Math.min(LIFE_RULES.dailyGoal, state.days[learningDay(state.now)] ?? 0);
-    return <section className="island-life" data-life-candidate={LIFE_CANDIDATE} data-life-destination={state.target} data-life-revision={record.revision} data-life-drops={state.drops} data-life-light={state.light} data-life-items={state.items.length} data-life-districts={places.map(p => p.label).join(',')}>
+    return <section className="island-life" data-life-candidate={LIFE_CANDIDATE} data-life-destination={state.target} data-life-revision={record.revision} data-life-drops={state.drops} data-life-light={state.light} data-life-items={state.items.length} data-life-districts={places.map(p => p.label).join(',')} data-life-panel-open={menuOpen || dockOpen || Boolean(placement) ? 'true' : undefined}>
         <div className="life-wallet" aria-label="しまの もちもの">
             <span className="life-wallet-item life-wallet-item--drops" data-life-resource="drops"><Droplets size={18} /><span>しずく</span><strong>{state.drops}</strong></span>
             <span className="life-wallet-item life-wallet-item--light" data-life-resource="light" title="みんなが たのしむと ふえるよ"><Sparkles size={18} /><span>ひかり</span><strong>{state.light}</strong></span>
@@ -181,8 +200,10 @@ export default function IslandLife({ controls, onHome, disabled }: {
             {gridOpen && <div className="life-cell-picker"><div className="life-grid" style={{ gridTemplateColumns: 'repeat(6, 1fr)' }}>{cells.slice(cellPage * 6, cellPage * 6 + 6).map(p => <button key={cellKey(p)} aria-label={`ばしょ ${p.x + 1} ${p.z + 1}`} data-life-cell={cellKey(p)} aria-pressed={cell && cellKey(cell) === cellKey(p)} disabled={locked || !placement.allowed.includes(cellKey(p))} onClick={() => { setCell(p); setGridOpen(false); }}>{p.x + 1},{p.z + 1}</button>)}</div><div className="life-pager"><button aria-label="まえの マス" disabled={cellPage === 0} onClick={() => setCellPage(cellPage - 1)}>←</button><span>{cellPage + 1} / {cellPages}</span><button aria-label="つぎの マス" disabled={cellPage + 1 >= cellPages} onClick={() => setCellPage(cellPage + 1)}>→</button></div></div>}
 
         </div>}
-        {menuOpen && !placement && <div ref={menuRef} tabIndex={-1} className="life-controls life-menu" role="region" aria-label="しまの メニュー">
+        {menuOpen && !placement && <div ref={menuRef} tabIndex={-1} className="life-controls life-menu" role="dialog" aria-modal="false" aria-label="しまの メニュー">
             <div className="life-menu-heading"><div className="life-menu-title">{(() => { const Icon = tabOptions.find(([id]) => id === tab)?.[2] ?? Sprout; return <Icon size={17} aria-hidden="true" />; })()}<b>{{ build: 'つくる', items: 'もちもの', style: 'いろ', land: 'ひろげる' }[tab]}</b></div>{(tab === 'build' || tab === 'items' && !item) && pageCount > 1 && pager}<button aria-label="メニューを とじる" onClick={() => setMenuOpen(false)}><X size={18} /></button></div>
+            <div className="life-menu-tabs" role="group" aria-label="しまの ていれ">{tabOptions.map(([id, name, Icon]) =>
+                <button key={id} type="button" aria-pressed={tab === id} onClick={() => openMenuTab(id)}><Icon size={15} /><span>{name}</span></button>)}</div>
             {error && <div className="life-error" role="alert"><p>{error}</p><button onClick={() => void retryAction()} disabled={locked}>もういちど</button><button onClick={() => { retryCompletion.current = undefined; controls.clearError(); }} disabled={locked}>よみなおす</button></div>}
             {notice && !error && <p role="status" className="life-notice">{notice}</p>}
             {tab === 'build' && <>
@@ -212,10 +233,10 @@ export default function IslandLife({ controls, onHome, disabled }: {
             {tab === 'land' && (state.expanded ? <p>ひろがった しまに、すきな ばしょを つくろう。</p> : <><p>しずく {LIFE_RULES.expansionPrice} で、みぎか ひだりへ３列ひろがるよ。</p><div className="life-land">{([['west', 'ひだりへ'], ['east', 'みぎへ']] as const).map(([side, label]) => <button key={side} disabled={locked || state.drops < LIFE_RULES.expansionPrice} onClick={() => void doAction({ type: 'expand', side }, 'しまが ひろがったよ！')}>{label} ひろげる</button>)}</div></>)}
         </div>}
         </div>
-        <div className="life-dock">
-        {!menuOpen && (error || notice) && <p className="life-dock-notice" role="status">{error || notice}{error && <button onClick={() => setMenuOpen(true)}>ひらく</button>}</p>}
-        <div className="life-caption"><div className="life-caption-title"><span className="life-caption-mark" aria-hidden="true"><Sprout size={16} /></span><div><p className="life-eyebrow">ぽこもこの にわ</p><h2>{places.length ? places.map(p => p.label).join(' と ') : 'なにを つくろう？'}</h2></div></div>
-            <button className="island-text-button" onClick={onHome} disabled={locked}><Home size={17} />いえへ</button></div>
+        {dockOpen && !menuOpen && !placement && <div ref={dockRef} tabIndex={-1} id="life-dock-dialog" className="life-dock" role="dialog" aria-modal="false" aria-labelledby="life-dock-title">
+        {(error || notice) && <p className="life-dock-notice" role="status">{error || notice}{error && <button onClick={() => { setMenuOpen(true); setDockOpen(false); }}>ひらく</button>}</p>}
+        <div className="life-caption"><div className="life-caption-title"><span className="life-caption-mark" aria-hidden="true"><Sprout size={16} /></span><div><p className="life-eyebrow">ぽこもこの にわ</p><h2 id="life-dock-title">{places.length ? places.map(p => p.label).join(' と ') : 'なにを つくろう？'}</h2></div></div>
+            <div className="life-caption-actions"><button className="island-text-button" onClick={onHome} disabled={locked}><Home size={17} />いえへ</button><button className="life-dock-close" type="button" aria-label="しまの ようすを とじる" onClick={() => setDockOpen(false)}><X size={17} /></button></div></div>
         <div className="life-residents" aria-label="みんなのようす">{state.residents.map(r => {
             const target = state.items.find(i => i.id === r.visit?.itemId);
             const reaction = residentReaction(state, r, state.now + elapsed);
@@ -228,8 +249,13 @@ export default function IslandLife({ controls, onHome, disabled }: {
         })}</div>
             <p className="life-goal">{goal === LIFE_RULES.dailyGoal ? 'きょうの いぶきが みちたよ' : `きょうの いぶき ${goal} / ${LIFE_RULES.dailyGoal} といたぶんは のこるよ`}</p>
             <div className="life-tabs" role="group" aria-label="しまの ていれ">{tabOptions.map(([id, name, Icon]) =>
-                <button key={id} data-life-tab={id} aria-pressed={menuOpen && tab === id} disabled={locked} onClick={() => switchTab(id)}><Icon size={16} /><span>{name}</span></button>)}</div>
+                <button key={id} type="button" data-life-tab={id} aria-pressed={tab === id} disabled={locked} onClick={() => switchTab(id)}><Icon size={16} /><span>{name}</span></button>)}</div>
         </div>
+        }
+        {!dockOpen && !menuOpen && !placement && <div className="life-dock-closed">
+            {(error || notice) && <p className="life-dock-closed-notice" role="status">{error || notice}<button type="button" onClick={openLifeControls}>ひらく</button></p>}
+            <button className="life-dock-launcher" type="button" aria-expanded={dockOpen} aria-controls="life-dock-dialog" onClick={openLifeControls}><Sprout size={17} aria-hidden="true" /><span>しまの ようす</span><i aria-hidden="true">↑</i></button>
+        </div>}
         {import.meta.env.DEV && <details className="life-dev"><summary>試作</summary><p>独立した試作の島です。通常の学習記録・旧島の所有物は変更しません。家の中は既存画面です。時間送りはこの島だけに作用します。</p>
             {[6, 24].map(hours => <button key={hours} disabled={locked} onClick={() => void refresh({ id: crypto.randomUUID(), revision: record.revision, advanceHours: hours as 6 | 24 })}>試作を {hours}時間すすめる</button>)}
         </details>}

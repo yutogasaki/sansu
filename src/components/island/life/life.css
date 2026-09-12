@@ -441,3 +441,190 @@
         bottom: calc(154px + env(safe-area-inset-bottom));
     }
 }
+
+/* World-first controls: keep the island open, and summon the details only on demand. */
+.island-page[data-life-home="true"] .life-dock-closed {
+    position: absolute;
+    z-index: 8;
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    left: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    pointer-events: none;
+}
+.island-page[data-life-home="true"] .life-dock-launcher {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 11px;
+    border: 2px solid color-mix(in srgb, var(--pokomoko-stitch) 72%, var(--pokomoko-paper));
+    border-radius: 16px 16px 13px 13px;
+    background: var(--pokomoko-paper);
+    box-shadow: 0 3px 0 color-mix(in srgb, var(--pokomoko-edge) 60%, transparent), 0 8px 18px rgb(38 49 69 / 14%);
+    color: var(--pokomoko-blue-deep);
+    font: inherit;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    pointer-events: auto;
+}
+.island-page[data-life-home="true"] .life-dock-launcher svg { color: #3b7c72; }
+.island-page[data-life-home="true"] .life-dock-launcher > i {
+    display: grid;
+    width: 20px;
+    height: 20px;
+    place-items: center;
+    border-radius: 8px;
+    background: var(--pokomoko-mint);
+    color: #3b7c72;
+    font-size: 13px;
+    font-style: normal;
+    line-height: 1;
+}
+.island-page[data-life-home="true"] .life-dock-launcher:focus-visible {
+    outline: 3px solid var(--pokomoko-blue);
+    outline-offset: 3px;
+}
+.island-page[data-life-home="true"] .life-dock-closed-notice {
+    display: flex;
+    max-width: min(88vw, 340px);
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 7px;
+    padding: 7px 9px;
+    border: 1px solid var(--pokomoko-edge);
+    border-radius: 12px;
+    background: var(--pokomoko-paper);
+    box-shadow: 0 3px 12px rgb(38 49 69 / 12%);
+    color: var(--pokomoko-muted);
+    font-size: 11px;
+    pointer-events: auto;
+}
+.island-page[data-life-home="true"] .life-dock-closed-notice button {
+    min-height: 36px;
+    padding: 4px 8px;
+    border: 1px solid var(--pokomoko-edge);
+    border-radius: 10px;
+    background: var(--pokomoko-paper);
+    color: var(--pokomoko-blue-deep);
+    font: inherit;
+    font-weight: 800;
+}
+
+.island-page[data-life-home="true"] .life-dock {
+    right: 14px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    left: 14px;
+    width: auto;
+    max-width: 430px;
+    max-height: calc(100% - 24px);
+    margin-inline: auto;
+    overflow: auto;
+    padding: 12px 12px max(12px, env(safe-area-inset-bottom));
+    border: 2px solid color-mix(in srgb, var(--pokomoko-stitch) 72%, var(--pokomoko-paper));
+    border-radius: 24px;
+    background: var(--pokomoko-paper);
+    box-shadow: 0 4px 0 color-mix(in srgb, var(--pokomoko-edge) 62%, transparent), 0 14px 30px rgb(38 49 69 / 16%);
+    pointer-events: auto;
+}
+.island-page[data-life-home="true"] .life-dock .life-caption-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.island-page[data-life-home="true"] .life-dock .life-caption-actions > .island-text-button {
+    min-height: 38px;
+    padding: 3px 8px;
+    border: 1px solid var(--pokomoko-edge);
+    border-radius: 12px;
+    background: var(--pokomoko-paper);
+    box-shadow: none;
+    font-size: 11px;
+}
+.island-page[data-life-home="true"] .life-dock .life-dock-close {
+    display: grid;
+    width: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    padding: 0;
+    place-items: center;
+    border: 1px solid var(--pokomoko-edge);
+    border-radius: 12px;
+    background: var(--pokomoko-paper);
+    color: var(--pokomoko-muted);
+}
+.island-page[data-life-home="true"] .life-menu,
+.island-page[data-life-home="true"] .life-viewport > .life-placement.life-controls {
+    bottom: max(12px, env(safe-area-inset-bottom));
+    max-width: 430px;
+    max-height: calc(100% - 24px);
+    overflow: auto;
+}
+.island-page[data-life-home="true"] .life-menu-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+    margin: 2px 0 8px;
+}
+.island-page[data-life-home="true"] .life-menu-tabs button {
+    display: flex;
+    min-width: 0;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 4px 2px;
+    border: 1px solid color-mix(in srgb, var(--life-tab-tint) 58%, var(--pokomoko-edge));
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--life-tab-tint) 30%, var(--pokomoko-paper));
+    color: var(--pokomoko-ink);
+    font-size: 10px;
+    font-weight: 800;
+}
+.island-page[data-life-home="true"] .life-menu-tabs button:nth-child(1) { --life-tab-tint: var(--pokomoko-mint); }
+.island-page[data-life-home="true"] .life-menu-tabs button:nth-child(2) { --life-tab-tint: var(--pokomoko-rose); }
+.island-page[data-life-home="true"] .life-menu-tabs button:nth-child(3) { --life-tab-tint: var(--pokomoko-lavender); }
+.island-page[data-life-home="true"] .life-menu-tabs button:nth-child(4) { --life-tab-tint: #f0dfbd; }
+.island-page[data-life-home="true"] .life-menu-tabs button[aria-pressed="true"] {
+    border-color: var(--pokomoko-blue);
+    background: color-mix(in srgb, var(--life-tab-tint) 68%, var(--pokomoko-paper));
+    box-shadow: inset 0 0 0 1px var(--pokomoko-blue);
+    color: var(--pokomoko-blue-deep);
+}
+.island-page[data-life-home="true"] .life-camera-tools,
+.island-page[data-life-home="true"] .island-stage__quick-reset {
+    bottom: calc(12px + env(safe-area-inset-bottom));
+}
+.island-page[data-life-home="true"] .island-life[data-life-panel-open="true"] .life-camera-tools,
+.island-page[data-life-home="true"] .island-life[data-life-panel-open="true"] .island-stage__quick-reset {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (min-width: 700px) {
+    .island-page[data-life-home="true"] .life-dock-closed {
+        right: 18px;
+        left: 18px;
+    }
+    .island-page[data-life-home="true"] .life-dock {
+        max-width: 440px;
+    }
+}
+
+@media (max-height: 700px) {
+    .island-page[data-life-home="true"] .life-dock-closed {
+        bottom: max(8px, env(safe-area-inset-bottom));
+    }
+    .island-page[data-life-home="true"] .life-dock {
+        padding-top: 9px;
+        padding-bottom: max(9px, env(safe-area-inset-bottom));
+    }
+    .island-page[data-life-home="true"] .life-menu,
+    .island-page[data-life-home="true"] .life-viewport > .life-placement.life-controls {
+        bottom: max(8px, env(safe-area-inset-bottom));
+    }
+}

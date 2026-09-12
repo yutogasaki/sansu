@@ -43,6 +43,16 @@ try {
    await page.reload(); await page.locator('.life-world[data-rendered="true"]').waitFor();
    const nativeBefore = await readNative(page);
    const candidate = await page.locator('[data-life-candidate]').getAttribute('data-life-candidate');
+   const openLifePanel = async () => {
+    const group = page.getByRole('group', { name: 'しまの ていれ' });
+    if (!await group.isVisible().catch(() => false)) {
+     await page.getByRole('button', { name: 'しまの ようす', exact: true }).click();
+     await group.waitFor();
+    }
+    return group;
+   };
+   const selectTab = async label => { await (await openLifePanel()).getByRole('button', { name: label, exact: true }).click(); };
+   await selectTab('つくる');
    const bench = page.locator('[data-life-buy="bench"]'); await bench.scrollIntoViewIfNeeded();
    const box = await bench.boundingBox(); await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2); await page.mouse.down();
    await page.evaluate(() => { window.__armLifeRead = true; window.__lifePoll(); });
@@ -67,7 +77,7 @@ try {
     await page.locator('.life-wallet').scrollIntoViewIfNeeded(); await page.screenshot({ path: `${out}/${name}-placed.png` });
     assert.deepEqual(await readNative(page), nativeBefore);
     const beginFlower = async () => {
-     await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'つくる', exact: true }).click();
+     await selectTab('つくる');
      await page.locator('[data-life-buy="flower"]').click(); await page.locator('.life-placement summary').click(); await page.locator('[data-life-cell="0,2"]').click();
      await page.evaluate(() => { window.__armLifeRead = true; window.__lifePoll(); }); await page.waitForFunction(() => window.__lifeReadHeld);
      await page.getByRole('button', { name: 'ここに おく', exact: true }).click();

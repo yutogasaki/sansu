@@ -35,12 +35,21 @@ try {
         assert.equal(await resident.getAttribute('data-life-favorite'), label);
         assert.match(await resident.innerText(), new RegExp(`すき: ${label}`));
       }
-      await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'つくる', exact: true }).click();
+      const openLifePanel = async () => {
+        const group = page.getByRole('group', { name: 'しまの ていれ' });
+        if (!await group.isVisible().catch(() => false)) {
+          await page.getByRole('button', { name: 'しまの ようす', exact: true }).click();
+          await group.waitFor();
+        }
+        return group;
+      };
+      const selectTab = async label => { await (await openLifePanel()).getByRole('button', { name: label, exact: true }).click(); };
+      await selectTab('つくる');
       assert.equal(await page.locator('[data-life-build-hint]').textContent(), 'まなぶと しずくが ふえるよ。');
       assert.equal(await page.locator('[data-life-buy="flower"]').isDisabled(), true);
       assert.match(await page.locator('[data-life-buy="flower"]').innerText(), /あと 2 しずく/);
       await page.screenshot({ path: `${out}/${name}-build-empty.png` });
-      await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'いろ', exact: true }).click();
+      await selectTab('いろ');
       assert.match(await page.locator('[data-life-style="sunshine"]').innerText(), /ひかり 4/);
       await page.getByRole('button', { name: 'メニューを とじる', exact: true }).click();
       await page.screenshot({ path: `${out}/${name}-initial.png` });
@@ -62,7 +71,7 @@ try {
       await page.locator('.life-menu').waitFor();
       assert.deepEqual(await page.locator('.life-world').boundingBox(), cueWorld);
       await page.getByRole('button', { name: 'メニューを とじる', exact: true }).click();
-      await page.getByRole('button', { name: 'つくる', exact: true }).click();
+      await selectTab('つくる');
       await page.getByRole('button', { name: 'つぎの ページ', exact: true }).click();
       assert.match(await page.locator('[data-life-buy="lantern"]').innerText(), /あと 2 しずく/);
       await page.getByRole('button', { name: 'まえの ページ', exact: true }).click();
@@ -90,7 +99,7 @@ try {
         return pose?.reaction === '♪' && (reduced ? pose.headRoll >= .1 : pose.headRoll > .03);
       }, name === 'tablet');
       await page.screenshot({ path: `${out}/${name}-resident-reply.png` });
-      await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'もちもの', exact: true }).click();
+      await selectTab('もちもの');
       const flowerItem = page.locator('[data-life-item]').first();
       assert.equal(await flowerItem.getAttribute('data-life-growth-stage'), '0');
       assert.equal(await flowerItem.getAttribute('data-life-growth-next-hours'), '2');

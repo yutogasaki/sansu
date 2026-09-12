@@ -43,7 +43,15 @@ try {
     await page.waitForFunction(() => Number(document.querySelector('[data-life-drops]')?.dataset.lifeDrops) >= 54);
     const nativeBefore = await readNative(page);
     const canvas = await page.locator('.life-world canvas').elementHandle();
-    const selectTab = async label => { await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: label, exact: true }).click(); };
+    const openLifePanel = async () => {
+        const group = page.getByRole('group', { name: 'しまの ていれ' });
+        if (!await group.isVisible().catch(() => false)) {
+            await page.getByRole('button', { name: 'しまの ようす', exact: true }).click();
+            await group.waitFor();
+        }
+        return group;
+    };
+    const selectTab = async label => { await (await openLifePanel()).getByRole('button', { name: label, exact: true }).click(); };
     const worldCell = async (x, z, expanded = false) => {
         await page.locator('.life-wallet').scrollIntoViewIfNeeded();
         const box = await page.locator('.life-world canvas').boundingBox();
@@ -54,6 +62,7 @@ try {
         assert.equal(await page.locator('.life-placement').getAttribute('data-life-placement-cell'), `${x},${z}`);
     };
     const ownedBeforePreview = await page.locator('[data-life-drops]').getAttribute('data-life-drops');
+    await selectTab('つくる');
     await page.locator('[data-life-buy="bench"]').click();
     await worldCell(4, 4);
     assert(await page.getByRole('button', { name: 'ここに おく', exact: true }).isDisabled());

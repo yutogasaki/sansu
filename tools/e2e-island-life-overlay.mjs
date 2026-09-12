@@ -30,8 +30,18 @@ try {
       assert(databaseNames.includes('SansuIslandLifeV1')); assert(!databaseNames.includes('SansuIslandLifePreviewV1'));
       await page.screenshot({ path: `${out}/${name}-initial.png` });
       const world = page.locator('.life-world'), beforeWorld = await world.boundingBox(), camera = await world.getAttribute('data-life-camera');
+      const openLifePanel = async () => {
+        const group = page.getByRole('group', { name: 'しまの ていれ' });
+        if (!await group.isVisible().catch(() => false)) {
+          await page.getByRole('button', { name: 'しまの ようす', exact: true }).click();
+          await group.waitFor();
+        }
+        return group;
+      };
       const tap = async (label) => {
-        const button = page.getByRole('button', { name: label, exact: true });
+        const button = ['つくる', 'もちもの', 'いろ', 'ひろげる'].includes(label)
+          ? (await openLifePanel()).getByRole('button', { name: label, exact: true })
+          : page.getByRole('button', { name: label, exact: true });
         const b = await button.boundingBox(); assert(b && b.y >= 0 && b.y + b.height <= viewport.height);
         const hit = await button.evaluate(el => { const r = el.getBoundingClientRect(); return el.contains(document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2)); });
         assert(hit, label + ' must be reachable without scrolling');
@@ -53,7 +63,7 @@ try {
       await page.getByRole('button', { name: 'とじる', exact: true }).click();
       await page.waitForFunction(() => Number(document.querySelector('[data-life-drops]')?.dataset.lifeDrops) >= 6);
       const earned = Number(await page.locator('[data-life-drops]').getAttribute('data-life-drops'));
-      await page.getByRole('button', { name: 'つくる', exact: true }).click();
+      await tap('つくる');
       await page.locator('[data-life-buy="flower"]').click();
       await page.getByRole('button', { name: 'マスから えらぶ', exact: true }).click();
       await page.getByRole('button', { name: 'つぎの マス' }).click();
