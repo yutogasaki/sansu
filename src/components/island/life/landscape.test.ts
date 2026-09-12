@@ -8,6 +8,17 @@ import { disposeGeometry } from '../three/primitives';
 
 const point = (c: { x: number; z: number }) => new T.Vector3(c.x - 2.5, .04, c.z - 2);
 describe('garden scenery preserves usable ground and ownership', () => {
+    it('removes decorative stepping stones beneath an owned item without changing its cell', () => {
+        const state = replayLife(newLife('path', 0));
+        const empty = buildLandscape(state, 6, point);
+        const placed = { ...state, items: [{ id: 'flower', kind: 'flower' as const, cell: { x: 2, z: 2 }, growth: 0, style: 'original' as const }] };
+        const before = structuredClone(placed), scene = buildLandscape(placed, 6, point);
+        try {
+            expect(empty.root.getObjectByName('life-doorstep-path')!.children).toHaveLength(6);
+            expect(scene.root.getObjectByName('life-doorstep-path')!.children).toHaveLength(4);
+            expect(placed).toEqual(before);
+        } finally { disposeGeometry(empty.root); empty.dispose(); disposeGeometry(scene.root); scene.dispose(); }
+    });
     it('keeps every playable cell corner inside the grass for both expansions', () => {
         for (const expanded of [undefined, 'east', 'west'] as const) {
             const cells = landCells({ expanded }), min = Math.min(...cells.map(c => c.x)), max = Math.max(...cells.map(c => c.x));

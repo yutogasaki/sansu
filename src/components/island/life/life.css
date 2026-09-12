@@ -597,7 +597,18 @@
 }
 .island-page[data-life-home="true"] .life-camera-tools,
 .island-page[data-life-home="true"] .island-stage__quick-reset {
-    bottom: calc(12px + env(safe-area-inset-bottom));
+    bottom: calc(64px + env(safe-area-inset-bottom));
+}
+.life-world:has(.life-camera-tools[open]) > .island-stage__quick-reset {
+    display: none;
+}
+.life-camera-tools-panel {
+    width: max-content;
+    max-width: calc(100vw - 24px);
+}
+.life-camera-tools-panel .island-camera__reset {
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 .island-page[data-life-home="true"] .island-life[data-life-panel-open="true"] .life-camera-tools,
 .island-page[data-life-home="true"] .island-life[data-life-panel-open="true"] .island-stage__quick-reset {

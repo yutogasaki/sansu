@@ -1,0 +1,62 @@
+{
+  "target": "http://127.0.0.1:5325",
+  "flag": "VITE_ISLAND_LIFE_ENABLED=true; production",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "phone",
+      "pass": true,
+      "answers": 3,
+      "earned": 6,
+      "earnedCue": 6,
+      "earnedCueBox": {
+        "x": 12,
+        "y": 108,
+        "width": 291.234375,
+        "height": 44
+      },
+      "residentFavorites": {
+        "pokomoko": "ベンチ",
+        "rabbit": "おはな",
+        "otter": "ブランコ"
+      },
+      "discoveryBounce": true,
+      "residentReply": "におい すき",
+      "rabbitHeadTilt": true,
+      "lightMeaning": true,
+      "lightStylePrice": 4,
+      "growthStageVisible": true,
+      "growthNextHint": "あと 2じかんで つぼみ",
+      "savedItems": 1,
+      "offlineAnswerAndReload": true
+    },
+    {
+      "name": "tablet",
+      "pass": true,
+      "answers": 3,
+      "earned": 6,
+      "earnedCue": 6,
+      "earnedCueBox": {
+        "x": 12,
+        "y": 108,
+        "width": 291.234375,
+        "height": 44
+      },
+      "residentFavorites": {
+        "pokomoko": "ベンチ",
+        "rabbit": "おはな",
+        "otter": "ブランコ"
+      },
+      "discoveryBounce": true,
+      "residentReply": "におい すき",
+      "rabbitHeadTilt": true,
+      "lightMeaning": true,
+      "lightStylePrice": 4,
+      "growthStageVisible": true,
+      "growthNextHint": "あと 2じかんで つぼみ",
+      "savedItems": 1,
+      "offlineAnswerAndReload": true
+    }
+  ],
+  "pass": true
+}

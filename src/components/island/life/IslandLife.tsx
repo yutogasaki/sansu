@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Droplets, Sparkles, Sprout, Flower2, Armchair, FerrisWheel, Lamp, Home, Move, Archive, Trash2, Check, X } from 'lucide-react';
+import { Droplets, Sparkles, Sprout, Home, Move, Archive, Trash2, Check, X } from 'lucide-react';
 import { CATALOG, LIFE_CANDIDATE, LIFE_RULES, learningDay, vigor, type Cell, type ItemKind, type LifeCommand, type Style } from '../../../domain/islandLife/model';
 import { cellKey, districts, isHouse, landCells } from '../../../domain/islandLife/space';
 import { replayLife } from '../../../domain/islandLife/simulation';
 import { activityLabel, activityPhase, residentFavoriteLabel, residentReaction } from '../../../domain/islandLife/activity';
 import type { useIslandLife } from './useIslandLife';
 import LifeWorld from './LifeWorld';
+import LifeProductPreview from './LifeProductPreview';
 import { previewPlacement } from './placement';
 import { rewardDelta } from './rewardCue';
 import { growthSnapshot, growthTransitions, type GrowthTransition } from './growthCue';
@@ -14,8 +15,9 @@ import { observationSnapshot, observationTransitions, type LifeObservationCue } 
 import './life.css';
 import './life-feedback.css';
 import './life-growth.css';
+import './life-close.css';
 
-const icons = { flower: Flower2, bench: Armchair, swing: FerrisWheel, lantern: Lamp };
+const productStories = { flower: 'めを そだてて おはなに', bench: 'ひとやすみの ばしょ', swing: 'すわって ゆらゆら', lantern: 'あかりの そばに あつまるかな' };
 const residentNames = { pokomoko: 'ぽこもこ', rabbit: 'うさぎ', otter: 'カワウソ' };
 const tabOptions = [
     ['build', 'つくる', Sprout],
@@ -208,9 +210,9 @@ export default function IslandLife({ controls, onHome, disabled }: {
             {notice && !error && <p role="status" className="life-notice">{notice}</p>}
             {tab === 'build' && <>
                 {!products.some(k => state.drops >= CATALOG[k].price) && <p className="life-menu-hint" data-life-build-hint role="status">まなぶと しずくが ふえるよ。</p>}
-                <div className="life-catalog">{products.slice(currentPage * 2, currentPage * 2 + 2).map(k => { const Icon = icons[k]; const missing = CATALOG[k].price - state.drops; return <button key={k} data-life-buy={k} data-life-kind={k} aria-pressed={kind === k}
+                <div className="life-catalog">{products.slice(currentPage * 2, currentPage * 2 + 2).map(k => { const missing = CATALOG[k].price - state.drops; return <button key={k} data-life-buy={k} data-life-kind={k} aria-pressed={kind === k}
                     disabled={locked || missing > 0} onClick={() => { setKind(k); setCell(undefined); setSelected(undefined); setNotice(''); showWorld(); }}>
-                    <i className="life-catalog-icon"><Icon size={24} /></i><b>{CATALOG[k].label}</b><span>{missing > 0 ? `あと ${missing} しずく` : `しずく ${CATALOG[k].price}`}</span></button>; })}</div>
+                    <LifeProductPreview kind={k} /><b>{CATALOG[k].label}</b><small className="life-product-story">{productStories[k]}</small><span>{missing > 0 ? `あと ${missing} しずく` : `しずく ${CATALOG[k].price}`}</span></button>; })}</div>
             </>}
             {tab === 'items' && <>
                 <div className="life-items">{!item && state.items.slice(currentPage * 2, currentPage * 2 + 2).map((i, index) => { const growth = lifeGrowthStatus(i); return <button key={i.id} data-life-item={i.id} data-life-growth-stage={growth.stage}
@@ -254,7 +256,8 @@ export default function IslandLife({ controls, onHome, disabled }: {
         }
         {!dockOpen && !menuOpen && !placement && <div className="life-dock-closed">
             {(error || notice) && <p className="life-dock-closed-notice" role="status">{error || notice}<button type="button" onClick={openLifeControls}>ひらく</button></p>}
-            <button className="life-dock-launcher" type="button" aria-expanded={dockOpen} aria-controls="life-dock-dialog" onClick={openLifeControls}><Sprout size={17} aria-hidden="true" /><span>しまの ようす</span><i aria-hidden="true">↑</i></button>
+            <div className="life-direct-actions"><button className="life-dock-launcher life-build-launcher" type="button" disabled={locked} onClick={() => openMenuTab('build')}><Sprout size={20} aria-hidden="true" /><span>つくる</span></button>
+            <button className="life-dock-launcher" type="button" aria-expanded={dockOpen} aria-controls="life-dock-dialog" onClick={openLifeControls}><span>しまの ようす</span><i aria-hidden="true">↑</i></button></div>
         </div>}
         {import.meta.env.DEV && <details className="life-dev"><summary>試作</summary><p>独立した試作の島です。通常の学習記録・旧島の所有物は変更しません。家の中は既存画面です。時間送りはこの島だけに作用します。</p>
             {[6, 24].map(hours => <button key={hours} disabled={locked} onClick={() => void refresh({ id: crypto.randomUUID(), revision: record.revision, advanceHours: hours as 6 | 24 })}>試作を {hours}時間すすめる</button>)}

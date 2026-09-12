@@ -45,6 +45,16 @@ describe('new Study input reservation', () => {
         expect(studyLearningEvidence(frozen, 'independent', true, false)?.problem.representation).toBe('algorithm');
     });
 
+    it('reserves compact division input for new written questions', () => {
+        const original = problem('div_3d1d_exact', '816 ÷ 8 =', '102');
+        const [frozen] = prepareStudyBlockPresentation([original], true);
+        expect(frozen).toMatchObject({ inputType: 'hissan', hissanVersion: 3,
+            studyPresentation: { version: 1, hissan: true } });
+        const presentation = resolveStudyHissanPresentation(frozen, false);
+        expect(presentation.isHissanActive).toBe(true);
+        expect(presentation.gridData?.steps.map(step => step.phase)).toEqual(['quotient', 'quotient', 'quotient']);
+    });
+
     it('leaves saved test problems and their unknown old default-written evidence unchanged', () => {
         const saved = [problem()], before = structuredClone(saved);
         expect(prepareStudyBlockPresentation(saved, true, true)).toBe(saved);

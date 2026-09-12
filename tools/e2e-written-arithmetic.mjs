@@ -105,7 +105,7 @@ try {
             }
             const problem = state.plan.slots[0].problem;
             assert.equal(problem.categoryId, scenario.skill);
-            assert.equal(problem.hissanVersion, 2);
+            assert.equal(problem.hissanVersion, scenario.skill.startsWith('div') ? 3 : 2);
             row.question = problem.questionText; row.answer = problem.correctAnswer; row.planId = state.plan.id;
             const originalSlots = state.plan.slots.map(slot => slot.problem);
             await capture(page, `${scenario.name}-ready`);

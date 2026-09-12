@@ -40,4 +40,25 @@ describe('written arithmetic presentation', () => {
         expect(html).toContain('type="button"');
         expect(html).not.toContain('>8</button>');
     });
+
+    it('makes compact division ask for the next quotient instead of the calculation rows', () => {
+        const gridData = generateWrittenArithmeticGrid('816 ÷ 8 =', '102', { divisionInput: 'compact' })!;
+        const userValues = new Map<string, string>();
+        const firstStep = gridData.steps[0];
+        firstStep.inputCellIndices.forEach((column, index) => {
+            userValues.set(`${firstStep.rowIndex}-${column}`, firstStep.correctValues[index]);
+        });
+        const step = gridData.steps[1];
+        const html = renderToStaticMarkup(<HissanGrid gridData={gridData} currentStepIndex={1}
+            activeCellPos={[step.rowIndex, step.inputCellIndices[0]]} userValues={userValues} onCellClick={() => {}} />);
+        expect(html).toContain('data-written-input-mode="compact"');
+        expect(html).toContain('商を いれよう');
+        expect(html).toContain('けいさんの行は 自動でうまるよ');
+        expect(html).toContain('data-written-input="0-1"');
+        expect(html).not.toContain('data-written-input="2-0"');
+        const completed = renderToStaticMarkup(<HissanGrid gridData={gridData} currentStepIndex={2}
+            activeCellPos={null} userValues={new Map([['0-0', '1'], ['0-1', '0'], ['0-2', '2']])}
+            stepFeedback="correct" onCellClick={() => {}} />);
+        expect(completed).toContain('data-row="9"');
+    });
 });

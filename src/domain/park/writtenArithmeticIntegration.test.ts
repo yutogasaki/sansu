@@ -56,9 +56,11 @@ describe('reserved written arithmetic layouts', () => {
             const slot = reserve(skill);
             expect(slot.problem.categoryId).toBe(skill);
             expect(slot.problem.inputType).toBe('hissan');
-            expect(slot.problem.hissanVersion).toBe(2);
+            const version = skill.startsWith('div') ? 3 : 2;
+            expect(slot.problem.hissanVersion).toBe(version);
             const grid = parkHissanGrid(slot.problem)!;
-            expect(grid).toEqual(generateWrittenArithmeticGrid(slot.problem.questionText!, slot.problem.correctAnswer));
+            expect(grid).toEqual(generateWrittenArithmeticGrid(slot.problem.questionText!, slot.problem.correctAnswer,
+                version === 3 ? { divisionInput: 'compact' } : undefined));
             expect(grid).not.toBeNull();
             for (const [index, step] of grid.steps.entries()) {
                 expect(gradeParkAnswer({ ...slot, hissanStep: index }, step.correctValues))

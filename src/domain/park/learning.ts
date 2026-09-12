@@ -16,9 +16,10 @@ import { isNormalReviewEligible } from '../learning/reviewPolicy';
 
 export function parkHissanGrid(problem: Problem) {
     if (problem.subject !== 'math' || !problem.questionText || problem.inputType === 'choice') return null;
-    if (problem.hissanVersion === 2) {
+    if (problem.hissanVersion === 2 || problem.hissanVersion === 3) {
         return problem.inputType === 'hissan'
-            ? generateWrittenArithmeticGrid(problem.questionText, problem.correctAnswer) : null;
+            ? generateWrittenArithmeticGrid(problem.questionText, problem.correctAnswer,
+                problem.hissanVersion === 3 ? { divisionInput: 'compact' } : undefined) : null;
     }
     if (!isHissanEligible(problem.categoryId)) return null;
     if (!problem.categoryId.includes('_hissan') && !problem.categoryId.includes('_algorithm') && problem.inputType !== 'hissan') return null;
@@ -92,7 +93,7 @@ export function planParkLearning(
                     ? generateWrittenArithmeticGrid(problem.questionText, problem.correctAnswer) : null;
                 if (written) {
                     problem.inputType = 'hissan';
-                    problem.hissanVersion = 2;
+                    problem.hissanVersion = written.writtenLayout?.kind === 'division' ? 3 : 2;
                 } else if (parkHissanGrid({ ...problem, inputType: 'hissan' })) {
                     problem.inputType = 'hissan';
                 }

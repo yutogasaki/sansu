@@ -1,0 +1,462 @@
+{
+  "target": "http://127.0.0.1:5325",
+  "candidate": "island-life-close-v7",
+  "flags": {
+    "VITE_ISLAND_ENABLED": true,
+    "VITE_ISLAND_LIFE_ENABLED": true,
+    "DEV": false
+  },
+  "revision": "29894545438d133a36f317e2618a4bdbab35e1e6",
+  "sourceState": "shared dirty checkout; revision alone does not identify this build",
+  "version": {
+    "version": "development-local:93029579-7fa6-4d05-adf8-6a2d943e501f",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "artifactHash": "2d7447c0ab84c974ac9d0aff7ff6e51e84447a518101d60bd438f0ec7a45677e",
+  "files": [
+    {
+      "path": "_headers",
+      "sha256": "b25111b3e4371fd5ef7367f726e14b205d2135cdef9c3a61dfe376915fc48bc7"
+    },
+    {
+      "path": "assets/Island-8lr2ViXl.js",
+      "sha256": "d514df7197dd8c64a7655ac514fbfe6e6ea754b6927356e16827cd5f8e0cb430"
+    },
+    {
+      "path": "assets/Island-C9Lfi2K9.css",
+      "sha256": "6d837a41b9da972ec2403c1a722e11e28fadba60a8d776aae2163150f5ab6276"
+    },
+    {
+      "path": "assets/Island-DyYOUQ1e.css",
+      "sha256": "fd5e75a6030072b4e7b90b5511496d09a6d1e4ac837ff77363af27cfafed2378"
+    },
+    {
+      "path": "assets/Island-KeT-4i82.js",
+      "sha256": "731ede8fe6e8e4835f9b0ac9d856574075e4fb3c20d8887d33623750128c9da4"
+    },
+    {
+      "path": "assets/IslandLife-BfQtPF5N.js",
+      "sha256": "42ca20ab082ca2749d94b2f21d574d5ac5b0dd402992b7c076cd8705a8df2454"
+    },
+    {
+      "path": "assets/IslandLife-Bn9mcgHc.css",
+      "sha256": "ac1061e2a1f4f690819e9a3cf1fadd144cded2166455681a588c317a41395b53"
+    },
+    {
+      "path": "assets/IslandOnboarding-oFt74la3.js",
+      "sha256": "6b02db2509ba25583f8322b7375bc68f50dbd2cbc65da071a4d99c5600b11f27"
+    },
+    {
+      "path": "assets/IslandWelcome-ASHYalFk.js",
+      "sha256": "012d44a9a7005ddb43e67430c8e3c50fd381848cb9e811041e55c964373a46ac"
+    },
+    {
+      "path": "assets/IslandWelcome-BJp8Sa-m.css",
+      "sha256": "e4fef7c767dd064d64625f5f9713b9d0fa395eeed78b0ddf3ceeda603d557965"
+    },
+    {
+      "path": "assets/NotoSansJP-C_ziqpoc.woff2",
+      "sha256": "539b381a6e0a5a49d299867d9ab722ad7e41d01f07bbcb6bed4518b63f8d4b0a"
+    },
+    {
+      "path": "assets/audio-DwtSHwBT.js",
+      "sha256": "e5eca991f0dda6f43a7688985f25d4603863804c42ab5ab449b3366a49269f15"
+    },
+    {
+      "path": "assets/charts-Dqb-tBNT.js",
+      "sha256": "b8164e9764b533a2675fc6150cfd7887bc60d7a05304ef22cbc0b381766b53e8"
+    },
+    {
+      "path": "assets/data-DHx4MMMe.js",
+      "sha256": "69255bbf1ae26043dd5392e5de8ffff7bfbfc32f4ddd574fca81f13ad53c5d59"
+    },
+    {
+      "path": "assets/explore/firefly-flower/scene-dew-trail-stumble-bloom-pokko-v5.jpg",
+      "sha256": "9bacadb8e625da373b4cee014d2f5725f1f8e3c1f7126c60fff7db4e32394293"
+    },
+    {
+      "path": "assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.jpg",
+      "sha256": "200e4c9502318a2bd6aefe62bde641c855480c27855ee5f8681f225376a91ce4"
+    },
+    {
+      "path": "assets/explore/firefly-flower/scene-ringing-petals-stumble-bloom-pokko-v5.jpg",
+      "sha256": "5d95d253530ab2ea8761b21bc1fe6793123939109e021b24e3b76025822341a3"
+    },
+    {
+      "path": "assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.jpg",
+      "sha256": "79b4b69f5843e1927d1f2bc6dd693a68dc003f92cdf7fd094712bcb67d7ffeae"
+    },
+    {
+      "path": "assets/explore/firefly-flower/scene-warm-bud-stumble-bloom-pokko-v5.jpg",
+      "sha256": "86c4d34264f72ce3d7a247b739cde31c0c55b3fc4598d5fcf2160d83df8e9cf6"
+    },
+    {
+      "path": "assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.jpg",
+      "sha256": "f1fdfad9425bb535705518570427f1ca0563aefc0333fc3eabe344bda903e3f5"
+    },
+    {
+      "path": "assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.jpg",
+      "sha256": "abab4542ddddacb1dd485eff7c6d3927d8ac9f3a471235c528eab4146941086b"
+    },
+    {
+      "path": "assets/explore/light-bridge/scene-idle-leaf-carry-bloom-pokko-v7.jpg",
+      "sha256": "a9f985178feb7911b73eec42b9e3ace657df036e8700937b55aea48d80422afa"
+    },
+    {
+      "path": "assets/explore/opening-root-pull-v1/payoff.jpg",
+      "sha256": "3ecf2c6cc39eb4b1545dbacff75e2d9ce7f742554e33641441a32b748ca25fbb"
+    },
+    {
+      "path": "assets/explore/opening-root-pull-v1/pull-one.jpg",
+      "sha256": "ea69d741857ea45c5676d9f97f05363721413fe5edc9704c317b809cd104a4c2"
+    },
+    {
+      "path": "assets/explore/opening-root-pull-v1/pull-two.jpg",
+      "sha256": "e178fc1db0995cba75cdfc045d552b5fef3837247d862275eab56953c4d45338"
+    },
+    {
+      "path": "assets/explore/opening-root-pull-v1/ready.jpg",
+      "sha256": "6e659c352784380208650ee8980ca58367e9c823f30e5d8d1c759a157c77a311"
+    },
+    {
+      "path": "assets/explore/opening-root-pull-v2/payoff-dirt-hat.jpg",
+      "sha256": "d2a1ef24f7e6392a77867b34b0baf75fb5fcdf18c1994c2e41b699e63db8b62f"
+    },
+    {
+      "path": "assets/explore/opening-root-pull-v2/payoff-leaf-hat.jpg",
+      "sha256": "603dba678500ae93e316b13e0387e77043e6038da7f90516f9dfd6feeb57843d"
+    },
+    {
+      "path": "assets/explore/opening-root-pull-v2/pull-one.jpg",
+      "sha256": "a722d84e23cfa85707c9f244fc8d2246fe5375092bf6f7697513e10b571a3dfd"
+    },
+    {
+      "path": "assets/explore/opening-root-pull-v2/pull-two.jpg",
+      "sha256": "5a57d458e212a578da633c353dfb4ed6ca6abd09ec5467183dc7b30fa4bef438"
+    },
+    {
+      "path": "assets/explore/opening-root-pull-v2/ready.jpg",
+      "sha256": "d0b31e5d6495b4371bb7cc5705b5050e5e5dd43792f3c410d2d6477656ed1d78"
+    },
+    {
+      "path": "assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-one.jpg",
+      "sha256": "cc3f19cbb88591a5caad738ec83d57c908bffed77e44f3bc8ab8230997e9d72e"
+    },
+    {
+      "path": "assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-two.jpg",
+      "sha256": "5fdca23b5d3ae174fc8459a854e2cee263a82bb5634a863f0be6536e587f4929"
+    },
+    {
+      "path": "assets/explore/opening-snap-root-carry-bloom-v3/scene-popped.jpg",
+      "sha256": "3c2ed5cf890f3be30698da900d8ffba17a051f3c0ebb17f3fe4e5047b43c233c"
+    },
+    {
+      "path": "assets/explore/opening-snap-root-carry-bloom-v3/scene-ready.jpg",
+      "sha256": "d7f338adbe08f219e2f8721394f4cb81be985378b3c2f13d682f870ebaaa7ac2"
+    },
+    {
+      "path": "assets/explore/rapid-trail/scene-run-pop-v1.webp",
+      "sha256": "2270f0e9833ebc3772a9338d6699a5334d8f2bfdeaa697edcb84af198e454a92"
+    },
+    {
+      "path": "assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.jpg",
+      "sha256": "17d265e09b1c576bc9ff4ff2c93fe38fd267b62dab65d21accf849bc18faa9b9"
+    },
+    {
+      "path": "assets/explore/root-tangle/scene-open-carry-bloom-pokko-v7.jpg",
+      "sha256": "0e57a38bedc079f23904b2991efa34649eb4e402db851d13eaae7a468c2fcca4"
+    },
+    {
+      "path": "assets/explore/root-tangle/scene-tangled-carry-bloom-pokko-v7.jpg",
+      "sha256": "62c0b3306ad834b250f9f7ef33becfa1e5f34994b353a69b13c6acba9618187b"
+    },
+    {
+      "path": "assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.jpg",
+      "sha256": "43b29df9ea4b6ac0025341565224d60d7b4596ec97eb483a41a48ac057af7d99"
+    },
+    {
+      "path": "assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.jpg",
+      "sha256": "7587c7e460a587fcecff2da7e8ddea73520d68cf4ecaa8141657ac0086809041"
+    },
+    {
+      "path": "assets/icons-CrPBO_F1.js",
+      "sha256": "9305d29073dee4bfe6d4718c835891e06be882670ade830e990e0b3d32fb5096"
+    },
+    {
+      "path": "assets/index-BJRhExpm.css",
+      "sha256": "bb955e1f47dd4b1a17a2d05de022fd21231511a6bd52fcb0806d4b9ebf882bd4"
+    },
+    {
+      "path": "assets/index-CoiEiYaM.js",
+      "sha256": "2a7ecf285fad35ed588436e04e3b40a0991ec089e017bf831996c7e3f3c95fcd"
+    },
+    {
+      "path": "assets/islandFurniturePlacement-BffI9G-f.js",
+      "sha256": "cbef4af2a10106de40f4d95c57e69db47e4d4dbda66800fd669bf9ca9e85e046"
+    },
+    {
+      "path": "assets/motion-iLBaTeAD.js",
+      "sha256": "2eafa186a77ed80ef3a1646d9c0b533cc4c1e3a35bd1d9f572ad4fadeb9c8861"
+    },
+    {
+      "path": "assets/pdf-l0sNRNKZ.js",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "assets/react-DcHpdqMy.js",
+      "sha256": "dd48938f099158343f1f43ca5363f3b5ec5be3d5ae4fd20186dbaed3c5782ab3"
+    },
+    {
+      "path": "assets/repository--Jq_wKT_.js",
+      "sha256": "d66436c9a001a89f499d1941199cde1e8d10d38a921c7f32e1b2800a17434a4a"
+    },
+    {
+      "path": "assets/residentInterest-QdNFV44m.js",
+      "sha256": "410721f68997703cf92b48e8fcd0b96182e3b07194184373f1bcf66385672733"
+    },
+    {
+      "path": "assets/runtime-wMJcdO-a.js",
+      "sha256": "161b19c0170a4a4e54d35e3be557fc2abd11573c753893768447141fc4a354b8"
+    },
+    {
+      "path": "fonts/NotoSansJP-Japanese.woff2",
+      "sha256": "34e66dbbac2ded91b36d9ba6154573a4e9576842559e466cd1fdb84370cb45a3"
+    },
+    {
+      "path": "fonts/NotoSansJP-Regular.otf",
+      "sha256": "c2f3b4d463500a2ddcd3849cded1fceeb9fd6d1c32e6cbecd568453ba50fc68f"
+    },
+    {
+      "path": "fonts/NotoSansJP.woff2",
+      "sha256": "539b381a6e0a5a49d299867d9ab722ad7e41d01f07bbcb6bed4518b63f8d4b0a"
+    },
+    {
+      "path": "icons/apple-touch-icon.png",
+      "sha256": "724e49b978468741ec8f2dee5a00def26d671ba463453f84a8c50c249364ac11"
+    },
+    {
+      "path": "icons/favicon-32.png",
+      "sha256": "73189d40ecfeb2e31c129870b6515a05c11895b86219fc2ddac37d796b013446"
+    },
+    {
+      "path": "icons/icon-192.png",
+      "sha256": "ffa0a900a780e0705653222f351724ff2492dfe40d9204d61d7ad7792b00b3ef"
+    },
+    {
+      "path": "icons/icon-512.png",
+      "sha256": "f214ae4c26ae2bc1b9f0bea16f7811b202077a4d46cbc1301e3e3f91276ad9da"
+    },
+    {
+      "path": "icons/icon-maskable-192.png",
+      "sha256": "ffa0a900a780e0705653222f351724ff2492dfe40d9204d61d7ad7792b00b3ef"
+    },
+    {
+      "path": "icons/icon-maskable-512.png",
+      "sha256": "f214ae4c26ae2bc1b9f0bea16f7811b202077a4d46cbc1301e3e3f91276ad9da"
+    },
+    {
+      "path": "ikimono/0-1.webp",
+      "sha256": "6e17ecaa5504ff8249e5f9129644f6abb10d75deea06d3a9e8d19e6bafa3efa4"
+    },
+    {
+      "path": "ikimono/0-2.webp",
+      "sha256": "ffb392499691ed94295f26f5edd367ca9794c8731a55a8d981559a23a4be2f97"
+    },
+    {
+      "path": "ikimono/0-3.webp",
+      "sha256": "c942d64bf2135f67fa042f5214516e57f302c111af8cd2adaacb786cc901959a"
+    },
+    {
+      "path": "ikimono/1-1.webp",
+      "sha256": "6f9f343439d2f11d29b271321ca2b16062309ca12aaa5c0fb3e135c3e22cf0d3"
+    },
+    {
+      "path": "ikimono/1-2.webp",
+      "sha256": "7b7f6581b3d8b9cd6b3acb4578805cc09f90682a1f1262e06cbd634d1020bd69"
+    },
+    {
+      "path": "ikimono/1-3.webp",
+      "sha256": "1eaf7d4fe203654f4748603af16346144a742b51e31d4a661fe257699a39f569"
+    },
+    {
+      "path": "ikimono/2-1.webp",
+      "sha256": "6008b85651c8ffb7ae506ff53dc8d6ca80ea4582cb16c170e6b0f80d09edf590"
+    },
+    {
+      "path": "ikimono/2-2.webp",
+      "sha256": "50981e44b30fd6a19f645418a24cd5eede5c5514b23ebb9dc890be931bad9adf"
+    },
+    {
+      "path": "ikimono/2-3.webp",
+      "sha256": "1bec305e07e22e690022b22229318e7392be3b02d6c1ead7b2d4701e518f2421"
+    },
+    {
+      "path": "ikimono/3-1.webp",
+      "sha256": "f082e7bb85bdf4fe6d605bd779848cbcb35f763c27f30809aaf251d1acb33a54"
+    },
+    {
+      "path": "ikimono/3-2.webp",
+      "sha256": "35c19ab1f385ada73bd3c3bb1c709870e6a5670a61b1fff0b698ebe451d07991"
+    },
+    {
+      "path": "ikimono/3-3.webp",
+      "sha256": "76ffe75a7d84494e3edc4db617ee2e54d93bbb02e69f82a8f4320179ccf02595"
+    },
+    {
+      "path": "ikimono/4-1.webp",
+      "sha256": "6f32026280134a5e915b6a4103416fb5ddf594bbda6ddbf8791b7eac310ac5d9"
+    },
+    {
+      "path": "ikimono/4-2.webp",
+      "sha256": "2dd61bf84420d850aed2bcefd32a094d8deed88e9aa2678e55ae401c9749dbdb"
+    },
+    {
+      "path": "ikimono/4-3.webp",
+      "sha256": "80c1ab09c8e18655e5c9bab65f6cad81e4dbf51836bda249ac5dea3ca38ac503"
+    },
+    {
+      "path": "ikimono/5-1.webp",
+      "sha256": "d58f9f7031e25b0d017552676ce16a59aa165e8bb5e7ad7a14ba224b4ed07efa"
+    },
+    {
+      "path": "ikimono/5-2.webp",
+      "sha256": "5c27dffbe2fb5e1a9052bc835a4cad9ae39810ac244bc749b9397d2a8acc6c0f"
+    },
+    {
+      "path": "ikimono/5-3.webp",
+      "sha256": "a1bd69372312f66c393dc9f167c6657af5d3e5adcdfd8a14cb4e7a72ef8336aa"
+    },
+    {
+      "path": "ikimono/6-1.webp",
+      "sha256": "a0de35d28429821d3ce24afa25ce7d1f00d19ec1923805c8e114e2a7e62eaf7d"
+    },
+    {
+      "path": "ikimono/6-2.webp",
+      "sha256": "11ac8b5ad043dfbe628809c705d0521c8b70b33ad073d9bc0c0053b9c9e015c8"
+    },
+    {
+      "path": "ikimono/6-3.webp",
+      "sha256": "1ada091a861dd01e87dfb86b8d4c7e2483a1807810436f28812a2c44f2cbd8f6"
+    },
+    {
+      "path": "ikimono/7-1.webp",
+      "sha256": "d8dfa91fbf5bd1d89c53f7803f78d00dcd86581e711abbfafd6f03831fd6a188"
+    },
+    {
+      "path": "ikimono/7-2.webp",
+      "sha256": "991215ab59d39d944aad3b8b9e16ccc30472c9e2364f603a57914919ea518301"
+    },
+    {
+      "path": "ikimono/7-3.webp",
+      "sha256": "4298f18ad748728fc3ce06be86f43dc8b8481ca31847ed05ced243689eaa8a67"
+    },
+    {
+      "path": "ikimono/8-1.webp",
+      "sha256": "683ee1b25a0daeff7d39f54c53179c69b5e2e4b18df7845e76d757b795ee454c"
+    },
+    {
+      "path": "ikimono/8-2.webp",
+      "sha256": "631d9a4bcf8889e029990d8a7d31576dcb54810a522ff352720d9b52f0f3a69a"
+    },
+    {
+      "path": "ikimono/8-3.webp",
+      "sha256": "1c4a1522563f27e7799dd7659ccd802d5dd45f63f773611040e14c9a849f096c"
+    },
+    {
+      "path": "ikimono/9-1.webp",
+      "sha256": "82200a9764c82295a8c5c7766b3fd640d6c03360e081b858bbd41bff65ab7026"
+    },
+    {
+      "path": "ikimono/9-2.webp",
+      "sha256": "b8f8abf4f9f4abc096ef7b8a2026b88f6e563911c21cc3873c0d9faeb81c623d"
+    },
+    {
+      "path": "ikimono/9-3.webp",
+      "sha256": "565beffc5578b79331d21eef0f13af8d96079c88b0c3d3ea7ccc39d78acafd36"
+    },
+    {
+      "path": "index.html",
+      "sha256": "8097fdaf4b7b848af86771f8bc0e9e279da851a8c506621b0e4787ccd2d627a8"
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "29f6ca25896786e705d2a1bdc8b987b028cdcc08b8a5fae3685792b27f151de9"
+    },
+    {
+      "path": "sounds/bgm_menu.mp3",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sounds/bgm_study.mp3",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sounds/clear.mp3",
+      "sha256": "d55fdb2be713093eaba2923038c0f5ea46afd59746cbb4b3f0144df14cf06206"
+    },
+    {
+      "path": "sounds/correct.mp3",
+      "sha256": "1cace7ca4862c4b7e72719428a4bbf4e22bfee29b30bf3e743db3a6558534704"
+    },
+    {
+      "path": "sounds/incorrect.mp3",
+      "sha256": "efa8df6ae4841704f07b15bb48f2efede2f0cabedcac3118d6cb0c7ddc6eec4a"
+    },
+    {
+      "path": "sounds/level_up.mp3",
+      "sha256": "0bf7cfbe918d44ffb5e591a0aa3cf880d2d9474ecba77ec11561fbcb28d91705"
+    },
+    {
+      "path": "sounds/start.mp3",
+      "sha256": "f018b912b2acbc0295c49e3332974a6f252b2570e2eb2eb577ddc52cefe51ae8"
+    },
+    {
+      "path": "sounds/step.mp3",
+      "sha256": "1ad1175c08f4b65a430cd8ffc5eeb3c0850f5089e31b9793367860ceaceb6131"
+    },
+    {
+      "path": "sounds/tap.mp3",
+      "sha256": "98b7bc75fe330840d2f2924b72ee36b7a8f0c5115599087563e25c4789b3ff82"
+    },
+    {
+      "path": "sw.js",
+      "sha256": "448e18fdcfd696818a53b762c007a4f0ee93a0987dc43cd86ffce2e258c72a63"
+    },
+    {
+      "path": "version.json",
+      "sha256": "10d7769b3e7a41a948e43c2c576218f5cab2e8e1c6d742ac7ff6d9f15721fcf9"
+    },
+    {
+      "path": "workbox-1d305bb8.js",
+      "sha256": "633cf55bf3565defde45f562db4253059d9201d2d24cacb3246d2704cc502196"
+    }
+  ],
+  "qa": [
+    {
+      "path": "output/playwright/island-close-qa-c.mjs",
+      "sha256": "e08d8a11b7f18adf7278e3b7b97c2a409cf582c00b2a7dbed243ed9b6386a4c4"
+    },
+    {
+      "path": "tools/island-e2e-helpers.mjs",
+      "sha256": "62cf3c8d9e5b4b448da3b36aa3fa7055278cc5c22a22c8e96a5f375204ebe887"
+    },
+    {
+      "path": "tools/island-learning-checks.mjs",
+      "sha256": "400bd0bbee5a88e98574f70654a87b0d91abe9c6c5ec4be001631d32808611d0"
+    }
+  ]
+}

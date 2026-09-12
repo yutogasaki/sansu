@@ -1,0 +1,51 @@
+vite v7.3.1 building client environment for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 3619 modules transformed.
+
+(!) outDir /tmp/sansu-island-close-v7c is not inside project root and will not be emptied.
+Use --emptyOutDir to override.
+
+Generated an empty chunk: "pdf".
+rendering chunks...
+computing gzip size...
+../../../../tmp/sansu-island-close-v7c/version.json                                     0.42 kB │ gzip:   0.25 kB
+../../../../tmp/sansu-island-close-v7c/index.html                                       1.58 kB │ gzip:   0.72 kB
+../../../../tmp/sansu-island-close-v7c/assets/NotoSansJP-C_ziqpoc.woff2                13.06 kB
+../../../../tmp/sansu-island-close-v7c/assets/IslandWelcome-BJp8Sa-m.css                2.05 kB │ gzip:   0.72 kB
+../../../../tmp/sansu-island-close-v7c/assets/Island-DyYOUQ1e.css                      28.98 kB │ gzip:   5.63 kB
+../../../../tmp/sansu-island-close-v7c/assets/IslandLife-Bn9mcgHc.css                  32.17 kB │ gzip:   5.29 kB
+../../../../tmp/sansu-island-close-v7c/assets/Island-C9Lfi2K9.css                     101.39 kB │ gzip:  16.08 kB
+../../../../tmp/sansu-island-close-v7c/assets/index-BJRhExpm.css                      240.61 kB │ gzip:  40.97 kB
+../../../../tmp/sansu-island-close-v7c/assets/pdf-l0sNRNKZ.js                           0.00 kB │ gzip:   0.02 kB
+../../../../tmp/sansu-island-close-v7c/assets/IslandWelcome-ASHYalFk.js                 1.94 kB │ gzip:   1.04 kB
+../../../../tmp/sansu-island-close-v7c/assets/IslandOnboarding-oFt74la3.js              3.45 kB │ gzip:   1.50 kB
+../../../../tmp/sansu-island-close-v7c/assets/repository--Jq_wKT_.js                   14.25 kB │ gzip:   5.79 kB
+../../../../tmp/sansu-island-close-v7c/assets/icons-CrPBO_F1.js                        25.82 kB │ gzip:   9.58 kB
+../../../../tmp/sansu-island-close-v7c/assets/audio-DwtSHwBT.js                        36.13 kB │ gzip:   9.75 kB
+../../../../tmp/sansu-island-close-v7c/assets/islandFurniturePlacement-BffI9G-f.js     42.09 kB │ gzip:  12.16 kB
+../../../../tmp/sansu-island-close-v7c/assets/IslandLife-BfQtPF5N.js                   47.20 kB │ gzip:  17.89 kB
+../../../../tmp/sansu-island-close-v7c/assets/react-DcHpdqMy.js                        48.53 kB │ gzip:  17.24 kB
+../../../../tmp/sansu-island-close-v7c/assets/Island-8lr2ViXl.js                       68.13 kB │ gzip:  21.41 kB
+../../../../tmp/sansu-island-close-v7c/assets/data-DHx4MMMe.js                         96.36 kB │ gzip:  32.45 kB
+../../../../tmp/sansu-island-close-v7c/assets/motion-iLBaTeAD.js                      119.65 kB │ gzip:  39.54 kB
+../../../../tmp/sansu-island-close-v7c/assets/Island-KeT-4i82.js                      299.53 kB │ gzip:  88.64 kB
+../../../../tmp/sansu-island-close-v7c/assets/charts-Dqb-tBNT.js                      371.57 kB │ gzip: 108.42 kB
+../../../../tmp/sansu-island-close-v7c/assets/runtime-wMJcdO-a.js                     388.82 kB │ gzip: 124.30 kB
+../../../../tmp/sansu-island-close-v7c/assets/residentInterest-QdNFV44m.js            588.26 kB │ gzip: 152.90 kB
+../../../../tmp/sansu-island-close-v7c/assets/index-CoiEiYaM.js                     1,062.39 kB │ gzip: 298.84 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 5.63s
+
+PWA v1.2.0
+mode      generateSW
+precache  98 entries (4662.84 KiB)
+files generated
+  ../../../../tmp/sansu-island-close-v7c/sw.js
+  ../../../../tmp/sansu-island-close-v7c/workbox-1d305bb8.js

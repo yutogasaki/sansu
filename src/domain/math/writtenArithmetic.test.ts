@@ -8,6 +8,12 @@ const gridFor = (question: string, answer: string | string[]): HissanGridData =>
     return grid!;
 };
 
+const compactDivisionGridFor = (question: string, answer: string | string[]): HissanGridData => {
+    const grid = generateWrittenArithmeticGrid(question, answer, { divisionInput: 'compact' });
+    expect(grid).not.toBeNull();
+    return grid!;
+};
+
 const writtenNumber = (step: HissanStep): string => (
     step.inputCellIndices.map((column, index) => [column, step.correctValues[index]] as const)
         .sort(([a], [b]) => a - b)
@@ -88,6 +94,33 @@ describe('written multiplication', () => {
 });
 
 describe('written division', () => {
+    it('asks only for quotient digits and a final remainder', () => {
+        const grid = compactDivisionGridFor('816 ÷ 8 =', '102');
+        expect(grid.steps.map(writtenNumber)).toEqual(['1', '0', '2']);
+        expect(grid.steps.map(step => step.phase)).toEqual(['quotient', 'quotient', 'quotient']);
+        expect(grid.steps.map(step => step.inputCellIndices)).toEqual([[0], [1], [2]]);
+        expect(grid.rows.filter(row => row.label === 'かける').map(row => row.cells.map(cell => cell.value).join('')))
+            .toEqual(['8', '0', '16']);
+        expect(grid.rows.filter(row => row.label === 'ひく').map(row => row.cells.map(cell => cell.value).join('')))
+            .toEqual(['0', '1', '0']);
+        expect(grid.rows.filter(row => row.label === 'おろす').map(row => row.visibleFromStep)).toEqual([1, 2]);
+        expect(grid.steps).toHaveLength(3);
+        assertGridContract(grid);
+    });
+
+    it('keeps the final remainder as the only non-quotient input', () => {
+        const grid = compactDivisionGridFor('899 ÷ 9 =', ['99', '8']);
+        expect(grid.steps.map(writtenNumber)).toEqual(['9', '9', '8']);
+        expect(grid.steps.map(step => step.phase)).toEqual(['quotient', 'quotient', 'remainder']);
+        expect(grid.steps.at(-1)?.inputCellIndices).toEqual([2]);
+        expect(grid.rows.filter(row => row.label === 'かける').map(row => row.cells.map(cell => cell.value).join('')))
+            .toEqual(['81', '81']);
+        expect(grid.rows.filter(row => row.label === 'ひく').map(row => row.cells.map(cell => cell.value).join('')))
+            .toEqual(['8']);
+        expect(grid.rows.at(-1)?.label).toBe('あまり');
+        assertGridContract(grid);
+    });
+
     it.each([
         ['96 ÷ 12 =', '8', 1, '96'],
         ['144 ÷ 24 =', '6', 2, '144'],

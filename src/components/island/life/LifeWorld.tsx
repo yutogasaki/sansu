@@ -17,6 +17,9 @@ export default function LifeWorld({ state, selected, cell, placement, onCell }: 
     const stateAtMount = useRef(state), placementAtMount = useRef(placement);
     const update = useRef<((state: LifeState, selected?: string, cell?: Cell, placement?: PlacementPreview) => void) | null>(null);
     const controlCamera = useRef<((action: IslandCameraAction) => void) | undefined>(undefined);
+    const overviewRef = useRef(false);
+    const reframe = useRef<(() => void) | undefined>(undefined);
+    const [overview, setOverview] = useState(false);
     const [cameraView, setCameraView] = useState<IslandCameraView>(initialIslandCameraView);
     const [failed, setFailed] = useState(false);
     useEffect(() => { choose.current = onCell; }, [onCell]);
@@ -56,7 +59,8 @@ export default function LifeWorld({ state, selected, cell, placement, onCell }: 
             const width = Math.max(1, node.clientWidth), height = Math.max(1, node.clientHeight), aspect = width / height;
             renderer.setSize(width, height);
             const projectedWidth = ((content?.width ?? 6) + 2) * .926 + 6.7 * .379 + .45;
-            const halfHeight = Math.max(3.8, projectedWidth / aspect / 2);
+            // The ordinary view reads faces; placement and overview retain the full shore.
+            const halfHeight = Math.max(3.8, projectedWidth / aspect / 2) * (currentPlacement || overviewRef.current ? 1 : .76);
             cameraOffset.copy(cameraBaseOffset).applyAxisAngle(cameraYAxis, cameraControls.view.azimuth);
             camera.position.copy(cameraTarget).add(cameraOffset); camera.lookAt(cameraTarget); camera.updateMatrixWorld(true);
             camera.left = -halfHeight * aspect; camera.right = halfHeight * aspect; camera.top = halfHeight; camera.bottom = -halfHeight;
@@ -88,7 +92,9 @@ export default function LifeWorld({ state, selected, cell, placement, onCell }: 
             camera.updateProjectionMatrix(); camera.updateMatrixWorld(true); setCameraView(cameraControls.view);
             node.dataset.lifeCamera = JSON.stringify({ projection: camera.projectionMatrix.toArray(), view: camera.matrixWorldInverse.toArray(), cameraView: cameraControls.view });
         };
+        reframe.current = () => { cameraControls.reset(false); resize(); };
         update.current = (next, selection, point, preview) => {
+            if (Boolean(preview) !== Boolean(currentPlacement)) cameraControls.reset(false);
             currentState = next; currentPlacement = preview;
             if (preview) cameraControls.cancel();
             if (content) { scene.remove(content.root); content.dispose(); }
@@ -166,7 +172,7 @@ export default function LifeWorld({ state, selected, cell, placement, onCell }: 
         const restored = () => setFailed(false);
         renderer.domElement.addEventListener('webglcontextlost', lost); renderer.domElement.addEventListener('webglcontextrestored', restored);
         return () => {
-            cancelAnimationFrame(raf); observer.disconnect(); update.current = null; controlCamera.current = undefined; cameraControls.cancel(); content?.dispose();
+            cancelAnimationFrame(raf); observer.disconnect(); update.current = null; controlCamera.current = undefined; reframe.current = undefined; cameraControls.cancel(); content?.dispose();
             renderer.domElement.removeEventListener('click', click);
             renderer.domElement.removeEventListener('pointerdown', pointerDown);
             renderer.domElement.removeEventListener('pointermove', pointerMove);
@@ -184,6 +190,9 @@ export default function LifeWorld({ state, selected, cell, placement, onCell }: 
         {!placement && <details className="life-camera-tools">
             <summary>ながめ</summary>
             <div className="life-camera-tools-panel">
+                <button type="button" className="life-view-toggle" aria-pressed={overview} onClick={() => {
+                    overviewRef.current = !overview; setOverview(!overview); reframe.current?.();
+                }}>{overview ? 'くらしを みる' : 'しま全体を みる'}</button>
                 <IslandCameraToolbar view={cameraView} onAction={action => controlCamera.current?.(action)} />
                 <p className="island-camera-hint">なぞって 移動・2本指で 拡大と回転</p>
             </div>

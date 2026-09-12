@@ -230,6 +230,10 @@ v8導入後のrollbackはv8を理解するbuildで機能を無効化する。v7�
 
 整数の多段筆算では、新規予約Problemにoptionalの`hissanVersion: 2`を持たせる。Island/Parkの版なしProblemは従来の筆算generatorで読み、保存済み`hissanStep`と`hissanValues`の行・列座標を再解釈しない。新しいProblemだけ多段generatorを使い、商とあまりの`correctAnswer`配列を連結しない。既存テーブル・index・Dexie versionは変更せず、旧planの一括書換えも行わない。表示・入力契約は [06_screen_specs.md](06_screen_specs.md)「多桁の筆算」を参照。
 
+## 2026-09-12: Division written-input compaction
+
+新規の整数割り算筆算にはoptionalの`hissanVersion: 3`を使い、商の各桁と、あまりありの場合の最後のあまりだけを入力対象にする。かける・ひく・おろすの行は各商桁の確定後に計算結果として表示する。v2、版のない保存済みProblem、既存の`hissanStep`・`hissanValues`は変更せず、既存table/index/Dexie versionも増やさない。
+
 [28_mystic_island_spec.md](28_mystic_island_spec.md) の島モードは Dexie v7 の `islands` / `islandPlans` / `islandEvents` にプロフィール単位で保存する。v6 の学習・探索・遊園地データを変換・削除しない。島の初期化は初回アクセス時に行う。プロフィール削除の同一transactionへ3テーブルを追加する。
 
 区間開始時に通常6問/複雑3問の完全なProblem・支援/筆算状態・学習sourceを予約し、再読込で再生成しない。active profile所有権、plan revision、action receiptを照合し、学習回答と既存writerの記録、最終問題の完了受取権を同一transactionへ保存する。支援・skipは独力確認Dueを残し、支援正解を独力正答に数えない。未受取権は次の区間を始めても保持し、受取をitemとclaim eventへ原子的に変換する。配置・回転・収納は島revisionを使ったCASで保存する。

@@ -1,5 +1,7 @@
 import type { HissanCell, HissanGridData, HissanRow, HissanStep } from './hissanTypes';
 
+export type WrittenDivisionInputMode = 'full' | 'compact';
+
 const emptyCells = (count: number): HissanCell[] => (
     Array.from({ length: count }, () => ({ state: 'empty', value: '' }))
 );
@@ -101,6 +103,7 @@ const multiplicationGrid = (a: bigint, b: bigint, finalAnswer: string): HissanGr
 
 const divisionGrid = (
     dividend: bigint, divisor: bigint, finalAnswer: string, hasRemainderAnswer: boolean,
+    inputMode: WrittenDivisionInputMode,
 ): HissanGridData => {
     const dividendText = String(dividend);
     const divisorText = String(divisor);
@@ -136,36 +139,55 @@ const divisionGrid = (
         });
 
         const productRow = rows.length;
-        const productInput = inputNumber(String(product), columnCount, column);
-        rows.push({
-            type: 'input', cells: productInput.cells, stepIndex: steps.length,
-            label: 'かける', visibleFromStep: steps.length,
-        });
-        steps.push({
-            index: steps.length, rowIndex: productRow,
-            inputCellIndices: productInput.inputCellIndices, correctValues: productInput.correctValues,
-            phase: 'multiply', description: 'かけて 下に かこう',
-            hint: `${divisorText} × ${digit} を、右から かこう`, focusCells: [[0, column]],
-        });
+        if (inputMode === 'compact') {
+            // The quotient is the child's decision. The product is a derived
+            // check, so reveal it after that quotient digit is accepted.
+            rows.push({
+                type: 'operand', cells: fixedNumber(String(product), columnCount, column),
+                label: 'かける', visibleFromStep: steps.length,
+            });
+        } else {
+            const productInput = inputNumber(String(product), columnCount, column);
+            rows.push({
+                type: 'input', cells: productInput.cells, stepIndex: steps.length,
+                label: 'かける', visibleFromStep: steps.length,
+            });
+            steps.push({
+                index: steps.length, rowIndex: productRow,
+                inputCellIndices: productInput.inputCellIndices, correctValues: productInput.correctValues,
+                phase: 'multiply', description: 'かけて 下に かこう',
+                hint: `${divisorText} × ${digit} を、右から かこう`, focusCells: [[0, column]],
+            });
+        }
 
         const subtractionRow = rows.length;
-        const subtractionInput = inputNumber(String(remainder), columnCount, column);
-        rows.push({
-            type: isLast ? 'result' : 'input', cells: subtractionInput.cells, stepIndex: steps.length,
-            label: isLast && hasRemainderAnswer ? 'あまり' : 'ひく',
-            visibleFromStep: steps.length, lineAbove: true,
-        });
-        steps.push({
-            index: steps.length, rowIndex: subtractionRow,
-            inputCellIndices: subtractionInput.inputCellIndices, correctValues: subtractionInput.correctValues,
-            phase: isLast ? 'remainder' : 'subtract',
-            description: isLast && hasRemainderAnswer ? 'ひいて あまりを かこう' : 'ひいて のこりを かこう',
-            hint: `${partial} から、いま かけた数を ひこう`,
-            focusCells: [
-                ...numberFocus(workingRow, String(partial), column),
-                ...numberFocus(productRow, String(product), column),
-            ],
-        });
+        const subtractionLabel = isLast && hasRemainderAnswer ? 'あまり' : 'ひく';
+        if (inputMode === 'compact' && !(isLast && hasRemainderAnswer)) {
+            // Subtraction is also a visible calculation result. Keeping the
+            // row fixed makes the next quotient digit the only next action.
+            rows.push({
+                type: isLast ? 'result' : 'operand',
+                cells: fixedNumber(String(remainder), columnCount, column),
+                label: subtractionLabel, visibleFromStep: steps.length, lineAbove: true,
+            });
+        } else {
+            const subtractionInput = inputNumber(String(remainder), columnCount, column);
+            rows.push({
+                type: isLast ? 'result' : 'input', cells: subtractionInput.cells, stepIndex: steps.length,
+                label: subtractionLabel, visibleFromStep: steps.length, lineAbove: true,
+            });
+            steps.push({
+                index: steps.length, rowIndex: subtractionRow,
+                inputCellIndices: subtractionInput.inputCellIndices, correctValues: subtractionInput.correctValues,
+                phase: isLast ? 'remainder' : 'subtract',
+                description: isLast && hasRemainderAnswer ? 'ひいて あまりを かこう' : 'ひいて のこりを かこう',
+                hint: `${partial} から、いま かけた数を ひこう`,
+                focusCells: [
+                    ...numberFocus(workingRow, String(partial), column),
+                    ...numberFocus(productRow, String(product), column),
+                ],
+            });
+        }
 
         if (!isLast) {
             partial = remainder * 10n + BigInt(dividendText[column + 1]);
@@ -193,7 +215,7 @@ const divisionGrid = (
  * unsupported expressions and decimal answers stay with the existing input engine.
  */
 export const generateWrittenArithmeticGrid = (
-    questionText: string, answer: string | string[],
+    questionText: string, answer: string | string[], options: { divisionInput?: WrittenDivisionInputMode } = {},
 ): HissanGridData | null => {
     const match = questionText.match(/^\s*(\d+)\s*([×÷])\s*(\d+)\s*=\s*(?:[?？])?\s*$/);
     if (!match) return null;
@@ -215,8 +237,8 @@ export const generateWrittenArithmeticGrid = (
     const answerParts = Array.isArray(answer) ? answer : remainderText?.slice(1);
     if (answerParts) {
         if (answerParts.length !== 2 || integer(answerParts[0]) !== quotient || integer(answerParts[1]) !== remainder) return null;
-        return divisionGrid(a, b, `${quotient} あまり ${remainder}`, true);
+        return divisionGrid(a, b, `${quotient} あまり ${remainder}`, true, options.divisionInput ?? 'full');
     }
     if (typeof answer !== 'string' || remainder !== 0n || integer(answer) !== quotient) return null;
-    return divisionGrid(a, b, String(quotient), false);
+    return divisionGrid(a, b, String(quotient), false, options.divisionInput ?? 'full');
 };

@@ -58,7 +58,8 @@ async function renderedGrid(page, skill) {
     const match=text.match(/^(\d+)\s*([×÷])\s*(\d+)$/); assert(match, `Visible expression ${text}`);
     const a=BigInt(match[1]),b=BigInt(match[3]);
     const answer=match[2]==='×' ? String(a*b) : skill.startsWith('div_rem') ? [String(a/b),String(a%b)] : String(a/b);
-    const grid=engine.generateWrittenArithmeticGrid(`${text} =`,answer); assert(grid);
+    const grid=engine.generateWrittenArithmeticGrid(`${text} =`,answer,
+        skill.startsWith('div') ? { divisionInput: 'compact' } : undefined); assert(grid);
     return { grid,text,answer };
 }
 async function ensureStep(page, index) {
@@ -109,7 +110,7 @@ try {
             if(scenario.route==='park') {await button(page,'つくる').click();await button(page,'シャボンゲートを つくる').click();}
             await ensureStep(page,0);
             const {grid,text,answer}=await renderedGrid(page,scenario.skill);row.expression=text;row.answer=answer;row.steps=grid.steps.length;
-            if(scenario.route==='park') {const state=await read(page,profileId);assert.equal(state.plan.slots[0].problem.categoryId,scenario.skill);assert.equal(state.plan.slots[0].problem.hissanVersion,2);row.planId=state.plan.id;}
+            if(scenario.route==='park') {const state=await read(page,profileId);assert.equal(state.plan.slots[0].problem.categoryId,scenario.skill);assert.equal(state.plan.slots[0].problem.hissanVersion,scenario.skill.startsWith('div')?3:2);row.planId=state.plan.id;}
             row.controls.push({phase:'ready',rows:await controls(page)});await capture(page,`${scenario.name}-ready`);
             await checkEditing(page,grid,profileId);row.editing=true;
             for(const [index,step] of grid.steps.entries()) {

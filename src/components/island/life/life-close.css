@@ -1,0 +1,28 @@
+.life-direct-actions { display:flex; gap:8px; align-items:center; }
+.island-page[data-life-home="true"] .life-build-launcher {
+    background:var(--pokomoko-blue); color:var(--pokomoko-paper); font-size:15px; padding-inline:18px;
+}
+.island-page[data-life-home="true"] .life-build-launcher svg { color:inherit; }
+.life-view-toggle {
+    min-height:44px; padding:8px 12px; border:1px solid var(--pokomoko-edge);
+    border-radius:12px; background:var(--pokomoko-paper); color:var(--pokomoko-ink); font:inherit;
+}
+.life-view-toggle:focus-visible { outline:3px solid var(--pokomoko-blue); outline-offset:2px; }
+.island-page[data-life-home="true"] .life-menu .life-catalog button {
+    display:flex; flex-direction:column; align-items:stretch; gap:4px; padding:8px;
+    text-align:left; min-width:0;
+}
+.life-product-preview { display:block; width:100%; height:94px; border-radius:14px; overflow:hidden; background:var(--pokomoko-mint); }
+.life-product-preview img { width:100%; height:100%; object-fit:contain; }
+.life-product-story { font-size:12px; line-height:1.4; color:var(--pokomoko-muted); }
+.island-page[data-life-home="true"] .life-earned { flex-wrap:wrap; }
+.island-page[data-life-home="true"] .life-earned .life-earned-message,
+.island-page[data-life-home="true"] .life-earned .life-earned-message strong { white-space:normal; }
+.island-page[data-life-home="true"] .life-dock-closed-notice { max-width:calc(100% - 82px); }
+.island-page[data-life-home="true"] .life-placement .life-cell-picker {
+    position:static; margin-top:8px; padding:6px; width:auto;
+}
+.island-page[data-life-home="true"] .life-menu .life-catalog button:disabled { opacity:1; }
+.island-page[data-life-home="true"] .life-menu .life-catalog button > b { font-size:15px; }
+.island-page[data-life-home="true"] .life-menu .life-catalog button > span { font-size:12px; }
+@media(max-height:700px) { .life-product-preview { height:60px; } }

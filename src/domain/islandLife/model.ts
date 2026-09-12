@@ -1,4 +1,4 @@
-export const LIFE_CANDIDATE = 'island-life-garden-v6';
+export const LIFE_CANDIDATE = 'island-life-moon-garden-v8';
 export const LIFE_STEP_MS = 1200;
 export const HOUR = 3_600_000;
 export const LIFE_RULES = { dropsPerProblem: 2, dailyGoal: 6, activityMs: HOUR / 2, expansionPrice: 12,

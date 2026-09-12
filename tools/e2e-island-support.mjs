@@ -111,7 +111,7 @@ try {
             row.planId = state.plan.id; row.reservedWorkload = state.plan.slots.length;
             row.readyControls = scenario.partial ? await assertWrittenSupportControls(page) : await assertControls(page);
             if (scenario.partial) {
-                assert.equal(state.plan.slots[0].problem.hissanVersion, 2);
+                assert([2, 3].includes(state.plan.slots[0].problem.hissanVersion));
                 assert(expectedLearningAnswer(state.plan.slots[0], 'hissan').totalSteps > 1);
                 state = (await answerWrittenRow(page, state, scenario.touch)).after;
                 assert.equal(state.plan.cursor, 0); assert.equal(state.plan.slots[0].hissanStep, 1);
@@ -165,7 +165,7 @@ try {
             let steps = 0;
             while (state.plan?.id === row.planId) {
                 assert(++steps <= 80, 'The normal fixed reservation finishes in its actual bounded steps');
-                state = state.plan.slots[state.plan.cursor].problem.hissanVersion === 2
+                state = [2, 3].includes(state.plan.slots[state.plan.cursor].problem.hissanVersion)
                     ? (await answerWrittenRow(page, state, scenario.touch)).after
                     : (await attempt(page, state, { touch: scenario.touch })).after;
             }

@@ -4,6 +4,7 @@ import { poseResidentTail, residentSeatContactY } from '../three/residentRig';
 import { isRoamVisit, LIFE_STEP_MS, type Cell, type LifeState } from '../../../domain/islandLife/model';
 import { activityPhase, favoriteReactionElapsed, residentReaction } from '../../../domain/islandLife/activity';
 import { sampleResidentInterest } from '../three/residentInterest';
+import { sampleWalkEdge, smoothArrival, turnToward } from './residentWalk';
 
 export type LifeSeat = { seat: T.Mesh; pivot?: T.Group };
 export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, state: LifeState,
@@ -26,27 +27,44 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                 feet[index].forEach((foot, n) => { foot.position.copy(neutralFeet[index][n]); foot.rotation.set(0, 0, 0); });
                 const rig = index === 1 ? content.rabbit : index === 2 ? content.otter : undefined;
                 if (rig) { rig.head.rotation.set(0, 0, 0); poseResidentTail(rig.tail, index === 1 ? 'rabbit' : 'otter', 0); }
-                let position = point(resident.cell), seatGap: number | undefined;
+                let position = point(resident.cell), seatGap: number | undefined, flowerLean = 0;
                 if (visit && (item || isRoamVisit(visit))) {
                     const step = Math.max(0, (now - visit.start) / LIFE_STEP_MS), n = Math.min(visit.path.length - 1, Math.floor(step));
                     const a = point(visit.path[n]), b = point(visit.path[Math.min(n + 1, visit.path.length - 1)]);
-                    position = a.clone().lerp(b, step - Math.floor(step));
+                    const edge = sampleWalkEdge(step - Math.floor(step), n === 0, n === visit.path.length - 2);
+                    position = a.clone().lerp(b, edge.fraction);
                     if (a.distanceTo(b) > .01) {
-                        actor.rotation.y = Math.atan2(b.x - a.x, b.z - a.z);
-                        if (!reduced) feet[index].forEach((foot, f) => {
-                            const stride = Math.sin(step * Math.PI * 2 + f * Math.PI);
-                            foot.position.y += Math.max(0, stride) * .07;
-                            foot.position.z += stride * .08;
-                        });
+                        const heading = Math.atan2(b.x - a.x, b.z - a.z);
+                        const previous = point(visit.path[Math.max(0, n - 1)]);
+                        const from = n > 0 ? Math.atan2(a.x - previous.x, a.z - previous.z) : 0;
+                        actor.rotation.y = reduced ? heading : turnToward(from, heading, (step - n) / .3);
+                        if (!reduced) {
+                            const gait = (n + edge.fraction) * Math.PI * 2;
+                            body.position.y = Math.sin(gait * 2) * .018 * edge.weight;
+                            body.rotation.x = .055 * edge.weight;
+                            body.rotation.z = Math.sin(gait) * .035 * edge.weight;
+                            feet[index].forEach((foot, f) => {
+                                const stride = Math.sin(gait + f * Math.PI) * edge.weight;
+                                foot.position.y += Math.max(0, stride) * .075;
+                                foot.position.z += stride * .09;
+                                foot.rotation.x = stride * .18;
+                            });
+                        }
                     } else if (item) {
                         const target = point(item.cell!), walkedAt = visit.start + (visit.path.length - 1) * LIFE_STEP_MS;
                         const duration = item.kind === 'flower' ? 400 : 900;
-                        const settling = Math.max(0, Math.min(1, (now - walkedAt) / duration));
+                        const settling = smoothArrival((now - walkedAt) / duration);
+                        const previous = point(visit.path[Math.max(0, visit.path.length - 2)]);
+                        const heading = previous.distanceTo(position) > .01
+                            ? Math.atan2(position.x - previous.x, position.z - previous.z) : 0;
                         if (item.kind === 'flower') {
-                            actor.rotation.y = Math.atan2(target.x - position.x, target.z - position.z);
+                            const facing = Math.atan2(target.x - position.x, target.z - position.z);
+                            actor.rotation.y = reduced ? facing : turnToward(heading, facing, (now - walkedAt) / duration);
                             position.lerp(target, .48 * settling);
                             body.rotation.x = (.18 + (reduced ? 0 : Math.sin((now - walkedAt) / 950) * .045)) * settling;
+                            flowerLean = settling;
                         } else {
+                            actor.rotation.y = reduced ? 0 : turnToward(heading, 0, (now - walkedAt) / duration);
                             const furniture = seats.get(item.id);
                             if (furniture) {
                                 const usingMs = Math.max(0, now - walkedAt - duration);
@@ -69,6 +87,9 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                                 if (settling === 1) seatGap = new T.Vector3(0, contactY, 0).applyMatrix4(actor.matrixWorld).distanceTo(top);
                             }
                         }
+                    } else if (isRoamVisit(visit) && visit.path.length > 1) {
+                        const previous = point(visit.path[visit.path.length - 2]);
+                        actor.rotation.y = Math.atan2(position.x - previous.x, position.z - previous.z);
                     }
                 }
                 const reaction = residentReaction(state, resident, now), hop = reduced ? 0 : reaction?.hop ?? 0;
@@ -83,6 +104,14 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                         rig.head.rotation.z = interest.headRoll;
                     } else if (!reduced && phase !== 'walking') {
                         rig.head.rotation.z = Math.sin(now / 1800 + index) * .035;
+                    }
+                    if (flowerLean > 0) {
+                        // The muzzle lowers as the feet settle, then makes two
+                        // small sniffs during the existing favorite reply.
+                        const sniff = elapsed === undefined || reduced ? 0
+                            : Math.sin(Math.min(1, elapsed / 1200) * Math.PI * 4)
+                                * Math.sin(Math.min(1, elapsed / 1200) * Math.PI) * .045;
+                        rig.head.rotation.x += (.09 + sniff) * flowerLean;
                     }
                 }
                 const scarf = content.hero.getObjectByName('life-scarf');

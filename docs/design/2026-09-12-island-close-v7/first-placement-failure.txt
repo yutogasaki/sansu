@@ -1,0 +1,302 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('button', { name: 'つぎの マス' })[22m
+[2m    - locator resolved to <button aria-label="つぎの マス">→</button>[22m
+[2m  - attempting click action[22m
+[2m    2 × waiting for element to be visible, enabled and stable[22m
+[2m      - element is visible, enabled and stable[22m
+[2m      - scrolling into view if needed[22m
+[2m      - done scrolling[22m
+[2m      - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.007030555097425639},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.0326498085…>…</div> subtree intercepts pointer events[22m
+[2m    - retrying click action[22m
+[2m    - waiting 20ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.007030555097425639},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.0326498085…>…</div> subtree intercepts pointer events[22m
+[2m  2 × retrying click action[22m
+[2m      - waiting 100ms[22m
+[2m      - waiting for element to be visible, enabled and stable[22m
+[2m      - element is visible, enabled and stable[22m
+[2m      - scrolling into view if needed[22m
+[2m      - done scrolling[22m
+[2m      - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.01652932075566748},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.03489101539…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.030606754989937725},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.0308227519…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.03415265046466201},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.02489407554…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.03264258971608009},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.00701093906…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.027872172422301715},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.00275400718…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.01178048173272846},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.021368057820…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.0021825558465578643},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.0282149260…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.007787517319815714},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.032920825215…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.024883998348526455},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.034155782371…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.03451742377606396},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.0235236575399…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.0347624189469241},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.01535646396279…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.026137457884895965},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.00546505463…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.01861762441240633},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.014879988602…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.00003334147139931481},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.02946948…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.009872505743972072},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.0335896962…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.018708580844155977},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.0349991803…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.03163627601680486},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.02969124212…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.03461589095357253},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.02305436152…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.03170857254190061},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.00466348795…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.026424674897188652},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.00503507066…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.018763392427673678},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.01472375591…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.0005278577046364639},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.02973333755…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.010448076695282181},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.033753748672…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.02685963553134462},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.0333950515155…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.032153355016182605},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.029006815749…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.034718157828962225},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.022488354435…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.0314841640931956},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.00414588470263…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.025816032627580764},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.00593826697…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.00922158445994274},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.023428418292…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.00736608858791882},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.03277176066…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.0169295376748147},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.034923987161…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.030861015609099277},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.0305674127…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.03420841376387292},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.02471115883…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.03490414493863688},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":-0.01668058808…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.02783763566270793},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.002810866228…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.020748462109749757},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.01250801640…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":-0.0014887107322730446},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.0286204768…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.008587800838758547},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.033191178342…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+[2m    - done scrolling[22m
+[2m    - <canvas width="390" height="778" data-engine="three.js r185" aria-label="ぽこもこと みんなが くらす しま"></canvas> from <div class="life-world" data-placing="true" data-rendered="true" data-life-render="{"calls":193,"triangles":101286,"geometries":127,"textures":5}" data-life-poses="[{"id":"pokomoko","itemId":"roam:pokomoko:994005","phase":"roaming","position":[-2.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0},{"id":"rabbit","phase":"home","position":[0.5,0.04,-1],"hop":0,"headPitch":0,"headRoll":0.01805833666429006},{"id":"otter","phase":"home","position":[0.5,0.04,0],"hop":0,"headPitch":0,"headRoll":0.0349856093595…>…</div> subtree intercepts pointer events[22m
+[2m  - retrying click action[22m
+[2m    - waiting 500ms[22m
+
+    at /Users/yutogasaki/Projects/sansu/output/playwright/island-close-qa.mjs:87:58 {
+  name: 'TimeoutError'
+}
+
+Node.js v22.22.3

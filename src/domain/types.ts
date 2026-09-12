@@ -373,8 +373,8 @@ export interface Problem {
 
     // 筆算モード用: オペランド情報
     hissanOperands?: { a: number; b: number };
-    /** Reserved written layout; absent preserves legacy step/cell coordinates. */
-    hissanVersion?: 2;
+    /** Reserved written layout; absent preserves legacy step/cell coordinates. v3 keeps division calculations automatic. */
+    hissanVersion?: 2 | 3;
     /** New Study reservations freeze the initial input mode; old problems keep legacy behavior. */
     studyPresentation?: { version: 1; hissan: boolean };
 

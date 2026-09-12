@@ -9,8 +9,12 @@ export function resolveStudyHissanPresentation(problem: Problem | undefined, his
     let gridData: HissanGridData | null = null;
     if (problem?.subject === 'math' && problem.inputType !== 'choice' && problem.questionText
         && (isHissanEligible(problem.categoryId) || ['div_rem_q1', 'div_rem_q2'].includes(problem.categoryId))) {
+        const compactDivision = problem.hissanVersion === 3
+            || (problem.hissanVersion === undefined && problem.inputType !== 'hissan'
+                && problem.questionText.includes('÷'));
         gridData = (/^(mul|div)_/.test(problem.categoryId)
-            ? generateWrittenArithmeticGrid(problem.questionText, problem.correctAnswer) : null)
+            ? generateWrittenArithmeticGrid(problem.questionText, problem.correctAnswer,
+                compactDivision ? { divisionInput: 'compact' } : undefined) : null)
             ?? generateHissanGrid(problem.categoryId, problem.questionText,
                 Array.isArray(problem.correctAnswer) ? problem.correctAnswer.join('') : problem.correctAnswer);
     }
@@ -42,6 +46,9 @@ export function prepareStudyBlockPresentation(
             inputType: presentation.isHissanActive ? 'hissan' : problem.inputType,
             studyPresentation: { version: 1, hissan: presentation.isHissanActive },
         };
+        if (presentation.isHissanActive && presentation.gridData?.writtenLayout) {
+            frozen.hissanVersion = presentation.gridData.writtenLayout.kind === 'division' ? 3 : 2;
+        }
         // A missing source context (for example emergency fallback content)
         // stays unknown. New generated context follows the actual initial mode.
         if (problem.learningContext) frozen.learningContext = createLearningProblemContext('math', frozen);

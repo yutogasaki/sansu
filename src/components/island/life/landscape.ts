@@ -1,7 +1,8 @@
 import * as T from 'three';
 import { batch, ellipsoid } from '../three/primitives';
 import type { Cell, LifeState } from '../../../domain/islandLife/model';
-import { cellKey, districts } from '../../../domain/islandLife/space';
+import { createIslandGrassSurface } from '../three/grassSurface';
+import { cellKey, districts, isHouse } from '../../../domain/islandLife/space';
 
 /** The playable rectangle stays level. Irregularity belongs outside its cells. */
 export function coastShape(width: number, depth: number) {
@@ -29,14 +30,17 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
         const mesh = new T.Mesh(geometry, paint(color)); mesh.position.y = y;
         mesh.receiveShadow = true; root.add(mesh); return mesh;
     };
-    land(width + 1.95, 6.65, -.24, .15, '#e9d3a2');
-    land(width + 1.4, 5.65, -.16, .15, '#8dbb71');
+    land(width + 1.7, 6.35, -.43, .23, '#9d8cb8');
+    land(width + 1.95, 6.65, -.24, .15, '#ead7a8');
+    const grass = land(width + 1.4, 5.65, -.16, .15, '#63cbb0');
+    const grassSurface = createIslandGrassSurface(grass.material, 'legacy-v1:moon-garden:ground');
+    if (grassSurface) grass.material = grassSurface.material;
 
     // A broad, quiet water plane with a shallow shelf and low-contrast current.
     // It carries no hit targets and never changes simulation time or growth.
     const water = new T.ShaderMaterial({
         uniforms: { time: { value: 0 }, halfLand: { value: new T.Vector2((width + 1.9) / 2, 3.35) },
-            deep: { value: new T.Color('#257eaf') }, shallow: { value: new T.Color('#83d9cd') } },
+            deep: { value: new T.Color('#355fc4') }, shallow: { value: new T.Color('#8bdbdd') } },
         vertexShader: 'varying vec2 vWorld; void main(){vec4 p=modelMatrix*vec4(position,1.0);vWorld=p.xz;gl_Position=projectionMatrix*viewMatrix*p;}',
         fragmentShader: `uniform float time; uniform vec2 halfLand; uniform vec3 deep; uniform vec3 shallow; varying vec2 vWorld;
         float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
@@ -54,17 +58,20 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
             #include <colorspace_fragment>
         }`,
     });
-    const sea = new T.Mesh(new T.PlaneGeometry(120, 120), water); sea.rotation.x = -Math.PI / 2; sea.position.y = -.28; sea.name = 'life-sea'; root.add(sea);
+    const sea = new T.Mesh(new T.PlaneGeometry(120, 120), water); sea.rotation.x = -Math.PI / 2; sea.position.y = -.46; sea.name = 'life-sea'; root.add(sea);
 
     const edge = new T.Group(); edge.name = 'life-coast-plants'; root.add(edge);
     // Only low shoreline growth: the playable cell centers and approaches stay open.
     for (const side of [-1, 1]) for (let j = 0; j < 7; j++) {
         if ((j + side) % 3 === 0) continue;
         const x = side * (width / 2 + .48 + Math.sin(j * 2.1) * .08), z = -2.6 + j * .83;
-        const stone = ellipsoid(edge, paint(j % 2 ? '#9d9da0' : '#c0b6a8'), [x + side * .15, -.11, z], [.20 + (j % 3) * .05, .13, .18], 9);
+        const stone = new T.Mesh(new T.IcosahedronGeometry(1, 0), paint(j % 2 ? '#a88bbc' : '#c9acd8'));
+        stone.position.set(x + side * .22, -.18, z);
+        stone.scale.set(.22 + (j % 3) * .065, .19, .24);
+        stone.castShadow = stone.receiveShadow = true; edge.add(stone);
         stone.rotation.y = j * .7;
         if (j % 3 !== 1) for (let k = 0; k < 4; k++) {
-            const leaf = ellipsoid(edge, paint(k % 2 ? '#5c8d50' : '#769f58'), [x + Math.sin(k * 2.3) * .12, .05 + k * .015, z + .17 + Math.cos(k * 2.3) * .10], [.075, .16, .035], 9);
+            const leaf = ellipsoid(edge, paint(k % 2 ? '#359c86' : '#72caa2'), [x + Math.sin(k * 2.3) * .12, .05 + k * .015, z + .17 + Math.cos(k * 2.3) * .10], [.075, .16, .035], 9);
             leaf.rotation.z = Math.sin(k * 2.3) * .65; leaf.rotation.x = Math.cos(k * 2.3) * .45;
         }
     }
@@ -73,7 +80,7 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
         if (j % 4 === 2 || j % 4 === 3) continue;
         const x = j - width / 2 + .2, z = -2.9 - Math.sin(j * 1.7) * .05;
         for (let k = 0; k < 3; k++) {
-            const leaf = ellipsoid(edge, paint(k % 2 ? '#648e53' : '#8aac65'), [x + k * .11, .10, z], [.16, .20 + k * .02, .09], 9);
+            const leaf = ellipsoid(edge, paint(k % 2 ? '#9162c0' : '#d176cf'), [x + k * .11, .10, z], [.16, .20 + k * .02, .09], 9);
             leaf.rotation.z = (k - 1) * .55;
         }
         if (j % 2 === 0) ellipsoid(edge, paint('#d5c7ab'), [x, -.14, 3.02], [.15, .07, .10], 9);
@@ -102,9 +109,21 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
     }
     batch(beds);
 
-    // A short doorstep path only within the existing home approach, not an invented route.
-    const home = point({ x: 2, z: 1 });
-    for (let i = 0; i < 3; i++) ellipsoid(root, paint('#e3d5b2'), [home.x + .42, .014, home.z - .14 + i * .20], [.20, .025, .13], 10);
+    // Flat stepping stones borrow the old garden's path without reserving cells.
+    // An owned item always wins over decoration, including after a move/reload.
+    const occupied = new Set(state.items.filter(item => item.cell).map(item => cellKey(item.cell!)));
+    const path = new T.Group(); path.name = 'life-doorstep-path'; root.add(path);
+    for (let z = 1; z <= 4; z++) {
+        const cell = { x: 2, z };
+        if (occupied.has(cellKey(cell)) || isHouse(cell)) continue;
+        const p = point(cell);
+        for (let step = 0; step < 2; step++) {
+            const stone = new T.Mesh(new T.CylinderGeometry(.21, .23, .018, 5), paint('#f3dda2'));
+            stone.position.set(p.x + .26 + Math.sin(z * 3 + step) * .06, .052, p.z - .25 + step * .44);
+            stone.rotation.y = z * .7 + step; stone.scale.z = .72; stone.receiveShadow = true;
+            path.add(stone);
+        }
+    }
     return { root, animate: (at: number, reduced: boolean) => { water.uniforms.time.value = reduced ? 0 : at / 1000 % (Math.PI * 100); },
-        dispose: () => { materials.forEach(m => m.dispose()); water.dispose(); } };
+        dispose: () => { materials.forEach(m => m.dispose()); grassSurface?.dispose(); water.dispose(); } };
 }

@@ -16,6 +16,7 @@ export function WrittenArithmeticGrid({ gridData, currentStepIndex, activeCellPo
     // the row label so its empty cells do not shrink the child's digit targets.
     const columnOffset = layout.kind === 'multiplication' ? 1 : 0;
     const step = gridData.steps[currentStepIndex];
+    const visibleStepIndex = stepFeedback === 'correct' ? gridData.steps.length : currentStepIndex;
     const historyRef = useRef<HTMLDivElement>(null);
     const currentRowRef = useRef<HTMLDivElement>(null);
     useLayoutEffect(() => {
@@ -26,10 +27,12 @@ export function WrittenArithmeticGrid({ gridData, currentStepIndex, activeCellPo
         if (row && history.contains(row)) history.scrollTop = Math.max(0, row.offsetTop + row.offsetHeight - history.clientHeight);
         else history.scrollTop = history.scrollHeight;
     }, [currentStepIndex, gridData]);
+    const compactDivision = layout.kind === 'division'
+        && gridData.steps.every(candidate => candidate.phase === 'quotient' || candidate.phase === 'remainder');
 
     const renderRow = (rowIndex: number) => {
         const row = gridData.rows[rowIndex];
-        if ((row.visibleFromStep ?? 0) > currentStepIndex) return null;
+        if ((row.visibleFromStep ?? 0) > visibleStepIndex) return null;
         if (row.type === 'separator') return <div className="written-rule" key={rowIndex} aria-hidden="true" />;
         const current = step?.rowIndex === rowIndex;
         const dividend = layout.kind === 'division' && rowIndex === layout.dividendRow;
@@ -45,7 +48,7 @@ export function WrittenArithmeticGrid({ gridData, currentStepIndex, activeCellPo
                     const index = current ? step.inputCellIndices.indexOf(column) : -1;
                     const formatting = index >= 0 && writtenAutomaticValues(step)[index];
                     const editable = index >= 0 && !formatting;
-                    const completed = gridData.steps.some(previous => previous.index < currentStepIndex
+                    const completed = gridData.steps.some(previous => previous.index < visibleStepIndex
                         && previous.rowIndex === rowIndex && previous.inputCellIndices.includes(column));
                     const future = cell.correctValue !== undefined && !editable && !completed && !formatting;
                     const value = userValues.get(`${rowIndex}-${column}`) ?? cell.value;
@@ -70,9 +73,17 @@ export function WrittenArithmeticGrid({ gridData, currentStepIndex, activeCellPo
     const pinned = layout.kind === 'division'
         ? [layout.quotientRow!, layout.dividendRow!]
         : gridData.rows.map((row, index) => row.type === 'operand' || row.type === 'operator' ? index : -1).filter(index => index >= 0);
-    const direction = step && step.inputCellIndices.length > 1 ? 'ひだりから →' : 'ここに いれよう';
+    const direction = compactDivision
+        ? step?.phase === 'remainder' ? 'あまりを いれよう' : '商を いれよう'
+        : step && step.inputCellIndices.length > 1 ? 'ひだりから →' : 'ここに いれよう';
+    const inputHelper = correcting
+        ? 'このだんを もういちど'
+        : stepFeedback === 'incorrect'
+            ? 'このだんを もういちど'
+            : compactDivision ? 'けいさんの行は 自動でうまるよ' : 'マスを おすと なおせるよ';
     return <section className="written-arithmetic" aria-label={`${layout.expression} のひっさん`}
-        data-written-operation={layout.kind} data-written-step={currentStepIndex} data-written-phase={step?.phase}
+        data-written-operation={layout.kind} data-written-input-mode={compactDivision ? 'compact' : 'full'}
+        data-written-step={currentStepIndex} data-written-phase={step?.phase}
         data-written-correction={correcting}
         style={{ '--written-columns': gridData.columnCount - columnOffset } as CSSProperties}>
         <div className="written-heading"><span>{layout.expression}</span><span className="written-kind">ひっさん</span></div>
@@ -86,7 +97,6 @@ export function WrittenArithmeticGrid({ gridData, currentStepIndex, activeCellPo
                 {gridData.rows.map((_, index) => pinned.includes(index) ? null : renderRow(index))}
             </div>
         </div>
-        <div className="written-input-guide"><span>{direction}</span>
-            <span>{correcting ? 'このだんを もういちど' : stepFeedback === 'incorrect' ? 'このだんを もういちど' : 'マスを おすと なおせるよ'}</span></div>
+        <div className="written-input-guide"><span>{direction}</span><span>{inputHelper}</span></div>
     </section>;
 }

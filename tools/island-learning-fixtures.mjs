@@ -43,8 +43,9 @@ export async function seedLearningProfile(page, scenario) {
 
 export function expectedLearningModel(slot) {
     const problem = slot.problem;
-    return problem.hissanVersion === 2
-        ? domain.generateWrittenArithmeticGrid(problem.questionText, problem.correctAnswer)
+    return problem.hissanVersion === 2 || problem.hissanVersion === 3
+        ? domain.generateWrittenArithmeticGrid(problem.questionText, problem.correctAnswer,
+            problem.hissanVersion === 3 ? { divisionInput: 'compact' } : undefined)
         : domain.generateHissanGrid(problem.categoryId, problem.questionText,
             Array.isArray(problem.correctAnswer) ? problem.correctAnswer.join('') : problem.correctAnswer);
 }
