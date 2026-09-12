@@ -347,6 +347,48 @@
     }
 }
 
+/* On a phone the room must remain the first thing the child can see. Keep the
+   house camera in its own row and let the destination sheet scroll below it;
+   the desktop side sheet would otherwise cover nearly the whole room. */
+@media (max-width: 699px), (max-height: 600px) {
+    .app-container .island-page[data-layout-version][data-mode="keepsakes"]:has(> .island-stage[data-keepsake-room="true"]) {
+        display: grid;
+        grid-template-rows: minmax(280px, 44dvh) minmax(0, 1fr);
+        overflow: hidden;
+    }
+
+    .app-container .island-page[data-layout-version][data-mode="keepsakes"]:has(> .island-stage[data-keepsake-room="true"]) > .island-stage {
+        position: relative;
+        inset: auto;
+        grid-row: 1;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+    }
+
+    .app-container .island-page[data-layout-version][data-mode="keepsakes"]:has(> .island-stage[data-keepsake-room="true"]) > .island-stage > .island-stage__viewport {
+        height: 100%;
+    }
+
+    .app-container .island-page[data-layout-version][data-mode="keepsakes"]:has(> .island-stage[data-keepsake-room="true"]) > .island-sheet {
+        position: relative;
+        inset: auto;
+        grid-row: 2;
+        width: 100%;
+        max-height: none;
+        min-height: 0;
+        margin: 0;
+        overflow-y: auto;
+    }
+}
+
+/* Preserve a useful room crop on short landscape phones as well. */
+@media (max-height: 600px) {
+    .app-container .island-page[data-layout-version][data-mode="keepsakes"]:has(> .island-stage[data-keepsake-room="true"]) {
+        grid-template-rows: minmax(190px, 50dvh) minmax(0, 1fr);
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-sheet,
     .island-page[data-layout-version]:has(> .island-stage):not([data-mode="learning"]):not([data-mode="home"]) > .island-showcase-controls {
