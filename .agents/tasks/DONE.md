@@ -7,6 +7,8 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 
 ## Current Index
 
+- 2026-09-13: 島の文字面を縮小し、実3Dの花・ぽこもこと望遠鏡の絵付き操作を1列へ。core3,665・smoke31・Chromium4サイズ確認、ローカルのみ -> `docs/done/2026-09.md`
+
 - 2026-09-09: 島・学習・一覧・編集・管理の目的別レイアウトを実装。背景保存中の学習開始も保護。最終core3,376・PWA・正式80runを確認 -> `docs/done/2026-09.md`
 
 - 2026-09-09: 島の表示面積を広げ、タブとホーム操作を縮小。3viewport・横位置復帰・キーボード・PWAを確認。ローカルのみ -> `docs/done/2026-09.md`

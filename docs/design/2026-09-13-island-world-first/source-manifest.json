@@ -1,0 +1,53 @@
+{
+  "base": "09f0fb9",
+  "build": {
+    "version": "09f0fb9-world-first-v1:e1473058-d24c-4ace-be84-23c4e1fb027e",
+    "revision": "09f0fb9-world-first-v1",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "flags": [
+    "VITE_ISLAND_ENABLED=true",
+    "VITE_ISLAND_LIFE_ENABLED=true"
+  ],
+  "hudCandidate": "life-world-first-v1",
+  "worldCandidate": "island-life-moon-garden-v9",
+  "files": [
+    {
+      "path": "src/pages/Island.tsx",
+      "sha256": "8e00ba68e2487339f9a6379dd10bcf1c1c1c67493664b6007ac9da6f8c054da9"
+    },
+    {
+      "path": "src/components/island/IslandToyIcon.tsx",
+      "sha256": "bd6ca31a774bce02f8a0cd27b348173903fc753b719a39d2c25bc332191913c8"
+    },
+    {
+      "path": "src/components/island/life/IslandLife.tsx",
+      "sha256": "d52e7f7ffa7433f65098d216e0df842d1f09cbd274ac3c83204ce24e5ff626c3"
+    },
+    {
+      "path": "src/components/island/life/LifeWorld.tsx",
+      "sha256": "a4e5dcb06cf6ea3f998afc63ab1e9b0d10b2f18a063d3984fd51be260be35d96"
+    },
+    {
+      "path": "src/components/island/life/LifeAppearance.tsx",
+      "sha256": "ef069f856954aa0829918b03d9be050e2fd0bb34d2078db0e6d764032c7bb494"
+    },
+    {
+      "path": "src/components/island/life/life-world-first.css",
+      "sha256": "65119dce61ccd6671537ce623c422158b51e9a3d76238479ca4c4fd24a5824f3"
+    }
+  ]
+}

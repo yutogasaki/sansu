@@ -1,0 +1,31 @@
+{
+  "target": "http://127.0.0.1:5323",
+  "version": {
+    "version": "09f0fb9-world-first-v1:e1473058-d24c-4ace-be84-23c4e1fb027e",
+    "revision": "09f0fb9-world-first-v1",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "fixture": "Disposable native life credits and four flowers/bench; acquisition is not earned-learning evidence",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "phone",
+      "pass": false,
+      "error": "Error: page.reload: WebKit encountered an internal error\nCall log:\n\u001b[2m  - waiting for navigation until \"load\"\u001b[22m\n",
+      "errors": []
+    }
+  ]
+}

@@ -634,7 +634,9 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         data-island-revision={island.revision} data-discovery-count={island.growth?.discoveries.length ?? 0}
         data-build-revision={__BUILD_REVISION__} data-build-version={__APP_VERSION__} data-busy={busy}>
         {!['showcase', 'placement'].includes(screen) && <header className="island-header"><div className="island-brand" data-learning-milestone={learning ? Boolean(milestoneNotice.milestone) : undefined}>
-            <Leaf size={20} /><div><p>{profile.name}の</p><h1 title={island.experience?.islandName}>{island.experience?.islandName ?? 'ふしぎな しま'}</h1></div>
+            <Leaf size={20} /><div>{screen === 'home' && lifeEnabled()
+                ? <h1 title={island.experience?.islandName}>{profile.name}の しま</h1>
+                : <><p>{profile.name}の</p><h1 title={island.experience?.islandName}>{island.experience?.islandName ?? 'ふしぎな しま'}</h1></>}</div>
             {milestoneNotice.milestone && <IslandMilestoneNotice milestone={milestoneNotice.milestone} island={island} />}</div>
             <div className="island-header-actions"><IslandSoundControl key={screen} enabled={profile.soundEnabled} disabled={busy} onChange={enabled => run(async () => {
                 const updated = await updateProfileAtomically(profile.id, current => ({ ...current, soundEnabled: enabled }));
@@ -650,7 +652,7 @@ function IslandSession({ profile }: { profile: UserProfile }) {
         </header>}
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
-        {active && screen === 'home' && lifeEnabled() && <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandLife controls={lifeControls} onHome={enterHouse} disabled={busy || preparingLearning} /></Suspense>}
+        {active && screen === 'home' && lifeEnabled() && <Suspense fallback={<p role="status">しまを ひらいているよ…</p>}><IslandLife controls={lifeControls} onHome={enterHouse} disabled={busy || preparingLearning} islandName={island.experience?.islandName ?? 'ふしぎな しま'} /></Suspense>}
         {active && homeJourneyScene && <HomeJourneyPreview key={profile.id} state={island.homeJourney}
             room={keepsakeRoomActive ? { state: island.learningKeepsakes, completedSets: island.completedSets, selectedId: keepsakeFocus, challengeDisplayed: challengeSummary?.displayed } : undefined}
             onHomeEnter={!busy && screen === 'home' ? enterHouse : undefined}

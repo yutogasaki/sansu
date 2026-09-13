@@ -1,0 +1,98 @@
+/* The small HUD and toy controls frame a real, unobscured world viewport. */
+.island-page[data-life-home="true"] {
+    --life-world-top: calc(96px + env(safe-area-inset-top));
+    --life-world-bottom: calc(78px + env(safe-area-inset-bottom));
+}
+.island-page[data-life-home="true"] > .island-header {
+    min-height: 52px;
+    padding: max(4px, env(safe-area-inset-top)) 14px 4px;
+    background: linear-gradient(180deg, var(--pokomoko-paper), rgb(248 247 242 / 88%) 76%, transparent);
+}
+.island-page[data-life-home="true"] .island-brand { gap: 7px; }
+.island-page[data-life-home="true"] .island-brand h1 { font-size: 17px; line-height: 1.4; }
+.island-page[data-life-home="true"] .island-brand > svg { width: 19px; height: 19px; }
+.island-page[data-life-home="true"] .island-sound-button {
+    width: 44px; height: 44px; padding: 0; border-radius: 50%;
+}
+.island-page[data-life-home="true"] .island-sound-button > svg { width: 22px; height: 22px; }
+.island-page[data-life-home="true"] .island-sound-button > span { display: none; }
+.island-page[data-life-home="true"] > .island-life { background: #2c5dc4; }
+.island-page[data-life-home="true"] .life-hud {
+    top: calc(54px + env(safe-area-inset-top)); left: 14px;
+    width: max-content; max-width: calc(100% - 28px); gap: 8px;
+}
+.island-page[data-life-home="true"] .life-hud .life-wallet.life-resources {
+    display: flex; flex-wrap: nowrap; width: max-content; max-width: 100%;
+    gap: 10px; padding: 5px 10px; border-radius: 14px; box-shadow: none;
+}
+.island-page[data-life-home="true"] .life-resources .life-wallet-item {
+    display: flex; gap: 5px!important; min-width: 0;
+}
+.island-page[data-life-home="true"] .life-resources .life-wallet-item > .life-resource-icon {
+    width: 22px; height: 25px;
+}
+.island-page[data-life-home="true"] .life-resources .life-wallet-item > span { color: var(--pokomoko-ink); }
+.island-page[data-life-home="true"] .life-resources .life-wallet-item strong { font-size: 16px; }
+.island-page[data-life-home="true"] .life-hud .life-earned {
+    display: flex; flex-direction: row; align-items: center; gap: 8px; width: auto;
+    max-width: min(340px, calc(100vw - 28px)); padding: 7px 10px;
+}
+.island-page[data-life-home="true"] .life-hud .life-earned-message { display: block; flex: 1; font-size: 12px; }
+.island-page[data-life-home="true"] .life-hud .life-earned-action { border: 0; padding: 0; font-size: 12px; }
+.island-page[data-life-home="true"] .life-viewport > .life-world {
+    position: absolute; inset: var(--life-world-top) 0 var(--life-world-bottom);
+    height: auto; min-height: 0;
+}
+.island-page[data-life-home="true"] .life-home-tools {
+    position: absolute; z-index: 9; inset: auto 12px max(12px, env(safe-area-inset-bottom));
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;
+    max-width: 390px; margin-inline: auto;
+}
+.island-page[data-life-home="true"] .life-home-tools .life-home-action {
+    display: flex; justify-content: center; align-items: center; gap: 2px;
+    width: 100%; min-width: 0; height: 54px; min-height: 44px; margin: 0; padding: 3px 5px;
+    color: var(--pokomoko-blue-deep); background: var(--pokomoko-paper);
+    border: 1px solid var(--pokomoko-edge); border-radius: 18px;
+    box-shadow: 0 3px 0 color-mix(in srgb, var(--pokomoko-ink) 18%, transparent);
+    font: inherit; font-size: 13px; font-weight: 800; white-space: nowrap; cursor: pointer;
+}
+.island-page[data-life-home="true"] .life-home-tools .life-build-action {
+    background: var(--pokomoko-blue); border-color: var(--pokomoko-blue); color: var(--pokomoko-paper);
+}
+.life-home-action:focus-visible { outline: 3px solid var(--pokomoko-paper); outline-offset: 3px; }
+.life-home-action:disabled { opacity: .55; cursor: default; }
+.life-home-action > .life-product-preview,
+.life-home-action > .life-resident-portrait {
+    flex-shrink: 0; width: 42px; height: 44px; border-radius: 0; overflow: hidden; background: none;
+}
+.life-home-action > .life-product-preview img { width: 62px; max-width: none; height: 44px; margin-left: -10px; object-fit: contain; }
+.life-home-action > .life-resident-portrait img { width: 42px; height: 44px; object-fit: contain; }
+.life-home-action > .island-toy-icon { flex-shrink: 0; width: 40px; height: 40px; }
+.island-page[data-life-home="true"] .life-home-tools .life-camera-tools { position: static; margin: 0; }
+.island-page[data-life-home="true"] .life-home-tools .life-camera-tools-panel {
+    bottom: 64px; right: 0; max-width: calc(100vw - 24px); padding: 10px; z-index: 1;
+}
+.island-page[data-life-home="true"] .life-home-tools .island-stage__quick-reset { bottom: 64px; left: auto; right: 0; }
+.life-home-tools:has(.life-camera-tools[open]) .island-stage__quick-reset { display: none; }
+.island-page[data-life-home="true"] .life-dock-closed {
+    bottom: var(--life-world-bottom); align-items: center;
+}
+.island-page[data-life-home="true"] .life-dock-closed-notice { font-size: 12px; }
+.island-page[data-life-home="true"] .life-dock-closed-notice button { min-height: 44px; min-width: 44px; }
+.life-island-name { margin: 0 0 8px; font-size: 12px; color: var(--pokomoko-muted); overflow-wrap: anywhere; }
+.life-world-error {
+    position: absolute; inset: var(--life-world-top) 14px auto; z-index: 7;
+    padding: 12px; border-radius: 14px; background: var(--pokomoko-paper); font-size: 13px;
+}
+@media (max-width: 359px) {
+    .island-page[data-life-home="true"] .life-home-tools { gap: 6px; }
+    .island-page[data-life-home="true"] .life-home-tools .life-home-action { font-size: 12px; padding-inline: 2px; }
+    .life-home-action > .life-product-preview, .life-home-action > .life-resident-portrait { width: 36px; }
+    .life-home-action > .life-resident-portrait img { width: 36px; }
+    .life-home-action > .island-toy-icon { width: 34px; }
+}
+@media (min-width: 600px) and (max-height: 500px) {
+    .island-page[data-life-home="true"] { --life-world-top: calc(54px + env(safe-area-inset-top)); }
+    .island-page[data-life-home="true"] .life-hud { top: calc(8px + env(safe-area-inset-top)); left: 38%; }
+    .island-page[data-life-home="true"] .island-brand { max-width: 34%; }
+}

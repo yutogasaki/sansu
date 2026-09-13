@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import * as T from 'three';
 import type { Cell, LifeState } from '../../../domain/islandLife/model';
 import { landCells } from '../../../domain/islandLife/space';
 import { IslandCameraToolbar } from '../IslandCameraToolbar';
+import { IslandToyIcon } from '../IslandToyIcon';
 import '../IslandStage.css';
 import { hasChangedIslandCameraView, initialIslandCameraView, IslandCameraControls, type IslandCameraAction, type IslandCameraView } from '../three/islandCameraControls';
 import type { CameraPanFraming, CameraPanPoint } from '../three/cameraPanFraming';
@@ -11,9 +12,9 @@ import type { PlacementPreview } from './placement';
 import { LifePresentationClock } from './presentationClock';
 
 type Content = ReturnType<typeof buildLifeScene>;
-type LifeWorldProps = { state: LifeState; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void };
+type LifeWorldProps = { state: LifeState; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
 
-export default function LifeWorld({ state, selected, cell, placement, onCell }: LifeWorldProps) {
+export default function LifeWorld({ state, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
     const host = useRef<HTMLDivElement>(null), choose = useRef(onCell);
     const stateAtMount = useRef(state), placementAtMount = useRef(placement);
     const update = useRef<((state: LifeState, selected?: string, cell?: Cell, placement?: PlacementPreview) => void) | null>(null);
@@ -61,7 +62,8 @@ export default function LifeWorld({ state, selected, cell, placement, onCell }: 
             renderer.setSize(width, height);
             const projectedWidth = ((content?.width ?? 6) + 2) * .926 + 6.7 * .379 + .45;
             // The ordinary view reads faces; placement and overview retain the full shore.
-            const halfHeight = Math.max(3.8, projectedWidth / aspect / 2) * (currentPlacement || overviewRef.current ? 1 : .76);
+            const closeView = !currentPlacement && !overviewRef.current;
+            const halfHeight = Math.max(3.8, projectedWidth / aspect / 2) * (closeView ? .66 : 1);
             cameraOffset.copy(cameraBaseOffset).applyAxisAngle(cameraYAxis, cameraControls.view.azimuth);
             camera.position.copy(cameraTarget).add(cameraOffset); camera.lookAt(cameraTarget); camera.updateMatrixWorld(true);
             camera.left = -halfHeight * aspect; camera.right = halfHeight * aspect; camera.top = halfHeight; camera.bottom = -halfHeight;
@@ -86,7 +88,10 @@ export default function LifeWorld({ state, selected, cell, placement, onCell }: 
             const origin = project(pointFor(0, 0)), xBasis = project(pointFor(1, 0)), zBasis = project(pointFor(0, 1));
             const framing: CameraPanFraming = {
                 ground: { origin, x: { x: xBasis.x - origin.x, y: xBasis.y - origin.y }, z: { x: zBasis.x - origin.x, y: zBasis.y - origin.y } },
-                center: { x: 0, y: 0 }, height: halfHeight * 2, aspect, bounds, regions: [ground],
+                // Bring the doorstep toward the center in the closer view without
+                // changing the full-island frame used for placement and overview.
+                center: closeView ? { x: project(pointFor(2.5, 1)).x * .45, y: 0 } : { x: 0, y: 0 },
+                height: halfHeight * 2, aspect, bounds, regions: [ground],
             };
             const frame = cameraControls.setFrame(framing);
             camera.left = frame.left; camera.right = frame.right; camera.top = frame.top; camera.bottom = frame.bottom;
@@ -197,9 +202,15 @@ export default function LifeWorld({ state, selected, cell, placement, onCell }: 
         };
     }, []);
     useEffect(() => { update.current?.(state, selected, cell, placement); }, [state, selected, cell, placement]);
-    return <><div ref={host} className="life-world" data-placing={Boolean(placement)}>
-        {!placement && <details className="life-camera-tools">
-            <summary>ながめ</summary>
+    return <><div ref={host} className="life-world" data-placing={Boolean(placement)} />
+        {!placement && controlsVisible && <div className="life-home-tools" role="group" aria-label="しまの あそび">
+        {children}
+        <details className="life-camera-tools" onKeyDown={event => {
+            if (event.key !== 'Escape') return;
+            event.currentTarget.open = false;
+            event.currentTarget.querySelector('summary')?.focus();
+        }}>
+            <summary className="life-home-action"><IslandToyIcon kind="telescope" size={40} /><span>ながめ</span></summary>
             <div className="life-camera-tools-panel">
                 <button type="button" className="life-view-toggle" aria-pressed={overview} onClick={() => {
                     overviewRef.current = !overview; setOverview(!overview); reframe.current?.();
@@ -207,7 +218,8 @@ export default function LifeWorld({ state, selected, cell, placement, onCell }: 
                 <IslandCameraToolbar view={cameraView} onAction={action => controlCamera.current?.(action)} />
                 <p className="island-camera-hint">なぞって 移動・2本指で 拡大と回転</p>
             </div>
-        </details>}
-        {!placement && hasChangedIslandCameraView(cameraView) && <button type="button" className="island-stage__quick-reset" onClick={() => controlCamera.current?.('reset')}>もとの ながめ</button>}
-    </div>{failed && <p role="status">景色をひらけなかったよ。下の一覧から選べるよ。</p>}</>;
+        </details>
+        {hasChangedIslandCameraView(cameraView) && <button type="button" className="island-stage__quick-reset" onClick={() => controlCamera.current?.('reset')}>もとの ながめ</button>}
+        </div>}
+        {failed && <p className="life-world-error" role="status">景色をひらけなかったよ。「つくる」からも選べるよ。</p>}</>;
 }

@@ -1,0 +1,44 @@
+{
+  "target": "http://127.0.0.1:5323",
+  "version": {
+    "version": "09f0fb9-world-first-v1:e1473058-d24c-4ace-be84-23c4e1fb027e",
+    "revision": "09f0fb9-world-first-v1",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "fixture": "Disposable native life credits and four flowers/bench; acquisition is not earned-learning evidence",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "small",
+      "width": 320,
+      "height": 568,
+      "worldBounds": {
+        "x": 0,
+        "y": 96,
+        "width": 320,
+        "height": 319.21875
+      },
+      "toolBounds": {
+        "x": 12,
+        "y": 427.21875,
+        "width": 296,
+        "height": 54
+      },
+      "worldShare": 0.5620048415492958,
+      "pass": true
+    }
+  ]
+}

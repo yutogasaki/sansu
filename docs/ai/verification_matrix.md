@@ -8,6 +8,8 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 
 ## Current Commands
 
+`node tools/e2e-island-life-world-first.mjs` は `SANSU_WORLD_FIRST_URL` と新規 `SANSU_WORLD_FIRST_OUTPUT` を指定。4サイズの実画面で絵付き操作の44px/hit、残高・世界・操作の分離、全景/近景/zoom復帰、情報面とカメラの排他、7秒の完了文と自動で消えない保存失敗、再試行、配置取消と学習復帰を確認する。花4個/ベンチと残高は明示native fixtureで、実取得や子どもの理解とは区別する。`SANSU_WORLD_FIRST_BROWSER=webkit` と `SANSU_WORLD_FIRST_WIDTH` で対象を限定できる。
+
 | Command | Purpose |
 |---|---|
 | `node tools/e2e-island-direct-scale.mjs` | `SANSU_DIRECT_URL` と新規 `SANSU_DIRECT_OUTPUT` を指定。合法配置1/9/16個・長い名前・空の配置を明示native fixtureで作り、4サイズで直接操作の大きさ、実hit、眺めとの排他、7store不変、絵と実3Dの遊び、混雑時の移動入口を検査。390幅は実キツネ選択・退出/再読込・明示WebGL故障、320幅は24px文字の診断を含む。`SANSU_DIRECT_BROWSER=webkit` は390幅、`SANSU_DIRECT_WIDTH` は指定幅だけ。`SANSU_DIRECT_BASELINE=1` は旧mainのリスト/重なり再現であり修正候補のPASSではない。実取得・実機・子どもの観察とは区別する |

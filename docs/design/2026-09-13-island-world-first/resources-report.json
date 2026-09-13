@@ -1,0 +1,85 @@
+{
+  "target": "http://127.0.0.1:5323",
+  "version": {
+    "version": "09f0fb9-world-first-v1:e1473058-d24c-4ace-be84-23c4e1fb027e",
+    "revision": "09f0fb9-world-first-v1",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "humanN": 0,
+  "evidence": "Real onboarding and first learning segment; five-digit glyphs are a DOM-only layout diagnostic",
+  "scenarios": [
+    {
+      "name": "phone",
+      "width": 390,
+      "height": 844,
+      "candidate": "island-life-moon-garden-v9",
+      "hudCandidate": "life-world-first-v1",
+      "informationBounds": {
+        "x": 14,
+        "y": 431.515625,
+        "width": 362,
+        "height": 334.890625
+      },
+      "answers": 3,
+      "pass": true
+    },
+    {
+      "name": "tablet",
+      "width": 768,
+      "height": 1024,
+      "candidate": "island-life-moon-garden-v9",
+      "hudCandidate": "life-world-first-v1",
+      "informationBounds": {
+        "x": 164,
+        "y": 611.515625,
+        "width": 440,
+        "height": 334.890625
+      },
+      "answers": 3,
+      "pass": true
+    },
+    {
+      "name": "small",
+      "width": 320,
+      "height": 568,
+      "candidate": "island-life-moon-garden-v9",
+      "hudCandidate": "life-world-first-v1",
+      "informationBounds": {
+        "x": 14,
+        "y": 161.9375,
+        "width": 292,
+        "height": 319.28125
+      },
+      "answers": 3,
+      "pass": true
+    },
+    {
+      "name": "landscape",
+      "width": 844,
+      "height": 390,
+      "candidate": "island-life-moon-garden-v9",
+      "hudCandidate": "life-world-first-v1",
+      "informationBounds": {
+        "x": 202,
+        "y": 134,
+        "width": 440,
+        "height": 178.40625
+      },
+      "answers": 3,
+      "pass": true
+    }
+  ]
+}

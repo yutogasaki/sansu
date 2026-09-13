@@ -7,6 +7,7 @@ import type { useIslandLife } from './useIslandLife';
 import LifeWorld from './LifeWorld';
 import LifeProductPreview from './LifeProductPreview';
 import LifeResidentsSummary from './LifeResidentsSummary';
+import LifeResidentPortrait from './LifeResidentPortrait';
 import LifeAppearance from './LifeAppearance';
 import LifeLand from './LifeLand';
 import { LifeResources, LifeGrowthSummary, LifeResourceGuide } from './LifeResources';
@@ -22,6 +23,7 @@ import './life-growth.css';
 import './life-close.css';
 import './life-belongings.css';
 import './life-resources.css';
+import './life-world-first.css';
 
 const productStories = { flower: 'めを そだてて おはなに', bench: 'ひとやすみの ばしょ', swing: 'すわって ゆらゆら', lantern: 'あかりの そばに あつまるかな' };
 const tabOptions = [
@@ -35,8 +37,8 @@ function GrowthDots({ status }: { status: LifeGrowthStatus }) {
         {[0, 1, 2].map(stage => <i className="life-growth-dot" key={stage} data-grown={stage <= status.stage} data-current={stage === status.stage} />)}
     </span>;
 }
-export default function IslandLife({ controls, onHome, disabled }: {
-    controls: ReturnType<typeof useIslandLife>; onHome: () => void; disabled: boolean;
+export default function IslandLife({ controls, onHome, disabled, islandName }: {
+    controls: ReturnType<typeof useIslandLife>; onHome: () => void; disabled: boolean; islandName: string;
 }) {
     const { record, error, busy, refresh } = controls;
     const [menuOpen, setMenuOpen] = useState(false);
@@ -45,6 +47,8 @@ export default function IslandLife({ controls, onHome, disabled }: {
     const [gridOpen, setGridOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
     const dockRef = useRef<HTMLDivElement>(null);
+    const buildTrigger = useRef<HTMLButtonElement>(null), informationTrigger = useRef<HTMLButtonElement>(null);
+    const previousPanel = useRef<'menu' | 'information' | undefined>(undefined);
     const actionRunning = useRef(false), retryCompletion = useRef<(() => void) | undefined>(undefined);
     const lastObservedDrops = useRef<number | undefined>(undefined);
     const lastObservedLight = useRef<number | undefined>(undefined);
@@ -65,12 +69,22 @@ export default function IslandLife({ controls, onHome, disabled }: {
     const [kind, setKind] = useState<ItemKind>(), [selected, setSelected] = useState<string>();
     const [cell, setCell] = useState<Cell>(), [moving, setMoving] = useState(false), [removing, setRemoving] = useState(false);
     const [notice, setNotice] = useState('');
+    useEffect(() => {
+        if (!notice) return;
+        const timer = window.setTimeout(() => setNotice(''), 7000);
+        return () => window.clearTimeout(timer);
+    }, [notice]);
     const item = state?.items.find(i => i.id === selected);
     const placement = useMemo(() => state && (kind || moving && item)
         ? previewPlacement(state, kind ?? item!, cell) : undefined, [state, kind, moving, item, cell]);
     const showWorld = () => { setMenuOpen(false); setDockOpen(false); setGridOpen(false); };
     useEffect(() => {
-        if (!menuOpen && !dockOpen) return;
+        if (!menuOpen && !dockOpen) {
+            if (previousPanel.current) (previousPanel.current === 'menu' ? buildTrigger : informationTrigger).current?.focus();
+            previousPanel.current = undefined;
+            return;
+        }
+        previousPanel.current = menuOpen ? 'menu' : 'information';
         (menuOpen ? menuRef : dockRef).current?.focus();
         const close = (event: KeyboardEvent) => {
             if (event.key === 'Escape') { setMenuOpen(false); setDockOpen(false); }
@@ -135,6 +149,7 @@ export default function IslandLife({ controls, onHome, disabled }: {
     const places = districts(state);
     const doAction = async (command: LifeCommand, message: string) => {
         if (locked || actionRunning.current) return;
+        setNotice('');
         const id = crypto.randomUUID();
         const complete = () => {
             setNotice(message); setKind(undefined); setCell(undefined); setMoving(false); setRemoving(false);
@@ -181,21 +196,29 @@ export default function IslandLife({ controls, onHome, disabled }: {
     const cells = landCells(state), cellPages = Math.ceil(cells.length / 6);
     const pager = <div className="life-pager"><button aria-label="まえの ページ" disabled={currentPage === 0} onClick={() => setPage(currentPage - 1)}>←</button><span>{currentPage + 1} / {pageCount}</span><button aria-label="つぎの ページ" disabled={currentPage + 1 === pageCount} onClick={() => setPage(currentPage + 1)}>→</button></div>;
     const goal = Math.min(LIFE_RULES.dailyGoal, state.days[learningDay(state.now)] ?? 0);
+    const notificationTab = grownItems.length || observationCues.length ? 'items' : earnedDrops !== undefined ? 'build' : 'style';
     return <section className="island-life" data-life-candidate={LIFE_CANDIDATE} data-life-destination={state.target} data-life-revision={record.revision} data-life-drops={state.drops} data-life-light={state.light} data-life-items={state.items.length} data-life-districts={places.map(p => p.label).join(',')} data-life-panel-open={menuOpen || dockOpen || Boolean(placement) ? 'true' : undefined}>
-        <div className="life-hud" data-life-hud="resources-v1">
+        <div className="life-hud" data-life-hud="life-world-first-v1">
         <LifeResources state={state} />
         {!menuOpen && !dockOpen && !placement && (earnedDrops !== undefined || earnedLight !== undefined || grownItems.length > 0 || observationCues.length > 0) && <button className="life-earned" data-life-earned={earnedDrops} data-life-light-earned={earnedLight}
             data-life-growth-earned={grownItems.map(item => item.id).join(',') || undefined} data-life-observation-earned={observationCues.map(item => item.id).join(',') || undefined} aria-live="polite"
-            onClick={() => switchTab(grownItems.length || observationCues.length ? 'items' : earnedLight !== undefined ? 'style' : 'build')}>
-            {earnedDrops !== undefined && <span className="life-earned-message">学んだぶん <strong>+{earnedDrops} しずく</strong></span>}
-            {earnedLight !== undefined && <span className="life-earned-message">みんなが あそんだ <strong>+{earnedLight} ひかり</strong></span>}
-            {grownItems.map(item => <span className="life-earned-message" key={item.id}>おはなが <strong>{item.message}</strong></span>)}
-            {observationCues.map(item => <span className="life-earned-message" key={item.id}><strong>{item.message}</strong> <span aria-hidden="true">{item.symbol}</span></span>)}
-            <span className="life-earned-action">{grownItems.length ? 'そだちを みる →' : observationCues.length ? 'ようすを みる →' : earnedLight !== undefined ? 'いろを えらぶ →' : 'つくるものを えらぶ →'}</span>
+            onClick={() => switchTab(notificationTab)}>
+            <span className="life-earned-message">{grownItems.length ? <>おはなが <strong>{grownItems[0].message}</strong></>
+                : observationCues.length ? <strong>{observationCues[0].message}</strong>
+                    : earnedDrops !== undefined ? <>学んだぶん <strong>+{earnedDrops} しずく</strong></>
+                        : <>みんなが あそんだ <strong>+{earnedLight} ひかり</strong></>}</span>
+            <span className="life-earned-action">{notificationTab === 'items' ? 'ようすを みる →' : notificationTab === 'style' ? 'いろを えらぶ →' : 'つくる →'}</span>
         </button>}
         </div>
         <div className="life-viewport">
-        <LifeWorld state={state} selected={selected} cell={cell} placement={placement} onCell={chooseCell} />
+        <LifeWorld state={state} selected={selected} cell={cell} placement={placement} onCell={chooseCell} controlsVisible={!menuOpen && !dockOpen}>
+            <button ref={buildTrigger} className="life-home-action life-build-action" type="button" disabled={locked} onClick={() => openMenuTab('build')}>
+                <LifeProductPreview kind="flower" growth={LIFE_RULES.bloomHours} /><span>つくる</span>
+            </button>
+            <button ref={informationTrigger} className="life-home-action" type="button" aria-label="しまの ようす" aria-expanded={dockOpen} aria-controls="life-dock-dialog" onClick={openLifeControls}>
+                <LifeResidentPortrait resident="pokomoko" style={state.heroStyle} /><span>ようす</span>
+            </button>
+        </LifeWorld>
         {placement && <div className="life-placement life-controls" data-life-placement-valid={placement.valid} data-life-placement-cell={cell && cellKey(cell)}>
             <h3>{CATALOG[placement.item.kind].label}を {moving ? 'うごかす' : 'おく'}</h3>
             <p role="status">{cell && (placement.valid ? <Check size={18} /> : <X size={18} />)}{placement.reason}</p>
@@ -249,6 +272,7 @@ export default function IslandLife({ controls, onHome, disabled }: {
             <LifeResidentsSummary state={state} now={state.now + elapsed} />
             <details className="life-island-notes">
                 <summary>そだちと しずく・ひかり<span aria-hidden="true">＋</span></summary>
+                <p className="life-island-name">{islandName}</p>
                 <LifeGrowthSummary state={state} goal={goal} />
                 <LifeResourceGuide />
             </details>
@@ -257,9 +281,7 @@ export default function IslandLife({ controls, onHome, disabled }: {
         </div>
         }
         {!dockOpen && !menuOpen && !placement && <div className="life-dock-closed">
-            {(error || notice) && <p className="life-dock-closed-notice" role="status">{error || notice}<button type="button" onClick={openLifeControls}>ひらく</button></p>}
-            <div className="life-direct-actions"><button className="life-dock-launcher life-build-launcher" type="button" disabled={locked} onClick={() => openMenuTab('build')}><Sprout size={20} aria-hidden="true" /><span>つくる</span></button>
-            <button className="life-dock-launcher" type="button" aria-expanded={dockOpen} aria-controls="life-dock-dialog" onClick={openLifeControls}><span>しまの ようす</span><i aria-hidden="true">↑</i></button></div>
+            {(error || notice) && <p className="life-dock-closed-notice" role="status">{error || notice}{error && <button type="button" onClick={() => openMenuTab(tab)}>ひらく</button>}</p>}
         </div>}
         {import.meta.env.DEV && <details className="life-dev"><summary>試作</summary><p>独立した試作の島です。通常の学習記録・旧島の所有物は変更しません。家の中は既存画面です。時間送りはこの島だけに作用します。</p>
             {[6, 24].map(hours => <button key={hours} disabled={locked} onClick={() => void refresh({ id: crypto.randomUUID(), revision: record.revision, advanceHours: hours as 6 | 24 })}>試作を {hours}時間すすめる</button>)}

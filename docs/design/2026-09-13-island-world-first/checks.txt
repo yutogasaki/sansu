@@ -1,0 +1,17 @@
+> npm run docs:check && npm run lint && npm run typecheck && npm run test:run && npm run build
+> pokko-fushigi-zukan-app@0.0.0 docs:check
+> node tools/check-docs.mjs
+PASS docs:check
+> pokko-fushigi-zukan-app@0.0.0 lint
+> eslint .
+> pokko-fushigi-zukan-app@0.0.0 typecheck
+> tsc -b --pretty false
+> vitest run
+ Test Files  351 passed (351)
+      Tests  3665 passed (3665)
+   Duration  122.08s (transform 7.18s, setup 0ms, collect 189.72s, tests 751.50s, environment 70ms, prepare 23.03s)
+> tsc -b && vite build && npm run assets:check
+> pokko-fushigi-zukan-app@0.0.0 assets:check
+> node tools/check-asset-budget.mjs
+PASS assets:check
+Smoke: 31 / 31 passed
