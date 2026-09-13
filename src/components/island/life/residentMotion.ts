@@ -32,7 +32,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
     const waterGaze = makeWaterGaze(state, heads, point);
     const feet = [content.heroFeet, content.rabbit.feet, content.otter.feet];
     const neutralFeet = feet.map(pair => pair.map(foot => foot.position.clone()));
-    let audit: { facilityUse?: { kind: 'library' | 'garden-hut'; action: 'reading' | 'tool-care' }; sandWork?: { form: 'mountain' | 'castle'; partnerId?: string; progress: number }; windLook?: ReturnType<typeof windGaze>; picnic?: ReturnType<typeof picnic.finish>; waterLook?: ReturnType<ReturnType<typeof makeWaterGaze>>; id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
+    let audit: { facilityUse?: { kind: 'library' | 'garden-hut'; action: 'reading' | 'tool-care' | 'carrying' }; sandWork?: { form: 'mountain' | 'castle'; partnerId?: string; progress: number }; windLook?: ReturnType<typeof windGaze>; picnic?: ReturnType<typeof picnic.finish>; waterLook?: ReturnType<ReturnType<typeof makeWaterGaze>>; id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
     return {
         audit: () => audit,
         snapshot: () => ({ ...(state.tourVersion ? visible : state), now: renderedAt,
@@ -138,7 +138,8 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                         actor.rotation.y = Math.atan2(position.x - previous.x, position.z - previous.z);
                     }
                 }
-                const reaction = residentReaction(state, resident, now), hop = reduced ? 0 : reaction?.hop ?? 0;
+                if (resident.facilityTrip?.phase === 'carry') (rig?.shoulders ?? heroArms).forEach(arm => { arm.rotation.x = -1; });
+                const reaction = resident.facilityTrip ? undefined : residentReaction(state, resident, now), hop = reduced ? 0 : reaction?.hop ?? 0;
                 position.y += hop;
                 actor.position.copy(position);
                 if (rig) {
@@ -171,11 +172,11 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
             audit.forEach((pose, index) => {
                 pose.facilityUse = facilityUse.get(pose.id);
                 pose.sandWork = sandWork.get(pose.id);
-                pose.relation = gaze(visible, now, reduced, index);
+                pose.relation = pose.facilityUse ? undefined : gaze(visible, now, reduced, index);
                 pose.picnic = picnic.finish(visible, now, index, reduced);
                 if (pose.picnic?.relation) pose.relation = pose.picnic.relation;
                 pose.waterLook = waterGaze(visible, now, reduced, index);
-                pose.windLook = windGaze(now, reduced, index, pose.phase);
+                pose.windLook = pose.facilityUse ? undefined : windGaze(now, reduced, index, pose.phase);
                 pose.headYaw = heads[index].rotation.y;
                 pose.headPitch = heads[index].rotation.x;
             });

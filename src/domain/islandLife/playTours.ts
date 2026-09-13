@@ -1,3 +1,4 @@
+import { reservedActivityCells } from './facilityTrips';
 import type { Cell, LifeItem, LifeState, ResidentId } from './model';
 import { districts, pathToActivity, sameCell } from './space';
 
@@ -37,7 +38,7 @@ export function planPlayTourDepartures(state: LifeState, requested: readonly Pen
     });
     const residents = pending.map(tour => state.residents.find(r => r.id === tour.residentId)!);
     const outside = state.residents.filter(r => !residents.includes(r));
-    const reserved = outside.map(r => r.visit ? endpoint(r.visit.path) : r.cell);
+    const reserved = [...outside.map(r => r.visit ? endpoint(r.visit.path) : r.cell), ...reservedActivityCells(state)];
     const options = pending.map((tour, index) => {
         const ids = tour.cursor.memberIds, after = ids.indexOf(tour.cursor.lastItemId);
         const visited = new Set(tour.cursor.visitedIds ?? [tour.cursor.lastItemId]);

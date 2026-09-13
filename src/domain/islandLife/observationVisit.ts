@@ -1,3 +1,4 @@
+import { reservedActivityCells, reservesItem } from './facilityTrips';
 import { LIFE_STEP_MS, type LifeState } from './model';
 import { pathToActivity } from './space';
 
@@ -8,7 +9,8 @@ export function observationVisit(state: LifeState, itemId: string) {
     if (!item) return { kind: 'unavailable' as const };
     const using = state.residents.find(resident => resident.visit?.itemId === itemId && state.now < resident.visit.end);
     if (using) return { kind: 'existing' as const, residentId: using.id };
-    const reserved = state.residents.flatMap(resident => resident.visit ? [resident.visit.path[resident.visit.path.length - 1]] : []);
+    if (state.residents.some(resident => reservesItem(resident, itemId))) return { kind: 'busy' as const };
+    const reserved = reservedActivityCells(state);
     const free = state.residents.filter(resident => !resident.visit && !(resident.id === 'pokomoko' && state.target))
         .flatMap(resident => {
             const path = pathToActivity(state, resident.cell, item, reserved);

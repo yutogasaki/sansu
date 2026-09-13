@@ -1,3 +1,5 @@
+import { assertFacilityCutover } from './facilityMigration';
+import { beginFacilityTrip, departFacilityTrip, reservedActivityCells, reservesItem } from './facilityTrips';
 import { isFacility, occupiesCell } from './footprint';
 import { applyLandExpansion, landReceipt } from './landRules';
 import { assertTourCutover } from './tourMigration';
@@ -54,6 +56,7 @@ export function planLifeResidentRoam(state: LifeState, resident: LifeResident, t
     for (const other of state.residents) if (other !== resident) {
         occupied.add(cellKey(residentCell(other, state.now)));
         other.visit?.path.forEach(point => occupied.add(cellKey(point)));
+        if (other.facilityTrip) occupied.add(cellKey(other.facilityTrip.path[other.facilityTrip.path.length - 1]));
     }
     const candidates = landCells(state).filter(target => {
         const key = cellKey(target);
@@ -100,7 +103,7 @@ function arrangeTours(s: LifeState) {
     const planned = planPlayTourDepartures(s, s.residents.flatMap(r => r.playTour ? [{ residentId: r.id, cursor: r.playTour }] : []));
     for (const id of planned.cancelled) {
         const resident = s.residents.find(r => r.id === id)!;
-        resident.cell = residentCell(resident, s.now); resident.visit = undefined; resident.playTour = undefined;
+        resident.cell = residentCell(resident, s.now); resident.visit = undefined; resident.playTour = undefined; resident.facilityTrip = undefined;
     }
     for (const departure of planned.departures) {
         const resident = s.residents.find(r => r.id === departure.residentId)!;
@@ -127,9 +130,9 @@ export function arrangeVisits(s: LifeState) {
         if (r.visit || r.playTour) continue;
         const choices = s.items.filter(i => i.cell && i.kind !== 'lantern' && i.kind !== 'pinwheel').flatMap(i => {
             if (i.kind === 'flower-arch' && (r.archCooldownUntil ?? 0) > s.now) return [];
-            const reserved = s.activityVersion === 2 || i.kind === 'picnic-table' || i.kind === 'flower-arch' || i.kind === 'sandbox' || isFacility(i.kind) ? s.residents.filter(other => other !== r && other.visit).map(other => other.visit!.path[other.visit!.path.length - 1]) : [];
+            const reserved = s.activityVersion === 2 || i.kind === 'picnic-table' || i.kind === 'flower-arch' || i.kind === 'sandbox' || isFacility(i.kind) ? reservedActivityCells(s, r.id) : [];
             const path = pathToActivity(s, r.cell, i, reserved); if (!path) return [];
-            const crowd = s.residents.filter(other => other.visit?.itemId === i.id).length;
+            const crowd = s.residents.filter(other => other !== r && reservesItem(other, i.id)).length;
             if (crowd >= (isFacility(i.kind) || isPlantsWater(i.kind) || i.kind === 'flower-arch' || i.kind === 'swing' || s.activityVersion === 2 && i.kind === 'bench' ? 1 : 2)) return [];
             const like = r.id === 'rabbit' ? i.kind === 'flower' : r.id === 'otter' ? i.kind === 'swing' : i.kind === 'bench';
             const lamp = s.items.some(l => l.kind === 'lantern' && l.cell && Math.abs(l.cell.x - i.cell!.x) + Math.abs(l.cell.z - i.cell!.z) <= 2);
@@ -149,6 +152,7 @@ export function arrangeVisits(s: LifeState) {
         const chosen = requested ? requested
             : choices.find(c => (dice -= c.weight) <= 0) ?? choices[0];
         r.visit = { itemId: chosen.item.id, path: chosen.path, from: { ...r.cell }, start: s.now, end: s.now + (chosen.item.kind === 'flower-arch' ? (chosen.path.length - 1) * LIFE_STEP_MS + 400 : LIFE_RULES.activityMs) };
+        beginFacilityTrip(s, r, chosen.item);
         const members = s.tourVersion && !requested ? playTourMembers(s, chosen.item.id) : undefined;
         if (members) {
             r.playTour = { memberIds: members, lastItemId: chosen.item.id, remainingMs: LIFE_RULES.activityMs };
@@ -187,8 +191,10 @@ export function advanceLifeState(s: LifeState, to: number) {
             awardUse(s, r, 'swing'); r.playTour.remainingMs = LIFE_RULES.activityMs;
         }
         for (const r of s.residents) if (r.visit && r.visit.end <= next) {
+            if (departFacilityTrip(s, r)) continue;
             const visit = r.visit, kind = s.items.find(i => i.id === visit.itemId)?.kind;
             r.cell = visit.path[visit.path.length - 1]; r.visit = undefined;
+            r.facilityTrip = undefined;
             if (kind === 'flower-arch') {
                 r.archCooldownUntil = s.now + LIFE_RULES.activityMs;
                 if (r.id === 'pokomoko' && s.target === visit.itemId) s.target = undefined;
@@ -220,7 +226,7 @@ export function applyCommand(s: LifeState, event: LifeAction) {
             const interested = hash(`${event.id}:${r.id}`) % 10 < (likes ? 10 : close ? 7 : 3);
             if (!interested || r.id === 'pokomoko' && s.target) continue;
             r.discovery = { itemId: item.id, at: s.now, mood: likes || close ? 'notice' : 'curious' };
-            r.cell = residentCell(r, s.now); r.visit = undefined; r.playTour = undefined;
+            r.cell = residentCell(r, s.now); r.visit = undefined; r.playTour = undefined; r.facilityTrip = undefined;
         }
     } else if (c.type === 'expand') {
         applyLandExpansion(s, event);
@@ -239,7 +245,7 @@ export function applyCommand(s: LifeState, event: LifeAction) {
             if (plan.kind === 'unavailable') fail('いまは ここで ためせないよ。');
             if (plan.kind === 'ready') {
                 const resident = s.residents.find(resident => resident.id === plan.residentId)!;
-                resident.playTour = undefined;
+                resident.playTour = undefined; resident.facilityTrip = undefined;
                 resident.visit = { itemId: item.id, from: { ...resident.cell }, path: plan.path,
                     start: s.now, end: s.now + plan.duration, observationTest: true };
             }
@@ -251,18 +257,18 @@ export function applyCommand(s: LifeState, event: LifeAction) {
             const hero = s.residents[0];
             if (hero.visit?.itemId !== item.id) {
                 if (hero.visit) hero.cell = residentCell(hero, s.now);
-                hero.visit = undefined; hero.playTour = undefined;
+                hero.visit = undefined; hero.playTour = undefined; hero.facilityTrip = undefined;
             }
             if (changed && s.activityVersion === 2) for (const other of s.residents.slice(1)) {
                 // One invitation per new destination. The resident still chooses
                 // their own reachable, uncrowded place; no instant light is paid.
                 const interested = hash(`${event.id}:${other.id}`) % 10 < 7;
-                if (interested && other.visit?.itemId !== item.id) { other.cell = residentCell(other, s.now); other.visit = undefined; other.playTour = undefined; }
+                if (interested && other.visit?.itemId !== item.id) { other.cell = residentCell(other, s.now); other.visit = undefined; other.playTour = undefined; other.facilityTrip = undefined; }
             }
         } else {
             if (c.type === 'move' && !usablePlacement(s, item.id, c.cell)) fail('そこには おけないよ。みちを あけてね。');
             // Reroute all walkers after any edit; interrupted visits never yield light.
-            for (const r of s.residents) { r.cell = s.activityVersion === 2 ? residentCell(r, s.now) : { ...homeCell }; r.visit = undefined; r.playTour = undefined; r.discovery = undefined; }
+            for (const r of s.residents) { r.cell = s.activityVersion === 2 ? residentCell(r, s.now) : { ...homeCell }; r.visit = undefined; r.playTour = undefined; r.facilityTrip = undefined; r.discovery = undefined; }
             if (c.type === 'remove') { s.items = s.items.filter(i => i.id !== item.id); s.drops += removalRefund(item); }
             else item.cell = c.type === 'move' ? c.cell : undefined;
             if (c.type === 'move' && s.activityVersion === 2 && ['bench', 'swing'].includes(item.kind)) item.access = 'front';
@@ -272,21 +278,21 @@ export function applyCommand(s: LifeState, event: LifeAction) {
     // Edits must also invalidate paths planned before a new obstacle was bought.
     for (const r of s.residents) {
         const occupied = (p: typeof r.cell) => s.items.some(i => blocksWalking(i) && occupiesCell(i, p));
-        if (r.visit && r.visit.path.some(occupied)) {
+        if (r.visit && (r.visit.path.some(occupied) || r.facilityTrip?.path.some(occupied))) {
             r.cell = residentCell(r, s.now);
-            r.visit = undefined; r.playTour = undefined;
+            r.visit = undefined; r.playTour = undefined; r.facilityTrip = undefined;
         }
-        if (occupied(r.cell)) { r.cell = { ...homeCell }; r.visit = undefined; r.playTour = undefined; }
+        if (occupied(r.cell)) { r.cell = { ...homeCell }; r.visit = undefined; r.playTour = undefined; r.facilityTrip = undefined; }
     }
     arrangeVisits(s);
 }
 export function replayLife(record: LifeRecord, to = record.now): LifeState {
     if (!readableLifeVersion(record.version)) throw new Error('この島のデータは新しい版で開いてください。');
     const checkpoint = record.economyCheckpoint;
-    assertCheckpointBoundary(record); assertTourCutover(record);
+    assertCheckpointBoundary(record); assertTourCutover(record); assertFacilityCutover(record);
     if (record.actions.some(action => action.command.type === 'buy' && action.command.kind === 'sandbox') && record.version < 9) throw new Error('砂場の保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isFacility(action.command.kind)) && record.version < 10) throw new Error('建物の保存版を確認できません。');
-    if (record.actions.some(action => action.landReceipt) && ![5, 6, 7, 8, 9, 10].includes(record.version)) throw new Error('土地の保存版を確認できません。');
+    if (record.actions.some(action => action.landReceipt) && ![5, 6, 7, 8, 9, 10, 11].includes(record.version)) throw new Error('土地の保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isWindArch(action.command.kind)) && record.version < 8) throw new Error('風車とアーチの保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && action.command.kind === 'picnic-table') && record.version < 7) throw new Error('テーブルの保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isPlantsWater(action.command.kind)) && record.version < 6) throw new Error('新しい物の保存版を確認できません。');
@@ -296,11 +302,12 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
     const credits = checkpoint ? record.credits.filter(credit => !known.has(credit.id)) : record.credits;
     if (checkpoint && credits.some(credit => credit.at <= checkpoint.cutoverAt)) throw new Error('以前の学習を反映してから島を開いてね。');
     const actions = checkpoint ? record.actions.slice(checkpoint.actionCount) : record.actions;
-    const events = [...credits.map(c => ({ at: c.at, credit: c, action: undefined, switchVersion: false, switchTour: false, rank: 0 })),
-        ...actions.map((a, index) => ({ at: a.at, credit: undefined, action: a, switchVersion: false, switchTour: false,
-            rank: record.tourCutover && a.at === record.tourCutover.at && index + (checkpoint?.actionCount ?? 0) < record.tourCutover.actionCount ? 1.25 : a.at === record.activitiesV2At && index < (record.activitiesV2After ?? 0) ? .5 : 2 })),
-        ...(checkpoint || record.activitiesV2At === undefined ? [] : [{ at: record.activitiesV2At, credit: undefined, action: undefined, switchVersion: true, switchTour: false, rank: 1 }]),
-        ...(record.tourCutover ? [{ at: record.tourCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: true, rank: 1.5 }] : [])]
+    const events = [...credits.map(c => ({ at: c.at, credit: c, action: undefined, switchVersion: false, switchTour: false, switchFacility: false, rank: 0 })),
+        ...actions.map((a, index) => ({ at: a.at, credit: undefined, action: a, switchVersion: false, switchTour: false, switchFacility: false,
+            rank: record.tourCutover && a.at === record.tourCutover.at && index + (checkpoint?.actionCount ?? 0) < record.tourCutover.actionCount ? 1.25 : record.facilityCutover && a.at === record.facilityCutover.at && index + (checkpoint?.actionCount ?? 0) < record.facilityCutover.actionCount ? 1.75 : a.at === record.activitiesV2At && index < (record.activitiesV2After ?? 0) ? .5 : 2 })),
+        ...(checkpoint || record.activitiesV2At === undefined ? [] : [{ at: record.activitiesV2At, credit: undefined, action: undefined, switchVersion: true, switchTour: false, switchFacility: false, rank: 1 }]),
+        ...(record.tourCutover ? [{ at: record.tourCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: true, switchFacility: false, rank: 1.5 }] : []),
+        ...(record.facilityCutover ? [{ at: record.facilityCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: false, switchFacility: true, rank: 1.875 }] : [])]
         .sort((a, b) => a.at - b.at || a.rank - b.rank);
     const credited = new Set<string>();
     for (const event of events) {
@@ -317,6 +324,7 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
             for (const r of s.residents) { r.cell = residentCell(r, s.now); r.visit = undefined; }
             arrangeVisits(s);
         } else if (event.switchTour) { s.tourVersion = 1; s.roamRound = 0; }
+        else if (event.switchFacility) { s.facilityTripVersion = 1; }
         else if (event.action) applyCommand(s, event.action);
     }
     advanceLifeState(s, Math.max(s.now, to)); return s;
@@ -339,5 +347,5 @@ export function commandLife(record: LifeRecord, command: LifeCommand, id: string
     const state = replayLife(record, now);
     if (command.type === 'expand' && record.tourCutover) event.landReceipt = landReceipt(state, event);
     applyCommand(state, event);
-    return { ...record, version: record.version === 10 || command.type === 'buy' && isFacility(command.kind) ? 10 : record.version === 9 || command.type === 'buy' && command.kind === 'sandbox' ? 9 : record.version === 8 || command.type === 'buy' && isWindArch(command.kind) ? 8 : record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
+    return { ...record, version: record.version === 11 ? 11 : record.version === 10 || command.type === 'buy' && isFacility(command.kind) ? 10 : record.version === 9 || command.type === 'buy' && command.kind === 'sandbox' ? 9 : record.version === 8 || command.type === 'buy' && isWindArch(command.kind) ? 8 : record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
 }

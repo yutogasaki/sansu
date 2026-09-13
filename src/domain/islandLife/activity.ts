@@ -59,6 +59,9 @@ export function activityPhase(state: LifeState, resident: LifeResident, now: num
 }
 export function activityLabel(state: LifeState, resident: LifeResident, now: number) {
     const phase = activityPhase(state, resident, now);
+    if (resident.facilityTrip?.phase === 'carry') return phase === 'walking'
+        ? resident.facilityTrip.kind === 'library' ? 'ほんを はこんでいる' : 'どうぐを はこんでいる'
+        : resident.facilityTrip.kind === 'library' ? 'ほんを よんでいる' : 'しょくぶつを おていれ';
     return phase === 'walking' ? 'てくてく むかっている' : phase === 'flower' ? 'おはなの かおりを くんくん'
         : phase === 'swing' ? 'ブランコで ゆらゆら' : phase === 'bench' ? 'すわって ひとやすみ'
         : phase === 'sapling' ? '木の そばで ひとやすみ' : phase === 'water-bowl' ? '水を そっと のぞいている'

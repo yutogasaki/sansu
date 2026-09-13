@@ -1,3 +1,4 @@
+import { prepareFacilityMigration } from './facilityMigration';
 import { prepareTourMigration } from './tourMigration';
 import { prepareEconomyMigration, reconcileLegacyCredits } from './economyMigration';
 import { placementUndo } from './placementUndo';
@@ -96,6 +97,7 @@ export async function updateLife(profileId: string, facts: TerminalFact[], inten
         // watermark and active version together. WebCrypto cannot let IDB expire.
         next = await Dexie.waitFor(next.economyCheckpoint ? reconcileLegacyCredits(next) : prepareEconomyMigration(next, facts, previous));
         next = await Dexie.waitFor(prepareTourMigration(next));
+        next = await Dexie.waitFor(prepareFacilityMigration(next));
         if (intent?.command) next = commandLife(next, intent.command, intent.id, next.now, intent.undoOf);
         replayLife(next); // Reject invalid transactions before any write.
         await database.worlds.put(next); return next;

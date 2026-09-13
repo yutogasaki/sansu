@@ -8,6 +8,8 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 
 ## Current Commands
 
+`node tools/e2e-island-facility-trips-v3.mjs` は `SANSU_TRIPS_URL` と新しい `SANSU_TRIPS_OUTPUT` を指定する。DEVのphone/tabletで図書室/ベンチと小屋/花を実購入し、入口→同一住民の運搬→利用、再読込保持、収納取消、学習正本/残高保持と学習入力復帰を確認する。100件のQA creditと、施設を呼び先にして相手の配置を確定し直す明示操作であり、自然初回発見・実取得・子どもの理解・R5/R6記録の検証とは区別する。
+
 `node tools/e2e-island-life-world-first.mjs` は `SANSU_WORLD_FIRST_URL` と新規 `SANSU_WORLD_FIRST_OUTPUT` を指定。4サイズの実画面で絵付き操作の44px/hit、残高・世界・操作の分離、全景/近景/zoom復帰、情報面とカメラの排他、7秒の完了文と自動で消えない保存失敗、再試行、配置取消と学習復帰を確認する。花4個/ベンチと残高は明示native fixtureで、実取得や子どもの理解とは区別する。`SANSU_WORLD_FIRST_BROWSER=webkit` と `SANSU_WORLD_FIRST_WIDTH` で対象を限定できる。
 
 | Command | Purpose |
