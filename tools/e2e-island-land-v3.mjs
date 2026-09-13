@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { seedDev, readNative } from './island-e2e-helpers.mjs';
+import { seedDev, readNative, waitForAsync } from './island-e2e-helpers.mjs';
 const base = process.env.SANSU_LAND_URL ?? 'http://127.0.0.1:5223', out = process.env.SANSU_LAND_OUTPUT;
 assert(out, 'Specify fresh SANSU_LAND_OUTPUT'); await mkdir(out, { recursive: false });
 async function sourceHash() {
@@ -55,7 +55,7 @@ try {
                 const confirm = page.getByRole('button', { name: `ここを ひろげる ${expectedPrices[step]} しずく`, exact: true });
                 await confirm.scrollIntoViewIfNeeded(); await page.screenshot({ path: `${out}/${device}-proposal-${step + 1}.png` });
                 await confirm.click();
-                await page.waitForFunction(async ({ id, count }) => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return (await lifeDb.worlds.get(id)).actions.filter(a => a.command.type === 'expand').length === count; }, { id: profileId, count: step + 1 });
+                await waitForAsync(page, async ({ id, count }) => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return (await lifeDb.worlds.get(id)).actions.filter(a => a.command.type === 'expand').length === count; }, { id: profileId, count: step + 1 });
             }
             await page.waitForFunction(() => document.querySelectorAll('[data-life-map-cell]').length === 96 && !document.querySelector('[data-proposed="true"]'));
             const expanded = await saved(page, profileId); assert.equal(expanded.record.version, 5); assert.equal(expanded.state.drops, 36);
@@ -75,7 +75,7 @@ try {
                 await page.locator(`[data-life-placement-cell="${cell.x},${cell.z}"][data-life-placement-valid="true"]`).waitFor();
                 await page.screenshot({ path: `${out}/${device}-place-${cell.x}.png` });
                 await page.getByRole('button', { name: 'ここに おく', exact: true }).click();
-                await page.waitForFunction(async ({ id, cell }) => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); const { replayLife } = await import('/src/domain/islandLife/simulation.ts'); return replayLife(await lifeDb.worlds.get(id)).items.some(i => i.cell?.x === cell.x && i.cell?.z === cell.z); }, { id: profileId, cell });
+                await waitForAsync(page, async ({ id, cell }) => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); const { replayLife } = await import('/src/domain/islandLife/simulation.ts'); return replayLife(await lifeDb.worlds.get(id)).items.some(i => i.cell?.x === cell.x && i.cell?.z === cell.z); }, { id: profileId, cell });
                 await closeMenu(page);
             }
             await page.reload(); await page.locator('.life-world[data-rendered="true"]').waitFor();

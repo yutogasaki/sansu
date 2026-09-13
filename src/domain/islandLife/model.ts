@@ -57,6 +57,9 @@ export interface LifeResident {
 export type LifeWorldStyle = 'moon-garden-v1' | 'canopy-dots-c3-v1';
 export interface LifeState {
     worldStyle?: LifeWorldStyle;
+    landscapeVersion?: 'groves-water-v1';
+    poseReducedMotion?: boolean;
+    waterFocus?: { residentId: ResidentId; itemId: string; targetId: string; ready: boolean; focus: number[] }[];
     extraLand?: LandSide[];
     tourVersion?: 1;
     scenePose?: 'captured-v1';

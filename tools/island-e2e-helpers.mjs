@@ -235,3 +235,15 @@ export async function assertKeypad(page, requireViewport = true) {
 }
 
 export const percentile = (values, fraction) => [...values].sort((a, b) => a - b)[Math.max(0, Math.ceil(values.length * fraction) - 1)] ?? null;
+
+/** Playwright 1.58.1 waitForFunction tests the returned Promise as truthy before
+ * its resolved value. Await async IndexedDB/import predicates on the Node side. */
+export async function waitForAsync(page, predicate, argument, timeoutMs = 45000) {
+    const deadline = Date.now() + timeoutMs;
+    do {
+        const result = await page.evaluate(predicate, argument);
+        if (result) return result;
+        await page.waitForTimeout(100);
+    } while (Date.now() < deadline);
+    throw new Error('Async island condition did not become true before the deadline');
+}

@@ -26,6 +26,10 @@ description: Run and interpret Sansu's required verification flow after substant
 - For normal production-preview journeys, allow service workers; explicitly blocking them is a separate fault diagnostic and can itself produce registration errors. For a static/on-demand WebGL view, capture the visible canvas with a browser screenshot after a real rendered frame; a later `toDataURL()` may read an already-cleared drawing buffer. Before touch navigation beside a sticky canvas, scroll the whole control into the unobscured area and verify the actual hit target. Keep the first failed trace when correcting these harness assumptions.
 - Before rerunning a long journey, classify the first failure as application behavior, harness assumptions, or environment. Capture the underlying exception and actual screen/route/save state. A failed locator after a successful save is not evidence of a failed save; reload may correctly retain a detail route. Prefer role/name or test-ID locators; never concatenate an unescaped JSON-shaped record ID into CSS. Keep application and corrected-harness versions distinct.
 
+## Async browser waits
+
+- With the pinned Playwright 1.58.1 runtime, do not pass an async predicate to `page.waitForFunction`. Its injected poller treats the returned Promise as truthy before its resolved boolean; a false DB result can therefore finish the wait. Use `waitForAsync` from `tools/island-e2e-helpers.mjs` for async imports/IndexedDB checks, or use a synchronous DOM predicate. Keep subsequent state assertions. This was diagnosed from the local `playwright-core/lib/server/frames.js` poller during the grove/water journey; do not relabel the resulting premature read as a lost app write.
+
 ## Verify the intended commit
 
 - In a shared dirty checkout, distinguish current working contents from the staged commit. Inspect ownership and `git diff --cached --name-only`; stage only authorized paths, including the exact required durable evidence files. Do not stage another task's work to make a check pass.

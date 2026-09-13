@@ -207,3 +207,12 @@ core PASS（371 files /3783 tests、docs/lint/typecheck/build/assets）。[実UI
 
 
 - 固定source `725d43e354a39aa39a8cee1b09ba00bb217d9d56a759d7b3551a253cd355893b` で両幅PASS。[木の苗・水鉢の実画面](../../design/2026-09-13-island-plants-water/README.md)。苗/若木/成木、木M2の表示記録、通常波紋と報酬/記録不変、再読込保持、学習復帰。core373 files /3790 tests PASS。DEV基礎の技術checkpointとしてcommitし、視覚HOLD・Human N=0・Bの各まとまり/関係/残り6品・release未完を継続する。
+
+
+## 木立・水辺のDEV接続
+
+- GT3/GT6/GW2を `groves-water-v1` に接続。木陰・樹冠のつながり・水辺の縁、木陰での休みと水鉢の見比べを実装。キャラクター造形と旧の訪問選択/成長/報酬/占有・経路を維持する。
+- 旧snapshotは旧土・姿勢・hashを保持。新snapshotに実表示のmotion設定と水面視線を保存し、再生側が反対motion設定でも当時の姿勢を保つ。
+- [実画面と比較資料](../../design/2026-09-13-island-groves-water/README.md)。最終core375 files /3801 tests PASS、固定sourceのphone/tabletで実liveGT6/GW2、実収納GT3、undo、再読込、記録/学習正本不変、学習入力復帰PASS。source `cf3573fdf297a74023880823338750ef7945bf0d1edfe2b2cd39ee45dcd18c9e`。
+- 初回はasync waitForFunctionのPromise早期終了をローカルPlaywright pollerから診断し共有waitForAsyncへ修正。2回目は葉で隠れた冗長な内部境界を必須とする可視判定を、実可視の接続で全木をたどれる判定へ修正。3回目は診断中source変更を検知し除外、固定4回目だけを最終証拠とする。
+- 視覚HOLD（矩形の陰・単純な苗木の葉・C3の光と奥行きに未達）、無文字理解Human N=0、DEV runtime対象範囲PASSを別判定。次はR4水鉢/ベンチとR2用机を含む残り6品、魔法/出会い。C3品質、全PWA/offline/update/throughput/全smoke/実機性能は全体受入の残件。

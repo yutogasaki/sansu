@@ -1,3 +1,4 @@
+import { buildExtendedGround } from './extendedGround';
 import { landBounds } from '../../../domain/islandLife/landRules';
 import * as T from 'three';
 import { batch, ellipsoid } from '../three/primitives';
@@ -120,8 +121,9 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
 
     // Young plants already change the ground. Keep their low soil edge distinct
     // from a mature bed, and never draw two surfaces over the same mature cell.
+    const extended = buildExtendedGround(state, point, paint); root.add(extended.root, extended.crowns);
     const young = new T.Group(); young.name = 'life-young-plant-ground'; root.add(young);
-    const matureCells = new Set(districts(state).filter(d => d.kind === 'flowers').flatMap(d => d.cells.map(cellKey)));
+    const matureCells = new Set([...districts(state).filter(d => d.kind === 'flowers').flatMap(d => d.cells.map(cellKey)), ...extended.mature]);
     const soilPiece = (x: number, z: number, w: number, d: number, edge: boolean) => {
         const mesh = new T.Mesh(new T.BoxGeometry(w, edge ? .022 : .012, d), paint(edge ? '#b29a72' : '#c4ad85'));
         mesh.position.set(x, edge ? .063 : .055, z); mesh.receiveShadow = true; young.add(mesh);

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
-import { readNative } from './island-e2e-helpers.mjs';
+import { readNative, waitForAsync } from './island-e2e-helpers.mjs';
 import { attempt } from './island-learning-checks.mjs';
 const candidate = process.env.SANSU_DISCOVERY_CANDIDATE ?? 'island-life-economy-checkpoint-v3';
 const base = process.env.SANSU_DISCOVERY_DEV_URL ?? 'http://127.0.0.1:5223';
@@ -130,7 +130,7 @@ try {
             await page.waitForFunction(() => document.querySelector('.life-observation-view')?.dataset.magic === 'leaves'
                 && Number(document.querySelector('.life-observation-view')?.dataset.magicElapsed) >= 800);
             await page.screenshot({ path: `${out}/${name}-recall-leaves.png` });
-            await page.waitForFunction(async () => {
+            await waitForAsync(page, async () => {
                 const { lifeDb } = await import('/src/domain/islandLife/repository.ts');
                 return (await lifeDb.worlds.toArray())[0].discoveryJournal.entries.some(entry => entry.event.source === 'replay');
             });
@@ -153,7 +153,7 @@ try {
             await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'もちもの', exact: true }).click();
             await page.locator('[data-life-item]').first().click();
             await page.getByRole('button', { name: 'しまう', exact: true }).click();
-            await page.waitForFunction(async () => {
+            await waitForAsync(page, async () => {
                 const { lifeDb } = await import('/src/domain/islandLife/repository.ts');
                 const { replayLife } = await import('/src/domain/islandLife/simulation.ts');
                 return !replayLife((await lifeDb.worlds.toArray())[0]).items[0].cell;

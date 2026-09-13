@@ -21,5 +21,6 @@ export function discoveryTitle(event: DiscoveryScene) {
         return plant?.kind === 'flower' && growthStage(plant) === 2 ? 'はなびらが うえへ' : 'はっぱが うえへ';
     }
     return { G0: 'つながった つち', GF3: 'あつまった おはな', GF6: 'ひろがった おはな',
+        GT3: 'つながった 木かげ', GT6: 'ひろがった 木かげ', GW2: 'ならんだ 水べ',
         GP2: 'ならんだ あそびば', GP3: 'ひろがった あそびば', R1: 'おはなの そばの ベンチ', R3: 'ブランコの そばの ベンチ' }[event.ruleId];
 }

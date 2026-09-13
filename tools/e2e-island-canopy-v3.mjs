@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { seedDev, readNative } from './island-e2e-helpers.mjs';
+import { seedDev, readNative, waitForAsync } from './island-e2e-helpers.mjs';
 const out = process.env.SANSU_CANOPY_OUTPUT, base = process.env.SANSU_CANOPY_URL ?? 'http://127.0.0.1:5223';
 assert(out, 'Specify a fresh SANSU_CANOPY_OUTPUT'); await mkdir(out, { recursive: false });
 async function sourceHash() {
@@ -41,7 +41,7 @@ try {
             const native = await readNative(page, profileId);
             const read = () => page.evaluate(async profileId => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return lifeDb.worlds.get(profileId); }, profileId);
             const before = await read();
-            await page.waitForFunction(async profileId => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return (await lifeDb.worlds.get(profileId))?.discoveryJournal?.entries.some(e => e.event.source === 'live' && e.event.snapshot.scene.worldStyle === 'canopy-dots-c3-v1'); }, profileId);
+            await waitForAsync(page, async profileId => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return (await lifeDb.worlds.get(profileId))?.discoveryJournal?.entries.some(e => e.event.source === 'live' && e.event.snapshot.scene.worldStyle === 'canopy-dots-c3-v1'); }, profileId);
             await page.screenshot({ path: `${out}/${device}-current.png` });
             await page.getByRole('button', { name: 'しまの ようす', exact: true }).click();
             await page.getByRole('button', { name: 'しまの おもいで', exact: true }).click();

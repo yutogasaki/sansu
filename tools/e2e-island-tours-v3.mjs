@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { seedDev, readNative } from './island-e2e-helpers.mjs';
+import { seedDev, readNative, waitForAsync } from './island-e2e-helpers.mjs';
 const base = process.env.SANSU_TOURS_URL ?? 'http://127.0.0.1:5223', out = process.env.SANSU_TOURS_OUTPUT;
 assert(out, 'Specify fresh SANSU_TOURS_OUTPUT'); await mkdir(out, { recursive: false });
 async function sourceHash() {
@@ -65,7 +65,7 @@ try {
             await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'もちもの', exact: true }).click();
             await page.locator('[data-life-item="qa-swing-0"]').click();
             await page.getByRole('button', { name: 'しまう', exact: true }).click();
-            await page.waitForFunction(async profileId => {
+            await waitForAsync(page, async profileId => {
                 const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); const { replayLife } = await import('/src/domain/islandLife/simulation.ts');
                 const state = replayLife(await lifeDb.worlds.get(profileId)); return !state.items.find(i => i.id === 'qa-swing-0').cell && state.residents.every(r => !r.playTour);
             }, profileId);

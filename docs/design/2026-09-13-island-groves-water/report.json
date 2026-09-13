@@ -1,0 +1,315 @@
+{
+  "startHash": "cf3573fdf297a74023880823338750ef7945bf0d1edfe2b2cd39ee45dcd18c9e",
+  "revision": "279680a046ca9d796db936d5c8c5ae2809e14dd0",
+  "target": "http://127.0.0.1:5223",
+  "candidate": "groves-water-v1",
+  "world": "canopy-dots-c3-v1",
+  "flags": "DEV VITE_ISLAND_LIFE_PREVIEW=true",
+  "fixture": "20 QA credits, six mature trees, two bowls and explicit hero destination; seeded simulated pre-grove G0 memory, not a claimed prior live capture",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "live": {
+        "poses": [
+          {
+            "id": "pokomoko",
+            "itemId": "qa-water-0",
+            "phase": "water-bowl",
+            "position": [
+              1.5,
+              0.04,
+              0.62
+            ],
+            "hop": 0,
+            "headPitch": 0.15802192494080555,
+            "headRoll": 0,
+            "waterLook": {
+              "itemId": "qa-water-0",
+              "targetId": "qa-water-0",
+              "ready": false,
+              "focus": [
+                2.2946222734372226,
+                0.27,
+                0
+              ]
+            },
+            "headYaw": -0.9627578912521505
+          },
+          {
+            "id": "rabbit",
+            "itemId": "qa-tree-5",
+            "phase": "sapling",
+            "position": [
+              0.06,
+              0.04,
+              1
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": -0.03408049698395031,
+            "headYaw": 0
+          },
+          {
+            "id": "otter",
+            "itemId": "qa-tree-3",
+            "phase": "walking",
+            "position": [
+              -2.291450436652429,
+              0.04,
+              2
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          }
+        ],
+        "groups": [
+          {
+            "ruleId": "GT6",
+            "ids": [
+              "qa-tree-0",
+              "qa-tree-1",
+              "qa-tree-2",
+              "qa-tree-3",
+              "qa-tree-4",
+              "qa-tree-5"
+            ],
+            "core": true
+          },
+          {
+            "ruleId": "GW2",
+            "ids": [
+              "qa-water-0",
+              "qa-water-1"
+            ],
+            "core": false,
+            "reason": "water-comparison-not-visible"
+          }
+        ]
+      },
+      "replay": {
+        "at": 1789281406133.1,
+        "core": true,
+        "status": "busy",
+        "poses": [
+          {
+            "id": "pokomoko",
+            "itemId": "qa-water-0",
+            "phase": "water-bowl",
+            "position": [
+              1.5,
+              0.04,
+              0.62
+            ],
+            "hop": 0,
+            "headPitch": 0.1745827688026609,
+            "headRoll": 0,
+            "waterLook": {
+              "itemId": "qa-water-0",
+              "targetId": "qa-water-1",
+              "ready": true,
+              "focus": [
+                2.5,
+                0.27,
+                0
+              ]
+            },
+            "headYaw": -1.04319256252441
+          },
+          {
+            "id": "rabbit",
+            "itemId": "qa-tree-5",
+            "phase": "sapling",
+            "position": [
+              0.06,
+              0.04,
+              1
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0.005477752001624277,
+            "headYaw": 0
+          },
+          {
+            "id": "otter",
+            "itemId": "qa-tree-3",
+            "phase": "walking",
+            "position": [
+              0.0569449824428192,
+              0.04,
+              2
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          }
+        ],
+        "preparation": "ready",
+        "eventId": "80a2d022-358a-43d1-834e-45d512730313",
+        "delivered": true,
+        "maxGap": 844.2000000476837,
+        "epoch": 1
+      },
+      "groveId": "8c062be5-e5be-4c00-946e-48eb5949c25e",
+      "waterId": "d0b87e9f-0c98-4065-9661-8fb1dc897ade",
+      "oldHash": "09df4004e2f910387d202f84d06dd7c41a05a461acbce8607a3152fb8820f8d7",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "device": "tablet",
+      "live": {
+        "poses": [
+          {
+            "id": "pokomoko",
+            "itemId": "qa-water-0",
+            "phase": "water-bowl",
+            "position": [
+              1.5,
+              0.04,
+              0.62
+            ],
+            "hop": 0,
+            "headPitch": 0.15479261548432313,
+            "headRoll": 0,
+            "waterLook": {
+              "itemId": "qa-water-0",
+              "targetId": "qa-water-1",
+              "ready": true,
+              "focus": [
+                2.5,
+                0.27,
+                0
+              ]
+            },
+            "headYaw": -1.0536292440277193
+          },
+          {
+            "id": "rabbit",
+            "itemId": "qa-tree-5",
+            "phase": "sapling",
+            "position": [
+              0.06,
+              0.04,
+              1
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          },
+          {
+            "id": "otter",
+            "itemId": "qa-tree-3",
+            "phase": "walking",
+            "position": [
+              -2.349135206040504,
+              0.04,
+              2
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          }
+        ],
+        "groups": [
+          {
+            "ruleId": "GT6",
+            "ids": [
+              "qa-tree-0",
+              "qa-tree-1",
+              "qa-tree-2",
+              "qa-tree-3",
+              "qa-tree-4",
+              "qa-tree-5"
+            ],
+            "core": true
+          },
+          {
+            "ruleId": "GW2",
+            "ids": [
+              "qa-water-0",
+              "qa-water-1"
+            ],
+            "core": true
+          }
+        ]
+      },
+      "replay": {
+        "at": 1789281511771,
+        "core": true,
+        "status": "busy",
+        "poses": [
+          {
+            "id": "pokomoko",
+            "itemId": "qa-water-0",
+            "phase": "water-bowl",
+            "position": [
+              1.5,
+              0.04,
+              0.62
+            ],
+            "hop": 0,
+            "headPitch": 0.15479261548432313,
+            "headRoll": 0,
+            "waterLook": {
+              "itemId": "qa-water-0",
+              "targetId": "qa-water-1",
+              "ready": true,
+              "focus": [
+                2.5,
+                0.27,
+                0
+              ]
+            },
+            "headYaw": -1.0536292440277193
+          },
+          {
+            "id": "rabbit",
+            "itemId": "qa-tree-5",
+            "phase": "walking",
+            "position": [
+              0.5,
+              0.04,
+              0.02137787744341546
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          },
+          {
+            "id": "otter",
+            "itemId": "qa-tree-3",
+            "phase": "walking",
+            "position": [
+              -0.40997794822410283,
+              0.04,
+              -1
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          }
+        ],
+        "preparation": "ready",
+        "eventId": "16a01ee5-217e-49af-bcce-ecafcf578b15",
+        "delivered": true,
+        "maxGap": 975.7000000476837,
+        "epoch": 1
+      },
+      "groveId": "1ae666c8-f956-460b-878c-6de0a70c16e9",
+      "waterId": "b5855ffb-b552-43c7-b90b-44d9bc8c76dd",
+      "oldHash": "6b17d502b606a0c43d31df2a8f259e8ea3c99cbc74513fe54236c5090ca84a91",
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "cf3573fdf297a74023880823338750ef7945bf0d1edfe2b2cd39ee45dcd18c9e"
+}

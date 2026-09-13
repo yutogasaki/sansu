@@ -115,6 +115,7 @@ export default function LifeWorld({ profileId, presented, state, selected, cell,
             if (content) { scene.remove(content.root); content.dispose(); }
             content = buildLifeScene(next, selection, point, preview); scene.add(content.root);
             node.dataset.lifeWorldStyle = content.root.userData.worldStyle;
+            node.dataset.lifeLandscapeVersion = next.landscapeVersion ?? 'original';
             node.dataset.lifeTourVersion = String(next.tourVersion ?? 0);
             resize();
         };
@@ -184,11 +185,14 @@ export default function LifeWorld({ profileId, presented, state, selected, cell,
                         const x = rect.left + (ndc.x + 1) / 2 * rect.width, y = rect.top + (1 - ndc.y) / 2 * rect.height;
                         return rect.width > 0 && rect.height > 0 && x >= 0 && x <= innerWidth && y >= 0 && y <= innerHeight && node.contains(document.elementFromPoint(x, y));
                     };
-                    const gatherings = rules.map(rule => ({ rule, key: rule.semanticSignature,
-                        core: gatheringVisible(stateAtFrame, rule, content!.root, camera, content!.point, onScreen) }));
+                    const gatherings = rules.map(rule => {
+                        let reason: string | undefined;
+                        const core = gatheringVisible(stateAtFrame, rule, content!.root, camera, content!.point, onScreen, value => { reason = value; });
+                        return { rule, key: rule.semanticSignature, core, reason };
+                    });
                     const relations = liveRelations(stateAtFrame, discoveryOwner!, content, camera, onScreen);
                     collector.sampleCandidates(stateAtFrame, [...gatherings, ...relations], performance.now(), Date.now());
-                    node.dataset.lifeGatherings = JSON.stringify(gatherings.map(({ rule, core }) => ({ ruleId: rule.ruleId, ids: rule.participantIds, core })));
+                    node.dataset.lifeGatherings = JSON.stringify(gatherings.map(({ rule, core, reason }) => ({ ruleId: rule.ruleId, ids: rule.participantIds, core, reason })));
                     node.dataset.lifeRelations = JSON.stringify(relations.map(({ rule, core, focalResidentIds }) => ({ ruleId: rule.ruleId, ids: rule.participantIds, core, focalResidentIds })));
                     discoveryAt = performance.now();
                 } else if (currentPlacement || !discovery.current.enabled) collector?.pause();

@@ -1,3 +1,4 @@
+import { waitForAsync } from './island-e2e-helpers.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { promises as fs } from 'node:fs';
@@ -737,7 +738,7 @@ async function disableSoundThroughSettings(page, row) {
     const control = setting.getByRole('button', { name: /^(ON|OFF)$/ }); assert.equal(await control.count(), 1);
     const before = await tables(page), profile = before.profiles.find(profile => profile.id === row.owner); assert(profile);
     // Persist a real off action even when the profile began off; no DB edits.
-    if (!profile.soundEnabled) { await activate(control, row.touch); await page.waitForFunction(async owner => {
+    if (!profile.soundEnabled) { await activate(control, row.touch); await waitForAsync(page, async owner => {
         const req = indexedDB.open('SansuDatabase'); const db = await new Promise(resolve => { req.onsuccess = () => resolve(req.result); });
         try { return await new Promise(resolve => { const r = db.transaction('profiles').objectStore('profiles').get(owner); r.onsuccess = () => resolve(r.result?.soundEnabled === true); }); }
         finally { db.close(); }

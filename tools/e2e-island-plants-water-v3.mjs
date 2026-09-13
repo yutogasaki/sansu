@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { seedDev, readNative } from './island-e2e-helpers.mjs';
+import { seedDev, readNative, waitForAsync } from './island-e2e-helpers.mjs';
 const base = process.env.SANSU_PLANTS_URL ?? 'http://127.0.0.1:5223', out = process.env.SANSU_PLANTS_OUTPUT;
 assert(out, 'Specify fresh SANSU_PLANTS_OUTPUT'); await mkdir(out, { recursive: false });
 async function sourceHash() {
@@ -46,7 +46,7 @@ try {
                 }, cell);
                 await page.touchscreen.tap(point.x, point.y); await page.locator(`[data-life-placement-cell="${cell.x},${cell.z}"][data-life-placement-valid="true"]`).waitFor();
                 await page.getByRole('button', { name: 'ここに おく', exact: true }).click();
-                await page.waitForFunction(async ({ id, kind }) => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return (await lifeDb.worlds.get(id)).actions.some(a => a.command.type === 'buy' && a.command.kind === kind); }, { id, kind });
+                await waitForAsync(page, async ({ id, kind }) => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return (await lifeDb.worlds.get(id)).actions.some(a => a.command.type === 'buy' && a.command.kind === kind); }, { id, kind });
                 await closeMenu(page);
             }
             const runtimeCandidate = await page.locator('.island-life').getAttribute('data-life-candidate');
@@ -59,12 +59,12 @@ try {
             await page.getByRole('button', { name: '木に ふれる', exact: true }).click();
             await page.waitForFunction(() => document.querySelector('.life-observation-view')?.dataset.magic === 'leaves');
             await page.waitForTimeout(1300); await page.screenshot({ path: `${out}/${device}-tree-magic.png` });
-            await page.waitForFunction(async id => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return (await lifeDb.worlds.get(id)).discoveryJournal?.entries.some(e => e.event.ruleId === 'M2' && e.event.snapshot.scene.items.some(i => i.kind === 'sapling')); }, id);
+            await waitForAsync(page, async id => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return (await lifeDb.worlds.get(id)).discoveryJournal?.entries.some(e => e.event.ruleId === 'M2' && e.event.snapshot.scene.items.some(i => i.kind === 'sapling')); }, id);
             await page.getByRole('button', { name: 'みてみるを とじる', exact: true }).click();
             for (const [hours, stage] of [[6, 1], [24, 2]]) {
                 await page.locator('.life-dev summary').click();
                 await page.getByRole('button', { name: `試作を ${hours}時間すすめる`, exact: true }).click();
-                await page.waitForFunction(async ({ id, tree, stage }) => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); const { replayLife } = await import('/src/domain/islandLife/simulation.ts'); const { growthStage } = await import('/src/domain/islandLife/model.ts'); return growthStage(replayLife(await lifeDb.worlds.get(id)).items.find(i => i.id === tree)) === stage; }, { id, tree, stage });
+                await waitForAsync(page, async ({ id, tree, stage }) => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); const { replayLife } = await import('/src/domain/islandLife/simulation.ts'); const { growthStage } = await import('/src/domain/islandLife/model.ts'); return growthStage(replayLife(await lifeDb.worlds.get(id)).items.find(i => i.id === tree)) === stage; }, { id, tree, stage });
                 await page.locator('.life-dev summary').click();
                 await inventory(page, tree); await page.getByRole('button', { name: 'みてみる', exact: true }).click(); await page.locator('.life-observation-view[data-rendered="true"]').waitFor();
                 await page.screenshot({ path: `${out}/${device}-tree-stage-${stage}.png` }); await page.getByRole('button', { name: 'みてみるを とじる', exact: true }).click();

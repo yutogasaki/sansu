@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { activate, answerUI, button, readNative, runtimeMetadata, seedNative, waitMode, waitReady } from './island-e2e-helpers.mjs';
+import { activate, answerUI, button, readNative, runtimeMetadata, seedNative, waitMode, waitReady, waitForAsync } from './island-e2e-helpers.mjs';
 import { assertDiscoveryDelta } from './island-qualified-audit.mjs';
 
 const viewports = [
@@ -277,7 +277,7 @@ async function display(page, row, action, expectedIds) {
     const geometryBefore = await roomGeometry(page), before = await tables(page), prior = islandFor(before, row.owner);
     assert.equal(await control.isDisabled(), false);
     await activate(control, row.touch);
-    await page.waitForFunction(async ({ owner, revision }) => {
+    await waitForAsync(page, async ({ owner, revision }) => {
         const opened = indexedDB.open('SansuDatabase');
         const db = await new Promise((resolve, reject) => { opened.onsuccess = () => resolve(opened.result); opened.onerror = () => reject(opened.error); });
         try { const request = db.transaction('islands').objectStore('islands').get(owner);

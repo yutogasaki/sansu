@@ -1,8 +1,9 @@
+import { makeWaterGaze } from './waterGaze';
 import * as T from 'three';
 import { makeLifeHeroHead, makeRelationGaze } from './relationGaze';
 import type { buildHomeJourney } from '../homeJourney/scene';
 import { easeResident, poseResidentTail, RESIDENT_SCALE, residentSeatContactY, sampleResidentStride, turnResidentToward } from '../three/residentRig';
-import { isRoamVisit, LIFE_STEP_MS, type Cell, type LifeState } from '../../../domain/islandLife/model';
+import { growthStage, isRoamVisit, LIFE_STEP_MS, type Cell, type LifeState } from '../../../domain/islandLife/model';
 import { activityPhase, favoriteReactionElapsed, residentReaction } from '../../../domain/islandLife/activity';
 import { sampleResidentInterest } from '../three/residentInterest';
 import { smoothArrival, turnToward } from './residentWalk';
@@ -12,19 +13,28 @@ export type LifeSeat = { seat: T.Mesh; pivot?: T.Group };
 export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, state: LifeState,
     point: (cell: Cell) => T.Vector3, seats: Map<string, LifeSeat>) {
     const project = makeLifeStateProjection(state);
-    let visible = state, renderedAt = state.now;
+    let visible = state, renderedAt = state.now, renderedReduced = false;
     const actors = [content.hero, content.rabbit.pose, content.otter.pose];
     const bodies = [content.heroBody, content.rabbit.body, content.otter.body];
     const heads = [makeLifeHeroHead(content.heroBody), content.rabbit.head, content.otter.head];
     const gaze = makeRelationGaze(state, heads, point);
+    const waterGaze = makeWaterGaze(state, heads, point);
     const feet = [content.heroFeet, content.rabbit.feet, content.otter.feet];
     const neutralFeet = feet.map(pair => pair.map(foot => foot.position.clone()));
-    let audit: { id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
+    let audit: { waterLook?: ReturnType<ReturnType<typeof makeWaterGaze>>; id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
     return {
         audit: () => audit,
-        snapshot: () => ({ ...(state.tourVersion ? visible : state), now: renderedAt }),
+        snapshot: () => ({ ...(state.tourVersion ? visible : state), now: renderedAt,
+            ...(state.landscapeVersion ? { poseReducedMotion: renderedReduced } : {}),
+            ...(audit.some(pose => pose.waterLook) ? { waterFocus: audit.flatMap(pose => pose.waterLook ? [{ residentId: state.residents.find(r => r.id === pose.id)!.id, ...pose.waterLook }] : []) } : {}) }),
         animate(now: number, reduced: boolean, decorationAt = now) {
-            if (state.scenePose === 'captured-v1') now = state.now;
+            if (state.scenePose === 'captured-v1') {
+                now = state.now;
+                // A captured pose stays still and keeps the mode in which it was
+                // actually shown, even when the viewer's motion preference changes.
+                if (state.poseReducedMotion !== undefined) { reduced = state.poseReducedMotion; decorationAt = state.now; }
+            }
+            renderedReduced = reduced;
             visible = project(now); renderedAt = now;
             heads.forEach(head => { head.rotation.order = 'XYZ'; });
             heads[0].rotation.set(0, 0, 0);
@@ -73,8 +83,10 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                             body.rotation.x = (.18 + (reduced ? 0 : Math.sin((now - walkedAt) / 950) * .045)) * settling;
                             flowerLean = settling;
                         } else if (item.kind === 'sapling') {
-                            const facing = Math.atan2(target.x - position.x, target.z - position.z);
+                            const shaded = state.landscapeVersion === 'groves-water-v1' && growthStage(item) === 2;
+                            const facing = shaded ? 0 : Math.atan2(target.x - position.x, target.z - position.z);
                             actor.rotation.y = reduced ? facing : turnToward(heading, facing, (now - walkedAt) / duration);
+                            if (shaded) position.lerp(target, .44 * settling);
                         } else {
                             actor.rotation.y = reduced ? 0 : turnToward(heading, 0, (now - walkedAt) / duration);
                             const furniture = seats.get(item.id);
@@ -134,6 +146,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
             content.world.updateMatrixWorld(true);
             audit.forEach((pose, index) => {
                 pose.relation = gaze(visible, now, reduced, index);
+                pose.waterLook = waterGaze(visible, now, reduced, index);
                 pose.headYaw = heads[index].rotation.y;
                 pose.headPitch = heads[index].rotation.x;
             });

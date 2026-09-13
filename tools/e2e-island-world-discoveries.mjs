@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { promises as fs } from 'node:fs';
 import { build } from 'esbuild';
 import { chromium } from 'playwright';
-import { button, readNative, runtimeMetadata, seedNative, waitMode, waitReady } from './island-e2e-helpers.mjs';
+import { button, readNative, runtimeMetadata, seedNative, waitMode, waitReady, waitForAsync } from './island-e2e-helpers.mjs';
 import { attempt, waitLearningReady } from './island-learning-checks.mjs';
 
 if (process.argv.includes('--plan')) {
@@ -104,7 +104,7 @@ async function waitNoObservation(page) {
     });
 }
 async function waitRecorded(page, profileId, discoveryId) {
-    await page.waitForFunction(async ({ profileId, discoveryId }) => {
+    await waitForAsync(page, async ({ profileId, discoveryId }) => {
         const open = indexedDB.open('SansuDatabase');
         const db = await new Promise((resolve, reject) => { open.onsuccess = () => resolve(open.result); open.onerror = () => reject(open.error); });
         const request = db.transaction('islands').objectStore('islands').get(profileId);

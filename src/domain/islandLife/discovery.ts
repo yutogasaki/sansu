@@ -1,8 +1,10 @@
+import { itemComponents as components } from './itemComponents';
+import { extendedGatherings } from './extendedGatherings';
 import { growthStage, LIFE_STEP_MS, type Cell, type LifeItem, type LifeState } from './model';
 import { cellKey, homeCell, route, sameCell, vacant } from './space';
 
 export const DISCOVERY_RULE_VERSION = 'discovery-v3.0-rc1';
-export type DiscoveryRuleId = 'G0' | 'GF3' | 'GF6' | 'GP2' | 'GP3' | 'R1' | 'R3' | 'M2';
+export type DiscoveryRuleId = 'G0' | 'GF3' | 'GF6' | 'GP2' | 'GP3' | 'GT3' | 'GT6' | 'GW2' | 'R1' | 'R3' | 'M2';
 export interface RuleEligibility {
     ruleId: DiscoveryRuleId;
     ruleVersion: typeof DISCOVERY_RULE_VERSION;
@@ -17,26 +19,8 @@ function eligibility(profileId: string, ruleId: DiscoveryRuleId, items: LifeItem
     return { ruleId, ruleVersion: DISCOVERY_RULE_VERSION, participantIds: ordered.map(item => item.id),
         semanticSignature: JSON.stringify([profileId, DISCOVERY_RULE_VERSION, ruleId,
             ordered.map(item => [item.id, item.kind, item.cell?.x, item.cell?.z,
-                ruleId === 'GF3' || ruleId === 'GF6' || ruleId === 'M2' ? growthStage(item) : null,
+                ruleId === 'GF3' || ruleId === 'GF6' || ruleId === 'GT3' || ruleId === 'GT6' || ruleId === 'M2' ? growthStage(item) : null,
                 ruleId === 'R1' || ruleId === 'R3' ? item.access ?? 'adjacent' : null])]), ...(distance === undefined ? {} : { distance }) };
-}
-
-function components(items: LifeItem[]): LifeItem[][] {
-    const remaining = new Map(items.filter(item => item.cell).map(item => [item.id, item]));
-    const result: LifeItem[][] = [];
-    while (remaining.size) {
-        const first = remaining.values().next().value!;
-        const group = [first]; remaining.delete(first.id);
-        for (let cursor = 0; cursor < group.length; cursor++) {
-            for (const item of remaining.values()) {
-                if (Math.abs(item.cell!.x - group[cursor].cell!.x) + Math.abs(item.cell!.z - group[cursor].cell!.z) === 1) {
-                    group.push(item); remaining.delete(item.id);
-                }
-            }
-        }
-        result.push(group);
-    }
-    return result;
 }
 
 /** Actual usable ground points, including the front-only legacy access contract. */
@@ -71,6 +55,10 @@ export function evaluateDiscovery(state: LifeState, profileId: string): RuleElig
     for (const group of components(state.items.filter(item => item.kind === 'swing'))) {
         if (group.length >= 2) result.push(eligibility(profileId, 'GP2', group));
         if (group.length >= 3) result.push(eligibility(profileId, 'GP3', group));
+    }
+    for (const group of extendedGatherings(state)) {
+        result.push(eligibility(profileId, group.kind === 'trees' ? 'GT3' : 'GW2', group.items));
+        if (group.kind === 'trees' && group.wide) result.push(eligibility(profileId, 'GT6', group.items));
     }
     for (const bench of state.items.filter(item => item.kind === 'bench' && item.cell)) {
         for (const target of state.items.filter(item => item.cell && (item.kind === 'flower' || item.kind === 'swing'))) {
