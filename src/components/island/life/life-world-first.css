@@ -103,3 +103,9 @@
     border: 1px solid var(--pokomoko-edge); border-radius: 14px;
     color: var(--pokomoko-blue-deep); background: var(--pokomoko-paper); font: inherit;
 }
+
+/* DEV shoreline studies: match the rendered deep-water color (ACES exposure .95)
+   below the canvas. These candidate IDs never occur in production. */
+.island-page[data-life-home="true"] > .island-life:has([data-life-visual-candidate="canopy-shore-lagoon-study-v2"]) { background: #2086b5; }
+.island-page[data-life-home="true"] > .island-life:has([data-life-visual-candidate="canopy-shore-tidal-study-v2"]) { background: #286ea5; }
+.island-page[data-life-home="true"] > .island-life:has([data-life-visual-candidate="canopy-shore-shelf-study-v2"]) { background: #3f9cbc; }

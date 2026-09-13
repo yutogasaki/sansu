@@ -375,3 +375,7 @@ cd0c951のLife有効productionと3781179の固定production buildで、実初回
 ## C3地面素材のDEV比較
 
 苔/芝/色面の3案を同じ実地形の両幅で比較。芝は次の検討用に選んだが、視覚33/60 HOLD、Human N=0。地形やキャラを変えず、地面albedoと根元の局所陰だけをDEV flagで試作。core407/3946、旧memory保持/現在観察/全体/学習復帰、画像失敗fallbackはPASS。[素材・実画面・独立3判定](../../design/2026-09-14-canopy-ground/README.md)。本番素材や全releaseの合格ではなく、次は根元/地面/海の形と光の接続を改善する。既存の全仕様残件は継続。
+
+## 実海岸に沿う浅瀬のDEV試作
+
+独立した丸角長方形の浅瀬を、実際の砂海岸polygonから作る距離textureへ変更。3案を両幅で比較し、中間幅のlagoonを次の試作に選択。下部操作面の色の段差も候補v2で修正。core408/3948、旧memory保持/現在観察/全体/学習復帰は両幅PASS。[証拠と範囲](../../design/2026-09-14-canopy-shore/README.md)。視覚34/60・Human N=0でHOLD、production既定は変更なし。根元/岸の立体的接続と元の全仕様残件は継続。

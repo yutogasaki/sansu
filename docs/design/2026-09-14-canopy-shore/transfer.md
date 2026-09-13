@@ -1,0 +1,4 @@
+# Shore distance study — before code
+TRANSFER: C3's readable shoreline, shallows attached to the actual island edge, water with broad calm areas; warm ground above locally cool water. DO NOT TRANSFER: fixed layout, generated characters, decorative paths or particles, all-over purple/darkness, a luminous halo unrelated to terrain.
+Static intent: the existing inhabited garden stands on land that meets the water. Existing coordinates, heights, hit targets, residents, state, learning and PWA contracts remain owned by the current app.
+Method change: replace the independent rounded-box shore estimate with a small distance texture computed from the rendered coast polygon. No new raster art generation; geometry/material calculations only. Compare lagoon/tidal/shelf palettes at actual phone/tablet crops before selecting a study direction. DEV-only, no release approval.
