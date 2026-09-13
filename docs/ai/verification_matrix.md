@@ -135,3 +135,10 @@ If a task spans more than one change type, use the stricter row.
 ## 暮らす島の家庭内本番切替（2026-09-11）
 
 `node tools/e2e-island-life-production.mjs` は `SANSU_ISLAND_PRODUCTION_URL` と新しい `SANSU_ISLAND_OUTPUT` を指定し、本番の空所有物→実回答→しずく→花購入→reload→実SW制御のオフライン回答と再起動を390/768幅で検査する。空の制作メニューで「まなぶと しずくが ふえるよ」と不足数を表示すること、住人チップにぽこもこ/うさぎ/カワウソそれぞれの好みを表示すること、学習後に一度だけ表示する「学んだぶん」通知の値、通知から「つくる」への導線、通知前後の島ワールドの同一サイズ、再読込での重複非表示も確認する。ひかり残高の意味（住人が楽しむと増える）と「いろ」メニューのひかり価格を表示し、増加通知の差分計算は `rewardCue.test.ts` で初回非表示・増加・支出を検査する。配置した花の持ち物に成長3段階の印と「あと 2じかんで つぼみ」を表示することは `growthStatus.test.ts` と同ハーネスで検査し、段階を越えた通知の初回除外・一度だけの遷移は `growthCue.test.ts` で確認する。配置直後の住人の気づき通知は `observationCue.test.ts` と同ハーネスで文言・一度だけの表示を検査する。`!`の気づき中に一回だけ跳ね、reduced motionでは跳ねないことも`data-life-poses`で確認する。好きな家具へ到着した住人の短い返事（うさぎの「におい すき」）と、その反応時計中の首かしげ姿勢を両幅で確認し、反応中の実画面を保存する。DEVの時間送りがなく、preview DBを作らず、保存された学習と所有が残ることを確認する。所有物移行はユーザー承認により省略。PWA保存holdの待機・完了・失敗と、プロフィール削除の所有者隔離は単体で別検査する。実機iOS、実参加者、長期の経済調整の証拠ではない。旧島専用E2Eは新flagをfalseにして残存導線の回帰として分離し、throughputは新しいホームにも対応して同じ通常学習を測る。
+
+
+### Lifeの実SWオフラインと投影失敗
+
+`node tools/e2e-island-life-storage.mjs` に `SANSU_LIFE_STORAGE_URL`（local production）、新しい `SANSU_LIFE_STORAGE_OUTPUT`、`SANSU_LIFE_STORAGE_BUILD_SOURCE` を指定する。manifestは `sourceHash`、各app入力の `files[{path,sha256}]`、`distFiles[{path,sha256}]`、実 `version` を持つ。実URLのversionと開始終了の全hashを照合する。Island/Life有効・Life preview/BuildPlay無効のbuildを先に用意する。
+
+実初回3問・購入・実SW制御/cache・offline移動/収納/回答・再読込/再接続の重複なしを両幅で検査する。`SANSU_LIFE_STORAGE_FAIL_PROJECTION=1` では、正式回答の後だけLife DBのputを明示的に失敗させ、学習保存・元の所有・エラー案内・UI retryを確認する。DBへprofile/credit/購入を注入しない。現在のproduction4品の検査で、DEV専用v3描画、実two-build、写真Blob全体、実機iOSの代用にはしない。

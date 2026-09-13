@@ -1,4 +1,5 @@
 import { holdPwaUpdateForCriticalPersistence } from '../../../pwa';
+import { lifePersistenceMessage } from './lifePersistenceMessage';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { lifeEnabled, type LifeRecord } from '../../../domain/islandLife/model';
 import { terminalFacts, updateLife, type LifeIntent } from '../../../domain/islandLife/repository';
@@ -52,7 +53,7 @@ export function useIslandLife(profileId: string, active: boolean) {
                 } catch (e) {
                     if (token === generation.current) {
                         ownRefresh.current = undefined;
-                        setError(e instanceof Error ? e.message : 'しまを ほぞんできなかったよ。'); retryIntent.current = request;
+                        setError(lifePersistenceMessage(e)); retryIntent.current = request;
                     }
                     return false;
                 }

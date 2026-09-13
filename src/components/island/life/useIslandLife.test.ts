@@ -75,13 +75,13 @@ describe('island life background refresh and explicit choices', () => {
         const h = await harness(); hooks.update.mockImplementationOnce(async (id, facts, intent) => { await actual.updateLife(id, facts, intent, 1000, h.d); throw new Error('completion lost'); });
         const intent = h.intent(); expect(await h.api.refresh(intent)).toBe(false); h.render();
         const count = hooks.update.mock.calls.length; expect(await h.api.refresh()).toBe(false); expect(hooks.update).toHaveBeenCalledTimes(count);
-        expect(h.api.error).toBe('completion lost'); expect(await h.api.retry()).toBe(true);
+        expect(h.api.error).toBe('しまの きろくを たしかめられなかったよ。もういちど ためしてね。'); expect(await h.api.retry()).toBe(true);
         expect((await h.d.worlds.get('a'))!.actions).toHaveLength(1); expect(hooks.update.mock.calls.at(-1)![2]).toEqual(intent);
     });
     it('keeps a queued purchase retryable when the preceding background read fails', async () => {
         const h = await harness(), hold = deferred<[]>(); hooks.facts.mockImplementationOnce(async () => { await hold.promise; throw new Error('read failed'); });
         const read = h.api.refresh(), intent = h.intent(), save = h.api.refresh(intent); hold.resolve([]);
-        expect(await read).toBe(false); expect(await save).toBe(false); h.render(); expect(h.api.error).toBe('read failed');
+        expect(await read).toBe(false); expect(await save).toBe(false); h.render(); expect(h.api.error).toBe('しまの きろくを たしかめられなかったよ。もういちど ためしてね。');
         expect(await h.api.refresh()).toBe(false); expect(await h.api.retry()).toBe(true);
         expect((await h.d.worlds.get('a'))!.actions.map(a => a.id)).toEqual([intent.id]);
     });

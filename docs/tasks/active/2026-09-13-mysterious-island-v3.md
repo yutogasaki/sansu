@@ -357,3 +357,10 @@ X3の自然行動は前の同じ購入記録/realAtから監視中。一巡後�
 時計追加前のcore1/UI5/zoom1/既存M3観察回帰と、最終core3/UI6/zoom2/読書回帰を区別。固定QA recordの実時間基点を検査開始へ合わせる明示fixtureで、獲得や自然発生の証拠ではない。C3視覚31/60 HOLD、Human N=0、全割込み/混合配置/最大数、新LifeのPWA/offline/update、fixed-ten10反復、自然X3、全releaseは継続。
 
 同じM3候補の既存classic smoke31/31、既存production PWA更新保護4/4もPASS。新Lifeの全PWA/offline/updateや固定10問比較の代用にはしない。
+
+
+## Lifeの実オフラインと投影失敗 A03
+
+旧島のPWAハーネスが新Life DBを比較しないため、実初回/実学習/実購入から始まる専用検査を追加。両幅で実SW offlineの移動/収納/回答・reload・再接続を確認。Life書込みだけを故障させてもnative回答は保存済み、Lifeは元の3creditを保持し、UI retryだけで4creditへ進む。二重反映なし。
+
+最初の故障診断で英語のDB例外が画面へ漏れたため、`useIslandLife` の表示だけを短い日本語へ変換した。保存/重複排除/owner/PWA hold/保存版は変更なし。source `d00da8603c1dcbb86f26180dd066a5133f5204e272d34a9d13a5c0f4c643d2c0`、core406 files /3940 testsと修正後UI3両幅PASS。[証拠と範囲](../../design/2026-09-14-island-life-storage/README.md)。公開4品のproduction境界であり、C3/魔法/追加8品のproduction統合、実two-build、全配置/固定10問/自然X3/視覚HOLD/Human N=0と全releaseは継続。
