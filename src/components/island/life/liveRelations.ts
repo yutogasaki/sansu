@@ -1,3 +1,4 @@
+import { facilityRelations } from './facilityRelations';
 import { Vector3, type Camera } from 'three';
 import { benchRelation } from '../../../domain/islandLife/discovery';
 import type { LifeState, ResidentId } from '../../../domain/islandLife/model';
@@ -8,7 +9,7 @@ import { visibleRelationObject } from './relationVisibility';
 /** Candidates come from the rendered, settled gaze, never placement eligibility alone. */
 export function liveRelations(state: LifeState, profileId: string, content: ReturnType<typeof buildLifeScene>, camera: Camera,
     onScreen: (point: Vector3) => boolean): LiveDiscoveryCandidate[] {
-    return content.audit().flatMap(pose => {
+    return [...facilityRelations(state, profileId, content, camera, onScreen), ...content.audit().flatMap(pose => {
         if ((pose.phase !== 'bench' && pose.phase !== 'picnic-table') || !pose.itemId || !pose.relation?.ready) return [];
         // Two table partners describe one shared episode, not one per head.
         if (pose.phase === 'picnic-table' && pose.relation.targetResidentId && pose.id > pose.relation.targetResidentId) return [];
@@ -36,5 +37,5 @@ export function liveRelations(state: LifeState, profileId: string, content: Retu
                 return Boolean(actor && head && visibleRelationObject(actor, content.root, camera, onScreen, head.getWorldPosition(new Vector3())));
             }));
         return [{ rule, key: JSON.stringify([rule.semanticSignature, visits]), core, focalResidentIds }];
-    });
+    })];
 }

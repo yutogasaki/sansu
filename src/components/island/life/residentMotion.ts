@@ -54,6 +54,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                 const actor = actors[index], body = bodies[index], visit = resident.visit;
                 const item = state.items.find(i => i.id === visit?.itemId && i.cell);
                 const phase = activityPhase(state, resident, now);
+                const caring = state.facilityPresentation === 'carry-care-v1' && resident.facilityTrip?.phase === 'carry' && resident.facilityTrip.kind === 'garden-hut';
                 const scale = actor.scale.x;
                 body.position.y = 0; body.rotation.set(0, 0, 0); actor.rotation.set(0, 0, 0);
                 feet[index].forEach((foot, n) => { foot.position.copy(neutralFeet[index][n]); foot.rotation.set(0, 0, 0); });
@@ -90,9 +91,9 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                         if (item.kind === 'flower' || item.kind === 'water-bowl') {
                             const facing = Math.atan2(target.x - position.x, target.z - position.z);
                             actor.rotation.y = reduced ? facing : turnToward(heading, facing, (now - walkedAt) / duration);
-                            position.lerp(target, (item.kind === 'water-bowl' ? .38 : .48) * settling);
-                            body.rotation.x = (.18 + (reduced ? 0 : Math.sin((now - walkedAt) / 950) * .045)) * settling;
-                            flowerLean = settling;
+                            position.lerp(target, (item.kind === 'water-bowl' ? .38 : caring ? .15 : .48) * settling);
+                            body.rotation.x = ((caring ? .08 : .18) + (reduced ? 0 : Math.sin((now - walkedAt) / 950) * .045)) * settling;
+                            flowerLean = caring ? 0 : settling;
                         } else if (isFacility(item.kind)) {
                             actor.rotation.y = reduced ? 0 : turnToward(heading, 0, (now - walkedAt) / 900);
                             (rig?.shoulders ?? heroArms).forEach(arm => { arm.rotation.x = -1 * settling; });
@@ -103,7 +104,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                             const work = (-.9 + (reduced ? 0 : Math.sin((now - walkedAt) / 550) * .18)) * settling;
                             (rig?.shoulders ?? heroArms).forEach(arm => { arm.rotation.x = work; });
                         } else if (item.kind === 'sapling') {
-                            const shaded = state.landscapeVersion === 'groves-water-v1' && growthStage(item) === 2;
+                            const shaded = !caring && state.landscapeVersion === 'groves-water-v1' && growthStage(item) === 2;
                             const facing = shaded ? 0 : Math.atan2(target.x - position.x, target.z - position.z);
                             actor.rotation.y = reduced ? facing : turnToward(heading, facing, (now - walkedAt) / duration);
                             if (shaded) position.lerp(target, .44 * settling);

@@ -5,7 +5,7 @@ import { growthStage, LIFE_STEP_MS, type Cell, type LifeItem, type LifeState } f
 import { cellKey, homeCell, route, sameCell, vacant } from './space';
 
 export const DISCOVERY_RULE_VERSION = 'discovery-v3.0-rc1';
-export type DiscoveryRuleId = 'G0' | 'GF3' | 'GF6' | 'GP2' | 'GP3' | 'GT3' | 'GT6' | 'GW2' | 'R1' | 'R2' | 'R3' | 'R4' | 'M2';
+export type DiscoveryRuleId = 'G0' | 'GF3' | 'GF6' | 'GP2' | 'GP3' | 'GT3' | 'GT6' | 'GW2' | 'R1' | 'R2' | 'R3' | 'R4' | 'R5' | 'R6' | 'M2';
 export interface RuleEligibility {
     ruleId: DiscoveryRuleId;
     ruleVersion: typeof DISCOVERY_RULE_VERSION;
@@ -21,7 +21,7 @@ function eligibility(profileId: string, ruleId: DiscoveryRuleId, items: LifeItem
         semanticSignature: JSON.stringify([profileId, DISCOVERY_RULE_VERSION, ruleId,
             ordered.map(item => [item.id, item.kind, item.cell?.x, item.cell?.z,
                 ruleId === 'GF3' || ruleId === 'GF6' || ruleId === 'GT3' || ruleId === 'GT6' || ruleId === 'R2' || ruleId === 'M2' ? growthStage(item) : null,
-                ruleId === 'R1' || ruleId === 'R3' || ruleId === 'R4' || ruleId === 'R2' ? item.access ?? 'adjacent' : null])]), ...(distance === undefined ? {} : { distance }) };
+                ruleId === 'R1' || ruleId === 'R3' || ruleId === 'R4' || ruleId === 'R2' || ruleId === 'R5' || ruleId === 'R6' ? item.access ?? 'adjacent' : null])]), ...(distance === undefined ? {} : { distance }) };
 }
 
 /** Actual usable ground points, including the front-only legacy access contract. */
@@ -71,6 +71,12 @@ export function evaluateDiscovery(state: LifeState, profileId: string): RuleElig
         for (const tree of state.items.filter(item => item.kind === 'sapling' && item.cell && growthStage(item) === 2)) {
             const distance = relationDistance(state, table, tree);
             if (distance !== undefined && distance <= 4) result.push(eligibility(profileId, 'R2', [table, tree], distance));
+        }
+    }
+    if (state.facilityTripVersion) for (const facility of state.items.filter(item => item.cell && isFacility(item.kind))) {
+        for (const target of state.items.filter(item => item.cell && (facility.kind === 'library' ? item.kind === 'bench' : item.kind === 'flower' || item.kind === 'sapling'))) {
+            const distance = relationDistance(state, facility, target);
+            if (distance !== undefined && distance <= 4) result.push(eligibility(profileId, facility.kind === 'library' ? 'R5' : 'R6', [facility, target], distance));
         }
     }
     for (const flower of state.items.filter(item => item.cell && (item.kind === 'flower' || item.kind === 'sapling'))) result.push(eligibility(profileId, 'M2', [flower]));

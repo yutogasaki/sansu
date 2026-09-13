@@ -13,8 +13,8 @@ async function digest(cutover: TourCutover) {
 }
 export function assertTourCutover(record: LifeRecord) {
     const cutover = record.tourCutover;
-    if (!cutover) { if ((record.version === 4 || record.version === 5 || record.version === 6 || record.version === 7 || record.version === 8 || record.version === 9 || record.version === 10 || record.version === 11)) throw new Error('巡回の切替記録が見つかりません。'); return; }
-    if (![4, 5, 6, 7, 8, 9, 10, 11].includes(record.version) || cutover.rules !== 'gp3-tours-v1' || cutover.profileId !== record.profileId
+    if (!cutover) { if ((record.version === 4 || record.version === 5 || record.version === 6 || record.version === 7 || record.version === 8 || record.version === 9 || record.version === 10 || record.version === 11 || record.version === 12)) throw new Error('巡回の切替記録が見つかりません。'); return; }
+    if (![4, 5, 6, 7, 8, 9, 10, 11, 12].includes(record.version) || cutover.rules !== 'gp3-tours-v1' || cutover.profileId !== record.profileId
         || !Number.isFinite(cutover.at) || !record.economyCheckpoint || cutover.at < record.economyCheckpoint.cutoverAt || cutover.at > record.now
         || !Number.isInteger(cutover.actionCount) || cutover.actionCount < record.economyCheckpoint.actionCount || cutover.actionCount > record.actions.length
         || cutover.priorActions.length !== cutover.actionCount
@@ -29,7 +29,7 @@ export async function verifyTourCutover(record: LifeRecord) {
 /** The action prefix stays intact; the new event orders later same-time actions
  * after the cutover. Existing visits are never restarted at this boundary. */
 export async function prepareTourMigration(record: LifeRecord): Promise<LifeRecord> {
-    if ((record.version === 4 || record.version === 5 || record.version === 6 || record.version === 7 || record.version === 8 || record.version === 9 || record.version === 10 || record.version === 11)) { await verifyTourCutover(record); return record; }
+    if ((record.version === 4 || record.version === 5 || record.version === 6 || record.version === 7 || record.version === 8 || record.version === 9 || record.version === 10 || record.version === 11 || record.version === 12)) { await verifyTourCutover(record); return record; }
     if (record.version !== 3 || record.tourCutover) throw new Error('Unknown tour migration source');
     const before = replayLife(record);
     const cutover: TourCutover = { rules: 'gp3-tours-v1', profileId: record.profileId, at: record.now,

@@ -37,7 +37,7 @@ export interface LifeLandReceipt {
 }
 export interface LifeAction { id: string; at: number; command: LifeCommand; purchaseReceipt?: LifePurchaseReceipt; landReceipt?: LifeLandReceipt; undoOf?: string }
 export interface LifeRecord {
-    profileId: string; version: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11; revision: number; createdAt: number; realAt: number; now: number;
+    profileId: string; version: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12; revision: number; createdAt: number; realAt: number; now: number;
     credits: Credit[]; actions: LifeAction[]; offsets: { at: number; offset: number }[]; clockIntents: string[];
     activitiesV2At?: number;
     activitiesV2After?: number;
@@ -69,6 +69,7 @@ export interface LifeState {
     poseReducedMotion?: boolean;
     waterFocus?: { residentId: ResidentId; itemId: string; targetId: string; ready: boolean; focus: number[] }[];
     extraLand?: LandSide[];
+    facilityPresentation?: 'carry-care-v1';
     facilityTripVersion?: 1;
     tourVersion?: 1;
     scenePose?: 'captured-v1';
@@ -102,4 +103,4 @@ export function newLife(profileId: string, now: number): LifeRecord {
     return { profileId, version: 1, revision: 0, createdAt: now, realAt: now, now, credits: [], actions: [], offsets: [{ at: now, offset: 0 }], clockIntents: [], activitiesV2At: now, activitiesV2After: 0 };
 }
 
-export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3 || version === 4 || version === 5 || version === 6 || version === 7 || version === 8 || version === 9 || version === 10 || version === 11; }
+export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3 || version === 4 || version === 5 || version === 6 || version === 7 || version === 8 || version === 9 || version === 10 || version === 11 || version === 12; }

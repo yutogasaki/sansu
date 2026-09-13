@@ -1,0 +1,17 @@
+{
+  "context": "Separate fresh QA context after the four journeys, same frozen source",
+  "url": "http://127.0.0.1:5223/#/island",
+  "builds": [
+    {
+      "revision": "development-local",
+      "delivery": "snap-root-v1"
+    },
+    {
+      "revision": "development-local",
+      "version": "development-local:42bba105-01c2-4a95-8185-3a8eb67c7303",
+      "delivery": "mystic-island-v1"
+    }
+  ],
+  "life": "island-life-economy-checkpoint-v3",
+  "world": "canopy-dots-c3-v1"
+}

@@ -15,7 +15,7 @@ export default function LifeSceneReplay({ original }: { original: DiscoveryScene
     const frozen = useMemo<LifeState>(() => ({ ...original.snapshot.scene, drops: 0, light: 0, styles: [], days: {} }), [original]);
     const participants = discoveryParticipants(original);
     const gathering = original.ruleId.startsWith('G') ? { ruleId: original.ruleId, participantIds: participants.map(item => item.id) } : undefined;
-    const bench = discoveryParticipants(original).find(item => item.kind === 'bench' || item.kind === 'picnic-table');
+    const bench = discoveryParticipants(original).find(item => item.kind === 'bench' || item.kind === 'picnic-table' || original.ruleId === 'R6' && item.kind === 'garden-hut');
     const plant = discoveryParticipants(original).find(item => item.kind === 'flower' || item.kind === 'sapling');
     const prepare = async () => {
         if (!alive.current || pending.current) return undefined;
@@ -40,7 +40,7 @@ export default function LifeSceneReplay({ original }: { original: DiscoveryScene
         {original.ruleId === 'M2' && plant ? <>
             <PlantObservationView item={plant} prepare={prepare} presented={(event, evidence) => { pending.current = { event, evidence }; void persist(); }} />
             <p className="life-observation-hint">ふれると もういちど みられるよ</p>
-        </> : gathering ? <RelationObservationView state={frozen} gathering={gathering} frozen prepare={prepare} presented={(event, evidence) => { pending.current = { event, evidence }; void persist(); }} /> : (original.ruleId === 'R2' || original.ruleId === 'R1' || original.ruleId === 'R3' || original.ruleId === 'R4') && bench ? <RelationObservationView state={frozen} benchId={bench.id} frozen prepare={prepare} presented={(event, evidence) => { pending.current = { event, evidence }; void persist(); }} /> : <p>この ばめんの えを ひらけなかったよ。</p>}
+        </> : gathering ? <RelationObservationView state={frozen} gathering={gathering} frozen prepare={prepare} presented={(event, evidence) => { pending.current = { event, evidence }; void persist(); }} /> : (original.ruleId === 'R2' || original.ruleId === 'R1' || original.ruleId === 'R3' || original.ruleId === 'R4' || original.ruleId === 'R5' || original.ruleId === 'R6') && bench ? <RelationObservationView state={frozen} benchId={bench.id} frozen prepare={prepare} presented={(event, evidence) => { pending.current = { event, evidence }; void persist(); }} /> : <p>この ばめんの えを ひらけなかったよ。</p>}
         {error && <div role="alert"><p>{error}</p>{pending.current && <button type="button" disabled={busy} onClick={() => void persist()}>きろくを もういちど のこす</button>}</div>}
     </div>;
 }

@@ -57,6 +57,28 @@ describe('one resident collects, carries and uses facility work',()=>{
     });
 });
 describe('facility transport migration',()=>{
+    it('versions the new facility observation action without downgrading later purchases, land or refreshes',async()=>{
+        const old=await prepareFacilityMigration(await legacy());
+        let next=commandLife(old,{type:'observe',itemId:'facility'},'facility-observation',old.now);
+        expect(next.version).toBe(12);expect(next.actions.slice(0,-1)).toEqual(old.actions);
+        expect(()=>replayLife({...next,version:11})).toThrow();
+        expect(commandLife(next,{type:'observe',itemId:'facility'},'facility-observation',old.now+1)).toBe(next);
+        next=commandLife(next,{type:'expand',side:'east'},'new-land',next.now);
+        next=commandLife(next,{type:'buy',kind:'flower',cell:{x:6,z:0}},'new-flower',next.now);
+        expect(next.version).toBe(12);expect(await prepareFacilityMigration(next)).toBe(next);
+        const db=new IslandLifeDatabase(`observation-version-${crypto.randomUUID()}`);
+        try{await db.worlds.put(next);const refreshed=await updateLife('trip',[],undefined,100,db);expect(refreshed.version).toBe(12);expect(refreshed.actions).toEqual(next.actions);}finally{await db.delete();}
+    });
+    it('uses a free resident for a bounded observation trip without cancelling a busy resident or awarding use credit',()=>{
+        const s=fixture('library');s.target=undefined;
+        expect(observationVisit(s,'facility').kind).toBe('ready');
+        applyCommand(s,{id:'observe-trip',at:0,command:{type:'observe',itemId:'facility'}});
+        const r=s.residents[0],end=r.facilityTrip!.end;
+        expect(r.visit?.observationTest).toBe(true);
+        expect(observationVisit(s,'facility').kind).toBe('existing');
+        advanceLifeState(s,8000);expect(r.facilityTrip?.phase).toBe('carry');expect(r.visit?.observationTest).toBe(true);
+        advanceLifeState(s,end);expect(r.enjoyed).toBe(0);expect(s.light).toBe(0);
+    });
     it('keeps all old actions and ongoing visits, orders later same-time edits after cutover, and preserves version through purchases/land',async()=>{
         const old=await legacy(),next=await prepareFacilityMigration(old),{facilityTripVersion,...after}=replayLife(next);
         expect(facilityTripVersion).toBe(1);expect(after).toEqual(replayLife(old));expect(next.actions).toEqual(old.actions);

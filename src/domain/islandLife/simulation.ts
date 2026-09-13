@@ -248,6 +248,7 @@ export function applyCommand(s: LifeState, event: LifeAction) {
                 resident.playTour = undefined; resident.facilityTrip = undefined;
                 resident.visit = { itemId: item.id, from: { ...resident.cell }, path: plan.path,
                     start: s.now, end: s.now + plan.duration, observationTest: true };
+                beginFacilityTrip(s, resident, item);
             }
         } else if (c.type === 'visit') {
             if (!item.cell || (item.kind === 'lantern' || item.kind === 'pinwheel') || !pathToActivity(s, homeCell, item)) fail('ここでは あそべないよ。');
@@ -288,11 +289,13 @@ export function applyCommand(s: LifeState, event: LifeAction) {
 }
 export function replayLife(record: LifeRecord, to = record.now): LifeState {
     if (!readableLifeVersion(record.version)) throw new Error('この島のデータは新しい版で開いてください。');
+    const facilityIds = new Set(record.actions.filter(a => a.command.type === 'buy' && isFacility(a.command.kind)).map(a => a.id));
+    if (record.version < 12 && record.actions.some(a => a.command.type === 'observe' && facilityIds.has(a.command.itemId))) throw new Error('この観察は新しい版で開いてください。');
     const checkpoint = record.economyCheckpoint;
     assertCheckpointBoundary(record); assertTourCutover(record); assertFacilityCutover(record);
     if (record.actions.some(action => action.command.type === 'buy' && action.command.kind === 'sandbox') && record.version < 9) throw new Error('砂場の保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isFacility(action.command.kind)) && record.version < 10) throw new Error('建物の保存版を確認できません。');
-    if (record.actions.some(action => action.landReceipt) && ![5, 6, 7, 8, 9, 10, 11].includes(record.version)) throw new Error('土地の保存版を確認できません。');
+    if (record.actions.some(action => action.landReceipt) && ![5, 6, 7, 8, 9, 10, 11, 12].includes(record.version)) throw new Error('土地の保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isWindArch(action.command.kind)) && record.version < 8) throw new Error('風車とアーチの保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && action.command.kind === 'picnic-table') && record.version < 7) throw new Error('テーブルの保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isPlantsWater(action.command.kind)) && record.version < 6) throw new Error('新しい物の保存版を確認できません。');
@@ -347,5 +350,6 @@ export function commandLife(record: LifeRecord, command: LifeCommand, id: string
     const state = replayLife(record, now);
     if (command.type === 'expand' && record.tourCutover) event.landReceipt = landReceipt(state, event);
     applyCommand(state, event);
-    return { ...record, version: record.version === 11 ? 11 : record.version === 10 || command.type === 'buy' && isFacility(command.kind) ? 10 : record.version === 9 || command.type === 'buy' && command.kind === 'sandbox' ? 9 : record.version === 8 || command.type === 'buy' && isWindArch(command.kind) ? 8 : record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
+    const facilityObservation = command.type === 'observe' && state.items.some(i => i.id === command.itemId && isFacility(i.kind));
+    return { ...record, version: record.version === 12 || facilityObservation ? 12 : record.version === 11 ? 11 : record.version === 10 || command.type === 'buy' && isFacility(command.kind) ? 10 : record.version === 9 || command.type === 'buy' && command.kind === 'sandbox' ? 9 : record.version === 8 || command.type === 'buy' && isWindArch(command.kind) ? 8 : record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
 }

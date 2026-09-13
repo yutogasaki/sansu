@@ -8,6 +8,8 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 
 ## Current Commands
 
+`node tools/e2e-island-facility-relations-v3.mjs` は `SANSU_FACILITY_RELATIONS_URL` と新しい `SANSU_FACILITY_RELATIONS_OUTPUT` を指定する。DEVのphone/tabletで本/道具の実運搬、見える実利用のR5/R6記録、再演・本人保存・現在入口、収納後の記録保持と学習復帰を確認する。実取得は100件のQA creditで代用。通常旅程後の所有者APIへのobserve書込と版12再読込は明示診断であり、UIから無料住民を呼んだ証拠と区別する。短い受け取り場面の撮影を含むため、全体検査と分けて実行した結果を正式証拠とする。
+
 `node tools/e2e-island-facility-trips-v3.mjs` は `SANSU_TRIPS_URL` と新しい `SANSU_TRIPS_OUTPUT` を指定する。DEVのphone/tabletで図書室/ベンチと小屋/花を実購入し、入口→同一住民の運搬→利用、再読込保持、収納取消、学習正本/残高保持と学習入力復帰を確認する。100件のQA creditと、施設を呼び先にして相手の配置を確定し直す明示操作であり、自然初回発見・実取得・子どもの理解・R5/R6記録の検証とは区別する。
 
 `node tools/e2e-island-life-world-first.mjs` は `SANSU_WORLD_FIRST_URL` と新規 `SANSU_WORLD_FIRST_OUTPUT` を指定。4サイズの実画面で絵付き操作の44px/hit、残高・世界・操作の分離、全景/近景/zoom復帰、情報面とカメラの排他、7秒の完了文と自動で消えない保存失敗、再試行、配置取消と学習復帰を確認する。花4個/ベンチと残高は明示native fixtureで、実取得や子どもの理解とは区別する。`SANSU_WORLD_FIRST_BROWSER=webkit` と `SANSU_WORLD_FIRST_WIDTH` で対象を限定できる。

@@ -1,3 +1,4 @@
+import { facilityRelations } from './facilityRelations';
 import { visibleRelationObject } from './relationVisibility';
 import { displayedGatherings, gatheringVisible } from './gatheringVisibility';
 import { useEffect, useRef, useState } from 'react';
@@ -39,7 +40,8 @@ export default function RelationObservationView(props: Props) {
         const subjectObjects = () => {
             if (!source || !content) return [];
             const relation = benchRelation(source, '', benchId, source.relationTarget?.targetId);
-            const ids = new Set(latest.current.gathering?.participantIds ?? [benchId, ...(relation?.participantIds ?? []), ...(source.relationTarget ? [source.relationTarget.targetId] : [])]);
+            const trip = source.residents.find(r => r.facilityTrip && [r.facilityTrip.facilityId, r.facilityTrip.targetId].includes(benchId))?.facilityTrip;
+            const ids = new Set(latest.current.gathering?.participantIds ?? [benchId, ...(relation?.participantIds ?? []), ...(source.relationTarget ? [source.relationTarget.targetId] : []), ...(trip ? [trip.facilityId, trip.targetId] : [])]);
             return [...ids].flatMap(id => { const object = content!.root.getObjectByName(`life-item-${id}`); return object ? [object] : []; })
                 .concat(source.residents.filter(resident => resident.visit && ids.has(resident.visit.itemId))
                     .flatMap(resident => { const object = content!.root.getObjectByName(`life-resident-${resident.id}`); return object ? [object] : []; }));
@@ -51,7 +53,13 @@ export default function RelationObservationView(props: Props) {
             const boxes = subjectObjects().map(object => new T.Box3().setFromObject(object));
             const bounds = boxes.reduce((box, current) => box.union(current), new T.Box3());
             if (bounds.isEmpty()) return;
-            const center = bounds.getCenter(new T.Vector3()); camera.position.copy(center).add(latest.current.gathering ? new T.Vector3(4.5, 7.8, 11) : new T.Vector3(4.5, 5, 7)); camera.lookAt(center); camera.updateMatrixWorld(true);
+            const center = bounds.getCenter(new T.Vector3());
+            const directions = latest.current.gathering ? [new T.Vector3(4.5, 7.8, 11)] : [new T.Vector3(4.5, 5, 7)];
+            const visible = content.snapshot();
+            const transporting = visible.residents.some(r => r.facilityTrip && [r.facilityTrip.facilityId, r.facilityTrip.targetId].includes(benchId));
+            if (transporting) directions.push(new T.Vector3(-8,10,1),new T.Vector3(8,10,1),new T.Vector3(0,10,-8));
+            const fit = (direction: T.Vector3) => {
+            camera.position.copy(center).add(direction); camera.lookAt(center); camera.updateMatrixWorld(true);
             const points = boxes.flatMap(box => [box.min.x, box.max.x].flatMap(x => [box.min.y, box.max.y].flatMap(y => [box.min.z, box.max.z].map(z =>
                 new T.Vector3(x, y, z).applyMatrix4(camera.matrixWorldInverse)))));
             const minX = Math.min(...points.map(p => p.x)), maxX = Math.max(...points.map(p => p.x));
@@ -59,6 +67,12 @@ export default function RelationObservationView(props: Props) {
             const half = Math.max(.9, (maxY - minY) / 2, (maxX - minX) / aspect / 2) * 1.18;
             camera.left = (minX + maxX) / 2 - half * aspect; camera.right = (minX + maxX) / 2 + half * aspect;
             camera.bottom = (minY + maxY) / 2 - half; camera.top = (minY + maxY) / 2 + half; camera.updateProjectionMatrix();
+            };
+            for (const direction of directions) {
+                fit(direction);
+                if (!transporting || facilityRelations(visible, '', content, camera, () => true, true).some(c => c.core && c.rule.participantIds.includes(benchId))) return;
+            }
+            fit(directions[0]);
         };
         update.current = () => {
             if (source === latest.current.state && benchId === (latest.current.benchId ?? '')) return;
@@ -75,14 +89,20 @@ export default function RelationObservationView(props: Props) {
             const at = source.now + (latest.current.frozen ? 0 : mono - start);
             if (foreground) {
                 content.animate(at, matchMedia('(prefers-reduced-motion: reduce)').matches, latest.current.frozen ? source.now + Math.min(3000, mono - start) : at); renderer.render(scene, camera); node.dataset.rendered = 'true';
-                const poses = content.audit(), sitter = poses.find(pose => pose.itemId === benchId && (pose.phase === 'bench' || pose.phase === 'picnic-table'));
-                const stateAtFrame = content.snapshot();
-                const nextStatus = sitter ? 'bench' : poses.some(pose => pose.itemId === benchId && pose.phase === 'walking') ? 'walking' : 'busy';
-                if (nextStatus !== previousStatus) { previousStatus = nextStatus; latest.current.status?.(nextStatus); }
+                const poses = content.audit(), stateAtFrame = content.snapshot();
+                const findTransport = () => facilityRelations(stateAtFrame, '', content!, camera, ndc => {
+                    const rect = node.getBoundingClientRect();
+                    return node.contains(document.elementFromPoint(rect.left + (ndc.x + 1) / 2 * rect.width, rect.top + (1 - ndc.y) / 2 * rect.height));
+                }, true).find(candidate => candidate.rule.participantIds.includes(benchId));
+                let transport = findTransport();
+                const sitter = transport ? poses.find(pose => pose.id === transport?.focalResidentIds?.[0])
+                    : poses.find(pose => pose.itemId === benchId && (['bench', 'picnic-table', 'library', 'garden-hut'].includes(pose.phase)));
+                const nextStatus = sitter ? 'bench' : poses.some(pose => (pose.itemId === benchId || stateAtFrame.residents.find(r => r.id === pose.id)?.facilityTrip?.facilityId === benchId) && pose.phase === 'walking') ? 'walking' : 'busy';
+                if (nextStatus !== previousStatus) { previousStatus = nextStatus; if (transport) { resize(); renderer.render(scene, camera); transport = findTransport(); } latest.current.status?.(nextStatus); }
                 const gathering = latest.current.gathering;
                 const rule = gathering ? displayedGatherings(stateAtFrame, '').find(rule => rule.ruleId === gathering.ruleId
                     && rule.participantIds.length === gathering.participantIds.length && rule.participantIds.every(id => gathering.participantIds.includes(id)))
-                    : sitter?.relation?.ready ? benchRelation(stateAtFrame, '', benchId, stateAtFrame.relationTarget?.targetId) : undefined;
+                    : transport?.rule ?? (sitter?.relation?.ready ? benchRelation(stateAtFrame, '', benchId, stateAtFrame.relationTarget?.targetId) : undefined);
                 const rect = node.getBoundingClientRect();
                 const onscreen = rect.width > 0 && rect.height > 0 && rect.left >= 0 && rect.top >= 0 && rect.right <= innerWidth && rect.bottom <= innerHeight;
                 const uncovered = onscreen && [[.1, .1], [.9, .1], [.5, .5], [.1, .9], [.9, .9]].every(([x, y]) => node.contains(document.elementFromPoint(rect.left + x * rect.width, rect.top + y * rect.height)));
@@ -90,6 +110,7 @@ export default function RelationObservationView(props: Props) {
                     node.contains(document.elementFromPoint(rect.left + (ndc.x + 1) / 2 * rect.width, rect.top + (1 - ndc.y) / 2 * rect.height)), focus);
                 let core = Boolean(gathering && rule && uncovered && gatheringVisible(stateAtFrame, rule, content.root, camera, content.point, ndc =>
                     node.contains(document.elementFromPoint(rect.left + (ndc.x + 1) / 2 * rect.width, rect.top + (1 - ndc.y) / 2 * rect.height))));
+                if (transport) core = uncovered && transport.core;
                 if (sitter?.relation && rule) {
                     const actor = content.root.getObjectByName(`life-resident-${sitter.id}`)!;
                     const head = actor.getObjectByName(sitter.id === 'pokomoko' ? 'life-hero-head' : 'resident-head')!;
@@ -102,7 +123,7 @@ export default function RelationObservationView(props: Props) {
                     }
                 }
                 const focal = sitter ? [sitter.id, ...(sitter.relation?.targetResidentId ? [sitter.relation.targetResidentId] : [])] as ResidentId[] : [];
-                const nextKey = gathering && rule ? rule.semanticSignature : rule && sitter ? JSON.stringify([rule.semanticSignature, focal, stateAtFrame.residents.find(r => r.id === sitter.id)?.visit?.start]) : '';
+                const nextKey = transport?.key ?? (gathering && rule ? rule.semanticSignature : rule && sitter ? JSON.stringify([rule.semanticSignature, focal, stateAtFrame.residents.find(r => r.id === sitter.id)?.visit?.start]) : '');
                 if (nextKey !== key) { cancel(); key = nextKey; }
                 if (core && rule && !pending && !event) {
                     pending = true; preparation = 'pending'; const token = epoch;
@@ -145,5 +166,5 @@ export default function RelationObservationView(props: Props) {
             renderer.domElement.removeEventListener('click', pick); document.removeEventListener('visibilitychange', hidden); renderer.domElement.removeEventListener('webglcontextlost', lost); renderer.domElement.removeEventListener('webglcontextrestored', restored);
             light.shadow.dispose(); renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); };
     }, []);
-    return <><div ref={host} className={`life-relation-view${props.gathering ? ' life-gathering-view' : ''}`} role="img" aria-label={props.gathering ? props.frozen ? 'あのときの あつまり' : 'あつまりの いまの ようす' : props.frozen ? 'あのときの ベンチ' : 'ベンチの いまの ようす'} />{failed && <p role="status">景色をひらけなかったよ。とじて、もういちど ためしてね。</p>}</>;
+    return <><div ref={host} className={`life-relation-view${props.gathering ? ' life-gathering-view' : ''}`} role="img" aria-label={props.gathering ? props.frozen ? 'あのときの あつまり' : 'あつまりの いまの ようす' : props.state.items.some(i => i.id === props.benchId && (i.kind === 'library' || i.kind === 'garden-hut')) ? props.frozen ? 'あのときの ようす' : 'たてものの いまの ようす' : props.frozen ? 'あのときの ベンチ' : 'ベンチの いまの ようす'} />{failed && <p role="status">景色をひらけなかったよ。とじて、もういちど ためしてね。</p>}</>;
 }

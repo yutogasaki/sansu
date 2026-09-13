@@ -41,7 +41,7 @@ export default function LifeMemories({ profileId, state, close, observe, observe
     const participants = selected ? discoveryParticipants(selected) : [];
     const gathering = selected?.ruleId.startsWith('G') ? { ruleId: selected.ruleId, participantIds: participants.map(item => item.id) } : undefined;
     const currentGathering = gathering && participants.length > 0 && participants.every(participant => state.items.some(item => item.id === participant.id && item.kind === participant.kind && item.cell));
-    const subject = selected && discoveryParticipants(selected).find(item => selected.ruleId === 'M2' ? item.kind === 'flower' || item.kind === 'sapling' : item.kind === (selected.ruleId === 'R2' ? 'picnic-table' : 'bench'));
+    const subject = selected && discoveryParticipants(selected).find(item => selected.ruleId === 'M2' ? item.kind === 'flower' || item.kind === 'sapling' : item.kind === (selected.ruleId === 'R6' ? 'garden-hut' : selected.ruleId === 'R2' ? 'picnic-table' : 'bench'));
     const current = subject && state.items.find(item => item.id === subject.id && item.kind === subject.kind && item.cell);
     const ids = journal ? tab === 'saved' ? [...journal.savedIds].reverse() : journal.historyIds : [];
     const reset = () => { setSelected(undefined); setConfirmUnpin(false); setError(''); };

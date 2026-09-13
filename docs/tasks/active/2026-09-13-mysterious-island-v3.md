@@ -265,3 +265,11 @@ core PASS（371 files /3783 tests、docs/lint/typecheck/build/assets）。[実UI
 関係R5/R6のlive記録・現物観察・同一住民比較と全関係の優先順は未接続。今回は運搬の土台の区切りであり、B全体やR5/R6の受入完了ではない。視覚C3 HOLD・Human N=0・全release未完を継続する。
 
 固定source `e8d6c48d17b766c4353191444089c4a1bb5e27df6307f1020e277c1953e4bb43`、core386 files /3849 tests PASS、両幅の本/道具4旅程PASS。[実画面と範囲](../../design/2026-09-13-island-facility-trips/README.md)。初回サーバー停止、UI2は購入保存前に次操作へ進む待機不足。保存済みstateを待つUI3を最終証拠とし、appは同一source。次はR5/R6の実提示に基づく発見保存と観察・比較への接続。
+
+## 運搬の発見記録と再演
+
+運搬checkpoint `2b42a1502e14ef18b2c57b1b0386f4efcdf0c5dd` はmain push済み。新しいR5/R6の実提示候補、運搬/表示版を含むsnapshot、本文・参加物復元・再演・本人保存・現在入口へ接続した。施設の無料観察は空いた住民だけを使い、道中もobservationTestを保持してlive/利用報酬へ変換しない。
+
+R6の花への接近で道具と植物が隠れる状態を、同一配置/同一住民の純粋検査でも確認。表示版 `carry-care-v1` だけに手入れ用の立ち位置を追加し、他の住民・通常の匂い嗅ぎ・版のない旧snapshotの姿勢を保持する。観察では対象が見える画角を選ぶが、見えなければ未提示のまま。全関係の優先順と現物を指定して試す全操作・同一住民の距離比較・自然初回の受入は残件。
+
+施設の新しいobserve actionを書く島だけ版12とし、旧版での誤再生を拒否する。既存利用を眺めるだけなら版11のまま。固定source `cee1cea9c4c41806b3ff6b0db94e036cd61d1ecffe9f40a41ffd81f6de6163bc`、core387 files /3857 tests PASS、最終UI4の両幅4旅程とowner APIの版12書込/再読込PASS。[証拠と残件](../../design/2026-09-13-island-facility-relations/README.md)。編集中のcore1/UI1、受け取りを撮影できなかったUI2、版12追加前のcore2/UI3を最終証拠へ混ぜない。次は現物指定・全関係の優先順・同一住民の比較を、過去の保存履歴への影響を分けて接続する。C3視覚HOLD・Human N=0・魔法/出会いと全releaseは継続。
