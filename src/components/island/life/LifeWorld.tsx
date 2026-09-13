@@ -121,6 +121,7 @@ export default function LifeWorld({ observationOpen = false, footstepInput, prep
             if (content) { scene.remove(content.root); content.dispose(); }
             content = buildLifeScene(next, selection, point, preview); scene.add(content.root);
             node.dataset.lifeWorldStyle = content.root.userData.worldStyle;
+            node.dataset.lifeVisualCandidate = content.root.getObjectByName('life-canopy-c3')?.userData.visualCandidate ?? content.root.userData.worldStyle;
             node.dataset.lifeLandscapeVersion = next.landscapeVersion ?? 'original';
             node.dataset.lifeTourVersion = String(next.tourVersion ?? 0);
             resize();

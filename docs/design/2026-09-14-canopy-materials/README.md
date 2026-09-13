@@ -40,3 +40,5 @@ SANSU_CANOPY_PREVIEW_OUTPUT=/tmp/canopy-new.png node tools/preview-island-canopy
 ```
 
 eslintと実行がPASS。公開した比較3と、この再現スクリプトの出力SHA-256はともに `96bdc988e03d779122d1bb625cc498c8b62f94a003ad86b29b12f77de6f668d0`。アプリsourceはX3の `74514aaad4483288a65ec4e85e8c576a832fcf64d813fad4e2762c37fea6bfec` のまま。[素材と手順の出所](provenance.json) を保持する。
+
+続く[DEV実画面の試作](runtime-study.md)では、候補2のmapと枝の終端を独立worktreeで検査した。上記は素材比較時点のsourceであり、実画面試作のsource/判定は別記する。視覚HOLD・Human N=0は継続。

@@ -1,5 +1,6 @@
 import * as T from 'three';
 import { batch } from '../three/primitives';
+import { canopyMaterialStudy, makeCanopyStudyWood } from './canopyMaterialStudy';
 
 /** Sculptural world geometry only. Coordinates stay behind the playable grid;
  * residents, paths, objects and hit targets are owned by the existing scene. */
@@ -7,6 +8,8 @@ export function buildCanopyScenery(center: number) {
     const root = new T.Group(); root.name = 'life-canopy-c3';
     root.userData.worldStyle = 'canopy-dots-c3-v1';
     const wood = new T.MeshStandardMaterial({ vertexColors: true, roughness: .88 });
+    root.userData.visualCandidate = canopyMaterialStudy ? 'canopy-bark-runtime-study-v1' : 'canopy-dots-c3-v1';
+    const disposeStudy = canopyMaterialStudy ? makeCanopyStudyWood(wood, root) : undefined;
     const paints: T.Material[] = [wood];
     const branch = (points: number[][], radius: number, tip: number, cool = false) => {
         const curve = new T.CatmullRomCurve3(points.map(p => new T.Vector3(...p)));
@@ -19,7 +22,8 @@ export function buildCanopyScenery(center: number) {
                 const vertex = new T.Vector3().fromBufferAttribute(positions, index).sub(axis).multiplyScalar(taper * (1 + .035 * Math.sin(j / sides * Math.PI * 22 + at * 8))).add(axis);
                 positions.setXYZ(index, vertex.x, vertex.y, vertex.z);
                 const shade = .5 + .5 * Math.sin(j / sides * Math.PI * 16 + at * 8);
-                const color = new T.Color(cool ? '#255b60' : '#765134').lerp(new T.Color(cool ? '#549985' : '#bc8851'), shade * .7);
+                const color = canopyMaterialStudy ? new T.Color(cool ? '#75a89b' : '#e2d4b7')
+                    : new T.Color(cool ? '#255b60' : '#765134').lerp(new T.Color(cool ? '#549985' : '#bc8851'), shade * .7);
                 colors.push(color.r, color.g, color.b);
             }
         }
@@ -27,8 +31,8 @@ export function buildCanopyScenery(center: number) {
         const mesh = new T.Mesh(geometry, wood); mesh.castShadow = mesh.receiveShadow = true; root.add(mesh);
     };
     // Two asymmetrical arms leave daylight and a cool recess behind the cottage.
-    branch([[2.9, 0, -3.35], [2.8, 1.4, -3.55], [2.1, 2.6, -3.9], [.9, 3.1, -3.8], [-1.7, 3.2, -3.4], [-3.5, 3.9, -3.3]], .92, .35);
-    branch([[2.8, .25, -3.5], [3.15, 1.9, -3.75], [2.9, 3.65, -4], [3.5, 4.9, -4.4]], .62, .25);
+    branch([[2.9, 0, -3.35], [2.8, 1.4, -3.55], [2.1, 2.6, -3.9], [.9, 3.1, -3.8], [-1.7, 3.2, -3.4], canopyMaterialStudy ? [-3.65, 4.1, -4.6] : [-3.5, 3.9, -3.3]], .92, canopyMaterialStudy ? .03 : .35);
+    branch([[2.8, .25, -3.5], [3.15, 1.9, -3.75], [2.9, 3.65, -4], [3.5, 4.9, -4.4]], .62, canopyMaterialStudy ? .035 : .25);
     branch([[2.9, .15, -3.4], [1.5, .70, -3.4], [.4, 1.7, -3.65], [-1.3, 1.35, -3.4], [-2.9, -.04, -3.1]], .48, .19);
     branch([[2.4, .05, -3.8], [1.9, 1.2, -4.3], [.9, 2.3, -4.5], [-.8, 2.5, -4.4]], .52, .22, true);
     branch([[2.8, .03, -3.6], [3.4, .25, -3.45], [4.1, -.04, -3.3]], .26, .10);
@@ -86,5 +90,5 @@ export function buildCanopyScenery(center: number) {
     const timber = new T.Group();
     [...root.children].filter(child => child instanceof T.Mesh && child.material === wood).forEach(child => timber.add(child));
     batch(timber); root.add(timber);
-    return { root, dispose: () => paints.forEach(material => material.dispose()) };
+    return { root, dispose: () => { disposeStudy?.(); paints.forEach(material => material.dispose()); } };
 }

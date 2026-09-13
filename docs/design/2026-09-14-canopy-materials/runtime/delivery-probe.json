@@ -1,0 +1,47 @@
+{
+  "url": "http://127.0.0.1:5233/#/island",
+  "at": 1789314966030,
+  "builds": [
+    {
+      "buildRevision": "development-local",
+      "deliveryId": "snap-root-v1",
+      "configuredDeliveryId": "snap-root-v1",
+      "visualLineageId": "pokko-field-v1"
+    },
+    {
+      "layoutVersion": "display-v1",
+      "gameId": "mystic-island-v1",
+      "mode": "home",
+      "lifeHome": "true",
+      "homeLayout": "world-first-v2",
+      "complex": "false",
+      "visualCandidateId": "mystic-island-shore-garden-v18",
+      "deliveryId": "mystic-island-v1",
+      "learningCandidate": "mystic-island-learning-v2",
+      "islandRevision": "0",
+      "discoveryCount": "0",
+      "buildRevision": "development-local",
+      "buildVersion": "development-local:c4829bae-9066-4a2f-87d5-ee8097f24539",
+      "busy": "false"
+    }
+  ],
+  "world": {
+    "placing": "false",
+    "lifeWorldStyle": "canopy-dots-c3-v1",
+    "lifeVisualCandidate": "canopy-bark-runtime-study-v1",
+    "lifeLandscapeVersion": "groves-water-v1",
+    "lifeTourVersion": "1",
+    "lifeCamera": "{\"projection\":[0.16219284729543426,0,0,0,0,0.39872408293460926,0,0,0,0,-0.02002002002002002,0,-0.027635192697141656,-0.37878787878787884,-1.002002002002002,1],\"view\":[0.9255469562056767,-0.17063826001053398,0.3380020947849059,0,-2.7755575615628914e-17,0.8926908972773304,0.4506694597132078,0,-0.37863284572050404,-0.41711574669241636,0.8262273428075476,0,6.938893903907228e-17,-0.17853817945546582,-13.403660847636989,1],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":5.551115123125783e-17,\"y\":0},\"manual\":false}}",
+    "rendered": "true",
+    "lifeGatherings": "[]",
+    "lifeRelations": "[]",
+    "lifePoses": "[{\"id\":\"pokomoko\",\"phase\":\"home\",\"position\":[-0.5,0.04,-1],\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"rabbit\",\"itemId\":\"roam:display:rabbit:0\",\"phase\":\"walking\",\"position\":[0.5068158436213992,0.04,-1],\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"otter\",\"phase\":\"home\",\"position\":[0.5,0.04,0],\"hop\":0,\"headPitch\":0,\"headRoll\":-0.0335834477914027,\"headYaw\":0}]",
+    "lifeRender": "{\"calls\":188,\"triangles\":156594,\"geometries\":128,\"textures\":7}"
+  },
+  "textures": [
+    {
+      "url": "http://127.0.0.1:5233/docs/design/2026-09-14-canopy-materials/bark-albedo-candidate-2.png",
+      "status": 200
+    }
+  ]
+}

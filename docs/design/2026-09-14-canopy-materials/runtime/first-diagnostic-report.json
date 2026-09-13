@@ -1,0 +1,34 @@
+{
+  "startHash": "7c364a79e3ca8cb626a8a6abc4faf219330466d50c5a72aa2b3388c1b4b11a49",
+  "revision": "b8d29708ecdd03a4cacb2ed977ad7f528f011ddd",
+  "target": "http://127.0.0.1:5233",
+  "candidate": "canopy-dots-c3-v1",
+  "flags": "DEV VITE_ISLAND_LIFE_PREVIEW=true",
+  "cache": "fresh DEV context; no production SW claim",
+  "fixture": "three connected flowers and an explicitly simulated old-world saved memory; no earned acquisition or historical user activity claim",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": true,
+      "errors": [],
+      "originalHash": "d53ef5d02e2b835e324f2cf6b5153954572367eed0fabe55f45761d166204362"
+    },
+    {
+      "device": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pass": true,
+      "errors": [],
+      "originalHash": "2a2f301bd553188d0bf3fc28223c78235d42b6cf681d8801d7e84f3b7dc42d19"
+    }
+  ],
+  "pass": true,
+  "endHash": "7c364a79e3ca8cb626a8a6abc4faf219330466d50c5a72aa2b3388c1b4b11a49"
+}

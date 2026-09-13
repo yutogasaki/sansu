@@ -5,13 +5,14 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { seedDev, readNative, waitForAsync } from './island-e2e-helpers.mjs';
 const out = process.env.SANSU_CANOPY_OUTPUT, base = process.env.SANSU_CANOPY_URL ?? 'http://127.0.0.1:5223';
+const candidate = process.env.SANSU_CANOPY_CANDIDATE ?? 'canopy-dots-c3-v1';
 assert(out, 'Specify a fresh SANSU_CANOPY_OUTPUT'); await mkdir(out, { recursive: false });
 async function sourceHash() {
     const files = [...new Set(execFileSync('git', ['ls-files', '-co', '--exclude-standard', 'src', 'public', 'package.json', 'package-lock.json', 'vite.config.ts'], { encoding: 'utf8' }).trim().split('\n'))].sort();
     const hash = createHash('sha256'); for (const file of files) hash.update(file).update('\0').update(await readFile(file)).update('\0'); return hash.digest('hex');
 }
 const report = { startHash: await sourceHash(), revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), target: base,
-    candidate: 'canopy-dots-c3-v1', flags: 'DEV VITE_ISLAND_LIFE_PREVIEW=true', cache: 'fresh DEV context; no production SW claim',
+    candidate, flags: `DEV VITE_ISLAND_LIFE_PREVIEW=true; material study ${candidate === 'canopy-bark-runtime-study-v1'}`, cache: 'fresh DEV context; no production SW claim',
     fixture: 'three connected flowers and an explicitly simulated old-world saved memory; no earned acquisition or historical user activity claim', humanN: 0, cases: [], pass: false };
 const browser = await chromium.launch();
 try {
@@ -38,6 +39,7 @@ try {
                 await lifeDb.worlds.put(record); return old;
             }, profileId);
             await page.reload(); await page.locator('.life-world[data-life-world-style="canopy-dots-c3-v1"][data-rendered="true"]').waitFor();
+            assert.equal(await page.locator('.life-world').getAttribute('data-life-visual-candidate'), candidate);
             const native = await readNative(page, profileId);
             const read = () => page.evaluate(async profileId => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); return lifeDb.worlds.get(profileId); }, profileId);
             const before = await read();
