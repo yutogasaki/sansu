@@ -1,0 +1,130 @@
+{
+  "fault": "none",
+  "target": "http://127.0.0.1:5254",
+  "variant": "turf",
+  "shore": "lagoon",
+  "sculpt": "buttress",
+  "atmosphere": "shelter",
+  "clearance": "vault",
+  "distance": "mist",
+  "candidate": "canopy-distance-mist-study-v2",
+  "flags": "DEV Island/Life preview; bark study=true; ground study=turf; shore study=lagoon; sculpt study=buttress; atmosphere study=shelter; clearance study=vault; distance study=mist",
+  "fixture": "Explicit same saved QA record, original resident assignments and logical time; realAt anchored at launch. No acquisition or human evidence.",
+  "startHash": "a9c2c66ae2a73d1280ae4c096461efd755c8ea252de82b62765f50c6b491cde0",
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "metadata": {
+        "builds": [
+          {
+            "buildRevision": "development-local",
+            "deliveryId": "snap-root-v1",
+            "configuredDeliveryId": "snap-root-v1",
+            "visualLineageId": "pokko-field-v1"
+          },
+          {
+            "layoutVersion": "display-v1",
+            "gameId": "mystic-island-v1",
+            "mode": "home",
+            "lifeHome": "true",
+            "homeLayout": "world-first-v2",
+            "complex": "false",
+            "visualCandidateId": "mystic-island-shore-garden-v18",
+            "deliveryId": "mystic-island-v1",
+            "learningCandidate": "mystic-island-learning-v2",
+            "islandRevision": "0",
+            "discoveryCount": "0",
+            "buildRevision": "development-local",
+            "buildVersion": "development-local:8143726a-22b6-4be7-a187-a6dab518d2c0",
+            "busy": "false"
+          }
+        ],
+        "world": {
+          "placing": "false",
+          "lifeWorldStyle": "canopy-dots-c3-v1",
+          "lifeStudyLighting": "{\"sky\":\"f2f2e6\",\"ground\":\"476e70\",\"hemi\":0.92,\"sun\":\"fff0d5\",\"strength\":2.65,\"direction\":[-4,6,3],\"fill\":0.22}",
+          "lifeVisualCandidate": "canopy-distance-mist-study-v2",
+          "lifeLandscapeVersion": "groves-water-v1",
+          "lifeTourVersion": "1",
+          "lifeCamera": "{\"projection\":[0.27479661615446876,0,0,0,0,0.17743490115934235,0,0,0,0,-0.02002002002002002,0,-0.19332256705876566,-0.18630664621730944,-1.002002002002002,1],\"view\":[0.9731846127764102,-0.0961377075305716,0.20897188960717858,0,0,0.9084728930551647,0.4179437792143572,0,-0.23002545392896967,-0.4067364549370337,0.8841118406457555,0,-4.2327252813834093e-16,-0.18169457861103258,-12.525453567839506,1],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":0},\"manual\":false}}",
+          "lifeSculptStatus": "ready",
+          "lifeGroundMaterialStatus": "ready",
+          "worldShadowpokomokoView": "{\"residentId\":\"pokomoko\",\"itemId\":\"234602c6-44cc-4088-a3e4-f0bf5be74c2a\",\"active\":false,\"elapsed\":-1,\"visitEnd\":1789317240125,\"visitStart\":1789315440125,\"touchPoint\":[0.8224999904632568,0.09,-0.43000001460313797]}",
+          "worldShadowrabbitView": "{\"residentId\":\"rabbit\",\"itemId\":\"066fa95d-a659-4f75-9f69-38b8e527595d\",\"active\":false,\"elapsed\":-1,\"visitEnd\":1789317271755,\"visitStart\":1789315471755,\"touchPoint\":[-1.170405387878418,0.09,-0.4080841988325119]}",
+          "worldShadowotterView": "{\"residentId\":\"otter\",\"itemId\":\"a7fe829b-0136-4d61-9aa2-dcb56aa209a9\",\"active\":false,\"elapsed\":-1,\"visitEnd\":1789317271755,\"visitStart\":1789315471755,\"touchPoint\":[-2.165987193584442,0.09,-0.4089999943971634]}",
+          "worldShadowUpdateMs": "0.699999988079071",
+          "rendered": "true",
+          "worldShadowSampleMs": "0",
+          "lifeGatherings": "[]",
+          "lifeRelations": "[]",
+          "lifePoses": "[{\"id\":\"pokomoko\",\"itemId\":\"234602c6-44cc-4088-a3e4-f0bf5be74c2a\",\"phase\":\"bench\",\"position\":[0.5,0.34199999999999997,0],\"seatGap\":5.551115123125783e-17,\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"rabbit\",\"itemId\":\"066fa95d-a659-4f75-9f69-38b8e527595d\",\"phase\":\"bench\",\"position\":[-1.5,0.32599999999999996,0],\"seatGap\":0,\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"otter\",\"itemId\":\"a7fe829b-0136-4d61-9aa2-dcb56aa209a9\",\"phase\":\"bench\",\"position\":[-2.5,0.35,0],\"seatGap\":0,\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0}]",
+          "lifeRender": "{\"calls\":254,\"triangles\":199018,\"geometries\":197,\"textures\":11}"
+        }
+      },
+      "errors": []
+    },
+    {
+      "device": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "metadata": {
+        "builds": [
+          {
+            "buildRevision": "development-local",
+            "deliveryId": "snap-root-v1",
+            "configuredDeliveryId": "snap-root-v1",
+            "visualLineageId": "pokko-field-v1"
+          },
+          {
+            "layoutVersion": "display-v1",
+            "gameId": "mystic-island-v1",
+            "mode": "home",
+            "lifeHome": "true",
+            "homeLayout": "world-first-v2",
+            "complex": "false",
+            "visualCandidateId": "mystic-island-shore-garden-v18",
+            "deliveryId": "mystic-island-v1",
+            "learningCandidate": "mystic-island-learning-v2",
+            "islandRevision": "0",
+            "discoveryCount": "0",
+            "buildRevision": "development-local",
+            "buildVersion": "development-local:8143726a-22b6-4be7-a187-a6dab518d2c0",
+            "busy": "false"
+          }
+        ],
+        "world": {
+          "placing": "false",
+          "lifeWorldStyle": "canopy-dots-c3-v1",
+          "lifeStudyLighting": "{\"sky\":\"f2f2e6\",\"ground\":\"476e70\",\"hemi\":0.92,\"sun\":\"fff0d5\",\"strength\":2.65,\"direction\":[-4,6,3],\"fill\":0.22}",
+          "lifeVisualCandidate": "canopy-distance-mist-study-v2",
+          "lifeLandscapeVersion": "groves-water-v1",
+          "lifeTourVersion": "1",
+          "lifeCamera": "{\"projection\":[0.2374031007751938,0,0,0,0,0.23255813953488372,0,0,0,0,-0.02002002002002002,0,-0.16701580067409777,-0.24418604651162787,-1.002002002002002,1],\"view\":[0.9731846127764102,-0.0961377075305716,0.20897188960717858,0,0,0.9084728930551647,0.4179437792143572,0,-0.23002545392896967,-0.4067364549370337,0.8841118406457555,0,-4.2327252813834093e-16,-0.18169457861103258,-12.525453567839506,1],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":0},\"manual\":false}}",
+          "lifeSculptStatus": "ready",
+          "lifeGroundMaterialStatus": "ready",
+          "worldShadowpokomokoView": "{\"residentId\":\"pokomoko\",\"itemId\":\"234602c6-44cc-4088-a3e4-f0bf5be74c2a\",\"active\":false,\"elapsed\":-1,\"visitEnd\":1789317240125,\"visitStart\":1789315440125,\"touchPoint\":[0.8224999904632568,0.09,-0.43000001460313797]}",
+          "worldShadowrabbitView": "{\"residentId\":\"rabbit\",\"itemId\":\"066fa95d-a659-4f75-9f69-38b8e527595d\",\"active\":false,\"elapsed\":-1,\"visitEnd\":1789317271755,\"visitStart\":1789315471755,\"touchPoint\":[-1.170405387878418,0.09,-0.4080841988325119]}",
+          "worldShadowotterView": "{\"residentId\":\"otter\",\"itemId\":\"a7fe829b-0136-4d61-9aa2-dcb56aa209a9\",\"active\":false,\"elapsed\":-1,\"visitEnd\":1789317271755,\"visitStart\":1789315471755,\"touchPoint\":[-2.165987193584442,0.09,-0.4089999943971634]}",
+          "worldShadowUpdateMs": "0.6000000238418579",
+          "rendered": "true",
+          "worldShadowSampleMs": "0",
+          "lifeGatherings": "[]",
+          "lifeRelations": "[]",
+          "lifePoses": "[{\"id\":\"pokomoko\",\"itemId\":\"234602c6-44cc-4088-a3e4-f0bf5be74c2a\",\"phase\":\"bench\",\"position\":[0.5,0.34199999999999997,0],\"seatGap\":5.551115123125783e-17,\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"rabbit\",\"itemId\":\"066fa95d-a659-4f75-9f69-38b8e527595d\",\"phase\":\"bench\",\"position\":[-1.5,0.32599999999999996,0],\"seatGap\":0,\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"otter\",\"itemId\":\"a7fe829b-0136-4d61-9aa2-dcb56aa209a9\",\"phase\":\"bench\",\"position\":[-2.5,0.35,0],\"seatGap\":0,\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0}]",
+          "lifeRender": "{\"calls\":254,\"triangles\":199018,\"geometries\":197,\"textures\":11}"
+        }
+      },
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "atlasSha256": "271c38b29e133a9a39697800371da0d494edec4830ba8277caf08577d9a1c6a3",
+  "sculptMeshSha256": "cd6deca4a25f2cf9c67352cb1d709b367b6078c051531492c5d04c55a264025f",
+  "endHash": "a9c2c66ae2a73d1280ae4c096461efd755c8ea252de82b62765f50c6b491cde0"
+}
