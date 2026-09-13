@@ -142,3 +142,10 @@ If a task spans more than one change type, use the stricter row.
 `node tools/e2e-island-life-storage.mjs` に `SANSU_LIFE_STORAGE_URL`（local production）、新しい `SANSU_LIFE_STORAGE_OUTPUT`、`SANSU_LIFE_STORAGE_BUILD_SOURCE` を指定する。manifestは `sourceHash`、各app入力の `files[{path,sha256}]`、`distFiles[{path,sha256}]`、実 `version` を持つ。実URLのversionと開始終了の全hashを照合する。Island/Life有効・Life preview/BuildPlay無効のbuildを先に用意する。
 
 実初回3問・購入・実SW制御/cache・offline移動/収納/回答・再読込/再接続の重複なしを両幅で検査する。`SANSU_LIFE_STORAGE_FAIL_PROJECTION=1` では、正式回答の後だけLife DBのputを明示的に失敗させ、学習保存・元の所有・エラー案内・UI retryを確認する。DBへprofile/credit/購入を注入しない。現在のproduction4品の検査で、DEV専用v3描画、実two-build、写真Blob全体、実機iOSの代用にはしない。
+
+
+### Lifeの異なる実buildへの更新
+
+`node tools/e2e-island-life-two-build.mjs` に `SANSU_LIFE_OLD_DIR` / `SANSU_LIFE_NEW_DIR`、それぞれの `SANSU_LIFE_OLD_MANIFEST` / `SANSU_LIFE_NEW_MANIFEST`、新しい `SANSU_LIFE_TWO_BUILD_OUTPUT` を指定。manifestはLife storage検査と同じ形式で、各distのversion/全ファイルを開始終了に照合する。異なるversionとentry JSを必須とし、実SWを同じlocal originでoldからnewへ切り替える。
+
+実初回・実獲得・購入・通常予約の1問目完了から始め、学習中の更新待機→島checkpointで自動reload1回→全native storeとLifeの所有/checkpoint保持→新buildのoffline同じ次問を両幅で確認。`SANSU_LIFE_UPDATE_INTERRUPTION=1` はSWだけoldへ固定した検出後切断・offline旧版再開・固定解除/再接続を追加する。実registration.updateの照会を行うが、app更新イベントやDBを注入しない。写真Blob/実機/旧v2既得権の移行検査とは別。

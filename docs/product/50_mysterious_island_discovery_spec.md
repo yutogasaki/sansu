@@ -301,3 +301,6 @@ DEVの新表示版では、実際のカワウソが図書室からベンチへ�
 Lifeの読込/書込みに失敗した場合、ブラウザやDBの例外本文を子ども向け画面へ出さない。未知の例外は「しまの きろくを たしかめられなかったよ。もういちど ためしてね。」とし、同じ既存intentの再試行を維持する。保存済みだが完了通知だけ失った場合もあるので、データ消失や未保存を断定しない。古いreaderと配置競合には、それぞれ更新/再選択の案内を返す。
 
 [実オフラインとLife投影失敗の検証](../design/2026-09-14-island-life-storage/README.md)では、現行4品のLife有効production buildで初回3問→実購入→offline移動/収納→実回答→Lifeだけ保存故障→再試行→再接続を両幅で確認。正式回答は保持し、再回答なしに一度だけ2しずくを反映する。DEVのC3/魔法/追加8品、実two-buildや利用者検証の合格へは拡張しない。
+
+
+現行4品・同じ保存版13の異なる実build間では、[Lifeのtwo-build検証](../design/2026-09-14-island-life-two-build/README.md)で学習中の更新待機、島へ戻るcheckpointの自動reload1回、native21storeとLifeの所有/checkpoint、新buildのoffline同じ次問を確認した。古いSWを残して検出後に切断する場合も、旧cacheから再開して再接続後に更新できる。これは旧v2の権利移行やDEV限定v3機能のproduction受入とは別の検証である。

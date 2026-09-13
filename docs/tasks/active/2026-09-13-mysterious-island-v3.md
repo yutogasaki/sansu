@@ -364,3 +364,10 @@ X3の自然行動は前の同じ購入記録/realAtから監視中。一巡後�
 旧島のPWAハーネスが新Life DBを比較しないため、実初回/実学習/実購入から始まる専用検査を追加。両幅で実SW offlineの移動/収納/回答・reload・再接続を確認。Life書込みだけを故障させてもnative回答は保存済み、Lifeは元の3creditを保持し、UI retryだけで4creditへ進む。二重反映なし。
 
 最初の故障診断で英語のDB例外が画面へ漏れたため、`useIslandLife` の表示だけを短い日本語へ変換した。保存/重複排除/owner/PWA hold/保存版は変更なし。source `d00da8603c1dcbb86f26180dd066a5133f5204e272d34a9d13a5c0f4c643d2c0`、core406 files /3940 testsと修正後UI3両幅PASS。[証拠と範囲](../../design/2026-09-14-island-life-storage/README.md)。公開4品のproduction境界であり、C3/魔法/追加8品のproduction統合、実two-build、全配置/固定10問/自然X3/視覚HOLD/Human N=0と全releaseは継続。
+
+
+## Lifeの実two-build更新
+
+cd0c951のLife有効productionと3781179の固定production buildで、実初回3問/購入/通常連問の1問完了を経た同じ所有者を更新。両幅の通常更新と、古いSW固定＋検出後切断/old版offline再開/再接続の計4ケースがPASS。学習中は更新を待ち、島checkpointで自動reload1回。native21storeとLifeのaction/credit/checkpointを保持し、新buildのofflineでも同じ次問へ戻る。[実画面と範囲](../../design/2026-09-14-island-life-two-build/README.md)。
+
+今回アプリ入力は変更なし。保存版13/公開4品の互換であり、旧v2権利/未受取贈与の実移行、DEV限定C3/魔法/追加8品のproduction統合、実機iOS、全混合配置/最大数/固定10問10反復、自然X3、視覚HOLD/Human N=0と全releaseは継続。
