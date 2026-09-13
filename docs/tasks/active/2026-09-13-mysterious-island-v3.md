@@ -371,3 +371,7 @@ X3の自然行動は前の同じ購入記録/realAtから監視中。一巡後�
 cd0c951のLife有効productionと3781179の固定production buildで、実初回3問/購入/通常連問の1問完了を経た同じ所有者を更新。両幅の通常更新と、古いSW固定＋検出後切断/old版offline再開/再接続の計4ケースがPASS。学習中は更新を待ち、島checkpointで自動reload1回。native21storeとLifeのaction/credit/checkpointを保持し、新buildのofflineでも同じ次問へ戻る。[実画面と範囲](../../design/2026-09-14-island-life-two-build/README.md)。
 
 今回アプリ入力は変更なし。保存版13/公開4品の互換であり、旧v2権利/未受取贈与の実移行、DEV限定C3/魔法/追加8品のproduction統合、実機iOS、全混合配置/最大数/固定10問10反復、自然X3、視覚HOLD/Human N=0と全releaseは継続。
+
+## C3地面素材のDEV比較
+
+苔/芝/色面の3案を同じ実地形の両幅で比較。芝は次の検討用に選んだが、視覚33/60 HOLD、Human N=0。地形やキャラを変えず、地面albedoと根元の局所陰だけをDEV flagで試作。core407/3946、旧memory保持/現在観察/全体/学習復帰、画像失敗fallbackはPASS。[素材・実画面・独立3判定](../../design/2026-09-14-canopy-ground/README.md)。本番素材や全releaseの合格ではなく、次は根元/地面/海の形と光の接続を改善する。既存の全仕様残件は継続。

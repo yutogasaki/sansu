@@ -7,6 +7,7 @@ import type { Cell, LifeState } from '../../../domain/islandLife/model';
 import { createIslandGrassSurface } from '../three/grassSurface';
 import { cellKey, districts, isHouse } from '../../../domain/islandLife/space';
 import { plantGatherings } from '../../../domain/islandLife/discovery';
+import { canopyGroundVariant, makeCanopyGroundStudy } from './canopyGroundStudy';
 
 /** The playable rectangle stays level. Irregularity belongs outside its cells. */
 export function coastShape(width: number, depth: number) {
@@ -46,6 +47,7 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
         grass.material = grassSurface.material;
         if (state.worldStyle === 'canopy-dots-c3-v1') grassSurface.material.bumpScale = .24;
     }
+    const groundStudy = canopy && canopyGroundVariant ? makeCanopyGroundStudy(grass, root, (landBounds(state).minX + landBounds(state).maxX) / 2, canopyGroundVariant) : undefined;
 
     // A broad, quiet water plane with a shallow shelf and low-contrast current.
     // It carries no hit targets and never changes simulation time or growth.
@@ -162,5 +164,5 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
         }
     }
     return { root, animate: (at: number, reduced: boolean) => { water.uniforms.time.value = reduced ? 0 : at / 1000 % (Math.PI * 100); },
-        dispose: () => { materials.forEach(m => m.dispose()); grassSurface?.dispose(); water.dispose(); } };
+        dispose: () => { groundStudy?.(); materials.forEach(m => m.dispose()); grassSurface?.dispose(); water.dispose(); } };
 }
