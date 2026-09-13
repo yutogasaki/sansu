@@ -43,7 +43,7 @@ try {
                 const record = await lifeDb.worlds.get(profileId); return { record, state: replayLife(record) };
             }, profileId);
             const waitState = async predicate => { for (let i = 0; i < 100; i++) { const value = await read(); if (predicate(value)) return value; await page.waitForTimeout(100); } throw new Error('Saved state did not reach expected boundary'); };
-            const initial = await waitState(value => value.record.version === 3), native = await readNative(page, profileId);
+            const initial = await waitState(value => value.record.version === 4), native = await readNative(page, profileId);
             assert.deepEqual(initial.record.economyCheckpoint.originalRecord, original);
             assert.equal(initial.state.drops, 10); assert.equal(initial.state.light, 0); assert.equal(initial.state.economy.lightRemainingBudget, 8);
             const closeMenu = async () => { const button = page.getByRole('button', { name: 'メニューを とじる', exact: true }); if (await button.isVisible()) await button.click(); };

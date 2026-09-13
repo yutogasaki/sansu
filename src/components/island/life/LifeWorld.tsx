@@ -115,6 +115,7 @@ export default function LifeWorld({ profileId, presented, state, selected, cell,
             if (content) { scene.remove(content.root); content.dispose(); }
             content = buildLifeScene(next, selection, point, preview); scene.add(content.root);
             node.dataset.lifeWorldStyle = content.root.userData.worldStyle;
+            node.dataset.lifeTourVersion = String(next.tourVersion ?? 0);
             resize();
         };
         const observer = new ResizeObserver(resize); observer.observe(node);
@@ -177,7 +178,7 @@ export default function LifeWorld({ profileId, presented, state, selected, cell,
                     collector = discoveryOwner ? new GatheringCollector(discoveryOwner, (event, evidence) => discovery.current.presented?.(event, evidence)) : undefined;
                 }
                 if (collector && discovery.current.enabled && !currentPlacement && performance.now() - discoveryAt >= 100) {
-                    const stateAtFrame = { ...currentState, now: logicalAt };
+                    const stateAtFrame = content.snapshot();
                     const rules = displayedGatherings(stateAtFrame, discoveryOwner!), rect = node.getBoundingClientRect();
                     const onScreen = (ndc: T.Vector3) => {
                         const x = rect.left + (ndc.x + 1) / 2 * rect.width, y = rect.top + (1 - ndc.y) / 2 * rect.height;

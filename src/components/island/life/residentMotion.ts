@@ -6,11 +6,13 @@ import { isRoamVisit, LIFE_STEP_MS, type Cell, type LifeState } from '../../../d
 import { activityPhase, favoriteReactionElapsed, residentReaction } from '../../../domain/islandLife/activity';
 import { sampleResidentInterest } from '../three/residentInterest';
 import { smoothArrival, turnToward } from './residentWalk';
-import { sampleLifeRoaming } from './roamingPresentation';
+import { makeLifeStateProjection } from './stateProjection';
 
 export type LifeSeat = { seat: T.Mesh; pivot?: T.Group };
 export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, state: LifeState,
     point: (cell: Cell) => T.Vector3, seats: Map<string, LifeSeat>) {
+    const project = makeLifeStateProjection(state);
+    let visible = state, renderedAt = state.now;
     const actors = [content.hero, content.rabbit.pose, content.otter.pose];
     const bodies = [content.heroBody, content.rabbit.body, content.otter.body];
     const heads = [makeLifeHeroHead(content.heroBody), content.rabbit.head, content.otter.head];
@@ -20,8 +22,10 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
     let audit: { id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
     return {
         audit: () => audit,
+        snapshot: () => ({ ...(state.tourVersion ? visible : state), now: renderedAt }),
         animate(now: number, reduced: boolean, decorationAt = now) {
-            const visible = sampleLifeRoaming(state, now);
+            if (state.scenePose === 'captured-v1') now = state.now;
+            visible = project(now); renderedAt = now;
             heads.forEach(head => { head.rotation.order = 'XYZ'; });
             heads[0].rotation.set(0, 0, 0);
             for (const { pivot } of seats.values()) if (pivot) pivot.rotation.x = 0;

@@ -87,7 +87,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
     actors.forEach((a, i) => { a.name = `life-resident-${state.residents[i].id}`; a.scale.setScalar(i ? .60 : .76); root.add(a); });
     const motion = makeLifeMotion(content, state, point, seats);
     return { root, clickables, width: max - min + 1, point,
-        animate: (at: number, reduced: boolean, decorationAt = at) => { landscape.animate(decorationAt, reduced); motion.animate(at, reduced, decorationAt); }, audit: motion.audit,
+        animate: (at: number, reduced: boolean, decorationAt = at) => { landscape.animate(decorationAt, reduced); motion.animate(at, reduced, decorationAt); }, audit: motion.audit, snapshot: motion.snapshot,
         dispose() {
             // Plane overlays use separate transparent materials; shared paints are owned by content.m.
             clickables.forEach(o => ((o as T.Mesh).material as T.Material).dispose());

@@ -1,0 +1,1017 @@
+{
+  "startHash": "f15c536725417c3b81dc7629da2e496cf319af3f1df55e74562119e47e440b76",
+  "revision": "c6841424408eeb80371d4ad631872074aa7f3c18",
+  "target": "http://127.0.0.1:5223",
+  "candidate": "gp3-tours-v1",
+  "world": "canopy-dots-c3-v1",
+  "flags": "DEV VITE_ISLAND_LIFE_PREVIEW=true",
+  "fixture": "9 explicit QA credits, three swings, and same-position move to restart all old reservations; no earned acquisition claim",
+  "cache": "fresh DEV context; no production SW claim",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": true,
+      "samples": [
+        {
+          "at": 1789276567325,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-0",
+              "phase": "walking",
+              "position": [
+                0.2877713310899217,
+                0.04,
+                -1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-swing-2",
+              "phase": "walking",
+              "position": [
+                0.5,
+                0.04,
+                0.29445176230727177
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-swing-1",
+              "phase": "walking",
+              "position": [
+                0.20554823769272823,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276572845,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-0",
+              "phase": "walking",
+              "position": [
+                -2.463604812915608,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-swing-2",
+              "phase": "swing",
+              "position": [
+                -0.5,
+                0.32273492385966224,
+                -0.19581661469730172
+              ],
+              "seatGap": 2.7755575615628914e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": -0.021638086288480296,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-swing-1",
+              "phase": "swing",
+              "position": [
+                -1.5,
+                0.3463868838487161,
+                -0.19174417210394368
+              ],
+              "seatGap": 0,
+              "reaction": "♪",
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276578082,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-0",
+              "phase": "swing",
+              "position": [
+                -2.5,
+                0.32200113102054595,
+                -0.0016044318256394074
+              ],
+              "seatGap": 1.951563910473908e-18,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-swing-1",
+              "phase": "walking",
+              "position": [
+                -0.7785698700376444,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-swing-2",
+              "phase": "walking",
+              "position": [
+                -1.2214301299623556,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276583310,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-swing-1",
+              "phase": "swing",
+              "position": [
+                -1.5,
+                0.30921123050757415,
+                0.08603027380003103
+              ],
+              "seatGap": 2.7755575615628914e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": -0.021936856454948098,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-swing-2",
+              "phase": "swing",
+              "position": [
+                -0.5,
+                0.33314444581764197,
+                0.08424108266380848
+              ],
+              "seatGap": 4.163336342344337e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0.011096253019854797,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276588819,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-2",
+              "phase": "walking",
+              "position": [
+                -0.5,
+                0.2725719065739591,
+                0.1752769270426986
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "phase": "home",
+              "position": [
+                -1.5,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0.021264745856408324,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-swing-0",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.27916969115761747,
+                0.1752769270426986
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276594081,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-2",
+              "phase": "swing",
+              "position": [
+                -0.5,
+                0.33308106886955613,
+                0.15842260779263218
+              ],
+              "seatGap": 2.7755575615628914e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "phase": "home",
+              "position": [
+                -1.5,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": -0.026589706414104786,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-swing-0",
+              "phase": "swing",
+              "position": [
+                -2.5,
+                0.3410031703186278,
+                0.1573089163494502
+              ],
+              "seatGap": 2.7755575615628914e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0.004784843734247757,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276599326,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-1",
+              "phase": "swing",
+              "position": [
+                -1.5,
+                0.3359480389668327,
+                -0.17762654333598493
+              ],
+              "seatGap": 8.326672684688674e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-swing-0",
+              "phase": "swing",
+              "position": [
+                -2.5,
+                0.32014414496285143,
+                -0.18012392883104256
+              ],
+              "seatGap": 5.551115123125783e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0.028631679009228472,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-swing-2",
+              "phase": "swing",
+              "position": [
+                -0.5,
+                0.33000994829837826,
+                -0.004741630032579769
+              ],
+              "seatGap": 3.2959746043559335e-17,
+              "reaction": "♪",
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276604843,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-1",
+              "phase": "swing",
+              "position": [
+                -1.5,
+                0.33434072564191036,
+                0.16713826028656253
+              ],
+              "seatGap": 2.7755575615628914e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-swing-0",
+              "phase": "swing",
+              "position": [
+                -2.5,
+                0.3185142332080532,
+                0.16948818310254232
+              ],
+              "seatGap": 6.206335383118183e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": -0.031749043428399876,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-swing-2",
+              "phase": "swing",
+              "position": [
+                -0.5,
+                0.3461302809003275,
+                0.1902478616773824
+              ],
+              "seatGap": 2.7755575615628914e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": -0.0047584899581984245,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276611131,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-0",
+              "phase": "swing",
+              "position": [
+                -2.5,
+                0.3247733459460526,
+                -0.07940052849622203
+              ],
+              "seatGap": 2.7755575615628914e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-swing-1",
+              "phase": "swing",
+              "position": [
+                -1.5,
+                0.30881233850768436,
+                -0.0805168803907208
+              ],
+              "seatGap": 6.938893903907228e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0.02864882064091223,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "phase": "home",
+              "position": [
+                -0.5,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": -0.0014394628616151229,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        }
+      ],
+      "light": 0,
+      "errors": []
+    },
+    {
+      "device": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pass": true,
+      "samples": [
+        {
+          "at": 1789276630385,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-0",
+              "phase": "walking",
+              "position": [
+                0.5,
+                0.04,
+                -0.6608249685610612
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-swing-2",
+              "phase": "walking",
+              "position": [
+                0.5,
+                0.04,
+                0.9928387506608045
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-swing-1",
+              "phase": "walking",
+              "position": [
+                -0.4928387506608045,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276636194,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-0",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.27669738594855975,
+                0.160647567558299
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-swing-2",
+              "phase": "swing",
+              "position": [
+                -0.5,
+                0.30600000000000005,
+                0
+              ],
+              "seatGap": 0,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-swing-1",
+              "phase": "swing",
+              "position": [
+                -1.5,
+                0.33000000000000007,
+                0
+              ],
+              "seatGap": 0,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276641577,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-0",
+              "phase": "swing",
+              "position": [
+                -2.5,
+                0.32200000000000006,
+                0
+              ],
+              "seatGap": 5.551115123125783e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-swing-1",
+              "phase": "walking",
+              "position": [
+                -1.5,
+                0.19852730637343244,
+                0.40403268280664517
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-swing-2",
+              "phase": "walking",
+              "position": [
+                -0.5,
+                0.21283052198607297,
+                0.40403268280664517
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276646945,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "phase": "home",
+              "position": [
+                -2.5,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-swing-1",
+              "phase": "swing",
+              "position": [
+                -1.5,
+                0.30600000000000005,
+                0
+              ],
+              "seatGap": 0,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-swing-2",
+              "phase": "swing",
+              "position": [
+                -0.5,
+                0.33000000000000007,
+                0
+              ],
+              "seatGap": 0,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276652701,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-2",
+              "phase": "swing",
+              "position": [
+                -0.5,
+                0.32200000000000006,
+                0
+              ],
+              "seatGap": 5.551115123125783e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "phase": "home",
+              "position": [
+                -1.5,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-swing-0",
+              "phase": "swing",
+              "position": [
+                -2.5,
+                0.33000000000000007,
+                0
+              ],
+              "seatGap": 0,
+              "reaction": "♪",
+              "hop": 0,
+              "headPitch": 0.055,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276658961,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-2",
+              "phase": "swing",
+              "position": [
+                -0.5,
+                0.32200000000000006,
+                0
+              ],
+              "seatGap": 5.551115123125783e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "phase": "home",
+              "position": [
+                -1.5,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-swing-0",
+              "phase": "swing",
+              "position": [
+                -2.5,
+                0.33000000000000007,
+                0
+              ],
+              "seatGap": 0,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276664359,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-1",
+              "phase": "swing",
+              "position": [
+                -1.5,
+                0.32200000000000006,
+                0
+              ],
+              "seatGap": 5.551115123125783e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-swing-0",
+              "phase": "swing",
+              "position": [
+                -2.5,
+                0.30600000000000005,
+                0
+              ],
+              "seatGap": 0,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "itemId": "qa-swing-2",
+              "phase": "swing",
+              "position": [
+                -0.5,
+                0.33000000000000007,
+                0
+              ],
+              "seatGap": 0,
+              "reaction": "♪",
+              "hop": 0,
+              "headPitch": 0.055,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276670154,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-0",
+              "phase": "walking",
+              "position": [
+                -2.5,
+                0.26207237680041157,
+                0.21250930212620034
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-swing-1",
+              "phase": "walking",
+              "position": [
+                -1.5,
+                0.2494725256344308,
+                0.21250930212620034
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "phase": "home",
+              "position": [
+                -0.5,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        },
+        {
+          "at": 1789276675524,
+          "poses": [
+            {
+              "id": "pokomoko",
+              "itemId": "qa-swing-0",
+              "phase": "swing",
+              "position": [
+                -2.5,
+                0.32200000000000006,
+                0
+              ],
+              "seatGap": 5.551115123125783e-17,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "rabbit",
+              "itemId": "qa-swing-1",
+              "phase": "swing",
+              "position": [
+                -1.5,
+                0.30600000000000005,
+                0
+              ],
+              "seatGap": 0,
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            },
+            {
+              "id": "otter",
+              "phase": "home",
+              "position": [
+                -0.5,
+                0.04,
+                1
+              ],
+              "hop": 0,
+              "headPitch": 0,
+              "headRoll": 0,
+              "headYaw": 0
+            }
+          ],
+          "render": {
+            "calls": 236,
+            "triangles": 157682,
+            "geometries": 151,
+            "textures": 6
+          }
+        }
+      ],
+      "light": 0,
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "f15c536725417c3b81dc7629da2e496cf319af3f1df55e74562119e47e440b76"
+}

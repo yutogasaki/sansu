@@ -1,3 +1,5 @@
+import type { TourCutover } from './tourMigration';
+import type { PlayTourCursor } from './playTours';
 import { growthRateV3, type LifeEconomyV3 } from './economyRules';
 import type { LifeEconomyCheckpoint } from './economyMigration';
 import type { DiscoveryJournal } from './discoveryJournal';
@@ -26,13 +28,14 @@ export interface LifePurchaseReceipt {
 }
 export interface LifeAction { id: string; at: number; command: LifeCommand; purchaseReceipt?: LifePurchaseReceipt; undoOf?: string }
 export interface LifeRecord {
-    profileId: string; version: 1 | 2 | 3; revision: number; createdAt: number; realAt: number; now: number;
+    profileId: string; version: 1 | 2 | 3 | 4; revision: number; createdAt: number; realAt: number; now: number;
     credits: Credit[]; actions: LifeAction[]; offsets: { at: number; offset: number }[]; clockIntents: string[];
     activitiesV2At?: number;
     activitiesV2After?: number;
     clockIntentHours?: Record<string, 6 | 24>;
     discoveryJournal?: DiscoveryJournal;
     economyCheckpoint?: LifeEconomyCheckpoint;
+    tourCutover?: TourCutover;
 }
 export interface Visit { observationTest?: boolean; itemId: string; from: Cell; path: Cell[]; start: number; end: number }
 /** Synthetic visits let the renderer show quiet ground walks without turning
@@ -42,12 +45,16 @@ export function isRoamVisit(visit?: Pick<Visit, 'itemId'>) {
     return Boolean(visit?.itemId.startsWith(ROAM_VISIT_PREFIX));
 }
 export interface LifeResident {
+    playTour?: PlayTourCursor & { remainingMs: number };
     id: ResidentId; cell: Cell; visit?: Visit; enjoyed: number; enjoyedBy: Partial<Record<ItemKind, number>>;
     discovery?: { itemId: string; at: number; mood: 'notice' | 'curious' };
 }
 export type LifeWorldStyle = 'moon-garden-v1' | 'canopy-dots-c3-v1';
 export interface LifeState {
     worldStyle?: LifeWorldStyle;
+    tourVersion?: 1;
+    scenePose?: 'captured-v1';
+    roamRound?: number;
     now: number; activityVersion: 1 | 2; drops: number; light: number; expanded?: 'east' | 'west'; items: LifeItem[];
     styles: Style[]; heroStyle: Style; target?: string; days: Record<string, number>;
     economy?: LifeEconomyV3;
@@ -71,4 +78,4 @@ export function newLife(profileId: string, now: number): LifeRecord {
     return { profileId, version: 1, revision: 0, createdAt: now, realAt: now, now, credits: [], actions: [], offsets: [{ at: now, offset: 0 }], clockIntents: [], activitiesV2At: now, activitiesV2After: 0 };
 }
 
-export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3; }
+export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3 || version === 4; }

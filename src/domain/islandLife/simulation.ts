@@ -1,3 +1,5 @@
+import { assertTourCutover } from './tourMigration';
+import { playTourMembers, planPlayTourDepartures, advancePlayTourCursor } from './playTours';
 import { assertCheckpointBoundary, checkpointLegacyRecord } from './economyMigration';
 import { effectiveGrowthHours, issueFiniteLight, GROWTH_WINDOW_MS } from './economyRules';
 import { placementUndo } from './placementUndo';
@@ -72,7 +74,8 @@ export function planLifeResidentRoam(state: LifeState, resident: LifeResident, t
 
 function arrangeRoam(state: LifeState) {
     if (state.activityVersion !== 2 || state.residents.some(resident => resident.visit && isRoamVisit(resident.visit))) return;
-    const turn = Math.floor(state.now / LIFE_RULES.activityMs);
+    const touring = state.tourVersion && state.residents.some(r => r.playTour);
+    const turn = touring ? state.roamRound ?? 0 : Math.floor(state.now / LIFE_RULES.activityMs);
     const count = state.residents.length;
     if (!count) return;
     const start = ((turn % count) + count) % count;
@@ -80,16 +83,32 @@ function arrangeRoam(state: LifeState) {
         const resident = state.residents[(start + offset) % count];
         // An explicitly chosen destination keeps Pokomoko available to wait
         // for that place; another resident can still take the quiet walk.
-        if (resident.visit || resident.id === 'pokomoko' && state.target) continue;
+        if (resident.visit || resident.playTour || resident.id === 'pokomoko' && state.target) continue;
         const plan = planLifeResidentRoam(state, resident, turn);
         if (!plan) continue;
         resident.visit = { itemId: `${ROAM_VISIT_PREFIX}${resident.id}:${turn}`, path: plan.path,
-            from: { ...resident.cell }, start: state.now, end: state.now + LIFE_RULES.activityMs };
+            from: { ...resident.cell }, start: state.now, end: state.now + (touring ? (plan.path.length - 1) * LIFE_STEP_MS + 1800 : LIFE_RULES.activityMs) };
+        if (touring) state.roamRound = turn + 1;
         return;
     }
 }
 
+function arrangeTours(s: LifeState) {
+    if (!s.tourVersion) return;
+    const planned = planPlayTourDepartures(s, s.residents.flatMap(r => r.playTour ? [{ residentId: r.id, cursor: r.playTour }] : []));
+    for (const id of planned.cancelled) {
+        const resident = s.residents.find(r => r.id === id)!;
+        resident.cell = residentCell(resident, s.now); resident.visit = undefined; resident.playTour = undefined;
+    }
+    for (const departure of planned.departures) {
+        const resident = s.residents.find(r => r.id === departure.residentId)!;
+        resident.playTour = { ...resident.playTour!, ...advancePlayTourCursor(resident.playTour!, departure.itemId) };
+        resident.visit = { itemId: departure.itemId, path: departure.path, from: { ...resident.cell }, start: s.now,
+            end: s.now + (departure.path.length - 1) * LIFE_STEP_MS + 8000 };
+    }
+}
 export function arrangeVisits(s: LifeState) {
+    arrangeTours(s);
     const developed = s.activityVersion === 2 ? new Set(districts(s).flatMap(d => d.ids)) : new Set<string>();
     // A fixed assignment order lets the first two residents monopolize two seats.
     // An explicit hero destination comes first; otherwise give less-served residents a turn.
@@ -103,7 +122,7 @@ export function arrangeVisits(s: LifeState) {
     });
     for (const r of order) {
         if (r.visit && !isRoamVisit(r.visit) && !s.items.some(i => i.id === r.visit!.itemId && i.cell)) { r.visit = undefined; r.cell = { ...homeCell }; }
-        if (r.visit) continue;
+        if (r.visit || r.playTour) continue;
         const choices = s.items.filter(i => i.cell && i.kind !== 'lantern').flatMap(i => {
             const reserved = s.activityVersion === 2 ? s.residents.filter(other => other !== r && other.visit).map(other => other.visit!.path[other.visit!.path.length - 1]) : [];
             const path = pathToActivity(s, r.cell, i, reserved); if (!path) return [];
@@ -127,8 +146,21 @@ export function arrangeVisits(s: LifeState) {
         const chosen = requested ? requested
             : choices.find(c => (dice -= c.weight) <= 0) ?? choices[0];
         r.visit = { itemId: chosen.item.id, path: chosen.path, from: { ...r.cell }, start: s.now, end: s.now + LIFE_RULES.activityMs };
+        const members = s.tourVersion && !requested ? playTourMembers(s, chosen.item.id) : undefined;
+        if (members) {
+            r.playTour = { memberIds: members, lastItemId: chosen.item.id, remainingMs: LIFE_RULES.activityMs };
+            r.visit.end = s.now + (chosen.path.length - 1) * LIFE_STEP_MS + 8000;
+        }
     }
     arrangeRoam(s);
+}
+function awardUse(s: LifeState, r: LifeResident, kind: typeof s.items[number]['kind'] | undefined) {
+    if (kind) r.enjoyedBy[kind] = (r.enjoyedBy[kind] ?? 0) + 1;
+    r.enjoyed++;
+    if (s.economy) {
+        const issued = issueFiniteLight(s.light, s.economy.lightRemainingBudget, 1);
+        s.light = issued.light; s.economy.lightRemainingBudget = issued.lightRemainingBudget;
+    } else s.light++;
 }
 export function advanceLifeState(s: LifeState, to: number) {
     if (!Number.isFinite(to) || to < s.now) throw new Error('Invalid world time');
@@ -136,20 +168,22 @@ export function advanceLifeState(s: LifeState, to: number) {
     while (s.now < to) {
         let next = to;
         if (s.lastAchievement !== undefined) for (const boundary of [24, 72].map(h => s.lastAchievement! + h * HOUR)) if (boundary > s.now) next = Math.min(next, boundary);
-        for (const r of s.residents) if (r.visit) next = Math.min(next, r.visit.end);
+        for (const r of s.residents) if (r.visit) {
+            next = Math.min(next, r.visit.end);
+            if (r.playTour) next = Math.min(next, s.now + r.playTour.remainingMs);
+        }
+        for (const r of s.residents) if (r.playTour && r.visit) r.playTour.remainingMs -= next - s.now;
         const hours = s.economy ? effectiveGrowthHours(s.economy.completionTimes, s.now, next) : (next - s.now) / HOUR * vigor(s);
         for (const i of s.items) if (i.kind === 'flower' && i.cell) i.growth = Math.min(LIFE_RULES.bloomHours, i.growth + hours);
         s.now = next;
+        for (const r of s.residents) if (r.playTour && r.playTour.remainingMs <= 0) {
+            awardUse(s, r, 'swing'); r.playTour.remainingMs = LIFE_RULES.activityMs;
+        }
         for (const r of s.residents) if (r.visit && r.visit.end <= next) {
             const visit = r.visit, kind = s.items.find(i => i.id === visit.itemId)?.kind;
             r.cell = visit.path[visit.path.length - 1]; r.visit = undefined;
             if (isRoamVisit(visit) || visit.observationTest) continue;
-            if (kind) r.enjoyedBy[kind] = (r.enjoyedBy[kind] ?? 0) + 1;
-            r.enjoyed++;
-            if (s.economy) {
-                const issued = issueFiniteLight(s.light, s.economy.lightRemainingBudget, 1);
-                s.light = issued.light; s.economy.lightRemainingBudget = issued.lightRemainingBudget;
-            } else s.light++;
+            if (!r.playTour) awardUse(s, r, kind);
         }
         arrangeVisits(s);
     }
@@ -173,7 +207,7 @@ export function applyCommand(s: LifeState, event: LifeAction) {
             const interested = hash(`${event.id}:${r.id}`) % 10 < (likes ? 10 : close ? 7 : 3);
             if (!interested || r.id === 'pokomoko' && s.target) continue;
             r.discovery = { itemId: item.id, at: s.now, mood: likes || close ? 'notice' : 'curious' };
-            r.cell = residentCell(r, s.now); r.visit = undefined;
+            r.cell = residentCell(r, s.now); r.visit = undefined; r.playTour = undefined;
         }
     } else if (c.type === 'expand') {
         if (s.expanded) fail('この しまは ここまで ひろがったよ。');
@@ -194,6 +228,7 @@ export function applyCommand(s: LifeState, event: LifeAction) {
             if (plan.kind === 'unavailable') fail('いまは ここで ためせないよ。');
             if (plan.kind === 'ready') {
                 const resident = s.residents.find(resident => resident.id === plan.residentId)!;
+                resident.playTour = undefined;
                 resident.visit = { itemId: item.id, from: { ...resident.cell }, path: plan.path,
                     start: s.now, end: s.now + plan.duration, observationTest: true };
             }
@@ -204,18 +239,18 @@ export function applyCommand(s: LifeState, event: LifeAction) {
             const hero = s.residents[0];
             if (hero.visit?.itemId !== item.id) {
                 if (hero.visit) hero.cell = residentCell(hero, s.now);
-                hero.visit = undefined;
+                hero.visit = undefined; hero.playTour = undefined;
             }
             if (changed && s.activityVersion === 2) for (const other of s.residents.slice(1)) {
                 // One invitation per new destination. The resident still chooses
                 // their own reachable, uncrowded place; no instant light is paid.
                 const interested = hash(`${event.id}:${other.id}`) % 10 < 7;
-                if (interested && other.visit?.itemId !== item.id) { other.cell = residentCell(other, s.now); other.visit = undefined; }
+                if (interested && other.visit?.itemId !== item.id) { other.cell = residentCell(other, s.now); other.visit = undefined; other.playTour = undefined; }
             }
         } else {
             if (c.type === 'move' && !usablePlacement(s, item.id, c.cell)) fail('そこには おけないよ。みちを あけてね。');
             // Reroute all walkers after any edit; interrupted visits never yield light.
-            for (const r of s.residents) { r.cell = s.activityVersion === 2 ? residentCell(r, s.now) : { ...homeCell }; r.visit = undefined; r.discovery = undefined; }
+            for (const r of s.residents) { r.cell = s.activityVersion === 2 ? residentCell(r, s.now) : { ...homeCell }; r.visit = undefined; r.playTour = undefined; r.discovery = undefined; }
             if (c.type === 'remove') { s.items = s.items.filter(i => i.id !== item.id); s.drops += removalRefund(item); }
             else item.cell = c.type === 'move' ? c.cell : undefined;
             if (c.type === 'move' && s.activityVersion === 2 && ['bench', 'swing'].includes(item.kind)) item.access = 'front';
@@ -227,26 +262,27 @@ export function applyCommand(s: LifeState, event: LifeAction) {
         const occupied = (p: typeof r.cell) => s.items.some(i => i.cell && sameCell(i.cell, p));
         if (r.visit && r.visit.path.some(occupied)) {
             r.cell = residentCell(r, s.now);
-            r.visit = undefined;
+            r.visit = undefined; r.playTour = undefined;
         }
-        if (occupied(r.cell)) { r.cell = { ...homeCell }; r.visit = undefined; }
+        if (occupied(r.cell)) { r.cell = { ...homeCell }; r.visit = undefined; r.playTour = undefined; }
     }
     arrangeVisits(s);
 }
 export function replayLife(record: LifeRecord, to = record.now): LifeState {
     if (!readableLifeVersion(record.version)) throw new Error('この島のデータは新しい版で開いてください。');
     const checkpoint = record.economyCheckpoint;
-    assertCheckpointBoundary(record);
+    assertCheckpointBoundary(record); assertTourCutover(record);
     if (checkpoint && to < checkpoint.cutoverAt) return replayLife(checkpointLegacyRecord(checkpoint), to);
     const s = checkpoint ? structuredClone(checkpoint.state) : initial(record.createdAt);
     const known = new Set(checkpoint?.projectedCreditIds ?? []);
     const credits = checkpoint ? record.credits.filter(credit => !known.has(credit.id)) : record.credits;
     if (checkpoint && credits.some(credit => credit.at <= checkpoint.cutoverAt)) throw new Error('以前の学習を反映してから島を開いてね。');
     const actions = checkpoint ? record.actions.slice(checkpoint.actionCount) : record.actions;
-    const events = [...credits.map(c => ({ at: c.at, credit: c, action: undefined, switchVersion: false, rank: 0 })),
-        ...actions.map((a, index) => ({ at: a.at, credit: undefined, action: a, switchVersion: false,
-            rank: a.at === record.activitiesV2At && index < (record.activitiesV2After ?? 0) ? .5 : 2 })),
-        ...(checkpoint || record.activitiesV2At === undefined ? [] : [{ at: record.activitiesV2At, credit: undefined, action: undefined, switchVersion: true, rank: 1 }])]
+    const events = [...credits.map(c => ({ at: c.at, credit: c, action: undefined, switchVersion: false, switchTour: false, rank: 0 })),
+        ...actions.map((a, index) => ({ at: a.at, credit: undefined, action: a, switchVersion: false, switchTour: false,
+            rank: record.tourCutover && a.at === record.tourCutover.at && index + (checkpoint?.actionCount ?? 0) < record.tourCutover.actionCount ? 1.25 : a.at === record.activitiesV2At && index < (record.activitiesV2After ?? 0) ? .5 : 2 })),
+        ...(checkpoint || record.activitiesV2At === undefined ? [] : [{ at: record.activitiesV2At, credit: undefined, action: undefined, switchVersion: true, switchTour: false, rank: 1 }]),
+        ...(record.tourCutover ? [{ at: record.tourCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: true, rank: 1.5 }] : [])]
         .sort((a, b) => a.at - b.at || a.rank - b.rank);
     const credited = new Set<string>();
     for (const event of events) {
@@ -262,7 +298,8 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
             s.activityVersion = 2;
             for (const r of s.residents) { r.cell = residentCell(r, s.now); r.visit = undefined; }
             arrangeVisits(s);
-        } else if (event.action) applyCommand(s, event.action);
+        } else if (event.switchTour) { s.tourVersion = 1; s.roamRound = 0; }
+        else if (event.action) applyCommand(s, event.action);
     }
     advanceLifeState(s, Math.max(s.now, to)); return s;
 }
@@ -273,6 +310,7 @@ export function commandLife(record: LifeRecord, command: LifeCommand, id: string
         if (existing.undoOf !== undoOf || commandFingerprint(existing.command) !== commandFingerprint(command)) throw new Error('同じ操作の内容が変わっています。');
         return record;
     }
+    if (record.tourCutover && now < record.now) throw new Error('以前の時刻には操作を追加できません。');
     if (undoOf !== undefined) {
         const inverse = placementUndo(record, undoOf);
         if (!inverse || commandFingerprint(inverse) !== commandFingerprint(command)) throw new Error('しまが かわったよ。もういちど えらんでね。');

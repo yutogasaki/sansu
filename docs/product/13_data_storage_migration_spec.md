@@ -253,3 +253,7 @@ optionalの算数巡回数は新しい算数区間を予約する同一transacti
 - バックアップ、初期状態の一致検証、版3への切替をownerの同一read-write transactionで保存する。WebCryptoを待つ間はDexie.waitForでtransactionを保持し、呼出側のPWA critical holdも維持する。中断は旧行への全rollback、再試行のcheckpoint IDはprofileと対象ルール版から同一に決まる。
 - 遅延した旧区間の終端は旧価格/時間で補正し、原本と当初の補充予算を維持する。旧時間境界/権利が再現できなければ停止し、旧購入列を新価格で再計算しない。既存intentの同内容再送は一度だけ、他タブのrevision競合は再選択を求める。
 - 新しい別tableを増やさず、プロフィール削除時は既存world削除がcheckpoint内backupも削除する。共通DBの学習/写真/旧島所有には書き込まない。実本番切替・オフライン/PWA全体の認定は検証記録に従い、データ形式の実装だけで完了にしない。
+
+### Life巡回の切替
+
+Life worldデータ版4は既存の経済checkpointを保持し、`tourCutover` に巡回ルール版・所有者・切替時刻・旧action数/原文・SHA-256を追加する。切替は同じowner transactionで検証して保存し、旧actionへの新行動の差し込みを避ける。同時刻の後続actionは切替後に処理する。切替時の既存訪問、残高、所有、成長を変えず、以後の新規行程に巡回を適用する。再送は既存の意図ID/content検証へ従う。保存失敗時は旧rowを保ち、版4で境界情報がない/改変されている場合は書込を拒否する。IndexedDBのstore/schema版は増やさない。

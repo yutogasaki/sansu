@@ -76,19 +76,19 @@ export default function RelationObservationView(props: Props) {
             if (foreground) {
                 content.animate(at, matchMedia('(prefers-reduced-motion: reduce)').matches, latest.current.frozen ? source.now + Math.min(3000, mono - start) : at); renderer.render(scene, camera); node.dataset.rendered = 'true';
                 const poses = content.audit(), sitter = poses.find(pose => pose.itemId === benchId && pose.phase === 'bench');
-                const stateAtFrame = { ...source, now: at };
+                const stateAtFrame = content.snapshot();
                 const nextStatus = sitter ? 'bench' : poses.some(pose => pose.itemId === benchId && pose.phase === 'walking') ? 'walking' : 'busy';
                 if (nextStatus !== previousStatus) { previousStatus = nextStatus; latest.current.status?.(nextStatus); }
                 const gathering = latest.current.gathering;
-                const rule = gathering ? displayedGatherings(source, '').find(rule => rule.ruleId === gathering.ruleId
+                const rule = gathering ? displayedGatherings(stateAtFrame, '').find(rule => rule.ruleId === gathering.ruleId
                     && rule.participantIds.length === gathering.participantIds.length && rule.participantIds.every(id => gathering.participantIds.includes(id)))
-                    : sitter?.relation?.ready ? benchRelation(source, '', benchId, source.relationTarget?.targetId) : undefined;
+                    : sitter?.relation?.ready ? benchRelation(stateAtFrame, '', benchId, stateAtFrame.relationTarget?.targetId) : undefined;
                 const rect = node.getBoundingClientRect();
                 const onscreen = rect.width > 0 && rect.height > 0 && rect.left >= 0 && rect.top >= 0 && rect.right <= innerWidth && rect.bottom <= innerHeight;
                 const uncovered = onscreen && [[.1, .1], [.9, .1], [.5, .5], [.1, .9], [.9, .9]].every(([x, y]) => node.contains(document.elementFromPoint(rect.left + x * rect.width, rect.top + y * rect.height)));
                 const visibleObject = (object: T.Object3D, focus?: T.Vector3) => visibleRelationObject(object, content!.root, camera, ndc =>
                     node.contains(document.elementFromPoint(rect.left + (ndc.x + 1) / 2 * rect.width, rect.top + (1 - ndc.y) / 2 * rect.height)), focus);
-                let core = Boolean(gathering && rule && uncovered && gatheringVisible(source, rule, content.root, camera, content.point, ndc =>
+                let core = Boolean(gathering && rule && uncovered && gatheringVisible(stateAtFrame, rule, content.root, camera, content.point, ndc =>
                     node.contains(document.elementFromPoint(rect.left + (ndc.x + 1) / 2 * rect.width, rect.top + (1 - ndc.y) / 2 * rect.height))));
                 if (sitter?.relation && rule) {
                     const actor = content.root.getObjectByName(`life-resident-${sitter.id}`)!;
@@ -102,7 +102,7 @@ export default function RelationObservationView(props: Props) {
                     }
                 }
                 const focal = sitter ? [sitter.id, ...(sitter.relation?.targetResidentId ? [sitter.relation.targetResidentId] : [])] as ResidentId[] : [];
-                const nextKey = gathering && rule ? rule.semanticSignature : rule && sitter ? JSON.stringify([rule.semanticSignature, focal, source.residents.find(r => r.id === sitter.id)?.visit?.start]) : '';
+                const nextKey = gathering && rule ? rule.semanticSignature : rule && sitter ? JSON.stringify([rule.semanticSignature, focal, stateAtFrame.residents.find(r => r.id === sitter.id)?.visit?.start]) : '';
                 if (nextKey !== key) { cancel(); key = nextKey; }
                 if (core && rule && !pending && !event) {
                     pending = true; preparation = 'pending'; const token = epoch;

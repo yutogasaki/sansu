@@ -1,3 +1,4 @@
+import { prepareTourMigration } from './tourMigration';
 import { prepareEconomyMigration, reconcileLegacyCredits } from './economyMigration';
 import { placementUndo } from './placementUndo';
 import { readableLifeVersion } from './model';
@@ -94,6 +95,7 @@ export async function updateLife(profileId: string, facts: TerminalFact[], inten
         // One owner transaction commits the untouched legacy backup, projection,
         // watermark and active version together. WebCrypto cannot let IDB expire.
         next = await Dexie.waitFor(next.economyCheckpoint ? reconcileLegacyCredits(next) : prepareEconomyMigration(next, facts, previous));
+        next = await Dexie.waitFor(prepareTourMigration(next));
         if (intent?.command) next = commandLife(next, intent.command, intent.id, next.now, intent.undoOf);
         replayLife(next); // Reject invalid transactions before any write.
         await database.worlds.put(next); return next;
