@@ -12,12 +12,13 @@ async function sourceHash() {
     const files = [...new Set(execFileSync('git', ['ls-files', '-co', '--exclude-standard', 'src', 'public', 'package.json', 'package-lock.json', 'vite.config.ts'], { encoding: 'utf8' }).trim().split('\n'))].sort();
     const hash = createHash('sha256'); for (const file of files) hash.update(file).update('\0').update(await readFile(file)).update('\0'); return hash.digest('hex');
 }
-const atmosphere = candidate.startsWith('canopy-atmosphere-') ? candidate.split('-')[2] : undefined;
+const clearance = candidate.startsWith('canopy-clearance-') ? candidate.split('-')[2] : undefined;
+const atmosphere = clearance ? 'shelter' : candidate.startsWith('canopy-atmosphere-') ? candidate.split('-')[2] : undefined;
 const sculpt = atmosphere ? 'buttress' : candidate.startsWith('canopy-sculpt-') ? candidate.split('-')[2] : undefined;
 const baseline = process.env.SANSU_CANOPY_BASELINE_URL;
 if (atmosphere) assert(baseline, 'Specify the matching non-atmosphere DEV target for camera comparison');
 const report = { startHash: await sourceHash(), revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), target: base,
-    candidate, flags: `DEV VITE_ISLAND_LIFE_PREVIEW=true; material study ${candidate === 'canopy-bark-runtime-study-v1' || (candidate.startsWith('canopy-ground-') || (candidate.startsWith('canopy-shore-') || Boolean(sculpt)))}; ground variant ${(candidate.startsWith('canopy-shore-') || Boolean(sculpt)) ? 'turf' : candidate.startsWith('canopy-ground-') ? candidate.split('-')[2] : 'off'}; shore variant ${(candidate.startsWith('canopy-shore-') || Boolean(sculpt)) ? (sculpt ? 'lagoon' : candidate.split('-')[2]) : 'off'}; sculpt ${sculpt ?? 'off'}; atmosphere ${atmosphere ?? 'off'}`, cache: 'fresh DEV context; no production SW claim',
+    candidate, flags: `DEV VITE_ISLAND_LIFE_PREVIEW=true; material study ${candidate === 'canopy-bark-runtime-study-v1' || (candidate.startsWith('canopy-ground-') || (candidate.startsWith('canopy-shore-') || Boolean(sculpt)))}; ground variant ${(candidate.startsWith('canopy-shore-') || Boolean(sculpt)) ? 'turf' : candidate.startsWith('canopy-ground-') ? candidate.split('-')[2] : 'off'}; shore variant ${(candidate.startsWith('canopy-shore-') || Boolean(sculpt)) ? (sculpt ? 'lagoon' : candidate.split('-')[2]) : 'off'}; sculpt ${sculpt ?? 'off'}; atmosphere ${atmosphere ?? 'off'}; clearance ${clearance ?? 'off'}`, cache: 'fresh DEV context; no production SW claim',
     fixture: 'three connected flowers and an explicitly simulated old-world saved memory; no earned acquisition or historical user activity claim', humanN: 0, cases: [], pass: false };
 if ((candidate.startsWith('canopy-ground-') || (candidate.startsWith('canopy-shore-') || Boolean(sculpt)))) report.groundAtlasSha256 = createHash('sha256').update(await readFile('docs/design/2026-09-14-canopy-ground/material-atlas.png')).digest('hex');
 if (sculpt) report.sculptMeshSha256 = createHash('sha256').update(await readFile(`docs/design/2026-09-14-canopy-sculpt/meshes/${sculpt}.json`)).digest('hex');
@@ -77,7 +78,7 @@ try {
             await page.locator('.life-camera-tools summary').click();
             if (atmosphere) {
                 await page.getByRole('button',{name:'しまを おおきく',exact:true}).click();
-                assert.notEqual(await page.locator('.life-world').getAttribute('data-life-camera'),closeCamera);
+                assert.notDeepEqual(cameraMatrices(await page.locator('.life-world').getAttribute('data-life-camera')),cameraMatrices(closeCamera));
                 await page.screenshot({path:`${out}/${device}-camera-zoom.png`});
                 await page.getByRole('button',{name:'もとの ながめ',exact:true}).click();
                 assert.deepEqual(cameraMatrices(await page.locator('.life-world').getAttribute('data-life-camera')),cameraMatrices(closeCamera));

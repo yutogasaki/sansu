@@ -1,3 +1,4 @@
+import { canopyClearanceStudy, canopyClearanceHeights } from './canopyClearanceStudy';
 import * as T from 'three';
 import { batch } from '../three/primitives';
 import { canopySculptStudy, loadCanopySculpt } from './canopySculptStudy';
@@ -86,7 +87,7 @@ export function buildCanopyScenery(center: number) {
     leaf([3.65, 2.65, -3.85], [.95, 1, 1.25], [.5, -.5, -.6], '#2a817a', '#dfbc66');
     leaf([-1.6, 2.75, -4.1], [1.1, 1, 1.05], [.45, -.65, -.18], '#398f85', '#e8c974');
     root.position.x = 2.5 - center;
-    root.scale.y = .67;
+    root.scale.y = canopyClearanceStudy ? canopyClearanceHeights[canopyClearanceStudy] : .67;
     // Leaves need their own shader; batch only the opaque timber geometry.
     const timber = new T.Group();
     [...root.children].filter(child => child instanceof T.Mesh && child.material === wood).forEach(child => timber.add(child));

@@ -1,3 +1,4 @@
+import { canopyClearanceCandidate } from './canopyClearanceStudy';
 import { canopyAtmosphereStudy, createCanopyLightingStudy } from './canopyAtmosphereStudy';
 import { makeEncounterObservation } from './encounterObservation';
 import { makeReadingObservation } from './readingObservation';
@@ -151,7 +152,7 @@ export default function RelationObservationView(props: Props) {
                 }
                 const canopy = content.root.getObjectByName('life-canopy-c3');
                 node.dataset.lifeSculptStatus = canopy?.userData.sculptStatus ?? 'none';
-                node.dataset.lifeVisualCandidate = source?.worldStyle === 'canopy-dots-c3-v1' && canopyAtmosphereStudy ? `canopy-atmosphere-${canopyAtmosphereStudy}-study-v1` : canopy?.userData.sculptStatus ? canopy.userData.visualCandidate : content.root.getObjectByName('life-landscape')?.userData.visualCandidate ?? canopy?.userData.visualCandidate ?? content.root.userData.worldStyle;
+                node.dataset.lifeVisualCandidate = source?.worldStyle === 'canopy-dots-c3-v1' && canopyAtmosphereStudy ? (canopyClearanceCandidate ?? `canopy-atmosphere-${canopyAtmosphereStudy}-study-v1`) : canopy?.userData.sculptStatus ? canopy.userData.visualCandidate : content.root.getObjectByName('life-landscape')?.userData.visualCandidate ?? canopy?.userData.visualCandidate ?? content.root.userData.worldStyle;
                 renderer.render(scene, camera); node.dataset.rendered = 'true';
                 const findTransport = () => facilityRelations(stateAtFrame, '', content!, camera, ndc => {
                     const rect = node.getBoundingClientRect();

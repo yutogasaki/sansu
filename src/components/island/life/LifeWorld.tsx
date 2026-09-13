@@ -1,3 +1,4 @@
+import { canopyClearanceCandidate } from './canopyClearanceStudy';
 import { canopyAtmosphereStudy, canopyAtmospheres, createCanopyLightingStudy } from './canopyAtmosphereStudy';
 import { makeFootstepPresentation, type FootstepInput } from './footstepPresentation';
 import { makeWorldShadowPresentation } from './worldShadowPresentation';
@@ -135,7 +136,7 @@ export default function LifeWorld({ inspectShadow, observationOpen = false, foot
             studyLighting?.set(atmosphere);
             if (studyLighting) node.dataset.lifeStudyLighting = JSON.stringify(studyLighting.snapshot());
             const canopy = content.root.getObjectByName('life-canopy-c3');
-            node.dataset.lifeVisualCandidate = atmosphere ? `canopy-atmosphere-${atmosphere}-study-v1` : canopy?.userData.sculptStatus ? canopy.userData.visualCandidate : content.root.getObjectByName('life-landscape')?.userData.visualCandidate ?? canopy?.userData.visualCandidate ?? content.root.userData.worldStyle;
+            node.dataset.lifeVisualCandidate = atmosphere ? (canopyClearanceCandidate ?? `canopy-atmosphere-${atmosphere}-study-v1`) : canopy?.userData.sculptStatus ? canopy.userData.visualCandidate : content.root.getObjectByName('life-landscape')?.userData.visualCandidate ?? canopy?.userData.visualCandidate ?? content.root.userData.worldStyle;
             node.dataset.lifeLandscapeVersion = next.landscapeVersion ?? 'original';
             node.dataset.lifeTourVersion = String(next.tourVersion ?? 0);
             resize();

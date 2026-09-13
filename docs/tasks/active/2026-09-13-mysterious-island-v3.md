@@ -393,3 +393,7 @@ cd0c951のLife有効productionと3781179の固定production buildで、実初回
 ## 構図と局所的な光の比較
 
 既存buttress/turf/lagoonで3案を比較し、shelterをDEV試作基準にした。キャラとgeometryは保持。core410/3955と両幅UI3 PASS。近景での花列cropによる未提示と、カメラ履歴まで比較した検査誤りを記録し、全景での実提示/実行列の比較へ修正した。[比較・初回失敗・最終導線・独立3判定](../../design/2026-09-14-canopy-atmosphere/README.md)。視覚36/60 HOLD・Human N=0。次は地面から樹冠までの空間と背景の層。全仕様残件は継続。
+
+## 樹冠下の尺度の比較
+
+幹と葉の縦圧縮0.67に対し、0.82/1.00/1.12を同じ家・住民・カメラ・照明で比較。vault 1.00を次のDEV試作基準にした。core410/3955と両幅UI1 PASS、試作前と全景/配置の描画行列一致、旧memory/学習正本を保持。[比較と独立3判定](../../design/2026-09-14-canopy-clearance/README.md)。視覚37/60 HOLD・Human N=0。葉のcropと背景の層、元の仕様全体の残件は継続。
