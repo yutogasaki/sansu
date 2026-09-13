@@ -1,0 +1,32 @@
+{
+  "target": "http://127.0.0.1:5308",
+  "sourceHash": "688fd1fd4b3178e7d08cb8311b1e8512f67e85eee5e358f8ee56edc193f56845",
+  "buildVersion": {
+    "version": "development-local:da584bc4-5757-42de-bb19-32c4f604a623",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "scope": "Actual earned owner, real clock, SW enabled; no DB injection, clock change, debugger or new purchases",
+  "seconds": 90,
+  "baseline": "/tmp/sansu-cadence-baseline-combined",
+  "cases": [],
+  "pass": false,
+  "failure": {
+    "device": "phone",
+    "error": "AssertionError [ERR_ASSERTION]: Both autonomous residents must walk to visibly different positions\n    at file:///private/tmp/sansu-canopy-material-worktree/tools/e2e-island-life-cadence.mjs:81:17",
+    "text": "プレイヤーの しま\nしずく\n2\nひかり\n3\nつくる\nようす\nながめ\nしま\nいえ\nまなぶ\nきろく\n設定"
+  }
+}

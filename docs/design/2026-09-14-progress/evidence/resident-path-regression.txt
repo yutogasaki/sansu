@@ -1,0 +1,26 @@
+
+ RUN  v2.1.9 /private/tmp/sansu-canopy-material-worktree
+
+ ❯ src/domain/islandLife/residentCadence.test.ts (7 tests | 1 failed) 347ms
+   × resident activity cadence > releases already-travelled paths on the actual narrow two-building layout 3ms
+     → expected undefined to be defined
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/domain/islandLife/residentCadence.test.ts > resident activity cadence > releases already-travelled paths on the actual narrow two-building layout
+AssertionError: expected undefined to be defined
+ ❯ src/domain/islandLife/residentCadence.test.ts:102:22
+    100|         state.cadenceVersion = 1; state.cadenceActive = true;
+    101|         const plan = planLifeResidentRoam(state, otter, 8);
+    102|         expect(plan).toBeDefined();
+       |                      ^
+    103|         expect(plan!.path.slice(1).some(p => state.residents.slice(0, …
+    104|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+   Start at  06:57:59
+   Duration  658ms (transform 93ms, setup 0ms, collect 134ms, tests 347ms, environment 0ms, prepare 38ms)
+
