@@ -1,3 +1,4 @@
+import type { PlacementCutover } from './placementMigration';
 import type { RelationCutover } from './relationMigration';
 import type { FacilityCutover } from './facilityMigration';
 import type { FacilityTrip } from './facilityTrips';
@@ -27,6 +28,7 @@ export const CATALOG: Record<ItemKind, { label: string; price: number }> = {
 export interface LifeItem { id: string; kind: ItemKind; cell?: Cell; growth: number; style: Style; access?: 'front'; paidDrops?: number }
 export interface Credit { id: string; at: number; day: string }
 export type LifeCommand = { type: 'buy'; kind: ItemKind; cell: Cell }
+    | { type: 'clear-placement'; kind: ItemKind; cell: Cell; itemId?: string }
     | { type: 'move'; itemId: string; cell: Cell } | { type: 'store' | 'remove' | 'visit' | 'observe'; itemId: string }
     | { type: 'observe-relation'; itemId: string; residentId: ResidentId; targetId?: string }
     | { type: 'expand'; side: LandSide } | { type: 'style'; style: Style; itemId?: string };
@@ -39,7 +41,7 @@ export interface LifeLandReceipt {
 }
 export interface LifeAction { id: string; at: number; command: LifeCommand; purchaseReceipt?: LifePurchaseReceipt; landReceipt?: LifeLandReceipt; undoOf?: string }
 export interface LifeRecord {
-    profileId: string; version: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14; revision: number; createdAt: number; realAt: number; now: number;
+    profileId: string; version: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15; revision: number; createdAt: number; realAt: number; now: number;
     credits: Credit[]; actions: LifeAction[]; offsets: { at: number; offset: number }[]; clockIntents: string[];
     activitiesV2At?: number;
     activitiesV2After?: number;
@@ -49,6 +51,7 @@ export interface LifeRecord {
     tourCutover?: TourCutover;
     facilityCutover?: FacilityCutover;
     relationCutover?: RelationCutover;
+    placementCutover?: PlacementCutover;
 }
 export interface Visit { observationSubjectId?: string; relationTargetId?: string; relationSelectionVersion?: 1; observationTest?: boolean; itemId: string; from: Cell; path: Cell[]; start: number; end: number }
 /** Synthetic visits let the renderer show quiet ground walks without turning
@@ -85,6 +88,7 @@ export interface LifeState {
     facilityPresentation?: 'carry-care-v1';
     facilityTripVersion?: 1;
     relationSelectionVersion?: 1;
+    placementVersion?: 1;
     tourVersion?: 1;
     scenePose?: 'captured-v1';
     roamRound?: number;
@@ -117,4 +121,4 @@ export function newLife(profileId: string, now: number): LifeRecord {
     return { profileId, version: 1, revision: 0, createdAt: now, realAt: now, now, credits: [], actions: [], offsets: [{ at: now, offset: 0 }], clockIntents: [], activitiesV2At: now, activitiesV2After: 0 };
 }
 
-export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3 || version === 4 || version === 5 || version === 6 || version === 7 || version === 8 || version === 9 || version === 10 || version === 11 || version === 12 || version === 13 || version === 14; }
+export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3 || version === 4 || version === 5 || version === 6 || version === 7 || version === 8 || version === 9 || version === 10 || version === 11 || version === 12 || version === 13 || version === 14 || version === 15; }

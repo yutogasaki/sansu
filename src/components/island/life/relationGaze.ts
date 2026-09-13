@@ -1,6 +1,7 @@
+import { routeDuration } from '../../../domain/islandLife/walkingSpace';
 import * as T from 'three';
 import { visitRelation } from '../../../domain/islandLife/discovery';
-import { growthStage, LIFE_STEP_MS, type LifeState } from '../../../domain/islandLife/model';
+import { growthStage, type LifeState } from '../../../domain/islandLife/model';
 import { activityPhase } from '../../../domain/islandLife/activity';
 import { smoothArrival } from './residentWalk';
 
@@ -30,7 +31,7 @@ export function makeRelationGaze(state: LifeState, heads: T.Group[], point: (cel
             : point(target.cell).add(new T.Vector3(0, target.kind === 'flower' ? [ .16, .32, .49 ][growthStage(target)] : target.kind === 'water-bowl' ? .23 : .7, 0));
         const head = heads[index];
         const local = head.parent!.worldToLocal(focus.clone()).sub(head.position);
-        const settledAt = visit.start + (visit.path.length - 1) * LIFE_STEP_MS + 900;
+        const settledAt = visit.start + routeDuration(visit.path) + 900;
         const blend = reduced ? 1 : smoothArrival((now - settledAt) / 500);
         head.rotation.order = 'YXZ';
         head.rotation.y = Math.atan2(local.x, local.z) * blend;

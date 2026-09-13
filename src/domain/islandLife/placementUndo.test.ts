@@ -61,15 +61,17 @@ describe('one placement undo within the same edit history', () => {
         await expect(updateLife('owner', [], { id: 'stale-undo', revision: r.revision, command: inverse, undoOf: 'flower' }, at, db)).rejects.toThrow();
         expect(await db.worlds.get('owner')).toEqual(r);
     });
-    it('rechecks present-day access rules and rolls back an unsafe legacy restoration', async () => {
+    it('restores an isolated legacy placement under current rules without losing ownership', async () => {
         const db = new IslandLifeDatabase(`undo-${crypto.randomUUID()}`); stores.push(db);
         let r = newLife('owner', at); delete r.activitiesV2At; delete r.activitiesV2After;
         r.credits = Array.from({ length: 6 }, (_, i) => ({ id: `credit-${i}`, at, day: learningDay(at) }));
         r = commandLife(r, { type: 'buy', kind: 'bench', cell: { x: 5, z: 4 } }, 'old-bench', at);
         await db.worlds.put(r);
         r = await updateLife('owner', [], { id: 'store', revision: r.revision, command: { type: 'store', itemId: 'old-bench' } }, at + 1, db);
-        await expect(updateLife('owner', [], { id: 'unsafe-undo', revision: r.revision, command: placementUndo(r, 'store')!, undoOf: 'store' }, at + 2, db)).rejects.toThrow('みちを あけてね');
-        expect(await db.worlds.get('owner')).toEqual(r);
+        const restored = await updateLife('owner', [], { id: 'restore-undo', revision: r.revision, command: placementUndo(r, 'store')!, undoOf: 'store' }, at + 2, db);
+        expect(replayLife(restored).items[0]).toMatchObject({ id: 'old-bench', cell: { x: 5, z: 4 } });
+        expect(replayLife(restored).drops).toBe(replayLife(r).drops);
+        expect(await db.worlds.get('owner')).toEqual(restored);
     });
 
 });

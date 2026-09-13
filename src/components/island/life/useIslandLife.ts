@@ -84,6 +84,6 @@ export function useIslandLife(profileId: string, active: boolean) {
         document.addEventListener('visibilitychange', refreshVisible);
         return () => { clearInterval(id); document.removeEventListener('visibilitychange', refreshVisible); };
     }, [active, refresh]);
-    return { record: record?.profileId === profileId ? record : undefined, busy, error, refresh,
+    return { currentRecord: () => latest.current, record: record?.profileId === profileId ? record : undefined, busy, error, refresh,
         retry: () => refresh(retryIntent.current), clearError: () => { retryIntent.current = undefined; void refresh(); } };
 }

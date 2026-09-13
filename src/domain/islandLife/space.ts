@@ -1,3 +1,4 @@
+import { canStand, fineRoute, routeLength } from './walkingSpace';
 import { isFacility, occupiedCells, occupiesCell } from './footprint';
 import { landBounds, type LandState } from './landRules';
 import { growthStage, type Cell, type District, type LifeItem, type LifeState } from './model';
@@ -17,10 +18,12 @@ export function vacant(s: LifeState, p: Cell, except?: string) {
 }
 export function blocksWalking(item: Pick<LifeItem, 'kind' | 'cell'>) { return Boolean(item.cell && item.kind !== 'flower-arch'); }
 export function walkable(s: LifeState, p: Cell) {
+    if (s.placementVersion === 1) return canStand(s, p);
     return landCells(s).some(c => sameCell(c, p)) && !(p.z === 0 && (p.x === 2 || p.x === 3))
         && !s.items.some(i => blocksWalking(i) && occupiesCell(i, p));
 }
 export function route(s: LifeState, from: Cell, to: Cell, avoid: Cell[] = []): Cell[] | undefined {
+    if (s.placementVersion === 1) return fineRoute(s, from, to, avoid);
     const land = new Set(landCells(s).map(cellKey));
     const blocked = new Set([...s.items.filter(blocksWalking).flatMap(i => occupiedCells(i).map(cellKey)), ...avoid.map(cellKey)]);
     blocked.add('2,0'); blocked.add('3,0');
@@ -36,6 +39,11 @@ export function route(s: LifeState, from: Cell, to: Cell, avoid: Cell[] = []): C
 }
 export function pathToActivity(s: LifeState, from: Cell, item: LifeItem, reserved: Cell[] = []) {
     if (!item.cell) return undefined;
+    if (s.placementVersion === 1 && !sameCell(from, homeCell) && !activityPath(s, homeCell, item)) return undefined;
+    return activityPath(s, from, item, reserved);
+}
+function activityPath(s: LifeState, from: Cell, item: LifeItem, reserved: Cell[] = []) {
+    if (!item.cell) return undefined;
     if (item.kind === 'flower-arch') {
         const neighbors = [{ x: 0, z: 1 }, { x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: -1 }]
             .map(d => ({ x: item.cell!.x + d.x, z: item.cell!.z + d.z })).filter(p => walkable(s, p));
@@ -49,20 +57,25 @@ export function pathToActivity(s: LifeState, from: Cell, item: LifeItem, reserve
             const approach = route(s, from, entry, [item.cell!]);
             if (approach) paths.push([...approach, item.cell!, entry]);
         }
-        return paths.sort((a, b) => a.length - b.length)[0];
+        return paths.sort((a, b) => routeLength(a) - routeLength(b))[0];
     }
-    const approaches = isFacility(item.kind) ? [{ x: 0, z: 2 }] : (item.kind === 'picnic-table' || item.kind === 'sandbox') ? [{ x: 0, z: 1 }, { x: 0, z: -1 }] : item.access === 'front' ? [{ x: 0, z: 1 }]
+    const approaches = s.placementVersion === 1 && ['flower', 'lantern', 'sapling'].includes(item.kind) ? [{ x: 0, z: .5 }, { x: .5, z: 0 }, { x: -.5, z: 0 }, { x: 0, z: -.5 }] : isFacility(item.kind) ? [{ x: 0, z: 2 }] : (item.kind === 'picnic-table' || item.kind === 'sandbox') ? [{ x: 0, z: 1 }, { x: 0, z: -1 }] : item.access === 'front' ? [{ x: 0, z: 1 }]
         : [{ x: 0, z: 1 }, { x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: -1 }];
     return approaches
         .map(d => route(s, from, { x: item.cell!.x + d.x, z: item.cell!.z + d.z }))
-        .filter((p): p is Cell[] => Boolean(p) && !reserved.some(c => sameCell(c, p![p!.length - 1]))).sort((a, b) => a.length - b.length)[0];
+        .filter((p): p is Cell[] => Boolean(p) && !reserved.some(c => sameCell(c, p![p!.length - 1]))).sort((a, b) => routeLength(a) - routeLength(b))[0];
 }
 export function usablePlacement(s: LifeState, itemId: string, p: Cell) {
     const item = s.items.find(i => i.id === itemId);
     if (!item || !occupiedCells({ ...item, cell: p }).every(cell => vacant(s, cell, itemId))) return false;
+    if (s.placementVersion === 1) return true;
     const trial = { ...s, items: s.items.map(i => i.id === itemId ? { ...i, cell: p,
         access: s.activityVersion === 2 && ['bench', 'swing'].includes(i.kind) ? 'front' as const : i.access } : i) };
     return trial.items.every(i => !i.cell || Boolean(pathToActivity(trial, homeCell, i)));
+}
+/** Connectivity describes use, independently of whether the object can be placed. */
+export function isolatedItems(s: LifeState): LifeItem[] {
+    return s.items.filter(item => item.cell && !pathToActivity(s, homeCell, item));
 }
 export function districts(s: LifeState): District[] {
     const found: District[] = [];

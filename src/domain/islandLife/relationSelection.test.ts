@@ -125,7 +125,7 @@ describe('relation scheduler cutover', () => {
             const old = await oldRecord(); await db.worlds.put(old); const fail = () => { throw new Error('disk failure'); }; db.worlds.hook('updating', fail);
             await expect(updateLife(old.profileId, [], undefined, 100, db)).rejects.toThrow('disk failure'); expect(await db.worlds.get(old.profileId)).toEqual(old);
             db.worlds.hook('updating').unsubscribe(fail);
-            const next = await updateLife(old.profileId, [], undefined, 100, db); expect(next.version).toBe(13); expect(next.revision).toBe(old.revision + 1);
+            const next = await updateLife(old.profileId, [], undefined, 100, db); expect(next.version).toBe(15); expect(next.revision).toBe(old.revision + 1);
             await verifyRelationCutover(next);
             const intent = { id: 'call', revision: next.revision, command: { type: 'visit' as const, itemId: 'bench' } };
             const called = await updateLife(old.profileId, [], intent, 101, db);

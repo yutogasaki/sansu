@@ -1,0 +1,381 @@
+{
+  "target": "http://127.0.0.1:5297",
+  "revision": "082958920f26efb5c8f55b80521bd86e0dc098de",
+  "startHash": "dba32cfd6713b26b71192fb19b59742f8bd7d439385c843b67575dcf241c485f",
+  "endHash": "dba32cfd6713b26b71192fb19b59742f8bd7d439385c843b67575dcf241c485f",
+  "flags": "production Island=true, Life=true, Discovery=true, Life preview=false, BuildPlay=false",
+  "fixture": "No injected profiles, clocks, credits, answers, or database writes; onboarding and purchases through actual UI in disposable contexts",
+  "failureInjection": "none",
+  "buildVersion": {
+    "version": "development-local:4a0b477c-07fb-4b2f-96ac-7d5016c047e2",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "scope": "Actual service worker offline ownership, earned credit projection, placement/storage and native learning. 12-item catalog and real sapling purchase. Not all rule journeys, C3 or two-build update.",
+  "humanN": 0,
+  "pass": true,
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "cache": {
+        "controlled": true,
+        "active": "activated",
+        "hook": false,
+        "resources": [
+          {
+            "url": "http://127.0.0.1:5297/assets/react-DcHpdqMy.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/index-U6sHpOv_.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/motion-iLBaTeAD.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/icons-CrPBO_F1.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/index-BJRhExpm.css",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/audio-DwtSHwBT.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/data-CYRvWfdS.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/charts-Dqb-tBNT.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/Island-DGgjU62M.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/Island-DyYOUQ1e.css",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/repository-CAAuDDev.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/Island-D-SCW4ZQ.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/islandFurniturePlacement-BexE8pnt.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/Island-C9Lfi2K9.css",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/IslandLife-CLEYrgoy.css",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/IslandLife-BeH_OveZ.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/residentInterest-B8dnRNGd.js",
+            "cached": true
+          }
+        ]
+      },
+      "delivery": {
+        "builds": [
+          {
+            "buildRevision": "development-local",
+            "deliveryId": "snap-root-v1",
+            "configuredDeliveryId": "snap-root-v1",
+            "visualLineageId": "pokko-field-v1"
+          },
+          {
+            "layoutVersion": "display-v1",
+            "gameId": "mystic-island-v1",
+            "mode": "home",
+            "lifeHome": "true",
+            "homeLayout": "world-first-v2",
+            "complex": "false",
+            "visualCandidateId": "mystic-island-shore-garden-v18",
+            "deliveryId": "mystic-island-v1",
+            "learningCandidate": "mystic-island-learning-v2",
+            "islandRevision": "3",
+            "discoveryCount": "0",
+            "buildRevision": "development-local",
+            "buildVersion": "development-local:4a0b477c-07fb-4b2f-96ac-7d5016c047e2",
+            "busy": "false"
+          }
+        ],
+        "world": "moon-garden-v1"
+      },
+      "catalog": [
+        {
+          "kind": "flower",
+          "text": "おはなおはなめを そだてて おはなにしずく 2",
+          "disabled": false
+        },
+        {
+          "kind": "bench",
+          "text": "ベンチベンチひとやすみの ばしょしずく 4",
+          "disabled": false
+        },
+        {
+          "kind": "swing",
+          "text": "ブランコブランコすわって ゆらゆらしずく 6",
+          "disabled": false
+        },
+        {
+          "kind": "lantern",
+          "text": "ほしの あかりほしの あかりあかりの そばに あつまるかなあと 2 しずく",
+          "disabled": true
+        },
+        {
+          "kind": "sapling",
+          "text": "木の なえ木の なえ木かげに そだつ なえしずく 4",
+          "disabled": false
+        },
+        {
+          "kind": "water-bowl",
+          "text": "水ばち水ばち水を のぞく うつわしずく 4",
+          "disabled": false
+        },
+        {
+          "kind": "picnic-table",
+          "text": "ピクニック テーブルピクニック テーブルおやつと おしゃべりの ばしょあと 2 しずく",
+          "disabled": true
+        },
+        {
+          "kind": "pinwheel",
+          "text": "かざぐるまかざぐるまかぜと くるくるあと 6 しずく",
+          "disabled": true
+        },
+        {
+          "kind": "flower-arch",
+          "text": "花の アーチ花の アーチおはなの したを くぐろうあと 6 しずく",
+          "disabled": true
+        },
+        {
+          "kind": "sandbox",
+          "text": "すなばすなばすなで おやまや おしろをあと 12 しずく",
+          "disabled": true
+        },
+        {
+          "kind": "garden-hut",
+          "text": "えんげい 小屋えんげい 小屋どうぐを だして おていれあと 30 しずく",
+          "disabled": true
+        },
+        {
+          "kind": "library",
+          "text": "森の としょしつ森の としょしつほんを ひらいて ひとやすみあと 66 しずく",
+          "disabled": true
+        }
+      ],
+      "answers": 3,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "device": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "cache": {
+        "controlled": true,
+        "active": "activated",
+        "hook": false,
+        "resources": [
+          {
+            "url": "http://127.0.0.1:5297/assets/react-DcHpdqMy.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/motion-iLBaTeAD.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/index-U6sHpOv_.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/index-BJRhExpm.css",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/icons-CrPBO_F1.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/audio-DwtSHwBT.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/data-CYRvWfdS.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/charts-Dqb-tBNT.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/repository-CAAuDDev.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/Island-DGgjU62M.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/Island-D-SCW4ZQ.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/Island-DyYOUQ1e.css",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/Island-C9Lfi2K9.css",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/islandFurniturePlacement-BexE8pnt.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/IslandLife-BeH_OveZ.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/residentInterest-B8dnRNGd.js",
+            "cached": true
+          },
+          {
+            "url": "http://127.0.0.1:5297/assets/IslandLife-CLEYrgoy.css",
+            "cached": true
+          }
+        ]
+      },
+      "delivery": {
+        "builds": [
+          {
+            "buildRevision": "development-local",
+            "deliveryId": "snap-root-v1",
+            "configuredDeliveryId": "snap-root-v1",
+            "visualLineageId": "pokko-field-v1"
+          },
+          {
+            "layoutVersion": "display-v1",
+            "gameId": "mystic-island-v1",
+            "mode": "home",
+            "lifeHome": "true",
+            "homeLayout": "world-first-v2",
+            "complex": "false",
+            "visualCandidateId": "mystic-island-shore-garden-v18",
+            "deliveryId": "mystic-island-v1",
+            "learningCandidate": "mystic-island-learning-v2",
+            "islandRevision": "3",
+            "discoveryCount": "0",
+            "buildRevision": "development-local",
+            "buildVersion": "development-local:4a0b477c-07fb-4b2f-96ac-7d5016c047e2",
+            "busy": "false"
+          }
+        ],
+        "world": "moon-garden-v1"
+      },
+      "catalog": [
+        {
+          "kind": "flower",
+          "text": "おはなおはなめを そだてて おはなにしずく 2",
+          "disabled": false
+        },
+        {
+          "kind": "bench",
+          "text": "ベンチベンチひとやすみの ばしょしずく 4",
+          "disabled": false
+        },
+        {
+          "kind": "swing",
+          "text": "ブランコブランコすわって ゆらゆらしずく 6",
+          "disabled": false
+        },
+        {
+          "kind": "lantern",
+          "text": "ほしの あかりほしの あかりあかりの そばに あつまるかなあと 2 しずく",
+          "disabled": true
+        },
+        {
+          "kind": "sapling",
+          "text": "木の なえ木の なえ木かげに そだつ なえしずく 4",
+          "disabled": false
+        },
+        {
+          "kind": "water-bowl",
+          "text": "水ばち水ばち水を のぞく うつわしずく 4",
+          "disabled": false
+        },
+        {
+          "kind": "picnic-table",
+          "text": "ピクニック テーブルピクニック テーブルおやつと おしゃべりの ばしょあと 2 しずく",
+          "disabled": true
+        },
+        {
+          "kind": "pinwheel",
+          "text": "かざぐるまかざぐるまかぜと くるくるあと 6 しずく",
+          "disabled": true
+        },
+        {
+          "kind": "flower-arch",
+          "text": "花の アーチ花の アーチおはなの したを くぐろうあと 6 しずく",
+          "disabled": true
+        },
+        {
+          "kind": "sandbox",
+          "text": "すなばすなばすなで おやまや おしろをあと 12 しずく",
+          "disabled": true
+        },
+        {
+          "kind": "garden-hut",
+          "text": "えんげい 小屋えんげい 小屋どうぐを だして おていれあと 30 しずく",
+          "disabled": true
+        },
+        {
+          "kind": "library",
+          "text": "森の としょしつ森の としょしつほんを ひらいて ひとやすみあと 66 しずく",
+          "disabled": true
+        }
+      ],
+      "answers": 3,
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "fullReport": "output/island-isolation-storage-20260914/report.json"
+}

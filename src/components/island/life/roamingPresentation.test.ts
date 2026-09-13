@@ -6,6 +6,10 @@ import { ROAM_REST_MS, sampleLifeRoaming } from './roamingPresentation';
 
 const start = 1000;
 describe('display-only roaming cadence', () => {
+    it('keeps authoritative walkers when placement must inspect their visible positions', () => {
+        const source = { ...replayLife(newLife('placement', start)), placementVersion: 1 as const };
+        expect(sampleLifeRoaming(source, start + 5000)).toBe(source);
+    });
     it('takes turns 1.8 seconds after arrival without changing rewards or the source', () => {
         const source = replayLife(newLife('cadence', start)), before = structuredClone(source);
         const seen = new Set<string>();

@@ -1,3 +1,4 @@
+import { routeDuration, routeLength } from './walkingSpace';
 import { groupEncounters } from './groupEncounters';
 import { readingOtter } from './readingEncounter';
 import { footstepWalker, inLanternGround, lanternGround } from './footstepMagic';
@@ -5,8 +6,8 @@ import { shadowResident } from './shadowMagic';
 import { isFacility } from './footprint';
 import { itemComponents as components } from './itemComponents';
 import { extendedGatherings } from './extendedGatherings';
-import { growthStage, LIFE_STEP_MS, type Cell, type LifeItem, type LifeState } from './model';
-import { cellKey, homeCell, route, sameCell, vacant } from './space';
+import { growthStage, type Cell, type LifeItem, type LifeState } from './model';
+import { cellKey, homeCell, route, sameCell, vacant, walkable } from './space';
 
 export const DISCOVERY_RULE_VERSION = 'discovery-v3.0-rc1';
 export type DiscoveryRuleId = 'G0' | 'GF3' | 'GF6' | 'GP2' | 'GP3' | 'GT3' | 'GT6' | 'GW2' | 'R1' | 'R2' | 'R3' | 'R4' | 'R5' | 'R6' | 'M1' | 'M2' | 'M3' | 'M4' | 'X1' | 'X2' | 'X3';
@@ -31,16 +32,16 @@ function eligibility(profileId: string, ruleId: DiscoveryRuleId, items: LifeItem
 /** Actual usable ground points, including the front-only legacy access contract. */
 export function discoveryAccessPoints(state: LifeState, item: LifeItem): Cell[] {
     if (!item.cell) return [];
-    const directions = isFacility(item.kind) ? [{ x: 0, z: 2 }] : (item.kind === 'picnic-table' || item.kind === 'sandbox') ? [{ x: 0, z: 1 }, { x: 0, z: -1 }] : item.access === 'front' ? [{ x: 0, z: 1 }]
+    const directions = state.placementVersion === 1 && ['flower', 'lantern', 'sapling'].includes(item.kind) ? [{ x: 0, z: .5 }, { x: .5, z: 0 }, { x: -.5, z: 0 }, { x: 0, z: -.5 }] : isFacility(item.kind) ? [{ x: 0, z: 2 }] : (item.kind === 'picnic-table' || item.kind === 'sandbox') ? [{ x: 0, z: 1 }, { x: 0, z: -1 }] : item.access === 'front' ? [{ x: 0, z: 1 }]
         : [{ x: 0, z: 1 }, { x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: -1 }];
     return directions.map(d => ({ x: item.cell!.x + d.x, z: item.cell!.z + d.z }))
-        .filter(point => vacant(state, point) && Boolean(route(state, homeCell, point)));
+        .filter(point => (state.placementVersion === 1 ? walkable(state, point) : vacant(state, point)) && Boolean(route(state, homeCell, point)));
 }
 
 export function relationDistance(state: LifeState, a: LifeItem, b: LifeItem): number | undefined {
     const distances = discoveryAccessPoints(state, a).flatMap(from => discoveryAccessPoints(state, b).flatMap(to => {
         const path = route(state, from, to);
-        return path ? [path.length - 1] : [];
+        return path ? [routeLength(path)] : [];
     }));
     return distances.length ? Math.min(...distances) : undefined;
 }
@@ -131,7 +132,7 @@ export function relationAvailability(state: LifeState, rule: RuleEligibility): '
     if (participants.some(item => !item?.cell || !discoveryAccessPoints(state, item).length)) return 'blocked-path';
     const bench = participants.find(item => item?.kind === 'bench' || item?.kind === 'picnic-table');
     if (bench && state.residents.some(resident => resident.visit?.itemId === bench.id
-        && state.now >= resident.visit.start + (resident.visit.path.length - 1) * LIFE_STEP_MS)) return 'active';
+        && state.now >= resident.visit.start + routeDuration(resident.visit.path))) return 'active';
     if (!bench) return 'eligible';
     const reserved = new Set(state.residents.flatMap(resident => resident.visit ? [cellKey(resident.visit.path[resident.visit.path.length - 1])] : []));
     const points = bench ? discoveryAccessPoints(state, bench).filter(point => !reserved.has(cellKey(point))) : [];

@@ -20,9 +20,9 @@ import type { PlacementPreview } from './placement';
 import { LifePresentationClock } from './presentationClock';
 
 type Content = ReturnType<typeof buildLifeScene>;
-type LifeWorldProps = { inspectShadow?: (itemId: string, residentId: ResidentId, worldAt: number) => void; observationOpen?: boolean; footstepInput?: FootstepInput; prepareFootstepReplay?: () => Promise<DiscoveryScene | undefined>; profileId?: string; presented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; state: LifeState; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
+type LifeWorldProps = { onFrame?: (state: LifeState) => void; inspectShadow?: (itemId: string, residentId: ResidentId, worldAt: number) => void; observationOpen?: boolean; footstepInput?: FootstepInput; prepareFootstepReplay?: () => Promise<DiscoveryScene | undefined>; profileId?: string; presented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; state: LifeState; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
 
-export default function LifeWorld({ inspectShadow, observationOpen = false, footstepInput, prepareFootstepReplay, profileId, presented, state, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
+export default function LifeWorld({ onFrame, inspectShadow, observationOpen = false, footstepInput, prepareFootstepReplay, profileId, presented, state, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
     const behindObservation = useRef(observationOpen);
     useEffect(() => { behindObservation.current = observationOpen; }, [observationOpen]);
     const footsteps = useRef({ input: footstepInput, prepareReplay: prepareFootstepReplay });
@@ -31,6 +31,8 @@ export default function LifeWorld({ inspectShadow, observationOpen = false, foot
     const discovery = useRef({ profileId, presented, inspectShadow, enabled: controlsVisible });
     useEffect(() => { discovery.current = { profileId, presented, inspectShadow, enabled: controlsVisible }; }, [profileId, presented, inspectShadow, controlsVisible]);
     const stateAtMount = useRef(state), placementAtMount = useRef(placement);
+    const frameObserver = useRef(onFrame);
+    useEffect(() => { frameObserver.current = onFrame; }, [onFrame]);
     const update = useRef<((state: LifeState, selected?: string, cell?: Cell, placement?: PlacementPreview) => void) | null>(null);
     const controlCamera = useRef<((action: IslandCameraAction) => void) | undefined>(undefined);
     const overviewRef = useRef(false);
@@ -201,7 +203,7 @@ export default function LifeWorld({ inspectShadow, observationOpen = false, foot
             if (content) shadows.update(content.snapshot(), content.root, performance.now(), media.matches,
                 discovery.current.enabled && !currentPlacement && !behindObservation.current && !renderer.getContext().isContextLost(), footsteps.current.input?.id);
             if (content) footprint.update(content, content.snapshot(), footsteps.current.input, performance.now(), discovery.current.enabled && !currentPlacement && !renderer.getContext().isContextLost(), media.matches);
-            if (content && document.visibilityState === 'visible' && !renderer.getContext().isContextLost()) { renderer.render(scene, camera); node.dataset.rendered = 'true'; footprint.sample(content, performance.now());
+            if (content && document.visibilityState === 'visible' && !renderer.getContext().isContextLost()) { content.faceIsolationSigns(camera); renderer.render(scene, camera); node.dataset.rendered = 'true'; frameObserver.current?.(content.snapshot()); footprint.sample(content, performance.now());
                 presentationClock.resume(performance.now());
                 shadows.sample(performance.now());
                 if (discovery.current.profileId !== discoveryOwner) {

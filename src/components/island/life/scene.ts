@@ -1,3 +1,4 @@
+import { isolationMarker } from './isolationMarker';
 import { buildLanternLight } from './lanternLight';
 import { isFacility, occupiedCells } from '../../../domain/islandLife/footprint';
 import type { SandScene } from './sandboxGeometry';
@@ -8,7 +9,7 @@ import { makeResidentRig } from '../three/residentRig';
 import { buildHomeJourney } from '../homeJourney/scene';
 import { disposeGeometry } from '../three/primitives';
 import { type Cell, type LifeState } from '../../../domain/islandLife/model';
-import { cellKey, districts, landCells } from '../../../domain/islandLife/space';
+import { cellKey, districts, homeCell, isolatedItems, landCells, pathToActivity } from '../../../domain/islandLife/space';
 import { plantGatherings } from '../../../domain/islandLife/discovery';
 import type { PlacementPreview } from './placement';
 import { buildLandscape } from './landscape';
@@ -86,8 +87,18 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
             const ring = new T.Mesh(new T.TorusGeometry(isFacility(item.kind) ? 1.03 : .43, .028, 8, 40), paint('#fff5ac')); ring.rotation.x = Math.PI / 2; ring.position.y = .045; if (isFacility(item.kind)) { ring.position.x = .5; ring.position.z = .5; } g.add(ring);
         }
     }
+    const isolated = placement?.item.cell && placement.valid ? placement.isolated : state.placementVersion === 1 ? isolatedItems(state) : [];
+    const isolationSigns: T.Object3D[] = [];
+    for (const item of isolated) {
+        if (!item.cell) continue;
+        const marker = isolationMarker(item, paint); marker.position.add(point(item.cell)); root.add(marker);
+        marker.traverse(o => { o.userData.cell = item.cell; }); clickables.push(marker);
+        isolationSigns.push(marker.getObjectByName('life-isolation-sign')!);
+    }
+    const selectedItem = state.items.find(i => i.id === selected);
+    const selectedPath = !placement && state.placementVersion === 1 && selectedItem && !isolated.some(i => i.id === selected) ? pathToActivity(state, homeCell, selectedItem) : undefined;
     const path = new T.Group(); path.name = 'life-placement-path'; root.add(path);
-    placement?.path?.forEach(c => {
+    (placement?.path ?? selectedPath)?.forEach(c => {
         const dot = new T.Mesh(new T.CircleGeometry(.12, 16), paint(placement?.valid ? '#fff9db' : '#715637')); dot.rotation.x = -Math.PI / 2;
         dot.position.copy(point(c)); dot.position.y = .10; path.add(dot);
     });
@@ -98,7 +109,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
     const lightGround = state.footstepMagicVersion && !placement ? buildLanternLight(state, point) : undefined;
     if (lightGround) root.add(lightGround.root);
     const motion = makeLifeMotion(content, state, point, seats, sandboxes);
-    return { root, clickables, lightGround, feet: () => {
+    return { root, clickables, lightGround, faceIsolationSigns: (camera: T.Camera) => { isolationSigns.forEach(sign => sign.quaternion.copy(camera.quaternion)); }, feet: () => {
         root.updateMatrixWorld(true);
         return content.heroFeet.map(foot => {
             const box = new T.Box3().setFromObject(foot), center = box.getCenter(new T.Vector3());
@@ -110,7 +121,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
             landscape.animate(decorationAt, reduced); motion.animate(at, reduced, decorationAt); }, audit: motion.audit, snapshot: motion.snapshot,
         dispose() {
             // Plane overlays use separate transparent materials; shared paints are owned by content.m.
-            clickables.forEach(o => ((o as T.Mesh).material as T.Material).dispose());
+            clickables.filter(o => o instanceof T.Mesh).forEach(o => ((o as T.Mesh).material as T.Material).dispose());
             previewMaterials.forEach(m => m.dispose());
             lightGround?.dispose(); canopy?.dispose(); landscape.dispose(); heritageHouse.dispose(); content.dispose();
         } };

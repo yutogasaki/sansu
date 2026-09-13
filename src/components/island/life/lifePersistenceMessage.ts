@@ -1,6 +1,10 @@
 /** Do not expose browser/database exceptions or claim an uncertain write was lost. */
 export function lifePersistenceMessage(error: unknown) {
     const message = error instanceof Error ? error.message : '';
+    if (message === 'そこを あるいているよ。すこし まって もういちど おこう。') return message;
+    if (message === 'ここから あるけないよ。べつの ばしょを えらぼう。'
+        || message === 'そこには おけないよ。べつの ばしょを えらぼう。'
+        || message === '島を よみなおしてから おこう。') return message;
     // These are rejected choices before persistence, not evidence of a failed save.
     if (message === 'いまは みちを とおっているよ。') {
         return 'みちを とおっているよ。ついてから もういちど えらんでね。';

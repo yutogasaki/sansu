@@ -1,7 +1,8 @@
+import { routeDuration } from './walkingSpace';
 import { activityRelation } from './discovery';
 import { isFacility } from './footprint';
 import { beginBenchTrip, beginFacilityTrip, reservedActivityCells, reservesItem } from './facilityTrips';
-import { LIFE_STEP_MS, type LifeState, type ResidentId } from './model';
+import { type LifeState, type ResidentId } from './model';
 import { pathToActivity } from './space';
 
 /** Explain an explicitly requested transport that cannot start, without
@@ -27,7 +28,7 @@ export function applyRelationObservation(state: LifeState, itemId: string, resid
     const belongs = previous && (previous.itemId === itemId || previous.observationSubjectId === itemId
         || resident.facilityTrip && [resident.facilityTrip.facilityId, resident.facilityTrip.targetId].includes(itemId));
     if (previous && !belongs || !previous && residentId === 'pokomoko' && state.target) throw new Error('いまは、ほかのことを しているよ。');
-    if (previous && state.now < previous.start + (previous.path.length - 1) * LIFE_STEP_MS + 900) throw new Error('いまは みちを とおっているよ。');
+    if (previous && state.now < previous.start + routeDuration(previous.path) + 900) throw new Error('いまは みちを とおっているよ。');
     const requested = activityRelation(state, '', itemId, targetId);
     const trip = resident.facilityTrip;
     if (trip?.phase === 'carry' && previous?.itemId === trip.targetId && requested
@@ -49,7 +50,7 @@ export function applyRelationObservation(state: LifeState, itemId: string, resid
     const path = pathToActivity(trial, actor.cell, item, reservedActivityCells(trial, residentId));
     if (!path) throw new Error('いまは、ほかのことを しているよ。');
     actor.visit = { itemId, path, from: { ...actor.cell }, start: state.now,
-        end: state.now + (path.length - 1) * LIFE_STEP_MS + 30000,
+        end: state.now + routeDuration(path) + 30000,
         observationTest: true, observationSubjectId: itemId, relationSelectionVersion: 1,
         ...(targetId ? { relationTargetId: targetId } : {}) };
     const rule = activityRelation(trial, '', itemId, targetId);

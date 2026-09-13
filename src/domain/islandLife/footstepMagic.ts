@@ -1,4 +1,5 @@
-import { LIFE_STEP_MS, type Cell, type LifeItem, type LifeState } from './model';
+import { routeDuration } from './walkingSpace';
+import { type Cell, type LifeItem, type LifeState } from './model';
 import { cellKey, homeCell, route, vacant, walkable } from './space';
 
 export const FOOTSTEP_MAGIC_MS = 6000, FOOTSTEP_LIFE_MS = 2000;
@@ -6,7 +7,7 @@ export const FOOTSTEP_MAGIC_MS = 6000, FOOTSTEP_LIFE_MS = 2000;
 export function footstepWalker(state: LifeState, targetId: string) {
     const hero = state.residents.find(r => r.id === 'pokomoko'), visit = hero?.visit;
     return state.footstepMagicVersion && visit?.itemId === targetId && state.target === targetId
-        && state.now >= visit.start && state.now < visit.start + (visit.path.length - 1) * LIFE_STEP_MS ? hero : undefined;
+        && state.now >= visit.start && state.now < visit.start + routeDuration(visit.path) ? hero : undefined;
 }
 
 /** The light and the footprints use this same reachable ground, including walls,

@@ -1,5 +1,6 @@
 import 'fake-indexeddb/auto';
 import { afterEach, describe, expect, it } from 'vitest';
+import { discoveryParticipants } from './discoveryRecall';
 import { evaluateDiscovery } from './discovery';
 import { appendPresentedScene, createDiscoveryScene, emptyDiscoveryJournal, replayDiscoveryScene, saveDiscoveryMemory,
     sceneDigest, unpinDiscoveryMemory, type DiscoveryScene, type PresentationEvidence } from './discoveryJournal';
@@ -65,6 +66,24 @@ describe('display is distinct from eligibility, saving and understanding', () =>
         expect(current.snapshot.immutableHash).not.toBe(old.snapshot.immutableHash);
         expect(replayDiscoveryScene(current, 'replay-new', 2000).snapshot).toEqual(current.snapshot);
         expect(replayDiscoveryScene(old, 'replay-old', 2000).snapshot).toEqual(old.snapshot);
+        expect(await sceneDigest(old.snapshot.scene)).toBe(old.snapshot.immutableHash);
+        expect(JSON.stringify(old)).toBe(oldBytes);
+    });
+    it('freezes placement rules while old memories retain their original absent marker and hash', async () => {
+        const old = await scene(), oldBytes = JSON.stringify(old);
+        const state = { ...replayLife(owner()), placementVersion: 1 as const };
+        const rule = evaluateDiscovery(state, 'p').find(rule => rule.ruleId === 'M2')!;
+        const current = await createDiscoveryScene('p', state, rule, 'live', 'new-placement', 1000);
+        expect(current.snapshot.scene.placementVersion).toBe(1);
+        expect(current.snapshot.immutableHash).not.toBe(old.snapshot.immutableHash);
+        const oldReplay = replayDiscoveryScene(old, 'old-replay', 2000);
+        const newReplay = replayDiscoveryScene(current, 'new-replay', 2000);
+        expect('placementVersion' in oldReplay.snapshot.scene).toBe(false);
+        expect(newReplay.snapshot.scene.placementVersion).toBe(1);
+        expect(discoveryParticipants(oldReplay).map(item => item.id)).toEqual(['flower']);
+        expect(discoveryParticipants(newReplay).map(item => item.id)).toEqual(['flower']);
+        expect(oldReplay.snapshot).toEqual(old.snapshot);
+        expect(newReplay.snapshot).toEqual(current.snapshot);
         expect(await sceneDigest(old.snapshot.scene)).toBe(old.snapshot.immutableHash);
         expect(JSON.stringify(old)).toBe(oldBytes);
     });

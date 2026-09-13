@@ -1,7 +1,8 @@
+import { routeDuration } from '../../../domain/islandLife/walkingSpace';
 import * as T from 'three';
 import { visitRelation } from '../../../domain/islandLife/discovery';
 import { activityPhase } from '../../../domain/islandLife/activity';
-import { LIFE_STEP_MS, type LifeItem, type LifeState, type Visit } from '../../../domain/islandLife/model';
+import { type LifeItem, type LifeState, type Visit } from '../../../domain/islandLife/model';
 import { smoothArrival } from './residentWalk';
 import type { LifeSeat } from './residentMotion';
 
@@ -36,7 +37,7 @@ export function makePicnicMotion(state: LifeState, heads: T.Group[], seats: Map<
             const focus = partner >= 0 ? heads[partner].getWorldPosition(new T.Vector3())
                 : target?.cell ? point(target.cell).add(new T.Vector3(0, .7, 0)) : point(item.cell!).add(new T.Vector3(0, .55, 0));
             const head = heads[index], local = head.parent!.worldToLocal(focus.clone()).sub(head.position);
-            const blend = reduced ? 1 : smoothArrival((now - visit.start - (visit.path.length - 1) * LIFE_STEP_MS - 900) / 400);
+            const blend = reduced ? 1 : smoothArrival((now - visit.start - routeDuration(visit.path) - 900) / 400);
             head.rotation.order = 'YXZ'; head.rotation.y = Math.atan2(local.x, local.z) * blend;
             head.rotation.x = T.MathUtils.clamp(-Math.atan2(local.y, Math.hypot(local.x, local.z)), -.45, .55) * blend;
             return { role, partnerId: partner >= 0 ? visible.residents[partner].id : undefined,

@@ -1,3 +1,4 @@
+import { routeLength } from './walkingSpace';
 import type { RuleEligibility } from './discovery';
 import type { Cell, LifeItem, LifeState } from './model';
 import { cellKey, homeCell, route, vacant } from './space';
@@ -19,12 +20,12 @@ export function groupEncounters(state: LifeState, groups: RuleEligibility[]) {
         return state.items.filter(i => i.kind === 'water-bowl' && i.cell).flatMap(water => {
             const choices = encounterAccess(state, water).flatMap(from => perimeter.flatMap(({ plant, point }) => {
                 const path = route(state, from, point);
-                return path && path.length <= 5 ? [{ plant, path }] : [];
-            })).sort((a, b) => a.path.length - b.path.length || a.plant.id.localeCompare(b.plant.id)
+                return path && routeLength(path) <= 4 ? [{ plant, path }] : [];
+            })).sort((a, b) => routeLength(a.path) - routeLength(b.path) || a.plant.id.localeCompare(b.plant.id)
                 || a.path.map(cellKey).join('|').localeCompare(b.path.map(cellKey).join('|')));
             const choice = choices[0];
             return choice ? [{ ruleId: group.ruleId === 'GF6' ? 'X1' as const : 'X2' as const,
-                group, plants, water, plant: choice.plant, path: choice.path, distance: choice.path.length - 1 }] : [];
+                group, plants, water, plant: choice.plant, path: choice.path, distance: routeLength(choice.path) }] : [];
         });
     });
 }

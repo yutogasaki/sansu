@@ -1,0 +1,96 @@
+{
+  "pass": true,
+  "runs": 80,
+  "buildSource": {
+    "path": "/tmp/sansu-isolation-benchmark-source.json",
+    "manifestSHA": "560c971888a57945e991ba6bddd202125787228456276a018ac32b2fa3e34473",
+    "sourceHash": "dba32cfd6713b26b71192fb19b59742f8bd7d439385c843b67575dcf241c485f",
+    "revision": "082958920f26efb5c8f55b80521bd86e0dc098de + working changes",
+    "flags": {
+      "VITE_ISLAND_ENABLED": true,
+      "VITE_ISLAND_LIFE_ENABLED": true,
+      "VITE_ISLAND_LIFE_DISCOVERY_ENABLED": true,
+      "VITE_ISLAND_LIFE_PREVIEW": false,
+      "VITE_BUILD_PLAY_ENABLED": false
+    }
+  },
+  "comparisons": [
+    {
+      "layout": "phone",
+      "studyMedianProblemsPerMinute": 123.52203913797103,
+      "islandMedianProblemsPerMinute": 282.0743451096866,
+      "allCorrectIslandToStudyRatio": 2.2835952764236396,
+      "correctOperableP95Ms": 216.19999998807907,
+      "incorrectRetryP95Ms": 215.80000001192093,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 204.5999999642372,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 208.89999997615814,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4857.450000017881,
+      "rawIslandDurationMedianMs": 2127.0999999940395
+    },
+    {
+      "layout": "tablet",
+      "studyMedianProblemsPerMinute": 123.42383240807663,
+      "islandMedianProblemsPerMinute": 281.35999530701463,
+      "allCorrectIslandToStudyRatio": 2.279624524838551,
+      "correctOperableP95Ms": 217.5,
+      "incorrectRetryP95Ms": 214.5,
+      "correctSamples": 200,
+      "incorrectSamples": 20,
+      "automaticSectionTransitionMedianMs": 204.94999998807907,
+      "automaticSectionTransitionSamples": 10,
+      "sectionBoundaryP95Ms": 208.69999998807907,
+      "sectionBoundarySamples": 20,
+      "rawStudyDurationMedianMs": 4861.300000011921,
+      "rawIslandDurationMedianMs": 2132.5
+    }
+  ],
+  "gates": {
+    "tenAlternatingRepetitions": true,
+    "allCorrectIslandThroughputNotBelowStudy": true,
+    "correctP95AtMost650Ms": true,
+    "incorrectP95AtMost550Ms": true,
+    "sectionBoundaryP95AtMost650Ms": true,
+    "twentySameQuestionIncorrectSamplesPerLayout": true,
+    "noExtraOrdinaryQuestionActions": true,
+    "automaticSectionBoundaryIncluded": true,
+    "emptyInputAfterEveryTransition": true,
+    "initialIslandControlsUsable": true,
+    "exactFixtureAndAtomicReceipts": true,
+    "phoneAndTablet": true,
+    "noBrowserErrors": true,
+    "oneRenderedBuildAndCandidate": true,
+    "sourceFilesUnchangedDuringBenchmark": true
+  },
+  "evidence": {
+    "eligible": true,
+    "confidence": "formal repeated UI timing; automated keyboard throughput, not child behavior evidence",
+    "productionPlannerEvidence": false,
+    "userLearningStateTouched": false
+  },
+  "runtime": {
+    "revisions": [
+      "development-local"
+    ],
+    "versions": [
+      "development-local:be1d6901-4468-452b-985f-69d1c7466da7"
+    ],
+    "candidates": [
+      "mystic-island-shore-garden-v18"
+    ],
+    "learningCandidates": [
+      "mystic-island-learning-v2"
+    ],
+    "deliveryIds": [
+      "mystic-island-v1"
+    ],
+    "flag": "VITE_ISLAND_ENABLED=true",
+    "evidenceSource": "Actual rendered Island data attributes on the shared Vite target; Study fixture runs against the same server."
+  },
+  "sourceHashStart": "8c6ebb433dad993d2a3deceff62ae0c4003b75c483df816f1385fc500f0f5d5e",
+  "sourceHashEnd": "8c6ebb433dad993d2a3deceff62ae0c4003b75c483df816f1385fc500f0f5d5e",
+  "fullReport": "output/island-isolation-throughput-20260914.json"
+}

@@ -1,3 +1,4 @@
+import { routeDuration, routeLength } from '../../../domain/islandLife/walkingSpace';
 import { makeFacilityMotion } from './facilityMotion';
 import { isFacility } from '../../../domain/islandLife/footprint';
 import { makeSandboxMotion } from './sandboxMotion';
@@ -62,16 +63,23 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                 if (rig) { rig.head.rotation.set(0, 0, 0); rig.shoulders.forEach(shoulder => { shoulder.rotation.x = 0; }); poseResidentTail(rig.tail, index === 1 ? 'rabbit' : 'otter', 0); }
                 let position = point(resident.cell), seatGap: number | undefined, flowerLean = 0;
                 if (visit && (item || isRoamVisit(visit))) {
-                    const length = visit.path.length - 1;
-                    const step = length ? easeResident((now - visit.start) / (length * LIFE_STEP_MS)) * length : 0;
-                    const n = Math.min(length, Math.floor(step));
+                    const length = routeLength(visit.path);
+                    const progress = length ? Math.max(0, Math.min(1, (now - visit.start) / (length * LIFE_STEP_MS))) : 0;
+                    const step = (state.placementVersion === 1 ? progress : easeResident(progress)) * length;
+                    let n = 0, covered = 0;
+                    while (n < visit.path.length - 1) {
+                        const distance = Math.hypot(visit.path[n + 1].x - visit.path[n].x, visit.path[n + 1].z - visit.path[n].z);
+                        if (covered + distance > step) break;
+                        covered += distance; n++;
+                    }
+                    const segment = n < visit.path.length - 1 ? Math.hypot(visit.path[n + 1].x - visit.path[n].x, visit.path[n + 1].z - visit.path[n].z) : 0;
                     const a = point(visit.path[n]), b = point(visit.path[Math.min(n + 1, visit.path.length - 1)]);
-                    position = a.clone().lerp(b, step - n);
+                    position = a.clone().lerp(b, segment ? (step - covered) / segment : 0);
                     if (a.distanceTo(b) > .01) {
                         const heading = Math.atan2(b.x - a.x, b.z - a.z);
                         const previous = point(visit.path[Math.max(0, n - 1)]);
                         const from = n > 0 ? Math.atan2(a.x - previous.x, a.z - previous.z) : 0;
-                        actor.rotation.y = reduced ? heading : turnResidentToward(from, heading, (step - n) * LIFE_STEP_MS);
+                        actor.rotation.y = reduced ? heading : turnResidentToward(from, heading, (step - covered) * LIFE_STEP_MS);
                         if (!reduced) {
                             const stride = sampleResidentStride(step * RESIDENT_SCALE / scale, length * RESIDENT_SCALE / scale);
                             body.position.y = stride.bob;
@@ -82,7 +90,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                             rig?.shoulders.forEach((shoulder, f) => { shoulder.rotation.x = stride.feet[f].arm; });
                         }
                     } else if (item) {
-                        const target = point(item.cell!), walkedAt = visit.start + (visit.path.length - 1) * LIFE_STEP_MS;
+                        const target = point(item.cell!), walkedAt = visit.start + routeDuration(visit.path);
                         const duration = item.kind === 'flower' ? 400 : 900;
                         const settling = smoothArrival((now - walkedAt) / duration);
                         const previous = point(visit.path[Math.max(0, visit.path.length - 2)]);
@@ -91,7 +99,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                         if (item.kind === 'flower' || item.kind === 'water-bowl') {
                             const facing = Math.atan2(target.x - position.x, target.z - position.z);
                             actor.rotation.y = reduced ? facing : turnToward(heading, facing, (now - walkedAt) / duration);
-                            position.lerp(target, (item.kind === 'water-bowl' ? .38 : caring ? .15 : .48) * settling);
+                            position.lerp(target, (item.kind === 'water-bowl' ? .38 : state.placementVersion === 1 ? 0 : caring ? .15 : .48) * settling);
                             body.rotation.x = ((caring ? .08 : .18) + (reduced ? 0 : Math.sin((now - walkedAt) / 950) * .045)) * settling;
                             flowerLean = caring ? 0 : settling;
                         } else if (isFacility(item.kind)) {

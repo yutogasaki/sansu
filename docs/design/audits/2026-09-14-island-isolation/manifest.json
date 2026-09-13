@@ -1,0 +1,72 @@
+{
+  "startHash": "dba32cfd6713b26b71192fb19b59742f8bd7d439385c843b67575dcf241c485f",
+  "target": "http://127.0.0.1:5232",
+  "revision": "082958920f26efb5c8f55b80521bd86e0dc098de",
+  "fixture": "Disposable DEV browser, seeded profile and 100 QA credits; library, hut and bench purchased through domain commands. Acquisition is injected, not earned learning. All subsequent placement, confirmation, reload and free restoration use real UI.",
+  "cache": "Fresh browser contexts; DEV target; production service-worker update untested",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": false,
+      "delivery": {
+        "placing": "false",
+        "lifeWorldStyle": "moon-garden-v1",
+        "lifeVisualCandidate": "moon-garden-v1",
+        "lifeLandscapeVersion": "groves-water-v1",
+        "lifeTourVersion": "1",
+        "lifeCamera": "{\"projection\":[0.2914509565274668,0,0,0,0,0.18818853153263582,0,0,0,0,-0.02002002002002002,0,-0.04965880727608123,0,-1.002002002002002,1],\"view\":[0.925546956205677,-0.207749733943065,0.3165483847771031,0,-5.551115123125784e-17,0.8360299122352686,0.5486838669469786,0,-0.3786328457205044,-0.5078326829719366,0.7737849405662518,0,2.116362640691705e-15,-0.16720598244705165,-14.325573013301563,1.0000000000000002],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":0},\"manual\":false}}",
+        "lifeSculptStatus": "none",
+        "lifeGroundMaterialStatus": "none",
+        "worldShadowUpdateMs": "0",
+        "rendered": "true",
+        "worldShadowSampleMs": "0",
+        "lifeGatherings": "[]",
+        "lifeRelations": "[]",
+        "lifePoses": "[{\"id\":\"pokomoko\",\"itemId\":\"roam:clear-placement:92577ea9-4e7a-4d95-8df4-84d42bb850de:pokomoko\",\"phase\":\"walking\",\"position\":[-0.17500000000000027,0.04,0.25],\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"rabbit\",\"itemId\":\"roam:clear-placement:92577ea9-4e7a-4d95-8df4-84d42bb850de:rabbit\",\"phase\":\"roaming\",\"position\":[1.25,0.04,1.75],\"hop\":0,\"headPitch\":0,\"headRoll\":0.024401588211147913,\"headYaw\":0},{\"id\":\"otter\",\"itemId\":\"roam:clear-placement:92577ea9-4e7a-4d95-8df4-84d42bb850de:otter\",\"phase\":\"roaming\",\"position\":[0.25,0.04,-0.75],\"hop\":0,\"headPitch\":0,\"headRoll\":-0.007929184727000152,\"headYaw\":0}]",
+        "lifeRender": "{\"calls\":316,\"triangles\":106466,\"geometries\":215,\"textures\":8}",
+        "worldShadowTap": "miss"
+      },
+      "errors": [],
+      "initialDrops": 88,
+      "finalDrops": 88,
+      "pass": true
+    },
+    {
+      "device": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": true,
+      "delivery": {
+        "placing": "false",
+        "lifeWorldStyle": "moon-garden-v1",
+        "lifeVisualCandidate": "moon-garden-v1",
+        "lifeLandscapeVersion": "groves-water-v1",
+        "lifeTourVersion": "1",
+        "lifeCamera": "{\"projection\":[0.2914509565274668,0,0,0,0,0.28550297782282463,0,0,0,0,-0.02002002002002002,0,-0.049658807276081234,0,-1.002002002002002,1],\"view\":[0.925546956205677,-0.207749733943065,0.3165483847771031,0,-5.551115123125784e-17,0.8360299122352686,0.5486838669469786,0,-0.3786328457205044,-0.5078326829719366,0.7737849405662518,0,2.116362640691705e-15,-0.16720598244705165,-14.325573013301563,1.0000000000000002],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":0},\"manual\":false}}",
+        "lifeSculptStatus": "none",
+        "lifeGroundMaterialStatus": "none",
+        "worldShadowUpdateMs": "0",
+        "rendered": "true",
+        "worldShadowSampleMs": "0",
+        "lifeGatherings": "[]",
+        "lifeRelations": "[]",
+        "lifePoses": "[{\"id\":\"pokomoko\",\"itemId\":\"qa-hut\",\"phase\":\"walking\",\"position\":[-0.25,0.04,0.6845833333333333],\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"rabbit\",\"itemId\":\"qa-bench\",\"phase\":\"walking\",\"position\":[1.4345833333333333,0.04,1.75],\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"otter\",\"itemId\":\"qa-library\",\"phase\":\"walking\",\"position\":[0.06541666666666668,0.04,-0.75],\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0}]",
+        "lifeRender": "{\"calls\":286,\"triangles\":105722,\"geometries\":189,\"textures\":8}",
+        "worldShadowTap": "miss"
+      },
+      "errors": [],
+      "initialDrops": 88,
+      "finalDrops": 88,
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "endHash": "dba32cfd6713b26b71192fb19b59742f8bd7d439385c843b67575dcf241c485f"
+}

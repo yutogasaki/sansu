@@ -1,4 +1,5 @@
-import { isRoamVisit, LIFE_STEP_MS, ROAM_VISIT_PREFIX, type LifeState } from '../../../domain/islandLife/model';
+import { routeDuration } from '../../../domain/islandLife/walkingSpace';
+import { isRoamVisit, ROAM_VISIT_PREFIX, type LifeState } from '../../../domain/islandLife/model';
 import { planLifeResidentRoam } from '../../../domain/islandLife/simulation';
 
 export const ROAM_REST_MS = 1800;
@@ -8,6 +9,9 @@ const schedules = new WeakMap<LifeState, Schedule>();
 /** Display-only walks. The reward replay and saved records never receive these
  * visits. Only the current activity window is reconstructed after a refresh. */
 export function sampleLifeRoaming(source: LifeState, now: number): LifeState {
+    // Placement checks the saved world's walkers. Never replace their visible
+    // paths with unrelated presentation-only strolls under the new contract.
+    if (source.placementVersion === 1) return source;
     const anchor = source.residents.find(r => isRoamVisit(r.visit))?.visit;
     if (source.activityVersion !== 2 || !anchor || !Number.isFinite(now) || now < anchor.start || now >= anchor.end) return source;
     let schedule = schedules.get(source);
@@ -29,7 +33,7 @@ export function sampleLifeRoaming(source: LifeState, now: number): LifeState {
             if (resident.visit || resident.id === 'pokomoko' && state.target) continue;
             const plan = planLifeResidentRoam(state, resident, schedule.turn);
             if (!plan) continue;
-            const end = state.now + (plan.path.length - 1) * LIFE_STEP_MS + ROAM_REST_MS;
+            const end = state.now + routeDuration(plan.path) + ROAM_REST_MS;
             state.residents[index] = { ...resident, visit: {
                 itemId: `${ROAM_VISIT_PREFIX}display:${resident.id}:${schedule.turn}`, from: resident.cell,
                 path: plan.path, start: state.now, end,

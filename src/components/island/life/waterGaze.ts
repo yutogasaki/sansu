@@ -1,6 +1,7 @@
+import { routeDuration } from '../../../domain/islandLife/walkingSpace';
 import * as T from 'three';
 import { extendedGatherings } from '../../../domain/islandLife/extendedGatherings';
-import { LIFE_STEP_MS, type Cell, type LifeState } from '../../../domain/islandLife/model';
+import { type Cell, type LifeState } from '../../../domain/islandLife/model';
 import { smoothArrival } from './residentWalk';
 
 /** Compare adjacent bowls with the existing head rig; feet and body keep using
@@ -15,7 +16,7 @@ export function makeWaterGaze(state: LifeState, heads: T.Group[], point: (cell: 
         const head = heads[index]; delete head.userData.waterLook;
         const visit = visible.residents[index].visit, pair = visit && neighbors.get(visit.itemId);
         if (!visit || !pair?.next || now >= visit.end) return;
-        const elapsed = now - visit.start - (visit.path.length - 1) * LIFE_STEP_MS - 900;
+        const elapsed = now - visit.start - routeDuration(visit.path) - 900;
         if (elapsed < 0) return;
         const other = reduced || Math.floor(elapsed / 3200) % 2 === 1, phase = elapsed % 3200;
         const blend = reduced ? 1 : smoothArrival(phase / 600);

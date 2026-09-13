@@ -7,6 +7,8 @@ Durable completion history and verification facts still belong in `docs/done/YYY
 
 ## Current Index
 
+- 2026-09-14: 島の孤立予告・自由配置・住人の退避・無料移動復旧と保存版15を実装。core3,990・両幅の実画面/production保存・80runを確認、smoke再確認の範囲と公開未実施を記録 -> `docs/done/2026-09.md`
+
 - 2026-09-13: 島の文字面を縮小し、実3Dの花・ぽこもこと望遠鏡の絵付き操作を1列へ。core3,665・smoke31・Chromium4サイズ確認、ローカルのみ -> `docs/done/2026-09.md`
 
 - 2026-09-09: 島・学習・一覧・編集・管理の目的別レイアウトを実装。背景保存中の学習開始も保護。最終core3,376・PWA・正式80runを確認 -> `docs/done/2026-09.md`

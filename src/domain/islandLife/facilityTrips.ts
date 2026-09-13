@@ -1,6 +1,7 @@
+import { routeDuration, routeLength } from './walkingSpace';
 import { isFacility } from './footprint';
 import { activityRelation, discoveryAccessPoints } from './discovery';
-import { LIFE_STEP_MS, type Cell, type LifeItem, type LifeResident, type LifeState } from './model';
+import { type Cell, type LifeItem, type LifeResident, type LifeState } from './model';
 import { pathToActivity, route, sameCell } from './space';
 
 export interface FacilityTrip {
@@ -28,12 +29,12 @@ export function beginFacilityTrip(state: LifeState, resident: LifeResident, faci
         .filter(i => (!selectedId || i.id === selectedId) && !state.residents.some(r => r !== resident && reservesItem(r, i.id)))
         .flatMap(item => discoveryAccessPoints(state, item).filter(to => !reserved.some(p => sameCell(p, to))).flatMap(to => {
             const path = route(state, from, to);
-            return path && path.length <= 5 ? [{ item, path }] : [];
-        })).sort((a, b) => a.path.length - b.path.length || (a.item.id < b.item.id ? -1 : a.item.id > b.item.id ? 1 : 0));
+            return path && routeLength(path) <= 4 ? [{ item, path }] : [];
+        })).sort((a, b) => routeLength(a.path) - routeLength(b.path) || (a.item.id < b.item.id ? -1 : a.item.id > b.item.id ? 1 : 0));
     const selected = choices[0]; if (!selected) return;
     resident.facilityTrip = { facilityId: facility.id, targetId: selected.item.id, kind: facility.kind,
         phase: 'collect', path: selected.path, end: resident.visit.end };
-    resident.visit.end = resident.visit.start + (resident.visit.path.length - 1) * LIFE_STEP_MS + 2000;
+    resident.visit.end = resident.visit.start + routeDuration(resident.visit.path) + 2000;
 }
 /** One resident retains the prop and reservation across the two visit legs.
  * Collection and transport never award separate use credit or plant growth. */

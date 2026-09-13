@@ -1,0 +1,21 @@
+.life-placement p.life-placement-isolation {
+    display: block;
+    max-height: 4.8em;
+    overflow-y: auto;
+    padding: 6px 8px;
+    border-radius: 8px;
+    background: var(--pokomoko-canvas);
+    color: var(--pokomoko-ink);
+    line-height: 1.5;
+}
+.life-placement-isolation:focus-visible {
+    outline: 2px solid var(--pokomoko-blue);
+    outline-offset: 2px;
+}
+.life-item-isolation {
+    width: 100%;
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+}
+.life-item-isolation svg { vertical-align: middle; }

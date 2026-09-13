@@ -1,0 +1,32 @@
+{
+  "target": "http://127.0.0.1:4173",
+  "harnessHash": "0d86e9b424e6b0f6686f8548b1ae5e71e1871d7ab09e70f4322f894103214f58",
+  "pass": true,
+  "scenarios": [
+    {
+      "name": "keeps the root tangle playable at 390x844",
+      "pass": true,
+      "durationMs": 7592
+    },
+    {
+      "name": "keeps the root tangle playable at 768x1024",
+      "pass": true,
+      "durationMs": 5153
+    },
+    {
+      "name": "keeps the root tangle playable at 1024x768",
+      "pass": true,
+      "durationMs": 5210
+    },
+    {
+      "name": "keeps the root tangle playable at 1024x1366",
+      "pass": true,
+      "durationMs": 5170
+    },
+    {
+      "name": "keeps the root tangle playable at 1080x1920",
+      "pass": true,
+      "durationMs": 5211
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:smoke
+> node tools/e2e-smoke.mjs
+
+Starting dev server on http://127.0.0.1:4173...
+
+> pokko-fushigi-zukan-app@0.0.0 dev
+> vite --host 127.0.0.1 --port 4173 --strictPort
+
+
+  VITE v7.3.1  ready in 148 ms
+
+  ➜  Local:   http://127.0.0.1:4173/
+Dev server ready on http://127.0.0.1:4173.
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+PASS redirects to onboarding when no profile (3282ms)
+PASS completes onboarding, chooses a route, and opens Makimodon (1704ms)
+PASS keeps the classic opening playable with expanded mobile browser chrome (1505ms)
+PASS keeps the direct study route working (2547ms)
+PASS keeps the direct review route working (1447ms)
+PASS keeps the direct settings route working (1284ms)
+PASS keeps legacy fuwafuwa album out of child records (1316ms)
+PASS completes periodic test from stats and opens results (23094ms)
+PASS launches explore immediately and safely returns at a route break (2561ms)
+PASS keeps the 390x800 route boundary fully visible (2455ms)
+PASS runs Root Pull v2 inline with reduced motion and the numeric keypad (2381ms)
+Snap Root measured ms { firstIncorrect: 437, secondIncorrect: 532, correct: [ 119, 121 ] }
+PASS runs the Snap Root breakthrough loop at 390px (4543ms)
+PASS keeps the Snap Root breakthrough loop playable on tablet (2407ms)
+PASS can exit safely after explore start persistence fails (1193ms)
+PASS safely exits and retries from a pending explore problem (1459ms)
+PASS commits one explore answer under rapid double submit (1522ms)
+PASS retries the same explore attempt after a save failure (1379ms)
+PASS resumes fixed-ten explore across retry, route, discovery, and partial-input boundaries (4963ms)
+PASS finishes last-light rescue without blocking on an ordinary clue (1455ms)
+PASS retries voluntary return without early terminal progress (2493ms)
+PASS grows the immersive light bridge from an addition answer (4107ms)
+PASS keeps the light bridge playable on tablet (4210ms)
+8:01:38 AM [vite] (client) hmr update /src/index.css
+PASS keeps the light bridge connected on a landscape tablet (4334ms)
+PASS keeps the light bridge playable on a 1024px portrait tablet (4081ms)
+PASS keeps the light bridge playable on a wide portrait tablet (4432ms)
+PASS opens the root tangle with profile-near subtraction (5142ms)
+PASS keeps the root tangle playable on tablet (5362ms)
+PASS keeps the root tangle playable on a landscape tablet (5530ms)
+PASS keeps the root tangle playable on a 1024px portrait tablet (5608ms)
+FAIL keeps the root tangle playable on a wide portrait tablet: page.waitForFunction: Timeout 1500ms exceeded.
+    at waitForNewExploreAttempt (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:1721:14)
+    at solveExploreAndWaitForNextProblem (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:1818:9)
+    at async scenarioRootTangleVerticalSlice (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:2696:3)
+    at async runScenario (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:415:5)
+    at async main (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6595:18)
+PASS guards /parents route behind parent gate (1464ms)

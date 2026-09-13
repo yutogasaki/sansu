@@ -1,7 +1,8 @@
+import { routeDuration, routeLength } from './walkingSpace';
 import { activityRelation } from './discovery';
 import { isFacility } from './footprint';
 import { reservedActivityCells, reservesItem } from './facilityTrips';
-import { LIFE_STEP_MS, type LifeState } from './model';
+import { type LifeState } from './model';
 import { pathToActivity } from './space';
 
 /** An optional current-world test uses an existing sitter or a genuinely idle
@@ -17,7 +18,7 @@ export function observationVisit(state: LifeState, itemId: string) {
         .flatMap(resident => {
             const path = pathToActivity(state, resident.cell, item, reserved);
             return path ? [{ residentId: resident.id, path }] : [];
-        }).sort((a, b) => a.path.length - b.path.length || a.residentId.localeCompare(b.residentId));
+        }).sort((a, b) => routeLength(a.path) - routeLength(b.path) || a.residentId.localeCompare(b.residentId));
     if (!free.length) return { kind: 'busy' as const };
-    return { kind: 'ready' as const, ...free[0], duration: (free[0].path.length - 1) * LIFE_STEP_MS + (isFacility(item.kind) || state.relationSelectionVersion && item.kind === 'bench' && activityRelation(state, '', itemId)?.ruleId === 'R5' ? 15000 : 6000) };
+    return { kind: 'ready' as const, ...free[0], duration: routeDuration(free[0].path) + (isFacility(item.kind) || state.relationSelectionVersion && item.kind === 'bench' && activityRelation(state, '', itemId)?.ruleId === 'R5' ? 15000 : 6000) };
 }

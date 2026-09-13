@@ -8,6 +8,7 @@ export const LEGACY_LIFE_PRICES: Readonly<Record<Exclude<ItemKind, 'sapling' | '
 
 export function commandFingerprint(command: LifeCommand): string {
     switch (command.type) {
+        case 'clear-placement': return JSON.stringify(['clear-placement', command.kind, command.cell.x, command.cell.z, command.itemId ?? null]);
         case 'observe-relation': return JSON.stringify(['observe-relation', command.itemId, command.residentId, command.targetId ?? null]);
         case 'buy': return JSON.stringify(['buy', command.kind, command.cell.x, command.cell.z]);
         case 'move': return JSON.stringify(['move', command.itemId, command.cell.x, command.cell.z]);

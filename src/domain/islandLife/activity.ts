@@ -1,5 +1,6 @@
+import { routeDuration } from './walkingSpace';
 import { isFacility } from './footprint';
-import { isRoamVisit, LIFE_STEP_MS, type LifeResident, type LifeState } from './model';
+import { isRoamVisit, type LifeResident, type LifeState } from './model';
 import { favorite } from './simulation';
 
 const favoriteLabels = { flower: 'おはな', bench: 'ベンチ', swing: 'ブランコ' } as const;
@@ -21,7 +22,7 @@ export function residentFavoriteReply(resident: LifeResident) {
 export function favoriteReactionElapsed(state: LifeState, resident: LifeResident, now: number) {
     const visit = resident.visit, item = state.items.find(i => i.id === visit?.itemId && i.cell);
     if (!visit || !item || item.kind !== favorite(resident)) return;
-    const arrived = visit.start + (visit.path.length - 1) * LIFE_STEP_MS + (item.kind === 'flower' ? 400 : 900);
+    const arrived = visit.start + routeDuration(visit.path) + (item.kind === 'flower' ? 400 : 900);
     const elapsed = now - arrived;
     return elapsed >= 0 && elapsed < 2400 ? elapsed : undefined;
 }
@@ -49,11 +50,11 @@ export function activityPhase(state: LifeState, resident: LifeResident, now: num
     const visit = resident.visit, item = state.items.find(i => i.id === visit?.itemId && i.cell);
     if (!visit) return resident.id === 'pokomoko' && state.target ? 'waiting' : 'home';
     if (isRoamVisit(visit)) {
-        const walkEnd = visit.start + (visit.path.length - 1) * LIFE_STEP_MS;
+        const walkEnd = visit.start + routeDuration(visit.path);
         return now < walkEnd ? 'walking' : 'roaming';
     }
     if (!item) return resident.id === 'pokomoko' && state.target ? 'waiting' : 'home';
-    const walkEnd = visit.start + (visit.path.length - 1) * LIFE_STEP_MS;
+    const walkEnd = visit.start + routeDuration(visit.path);
     const settle = isFacility(item.kind) || item.kind === 'bench' || item.kind === 'swing' || item.kind === 'picnic-table' || item.kind === 'sandbox' ? 900 : 400;
     return now < walkEnd + settle ? 'walking' : item.kind;
 }

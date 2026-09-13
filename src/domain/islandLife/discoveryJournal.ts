@@ -1,11 +1,12 @@
+import { routeDuration } from './walkingSpace';
 import { shadowResident } from './shadowMagic';
 import { readingOtter } from './readingEncounter';
 import { validWaterPoint } from './waterMagic';
 import { DISCOVERY_RULE_VERSION, evaluateDiscovery, type DiscoveryRuleId, type RuleEligibility } from './discovery';
-import { LIFE_STEP_MS, type LifeState, type ResidentId } from './model';
+import { type LifeState, type ResidentId } from './model';
 
 export type SceneSource = 'live' | 'current-context-test' | 'replay' | 'simulated';
-export type SceneSnapshot = Pick<LifeState, 'now' | 'activityVersion' | 'items' | 'residents' | 'heroStyle' | 'expanded' | 'extraLand' | 'target' | 'relationTarget' | 'worldStyle' | 'landscapeVersion' | 'relationVersion' | 'waterFocus' | 'poseReducedMotion' | 'tourVersion' | 'roamRound' | 'scenePose' | 'facilityTripVersion' | 'relationSelectionVersion' | 'waterMagicVersion' | 'waterTouch' | 'shadowMagicVersion' | 'shadowTouch' | 'footstepMagicVersion' | 'footstepTouch' | 'encounterVersion' | 'encounterTouch' | 'readingEncounterVersion' | 'readingObservation'> & { observationResidentId?: ResidentId };
+export type SceneSnapshot = Pick<LifeState, 'now' | 'activityVersion' | 'items' | 'residents' | 'heroStyle' | 'expanded' | 'extraLand' | 'target' | 'relationTarget' | 'worldStyle' | 'landscapeVersion' | 'relationVersion' | 'waterFocus' | 'poseReducedMotion' | 'tourVersion' | 'roamRound' | 'scenePose' | 'facilityTripVersion' | 'relationSelectionVersion' | 'placementVersion' | 'waterMagicVersion' | 'waterTouch' | 'shadowMagicVersion' | 'shadowTouch' | 'footstepMagicVersion' | 'footstepTouch' | 'encounterVersion' | 'encounterTouch' | 'readingEncounterVersion' | 'readingObservation'> & { observationResidentId?: ResidentId };
 export interface DiscoveryScene {
     eventId: string; profileId: string; ruleId: DiscoveryRuleId; ruleVersion: typeof DISCOVERY_RULE_VERSION;
     semanticSignature: string; createdAt: number; source: SceneSource; originEventId?: string;
@@ -68,6 +69,7 @@ export async function createDiscoveryScene(profileId: string, state: LifeState, 
         ...(state.waterMagicVersion ? { waterMagicVersion: state.waterMagicVersion } : {}),
         ...(state.waterTouch ? { waterTouch: state.waterTouch } : {}),
         ...(state.facilityPresentation ? { facilityPresentation: state.facilityPresentation } : {}),
+        ...(state.placementVersion ? { placementVersion: state.placementVersion } : {}),
         ...(state.relationSelectionVersion ? { relationSelectionVersion: state.relationSelectionVersion } : {}),
         ...(state.facilityTripVersion ? { facilityTripVersion: state.facilityTripVersion } : {}),
         ...(state.extraLand ? { extraLand: state.extraLand } : {}),
@@ -80,7 +82,7 @@ export async function createDiscoveryScene(profileId: string, state: LifeState, 
     const residentState = focal.map(id => {
         const resident = scene.residents.find(candidate => candidate.id === id)!;
         return [id, resident.visit?.itemId ?? null,
-            resident.visit ? state.now >= resident.visit.start + (resident.visit.path.length - 1) * LIFE_STEP_MS ? 'using' : 'walking' : 'idle'];
+            resident.visit ? state.now >= resident.visit.start + routeDuration(resident.visit.path) ? 'using' : 'walking' : 'idle'];
     });
     return { eventId, profileId, ruleId: rule.ruleId, ruleVersion: rule.ruleVersion,
         semanticSignature: JSON.stringify([rule.semanticSignature, residentState]), createdAt, source, focalResidentIds: focal,

@@ -50,3 +50,38 @@ describe('placement preview', () => {
         } finally { original.dispose(); scene.dispose(); }
     });
 });
+
+describe('isolation placement presentation', () => {
+    it('allows blocking an existing entrance and names every affected item without inventing a route', () => {
+        const state = { ...replayLife(record()), placementVersion: 1 as const };
+        state.items = [
+            { id: 'library', kind: 'library', cell: { x: 0, z: 0 }, growth: 0, style: 'original' },
+            { id: 'hut', kind: 'garden-hut', cell: { x: 0, z: 2 }, growth: 0, style: 'original' },
+        ];
+        const preview = previewPlacement(state, 'bench', { x: 0, z: 4 });
+        expect(preview.valid).toBe(true);
+        expect(preview.isolated.map(i => i.id)).toEqual(expect.arrayContaining(['library', 'hut', '__life-preview__']));
+        expect(preview.reason).toContain('このまま おけるよ');
+        expect(preview.path).toBeUndefined();
+        const scene = buildLifeScene(state, undefined, preview.item.cell, preview);
+        try {
+            for (const item of preview.isolated) expect(scene.root.getObjectByName(`life-isolation-${item.id}`)).toBeDefined();
+            expect(scene.root.getObjectByName('life-placement-path')?.children).toHaveLength(0);
+        } finally { scene.dispose(); }
+    });
+    it('keeps static markers after confirmation and clears them when an entrance reconnects', () => {
+        const state = { ...replayLife(record()), placementVersion: 1 as const };
+        state.items = [
+            { id: 'library', kind: 'library', cell: { x: 0, z: 0 }, growth: 0, style: 'original' },
+            { id: 'bench', kind: 'bench', cell: { x: 0, z: 2 }, access: 'front', growth: 0, style: 'original' },
+        ];
+        const scene = buildLifeScene(state, 'library');
+        try {
+            expect(scene.root.getObjectByName('life-isolation-library')).toBeDefined();
+            expect(scene.root.getObjectByName('life-placement-path')?.children).toHaveLength(0);
+        } finally { scene.dispose(); }
+        const moved = previewPlacement(state, state.items[1], { x: 4, z: 2 });
+        expect(moved.valid).toBe(true);
+        expect(moved.isolated).toEqual([]);
+    });
+});
