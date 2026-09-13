@@ -2,7 +2,7 @@ import { DISCOVERY_RULE_VERSION, evaluateDiscovery, type DiscoveryRuleId, type R
 import { LIFE_STEP_MS, type LifeState, type ResidentId } from './model';
 
 export type SceneSource = 'live' | 'current-context-test' | 'replay' | 'simulated';
-export type SceneSnapshot = Pick<LifeState, 'now' | 'activityVersion' | 'items' | 'residents' | 'heroStyle' | 'expanded' | 'extraLand' | 'target' | 'relationTarget' | 'worldStyle' | 'landscapeVersion' | 'relationVersion' | 'waterFocus' | 'poseReducedMotion' | 'tourVersion' | 'roamRound' | 'scenePose' | 'facilityTripVersion'>;
+export type SceneSnapshot = Pick<LifeState, 'now' | 'activityVersion' | 'items' | 'residents' | 'heroStyle' | 'expanded' | 'extraLand' | 'target' | 'relationTarget' | 'worldStyle' | 'landscapeVersion' | 'relationVersion' | 'waterFocus' | 'poseReducedMotion' | 'tourVersion' | 'roamRound' | 'scenePose' | 'facilityTripVersion' | 'relationSelectionVersion'>;
 export interface DiscoveryScene {
     eventId: string; profileId: string; ruleId: DiscoveryRuleId; ruleVersion: typeof DISCOVERY_RULE_VERSION;
     semanticSignature: string; createdAt: number; source: SceneSource; originEventId?: string;
@@ -36,6 +36,7 @@ export async function createDiscoveryScene(profileId: string, state: LifeState, 
     const scene: SceneSnapshot = structuredClone({ now: state.now, activityVersion: state.activityVersion,
         ...(state.tourVersion ? { tourVersion: state.tourVersion, roamRound: state.roamRound, scenePose: 'captured-v1' as const } : {}),
         ...(state.facilityPresentation ? { facilityPresentation: state.facilityPresentation } : {}),
+        ...(state.relationSelectionVersion ? { relationSelectionVersion: state.relationSelectionVersion } : {}),
         ...(state.facilityTripVersion ? { facilityTripVersion: state.facilityTripVersion } : {}),
         ...(state.extraLand ? { extraLand: state.extraLand } : {}),
         ...(state.poseReducedMotion === undefined ? {} : { poseReducedMotion: state.poseReducedMotion }),

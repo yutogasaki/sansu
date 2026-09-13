@@ -1,3 +1,4 @@
+import { prepareRelationMigration } from './relationMigration';
 import { prepareFacilityMigration } from './facilityMigration';
 import { prepareTourMigration } from './tourMigration';
 import { prepareEconomyMigration, reconcileLegacyCredits } from './economyMigration';
@@ -98,6 +99,7 @@ export async function updateLife(profileId: string, facts: TerminalFact[], inten
         next = await Dexie.waitFor(next.economyCheckpoint ? reconcileLegacyCredits(next) : prepareEconomyMigration(next, facts, previous));
         next = await Dexie.waitFor(prepareTourMigration(next));
         next = await Dexie.waitFor(prepareFacilityMigration(next));
+        next = await Dexie.waitFor(prepareRelationMigration(next));
         if (intent?.command) next = commandLife(next, intent.command, intent.id, next.now, intent.undoOf);
         replayLife(next); // Reject invalid transactions before any write.
         await database.worlds.put(next); return next;

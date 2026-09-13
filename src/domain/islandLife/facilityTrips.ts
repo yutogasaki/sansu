@@ -1,7 +1,7 @@
 import { isFacility } from './footprint';
-import { discoveryAccessPoints } from './discovery';
+import { activityRelation, discoveryAccessPoints } from './discovery';
 import { LIFE_STEP_MS, type Cell, type LifeItem, type LifeResident, type LifeState } from './model';
-import { route, sameCell } from './space';
+import { pathToActivity, route, sameCell } from './space';
 
 export interface FacilityTrip {
     facilityId: string; targetId: string; kind: 'library' | 'garden-hut';
@@ -18,12 +18,14 @@ export function reservedActivityCells(state: LifeState, exceptId?: string): Cell
 }
 /** Reserve the destination role before collecting. A busy destination is never
  * evicted; without a free reachable partner, the ordinary entrance use remains. */
-export function beginFacilityTrip(state: LifeState, resident: LifeResident, facility: LifeItem) {
+export function beginFacilityTrip(state: LifeState, resident: LifeResident, facility: LifeItem, targetId?: string) {
     if (!state.facilityTripVersion || !isFacility(facility.kind) || !resident.visit) return;
     const from = resident.visit.path[resident.visit.path.length - 1];
     const reserved = reservedActivityCells(state, resident.id);
+    const selectedId = targetId ?? (state.relationSelectionVersion ? activityRelation(state, '', facility.id)?.participantIds.find(id => id !== facility.id) : undefined);
+    if (state.relationSelectionVersion && !selectedId) return;
     const choices = state.items.filter(i => i.cell && (facility.kind === 'library' ? i.kind === 'bench' : i.kind === 'flower' || i.kind === 'sapling'))
-        .filter(i => !state.residents.some(r => r !== resident && reservesItem(r, i.id)))
+        .filter(i => (!selectedId || i.id === selectedId) && !state.residents.some(r => r !== resident && reservesItem(r, i.id)))
         .flatMap(item => discoveryAccessPoints(state, item).filter(to => !reserved.some(p => sameCell(p, to))).flatMap(to => {
             const path = route(state, from, to);
             return path && path.length <= 5 ? [{ item, path }] : [];
@@ -40,7 +42,23 @@ export function departFacilityTrip(state: LifeState, resident: LifeResident) {
     if (!trip || !visit || trip.phase !== 'collect') return false;
     resident.cell = visit.path[visit.path.length - 1];
     trip.phase = 'carry';
-    resident.visit = { itemId: trip.targetId, from: { ...resident.cell }, path: trip.path,
+    resident.visit = { ...(visit.relationSelectionVersion ? { relationSelectionVersion: visit.relationSelectionVersion } : {}), itemId: trip.targetId, from: { ...resident.cell }, path: trip.path,
         start: state.now, end: trip.end, ...(visit.observationTest ? { observationTest: true } : {}) };
     return true;
+}
+
+/** A bench relation starts at the real library entrance, carrying back to this
+ * same reserved bench. No book appears merely because a library is nearby. */
+export function beginBenchTrip(state: LifeState, resident: LifeResident, bench: LifeItem) {
+    if (!state.relationSelectionVersion || bench.kind !== 'bench' || !resident.visit) return;
+    const rule = activityRelation(state, '', bench.id);
+    if (rule?.ruleId !== 'R5') return;
+    const facility = state.items.find(i => i.id !== bench.id && rule.participantIds.includes(i.id));
+    if (!facility || state.residents.some(r => r !== resident && reservesItem(r, facility.id))) return;
+    const path = pathToActivity(state, resident.cell, facility, reservedActivityCells(state, resident.id));
+    if (!path) return;
+    const original = resident.visit;
+    resident.visit = { ...original, itemId: facility.id, path };
+    beginFacilityTrip(state, resident, facility, bench.id);
+    if (!resident.facilityTrip) resident.visit = original;
 }

@@ -62,7 +62,7 @@ export function evaluateDiscovery(state: LifeState, profileId: string): RuleElig
         if (group.kind === 'trees' && group.wide) result.push(eligibility(profileId, 'GT6', group.items));
     }
     for (const bench of state.items.filter(item => item.kind === 'bench' && item.cell)) {
-        for (const target of state.items.filter(item => item.cell && (item.kind === 'flower' || (item.kind === 'swing' || item.kind === 'sandbox') || (state.relationVersion === 'water-bench-v1' && item.kind === 'water-bowl')))) {
+        for (const target of state.items.filter(item => item.cell && (item.kind === 'flower' || (item.kind === 'swing' || item.kind === 'sandbox') || ((state.relationVersion === 'water-bench-v1' || state.relationSelectionVersion) && item.kind === 'water-bowl')))) {
             const distance = relationDistance(state, bench, target);
             if (distance !== undefined && distance <= 4) result.push(eligibility(profileId, target.kind === 'flower' ? 'R1' : target.kind === 'water-bowl' ? 'R4' : 'R3', [bench, target], distance));
         }
@@ -89,7 +89,14 @@ export function plantGatherings(state: LifeState): LifeItem[][] {
 }
 
 /** Select the current relation, or a touched real object, without a recipe menu. */
-export function benchRelation(state: LifeState, profileId: string, benchId: string, targetId?: string) {
+export function benchRelation(state: LifeState, profileId: string, benchId: string, targetId?: string): RuleEligibility | undefined {
+    if (state.relationSelectionVersion && state.residents.some(r => r.visit?.itemId === benchId && !r.visit.relationSelectionVersion && state.now < r.visit.end)) {
+        return benchRelation({ ...state, relationSelectionVersion: undefined }, profileId, benchId, targetId);
+    }
+    if (state.relationSelectionVersion) {
+        const selected = activityRelation(state, profileId, benchId, targetId);
+        return selected?.ruleId === 'R5' ? undefined : selected;
+    }
     return evaluateDiscovery(state, profileId).filter(rule => (rule.ruleId === 'R1' || rule.ruleId === 'R2' || rule.ruleId === 'R3' || rule.ruleId === 'R4')
         && rule.participantIds.includes(benchId) && (!targetId || rule.participantIds.includes(targetId)))
         .sort((a, b) => a.distance! - b.distance! || (['R1', 'R4', 'R3', 'R2'].indexOf(a.ruleId) - ['R1', 'R4', 'R3', 'R2'].indexOf(b.ruleId))
@@ -107,4 +114,15 @@ export function relationAvailability(state: LifeState, rule: RuleEligibility): '
     const points = bench ? discoveryAccessPoints(state, bench).filter(point => !reserved.has(cellKey(point))) : [];
     const free = state.residents.some(resident => !resident.visit && points.some(point => sameCell(resident.cell, point) || route(state, resident.cell, point)));
     return free ? 'eligible' : 'waiting-for-resident';
+}
+
+/** New scheduling and explicit-object selection share distance, rule and actual
+ * partner ID ordering. An unavailable selected role is not silently substituted. */
+export function activityRelation(state: LifeState, profileId: string, itemId: string, targetId?: string) {
+    const order = ['R5', 'R1', 'R4', 'R3', 'R2', 'R6'];
+    const partner = (rule: RuleEligibility) => rule.participantIds.find(id => id !== itemId)!;
+    return evaluateDiscovery(state, profileId).filter(rule => order.includes(rule.ruleId)
+        && rule.participantIds.includes(itemId) && (!targetId || partner(rule) === targetId))
+        .sort((a, b) => a.distance! - b.distance! || order.indexOf(a.ruleId) - order.indexOf(b.ruleId)
+            || (partner(a) < partner(b) ? -1 : partner(a) > partner(b) ? 1 : 0))[0];
 }

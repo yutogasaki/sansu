@@ -1,5 +1,6 @@
+import { assertRelationCutover } from './relationMigration';
 import { assertFacilityCutover } from './facilityMigration';
-import { beginFacilityTrip, departFacilityTrip, reservedActivityCells, reservesItem } from './facilityTrips';
+import { beginBenchTrip, beginFacilityTrip, departFacilityTrip, reservedActivityCells, reservesItem } from './facilityTrips';
 import { isFacility, occupiesCell } from './footprint';
 import { applyLandExpansion, landReceipt } from './landRules';
 import { assertTourCutover } from './tourMigration';
@@ -151,8 +152,9 @@ export function arrangeVisits(s: LifeState) {
         if (r.id === 'pokomoko' && s.target && !requested) continue;
         const chosen = requested ? requested
             : choices.find(c => (dice -= c.weight) <= 0) ?? choices[0];
-        r.visit = { itemId: chosen.item.id, path: chosen.path, from: { ...r.cell }, start: s.now, end: s.now + (chosen.item.kind === 'flower-arch' ? (chosen.path.length - 1) * LIFE_STEP_MS + 400 : LIFE_RULES.activityMs) };
+        r.visit = { ...(s.relationSelectionVersion ? { relationSelectionVersion: 1 as const } : {}), itemId: chosen.item.id, path: chosen.path, from: { ...r.cell }, start: s.now, end: s.now + (chosen.item.kind === 'flower-arch' ? (chosen.path.length - 1) * LIFE_STEP_MS + 400 : LIFE_RULES.activityMs) };
         beginFacilityTrip(s, r, chosen.item);
+        beginBenchTrip(s, r, chosen.item);
         const members = s.tourVersion && !requested ? playTourMembers(s, chosen.item.id) : undefined;
         if (members) {
             r.playTour = { memberIds: members, lastItemId: chosen.item.id, remainingMs: LIFE_RULES.activityMs };
@@ -246,9 +248,10 @@ export function applyCommand(s: LifeState, event: LifeAction) {
             if (plan.kind === 'ready') {
                 const resident = s.residents.find(resident => resident.id === plan.residentId)!;
                 resident.playTour = undefined; resident.facilityTrip = undefined;
-                resident.visit = { itemId: item.id, from: { ...resident.cell }, path: plan.path,
+                resident.visit = { ...(s.relationSelectionVersion ? { relationSelectionVersion: 1 as const } : {}), itemId: item.id, from: { ...resident.cell }, path: plan.path,
                     start: s.now, end: s.now + plan.duration, observationTest: true };
                 beginFacilityTrip(s, resident, item);
+                beginBenchTrip(s, resident, item);
             }
         } else if (c.type === 'visit') {
             if (!item.cell || (item.kind === 'lantern' || item.kind === 'pinwheel') || !pathToActivity(s, homeCell, item)) fail('ここでは あそべないよ。');
@@ -292,10 +295,10 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
     const facilityIds = new Set(record.actions.filter(a => a.command.type === 'buy' && isFacility(a.command.kind)).map(a => a.id));
     if (record.version < 12 && record.actions.some(a => a.command.type === 'observe' && facilityIds.has(a.command.itemId))) throw new Error('この観察は新しい版で開いてください。');
     const checkpoint = record.economyCheckpoint;
-    assertCheckpointBoundary(record); assertTourCutover(record); assertFacilityCutover(record);
+    assertCheckpointBoundary(record); assertTourCutover(record); assertFacilityCutover(record); assertRelationCutover(record);
     if (record.actions.some(action => action.command.type === 'buy' && action.command.kind === 'sandbox') && record.version < 9) throw new Error('砂場の保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isFacility(action.command.kind)) && record.version < 10) throw new Error('建物の保存版を確認できません。');
-    if (record.actions.some(action => action.landReceipt) && ![5, 6, 7, 8, 9, 10, 11, 12].includes(record.version)) throw new Error('土地の保存版を確認できません。');
+    if (record.actions.some(action => action.landReceipt) && ![5, 6, 7, 8, 9, 10, 11, 12, 13].includes(record.version)) throw new Error('土地の保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isWindArch(action.command.kind)) && record.version < 8) throw new Error('風車とアーチの保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && action.command.kind === 'picnic-table') && record.version < 7) throw new Error('テーブルの保存版を確認できません。');
     if (record.actions.some(action => action.command.type === 'buy' && isPlantsWater(action.command.kind)) && record.version < 6) throw new Error('新しい物の保存版を確認できません。');
@@ -305,12 +308,13 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
     const credits = checkpoint ? record.credits.filter(credit => !known.has(credit.id)) : record.credits;
     if (checkpoint && credits.some(credit => credit.at <= checkpoint.cutoverAt)) throw new Error('以前の学習を反映してから島を開いてね。');
     const actions = checkpoint ? record.actions.slice(checkpoint.actionCount) : record.actions;
-    const events = [...credits.map(c => ({ at: c.at, credit: c, action: undefined, switchVersion: false, switchTour: false, switchFacility: false, rank: 0 })),
-        ...actions.map((a, index) => ({ at: a.at, credit: undefined, action: a, switchVersion: false, switchTour: false, switchFacility: false,
-            rank: record.tourCutover && a.at === record.tourCutover.at && index + (checkpoint?.actionCount ?? 0) < record.tourCutover.actionCount ? 1.25 : record.facilityCutover && a.at === record.facilityCutover.at && index + (checkpoint?.actionCount ?? 0) < record.facilityCutover.actionCount ? 1.75 : a.at === record.activitiesV2At && index < (record.activitiesV2After ?? 0) ? .5 : 2 })),
-        ...(checkpoint || record.activitiesV2At === undefined ? [] : [{ at: record.activitiesV2At, credit: undefined, action: undefined, switchVersion: true, switchTour: false, switchFacility: false, rank: 1 }]),
-        ...(record.tourCutover ? [{ at: record.tourCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: true, switchFacility: false, rank: 1.5 }] : []),
-        ...(record.facilityCutover ? [{ at: record.facilityCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: false, switchFacility: true, rank: 1.875 }] : [])]
+    const events = [...credits.map(c => ({ at: c.at, credit: c, action: undefined, switchVersion: false, switchTour: false, switchFacility: false, switchRelation: false, rank: 0 })),
+        ...actions.map((a, index) => ({ at: a.at, credit: undefined, action: a, switchVersion: false, switchTour: false, switchFacility: false, switchRelation: false,
+            rank: record.tourCutover && a.at === record.tourCutover.at && index + (checkpoint?.actionCount ?? 0) < record.tourCutover.actionCount ? 1.25 : record.facilityCutover && a.at === record.facilityCutover.at && index + (checkpoint?.actionCount ?? 0) < record.facilityCutover.actionCount ? 1.75 : record.relationCutover && a.at === record.relationCutover.at && index + (checkpoint?.actionCount ?? 0) < record.relationCutover.actionCount ? 1.9 : a.at === record.activitiesV2At && index < (record.activitiesV2After ?? 0) ? .5 : 2 })),
+        ...(checkpoint || record.activitiesV2At === undefined ? [] : [{ at: record.activitiesV2At, credit: undefined, action: undefined, switchVersion: true, switchTour: false, switchFacility: false, switchRelation: false, rank: 1 }]),
+        ...(record.tourCutover ? [{ at: record.tourCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: true, switchFacility: false, switchRelation: false, rank: 1.5 }] : []),
+        ...(record.facilityCutover ? [{ at: record.facilityCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: false, switchFacility: true, switchRelation: false, rank: 1.875 }] : []),
+        ...(record.relationCutover ? [{ at: record.relationCutover.at, credit: undefined, action: undefined, switchVersion: false, switchTour: false, switchFacility: false, switchRelation: true, rank: 1.95 }] : [])]
         .sort((a, b) => a.at - b.at || a.rank - b.rank);
     const credited = new Set<string>();
     for (const event of events) {
@@ -328,6 +332,7 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
             arrangeVisits(s);
         } else if (event.switchTour) { s.tourVersion = 1; s.roamRound = 0; }
         else if (event.switchFacility) { s.facilityTripVersion = 1; }
+        else if (event.switchRelation) { s.relationSelectionVersion = 1; }
         else if (event.action) applyCommand(s, event.action);
     }
     advanceLifeState(s, Math.max(s.now, to)); return s;
@@ -351,5 +356,5 @@ export function commandLife(record: LifeRecord, command: LifeCommand, id: string
     if (command.type === 'expand' && record.tourCutover) event.landReceipt = landReceipt(state, event);
     applyCommand(state, event);
     const facilityObservation = command.type === 'observe' && state.items.some(i => i.id === command.itemId && isFacility(i.kind));
-    return { ...record, version: record.version === 12 || facilityObservation ? 12 : record.version === 11 ? 11 : record.version === 10 || command.type === 'buy' && isFacility(command.kind) ? 10 : record.version === 9 || command.type === 'buy' && command.kind === 'sandbox' ? 9 : record.version === 8 || command.type === 'buy' && isWindArch(command.kind) ? 8 : record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
+    return { ...record, version: record.version === 13 ? 13 : record.version === 12 || facilityObservation ? 12 : record.version === 11 ? 11 : record.version === 10 || command.type === 'buy' && isFacility(command.kind) ? 10 : record.version === 9 || command.type === 'buy' && command.kind === 'sandbox' ? 9 : record.version === 8 || command.type === 'buy' && isWindArch(command.kind) ? 8 : record.version === 7 || command.type === 'buy' && command.kind === 'picnic-table' ? 7 : record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
 }

@@ -75,7 +75,7 @@ describe('receipted land expansion', () => {
             expect(await db.worlds.get('land-owner')).toEqual(current);
             db.worlds.hook('updating').unsubscribe(fail);
             const saved = await updateLife('land-owner', [], intent, 1, db);
-            expect(saved.version).toBe(11); expect(await updateLife('land-owner', [], intent, 2, db)).toEqual(saved);
+            expect(saved.version).toBe(13); expect(await updateLife('land-owner', [], intent, 2, db)).toEqual(saved);
             const resumed = await updateLife('land-owner', [], undefined, 3, db);
             expect(replayLife(resumed).drops).toBe(replayLife(current).drops - 12);
         } finally { await db.delete(); }

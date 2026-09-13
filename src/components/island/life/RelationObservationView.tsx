@@ -97,7 +97,8 @@ export default function RelationObservationView(props: Props) {
                 let transport = findTransport();
                 const sitter = transport ? poses.find(pose => pose.id === transport?.focalResidentIds?.[0])
                     : poses.find(pose => pose.itemId === benchId && (['bench', 'picnic-table', 'library', 'garden-hut'].includes(pose.phase)));
-                const nextStatus = sitter ? 'bench' : poses.some(pose => (pose.itemId === benchId || stateAtFrame.residents.find(r => r.id === pose.id)?.facilityTrip?.facilityId === benchId) && pose.phase === 'walking') ? 'walking' : 'busy';
+                const collectingForBench = stateAtFrame.relationSelectionVersion && stateAtFrame.residents.some(r => r.facilityTrip?.targetId === benchId && r.facilityTrip.phase === 'collect');
+                const nextStatus = sitter ? 'bench' : collectingForBench || poses.some(pose => (pose.itemId === benchId || stateAtFrame.residents.find(r => r.id === pose.id)?.facilityTrip?.facilityId === benchId) && pose.phase === 'walking') ? 'walking' : 'busy';
                 if (nextStatus !== previousStatus) { previousStatus = nextStatus; if (transport) { resize(); renderer.render(scene, camera); transport = findTransport(); } latest.current.status?.(nextStatus); }
                 const gathering = latest.current.gathering;
                 const rule = gathering ? displayedGatherings(stateAtFrame, '').find(rule => rule.ruleId === gathering.ruleId
