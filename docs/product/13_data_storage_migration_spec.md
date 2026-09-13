@@ -243,3 +243,13 @@ v8導入後のrollbackはv8を理解するbuildで機能を無効化する。v7�
 島の再確認改善では、既存island行にoptionalの算数再確認状態と英語Due巡回位置を加える。旧行は未設定のまま読み込める。算数はskill単位の失敗問題識別と別表現/独力の確認段階を持ち、訂正正解で消さない。状態更新は回答または次区間予約と同一transaction、島revisionのCASとreceipt冪等性に従う。区間のProblemは予約後に差し替えない。新しいtable/index、既存履歴の書換え、schema downgradeは伴わない。
 
 optionalの算数巡回数は新しい算数区間を予約する同一transactionでだけ進め、通常Dueと再確認の交互優先・再確認候補の巡回に使う。英語区間、再読込、報酬受取では進めない。
+
+### 独立Life DBの経済checkpoint（worldデータ版3）
+
+[不思議な島v3](50_mysterious_island_discovery_spec.md)の成長/有限ひかりは、`SansuIslandLifeV1`（DEVは`SansuIslandLifePreviewV1`）の既存world行に`economyCheckpoint`を追加し、worldデータ版を3へ切り替える。これは共通Sansu DBのschema版ではなく、独立DBのstore/index版1も維持する。
+
+- 旧版1/2の生行を`originalRecord`へ、学習fact/旧時計を切替時点まで確定した旧行を`sourceRecord`へ複製する。いずれも削除しない。既読fact集合、旧action境界、credit ID、同一個体/残高/権利/成長の初期状態、固定補充予算とSHA-256を保持する。
+- 旧版readerの1/2のみというguardは新版3への書込を拒否する。新版は1/2を読むが、版3のcheckpointが欠落/破損した場合に旧ルールへ黙って戻さない。snapshot/写真や旧ほしを新通貨へ換算しない。
+- バックアップ、初期状態の一致検証、版3への切替をownerの同一read-write transactionで保存する。WebCryptoを待つ間はDexie.waitForでtransactionを保持し、呼出側のPWA critical holdも維持する。中断は旧行への全rollback、再試行のcheckpoint IDはprofileと対象ルール版から同一に決まる。
+- 遅延した旧区間の終端は旧価格/時間で補正し、原本と当初の補充予算を維持する。旧時間境界/権利が再現できなければ停止し、旧購入列を新価格で再計算しない。既存intentの同内容再送は一度だけ、他タブのrevision競合は再選択を求める。
+- 新しい別tableを増やさず、プロフィール削除時は既存world削除がcheckpoint内backupも削除する。共通DBの学習/写真/旧島所有には書き込まない。実本番切替・オフライン/PWA全体の認定は検証記録に従い、データ形式の実装だけで完了にしない。

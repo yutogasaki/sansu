@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { seedDev, readNative } from './island-e2e-helpers.mjs';
 
-const candidate = process.env.SANSU_DISCOVERY_CANDIDATE ?? 'island-life-discovery-a-live-relations-v1';
+const candidate = process.env.SANSU_DISCOVERY_CANDIDATE ?? 'island-life-economy-checkpoint-v3';
 const base = process.env.SANSU_DISCOVERY_DEV_URL ?? 'http://127.0.0.1:5223';
 const out = process.env.SANSU_DISCOVERY_OUTPUT;
 assert(out, 'Specify a fresh SANSU_DISCOVERY_OUTPUT directory');

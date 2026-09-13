@@ -1,6 +1,8 @@
+import { growthRateV3, type LifeEconomyV3 } from './economyRules';
+import type { LifeEconomyCheckpoint } from './economyMigration';
 import type { DiscoveryJournal } from './discoveryJournal';
 
-export const LIFE_CANDIDATE = 'island-life-discovery-a-live-relations-v1';
+export const LIFE_CANDIDATE = 'island-life-economy-checkpoint-v3';
 export const LIFE_STEP_MS = 1200;
 export const HOUR = 3_600_000;
 export const LIFE_RULES = { dropsPerProblem: 2, dailyGoal: 6, activityMs: HOUR / 2, expansionPrice: 12,
@@ -24,12 +26,13 @@ export interface LifePurchaseReceipt {
 }
 export interface LifeAction { id: string; at: number; command: LifeCommand; purchaseReceipt?: LifePurchaseReceipt; undoOf?: string }
 export interface LifeRecord {
-    profileId: string; version: 1 | 2; revision: number; createdAt: number; realAt: number; now: number;
+    profileId: string; version: 1 | 2 | 3; revision: number; createdAt: number; realAt: number; now: number;
     credits: Credit[]; actions: LifeAction[]; offsets: { at: number; offset: number }[]; clockIntents: string[];
     activitiesV2At?: number;
     activitiesV2After?: number;
     clockIntentHours?: Record<string, 6 | 24>;
     discoveryJournal?: DiscoveryJournal;
+    economyCheckpoint?: LifeEconomyCheckpoint;
 }
 export interface Visit { observationTest?: boolean; itemId: string; from: Cell; path: Cell[]; start: number; end: number }
 /** Synthetic visits let the renderer show quiet ground walks without turning
@@ -45,6 +48,7 @@ export interface LifeResident {
 export interface LifeState {
     now: number; activityVersion: 1 | 2; drops: number; light: number; expanded?: 'east' | 'west'; items: LifeItem[];
     styles: Style[]; heroStyle: Style; target?: string; days: Record<string, number>;
+    economy?: LifeEconomyV3;
     relationTarget?: { benchId: string; targetId: string };
     lastAchievement?: number; residents: LifeResident[];
 }
@@ -55,6 +59,7 @@ export function learningDay(at: number) {
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 }
 export function vigor(s: LifeState, at = s.now) {
+    if (s.economy) return growthRateV3(s.economy.completionTimes, at);
     if (s.lastAchievement === undefined) return .25;
     const elapsed = at - s.lastAchievement;
     return elapsed < 24 * HOUR ? 1 : elapsed < 72 * HOUR ? .5 : .1;
@@ -64,4 +69,4 @@ export function newLife(profileId: string, now: number): LifeRecord {
     return { profileId, version: 1, revision: 0, createdAt: now, realAt: now, now, credits: [], actions: [], offsets: [{ at: now, offset: 0 }], clockIntents: [], activitiesV2At: now, activitiesV2After: 0 };
 }
 
-export function readableLifeVersion(version: number) { return version === 1 || version === 2; }
+export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3; }

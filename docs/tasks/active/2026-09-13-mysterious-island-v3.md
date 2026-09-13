@@ -149,3 +149,19 @@
 - 既存の視線/観察ハーネスは通常liveが存在し得る契約へ更新。観察の早期退出ではcurrent-context-testの未発行を検査し、別sourceのliveを観察完了へ数えない。今回その旧ハーネス全体の再PASSとは主張しない。
 
 - 最終DEV4ケースPASS、両実行のsource開始/終了 `78fa1893fc823eb0a4837d7ce879b407bd5e1ceac386f4faa4426b03afa0ee80` 一致。[実画像とreport](../../design/2026-09-13-island-live-relations/README.md)。最終verify:core PASS（363 files / 3726 tests、lint/typecheck/build/assets、precache10.79MiB）。Human N=0、release全体は未完。次はGP3巡回とv3の成長/有限ひかり/土地checkpoint、Bを継続する。
+
+### 段階10: 成長・有限ひかりの経済checkpoint（実装中）
+
+- 前段階の通常R1/R3記録は `2c75aa38d577fff9648597e3b0f18f76092f6b5b` としてmainへpush済み。
+- v3の24時間は学習加速のrolling windowで、花の開花は有効6時間。速度0.5〜1.0、学習の発生/失効境界を積分し、追加学習なしの実時間目安を表示する。収納中は停止、既存の成長段階は保持。
+- 初回updateのowner transactionで、生の旧recordと旧ルールで切替時刻まで進めたrecordを別にbackup。学習factの読取watermark、旧action境界、個体/残高/権利/成長の一致、固定ひかり予算、SHA-256を含むeconomyCheckpointを同時保存し、worldデータ版3へ切替。IndexedDBのstore/schemaを増やさず、旧版1/2のreaderは新版への書込を拒否する。
+- rootの旧action/credit境界を書き換えず、遅れて届く旧区間の学習は元の旧価格/時間で補正。原本backupと初期のひかり予算を保持。新規の利用ひかりは予算以内に限定し、色購入で予算を再計算しない。
+- 対象104テストPASS後、raw backup分離・prefix改変検知・将来timestampの保存済みcreditを補強。直近の境界12テストPASS。全体coreと実UIは未完。土地追加/上限拡張、GP3巡回、Bは次の統合範囲。
+
+### 世界表現の追加指示（2026-09-13）
+
+ユーザーからC3を取り入れて進める指示を受領。指定のデザイン憲章、C3 README/実画像、07、MASTERを確認。通常島の世界美術は、巨大でうねる植物が家と住人を包む空間、曲面に沿う大粒で間隔のある水玉、黄色/桃色/青の色瓦、木の奥/根元の局所的な青緑/青紫の陰、広い余白へ更新する。静止した形/光/空間を主とし、全体の暗化や紫化、粒子の追加で代用しない。
+
+ぽこもこの顔/輪郭/頭身/耳/配色/布の切替と既存住民の好み・動作を維持。参考画像の生成キャラは設定画にしない。C3は配信背景や固定配置/カメラの契約ではなく、世界表現の参照。進行中の経済移行を検証可能なcheckpointへ整えた後、通常島の美術を更新し、実画面とC3を比較する。視覚・無文字理解/安全・runtimeを別に判定する。別作業のデザイン資料を戻さず、関連する正本の取り込みは世界美術のまとまりで扱う。
+
+- 段階10の最終core PASS（366 files / 3751 tests、docs/lint/typecheck/build/assets）。DEV両幅PASS、source開始/終了 `6c27e4b8743690ed2b7ac4911ce8d7769a7595be52c5a9e5ba94ae36f3c56693` 一致。[実画面・transaction検査の範囲](../../design/2026-09-13-island-economy-checkpoint/README.md)。C3の世界美術更新、土地/cap/GP3/B、release全体は引き続き未完。

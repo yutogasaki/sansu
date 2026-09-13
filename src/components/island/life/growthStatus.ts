@@ -1,4 +1,5 @@
-import { growthStage, LIFE_RULES, type LifeItem } from '../../../domain/islandLife/model';
+import { growthHoursRemaining } from '../../../domain/islandLife/economyRules';
+import { growthStage, LIFE_RULES, type LifeItem, type LifeState } from '../../../domain/islandLife/model';
 
 export const FLOWER_GROWTH_LABELS = ['めが でた', 'つぼみ', 'さいた'] as const;
 
@@ -16,7 +17,7 @@ export interface LifeGrowthStatus {
  * The thresholds stay owned by the domain model; this helper never changes
  * learning, ownership, or the saved clock.
  */
-export function lifeGrowthStatus(item: Pick<LifeItem, 'kind' | 'growth' | 'cell'>): LifeGrowthStatus {
+export function lifeGrowthStatus(item: Pick<LifeItem, 'kind' | 'growth' | 'cell'>, state?: Pick<LifeState, 'now' | 'economy'>): LifeGrowthStatus {
     const stage = growthStage(item) as FlowerGrowthStage;
     if (item.kind !== 'flower') return { stage, label: 'おいてある', progress: 1 };
 
@@ -27,7 +28,7 @@ export function lifeGrowthStatus(item: Pick<LifeItem, 'kind' | 'growth' | 'cell'
         stage,
         label: FLOWER_GROWTH_LABELS[stage],
         nextLabel,
-        remainingHours: nextLabel && item.cell ? Math.max(1, Math.ceil(threshold - growth)) : undefined,
+        remainingHours: nextLabel && item.cell ? Math.max(1, Math.ceil(state?.economy ? growthHoursRemaining(state.economy.completionTimes, state.now, Math.max(0, threshold - growth)) : threshold - growth)) : undefined,
         progress: Math.min(1, growth / LIFE_RULES.bloomHours),
     };
 }

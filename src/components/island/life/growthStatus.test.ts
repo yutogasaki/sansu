@@ -1,3 +1,5 @@
+import { HOUR } from '../../../domain/islandLife/model';
+import { ECONOMY_V3_VERSION } from '../../../domain/islandLife/economyRules';
 import { describe, expect, it } from 'vitest';
 import { LIFE_RULES } from '../../../domain/islandLife/model';
 import { lifeGrowthStatus } from './growthStatus';
@@ -17,4 +19,14 @@ describe('lifeGrowthStatus', () => {
         expect(lifeGrowthStatus({ kind: 'flower', growth: 0, cell: undefined }).remainingHours).toBeUndefined();
         expect(lifeGrowthStatus({ kind: 'bench', growth: 0, cell: { x: 0, z: 2 } })).toMatchObject({ stage: 2, label: 'おいてある', progress: 1 });
     });
+    it('shows real elapsed hours including rolling learning expiry for migrated worlds', () => {
+        const state = { now: 20 * HOUR, economy: { version: ECONOMY_V3_VERSION, completionTimes: Array(6).fill(0) as number[], lightRemainingBudget: 0 } };
+        expect(lifeGrowthStatus({ kind: 'flower', growth: 2, cell: { x: 0, z: 2 } }, state).remainingHours).toBe(4);
+        state.now = 23 * HOUR;
+        expect(lifeGrowthStatus({ kind: 'flower', growth: 2, cell: { x: 0, z: 2 } }, state).remainingHours).toBe(7);
+        state.economy.completionTimes = [];
+        expect(lifeGrowthStatus({ kind: 'flower', growth: 0, cell: { x: 0, z: 2 } }, state).remainingHours).toBe(4);
+        expect(lifeGrowthStatus({ kind: 'flower', growth: 0, cell: undefined }, state).remainingHours).toBeUndefined();
+    });
+
 });

@@ -1,3 +1,5 @@
+import { assertCheckpointBoundary, checkpointLegacyRecord } from './economyMigration';
+import { effectiveGrowthHours, issueFiniteLight, GROWTH_WINDOW_MS } from './economyRules';
 import { placementUndo } from './placementUndo';
 import { observationVisit } from './observationVisit';
 import { readableLifeVersion, CATALOG, HOUR, LIFE_RULES, LIFE_STEP_MS, ROAM_VISIT_PREFIX, isRoamVisit, vigor, type LifeAction, type LifeCommand, type LifeRecord, type LifeState, type LifeResident, type Cell } from './model';
@@ -135,7 +137,7 @@ export function advanceLifeState(s: LifeState, to: number) {
         let next = to;
         if (s.lastAchievement !== undefined) for (const boundary of [24, 72].map(h => s.lastAchievement! + h * HOUR)) if (boundary > s.now) next = Math.min(next, boundary);
         for (const r of s.residents) if (r.visit) next = Math.min(next, r.visit.end);
-        const hours = (next - s.now) / HOUR * vigor(s);
+        const hours = s.economy ? effectiveGrowthHours(s.economy.completionTimes, s.now, next) : (next - s.now) / HOUR * vigor(s);
         for (const i of s.items) if (i.kind === 'flower' && i.cell) i.growth = Math.min(LIFE_RULES.bloomHours, i.growth + hours);
         s.now = next;
         for (const r of s.residents) if (r.visit && r.visit.end <= next) {
@@ -143,7 +145,11 @@ export function advanceLifeState(s: LifeState, to: number) {
             r.cell = visit.path[visit.path.length - 1]; r.visit = undefined;
             if (isRoamVisit(visit) || visit.observationTest) continue;
             if (kind) r.enjoyedBy[kind] = (r.enjoyedBy[kind] ?? 0) + 1;
-            r.enjoyed++; s.light++;
+            r.enjoyed++;
+            if (s.economy) {
+                const issued = issueFiniteLight(s.light, s.economy.lightRemainingBudget, 1);
+                s.light = issued.light; s.economy.lightRemainingBudget = issued.lightRemainingBudget;
+            } else s.light++;
         }
         arrangeVisits(s);
     }
@@ -229,11 +235,18 @@ export function applyCommand(s: LifeState, event: LifeAction) {
 }
 export function replayLife(record: LifeRecord, to = record.now): LifeState {
     if (!readableLifeVersion(record.version)) throw new Error('この島のデータは新しい版で開いてください。');
-    const s = initial(record.createdAt);
-    const events = [...record.credits.map(c => ({ at: c.at, credit: c, action: undefined, switchVersion: false, rank: 0 })),
-        ...record.actions.map((a, index) => ({ at: a.at, credit: undefined, action: a, switchVersion: false,
+    const checkpoint = record.economyCheckpoint;
+    assertCheckpointBoundary(record);
+    if (checkpoint && to < checkpoint.cutoverAt) return replayLife(checkpointLegacyRecord(checkpoint), to);
+    const s = checkpoint ? structuredClone(checkpoint.state) : initial(record.createdAt);
+    const known = new Set(checkpoint?.projectedCreditIds ?? []);
+    const credits = checkpoint ? record.credits.filter(credit => !known.has(credit.id)) : record.credits;
+    if (checkpoint && credits.some(credit => credit.at <= checkpoint.cutoverAt)) throw new Error('以前の学習を反映してから島を開いてね。');
+    const actions = checkpoint ? record.actions.slice(checkpoint.actionCount) : record.actions;
+    const events = [...credits.map(c => ({ at: c.at, credit: c, action: undefined, switchVersion: false, rank: 0 })),
+        ...actions.map((a, index) => ({ at: a.at, credit: undefined, action: a, switchVersion: false,
             rank: a.at === record.activitiesV2At && index < (record.activitiesV2After ?? 0) ? .5 : 2 })),
-        ...(record.activitiesV2At === undefined ? [] : [{ at: record.activitiesV2At, credit: undefined, action: undefined, switchVersion: true, rank: 1 }])]
+        ...(checkpoint || record.activitiesV2At === undefined ? [] : [{ at: record.activitiesV2At, credit: undefined, action: undefined, switchVersion: true, rank: 1 }])]
         .sort((a, b) => a.at - b.at || a.rank - b.rank);
     const credited = new Set<string>();
     for (const event of events) {
@@ -242,6 +255,7 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
         if (event.credit) {
             const c = event.credit; if (credited.has(c.id)) continue; credited.add(c.id);
             s.drops += LIFE_RULES.dropsPerProblem;
+            if (s.economy) s.economy.completionTimes = [...s.economy.completionTimes.filter(at => at > s.now - GROWTH_WINDOW_MS), c.at];
             s.days[c.day] = (s.days[c.day] ?? 0) + 1;
             if (s.days[c.day] === LIFE_RULES.dailyGoal) s.lastAchievement = c.at;
         } else if (event.switchVersion) {
@@ -266,5 +280,5 @@ export function commandLife(record: LifeRecord, command: LifeCommand, id: string
     const event: LifeAction = { id, at: now, command, ...(undoOf === undefined ? {} : { undoOf }) };
     if (command.type === 'buy') event.purchaseReceipt = purchaseReceipt(event);
     applyCommand(replayLife(record, now), event);
-    return { ...record, version: command.type === 'observe' ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
+    return { ...record, version: command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
 }

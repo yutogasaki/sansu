@@ -18,7 +18,7 @@ export function LifeResources({ state }: { state: LifeState }) {
         <span className="life-wallet-item life-wallet-item--drops" data-life-resource="drops" title="まなぶと ふえるよ。つくる・ひろげるに つかうよ。">
             <LifeResourceIcon kind="drops" /><span>しずく</span><strong>{state.drops}</strong>
         </span>
-        <span className="life-wallet-item life-wallet-item--light" data-life-resource="light" title="みんなが たのしむと ふえるよ">
+        <span className="life-wallet-item life-wallet-item--light" data-life-resource="light" title="いろを そろえる ぶんまで、みんなが たのしむと ふえるよ">
             <LifeResourceIcon kind="light" /><span>ひかり</span><strong>{state.light}</strong>
         </span>
     </div>;
@@ -36,6 +36,6 @@ export function LifeGrowthSummary({ state, goal }: { state: LifeState; goal: num
 export function LifeResourceGuide() {
     return <div className="life-resource-guide">
         <div><LifeResourceIcon kind="drops" /><p><b>まなぶと しずく</b><span>つくる・ひろげるに つかうよ。</span></p></div>
-        <div><LifeResourceIcon kind="light" /><p><b>みんなが あそぶと ひかり</b><span>いろを かえるのに つかうよ。</span></p></div>
+        <div><LifeResourceIcon kind="light" /><p><b>みんなが あそぶと ひかり</b><span>2つの いろを そろえるのに つかうよ。</span></p></div>
     </div>;
 }

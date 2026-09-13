@@ -1,0 +1,40 @@
+{
+  "startHash": "6c27e4b8743690ed2b7ac4911ce8d7769a7595be52c5a9e5ba94ae36f3c56693",
+  "revision": "2c75aa38d577fff9648597e3b0f18f76092f6b5b",
+  "flags": "VITE_ISLAND_ENABLED=true; VITE_ISLAND_LIFE_PREVIEW=true; DEV",
+  "cache": "fresh browser context; DEV; no production SW claim",
+  "target": "http://127.0.0.1:5223",
+  "candidate": "island-life-economy-checkpoint-v3",
+  "source": "explicit DEV legacy flower and six completed-credit fixture at minus 20 hours; no earned acquisition claim",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "device": "phone",
+      "pass": true,
+      "checkpoint": "[\"154c0f3a-9d20-4130-ab0b-cd2bf778238a\",\"life-v3.0-rc1\"]",
+      "validationHash": "9ac4555cc8577f9244e534b0fdd86de7bcc811370ecb41b45d6781d93eb4a2b1",
+      "growthAtSixHours": 5.001038611111111,
+      "light": {
+        "initial": 0,
+        "capped": 8,
+        "afterColor": 4
+      },
+      "errors": []
+    },
+    {
+      "device": "tablet",
+      "pass": true,
+      "checkpoint": "[\"15c94aae-9be9-41eb-b20c-d137d1e5d477\",\"life-v3.0-rc1\"]",
+      "validationHash": "7aaa62b400a7483cda6e9c57a83eaa820829518dc6b05c1fa28b091c5bfad343",
+      "growthAtSixHours": 5.001375,
+      "light": {
+        "initial": 0,
+        "capped": 8,
+        "afterColor": 4
+      },
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "6c27e4b8743690ed2b7ac4911ce8d7769a7595be52c5a9e5ba94ae36f3c56693"
+}
