@@ -1,3 +1,4 @@
+import { MAGIC_RETRY_MS } from '../../../domain/islandLife/magicTiming';
 import * as T from 'three';
 import { shadowResident } from '../../../domain/islandLife/shadowMagic';
 import { evaluateDiscovery, type RuleEligibility } from '../../../domain/islandLife/discovery';
@@ -56,14 +57,14 @@ export function makeShadowObservation(node: HTMLElement, scene: T.Scene, camera:
         update(next: LifeState, root: T.Object3D, benchId: string, residentId: ResidentId | undefined, at: number, reduced: boolean) {
             state = next; content = root; itemId = benchId;
             const resident = shadowResident(next,benchId,residentId);
-            const nextKey = resident ? JSON.stringify([resident.id,benchId,resident.visit!.start,resident.visit!.end,next.items.map(i=>[i.id,i.cell,i.style])]) : '';
+            const nextKey = resident ? JSON.stringify([resident.id,benchId,resident.visit!.start,resident.visit!.end,next.expanded,next.extraLand,next.heroStyle,next.worldStyle,next.items.map(i=>[i.id,i.cell,i.style])]) : '';
             if (nextKey !== key) { cancel(); key = nextKey; }
             const nextActor = resident ? root.getObjectByName(`life-resident-${resident.id}`) : undefined;
             let changed = false;
             if (nextActor !== actor) { clearShape(); actor = nextActor; who = resident?.id; if (actor) { shape = buildResidentShadow(actor); scene.add(shape.root); } changed = true; }
             if (ready !== Boolean(shape)) { ready = Boolean(shape); callbacks.ready(ready); }
             let elapsed = started === undefined ? -1 : at - started;
-            if (elapsed >= SHADOW_MAGIC_MS) { cancel(); cooldown = at + 250; elapsed = -1; }
+            if (elapsed >= SHADOW_MAGIC_MS) { cancel(); cooldown = at + MAGIC_RETRY_MS; elapsed = -1; }
             shape?.update(elapsed,reduced);
             if (at - auditAt > 200) { node.dataset.shadowView = JSON.stringify({ residentId: who, itemId, active: Boolean(event), elapsed, visitEnd: resident?.visit?.end, visitStart: resident?.visit?.start, eventId: event?.eventId, touchPoint: exposedPoint() }); auditAt = at; }
             if (event) node.dataset.shadowMagic = 'greeting';

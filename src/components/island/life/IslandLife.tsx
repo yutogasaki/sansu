@@ -1,3 +1,4 @@
+import type { FootstepInput } from './footstepPresentation';
 import { isFacility, occupiesCell } from '../../../domain/islandLife/footprint';
 import type { RuleEligibility } from '../../../domain/islandLife/discovery';
 import { useLiveDiscovery } from './useLiveDiscovery';
@@ -68,7 +69,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const lastObservedLight = useRef<number | undefined>(undefined);
     const lastObservedGrowth = useRef<Record<string, number> | undefined>(undefined);
     const lastObservedObservation = useRef<Record<string, string> | undefined>(undefined);
-    const state = useMemo(() => record ? { ...replayLife(record), ...(import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true' ? { shadowMagicVersion: 1 as const, waterMagicVersion: 1 as const, facilityPresentation: 'carry-care-v1' as const, landscapeVersion: 'groves-water-v1' as const, relationVersion: 'water-bench-v1' as const } : {}), worldStyle: import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true' ? 'canopy-dots-c3-v1' as const : 'moon-garden-v1' as const } : undefined, [record]);
+    const state = useMemo(() => record ? { ...replayLife(record), ...(import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true' ? { footstepMagicVersion: 1 as const, shadowMagicVersion: 1 as const, waterMagicVersion: 1 as const, facilityPresentation: 'carry-care-v1' as const, landscapeVersion: 'groves-water-v1' as const, relationVersion: 'water-bench-v1' as const } : {}), worldStyle: import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true' ? 'canopy-dots-c3-v1' as const : 'moon-garden-v1' as const } : undefined, [record]);
     useEffect(() => {
         if (!observed) { setGathering(undefined); observationOrigin.current = undefined; return; }
         const target = state?.items.find(i => i.id === observed && i.cell);
@@ -90,6 +91,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const [kind, setKind] = useState<ItemKind>(), [selected, setSelected] = useState<string>();
     const [cell, setCell] = useState<Cell>(), [moving, setMoving] = useState(false), [removing, setRemoving] = useState(false);
     const [notice, setNotice] = useState('');
+    const [footstepInput, setFootstepInput] = useState<FootstepInput>();
     const [undo, setUndo] = useState<{ profileId: string; actionId: string }>();
     const undoCommand = record && undo?.profileId === record.profileId ? placementUndo(record, undo.actionId) : undefined;
     useEffect(() => {
@@ -170,7 +172,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         <button className="island-secondary" onClick={() => void refresh()}>もういちど</button></section>;
     const locked = disabled || busy;
     const places = districts(state);
-    const doAction = async (command: LifeCommand, message: string, undoOf?: string) => {
+    const doAction = async (command: LifeCommand, message: string, undoOf?: string, walkSource: 'live' | 'current-context-test' = 'live') => {
         if (locked || actionRunning.current) return;
         setNotice('');
         const id = crypto.randomUUID();
@@ -178,6 +180,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             if (undoOf) setUndo(undefined);
             else if (['buy', 'move', 'store'].includes(command.type)) setUndo({ profileId: record.profileId, actionId: id });
             setNotice(message); setKind(undefined); setCell(undefined); setMoving(false); setRemoving(false);
+            if (command.type === 'visit' && state.footstepMagicVersion) { setFootstepInput({ profileId: record.profileId, id, targetId: command.itemId, source: walkSource }); showWorld(); }
             if (command.type === 'buy') { setSelected(id); setTab('items'); }
             if (command.type === 'buy' || command.type === 'move') showWorld();
             if (command.type === 'remove') setSelected(undefined);
@@ -243,7 +246,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         </button>}
         </div>
         <div className="life-viewport">
-        <LifeWorld profileId={record.profileId} presented={liveDiscovery.presented} state={state} selected={selected} cell={cell} placement={placement} onCell={chooseCell} controlsVisible={!menuOpen && !dockOpen && !observed && !memoriesOpen}>
+        <LifeWorld footstepInput={footstepInput} profileId={record.profileId} presented={liveDiscovery.presented} state={state} selected={selected} cell={cell} placement={placement} onCell={chooseCell} controlsVisible={!menuOpen && !dockOpen && !observed && !memoriesOpen}>
             <button ref={buildTrigger} className="life-home-action life-build-action" type="button" disabled={locked} onClick={() => openMenuTab('build')}>
                 <LifeProductPreview kind="flower" growth={LIFE_RULES.bloomHours} /><span>つくる</span>
             </button>
@@ -257,7 +260,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
                 record={record} state={state} item={target} initialResidentId={observedResident} gathering={gathering} close={() => setObserved(undefined)} memories={openMemories} tryVisit={() => tryObservation(target.id)} selectionFailure={error}
                 tryRelation={(targetId, residentId) => locked ? Promise.resolve(false) : refresh({ id: crypto.randomUUID(), revision: record.revision, command: { type: 'observe-relation', itemId: target.id, residentId, ...(targetId ? { targetId } : {}) } })} /> : null;
         })()}
-        {memoriesOpen && <LifeMemories key={record.profileId} profileId={record.profileId} state={state} close={() => setMemoriesOpen(false)}
+        {memoriesOpen && <LifeMemories key={record.profileId} profileId={record.profileId} state={state} walk={id => { setMemoriesOpen(false); void doAction({ type: 'visit', itemId: id }, 'いきさきを きめたよ', undefined, 'current-context-test'); }} close={() => setMemoriesOpen(false)}
             observe={(id, residentId) => { setGathering(undefined); setMemoriesOpen(false); setObservedResident(residentId); setObserved(id); if (!residentId) tryObservation(id); }}
             observeGathering={group => { setGathering(group); setMemoriesOpen(false); setObserved(group.participantIds[0]); }} />}
         {placement && <div className="life-placement life-controls" data-life-placement-valid={placement.valid} data-life-placement-cell={cell && cellKey(cell)}>

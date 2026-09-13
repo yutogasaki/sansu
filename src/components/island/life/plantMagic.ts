@@ -1,10 +1,11 @@
+import { MAGIC_RETRY_MS } from '../../../domain/islandLife/magicTiming';
 import * as T from 'three';
 import { growthStage, type LifeItem } from '../../../domain/islandLife/model';
 import { ellipsoid, IslandMaterials } from '../three/primitives';
 import { tint } from './itemGeometry';
 
 export const PLANT_MAGIC_MS = 3000;
-export const PLANT_MAGIC_RETRY_MS = 500;
+export const PLANT_MAGIC_RETRY_MS = MAGIC_RETRY_MS;
 
 /** Display-only duplicates: the plant never loses a leaf or gains any growth. */
 export function buildPlantMagic(item: LifeItem, materials: IslandMaterials) {

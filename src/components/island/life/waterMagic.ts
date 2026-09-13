@@ -1,5 +1,6 @@
+import { MAGIC_RETRY_MS } from '../../../domain/islandLife/magicTiming';
 import * as T from 'three';
-export const WATER_MAGIC_MS = 5000, WATER_RIPPLE_MS = 1200, WATER_RETRY_MS = 250;
+export const WATER_MAGIC_MS = 5000, WATER_RIPPLE_MS = 1200, WATER_RETRY_MS = MAGIC_RETRY_MS;
 import { WATER_RADIUS, validWaterPoint } from '../../../domain/islandLife/waterMagic';
 export { WATER_RADIUS, validWaterPoint } from '../../../domain/islandLife/waterMagic';
 /** One clipped surface, not a reflected sky or a second scene. The bowl's rim

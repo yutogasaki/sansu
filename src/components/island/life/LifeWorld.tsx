@@ -1,3 +1,4 @@
+import { makeFootstepPresentation, type FootstepInput } from './footstepPresentation';
 import { liveRelations } from './liveRelations';
 import { GatheringCollector } from './gatheringCollector';
 import { displayedGatherings, gatheringVisible } from './gatheringVisibility';
@@ -16,9 +17,11 @@ import type { PlacementPreview } from './placement';
 import { LifePresentationClock } from './presentationClock';
 
 type Content = ReturnType<typeof buildLifeScene>;
-type LifeWorldProps = { profileId?: string; presented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; state: LifeState; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
+type LifeWorldProps = { footstepInput?: FootstepInput; prepareFootstepReplay?: () => Promise<DiscoveryScene | undefined>; profileId?: string; presented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; state: LifeState; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
 
-export default function LifeWorld({ profileId, presented, state, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
+export default function LifeWorld({ footstepInput, prepareFootstepReplay, profileId, presented, state, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
+    const footsteps = useRef({ input: footstepInput, prepareReplay: prepareFootstepReplay });
+    useEffect(() => { footsteps.current = { input: footstepInput, prepareReplay: prepareFootstepReplay }; }, [footstepInput, prepareFootstepReplay]);
     const host = useRef<HTMLDivElement>(null), choose = useRef(onCell);
     const discovery = useRef({ profileId, presented, enabled: controlsVisible });
     useEffect(() => { discovery.current = { profileId, presented, enabled: controlsVisible }; }, [profileId, presented, controlsVisible]);
@@ -46,6 +49,7 @@ export default function LifeWorld({ profileId, presented, state, selected, cell,
         const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100);
         const cameraTarget = new T.Vector3(0, .2, 0), cameraOffset = new T.Vector3(), cameraYAxis = new T.Vector3(0, 1, 0);
         const cameraBaseOffset = new T.Vector3(4.5, 7.8, 11);
+        const footprint = makeFootstepPresentation(scene, camera, node, { profileId: () => discovery.current.profileId, prepareReplay: () => footsteps.current.prepareReplay?.() ?? Promise.resolve(undefined), presented: (event, evidence) => discovery.current.presented?.(event, evidence) });
         camera.position.copy(cameraTarget).add(cameraBaseOffset); camera.lookAt(cameraTarget);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5)); renderer.outputColorSpace = T.SRGBColorSpace;
         renderer.shadowMap.enabled = true; renderer.shadowMap.type = T.PCFSoftShadowMap;
@@ -172,13 +176,14 @@ export default function LifeWorld({ profileId, presented, state, selected, cell,
             if (document.visibilityState !== 'visible' || renderer.getContext().isContextLost()) presentationClock.resume(performance.now(), true);
             const logicalAt = presentationClock.sample(performance.now());
             content?.animate(logicalAt, media.matches);
-            if (content && document.visibilityState === 'visible' && !renderer.getContext().isContextLost()) { renderer.render(scene, camera); node.dataset.rendered = 'true';
+            if (content) footprint.update(content, content.snapshot(), footsteps.current.input, performance.now(), discovery.current.enabled && !currentPlacement && !renderer.getContext().isContextLost(), media.matches);
+            if (content && document.visibilityState === 'visible' && !renderer.getContext().isContextLost()) { renderer.render(scene, camera); node.dataset.rendered = 'true'; footprint.sample(content, performance.now());
                 presentationClock.resume(performance.now());
                 if (discovery.current.profileId !== discoveryOwner) {
                     collector?.cancel(); discoveryOwner = discovery.current.profileId;
                     collector = discoveryOwner ? new GatheringCollector(discoveryOwner, (event, evidence) => discovery.current.presented?.(event, evidence)) : undefined;
                 }
-                if (collector && discovery.current.enabled && !currentPlacement && performance.now() - discoveryAt >= 100) {
+                if (collector && !footsteps.current.prepareReplay && discovery.current.enabled && !currentPlacement && performance.now() - discoveryAt >= 100) {
                     const stateAtFrame = content.snapshot();
                     const rules = displayedGatherings(stateAtFrame, discoveryOwner!), rect = node.getBoundingClientRect();
                     const onScreen = (ndc: T.Vector3) => {
@@ -216,13 +221,13 @@ export default function LifeWorld({ profileId, presented, state, selected, cell,
             if (document.visibilityState !== 'visible' || renderer.getContext().isContextLost()) collector?.pause();
             raf = requestAnimationFrame(frame);
         }; raf = requestAnimationFrame(frame);
-        const hidden = () => { if (document.visibilityState !== 'visible') { collector?.pause(); presentationClock.resume(performance.now(), true); } };
+        const hidden = () => { if (document.visibilityState !== 'visible') { footprint.cancel(); collector?.pause(); presentationClock.resume(performance.now(), true); } };
         document.addEventListener('visibilitychange', hidden);
-        const lost = (event: Event) => { collector?.pause(); presentationClock.resume(performance.now(), true); event.preventDefault(); setFailed(true); delete node.dataset.rendered; };
+        const lost = (event: Event) => { footprint.cancel(); collector?.pause(); presentationClock.resume(performance.now(), true); event.preventDefault(); setFailed(true); delete node.dataset.rendered; };
         const restored = () => setFailed(false);
         renderer.domElement.addEventListener('webglcontextlost', lost); renderer.domElement.addEventListener('webglcontextrestored', restored);
         return () => {
-            collector?.cancel(); cancelAnimationFrame(raf); observer.disconnect(); update.current = null; controlCamera.current = undefined; reframe.current = undefined; cameraControls.cancel(); content?.dispose();
+            collector?.cancel(); cancelAnimationFrame(raf); observer.disconnect(); update.current = null; controlCamera.current = undefined; reframe.current = undefined; cameraControls.cancel(); footprint.dispose(); content?.dispose();
             document.removeEventListener('visibilitychange', hidden);
             renderer.domElement.removeEventListener('click', click);
             renderer.domElement.removeEventListener('pointerdown', pointerDown);
@@ -238,7 +243,7 @@ export default function LifeWorld({ profileId, presented, state, selected, cell,
     }, []);
     useEffect(() => { update.current?.(state, selected, cell, placement); }, [state, selected, cell, placement]);
     return <><div ref={host} className="life-world" data-placing={Boolean(placement)} />
-        {!placement && controlsVisible && <div className="life-home-tools" role="group" aria-label="しまの あそび">
+        {!placement && controlsVisible && !prepareFootstepReplay && <div className="life-home-tools" role="group" aria-label="しまの あそび">
         {children}
         <details className="life-camera-tools" onKeyDown={event => {
             if (event.key !== 'Escape') return;

@@ -15,3 +15,5 @@
 .life-memory-confirm { font-size: 13px; }
 .life-memory-confirm button { margin-right: 6px; }
 .life-memory-entry { margin: 8px 0; min-height: 44px; width: 100%; border: 1px solid var(--pokomoko-edge); background: var(--pokomoko-paper); color: inherit; border-radius: 12px; font: inherit; }
+.life-footstep-replay .life-world { height: 240px; min-height: 0; border-radius: 16px; }
+.life-footstep-replay > button { display: block; margin: 8px auto; padding: 6px 14px; }

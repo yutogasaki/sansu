@@ -12,8 +12,8 @@ import LifeSceneReplay from './LifeSceneReplay';
 import './life-observation.css';
 import './life-memories.css';
 
-export default function LifeMemories({ profileId, state, close, observe, observeGathering }: {
-    profileId: string; state: LifeState; close: () => void; observe: (itemId: string, residentId?: ResidentId) => void; observeGathering?: (group: { ruleId: RuleEligibility['ruleId']; participantIds: string[] }) => void;
+export default function LifeMemories({ profileId, state, close, walk, observe, observeGathering }: {
+    walk?: (itemId: string) => void; profileId: string; state: LifeState; close: () => void; observe: (itemId: string, residentId?: ResidentId) => void; observeGathering?: (group: { ruleId: RuleEligibility['ruleId']; participantIds: string[] }) => void;
 }) {
     const { journal, error: readError, retry } = useDiscoveryJournal(profileId);
     const [tab, setTab] = useState<'saved' | 'history'>('saved');
@@ -54,7 +54,7 @@ export default function LifeMemories({ profileId, state, close, observe, observe
                     <h3>{discoveryTitle(selected)}</h3>
                     <LifeSceneReplay key={selected.eventId} original={selected} />
                     <div className="life-memory-actions">
-                        {gathering ? currentGathering && observeGathering ? <button type="button" onClick={() => observeGathering(gathering)}>いまの島でみる</button> : <p>いまは しまに おいていないものが あるよ</p> : current ? <button type="button" onClick={() => observe(current.id, selected.snapshot.scene.observationResidentId ?? selected.focalResidentIds[0])}>いまの島でみる</button> : subject && <p>いまは しまに おいていないよ</p>}
+                        {gathering ? currentGathering && observeGathering ? <button type="button" onClick={() => observeGathering(gathering)}>いまの島でみる</button> : <p>いまは しまに おいていないものが あるよ</p> : current ? <button type="button" onClick={() => selected.ruleId === 'M1' && walk ? walk(current.id) : observe(current.id, selected.snapshot.scene.observationResidentId ?? selected.focalResidentIds[0])}>いまの島でみる</button> : subject && <p>いまは しまに おいていないよ</p>}
                         {!confirmUnpin && <button type="button" disabled={busy} onClick={() => saved ? setConfirmUnpin(true) : void changeMemory('save')}>{saved ? 'のこすのを やめる' : 'のこす'}</button>}
                     </div>
                     {confirmUnpin && <div className="life-memory-confirm"><p>この おもいでを、のこす ばしょから はずす？</p>

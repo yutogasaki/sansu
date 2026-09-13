@@ -1,0 +1,821 @@
+{
+  "startHash": "02aab7b19e7ec1464dab9bb8807ea8a2634243757aeb105dc85a871e4b60f17a",
+  "revision": "73e936a0076c8c6751cdefad1e00dae131dc5090",
+  "target": "http://127.0.0.1:5223",
+  "flags": "DEV VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_PREVIEW=true",
+  "candidate": "lantern-footsteps-v1",
+  "humanN": 0,
+  "fixture": "20 QA credits; actual UI purchases and free unoccupied destination selected from current committed assignments; no resident reroll or accelerated clock",
+  "cases": [
+    {
+      "device": "phone",
+      "delivery": {
+        "url": "http://127.0.0.1:5223/#/island",
+        "builds": [
+          {
+            "revision": "development-local",
+            "delivery": "snap-root-v1"
+          },
+          {
+            "revision": "development-local",
+            "version": "development-local:42bba105-01c2-4a95-8185-3a8eb67c7303",
+            "delivery": "mystic-island-v1"
+          }
+        ],
+        "world": "canopy-dots-c3-v1"
+      },
+      "version": 13,
+      "pass": true,
+      "event": {
+        "eventId": "0d77be7c-5251-4376-9796-da592b6c65d4",
+        "profileId": "08ea4a72-065b-45f1-b7a3-74494699a95f",
+        "ruleId": "M1",
+        "ruleVersion": "discovery-v3.0-rc1",
+        "semanticSignature": "[\"[\\\"08ea4a72-065b-45f1-b7a3-74494699a95f\\\",\\\"discovery-v3.0-rc1\\\",\\\"M1\\\",[[\\\"dc85af12-9533-466d-aa68-9c9521c4a26a\\\",\\\"lantern\\\",2,3,null,null],[\\\"fc48dea3-6032-481a-a0fc-a22e83365a5e\\\",\\\"bench\\\",5,2,null,null]]]\",[[\"pokomoko\",\"fc48dea3-6032-481a-a0fc-a22e83365a5e\",\"walking\"]]]",
+        "createdAt": 1789305186499,
+        "source": "live",
+        "focalResidentIds": [
+          "pokomoko"
+        ],
+        "snapshot": {
+          "contentVersion": 1,
+          "scene": {
+            "now": 1789305185173,
+            "activityVersion": 2,
+            "tourVersion": 1,
+            "roamRound": 0,
+            "scenePose": "captured-v1",
+            "footstepMagicVersion": 1,
+            "footstepTouch": {
+              "lampId": "dc85af12-9533-466d-aa68-9c9521c4a26a",
+              "targetId": "fc48dea3-6032-481a-a0fc-a22e83365a5e",
+              "point": [
+                -0.08513647643034616,
+                3.0750646027430495
+              ],
+              "visitStart": 1789305185073
+            },
+            "shadowMagicVersion": 1,
+            "waterMagicVersion": 1,
+            "facilityPresentation": "carry-care-v1",
+            "relationSelectionVersion": 1,
+            "facilityTripVersion": 1,
+            "poseReducedMotion": false,
+            "relationVersion": "water-bench-v1",
+            "landscapeVersion": "groves-water-v1",
+            "worldStyle": "canopy-dots-c3-v1",
+            "items": [
+              {
+                "id": "1cd8f8ad-9ee2-4f2e-9014-d445f50f70fe",
+                "kind": "bench",
+                "cell": {
+                  "x": 0,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4,
+                "access": "front"
+              },
+              {
+                "id": "dc85af12-9533-466d-aa68-9c9521c4a26a",
+                "kind": "lantern",
+                "cell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 8
+              },
+              {
+                "id": "b6f7ab8b-6dde-4e68-b62d-b22e1c6dd508",
+                "kind": "bench",
+                "cell": {
+                  "x": 1,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4,
+                "access": "front"
+              },
+              {
+                "id": "7bd59473-8514-4b43-afea-5bb2f655c75e",
+                "kind": "bench",
+                "cell": {
+                  "x": 4,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4,
+                "access": "front"
+              },
+              {
+                "id": "fc48dea3-6032-481a-a0fc-a22e83365a5e",
+                "kind": "bench",
+                "cell": {
+                  "x": 5,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4,
+                "access": "front"
+              }
+            ],
+            "residents": [
+              {
+                "id": "pokomoko",
+                "cell": {
+                  "x": 0,
+                  "z": 3
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "relationSelectionVersion": 1,
+                  "itemId": "fc48dea3-6032-481a-a0fc-a22e83365a5e",
+                  "path": [
+                    {
+                      "x": 0,
+                      "z": 3
+                    },
+                    {
+                      "x": 1,
+                      "z": 3
+                    },
+                    {
+                      "x": 1,
+                      "z": 4
+                    },
+                    {
+                      "x": 2,
+                      "z": 4
+                    },
+                    {
+                      "x": 3,
+                      "z": 4
+                    },
+                    {
+                      "x": 4,
+                      "z": 4
+                    },
+                    {
+                      "x": 5,
+                      "z": 4
+                    },
+                    {
+                      "x": 5,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 0,
+                    "z": 3
+                  },
+                  "start": 1789305185073,
+                  "end": 1789306985073
+                },
+                "discovery": {
+                  "itemId": "1cd8f8ad-9ee2-4f2e-9014-d445f50f70fe",
+                  "at": 1789305138629,
+                  "mood": "notice"
+                }
+              },
+              {
+                "id": "rabbit",
+                "cell": {
+                  "x": 2,
+                  "z": 4
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "relationSelectionVersion": 1,
+                  "itemId": "b6f7ab8b-6dde-4e68-b62d-b22e1c6dd508",
+                  "path": [
+                    {
+                      "x": 2,
+                      "z": 4
+                    },
+                    {
+                      "x": 1,
+                      "z": 4
+                    },
+                    {
+                      "x": 1,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 2,
+                    "z": 4
+                  },
+                  "start": 1789305185073,
+                  "end": 1789306985073
+                }
+              },
+              {
+                "id": "otter",
+                "cell": {
+                  "x": 4,
+                  "z": 3
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "relationSelectionVersion": 1,
+                  "itemId": "7bd59473-8514-4b43-afea-5bb2f655c75e",
+                  "path": [
+                    {
+                      "x": 4,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 4,
+                    "z": 3
+                  },
+                  "start": 1789305185073,
+                  "end": 1789306985073
+                },
+                "discovery": {
+                  "itemId": "7bd59473-8514-4b43-afea-5bb2f655c75e",
+                  "at": 1789305168810,
+                  "mood": "notice"
+                }
+              }
+            ],
+            "heroStyle": "original",
+            "target": "fc48dea3-6032-481a-a0fc-a22e83365a5e"
+          },
+          "immutableHash": "c21ba3cd47da781b55b5512c9ef298ffa9db330fbbf319a988eebad2192aa888"
+        }
+      },
+      "view": {
+        "steps": {
+          "targetId": "fc48dea3-6032-481a-a0fc-a22e83365a5e",
+          "lampId": "dc85af12-9533-466d-aa68-9c9521c4a26a",
+          "started": 57281,
+          "elapsed": 1211.699999988079,
+          "moving": true,
+          "eventId": "0d77be7c-5251-4376-9796-da592b6c65d4",
+          "delivered": false,
+          "stars": [
+            {
+              "point": [
+                -0.08513647643034616,
+                3.0750646027430495
+              ],
+              "age": 1211.699999988079,
+              "world": [
+                -2.585136476430346,
+                0.094,
+                1.0750646027430495
+              ]
+            },
+            {
+              "point": [
+                0.3063519036141509,
+                2.9088000000000003
+              ],
+              "age": 565,
+              "world": [
+                -2.193648096385849,
+                0.094,
+                0.9088
+              ]
+            }
+          ],
+          "regions": [
+            {
+              "lampId": "dc85af12-9533-466d-aa68-9c9521c4a26a",
+              "cells": [
+                {
+                  "x": 1,
+                  "z": 1
+                },
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 2,
+                  "z": 2
+                },
+                {
+                  "x": 3,
+                  "z": 2
+                },
+                {
+                  "x": 0,
+                  "z": 3
+                },
+                {
+                  "x": 1,
+                  "z": 3
+                },
+                {
+                  "x": 3,
+                  "z": 3
+                },
+                {
+                  "x": 4,
+                  "z": 3
+                },
+                {
+                  "x": 5,
+                  "z": 3
+                },
+                {
+                  "x": 0,
+                  "z": 4
+                },
+                {
+                  "x": 1,
+                  "z": 4
+                },
+                {
+                  "x": 2,
+                  "z": 4
+                },
+                {
+                  "x": 3,
+                  "z": 4
+                },
+                {
+                  "x": 4,
+                  "z": 4
+                }
+              ]
+            }
+          ]
+        },
+        "poses": [
+          {
+            "id": "pokomoko",
+            "itemId": "fc48dea3-6032-481a-a0fc-a22e83365a5e",
+            "phase": "walking",
+            "position": [
+              -2.1445057331311803,
+              0.04,
+              1
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          },
+          {
+            "id": "rabbit",
+            "itemId": "b6f7ab8b-6dde-4e68-b62d-b22e1c6dd508",
+            "phase": "walking",
+            "position": [
+              -1.4329198682488673,
+              0.04,
+              2
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          },
+          {
+            "id": "otter",
+            "itemId": "7bd59473-8514-4b43-afea-5bb2f655c75e",
+            "phase": "bench",
+            "position": [
+              1.5,
+              0.35,
+              0
+            ],
+            "seatGap": 0,
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0.03497984078679759,
+            "headYaw": 0
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "device": "tablet",
+      "delivery": {
+        "url": "http://127.0.0.1:5223/#/island",
+        "builds": [
+          {
+            "revision": "development-local",
+            "delivery": "snap-root-v1"
+          },
+          {
+            "revision": "development-local",
+            "version": "development-local:42bba105-01c2-4a95-8185-3a8eb67c7303",
+            "delivery": "mystic-island-v1"
+          }
+        ],
+        "world": "canopy-dots-c3-v1"
+      },
+      "version": 13,
+      "pass": true,
+      "event": {
+        "eventId": "abbbbd64-c4c2-4e67-9002-cdd309bf7f5f",
+        "profileId": "b92895c8-80d0-47f7-a1b6-347b2d2e4acb",
+        "ruleId": "M1",
+        "ruleVersion": "discovery-v3.0-rc1",
+        "semanticSignature": "[\"[\\\"b92895c8-80d0-47f7-a1b6-347b2d2e4acb\\\",\\\"discovery-v3.0-rc1\\\",\\\"M1\\\",[[\\\"a6d1e823-3155-4a3f-89bb-3da9fd4cf981\\\",\\\"lantern\\\",2,3,null,null],[\\\"d05c5311-1117-4675-9c08-a86f24792edb\\\",\\\"bench\\\",5,2,null,null]]]\",[[\"pokomoko\",\"d05c5311-1117-4675-9c08-a86f24792edb\",\"walking\"]]]",
+        "createdAt": 1789305305319,
+        "source": "live",
+        "focalResidentIds": [
+          "pokomoko"
+        ],
+        "snapshot": {
+          "contentVersion": 1,
+          "scene": {
+            "now": 1789305303635,
+            "activityVersion": 2,
+            "tourVersion": 1,
+            "roamRound": 0,
+            "scenePose": "captured-v1",
+            "footstepMagicVersion": 1,
+            "footstepTouch": {
+              "lampId": "a6d1e823-3155-4a3f-89bb-3da9fd4cf981",
+              "targetId": "d05c5311-1117-4675-9c08-a86f24792edb",
+              "point": [
+                0.07135256991685557,
+                3.0911999999999997
+              ],
+              "visitStart": 1789305303535
+            },
+            "shadowMagicVersion": 1,
+            "waterMagicVersion": 1,
+            "facilityPresentation": "carry-care-v1",
+            "relationSelectionVersion": 1,
+            "facilityTripVersion": 1,
+            "poseReducedMotion": true,
+            "relationVersion": "water-bench-v1",
+            "landscapeVersion": "groves-water-v1",
+            "worldStyle": "canopy-dots-c3-v1",
+            "items": [
+              {
+                "id": "0599c596-a0b1-448d-b72a-fe031853d470",
+                "kind": "bench",
+                "cell": {
+                  "x": 0,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4,
+                "access": "front"
+              },
+              {
+                "id": "a6d1e823-3155-4a3f-89bb-3da9fd4cf981",
+                "kind": "lantern",
+                "cell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 8
+              },
+              {
+                "id": "bb3a5242-f3a1-46b2-8c6c-34fe7d566fc6",
+                "kind": "bench",
+                "cell": {
+                  "x": 1,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4,
+                "access": "front"
+              },
+              {
+                "id": "cefcf984-21af-4983-ae34-2688afa4b587",
+                "kind": "bench",
+                "cell": {
+                  "x": 4,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4,
+                "access": "front"
+              },
+              {
+                "id": "d05c5311-1117-4675-9c08-a86f24792edb",
+                "kind": "bench",
+                "cell": {
+                  "x": 5,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4,
+                "access": "front"
+              }
+            ],
+            "residents": [
+              {
+                "id": "pokomoko",
+                "cell": {
+                  "x": 0,
+                  "z": 3
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "relationSelectionVersion": 1,
+                  "itemId": "d05c5311-1117-4675-9c08-a86f24792edb",
+                  "path": [
+                    {
+                      "x": 0,
+                      "z": 3
+                    },
+                    {
+                      "x": 1,
+                      "z": 3
+                    },
+                    {
+                      "x": 1,
+                      "z": 4
+                    },
+                    {
+                      "x": 2,
+                      "z": 4
+                    },
+                    {
+                      "x": 3,
+                      "z": 4
+                    },
+                    {
+                      "x": 4,
+                      "z": 4
+                    },
+                    {
+                      "x": 5,
+                      "z": 4
+                    },
+                    {
+                      "x": 5,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 0,
+                    "z": 3
+                  },
+                  "start": 1789305303535,
+                  "end": 1789307103535
+                },
+                "discovery": {
+                  "itemId": "0599c596-a0b1-448d-b72a-fe031853d470",
+                  "at": 1789305245406,
+                  "mood": "notice"
+                }
+              },
+              {
+                "id": "rabbit",
+                "cell": {
+                  "x": 4,
+                  "z": 3
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "relationSelectionVersion": 1,
+                  "itemId": "cefcf984-21af-4983-ae34-2688afa4b587",
+                  "path": [
+                    {
+                      "x": 4,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 4,
+                    "z": 3
+                  },
+                  "start": 1789305303535,
+                  "end": 1789307103535
+                },
+                "discovery": {
+                  "itemId": "d05c5311-1117-4675-9c08-a86f24792edb",
+                  "at": 1789305292312,
+                  "mood": "notice"
+                }
+              },
+              {
+                "id": "otter",
+                "cell": {
+                  "x": 1,
+                  "z": 3
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "relationSelectionVersion": 1,
+                  "itemId": "bb3a5242-f3a1-46b2-8c6c-34fe7d566fc6",
+                  "path": [
+                    {
+                      "x": 1,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 1,
+                    "z": 3
+                  },
+                  "start": 1789305303535,
+                  "end": 1789307103535
+                },
+                "discovery": {
+                  "itemId": "0599c596-a0b1-448d-b72a-fe031853d470",
+                  "at": 1789305245406,
+                  "mood": "notice"
+                }
+              }
+            ],
+            "heroStyle": "original",
+            "target": "d05c5311-1117-4675-9c08-a86f24792edb"
+          },
+          "immutableHash": "eb45df7deb4176e689b7b9f27194e8c818798abe5ff6bf10b6eb3d2a500c4872"
+        }
+      },
+      "view": {
+        "steps": {
+          "targetId": "d05c5311-1117-4675-9c08-a86f24792edb",
+          "lampId": "a6d1e823-3155-4a3f-89bb-3da9fd4cf981",
+          "started": 71837.30000001192,
+          "elapsed": 1659.7999999523163,
+          "moving": true,
+          "eventId": "abbbbd64-c4c2-4e67-9002-cdd309bf7f5f",
+          "delivered": true,
+          "stars": [
+            {
+              "point": [
+                0.07135256991685557,
+                3.0911999999999997
+              ],
+              "age": 1659.7999999523163,
+              "world": [
+                -2.4286474300831444,
+                0.094,
+                1.0912
+              ]
+            },
+            {
+              "point": [
+                0.37566544350742737,
+                2.9088000000000003
+              ],
+              "age": 698.0999999642372,
+              "world": [
+                -2.1243345564925726,
+                0.094,
+                0.9088
+              ]
+            },
+            {
+              "point": [
+                0.6942663607328394,
+                3.0911999999999997
+              ],
+              "age": 211.5,
+              "world": [
+                -1.8057336392671606,
+                0.094,
+                1.0912
+              ]
+            }
+          ],
+          "regions": [
+            {
+              "lampId": "a6d1e823-3155-4a3f-89bb-3da9fd4cf981",
+              "cells": [
+                {
+                  "x": 1,
+                  "z": 1
+                },
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 2,
+                  "z": 2
+                },
+                {
+                  "x": 3,
+                  "z": 2
+                },
+                {
+                  "x": 0,
+                  "z": 3
+                },
+                {
+                  "x": 1,
+                  "z": 3
+                },
+                {
+                  "x": 3,
+                  "z": 3
+                },
+                {
+                  "x": 4,
+                  "z": 3
+                },
+                {
+                  "x": 5,
+                  "z": 3
+                },
+                {
+                  "x": 0,
+                  "z": 4
+                },
+                {
+                  "x": 1,
+                  "z": 4
+                },
+                {
+                  "x": 2,
+                  "z": 4
+                },
+                {
+                  "x": 3,
+                  "z": 4
+                },
+                {
+                  "x": 4,
+                  "z": 4
+                }
+              ]
+            }
+          ]
+        },
+        "poses": [
+          {
+            "id": "pokomoko",
+            "itemId": "d05c5311-1117-4675-9c08-a86f24792edb",
+            "phase": "walking",
+            "position": [
+              -1.7070348128179316,
+              0.04,
+              1
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          },
+          {
+            "id": "rabbit",
+            "itemId": "cefcf984-21af-4983-ae34-2688afa4b587",
+            "phase": "bench",
+            "position": [
+              1.5,
+              0.32599999999999996,
+              0
+            ],
+            "seatGap": 0,
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          },
+          {
+            "id": "otter",
+            "itemId": "bb3a5242-f3a1-46b2-8c6c-34fe7d566fc6",
+            "phase": "bench",
+            "position": [
+              -1.5,
+              0.35,
+              0
+            ],
+            "seatGap": 0,
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "headYaw": 0
+          }
+        ]
+      },
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "02aab7b19e7ec1464dab9bb8807ea8a2634243757aeb105dc85a871e4b60f17a",
+  "rawReportSha256": "439b40cef80aeb5ad6184b5be6203471aea70ead758fd584b5e6d460f28bd112",
+  "rawReportLocation": "/tmp/sansu-footstep-runtime-5/report.json"
+}

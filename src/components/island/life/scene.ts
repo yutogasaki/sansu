@@ -1,3 +1,4 @@
+import { buildLanternLight } from './lanternLight';
 import { isFacility, occupiedCells } from '../../../domain/islandLife/footprint';
 import type { SandScene } from './sandboxGeometry';
 import { buildCanopyScenery } from './canopyScenery';
@@ -94,8 +95,16 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
     scarf.name = 'life-scarf';
     scarf.rotation.x = Math.PI / 2; scarf.position.y = .59; content.hero.add(scarf);
     actors.forEach((a, i) => { a.name = `life-resident-${state.residents[i].id}`; a.scale.setScalar(i ? .60 : .76); root.add(a); });
+    const lightGround = state.footstepMagicVersion && !placement ? buildLanternLight(state, point) : undefined;
+    if (lightGround) root.add(lightGround.root);
     const motion = makeLifeMotion(content, state, point, seats, sandboxes);
-    return { root, clickables, width: max - min + 1, depth: Math.max(...cells.map(c => c.z)) + 1, point,
+    return { root, clickables, lightGround, feet: () => {
+        root.updateMatrixWorld(true);
+        return content.heroFeet.map(foot => {
+            const box = new T.Box3().setFromObject(foot), center = box.getCenter(new T.Vector3());
+            return { point: new T.Vector3(center.x, .094, center.z), bottom: box.min.y };
+        });
+    }, width: max - min + 1, depth: Math.max(...cells.map(c => c.z)) + 1, point,
         animate: (at: number, reduced: boolean, decorationAt = at) => { const frozen = state.scenePose === 'captured-v1';
             rotors.forEach(rotor => { rotor.rotation.z = (frozen && state.poseReducedMotion !== undefined ? state.poseReducedMotion : reduced) ? .2 : (frozen ? state.now : decorationAt) / 2300 % (Math.PI * 2); });
             landscape.animate(decorationAt, reduced); motion.animate(at, reduced, decorationAt); }, audit: motion.audit, snapshot: motion.snapshot,
@@ -103,6 +112,6 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
             // Plane overlays use separate transparent materials; shared paints are owned by content.m.
             clickables.forEach(o => ((o as T.Mesh).material as T.Material).dispose());
             previewMaterials.forEach(m => m.dispose());
-            canopy?.dispose(); landscape.dispose(); heritageHouse.dispose(); content.dispose();
+            lightGround?.dispose(); canopy?.dispose(); landscape.dispose(); heritageHouse.dispose(); content.dispose();
         } };
 }
