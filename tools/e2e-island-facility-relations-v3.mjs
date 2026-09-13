@@ -11,7 +11,7 @@ async function sourceHash() {
     for (const file of files) hash.update(file).update('\0').update(await readFile(file)).update('\0'); return hash.digest('hex');
 }
 const report = { startHash: await sourceHash(), revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), target: base,
-    flags: 'DEV VITE_ISLAND_LIFE_PREVIEW=true', candidate: 'facility-relations-v1', fixture: '100 QA credits; real UI purchases and visits; separate owner-API observation/version-12 probe; no earned acquisition claim', humanN: 0, cases: [], pass: false };
+    flags: 'DEV VITE_ISLAND_LIFE_PREVIEW=true', candidate: 'facility-distance-v1', fixture: '100 QA credits; real UI purchases and visits; separate owner-API observation/version-12 probe; no earned acquisition claim', humanN: 0, cases: [], pass: false };
 async function saved(page, id) { return page.evaluate(async id => { const { lifeDb } = await import('/src/domain/islandLife/repository.ts'); const { replayLife } = await import('/src/domain/islandLife/simulation.ts'); const record = await lifeDb.worlds.get(id); return { record, state: replayLife(record) }; }, id); }
 async function closeMenu(page) { const b = page.getByRole('button', { name: 'メニューを とじる', exact: true }); if (await b.isVisible()) await b.click(); }
 async function inventory(page, id) { await closeMenu(page); await page.getByRole('button', { name: 'つくる', exact: true }).click(); await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'もちもの', exact: true }).click(); await page.locator(`[data-life-item="${id}"]`).click(); }
@@ -69,6 +69,29 @@ try{
             await page.getByRole('button',{name:'いまの島でみる',exact:true}).click();
             await page.waitForFunction(()=>JSON.parse(document.querySelector('.life-relation-view')?.dataset.relationView??'{}').delivered===true);await page.screenshot({path:`${out}/${device}-${kind}-current.png`});
             await page.getByRole('button',{name:'みてみるを とじる',exact:true}).click();
+            const comparison=[];
+            for(const [stage,cell] of [['far',{x:5,z:3}],['restored',{x:3,z:2}]]){
+                const journalBefore=(await saved(page,id)).record.discoveryJournal;
+                await inventory(page,target.id);await page.getByRole('button',{name:'うごかす',exact:true}).click();await putCell(page,cell);
+                await waitForAsync(page,async({id,target,cell})=>{const{lifeDb}=await import('/src/domain/islandLife/repository.ts');const{replayLife}=await import('/src/domain/islandLife/simulation.ts');const s=replayLife(await lifeDb.worlds.get(id));return s.items.some(i=>i.id===target&&i.cell?.x===cell.x&&i.cell?.z===cell.z);},{id,target:target.id,cell});
+                await page.waitForFunction(({stage,kind,facility,target})=>JSON.parse(document.querySelector('.life-world').dataset.lifePoses).some(p=>p.id==='pokomoko'&&p.facilityUse?.kind===kind&&p.facilityUse.action!=='carrying'&&p.itemId===(stage==='far'?facility:target)),{stage,kind,facility:facility.id,target:target.id});
+                const pose=await page.locator('.life-world').evaluate(n=>JSON.parse(n.dataset.lifePoses).find(p=>p.id==='pokomoko'));
+                const distance=await page.evaluate(async({id,facility,target})=>{const{lifeDb}=await import('/src/domain/islandLife/repository.ts');const{replayLife}=await import('/src/domain/islandLife/simulation.ts');const{relationDistance}=await import('/src/domain/islandLife/discovery.ts');const s=replayLife(await lifeDb.worlds.get(id));return relationDistance(s,s.items.find(i=>i.id===facility),s.items.find(i=>i.id===target));},{id,facility:facility.id,target:target.id});
+                assert(stage==='far'?distance>4:distance<=4);assert.equal(pose.id,collected[2].pose.id);
+                await page.screenshot({path:`${out}/${device}-${kind}-${stage}.png`});
+                await inventory(page,facility.id);await page.getByRole('button',{name:'みてみる',exact:true}).click();
+                await page.locator('.life-relation-view[data-rendered="true"]').waitFor();
+                if(stage==='restored')await page.waitForFunction(()=>JSON.parse(document.querySelector('.life-relation-view')?.dataset.relationView??'{}').delivered===true);
+                else await page.waitForTimeout(2400);
+                const view=await page.locator('.life-relation-view').evaluate(n=>JSON.parse(n.dataset.relationView));
+                const observed=view.poses.find(p=>p.id==='pokomoko');assert.equal(observed.itemId,pose.itemId);assert.equal(observed.facilityUse?.kind,kind);
+                if(stage==='far'){assert.equal(view.delivered,false);assert.equal(view.core,false);}
+                await page.screenshot({path:`${out}/${device}-${kind}-${stage}-observation.png`});
+                await page.getByRole('button',{name:'みてみるを とじる',exact:true}).click();
+                const compared=await saved(page,id);assert.deepEqual(compared.record.discoveryJournal.entries.find(e=>e.event.eventId===event.eventId).event,event);assert(compared.record.discoveryJournal.savedIds.includes(event.eventId));assert.equal(compared.state.light,0);assert.equal(compared.state.drops,kind==='library'?124:162);assert.deepEqual(await readNative(page,id),native);
+                if(stage==='far')assert.deepEqual(compared.record.discoveryJournal.historyIds,journalBefore.historyIds);
+                comparison.push({stage,cell,distance,pose,view});
+            }
             const before=(await saved(page,id));assert.equal(before.state.light,0);
             await page.reload();await page.locator('.life-world[data-rendered="true"]').waitFor();
             await page.waitForFunction(({kind,target})=>JSON.parse(document.querySelector('.life-world').dataset.lifePoses).some(p=>p.id==='pokomoko'&&p.itemId===target&&p.facilityUse?.kind===kind),{kind,target:target.id});
@@ -89,7 +112,7 @@ try{
             const afterProbe=await saved(page,id);assert.equal(afterProbe.record.version,12);assert.equal(afterProbe.state.drops,final.state.drops);assert.equal(afterProbe.state.light,0);assert.deepEqual(await readNative(page,id),native);
             assert.deepEqual(afterProbe.record.discoveryJournal.entries.find(e=>e.event.eventId===event.eventId).event,event);
             await page.getByRole('button',{name:'まなぶ',exact:true}).click();await page.locator('.park-answer').waitFor();assert.deepEqual(errors,[]);
-            report.cases.push({device,kind,ruleId,event,collected,samples,version:final.record.version,observationWriteProbe,pass:true,errors});
+            report.cases.push({device,kind,ruleId,event,collected,samples,comparison,version:final.record.version,observationWriteProbe,pass:true,errors});
         }catch(error){const diagnostic=await page.evaluate(()=>({poses:document.querySelector('.life-world')?.dataset.lifePoses,samples:window.tripSamples}));await writeFile(`${out}/${device}-${kind}-failure-state.json`,JSON.stringify(diagnostic,null,2));await page.screenshot({path:`${out}/${device}-${kind}-failure.png`});report.cases.push({device,kind,pass:false,error:error.stack,errors});throw error;}
         finally{await context.close();}
     }

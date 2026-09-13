@@ -1,0 +1,1813 @@
+{
+  "startHash": "cee1cea9c4c41806b3ff6b0db94e036cd61d1ecffe9f40a41ffd81f6de6163bc",
+  "revision": "225b58aa2ff0b06d8541a15c6a72ffdf1657f93b",
+  "target": "http://127.0.0.1:5223",
+  "flags": "DEV VITE_ISLAND_LIFE_PREVIEW=true",
+  "candidate": "facility-distance-v1",
+  "fixture": "100 QA credits; real UI purchases and visits; separate owner-API observation/version-12 probe; no earned acquisition claim",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "kind": "library",
+      "ruleId": "R5",
+      "event": {
+        "eventId": "71ba7dab-6777-459e-8591-5276b9e17d13",
+        "profileId": "2a257561-5647-49c3-bff4-ecf1f07cf38c",
+        "ruleId": "R5",
+        "ruleVersion": "discovery-v3.0-rc1",
+        "semanticSignature": "[\"[\\\"2a257561-5647-49c3-bff4-ecf1f07cf38c\\\",\\\"discovery-v3.0-rc1\\\",\\\"R5\\\",[[\\\"3e46c97d-c9f7-44dd-922f-4c583e9f9ccb\\\",\\\"library\\\",0,0,null,\\\"adjacent\\\"],[\\\"d7bd6da0-7e30-49a9-9714-5397cfb4c6fd\\\",\\\"bench\\\",3,2,null,\\\"front\\\"]]]\",[[\"pokomoko\",\"d7bd6da0-7e30-49a9-9714-5397cfb4c6fd\",\"using\"]]]",
+        "createdAt": 1789291768179,
+        "source": "live",
+        "focalResidentIds": [
+          "pokomoko"
+        ],
+        "snapshot": {
+          "contentVersion": 1,
+          "scene": {
+            "now": 1789291766940.1,
+            "activityVersion": 2,
+            "tourVersion": 1,
+            "roamRound": 0,
+            "scenePose": "captured-v1",
+            "facilityPresentation": "carry-care-v1",
+            "facilityTripVersion": 1,
+            "poseReducedMotion": false,
+            "relationVersion": "water-bench-v1",
+            "landscapeVersion": "groves-water-v1",
+            "worldStyle": "canopy-dots-c3-v1",
+            "items": [
+              {
+                "id": "3e46c97d-c9f7-44dd-922f-4c583e9f9ccb",
+                "kind": "library",
+                "cell": {
+                  "x": 0,
+                  "z": 0
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 72
+              },
+              {
+                "id": "d7bd6da0-7e30-49a9-9714-5397cfb4c6fd",
+                "kind": "bench",
+                "cell": {
+                  "x": 3,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4,
+                "access": "front"
+              }
+            ],
+            "residents": [
+              {
+                "id": "pokomoko",
+                "cell": {
+                  "x": 0,
+                  "z": 2
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "d7bd6da0-7e30-49a9-9714-5397cfb4c6fd",
+                  "from": {
+                    "x": 0,
+                    "z": 2
+                  },
+                  "path": [
+                    {
+                      "x": 0,
+                      "z": 2
+                    },
+                    {
+                      "x": 1,
+                      "z": 2
+                    },
+                    {
+                      "x": 2,
+                      "z": 2
+                    },
+                    {
+                      "x": 2,
+                      "z": 3
+                    },
+                    {
+                      "x": 3,
+                      "z": 3
+                    }
+                  ],
+                  "start": 1789291761171,
+                  "end": 1789293559171
+                },
+                "facilityTrip": {
+                  "facilityId": "3e46c97d-c9f7-44dd-922f-4c583e9f9ccb",
+                  "targetId": "d7bd6da0-7e30-49a9-9714-5397cfb4c6fd",
+                  "kind": "library",
+                  "phase": "carry",
+                  "path": [
+                    {
+                      "x": 0,
+                      "z": 2
+                    },
+                    {
+                      "x": 1,
+                      "z": 2
+                    },
+                    {
+                      "x": 2,
+                      "z": 2
+                    },
+                    {
+                      "x": 2,
+                      "z": 3
+                    },
+                    {
+                      "x": 3,
+                      "z": 3
+                    }
+                  ],
+                  "end": 1789293559171
+                }
+              },
+              {
+                "id": "rabbit",
+                "cell": {
+                  "x": 4,
+                  "z": 4
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "roam:display:rabbit:1",
+                  "from": {
+                    "x": 4,
+                    "z": 4
+                  },
+                  "path": [
+                    {
+                      "x": 4,
+                      "z": 4
+                    },
+                    {
+                      "x": 5,
+                      "z": 4
+                    },
+                    {
+                      "x": 5,
+                      "z": 3
+                    },
+                    {
+                      "x": 5,
+                      "z": 2
+                    },
+                    {
+                      "x": 5,
+                      "z": 1
+                    },
+                    {
+                      "x": 5,
+                      "z": 0
+                    }
+                  ],
+                  "start": 1789291763371,
+                  "end": 1789291771171
+                }
+              },
+              {
+                "id": "otter",
+                "cell": {
+                  "x": 4,
+                  "z": 1
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "3e46c97d-c9f7-44dd-922f-4c583e9f9ccb",
+                  "path": [
+                    {
+                      "x": 4,
+                      "z": 1
+                    },
+                    {
+                      "x": 3,
+                      "z": 1
+                    },
+                    {
+                      "x": 2,
+                      "z": 1
+                    },
+                    {
+                      "x": 2,
+                      "z": 2
+                    },
+                    {
+                      "x": 1,
+                      "z": 2
+                    },
+                    {
+                      "x": 0,
+                      "z": 2
+                    }
+                  ],
+                  "from": {
+                    "x": 4,
+                    "z": 1
+                  },
+                  "start": 1789291761171,
+                  "end": 1789293561171
+                }
+              }
+            ],
+            "heroStyle": "original",
+            "target": "3e46c97d-c9f7-44dd-922f-4c583e9f9ccb"
+          },
+          "immutableHash": "a5b427523566e2c17ed074913a18be03fad55031d891e8f1d53d9cdeb1685141"
+        }
+      },
+      "collected": [
+        {
+          "stage": "collect",
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "3e46c97d-c9f7-44dd-922f-4c583e9f9ccb",
+            "phase": "library",
+            "position": [
+              -2.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "library",
+              "action": "reading"
+            },
+            "headYaw": -1.4802973661668755e-15
+          }
+        },
+        {
+          "stage": "carry",
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "d7bd6da0-7e30-49a9-9714-5397cfb4c6fd",
+            "phase": "walking",
+            "position": [
+              -2.48294607527314,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "library",
+              "action": "carrying"
+            },
+            "headYaw": 0
+          }
+        },
+        {
+          "stage": "use",
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "d7bd6da0-7e30-49a9-9714-5397cfb4c6fd",
+            "phase": "bench",
+            "position": [
+              0.5,
+              0.34199999999999997,
+              0
+            ],
+            "seatGap": 5.551115123125783e-17,
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "library",
+              "action": "reading"
+            },
+            "headYaw": 0
+          }
+        }
+      ],
+      "comparison": [
+        {
+          "stage": "far",
+          "cell": {
+            "x": 5,
+            "z": 3
+          },
+          "distance": 7,
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "3e46c97d-c9f7-44dd-922f-4c583e9f9ccb",
+            "phase": "library",
+            "position": [
+              -2.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "library",
+              "action": "reading"
+            },
+            "headYaw": -1.4802973661668755e-15
+          },
+          "view": {
+            "at": 1789291807502.5,
+            "core": false,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "itemId": "3e46c97d-c9f7-44dd-922f-4c583e9f9ccb",
+                "phase": "library",
+                "position": [
+                  -2.5,
+                  0.04,
+                  0
+                ],
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "library",
+                  "action": "reading"
+                },
+                "headYaw": -1.4802973661668755e-15
+              },
+              {
+                "id": "rabbit",
+                "itemId": "d7bd6da0-7e30-49a9-9714-5397cfb4c6fd",
+                "phase": "bench",
+                "position": [
+                  2.5,
+                  0.32599999999999996,
+                  1
+                ],
+                "seatGap": 0,
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0.029309062982119043,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "phase": "home",
+                "position": [
+                  -2.5,
+                  0.04,
+                  0
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0.03193357649793627,
+                "headYaw": 0
+              }
+            ],
+            "preparation": "",
+            "delivered": false,
+            "maxGap": 1678,
+            "epoch": 1
+          }
+        },
+        {
+          "stage": "restored",
+          "cell": {
+            "x": 3,
+            "z": 2
+          },
+          "distance": 4,
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "d7bd6da0-7e30-49a9-9714-5397cfb4c6fd",
+            "phase": "bench",
+            "position": [
+              0.5,
+              0.34199999999999997,
+              0
+            ],
+            "seatGap": 5.551115123125783e-17,
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "library",
+              "action": "reading"
+            },
+            "headYaw": 0
+          },
+          "view": {
+            "at": 1789291837745.9,
+            "core": true,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "itemId": "d7bd6da0-7e30-49a9-9714-5397cfb4c6fd",
+                "phase": "bench",
+                "position": [
+                  0.5,
+                  0.34199999999999997,
+                  0
+                ],
+                "seatGap": 5.551115123125783e-17,
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "library",
+                  "action": "reading"
+                },
+                "headYaw": 0
+              },
+              {
+                "id": "rabbit",
+                "itemId": "roam:display:rabbit:3",
+                "phase": "roaming",
+                "position": [
+                  2.5,
+                  0.04,
+                  2
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": -0.030449180284164323,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "itemId": "3e46c97d-c9f7-44dd-922f-4c583e9f9ccb",
+                "phase": "library",
+                "position": [
+                  -2.5,
+                  0.04,
+                  0
+                ],
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": -0.0019294401627565243,
+                "facilityUse": {
+                  "kind": "library",
+                  "action": "reading"
+                },
+                "headYaw": -2.3373116307898034e-15
+              }
+            ],
+            "preparation": "ready",
+            "eventId": "1bf9d094-a4f0-4669-846e-49938b6aff81",
+            "delivered": true,
+            "maxGap": 1551.800000011921,
+            "epoch": 2
+          }
+        }
+      ],
+      "version": 11,
+      "observationWriteProbe": {
+        "version": 12,
+        "action": {
+          "id": "qa-version-12-2a257561-5647-49c3-bff4-ecf1f07cf38c",
+          "at": 1789291853066,
+          "command": {
+            "type": "observe",
+            "itemId": "3e46c97d-c9f7-44dd-922f-4c583e9f9ccb"
+          }
+        }
+      },
+      "pass": true,
+      "errors": [],
+      "carrySamples": {
+        "frameCount": 126,
+        "distinctHeroPositions": 11
+      }
+    },
+    {
+      "device": "phone",
+      "kind": "garden-hut",
+      "ruleId": "R6",
+      "event": {
+        "eventId": "81e610d1-ada0-4df0-948c-c777f08e046f",
+        "profileId": "ba26eb13-628a-412b-ac1d-ca729ccd73f2",
+        "ruleId": "R6",
+        "ruleVersion": "discovery-v3.0-rc1",
+        "semanticSignature": "[\"[\\\"ba26eb13-628a-412b-ac1d-ca729ccd73f2\\\",\\\"discovery-v3.0-rc1\\\",\\\"R6\\\",[[\\\"173f76a5-152e-47df-ad44-b083788eb51c\\\",\\\"flower\\\",3,2,null,\\\"adjacent\\\"],[\\\"7958c520-b8da-44af-ad37-15bc4170f2cf\\\",\\\"garden-hut\\\",0,0,null,\\\"adjacent\\\"]]]\",[[\"pokomoko\",\"173f76a5-152e-47df-ad44-b083788eb51c\",\"using\"]]]",
+        "createdAt": 1789291896991,
+        "source": "live",
+        "focalResidentIds": [
+          "pokomoko"
+        ],
+        "snapshot": {
+          "contentVersion": 1,
+          "scene": {
+            "now": 1789291895741.3,
+            "activityVersion": 2,
+            "tourVersion": 1,
+            "roamRound": 0,
+            "scenePose": "captured-v1",
+            "facilityPresentation": "carry-care-v1",
+            "facilityTripVersion": 1,
+            "poseReducedMotion": false,
+            "relationVersion": "water-bench-v1",
+            "landscapeVersion": "groves-water-v1",
+            "worldStyle": "canopy-dots-c3-v1",
+            "items": [
+              {
+                "id": "7958c520-b8da-44af-ad37-15bc4170f2cf",
+                "kind": "garden-hut",
+                "cell": {
+                  "x": 0,
+                  "z": 0
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 36
+              },
+              {
+                "id": "173f76a5-152e-47df-ad44-b083788eb51c",
+                "kind": "flower",
+                "cell": {
+                  "x": 3,
+                  "z": 2
+                },
+                "growth": 0.0028444444444444446,
+                "style": "original",
+                "paidDrops": 2
+              }
+            ],
+            "residents": [
+              {
+                "id": "pokomoko",
+                "cell": {
+                  "x": 0,
+                  "z": 2
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "173f76a5-152e-47df-ad44-b083788eb51c",
+                  "from": {
+                    "x": 0,
+                    "z": 2
+                  },
+                  "path": [
+                    {
+                      "x": 0,
+                      "z": 2
+                    },
+                    {
+                      "x": 1,
+                      "z": 2
+                    },
+                    {
+                      "x": 2,
+                      "z": 2
+                    }
+                  ],
+                  "start": 1789291892896,
+                  "end": 1789293690896
+                },
+                "facilityTrip": {
+                  "facilityId": "7958c520-b8da-44af-ad37-15bc4170f2cf",
+                  "targetId": "173f76a5-152e-47df-ad44-b083788eb51c",
+                  "kind": "garden-hut",
+                  "phase": "carry",
+                  "path": [
+                    {
+                      "x": 0,
+                      "z": 2
+                    },
+                    {
+                      "x": 1,
+                      "z": 2
+                    },
+                    {
+                      "x": 2,
+                      "z": 2
+                    }
+                  ],
+                  "end": 1789293690896
+                }
+              },
+              {
+                "id": "rabbit",
+                "cell": {
+                  "x": 3,
+                  "z": 3
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "173f76a5-152e-47df-ad44-b083788eb51c",
+                  "path": [
+                    {
+                      "x": 3,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 3,
+                    "z": 3
+                  },
+                  "start": 1789291890896,
+                  "end": 1789293690896
+                }
+              },
+              {
+                "id": "otter",
+                "cell": {
+                  "x": 2,
+                  "z": 4
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "roam:display:otter:1",
+                  "from": {
+                    "x": 2,
+                    "z": 4
+                  },
+                  "path": [
+                    {
+                      "x": 2,
+                      "z": 4
+                    },
+                    {
+                      "x": 1,
+                      "z": 4
+                    },
+                    {
+                      "x": 0,
+                      "z": 4
+                    }
+                  ],
+                  "start": 1789291895096,
+                  "end": 1789291899296
+                }
+              }
+            ],
+            "heroStyle": "original",
+            "target": "7958c520-b8da-44af-ad37-15bc4170f2cf"
+          },
+          "immutableHash": "c7d4e97831f818022a370c13a26d9193e237ed146bd491cffcfa16c4d75c66ef"
+        }
+      },
+      "collected": [
+        {
+          "stage": "collect",
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "7958c520-b8da-44af-ad37-15bc4170f2cf",
+            "phase": "garden-hut",
+            "position": [
+              -2.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "garden-hut",
+              "action": "tool-care"
+            },
+            "headYaw": -1.4802973661668755e-15
+          }
+        },
+        {
+          "stage": "carry",
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "173f76a5-152e-47df-ad44-b083788eb51c",
+            "phase": "walking",
+            "position": [
+              -2.4479822890625,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "garden-hut",
+              "action": "carrying"
+            },
+            "headYaw": 0
+          }
+        },
+        {
+          "stage": "use",
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "173f76a5-152e-47df-ad44-b083788eb51c",
+            "phase": "flower",
+            "position": [
+              -0.35,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "garden-hut",
+              "action": "tool-care"
+            },
+            "headYaw": 0
+          }
+        }
+      ],
+      "comparison": [
+        {
+          "stage": "far",
+          "cell": {
+            "x": 5,
+            "z": 3
+          },
+          "distance": 5,
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "7958c520-b8da-44af-ad37-15bc4170f2cf",
+            "phase": "garden-hut",
+            "position": [
+              -2.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "garden-hut",
+              "action": "tool-care"
+            },
+            "headYaw": -1.4802973661668755e-15
+          },
+          "view": {
+            "at": 1789291924703.6,
+            "core": false,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "itemId": "7958c520-b8da-44af-ad37-15bc4170f2cf",
+                "phase": "garden-hut",
+                "position": [
+                  -2.5,
+                  0.04,
+                  0
+                ],
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "garden-hut",
+                  "action": "tool-care"
+                },
+                "headYaw": -1.4802973661668755e-15
+              },
+              {
+                "id": "rabbit",
+                "itemId": "173f76a5-152e-47df-ad44-b083788eb51c",
+                "phase": "flower",
+                "position": [
+                  1.98,
+                  0.04,
+                  1
+                ],
+                "reaction": "♪",
+                "hop": 0,
+                "headPitch": 0.08955214973397607,
+                "headRoll": 0.005795896005662227,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "itemId": "173f76a5-152e-47df-ad44-b083788eb51c",
+                "phase": "walking",
+                "position": [
+                  2.1050576025067214,
+                  0.04,
+                  2
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0,
+                "headYaw": 0
+              }
+            ],
+            "preparation": "",
+            "delivered": false,
+            "maxGap": 994.7000000476837,
+            "epoch": 1
+          }
+        },
+        {
+          "stage": "restored",
+          "cell": {
+            "x": 3,
+            "z": 2
+          },
+          "distance": 2,
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "173f76a5-152e-47df-ad44-b083788eb51c",
+            "phase": "flower",
+            "position": [
+              -0.35,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "garden-hut",
+              "action": "tool-care"
+            },
+            "headYaw": 4.108650548026103e-32
+          },
+          "view": {
+            "at": 1789291951806.1,
+            "core": true,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "itemId": "173f76a5-152e-47df-ad44-b083788eb51c",
+                "phase": "flower",
+                "position": [
+                  -0.35,
+                  0.04,
+                  0
+                ],
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "garden-hut",
+                  "action": "tool-care"
+                },
+                "headYaw": -4.108650548026103e-32
+              },
+              {
+                "id": "rabbit",
+                "itemId": "173f76a5-152e-47df-ad44-b083788eb51c",
+                "phase": "flower",
+                "position": [
+                  0.5,
+                  0.04,
+                  0.52
+                ],
+                "hop": 0,
+                "headPitch": 0.09,
+                "headRoll": -0.017397790201028083,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "itemId": "roam:display:otter:0",
+                "phase": "roaming",
+                "position": [
+                  2.5,
+                  0.04,
+                  -2
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0.01615513051765598,
+                "headYaw": 0
+              }
+            ],
+            "preparation": "ready",
+            "eventId": "a00adfc5-75b3-463a-a70e-e0b1c983e2ec",
+            "delivered": true,
+            "maxGap": 129.20000004768372,
+            "epoch": 2
+          }
+        }
+      ],
+      "version": 11,
+      "observationWriteProbe": {
+        "version": 12,
+        "action": {
+          "id": "qa-version-12-ba26eb13-628a-412b-ac1d-ca729ccd73f2",
+          "at": 1789291974052,
+          "command": {
+            "type": "observe",
+            "itemId": "7958c520-b8da-44af-ad37-15bc4170f2cf"
+          }
+        }
+      },
+      "pass": true,
+      "errors": [],
+      "carrySamples": {
+        "frameCount": 87,
+        "distinctHeroPositions": 13
+      }
+    },
+    {
+      "device": "tablet",
+      "kind": "library",
+      "ruleId": "R5",
+      "event": {
+        "eventId": "d0971d2a-8634-4751-ac39-5d5073a5b198",
+        "profileId": "c0da38cd-dd1e-423d-ad15-891ea511ceaf",
+        "ruleId": "R5",
+        "ruleVersion": "discovery-v3.0-rc1",
+        "semanticSignature": "[\"[\\\"c0da38cd-dd1e-423d-ad15-891ea511ceaf\\\",\\\"discovery-v3.0-rc1\\\",\\\"R5\\\",[[\\\"b7340314-0222-4f94-8b32-52709ca2eec7\\\",\\\"library\\\",0,0,null,\\\"adjacent\\\"],[\\\"e07200a1-c225-4687-9696-bf00d6ad57f5\\\",\\\"bench\\\",3,2,null,\\\"front\\\"]]]\",[[\"pokomoko\",\"e07200a1-c225-4687-9696-bf00d6ad57f5\",\"using\"]]]",
+        "createdAt": 1789292026794,
+        "source": "live",
+        "focalResidentIds": [
+          "pokomoko"
+        ],
+        "snapshot": {
+          "contentVersion": 1,
+          "scene": {
+            "now": 1789292025311.2,
+            "activityVersion": 2,
+            "tourVersion": 1,
+            "roamRound": 0,
+            "scenePose": "captured-v1",
+            "facilityPresentation": "carry-care-v1",
+            "facilityTripVersion": 1,
+            "poseReducedMotion": true,
+            "relationVersion": "water-bench-v1",
+            "landscapeVersion": "groves-water-v1",
+            "worldStyle": "canopy-dots-c3-v1",
+            "items": [
+              {
+                "id": "b7340314-0222-4f94-8b32-52709ca2eec7",
+                "kind": "library",
+                "cell": {
+                  "x": 0,
+                  "z": 0
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 72
+              },
+              {
+                "id": "e07200a1-c225-4687-9696-bf00d6ad57f5",
+                "kind": "bench",
+                "cell": {
+                  "x": 3,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4,
+                "access": "front"
+              }
+            ],
+            "residents": [
+              {
+                "id": "pokomoko",
+                "cell": {
+                  "x": 0,
+                  "z": 2
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "e07200a1-c225-4687-9696-bf00d6ad57f5",
+                  "from": {
+                    "x": 0,
+                    "z": 2
+                  },
+                  "path": [
+                    {
+                      "x": 0,
+                      "z": 2
+                    },
+                    {
+                      "x": 1,
+                      "z": 2
+                    },
+                    {
+                      "x": 2,
+                      "z": 2
+                    },
+                    {
+                      "x": 2,
+                      "z": 3
+                    },
+                    {
+                      "x": 3,
+                      "z": 3
+                    }
+                  ],
+                  "start": 1789292019497,
+                  "end": 1789293817497
+                },
+                "facilityTrip": {
+                  "facilityId": "b7340314-0222-4f94-8b32-52709ca2eec7",
+                  "targetId": "e07200a1-c225-4687-9696-bf00d6ad57f5",
+                  "kind": "library",
+                  "phase": "carry",
+                  "path": [
+                    {
+                      "x": 0,
+                      "z": 2
+                    },
+                    {
+                      "x": 1,
+                      "z": 2
+                    },
+                    {
+                      "x": 2,
+                      "z": 2
+                    },
+                    {
+                      "x": 2,
+                      "z": 3
+                    },
+                    {
+                      "x": 3,
+                      "z": 3
+                    }
+                  ],
+                  "end": 1789293817497
+                }
+              },
+              {
+                "id": "rabbit",
+                "cell": {
+                  "x": 4,
+                  "z": 4
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "roam:display:rabbit:1",
+                  "from": {
+                    "x": 4,
+                    "z": 4
+                  },
+                  "path": [
+                    {
+                      "x": 4,
+                      "z": 4
+                    },
+                    {
+                      "x": 4,
+                      "z": 3
+                    },
+                    {
+                      "x": 4,
+                      "z": 2
+                    }
+                  ],
+                  "start": 1789292021697,
+                  "end": 1789292025897
+                }
+              },
+              {
+                "id": "otter",
+                "cell": {
+                  "x": 4,
+                  "z": 0
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "b7340314-0222-4f94-8b32-52709ca2eec7",
+                  "path": [
+                    {
+                      "x": 4,
+                      "z": 0
+                    },
+                    {
+                      "x": 4,
+                      "z": 1
+                    },
+                    {
+                      "x": 3,
+                      "z": 1
+                    },
+                    {
+                      "x": 2,
+                      "z": 1
+                    },
+                    {
+                      "x": 2,
+                      "z": 2
+                    },
+                    {
+                      "x": 1,
+                      "z": 2
+                    },
+                    {
+                      "x": 0,
+                      "z": 2
+                    }
+                  ],
+                  "from": {
+                    "x": 4,
+                    "z": 0
+                  },
+                  "start": 1789292019497,
+                  "end": 1789293819497
+                }
+              }
+            ],
+            "heroStyle": "original",
+            "target": "b7340314-0222-4f94-8b32-52709ca2eec7"
+          },
+          "immutableHash": "183851cf1b1f0af086c21265c1bc27041e46487f3df9f7dac560b81eb6636d23"
+        }
+      },
+      "collected": [
+        {
+          "stage": "collect",
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "b7340314-0222-4f94-8b32-52709ca2eec7",
+            "phase": "library",
+            "position": [
+              -2.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "library",
+              "action": "reading"
+            },
+            "headYaw": -1.4802973661668755e-15
+          }
+        },
+        {
+          "stage": "carry",
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "e07200a1-c225-4687-9696-bf00d6ad57f5",
+            "phase": "walking",
+            "position": [
+              -2.477596463225188,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "library",
+              "action": "carrying"
+            },
+            "headYaw": 0
+          }
+        },
+        {
+          "stage": "use",
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "e07200a1-c225-4687-9696-bf00d6ad57f5",
+            "phase": "bench",
+            "position": [
+              0.5,
+              0.34199999999999997,
+              0
+            ],
+            "seatGap": 5.551115123125783e-17,
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "library",
+              "action": "reading"
+            },
+            "headYaw": 0
+          }
+        }
+      ],
+      "comparison": [
+        {
+          "stage": "far",
+          "cell": {
+            "x": 5,
+            "z": 3
+          },
+          "distance": 7,
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "b7340314-0222-4f94-8b32-52709ca2eec7",
+            "phase": "library",
+            "position": [
+              -2.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "library",
+              "action": "reading"
+            },
+            "headYaw": -1.4802973661668755e-15
+          },
+          "view": {
+            "at": 1789292073646.6,
+            "core": false,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "itemId": "b7340314-0222-4f94-8b32-52709ca2eec7",
+                "phase": "library",
+                "position": [
+                  -2.5,
+                  0.04,
+                  0
+                ],
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "library",
+                  "action": "reading"
+                },
+                "headYaw": -1.4802973661668755e-15
+              },
+              {
+                "id": "rabbit",
+                "itemId": "e07200a1-c225-4687-9696-bf00d6ad57f5",
+                "phase": "bench",
+                "position": [
+                  2.5,
+                  0.32599999999999996,
+                  1
+                ],
+                "seatGap": 0,
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "itemId": "roam:display:otter:2",
+                "phase": "roaming",
+                "position": [
+                  0.5,
+                  0.04,
+                  -1
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0,
+                "headYaw": 0
+              }
+            ],
+            "preparation": "",
+            "delivered": false,
+            "maxGap": 1690.199999988079,
+            "epoch": 1
+          }
+        },
+        {
+          "stage": "restored",
+          "cell": {
+            "x": 3,
+            "z": 2
+          },
+          "distance": 4,
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "e07200a1-c225-4687-9696-bf00d6ad57f5",
+            "phase": "bench",
+            "position": [
+              0.5,
+              0.34199999999999997,
+              0
+            ],
+            "seatGap": 5.551115123125783e-17,
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "library",
+              "action": "reading"
+            },
+            "headYaw": 0
+          },
+          "view": {
+            "at": 1789292102811.2,
+            "core": true,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "itemId": "e07200a1-c225-4687-9696-bf00d6ad57f5",
+                "phase": "bench",
+                "position": [
+                  0.5,
+                  0.34199999999999997,
+                  0
+                ],
+                "seatGap": 5.551115123125783e-17,
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "library",
+                  "action": "reading"
+                },
+                "headYaw": 0
+              },
+              {
+                "id": "rabbit",
+                "itemId": "roam:display:rabbit:2",
+                "phase": "walking",
+                "position": [
+                  -1.4155871147677708,
+                  0.04,
+                  2
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "itemId": "b7340314-0222-4f94-8b32-52709ca2eec7",
+                "phase": "library",
+                "position": [
+                  -2.5,
+                  0.04,
+                  0
+                ],
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "library",
+                  "action": "reading"
+                },
+                "headYaw": -2.3373116307898034e-15
+              }
+            ],
+            "preparation": "ready",
+            "eventId": "fae6d40a-afe9-4c56-9c0a-bd6178d549bd",
+            "delivered": true,
+            "maxGap": 1006.7000000476837,
+            "epoch": 2
+          }
+        }
+      ],
+      "version": 11,
+      "observationWriteProbe": {
+        "version": 12,
+        "action": {
+          "id": "qa-version-12-c0da38cd-dd1e-423d-ad15-891ea511ceaf",
+          "at": 1789292128337,
+          "command": {
+            "type": "observe",
+            "itemId": "b7340314-0222-4f94-8b32-52709ca2eec7"
+          }
+        }
+      },
+      "pass": true,
+      "errors": [],
+      "carrySamples": {
+        "frameCount": 80,
+        "distinctHeroPositions": 10
+      }
+    },
+    {
+      "device": "tablet",
+      "kind": "garden-hut",
+      "ruleId": "R6",
+      "event": {
+        "eventId": "68a10bce-acdc-4bfe-a7d5-53d289f34780",
+        "profileId": "0cf4c2c5-d376-4133-aed1-745888769e70",
+        "ruleId": "R6",
+        "ruleVersion": "discovery-v3.0-rc1",
+        "semanticSignature": "[\"[\\\"0cf4c2c5-d376-4133-aed1-745888769e70\\\",\\\"discovery-v3.0-rc1\\\",\\\"R6\\\",[[\\\"93d80cdf-a42e-41dc-b27c-eb00f3aab541\\\",\\\"flower\\\",3,2,null,\\\"adjacent\\\"],[\\\"e1e9d4d1-ff1d-4903-a2d4-037fc8e01850\\\",\\\"garden-hut\\\",0,0,null,\\\"adjacent\\\"]]]\",[[\"pokomoko\",\"93d80cdf-a42e-41dc-b27c-eb00f3aab541\",\"using\"]]]",
+        "createdAt": 1789292180466,
+        "source": "live",
+        "focalResidentIds": [
+          "pokomoko"
+        ],
+        "snapshot": {
+          "contentVersion": 1,
+          "scene": {
+            "now": 1789292179038.7,
+            "activityVersion": 2,
+            "tourVersion": 1,
+            "roamRound": 0,
+            "scenePose": "captured-v1",
+            "facilityPresentation": "carry-care-v1",
+            "facilityTripVersion": 1,
+            "poseReducedMotion": true,
+            "relationVersion": "water-bench-v1",
+            "landscapeVersion": "groves-water-v1",
+            "worldStyle": "canopy-dots-c3-v1",
+            "items": [
+              {
+                "id": "e1e9d4d1-ff1d-4903-a2d4-037fc8e01850",
+                "kind": "garden-hut",
+                "cell": {
+                  "x": 0,
+                  "z": 0
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 36
+              },
+              {
+                "id": "93d80cdf-a42e-41dc-b27c-eb00f3aab541",
+                "kind": "flower",
+                "cell": {
+                  "x": 3,
+                  "z": 2
+                },
+                "growth": 0.003194722222222222,
+                "style": "original",
+                "paidDrops": 2
+              }
+            ],
+            "residents": [
+              {
+                "id": "pokomoko",
+                "cell": {
+                  "x": 0,
+                  "z": 2
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "93d80cdf-a42e-41dc-b27c-eb00f3aab541",
+                  "from": {
+                    "x": 0,
+                    "z": 2
+                  },
+                  "path": [
+                    {
+                      "x": 0,
+                      "z": 2
+                    },
+                    {
+                      "x": 1,
+                      "z": 2
+                    },
+                    {
+                      "x": 2,
+                      "z": 2
+                    }
+                  ],
+                  "start": 1789292176160,
+                  "end": 1789293974160
+                },
+                "facilityTrip": {
+                  "facilityId": "e1e9d4d1-ff1d-4903-a2d4-037fc8e01850",
+                  "targetId": "93d80cdf-a42e-41dc-b27c-eb00f3aab541",
+                  "kind": "garden-hut",
+                  "phase": "carry",
+                  "path": [
+                    {
+                      "x": 0,
+                      "z": 2
+                    },
+                    {
+                      "x": 1,
+                      "z": 2
+                    },
+                    {
+                      "x": 2,
+                      "z": 2
+                    }
+                  ],
+                  "end": 1789293974160
+                }
+              },
+              {
+                "id": "rabbit",
+                "cell": {
+                  "x": 3,
+                  "z": 3
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "93d80cdf-a42e-41dc-b27c-eb00f3aab541",
+                  "path": [
+                    {
+                      "x": 3,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 3,
+                    "z": 3
+                  },
+                  "start": 1789292174160,
+                  "end": 1789293974160
+                }
+              },
+              {
+                "id": "otter",
+                "cell": {
+                  "x": 2,
+                  "z": 4
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "roam:display:otter:1",
+                  "from": {
+                    "x": 2,
+                    "z": 4
+                  },
+                  "path": [
+                    {
+                      "x": 2,
+                      "z": 4
+                    },
+                    {
+                      "x": 1,
+                      "z": 4
+                    },
+                    {
+                      "x": 0,
+                      "z": 4
+                    }
+                  ],
+                  "start": 1789292178360,
+                  "end": 1789292182560
+                }
+              }
+            ],
+            "heroStyle": "original",
+            "target": "e1e9d4d1-ff1d-4903-a2d4-037fc8e01850"
+          },
+          "immutableHash": "eac3eee22722a0a60a1af036632f879ef6278ed2af49fa426121d43df45b9d95"
+        }
+      },
+      "collected": [
+        {
+          "stage": "collect",
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "e1e9d4d1-ff1d-4903-a2d4-037fc8e01850",
+            "phase": "garden-hut",
+            "position": [
+              -2.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "garden-hut",
+              "action": "tool-care"
+            },
+            "headYaw": -1.4802973661668755e-15
+          }
+        },
+        {
+          "stage": "carry",
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "93d80cdf-a42e-41dc-b27c-eb00f3aab541",
+            "phase": "walking",
+            "position": [
+              -2.37406669266417,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "garden-hut",
+              "action": "carrying"
+            },
+            "headYaw": 0
+          }
+        },
+        {
+          "stage": "use",
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "93d80cdf-a42e-41dc-b27c-eb00f3aab541",
+            "phase": "flower",
+            "position": [
+              -0.35,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "garden-hut",
+              "action": "tool-care"
+            },
+            "headYaw": 4.108650548026104e-32
+          }
+        }
+      ],
+      "comparison": [
+        {
+          "stage": "far",
+          "cell": {
+            "x": 5,
+            "z": 3
+          },
+          "distance": 5,
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "e1e9d4d1-ff1d-4903-a2d4-037fc8e01850",
+            "phase": "garden-hut",
+            "position": [
+              -2.5,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "garden-hut",
+              "action": "tool-care"
+            },
+            "headYaw": -1.4802973661668755e-15
+          },
+          "view": {
+            "at": 1789292214820.9,
+            "core": false,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "itemId": "e1e9d4d1-ff1d-4903-a2d4-037fc8e01850",
+                "phase": "garden-hut",
+                "position": [
+                  -2.5,
+                  0.04,
+                  0
+                ],
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "garden-hut",
+                  "action": "tool-care"
+                },
+                "headYaw": -1.4802973661668755e-15
+              },
+              {
+                "id": "rabbit",
+                "itemId": "93d80cdf-a42e-41dc-b27c-eb00f3aab541",
+                "phase": "flower",
+                "position": [
+                  1.98,
+                  0.04,
+                  1
+                ],
+                "hop": 0,
+                "headPitch": 0.09,
+                "headRoll": 0,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "itemId": "93d80cdf-a42e-41dc-b27c-eb00f3aab541",
+                "phase": "walking",
+                "position": [
+                  2.338852499148148,
+                  0.04,
+                  2
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0,
+                "headYaw": 0
+              }
+            ],
+            "preparation": "",
+            "delivered": false,
+            "maxGap": 975.1999999880791,
+            "epoch": 1
+          }
+        },
+        {
+          "stage": "restored",
+          "cell": {
+            "x": 3,
+            "z": 2
+          },
+          "distance": 2,
+          "pose": {
+            "id": "pokomoko",
+            "itemId": "93d80cdf-a42e-41dc-b27c-eb00f3aab541",
+            "phase": "flower",
+            "position": [
+              -0.35,
+              0.04,
+              0
+            ],
+            "hop": 0,
+            "headPitch": 0.6,
+            "headRoll": 0,
+            "facilityUse": {
+              "kind": "garden-hut",
+              "action": "tool-care"
+            },
+            "headYaw": 4.108650548026104e-32
+          },
+          "view": {
+            "at": 1789292259315.7,
+            "core": true,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "itemId": "93d80cdf-a42e-41dc-b27c-eb00f3aab541",
+                "phase": "flower",
+                "position": [
+                  -0.35,
+                  0.04,
+                  0
+                ],
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "garden-hut",
+                  "action": "tool-care"
+                },
+                "headYaw": 4.108650548026104e-32
+              },
+              {
+                "id": "rabbit",
+                "itemId": "93d80cdf-a42e-41dc-b27c-eb00f3aab541",
+                "phase": "flower",
+                "position": [
+                  0.5,
+                  0.04,
+                  0.52
+                ],
+                "hop": 0,
+                "headPitch": 0.09,
+                "headRoll": 0,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "itemId": "roam:display:otter:3",
+                "phase": "walking",
+                "position": [
+                  2.5,
+                  0.04,
+                  1.9507956764095185
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0,
+                "headYaw": 0
+              }
+            ],
+            "preparation": "ready",
+            "eventId": "a7fe9609-fe19-4f45-8d5a-898eda6c10fa",
+            "delivered": true,
+            "maxGap": 1652.8999999761581,
+            "epoch": 2
+          }
+        }
+      ],
+      "version": 11,
+      "observationWriteProbe": {
+        "version": 12,
+        "action": {
+          "id": "qa-version-12-0cf4c2c5-d376-4133-aed1-745888769e70",
+          "at": 1789292279981,
+          "command": {
+            "type": "observe",
+            "itemId": "e1e9d4d1-ff1d-4903-a2d4-037fc8e01850"
+          }
+        }
+      },
+      "pass": true,
+      "errors": [],
+      "carrySamples": {
+        "frameCount": 61,
+        "distinctHeroPositions": 10
+      }
+    }
+  ],
+  "pass": true,
+  "endHash": "cee1cea9c4c41806b3ff6b0db94e036cd61d1ecffe9f40a41ffd81f6de6163bc",
+  "rawReportSha256": "f4cfdc34eb8e5167b95bc1fa501d00d561b587f43b1bd09c870e779bea9a4983",
+  "rawReportLocation": "/tmp/sansu-facility-distance-runtime-1/report.json"
+}
