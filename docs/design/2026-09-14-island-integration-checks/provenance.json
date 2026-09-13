@@ -1,0 +1,81 @@
+{
+  "appSource": "74514aaad4483288a65ec4e85e8c576a832fcf64d813fad4e2762c37fea6bfec",
+  "appCommit": "4e250d50d0cc72ea62f500c9fbfc53812f72cf3d",
+  "files": [
+    {
+      "file": "smoke-report.json",
+      "source": "/tmp/sansu-reading-full-smoke/smoke-report.json",
+      "sha256": "5a2c977ae16db9f5432be4a53a68a0ffdc0846415ee009464d6d2c1930309263"
+    },
+    {
+      "file": "smoke-output.txt",
+      "source": "/tmp/sansu-reading-full-smoke.log",
+      "sha256": "a3cc93e212e75428f0fc2b7b467a1a7ca805a3e8edb8dc37bf27f76c86d871bc"
+    },
+    {
+      "file": "pwa-update-output.txt",
+      "source": "/tmp/sansu-reading-pwa-update.log",
+      "sha256": "87b73ab325cbc7a1d3b4e4fc9e57c817c43b07d751c76ecf1e9768c0e4edca3f"
+    },
+    {
+      "file": "classic-build-version.json",
+      "source": "dist/version.json",
+      "sha256": "2ce6afe146797c381d6338e9171d9a7338aaf3a913e5b83dee116e42c32fbdd1"
+    },
+    {
+      "file": "legacy-first-report.json",
+      "source": "/tmp/sansu-reading-legacy-island/report.json",
+      "sha256": "ef3e3e646e557eeeed2210b86ef37e8c1778db68f73ec558cbd6e56faea2b086"
+    },
+    {
+      "file": "fraction-incomplete-input.png",
+      "source": "/tmp/sansu-reading-legacy-island/tablet-fraction-failure.png",
+      "sha256": "dc2def2dac26e0f9130c690b5ab431f6f43537aa0d088e7467b34d22c6b5484d"
+    },
+    {
+      "file": "fraction-focused-report.json",
+      "source": "/tmp/sansu-reading-fraction2/report.json",
+      "sha256": "d8de085e03672692bd81e2dff523bb2f6e0078d431c9882cab98a1aab889a9e5"
+    },
+    {
+      "file": "legacy-final-report.json",
+      "source": "/tmp/sansu-reading-legacy-island2/report.json",
+      "sha256": "2348cc12c440fa49ce55daca8460052f671f42f27c98f239024c29bd1c610182"
+    },
+    {
+      "file": "legacy-final-output.txt",
+      "source": "/tmp/sansu-reading-legacy-island2.log",
+      "sha256": "82feb27d808ca47ec472441528c33a438211abebefd0c1e0caf4831350810207"
+    },
+    {
+      "file": "fraction-completed-growth.png",
+      "source": "/tmp/sansu-reading-legacy-island2/tablet-fraction-first-growth.png",
+      "sha256": "54ca08abeb08a215104a042e1574fc89c511146a52c94ad2f734586e80c89b24"
+    },
+    {
+      "source": "/tmp/sansu-reading-legacy-pwa/pwa-report.json",
+      "file": "legacy-pwa-report.json",
+      "sha256": "27f3747a8f61b72b9bd19d8ff36e8bdd77ccde34128c4d1a15005ddedaf466b2"
+    },
+    {
+      "source": "/tmp/sansu-reading-legacy-pwa/offline-reduced-resume.png",
+      "file": "legacy-offline-resume.png",
+      "sha256": "134d70259958fe04617cf661574dbf670be5456bf45a579b5d40fb8eb9c8bd21"
+    },
+    {
+      "source": "/tmp/sansu-reading-legacy-dist/version.json",
+      "file": "legacy-build-version.json",
+      "sha256": "fa64d12275843f22ccf22f717320322426b7e95b82035f48d07a47539400c8c4"
+    }
+  ],
+  "fixedHarness": {
+    "path": "tools/island-e2e-helpers.mjs",
+    "sha256": "7b977c0a5cb80e1f23f180d61859c4f86e684ca023f4ca2143bc02cefcfc7274"
+  },
+  "legacyProductionBuild": {
+    "directory": "/tmp/sansu-reading-legacy-dist",
+    "flags": "VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_ENABLED=false VITE_ISLAND_LIFE_PREVIEW=false VITE_BUILD_PLAY_ENABLED=false",
+    "command": "npx vite build --outDir /tmp/sansu-reading-legacy-dist",
+    "target": "http://127.0.0.1:5298"
+  }
+}

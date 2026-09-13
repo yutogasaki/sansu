@@ -97,6 +97,12 @@ export async function runtimeMetadata(page) {
     }));
 }
 
+// Keep every field complete: a one-digit replacement for an eleven-denominator
+// is an unfinished input, so automatic completion must not submit it.
+export function completeIncorrectValues(values) {
+    return values.map((value, index) => index ? value : String(value).replace(/\d(?!.*\d)/, digit => digit === '9' ? '8' : String(Number(digit) + 1)));
+}
+
 export async function answerUI(page, plan, { incorrect = false, touch = false, dev = true } = {}) {
     const before = await readNative(page, plan.profileId);
     assert.equal(before.plan?.id, plan.id); assert.equal(before.plan.revision, plan.revision);
@@ -119,7 +125,7 @@ export async function answerUI(page, plan, { incorrect = false, touch = false, d
         submit = page.locator('.park-choices').getByRole('button', { name: choice.label, exact: true });
     } else {
         const values = Array.isArray(answer) ? answer : [answer];
-        const entered = incorrect ? values.map(value => String(value) === '9' ? '8' : '9') : values;
+        const entered = incorrect ? completeIncorrectValues(values) : values;
         for (let index = 0; index < entered.length; index++) {
             if (inputType !== 'hissan') await activate(page.locator('.park-input').nth(index), touch);
             const digits = String(entered[index]);

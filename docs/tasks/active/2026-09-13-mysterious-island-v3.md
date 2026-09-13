@@ -330,3 +330,11 @@ source `cee1cea9c4c41806b3ff6b0db94e036cd61d1ecffe9f40a41ffd81f6de6163bc` は変
 固定source `74514aaad4483288a65ec4e85e8c576a832fcf64d813fad4e2762c37fea6bfec` でcore1の402 files /3928 testsと、その後の両幅UI2がPASS。[実画面・出所・独立判定](../../design/2026-09-13-island-reading/README.md)。UIは明示したsnapshotを実コンポーネントで描画し、実提示をsimulatedとして記録した後、アプリ内保存/再演/再読込を確認した限定範囲である。行動履歴・通貨・学習正本・元の記録を保持。
 
 自然な初回診断ではぽこもこが読書、カワウソは休憩だったためX3は未成立。本人や時刻を再抽選せず、この結果を残した。次は自然初回と現在の同じ本人への再訪。C3視覚HOLD/Human N=0、M3全景直接操作、全配置/混合配置、所有120/配置60候補の性能、全体smoke/PWA/throughput・全releaseは継続。
+
+## 既存導線と分数の回帰検証
+
+同じapp sourceで全体smoke31/31とclassicのPWA更新4/4がPASS。旧島E2Eは両幅の成長/履歴等を通過した後、分母2桁へ1桁の誤答を入力して自動確定を待つhelperの不具合で停止した。アプリ側を緩めず、桁数と残りの分母/筆算欄を保って誤答を完成させるhelperへ修正。3件の単体検査と分数限定の再現確認後、旧島E2Eを全シナリオ再実行し11/11 PASS。両幅とも46回の実UI学習区間で全地区成熟を確認。[失敗・修正・検証範囲](../../design/2026-09-14-island-integration-checks/README.md)。
+
+旧島有効/Life無効の別production buildでも、8つの更新保護hook検査と実SWのoffline再読込/回答/成長/同じ予約への復帰がPASS。実two-build更新や新しいLife全機能のPWAへ結果を広げない。
+
+X3の自然行動は前の同じ購入記録/realAtから監視中。一巡後もぽこもこが読書、カワウソは別のベンチ休憩だったため成功に数えない。旧島の回帰合格は新しいLife全機能のPWA/throughput、C3視覚、Human N、全releaseの合格を意味しない。
