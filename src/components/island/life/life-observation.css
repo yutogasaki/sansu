@@ -25,3 +25,5 @@
 .life-observation-target { display: flex; gap: 8px; align-items: center; font-size: 13px; margin: 8px 0; }
 .life-observation-target select { min-height: 44px; min-width: 0; flex: 1; border: 1px solid var(--pokomoko-edge); border-radius: 10px; padding: 6px; color: inherit; background: var(--pokomoko-paper); }
 @media (max-height: 540px) { .life-relation-view { height: 150px; } }
+
+.life-shadow-touch { display: block; margin: 8px auto; padding: 6px 16px; border: 1px solid var(--pokomoko-edge); border-radius: 12px; background: var(--pokomoko-paper); }

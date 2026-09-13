@@ -1,3 +1,4 @@
+import { shadowResident } from './shadowMagic';
 import { isFacility } from './footprint';
 import { itemComponents as components } from './itemComponents';
 import { extendedGatherings } from './extendedGatherings';
@@ -5,7 +6,7 @@ import { growthStage, LIFE_STEP_MS, type Cell, type LifeItem, type LifeState } f
 import { cellKey, homeCell, route, sameCell, vacant } from './space';
 
 export const DISCOVERY_RULE_VERSION = 'discovery-v3.0-rc1';
-export type DiscoveryRuleId = 'G0' | 'GF3' | 'GF6' | 'GP2' | 'GP3' | 'GT3' | 'GT6' | 'GW2' | 'R1' | 'R2' | 'R3' | 'R4' | 'R5' | 'R6' | 'M2' | 'M4';
+export type DiscoveryRuleId = 'G0' | 'GF3' | 'GF6' | 'GP2' | 'GP3' | 'GT3' | 'GT6' | 'GW2' | 'R1' | 'R2' | 'R3' | 'R4' | 'R5' | 'R6' | 'M2' | 'M3' | 'M4';
 export interface RuleEligibility {
     ruleId: DiscoveryRuleId;
     ruleVersion: typeof DISCOVERY_RULE_VERSION;
@@ -78,6 +79,9 @@ export function evaluateDiscovery(state: LifeState, profileId: string): RuleElig
             const distance = relationDistance(state, facility, target);
             if (distance !== undefined && distance <= 4) result.push(eligibility(profileId, facility.kind === 'library' ? 'R5' : 'R6', [facility, target], distance));
         }
+    }
+    if (state.shadowMagicVersion) for (const bench of state.items.filter(i => i.kind === 'bench' && i.cell)) {
+        if (shadowResident(state, bench.id)) result.push(eligibility(profileId, 'M3', [bench]));
     }
     if (state.waterMagicVersion) for (const water of state.items.filter(item => item.kind === 'water-bowl' && item.cell)) {
         for (const lamp of state.items.filter(item => item.kind === 'lantern' && item.cell)) {

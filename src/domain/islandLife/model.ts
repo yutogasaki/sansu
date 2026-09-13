@@ -69,6 +69,8 @@ export interface LifeState {
     worldStyle?: LifeWorldStyle;
     landscapeVersion?: 'groves-water-v1';
     relationVersion?: 'water-bench-v1';
+    shadowMagicVersion?: 1;
+    shadowTouch?: { itemId: string; residentId: ResidentId };
     waterMagicVersion?: 1;
     waterTouch?: { itemId: string; point: [number, number] };
     poseReducedMotion?: boolean;

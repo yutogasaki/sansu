@@ -20,6 +20,7 @@ export function discoveryTitle(event: DiscoveryScene) {
         const plant = discoveryParticipants(event)[0];
         return plant?.kind === 'flower' && growthStage(plant) === 2 ? 'はなびらが うえへ' : 'はっぱが うえへ';
     }
+    if (event.ruleId === 'M3') return 'かげが あいさつ';
     if (event.ruleId === 'M4') return '水の なかの 星空';
     return { G0: 'つながった つち', GF3: 'あつまった おはな', GF6: 'ひろがった おはな',
         GT3: 'つながった 木かげ', GT6: 'ひろがった 木かげ', GW2: 'ならんだ 水べ',
