@@ -1,0 +1,2029 @@
+{
+  "sourceHash": "d594fd9d6751c0308a654d62c688e8a8c9f9e0f8bf8bcf21393092758ed27194",
+  "version": {
+    "version": "development-local:ee54c5fe-d2c1-4259-a8c8-140cae443177",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "target": "http://127.0.0.1:5308",
+  "scope": "Real earned profiles, explicit visits and target choices; no DB injection, clock acceleration or debugger pauses",
+  "cases": [],
+  "pass": false,
+  "failure": {
+    "device": "phone",
+    "error": "locator.click: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'みてみる', exact: true })\u001b[22m\n\n    at /private/tmp/sansu-canopy-material-worktree/tools/e2e-island-life-observation-feedback.mjs:18:573",
+    "text": "プレイヤーの しま\nしずく\n2\nひかり\n3\nつくる\nようす\nながめ\nしま\nいえ\nまなぶ\nきろく\n設定",
+    "record": {
+      "profileId": "de416728-1473-4d44-b0f1-da6d775e26cb",
+      "version": 14,
+      "revision": 114,
+      "createdAt": 1789331425076,
+      "realAt": 1789335111344,
+      "now": 1789335111344,
+      "credits": [
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",0]\",0]",
+          "at": 1789331430011,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",0]\",1]",
+          "at": 1789331430304,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",0]\",2]",
+          "at": 1789331430598,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",1]\",0]",
+          "at": 1789331430890,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",1]\",1]",
+          "at": 1789331431185,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",1]\",2]",
+          "at": 1789331431479,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",1]\",3]",
+          "at": 1789331435651,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",1]\",4]",
+          "at": 1789331435947,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",1]\",5]",
+          "at": 1789331436239,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",2]\",0]",
+          "at": 1789331436520,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",2]\",1]",
+          "at": 1789331436801,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",2]\",2]",
+          "at": 1789331437093,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",2]\",3]",
+          "at": 1789331441322,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",2]\",4]",
+          "at": 1789331441616,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",2]\",5]",
+          "at": 1789331441908,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",3]\",0]",
+          "at": 1789331442189,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",3]\",1]",
+          "at": 1789331442469,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",3]\",2]",
+          "at": 1789331442761,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",4]\",0]",
+          "at": 1789331446989,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",4]\",1]",
+          "at": 1789331447269,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",4]\",2]",
+          "at": 1789331447551,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",4]\",3]",
+          "at": 1789331447844,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",4]\",4]",
+          "at": 1789331448138,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",4]\",5]",
+          "at": 1789331448434,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",5]\",0]",
+          "at": 1789331452513,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",5]\",1]",
+          "at": 1789331452807,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",5]\",2]",
+          "at": 1789331453113,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",5]\",3]",
+          "at": 1789331453420,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",5]\",4]",
+          "at": 1789331453729,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",5]\",5]",
+          "at": 1789331454019,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",6]\",0]",
+          "at": 1789331458048,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",6]\",1]",
+          "at": 1789331458354,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",6]\",2]",
+          "at": 1789331458662,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",6]\",3]",
+          "at": 1789331458955,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",6]\",4]",
+          "at": 1789331459262,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",6]\",5]",
+          "at": 1789331459569,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",7]\",0]",
+          "at": 1789331463648,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",7]\",1]",
+          "at": 1789331463931,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",7]\",2]",
+          "at": 1789331464222,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",8]\",0]",
+          "at": 1789331464515,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",8]\",1]",
+          "at": 1789331464812,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",8]\",2]",
+          "at": 1789331465104,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",10]\",0]",
+          "at": 1789331470251,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",10]\",1]",
+          "at": 1789331470544,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",10]\",2]",
+          "at": 1789331470839,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",9]\",0]",
+          "at": 1789331469371,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",9]\",1]",
+          "at": 1789331469666,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",9]\",2]",
+          "at": 1789331469959,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",10]\",3]",
+          "at": 1789331475120,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",10]\",4]",
+          "at": 1789331475414,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",10]\",5]",
+          "at": 1789331475708,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",11]\",0]",
+          "at": 1789331476002,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",11]\",1]",
+          "at": 1789331476295,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",11]\",2]",
+          "at": 1789331476589,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",11]\",3]",
+          "at": 1789331480683,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",11]\",4]",
+          "at": 1789331480990,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",11]\",5]",
+          "at": 1789331481297,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",12]\",0]",
+          "at": 1789331481617,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",12]\",1]",
+          "at": 1789331481924,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"[\\\"island-plan-v1\\\",\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",12]\",2]",
+          "at": 1789331482246,
+          "day": "2026-9-14"
+        }
+      ],
+      "actions": [
+        {
+          "id": "860a8c44-c073-44ea-a23f-79449f897242",
+          "at": 1789331492289,
+          "command": {
+            "type": "buy",
+            "kind": "library",
+            "cell": {
+              "x": 0,
+              "z": 0
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-v3-facilities-v1",
+            "actualPaidDrops": 72,
+            "quoteFingerprint": "[\"life-v3-facilities-v1\",\"library\",72]",
+            "itemInstanceId": "860a8c44-c073-44ea-a23f-79449f897242",
+            "committedAt": 1789331492289
+          }
+        },
+        {
+          "id": "66db7a7b-9e2a-44bd-9049-26305a6524f9",
+          "at": 1789331497013,
+          "command": {
+            "type": "visit",
+            "itemId": "860a8c44-c073-44ea-a23f-79449f897242"
+          }
+        },
+        {
+          "id": "334c8fbc-54f0-430e-8e74-91fbf6b0ed84",
+          "at": 1789331505306,
+          "command": {
+            "type": "buy",
+            "kind": "bench",
+            "cell": {
+              "x": 1,
+              "z": 3
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-48-v1",
+            "actualPaidDrops": 4,
+            "quoteFingerprint": "[\"life-48-v1\",\"bench\",4]",
+            "itemInstanceId": "334c8fbc-54f0-430e-8e74-91fbf6b0ed84",
+            "committedAt": 1789331505306
+          }
+        },
+        {
+          "id": "c6c76189-3057-43ee-8163-bd91532ae82d",
+          "at": 1789331509756,
+          "command": {
+            "type": "visit",
+            "itemId": "860a8c44-c073-44ea-a23f-79449f897242"
+          }
+        },
+        {
+          "id": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03",
+          "at": 1789331517628,
+          "command": {
+            "type": "buy",
+            "kind": "garden-hut",
+            "cell": {
+              "x": 4,
+              "z": 0
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-v3-facilities-v1",
+            "actualPaidDrops": 36,
+            "quoteFingerprint": "[\"life-v3-facilities-v1\",\"garden-hut\",36]",
+            "itemInstanceId": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03",
+            "committedAt": 1789331517628
+          }
+        },
+        {
+          "id": "6058029b-e599-44db-b5da-43f8aeae51b5",
+          "at": 1789331523000,
+          "command": {
+            "type": "visit",
+            "itemId": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03"
+          }
+        },
+        {
+          "id": "4633c84b-3b16-46ee-99b2-89113967baf0",
+          "at": 1789331531224,
+          "command": {
+            "type": "buy",
+            "kind": "flower",
+            "cell": {
+              "x": 4,
+              "z": 3
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-48-v1",
+            "actualPaidDrops": 2,
+            "quoteFingerprint": "[\"life-48-v1\",\"flower\",2]",
+            "itemInstanceId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+            "committedAt": 1789331531224
+          }
+        },
+        {
+          "id": "b8ae5340-a07c-46dd-bc3e-f302d5432b74",
+          "at": 1789331535902,
+          "command": {
+            "type": "visit",
+            "itemId": "860a8c44-c073-44ea-a23f-79449f897242"
+          }
+        },
+        {
+          "id": "1e9042c9-b737-420e-abc5-ef3feea8236f",
+          "at": 1789331552453,
+          "command": {
+            "type": "visit",
+            "itemId": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03"
+          }
+        },
+        {
+          "id": "06a46c66-a3ba-4b55-9e3c-959fd622cda7",
+          "at": 1789331561138,
+          "command": {
+            "type": "observe-relation",
+            "itemId": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03",
+            "residentId": "pokomoko",
+            "targetId": "4633c84b-3b16-46ee-99b2-89113967baf0"
+          }
+        },
+        {
+          "id": "2e36cede-3310-4655-a325-01fec8008aae",
+          "at": 1789331569351,
+          "command": {
+            "type": "buy",
+            "kind": "flower",
+            "cell": {
+              "x": 3,
+              "z": 1
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-48-v1",
+            "actualPaidDrops": 2,
+            "quoteFingerprint": "[\"life-48-v1\",\"flower\",2]",
+            "itemInstanceId": "2e36cede-3310-4655-a325-01fec8008aae",
+            "committedAt": 1789331569351
+          }
+        },
+        {
+          "id": "37a19068-5329-45c6-94c9-9d5f4dbadcee",
+          "at": 1789331577454,
+          "command": {
+            "type": "buy",
+            "kind": "flower",
+            "cell": {
+              "x": 5,
+              "z": 3
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-48-v1",
+            "actualPaidDrops": 2,
+            "quoteFingerprint": "[\"life-48-v1\",\"flower\",2]",
+            "itemInstanceId": "37a19068-5329-45c6-94c9-9d5f4dbadcee",
+            "committedAt": 1789331577454
+          }
+        },
+        {
+          "id": "ad552299-ef77-40d5-a201-b67ed10996d5",
+          "at": 1789331583045,
+          "command": {
+            "type": "visit",
+            "itemId": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03"
+          }
+        },
+        {
+          "id": "aa461e8e-b48c-4686-ad37-0da90f342ffd",
+          "at": 1789334528546,
+          "command": {
+            "type": "visit",
+            "itemId": "860a8c44-c073-44ea-a23f-79449f897242"
+          }
+        },
+        {
+          "id": "633c62f3-045e-4a34-8aec-a4ca0bcc3250",
+          "at": 1789334534413,
+          "command": {
+            "type": "visit",
+            "itemId": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03"
+          }
+        },
+        {
+          "id": "e22c51cf-e202-41c8-bda6-57d2a5777cea",
+          "at": 1789334542192,
+          "command": {
+            "type": "observe-relation",
+            "itemId": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03",
+            "residentId": "otter",
+            "targetId": "4633c84b-3b16-46ee-99b2-89113967baf0"
+          }
+        },
+        {
+          "id": "7a8b9b5d-ac73-425f-953a-b27e514f9344",
+          "at": 1789334596986,
+          "command": {
+            "type": "visit",
+            "itemId": "860a8c44-c073-44ea-a23f-79449f897242"
+          }
+        },
+        {
+          "id": "2d020d32-3278-429f-9109-e3f04117f80f",
+          "at": 1789334609483,
+          "command": {
+            "type": "visit",
+            "itemId": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03"
+          }
+        },
+        {
+          "id": "9e414fb6-9f69-413e-ad0f-01c745bb19f1",
+          "at": 1789334897825,
+          "command": {
+            "type": "visit",
+            "itemId": "860a8c44-c073-44ea-a23f-79449f897242"
+          }
+        },
+        {
+          "id": "1086d2d2-499a-40a8-b3ac-8b9edc5d2c55",
+          "at": 1789334910245,
+          "command": {
+            "type": "visit",
+            "itemId": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03"
+          }
+        },
+        {
+          "id": "0bbbaa2e-b26d-4e96-af7e-6f32ac00e47b",
+          "at": 1789334917069,
+          "command": {
+            "type": "observe-relation",
+            "itemId": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03",
+            "residentId": "otter",
+            "targetId": "4633c84b-3b16-46ee-99b2-89113967baf0"
+          }
+        },
+        {
+          "id": "4acebda0-a370-4d25-934a-3c734f86ea87",
+          "at": 1789335057566,
+          "command": {
+            "type": "visit",
+            "itemId": "860a8c44-c073-44ea-a23f-79449f897242"
+          }
+        },
+        {
+          "id": "625ab646-64bb-4930-a178-deb418b9978b",
+          "at": 1789335069700,
+          "command": {
+            "type": "visit",
+            "itemId": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03"
+          }
+        }
+      ],
+      "offsets": [
+        {
+          "at": 1789331425076,
+          "offset": 0
+        }
+      ],
+      "clockIntents": [],
+      "activitiesV2At": 1789331425076,
+      "activitiesV2After": 0,
+      "economyCheckpoint": {
+        "checkpointId": "[\"de416728-1473-4d44-b0f1-da6d775e26cb\",\"life-v3.0-rc1\"]",
+        "sourceRules": "life-48-v1",
+        "targetRules": "life-v3.0-rc1",
+        "originalRecord": {
+          "profileId": "de416728-1473-4d44-b0f1-da6d775e26cb",
+          "version": 1,
+          "revision": 0,
+          "createdAt": 1789331425076,
+          "realAt": 1789331425076,
+          "now": 1789331425076,
+          "credits": [],
+          "actions": [],
+          "offsets": [
+            {
+              "at": 1789331425076,
+              "offset": 0
+            }
+          ],
+          "clockIntents": [],
+          "activitiesV2At": 1789331425076,
+          "activitiesV2After": 0
+        },
+        "sourceRecord": {
+          "profileId": "de416728-1473-4d44-b0f1-da6d775e26cb",
+          "version": 1,
+          "revision": 1,
+          "createdAt": 1789331425076,
+          "realAt": 1789331425076,
+          "now": 1789331425076,
+          "credits": [],
+          "actions": [],
+          "offsets": [
+            {
+              "at": 1789331425076,
+              "offset": 0
+            }
+          ],
+          "clockIntents": [],
+          "activitiesV2At": 1789331425076,
+          "activitiesV2After": 0
+        },
+        "sourceFactWatermark": [],
+        "cutoverAt": 1789331425076,
+        "actionCount": 0,
+        "projectedCreditIds": [],
+        "legacyCorrections": [],
+        "initialLightRemainingBudget": 8,
+        "state": {
+          "now": 1789331425076,
+          "activityVersion": 2,
+          "drops": 0,
+          "light": 0,
+          "items": [],
+          "styles": [
+            "original"
+          ],
+          "heroStyle": "original",
+          "days": {},
+          "residents": [
+            {
+              "id": "pokomoko",
+              "cell": {
+                "x": 2,
+                "z": 1
+              },
+              "enjoyed": 0,
+              "enjoyedBy": {}
+            },
+            {
+              "id": "rabbit",
+              "cell": {
+                "x": 3,
+                "z": 1
+              },
+              "enjoyed": 0,
+              "enjoyedBy": {}
+            },
+            {
+              "id": "otter",
+              "cell": {
+                "x": 3,
+                "z": 2
+              },
+              "enjoyed": 0,
+              "enjoyedBy": {},
+              "visit": {
+                "itemId": "roam:otter:994073",
+                "path": [
+                  {
+                    "x": 3,
+                    "z": 2
+                  },
+                  {
+                    "x": 3,
+                    "z": 3
+                  },
+                  {
+                    "x": 3,
+                    "z": 4
+                  }
+                ],
+                "from": {
+                  "x": 3,
+                  "z": 2
+                },
+                "start": 1789331425076,
+                "end": 1789333225076
+              }
+            }
+          ],
+          "economy": {
+            "version": "life-v3.0-rc1",
+            "lightRemainingBudget": 8,
+            "completionTimes": []
+          }
+        },
+        "validationHash": "49f90635153bb1446515fdc54cec177dd22493119c4c23502150ef49f8491694",
+        "completionStatus": "complete"
+      },
+      "tourCutover": {
+        "rules": "gp3-tours-v1",
+        "profileId": "de416728-1473-4d44-b0f1-da6d775e26cb",
+        "at": 1789331425076,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "ab9e5f2d654a760685337c63550b8f41e073a1788d674f8368f11406aee62ed0"
+      },
+      "facilityCutover": {
+        "rules": "facility-trips-v1",
+        "profileId": "de416728-1473-4d44-b0f1-da6d775e26cb",
+        "at": 1789331425076,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "dfb51449b56efffad3a103e3e1d30c092ddba7aa27e939a715fdce4f9bd6f36b"
+      },
+      "relationCutover": {
+        "rules": "relation-selection-v1",
+        "profileId": "de416728-1473-4d44-b0f1-da6d775e26cb",
+        "at": 1789331425076,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "5bb14d9eea20f4d147282a260713b8e12c5340226ba458670ef5dab4f5e6feed"
+      },
+      "discoveryJournal": {
+        "version": 1,
+        "revision": 11,
+        "entries": [
+          {
+            "event": {
+              "eventId": "e6d7a0c5-9caa-4e0e-b50d-bb02c61493ed",
+              "profileId": "de416728-1473-4d44-b0f1-da6d775e26cb",
+              "ruleId": "R5",
+              "ruleVersion": "discovery-v3.0-rc1",
+              "semanticSignature": "[\"[\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",\\\"discovery-v3.0-rc1\\\",\\\"R5\\\",[[\\\"334c8fbc-54f0-430e-8e74-91fbf6b0ed84\\\",\\\"bench\\\",1,3,null,\\\"front\\\"],[\\\"860a8c44-c073-44ea-a23f-79449f897242\\\",\\\"library\\\",0,0,null,\\\"adjacent\\\"]]]\",[[\"otter\",\"334c8fbc-54f0-430e-8e74-91fbf6b0ed84\",\"using\"]]]",
+              "createdAt": 1789331544127,
+              "source": "current-context-test",
+              "focalResidentIds": [
+                "otter"
+              ],
+              "snapshot": {
+                "contentVersion": 1,
+                "scene": {
+                  "now": 1789331543728.7,
+                  "activityVersion": 2,
+                  "tourVersion": 1,
+                  "roamRound": 0,
+                  "scenePose": "captured-v1",
+                  "encounterVersion": 1,
+                  "readingEncounterVersion": 1,
+                  "footstepMagicVersion": 1,
+                  "shadowMagicVersion": 1,
+                  "waterMagicVersion": 1,
+                  "facilityPresentation": "carry-care-v1",
+                  "relationSelectionVersion": 1,
+                  "facilityTripVersion": 1,
+                  "poseReducedMotion": false,
+                  "relationVersion": "water-bench-v1",
+                  "landscapeVersion": "groves-water-v1",
+                  "worldStyle": "moon-garden-v1",
+                  "items": [
+                    {
+                      "id": "860a8c44-c073-44ea-a23f-79449f897242",
+                      "kind": "library",
+                      "cell": {
+                        "x": 0,
+                        "z": 0
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 72
+                    },
+                    {
+                      "id": "334c8fbc-54f0-430e-8e74-91fbf6b0ed84",
+                      "kind": "bench",
+                      "cell": {
+                        "x": 1,
+                        "z": 3
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 4,
+                      "access": "front"
+                    },
+                    {
+                      "id": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03",
+                      "kind": "garden-hut",
+                      "cell": {
+                        "x": 4,
+                        "z": 0
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 36
+                    },
+                    {
+                      "id": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                      "kind": "flower",
+                      "cell": {
+                        "x": 4,
+                        "z": 3
+                      },
+                      "growth": 0.003434722222222222,
+                      "style": "original",
+                      "paidDrops": 2
+                    }
+                  ],
+                  "residents": [
+                    {
+                      "id": "pokomoko",
+                      "cell": {
+                        "x": 3,
+                        "z": 3
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "860a8c44-c073-44ea-a23f-79449f897242",
+                        "path": [
+                          {
+                            "x": 3,
+                            "z": 3
+                          },
+                          {
+                            "x": 2,
+                            "z": 3
+                          },
+                          {
+                            "x": 2,
+                            "z": 2
+                          },
+                          {
+                            "x": 1,
+                            "z": 2
+                          },
+                          {
+                            "x": 0,
+                            "z": 2
+                          }
+                        ],
+                        "from": {
+                          "x": 3,
+                          "z": 3
+                        },
+                        "start": 1789331538024,
+                        "end": 1789333338024
+                      },
+                      "discovery": {
+                        "itemId": "860a8c44-c073-44ea-a23f-79449f897242",
+                        "at": 1789331492289,
+                        "mood": "notice"
+                      }
+                    },
+                    {
+                      "id": "rabbit",
+                      "cell": {
+                        "x": 1,
+                        "z": 4
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                        "path": [
+                          {
+                            "x": 1,
+                            "z": 4
+                          },
+                          {
+                            "x": 2,
+                            "z": 4
+                          },
+                          {
+                            "x": 3,
+                            "z": 4
+                          },
+                          {
+                            "x": 4,
+                            "z": 4
+                          }
+                        ],
+                        "from": {
+                          "x": 1,
+                          "z": 4
+                        },
+                        "start": 1789331531224,
+                        "end": 1789333331224
+                      },
+                      "discovery": {
+                        "itemId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                        "at": 1789331531224,
+                        "mood": "notice"
+                      }
+                    },
+                    {
+                      "id": "otter",
+                      "cell": {
+                        "x": 0,
+                        "z": 2
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "334c8fbc-54f0-430e-8e74-91fbf6b0ed84",
+                        "from": {
+                          "x": 0,
+                          "z": 2
+                        },
+                        "path": [
+                          {
+                            "x": 0,
+                            "z": 2
+                          },
+                          {
+                            "x": 0,
+                            "z": 3
+                          },
+                          {
+                            "x": 0,
+                            "z": 4
+                          },
+                          {
+                            "x": 1,
+                            "z": 4
+                          }
+                        ],
+                        "start": 1789331538024,
+                        "end": 1789333331224
+                      },
+                      "facilityTrip": {
+                        "facilityId": "860a8c44-c073-44ea-a23f-79449f897242",
+                        "targetId": "334c8fbc-54f0-430e-8e74-91fbf6b0ed84",
+                        "kind": "library",
+                        "phase": "carry",
+                        "path": [
+                          {
+                            "x": 0,
+                            "z": 2
+                          },
+                          {
+                            "x": 0,
+                            "z": 3
+                          },
+                          {
+                            "x": 0,
+                            "z": 4
+                          },
+                          {
+                            "x": 1,
+                            "z": 4
+                          }
+                        ],
+                        "end": 1789333331224
+                      },
+                      "discovery": {
+                        "itemId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                        "at": 1789331531224,
+                        "mood": "notice"
+                      }
+                    }
+                  ],
+                  "heroStyle": "original",
+                  "target": "860a8c44-c073-44ea-a23f-79449f897242"
+                },
+                "immutableHash": "fd7bcba45585852a2d756cc1ab2ee9cfbd7d6ab53f811c88766a7c2c88361a71"
+              }
+            },
+            "evidence": {
+              "eventId": "e6d7a0c5-9caa-4e0e-b50d-bb02c61493ed",
+              "firstVisibleAt": 1789331545762,
+              "visibleDurationMs": 1036.6000000238419,
+              "coreShown": true,
+              "presentationKind": "current-context-test"
+            }
+          },
+          {
+            "event": {
+              "eventId": "b63cd798-7ce0-4b5b-a9d4-f36d5485fec8",
+              "profileId": "de416728-1473-4d44-b0f1-da6d775e26cb",
+              "ruleId": "R5",
+              "ruleVersion": "discovery-v3.0-rc1",
+              "semanticSignature": "[\"[\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",\\\"discovery-v3.0-rc1\\\",\\\"R5\\\",[[\\\"334c8fbc-54f0-430e-8e74-91fbf6b0ed84\\\",\\\"bench\\\",1,3,null,\\\"front\\\"],[\\\"860a8c44-c073-44ea-a23f-79449f897242\\\",\\\"library\\\",0,0,null,\\\"adjacent\\\"]]]\",[[\"otter\",\"334c8fbc-54f0-430e-8e74-91fbf6b0ed84\",\"using\"]]]",
+              "createdAt": 1789331548248,
+              "source": "live",
+              "focalResidentIds": [
+                "otter"
+              ],
+              "snapshot": {
+                "contentVersion": 1,
+                "scene": {
+                  "now": 1789331546172.8,
+                  "activityVersion": 2,
+                  "tourVersion": 1,
+                  "roamRound": 0,
+                  "scenePose": "captured-v1",
+                  "encounterVersion": 1,
+                  "readingEncounterVersion": 1,
+                  "footstepMagicVersion": 1,
+                  "shadowMagicVersion": 1,
+                  "waterMagicVersion": 1,
+                  "facilityPresentation": "carry-care-v1",
+                  "relationSelectionVersion": 1,
+                  "facilityTripVersion": 1,
+                  "poseReducedMotion": false,
+                  "relationVersion": "water-bench-v1",
+                  "landscapeVersion": "groves-water-v1",
+                  "worldStyle": "moon-garden-v1",
+                  "items": [
+                    {
+                      "id": "860a8c44-c073-44ea-a23f-79449f897242",
+                      "kind": "library",
+                      "cell": {
+                        "x": 0,
+                        "z": 0
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 72
+                    },
+                    {
+                      "id": "334c8fbc-54f0-430e-8e74-91fbf6b0ed84",
+                      "kind": "bench",
+                      "cell": {
+                        "x": 1,
+                        "z": 3
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 4,
+                      "access": "front"
+                    },
+                    {
+                      "id": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03",
+                      "kind": "garden-hut",
+                      "cell": {
+                        "x": 4,
+                        "z": 0
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 36
+                    },
+                    {
+                      "id": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                      "kind": "flower",
+                      "cell": {
+                        "x": 4,
+                        "z": 3
+                      },
+                      "growth": 0.003434722222222222,
+                      "style": "original",
+                      "paidDrops": 2
+                    }
+                  ],
+                  "residents": [
+                    {
+                      "id": "pokomoko",
+                      "cell": {
+                        "x": 3,
+                        "z": 3
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "860a8c44-c073-44ea-a23f-79449f897242",
+                        "path": [
+                          {
+                            "x": 3,
+                            "z": 3
+                          },
+                          {
+                            "x": 2,
+                            "z": 3
+                          },
+                          {
+                            "x": 2,
+                            "z": 2
+                          },
+                          {
+                            "x": 1,
+                            "z": 2
+                          },
+                          {
+                            "x": 0,
+                            "z": 2
+                          }
+                        ],
+                        "from": {
+                          "x": 3,
+                          "z": 3
+                        },
+                        "start": 1789331538024,
+                        "end": 1789333338024
+                      },
+                      "discovery": {
+                        "itemId": "860a8c44-c073-44ea-a23f-79449f897242",
+                        "at": 1789331492289,
+                        "mood": "notice"
+                      }
+                    },
+                    {
+                      "id": "rabbit",
+                      "cell": {
+                        "x": 1,
+                        "z": 4
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                        "path": [
+                          {
+                            "x": 1,
+                            "z": 4
+                          },
+                          {
+                            "x": 2,
+                            "z": 4
+                          },
+                          {
+                            "x": 3,
+                            "z": 4
+                          },
+                          {
+                            "x": 4,
+                            "z": 4
+                          }
+                        ],
+                        "from": {
+                          "x": 1,
+                          "z": 4
+                        },
+                        "start": 1789331531224,
+                        "end": 1789333331224
+                      },
+                      "discovery": {
+                        "itemId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                        "at": 1789331531224,
+                        "mood": "notice"
+                      }
+                    },
+                    {
+                      "id": "otter",
+                      "cell": {
+                        "x": 0,
+                        "z": 2
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "334c8fbc-54f0-430e-8e74-91fbf6b0ed84",
+                        "from": {
+                          "x": 0,
+                          "z": 2
+                        },
+                        "path": [
+                          {
+                            "x": 0,
+                            "z": 2
+                          },
+                          {
+                            "x": 0,
+                            "z": 3
+                          },
+                          {
+                            "x": 0,
+                            "z": 4
+                          },
+                          {
+                            "x": 1,
+                            "z": 4
+                          }
+                        ],
+                        "start": 1789331538024,
+                        "end": 1789333331224
+                      },
+                      "facilityTrip": {
+                        "facilityId": "860a8c44-c073-44ea-a23f-79449f897242",
+                        "targetId": "334c8fbc-54f0-430e-8e74-91fbf6b0ed84",
+                        "kind": "library",
+                        "phase": "carry",
+                        "path": [
+                          {
+                            "x": 0,
+                            "z": 2
+                          },
+                          {
+                            "x": 0,
+                            "z": 3
+                          },
+                          {
+                            "x": 0,
+                            "z": 4
+                          },
+                          {
+                            "x": 1,
+                            "z": 4
+                          }
+                        ],
+                        "end": 1789333331224
+                      },
+                      "discovery": {
+                        "itemId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                        "at": 1789331531224,
+                        "mood": "notice"
+                      }
+                    }
+                  ],
+                  "heroStyle": "original",
+                  "target": "860a8c44-c073-44ea-a23f-79449f897242"
+                },
+                "immutableHash": "2d699dba0b45c0e88474157109d754f45952d4f9f8452b55abd9c4d123a90a2c"
+              }
+            },
+            "evidence": {
+              "eventId": "b63cd798-7ce0-4b5b-a9d4-f36d5485fec8",
+              "firstVisibleAt": 1789331548363,
+              "visibleDurationMs": 1028.0999999642372,
+              "coreShown": true,
+              "presentationKind": "live"
+            }
+          },
+          {
+            "event": {
+              "eventId": "f91e5e2c-c154-4595-b5f8-7d708bbd93de",
+              "profileId": "de416728-1473-4d44-b0f1-da6d775e26cb",
+              "ruleId": "R6",
+              "ruleVersion": "discovery-v3.0-rc1",
+              "semanticSignature": "[\"[\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",\\\"discovery-v3.0-rc1\\\",\\\"R6\\\",[[\\\"4633c84b-3b16-46ee-99b2-89113967baf0\\\",\\\"flower\\\",4,3,null,\\\"adjacent\\\"],[\\\"cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03\\\",\\\"garden-hut\\\",4,0,null,\\\"adjacent\\\"]]]\",[[\"pokomoko\",\"4633c84b-3b16-46ee-99b2-89113967baf0\",\"using\"]]]",
+              "createdAt": 1789331593958,
+              "source": "current-context-test",
+              "focalResidentIds": [
+                "pokomoko"
+              ],
+              "snapshot": {
+                "contentVersion": 1,
+                "scene": {
+                  "now": 1789331593554.6,
+                  "activityVersion": 2,
+                  "tourVersion": 1,
+                  "roamRound": 0,
+                  "scenePose": "captured-v1",
+                  "encounterVersion": 1,
+                  "readingEncounterVersion": 1,
+                  "footstepMagicVersion": 1,
+                  "shadowMagicVersion": 1,
+                  "waterMagicVersion": 1,
+                  "facilityPresentation": "carry-care-v1",
+                  "relationSelectionVersion": 1,
+                  "facilityTripVersion": 1,
+                  "poseReducedMotion": false,
+                  "relationVersion": "water-bench-v1",
+                  "landscapeVersion": "groves-water-v1",
+                  "worldStyle": "moon-garden-v1",
+                  "items": [
+                    {
+                      "id": "860a8c44-c073-44ea-a23f-79449f897242",
+                      "kind": "library",
+                      "cell": {
+                        "x": 0,
+                        "z": 0
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 72
+                    },
+                    {
+                      "id": "334c8fbc-54f0-430e-8e74-91fbf6b0ed84",
+                      "kind": "bench",
+                      "cell": {
+                        "x": 1,
+                        "z": 3
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 4,
+                      "access": "front"
+                    },
+                    {
+                      "id": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03",
+                      "kind": "garden-hut",
+                      "cell": {
+                        "x": 4,
+                        "z": 0
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 36
+                    },
+                    {
+                      "id": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                      "kind": "flower",
+                      "cell": {
+                        "x": 4,
+                        "z": 3
+                      },
+                      "growth": 0.016174722222222222,
+                      "style": "original",
+                      "paidDrops": 2
+                    },
+                    {
+                      "id": "2e36cede-3310-4655-a325-01fec8008aae",
+                      "kind": "flower",
+                      "cell": {
+                        "x": 3,
+                        "z": 1
+                      },
+                      "growth": 0.005583888888888888,
+                      "style": "original",
+                      "paidDrops": 2
+                    },
+                    {
+                      "id": "37a19068-5329-45c6-94c9-9d5f4dbadcee",
+                      "kind": "flower",
+                      "cell": {
+                        "x": 5,
+                        "z": 3
+                      },
+                      "growth": 0.0033330555555555553,
+                      "style": "original",
+                      "paidDrops": 2
+                    }
+                  ],
+                  "residents": [
+                    {
+                      "id": "pokomoko",
+                      "cell": {
+                        "x": 4,
+                        "z": 2
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                        "from": {
+                          "x": 4,
+                          "z": 2
+                        },
+                        "path": [
+                          {
+                            "x": 4,
+                            "z": 2
+                          }
+                        ],
+                        "start": 1789331593138,
+                        "end": 1789333391138
+                      },
+                      "facilityTrip": {
+                        "facilityId": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03",
+                        "targetId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                        "kind": "garden-hut",
+                        "phase": "carry",
+                        "path": [
+                          {
+                            "x": 4,
+                            "z": 2
+                          }
+                        ],
+                        "end": 1789333391138
+                      }
+                    },
+                    {
+                      "id": "rabbit",
+                      "cell": {
+                        "x": 3,
+                        "z": 2
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "37a19068-5329-45c6-94c9-9d5f4dbadcee",
+                        "path": [
+                          {
+                            "x": 3,
+                            "z": 2
+                          },
+                          {
+                            "x": 4,
+                            "z": 2
+                          },
+                          {
+                            "x": 5,
+                            "z": 2
+                          }
+                        ],
+                        "from": {
+                          "x": 3,
+                          "z": 2
+                        },
+                        "start": 1789331577454,
+                        "end": 1789333377454
+                      },
+                      "discovery": {
+                        "itemId": "37a19068-5329-45c6-94c9-9d5f4dbadcee",
+                        "at": 1789331577454,
+                        "mood": "notice"
+                      }
+                    },
+                    {
+                      "id": "otter",
+                      "cell": {
+                        "x": 2,
+                        "z": 1
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "37a19068-5329-45c6-94c9-9d5f4dbadcee",
+                        "path": [
+                          {
+                            "x": 2,
+                            "z": 1
+                          },
+                          {
+                            "x": 2,
+                            "z": 2
+                          },
+                          {
+                            "x": 3,
+                            "z": 2
+                          },
+                          {
+                            "x": 3,
+                            "z": 3
+                          },
+                          {
+                            "x": 3,
+                            "z": 4
+                          },
+                          {
+                            "x": 4,
+                            "z": 4
+                          },
+                          {
+                            "x": 5,
+                            "z": 4
+                          }
+                        ],
+                        "from": {
+                          "x": 2,
+                          "z": 1
+                        },
+                        "start": 1789331577454,
+                        "end": 1789333377454
+                      },
+                      "discovery": {
+                        "itemId": "37a19068-5329-45c6-94c9-9d5f4dbadcee",
+                        "at": 1789331577454,
+                        "mood": "curious"
+                      }
+                    }
+                  ],
+                  "heroStyle": "original",
+                  "target": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03"
+                },
+                "immutableHash": "4478f7b86bebf14a156d3490cec822dbbcff273afbd2a517ed6726b3b87b188e"
+              }
+            },
+            "evidence": {
+              "eventId": "f91e5e2c-c154-4595-b5f8-7d708bbd93de",
+              "firstVisibleAt": 1789331594085,
+              "visibleDurationMs": 1012.3000000119209,
+              "coreShown": true,
+              "presentationKind": "current-context-test"
+            }
+          },
+          {
+            "event": {
+              "eventId": "2fbe9436-9d8e-4a2b-acc9-4564f0ee9558",
+              "profileId": "de416728-1473-4d44-b0f1-da6d775e26cb",
+              "ruleId": "R5",
+              "ruleVersion": "discovery-v3.0-rc1",
+              "semanticSignature": "[\"[\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",\\\"discovery-v3.0-rc1\\\",\\\"R5\\\",[[\\\"334c8fbc-54f0-430e-8e74-91fbf6b0ed84\\\",\\\"bench\\\",1,3,null,\\\"front\\\"],[\\\"860a8c44-c073-44ea-a23f-79449f897242\\\",\\\"library\\\",0,0,null,\\\"adjacent\\\"]]]\",[[\"otter\",\"334c8fbc-54f0-430e-8e74-91fbf6b0ed84\",\"using\"]]]",
+              "createdAt": 1789334277448,
+              "source": "replay",
+              "focalResidentIds": [
+                "otter"
+              ],
+              "snapshot": {
+                "contentVersion": 1,
+                "scene": {
+                  "now": 1789331543728.7,
+                  "activityVersion": 2,
+                  "tourVersion": 1,
+                  "roamRound": 0,
+                  "scenePose": "captured-v1",
+                  "encounterVersion": 1,
+                  "readingEncounterVersion": 1,
+                  "footstepMagicVersion": 1,
+                  "shadowMagicVersion": 1,
+                  "waterMagicVersion": 1,
+                  "facilityPresentation": "carry-care-v1",
+                  "relationSelectionVersion": 1,
+                  "facilityTripVersion": 1,
+                  "poseReducedMotion": false,
+                  "relationVersion": "water-bench-v1",
+                  "landscapeVersion": "groves-water-v1",
+                  "worldStyle": "moon-garden-v1",
+                  "items": [
+                    {
+                      "id": "860a8c44-c073-44ea-a23f-79449f897242",
+                      "kind": "library",
+                      "cell": {
+                        "x": 0,
+                        "z": 0
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 72
+                    },
+                    {
+                      "id": "334c8fbc-54f0-430e-8e74-91fbf6b0ed84",
+                      "kind": "bench",
+                      "cell": {
+                        "x": 1,
+                        "z": 3
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 4,
+                      "access": "front"
+                    },
+                    {
+                      "id": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03",
+                      "kind": "garden-hut",
+                      "cell": {
+                        "x": 4,
+                        "z": 0
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 36
+                    },
+                    {
+                      "id": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                      "kind": "flower",
+                      "cell": {
+                        "x": 4,
+                        "z": 3
+                      },
+                      "growth": 0.003434722222222222,
+                      "style": "original",
+                      "paidDrops": 2
+                    }
+                  ],
+                  "residents": [
+                    {
+                      "id": "pokomoko",
+                      "cell": {
+                        "x": 3,
+                        "z": 3
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "860a8c44-c073-44ea-a23f-79449f897242",
+                        "path": [
+                          {
+                            "x": 3,
+                            "z": 3
+                          },
+                          {
+                            "x": 2,
+                            "z": 3
+                          },
+                          {
+                            "x": 2,
+                            "z": 2
+                          },
+                          {
+                            "x": 1,
+                            "z": 2
+                          },
+                          {
+                            "x": 0,
+                            "z": 2
+                          }
+                        ],
+                        "from": {
+                          "x": 3,
+                          "z": 3
+                        },
+                        "start": 1789331538024,
+                        "end": 1789333338024
+                      },
+                      "discovery": {
+                        "itemId": "860a8c44-c073-44ea-a23f-79449f897242",
+                        "at": 1789331492289,
+                        "mood": "notice"
+                      }
+                    },
+                    {
+                      "id": "rabbit",
+                      "cell": {
+                        "x": 1,
+                        "z": 4
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                        "path": [
+                          {
+                            "x": 1,
+                            "z": 4
+                          },
+                          {
+                            "x": 2,
+                            "z": 4
+                          },
+                          {
+                            "x": 3,
+                            "z": 4
+                          },
+                          {
+                            "x": 4,
+                            "z": 4
+                          }
+                        ],
+                        "from": {
+                          "x": 1,
+                          "z": 4
+                        },
+                        "start": 1789331531224,
+                        "end": 1789333331224
+                      },
+                      "discovery": {
+                        "itemId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                        "at": 1789331531224,
+                        "mood": "notice"
+                      }
+                    },
+                    {
+                      "id": "otter",
+                      "cell": {
+                        "x": 0,
+                        "z": 2
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "334c8fbc-54f0-430e-8e74-91fbf6b0ed84",
+                        "from": {
+                          "x": 0,
+                          "z": 2
+                        },
+                        "path": [
+                          {
+                            "x": 0,
+                            "z": 2
+                          },
+                          {
+                            "x": 0,
+                            "z": 3
+                          },
+                          {
+                            "x": 0,
+                            "z": 4
+                          },
+                          {
+                            "x": 1,
+                            "z": 4
+                          }
+                        ],
+                        "start": 1789331538024,
+                        "end": 1789333331224
+                      },
+                      "facilityTrip": {
+                        "facilityId": "860a8c44-c073-44ea-a23f-79449f897242",
+                        "targetId": "334c8fbc-54f0-430e-8e74-91fbf6b0ed84",
+                        "kind": "library",
+                        "phase": "carry",
+                        "path": [
+                          {
+                            "x": 0,
+                            "z": 2
+                          },
+                          {
+                            "x": 0,
+                            "z": 3
+                          },
+                          {
+                            "x": 0,
+                            "z": 4
+                          },
+                          {
+                            "x": 1,
+                            "z": 4
+                          }
+                        ],
+                        "end": 1789333331224
+                      },
+                      "discovery": {
+                        "itemId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                        "at": 1789331531224,
+                        "mood": "notice"
+                      }
+                    }
+                  ],
+                  "heroStyle": "original",
+                  "target": "860a8c44-c073-44ea-a23f-79449f897242"
+                },
+                "immutableHash": "fd7bcba45585852a2d756cc1ab2ee9cfbd7d6ab53f811c88766a7c2c88361a71"
+              },
+              "originEventId": "e6d7a0c5-9caa-4e0e-b50d-bb02c61493ed"
+            },
+            "evidence": {
+              "eventId": "2fbe9436-9d8e-4a2b-acc9-4564f0ee9558",
+              "firstVisibleAt": 1789334278401,
+              "visibleDurationMs": 1011,
+              "coreShown": true,
+              "presentationKind": "replay"
+            }
+          },
+          {
+            "event": {
+              "eventId": "708d4f25-32e3-4337-9e15-03b3bf348a14",
+              "profileId": "de416728-1473-4d44-b0f1-da6d775e26cb",
+              "ruleId": "R6",
+              "ruleVersion": "discovery-v3.0-rc1",
+              "semanticSignature": "[\"[\\\"de416728-1473-4d44-b0f1-da6d775e26cb\\\",\\\"discovery-v3.0-rc1\\\",\\\"R6\\\",[[\\\"4633c84b-3b16-46ee-99b2-89113967baf0\\\",\\\"flower\\\",4,3,null,\\\"adjacent\\\"],[\\\"cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03\\\",\\\"garden-hut\\\",4,0,null,\\\"adjacent\\\"]]]\",[[\"pokomoko\",\"4633c84b-3b16-46ee-99b2-89113967baf0\",\"using\"]]]",
+              "createdAt": 1789334285013,
+              "source": "replay",
+              "focalResidentIds": [
+                "pokomoko"
+              ],
+              "snapshot": {
+                "contentVersion": 1,
+                "scene": {
+                  "now": 1789331593554.6,
+                  "activityVersion": 2,
+                  "tourVersion": 1,
+                  "roamRound": 0,
+                  "scenePose": "captured-v1",
+                  "encounterVersion": 1,
+                  "readingEncounterVersion": 1,
+                  "footstepMagicVersion": 1,
+                  "shadowMagicVersion": 1,
+                  "waterMagicVersion": 1,
+                  "facilityPresentation": "carry-care-v1",
+                  "relationSelectionVersion": 1,
+                  "facilityTripVersion": 1,
+                  "poseReducedMotion": false,
+                  "relationVersion": "water-bench-v1",
+                  "landscapeVersion": "groves-water-v1",
+                  "worldStyle": "moon-garden-v1",
+                  "items": [
+                    {
+                      "id": "860a8c44-c073-44ea-a23f-79449f897242",
+                      "kind": "library",
+                      "cell": {
+                        "x": 0,
+                        "z": 0
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 72
+                    },
+                    {
+                      "id": "334c8fbc-54f0-430e-8e74-91fbf6b0ed84",
+                      "kind": "bench",
+                      "cell": {
+                        "x": 1,
+                        "z": 3
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 4,
+                      "access": "front"
+                    },
+                    {
+                      "id": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03",
+                      "kind": "garden-hut",
+                      "cell": {
+                        "x": 4,
+                        "z": 0
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 36
+                    },
+                    {
+                      "id": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                      "kind": "flower",
+                      "cell": {
+                        "x": 4,
+                        "z": 3
+                      },
+                      "growth": 0.016174722222222222,
+                      "style": "original",
+                      "paidDrops": 2
+                    },
+                    {
+                      "id": "2e36cede-3310-4655-a325-01fec8008aae",
+                      "kind": "flower",
+                      "cell": {
+                        "x": 3,
+                        "z": 1
+                      },
+                      "growth": 0.005583888888888888,
+                      "style": "original",
+                      "paidDrops": 2
+                    },
+                    {
+                      "id": "37a19068-5329-45c6-94c9-9d5f4dbadcee",
+                      "kind": "flower",
+                      "cell": {
+                        "x": 5,
+                        "z": 3
+                      },
+                      "growth": 0.0033330555555555553,
+                      "style": "original",
+                      "paidDrops": 2
+                    }
+                  ],
+                  "residents": [
+                    {
+                      "id": "pokomoko",
+                      "cell": {
+                        "x": 4,
+                        "z": 2
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                        "from": {
+                          "x": 4,
+                          "z": 2
+                        },
+                        "path": [
+                          {
+                            "x": 4,
+                            "z": 2
+                          }
+                        ],
+                        "start": 1789331593138,
+                        "end": 1789333391138
+                      },
+                      "facilityTrip": {
+                        "facilityId": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03",
+                        "targetId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                        "kind": "garden-hut",
+                        "phase": "carry",
+                        "path": [
+                          {
+                            "x": 4,
+                            "z": 2
+                          }
+                        ],
+                        "end": 1789333391138
+                      }
+                    },
+                    {
+                      "id": "rabbit",
+                      "cell": {
+                        "x": 3,
+                        "z": 2
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "37a19068-5329-45c6-94c9-9d5f4dbadcee",
+                        "path": [
+                          {
+                            "x": 3,
+                            "z": 2
+                          },
+                          {
+                            "x": 4,
+                            "z": 2
+                          },
+                          {
+                            "x": 5,
+                            "z": 2
+                          }
+                        ],
+                        "from": {
+                          "x": 3,
+                          "z": 2
+                        },
+                        "start": 1789331577454,
+                        "end": 1789333377454
+                      },
+                      "discovery": {
+                        "itemId": "37a19068-5329-45c6-94c9-9d5f4dbadcee",
+                        "at": 1789331577454,
+                        "mood": "notice"
+                      }
+                    },
+                    {
+                      "id": "otter",
+                      "cell": {
+                        "x": 2,
+                        "z": 1
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "37a19068-5329-45c6-94c9-9d5f4dbadcee",
+                        "path": [
+                          {
+                            "x": 2,
+                            "z": 1
+                          },
+                          {
+                            "x": 2,
+                            "z": 2
+                          },
+                          {
+                            "x": 3,
+                            "z": 2
+                          },
+                          {
+                            "x": 3,
+                            "z": 3
+                          },
+                          {
+                            "x": 3,
+                            "z": 4
+                          },
+                          {
+                            "x": 4,
+                            "z": 4
+                          },
+                          {
+                            "x": 5,
+                            "z": 4
+                          }
+                        ],
+                        "from": {
+                          "x": 2,
+                          "z": 1
+                        },
+                        "start": 1789331577454,
+                        "end": 1789333377454
+                      },
+                      "discovery": {
+                        "itemId": "37a19068-5329-45c6-94c9-9d5f4dbadcee",
+                        "at": 1789331577454,
+                        "mood": "curious"
+                      }
+                    }
+                  ],
+                  "heroStyle": "original",
+                  "target": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03"
+                },
+                "immutableHash": "4478f7b86bebf14a156d3490cec822dbbcff273afbd2a517ed6726b3b87b188e"
+              },
+              "originEventId": "f91e5e2c-c154-4595-b5f8-7d708bbd93de"
+            },
+            "evidence": {
+              "eventId": "708d4f25-32e3-4337-9e15-03b3bf348a14",
+              "firstVisibleAt": 1789334285975,
+              "visibleDurationMs": 1029.8999999761581,
+              "coreShown": true,
+              "presentationKind": "replay"
+            }
+          }
+        ],
+        "historyIds": [
+          "708d4f25-32e3-4337-9e15-03b3bf348a14",
+          "2fbe9436-9d8e-4a2b-acc9-4564f0ee9558",
+          "f91e5e2c-c154-4595-b5f8-7d708bbd93de",
+          "b63cd798-7ce0-4b5b-a9d4-f36d5485fec8",
+          "e6d7a0c5-9caa-4e0e-b50d-bb02c61493ed"
+        ],
+        "savedIds": [
+          "e6d7a0c5-9caa-4e0e-b50d-bb02c61493ed",
+          "f91e5e2c-c154-4595-b5f8-7d708bbd93de"
+        ],
+        "firstPresented": [
+          {
+            "ruleId": "R5",
+            "ruleVersion": "discovery-v3.0-rc1",
+            "eventId": "e6d7a0c5-9caa-4e0e-b50d-bb02c61493ed",
+            "at": 1789331545762
+          },
+          {
+            "ruleId": "R6",
+            "ruleVersion": "discovery-v3.0-rc1",
+            "eventId": "f91e5e2c-c154-4595-b5f8-7d708bbd93de",
+            "at": 1789331594085
+          }
+        ]
+      }
+    },
+    "view": null
+  }
+}

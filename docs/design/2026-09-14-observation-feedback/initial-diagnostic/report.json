@@ -1,0 +1,473 @@
+{
+  "scope": "Caught-exception diagnostic; debugger pauses affect timing",
+  "caught": [
+    {
+      "exception": "ReferenceError: require is not defined\n    at http://127.0.0.1:5308/assets/motion-iLBaTeAD.js:9:3691",
+      "frames": [
+        {
+          "function": "",
+          "location": {
+            "scriptId": "4",
+            "lineNumber": 8,
+            "columnNumber": 3690
+          }
+        }
+      ]
+    },
+    {
+      "exception": "Promise",
+      "frames": [
+        {
+          "function": "at",
+          "location": {
+            "scriptId": "6",
+            "lineNumber": 0,
+            "columnNumber": 4287
+          }
+        },
+        {
+          "function": "Hi",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 37346
+          }
+        },
+        {
+          "function": "dx",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 81100
+          }
+        },
+        {
+          "function": "$x",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 117215
+          }
+        },
+        {
+          "function": "j_",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 117187
+          }
+        }
+      ]
+    },
+    {
+      "exception": "Error: Minified React error #460; visit https://react.dev/errors/460 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at ek (http://127.0.0.1:5308/assets/index-Du3zMe2N.js:9:36599)\n    at tk (http://127.0.0.1:5308/assets/index-Du3zMe2N.js:10:37359)\n    at http://127.0.0.1:5308/assets/index-Du3zMe2N.js:10:37382",
+      "frames": [
+        {
+          "function": "Hi",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 37369
+          }
+        },
+        {
+          "function": "dx",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 81100
+          }
+        },
+        {
+          "function": "$x",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 117215
+          }
+        },
+        {
+          "function": "j_",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 117187
+          }
+        },
+        {
+          "function": "b_",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 117040
+          }
+        }
+      ]
+    },
+    {
+      "exception": "Promise",
+      "frames": [
+        {
+          "function": "at",
+          "location": {
+            "scriptId": "6",
+            "lineNumber": 0,
+            "columnNumber": 4287
+          }
+        },
+        {
+          "function": "Hi",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 37346
+          }
+        },
+        {
+          "function": "dx",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 81100
+          }
+        },
+        {
+          "function": "$x",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 117215
+          }
+        },
+        {
+          "function": "y_",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 116259
+          }
+        }
+      ]
+    },
+    {
+      "exception": "Error: Minified React error #460; visit https://react.dev/errors/460 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at ek (http://127.0.0.1:5308/assets/index-Du3zMe2N.js:9:36599)\n    at tk (http://127.0.0.1:5308/assets/index-Du3zMe2N.js:10:37359)\n    at http://127.0.0.1:5308/assets/index-Du3zMe2N.js:10:37382",
+      "frames": [
+        {
+          "function": "Hi",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 37369
+          }
+        },
+        {
+          "function": "dx",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 81100
+          }
+        },
+        {
+          "function": "$x",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 117215
+          }
+        },
+        {
+          "function": "y_",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 116259
+          }
+        },
+        {
+          "function": "Lm",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 116089
+          }
+        }
+      ]
+    },
+    {
+      "exception": "Promise",
+      "frames": [
+        {
+          "function": "at",
+          "location": {
+            "scriptId": "6",
+            "lineNumber": 0,
+            "columnNumber": 4287
+          }
+        },
+        {
+          "function": "Hi",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 37346
+          }
+        },
+        {
+          "function": "dx",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 81100
+          }
+        },
+        {
+          "function": "$x",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 117215
+          }
+        },
+        {
+          "function": "y_",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 116259
+          }
+        }
+      ]
+    },
+    {
+      "exception": "Error: Minified React error #460; visit https://react.dev/errors/460 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at ek (http://127.0.0.1:5308/assets/index-Du3zMe2N.js:9:36599)\n    at tk (http://127.0.0.1:5308/assets/index-Du3zMe2N.js:10:37359)\n    at http://127.0.0.1:5308/assets/index-Du3zMe2N.js:10:37382",
+      "frames": [
+        {
+          "function": "Hi",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 37369
+          }
+        },
+        {
+          "function": "dx",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 81100
+          }
+        },
+        {
+          "function": "$x",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 117215
+          }
+        },
+        {
+          "function": "y_",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 116259
+          }
+        },
+        {
+          "function": "Lm",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 116089
+          }
+        }
+      ]
+    },
+    {
+      "exception": "Promise",
+      "frames": [
+        {
+          "function": "at",
+          "location": {
+            "scriptId": "6",
+            "lineNumber": 0,
+            "columnNumber": 4287
+          }
+        },
+        {
+          "function": "Hi",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 37346
+          }
+        },
+        {
+          "function": "dx",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 81100
+          }
+        },
+        {
+          "function": "$x",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 117215
+          }
+        },
+        {
+          "function": "j_",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 117187
+          }
+        }
+      ]
+    },
+    {
+      "exception": "Error: Minified React error #460; visit https://react.dev/errors/460 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at ek (http://127.0.0.1:5308/assets/index-Du3zMe2N.js:9:36599)\n    at tk (http://127.0.0.1:5308/assets/index-Du3zMe2N.js:10:37359)\n    at http://127.0.0.1:5308/assets/index-Du3zMe2N.js:10:37382",
+      "frames": [
+        {
+          "function": "Hi",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 37369
+          }
+        },
+        {
+          "function": "dx",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 81100
+          }
+        },
+        {
+          "function": "$x",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 117215
+          }
+        },
+        {
+          "function": "j_",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 117187
+          }
+        },
+        {
+          "function": "b_",
+          "location": {
+            "scriptId": "8",
+            "lineNumber": 8,
+            "columnNumber": 117040
+          }
+        }
+      ]
+    }
+  ],
+  "text": "プレイヤーの しま\nしずく\n2\nひかり\n3\nえんげい 小屋の ようす\n\nいまは ほかのこが つかっているよ\n\nみるもの\nいまの ようす\n森の としょしつ 1\nベンチ 2\nおはな 3\nおはな 4\nおはな 5\nもういちど みてみる\nしま\nいえ\nまなぶ\nきろく\n設定",
+  "view": {
+    "at": 1789334544298.9,
+    "core": false,
+    "status": "target-busy",
+    "poses": [
+      {
+        "id": "pokomoko",
+        "phase": "waiting",
+        "position": [
+          -2.5,
+          0.04,
+          0
+        ],
+        "hop": 0,
+        "headPitch": 0,
+        "headRoll": 0,
+        "headYaw": 0
+      },
+      {
+        "id": "rabbit",
+        "itemId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+        "phase": "flower",
+        "position": [
+          0.98,
+          0.04,
+          1
+        ],
+        "hop": 0,
+        "headPitch": 0.09,
+        "headRoll": -0.016782870169863063,
+        "headYaw": 0
+      },
+      {
+        "id": "otter",
+        "itemId": "cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03",
+        "phase": "garden-hut",
+        "position": [
+          1.5,
+          0.04,
+          0
+        ],
+        "hop": 0,
+        "headPitch": 0.6,
+        "headRoll": 0.01677691737486642,
+        "facilityUse": {
+          "kind": "garden-hut",
+          "action": "tool-care"
+        },
+        "headYaw": 1.1102230246251565e-15
+      }
+    ],
+    "preparation": "",
+    "delivered": false,
+    "maxGap": 1519.5,
+    "epoch": 1,
+    "camera": {
+      "projection": [
+        0.4422790212480578,
+        0,
+        0,
+        0,
+        0,
+        0.4649294293443195,
+        0,
+        0,
+        0,
+        0,
+        -0.02002002002002002,
+        0,
+        -0.01406386202873566,
+        -0.05129814089196152,
+        -1.002002002002002,
+        1
+      ],
+      "view": [
+        0.8411784753765535,
+        -0.2785043287946192,
+        0.4635235823621443,
+        0,
+        5.551115123125783e-17,
+        0.8571744341789946,
+        0.5150262026246047,
+        0,
+        -0.5407575913134988,
+        -0.43322895590274096,
+        0.7210366836744466,
+        0,
+        -1.8477408933640347,
+        -0.33346320309773814,
+        -10.549111713376135,
+        1
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "sourceHash": "d594fd9d6751c0308a654d62c688e8a8c9f9e0f8bf8bcf21393092758ed27194",
+  "version": {
+    "version": "development-local:ee54c5fe-d2c1-4259-a8c8-140cae443177",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "target": "http://127.0.0.1:5308",
+  "scope": "Real earned profiles, explicit visits and target choices; no DB injection, clock acceleration or debugger pauses",
+  "cases": [],
+  "pass": false,
+  "failure": {
+    "device": "phone",
+    "error": "locator.waitFor: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-life-observation]').getByText('みちを とおっているよ。ついてから もういちど えらんでね。', { exact: true }) to be visible\u001b[22m\n\n    at /private/tmp/sansu-canopy-material-worktree/tools/e2e-island-life-observation-feedback.mjs:19:120",
+    "text": "プレイヤーの しま\nしずく\n2\nひかり\n3\nえんげい 小屋の ようす\n\nいまは、ほかのことを しているよ\n\nみるもの\nいまの ようす\n森の としょしつ 1\nベンチ 2\nおはな 3\nおはな 4\nおはな 5\nもういちど みてみる\nしま\nいえ\nまなぶ\nきろく\n設定"
+  }
+}

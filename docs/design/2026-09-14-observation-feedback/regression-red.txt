@@ -1,0 +1,48 @@
+
+ RUN  v2.1.9 /private/tmp/sansu-canopy-material-worktree
+
+ ❯ src/components/island/life/lifePersistenceMessage.test.ts (4 tests | 2 failed) 5ms
+   × explains a real walking rejection without claiming the save failed or changing the visit 4ms
+     → expected 'しまの きろくを たしかめられなかったよ。もういちど ためしてね。' to be 'みちを とおっているよ。ついてから もういちど えらんでね。' // Object.is equality
+   × keeps known unavailable choices separate from unknown storage failures 0ms
+     → expected 'しまの きろくを たしかめられなかったよ。もういちど ためしてね。' to be 'ほかのことを しているよ。あとで もういちど えらんでね。' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/island/life/lifePersistenceMessage.test.ts > explains a real walking rejection without claiming the save failed or changing the visit
+AssertionError: expected 'しまの きろくを たしかめられなかったよ。もういちど ためしてね。' to be 'みちを とおっているよ。ついてから もういちど えらんでね。' // Object.is equality
+
+Expected: "みちを とおっているよ。ついてから もういちど えらんでね。"
+Received: "しまの きろくを たしかめられなかったよ。もういちど ためしてね。"
+
+ ❯ src/components/island/life/lifePersistenceMessage.test.ts:16:46
+     14|     try { applyRelationObservation(state, 'bench', state.residents[0].…
+     15|     expect(rejected).toBeInstanceOf(Error);
+     16|     expect(lifePersistenceMessage(rejected)).toBe('みちを とおっている…
+       |                                              ^
+     17|     expect(state).toEqual(before);
+     18| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/components/island/life/lifePersistenceMessage.test.ts > keeps known unavailable choices separate from unknown storage failures
+AssertionError: expected 'しまの きろくを たしかめられなかったよ。もういちど ためしてね。' to be 'ほかのことを しているよ。あとで もういちど えらんでね。' // Object.is equality
+
+Expected: "ほかのことを しているよ。あとで もういちど えらんでね。"
+Received: "しまの きろくを たしかめられなかったよ。もういちど ためしてね。"
+
+ ❯ src/components/island/life/lifePersistenceMessage.test.ts:21:68
+     19| 
+     20| it('keeps known unavailable choices separate from unknown storage fail…
+     21|     expect(lifePersistenceMessage(new Error('いまは、ほかのことを して…
+       |                                                                    ^
+     22|     expect(lifePersistenceMessage(new Error('その ものは いま ここに …
+     23| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 2 passed (4)
+   Start at  06:24:19
+   Duration  301ms (transform 78ms, setup 0ms, collect 97ms, tests 5ms, environment 0ms, prepare 51ms)
+
