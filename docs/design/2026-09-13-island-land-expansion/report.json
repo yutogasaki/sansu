@@ -1,0 +1,414 @@
+{
+  "startHash": "490780a338a48ab1c11693eceb6585537db9c497b42ba60c3d590f3056a3baf0",
+  "revision": "6e26fd014a5ddb083cfdfd447445fa06b0ec4479",
+  "target": "http://127.0.0.1:5223",
+  "candidate": "land-12-24-48-v1",
+  "world": "canopy-dots-c3-v1",
+  "flags": "DEV VITE_ISLAND_LIFE_PREVIEW=true",
+  "fixture": "60 QA credits; all three land purchases and two placements through real controls; no earned acquisition claim",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "corners": [
+        {
+          "cell": {
+            "x": -3,
+            "z": 0
+          },
+          "point": {
+            "x": 109.07614923946986,
+            "y": 331.4276961029811,
+            "visible": true
+          }
+        },
+        {
+          "cell": {
+            "x": 8,
+            "z": 0
+          },
+          "point": {
+            "x": 341.40656135174135,
+            "y": 383.61202348906113,
+            "visible": true
+          }
+        },
+        {
+          "cell": {
+            "x": -3,
+            "z": 7
+          },
+          "point": {
+            "x": 48.59343864825866,
+            "y": 412.6033164813278,
+            "visible": true
+          }
+        },
+        {
+          "cell": {
+            "x": 8,
+            "z": 7
+          },
+          "point": {
+            "x": 280.9238507605302,
+            "y": 464.7876438674079,
+            "visible": true
+          }
+        }
+      ],
+      "routes": [
+        [
+          {
+            "x": 2,
+            "z": 1
+          },
+          {
+            "x": 1,
+            "z": 1
+          },
+          {
+            "x": 0,
+            "z": 1
+          },
+          {
+            "x": -1,
+            "z": 1
+          },
+          {
+            "x": -2,
+            "z": 1
+          },
+          {
+            "x": -2,
+            "z": 2
+          },
+          {
+            "x": -2,
+            "z": 3
+          },
+          {
+            "x": -2,
+            "z": 4
+          },
+          {
+            "x": -2,
+            "z": 5
+          },
+          {
+            "x": -2,
+            "z": 6
+          },
+          {
+            "x": -2,
+            "z": 7
+          }
+        ],
+        [
+          {
+            "x": 2,
+            "z": 1
+          },
+          {
+            "x": 3,
+            "z": 1
+          },
+          {
+            "x": 4,
+            "z": 1
+          },
+          {
+            "x": 5,
+            "z": 1
+          },
+          {
+            "x": 6,
+            "z": 1
+          },
+          {
+            "x": 7,
+            "z": 1
+          },
+          {
+            "x": 7,
+            "z": 2
+          },
+          {
+            "x": 7,
+            "z": 3
+          },
+          {
+            "x": 7,
+            "z": 4
+          },
+          {
+            "x": 7,
+            "z": 5
+          },
+          {
+            "x": 7,
+            "z": 6
+          },
+          {
+            "x": 7,
+            "z": 7
+          }
+        ]
+      ],
+      "drops": 32,
+      "receipts": [
+        {
+          "id": "cf2e0b20-5e4a-452f-8c38-3cd36674ce31",
+          "at": 1789277665093,
+          "command": {
+            "type": "expand",
+            "side": "east"
+          },
+          "landReceipt": {
+            "rules": "land-12-24-48-v1",
+            "step": 1,
+            "side": "east",
+            "actualPaidDrops": 12,
+            "actionId": "cf2e0b20-5e4a-452f-8c38-3cd36674ce31",
+            "committedAt": 1789277665093
+          }
+        },
+        {
+          "id": "0c006283-a51e-4ad0-9583-6eef34518f82",
+          "at": 1789277667852,
+          "command": {
+            "type": "expand",
+            "side": "west"
+          },
+          "landReceipt": {
+            "rules": "land-12-24-48-v1",
+            "step": 2,
+            "side": "west",
+            "actualPaidDrops": 24,
+            "actionId": "0c006283-a51e-4ad0-9583-6eef34518f82",
+            "committedAt": 1789277667852
+          }
+        },
+        {
+          "id": "b48a7e14-63f8-4cc8-b3ed-1513e9b96398",
+          "at": 1789277670437,
+          "command": {
+            "type": "expand",
+            "side": "south"
+          },
+          "landReceipt": {
+            "rules": "land-12-24-48-v1",
+            "step": 3,
+            "side": "south",
+            "actualPaidDrops": 48,
+            "actionId": "b48a7e14-63f8-4cc8-b3ed-1513e9b96398",
+            "committedAt": 1789277670437
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "device": "tablet",
+      "corners": [
+        {
+          "cell": {
+            "x": -3,
+            "z": 0
+          },
+          "point": {
+            "x": 214.7961092715714,
+            "y": 356.727188222663,
+            "visible": true
+          }
+        },
+        {
+          "cell": {
+            "x": 8,
+            "z": 0
+          },
+          "point": {
+            "x": 672.3083054311214,
+            "y": 459.4743130484897,
+            "visible": true
+          }
+        },
+        {
+          "cell": {
+            "x": -3,
+            "z": 7
+          },
+          "point": {
+            "x": 95.69169456887859,
+            "y": 516.5560490628377,
+            "visible": true
+          }
+        },
+        {
+          "cell": {
+            "x": 8,
+            "z": 7
+          },
+          "point": {
+            "x": 553.2038907284286,
+            "y": 619.3031738886643,
+            "visible": true
+          }
+        }
+      ],
+      "routes": [
+        [
+          {
+            "x": 2,
+            "z": 1
+          },
+          {
+            "x": 1,
+            "z": 1
+          },
+          {
+            "x": 0,
+            "z": 1
+          },
+          {
+            "x": -1,
+            "z": 1
+          },
+          {
+            "x": -2,
+            "z": 1
+          },
+          {
+            "x": -2,
+            "z": 2
+          },
+          {
+            "x": -2,
+            "z": 3
+          },
+          {
+            "x": -2,
+            "z": 4
+          },
+          {
+            "x": -2,
+            "z": 5
+          },
+          {
+            "x": -2,
+            "z": 6
+          },
+          {
+            "x": -2,
+            "z": 7
+          }
+        ],
+        [
+          {
+            "x": 2,
+            "z": 1
+          },
+          {
+            "x": 3,
+            "z": 1
+          },
+          {
+            "x": 4,
+            "z": 1
+          },
+          {
+            "x": 5,
+            "z": 1
+          },
+          {
+            "x": 6,
+            "z": 1
+          },
+          {
+            "x": 7,
+            "z": 1
+          },
+          {
+            "x": 7,
+            "z": 2
+          },
+          {
+            "x": 7,
+            "z": 3
+          },
+          {
+            "x": 7,
+            "z": 4
+          },
+          {
+            "x": 7,
+            "z": 5
+          },
+          {
+            "x": 7,
+            "z": 6
+          },
+          {
+            "x": 7,
+            "z": 7
+          }
+        ]
+      ],
+      "drops": 32,
+      "receipts": [
+        {
+          "id": "f242c697-9ac1-4413-9dfe-23061ece18b1",
+          "at": 1789277705214,
+          "command": {
+            "type": "expand",
+            "side": "west"
+          },
+          "landReceipt": {
+            "rules": "land-12-24-48-v1",
+            "step": 1,
+            "side": "west",
+            "actualPaidDrops": 12,
+            "actionId": "f242c697-9ac1-4413-9dfe-23061ece18b1",
+            "committedAt": 1789277705214
+          }
+        },
+        {
+          "id": "3c9caf8f-bc1e-40bf-862a-ace25aab0bfc",
+          "at": 1789277708920,
+          "command": {
+            "type": "expand",
+            "side": "east"
+          },
+          "landReceipt": {
+            "rules": "land-12-24-48-v1",
+            "step": 2,
+            "side": "east",
+            "actualPaidDrops": 24,
+            "actionId": "3c9caf8f-bc1e-40bf-862a-ace25aab0bfc",
+            "committedAt": 1789277708920
+          }
+        },
+        {
+          "id": "81a7843e-352c-4902-b538-b475457e5ef3",
+          "at": 1789277713794,
+          "command": {
+            "type": "expand",
+            "side": "south"
+          },
+          "landReceipt": {
+            "rules": "land-12-24-48-v1",
+            "step": 3,
+            "side": "south",
+            "actualPaidDrops": 48,
+            "actionId": "81a7843e-352c-4902-b538-b475457e5ef3",
+            "committedAt": 1789277713794
+          }
+        }
+      ],
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "endHash": "490780a338a48ab1c11693eceb6585537db9c497b42ba60c3d590f3056a3baf0"
+}

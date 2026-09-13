@@ -190,3 +190,10 @@
 
 - 保存版4/tourCutoverを接続。旧action原文・境界時刻・同時刻順序とhashを検証し、切替時の既存訪問を保持。15秒のrefresh間は正式stateを訪問/支払境界で進めるprojectionへ接続し、実表示の住民stateをsnapshotに渡す。新snapshotはcaptured-v1で再計画せず、旧snapshotは従来どおり。
 - 最終core PASS（370 files / 3777 tests、docs/lint/typecheck/build/assets）。[GP3の両幅実画面](../../design/2026-09-13-island-play-tours/README.md): 3住民が3台を巡回、短い利用でひかり0、実live GP3の再演、実収納で巡回取消・記録不変、学習復帰。source開始/終了 `f15c536725417c3b81dc7629da2e496cf319af3f1df55e74562119e47e440b76` 一致。明示fixtureであり自然初回連結/実取得の証明ではない。Human N=0、C3視覚HOLDと全体release未完を継続。次は土地の2回目/南拡張、所有/配置上限の実機検証、Bの商品/関係/魔法、C3の改善を進める。
+
+
+### 土地の追加拡張
+
+GP3 checkpoint `6e26fd014a5ddb083cfdfd447445fa06b0ec4479` はmain push済み。土地は既存片側権利を保ち、逆側24/南48しずくを実装。新土地receiptと保存版5で旧履歴へ新解釈を差し込まない。見取り図・実地形・配置/全景の奥行きと新セルの通路検査を接続。
+
+core PASS（371 files /3783 tests、docs/lint/typecheck/build/assets）。[実UIの両幅](../../design/2026-09-13-island-land-expansion/README.md)で3段階購入・南端両側のタッチ配置・再読込保持・学習復帰。source開始/終了 `490780a338a48ab1c11693eceb6585537db9c497b42ba60c3d590f3056a3baf0` 一致。C3視覚HOLD、Human N=0、release未完を継続。所有/配置120/60候補の実機検証、Bの商品/関係/魔法、C3品質、全体統合は次の範囲。思い出の拡張前後の実UI往復と住民の端までの歩行も追加確認対象。

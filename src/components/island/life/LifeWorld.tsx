@@ -66,7 +66,7 @@ export default function LifeWorld({ profileId, presented, state, selected, cell,
         resize = () => {
             const width = Math.max(1, node.clientWidth), height = Math.max(1, node.clientHeight), aspect = width / height;
             renderer.setSize(width, height);
-            const projectedWidth = ((content?.width ?? 6) + 2) * .926 + 6.7 * .379 + .45;
+            const projectedWidth = ((content?.width ?? 6) + 2) * .926 + ((content?.depth ?? 5) + 1.7) * .379 + .45;
             // The ordinary view reads faces; placement and overview retain the full shore.
             const closeView = !currentPlacement && !overviewRef.current;
             const halfHeight = Math.max(3.8, projectedWidth / aspect / 2) * (closeView ? .66 : 1);
@@ -97,7 +97,7 @@ export default function LifeWorld({ profileId, presented, state, selected, cell,
                 ground: { origin, x: { x: xBasis.x - origin.x, y: xBasis.y - origin.y }, z: { x: zBasis.x - origin.x, y: zBasis.y - origin.y } },
                 // Bring the doorstep toward the center in the closer view without
                 // changing the full-island frame used for placement and overview.
-                center: closeView ? { x: project(pointFor(2.5, 1)).x * .45, y: canopyView ? .95 : 0 } : { x: 0, y: 0 },
+                center: closeView ? { x: project(pointFor(2.5, 1)).x * .45, y: canopyView ? .95 : 0 } : project(pointFor(center, ((content?.depth ?? 5) - 1) / 2)),
                 height: halfHeight * 2, aspect, bounds, regions: [ground],
             };
             const frame = cameraControls.setFrame(framing);

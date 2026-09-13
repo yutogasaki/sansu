@@ -12,6 +12,7 @@ export const LIFE_RULES = { dropsPerProblem: 2, dailyGoal: 6, activityMs: HOUR /
 export type ItemKind = 'flower' | 'bench' | 'swing' | 'lantern';
 export type Style = 'original' | 'sunshine' | 'starlight';
 export type ResidentId = 'pokomoko' | 'rabbit' | 'otter';
+export type LandSide = 'east' | 'west' | 'south';
 export type Cell = { x: number; z: number };
 export const CATALOG: Record<ItemKind, { label: string; price: number }> = {
     flower: { label: 'おはな', price: 2 }, bench: { label: 'ベンチ', price: 4 },
@@ -21,14 +22,17 @@ export interface LifeItem { id: string; kind: ItemKind; cell?: Cell; growth: num
 export interface Credit { id: string; at: number; day: string }
 export type LifeCommand = { type: 'buy'; kind: ItemKind; cell: Cell }
     | { type: 'move'; itemId: string; cell: Cell } | { type: 'store' | 'remove' | 'visit' | 'observe'; itemId: string }
-    | { type: 'expand'; side: 'east' | 'west' } | { type: 'style'; style: Style; itemId?: string };
+    | { type: 'expand'; side: LandSide } | { type: 'style'; style: Style; itemId?: string };
 export interface LifePurchaseReceipt {
     priceVersion: 'life-48-v1'; actualPaidDrops: number; quoteFingerprint: string;
     itemInstanceId: string; committedAt: number;
 }
-export interface LifeAction { id: string; at: number; command: LifeCommand; purchaseReceipt?: LifePurchaseReceipt; undoOf?: string }
+export interface LifeLandReceipt {
+    rules: 'land-12-24-48-v1'; step: number; side: LandSide; actualPaidDrops: number; actionId: string; committedAt: number;
+}
+export interface LifeAction { id: string; at: number; command: LifeCommand; purchaseReceipt?: LifePurchaseReceipt; landReceipt?: LifeLandReceipt; undoOf?: string }
 export interface LifeRecord {
-    profileId: string; version: 1 | 2 | 3 | 4; revision: number; createdAt: number; realAt: number; now: number;
+    profileId: string; version: 1 | 2 | 3 | 4 | 5; revision: number; createdAt: number; realAt: number; now: number;
     credits: Credit[]; actions: LifeAction[]; offsets: { at: number; offset: number }[]; clockIntents: string[];
     activitiesV2At?: number;
     activitiesV2After?: number;
@@ -52,6 +56,7 @@ export interface LifeResident {
 export type LifeWorldStyle = 'moon-garden-v1' | 'canopy-dots-c3-v1';
 export interface LifeState {
     worldStyle?: LifeWorldStyle;
+    extraLand?: LandSide[];
     tourVersion?: 1;
     scenePose?: 'captured-v1';
     roamRound?: number;
@@ -78,4 +83,4 @@ export function newLife(profileId: string, now: number): LifeRecord {
     return { profileId, version: 1, revision: 0, createdAt: now, realAt: now, now, credits: [], actions: [], offsets: [{ at: now, offset: 0 }], clockIntents: [], activitiesV2At: now, activitiesV2After: 0 };
 }
 
-export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3 || version === 4; }
+export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3 || version === 4 || version === 5; }

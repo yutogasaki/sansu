@@ -1,10 +1,12 @@
+import { landBounds, type LandState } from './landRules';
 import { growthStage, type Cell, type District, type LifeItem, type LifeState } from './model';
 export const homeCell: Cell = { x: 2, z: 1 };
 export const cellKey = (p: Cell) => `${p.x},${p.z}`;
 export const sameCell = (a: Cell, b: Cell) => a.x === b.x && a.z === b.z;
-export function landCells(s: Pick<LifeState, 'expanded'>): Cell[] {
+export function landCells(s: LandState): Cell[] {
     const out: Cell[] = [];
-    for (let z = 0; z < 5; z++) for (let x = s.expanded === 'west' ? -3 : 0; x < (s.expanded === 'east' ? 9 : 6); x++) out.push({ x, z });
+    const { minX, maxX, depth } = landBounds(s);
+    for (let z = 0; z < depth; z++) for (let x = minX; x <= maxX; x++) out.push({ x, z });
     return out;
 }
 export function isHouse(p: Cell) { return p.z === 0 && (p.x === 2 || p.x === 3) || sameCell(p, homeCell); }

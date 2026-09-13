@@ -1,3 +1,4 @@
+import { landBounds } from '../../../domain/islandLife/landRules';
 import * as T from 'three';
 import { batch, ellipsoid } from '../three/primitives';
 import type { Cell, LifeState } from '../../../domain/islandLife/model';
@@ -32,11 +33,12 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
         mesh.receiveShadow = true; root.add(mesh); return mesh;
     };
     const canopy = state.worldStyle === 'canopy-dots-c3-v1';
+    const addedDepth = landBounds(state).depth - 5;
     const apron = canopy ? 1.35 : 0;
-    const cliff = land(width + 1.7, 6.35 + apron, -.43, .23, '#9d8cb8');
-    const sand = land(width + 1.95, 6.65 + apron, -.24, .15, '#ead7a8');
-    const grass = land(width + 1.4, 5.65 + apron, -.16, .15, '#63cbb0');
-    for (const layer of [cliff, sand, grass]) layer.position.z = -apron / 2;
+    const cliff = land(width + 1.7, 6.35 + addedDepth + apron, -.43, .23, '#9d8cb8');
+    const sand = land(width + 1.95, 6.65 + addedDepth + apron, -.24, .15, '#ead7a8');
+    const grass = land(width + 1.4, 5.65 + addedDepth + apron, -.16, .15, '#63cbb0');
+    for (const layer of [cliff, sand, grass]) layer.position.z = (addedDepth - apron) / 2;
     const grassSurface = createIslandGrassSurface(grass.material, 'legacy-v1:moon-garden:ground');
     if (grassSurface) {
         grass.material = grassSurface.material;
@@ -46,8 +48,8 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
     // A broad, quiet water plane with a shallow shelf and low-contrast current.
     // It carries no hit targets and never changes simulation time or growth.
     const water = new T.ShaderMaterial({
-        uniforms: { time: { value: 0 }, halfLand: { value: new T.Vector2((width + 1.9) / 2, 3.35 + apron / 2) },
-            landOffset: { value: apron / 2 }, deep: { value: new T.Color('#355fc4') }, shallow: { value: new T.Color('#8bdbdd') } },
+        uniforms: { time: { value: 0 }, halfLand: { value: new T.Vector2((width + 1.9) / 2, 3.35 + (addedDepth + apron) / 2) },
+            landOffset: { value: (apron - addedDepth) / 2 }, deep: { value: new T.Color('#355fc4') }, shallow: { value: new T.Color('#8bdbdd') } },
         vertexShader: 'varying vec2 vWorld; void main(){vec4 p=modelMatrix*vec4(position,1.0);vWorld=p.xz;gl_Position=projectionMatrix*viewMatrix*p;}',
         fragmentShader: `uniform float time; uniform float landOffset; uniform vec2 halfLand; uniform vec3 deep; uniform vec3 shallow; varying vec2 vWorld;
         float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
@@ -69,7 +71,7 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
 
     const edge = new T.Group(); edge.name = 'life-coast-plants'; root.add(edge);
     // Only low shoreline growth: the playable cell centers and approaches stay open.
-    for (const side of [-1, 1]) for (let j = 0; j < 7; j++) {
+    for (const side of [-1, 1]) for (let j = 0; j < 7 + Math.floor(addedDepth / .83); j++) {
         if ((j + side) % 3 === 0) continue;
         const x = side * (width / 2 + .48 + Math.sin(j * 2.1) * .08), z = -2.6 + j * .83;
         const stone = new T.Mesh(new T.IcosahedronGeometry(1, 0), paint(j % 2 ? '#a88bbc' : '#c9acd8'));
@@ -90,7 +92,7 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
             const leaf = ellipsoid(edge, paint(k % 2 ? '#9162c0' : '#d176cf'), [x + k * .11, .10, z], [.16, .20 + k * .02, .09], 9);
             leaf.rotation.z = (k - 1) * .55;
         }
-        if (j % 2 === 0) ellipsoid(edge, paint('#d5c7ab'), [x, -.14, 3.02], [.15, .07, .10], 9);
+        if (j % 2 === 0) ellipsoid(edge, paint('#d5c7ab'), [x, -.14, 3.02 + addedDepth], [.15, .07, .10], 9);
     }
     batch(edge);
 

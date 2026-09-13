@@ -1,3 +1,4 @@
+import { applyLandExpansion, landReceipt } from './landRules';
 import { assertTourCutover } from './tourMigration';
 import { playTourMembers, planPlayTourDepartures, advancePlayTourCursor } from './playTours';
 import { assertCheckpointBoundary, checkpointLegacyRecord } from './economyMigration';
@@ -210,9 +211,7 @@ export function applyCommand(s: LifeState, event: LifeAction) {
             r.cell = residentCell(r, s.now); r.visit = undefined; r.playTour = undefined;
         }
     } else if (c.type === 'expand') {
-        if (s.expanded) fail('この しまは ここまで ひろがったよ。');
-        if (!['east', 'west'].includes(c.side) || s.drops < LIFE_RULES.expansionPrice) fail('しずくが もうすこし いるよ。');
-        s.expanded = c.side; s.drops -= LIFE_RULES.expansionPrice;
+        applyLandExpansion(s, event);
     } else if (c.type === 'style') {
         if (!['original', 'sunshine', 'starlight'].includes(c.style)) fail('その いろは まだ ないよ。');
         const item = c.itemId ? s.items.find(i => i.id === c.itemId) : undefined;
@@ -272,6 +271,7 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
     if (!readableLifeVersion(record.version)) throw new Error('この島のデータは新しい版で開いてください。');
     const checkpoint = record.economyCheckpoint;
     assertCheckpointBoundary(record); assertTourCutover(record);
+    if (record.actions.some(action => action.landReceipt) && record.version !== 5) throw new Error('土地の保存版を確認できません。');
     if (checkpoint && to < checkpoint.cutoverAt) return replayLife(checkpointLegacyRecord(checkpoint), to);
     const s = checkpoint ? structuredClone(checkpoint.state) : initial(record.createdAt);
     const known = new Set(checkpoint?.projectedCreditIds ?? []);
@@ -317,6 +317,8 @@ export function commandLife(record: LifeRecord, command: LifeCommand, id: string
     }
     const event: LifeAction = { id, at: now, command, ...(undoOf === undefined ? {} : { undoOf }) };
     if (command.type === 'buy') event.purchaseReceipt = purchaseReceipt(event);
-    applyCommand(replayLife(record, now), event);
-    return { ...record, version: command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
+    const state = replayLife(record, now);
+    if (command.type === 'expand' && record.tourCutover) event.landReceipt = landReceipt(state, event);
+    applyCommand(state, event);
+    return { ...record, version: event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
 }
