@@ -10,10 +10,3 @@
 .life-catalog-dots button[aria-pressed="true"] span { width:18px; border-radius:6px; background:var(--pokomoko-blue); }
 .life-catalog-dots button:focus-visible { outline:3px solid var(--pokomoko-blue); outline-offset:-3px; }
 @media(prefers-reduced-motion:reduce) { .life-catalog-scroll { scroll-behavior:auto; } }
-/* Six 44px page targets need their own row in the twelve-item catalog. */
-.life-catalog-navigation:has(.life-catalog-dots button:nth-child(5)) {
-    display:grid; grid-template-columns:1fr auto; gap:0 12px;
-}
-.life-catalog-navigation:has(.life-catalog-dots button:nth-child(5)) small { grid-column:1; grid-row:1; white-space:nowrap; }
-.life-catalog-navigation:has(.life-catalog-dots button:nth-child(5)) .life-catalog-count { grid-column:2; grid-row:1; white-space:nowrap; }
-.life-catalog-navigation:has(.life-catalog-dots button:nth-child(5)) .life-catalog-dots { grid-column:1 / -1; grid-row:2; justify-self:center; }

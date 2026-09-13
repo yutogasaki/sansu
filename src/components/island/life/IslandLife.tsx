@@ -1,3 +1,4 @@
+import { lifeCatalogKinds, lifeDiscoveryPresentation } from '../../../domain/islandLife/capabilities';
 import type { FootstepInput } from './footstepPresentation';
 import type { ShadowRequest } from './shadowObservation';
 import { isFacility, occupiesCell } from '../../../domain/islandLife/footprint';
@@ -72,7 +73,13 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const lastObservedLight = useRef<number | undefined>(undefined);
     const lastObservedGrowth = useRef<Record<string, number> | undefined>(undefined);
     const lastObservedObservation = useRef<Record<string, string> | undefined>(undefined);
-    const state = useMemo(() => record ? { ...replayLife(record), ...(import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true' ? { readingEncounterVersion: 1 as const, encounterVersion: 1 as const, footstepMagicVersion: 1 as const, shadowMagicVersion: 1 as const, waterMagicVersion: 1 as const, facilityPresentation: 'carry-care-v1' as const, landscapeVersion: 'groves-water-v1' as const, relationVersion: 'water-bench-v1' as const } : {}), worldStyle: import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true' ? 'canopy-dots-c3-v1' as const : 'moon-garden-v1' as const } : undefined, [record]);
+    const state = useMemo(() => {
+        if (!record) return undefined;
+        const current = replayLife(record);
+        return { ...current, ...lifeDiscoveryPresentation(current.items),
+            worldStyle: import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true'
+                ? 'canopy-dots-c3-v1' as const : 'moon-garden-v1' as const };
+    }, [record]);
     useEffect(() => {
         if (!observed) { setGathering(undefined); observationOrigin.current = undefined; return; }
         const target = state?.items.find(i => i.id === observed && i.cell);
@@ -227,8 +234,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         if (error) { setMenuOpen(true); setDockOpen(false); return; }
         setDockOpen(true);
     };
-    const products = (Object.keys(CATALOG) as ItemKind[]).filter(kind => !['sapling', 'water-bowl', 'picnic-table', 'pinwheel', 'flower-arch', 'sandbox', 'garden-hut', 'library'].includes(kind)
-        || import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true').filter(kind => !isFacility(kind) || !state.items.some(i => i.kind === kind));
+    const products = lifeCatalogKinds().filter(kind => !isFacility(kind) || !state.items.some(i => i.kind === kind));
     const pageCount = Math.max(1, Math.ceil((tab === 'build' ? products.length : state.items.length) / 2));
     const currentPage = Math.min(page, pageCount - 1);
     const cells = landCells(state), cellPages = Math.ceil(cells.length / 6);

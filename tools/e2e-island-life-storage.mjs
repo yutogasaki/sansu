@@ -12,6 +12,9 @@ assert(['127.0.0.1', 'localhost'].includes(new URL(base).hostname), 'Local isola
 await mkdir(out, { recursive: false });
 const buildPath = process.env.SANSU_LIFE_STORAGE_BUILD_SOURCE; assert(buildPath, 'Bind the run to a frozen production build');
 const build = JSON.parse(await readFile(buildPath));
+const discovery = process.env.SANSU_LIFE_STORAGE_DISCOVERY === '1';
+const purchaseKind = discovery ? 'sapling' : 'flower', purchaseCost = discovery ? 4 : 2;
+const afterPurchase = 6 - purchaseCost, afterProjection = afterPurchase + 2;
 const failProjection = process.env.SANSU_LIFE_STORAGE_FAIL_PROJECTION === '1';
 async function verifyBuild() {
     for (const file of [...build.files, ...build.distFiles]) assert.equal(createHash('sha256').update(await readFile(file.path)).digest('hex'), file.sha256, file.path);
@@ -47,9 +50,9 @@ const stableKeys = ['profileId', 'createdAt', 'credits', 'actions', 'economyChec
 function sameOwnership(before, after) { for (const key of stableKeys) assert.deepEqual(after[key], before[key], key); }
 async function wallet(page) { return Number(await page.locator('[data-life-drops]').getAttribute('data-life-drops')); }
 const report = { target: base, startHash: await sourceHash(), revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
-    flags: 'production Island=true, Life=true, Life preview=false, BuildPlay=false', fixture: 'No injected profiles, clocks, credits, answers, or database writes; onboarding and purchases through actual UI in disposable contexts',
+    flags: `production Island=true, Life=true, Discovery=${discovery}, Life preview=false, BuildPlay=false`, fixture: 'No injected profiles, clocks, credits, answers, or database writes; onboarding and purchases through actual UI in disposable contexts',
     failureInjection: failProjection ? 'Explicit IDBObjectStore.put failure for SansuIslandLifeV1/worlds only after a real offline answer; disabled before UI retry' : 'none', buildVersion: build.version,
-    scope: 'Actual service worker offline ownership, earned credit projection, placement/storage and native learning. Current four-item production capability; not DEV-only v3 visuals/magic or two-build update.', humanN: 0, cases: [], pass: false };
+    scope: `Actual service worker offline ownership, earned credit projection, placement/storage and native learning. ${discovery ? '12-item catalog and real sapling purchase' : 'Four-item production capability'}. Not all rule journeys, C3 or two-build update.`, humanN: 0, cases: [], pass: false };
 assert.equal(report.startHash, build.sourceHash);
 const browser = await chromium.launch();
 try {
@@ -76,10 +79,32 @@ try {
             console.log(`${device}: purchase`);
             await page.getByRole('button', { name: 'つくる', exact: true }).click();
             await page.getByRole('group', { name: 'しまの ていれ' }).getByRole('button', { name: 'つくる', exact: true }).click();
-            await page.locator('[data-life-buy="flower"]').click(); await putCell(page, { x: 0, z: 2 });
+            let catalog;
+            if (discovery) {
+                catalog=[];
+                for(let i=1;i<=6;i++){
+                    await page.getByRole('button',{name:`${i}ページめ`,exact:true}).click();
+                    const group=page.getByRole('group',{name:`${i}ページめ`,exact:true});
+                    catalog.push(...await group.locator('[data-life-buy]').evaluateAll(nodes=>nodes.map(n=>({kind:n.dataset.lifeBuy,text:n.textContent,disabled:n.disabled}))));
+                    await page.screenshot({path:`${out}/${device}-catalog-${i}.png`});
+                }
+                const navigation = await page.locator('.life-catalog-navigation').evaluate(n=>{
+                    const box=n.getBoundingClientRect(),hint=n.querySelector('small').getBoundingClientRect(),count=n.querySelector('.life-catalog-count').getBoundingClientRect();
+                    return {width:n.clientWidth,scrollWidth:n.scrollWidth,hintHeight:hint.height,countHeight:count.height,
+                        targets:[...n.querySelectorAll('button')].map(b=>{const r=b.getBoundingClientRect();return {width:r.width,height:r.height,inside:r.left>=box.left-1&&r.right<=box.right+1};})};
+                });
+                assert(navigation.scrollWidth<=navigation.width+1);assert(navigation.hintHeight<20&&navigation.countHeight<20);
+                assert(navigation.targets.length===6&&navigation.targets.every(b=>b.width>=44&&b.height>=44&&b.inside));
+                report.navigationChecks??=[];report.navigationChecks.push({device,...navigation});
+                assert.deepEqual(catalog.map(p=>p.kind),['flower','bench','swing','lantern','sapling','water-bowl','picnic-table','pinwheel','flower-arch','sandbox','garden-hut','library']);
+                await page.getByRole('button',{name:'3ページめ',exact:true}).click();
+            }
+            await page.locator(`[data-life-buy="${purchaseKind}"]`).click(); await putCell(page, { x: 0, z: 2 });
             const purchased = await until(() => life(page), r => r.actions.some(a => a.command.type === 'buy'), 'Purchase must commit before reload');
             const itemId = purchased.actions.find(a => a.command.type === 'buy').id;
-            assert(itemId); assert.equal(await wallet(page), 4); assert.deepEqual(purchased.credits, earned.credits);
+            assert.equal(purchased.actions.find(a=>a.id===itemId).purchaseReceipt.actualPaidDrops,purchaseCost);
+            assert.equal(purchased.actions.find(a=>a.id===itemId).command.kind,purchaseKind);
+            assert(itemId); assert.equal(await wallet(page), afterPurchase); assert.deepEqual(purchased.credits, earned.credits);
             await page.screenshot({ path: `${out}/${device}-purchased.png` });
             await page.evaluate(async () => { await navigator.serviceWorker.ready; });
             await page.reload(); await ready(page);
@@ -93,13 +118,13 @@ try {
             const onlineNative = await readNative(page); sameOwnership(purchased, await life(page));
             console.log(`${device}: offline reload and placement`);
             await context.setOffline(true); await page.reload(); await ready(page); sameOwnership(purchased, await life(page));
-            assert.deepEqual(await readNative(page), onlineNative); assert.equal(await wallet(page), 4);
+            assert.deepEqual(await readNative(page), onlineNative); assert.equal(await wallet(page), afterPurchase);
             await inventory(page, itemId); await page.getByRole('button', { name: 'うごかす', exact: true }).click(); await putCell(page, { x: 1, z: 2 });
             const moved = await until(() => life(page), r => r.actions.some(a => a.command.type === 'move' && a.command.itemId === itemId), 'Offline move must commit');
             await inventory(page, itemId); await page.getByRole('button', { name: 'しまう', exact: true }).click(); await closeMenu(page);
             const stored = await until(() => life(page), r => r.actions.length > moved.actions.length, 'Offline storage must commit');
             assert.deepEqual(stored.actions.at(-1).command, { type: 'store', itemId });
-            await page.reload(); await ready(page); sameOwnership(stored, await life(page)); assert.equal(await wallet(page), 4);
+            await page.reload(); await ready(page); sameOwnership(stored, await life(page)); assert.equal(await wallet(page), afterPurchase);
             assert.deepEqual(await readNative(page), onlineNative);
             await inventory(page, itemId); await page.getByRole('button', { name: 'おく', exact: true }).waitFor(); await closeMenu(page);
             await page.screenshot({ path: `${out}/${device}-offline-stored.png` });
@@ -131,13 +156,14 @@ try {
                 await page.locator('.life-error').waitFor({ state: 'hidden' }); await closeMenu(page);
             }
             const projected = await until(() => life(page), r => r.credits.length === 4, 'Offline terminal projects exactly once');
-            await page.waitForFunction(() => document.querySelector('[data-life-drops]')?.dataset.lifeDrops === '6');
+            await page.waitForFunction(amount => Number(document.querySelector('[data-life-drops]')?.dataset.lifeDrops) === amount, afterProjection);
             assert.deepEqual(projected.actions, stored.actions); assert.deepEqual(projected.credits.slice(0, 3), earned.credits);
             await page.reload(); await ready(page); sameOwnership(projected, await life(page)); assert.deepEqual(await readNative(page), answered);
-            await context.setOffline(false); await page.reload(); await ready(page); sameOwnership(projected, await life(page)); assert.equal(await wallet(page), 6);
+            await context.setOffline(false); await page.reload(); await ready(page); sameOwnership(projected, await life(page)); assert.equal(await wallet(page), afterProjection);
             await page.screenshot({ path: `${out}/${device}-reconnected.png` });
             const delivery = await page.evaluate(() => ({ builds: [...document.querySelectorAll('[data-build-revision]')].map(n => ({ ...n.dataset })), world: document.querySelector('.life-world')?.dataset.lifeWorldStyle }));
-            assert.deepEqual(errors, []); report.cases.push({ device, viewport, cache, delivery, fault, answers, initial, earned, purchased, stored, projected, offlineNativeBefore: offlineBefore, offlineNativeAfter: answered, errors, pass: true });
+            assert.equal(delivery.world,'moon-garden-v1');
+            assert.deepEqual(errors, []); report.cases.push({ device, viewport, cache, delivery, catalog, fault, answers, initial, earned, purchased, stored, projected, offlineNativeBefore: offlineBefore, offlineNativeAfter: answered, errors, pass: true });
         } catch (error) { await page.screenshot({ path: `${out}/${device}-failure.png` }).catch(() => {}); await writeFile(`${out}/${device}-failure.json`, JSON.stringify({ error: error.stack, errors, body: await page.locator('body').innerText(), life: await life(page).catch(() => null), native: await readNative(page).catch(() => null) }, null, 2)); throw error; }
         finally { await context.close(); }
     }

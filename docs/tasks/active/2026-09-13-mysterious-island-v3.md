@@ -401,3 +401,7 @@ cd0c951のLife有効productionと3781179の固定production buildで、実初回
 ## 完了優先への切替
 
 ユーザーから「まだ終わらん？」「何割おわった？」の確認。全体約7割という暫定見立てを伝えたが、厳密な重み付き集計ではない。美術の小刻みな試作を増やす進め方を止める。[遠景の2方式比較](../../design/2026-09-14-canopy-distance/README.md)はsource/両幅撮影を保存して保留し、prototypeのapp/tools変更を戻した。現在のmainアプリは検証済みvault。次はDEV条件に結びついた追加8品/表示版と、明示的な本番検証構成を整理する。デザインの完成や全受入を偽って先へ進めない。
+
+## 本番構成の12品とoffline保存
+
+DEVに結びついていた追加8品/表示版を明示production capabilityへ分離。新規購入のcommit検査、切替後も同一receipt再送/所有/収納/既得表示を保持する。初回production UI1で6ページ案内の文字折れを発見して修正。最終core411/3958とUI2（両幅、12品一覧、実3問→苗購入、offline移動/収納/学習、Life put故障→回答保持→再試行一度）がPASS。[source/build/初回と最終の証拠](../../design/2026-09-14-island-v3-capability/README.md)。次は4→12品の実two-build更新。C3/利用者検証/元の全仕様残件は継続。

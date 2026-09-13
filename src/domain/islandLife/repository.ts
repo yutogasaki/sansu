@@ -1,3 +1,4 @@
+import { lifeCatalogKinds } from './capabilities';
 import { prepareRelationMigration } from './relationMigration';
 import { prepareFacilityMigration } from './facilityMigration';
 import { prepareTourMigration } from './tourMigration';
@@ -70,6 +71,10 @@ export async function updateLife(profileId: string, facts: TerminalFact[], inten
                     && previous.clockIntentHours[intent.id] !== intent.advanceHours) throw new Error('同じ操作の内容が変わっています。');
                 return previous;
             }
+        }
+        // Existing receipts still replay after a rollout flag changes; only new purchases are gated.
+        if (!import.meta.env.DEV && intent?.command?.type === 'buy' && !lifeCatalogKinds().includes(intent.command.kind)) {
+            throw new Error('この おみせでは いま えらべないよ。');
         }
         if (intent && previous.revision !== intent.revision) throw new Error('しまが かわったよ。もういちど えらんでね。');
         if (intent?.undoOf !== undefined) {
