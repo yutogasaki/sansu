@@ -1,10 +1,11 @@
 import { shadowResident } from './shadowMagic';
+import { readingOtter } from './readingEncounter';
 import { validWaterPoint } from './waterMagic';
 import { DISCOVERY_RULE_VERSION, evaluateDiscovery, type DiscoveryRuleId, type RuleEligibility } from './discovery';
 import { LIFE_STEP_MS, type LifeState, type ResidentId } from './model';
 
 export type SceneSource = 'live' | 'current-context-test' | 'replay' | 'simulated';
-export type SceneSnapshot = Pick<LifeState, 'now' | 'activityVersion' | 'items' | 'residents' | 'heroStyle' | 'expanded' | 'extraLand' | 'target' | 'relationTarget' | 'worldStyle' | 'landscapeVersion' | 'relationVersion' | 'waterFocus' | 'poseReducedMotion' | 'tourVersion' | 'roamRound' | 'scenePose' | 'facilityTripVersion' | 'relationSelectionVersion' | 'waterMagicVersion' | 'waterTouch' | 'shadowMagicVersion' | 'shadowTouch' | 'footstepMagicVersion' | 'footstepTouch' | 'encounterVersion' | 'encounterTouch'> & { observationResidentId?: ResidentId };
+export type SceneSnapshot = Pick<LifeState, 'now' | 'activityVersion' | 'items' | 'residents' | 'heroStyle' | 'expanded' | 'extraLand' | 'target' | 'relationTarget' | 'worldStyle' | 'landscapeVersion' | 'relationVersion' | 'waterFocus' | 'poseReducedMotion' | 'tourVersion' | 'roamRound' | 'scenePose' | 'facilityTripVersion' | 'relationSelectionVersion' | 'waterMagicVersion' | 'waterTouch' | 'shadowMagicVersion' | 'shadowTouch' | 'footstepMagicVersion' | 'footstepTouch' | 'encounterVersion' | 'encounterTouch' | 'readingEncounterVersion' | 'readingObservation'> & { observationResidentId?: ResidentId };
 export interface DiscoveryScene {
     eventId: string; profileId: string; ruleId: DiscoveryRuleId; ruleVersion: typeof DISCOVERY_RULE_VERSION;
     semanticSignature: string; createdAt: number; source: SceneSource; originEventId?: string;
@@ -41,6 +42,11 @@ export async function createDiscoveryScene(profileId: string, state: LifeState, 
             || !rule.participantIds.includes(touch.waterId) || !state.items.some(i => i.id === touch.waterId && i.kind === 'water-bowl')
             || rule.participantIds.length !== normal.participantIds.length + 1 || !normal.participantIds.every(id => rule.participantIds.includes(id))) throw new Error('Missing observed group and encounter input');
     }
+    if (rule.ruleId === 'X3') {
+        const reader = readingOtter(state), observed = state.readingObservation;
+        if (!reader || !observed || observed.benchId !== reader.bench.id || observed.libraryId !== reader.library.id
+            || observed.visitStart !== reader.visit.start || focalResidentIds.length !== 1 || focalResidentIds[0] !== 'otter') throw new Error('Missing naturally reading otter observation');
+    }
     if (rule.ruleId === 'M1' && !focalResidentIds.includes('pokomoko')) throw new Error('Missing walking resident');
     if (rule.ruleId === 'M4' && (!state.waterTouch || !validWaterPoint(state.waterTouch.point)
         || !rule.participantIds.some(id => id === state.waterTouch!.itemId && state.items.some(i => i.id === id && i.kind === 'water-bowl')))) throw new Error('水に もういちど ふれてね。');
@@ -52,6 +58,8 @@ export async function createDiscoveryScene(profileId: string, state: LifeState, 
     const scene: SceneSnapshot = structuredClone({ ...(observationResidentId ? { observationResidentId } : {}), now: state.now, activityVersion: state.activityVersion,
         ...(state.tourVersion ? { tourVersion: state.tourVersion, roamRound: state.roamRound, scenePose: 'captured-v1' as const } : {}),
         ...(state.encounterVersion ? { encounterVersion: state.encounterVersion } : {}),
+        ...(state.readingEncounterVersion ? { readingEncounterVersion: state.readingEncounterVersion } : {}),
+        ...(state.readingObservation ? { readingObservation: state.readingObservation } : {}),
         ...(state.encounterTouch ? { encounterTouch: state.encounterTouch } : {}),
         ...(state.footstepMagicVersion ? { footstepMagicVersion: state.footstepMagicVersion } : {}),
         ...(state.footstepTouch ? { footstepTouch: state.footstepTouch } : {}),

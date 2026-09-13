@@ -24,7 +24,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
     const bodies = [content.heroBody, content.rabbit.body, content.otter.body];
     const heads = [makeLifeHeroHead(content.heroBody), content.rabbit.head, content.otter.head];
     const heroArms = content.heroBody.children.filter(part => Math.abs(part.position.x) === .27 && part.position.y === .46);
-    const facilityMotion = makeFacilityMotion(content.m, bodies, heads, state.items.some(i => isFacility(i.kind) && i.cell));
+    const facilityMotion = makeFacilityMotion(content.m, bodies, heads, state.items.some(i => isFacility(i.kind) && i.cell), Boolean(state.readingEncounterVersion));
     const sandMotion = makeSandboxMotion(sandboxes, heads, point);
     const gaze = makeRelationGaze(state, heads, point);
     const picnic = makePicnicMotion(state, heads, seats, point);

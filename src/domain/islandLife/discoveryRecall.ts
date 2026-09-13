@@ -22,6 +22,7 @@ export function discoveryTitle(event: DiscoveryScene) {
     }
     if (event.ruleId === 'X1') return 'しろい ちょう';
     if (event.ruleId === 'X2') return 'まるもようの ことり';
+    if (event.ruleId === 'X3') return 'ほんを もちなおした';
     if (event.ruleId === 'M1') return 'ほしの あしあと';
     if (event.ruleId === 'M3') return 'かげが あいさつ';
     if (event.ruleId === 'M4') return '水の なかの 星空';

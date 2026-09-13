@@ -29,12 +29,21 @@ export function buildFacility(kind: 'library' | 'garden-hut', materials: IslandM
     return root;
 }
 /** Separate held objects; no resident mesh, fabric or proportions are replaced. */
-export function buildHeldWork(kind: 'library' | 'garden-hut', materials: IslandMaterials) {
+export function buildHeldWork(kind: 'library' | 'garden-hut', materials: IslandMaterials, illustrated = false) {
     const root = new T.Group(), paint = (color: string) => materials.surface(color,.8);
     if (kind === 'library') {
         for (const side of [-1,1]) {
             const page = new T.Mesh(new T.BoxGeometry(.22,.025,.24),paint('#fff0cb')); page.position.x=side*.108; page.rotation.z=side*.13; root.add(page);
             const cover = new T.Mesh(new T.BoxGeometry(.23,.018,.25),paint('#4e9ca7')); cover.position.set(side*.108,-.023,0); cover.rotation.z=side*.13; root.add(cover);
+            if (illustrated) {
+                const picture = new T.Group(); picture.name = side < 0 ? 'life-book-tree' : 'life-book-sun'; page.add(picture);
+                const circle = new T.Mesh(new T.CircleGeometry(side < 0 ? .052 : .036, 20), paint(side < 0 ? '#377858' : '#e3ac43'));
+                circle.rotation.x = -Math.PI / 2; circle.position.set(0, .014, side < 0 ? .029 : .062); picture.add(circle);
+                if (side < 0) {
+                    const trunk = new T.Mesh(new T.BoxGeometry(.016, .003, .075), paint('#8f6540'));
+                    trunk.position.set(0, .014, -.043); picture.add(trunk);
+                }
+            }
         }
     } else {
         cylinder(root,paint('#79b8a8'),[0,0,0],.105,.16);

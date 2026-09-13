@@ -6,6 +6,8 @@ This file defines the minimum verification expected for each change type.
 If a check cannot run, record the gap in the active task and the done log.
 GitHub Actions should mirror the same baseline for `docs:check` and `verify:core`.
 
+`node tools/e2e-island-reading-fixture.mjs` は新しい `SANSU_READING_OUTPUT` を指定する。実コンポーネントで明示した読書snapshotを描画し、実提示の証拠を `simulated` として保存した後、アプリの一覧から本人保存・再生・再読込保持をphone通常motion/tablet reduced motionで確認する。行動/通貨/学習正本不変とsource一致を検査する。これは自然なカワウソのX3出現、実取得、学習入力復帰、PWAや無文字理解の証拠ではない。自然初回の不成立は別に残し、住民や時刻の再抽選で埋め合わせない。
+
 ## Current Commands
 
 `node tools/e2e-island-water-magic-v3.mjs` は `SANSU_WATER_MAGIC_URL` と新しい `SANSU_WATER_MAGIC_OUTPUT` を指定。DEVのphone390×844/通常motion・tablet768×1024/reduced motionで、水鉢の実タップ・連打統合・5秒後の通常水面、灯りの近→遠→復元、縁からの再試行、本人保存/元のタップ位置での再演/現在入口、収納・再読込後の過去保持、残高/学習正本不変と学習入力復帰を確認する。20件のQA creditを使う。非表示中断はdocument visibilityへの明示障害注入であり、実ブラウザーのバックグラウンド遷移やPWA検証と区別する。`SANSU_WATER_MAGIC_DEVICE` は診断の幅限定。固定sourceのcore後に実時間UIを実行する。

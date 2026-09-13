@@ -1,0 +1,275 @@
+{
+  "note": "Earlier implementation diagnostic, not final-source end-to-end evidence. QA purchase commands only, no actor substitution or clock reroll. Otter did not naturally read.",
+  "now": 1789311019096,
+  "residents": [
+    {
+      "id": "pokomoko",
+      "cell": {
+        "x": 0,
+        "z": 2
+      },
+      "enjoyed": 0,
+      "enjoyedBy": {},
+      "visit": {
+        "relationSelectionVersion": 1,
+        "itemId": "qa-bench-2",
+        "from": {
+          "x": 0,
+          "z": 2
+        },
+        "path": [
+          {
+            "x": 0,
+            "z": 2
+          },
+          {
+            "x": 1,
+            "z": 2
+          },
+          {
+            "x": 1,
+            "z": 3
+          },
+          {
+            "x": 2,
+            "z": 3
+          },
+          {
+            "x": 3,
+            "z": 3
+          }
+        ],
+        "start": 1789311008692,
+        "end": 1789312795892
+      },
+      "discovery": {
+        "itemId": "qa-bench-2",
+        "at": 1789310995892,
+        "mood": "notice"
+      },
+      "facilityTrip": {
+        "facilityId": "qa-library",
+        "targetId": "qa-bench-2",
+        "kind": "library",
+        "phase": "carry",
+        "path": [
+          {
+            "x": 0,
+            "z": 2
+          },
+          {
+            "x": 1,
+            "z": 2
+          },
+          {
+            "x": 1,
+            "z": 3
+          },
+          {
+            "x": 2,
+            "z": 3
+          },
+          {
+            "x": 3,
+            "z": 3
+          }
+        ],
+        "end": 1789312795892
+      }
+    },
+    {
+      "id": "rabbit",
+      "cell": {
+        "x": 3,
+        "z": 1
+      },
+      "enjoyed": 0,
+      "enjoyedBy": {},
+      "visit": {
+        "relationSelectionVersion": 1,
+        "itemId": "qa-bench-1",
+        "path": [
+          {
+            "x": 3,
+            "z": 1
+          },
+          {
+            "x": 4,
+            "z": 1
+          },
+          {
+            "x": 4,
+            "z": 2
+          },
+          {
+            "x": 4,
+            "z": 3
+          },
+          {
+            "x": 3,
+            "z": 3
+          },
+          {
+            "x": 2,
+            "z": 3
+          }
+        ],
+        "from": {
+          "x": 3,
+          "z": 1
+        },
+        "start": 1789310995892,
+        "end": 1789312795892
+      },
+      "discovery": {
+        "itemId": "qa-bench-2",
+        "at": 1789310995892,
+        "mood": "notice"
+      }
+    },
+    {
+      "id": "otter",
+      "cell": {
+        "x": 2,
+        "z": 1
+      },
+      "enjoyed": 0,
+      "enjoyedBy": {},
+      "visit": {
+        "relationSelectionVersion": 1,
+        "itemId": "qa-bench-0",
+        "path": [
+          {
+            "x": 2,
+            "z": 1
+          },
+          {
+            "x": 3,
+            "z": 1
+          },
+          {
+            "x": 4,
+            "z": 1
+          },
+          {
+            "x": 4,
+            "z": 2
+          },
+          {
+            "x": 4,
+            "z": 3
+          },
+          {
+            "x": 3,
+            "z": 3
+          },
+          {
+            "x": 2,
+            "z": 3
+          },
+          {
+            "x": 1,
+            "z": 3
+          },
+          {
+            "x": 1,
+            "z": 4
+          },
+          {
+            "x": 0,
+            "z": 4
+          }
+        ],
+        "from": {
+          "x": 2,
+          "z": 1
+        },
+        "start": 1789310995892,
+        "end": 1789312795892
+      },
+      "discovery": {
+        "itemId": "qa-bench-2",
+        "at": 1789310995892,
+        "mood": "notice"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "id": "qa-library",
+      "at": 1789310995892,
+      "command": {
+        "type": "buy",
+        "kind": "library",
+        "cell": {
+          "x": 0,
+          "z": 0
+        }
+      },
+      "purchaseReceipt": {
+        "priceVersion": "life-v3-facilities-v1",
+        "actualPaidDrops": 72,
+        "quoteFingerprint": "[\"life-v3-facilities-v1\",\"library\",72]",
+        "itemInstanceId": "qa-library",
+        "committedAt": 1789310995892
+      }
+    },
+    {
+      "id": "qa-bench-0",
+      "at": 1789310995892,
+      "command": {
+        "type": "buy",
+        "kind": "bench",
+        "cell": {
+          "x": 0,
+          "z": 3
+        }
+      },
+      "purchaseReceipt": {
+        "priceVersion": "life-48-v1",
+        "actualPaidDrops": 4,
+        "quoteFingerprint": "[\"life-48-v1\",\"bench\",4]",
+        "itemInstanceId": "qa-bench-0",
+        "committedAt": 1789310995892
+      }
+    },
+    {
+      "id": "qa-bench-1",
+      "at": 1789310995892,
+      "command": {
+        "type": "buy",
+        "kind": "bench",
+        "cell": {
+          "x": 2,
+          "z": 2
+        }
+      },
+      "purchaseReceipt": {
+        "priceVersion": "life-48-v1",
+        "actualPaidDrops": 4,
+        "quoteFingerprint": "[\"life-48-v1\",\"bench\",4]",
+        "itemInstanceId": "qa-bench-1",
+        "committedAt": 1789310995892
+      }
+    },
+    {
+      "id": "qa-bench-2",
+      "at": 1789310995892,
+      "command": {
+        "type": "buy",
+        "kind": "bench",
+        "cell": {
+          "x": 3,
+          "z": 2
+        }
+      },
+      "purchaseReceipt": {
+        "priceVersion": "life-48-v1",
+        "actualPaidDrops": 4,
+        "quoteFingerprint": "[\"life-48-v1\",\"bench\",4]",
+        "itemInstanceId": "qa-bench-2",
+        "committedAt": 1789310995892
+      }
+    }
+  ]
+}

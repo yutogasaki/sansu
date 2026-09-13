@@ -70,6 +70,8 @@ export interface LifeState {
     landscapeVersion?: 'groves-water-v1';
     relationVersion?: 'water-bench-v1';
     encounterVersion?: 1;
+    readingEncounterVersion?: 1;
+    readingObservation?: { benchId: string; libraryId: string; visitStart: number };
     encounterTouch?: { ruleId: 'X1' | 'X2'; waterId: string; plantId: string; normalRuleId: 'GF6' | 'GT3' | 'GT6'; normalGroupIds: string[] };
     footstepMagicVersion?: 1;
     footstepTouch?: { targetId: string; lampId: string; visitStart: number; point: [number, number] };

@@ -4,9 +4,9 @@ import { activityPhase } from '../../../domain/islandLife/activity';
 import type { LifeState } from '../../../domain/islandLife/model';
 import { buildHeldWork } from './facilityGeometry';
 import type { IslandMaterials } from '../three/primitives';
-export function makeFacilityMotion(materials: IslandMaterials, bodies: T.Group[], heads: T.Group[], enabled: boolean) {
+export function makeFacilityMotion(materials: IslandMaterials, bodies: T.Group[], heads: T.Group[], enabled: boolean, illustrated = false) {
     const props = (enabled ? bodies : []).map((body, index) => {
-        const book = buildHeldWork('library', materials), tools = buildHeldWork('garden-hut', materials);
+        const book = buildHeldWork('library', materials, illustrated), tools = buildHeldWork('garden-hut', materials);
         book.position.set(0,index ? .49 : .42,index ? .38 : .30); tools.position.set(0,index ? .45 : .38,index ? .40 : .30); body.add(book, tools); return { book, tools };
     });
     return (visible: LifeState, now: number, reduced: boolean) => {

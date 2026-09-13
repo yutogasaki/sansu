@@ -1,0 +1,835 @@
+{
+  "startHash": "74514aaad4483288a65ec4e85e8c576a832fcf64d813fad4e2762c37fea6bfec",
+  "revision": "baa7bd9ce1f4aaaa8d0e4d8a1ef0ed09f27c54ef",
+  "target": "http://127.0.0.1:5223",
+  "flags": "DEV VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_PREVIEW=true",
+  "candidate": "reading-book-v1",
+  "fixture": "Explicit simulated otter reading snapshot rendered by the actual observation component. Actual rendered evidence is persisted as simulated, then saved and replayed through app UI. This does not prove a naturally scheduled X3 or acquisition.",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "original": {
+        "event": {
+          "eventId": "ca31c989-38db-4b9a-b5d4-1ee5d3f5530c",
+          "profileId": "09184c03-be37-4f85-912b-a6da953db122",
+          "ruleId": "X3",
+          "ruleVersion": "discovery-v3.0-rc1",
+          "semanticSignature": "[\"[\\\"09184c03-be37-4f85-912b-a6da953db122\\\",\\\"discovery-v3.0-rc1\\\",\\\"X3\\\",[[\\\"fixture-bench\\\",\\\"bench\\\",3,2,null,\\\"front\\\"],[\\\"fixture-library\\\",\\\"library\\\",0,0,null,\\\"adjacent\\\"]]]\",[[\"otter\",\"fixture-bench\",\"using\"]]]",
+          "createdAt": 1789311562884,
+          "source": "simulated",
+          "focalResidentIds": [
+            "otter"
+          ],
+          "snapshot": {
+            "contentVersion": 1,
+            "scene": {
+              "now": 10000,
+              "activityVersion": 2,
+              "readingEncounterVersion": 1,
+              "readingObservation": {
+                "benchId": "fixture-bench",
+                "libraryId": "fixture-library",
+                "visitStart": 0
+              },
+              "facilityTripVersion": 1,
+              "worldStyle": "canopy-dots-c3-v1",
+              "items": [
+                {
+                  "id": "fixture-library",
+                  "kind": "library",
+                  "cell": {
+                    "x": 0,
+                    "z": 0
+                  },
+                  "growth": 0,
+                  "style": "original"
+                },
+                {
+                  "id": "fixture-bench",
+                  "kind": "bench",
+                  "cell": {
+                    "x": 3,
+                    "z": 2
+                  },
+                  "growth": 0,
+                  "style": "original",
+                  "access": "front"
+                }
+              ],
+              "residents": [
+                {
+                  "id": "pokomoko",
+                  "cell": {
+                    "x": 2,
+                    "z": 1
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "roam:pokomoko:0",
+                    "path": [
+                      {
+                        "x": 2,
+                        "z": 1
+                      },
+                      {
+                        "x": 1,
+                        "z": 1
+                      },
+                      {
+                        "x": 1,
+                        "z": 0
+                      }
+                    ],
+                    "from": {
+                      "x": 2,
+                      "z": 1
+                    },
+                    "start": 0,
+                    "end": 1800000
+                  }
+                },
+                {
+                  "id": "rabbit",
+                  "cell": {
+                    "x": 3,
+                    "z": 1
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {}
+                },
+                {
+                  "id": "otter",
+                  "cell": {
+                    "x": 3,
+                    "z": 2
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "fixture-bench",
+                    "from": {
+                      "x": 0,
+                      "z": 2
+                    },
+                    "path": [
+                      {
+                        "x": 0,
+                        "z": 2
+                      },
+                      {
+                        "x": 0,
+                        "z": 3
+                      },
+                      {
+                        "x": 1,
+                        "z": 3
+                      },
+                      {
+                        "x": 2,
+                        "z": 3
+                      },
+                      {
+                        "x": 3,
+                        "z": 3
+                      }
+                    ],
+                    "start": 0,
+                    "end": 100000
+                  },
+                  "facilityTrip": {
+                    "facilityId": "fixture-library",
+                    "targetId": "fixture-bench",
+                    "kind": "library",
+                    "phase": "carry",
+                    "path": [
+                      {
+                        "x": 0,
+                        "z": 2
+                      },
+                      {
+                        "x": 0,
+                        "z": 3
+                      },
+                      {
+                        "x": 1,
+                        "z": 3
+                      },
+                      {
+                        "x": 2,
+                        "z": 3
+                      },
+                      {
+                        "x": 3,
+                        "z": 3
+                      }
+                    ],
+                    "end": 100000
+                  }
+                }
+              ],
+              "heroStyle": "original"
+            },
+            "immutableHash": "b94d5a652f30e5b1d992d54ddd8756501c93f1a27a96cf688fe5425536177438"
+          }
+        },
+        "evidence": {
+          "eventId": "ca31c989-38db-4b9a-b5d4-1ee5d3f5530c",
+          "firstVisibleAt": 1789311566516,
+          "visibleDurationMs": 1040.300000011921,
+          "coreShown": true,
+          "presentationKind": "simulated"
+        }
+      },
+      "samples": [
+        {
+          "reading": {
+            "available": true,
+            "observed": true,
+            "active": true,
+            "elapsed": 371.80000001192093,
+            "stage": "upside-down",
+            "upsideSeen": 356.7000000476837,
+            "eventId": "c63c2d37-c769-4293-b6cc-ee6296f1f877"
+          },
+          "relation": {
+            "at": 10000,
+            "core": false,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "phase": "home",
+                "position": [
+                  -1.5,
+                  0.04,
+                  0
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0,
+                "headYaw": 0
+              },
+              {
+                "id": "rabbit",
+                "itemId": "roam:display:rabbit:1",
+                "phase": "roaming",
+                "position": [
+                  2.5,
+                  0.04,
+                  1
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0.029456383915392386,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "itemId": "fixture-bench",
+                "phase": "bench",
+                "position": [
+                  0.5,
+                  0.35,
+                  0
+                ],
+                "seatGap": 0,
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0.03182163450011063,
+                "facilityUse": {
+                  "kind": "library",
+                  "action": "reading"
+                },
+                "headYaw": 0
+              }
+            ],
+            "preparation": "empty",
+            "delivered": false,
+            "maxGap": 934.8999999761581,
+            "epoch": 2,
+            "camera": {
+              "projection": [
+                0.9810753829531961,
+                0,
+                0,
+                0,
+                0,
+                1.3489786515606446,
+                0,
+                0,
+                0,
+                0,
+                -0.02002002002002002,
+                0,
+                -0.008893062174199275,
+                -0.04136340593215428,
+                -1.002002002002002,
+                1
+              ],
+              "view": [
+                0.9615239476408233,
+                -0.15553021195625064,
+                0.22645540682891907,
+                0,
+                4.163336342344337e-17,
+                0.8243101233681288,
+                0.5661385170722977,
+                0,
+                -0.27472112789737796,
+                -0.5443557418468773,
+                0.7925939239012171,
+                0,
+                -0.47238417054811743,
+                -0.4030683910446581,
+                -9.310798312784286,
+                1
+              ]
+            }
+          }
+        },
+        {
+          "reading": {
+            "available": true,
+            "observed": true,
+            "active": true,
+            "elapsed": 4690.100000023842,
+            "stage": "upright",
+            "upsideSeen": 2504.5,
+            "eventId": "c63c2d37-c769-4293-b6cc-ee6296f1f877"
+          },
+          "relation": {
+            "at": 10000,
+            "core": false,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "phase": "home",
+                "position": [
+                  -1.5,
+                  0.04,
+                  0
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0,
+                "headYaw": 0
+              },
+              {
+                "id": "rabbit",
+                "itemId": "roam:display:rabbit:1",
+                "phase": "roaming",
+                "position": [
+                  2.5,
+                  0.04,
+                  1
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0.032653674644341074,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "itemId": "fixture-bench",
+                "phase": "bench",
+                "position": [
+                  0.5,
+                  0.35,
+                  0
+                ],
+                "seatGap": 0,
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0.0070410715608192325,
+                "facilityUse": {
+                  "kind": "library",
+                  "action": "reading"
+                },
+                "headYaw": 0
+              }
+            ],
+            "preparation": "empty",
+            "delivered": false,
+            "maxGap": 934.8999999761581,
+            "epoch": 2,
+            "camera": {
+              "projection": [
+                0.9810753829531961,
+                0,
+                0,
+                0,
+                0,
+                1.3489786515606446,
+                0,
+                0,
+                0,
+                0,
+                -0.02002002002002002,
+                0,
+                -0.008893062174199275,
+                -0.04136340593215428,
+                -1.002002002002002,
+                1
+              ],
+              "view": [
+                0.9615239476408233,
+                -0.15553021195625064,
+                0.22645540682891907,
+                0,
+                4.163336342344337e-17,
+                0.8243101233681288,
+                0.5661385170722977,
+                0,
+                -0.27472112789737796,
+                -0.5443557418468773,
+                0.7925939239012171,
+                0,
+                -0.47238417054811743,
+                -0.4030683910446581,
+                -9.310798312784286,
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "delivery": {
+        "url": "http://127.0.0.1:5223/#/island",
+        "builds": [
+          {
+            "revision": "development-local",
+            "delivery": "snap-root-v1"
+          },
+          {
+            "revision": "development-local",
+            "version": "development-local:42bba105-01c2-4a95-8185-3a8eb67c7303",
+            "delivery": "mystic-island-v1"
+          }
+        ],
+        "world": "canopy-dots-c3-v1"
+      },
+      "unchangedActions": true,
+      "unchangedNative": true,
+      "unchangedCurrency": true,
+      "savedAfterReload": true,
+      "errors": []
+    },
+    {
+      "device": "tablet",
+      "original": {
+        "event": {
+          "eventId": "a5f2f277-7430-410a-90ec-3680b5549463",
+          "profileId": "1c9da1a7-ca6c-4e46-947f-8cce27f77c89",
+          "ruleId": "X3",
+          "ruleVersion": "discovery-v3.0-rc1",
+          "semanticSignature": "[\"[\\\"1c9da1a7-ca6c-4e46-947f-8cce27f77c89\\\",\\\"discovery-v3.0-rc1\\\",\\\"X3\\\",[[\\\"fixture-bench\\\",\\\"bench\\\",3,2,null,\\\"front\\\"],[\\\"fixture-library\\\",\\\"library\\\",0,0,null,\\\"adjacent\\\"]]]\",[[\"otter\",\"fixture-bench\",\"using\"]]]",
+          "createdAt": 1789311599362,
+          "source": "simulated",
+          "focalResidentIds": [
+            "otter"
+          ],
+          "snapshot": {
+            "contentVersion": 1,
+            "scene": {
+              "now": 10000,
+              "activityVersion": 2,
+              "readingEncounterVersion": 1,
+              "readingObservation": {
+                "benchId": "fixture-bench",
+                "libraryId": "fixture-library",
+                "visitStart": 0
+              },
+              "facilityTripVersion": 1,
+              "worldStyle": "canopy-dots-c3-v1",
+              "items": [
+                {
+                  "id": "fixture-library",
+                  "kind": "library",
+                  "cell": {
+                    "x": 0,
+                    "z": 0
+                  },
+                  "growth": 0,
+                  "style": "original"
+                },
+                {
+                  "id": "fixture-bench",
+                  "kind": "bench",
+                  "cell": {
+                    "x": 3,
+                    "z": 2
+                  },
+                  "growth": 0,
+                  "style": "original",
+                  "access": "front"
+                }
+              ],
+              "residents": [
+                {
+                  "id": "pokomoko",
+                  "cell": {
+                    "x": 2,
+                    "z": 1
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "roam:pokomoko:0",
+                    "path": [
+                      {
+                        "x": 2,
+                        "z": 1
+                      },
+                      {
+                        "x": 1,
+                        "z": 1
+                      },
+                      {
+                        "x": 1,
+                        "z": 0
+                      }
+                    ],
+                    "from": {
+                      "x": 2,
+                      "z": 1
+                    },
+                    "start": 0,
+                    "end": 1800000
+                  }
+                },
+                {
+                  "id": "rabbit",
+                  "cell": {
+                    "x": 3,
+                    "z": 1
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {}
+                },
+                {
+                  "id": "otter",
+                  "cell": {
+                    "x": 3,
+                    "z": 2
+                  },
+                  "enjoyed": 0,
+                  "enjoyedBy": {},
+                  "visit": {
+                    "itemId": "fixture-bench",
+                    "from": {
+                      "x": 0,
+                      "z": 2
+                    },
+                    "path": [
+                      {
+                        "x": 0,
+                        "z": 2
+                      },
+                      {
+                        "x": 0,
+                        "z": 3
+                      },
+                      {
+                        "x": 1,
+                        "z": 3
+                      },
+                      {
+                        "x": 2,
+                        "z": 3
+                      },
+                      {
+                        "x": 3,
+                        "z": 3
+                      }
+                    ],
+                    "start": 0,
+                    "end": 100000
+                  },
+                  "facilityTrip": {
+                    "facilityId": "fixture-library",
+                    "targetId": "fixture-bench",
+                    "kind": "library",
+                    "phase": "carry",
+                    "path": [
+                      {
+                        "x": 0,
+                        "z": 2
+                      },
+                      {
+                        "x": 0,
+                        "z": 3
+                      },
+                      {
+                        "x": 1,
+                        "z": 3
+                      },
+                      {
+                        "x": 2,
+                        "z": 3
+                      },
+                      {
+                        "x": 3,
+                        "z": 3
+                      }
+                    ],
+                    "end": 100000
+                  }
+                }
+              ],
+              "heroStyle": "original"
+            },
+            "immutableHash": "b94d5a652f30e5b1d992d54ddd8756501c93f1a27a96cf688fe5425536177438"
+          }
+        },
+        "evidence": {
+          "eventId": "a5f2f277-7430-410a-90ec-3680b5549463",
+          "firstVisibleAt": 1789311603068,
+          "visibleDurationMs": 1093.1000000238419,
+          "coreShown": true,
+          "presentationKind": "simulated"
+        }
+      },
+      "samples": [
+        {
+          "reading": {
+            "available": true,
+            "observed": true,
+            "active": true,
+            "elapsed": 542.4000000357628,
+            "stage": "upside-down",
+            "upsideSeen": 526.6999999880791,
+            "eventId": "b2b053fd-135d-4ed7-a99d-3d6e576785cd"
+          },
+          "relation": {
+            "at": 10000,
+            "core": false,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "phase": "home",
+                "position": [
+                  -1.5,
+                  0.04,
+                  0
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0,
+                "headYaw": 0
+              },
+              {
+                "id": "rabbit",
+                "itemId": "roam:display:rabbit:1",
+                "phase": "roaming",
+                "position": [
+                  2.5,
+                  0.04,
+                  1
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "itemId": "fixture-bench",
+                "phase": "bench",
+                "position": [
+                  0.5,
+                  0.35,
+                  0
+                ],
+                "seatGap": 0,
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "library",
+                  "action": "reading"
+                },
+                "headYaw": 0
+              }
+            ],
+            "preparation": "empty",
+            "delivered": false,
+            "maxGap": 1050.5,
+            "epoch": 2,
+            "camera": {
+              "projection": [
+                0.9870337053245204,
+                0,
+                0,
+                0,
+                0,
+                1.3571713448212155,
+                0,
+                0,
+                0,
+                0,
+                -0.02002002002002002,
+                0,
+                -0.00953510905616715,
+                -0.04161461650292438,
+                -1.002002002002002,
+                1
+              ],
+              "view": [
+                0.9615239476408233,
+                -0.15553021195625064,
+                0.22645540682891907,
+                0,
+                4.163336342344337e-17,
+                0.8243101233681288,
+                0.5661385170722977,
+                0,
+                -0.27472112789737796,
+                -0.5443557418468773,
+                0.7925939239012171,
+                0,
+                -0.4717884086893045,
+                -0.3992760714550449,
+                -9.310723326827993,
+                1
+              ]
+            }
+          }
+        },
+        {
+          "reading": {
+            "available": true,
+            "observed": true,
+            "active": true,
+            "elapsed": 3825.199999988079,
+            "stage": "upright",
+            "upsideSeen": 2091.599999964237,
+            "eventId": "b2b053fd-135d-4ed7-a99d-3d6e576785cd"
+          },
+          "relation": {
+            "at": 10000,
+            "core": false,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "phase": "home",
+                "position": [
+                  -1.5,
+                  0.04,
+                  0
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0,
+                "headYaw": 0
+              },
+              {
+                "id": "rabbit",
+                "itemId": "roam:display:rabbit:1",
+                "phase": "roaming",
+                "position": [
+                  2.5,
+                  0.04,
+                  1
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "itemId": "fixture-bench",
+                "phase": "bench",
+                "position": [
+                  0.5,
+                  0.35,
+                  0
+                ],
+                "seatGap": 0,
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "library",
+                  "action": "reading"
+                },
+                "headYaw": 0
+              }
+            ],
+            "preparation": "empty",
+            "delivered": false,
+            "maxGap": 1050.5,
+            "epoch": 2,
+            "camera": {
+              "projection": [
+                0.9870337053245204,
+                0,
+                0,
+                0,
+                0,
+                1.3571713448212155,
+                0,
+                0,
+                0,
+                0,
+                -0.02002002002002002,
+                0,
+                -0.00953510905616715,
+                -0.04161461650292438,
+                -1.002002002002002,
+                1
+              ],
+              "view": [
+                0.9615239476408233,
+                -0.15553021195625064,
+                0.22645540682891907,
+                0,
+                4.163336342344337e-17,
+                0.8243101233681288,
+                0.5661385170722977,
+                0,
+                -0.27472112789737796,
+                -0.5443557418468773,
+                0.7925939239012171,
+                0,
+                -0.4717884086893045,
+                -0.3992760714550449,
+                -9.310723326827993,
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "delivery": {
+        "url": "http://127.0.0.1:5223/#/island",
+        "builds": [
+          {
+            "revision": "development-local",
+            "delivery": "snap-root-v1"
+          },
+          {
+            "revision": "development-local",
+            "version": "development-local:42bba105-01c2-4a95-8185-3a8eb67c7303",
+            "delivery": "mystic-island-v1"
+          }
+        ],
+        "world": "canopy-dots-c3-v1"
+      },
+      "unchangedActions": true,
+      "unchangedNative": true,
+      "unchangedCurrency": true,
+      "savedAfterReload": true,
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "74514aaad4483288a65ec4e85e8c576a832fcf64d813fad4e2762c37fea6bfec",
+  "rawReportSha256": "0f8ff983b977c9f252397aa095cce06819fd1faba332e849afa98cd74ef840e5",
+  "rawReportLocation": "/tmp/sansu-reading-ui2/report.json"
+}
