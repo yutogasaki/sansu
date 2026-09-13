@@ -30,7 +30,7 @@ export function route(s: LifeState, from: Cell, to: Cell): Cell[] | undefined {
 }
 export function pathToActivity(s: LifeState, from: Cell, item: LifeItem, reserved: Cell[] = []) {
     if (!item.cell) return undefined;
-    const approaches = item.access === 'front' ? [{ x: 0, z: 1 }]
+    const approaches = item.kind === 'picnic-table' ? [{ x: 0, z: 1 }, { x: 0, z: -1 }] : item.access === 'front' ? [{ x: 0, z: 1 }]
         : [{ x: 0, z: 1 }, { x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: -1 }];
     return approaches
         .map(d => route(s, from, { x: item.cell!.x + d.x, z: item.cell!.z + d.z }))

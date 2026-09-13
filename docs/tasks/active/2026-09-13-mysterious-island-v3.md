@@ -224,3 +224,11 @@ core PASS（371 files /3783 tests、docs/lint/typecheck/build/assets）。[実UI
 - [実画面と証拠](../../design/2026-09-13-island-water-bench/README.md)。core376 files /3808 tests PASS。最終固定source `a335336f2a7a840e14d9ef2f1fc0bb3b712038abf21ea532bd48c1a769b9f695` の両幅で覆い中の記録抑止、live記録/再演/本人保存、水鉢の実移動で同一住民・同一席の近い/遠い/復元、学習正本/残高保持、学習入力復帰PASS。
 - 初回再演入口のR1/R3限定を実画面で発見・修正。2回目の両幅を最終証拠とする。最終入口とハーネスlint、修正後build/typecheck PASS。C3視覚HOLD、Human N=0、対象runtime PASSを分ける。
 - 次はピクニックテーブルとR2。仕様の1人おやつ/2人会話、成木1本、成熟陰側の体向き、2役予約を一緒に扱う。2×2施設/通行可能アーチと残りの魔法・出会い、全体受入は未完。
+
+
+## ピクニックテーブルとR2
+
+- 8しずく/1マス本体/前後2席をDEV購入UIへ接続。空いた利用点を別予約し、1人のおやつ/2人の対面へ。成木1本・利用点間4歩以内のR2、単体利用、観察・記録・再演・現在入口を接続。旧キャラ造形/好みは維持。
+- 新receipt `life-v3-picnic-v1` と保存版7、旧receipt/経済checkpoint/巡回/土地を保持。土地とテーブル購入の両順序で再生し、欠落・改変・版降格を拒否。旧activity版でもテーブルの同席重複を許さない。
+- [実画面と証拠](../../design/2026-09-13-island-picnic/README.md)。固定source core378 files /3817 tests PASS。両幅の実購入→2人利用→DEV成木/R2→再演→収納→再読込/学習復帰PASS。C3視覚HOLD、Human N=0、対象runtime PASSを別判定。
+- 次は残り5品（かざぐるま/アーチ/砂場/小屋/図書室）と対応R5/R6。M3は風車ではなく「着座住民の影へのタップ」で4秒の挨拶。M1/M4と出会い、全体検証/視覚品質も残件。

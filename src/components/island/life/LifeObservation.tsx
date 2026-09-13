@@ -17,7 +17,7 @@ export default function LifeObservation({ record, state, item, close, memories, 
     record: LifeRecord; state: LifeState; item: LifeItem; close: () => void; memories: () => void; tryVisit?: () => void; gathering?: { ruleId: RuleEligibility['ruleId']; participantIds: string[] };
 }) {
     const [targetId, setTargetId] = useState<string>(), [status, setStatus] = useState<'bench' | 'walking' | 'busy'>('busy');
-    const isBench = item.kind === 'bench';
+    const isBench = item.kind === 'bench' || item.kind === 'picnic-table';
     const viewState = useMemo(() => targetId ? { ...state, relationTarget: { benchId: item.id, targetId } } : state, [state, item.id, targetId]);
     const panel = useRef<HTMLDivElement>(null), alive = useRef(true), working = useRef(false);
     const latest = useRef({ record, state });

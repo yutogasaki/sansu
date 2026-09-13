@@ -4,7 +4,7 @@ import { pathToActivity } from './space';
 /** An optional current-world test uses an existing sitter or a genuinely idle
  * resident. It never cancels another activity or changes the hero destination. */
 export function observationVisit(state: LifeState, itemId: string) {
-    const item = state.items.find(item => item.id === itemId && item.kind === 'bench' && item.cell);
+    const item = state.items.find(item => item.id === itemId && (item.kind === 'bench' || item.kind === 'picnic-table') && item.cell);
     if (!item) return { kind: 'unavailable' as const };
     const using = state.residents.find(resident => resident.visit?.itemId === itemId && state.now < resident.visit.end);
     if (using) return { kind: 'existing' as const, residentId: using.id };

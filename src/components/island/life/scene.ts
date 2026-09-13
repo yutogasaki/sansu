@@ -59,7 +59,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
         g.name = preview ? 'life-placement-ghost' : `life-item-${item.id}`;
         const model = buildLifeItem(item, content.m, !bedIds.has(item.id) || preview);
         g.add(model.root);
-        if (!preview && model.seat) seats.set(item.id, { seat: model.seat, pivot: model.pivot });
+        if (!preview && model.seat) seats.set(item.id, { seat: model.seat, pivot: model.pivot, picnic: model.picnic });
         if (preview) {
             g.traverse(o => {
                 if (!(o instanceof T.Mesh)) return;

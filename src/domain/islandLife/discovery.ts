@@ -4,7 +4,7 @@ import { growthStage, LIFE_STEP_MS, type Cell, type LifeItem, type LifeState } f
 import { cellKey, homeCell, route, sameCell, vacant } from './space';
 
 export const DISCOVERY_RULE_VERSION = 'discovery-v3.0-rc1';
-export type DiscoveryRuleId = 'G0' | 'GF3' | 'GF6' | 'GP2' | 'GP3' | 'GT3' | 'GT6' | 'GW2' | 'R1' | 'R3' | 'R4' | 'M2';
+export type DiscoveryRuleId = 'G0' | 'GF3' | 'GF6' | 'GP2' | 'GP3' | 'GT3' | 'GT6' | 'GW2' | 'R1' | 'R2' | 'R3' | 'R4' | 'M2';
 export interface RuleEligibility {
     ruleId: DiscoveryRuleId;
     ruleVersion: typeof DISCOVERY_RULE_VERSION;
@@ -19,14 +19,14 @@ function eligibility(profileId: string, ruleId: DiscoveryRuleId, items: LifeItem
     return { ruleId, ruleVersion: DISCOVERY_RULE_VERSION, participantIds: ordered.map(item => item.id),
         semanticSignature: JSON.stringify([profileId, DISCOVERY_RULE_VERSION, ruleId,
             ordered.map(item => [item.id, item.kind, item.cell?.x, item.cell?.z,
-                ruleId === 'GF3' || ruleId === 'GF6' || ruleId === 'GT3' || ruleId === 'GT6' || ruleId === 'M2' ? growthStage(item) : null,
-                ruleId === 'R1' || ruleId === 'R3' || ruleId === 'R4' ? item.access ?? 'adjacent' : null])]), ...(distance === undefined ? {} : { distance }) };
+                ruleId === 'GF3' || ruleId === 'GF6' || ruleId === 'GT3' || ruleId === 'GT6' || ruleId === 'R2' || ruleId === 'M2' ? growthStage(item) : null,
+                ruleId === 'R1' || ruleId === 'R3' || ruleId === 'R4' || ruleId === 'R2' ? item.access ?? 'adjacent' : null])]), ...(distance === undefined ? {} : { distance }) };
 }
 
 /** Actual usable ground points, including the front-only legacy access contract. */
 export function discoveryAccessPoints(state: LifeState, item: LifeItem): Cell[] {
     if (!item.cell) return [];
-    const directions = item.access === 'front' ? [{ x: 0, z: 1 }]
+    const directions = item.kind === 'picnic-table' ? [{ x: 0, z: 1 }, { x: 0, z: -1 }] : item.access === 'front' ? [{ x: 0, z: 1 }]
         : [{ x: 0, z: 1 }, { x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: -1 }];
     return directions.map(d => ({ x: item.cell!.x + d.x, z: item.cell!.z + d.z }))
         .filter(point => vacant(state, point) && Boolean(route(state, homeCell, point)));
@@ -66,6 +66,12 @@ export function evaluateDiscovery(state: LifeState, profileId: string): RuleElig
             if (distance !== undefined && distance <= 4) result.push(eligibility(profileId, target.kind === 'flower' ? 'R1' : target.kind === 'water-bowl' ? 'R4' : 'R3', [bench, target], distance));
         }
     }
+    for (const table of state.items.filter(item => item.kind === 'picnic-table' && item.cell)) {
+        for (const tree of state.items.filter(item => item.kind === 'sapling' && item.cell && growthStage(item) === 2)) {
+            const distance = relationDistance(state, table, tree);
+            if (distance !== undefined && distance <= 4) result.push(eligibility(profileId, 'R2', [table, tree], distance));
+        }
+    }
     for (const flower of state.items.filter(item => item.cell && (item.kind === 'flower' || item.kind === 'sapling'))) result.push(eligibility(profileId, 'M2', [flower]));
     return result.sort((a, b) => a.semanticSignature < b.semanticSignature ? -1 : a.semanticSignature > b.semanticSignature ? 1 : 0);
 }
@@ -77,16 +83,16 @@ export function plantGatherings(state: LifeState): LifeItem[][] {
 
 /** Select the current relation, or a touched real object, without a recipe menu. */
 export function benchRelation(state: LifeState, profileId: string, benchId: string, targetId?: string) {
-    return evaluateDiscovery(state, profileId).filter(rule => (rule.ruleId === 'R1' || rule.ruleId === 'R3' || rule.ruleId === 'R4')
+    return evaluateDiscovery(state, profileId).filter(rule => (rule.ruleId === 'R1' || rule.ruleId === 'R2' || rule.ruleId === 'R3' || rule.ruleId === 'R4')
         && rule.participantIds.includes(benchId) && (!targetId || rule.participantIds.includes(targetId)))
-        .sort((a, b) => a.distance! - b.distance! || (['R1', 'R4', 'R3'].indexOf(a.ruleId) - ['R1', 'R4', 'R3'].indexOf(b.ruleId))
+        .sort((a, b) => a.distance! - b.distance! || (['R1', 'R4', 'R3', 'R2'].indexOf(a.ruleId) - ['R1', 'R4', 'R3', 'R2'].indexOf(b.ruleId))
             || (a.semanticSignature < b.semanticSignature ? -1 : a.semanticSignature > b.semanticSignature ? 1 : 0))[0];
 }
 
 export function relationAvailability(state: LifeState, rule: RuleEligibility): 'eligible' | 'waiting-for-resident' | 'blocked-path' | 'active' {
     const participants = rule.participantIds.map(id => state.items.find(item => item.id === id));
     if (participants.some(item => !item?.cell || !discoveryAccessPoints(state, item).length)) return 'blocked-path';
-    const bench = participants.find(item => item?.kind === 'bench');
+    const bench = participants.find(item => item?.kind === 'bench' || item?.kind === 'picnic-table');
     if (bench && state.residents.some(resident => resident.visit?.itemId === bench.id
         && state.now >= resident.visit.start + (resident.visit.path.length - 1) * LIFE_STEP_MS)) return 'active';
     if (!bench) return 'eligible';

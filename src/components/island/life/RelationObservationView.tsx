@@ -75,7 +75,7 @@ export default function RelationObservationView(props: Props) {
             const at = source.now + (latest.current.frozen ? 0 : mono - start);
             if (foreground) {
                 content.animate(at, matchMedia('(prefers-reduced-motion: reduce)').matches, latest.current.frozen ? source.now + Math.min(3000, mono - start) : at); renderer.render(scene, camera); node.dataset.rendered = 'true';
-                const poses = content.audit(), sitter = poses.find(pose => pose.itemId === benchId && pose.phase === 'bench');
+                const poses = content.audit(), sitter = poses.find(pose => pose.itemId === benchId && (pose.phase === 'bench' || pose.phase === 'picnic-table'));
                 const stateAtFrame = content.snapshot();
                 const nextStatus = sitter ? 'bench' : poses.some(pose => pose.itemId === benchId && pose.phase === 'walking') ? 'walking' : 'busy';
                 if (nextStatus !== previousStatus) { previousStatus = nextStatus; latest.current.status?.(nextStatus); }
@@ -133,7 +133,7 @@ export default function RelationObservationView(props: Props) {
             for (let object = hit?.object; object; object = object.parent ?? undefined) {
                 if (!object.name.startsWith('life-item-')) continue;
                 const id = object.name.slice('life-item-'.length), item = source.items.find(item => item.id === id);
-                if (item?.cell && (item.kind === 'flower' || item.kind === 'swing' || (source.relationVersion === 'water-bench-v1' && item.kind === 'water-bowl'))) latest.current.target(id);
+                if (item?.cell && (item.kind === 'sapling' || item.kind === 'flower' || item.kind === 'swing' || (source.relationVersion === 'water-bench-v1' && item.kind === 'water-bowl'))) latest.current.target(id);
                 break;
             }
         };

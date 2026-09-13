@@ -1,3 +1,4 @@
+import { makePicnicMotion, picnicRole } from './picnicMotion';
 import { makeWaterGaze } from './waterGaze';
 import * as T from 'three';
 import { makeLifeHeroHead, makeRelationGaze } from './relationGaze';
@@ -9,7 +10,7 @@ import { sampleResidentInterest } from '../three/residentInterest';
 import { smoothArrival, turnToward } from './residentWalk';
 import { makeLifeStateProjection } from './stateProjection';
 
-export type LifeSeat = { seat: T.Mesh; pivot?: T.Group };
+export type LifeSeat = { seat: T.Mesh; pivot?: T.Group; picnic?: { seats: T.Mesh[]; snacks: T.Group[] } };
 export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, state: LifeState,
     point: (cell: Cell) => T.Vector3, seats: Map<string, LifeSeat>) {
     const project = makeLifeStateProjection(state);
@@ -18,10 +19,11 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
     const bodies = [content.heroBody, content.rabbit.body, content.otter.body];
     const heads = [makeLifeHeroHead(content.heroBody), content.rabbit.head, content.otter.head];
     const gaze = makeRelationGaze(state, heads, point);
+    const picnic = makePicnicMotion(state, heads, seats, point);
     const waterGaze = makeWaterGaze(state, heads, point);
     const feet = [content.heroFeet, content.rabbit.feet, content.otter.feet];
     const neutralFeet = feet.map(pair => pair.map(foot => foot.position.clone()));
-    let audit: { waterLook?: ReturnType<ReturnType<typeof makeWaterGaze>>; id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
+    let audit: { picnic?: ReturnType<typeof picnic.finish>; waterLook?: ReturnType<ReturnType<typeof makeWaterGaze>>; id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
     return {
         audit: () => audit,
         snapshot: () => ({ ...(state.tourVersion ? visible : state), now: renderedAt,
@@ -34,7 +36,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                 // actually shown, even when the viewer's motion preference changes.
                 if (state.poseReducedMotion !== undefined) { reduced = state.poseReducedMotion; decorationAt = state.now; }
             }
-            renderedReduced = reduced;
+            renderedReduced = reduced; picnic.clear();
             visible = project(now); renderedAt = now;
             heads.forEach(head => { head.rotation.order = 'XYZ'; });
             heads[0].rotation.set(0, 0, 0);
@@ -102,7 +104,9 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                                     foot.rotation.x = -.6 * settling;
                                 });
                                 content.world.updateMatrixWorld(true);
-                                const top = furniture.seat.localToWorld(new T.Vector3(0, .05, 0));
+                                const role = item.kind === 'picnic-table' ? picnicRole(item, visit) : 0;
+                                if (item.kind === 'picnic-table') actor.rotation.y = reduced ? picnic.facing(item, visit) : turnToward(heading, picnic.facing(item, visit), (now - walkedAt) / duration);
+                                const top = (furniture.picnic?.seats[role] ?? furniture.seat).localToWorld(new T.Vector3(0, .05, 0));
                                 const contactY = index === 0 ? .05 : residentSeatContactY(index === 1 ? 'rabbit' : 'otter');
                                 const offset = new T.Vector3(0, contactY * scale, 0).applyEuler(actor.rotation);
                                 const seated = top.clone().sub(offset);
@@ -146,6 +150,8 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
             content.world.updateMatrixWorld(true);
             audit.forEach((pose, index) => {
                 pose.relation = gaze(visible, now, reduced, index);
+                pose.picnic = picnic.finish(visible, now, index, reduced);
+                if (pose.picnic?.relation) pose.relation = pose.picnic.relation;
                 pose.waterLook = waterGaze(visible, now, reduced, index);
                 pose.headYaw = heads[index].rotation.y;
                 pose.headPitch = heads[index].rotation.x;

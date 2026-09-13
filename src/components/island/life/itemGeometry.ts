@@ -59,6 +59,21 @@ export function buildLifeItem(item: LifeItem, materials: IslandMaterials, showSo
         water.rotation.x = -Math.PI / 2; water.position.y = .23; water.name = 'life-bowl-water'; g.add(water);
         const rim = new T.Mesh(new T.TorusGeometry(.349, .028, 10, 40), materials.surface(color, .4));
         rim.rotation.x = Math.PI / 2; rim.position.y = .31; g.add(rim);
+    } else if (item.kind === 'picnic-table') {
+        box(g, '#bd9066', 0, .49, 0, .78, .09, .48);
+        for (const x of [-.27, .27]) box(g, '#98714e', x, .23, 0, .075, .46, .34);
+        const seats = [1, -1].map(side => {
+            const seat = box(g, color, 0, .29, side * .38, .70, .10, .16);
+            for (const x of [-.25, .25]) box(g, '#a88056', x, .12, side * .38, .06, .24, .14);
+            return seat;
+        });
+        const snacks = [1, -1].map(side => {
+            const snack = new T.Group(); snack.name = `life-picnic-snack-${side}`;
+            cylinder(snack, paint('#f9edd0'), [0, .546, side * .13], .085, .015);
+            ellipsoid(snack, paint('#e4aa62'), [0, .566, side * .13], [.048, .022, .04], 12);
+            snack.visible = false; g.add(snack); return snack;
+        });
+        result.seat = seats[0]; result.picnic = { seats, snacks };
     } else if (item.kind === 'bench') {
         const seat = box(g, '#b48258', 0, .29, 0, .7, .10, .35); result.seat = seat; box(g, color, 0, .49, -.14, .7, .33, .08);
         for (const x of [-.26, .26]) box(g, '#b48258', x, .12, 0, .07, .24, .3);
@@ -76,5 +91,5 @@ export function buildLifeItem(item: LifeItem, materials: IslandMaterials, showSo
         ellipsoid(g, materials.surface('#fff2a1', .4, 0, true), [0, .92, 0], [.18, .18, .18]);
         for (const x of [-.13, .13]) box(g, '#dab46a', x, .91, 0, .025, .38, .2);
     }
-    return { root: g, seat: result.seat, pivot: result.pivot };
+    return { root: g, seat: result.seat, pivot: result.pivot, picnic: result.picnic };
 }

@@ -1,0 +1,229 @@
+{
+  "startHash": "d113cec59acc7bcbb8f99a69cfb3c8f98e3f4c5506c1d69a1b47730cb68094be",
+  "revision": "477b6c73fe5166f84de3cf5c4b572ca8016522ae",
+  "target": "http://127.0.0.1:5223",
+  "flags": "DEV VITE_ISLAND_LIFE_PREVIEW=true",
+  "candidate": "life-v3-picnic-v1",
+  "fixture": "24 QA credits; real UI purchases; explicit DEV 24h growth; no earned acquisition or real elapsed time claim",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "delivered": {
+        "candidate": "island-life-economy-checkpoint-v3",
+        "world": "canopy-dots-c3-v1"
+      },
+      "shade": [
+        {
+          "id": "pokomoko",
+          "itemId": "a6266003-1adc-4408-a6fe-b335c403135f",
+          "phase": "picnic-table",
+          "position": [
+            -1.5,
+            0.34199999999999997,
+            0.38
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "hop": 0,
+          "headPitch": -0.14373867314832622,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R2",
+            "targetId": "f4894a61-eba9-4257-b31c-fb5e0e0d1fe3",
+            "targetResidentId": "otter",
+            "focus": [
+              -1.5,
+              0.9079999999999999,
+              -0.38
+            ],
+            "ready": true
+          },
+          "picnic": {
+            "role": 0,
+            "partnerId": "otter",
+            "relation": {
+              "ruleId": "R2",
+              "targetId": "f4894a61-eba9-4257-b31c-fb5e0e0d1fe3",
+              "targetResidentId": "otter",
+              "focus": [
+                -1.5,
+                0.9079999999999999,
+                -0.38
+              ],
+              "ready": true
+            }
+          },
+          "headYaw": 0.35000000000000053
+        },
+        {
+          "id": "rabbit",
+          "itemId": "f4894a61-eba9-4257-b31c-fb5e0e0d1fe3",
+          "phase": "sapling",
+          "position": [
+            -0.06,
+            0.04,
+            0
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": -0.012679617849501883,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "a6266003-1adc-4408-a6fe-b335c403135f",
+          "phase": "picnic-table",
+          "position": [
+            -1.5,
+            0.35,
+            -0.38
+          ],
+          "seatGap": 0,
+          "hop": 0,
+          "headPitch": 0.14373867314832603,
+          "headRoll": -0.03430171118986649,
+          "relation": {
+            "ruleId": "R2",
+            "targetId": "f4894a61-eba9-4257-b31c-fb5e0e0d1fe3",
+            "targetResidentId": "pokomoko",
+            "focus": [
+              -1.5,
+              0.798,
+              0.38
+            ],
+            "ready": true
+          },
+          "picnic": {
+            "role": 1,
+            "partnerId": "pokomoko",
+            "relation": {
+              "ruleId": "R2",
+              "targetId": "f4894a61-eba9-4257-b31c-fb5e0e0d1fe3",
+              "targetResidentId": "pokomoko",
+              "focus": [
+                -1.5,
+                0.798,
+                0.38
+              ],
+              "ready": true
+            }
+          },
+          "headYaw": -0.34999999999999964
+        }
+      ],
+      "eventId": "0919d4ec-a499-4c6b-8a32-f2c4532e62d3",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "device": "tablet",
+      "delivered": {
+        "candidate": "island-life-economy-checkpoint-v3",
+        "world": "canopy-dots-c3-v1"
+      },
+      "shade": [
+        {
+          "id": "pokomoko",
+          "itemId": "ffe829f2-e464-45da-b530-5d9cafe0b958",
+          "phase": "picnic-table",
+          "position": [
+            -1.5,
+            0.34199999999999997,
+            0.38
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "hop": 0,
+          "headPitch": -0.14373867314832622,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R2",
+            "targetId": "8b3241ea-8e9b-495f-a327-96976de2555f",
+            "targetResidentId": "otter",
+            "focus": [
+              -1.5,
+              0.9079999999999999,
+              -0.38
+            ],
+            "ready": true
+          },
+          "picnic": {
+            "role": 0,
+            "partnerId": "otter",
+            "relation": {
+              "ruleId": "R2",
+              "targetId": "8b3241ea-8e9b-495f-a327-96976de2555f",
+              "targetResidentId": "otter",
+              "focus": [
+                -1.5,
+                0.9079999999999999,
+                -0.38
+              ],
+              "ready": true
+            }
+          },
+          "headYaw": 0.35000000000000053
+        },
+        {
+          "id": "rabbit",
+          "itemId": "8b3241ea-8e9b-495f-a327-96976de2555f",
+          "phase": "sapling",
+          "position": [
+            0.5,
+            0.04,
+            0.56
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "ffe829f2-e464-45da-b530-5d9cafe0b958",
+          "phase": "picnic-table",
+          "position": [
+            -1.5,
+            0.35,
+            -0.38
+          ],
+          "seatGap": 0,
+          "hop": 0,
+          "headPitch": 0.14373867314832603,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R2",
+            "targetId": "8b3241ea-8e9b-495f-a327-96976de2555f",
+            "targetResidentId": "pokomoko",
+            "focus": [
+              -1.5,
+              0.798,
+              0.38
+            ],
+            "ready": true
+          },
+          "picnic": {
+            "role": 1,
+            "partnerId": "pokomoko",
+            "relation": {
+              "ruleId": "R2",
+              "targetId": "8b3241ea-8e9b-495f-a327-96976de2555f",
+              "targetResidentId": "pokomoko",
+              "focus": [
+                -1.5,
+                0.798,
+                0.38
+              ],
+              "ready": true
+            }
+          },
+          "headYaw": -0.34999999999999964
+        }
+      ],
+      "eventId": "15b4edbe-4d3f-4983-a046-d66e298b9947",
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "d113cec59acc7bcbb8f99a69cfb3c8f98e3f4c5506c1d69a1b47730cb68094be"
+}

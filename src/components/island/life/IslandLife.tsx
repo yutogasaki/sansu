@@ -32,7 +32,7 @@ import './life-belongings.css';
 import './life-resources.css';
 import './life-world-first.css';
 
-const productStories = { flower: 'めを そだてて おはなに', bench: 'ひとやすみの ばしょ', swing: 'すわって ゆらゆら', lantern: 'あかりの そばに あつまるかな', sapling: '木かげに そだつ なえ', 'water-bowl': '水を のぞく うつわ' };
+const productStories = { flower: 'めを そだてて おはなに', bench: 'ひとやすみの ばしょ', swing: 'すわって ゆらゆら', lantern: 'あかりの そばに あつまるかな', sapling: '木かげに そだつ なえ', 'water-bowl': '水を のぞく うつわ', 'picnic-table': 'おやつと おしゃべりの ばしょ' };
 const tabOptions = [
     ['build', 'つくる', Sprout],
     ['items', 'もちもの', Archive],
@@ -219,7 +219,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         if (error) { setMenuOpen(true); setDockOpen(false); return; }
         setDockOpen(true);
     };
-    const products = (Object.keys(CATALOG) as ItemKind[]).filter(kind => !['sapling', 'water-bowl'].includes(kind)
+    const products = (Object.keys(CATALOG) as ItemKind[]).filter(kind => !['sapling', 'water-bowl', 'picnic-table'].includes(kind)
         || import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true');
     const pageCount = Math.max(1, Math.ceil((tab === 'build' ? products.length : state.items.length) / 2));
     const currentPage = Math.min(page, pageCount - 1);
@@ -250,7 +250,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             </button>
         </LifeWorld>
         {observed && !placement && !menuOpen && !dockOpen && (() => {
-            const target = state.items.find(i => i.id === observed && i.cell && (gathering || ['flower', 'sapling', 'water-bowl', 'bench'].includes(i.kind)));
+            const target = state.items.find(i => i.id === observed && i.cell && (gathering || ['flower', 'sapling', 'water-bowl', 'bench', 'picnic-table'].includes(i.kind)));
             return target ? <LifeObservation key={`${record.profileId}:${target.id}:${target.cell!.x}:${target.cell!.z}:${target.style}`}
                 record={record} state={state} item={target} gathering={gathering} close={() => setObserved(undefined)} memories={openMemories} tryVisit={() => tryObservation(target.id)} /> : null;
         })()}
@@ -289,7 +289,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
                     <LifeProductPreview kind={item.kind} growth={item.growth} style={item.style} />
                     {(() => { const growth = lifeGrowthStatus(item, state); return <div className="life-item-growth-detail" data-life-growth-stage={growth.stage}><div>{(item.kind === 'flower' || item.kind === 'sapling') && <GrowthDots status={growth} />}<strong>{item.cell ? growth.label : 'しまってある'}</strong></div>
                         <small>{!['flower', 'sapling'].includes(item.kind) ? (item.cell ? 'しまに おいてあるよ' : 'また しまに おけるよ') : !item.cell ? 'おくと また そだつよ' : growth.nextLabel ? `あと 約${growth.remainingHours}じかんで ${growth.nextLabel}` : 'いちばん おおきく そだったよ'}</small>{item.cell && growth.nextLabel && <small>追加で まなばない ときの めやすだよ。</small>}</div>; })()}
-                    {['flower', 'sapling', 'water-bowl', 'bench'].includes(item.kind) && item.cell && <button hidden={removing} disabled={locked} onClick={() => { showWorld(); setObserved(item.id); if (item.kind === 'bench') tryObservation(item.id); }}>みてみる</button>}
+                    {['flower', 'sapling', 'water-bowl', 'bench', 'picnic-table'].includes(item.kind) && item.cell && <button hidden={removing} disabled={locked} onClick={() => { showWorld(); setObserved(item.id); if (item.kind === 'bench' || item.kind === 'picnic-table') tryObservation(item.id); }}>みてみる</button>}
                     <button hidden={removing} disabled={locked || !item.cell || item.kind === 'lantern'} onClick={() => void doAction({ type: 'visit', itemId: item.id }, 'ぽこもこの いきさきを きめたよ。だれか くるかな？')}>ぽこもこを よぶ</button>
                     <button hidden={removing} disabled={locked} onClick={() => { setMoving(true); setCell(undefined); setRemoving(false); setNotice(''); showWorld(); }}><Move size={16} />{item.cell ? 'うごかす' : 'おく'}</button>
                     <button hidden={removing} disabled={locked || !item.cell} onClick={() => void doAction({ type: 'store', itemId: item.id }, 'そだったまま しまったよ。')}><Archive size={16} />しまう</button>
