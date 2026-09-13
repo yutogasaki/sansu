@@ -1,0 +1,153 @@
+{
+  "free": "fcf08e9c-43fa-4de1-bb6b-393f5bf15fb9",
+  "plants": [
+    "fcf08e9c-43fa-4de1-bb6b-393f5bf15fb9",
+    "9c4847c1-4356-4cd2-9ff1-0a7b9872ba94",
+    "9c4847c1-4356-4cd2-9ff1-0a7b9872ba94"
+  ],
+  "poses": [
+    {
+      "id": "pokomoko",
+      "itemId": "23c88737-c452-4f43-8770-eb3a8e84ad76",
+      "phase": "garden-hut",
+      "position": [
+        1.5,
+        0.04,
+        0
+      ],
+      "hop": 0,
+      "headPitch": 0.6,
+      "headRoll": 0,
+      "facilityUse": {
+        "kind": "garden-hut",
+        "action": "tool-care"
+      },
+      "headYaw": 0
+    },
+    {
+      "id": "rabbit",
+      "itemId": "c95d8d82-fdbf-4469-98b3-d5cba829f33c",
+      "phase": "flower",
+      "position": [
+        2.5,
+        0.04,
+        0.48
+      ],
+      "hop": 0,
+      "headPitch": 0.09,
+      "headRoll": -0.002508543298909717,
+      "headYaw": 0
+    },
+    {
+      "id": "otter",
+      "itemId": "c95d8d82-fdbf-4469-98b3-d5cba829f33c",
+      "phase": "flower",
+      "position": [
+        2.5,
+        0.04,
+        1.52
+      ],
+      "hop": 0,
+      "headPitch": 0.09,
+      "headRoll": -0.030731113088365163,
+      "headYaw": 0
+    }
+  ],
+  "view": {
+    "at": 1789331339528.4,
+    "core": true,
+    "status": "bench",
+    "poses": [
+      {
+        "id": "pokomoko",
+        "itemId": "fcf08e9c-43fa-4de1-bb6b-393f5bf15fb9",
+        "phase": "flower",
+        "position": [
+          1.5,
+          0.04,
+          0.15
+        ],
+        "hop": 0,
+        "headPitch": 0.6,
+        "headRoll": 0,
+        "facilityUse": {
+          "kind": "garden-hut",
+          "action": "tool-care"
+        },
+        "headYaw": 1.4802973661668757e-15
+      },
+      {
+        "id": "rabbit",
+        "itemId": "c95d8d82-fdbf-4469-98b3-d5cba829f33c",
+        "phase": "flower",
+        "position": [
+          2.5,
+          0.04,
+          0.48
+        ],
+        "hop": 0,
+        "headPitch": 0.09,
+        "headRoll": -0.012161795407404348,
+        "headYaw": 0
+      },
+      {
+        "id": "otter",
+        "itemId": "c95d8d82-fdbf-4469-98b3-d5cba829f33c",
+        "phase": "flower",
+        "position": [
+          2.5,
+          0.04,
+          1.52
+        ],
+        "hop": 0,
+        "headPitch": 0.09,
+        "headRoll": -0.03418733326621128,
+        "headYaw": 0
+      }
+    ],
+    "preparation": "ready",
+    "eventId": "80e88f5a-8531-449e-bb4e-e6a4e6dc3338",
+    "delivered": true,
+    "maxGap": 118.60000002384186,
+    "epoch": 2,
+    "camera": {
+      "projection": [
+        0.4004428068231218,
+        0,
+        0,
+        0,
+        0,
+        0.5506088593817924,
+        0,
+        0,
+        0,
+        0,
+        -0.02002002002002002,
+        0,
+        -0.013014846512359898,
+        -0.08357408618087932,
+        -1.002002002002002,
+        1
+      ],
+      "view": [
+        0.8411784753765535,
+        -0.2785043287946192,
+        0.4635235823621443,
+        0,
+        5.551115123125783e-17,
+        0.8571744341789946,
+        0.5150262026246047,
+        0,
+        -0.5407575913134988,
+        -0.43322895590274096,
+        0.7210366836744466,
+        0,
+        -1.9729326664312554,
+        -0.2920136751446047,
+        -10.618097476603623,
+        1
+      ]
+    }
+  },
+  "pass": true
+}

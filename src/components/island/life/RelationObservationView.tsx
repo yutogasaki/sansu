@@ -1,3 +1,4 @@
+import { relationTargetBusy } from '../../../domain/islandLife/relationObservation';
 import { canopyClearanceCandidate } from './canopyClearanceStudy';
 import { canopyAtmosphereStudy, createCanopyLightingStudy } from './canopyAtmosphereStudy';
 import { makeEncounterObservation } from './encounterObservation';
@@ -19,7 +20,7 @@ type Props = { state: LifeState; residentId?: ResidentId; selectedTarget?: (id?:
     readingPrepare?: Prepared; readingPresented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; readingReplay?: boolean;
     encounterPrepare?: Prepared; encounterPresented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; encounterReplay?: boolean;
     shadowRequest?: ShadowRequest; shadowRequestCancelled?: boolean; shadowPrepare?: Prepared; shadowPresented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void;
-    presented: (event: DiscoveryScene, evidence: PresentationEvidence) => void; target?: (id: string) => void; status?: (status: 'bench' | 'walking' | 'busy') => void };
+    presented: (event: DiscoveryScene, evidence: PresentationEvidence) => void; target?: (id: string) => void; status?: (status: 'bench' | 'walking' | 'busy' | 'target-busy') => void };
 
 /** Render committed geometry and real visits. The memory mode freezes the original
  * world clock; neither mode can write a placement or create its own resident. */
@@ -129,7 +130,7 @@ export default function RelationObservationView(props: Props) {
             if (foreground) {
                 content.animate(at, matchMedia('(prefers-reduced-motion: reduce)').matches, latest.current.frozen ? source.now + Math.min(3000, mono - start) : at);
                 const poses = content.audit(), stateAtFrame = content.snapshot();
-                if (shadow.update(stateAtFrame,content.root,benchId,latest.current.residentId,mono,matchMedia('(prefers-reduced-motion: reduce)').matches)) resize();
+                if (shadow.update(stateAtFrame,content.root,benchId,latest.current.residentId,mono,matchMedia('(prefers-reduced-motion: reduce)').matches,Boolean(latest.current.shadowPrepare))) resize();
                 if (encounter.update(stateAtFrame,content,latest.current.encounterPrepare ? latest.current.gathering : undefined,Boolean(latest.current.encounterReplay),mono,matchMedia('(prefers-reduced-motion: reduce)').matches)) resize();
                 if (shadow.active()) reading.cancel();
                 else if (reading.update(stateAtFrame, content.root, benchId, latest.current.residentId, Boolean(latest.current.readingReplay), Boolean(latest.current.readingPrepare), mono, matchMedia('(prefers-reduced-motion: reduce)').matches)) resize();
@@ -162,7 +163,7 @@ export default function RelationObservationView(props: Props) {
                 const sitter = transport ? poses.find(pose => pose.id === transport?.focalResidentIds?.[0])
                     : poses.find(pose => (!latest.current.residentId || pose.id === latest.current.residentId) && pose.itemId === benchId && (['bench', 'picnic-table', 'library', 'garden-hut'].includes(pose.phase)));
                 const collectingForBench = stateAtFrame.relationSelectionVersion && stateAtFrame.residents.some(r => (!latest.current.residentId || r.id === latest.current.residentId) && r.facilityTrip?.targetId === benchId && r.facilityTrip.phase === 'collect');
-                const nextStatus = sitter ? 'bench' : collectingForBench || poses.some(pose => (!latest.current.residentId || pose.id === latest.current.residentId) && (pose.itemId === benchId || stateAtFrame.residents.find(r => r.id === pose.id)?.facilityTrip?.facilityId === benchId) && pose.phase === 'walking') ? 'walking' : 'busy';
+                const nextStatus = relationTargetBusy(stateAtFrame, benchId, latest.current.residentId, selectedTarget) ? 'target-busy' : sitter ? 'bench' : collectingForBench || poses.some(pose => (!latest.current.residentId || pose.id === latest.current.residentId) && (pose.itemId === benchId || stateAtFrame.residents.find(r => r.id === pose.id)?.facilityTrip?.facilityId === benchId) && pose.phase === 'walking') ? 'walking' : 'busy';
                 if (nextStatus !== previousStatus) { previousStatus = nextStatus; if (transport) { resize(); renderer.render(scene, camera); transport = findTransport(); } latest.current.status?.(nextStatus); }
                 const gathering = latest.current.gathering;
                 const rule = gathering ? displayedGatherings(stateAtFrame, '').find(rule => rule.ruleId === gathering.ruleId

@@ -1,0 +1,33 @@
+
+ RUN  v2.1.9 /private/tmp/sansu-canopy-material-worktree
+
+ ❯ src/components/island/life/worldShadowPresentation.test.ts (4 tests | 1 failed) 274ms
+   × predicts a tiny shadow needs the close view without recording or leaving its preview gesture behind 156ms
+     → expected [ Group{ isObject3D: true, …(31) } ] to have a length of +0 but got 1
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/island/life/worldShadowPresentation.test.ts > predicts a tiny shadow needs the close view without recording or leaving its preview gesture behind
+AssertionError: expected [ Group{ isObject3D: true, …(31) } ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/components/island/life/worldShadowPresentation.test.ts:37:38
+     35|         // offering a shadow interaction. It must not inherit shadow f…
+     36|         controller.update(state, content.root, 'bench', 'pokomoko', 1,…
+     37|         expect(controller.objects()).toHaveLength(0);
+       |                                      ^
+     38|         expect(controller.subject()).toBeUndefined();
+     39|         controller.update(state, content.root, 'bench', 'pokomoko', 2,…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  05:47:43
+   Duration  787ms (transform 215ms, setup 0ms, collect 303ms, tests 274ms, environment 0ms, prepare 42ms)
+

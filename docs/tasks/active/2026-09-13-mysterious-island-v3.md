@@ -409,3 +409,7 @@ cd0c951のLife有効productionと3781179の固定production buildで、実初回
 ## 本番構成の12品とoffline保存
 
 DEVに結びついていた追加8品/表示版を明示production capabilityへ分離。新規購入のcommit検査、切替後も同一receipt再送/所有/収納/既得表示を保持する。初回production UI1で6ページ案内の文字折れを発見して修正。最終core411/3958とUI2（両幅、12品一覧、実3問→苗購入、offline移動/収納/学習、Life put故障→回答保持→再試行一度）がPASS。[source/build/初回と最終の証拠](../../design/2026-09-14-island-v3-capability/README.md)。次は4→12品の実two-build更新。C3/利用者検証/元の全仕様残件は継続。
+
+## 施設の実取得と旧場面の再演
+
+利用中の相手に理由を表示し、R5再演に無関係な影の構図が入る不具合を修正。core411/3960、実60問からの施設購入/観察/保存/offline両幅、修正後buildで元のR5/R6のoffline再演両幅PASS。獲得と再演のsourceは別で、[初回失敗・実画面・manifest・限定範囲](../../design/2026-09-14-facility-production/README.md)に保持。取得時の園芸画面に残る保存確認エラーの文言は未解決。観察・思い出に残る箱UIも次の修正対象。全体goal、C3、Human N=0、全release残件は継続。

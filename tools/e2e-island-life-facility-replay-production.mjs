@@ -1,0 +1,27 @@
+import assert from 'node:assert/strict';
+import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import {chromium} from 'playwright';
+import {createHash} from 'node:crypto';
+import {readNative} from './island-e2e-helpers.mjs';
+const root=process.env.SANSU_FACILITY_PRODUCTION_SOURCE,out=process.env.SANSU_FACILITY_REPLAY_OUTPUT;
+assert(root&&out);await mkdir(out,{recursive:false});const source=JSON.parse(await readFile(`${root}/report.json`));assert(source.pass);assert(['127.0.0.1','localhost'].includes(new URL(source.target).hostname));
+const build=JSON.parse(await readFile(process.env.SANSU_FACILITY_REPLAY_MANIFEST));
+async function savedRecord(page){return page.evaluate(async()=>{const request=indexedDB.open('SansuIslandLifeV1');const db=await new Promise((resolve,reject)=>{request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error);});try{const query=db.transaction('worlds').objectStore('worlds').getAll();const rows=await new Promise((resolve,reject)=>{query.onsuccess=()=>resolve(query.result);query.onerror=()=>reject(query.error);});if(rows.length!==1)throw Error('One earned owner required');return rows[0];}finally{db.close();}});}
+async function verify(){for(const f of [...build.files,...build.distFiles])assert.equal(createHash('sha256').update(await readFile(f.path)).digest('hex'),f.sha256,f.path);}
+await verify();const html=await readFile(build.distFiles.find(f=>f.path.endsWith('/index.html')).path,'utf8');const entry=html.match(/<script\b[^>]*type="module"[^>]*src="([^"]+)"/)?.[1];assert(entry);
+const result={target:source.target,buildVersion:build.version,sourceHash:build.sourceHash,originalSourceHash:source.sourceHash,fixture:'Continue the actual earned disposable profiles, with no imported or injected DB state',cases:[],pass:false};
+try{for(const test of source.cases){const c=await chromium.launchPersistentContext(`${root}/${test.device}-browser`,{viewport:test.viewport,reducedMotion:test.device==='tablet'?'reduce':'no-preference'});const p=c.pages()[0];p.setDefaultTimeout(45000);try{
+ await p.goto(source.target);await p.locator('.life-world[data-rendered="true"]').waitFor();
+ if(await p.locator('script[type="module"][src]').first().getAttribute('src')!==entry){
+  await c.setOffline(true);await c.setOffline(false);
+  await p.evaluate(async()=>{const registration=await navigator.serviceWorker.ready;await registration.update();}).catch(e=>{if(!String(e).includes('Execution context was destroyed'))throw e;});
+  await p.waitForFunction(expected=>document.querySelector('script[type="module"][src]')?.getAttribute('src')===expected,entry);await p.locator('.life-world[data-rendered="true"]').waitFor();
+ }
+ assert.deepEqual(await(await p.request.get(new URL('/version.json',source.target).href)).json(),build.version);assert(await p.evaluate(()=>Boolean(navigator.serviceWorker.controller)));
+ const originalRecord=await savedRecord(p);for(const observation of test.observations)assert.deepEqual(JSON.parse(JSON.stringify(originalRecord.discoveryJournal.entries.find(e=>e.event.eventId===observation.view.eventId))),test.after.discoveryJournal.entries.find(e=>e.event.eventId===observation.view.eventId),'Original saved scene is unchanged across builds');
+ const before=await readNative(p),wallet=await p.locator('[data-life-drops]').getAttribute('data-life-drops');await c.setOffline(true);const replays=[];
+ for(const observation of test.observations){await p.getByRole('button',{name:'しまの ようす',exact:true}).click();await p.getByRole('button',{name:'しまの おもいで',exact:true}).click();const entries=p.locator('[data-life-memory]');await entries.first().waitFor();let found=false;for(const entry of await entries.all()){if(await entry.getAttribute('data-life-memory')===observation.view.eventId){await entry.click();found=true;break;}}assert(found,'Saved original event is present');
+ await p.waitForFunction(()=>JSON.parse(document.querySelector('.life-relation-view')?.dataset.relationView??'{}').delivered===true);const view=await p.locator('.life-relation-view').evaluate(n=>JSON.parse(n.dataset.relationView));await p.screenshot({path:`${out}/${test.device}-${observation.kind}.png`});replays.push({original:observation.view.eventId,view});await p.getByRole('button',{name:'おもいでを とじる',exact:true}).click();}
+ assert.deepEqual(await readNative(p),before);assert.equal(await p.locator('[data-life-drops]').getAttribute('data-life-drops'),wallet);const after=await savedRecord(p);for(const observation of test.observations)assert.deepEqual(after.discoveryJournal.entries.find(e=>e.event.eventId===observation.view.eventId),originalRecord.discoveryJournal.entries.find(e=>e.event.eventId===observation.view.eventId));result.cases.push({device:test.device,viewport:test.viewport,replays,wallet,originalScenesUnchanged:true,serviceWorkerControlled:true,pass:true});
+ }catch(e){await p.screenshot({path:`${out}/${test.device}-failure.png`}).catch(()=>{});result.failure={device:test.device,error:e.stack,text:await p.locator('body').innerText(),view:await p.locator('.life-relation-view').evaluate(n=>JSON.parse(n.dataset.relationView)).catch(()=>null)};throw e;}finally{await c.close();}}
+ await verify();result.pass=true;}finally{await writeFile(`${out}/report.json`,JSON.stringify(result,null,2));}

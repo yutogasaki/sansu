@@ -1,7 +1,7 @@
 import 'fake-indexeddb/auto';
 import { describe, expect, it } from 'vitest';
 import { activityRelation, visitRelation } from './discovery';
-import { applyRelationObservation } from './relationObservation';
+import { applyRelationObservation, relationTargetBusy } from './relationObservation';
 import { HOUR, newLife, learningDay, type LifeState } from './model';
 import { advanceLifeState, commandLife, replayLife } from './simulation';
 import { prepareEconomyMigration } from './economyMigration';
@@ -25,6 +25,26 @@ function fixture(hut = false): LifeState {
     return s;
 }
 describe('explicit current-world object trial', () => {
+    it('explains another plant user only for the selected eligible transport, without changing visits', () => {
+        const s = fixture(true), cell = { x: 3, z: 3 };
+        s.residents.push({ id: 'rabbit', cell, enjoyed: 0, enjoyedBy: {}, visit: { itemId: 'flower', from: cell, path: [cell], start: 0, end: HOUR } });
+        const before = structuredClone(s);
+        expect(relationTargetBusy(s, 'facility', 'pokomoko', 'flower')).toBe(true);
+        expect(relationTargetBusy(s, 'facility', 'pokomoko', 'near')).toBe(false);
+        expect(relationTargetBusy(s, 'facility', 'pokomoko')).toBe(false);
+        expect(s).toEqual(before);
+        s.residents[1].visit = undefined;
+        expect(relationTargetBusy(s, 'facility', 'pokomoko', 'flower')).toBe(false);
+    });
+    it('distinguishes an occupied library from a book already carried out of that library', () => {
+        const s = fixture(), cell = { x: 0, z: 2 };
+        applyRelationObservation(s, 'bench', 'pokomoko', 'facility');
+        advanceLifeState(s, s.residents[0].visit!.end + 5000);
+        s.residents.push({ id: 'rabbit', cell, enjoyed: 0, enjoyedBy: {}, visit: { itemId: 'facility', from: cell, path: [cell], start: 0, end: HOUR } });
+        expect(relationTargetBusy(s, 'bench', 'pokomoko', 'facility')).toBe(false);
+        s.residents[0].facilityTrip = undefined;
+        expect(relationTargetBusy(s, 'bench', 'pokomoko', 'facility')).toBe(true);
+    });
     it('overrides a nearer flower with water, keeps the same seat, and uses ordinary rest for an unrelated object', () => {
         const s = fixture(), before = structuredClone(s.residents[0]);
         expect(activityRelation(s, '', 'bench')?.ruleId).toBe('R1');

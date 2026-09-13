@@ -4,6 +4,17 @@ import { beginBenchTrip, beginFacilityTrip, reservedActivityCells, reservesItem 
 import { LIFE_STEP_MS, type LifeState, type ResidentId } from './model';
 import { pathToActivity } from './space';
 
+/** Explain an explicitly requested transport that cannot start, without
+ * rewriting a saved observation or evicting its destination's current user. */
+export function relationTargetBusy(state: LifeState, itemId?: string, residentId?: ResidentId, targetId?: string) {
+    if (!itemId || !residentId || !targetId) return false;
+    const rule = activityRelation(state, '', itemId, targetId);
+    if (rule?.ruleId !== 'R5' && rule?.ruleId !== 'R6') return false;
+    const trip = state.residents.find(r => r.id === residentId)?.facilityTrip;
+    if (trip?.phase === 'carry' && rule.participantIds.includes(trip.facilityId) && rule.participantIds.includes(trip.targetId)) return false;
+    return state.residents.some(r => r.id !== residentId && reservesItem(r, targetId));
+}
+
 /** Explicit, free current-world comparison. Only the named resident already
  * using this subject (or genuinely idle) can participate. No actor substitution,
  * invalid-pair fallback to another target, or mid-walk teleport is permitted. */

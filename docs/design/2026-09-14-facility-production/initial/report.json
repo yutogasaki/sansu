@@ -1,0 +1,886 @@
+{
+  "target": "http://127.0.0.1:5307",
+  "buildVersion": {
+    "version": "development-local:b052a594-0f36-4889-a344-ba1bc19ae34b",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceHash": "f03b6f45255db23a342d71341251614fb476d0f9003c19e7971bd999c879c25f",
+  "fixture": "Actual onboarding and earned purchases; no injected profile, credits, timestamps or DB writes. User-requested observations are current-context tests, not spontaneous discoveries.",
+  "humanN": 0,
+  "cases": [],
+  "pass": false,
+  "failure": {
+    "device": "phone",
+    "error": "page.waitForFunction: Timeout 45000ms exceeded.\n    at /private/tmp/sansu-canopy-material-worktree/tools/e2e-island-life-facility-production.mjs:40:12",
+    "text": "プレイヤーの しま\nしずく\n6\nひかり\n0\nえんげい 小屋の ようす\n\nここで おていれ\n\nみるもの\nいまの ようす\n森の としょしつ 1\nベンチ 2\nおはな 3\nしま\nいえ\nまなぶ\nきろく\n設定",
+    "record": {
+      "profileId": "76556f9f-5e5f-454b-bd21-773ab3e7934a",
+      "version": 13,
+      "revision": 38,
+      "createdAt": 1789330172118,
+      "realAt": 1789330350644,
+      "now": 1789330350644,
+      "credits": [
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",0]\",0]",
+          "at": 1789330177093,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",0]\",1]",
+          "at": 1789330177387,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",0]\",2]",
+          "at": 1789330177680,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",1]\",0]",
+          "at": 1789330177961,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",1]\",1]",
+          "at": 1789330178255,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",1]\",2]",
+          "at": 1789330178548,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",1]\",3]",
+          "at": 1789330182535,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",1]\",4]",
+          "at": 1789330182829,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",1]\",5]",
+          "at": 1789330183121,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",2]\",0]",
+          "at": 1789330183429,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",2]\",1]",
+          "at": 1789330183723,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",2]\",2]",
+          "at": 1789330184043,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",2]\",3]",
+          "at": 1789330188163,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",2]\",4]",
+          "at": 1789330188458,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",2]\",5]",
+          "at": 1789330188752,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",3]\",0]",
+          "at": 1789330189056,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",3]\",1]",
+          "at": 1789330189338,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",3]\",2]",
+          "at": 1789330189631,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",3]\",3]",
+          "at": 1789330193832,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",3]\",4]",
+          "at": 1789330194126,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",3]\",5]",
+          "at": 1789330194407,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",4]\",0]",
+          "at": 1789330194714,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",4]\",1]",
+          "at": 1789330194992,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",4]\",2]",
+          "at": 1789330195287,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",5]\",0]",
+          "at": 1789330199475,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",5]\",1]",
+          "at": 1789330199768,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",5]\",2]",
+          "at": 1789330200076,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",6]\",0]",
+          "at": 1789330200368,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",6]\",1]",
+          "at": 1789330200662,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",6]\",2]",
+          "at": 1789330200956,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",6]\",3]",
+          "at": 1789330205076,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",6]\",4]",
+          "at": 1789330205384,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",6]\",5]",
+          "at": 1789330205690,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",7]\",0]",
+          "at": 1789330205997,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",7]\",1]",
+          "at": 1789330206304,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",7]\",2]",
+          "at": 1789330206611,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",7]\",3]",
+          "at": 1789330210651,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",7]\",4]",
+          "at": 1789330210959,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",7]\",5]",
+          "at": 1789330211266,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",8]\",0]",
+          "at": 1789330211573,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",8]\",1]",
+          "at": 1789330211880,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",8]\",2]",
+          "at": 1789330212186,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",8]\",3]",
+          "at": 1789330216319,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",8]\",4]",
+          "at": 1789330216612,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",8]\",5]",
+          "at": 1789330216907,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",9]\",0]",
+          "at": 1789330217200,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",9]\",1]",
+          "at": 1789330217495,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",9]\",2]",
+          "at": 1789330217800,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",10]\",0]",
+          "at": 1789330222922,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",10]\",1]",
+          "at": 1789330223216,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",10]\",2]",
+          "at": 1789330223523,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",9]\",3]",
+          "at": 1789330222043,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",9]\",4]",
+          "at": 1789330222335,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",9]\",5]",
+          "at": 1789330222643,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",10]\",3]",
+          "at": 1789330227778,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",10]\",4]",
+          "at": 1789330228072,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",10]\",5]",
+          "at": 1789330228365,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",11]\",0]",
+          "at": 1789330228657,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",11]\",1]",
+          "at": 1789330228953,
+          "day": "2026-9-14"
+        },
+        {
+          "id": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"[\\\"island-plan-v1\\\",\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",11]\",2]",
+          "at": 1789330229246,
+          "day": "2026-9-14"
+        }
+      ],
+      "actions": [
+        {
+          "id": "bf7ab80c-e1bd-4f2b-8264-ccdd5bcb04b9",
+          "at": 1789330239101,
+          "command": {
+            "type": "buy",
+            "kind": "library",
+            "cell": {
+              "x": 0,
+              "z": 0
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-v3-facilities-v1",
+            "actualPaidDrops": 72,
+            "quoteFingerprint": "[\"life-v3-facilities-v1\",\"library\",72]",
+            "itemInstanceId": "bf7ab80c-e1bd-4f2b-8264-ccdd5bcb04b9",
+            "committedAt": 1789330239101
+          }
+        },
+        {
+          "id": "8a8bf2c9-d769-4069-9aa0-49d9095dba90",
+          "at": 1789330243630,
+          "command": {
+            "type": "visit",
+            "itemId": "bf7ab80c-e1bd-4f2b-8264-ccdd5bcb04b9"
+          }
+        },
+        {
+          "id": "f23889bc-3769-437f-9744-089517fbdff8",
+          "at": 1789330251172,
+          "command": {
+            "type": "buy",
+            "kind": "bench",
+            "cell": {
+              "x": 1,
+              "z": 3
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-48-v1",
+            "actualPaidDrops": 4,
+            "quoteFingerprint": "[\"life-48-v1\",\"bench\",4]",
+            "itemInstanceId": "f23889bc-3769-437f-9744-089517fbdff8",
+            "committedAt": 1789330251172
+          }
+        },
+        {
+          "id": "8d3920cf-c7f1-4bb4-a9e4-bf2ea7f8078c",
+          "at": 1789330255895,
+          "command": {
+            "type": "visit",
+            "itemId": "bf7ab80c-e1bd-4f2b-8264-ccdd5bcb04b9"
+          }
+        },
+        {
+          "id": "bc5f0e85-595f-4f4f-bbae-a02380c21029",
+          "at": 1789330263769,
+          "command": {
+            "type": "buy",
+            "kind": "garden-hut",
+            "cell": {
+              "x": 4,
+              "z": 0
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-v3-facilities-v1",
+            "actualPaidDrops": 36,
+            "quoteFingerprint": "[\"life-v3-facilities-v1\",\"garden-hut\",36]",
+            "itemInstanceId": "bc5f0e85-595f-4f4f-bbae-a02380c21029",
+            "committedAt": 1789330263769
+          }
+        },
+        {
+          "id": "076b3dc7-e7f4-4dba-a76d-b65313137fb9",
+          "at": 1789330268788,
+          "command": {
+            "type": "visit",
+            "itemId": "bc5f0e85-595f-4f4f-bbae-a02380c21029"
+          }
+        },
+        {
+          "id": "4edd30dc-d9b7-4136-9372-a6025e604faa",
+          "at": 1789330282243,
+          "command": {
+            "type": "buy",
+            "kind": "flower",
+            "cell": {
+              "x": 4,
+              "z": 3
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-48-v1",
+            "actualPaidDrops": 2,
+            "quoteFingerprint": "[\"life-48-v1\",\"flower\",2]",
+            "itemInstanceId": "4edd30dc-d9b7-4136-9372-a6025e604faa",
+            "committedAt": 1789330282243
+          }
+        },
+        {
+          "id": "ce0f5465-1bc9-40b0-baad-fd7576a2d3cc",
+          "at": 1789330287127,
+          "command": {
+            "type": "visit",
+            "itemId": "bf7ab80c-e1bd-4f2b-8264-ccdd5bcb04b9"
+          }
+        },
+        {
+          "id": "efab25a5-bbb3-4b25-8e2c-23aeea84deaf",
+          "at": 1789330307917,
+          "command": {
+            "type": "visit",
+            "itemId": "bc5f0e85-595f-4f4f-bbae-a02380c21029"
+          }
+        }
+      ],
+      "offsets": [
+        {
+          "at": 1789330172118,
+          "offset": 0
+        }
+      ],
+      "clockIntents": [],
+      "activitiesV2At": 1789330172118,
+      "activitiesV2After": 0,
+      "economyCheckpoint": {
+        "checkpointId": "[\"76556f9f-5e5f-454b-bd21-773ab3e7934a\",\"life-v3.0-rc1\"]",
+        "sourceRules": "life-48-v1",
+        "targetRules": "life-v3.0-rc1",
+        "originalRecord": {
+          "profileId": "76556f9f-5e5f-454b-bd21-773ab3e7934a",
+          "version": 1,
+          "revision": 0,
+          "createdAt": 1789330172118,
+          "realAt": 1789330172118,
+          "now": 1789330172118,
+          "credits": [],
+          "actions": [],
+          "offsets": [
+            {
+              "at": 1789330172118,
+              "offset": 0
+            }
+          ],
+          "clockIntents": [],
+          "activitiesV2At": 1789330172118,
+          "activitiesV2After": 0
+        },
+        "sourceRecord": {
+          "profileId": "76556f9f-5e5f-454b-bd21-773ab3e7934a",
+          "version": 1,
+          "revision": 1,
+          "createdAt": 1789330172118,
+          "realAt": 1789330172118,
+          "now": 1789330172118,
+          "credits": [],
+          "actions": [],
+          "offsets": [
+            {
+              "at": 1789330172118,
+              "offset": 0
+            }
+          ],
+          "clockIntents": [],
+          "activitiesV2At": 1789330172118,
+          "activitiesV2After": 0
+        },
+        "sourceFactWatermark": [],
+        "cutoverAt": 1789330172118,
+        "actionCount": 0,
+        "projectedCreditIds": [],
+        "legacyCorrections": [],
+        "initialLightRemainingBudget": 8,
+        "state": {
+          "now": 1789330172118,
+          "activityVersion": 2,
+          "drops": 0,
+          "light": 0,
+          "items": [],
+          "styles": [
+            "original"
+          ],
+          "heroStyle": "original",
+          "days": {},
+          "residents": [
+            {
+              "id": "pokomoko",
+              "cell": {
+                "x": 2,
+                "z": 1
+              },
+              "enjoyed": 0,
+              "enjoyedBy": {}
+            },
+            {
+              "id": "rabbit",
+              "cell": {
+                "x": 3,
+                "z": 1
+              },
+              "enjoyed": 0,
+              "enjoyedBy": {},
+              "visit": {
+                "itemId": "roam:rabbit:994072",
+                "path": [
+                  {
+                    "x": 3,
+                    "z": 1
+                  },
+                  {
+                    "x": 4,
+                    "z": 1
+                  },
+                  {
+                    "x": 5,
+                    "z": 1
+                  },
+                  {
+                    "x": 5,
+                    "z": 2
+                  },
+                  {
+                    "x": 5,
+                    "z": 3
+                  }
+                ],
+                "from": {
+                  "x": 3,
+                  "z": 1
+                },
+                "start": 1789330172118,
+                "end": 1789331972118
+              }
+            },
+            {
+              "id": "otter",
+              "cell": {
+                "x": 3,
+                "z": 2
+              },
+              "enjoyed": 0,
+              "enjoyedBy": {}
+            }
+          ],
+          "economy": {
+            "version": "life-v3.0-rc1",
+            "lightRemainingBudget": 8,
+            "completionTimes": []
+          }
+        },
+        "validationHash": "aae343cc844f3fca757eea4512484786f783bc25714cbcaa16566b9dd5070bc8",
+        "completionStatus": "complete"
+      },
+      "tourCutover": {
+        "rules": "gp3-tours-v1",
+        "profileId": "76556f9f-5e5f-454b-bd21-773ab3e7934a",
+        "at": 1789330172118,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "4c862196afbcb85860397657e67fd4ad90e3d71bb094b3982888a35b9cad9183"
+      },
+      "facilityCutover": {
+        "rules": "facility-trips-v1",
+        "profileId": "76556f9f-5e5f-454b-bd21-773ab3e7934a",
+        "at": 1789330172118,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "6b675502fd3f1bf0cb9f4c617a8c610583906cc2fe6004687bbc9f6de657b611"
+      },
+      "relationCutover": {
+        "rules": "relation-selection-v1",
+        "profileId": "76556f9f-5e5f-454b-bd21-773ab3e7934a",
+        "at": 1789330172118,
+        "actionCount": 0,
+        "priorActions": [],
+        "validationHash": "4e0a26c900a5ee23f53be5644783362f36685ca81c00a803d4a253b4a7540527"
+      },
+      "discoveryJournal": {
+        "version": 1,
+        "revision": 2,
+        "entries": [
+          {
+            "event": {
+              "eventId": "dd0b98d4-53da-4711-93aa-43e837889c08",
+              "profileId": "76556f9f-5e5f-454b-bd21-773ab3e7934a",
+              "ruleId": "R5",
+              "ruleVersion": "discovery-v3.0-rc1",
+              "semanticSignature": "[\"[\\\"76556f9f-5e5f-454b-bd21-773ab3e7934a\\\",\\\"discovery-v3.0-rc1\\\",\\\"R5\\\",[[\\\"bf7ab80c-e1bd-4f2b-8264-ccdd5bcb04b9\\\",\\\"library\\\",0,0,null,\\\"adjacent\\\"],[\\\"f23889bc-3769-437f-9744-089517fbdff8\\\",\\\"bench\\\",1,3,null,\\\"front\\\"]]]\",[[\"pokomoko\",\"f23889bc-3769-437f-9744-089517fbdff8\",\"using\"]]]",
+              "createdAt": 1789330299858,
+              "source": "current-context-test",
+              "focalResidentIds": [
+                "pokomoko"
+              ],
+              "snapshot": {
+                "contentVersion": 1,
+                "scene": {
+                  "now": 1789330298468.3,
+                  "activityVersion": 2,
+                  "tourVersion": 1,
+                  "roamRound": 0,
+                  "scenePose": "captured-v1",
+                  "encounterVersion": 1,
+                  "readingEncounterVersion": 1,
+                  "footstepMagicVersion": 1,
+                  "shadowMagicVersion": 1,
+                  "waterMagicVersion": 1,
+                  "facilityPresentation": "carry-care-v1",
+                  "relationSelectionVersion": 1,
+                  "facilityTripVersion": 1,
+                  "poseReducedMotion": false,
+                  "relationVersion": "water-bench-v1",
+                  "landscapeVersion": "groves-water-v1",
+                  "worldStyle": "moon-garden-v1",
+                  "items": [
+                    {
+                      "id": "bf7ab80c-e1bd-4f2b-8264-ccdd5bcb04b9",
+                      "kind": "library",
+                      "cell": {
+                        "x": 0,
+                        "z": 0
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 72
+                    },
+                    {
+                      "id": "f23889bc-3769-437f-9744-089517fbdff8",
+                      "kind": "bench",
+                      "cell": {
+                        "x": 1,
+                        "z": 3
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 4,
+                      "access": "front"
+                    },
+                    {
+                      "id": "bc5f0e85-595f-4f4f-bbae-a02380c21029",
+                      "kind": "garden-hut",
+                      "cell": {
+                        "x": 4,
+                        "z": 0
+                      },
+                      "growth": 0,
+                      "style": "original",
+                      "paidDrops": 36
+                    },
+                    {
+                      "id": "4edd30dc-d9b7-4136-9372-a6025e604faa",
+                      "kind": "flower",
+                      "cell": {
+                        "x": 4,
+                        "z": 3
+                      },
+                      "growth": 0.002556388888888889,
+                      "style": "original",
+                      "paidDrops": 2
+                    }
+                  ],
+                  "residents": [
+                    {
+                      "id": "pokomoko",
+                      "cell": {
+                        "x": 0,
+                        "z": 2
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "f23889bc-3769-437f-9744-089517fbdff8",
+                        "from": {
+                          "x": 0,
+                          "z": 2
+                        },
+                        "path": [
+                          {
+                            "x": 0,
+                            "z": 2
+                          },
+                          {
+                            "x": 0,
+                            "z": 3
+                          },
+                          {
+                            "x": 0,
+                            "z": 4
+                          },
+                          {
+                            "x": 1,
+                            "z": 4
+                          }
+                        ],
+                        "start": 1789330293927,
+                        "end": 1789332087127
+                      },
+                      "facilityTrip": {
+                        "facilityId": "bf7ab80c-e1bd-4f2b-8264-ccdd5bcb04b9",
+                        "targetId": "f23889bc-3769-437f-9744-089517fbdff8",
+                        "kind": "library",
+                        "phase": "carry",
+                        "path": [
+                          {
+                            "x": 0,
+                            "z": 2
+                          },
+                          {
+                            "x": 0,
+                            "z": 3
+                          },
+                          {
+                            "x": 0,
+                            "z": 4
+                          },
+                          {
+                            "x": 1,
+                            "z": 4
+                          }
+                        ],
+                        "end": 1789332087127
+                      }
+                    },
+                    {
+                      "id": "rabbit",
+                      "cell": {
+                        "x": 1,
+                        "z": 4
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "4edd30dc-d9b7-4136-9372-a6025e604faa",
+                        "path": [
+                          {
+                            "x": 1,
+                            "z": 4
+                          },
+                          {
+                            "x": 2,
+                            "z": 4
+                          },
+                          {
+                            "x": 3,
+                            "z": 4
+                          },
+                          {
+                            "x": 4,
+                            "z": 4
+                          }
+                        ],
+                        "from": {
+                          "x": 1,
+                          "z": 4
+                        },
+                        "start": 1789330282243,
+                        "end": 1789332082243
+                      },
+                      "discovery": {
+                        "itemId": "4edd30dc-d9b7-4136-9372-a6025e604faa",
+                        "at": 1789330282243,
+                        "mood": "notice"
+                      }
+                    },
+                    {
+                      "id": "otter",
+                      "cell": {
+                        "x": 0,
+                        "z": 2
+                      },
+                      "enjoyed": 0,
+                      "enjoyedBy": {},
+                      "visit": {
+                        "relationSelectionVersion": 1,
+                        "itemId": "4edd30dc-d9b7-4136-9372-a6025e604faa",
+                        "path": [
+                          {
+                            "x": 0,
+                            "z": 2
+                          },
+                          {
+                            "x": 1,
+                            "z": 2
+                          },
+                          {
+                            "x": 2,
+                            "z": 2
+                          },
+                          {
+                            "x": 3,
+                            "z": 2
+                          },
+                          {
+                            "x": 3,
+                            "z": 3
+                          }
+                        ],
+                        "from": {
+                          "x": 0,
+                          "z": 2
+                        },
+                        "start": 1789330282243,
+                        "end": 1789332082243
+                      },
+                      "discovery": {
+                        "itemId": "4edd30dc-d9b7-4136-9372-a6025e604faa",
+                        "at": 1789330282243,
+                        "mood": "curious"
+                      }
+                    }
+                  ],
+                  "heroStyle": "original",
+                  "target": "bf7ab80c-e1bd-4f2b-8264-ccdd5bcb04b9"
+                },
+                "immutableHash": "01345029367de901d21ab4d04738118785b751a02ab4a97ccc1e8ad8ba0b013e"
+              }
+            },
+            "evidence": {
+              "eventId": "dd0b98d4-53da-4711-93aa-43e837889c08",
+              "firstVisibleAt": 1789330299973,
+              "visibleDurationMs": 1022,
+              "coreShown": true,
+              "presentationKind": "current-context-test"
+            }
+          }
+        ],
+        "historyIds": [
+          "dd0b98d4-53da-4711-93aa-43e837889c08"
+        ],
+        "savedIds": [
+          "dd0b98d4-53da-4711-93aa-43e837889c08"
+        ],
+        "firstPresented": [
+          {
+            "ruleId": "R5",
+            "ruleVersion": "discovery-v3.0-rc1",
+            "eventId": "dd0b98d4-53da-4711-93aa-43e837889c08",
+            "at": 1789330299973
+          }
+        ]
+      }
+    },
+    "errors": []
+  }
+}

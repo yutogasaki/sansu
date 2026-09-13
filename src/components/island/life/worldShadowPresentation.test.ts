@@ -31,6 +31,14 @@ it('predicts a tiny shadow needs the close view without recording or leaving its
         const ordinary = vertices(); expect(controller.canShowGesture()).toBe(false);
         expect(vertices()).toEqual(ordinary); expect(prepare).not.toHaveBeenCalled(); expect(presented).not.toHaveBeenCalled();
         expect(controller.subject()).toEqual({ itemId: 'bench', residentId: 'pokomoko', worldAt: 2000 });
+        // A captured R5 scene can carry the world's M3 capability without
+        // offering a shadow interaction. It must not inherit shadow framing.
+        controller.update(state, content.root, 'bench', 'pokomoko', 1, true, false);
+        expect(controller.objects()).toHaveLength(0);
+        expect(controller.subject()).toBeUndefined();
+        controller.update(state, content.root, 'bench', 'pokomoko', 2, true, true);
+        expect(vertices()).toEqual(ordinary);
+        expect(prepare).not.toHaveBeenCalled(); expect(presented).not.toHaveBeenCalled();
     } finally { controller.dispose(); content.dispose(); }
 });
 

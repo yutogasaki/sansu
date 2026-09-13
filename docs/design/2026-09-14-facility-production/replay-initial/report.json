@@ -1,0 +1,30 @@
+{
+  "target": "http://127.0.0.1:5308",
+  "buildVersion": {
+    "version": "development-local:c1d3d034-2a95-43f3-9dc0-7caecf1f3c51",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceHash": "95b6c3563962db005ca9a31fc5c18411134bf9d0f77c2cbaafe3f177474d2629",
+  "fixture": "Continue the actual earned disposable profiles, with no imported or injected DB state",
+  "cases": [],
+  "pass": false,
+  "failure": {
+    "device": "phone",
+    "error": "page.waitForFunction: Timeout 45000ms exceeded.\n    at /private/tmp/sansu-canopy-material-worktree/tools/e2e-island-life-facility-replay-production.mjs:12:10",
+    "text": "プレイヤーの しま\nしずく\n2\nひかり\n0\nおもいでを みる\n← おもいでの 一覧へ\nほんを はこんで ひとやすみ\n\nあのときの すがた\n\nいまの島でみる\nのこすのを やめる\nしま\nいえ\nまなぶ\nきろく\n設定"
+  }
+}

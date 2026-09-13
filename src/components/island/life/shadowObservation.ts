@@ -80,9 +80,9 @@ export function makeShadowObservation(node: HTMLElement, scene: T.Scene, camera:
             const readable = width >= 44 && height >= 44 && coreVisible() && shape.gesture.some(part=>visibleRelationObject(part,scene,camera,domVisible));
             shape.update(-1, true); return readable;
         }, objects: () => shape ? [shape.root] : [],
-        update(next: LifeState, root: T.Object3D, benchId: string, residentId: ResidentId | undefined, at: number, reduced: boolean) {
+        update(next: LifeState, root: T.Object3D, benchId: string, residentId: ResidentId | undefined, at: number, reduced: boolean, enabled = true) {
             state = next; content = root; itemId = benchId;
-            const resident = shadowResident(next,benchId,residentId);
+            const resident = enabled ? shadowResident(next,benchId,residentId) : undefined;
             const nextKey = resident ? JSON.stringify([resident.id,benchId,resident.visit!.start,resident.visit!.end,next.expanded,next.extraLand,next.heroStyle,next.worldStyle,next.items.map(i=>[i.id,i.cell,i.style])]) : '';
             if (nextKey !== key) { cancel(); key = nextKey; }
             const nextActor = resident ? root.getObjectByName(`life-resident-${resident.id}`) : undefined;

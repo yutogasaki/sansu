@@ -1,0 +1,60 @@
+import assert from 'node:assert/strict';
+import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {chromium} from 'playwright';
+import {readNative} from './island-e2e-helpers.mjs';
+import {attempt} from './island-learning-checks.mjs';
+import {inventory,closeMenu,putCell} from './island-life-ui-helpers.mjs';
+const base=process.env.SANSU_FACILITY_PRODUCTION_URL,out=process.env.SANSU_FACILITY_PRODUCTION_OUTPUT;
+assert(base&&out&&['127.0.0.1','localhost'].includes(new URL(base).hostname));
+await mkdir(out,{recursive:false});
+const build=JSON.parse(await readFile(process.env.SANSU_FACILITY_PRODUCTION_MANIFEST));
+async function verifyBuild(){for(const f of [...build.files,...build.distFiles])assert.equal(createHash('sha256').update(await readFile(f.path)).digest('hex'),f.sha256,f.path);}
+await verifyBuild();assert.equal(build.flags.VITE_ISLAND_LIFE_DISCOVERY_ENABLED,true);
+async function record(page){return page.evaluate(async()=>{const names=(await indexedDB.databases()).map(d=>d.name);if(names.includes('SansuIslandLifePreviewV1'))throw Error('Production owner required');const r=indexedDB.open('SansuIslandLifeV1');const db=await new Promise((ok,no)=>{r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error);});try{const q=db.transaction('worlds').objectStore('worlds').getAll();const rows=await new Promise((ok,no)=>{q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error);});if(rows.length!==1)throw Error('One actual owner required');return rows[0];}finally{db.close();}});}
+async function until(read,accept){const end=Date.now()+30000;while(Date.now()<end){const value=await read();if(accept(value))return value;await new Promise(r=>setTimeout(r,150));}throw Error('Saved state did not reach expected boundary');}
+const ready=p=>p.locator('.life-world[data-rendered="true"]').waitFor();
+const input=p=>p.locator('.island-learning[data-input-ready="true"]').waitFor();
+const wallet=p=>p.locator('[data-life-drops]').getAttribute('data-life-drops');
+const report={target:base,buildVersion:build.version,sourceHash:build.sourceHash,fixture:'Actual onboarding and earned purchases; no injected profile, credits, timestamps or DB writes. User-requested observations are current-context tests, not spontaneous discoveries.',humanN:0,cases:[],pass:false};
+async function buy(p,kind,cell){const count=(await record(p)).actions.length;await closeMenu(p);await p.getByRole('button',{name:'つくる',exact:true}).click();await p.getByRole('group',{name:'しまの ていれ'}).getByRole('button',{name:'つくる',exact:true}).click();const button=p.locator(`[data-life-buy="${kind}"]`);const index=await p.locator('[data-life-buy]').evaluateAll((nodes,kind)=>nodes.findIndex(n=>n.dataset.lifeBuy===kind),kind);assert(index>=0);await p.getByRole('button',{name:`${Math.floor(index/2)+1}ページめ`,exact:true}).click();await button.click();await putCell(p,cell);const r=await until(()=>record(p),r=>r.actions.slice(count).some(a=>a.command.type==='buy'&&a.command.kind===kind));return r.actions.slice(count).find(a=>a.command.type==='buy'&&a.command.kind===kind).id;}
+async function call(p,id){await inventory(p,id);await p.getByRole('button',{name:'ぽこもこを よぶ',exact:true}).click();await closeMenu(p);}
+const devices=process.env.SANSU_FACILITY_PRODUCTION_DEVICE==='phone'?[['phone',{width:390,height:844}]]:[['phone',{width:390,height:844}],['tablet',{width:768,height:1024}]];
+try{for(const[device,viewport]of devices){
+ const context=await chromium.launchPersistentContext(`${out}/${device}-browser`,{viewport,hasTouch:true,reducedMotion:device==='tablet'?'reduce':'no-preference'});const p=context.pages()[0];p.setDefaultTimeout(45000);const errors=[];p.on('pageerror',e=>errors.push(e.message));
+ try{
+  await p.goto(base);assert.deepEqual(await(await p.request.get(new URL('/version.json',base).href)).json(),build.version);
+  await p.getByRole('button',{name:'まなぶ',exact:true}).first().click();for(const name of ['小学 1 年生','さんすう','足し算まで'])await p.getByRole('button',{name,exact:true}).click();await input(p);await p.getByRole('button',{name:'とじる',exact:true}).click();await ready(p);assert.equal(await p.locator('.life-dev').count(),0);
+  let earned=await record(p),terminals=0;
+  while(earned.credits.length<60){await p.getByRole('button',{name:'まなぶ',exact:true}).click();await input(p);let native=await readNative(p);for(let i=0;i<6;){const result=await attempt(p,native,{touch:true});native=result.after;if(result.sample.completed){i++;terminals++;}}await p.getByRole('button',{name:'とじる',exact:true}).click();await ready(p);earned=await until(()=>record(p),r=>r.credits.length>=terminals);console.log(`${device}: ${earned.credits.length} earned terminals`);assert(terminals<=66);}
+  assert.equal(await wallet(p),'120');await writeFile(`${out}/${device}-earned.json`,JSON.stringify(earned,null,2));const nativeBefore=await readNative(p);await p.screenshot({path:`${out}/${device}-earned.png`});
+  const library=await buy(p,'library',{x:0,z:0});await call(p,library);
+  await p.waitForFunction(id=>JSON.parse(document.querySelector('.life-world').dataset.lifePoses).some(p=>p.itemId===id&&p.facilityUse?.action==='reading'),library);await p.screenshot({path:`${out}/${device}-library-alone.png`});
+  const bench=await buy(p,'bench',{x:1,z:3});await call(p,library);
+  const hut=await buy(p,'garden-hut',{x:4,z:0});await call(p,hut);
+  await p.waitForFunction(id=>JSON.parse(document.querySelector('.life-world').dataset.lifePoses).some(p=>p.itemId===id&&p.facilityUse?.action==='tool-care'),hut);await p.screenshot({path:`${out}/${device}-hut-alone.png`});
+  const flower=await buy(p,'flower',{x:4,z:3});assert.equal(await wallet(p),'6');
+  const observations=[];let secondFlower,busyEvidence;
+  for(const[kind,id,ruleId]of[['library',library,'R5'],['garden-hut',hut,'R6']]){
+   await call(p,id);await inventory(p,id);await p.getByRole('button',{name:'みてみる',exact:true}).click();
+   if(kind==='garden-hut'){
+    await p.getByRole('combobox',{name:'たてものから みるもの'}).selectOption(flower);
+    await p.waitForFunction(()=>{const v=JSON.parse(document.querySelector('.life-relation-view')?.dataset.relationView??'{}');return v.status==='target-busy'||v.delivered===true;});
+    const v=await p.locator('.life-relation-view').evaluate(n=>JSON.parse(n.dataset.relationView));
+    if(v.status==='target-busy'){
+     assert(await p.getByText('いまは ほかのこが つかっているよ',{exact:true}).isVisible());busyEvidence=v;
+     await p.screenshot({path:`${out}/${device}-plant-busy.png`});await p.getByRole('button',{name:'みてみるを とじる',exact:true}).click();
+     secondFlower=await buy(p,'flower',{x:3,z:1});await call(p,id);await inventory(p,id);await p.getByRole('button',{name:'みてみる',exact:true}).click();
+    }
+   }
+   await p.waitForFunction(()=>JSON.parse(document.querySelector('.life-relation-view')?.dataset.relationView??'{}').delivered===true);
+   const view=await p.locator('.life-relation-view').evaluate(n=>JSON.parse(n.dataset.relationView));await p.screenshot({path:`${out}/${device}-${kind}-observation.png`});
+   const presented=await until(()=>record(p),r=>r.discoveryJournal?.entries.some(e=>e.event.eventId===view.eventId&&e.event.ruleId===ruleId));
+   await p.getByRole('button',{name:'のこす',exact:true}).click();const saved=await until(()=>record(p),r=>r.discoveryJournal.savedIds.includes(view.eventId));
+   observations.push({kind,view,event:presented.discoveryJournal.entries.find(e=>e.event.eventId===view.eventId),savedIds:saved.discoveryJournal.savedIds});await p.getByRole('button',{name:'みてみるを とじる',exact:true}).click();
+  }
+  const before=await record(p);assert.deepEqual(await readNative(p),nativeBefore);assert.equal(await wallet(p),secondFlower?'4':'6');
+  await context.setOffline(true);await p.reload();await ready(p);const after=await record(p);for(const key of['profileId','credits','actions','economyCheckpoint','facilityCutover','relationCutover'])assert.deepEqual(after[key],before[key],key);assert.deepEqual(after.discoveryJournal.savedIds,before.discoveryJournal.savedIds);assert.deepEqual(await readNative(p),nativeBefore);await p.screenshot({path:`${out}/${device}-offline-restored.png`});assert.deepEqual(errors,[]);
+  report.cases.push({device,viewport,terminals,library,bench,hut,flower,secondFlower,busyEvidence,observations,before,after,errors,pass:true});console.log(`${device}: PASS`);
+ }catch(e){await p.screenshot({path:`${out}/${device}-failure.png`}).catch(()=>{});report.failure={device,error:e.stack,text:await p.locator('body').innerText(),record:await record(p).catch(()=>null),view:await p.locator('.life-relation-view').evaluate(n=>JSON.parse(n.dataset.relationView)).catch(()=>null),errors};throw e;}finally{await context.close();}
+}await verifyBuild();report.pass=true;}finally{await writeFile(`${out}/report.json`,JSON.stringify(report,null,2));}

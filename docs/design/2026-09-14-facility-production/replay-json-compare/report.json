@@ -1,0 +1,32 @@
+{
+  "target": "http://127.0.0.1:5308",
+  "buildVersion": {
+    "version": "development-local:2d9c3134-97f9-4b19-a429-6f2abef1d5ec",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceHash": "65948365dabf82b88530f272606e2ab80da65c233aad893a3042463716bae4d2",
+  "originalSourceHash": "95b6c3563962db005ca9a31fc5c18411134bf9d0f77c2cbaafe3f177474d2629",
+  "fixture": "Continue the actual earned disposable profiles, with no imported or injected DB state",
+  "cases": [],
+  "pass": false,
+  "failure": {
+    "device": "phone",
+    "error": "AssertionError [ERR_ASSERTION]: Original saved scene is unchanged across builds\n+ actual - expected\n... Skipped lines\n\n  {\n    event: {\n      createdAt: 1789331544127,\n      eventId: 'e6d7a0c5-9caa-4e0e-b50d-bb02c61493ed',\n      focalResidentIds: [\n...\n          encounterVersion: 1,\n+         expanded: undefined,\n          facilityPresentation: 'carry-care-v1',\n          facilityTripVersion: 1,\n          footstepMagicVersion: 1,\n          heroStyle: 'original',\n          items: [\n            {\n+             access: undefined,\n              cell: {\n                x: 0,\n                z: 0\n              },\n              growth: 0,\n...\n            {\n+             access: undefined,\n              cell: {\n                x: 4,\n                z: 0\n              },\n              growth: 0,\n...\n            {\n+             access: undefined,\n              cell: {\n                x: 4,\n                z: 3\n              },\n              growth: 0.003434722222222222,\n...\n          relationSelectionVersion: 1,\n+         relationTarget: undefined,\n          relationVersion: 'water-bench-v1',\n          residents: [\n            {\n              cell: {\n                x: 3,\n...\n              enjoyedBy: {},\n+             facilityTrip: undefined,\n              id: 'pokomoko',\n+             playTour: undefined,\n              visit: {\n                end: 1789333338024,\n                from: {\n                  x: 3,\n                  z: 3\n...\n              enjoyedBy: {},\n+             facilityTrip: undefined,\n              id: 'rabbit',\n+             playTour: undefined,\n              visit: {\n                end: 1789333331224,\n                from: {\n                  x: 1,\n                  z: 4\n...\n              id: 'otter',\n+             playTour: undefined,\n              visit: {\n                end: 1789333331224,\n                from: {\n                  x: 0,\n                  z: 2\n\n    at file:///private/tmp/sansu-canopy-material-worktree/tools/e2e-island-life-facility-replay-production.mjs:21:94",
+    "text": "プレイヤーの しま\nしずく\n2\nひかり\n0\nつくる\nようす\nながめ\nしま\nいえ\nまなぶ\nきろく\n設定",
+    "view": null
+  }
+}

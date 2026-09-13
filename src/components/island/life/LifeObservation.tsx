@@ -19,7 +19,7 @@ import './life-observation.css';
 export default function LifeObservation({ record, state, item, initialResidentId, initialShadowRequest, close, memories, tryVisit, tryRelation, selectionFailure, gathering }: {
     record: LifeRecord; state: LifeState; item: LifeItem; initialResidentId?: ResidentId; initialShadowRequest?: ShadowRequest; close: () => void; memories: () => void; tryVisit?: () => void; tryRelation?: (targetId: string | undefined, residentId: ResidentId) => Promise<boolean>; selectionFailure?: string; gathering?: { ruleId: RuleEligibility['ruleId']; participantIds: string[] };
 }) {
-    const [status, setStatus] = useState<'bench' | 'walking' | 'busy'>('busy');
+    const [status, setStatus] = useState<'bench' | 'walking' | 'busy' | 'target-busy'>('busy');
     const [residentId, setResidentId] = useState<ResidentId | undefined>(() => {
         if (initialResidentId) return initialResidentId;
         const plan = observationVisit(state, item.id); return 'residentId' in plan ? plan.residentId : undefined;
@@ -141,11 +141,11 @@ export default function LifeObservation({ record, state, item, initialResidentId
         <div className="life-observation-body">
             {gathering ? <RelationObservationView state={state} gathering={gathering} encounterPrepare={prepareEncounter} encounterPresented={presented} prepare={prepareGathering} presented={presented} /> : isRelation ? <>
                 <RelationObservationView state={state} benchId={item.id} residentId={residentId} shadowRequest={initialShadowRequest} shadowRequestCancelled={cancelledShadowRequest.current} selectedTarget={setTargetId} readingPrepare={prepareReading} readingPresented={presented} shadowPrepare={item.kind === 'bench' ? prepareShadow : undefined} shadowPresented={presented} prepare={prepareRelation} presented={presented} status={setStatus} target={!selecting && !busy && !pending.current && residentId ? id => { void selectTarget(id); } : undefined} />
-                <p className="life-observation-hint" role="status">{status === 'bench' ? item.kind === 'garden-hut' ? 'ここで おていれ' : item.kind === 'library' ? 'ここで よんでいる' : 'ここで ひとやすみ' : status === 'walking' ? 'みちを とおって くるよ' : 'いまは、ほかのことを しているよ'}</p>
+                <p className="life-observation-hint" role="status">{status === 'target-busy' ? 'いまは ほかのこが つかっているよ' : status === 'bench' ? item.kind === 'garden-hut' ? 'ここで おていれ' : item.kind === 'library' ? 'ここで よんでいる' : 'ここで ひとやすみ' : status === 'walking' ? 'みちを とおって くるよ' : 'いまは、ほかのことを しているよ'}</p>
                 {isRelation && <label className="life-observation-target">みるもの <select aria-label={isBench ? "ベンチから みるもの" : "たてものから みるもの"} value={targetId ?? ''} disabled={selecting || busy || Boolean(pending.current) || !residentId} onChange={event => { void selectTarget(event.target.value || undefined); }}>
                     <option value="">いまの ようす</option>{state.items.filter(i => i.cell && i.id !== item.id).map((i, index) => <option key={i.id} value={i.id}>{CATALOG[i.kind].label} {index + 1}</option>)}
                 </select></label>}
-                {status === 'busy' && <button type="button" onClick={() => residentId ? void selectTarget(targetId) : tryVisit?.()}>もういちど みてみる</button>}
+                {(status === 'busy' || status === 'target-busy') && <button type="button" onClick={() => residentId ? void selectTarget(targetId) : tryVisit?.()}>もういちど みてみる</button>}
             </> : item.kind === 'water-bowl' ? <WaterObservationView item={item} conditionKey={waterRule?.semanticSignature} prepare={prepareWater} presented={presented} /> : <><PlantObservationView item={item} prepare={prepare} presented={presented} />
                 <p className="life-observation-hint">{item.kind === 'sapling' ? '木に ふれてみよう' : 'おはなに ふれてみよう'}</p></>}
             {selecting && <p role="status">ようすを みているよ…</p>}

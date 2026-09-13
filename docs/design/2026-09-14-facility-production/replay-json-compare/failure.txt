@@ -1,0 +1,183 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Original saved scene is unchanged across builds
++ actual - expected
+... Skipped lines
+
+  {
+    event: {
+      createdAt: 1789331544127,
+      eventId: 'e6d7a0c5-9caa-4e0e-b50d-bb02c61493ed',
+      focalResidentIds: [
+...
+          encounterVersion: 1,
++         expanded: undefined,
+          facilityPresentation: 'carry-care-v1',
+          facilityTripVersion: 1,
+          footstepMagicVersion: 1,
+          heroStyle: 'original',
+          items: [
+            {
++             access: undefined,
+              cell: {
+                x: 0,
+                z: 0
+              },
+              growth: 0,
+...
+            {
++             access: undefined,
+              cell: {
+                x: 4,
+                z: 0
+              },
+              growth: 0,
+...
+            {
++             access: undefined,
+              cell: {
+                x: 4,
+                z: 3
+              },
+              growth: 0.003434722222222222,
+...
+          relationSelectionVersion: 1,
++         relationTarget: undefined,
+          relationVersion: 'water-bench-v1',
+          residents: [
+            {
+              cell: {
+                x: 3,
+...
+              enjoyedBy: {},
++             facilityTrip: undefined,
+              id: 'pokomoko',
++             playTour: undefined,
+              visit: {
+                end: 1789333338024,
+                from: {
+                  x: 3,
+                  z: 3
+...
+              enjoyedBy: {},
++             facilityTrip: undefined,
+              id: 'rabbit',
++             playTour: undefined,
+              visit: {
+                end: 1789333331224,
+                from: {
+                  x: 1,
+                  z: 4
+...
+              id: 'otter',
++             playTour: undefined,
+              visit: {
+                end: 1789333331224,
+                from: {
+                  x: 0,
+                  z: 2
+
+    at file:///private/tmp/sansu-canopy-material-worktree/tools/e2e-island-life-facility-replay-production.mjs:21:94 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    event: {
+      eventId: 'e6d7a0c5-9caa-4e0e-b50d-bb02c61493ed',
+      profileId: 'de416728-1473-4d44-b0f1-da6d775e26cb',
+      ruleId: 'R5',
+      ruleVersion: 'discovery-v3.0-rc1',
+      semanticSignature: '["[\\"de416728-1473-4d44-b0f1-da6d775e26cb\\",\\"discovery-v3.0-rc1\\",\\"R5\\",[[\\"334c8fbc-54f0-430e-8e74-91fbf6b0ed84\\",\\"bench\\",1,3,null,\\"front\\"],[\\"860a8c44-c073-44ea-a23f-79449f897242\\",\\"library\\",0,0,null,\\"adjacent\\"]]]",[["otter","334c8fbc-54f0-430e-8e74-91fbf6b0ed84","using"]]]',
+      createdAt: 1789331544127,
+      source: 'current-context-test',
+      focalResidentIds: [ 'otter' ],
+      snapshot: {
+        contentVersion: 1,
+        scene: {
+          now: 1789331543728.7,
+          activityVersion: 2,
+          tourVersion: 1,
+          roamRound: 0,
+          scenePose: 'captured-v1',
+          encounterVersion: 1,
+          readingEncounterVersion: 1,
+          footstepMagicVersion: 1,
+          shadowMagicVersion: 1,
+          waterMagicVersion: 1,
+          facilityPresentation: 'carry-care-v1',
+          relationSelectionVersion: 1,
+          facilityTripVersion: 1,
+          poseReducedMotion: false,
+          relationVersion: 'water-bench-v1',
+          landscapeVersion: 'groves-water-v1',
+          worldStyle: 'moon-garden-v1',
+          items: [ [Object], [Object], [Object], [Object] ],
+          residents: [ [Object], [Object], [Object] ],
+          heroStyle: 'original',
+          expanded: undefined,
+          target: '860a8c44-c073-44ea-a23f-79449f897242',
+          relationTarget: undefined
+        },
+        immutableHash: 'fd7bcba45585852a2d756cc1ab2ee9cfbd7d6ab53f811c88766a7c2c88361a71'
+      }
+    },
+    evidence: {
+      eventId: 'e6d7a0c5-9caa-4e0e-b50d-bb02c61493ed',
+      firstVisibleAt: 1789331545762,
+      visibleDurationMs: 1036.6000000238419,
+      coreShown: true,
+      presentationKind: 'current-context-test'
+    }
+  },
+  expected: {
+    event: {
+      eventId: 'e6d7a0c5-9caa-4e0e-b50d-bb02c61493ed',
+      profileId: 'de416728-1473-4d44-b0f1-da6d775e26cb',
+      ruleId: 'R5',
+      ruleVersion: 'discovery-v3.0-rc1',
+      semanticSignature: '["[\\"de416728-1473-4d44-b0f1-da6d775e26cb\\",\\"discovery-v3.0-rc1\\",\\"R5\\",[[\\"334c8fbc-54f0-430e-8e74-91fbf6b0ed84\\",\\"bench\\",1,3,null,\\"front\\"],[\\"860a8c44-c073-44ea-a23f-79449f897242\\",\\"library\\",0,0,null,\\"adjacent\\"]]]",[["otter","334c8fbc-54f0-430e-8e74-91fbf6b0ed84","using"]]]',
+      createdAt: 1789331544127,
+      source: 'current-context-test',
+      focalResidentIds: [ 'otter' ],
+      snapshot: {
+        contentVersion: 1,
+        scene: {
+          now: 1789331543728.7,
+          activityVersion: 2,
+          tourVersion: 1,
+          roamRound: 0,
+          scenePose: 'captured-v1',
+          encounterVersion: 1,
+          readingEncounterVersion: 1,
+          footstepMagicVersion: 1,
+          shadowMagicVersion: 1,
+          waterMagicVersion: 1,
+          facilityPresentation: 'carry-care-v1',
+          relationSelectionVersion: 1,
+          facilityTripVersion: 1,
+          poseReducedMotion: false,
+          relationVersion: 'water-bench-v1',
+          landscapeVersion: 'groves-water-v1',
+          worldStyle: 'moon-garden-v1',
+          items: [ [Object], [Object], [Object], [Object] ],
+          residents: [ [Object], [Object], [Object] ],
+          heroStyle: 'original',
+          target: '860a8c44-c073-44ea-a23f-79449f897242'
+        },
+        immutableHash: 'fd7bcba45585852a2d756cc1ab2ee9cfbd7d6ab53f811c88766a7c2c88361a71'
+      }
+    },
+    evidence: {
+      eventId: 'e6d7a0c5-9caa-4e0e-b50d-bb02c61493ed',
+      firstVisibleAt: 1789331545762,
+      visibleDurationMs: 1036.6000000238419,
+      coreShown: true,
+      presentationKind: 'current-context-test'
+    }
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

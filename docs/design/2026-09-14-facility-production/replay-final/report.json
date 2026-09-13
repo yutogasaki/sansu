@@ -1,0 +1,459 @@
+{
+  "target": "http://127.0.0.1:5308",
+  "buildVersion": {
+    "version": "development-local:2d9c3134-97f9-4b19-a429-6f2abef1d5ec",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceHash": "65948365dabf82b88530f272606e2ab80da65c233aad893a3042463716bae4d2",
+  "originalSourceHash": "95b6c3563962db005ca9a31fc5c18411134bf9d0f77c2cbaafe3f177474d2629",
+  "fixture": "Continue the actual earned disposable profiles, with no imported or injected DB state",
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "replays": [
+        {
+          "original": "e6d7a0c5-9caa-4e0e-b50d-bb02c61493ed",
+          "view": {
+            "at": 1789331543728.7,
+            "core": true,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "itemId": "860a8c44-c073-44ea-a23f-79449f897242",
+                "phase": "library",
+                "position": [
+                  -2.5,
+                  0.04,
+                  0
+                ],
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "library",
+                  "action": "reading"
+                },
+                "headYaw": -1.4802973661668755e-15
+              },
+              {
+                "id": "rabbit",
+                "itemId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                "phase": "flower",
+                "position": [
+                  1.5,
+                  0.04,
+                  1.52
+                ],
+                "hop": 0,
+                "headPitch": 0.09,
+                "headRoll": -0.022605327058688396,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "itemId": "334c8fbc-54f0-430e-8e74-91fbf6b0ed84",
+                "phase": "bench",
+                "position": [
+                  -1.5,
+                  0.35,
+                  1
+                ],
+                "seatGap": 0,
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": -0.034698457300047426,
+                "facilityUse": {
+                  "kind": "library",
+                  "action": "reading"
+                },
+                "headYaw": -1.1686558153949013e-15
+              }
+            ],
+            "preparation": "ready",
+            "eventId": "bbc9ed74-d339-4133-a327-8173bd093813",
+            "delivered": true,
+            "maxGap": 976.1999999880791,
+            "epoch": 2,
+            "camera": {
+              "projection": [
+                0.3526006524425722,
+                0,
+                0,
+                0,
+                0,
+                0.4848258971085368,
+                0,
+                0,
+                0,
+                0,
+                -0.02002002002002002,
+                0,
+                -0.11161027853017212,
+                -0.021668915261411223,
+                -1.002002002002002,
+                1
+              ],
+              "view": [
+                0.8411784753765535,
+                -0.2785043287946192,
+                0.4635235823621443,
+                0,
+                5.551115123125783e-17,
+                0.8571744341789946,
+                0.5150262026246047,
+                0,
+                -0.5407575913134988,
+                -0.43322895590274096,
+                0.7210366836744466,
+                0,
+                1.383272219566241,
+                -1.5487915062877566,
+                -8.834337909452138,
+                1
+              ]
+            }
+          }
+        },
+        {
+          "original": "f91e5e2c-c154-4595-b5f8-7d708bbd93de",
+          "view": {
+            "at": 1789331593554.6,
+            "core": true,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "itemId": "4633c84b-3b16-46ee-99b2-89113967baf0",
+                "phase": "flower",
+                "position": [
+                  1.5,
+                  0.04,
+                  0.15
+                ],
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "garden-hut",
+                  "action": "tool-care"
+                },
+                "headYaw": -7.40148683083438e-16
+              },
+              {
+                "id": "rabbit",
+                "itemId": "37a19068-5329-45c6-94c9-9d5f4dbadcee",
+                "phase": "flower",
+                "position": [
+                  2.5,
+                  0.04,
+                  0.48
+                ],
+                "hop": 0,
+                "headPitch": 0.09,
+                "headRoll": 0.003803257099679083,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "itemId": "37a19068-5329-45c6-94c9-9d5f4dbadcee",
+                "phase": "flower",
+                "position": [
+                  2.5,
+                  0.04,
+                  1.52
+                ],
+                "hop": 0,
+                "headPitch": 0.09,
+                "headRoll": 0.03133199556178531,
+                "headYaw": 0
+              }
+            ],
+            "preparation": "ready",
+            "eventId": "855b42d9-3f6d-40b0-8129-023c1a04cfae",
+            "delivered": true,
+            "maxGap": 910.5,
+            "epoch": 2,
+            "camera": {
+              "projection": [
+                0.4004428068231218,
+                0,
+                0,
+                0,
+                0,
+                0.5506088593817924,
+                0,
+                0,
+                0,
+                0,
+                -0.02002002002002002,
+                0,
+                -0.013014846512359898,
+                -0.08357408618087932,
+                -1.002002002002002,
+                1
+              ],
+              "view": [
+                0.8411784753765535,
+                -0.2785043287946192,
+                0.4635235823621443,
+                0,
+                5.551115123125783e-17,
+                0.8571744341789946,
+                0.5150262026246047,
+                0,
+                -0.5407575913134988,
+                -0.43322895590274096,
+                0.7210366836744466,
+                0,
+                -1.9729326664312554,
+                -0.2920136751446047,
+                -10.618097476603623,
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "wallet": "2",
+      "originalScenesUnchanged": true,
+      "serviceWorkerControlled": true,
+      "pass": true
+    },
+    {
+      "device": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "replays": [
+        {
+          "original": "fc66ff7f-8fa0-43d4-a4ea-76343978677d",
+          "view": {
+            "at": 1789331744054.6,
+            "core": true,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "itemId": "9b11cf8d-ebf4-4134-918b-eeca456f11f2",
+                "phase": "bench",
+                "position": [
+                  -1.5,
+                  0.34199999999999997,
+                  1
+                ],
+                "seatGap": 5.551115123125783e-17,
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "library",
+                  "action": "reading"
+                },
+                "headYaw": 0
+              },
+              {
+                "id": "rabbit",
+                "itemId": "848bca64-bb10-4f71-a7b2-c7d1cf196f95",
+                "phase": "flower",
+                "position": [
+                  1.5,
+                  0.04,
+                  1.52
+                ],
+                "hop": 0,
+                "headPitch": 0.09,
+                "headRoll": 0,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "itemId": "848bca64-bb10-4f71-a7b2-c7d1cf196f95",
+                "phase": "flower",
+                "position": [
+                  0.98,
+                  0.04,
+                  1
+                ],
+                "hop": 0,
+                "headPitch": 0.09,
+                "headRoll": 0,
+                "headYaw": 0
+              }
+            ],
+            "preparation": "ready",
+            "eventId": "2a3e1c6a-fbc5-42cb-86f4-9c550eac229c",
+            "delivered": true,
+            "maxGap": 1023.8999999761581,
+            "epoch": 2,
+            "camera": {
+              "projection": [
+                0.3526006524425722,
+                0,
+                0,
+                0,
+                0,
+                0.4848258971085368,
+                0,
+                0,
+                0,
+                0,
+                -0.02002002002002002,
+                0,
+                -0.17125688327724034,
+                -0.02903003421613989,
+                -1.002002002002002,
+                1
+              ],
+              "view": [
+                0.8411784753765535,
+                -0.2785043287946192,
+                0.4635235823621443,
+                0,
+                5.551115123125783e-17,
+                0.8571744341789946,
+                0.5150262026246047,
+                0,
+                -0.5407575913134988,
+                -0.43322895590274096,
+                0.7210366836744466,
+                0,
+                1.402223701467292,
+                -1.5336084911092565,
+                -8.859607482880516,
+                1
+              ]
+            }
+          }
+        },
+        {
+          "original": "a13f3101-967a-43d8-8f79-56a91302556c",
+          "view": {
+            "at": 1789331761636.9,
+            "core": true,
+            "status": "bench",
+            "poses": [
+              {
+                "id": "pokomoko",
+                "itemId": "848bca64-bb10-4f71-a7b2-c7d1cf196f95",
+                "phase": "flower",
+                "position": [
+                  1.5,
+                  0.04,
+                  0.15
+                ],
+                "hop": 0,
+                "headPitch": 0.6,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "garden-hut",
+                  "action": "tool-care"
+                },
+                "headYaw": 7.401486830834376e-16
+              },
+              {
+                "id": "rabbit",
+                "itemId": "848bca64-bb10-4f71-a7b2-c7d1cf196f95",
+                "phase": "flower",
+                "position": [
+                  1.5,
+                  0.04,
+                  1.52
+                ],
+                "hop": 0,
+                "headPitch": 0.09,
+                "headRoll": 0,
+                "headYaw": 0
+              },
+              {
+                "id": "otter",
+                "itemId": "9b11cf8d-ebf4-4134-918b-eeca456f11f2",
+                "phase": "walking",
+                "position": [
+                  -2.5,
+                  0.04,
+                  1.3140511408262843
+                ],
+                "hop": 0,
+                "headPitch": 0,
+                "headRoll": 0,
+                "facilityUse": {
+                  "kind": "library",
+                  "action": "carrying"
+                },
+                "headYaw": 0
+              }
+            ],
+            "preparation": "ready",
+            "eventId": "91e0c305-159e-4ba2-b547-7e0d9ca89e49",
+            "delivered": true,
+            "maxGap": 914.3000000119209,
+            "epoch": 2,
+            "camera": {
+              "projection": [
+                0.3865260272286358,
+                0,
+                0,
+                0,
+                0,
+                0.5314732874393743,
+                0,
+                0,
+                0,
+                0,
+                -0.02002002002002002,
+                0,
+                -0.038627562108967575,
+                -0.09911069088868217,
+                -1.002002002002002,
+                1
+              ],
+              "view": [
+                0.8411784753765535,
+                -0.2785043287946192,
+                0.4635235823621443,
+                0,
+                5.551115123125783e-17,
+                0.8571744341789946,
+                0.5150262026246047,
+                0,
+                -0.5407575913134988,
+                -0.43322895590274096,
+                0.7210366836744466,
+                0,
+                -1.8604520980236399,
+                -0.20189965734188914,
+                -10.768077092840626,
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "wallet": "6",
+      "originalScenesUnchanged": true,
+      "serviceWorkerControlled": true,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

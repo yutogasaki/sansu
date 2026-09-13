@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import {chromium} from 'playwright';
+import {readNative} from './island-e2e-helpers.mjs';
+const root=process.env.SANSU_FACILITY_PRODUCTION_SOURCE,out=process.env.SANSU_FACILITY_REPLAY_OUTPUT;
+assert(root&&out);await mkdir(out,{recursive:false});const source=JSON.parse(await readFile(`${root}/report.json`));assert(source.pass);assert(['127.0.0.1','localhost'].includes(new URL(source.target).hostname));
+const result={target:source.target,buildVersion:source.buildVersion,sourceHash:source.sourceHash,fixture:'Continue the actual earned disposable profiles, with no imported or injected DB state',cases:[],pass:false};
+try{for(const test of source.cases){const c=await chromium.launchPersistentContext(`${root}/${test.device}-browser`,{viewport:test.viewport,reducedMotion:test.device==='tablet'?'reduce':'no-preference'});const p=c.pages()[0];p.setDefaultTimeout(45000);try{
+ await p.goto(source.target);assert.deepEqual(await(await p.request.get(new URL('/version.json',source.target).href)).json(),source.buildVersion);await p.locator('.life-world[data-rendered="true"]').waitFor();assert(await p.evaluate(()=>Boolean(navigator.serviceWorker.controller)));
+ const before=await readNative(p),wallet=await p.locator('[data-life-drops]').getAttribute('data-life-drops');await c.setOffline(true);const replays=[];
+ for(const observation of test.observations){await p.getByRole('button',{name:'しまの ようす',exact:true}).click();await p.getByRole('button',{name:'しまの おもいで',exact:true}).click();const entries=p.locator('[data-life-memory]');await entries.first().waitFor();let found=false;for(const entry of await entries.all()){if(await entry.getAttribute('data-life-memory')===observation.view.eventId){await entry.click();found=true;break;}}assert(found,'Saved original event is present');
+ await p.waitForFunction(()=>JSON.parse(document.querySelector('.life-relation-view')?.dataset.relationView??'{}').delivered===true);const view=await p.locator('.life-relation-view').evaluate(n=>JSON.parse(n.dataset.relationView));await p.screenshot({path:`${out}/${test.device}-${observation.kind}.png`});replays.push({original:observation.view.eventId,view});await p.getByRole('button',{name:'おもいでを とじる',exact:true}).click();}
+ assert.deepEqual(await readNative(p),before);assert.equal(await p.locator('[data-life-drops]').getAttribute('data-life-drops'),wallet);result.cases.push({device:test.device,viewport:test.viewport,replays,wallet,serviceWorkerControlled:true,pass:true});
+ }catch(e){await p.screenshot({path:`${out}/${test.device}-failure.png`}).catch(()=>{});result.failure={device:test.device,error:e.stack,text:await p.locator('body').innerText()};throw e;}finally{await c.close();}}
+ result.pass=true;}finally{await writeFile(`${out}/report.json`,JSON.stringify(result,null,2));}
