@@ -1,0 +1,13 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 45000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('button', { name: 'しまの おもいで', exact: true })[22m
+
+    at /private/tmp/sansu-canopy-material-worktree/tools/e2e-island-life-facility-replay-production.mjs:23:167 {
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0

@@ -1,0 +1,40 @@
+{
+  "sourceHash": "a24318c52f67d5035272e7d80277fa311abe867a5b5086fb363bcb6552990f45",
+  "version": {
+    "version": "development-local:4740c9ae-b42f-4040-9284-fe549557fc16",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "scope": "Supplemental settled dock screenshots only; no acquisition or full journey claim",
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": true
+    },
+    {
+      "device": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pass": true
+    }
+  ]
+}

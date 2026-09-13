@@ -1,0 +1,10 @@
+import {chromium} from '/private/tmp/sansu-canopy-material-worktree/node_modules/playwright/index.mjs';
+import {readFile,mkdir,writeFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const build=JSON.parse(await readFile('/tmp/sansu-open-scenes-final-build-source.json'));
+const out='/tmp/sansu-open-scenes-dock';await mkdir(out,{recursive:false});
+const report={sourceHash:build.sourceHash,version:build.version,scope:'Supplemental settled dock screenshots only; no acquisition or full journey claim',cases:[]};
+for(const[device,viewport]of[['phone',{width:390,height:844}],['tablet',{width:768,height:1024}]]){
+const c=await chromium.launchPersistentContext(`/tmp/sansu-facility-production-final2/${device}-browser`,{viewport,reducedMotion:device==='tablet'?'reduce':'no-preference'});
+try{const p=c.pages()[0];await p.goto('http://127.0.0.1:5308');await p.locator('.life-world[data-rendered="true"]').waitFor();assert.deepEqual(await(await p.request.get('http://127.0.0.1:5308/version.json')).json(),build.version);await p.getByRole('button',{name:'しまの ようす',exact:true}).click();await p.waitForTimeout(750);await p.screenshot({path:`${out}/${device}.png`});report.cases.push({device,viewport,pass:true});}finally{await c.close();}}
+await writeFile(`${out}/report.json`,JSON.stringify(report,null,2));

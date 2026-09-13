@@ -1,0 +1,132 @@
+{
+  "sourceHash": "a24318c52f67d5035272e7d80277fa311abe867a5b5086fb363bcb6552990f45",
+  "version": {
+    "version": "development-local:4740c9ae-b42f-4040-9284-fe549557fc16",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "scope": "Supplemental settled dock screenshots only; no acquisition or full journey claim",
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "world": {
+        "data": {
+          "placing": "false",
+          "lifeWorldStyle": "moon-garden-v1",
+          "lifeVisualCandidate": "moon-garden-v1",
+          "lifeLandscapeVersion": "groves-water-v1",
+          "lifeTourVersion": "1",
+          "lifeCamera": "{\"projection\":[0.2914509565274668,0,0,0,0,0.18818853153263582,0,0,0,0,-0.02002002002002002,0,-0.04965880727608123,0,-1.002002002002002,1],\"view\":[0.925546956205677,-0.207749733943065,0.3165483847771031,0,-5.551115123125784e-17,0.8360299122352686,0.5486838669469786,0,-0.3786328457205044,-0.5078326829719366,0.7737849405662518,0,2.116362640691705e-15,-0.16720598244705165,-14.325573013301563,1.0000000000000002],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":0},\"manual\":false}}",
+          "lifeSculptStatus": "none",
+          "lifeGroundMaterialStatus": "none",
+          "worldShadowUpdateMs": "0",
+          "rendered": "true",
+          "worldShadowSampleMs": "0",
+          "lifeGatherings": "[]",
+          "lifeRelations": "[]",
+          "lifePoses": "[{\"id\":\"pokomoko\",\"itemId\":\"cf515a4d-cdbb-4e91-bc8f-ee8c64d6cc03\",\"phase\":\"garden-hut\",\"position\":[1.5,0.04,0],\"hop\":0,\"headPitch\":0.6,\"headRoll\":0,\"facilityUse\":{\"kind\":\"garden-hut\",\"action\":\"tool-care\"},\"headYaw\":0},{\"id\":\"rabbit\",\"itemId\":\"4633c84b-3b16-46ee-99b2-89113967baf0\",\"phase\":\"flower\",\"position\":[0.98,0.04,1],\"hop\":0,\"headPitch\":0.09,\"headRoll\":0.0021925428282231108,\"headYaw\":0},{\"id\":\"otter\",\"itemId\":\"2e36cede-3310-4655-a325-01fec8008aae\",\"phase\":\"flower\",\"position\":[0.5,0.04,-0.48],\"hop\":0,\"headPitch\":0.09,\"headRoll\":-0.028209003768522735,\"headYaw\":0}]",
+          "lifeRender": "{\"calls\":297,\"triangles\":121546,\"geometries\":186,\"textures\":8}"
+        },
+        "rect": {
+          "x": 0,
+          "y": 96,
+          "width": 390,
+          "height": 604.40625,
+          "top": 96,
+          "right": 390,
+          "bottom": 700.40625,
+          "left": 0
+        },
+        "canvas": [
+          {
+            "rect": {
+              "x": 0,
+              "y": 96,
+              "width": 390,
+              "height": 604,
+              "top": 96,
+              "right": 390,
+              "bottom": 700,
+              "left": 0
+            },
+            "width": 390,
+            "height": 604,
+            "style": ""
+          }
+        ]
+      },
+      "pass": true
+    },
+    {
+      "device": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "world": {
+        "data": {
+          "placing": "false",
+          "lifeWorldStyle": "moon-garden-v1",
+          "lifeVisualCandidate": "moon-garden-v1",
+          "lifeLandscapeVersion": "groves-water-v1",
+          "lifeTourVersion": "1",
+          "lifeCamera": "{\"projection\":[0.2914509565274668,0,0,0,0,0.28550297782282463,0,0,0,0,-0.02002002002002002,0,-0.049658807276081234,0,-1.002002002002002,1],\"view\":[0.925546956205677,-0.207749733943065,0.3165483847771031,0,-5.551115123125784e-17,0.8360299122352686,0.5486838669469786,0,-0.3786328457205044,-0.5078326829719366,0.7737849405662518,0,2.116362640691705e-15,-0.16720598244705165,-14.325573013301563,1.0000000000000002],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":0},\"manual\":false}}",
+          "lifeSculptStatus": "none",
+          "lifeGroundMaterialStatus": "none",
+          "worldShadowUpdateMs": "0.5",
+          "rendered": "true",
+          "worldShadowSampleMs": "0",
+          "lifeGatherings": "[]",
+          "lifeRelations": "[{\"ruleId\":\"R6\",\"ids\":[\"69a9c4b8-e578-4bd7-848d-2f59375a4090\",\"848bca64-bb10-4f71-a7b2-c7d1cf196f95\"],\"core\":false,\"focalResidentIds\":[\"pokomoko\"]},{\"ruleId\":\"R5\",\"ids\":[\"9b11cf8d-ebf4-4134-918b-eeca456f11f2\",\"aa7ea572-2ae1-4c4a-8787-c270d29bb89f\"],\"core\":true,\"focalResidentIds\":[\"otter\"]}]",
+          "lifePoses": "[{\"id\":\"pokomoko\",\"itemId\":\"848bca64-bb10-4f71-a7b2-c7d1cf196f95\",\"phase\":\"flower\",\"position\":[1.5,0.04,0.15],\"hop\":0,\"headPitch\":0.6,\"headRoll\":0,\"facilityUse\":{\"kind\":\"garden-hut\",\"action\":\"tool-care\"},\"headYaw\":7.401486830834376e-16},{\"id\":\"rabbit\",\"itemId\":\"848bca64-bb10-4f71-a7b2-c7d1cf196f95\",\"phase\":\"flower\",\"position\":[1.5,0.04,1.52],\"hop\":0,\"headPitch\":0.09,\"headRoll\":0,\"headYaw\":0},{\"id\":\"otter\",\"itemId\":\"9b11cf8d-ebf4-4134-918b-eeca456f11f2\",\"phase\":\"bench\",\"position\":[-1.5,0.35,1],\"seatGap\":0,\"hop\":0,\"headPitch\":0.6,\"headRoll\":0,\"facilityUse\":{\"kind\":\"library\",\"action\":\"reading\"},\"headYaw\":-1.1686558153949013e-15}]",
+          "lifeRender": "{\"calls\":288,\"triangles\":110830,\"geometries\":185,\"textures\":8}"
+        },
+        "rect": {
+          "x": 0,
+          "y": 96,
+          "width": 768,
+          "height": 784.40625,
+          "top": 96,
+          "right": 768,
+          "bottom": 880.40625,
+          "left": 0
+        },
+        "canvas": [
+          {
+            "rect": {
+              "x": 0,
+              "y": 96,
+              "width": 768,
+              "height": 784,
+              "top": 96,
+              "right": 768,
+              "bottom": 880,
+              "left": 0
+            },
+            "width": 768,
+            "height": 784,
+            "style": ""
+          }
+        ]
+      },
+      "pass": true
+    }
+  ]
+}

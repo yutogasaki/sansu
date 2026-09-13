@@ -1,0 +1,32 @@
+{
+  "target": "http://127.0.0.1:5308",
+  "buildVersion": {
+    "version": "development-local:09d47201-a34b-4014-ab1f-b405854df408",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "learningCandidate": "mystic-island-learning-v2",
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "sourceHash": "1d4db7f5e337e9224ae36930854562138c8e368ab6d5983a6f9dee629eeb8706",
+  "originalSourceHash": "95b6c3563962db005ca9a31fc5c18411134bf9d0f77c2cbaafe3f177474d2629",
+  "fixture": "Continue the actual earned disposable profiles, with no imported or injected DB state",
+  "cases": [],
+  "pass": false,
+  "failure": {
+    "device": "phone",
+    "error": "locator.click: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'しまの おもいで', exact: true })\u001b[22m\n\n    at /private/tmp/sansu-canopy-material-worktree/tools/e2e-island-life-facility-replay-production.mjs:23:167",
+    "text": "プレイヤーの しま\nしずく\n2\nひかり\n3\nみんなの ようす\nいえへ\nぽこもこ\nうさぎ\nカワウソ\n\nどうぐを おていれ\n\nすきなもの：ベンチ\nしまの おもいで\nそだちと しずく・ひかり\n＋\nしま\nいえ\nまなぶ\nきろく\n設定",
+    "view": null
+  }
+}

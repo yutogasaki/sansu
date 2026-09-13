@@ -14,6 +14,8 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 
 `node tools/e2e-island-life-facility-replay-production.mjs` は上記の成功結果を `SANSU_FACILITY_PRODUCTION_SOURCE`、新規出力を `SANSU_FACILITY_REPLAY_OUTPUT`、新build manifestを `SANSU_FACILITY_REPLAY_MANIFEST` に指定。同じlocal originへ新buildを配信してから、元の隔離ブラウザを開き、実SW更新とentry JS/versionを照合する。元の保存場面を変更せずofflineでR5/R6を再演し、元scene・残高・学習等7ストアを保持することを検査する。元の獲得buildと新rendererのsourceは別々に記録する。
 
+`SANSU_FACILITY_REPLAY_OPEN_SCENES=1` では横幅を広げた枠なし場面の寸法を確認し、保存解除の取消・現在画面・高さ390pxで閉じる操作とEscape・学習復帰の全数字キーを追加検査する。throughputや実機理解を測定した検査ではない。
+
 `node tools/e2e-island-water-magic-v3.mjs` は `SANSU_WATER_MAGIC_URL` と新しい `SANSU_WATER_MAGIC_OUTPUT` を指定。DEVのphone390×844/通常motion・tablet768×1024/reduced motionで、水鉢の実タップ・連打統合・5秒後の通常水面、灯りの近→遠→復元、縁からの再試行、本人保存/元のタップ位置での再演/現在入口、収納・再読込後の過去保持、残高/学習正本不変と学習入力復帰を確認する。20件のQA creditを使う。非表示中断はdocument visibilityへの明示障害注入であり、実ブラウザーのバックグラウンド遷移やPWA検証と区別する。`SANSU_WATER_MAGIC_DEVICE` は診断の幅限定。固定sourceのcore後に実時間UIを実行する。
 
 `node tools/e2e-island-explicit-observation-v3.mjs` は `SANSU_EXPLICIT_URL` と新しい `SANSU_EXPLICIT_OUTPUT` を指定。DEVのphone390×844/通常motion・tablet768×1024/reduced motionで、図書室の現物タップ、同じ住民の花/水/通常休憩への切替と本の往復、小屋から自動選択とは異なる現物への道具運搬、R5/R6のcurrent-context-test記録/本人保存/再演/現在復帰、版14再読込/収納後の過去保持、残高/学習正本不変と学習入力への復帰を確認する。100件のQA credit、明示呼び先・実配置、小屋では読み取りだけの現在空き対象判定を用いる。時間加速・住民の抽選やり直しはしない。`SANSU_EXPLICIT_DEVICE` は診断の幅限定用。全coreを固定sourceで完了してから短い実時間のUI旅程を実行し、source開始/終了一致も必要。対象旅程のPASSを自然初回・無文字理解・全PWA/releaseの合格へ置き換えない。

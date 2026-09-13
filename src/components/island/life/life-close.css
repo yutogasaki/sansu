@@ -28,6 +28,16 @@
 @media(max-height:700px) { .life-product-preview { height:60px; } }
 
 /* One open work surface: objects carry the choice, without nested cards. */
+.island-page[data-life-home="true"] .island-life .life-dock {
+    left: 0; right: 0; bottom: 0; max-width: 560px;
+    padding: 16px 22px max(16px, env(safe-area-inset-bottom));
+    /* A zero-radius opaque overlay can blank the WebGL region behind it in Chromium. */
+    border: 0; border-radius: 1px; box-shadow: none;
+}
+.island-page[data-life-home="true"] .island-life .life-dock::before { display: none; }
+.island-page[data-life-home="true"] .island-life .life-dock .life-caption > button {
+    border: 0; border-radius: 0; background: transparent; box-shadow: none;
+}
 .island-page[data-life-home="true"] .island-life .life-menu {
     left:0; right:0; bottom:0; max-width:560px; padding:10px 22px 16px;
     border:0; border-radius:0; box-shadow:none;
