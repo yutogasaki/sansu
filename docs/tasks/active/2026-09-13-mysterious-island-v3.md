@@ -295,3 +295,8 @@ source `cee1cea9c4c41806b3ff6b0db94e036cd61d1ecffe9f40a41ffd81f6de6163bc` は変
 ベンチ/テーブル/施設から配置済みの現物を選ぶ無料観察を、同じ住民の実visitと保存版14へ接続した。視線だけなら同じ席、運搬なら実経路を使い、歩行中や先客を押し出さない。旧保存・同席者・報酬を保持し、おもいで→現在も住民IDを引き継ぐ。固定source `f91b2d7bd5bd225abe7b4cdf0233aa0f9ef2b12920e4b64b86efebdd56de8dcc` でcore390 files /3882 testsと、両幅の図書室/小屋4旅程PASS。[実画面・配信ラベル・検証範囲](../../design/2026-09-13-island-explicit-observation/README.md)。本人IDのsnapshot保持・元の施設へ戻る処理・地面より上の選択目印を補強した診断3はsource不一致で終了したため、core後の固定source UI4だけを最終証拠にした。魔法/出会い・視覚C3/Human N=0・全releaseは継続。
 
 全体smoke/PWA更新/production島旅程/固定十問throughput・自然初回・全住民/混合配置は対象DEV旅程で代替していない。次は灯りと水のM4など、未接続の魔法と実提示/中断/保存を進める。
+
+
+## 水鉢の魔法M4
+
+実水面のタップ、灯りの近/遠/復元、5秒の星空とタップ位置起点の波紋、連打の統合、非表示中断、元の位置での再演を接続した。診断1は共通観察helperが関係観察のクラスだけを待った検査側の誤り。helperを実描画済み観察面へ一般化。診断2のスマホ旅程は完走したが、星の読み取りを改善している途中だったためsource不一致で終了。水鉢の縁/本体の入力も補強し、固定source `27d5645aefdb63c75a5f0b1d48f0268b6d7465ab9113e01862eb5fbb2b21da61` でcore2の392 files /3888 testsと両幅UI4がPASS。[実画面と検証範囲](../../design/2026-09-13-island-water-magic/README.md)。UI3は収納保存を待たず再読込した検査側の手順不備。UI4では保存済みstateを待つ。core1/診断2/UI3を最終の完走証拠へ混ぜない。全体smoke/PWA/throughput・視覚C3/Human N=0・M1/M3/出会いと全releaseは継続。

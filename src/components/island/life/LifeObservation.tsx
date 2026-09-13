@@ -85,6 +85,15 @@ export default function LifeObservation({ record, state, item, initialResidentId
         try { return await createDiscoveryScene(record.profileId, visible, rule, 'current-context-test', crypto.randomUUID(), Date.now(), residents); }
         catch (cause) { if (alive.current) setError(cause instanceof Error ? cause.message : 'もういちど ためしてね。'); return undefined; }
     };
+    const waterRule = item.kind === 'water-bowl' ? evaluateDiscovery(state, record.profileId).filter(rule => rule.ruleId === 'M4' && rule.participantIds.includes(item.id))
+        .sort((a, b) => a.distance! - b.distance! || a.semanticSignature.localeCompare(b.semanticSignature))[0] : undefined;
+    const prepareWater = async (point: [number, number]) => {
+        if (!alive.current || pending.current || !waterRule) return undefined;
+        setError(''); setShown(undefined);
+        const current = latest.current;
+        try { return await createDiscoveryScene(record.profileId, { ...current.state, waterTouch: { itemId: item.id, point } }, waterRule, 'current-context-test', crypto.randomUUID(), Date.now()); }
+        catch (cause) { if (alive.current) setError(cause instanceof Error ? cause.message : 'もういちど ためしてね。'); return undefined; }
+    };
     const prepareGathering = async (visible: LifeState) => {
         if (!alive.current || pending.current || !gathering) return undefined;
         const rule = displayedGatherings(visible, record.profileId).find(rule => rule.ruleId === gathering.ruleId
@@ -110,7 +119,7 @@ export default function LifeObservation({ record, state, item, initialResidentId
                     <option value="">いまの ようす</option>{state.items.filter(i => i.cell && i.id !== item.id).map((i, index) => <option key={i.id} value={i.id}>{CATALOG[i.kind].label} {index + 1}</option>)}
                 </select></label>}
                 {status === 'busy' && <button type="button" onClick={() => residentId ? void selectTarget(targetId) : tryVisit?.()}>もういちど みてみる</button>}
-            </> : item.kind === 'water-bowl' ? <WaterObservationView item={item} /> : <><PlantObservationView item={item} prepare={prepare} presented={presented} />
+            </> : item.kind === 'water-bowl' ? <WaterObservationView item={item} conditionKey={waterRule?.semanticSignature} prepare={prepareWater} presented={presented} /> : <><PlantObservationView item={item} prepare={prepare} presented={presented} />
                 <p className="life-observation-hint">{item.kind === 'sapling' ? '木に ふれてみよう' : 'おはなに ふれてみよう'}</p></>}
             {selecting && <p role="status">ようすを みているよ…</p>}
             {selectionError && <p role="alert">{selectionFailure ?? 'いまは ためせなかったよ。もういちど えらんでね。'}</p>}

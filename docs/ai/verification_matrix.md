@@ -8,6 +8,8 @@ GitHub Actions should mirror the same baseline for `docs:check` and `verify:core
 
 ## Current Commands
 
+`node tools/e2e-island-water-magic-v3.mjs` は `SANSU_WATER_MAGIC_URL` と新しい `SANSU_WATER_MAGIC_OUTPUT` を指定。DEVのphone390×844/通常motion・tablet768×1024/reduced motionで、水鉢の実タップ・連打統合・5秒後の通常水面、灯りの近→遠→復元、縁からの再試行、本人保存/元のタップ位置での再演/現在入口、収納・再読込後の過去保持、残高/学習正本不変と学習入力復帰を確認する。20件のQA creditを使う。非表示中断はdocument visibilityへの明示障害注入であり、実ブラウザーのバックグラウンド遷移やPWA検証と区別する。`SANSU_WATER_MAGIC_DEVICE` は診断の幅限定。固定sourceのcore後に実時間UIを実行する。
+
 `node tools/e2e-island-explicit-observation-v3.mjs` は `SANSU_EXPLICIT_URL` と新しい `SANSU_EXPLICIT_OUTPUT` を指定。DEVのphone390×844/通常motion・tablet768×1024/reduced motionで、図書室の現物タップ、同じ住民の花/水/通常休憩への切替と本の往復、小屋から自動選択とは異なる現物への道具運搬、R5/R6のcurrent-context-test記録/本人保存/再演/現在復帰、版14再読込/収納後の過去保持、残高/学習正本不変と学習入力への復帰を確認する。100件のQA credit、明示呼び先・実配置、小屋では読み取りだけの現在空き対象判定を用いる。時間加速・住民の抽選やり直しはしない。`SANSU_EXPLICIT_DEVICE` は診断の幅限定用。全coreを固定sourceで完了してから短い実時間のUI旅程を実行し、source開始/終了一致も必要。対象旅程のPASSを自然初回・無文字理解・全PWA/releaseの合格へ置き換えない。
 
 `node tools/e2e-island-facility-relations-v3.mjs` は `SANSU_FACILITY_RELATIONS_URL` と新しい `SANSU_FACILITY_RELATIONS_OUTPUT` を指定する。DEVのphone/tabletで本/道具の実運搬、見える実利用のR5/R6記録、再演・本人保存・現在入口、同じぽこもこの近→遠→復元の実移設と入口通常利用への切替、遠い配置で新しい提示履歴を作らないこと、収納後の記録保持と学習復帰を確認する。実取得は100件のQA creditで代用。所有者の更新は版13へ移行する。`SANSU_RELATION_BENCH_START=1` は図書室旅程をベンチ指定から始め、より近い花へのR1切替も実操作する。距離比較は施設指定へ戻して行う。通常旅程後の所有者APIへのobserve書込と版13再読込は明示診断であり、UIから無料住民を呼んだ証拠と区別する。短い受け取り場面の撮影を含むため、全体検査と分けて実行した結果を正式証拠とする。

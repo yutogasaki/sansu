@@ -5,6 +5,7 @@ import { recordPresentedScene } from '../../../domain/islandLife/discoveryReposi
 import { holdPwaUpdateForCriticalPersistence } from '../../../pwa';
 import type { LifeState } from '../../../domain/islandLife/model';
 import RelationObservationView from './RelationObservationView';
+import WaterObservationView from './WaterObservationView';
 import PlantObservationView from './PlantObservationView';
 
 export default function LifeSceneReplay({ original }: { original: DiscoveryScene }) {
@@ -37,7 +38,7 @@ export default function LifeSceneReplay({ original }: { original: DiscoveryScene
     };
     return <div data-life-replay-origin={original.originEventId ?? original.eventId}>
         <p className="life-memory-time">あのときの すがた</p>
-        {original.ruleId === 'M2' && plant ? <>
+        {original.ruleId === 'M4' && bench ? <WaterObservationView item={bench} conditionKey={original.semanticSignature} prepare={prepare} presented={(event, evidence) => { pending.current = { event, evidence }; void persist(); }} /> : original.ruleId === 'M2' && plant ? <>
             <PlantObservationView item={plant} prepare={prepare} presented={(event, evidence) => { pending.current = { event, evidence }; void persist(); }} />
             <p className="life-observation-hint">ふれると もういちど みられるよ</p>
         </> : gathering ? <RelationObservationView state={frozen} gathering={gathering} frozen prepare={prepare} presented={(event, evidence) => { pending.current = { event, evidence }; void persist(); }} /> : (original.ruleId === 'R2' || original.ruleId === 'R1' || original.ruleId === 'R3' || original.ruleId === 'R4' || original.ruleId === 'R5' || original.ruleId === 'R6') && bench ? <RelationObservationView state={frozen} benchId={bench.id} residentId={original.snapshot.scene.observationResidentId} frozen prepare={prepare} presented={(event, evidence) => { pending.current = { event, evidence }; void persist(); }} /> : <p>この ばめんの えを ひらけなかったよ。</p>}

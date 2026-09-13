@@ -20,6 +20,7 @@ export function discoveryTitle(event: DiscoveryScene) {
         const plant = discoveryParticipants(event)[0];
         return plant?.kind === 'flower' && growthStage(plant) === 2 ? 'はなびらが うえへ' : 'はっぱが うえへ';
     }
+    if (event.ruleId === 'M4') return '水の なかの 星空';
     return { G0: 'つながった つち', GF3: 'あつまった おはな', GF6: 'ひろがった おはな',
         GT3: 'つながった 木かげ', GT6: 'ひろがった 木かげ', GW2: 'ならんだ 水べ',
         GP2: 'ならんだ あそびば', GP3: 'ひろがった あそびば', R1: 'おはなの そばの ベンチ', R2: '木かげの テーブル', R3: 'ブランコの そばの ベンチ', R4: '水べの ベンチ', R5: 'ほんを はこんで ひとやすみ', R6: 'どうぐを はこんで おていれ' }[event.ruleId];
@@ -31,5 +32,5 @@ export function discoverySubject(event: DiscoveryScene) {
     const anchor = snapshot.residents.find(r => r.id === snapshot.observationResidentId)?.visit?.observationSubjectId;
     return participants.find(item => item.id === anchor) ?? participants.find(item => event.ruleId === 'M2'
         ? item.kind === 'flower' || item.kind === 'sapling'
-        : item.kind === (event.ruleId === 'R6' ? 'garden-hut' : event.ruleId === 'R2' ? 'picnic-table' : 'bench'));
+        : event.ruleId === 'M4' ? item.kind === 'water-bowl' : item.kind === (event.ruleId === 'R6' ? 'garden-hut' : event.ruleId === 'R2' ? 'picnic-table' : 'bench'));
 }

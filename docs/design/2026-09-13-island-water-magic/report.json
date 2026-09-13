@@ -1,0 +1,635 @@
+{
+  "startHash": "27d5645aefdb63c75a5f0b1d48f0268b6d7465ab9113e01862eb5fbb2b21da61",
+  "revision": "001d461c0e47406d5193bb6eb942015a8017f209",
+  "target": "http://127.0.0.1:5223",
+  "flags": "DEV VITE_ISLAND_ENABLED=true VITE_ISLAND_LIFE_PREVIEW=true",
+  "candidate": "water-stars-v1",
+  "humanN": 0,
+  "fixture": "20 QA credits; actual UI purchases/placement/water touch. Visibility cancellation is a separately labelled injected hidden-document diagnostic.",
+  "cases": [
+    {
+      "device": "phone",
+      "event": {
+        "eventId": "103851a0-467d-41ea-b16d-15e11a385df3",
+        "profileId": "b40ece2a-724d-468d-ba2f-2253536d8295",
+        "ruleId": "M4",
+        "ruleVersion": "discovery-v3.0-rc1",
+        "semanticSignature": "[\"[\\\"b40ece2a-724d-468d-ba2f-2253536d8295\\\",\\\"discovery-v3.0-rc1\\\",\\\"M4\\\",[[\\\"56376b6a-4b09-469e-8353-5ca363a087a5\\\",\\\"lantern\\\",4,2,null,null],[\\\"67bbe31a-9f5e-4df4-8ae2-93e26e9c010b\\\",\\\"water-bowl\\\",0,2,null,null]]]\",[]]",
+        "createdAt": 1789300558576,
+        "source": "current-context-test",
+        "focalResidentIds": [],
+        "snapshot": {
+          "contentVersion": 1,
+          "scene": {
+            "now": 1789300551371,
+            "activityVersion": 2,
+            "tourVersion": 1,
+            "roamRound": 0,
+            "scenePose": "captured-v1",
+            "waterMagicVersion": 1,
+            "waterTouch": {
+              "itemId": "67bbe31a-9f5e-4df4-8ae2-93e26e9c010b",
+              "point": [
+                0.08139971661791456,
+                -0.0811861346624605
+              ]
+            },
+            "facilityPresentation": "carry-care-v1",
+            "relationSelectionVersion": 1,
+            "facilityTripVersion": 1,
+            "relationVersion": "water-bench-v1",
+            "landscapeVersion": "groves-water-v1",
+            "worldStyle": "canopy-dots-c3-v1",
+            "items": [
+              {
+                "id": "67bbe31a-9f5e-4df4-8ae2-93e26e9c010b",
+                "kind": "water-bowl",
+                "cell": {
+                  "x": 0,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4
+              },
+              {
+                "id": "56376b6a-4b09-469e-8353-5ca363a087a5",
+                "kind": "lantern",
+                "cell": {
+                  "x": 4,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 8
+              }
+            ],
+            "residents": [
+              {
+                "id": "pokomoko",
+                "cell": {
+                  "x": 1,
+                  "z": 2
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "relationSelectionVersion": 1,
+                  "itemId": "67bbe31a-9f5e-4df4-8ae2-93e26e9c010b",
+                  "path": [
+                    {
+                      "x": 1,
+                      "z": 2
+                    }
+                  ],
+                  "from": {
+                    "x": 1,
+                    "z": 2
+                  },
+                  "start": 1789300551371,
+                  "end": 1789302351371
+                },
+                "discovery": {
+                  "itemId": "56376b6a-4b09-469e-8353-5ca363a087a5",
+                  "at": 1789300551371,
+                  "mood": "notice"
+                }
+              },
+              {
+                "id": "rabbit",
+                "cell": {
+                  "x": 3,
+                  "z": 1
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "discovery": {
+                  "itemId": "56376b6a-4b09-469e-8353-5ca363a087a5",
+                  "at": 1789300551371,
+                  "mood": "notice"
+                }
+              },
+              {
+                "id": "otter",
+                "cell": {
+                  "x": 4,
+                  "z": 4
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "roam:otter:994055",
+                  "path": [
+                    {
+                      "x": 4,
+                      "z": 4
+                    },
+                    {
+                      "x": 3,
+                      "z": 4
+                    },
+                    {
+                      "x": 2,
+                      "z": 4
+                    }
+                  ],
+                  "from": {
+                    "x": 4,
+                    "z": 4
+                  },
+                  "start": 1789300551371,
+                  "end": 1789302351371
+                },
+                "discovery": {
+                  "itemId": "56376b6a-4b09-469e-8353-5ca363a087a5",
+                  "at": 1789300551371,
+                  "mood": "notice"
+                }
+              }
+            ],
+            "heroStyle": "original"
+          },
+          "immutableHash": "294356971dab47ce4ee88c42a96f34fb0d7431c79ffa0ad61d9030cab3857c1e"
+        }
+      },
+      "again": {
+        "eventId": "7e9ffb42-4b2b-44ae-8155-1216bde70ade",
+        "profileId": "b40ece2a-724d-468d-ba2f-2253536d8295",
+        "ruleId": "M4",
+        "ruleVersion": "discovery-v3.0-rc1",
+        "semanticSignature": "[\"[\\\"b40ece2a-724d-468d-ba2f-2253536d8295\\\",\\\"discovery-v3.0-rc1\\\",\\\"M4\\\",[[\\\"56376b6a-4b09-469e-8353-5ca363a087a5\\\",\\\"lantern\\\",4,2,null,null],[\\\"67bbe31a-9f5e-4df4-8ae2-93e26e9c010b\\\",\\\"water-bowl\\\",0,2,null,null]]]\",[]]",
+        "createdAt": 1789300598401,
+        "source": "current-context-test",
+        "focalResidentIds": [],
+        "snapshot": {
+          "contentVersion": 1,
+          "scene": {
+            "now": 1789300593216,
+            "activityVersion": 2,
+            "tourVersion": 1,
+            "roamRound": 0,
+            "scenePose": "captured-v1",
+            "waterMagicVersion": 1,
+            "waterTouch": {
+              "itemId": "67bbe31a-9f5e-4df4-8ae2-93e26e9c010b",
+              "point": [
+                0.30468653274689406,
+                0.025598717988912036
+              ]
+            },
+            "facilityPresentation": "carry-care-v1",
+            "relationSelectionVersion": 1,
+            "facilityTripVersion": 1,
+            "relationVersion": "water-bench-v1",
+            "landscapeVersion": "groves-water-v1",
+            "worldStyle": "canopy-dots-c3-v1",
+            "items": [
+              {
+                "id": "67bbe31a-9f5e-4df4-8ae2-93e26e9c010b",
+                "kind": "water-bowl",
+                "cell": {
+                  "x": 0,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4
+              },
+              {
+                "id": "56376b6a-4b09-469e-8353-5ca363a087a5",
+                "kind": "lantern",
+                "cell": {
+                  "x": 4,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 8
+              }
+            ],
+            "residents": [
+              {
+                "id": "pokomoko",
+                "cell": {
+                  "x": 1,
+                  "z": 2
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "relationSelectionVersion": 1,
+                  "itemId": "67bbe31a-9f5e-4df4-8ae2-93e26e9c010b",
+                  "path": [
+                    {
+                      "x": 1,
+                      "z": 2
+                    }
+                  ],
+                  "from": {
+                    "x": 1,
+                    "z": 2
+                  },
+                  "start": 1789300591591,
+                  "end": 1789302391591
+                }
+              },
+              {
+                "id": "rabbit",
+                "cell": {
+                  "x": 3,
+                  "z": 1
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {}
+              },
+              {
+                "id": "otter",
+                "cell": {
+                  "x": 4,
+                  "z": 4
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "roam:otter:994055",
+                  "path": [
+                    {
+                      "x": 4,
+                      "z": 4
+                    },
+                    {
+                      "x": 3,
+                      "z": 4
+                    },
+                    {
+                      "x": 2,
+                      "z": 4
+                    }
+                  ],
+                  "from": {
+                    "x": 4,
+                    "z": 4
+                  },
+                  "start": 1789300591591,
+                  "end": 1789302391591
+                }
+              }
+            ],
+            "heroStyle": "original"
+          },
+          "immutableHash": "36cf442164c2a99c9ffc3fe965fda34146fef57b78aa9a5ee5f6725935bf9e42"
+        }
+      },
+      "delivery": {
+        "url": "http://127.0.0.1:5223/#/island",
+        "builds": [
+          {
+            "revision": "development-local",
+            "delivery": "snap-root-v1"
+          },
+          {
+            "revision": "development-local",
+            "version": "development-local:42bba105-01c2-4a95-8185-3a8eb67c7303",
+            "delivery": "mystic-island-v1"
+          }
+        ],
+        "world": "canopy-dots-c3-v1"
+      },
+      "version": 13,
+      "drops": 28,
+      "visibilityDiagnostic": "injected hidden document cancels; restoring visible does not resume",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "device": "tablet",
+      "event": {
+        "eventId": "42713525-a11e-4803-a0c1-d8a1dd8d6ca7",
+        "profileId": "47fa33d0-4f93-41e2-be68-3e38cb923645",
+        "ruleId": "M4",
+        "ruleVersion": "discovery-v3.0-rc1",
+        "semanticSignature": "[\"[\\\"47fa33d0-4f93-41e2-be68-3e38cb923645\\\",\\\"discovery-v3.0-rc1\\\",\\\"M4\\\",[[\\\"26799de7-fba9-4867-9e03-eb55c088c047\\\",\\\"lantern\\\",4,2,null,null],[\\\"ebdabafd-84b4-4945-8d70-2cddeb80f74b\\\",\\\"water-bowl\\\",0,2,null,null]]]\",[]]",
+        "createdAt": 1789300657144,
+        "source": "current-context-test",
+        "focalResidentIds": [],
+        "snapshot": {
+          "contentVersion": 1,
+          "scene": {
+            "now": 1789300655269,
+            "activityVersion": 2,
+            "tourVersion": 1,
+            "roamRound": 0,
+            "scenePose": "captured-v1",
+            "waterMagicVersion": 1,
+            "waterTouch": {
+              "itemId": "ebdabafd-84b4-4945-8d70-2cddeb80f74b",
+              "point": [
+                0.08139971661791456,
+                -0.0811861346624605
+              ]
+            },
+            "facilityPresentation": "carry-care-v1",
+            "relationSelectionVersion": 1,
+            "facilityTripVersion": 1,
+            "relationVersion": "water-bench-v1",
+            "landscapeVersion": "groves-water-v1",
+            "worldStyle": "canopy-dots-c3-v1",
+            "items": [
+              {
+                "id": "ebdabafd-84b4-4945-8d70-2cddeb80f74b",
+                "kind": "water-bowl",
+                "cell": {
+                  "x": 0,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4
+              },
+              {
+                "id": "26799de7-fba9-4867-9e03-eb55c088c047",
+                "kind": "lantern",
+                "cell": {
+                  "x": 4,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 8
+              }
+            ],
+            "residents": [
+              {
+                "id": "pokomoko",
+                "cell": {
+                  "x": 2,
+                  "z": 1
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "relationSelectionVersion": 1,
+                  "itemId": "ebdabafd-84b4-4945-8d70-2cddeb80f74b",
+                  "path": [
+                    {
+                      "x": 2,
+                      "z": 1
+                    },
+                    {
+                      "x": 1,
+                      "z": 1
+                    },
+                    {
+                      "x": 1,
+                      "z": 2
+                    }
+                  ],
+                  "from": {
+                    "x": 2,
+                    "z": 1
+                  },
+                  "start": 1789300636305,
+                  "end": 1789302436305
+                },
+                "discovery": {
+                  "itemId": "ebdabafd-84b4-4945-8d70-2cddeb80f74b",
+                  "at": 1789300636305,
+                  "mood": "notice"
+                }
+              },
+              {
+                "id": "rabbit",
+                "cell": {
+                  "x": 3,
+                  "z": 1
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "discovery": {
+                  "itemId": "26799de7-fba9-4867-9e03-eb55c088c047",
+                  "at": 1789300647286,
+                  "mood": "notice"
+                }
+              },
+              {
+                "id": "otter",
+                "cell": {
+                  "x": 4,
+                  "z": 4
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "roam:otter:994055",
+                  "path": [
+                    {
+                      "x": 4,
+                      "z": 4
+                    },
+                    {
+                      "x": 3,
+                      "z": 4
+                    },
+                    {
+                      "x": 2,
+                      "z": 4
+                    },
+                    {
+                      "x": 1,
+                      "z": 4
+                    },
+                    {
+                      "x": 0,
+                      "z": 4
+                    },
+                    {
+                      "x": 0,
+                      "z": 3
+                    }
+                  ],
+                  "from": {
+                    "x": 4,
+                    "z": 4
+                  },
+                  "start": 1789300647286,
+                  "end": 1789302447286
+                },
+                "discovery": {
+                  "itemId": "26799de7-fba9-4867-9e03-eb55c088c047",
+                  "at": 1789300647286,
+                  "mood": "notice"
+                }
+              }
+            ],
+            "heroStyle": "original"
+          },
+          "immutableHash": "5ef7ab369520db744b7e5691797b74d62dfb63131451faa68138cb7a48ab919b"
+        }
+      },
+      "again": {
+        "eventId": "cc4a7fef-53aa-4965-b935-dc6669e02aa4",
+        "profileId": "47fa33d0-4f93-41e2-be68-3e38cb923645",
+        "ruleId": "M4",
+        "ruleVersion": "discovery-v3.0-rc1",
+        "semanticSignature": "[\"[\\\"47fa33d0-4f93-41e2-be68-3e38cb923645\\\",\\\"discovery-v3.0-rc1\\\",\\\"M4\\\",[[\\\"26799de7-fba9-4867-9e03-eb55c088c047\\\",\\\"lantern\\\",4,2,null,null],[\\\"ebdabafd-84b4-4945-8d70-2cddeb80f74b\\\",\\\"water-bowl\\\",0,2,null,null]]]\",[]]",
+        "createdAt": 1789300705579,
+        "source": "current-context-test",
+        "focalResidentIds": [],
+        "snapshot": {
+          "contentVersion": 1,
+          "scene": {
+            "now": 1789300700896,
+            "activityVersion": 2,
+            "tourVersion": 1,
+            "roamRound": 0,
+            "scenePose": "captured-v1",
+            "waterMagicVersion": 1,
+            "waterTouch": {
+              "itemId": "ebdabafd-84b4-4945-8d70-2cddeb80f74b",
+              "point": [
+                0.30468653274689406,
+                0.025598717988912036
+              ]
+            },
+            "facilityPresentation": "carry-care-v1",
+            "relationSelectionVersion": 1,
+            "facilityTripVersion": 1,
+            "relationVersion": "water-bench-v1",
+            "landscapeVersion": "groves-water-v1",
+            "worldStyle": "canopy-dots-c3-v1",
+            "items": [
+              {
+                "id": "ebdabafd-84b4-4945-8d70-2cddeb80f74b",
+                "kind": "water-bowl",
+                "cell": {
+                  "x": 0,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 4
+              },
+              {
+                "id": "26799de7-fba9-4867-9e03-eb55c088c047",
+                "kind": "lantern",
+                "cell": {
+                  "x": 4,
+                  "z": 2
+                },
+                "growth": 0,
+                "style": "original",
+                "paidDrops": 8
+              }
+            ],
+            "residents": [
+              {
+                "id": "pokomoko",
+                "cell": {
+                  "x": 1,
+                  "z": 2
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "relationSelectionVersion": 1,
+                  "itemId": "ebdabafd-84b4-4945-8d70-2cddeb80f74b",
+                  "path": [
+                    {
+                      "x": 1,
+                      "z": 2
+                    }
+                  ],
+                  "from": {
+                    "x": 1,
+                    "z": 2
+                  },
+                  "start": 1789300697454,
+                  "end": 1789302497454
+                }
+              },
+              {
+                "id": "rabbit",
+                "cell": {
+                  "x": 3,
+                  "z": 1
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {}
+              },
+              {
+                "id": "otter",
+                "cell": {
+                  "x": 5,
+                  "z": 0
+                },
+                "enjoyed": 0,
+                "enjoyedBy": {},
+                "visit": {
+                  "itemId": "roam:otter:994055",
+                  "path": [
+                    {
+                      "x": 5,
+                      "z": 0
+                    },
+                    {
+                      "x": 5,
+                      "z": 1
+                    },
+                    {
+                      "x": 5,
+                      "z": 2
+                    },
+                    {
+                      "x": 5,
+                      "z": 3
+                    },
+                    {
+                      "x": 4,
+                      "z": 3
+                    },
+                    {
+                      "x": 4,
+                      "z": 4
+                    }
+                  ],
+                  "from": {
+                    "x": 5,
+                    "z": 0
+                  },
+                  "start": 1789300697454,
+                  "end": 1789302497454
+                }
+              }
+            ],
+            "heroStyle": "original"
+          },
+          "immutableHash": "0ff0eeeb6e46dfe5820c67fd069171665595bf31d30ec3b87993b7ff94ae3218"
+        }
+      },
+      "delivery": {
+        "url": "http://127.0.0.1:5223/#/island",
+        "builds": [
+          {
+            "revision": "development-local",
+            "delivery": "snap-root-v1"
+          },
+          {
+            "revision": "development-local",
+            "version": "development-local:42bba105-01c2-4a95-8185-3a8eb67c7303",
+            "delivery": "mystic-island-v1"
+          }
+        ],
+        "world": "canopy-dots-c3-v1"
+      },
+      "version": 13,
+      "drops": 28,
+      "visibilityDiagnostic": "injected hidden document cancels; restoring visible does not resume",
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "27d5645aefdb63c75a5f0b1d48f0268b6d7465ab9113e01862eb5fbb2b21da61",
+  "rawReportSha256": "905eec28c7c104e2fcd18cb9dd675754b766e2acac31c928fe7f510568823bb6",
+  "rawReportLocation": "/tmp/sansu-water-magic-runtime-4/report.json"
+}

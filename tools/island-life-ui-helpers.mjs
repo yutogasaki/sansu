@@ -41,5 +41,5 @@ export async function moveItem(page,itemId,cell,profileId){
     await waitForAsync(page,async({profileId,itemId,cell,count})=>{const{lifeDb}=await import('/src/domain/islandLife/repository.ts');const r=await lifeDb.worlds.get(profileId);return r.actions.slice(count).some(a=>a.command.type==='move'&&a.command.itemId===itemId&&a.command.cell.x===cell.x&&a.command.cell.z===cell.z);},{profileId,itemId,cell,count});
 }
 export async function openObservation(page,itemId){
-    await inventory(page,itemId);await page.getByRole('button',{name:'みてみる',exact:true}).click();await page.locator('.life-relation-view[data-rendered="true"]').waitFor();
+    await inventory(page,itemId);await page.getByRole('button',{name:'みてみる',exact:true}).click();await page.locator('.life-observation [data-rendered="true"]').waitFor();
 }
