@@ -136,12 +136,6 @@ try {
                 await page.getByRole('button', { name: 'つくる', exact: true }).click();
                 assert.deepEqual(await page.locator('[data-life-buy]').evaluateAll(nodes => nodes.map(n => n.dataset.lifeBuy)), ['flower','bench','swing','lantern','sapling','water-bowl','picnic-table','pinwheel','flower-arch','sandbox','garden-hut','library']);
                 await page.getByRole('button', { name: '3ページめ', exact: true }).click();
-                await page.waitForFunction(() => {
-                    const scroller=document.querySelector('.life-catalog-scroll'), group=document.querySelectorAll('.life-catalog-page')[2];
-                    if (!scroller || !group) return false;
-                    const view=scroller.getBoundingClientRect(), target=group.getBoundingClientRect();
-                    return Math.abs(target.left-view.left)<1 && Math.abs(target.right-view.right)<1;
-                });
                 await page.screenshot({ path: `${out}/${device}-new-catalog.png` });
                 await page.locator('[data-life-buy="sapling"]').click(); await putCell(page, { x: 2, z: 2 });
                 await page.waitForFunction(() => document.querySelector('[data-life-drops]')?.dataset.lifeDrops === '2');

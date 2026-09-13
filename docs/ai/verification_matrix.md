@@ -151,6 +151,8 @@ If a task spans more than one change type, use the stricter row.
 実初回・実獲得・購入・通常予約の1問目完了から始め、学習中の更新待機→島checkpointで自動reload1回→全native storeとLifeの所有/checkpoint保持→新buildのoffline同じ次問を両幅で確認。`SANSU_LIFE_UPDATE_INTERRUPTION=1` はSWだけoldへ固定した検出後切断・offline旧版再開・固定解除/再接続を追加する。実registration.updateの照会を行うが、app更新イベントやDBを注入しない。写真Blob/実機/旧v2既得権の移行検査とは別。
 
 
+`SANSU_LIFE_DISCOVERY_UPGRADE=1` を追加すると、oldの4品とnewの明示Discovery=true・12品を照合する。旧版の花と学習途中の予約を保持したまま更新し、新版で苗を実際に4しずくで購入、その2品と残高2をoffline再起動後も保持する。通常と更新中断の両方へ適用できる。指定しない場合は従来の同capability間旅程。two-build manifestのdistパスは配信rootに相対の `dist/...` とする。
+
 ### Life v3 のproduction capability検査
 
 `tools/e2e-island-life-storage.mjs` に `SANSU_LIFE_STORAGE_DISCOVERY=1` を付けると、明示Discovery=trueの固定production buildで12品の6ページを照合し、実初回3問から苗4しずくの購入・offline移動/収納/回答を検査する。6個の44pxボタンと説明/ページ数の折れ・横overflowも確認する。既存のbuild manifestとsource開始終了一致は必須。`SANSU_LIFE_STORAGE_FAIL_PROJECTION=1` では同じ旅程にLife putの明示障害と再試行の検査を加える。追加8品の全関係、two-build更新、自然X3、利用者評価の代替にはしない。Discovery未指定時は従来の4品/花購入旅程を維持する。
