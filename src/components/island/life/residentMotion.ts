@@ -1,4 +1,5 @@
 import * as T from 'three';
+import { makeLifeHeroHead, makeRelationGaze } from './relationGaze';
 import type { buildHomeJourney } from '../homeJourney/scene';
 import { easeResident, poseResidentTail, RESIDENT_SCALE, residentSeatContactY, sampleResidentStride, turnResidentToward } from '../three/residentRig';
 import { isRoamVisit, LIFE_STEP_MS, type Cell, type LifeState } from '../../../domain/islandLife/model';
@@ -12,13 +13,17 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
     point: (cell: Cell) => T.Vector3, seats: Map<string, LifeSeat>) {
     const actors = [content.hero, content.rabbit.pose, content.otter.pose];
     const bodies = [content.heroBody, content.rabbit.body, content.otter.body];
+    const heads = [makeLifeHeroHead(content.heroBody), content.rabbit.head, content.otter.head];
+    const gaze = makeRelationGaze(state, heads, point);
     const feet = [content.heroFeet, content.rabbit.feet, content.otter.feet];
     const neutralFeet = feet.map(pair => pair.map(foot => foot.position.clone()));
-    let audit: { id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number }[] = [];
+    let audit: { id: string; itemId?: string; phase: string; position: number[]; seatGap?: number; reaction?: string; hop: number; headPitch: number; headRoll: number; headYaw?: number; relation?: ReturnType<ReturnType<typeof makeRelationGaze>> }[] = [];
     return {
         audit: () => audit,
-        animate(now: number, reduced: boolean) {
+        animate(now: number, reduced: boolean, decorationAt = now) {
             const visible = sampleLifeRoaming(state, now);
+            heads.forEach(head => { head.rotation.order = 'XYZ'; });
+            heads[0].rotation.set(0, 0, 0);
             for (const { pivot } of seats.values()) if (pivot) pivot.rotation.x = 0;
             audit = visible.residents.map((resident, index) => {
                 const actor = actors[index], body = bodies[index], visit = resident.visit;
@@ -68,7 +73,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                             const furniture = seats.get(item.id);
                             if (furniture) {
                                 const usingMs = Math.max(0, now - walkedAt - duration);
-                                const angle = item.kind === 'swing' && !reduced ? Math.sin(usingMs / 1250) * .18 * Math.min(1, usingMs / 500) : 0;
+                                const angle = item.kind === 'swing' && !reduced ? Math.sin((usingMs + decorationAt - now) / 1250) * .18 * Math.min(1, usingMs / 500) : 0;
                                 if (furniture.pivot) furniture.pivot.rotation.x = angle;
                                 body.position.y = -.08 * settling;
                                 actor.rotation.x = angle;
@@ -103,7 +108,7 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                         rig.head.rotation.x = interest.headPitch;
                         rig.head.rotation.z = interest.headRoll;
                     } else if (!reduced && phase !== 'walking') {
-                        rig.head.rotation.z = Math.sin(now / 1800 + index) * .035;
+                        rig.head.rotation.z = Math.sin(decorationAt / 1800 + index) * .035;
                     }
                     if (flowerLean > 0) {
                         // The muzzle lowers as the feet settle, then makes two
@@ -118,6 +123,12 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                 if (index === 0 && scarf) scarf.position.y = .59 + body.position.y;
                 return { id: resident.id, itemId: visit?.itemId, phase, position: actor.position.toArray(), seatGap, reaction: reaction?.symbol, hop,
                     headPitch: rig?.head.rotation.x ?? 0, headRoll: rig?.head.rotation.z ?? 0 };
+            });
+            content.world.updateMatrixWorld(true);
+            audit.forEach((pose, index) => {
+                pose.relation = gaze(visible, now, reduced, index);
+                pose.headYaw = heads[index].rotation.y;
+                pose.headPitch = heads[index].rotation.x;
             });
         },
     };

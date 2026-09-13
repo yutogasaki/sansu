@@ -1,0 +1,30 @@
+{
+  "startHash": "72acc6ce0d8a323892b8a8d575692693bbc33d4c55fe84de3a2af4f584df56e1",
+  "revision": "7a159d677ffa27db2ff031b8472cb8495c049fcb",
+  "flags": "VITE_ISLAND_ENABLED=true; VITE_ISLAND_LIFE_PREVIEW=true; DEV",
+  "cache": "fresh browser context; DEV; no production SW claim",
+  "target": "http://127.0.0.1:5223",
+  "candidate": "island-life-discovery-a-placement-undo-v1",
+  "source": "explicit DEV six-credit fixture; real purchase/move/store/undo controls; no earned learning claim",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "phone",
+      "pass": true,
+      "itemId": "f2f415ba-6b08-45e4-8f3f-9b183c0c90ca",
+      "undoActions": 3,
+      "drops": 10,
+      "errors": []
+    },
+    {
+      "name": "tablet",
+      "pass": true,
+      "itemId": "ab1d674c-54db-41f1-81d0-70dea440c879",
+      "undoActions": 3,
+      "drops": 10,
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "72acc6ce0d8a323892b8a8d575692693bbc33d4c55fe84de3a2af4f584df56e1"
+}

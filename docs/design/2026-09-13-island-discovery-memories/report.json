@@ -1,0 +1,40 @@
+{
+  "startHash": "af3b13d5679a5d575cf8347c5e0140dedfcc5b9386a26f2aa8ed789297d66b21",
+  "revision": "7a159d677ffa27db2ff031b8472cb8495c049fcb",
+  "candidate": "island-life-discovery-a-memory-v1",
+  "target": "http://127.0.0.1:5223",
+  "flag": "VITE_ISLAND_LIFE_PREVIEW=true; DEV",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "phone",
+      "pass": true,
+      "actualProblems": 3,
+      "reducedMotion": false,
+      "saved": 0,
+      "replaySnapshot": "young plant after bloom/storage",
+      "unpin": true,
+      "capSource": "explicit DEV 13-event fixture, no silent eviction, selected replacement",
+      "bloomSource": "explicit DEV 24h clock",
+      "contextLoss": true,
+      "repeatedTaps": 6,
+      "errors": []
+    },
+    {
+      "name": "tablet",
+      "pass": true,
+      "actualProblems": 3,
+      "reducedMotion": true,
+      "saved": 0,
+      "replaySnapshot": "young plant after bloom/storage",
+      "unpin": true,
+      "capSource": "explicit DEV 13-event fixture, no silent eviction, selected replacement",
+      "bloomSource": "explicit DEV 24h clock",
+      "contextLoss": true,
+      "repeatedTaps": 6,
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "af3b13d5679a5d575cf8347c5e0140dedfcc5b9386a26f2aa8ed789297d66b21"
+}

@@ -1,0 +1,2546 @@
+{
+  "status": "independent-spec-model-not-app",
+  "catalog_total": 186,
+  "income": [
+    {
+      "schedule": "daily",
+      "questions": 3,
+      "sessions": 30,
+      "total_questions": 90,
+      "drops": 180
+    },
+    {
+      "schedule": "daily",
+      "questions": 6,
+      "sessions": 30,
+      "total_questions": 180,
+      "drops": 360
+    },
+    {
+      "schedule": "daily",
+      "questions": 12,
+      "sessions": 30,
+      "total_questions": 360,
+      "drops": 720
+    },
+    {
+      "schedule": "daily",
+      "questions": 24,
+      "sessions": 30,
+      "total_questions": 720,
+      "drops": 1440
+    },
+    {
+      "schedule": "mon-wed-fri",
+      "questions": 3,
+      "sessions": 13,
+      "total_questions": 39,
+      "drops": 78
+    },
+    {
+      "schedule": "mon-wed-fri",
+      "questions": 6,
+      "sessions": 13,
+      "total_questions": 78,
+      "drops": 156
+    },
+    {
+      "schedule": "mon-wed-fri",
+      "questions": 12,
+      "sessions": 13,
+      "total_questions": 156,
+      "drops": 312
+    },
+    {
+      "schedule": "mon-wed-fri",
+      "questions": 24,
+      "sessions": 13,
+      "total_questions": 312,
+      "drops": 624
+    }
+  ],
+  "growth": [
+    {
+      "completions_before_placement": 0,
+      "flower_hours": 12.0,
+      "tree_hours": 36.0
+    },
+    {
+      "completions_before_placement": 3,
+      "flower_hours": 8.0,
+      "tree_hours": 24.0
+    },
+    {
+      "completions_before_placement": 6,
+      "flower_hours": 6.0,
+      "tree_hours": 18.0
+    },
+    {
+      "completions_before_placement": 12,
+      "flower_hours": 6.0,
+      "tree_hours": 18.0
+    }
+  ],
+  "routes": [
+    {
+      "route_id": "flower_and_bench",
+      "name": "花1＋ベンチ（配置まで）",
+      "schedule": "daily",
+      "questions": 3,
+      "cost": 6,
+      "financed_hours": 0.0,
+      "ready_hours": 0.0,
+      "study_sessions": 1,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "flower_bed_and_bench",
+      "name": "花壇3＋ベンチ",
+      "schedule": "daily",
+      "questions": 3,
+      "cost": 10,
+      "financed_hours": 24.0,
+      "ready_hours": 24.0,
+      "study_sessions": 2,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 24.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "four_magic_materials",
+      "name": "花＋ベンチ＋灯り＋水鉢（4魔法の材料）",
+      "schedule": "daily",
+      "questions": 3,
+      "cost": 18,
+      "financed_hours": 48.0,
+      "ready_hours": 48.0,
+      "study_sessions": 3,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "lantern",
+          "at_hours": 48.0,
+          "paid": 8
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 48.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "playground_and_wind",
+      "name": "ブランコ2＋ベンチ＋かざぐるま",
+      "schedule": "daily",
+      "questions": 3,
+      "cost": 28,
+      "financed_hours": 96.0,
+      "ready_hours": 96.0,
+      "study_sessions": 5,
+      "purchases": [
+        {
+          "kind": "swing",
+          "at_hours": 0.0,
+          "paid": 6
+        },
+        {
+          "kind": "swing",
+          "at_hours": 24.0,
+          "paid": 6
+        },
+        {
+          "kind": "bench",
+          "at_hours": 48.0,
+          "paid": 4
+        },
+        {
+          "kind": "pinwheel",
+          "at_hours": 96.0,
+          "paid": 12
+        }
+      ]
+    },
+    {
+      "route_id": "grove_and_table",
+      "name": "成木3＋テーブル",
+      "schedule": "daily",
+      "questions": 3,
+      "cost": 20,
+      "financed_hours": 72.0,
+      "ready_hours": 72.0,
+      "study_sessions": 4,
+      "purchases": [
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 24.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 24.0,
+          "paid": 4
+        },
+        {
+          "kind": "picnic-table",
+          "at_hours": 72.0,
+          "paid": 8
+        }
+      ]
+    },
+    {
+      "route_id": "flower_field_and_hut",
+      "name": "花畑6＋ベンチ＋園芸小屋",
+      "schedule": "daily",
+      "questions": 3,
+      "cost": 52,
+      "financed_hours": 192.0,
+      "ready_hours": 192.0,
+      "study_sessions": 9,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 24.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 24.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 24.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 48.0,
+          "paid": 4
+        },
+        {
+          "kind": "garden-hut",
+          "at_hours": 192.0,
+          "paid": 36
+        }
+      ]
+    },
+    {
+      "route_id": "library_and_bench",
+      "name": "図書室＋ベンチ",
+      "schedule": "daily",
+      "questions": 3,
+      "cost": 76,
+      "financed_hours": 288.0,
+      "ready_hours": 288.0,
+      "study_sessions": 13,
+      "purchases": [
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "library",
+          "at_hours": 288.0,
+          "paid": 72
+        }
+      ]
+    },
+    {
+      "route_id": "mixed_twelve",
+      "name": "12品種の複合配置例＋土地2回",
+      "schedule": "daily",
+      "questions": 3,
+      "cost": 250,
+      "financed_hours": 984.0,
+      "ready_hours": 984.0,
+      "study_sessions": 42,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "flower",
+          "at_hours": 24.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 24.0,
+          "paid": 2
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 48.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 48.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 72.0,
+          "paid": 4
+        },
+        {
+          "kind": "swing",
+          "at_hours": 96.0,
+          "paid": 6
+        },
+        {
+          "kind": "swing",
+          "at_hours": 120.0,
+          "paid": 6
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 144.0,
+          "paid": 4
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 144.0,
+          "paid": 4
+        },
+        {
+          "kind": "land1",
+          "at_hours": 192.0,
+          "paid": 12
+        },
+        {
+          "kind": "lantern",
+          "at_hours": 240.0,
+          "paid": 8
+        },
+        {
+          "kind": "picnic-table",
+          "at_hours": 264.0,
+          "paid": 8
+        },
+        {
+          "kind": "pinwheel",
+          "at_hours": 312.0,
+          "paid": 12
+        },
+        {
+          "kind": "flower",
+          "at_hours": 312.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 336.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 336.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower-arch",
+          "at_hours": 384.0,
+          "paid": 12
+        },
+        {
+          "kind": "sandbox",
+          "at_hours": 456.0,
+          "paid": 18
+        },
+        {
+          "kind": "land2",
+          "at_hours": 552.0,
+          "paid": 24
+        },
+        {
+          "kind": "garden-hut",
+          "at_hours": 696.0,
+          "paid": 36
+        },
+        {
+          "kind": "library",
+          "at_hours": 984.0,
+          "paid": 72
+        }
+      ]
+    },
+    {
+      "route_id": "flower_and_bench",
+      "name": "花1＋ベンチ（配置まで）",
+      "schedule": "daily",
+      "questions": 6,
+      "cost": 6,
+      "financed_hours": 0.0,
+      "ready_hours": 0.0,
+      "study_sessions": 1,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "flower_bed_and_bench",
+      "name": "花壇3＋ベンチ",
+      "schedule": "daily",
+      "questions": 6,
+      "cost": 10,
+      "financed_hours": 0.0,
+      "ready_hours": 6.0,
+      "study_sessions": 1,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "four_magic_materials",
+      "name": "花＋ベンチ＋灯り＋水鉢（4魔法の材料）",
+      "schedule": "daily",
+      "questions": 6,
+      "cost": 18,
+      "financed_hours": 24.0,
+      "ready_hours": 24.0,
+      "study_sessions": 2,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "lantern",
+          "at_hours": 24.0,
+          "paid": 8
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 24.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "playground_and_wind",
+      "name": "ブランコ2＋ベンチ＋かざぐるま",
+      "schedule": "daily",
+      "questions": 6,
+      "cost": 28,
+      "financed_hours": 48.0,
+      "ready_hours": 48.0,
+      "study_sessions": 3,
+      "purchases": [
+        {
+          "kind": "swing",
+          "at_hours": 0.0,
+          "paid": 6
+        },
+        {
+          "kind": "swing",
+          "at_hours": 0.0,
+          "paid": 6
+        },
+        {
+          "kind": "bench",
+          "at_hours": 24.0,
+          "paid": 4
+        },
+        {
+          "kind": "pinwheel",
+          "at_hours": 48.0,
+          "paid": 12
+        }
+      ]
+    },
+    {
+      "route_id": "grove_and_table",
+      "name": "成木3＋テーブル",
+      "schedule": "daily",
+      "questions": 6,
+      "cost": 20,
+      "financed_hours": 24.0,
+      "ready_hours": 24.0,
+      "study_sessions": 2,
+      "purchases": [
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "picnic-table",
+          "at_hours": 24.0,
+          "paid": 8
+        }
+      ]
+    },
+    {
+      "route_id": "flower_field_and_hut",
+      "name": "花畑6＋ベンチ＋園芸小屋",
+      "schedule": "daily",
+      "questions": 6,
+      "cost": 52,
+      "financed_hours": 96.0,
+      "ready_hours": 96.0,
+      "study_sessions": 5,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 24.0,
+          "paid": 4
+        },
+        {
+          "kind": "garden-hut",
+          "at_hours": 96.0,
+          "paid": 36
+        }
+      ]
+    },
+    {
+      "route_id": "library_and_bench",
+      "name": "図書室＋ベンチ",
+      "schedule": "daily",
+      "questions": 6,
+      "cost": 76,
+      "financed_hours": 144.0,
+      "ready_hours": 144.0,
+      "study_sessions": 7,
+      "purchases": [
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "library",
+          "at_hours": 144.0,
+          "paid": 72
+        }
+      ]
+    },
+    {
+      "route_id": "mixed_twelve",
+      "name": "12品種の複合配置例＋土地2回",
+      "schedule": "daily",
+      "questions": 6,
+      "cost": 250,
+      "financed_hours": 480.0,
+      "ready_hours": 480.0,
+      "study_sessions": 21,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 24.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 24.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 24.0,
+          "paid": 4
+        },
+        {
+          "kind": "swing",
+          "at_hours": 48.0,
+          "paid": 6
+        },
+        {
+          "kind": "swing",
+          "at_hours": 48.0,
+          "paid": 6
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 72.0,
+          "paid": 4
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 72.0,
+          "paid": 4
+        },
+        {
+          "kind": "land1",
+          "at_hours": 96.0,
+          "paid": 12
+        },
+        {
+          "kind": "lantern",
+          "at_hours": 120.0,
+          "paid": 8
+        },
+        {
+          "kind": "picnic-table",
+          "at_hours": 120.0,
+          "paid": 8
+        },
+        {
+          "kind": "pinwheel",
+          "at_hours": 144.0,
+          "paid": 12
+        },
+        {
+          "kind": "flower",
+          "at_hours": 144.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 168.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 168.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower-arch",
+          "at_hours": 192.0,
+          "paid": 12
+        },
+        {
+          "kind": "sandbox",
+          "at_hours": 216.0,
+          "paid": 18
+        },
+        {
+          "kind": "land2",
+          "at_hours": 264.0,
+          "paid": 24
+        },
+        {
+          "kind": "garden-hut",
+          "at_hours": 336.0,
+          "paid": 36
+        },
+        {
+          "kind": "library",
+          "at_hours": 480.0,
+          "paid": 72
+        }
+      ]
+    },
+    {
+      "route_id": "flower_and_bench",
+      "name": "花1＋ベンチ（配置まで）",
+      "schedule": "daily",
+      "questions": 12,
+      "cost": 6,
+      "financed_hours": 0.0,
+      "ready_hours": 0.0,
+      "study_sessions": 1,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "flower_bed_and_bench",
+      "name": "花壇3＋ベンチ",
+      "schedule": "daily",
+      "questions": 12,
+      "cost": 10,
+      "financed_hours": 0.0,
+      "ready_hours": 6.0,
+      "study_sessions": 1,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "four_magic_materials",
+      "name": "花＋ベンチ＋灯り＋水鉢（4魔法の材料）",
+      "schedule": "daily",
+      "questions": 12,
+      "cost": 18,
+      "financed_hours": 0.0,
+      "ready_hours": 0.0,
+      "study_sessions": 1,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "lantern",
+          "at_hours": 0.0,
+          "paid": 8
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 0.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "playground_and_wind",
+      "name": "ブランコ2＋ベンチ＋かざぐるま",
+      "schedule": "daily",
+      "questions": 12,
+      "cost": 28,
+      "financed_hours": 24.0,
+      "ready_hours": 24.0,
+      "study_sessions": 2,
+      "purchases": [
+        {
+          "kind": "swing",
+          "at_hours": 0.0,
+          "paid": 6
+        },
+        {
+          "kind": "swing",
+          "at_hours": 0.0,
+          "paid": 6
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "pinwheel",
+          "at_hours": 24.0,
+          "paid": 12
+        }
+      ]
+    },
+    {
+      "route_id": "grove_and_table",
+      "name": "成木3＋テーブル",
+      "schedule": "daily",
+      "questions": 12,
+      "cost": 20,
+      "financed_hours": 0.0,
+      "ready_hours": 18.0,
+      "study_sessions": 1,
+      "purchases": [
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "picnic-table",
+          "at_hours": 0.0,
+          "paid": 8
+        }
+      ]
+    },
+    {
+      "route_id": "flower_field_and_hut",
+      "name": "花畑6＋ベンチ＋園芸小屋",
+      "schedule": "daily",
+      "questions": 12,
+      "cost": 52,
+      "financed_hours": 48.0,
+      "ready_hours": 48.0,
+      "study_sessions": 3,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "garden-hut",
+          "at_hours": 48.0,
+          "paid": 36
+        }
+      ]
+    },
+    {
+      "route_id": "library_and_bench",
+      "name": "図書室＋ベンチ",
+      "schedule": "daily",
+      "questions": 12,
+      "cost": 76,
+      "financed_hours": 72.0,
+      "ready_hours": 72.0,
+      "study_sessions": 4,
+      "purchases": [
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "library",
+          "at_hours": 72.0,
+          "paid": 72
+        }
+      ]
+    },
+    {
+      "route_id": "mixed_twelve",
+      "name": "12品種の複合配置例＋土地2回",
+      "schedule": "daily",
+      "questions": 12,
+      "cost": 250,
+      "financed_hours": 240.0,
+      "ready_hours": 240.0,
+      "study_sessions": 11,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "swing",
+          "at_hours": 24.0,
+          "paid": 6
+        },
+        {
+          "kind": "swing",
+          "at_hours": 24.0,
+          "paid": 6
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 24.0,
+          "paid": 4
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 24.0,
+          "paid": 4
+        },
+        {
+          "kind": "land1",
+          "at_hours": 48.0,
+          "paid": 12
+        },
+        {
+          "kind": "lantern",
+          "at_hours": 48.0,
+          "paid": 8
+        },
+        {
+          "kind": "picnic-table",
+          "at_hours": 48.0,
+          "paid": 8
+        },
+        {
+          "kind": "pinwheel",
+          "at_hours": 72.0,
+          "paid": 12
+        },
+        {
+          "kind": "flower",
+          "at_hours": 72.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 72.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 72.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower-arch",
+          "at_hours": 96.0,
+          "paid": 12
+        },
+        {
+          "kind": "sandbox",
+          "at_hours": 96.0,
+          "paid": 18
+        },
+        {
+          "kind": "land2",
+          "at_hours": 120.0,
+          "paid": 24
+        },
+        {
+          "kind": "garden-hut",
+          "at_hours": 168.0,
+          "paid": 36
+        },
+        {
+          "kind": "library",
+          "at_hours": 240.0,
+          "paid": 72
+        }
+      ]
+    },
+    {
+      "route_id": "flower_and_bench",
+      "name": "花1＋ベンチ（配置まで）",
+      "schedule": "mon-wed-fri",
+      "questions": 3,
+      "cost": 6,
+      "financed_hours": 0.0,
+      "ready_hours": 0.0,
+      "study_sessions": 1,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "flower_bed_and_bench",
+      "name": "花壇3＋ベンチ",
+      "schedule": "mon-wed-fri",
+      "questions": 3,
+      "cost": 10,
+      "financed_hours": 48.0,
+      "ready_hours": 48.0,
+      "study_sessions": 2,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 48.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "four_magic_materials",
+      "name": "花＋ベンチ＋灯り＋水鉢（4魔法の材料）",
+      "schedule": "mon-wed-fri",
+      "questions": 3,
+      "cost": 18,
+      "financed_hours": 96.0,
+      "ready_hours": 96.0,
+      "study_sessions": 3,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "lantern",
+          "at_hours": 96.0,
+          "paid": 8
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 96.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "playground_and_wind",
+      "name": "ブランコ2＋ベンチ＋かざぐるま",
+      "schedule": "mon-wed-fri",
+      "questions": 3,
+      "cost": 28,
+      "financed_hours": 216.0,
+      "ready_hours": 216.0,
+      "study_sessions": 5,
+      "purchases": [
+        {
+          "kind": "swing",
+          "at_hours": 0.0,
+          "paid": 6
+        },
+        {
+          "kind": "swing",
+          "at_hours": 48.0,
+          "paid": 6
+        },
+        {
+          "kind": "bench",
+          "at_hours": 96.0,
+          "paid": 4
+        },
+        {
+          "kind": "pinwheel",
+          "at_hours": 216.0,
+          "paid": 12
+        }
+      ]
+    },
+    {
+      "route_id": "grove_and_table",
+      "name": "成木3＋テーブル",
+      "schedule": "mon-wed-fri",
+      "questions": 3,
+      "cost": 20,
+      "financed_hours": 168.0,
+      "ready_hours": 168.0,
+      "study_sessions": 4,
+      "purchases": [
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 48.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 48.0,
+          "paid": 4
+        },
+        {
+          "kind": "picnic-table",
+          "at_hours": 168.0,
+          "paid": 8
+        }
+      ]
+    },
+    {
+      "route_id": "flower_field_and_hut",
+      "name": "花畑6＋ベンチ＋園芸小屋",
+      "schedule": "mon-wed-fri",
+      "questions": 3,
+      "cost": 52,
+      "financed_hours": 432.0,
+      "ready_hours": 432.0,
+      "study_sessions": 9,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 48.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 48.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 48.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 96.0,
+          "paid": 4
+        },
+        {
+          "kind": "garden-hut",
+          "at_hours": 432.0,
+          "paid": 36
+        }
+      ]
+    },
+    {
+      "route_id": "library_and_bench",
+      "name": "図書室＋ベンチ",
+      "schedule": "mon-wed-fri",
+      "questions": 3,
+      "cost": 76,
+      "financed_hours": 672.0,
+      "ready_hours": 672.0,
+      "study_sessions": 13,
+      "purchases": [
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "library",
+          "at_hours": 672.0,
+          "paid": 72
+        }
+      ]
+    },
+    {
+      "route_id": "mixed_twelve",
+      "name": "12品種の複合配置例＋土地2回",
+      "schedule": "mon-wed-fri",
+      "questions": 3,
+      "cost": 250,
+      "financed_hours": 2280.0,
+      "ready_hours": 2280.0,
+      "study_sessions": 42,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "flower",
+          "at_hours": 48.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 48.0,
+          "paid": 2
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 96.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 96.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 168.0,
+          "paid": 4
+        },
+        {
+          "kind": "swing",
+          "at_hours": 216.0,
+          "paid": 6
+        },
+        {
+          "kind": "swing",
+          "at_hours": 264.0,
+          "paid": 6
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 336.0,
+          "paid": 4
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 336.0,
+          "paid": 4
+        },
+        {
+          "kind": "land1",
+          "at_hours": 432.0,
+          "paid": 12
+        },
+        {
+          "kind": "lantern",
+          "at_hours": 552.0,
+          "paid": 8
+        },
+        {
+          "kind": "picnic-table",
+          "at_hours": 600.0,
+          "paid": 8
+        },
+        {
+          "kind": "pinwheel",
+          "at_hours": 720.0,
+          "paid": 12
+        },
+        {
+          "kind": "flower",
+          "at_hours": 720.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 768.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 768.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower-arch",
+          "at_hours": 888.0,
+          "paid": 12
+        },
+        {
+          "kind": "sandbox",
+          "at_hours": 1056.0,
+          "paid": 18
+        },
+        {
+          "kind": "land2",
+          "at_hours": 1272.0,
+          "paid": 24
+        },
+        {
+          "kind": "garden-hut",
+          "at_hours": 1608.0,
+          "paid": 36
+        },
+        {
+          "kind": "library",
+          "at_hours": 2280.0,
+          "paid": 72
+        }
+      ]
+    },
+    {
+      "route_id": "flower_and_bench",
+      "name": "花1＋ベンチ（配置まで）",
+      "schedule": "mon-wed-fri",
+      "questions": 6,
+      "cost": 6,
+      "financed_hours": 0.0,
+      "ready_hours": 0.0,
+      "study_sessions": 1,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "flower_bed_and_bench",
+      "name": "花壇3＋ベンチ",
+      "schedule": "mon-wed-fri",
+      "questions": 6,
+      "cost": 10,
+      "financed_hours": 0.0,
+      "ready_hours": 6.0,
+      "study_sessions": 1,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "four_magic_materials",
+      "name": "花＋ベンチ＋灯り＋水鉢（4魔法の材料）",
+      "schedule": "mon-wed-fri",
+      "questions": 6,
+      "cost": 18,
+      "financed_hours": 48.0,
+      "ready_hours": 48.0,
+      "study_sessions": 2,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "lantern",
+          "at_hours": 48.0,
+          "paid": 8
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 48.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "playground_and_wind",
+      "name": "ブランコ2＋ベンチ＋かざぐるま",
+      "schedule": "mon-wed-fri",
+      "questions": 6,
+      "cost": 28,
+      "financed_hours": 96.0,
+      "ready_hours": 96.0,
+      "study_sessions": 3,
+      "purchases": [
+        {
+          "kind": "swing",
+          "at_hours": 0.0,
+          "paid": 6
+        },
+        {
+          "kind": "swing",
+          "at_hours": 0.0,
+          "paid": 6
+        },
+        {
+          "kind": "bench",
+          "at_hours": 48.0,
+          "paid": 4
+        },
+        {
+          "kind": "pinwheel",
+          "at_hours": 96.0,
+          "paid": 12
+        }
+      ]
+    },
+    {
+      "route_id": "grove_and_table",
+      "name": "成木3＋テーブル",
+      "schedule": "mon-wed-fri",
+      "questions": 6,
+      "cost": 20,
+      "financed_hours": 48.0,
+      "ready_hours": 48.0,
+      "study_sessions": 2,
+      "purchases": [
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "picnic-table",
+          "at_hours": 48.0,
+          "paid": 8
+        }
+      ]
+    },
+    {
+      "route_id": "flower_field_and_hut",
+      "name": "花畑6＋ベンチ＋園芸小屋",
+      "schedule": "mon-wed-fri",
+      "questions": 6,
+      "cost": 52,
+      "financed_hours": 216.0,
+      "ready_hours": 216.0,
+      "study_sessions": 5,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 48.0,
+          "paid": 4
+        },
+        {
+          "kind": "garden-hut",
+          "at_hours": 216.0,
+          "paid": 36
+        }
+      ]
+    },
+    {
+      "route_id": "library_and_bench",
+      "name": "図書室＋ベンチ",
+      "schedule": "mon-wed-fri",
+      "questions": 6,
+      "cost": 76,
+      "financed_hours": 336.0,
+      "ready_hours": 336.0,
+      "study_sessions": 7,
+      "purchases": [
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "library",
+          "at_hours": 336.0,
+          "paid": 72
+        }
+      ]
+    },
+    {
+      "route_id": "mixed_twelve",
+      "name": "12品種の複合配置例＋土地2回",
+      "schedule": "mon-wed-fri",
+      "questions": 6,
+      "cost": 250,
+      "financed_hours": 1104.0,
+      "ready_hours": 1104.0,
+      "study_sessions": 21,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 48.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 48.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 48.0,
+          "paid": 4
+        },
+        {
+          "kind": "swing",
+          "at_hours": 96.0,
+          "paid": 6
+        },
+        {
+          "kind": "swing",
+          "at_hours": 96.0,
+          "paid": 6
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 168.0,
+          "paid": 4
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 168.0,
+          "paid": 4
+        },
+        {
+          "kind": "land1",
+          "at_hours": 216.0,
+          "paid": 12
+        },
+        {
+          "kind": "lantern",
+          "at_hours": 264.0,
+          "paid": 8
+        },
+        {
+          "kind": "picnic-table",
+          "at_hours": 264.0,
+          "paid": 8
+        },
+        {
+          "kind": "pinwheel",
+          "at_hours": 336.0,
+          "paid": 12
+        },
+        {
+          "kind": "flower",
+          "at_hours": 336.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 384.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 384.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower-arch",
+          "at_hours": 432.0,
+          "paid": 12
+        },
+        {
+          "kind": "sandbox",
+          "at_hours": 504.0,
+          "paid": 18
+        },
+        {
+          "kind": "land2",
+          "at_hours": 600.0,
+          "paid": 24
+        },
+        {
+          "kind": "garden-hut",
+          "at_hours": 768.0,
+          "paid": 36
+        },
+        {
+          "kind": "library",
+          "at_hours": 1104.0,
+          "paid": 72
+        }
+      ]
+    },
+    {
+      "route_id": "flower_and_bench",
+      "name": "花1＋ベンチ（配置まで）",
+      "schedule": "mon-wed-fri",
+      "questions": 12,
+      "cost": 6,
+      "financed_hours": 0.0,
+      "ready_hours": 0.0,
+      "study_sessions": 1,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "flower_bed_and_bench",
+      "name": "花壇3＋ベンチ",
+      "schedule": "mon-wed-fri",
+      "questions": 12,
+      "cost": 10,
+      "financed_hours": 0.0,
+      "ready_hours": 6.0,
+      "study_sessions": 1,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "four_magic_materials",
+      "name": "花＋ベンチ＋灯り＋水鉢（4魔法の材料）",
+      "schedule": "mon-wed-fri",
+      "questions": 12,
+      "cost": 18,
+      "financed_hours": 0.0,
+      "ready_hours": 0.0,
+      "study_sessions": 1,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "lantern",
+          "at_hours": 0.0,
+          "paid": 8
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 0.0,
+          "paid": 4
+        }
+      ]
+    },
+    {
+      "route_id": "playground_and_wind",
+      "name": "ブランコ2＋ベンチ＋かざぐるま",
+      "schedule": "mon-wed-fri",
+      "questions": 12,
+      "cost": 28,
+      "financed_hours": 48.0,
+      "ready_hours": 48.0,
+      "study_sessions": 2,
+      "purchases": [
+        {
+          "kind": "swing",
+          "at_hours": 0.0,
+          "paid": 6
+        },
+        {
+          "kind": "swing",
+          "at_hours": 0.0,
+          "paid": 6
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "pinwheel",
+          "at_hours": 48.0,
+          "paid": 12
+        }
+      ]
+    },
+    {
+      "route_id": "grove_and_table",
+      "name": "成木3＋テーブル",
+      "schedule": "mon-wed-fri",
+      "questions": 12,
+      "cost": 20,
+      "financed_hours": 0.0,
+      "ready_hours": 18.0,
+      "study_sessions": 1,
+      "purchases": [
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "picnic-table",
+          "at_hours": 0.0,
+          "paid": 8
+        }
+      ]
+    },
+    {
+      "route_id": "flower_field_and_hut",
+      "name": "花畑6＋ベンチ＋園芸小屋",
+      "schedule": "mon-wed-fri",
+      "questions": 12,
+      "cost": 52,
+      "financed_hours": 96.0,
+      "ready_hours": 96.0,
+      "study_sessions": 3,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "garden-hut",
+          "at_hours": 96.0,
+          "paid": 36
+        }
+      ]
+    },
+    {
+      "route_id": "library_and_bench",
+      "name": "図書室＋ベンチ",
+      "schedule": "mon-wed-fri",
+      "questions": 12,
+      "cost": 76,
+      "financed_hours": 168.0,
+      "ready_hours": 168.0,
+      "study_sessions": 4,
+      "purchases": [
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "library",
+          "at_hours": 168.0,
+          "paid": 72
+        }
+      ]
+    },
+    {
+      "route_id": "mixed_twelve",
+      "name": "12品種の複合配置例＋土地2回",
+      "schedule": "mon-wed-fri",
+      "questions": 12,
+      "cost": 250,
+      "financed_hours": 552.0,
+      "ready_hours": 552.0,
+      "study_sessions": 11,
+      "purchases": [
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "bench",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 0.0,
+          "paid": 2
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "sapling",
+          "at_hours": 0.0,
+          "paid": 4
+        },
+        {
+          "kind": "swing",
+          "at_hours": 48.0,
+          "paid": 6
+        },
+        {
+          "kind": "swing",
+          "at_hours": 48.0,
+          "paid": 6
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 48.0,
+          "paid": 4
+        },
+        {
+          "kind": "water-bowl",
+          "at_hours": 48.0,
+          "paid": 4
+        },
+        {
+          "kind": "land1",
+          "at_hours": 96.0,
+          "paid": 12
+        },
+        {
+          "kind": "lantern",
+          "at_hours": 96.0,
+          "paid": 8
+        },
+        {
+          "kind": "picnic-table",
+          "at_hours": 96.0,
+          "paid": 8
+        },
+        {
+          "kind": "pinwheel",
+          "at_hours": 168.0,
+          "paid": 12
+        },
+        {
+          "kind": "flower",
+          "at_hours": 168.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 168.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower",
+          "at_hours": 168.0,
+          "paid": 2
+        },
+        {
+          "kind": "flower-arch",
+          "at_hours": 216.0,
+          "paid": 12
+        },
+        {
+          "kind": "sandbox",
+          "at_hours": 216.0,
+          "paid": 18
+        },
+        {
+          "kind": "land2",
+          "at_hours": 264.0,
+          "paid": 24
+        },
+        {
+          "kind": "garden-hut",
+          "at_hours": 384.0,
+          "paid": 36
+        },
+        {
+          "kind": "library",
+          "at_hours": 552.0,
+          "paid": 72
+        }
+      ]
+    }
+  ],
+  "layouts": {
+    "garden": {
+      "size": [
+        6,
+        5
+      ],
+      "item_count": 8,
+      "occupied_cells": 14,
+      "passable_occupied_cells": 0,
+      "valid": true,
+      "items": [
+        {
+          "kind": "flower",
+          "x": 3,
+          "z": 1,
+          "access": null
+        },
+        {
+          "kind": "flower",
+          "x": 3,
+          "z": 2,
+          "access": null
+        },
+        {
+          "kind": "flower",
+          "x": 4,
+          "z": 1,
+          "access": null
+        },
+        {
+          "kind": "flower",
+          "x": 4,
+          "z": 2,
+          "access": null
+        },
+        {
+          "kind": "flower",
+          "x": 5,
+          "z": 1,
+          "access": null
+        },
+        {
+          "kind": "flower",
+          "x": 5,
+          "z": 2,
+          "access": null
+        },
+        {
+          "kind": "bench",
+          "x": 3,
+          "z": 4,
+          "access": [
+            [
+              3,
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "garden-hut",
+          "x": 0,
+          "z": 3,
+          "access": [
+            [
+              2,
+              3
+            ]
+          ]
+        }
+      ]
+    },
+    "grove": {
+      "size": [
+        6,
+        5
+      ],
+      "item_count": 4,
+      "occupied_cells": 7,
+      "passable_occupied_cells": 0,
+      "valid": true,
+      "items": [
+        {
+          "kind": "sapling",
+          "x": 3,
+          "z": 1,
+          "access": null
+        },
+        {
+          "kind": "sapling",
+          "x": 4,
+          "z": 1,
+          "access": null
+        },
+        {
+          "kind": "sapling",
+          "x": 4,
+          "z": 2,
+          "access": null
+        },
+        {
+          "kind": "picnic-table",
+          "x": 2,
+          "z": 3,
+          "access": [
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              4
+            ]
+          ]
+        }
+      ]
+    },
+    "play": {
+      "size": [
+        6,
+        5
+      ],
+      "item_count": 4,
+      "occupied_cells": 7,
+      "passable_occupied_cells": 0,
+      "valid": true,
+      "items": [
+        {
+          "kind": "swing",
+          "x": 3,
+          "z": 2,
+          "access": [
+            [
+              3,
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "swing",
+          "x": 4,
+          "z": 2,
+          "access": [
+            [
+              4,
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "bench",
+          "x": 4,
+          "z": 4,
+          "access": [
+            [
+              4,
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "pinwheel",
+          "x": 5,
+          "z": 1,
+          "access": null
+        }
+      ]
+    },
+    "mixed": {
+      "size": [
+        12,
+        5
+      ],
+      "item_count": 21,
+      "occupied_cells": 30,
+      "passable_occupied_cells": 1,
+      "valid": true,
+      "items": [
+        {
+          "kind": "flower",
+          "x": 3,
+          "z": 1,
+          "access": null
+        },
+        {
+          "kind": "flower",
+          "x": 3,
+          "z": 2,
+          "access": null
+        },
+        {
+          "kind": "flower",
+          "x": 4,
+          "z": 1,
+          "access": null
+        },
+        {
+          "kind": "flower",
+          "x": 4,
+          "z": 2,
+          "access": null
+        },
+        {
+          "kind": "flower",
+          "x": 5,
+          "z": 1,
+          "access": null
+        },
+        {
+          "kind": "flower",
+          "x": 5,
+          "z": 2,
+          "access": null
+        },
+        {
+          "kind": "sapling",
+          "x": 8,
+          "z": 1,
+          "access": null
+        },
+        {
+          "kind": "sapling",
+          "x": 9,
+          "z": 1,
+          "access": null
+        },
+        {
+          "kind": "sapling",
+          "x": 8,
+          "z": 2,
+          "access": null
+        },
+        {
+          "kind": "swing",
+          "x": 3,
+          "z": 4,
+          "access": [
+            [
+              3,
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "swing",
+          "x": 4,
+          "z": 4,
+          "access": [
+            [
+              4,
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "water-bowl",
+          "x": 11,
+          "z": 3,
+          "access": null
+        },
+        {
+          "kind": "water-bowl",
+          "x": 11,
+          "z": 4,
+          "access": null
+        },
+        {
+          "kind": "bench",
+          "x": 2,
+          "z": 2,
+          "access": [
+            [
+              2,
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "library",
+          "x": 0,
+          "z": 3,
+          "access": [
+            [
+              2,
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "garden-hut",
+          "x": 10,
+          "z": 0,
+          "access": [
+            [
+              10,
+              2
+            ]
+          ]
+        },
+        {
+          "kind": "picnic-table",
+          "x": 8,
+          "z": 4,
+          "access": [
+            [
+              8,
+              3
+            ],
+            [
+              9,
+              4
+            ]
+          ]
+        },
+        {
+          "kind": "lantern",
+          "x": 6,
+          "z": 4,
+          "access": null
+        },
+        {
+          "kind": "pinwheel",
+          "x": 7,
+          "z": 4,
+          "access": null
+        },
+        {
+          "kind": "flower-arch",
+          "x": 1,
+          "z": 2,
+          "access": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "kind": "sandbox",
+          "x": 10,
+          "z": 3,
+          "access": [
+            [
+              10,
+              2
+            ],
+            [
+              10,
+              4
+            ]
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { batch, ellipsoid } from '../three/primitives';
 import type { Cell, LifeState } from '../../../domain/islandLife/model';
 import { createIslandGrassSurface } from '../three/grassSurface';
 import { cellKey, districts, isHouse } from '../../../domain/islandLife/space';
+import { plantGatherings } from '../../../domain/islandLife/discovery';
 
 /** The playable rectangle stays level. Irregularity belongs outside its cells. */
 export function coastShape(width: number, depth: number) {
@@ -108,6 +109,30 @@ export function buildLandscape(state: LifeState, width: number, point: (c: Cell)
         }
     }
     batch(beds);
+
+    // Young plants already change the ground. Keep their low soil edge distinct
+    // from a mature bed, and never draw two surfaces over the same mature cell.
+    const young = new T.Group(); young.name = 'life-young-plant-ground'; root.add(young);
+    const matureCells = new Set(districts(state).filter(d => d.kind === 'flowers').flatMap(d => d.cells.map(cellKey)));
+    const soilPiece = (x: number, z: number, w: number, d: number, edge: boolean) => {
+        const mesh = new T.Mesh(new T.BoxGeometry(w, edge ? .022 : .012, d), paint(edge ? '#b29a72' : '#c4ad85'));
+        mesh.position.set(x, edge ? .063 : .055, z); mesh.receiveShadow = true; young.add(mesh);
+    };
+    for (const group of plantGatherings(state)) {
+        const connected = new Set(group.map(item => cellKey(item.cell!)));
+        for (const item of group) {
+            const c = item.cell!; if (matureCells.has(cellKey(c))) continue;
+            const p = point(c); soilPiece(p.x, p.z, .94, .94, false);
+            for (const [dx, dz] of [[1, 0], [0, 1]]) {
+                const neighbor = cellKey({ x: c.x + dx, z: c.z + dz });
+                if (connected.has(neighbor) && !matureCells.has(neighbor)) soilPiece(p.x + dx * .5, p.z + dz * .5, dx ? .06 : .94, dz ? .06 : .94, false);
+            }
+            for (const [dx, dz] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+                if (!connected.has(cellKey({ x: c.x + dx, z: c.z + dz }))) soilPiece(p.x + dx * .46, p.z + dz * .46, dx ? .035 : .94, dz ? .035 : .94, true);
+            }
+        }
+    }
+    batch(young);
 
     // Flat stepping stones borrow the old garden's path without reserving cells.
     // An owned item always wins over decoration, including after a move/reload.

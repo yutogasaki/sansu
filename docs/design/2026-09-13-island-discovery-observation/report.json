@@ -1,0 +1,34 @@
+{
+  "startHash": "62a394294056e94c4003128c7010db0b9dcc9f336faaa321cccf4f6b146c8743",
+  "revision": "7a159d677ffa27db2ff031b8472cb8495c049fcb",
+  "candidate": "island-life-discovery-a-observation-v1",
+  "target": "http://127.0.0.1:5223",
+  "flag": "VITE_ISLAND_LIFE_PREVIEW=true; DEV",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "phone",
+      "pass": true,
+      "actualProblems": 3,
+      "reducedMotion": false,
+      "saved": 1,
+      "bloomSource": "explicit DEV 24h clock",
+      "contextLoss": true,
+      "repeatedTaps": 6,
+      "errors": []
+    },
+    {
+      "name": "tablet",
+      "pass": true,
+      "actualProblems": 3,
+      "reducedMotion": true,
+      "saved": 1,
+      "bloomSource": "explicit DEV 24h clock",
+      "contextLoss": true,
+      "repeatedTaps": 6,
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "62a394294056e94c4003128c7010db0b9dcc9f336faaa321cccf4f6b146c8743"
+}

@@ -1,10 +1,17 @@
+import type { RuleEligibility } from '../../../domain/islandLife/discovery';
+import { useLiveDiscovery } from './useLiveDiscovery';
+import { placementUndo } from '../../../domain/islandLife/placementUndo';
+import { observationVisit } from '../../../domain/islandLife/observationVisit';
+import { removalRefund } from '../../../domain/islandLife/purchases';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Sparkles, Sprout, Home, Move, Archive, Trash2, Check, X } from 'lucide-react';
+import { Sparkles, Sprout, Home, Move, Archive, Trash2, Check, X, Undo2 } from 'lucide-react';
 import { CATALOG, LIFE_CANDIDATE, LIFE_RULES, learningDay, type Cell, type ItemKind, type LifeCommand } from '../../../domain/islandLife/model';
 import { cellKey, districts, isHouse, landCells } from '../../../domain/islandLife/space';
 import { replayLife } from '../../../domain/islandLife/simulation';
 import type { useIslandLife } from './useIslandLife';
 import LifeWorld from './LifeWorld';
+import LifeObservation from './LifeObservation';
+import LifeMemories from './LifeMemories';
 import LifeProductPreview from './LifeProductPreview';
 import LifeResidentsSummary from './LifeResidentsSummary';
 import LifeResidentPortrait from './LifeResidentPortrait';
@@ -41,7 +48,12 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     controls: ReturnType<typeof useIslandLife>; onHome: () => void; disabled: boolean; islandName: string;
 }) {
     const { record, error, busy, refresh } = controls;
+    const liveDiscovery = useLiveDiscovery(record?.profileId);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [observed, setObserved] = useState<string>();
+    const [gathering, setGathering] = useState<{ ruleId: RuleEligibility['ruleId']; participantIds: string[] }>();
+    const [memoriesOpen, setMemoriesOpen] = useState(false);
+    const observationOrigin = useRef<string | undefined>(undefined);
     const [dockOpen, setDockOpen] = useState(false);
     const [page, setPage] = useState(0), [cellPage, setCellPage] = useState(0);
     const [gridOpen, setGridOpen] = useState(false);
@@ -55,6 +67,13 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const lastObservedGrowth = useRef<Record<string, number> | undefined>(undefined);
     const lastObservedObservation = useRef<Record<string, string> | undefined>(undefined);
     const state = useMemo(() => record ? replayLife(record) : undefined, [record]);
+    useEffect(() => {
+        if (!observed) { setGathering(undefined); observationOrigin.current = undefined; return; }
+        const target = state?.items.find(i => i.id === observed && i.cell);
+        const origin = target ? JSON.stringify([record?.profileId, target.id, target.cell]) : undefined;
+        if (!origin || observationOrigin.current && observationOrigin.current !== origin) setObserved(undefined);
+        else observationOrigin.current = origin;
+    }, [observed, state, record?.profileId]);
     const [elapsed, setElapsed] = useState(0);
     const [earnedDrops, setEarnedDrops] = useState<number>();
     const [earnedLight, setEarnedLight] = useState<number>();
@@ -69,6 +88,8 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const [kind, setKind] = useState<ItemKind>(), [selected, setSelected] = useState<string>();
     const [cell, setCell] = useState<Cell>(), [moving, setMoving] = useState(false), [removing, setRemoving] = useState(false);
     const [notice, setNotice] = useState('');
+    const [undo, setUndo] = useState<{ profileId: string; actionId: string }>();
+    const undoCommand = record && undo?.profileId === record.profileId ? placementUndo(record, undo.actionId) : undefined;
     useEffect(() => {
         if (!notice) return;
         const timer = window.setTimeout(() => setNotice(''), 7000);
@@ -80,7 +101,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const showWorld = () => { setMenuOpen(false); setDockOpen(false); setGridOpen(false); };
     useEffect(() => {
         if (!menuOpen && !dockOpen) {
-            if (previousPanel.current) (previousPanel.current === 'menu' ? buildTrigger : informationTrigger).current?.focus();
+            if (previousPanel.current && !observed && !memoriesOpen) (previousPanel.current === 'menu' ? buildTrigger : informationTrigger).current?.focus();
             previousPanel.current = undefined;
             return;
         }
@@ -91,7 +112,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         };
         window.addEventListener('keydown', close);
         return () => window.removeEventListener('keydown', close);
-    }, [menuOpen, dockOpen]);
+    }, [menuOpen, dockOpen, observed, memoriesOpen]);
     useEffect(() => {
         if (!record) return;
         const current = replayLife(record);
@@ -147,18 +168,20 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         <button className="island-secondary" onClick={() => void refresh()}>もういちど</button></section>;
     const locked = disabled || busy;
     const places = districts(state);
-    const doAction = async (command: LifeCommand, message: string) => {
+    const doAction = async (command: LifeCommand, message: string, undoOf?: string) => {
         if (locked || actionRunning.current) return;
         setNotice('');
         const id = crypto.randomUUID();
         const complete = () => {
+            if (undoOf) setUndo(undefined);
+            else if (['buy', 'move', 'store'].includes(command.type)) setUndo({ profileId: record.profileId, actionId: id });
             setNotice(message); setKind(undefined); setCell(undefined); setMoving(false); setRemoving(false);
             if (command.type === 'buy') { setSelected(id); setTab('items'); }
             if (command.type === 'buy' || command.type === 'move') showWorld();
             if (command.type === 'remove') setSelected(undefined);
         };
         actionRunning.current = true; retryCompletion.current = complete;
-        try { if (await refresh({ id, revision: record.revision, command })) { complete(); retryCompletion.current = undefined; } }
+        try { if (await refresh({ id, revision: record.revision, command, undoOf })) { complete(); retryCompletion.current = undefined; } }
         finally { actionRunning.current = false; }
     };
     const retryAction = async () => {
@@ -168,13 +191,14 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         finally { actionRunning.current = false; }
     };
     const chooseCell = (next: Cell) => {
-        if (locked) return;
+        if (locked || observed || memoriesOpen) return;
         if (kind || moving) { setCell(next); return; }
         const found = state.items.find(i => i.cell && cellKey(i.cell) === cellKey(next));
         if (found) { setSelected(found.id); setTab('items'); setDockOpen(false); setMenuOpen(true); setRemoving(false); }
         else if (isHouse(next)) onHome();
     };
     const resetPanelForTab = (next: typeof tab) => {
+        setObserved(undefined); setMemoriesOpen(false);
         setEarnedDrops(undefined); setEarnedLight(undefined); setGrownItems([]); setObservationCues([]);
         setNotice(''); setPage(0); if (next !== 'style') setSelected(undefined); setTab(next);
         setKind(undefined); setCell(undefined); setMoving(false); setRemoving(false);
@@ -186,7 +210,12 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const openMenuTab = (next: typeof tab) => {
         resetPanelForTab(next); setMenuOpen(true); setDockOpen(false);
     };
+    const tryObservation = (itemId: string) => {
+        if (!locked && observationVisit(state, itemId).kind === 'ready') void refresh({ id: crypto.randomUUID(), revision: record.revision, command: { type: 'observe', itemId } });
+    };
+    const openMemories = () => { showWorld(); setObserved(undefined); setMemoriesOpen(true); };
     const openLifeControls = () => {
+        setObserved(undefined); setMemoriesOpen(false);
         if (error) { setMenuOpen(true); setDockOpen(false); return; }
         setDockOpen(true);
     };
@@ -197,10 +226,10 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const pager = <div className="life-pager"><button aria-label="まえの ページ" disabled={currentPage === 0} onClick={() => setPage(currentPage - 1)}>←</button><span>{currentPage + 1} / {pageCount}</span><button aria-label="つぎの ページ" disabled={currentPage + 1 === pageCount} onClick={() => setPage(currentPage + 1)}>→</button></div>;
     const goal = Math.min(LIFE_RULES.dailyGoal, state.days[learningDay(state.now)] ?? 0);
     const notificationTab = grownItems.length || observationCues.length ? 'items' : earnedDrops !== undefined ? 'build' : 'style';
-    return <section className="island-life" data-life-candidate={LIFE_CANDIDATE} data-life-destination={state.target} data-life-revision={record.revision} data-life-drops={state.drops} data-life-light={state.light} data-life-items={state.items.length} data-life-districts={places.map(p => p.label).join(',')} data-life-panel-open={menuOpen || dockOpen || Boolean(placement) ? 'true' : undefined}>
+    return <section className="island-life" data-life-candidate={LIFE_CANDIDATE} data-life-destination={state.target} data-life-revision={record.revision} data-life-drops={state.drops} data-life-light={state.light} data-life-items={state.items.length} data-life-districts={places.map(p => p.label).join(',')} data-life-panel-open={menuOpen || dockOpen || observed || memoriesOpen || Boolean(placement) ? 'true' : undefined}>
         <div className="life-hud" data-life-hud="life-world-first-v1">
         <LifeResources state={state} />
-        {!menuOpen && !dockOpen && !placement && (earnedDrops !== undefined || earnedLight !== undefined || grownItems.length > 0 || observationCues.length > 0) && <button className="life-earned" data-life-earned={earnedDrops} data-life-light-earned={earnedLight}
+        {!menuOpen && !dockOpen && !placement && !observed && !memoriesOpen && (earnedDrops !== undefined || earnedLight !== undefined || grownItems.length > 0 || observationCues.length > 0) && <button className="life-earned" data-life-earned={earnedDrops} data-life-light-earned={earnedLight}
             data-life-growth-earned={grownItems.map(item => item.id).join(',') || undefined} data-life-observation-earned={observationCues.map(item => item.id).join(',') || undefined} aria-live="polite"
             onClick={() => switchTab(notificationTab)}>
             <span className="life-earned-message">{grownItems.length ? <>おはなが <strong>{grownItems[0].message}</strong></>
@@ -211,7 +240,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         </button>}
         </div>
         <div className="life-viewport">
-        <LifeWorld state={state} selected={selected} cell={cell} placement={placement} onCell={chooseCell} controlsVisible={!menuOpen && !dockOpen}>
+        <LifeWorld profileId={record.profileId} presented={liveDiscovery.presented} state={state} selected={selected} cell={cell} placement={placement} onCell={chooseCell} controlsVisible={!menuOpen && !dockOpen && !observed && !memoriesOpen}>
             <button ref={buildTrigger} className="life-home-action life-build-action" type="button" disabled={locked} onClick={() => openMenuTab('build')}>
                 <LifeProductPreview kind="flower" growth={LIFE_RULES.bloomHours} /><span>つくる</span>
             </button>
@@ -219,6 +248,14 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
                 <LifeResidentPortrait resident="pokomoko" style={state.heroStyle} /><span>ようす</span>
             </button>
         </LifeWorld>
+        {observed && !placement && !menuOpen && !dockOpen && (() => {
+            const target = state.items.find(i => i.id === observed && i.cell && (gathering || i.kind === 'flower' || i.kind === 'bench'));
+            return target ? <LifeObservation key={`${record.profileId}:${target.id}:${target.cell!.x}:${target.cell!.z}:${target.style}`}
+                record={record} state={state} item={target} gathering={gathering} close={() => setObserved(undefined)} memories={openMemories} tryVisit={() => tryObservation(target.id)} /> : null;
+        })()}
+        {memoriesOpen && <LifeMemories key={record.profileId} profileId={record.profileId} state={state} close={() => setMemoriesOpen(false)}
+            observe={id => { setGathering(undefined); setMemoriesOpen(false); setObserved(id); tryObservation(id); }}
+            observeGathering={group => { setGathering(group); setMemoriesOpen(false); setObserved(group.participantIds[0]); }} />}
         {placement && <div className="life-placement life-controls" data-life-placement-valid={placement.valid} data-life-placement-cell={cell && cellKey(cell)}>
             <h3>{CATALOG[placement.item.kind].label}を {moving ? 'うごかす' : 'おく'}</h3>
             <p role="status">{cell && (placement.valid ? <Check size={18} /> : <X size={18} />)}{placement.reason}</p>
@@ -231,6 +268,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         {menuOpen && !placement && <div ref={menuRef} tabIndex={-1} className="life-controls life-menu" role="dialog" aria-modal="false" aria-label="しまの メニュー">
             <div className="life-menu-heading"><div className="life-menu-title">{(() => { const Icon = tabOptions.find(([id]) => id === tab)?.[2] ?? Sprout; return <Icon size={17} aria-hidden="true" />; })()}<b>{{ build: 'つくる', items: 'もちもの', style: 'いろ', land: 'ひろげる' }[tab]}</b></div>{tab === 'items' && !item && pageCount > 1 && pager}<button aria-label="メニューを とじる" onClick={() => setMenuOpen(false)}><X size={18} /></button></div>
             <div className="life-menu-body">
+            {undoCommand && <button type="button" data-life-undo disabled={locked || Boolean(error)} onClick={() => void doAction(undoCommand, undoCommand.type === 'store' ? 'しまってある ところに もどしたよ。' : 'まえの ばしょに もどしたよ。', undo!.actionId)}><Undo2 size={16} />もどす</button>}
             <div className="life-menu-tabs" role="group" aria-label="しまの ていれ">{tabOptions.map(([id, name, Icon]) =>
                 <button key={id} type="button" aria-pressed={tab === id} onClick={() => openMenuTab(id)}><Icon size={15} /><span>{name}</span></button>)}</div>
             {error && <div className="life-error" role="alert"><p>{error}</p><button onClick={() => void retryAction()} disabled={locked}>もういちど</button><button onClick={() => { retryCompletion.current = undefined; controls.clearError(); }} disabled={locked}>よみなおす</button></div>}
@@ -250,12 +288,13 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
                     <LifeProductPreview kind={item.kind} growth={item.growth} style={item.style} />
                     {(() => { const growth = lifeGrowthStatus(item); return <div className="life-item-growth-detail" data-life-growth-stage={growth.stage}><div>{item.kind === 'flower' && <GrowthDots status={growth} />}<strong>{item.cell ? growth.label : 'しまってある'}</strong></div>
                         <small>{item.kind !== 'flower' ? (item.cell ? 'しまに おいてあるよ' : 'また しまに おけるよ') : !item.cell ? 'おくと また そだつよ' : growth.nextLabel ? `あと ${growth.remainingHours}じかんで ${growth.nextLabel}` : 'いちばん おおきく そだったよ'}</small></div>; })()}
+                    {(item.kind === 'flower' || item.kind === 'bench') && item.cell && <button hidden={removing} disabled={locked} onClick={() => { showWorld(); setObserved(item.id); if (item.kind === 'bench') tryObservation(item.id); }}>みてみる</button>}
                     <button hidden={removing} disabled={locked || !item.cell || item.kind === 'lantern'} onClick={() => void doAction({ type: 'visit', itemId: item.id }, 'ぽこもこの いきさきを きめたよ。だれか くるかな？')}>ぽこもこを よぶ</button>
                     <button hidden={removing} disabled={locked} onClick={() => { setMoving(true); setCell(undefined); setRemoving(false); setNotice(''); showWorld(); }}><Move size={16} />{item.cell ? 'うごかす' : 'おく'}</button>
                     <button hidden={removing} disabled={locked || !item.cell} onClick={() => void doAction({ type: 'store', itemId: item.id }, 'そだったまま しまったよ。')}><Archive size={16} />しまう</button>
                     {item.kind !== 'lantern' && <button hidden={removing} disabled={locked} onClick={() => openMenuTab('style')}><Sparkles size={16} />いろを かえる</button>}
                     <button className="life-remove-action" hidden={removing} disabled={locked} onClick={() => setRemoving(true)}><Trash2 size={16} />とりのぞく</button>
-                    {removing && <div className="life-confirm"><p>とりのぞくと、しずく {Math.floor(CATALOG[item.kind].price / 2)} が もどるよ。この ものの そだちは もどせないよ。</p>
+                    {removing && <div className="life-confirm"><p>とりのぞくと、しずく {removalRefund(item)} が もどるよ。この ものの そだちは もどせないよ。</p>
                         <button disabled={locked} onClick={() => void doAction({ type: 'remove', itemId: item.id }, 'しずくが もどったよ。')}>とりのぞくと きめる</button><button disabled={locked} onClick={() => setRemoving(false)}>やめる</button></div>}
                 </div>}
             </>}
@@ -270,6 +309,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             <div className="life-caption-actions"><button className="island-text-button" onClick={onHome} disabled={locked}><Home size={17} />いえへ</button><button className="life-dock-close" type="button" aria-label="しまの ようすを とじる" onClick={() => setDockOpen(false)}><X size={17} /></button></div></div>
         <div className="life-information-body">
             <LifeResidentsSummary state={state} now={state.now + elapsed} />
+            <button type="button" className="life-memory-entry" onClick={openMemories}>しまの おもいで</button>
             <details className="life-island-notes">
                 <summary>そだちと しずく・ひかり<span aria-hidden="true">＋</span></summary>
                 <p className="life-island-name">{islandName}</p>
@@ -281,6 +321,8 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         </div>
         }
         {!dockOpen && !menuOpen && !placement && <div className="life-dock-closed">
+            {undoCommand && !observed && !memoriesOpen && <button type="button" className="island-secondary" data-life-undo disabled={locked || Boolean(error)} onClick={() => void doAction(undoCommand, undoCommand.type === 'store' ? 'しまってある ところに もどしたよ。' : 'まえの ばしょに もどしたよ。', undo!.actionId)}><Undo2 size={16} />もどす</button>}
+            {liveDiscovery.error && !observed && !memoriesOpen && <p className="life-dock-closed-notice" role="alert">{liveDiscovery.error}<button type="button" onClick={() => void liveDiscovery.retry()}>もういちど</button></p>}
             {(error || notice) && <p className="life-dock-closed-notice" role="status">{error || notice}{error && <button type="button" onClick={() => openMenuTab(tab)}>ひらく</button>}</p>}
         </div>}
         {import.meta.env.DEV && <details className="life-dev"><summary>試作</summary><p>独立した試作の島です。通常の学習記録・旧島の所有物は変更しません。家の中は既存画面です。時間送りはこの島だけに作用します。</p>

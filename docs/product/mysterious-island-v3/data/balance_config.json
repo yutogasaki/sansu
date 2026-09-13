@@ -1,0 +1,101 @@
+{
+  "version": "discovery-v3.0-rc1",
+  "date": "2026-09-13",
+  "status": "proposal",
+  "learning": {
+    "drops_per_terminal": 2,
+    "weighting_enabled": false,
+    "daily_currency_cap": null,
+    "progress_P_enabled": false,
+    "eligible_outcomes": [
+      "correct",
+      "assisted-correct",
+      "supported-completion"
+    ]
+  },
+  "growth": {
+    "base_rate": 0.5,
+    "boost_max": 0.5,
+    "full_boost_completions": 6,
+    "lookback_hours": 24,
+    "flower_bud_hours": 2,
+    "flower_bloom_hours": 6,
+    "tree_young_hours": 6,
+    "tree_mature_hours": 18
+  },
+  "land": {
+    "initial": [
+      6,
+      5
+    ],
+    "house_cells": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "entry": [
+      1,
+      1
+    ],
+    "expansion_prices": [
+      12,
+      24,
+      48
+    ],
+    "expansion_sizes": [
+      [
+        9,
+        5
+      ],
+      [
+        12,
+        5
+      ],
+      [
+        12,
+        8
+      ]
+    ],
+    "ownership_limit": 120,
+    "placement_limit": 60
+  },
+  "economy": {
+    "new_district_gifts": 0,
+    "refund_fraction": 0.5,
+    "legacy_style_cost": 4,
+    "legacy_styles": 2
+  },
+  "experience": {
+    "rare_mode": "deterministic-context-no-lottery",
+    "magic_progress_gate": false,
+    "ordinary_relation_max_path_steps": 4,
+    "initial_magic_count": 4,
+    "initial_rare_count": 3,
+    "one_focal_event": true,
+    "manual_story_slots": 12,
+    "automatic_story_slots": 20
+  },
+  "simulation": {
+    "days": 30,
+    "per_day_cases": [
+      3,
+      6,
+      12,
+      24
+    ],
+    "schedules": [
+      "daily",
+      "mon-wed-fri"
+    ],
+    "financial_and_growth_only": true
+  }
+}

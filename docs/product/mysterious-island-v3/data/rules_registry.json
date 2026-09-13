@@ -1,0 +1,475 @@
+{
+  "status": "authoring-register-not-production-runtime",
+  "rules": [
+    {
+      "id": "G0",
+      "version": 1,
+      "kind": "precursor",
+      "item_kinds": [
+        "flower",
+        "sapling"
+      ],
+      "condition": {
+        "same_family_component_min": 3,
+        "mature_required": false
+      },
+      "effect": "connected-low-soil",
+      "phase": "A-for-flowers-B-for-trees",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": null
+    },
+    {
+      "id": "GF3",
+      "version": 1,
+      "kind": "group",
+      "item_kinds": [
+        "flower"
+      ],
+      "condition": {
+        "family": "flower",
+        "component_min": 3,
+        "mature_required": true,
+        "adjacency": "four-neighbor"
+      },
+      "effect": "district-ground-and-activity-target",
+      "phase": "A",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": null
+    },
+    {
+      "id": "GF6",
+      "version": 1,
+      "kind": "group",
+      "item_kinds": [
+        "flower"
+      ],
+      "condition": {
+        "family": "flower",
+        "component_min": 6,
+        "mature_required": true,
+        "adjacency": "four-neighbor",
+        "min_bounding_width": 3,
+        "min_bounding_depth": 2
+      },
+      "effect": "district-ground-and-activity-target",
+      "phase": "A",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": null
+    },
+    {
+      "id": "GT3",
+      "version": 1,
+      "kind": "group",
+      "item_kinds": [
+        "sapling"
+      ],
+      "condition": {
+        "family": "tree",
+        "component_min": 3,
+        "mature_required": true,
+        "adjacency": "four-neighbor"
+      },
+      "effect": "district-ground-and-activity-target",
+      "phase": "B",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": null
+    },
+    {
+      "id": "GT6",
+      "version": 1,
+      "kind": "group",
+      "item_kinds": [
+        "sapling"
+      ],
+      "condition": {
+        "family": "tree",
+        "component_min": 6,
+        "mature_required": true,
+        "adjacency": "four-neighbor",
+        "min_bounding_width": 3,
+        "min_bounding_depth": 2
+      },
+      "effect": "district-ground-and-activity-target",
+      "phase": "B",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": null
+    },
+    {
+      "id": "GP2",
+      "version": 1,
+      "kind": "group",
+      "item_kinds": [
+        "swing",
+        "sandbox"
+      ],
+      "condition": {
+        "family": "play",
+        "component_min": 2,
+        "mature_required": false,
+        "adjacency": "four-neighbor"
+      },
+      "effect": "district-ground-and-activity-target",
+      "phase": "A",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": null
+    },
+    {
+      "id": "GP3",
+      "version": 1,
+      "kind": "group",
+      "item_kinds": [
+        "swing",
+        "sandbox"
+      ],
+      "condition": {
+        "family": "play",
+        "component_min": 3,
+        "mature_required": false,
+        "adjacency": "four-neighbor"
+      },
+      "effect": "district-ground-and-activity-target",
+      "phase": "A",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": null
+    },
+    {
+      "id": "GW2",
+      "version": 1,
+      "kind": "group",
+      "item_kinds": [
+        "water-bowl"
+      ],
+      "condition": {
+        "family": "water",
+        "component_min": 2,
+        "mature_required": false,
+        "adjacency": "four-neighbor"
+      },
+      "effect": "district-ground-and-activity-target",
+      "phase": "B",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": null
+    },
+    {
+      "id": "R1",
+      "version": 1,
+      "kind": "relation",
+      "item_kinds": [
+        "flower",
+        "bench"
+      ],
+      "condition": {
+        "max_access_path_steps": 4,
+        "tree_mature_required": false,
+        "requires_current_reservations": true,
+        "selectors_defined_in": "02_DISCOVERY_RULES.md"
+      },
+      "effect": "face-plant",
+      "phase": "A",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": null
+    },
+    {
+      "id": "R2",
+      "version": 1,
+      "kind": "relation",
+      "item_kinds": [
+        "sapling",
+        "picnic-table"
+      ],
+      "condition": {
+        "max_access_path_steps": 4,
+        "tree_mature_required": true,
+        "requires_current_reservations": true,
+        "selectors_defined_in": "02_DISCOVERY_RULES.md"
+      },
+      "effect": "snack-facing-shade",
+      "phase": "B",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": null
+    },
+    {
+      "id": "R3",
+      "version": 1,
+      "kind": "relation",
+      "item_kinds": [
+        "swing",
+        "sandbox",
+        "bench"
+      ],
+      "condition": {
+        "max_access_path_steps": 4,
+        "tree_mature_required": false,
+        "requires_current_reservations": true,
+        "selectors_defined_in": "02_DISCOVERY_RULES.md"
+      },
+      "effect": "rest-facing-play",
+      "phase": "A",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": null
+    },
+    {
+      "id": "R4",
+      "version": 1,
+      "kind": "relation",
+      "item_kinds": [
+        "water-bowl",
+        "bench"
+      ],
+      "condition": {
+        "max_access_path_steps": 4,
+        "tree_mature_required": false,
+        "requires_current_reservations": true,
+        "selectors_defined_in": "02_DISCOVERY_RULES.md"
+      },
+      "effect": "rest-facing-water",
+      "phase": "B",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": null
+    },
+    {
+      "id": "R5",
+      "version": 1,
+      "kind": "relation",
+      "item_kinds": [
+        "library",
+        "bench"
+      ],
+      "condition": {
+        "max_access_path_steps": 4,
+        "tree_mature_required": false,
+        "requires_current_reservations": true,
+        "selectors_defined_in": "02_DISCOVERY_RULES.md"
+      },
+      "effect": "carry-book-and-read",
+      "phase": "B",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": null
+    },
+    {
+      "id": "R6",
+      "version": 1,
+      "kind": "relation",
+      "item_kinds": [
+        "garden-hut",
+        "flower",
+        "sapling"
+      ],
+      "condition": {
+        "max_access_path_steps": 4,
+        "tree_mature_required": false,
+        "requires_current_reservations": true,
+        "selectors_defined_in": "02_DISCOVERY_RULES.md"
+      },
+      "effect": "carry-tool-and-tend",
+      "phase": "B",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": null
+    },
+    {
+      "id": "M1",
+      "version": 1,
+      "kind": "magic",
+      "item_kinds": [
+        "lantern"
+      ],
+      "condition": {
+        "trigger": "hero-walking",
+        "max_lantern_access_path_steps": 2,
+        "actor": "pokomoko"
+      },
+      "effect": "star-footprints",
+      "phase": "B",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": 6
+    },
+    {
+      "id": "M2",
+      "version": 1,
+      "kind": "magic",
+      "item_kinds": [
+        "flower",
+        "sapling"
+      ],
+      "condition": {
+        "trigger": "tap-plant",
+        "any_growth_stage": true
+      },
+      "effect": "upward-leaves-or-petals",
+      "phase": "A",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": 3
+    },
+    {
+      "id": "M3",
+      "version": 1,
+      "kind": "magic",
+      "item_kinds": [
+        "bench"
+      ],
+      "condition": {
+        "trigger": "tap-shadow",
+        "resident_state": "seated-at-bench"
+      },
+      "effect": "independent-shadow-greeting",
+      "phase": "B",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": 4
+    },
+    {
+      "id": "M4",
+      "version": 1,
+      "kind": "magic",
+      "item_kinds": [
+        "water-bowl",
+        "lantern"
+      ],
+      "condition": {
+        "trigger": "tap-water",
+        "max_access_path_steps": 4
+      },
+      "effect": "night-sky-inside-water",
+      "phase": "B",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": 5
+    },
+    {
+      "id": "X1",
+      "version": 1,
+      "kind": "rare-encounter",
+      "item_kinds": [
+        "flower",
+        "water-bowl"
+      ],
+      "condition": {
+        "district": "GF6",
+        "max_access_path_steps": 4,
+        "trigger": "inspect-local-clue"
+      },
+      "effect": "white-butterfly",
+      "phase": "B",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": 5
+    },
+    {
+      "id": "X2",
+      "version": 1,
+      "kind": "rare-encounter",
+      "item_kinds": [
+        "sapling",
+        "water-bowl"
+      ],
+      "condition": {
+        "district": "GT3",
+        "max_access_path_steps": 4,
+        "trigger": "inspect-local-clue"
+      },
+      "effect": "spotted-small-bird",
+      "phase": "B",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": 5
+    },
+    {
+      "id": "X3",
+      "version": 1,
+      "kind": "rare-encounter",
+      "item_kinds": [
+        "library",
+        "bench"
+      ],
+      "condition": {
+        "relation": "R5",
+        "actor": "otter",
+        "actor_state": "reading-at-bench"
+      },
+      "effect": "upside-down-book-correction",
+      "phase": "B",
+      "status": "proposed-not-implemented",
+      "reproducible": true,
+      "random_gate": false,
+      "learning_gate": false,
+      "currency_reward": 0,
+      "max_display_seconds": 4
+    }
+  ]
+}

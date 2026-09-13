@@ -1,0 +1,35 @@
+{
+  "startHash": "ce53b5e2464eff652a93f27d45fcf6fef9cae0dbb0cc47423c25ef880ae39b57",
+  "revision": "7a159d677ffa27db2ff031b8472cb8495c049fcb",
+  "flags": "VITE_ISLAND_ENABLED=true; VITE_ISLAND_LIFE_PREVIEW=true; DEV",
+  "cache": "fresh browser context; DEV; no production SW claim",
+  "target": "http://127.0.0.1:5223",
+  "source": "explicit DEV ownership fixture; no earned acquisition claim",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": true,
+      "candidate": "island-life-discovery-a-ground-v1",
+      "reducedMotion": false,
+      "errors": []
+    },
+    {
+      "name": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pass": true,
+      "candidate": "island-life-discovery-a-ground-v1",
+      "reducedMotion": true,
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "ce53b5e2464eff652a93f27d45fcf6fef9cae0dbb0cc47423c25ef880ae39b57"
+}

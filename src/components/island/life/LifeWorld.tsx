@@ -1,3 +1,6 @@
+import { GatheringCollector } from './gatheringCollector';
+import { displayedGatherings, gatheringVisible } from './gatheringVisibility';
+import type { DiscoveryScene, PresentationEvidence } from '../../../domain/islandLife/discoveryJournal';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import * as T from 'three';
 import type { Cell, LifeState } from '../../../domain/islandLife/model';
@@ -12,10 +15,12 @@ import type { PlacementPreview } from './placement';
 import { LifePresentationClock } from './presentationClock';
 
 type Content = ReturnType<typeof buildLifeScene>;
-type LifeWorldProps = { state: LifeState; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
+type LifeWorldProps = { profileId?: string; presented?: (event: DiscoveryScene, evidence: PresentationEvidence) => void; state: LifeState; selected?: string; cell?: Cell; placement?: PlacementPreview; onCell: (cell: Cell) => void; controlsVisible: boolean; children: ReactNode };
 
-export default function LifeWorld({ state, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
+export default function LifeWorld({ profileId, presented, state, selected, cell, placement, onCell, controlsVisible, children }: LifeWorldProps) {
     const host = useRef<HTMLDivElement>(null), choose = useRef(onCell);
+    const discovery = useRef({ profileId, presented, enabled: controlsVisible });
+    useEffect(() => { discovery.current = { profileId, presented, enabled: controlsVisible }; }, [profileId, presented, controlsVisible]);
     const stateAtMount = useRef(state), placementAtMount = useRef(placement);
     const update = useRef<((state: LifeState, selected?: string, cell?: Cell, placement?: PlacementPreview) => void) | null>(null);
     const controlCamera = useRef<((action: IslandCameraAction) => void) | undefined>(undefined);
@@ -155,13 +160,29 @@ export default function LifeWorld({ state, selected, cell, placement, onCell, co
         renderer.domElement.addEventListener('lostpointercapture', lostPointerCapture);
         renderer.domElement.addEventListener('wheel', wheel, { passive: false });
         const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-        let raf = 0, auditAt = 0;
+        let raf = 0, auditAt = 0, discoveryAt = 0, discoveryOwner: string | undefined;
+        let collector: GatheringCollector | undefined;
         const frame = () => {
             // Background/context-loss time must age reactions, not replay them on return.
             if (document.visibilityState !== 'visible' || renderer.getContext().isContextLost()) presentationClock.resume(performance.now(), true);
-            content?.animate(presentationClock.sample(performance.now()), media.matches);
+            const logicalAt = presentationClock.sample(performance.now());
+            content?.animate(logicalAt, media.matches);
             if (content && document.visibilityState === 'visible' && !renderer.getContext().isContextLost()) { renderer.render(scene, camera); node.dataset.rendered = 'true';
                 presentationClock.resume(performance.now());
+                if (discovery.current.profileId !== discoveryOwner) {
+                    collector?.cancel(); discoveryOwner = discovery.current.profileId;
+                    collector = discoveryOwner ? new GatheringCollector(discoveryOwner, (event, evidence) => discovery.current.presented?.(event, evidence)) : undefined;
+                }
+                if (collector && discovery.current.enabled && !currentPlacement && performance.now() - discoveryAt >= 100) {
+                    const rules = displayedGatherings(currentState, discoveryOwner!), rect = node.getBoundingClientRect();
+                    const shown = new Map(rules.map(rule => [rule.semanticSignature, gatheringVisible(currentState, rule, content!.root, camera, content!.point, ndc => {
+                        const x = rect.left + (ndc.x + 1) / 2 * rect.width, y = rect.top + (1 - ndc.y) / 2 * rect.height;
+                        return x >= 0 && x <= innerWidth && y >= 0 && y <= innerHeight && node.contains(document.elementFromPoint(x, y));
+                    })]));
+                    collector.sample({ ...currentState, now: logicalAt }, rules, rule => shown.get(rule.semanticSignature) ?? false, performance.now(), Date.now());
+                    node.dataset.lifeGatherings = JSON.stringify(rules.map(rule => ({ ruleId: rule.ruleId, ids: rule.participantIds, core: shown.get(rule.semanticSignature) })));
+                    discoveryAt = performance.now();
+                } else if (currentPlacement || !discovery.current.enabled) collector?.pause();
                 const poses = content.audit();
                 poses.forEach((pose, i) => {
                     const badge = emotes[i]; badge.hidden = !pose.reaction;
@@ -179,15 +200,16 @@ export default function LifeWorld({ state, selected, cell, placement, onCell, co
                     auditAt = performance.now();
                 }
             }
+            if (document.visibilityState !== 'visible' || renderer.getContext().isContextLost()) collector?.pause();
             raf = requestAnimationFrame(frame);
-        }; frame();
-        const hidden = () => { if (document.visibilityState !== 'visible') presentationClock.resume(performance.now(), true); };
+        }; raf = requestAnimationFrame(frame);
+        const hidden = () => { if (document.visibilityState !== 'visible') { collector?.pause(); presentationClock.resume(performance.now(), true); } };
         document.addEventListener('visibilitychange', hidden);
-        const lost = (event: Event) => { presentationClock.resume(performance.now(), true); event.preventDefault(); setFailed(true); delete node.dataset.rendered; };
+        const lost = (event: Event) => { collector?.pause(); presentationClock.resume(performance.now(), true); event.preventDefault(); setFailed(true); delete node.dataset.rendered; };
         const restored = () => setFailed(false);
         renderer.domElement.addEventListener('webglcontextlost', lost); renderer.domElement.addEventListener('webglcontextrestored', restored);
         return () => {
-            cancelAnimationFrame(raf); observer.disconnect(); update.current = null; controlCamera.current = undefined; reframe.current = undefined; cameraControls.cancel(); content?.dispose();
+            collector?.cancel(); cancelAnimationFrame(raf); observer.disconnect(); update.current = null; controlCamera.current = undefined; reframe.current = undefined; cameraControls.cancel(); content?.dispose();
             document.removeEventListener('visibilitychange', hidden);
             renderer.domElement.removeEventListener('click', click);
             renderer.domElement.removeEventListener('pointerdown', pointerDown);

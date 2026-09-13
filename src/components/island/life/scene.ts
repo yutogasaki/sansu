@@ -5,6 +5,7 @@ import { buildHomeJourney } from '../homeJourney/scene';
 import { disposeGeometry } from '../three/primitives';
 import { type Cell, type LifeState } from '../../../domain/islandLife/model';
 import { cellKey, districts, landCells } from '../../../domain/islandLife/space';
+import { plantGatherings } from '../../../domain/islandLife/discovery';
 import type { PlacementPreview } from './placement';
 import { buildLandscape } from './landscape';
 import { buildHeritageHouse, buildHeritageTree } from './heritageScenery';
@@ -28,7 +29,8 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
         const mesh = new T.Mesh(new T.BoxGeometry(w, h, d), paint(color)); mesh.position.set(x, y, z); mesh.castShadow = mesh.receiveShadow = true; parent.add(mesh); return mesh;
     };
     const landscape = buildLandscape(state, max - min + 1, point); root.add(landscape.root);
-    const bedIds = new Set(districts(state).filter(d => d.kind === 'flowers').flatMap(d => d.ids));
+    const bedIds = new Set([...districts(state).filter(d => d.kind === 'flowers').flatMap(d => d.ids),
+        ...plantGatherings(state).flatMap(group => group.map(item => item.id))]);
     const clickables: T.Object3D[] = [];
     const previewMaterials: T.Material[] = [];
     for (const c of cells) {
@@ -79,7 +81,7 @@ export function buildLifeScene(state: LifeState, selected?: string, selectedCell
     actors.forEach((a, i) => { a.name = `life-resident-${state.residents[i].id}`; a.scale.setScalar(i ? .60 : .76); root.add(a); });
     const motion = makeLifeMotion(content, state, point, seats);
     return { root, clickables, width: max - min + 1, point,
-        animate: (at: number, reduced: boolean) => { landscape.animate(at, reduced); motion.animate(at, reduced); }, audit: motion.audit,
+        animate: (at: number, reduced: boolean, decorationAt = at) => { landscape.animate(decorationAt, reduced); motion.animate(at, reduced, decorationAt); }, audit: motion.audit,
         dispose() {
             // Plane overlays use separate transparent materials; shared paints are owned by content.m.
             clickables.forEach(o => ((o as T.Mesh).material as T.Material).dispose());

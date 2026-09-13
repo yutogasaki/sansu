@@ -1,5 +1,8 @@
 # Documentation Index
 
+不思議な島のv3段階実装は[仕様50](product/50_mysterious_island_discovery_spec.md)。添付原文と現行実装の境界、購入履歴保護、4品からの実装順を参照。
+
+
 暮らす島の次期設計と32種の品揃えは[地区・解放・施設カタログ49](product/49_island_growth_catalog_spec.md)。既存の花畑等からの恒久解放、組み合わせ、特殊施設の働きを定義。数値は調整案で、実装・配布は未完。
 
 暮らす島の家庭内利用は[仕様48](product/48_island_life_spec.md)と[検証記録](design/2026-09-10-island-life/main-release/README.md)を参照。

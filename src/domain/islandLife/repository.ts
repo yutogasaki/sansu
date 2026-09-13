@@ -1,7 +1,10 @@
+import { placementUndo } from './placementUndo';
+import { readableLifeVersion } from './model';
 import Dexie, { type Table } from 'dexie';
 import { db, type SansuDatabase } from '../../db';
 import { HOUR, learningDay, newLife, type Credit, type LifeCommand, type LifeRecord } from './model';
 import { commandLife, replayLife } from './simulation';
+import { commandFingerprint } from './purchases';
 
 /** Separate ownership database; production never imports diagnostic preview time or items. */
 export function lifeDatabaseName() { return import.meta.env.DEV ? 'SansuIslandLifePreviewV1' : 'SansuIslandLifeV1'; }
@@ -14,7 +17,7 @@ export const lifeDb = new IslandLifeDatabase();
 export async function deleteLifeOwner(profileId: string) {
     if (await Dexie.exists(lifeDb.name)) await lifeDb.worlds.delete(profileId);
 }
-export interface LifeIntent { id: string; revision: number; command?: LifeCommand; advanceHours?: 6 | 24 }
+export interface LifeIntent { id: string; revision: number; command?: LifeCommand; undoOf?: string; advanceHours?: 6 | 24 }
 export interface TerminalFact { id: string; at: number }
 export function mergeFacts(record: LifeRecord, facts: TerminalFact[]) {
     const known = new Set(record.credits.map(c => c.id)), credits: Credit[] = [...record.credits];
@@ -49,9 +52,28 @@ export async function updateLife(profileId: string, facts: TerminalFact[], inten
     if (intent?.advanceHours && !import.meta.env.DEV) throw new Error('Diagnostic time is unavailable in production');
     return database.transaction('rw', database.worlds, async () => {
         const previous = await database.worlds.get(profileId) ?? newLife(profileId, realNow);
-        if (previous.version !== 1) throw new Error('この島のデータは新しい版で開いてください。');
-        if (intent && (previous.actions.some(a => a.id === intent.id) || previous.clockIntents.includes(intent.id))) return previous;
+        if (!readableLifeVersion(previous.version)) throw new Error('この島のデータは新しい版で開いてください。');
+        if (intent) {
+            if (Boolean(intent.command) === Boolean(intent.advanceHours)) throw new Error('Invalid island intent');
+            const action = previous.actions.find(a => a.id === intent.id);
+            if (action) {
+                if (action.undoOf !== intent.undoOf || !intent.command || commandFingerprint(action.command) !== commandFingerprint(intent.command)) throw new Error('同じ操作の内容が変わっています。');
+                return previous;
+            }
+            if (previous.clockIntents.includes(intent.id)) {
+                // Legacy time intents did not store their duration. Do not guess it.
+                if (intent.undoOf || !intent.advanceHours || previous.clockIntentHours?.[intent.id] !== undefined
+                    && previous.clockIntentHours[intent.id] !== intent.advanceHours) throw new Error('同じ操作の内容が変わっています。');
+                return previous;
+            }
+        }
         if (intent && previous.revision !== intent.revision) throw new Error('しまが かわったよ。もういちど えらんでね。');
+        if (intent?.undoOf !== undefined) {
+            const inverse = placementUndo(previous, intent.undoOf);
+            if (!inverse || !intent.command || commandFingerprint(inverse) !== commandFingerprint(intent.command)) {
+                throw new Error('しまが かわったよ。もういちど えらんでね。');
+            }
+        }
         let next = previous;
         const elapsed = Math.max(0, Math.min(7 * 24 * HOUR, realNow - previous.realAt));
         next = { ...next, realAt: realNow, now: previous.now + elapsed, revision: previous.revision + 1 };
@@ -61,13 +83,14 @@ export async function updateLife(profileId: string, facts: TerminalFact[], inten
         next = mergeFacts(next, facts);
         if (intent?.advanceHours) {
             if (![6, 24].includes(intent.advanceHours)) throw new Error('Invalid diagnostic interval');
-            next = { ...next, now: next.now + intent.advanceHours * HOUR, clockIntents: [...next.clockIntents, intent.id] };
+            next = { ...next, now: next.now + intent.advanceHours * HOUR, clockIntents: [...next.clockIntents, intent.id],
+                clockIntentHours: { ...next.clockIntentHours, [intent.id]: intent.advanceHours } };
             next.offsets = [...next.offsets, { at: realNow, offset: next.now - realNow }];
         }
         if (next.activitiesV2At === undefined) {
             next.activitiesV2At = next.now; next.activitiesV2After = next.actions.length;
         }
-        if (intent?.command) next = commandLife(next, intent.command, intent.id, next.now);
+        if (intent?.command) next = commandLife(next, intent.command, intent.id, next.now, intent.undoOf);
         replayLife(next); // Reject invalid transactions before any write.
         await database.worlds.put(next); return next;
     });

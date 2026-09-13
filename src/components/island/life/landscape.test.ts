@@ -54,4 +54,17 @@ describe('garden scenery preserves usable ground and ownership', () => {
             scene.animate(1_789_020_000_100, true); expect(water.uniforms.time.value).toBe(0);
         } finally { disposeGeometry(scene.root); scene.dispose(); }
     });
+    it('connects young soil, removes it on a split, and does not duplicate mature ground', () => {
+        const base = replayLife(newLife('young', 0));
+        const items: LifeItem[] = [0, 1, 2].map(x => ({ id: String(x), kind: 'flower', cell: { x, z: 2 }, growth: 0, style: 'original' }));
+        for (const [layout, hasSoil] of [[items, true], [items.map((item, index) => index === 2 ? { ...item, cell: { x: 5, z: 3 } } : item), false],
+            [items.map(item => ({ ...item, growth: 6 })), false]] as const) {
+            const state = { ...base, items: [...layout] }, before = structuredClone(state);
+            const scene = buildLandscape(state, 6, point);
+            try {
+                expect(scene.root.getObjectByName('life-young-plant-ground')!.children.length > 0).toBe(hasSoil);
+                expect(state).toEqual(before);
+            } finally { disposeGeometry(scene.root); scene.dispose(); }
+        }
+    });
 });

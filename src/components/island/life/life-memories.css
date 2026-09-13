@@ -1,0 +1,17 @@
+.life-memories h3 { margin: 10px 0; font-size: 16px; }
+.life-memories button { border: 1px solid var(--pokomoko-edge); border-radius: 12px; background: var(--pokomoko-paper); }
+.life-memory-tabs { display: flex; gap: 6px; margin: 10px 0; }
+.life-memory-tabs button { flex: 1; padding: 5px 8px; font-size: 13px; }
+.life-memory-tabs button[aria-pressed="true"] { background: var(--pokomoko-mint); border-color: var(--pokomoko-blue-deep); }
+.life-memory-list { display: grid; gap: 10px; }
+.life-memory-list > button { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px; text-align: left; }
+.life-memory-list .life-product-preview { width: 80px; height: 64px; flex: 0 0 80px; }
+.life-memory-list span { display: grid; gap: 6px; }
+.life-memory-list b { font-size: 14px; }
+.life-memory-list small, .life-memory-time, .life-memory-empty { font-size: 12px; }
+.life-memory-time { margin: 4px 0 8px; }
+.life-memory-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.life-memory-actions button, .life-memory-back, .life-memory-confirm button { padding: 6px 10px; font-size: 13px; }
+.life-memory-confirm { font-size: 13px; }
+.life-memory-confirm button { margin-right: 6px; }
+.life-memory-entry { margin: 8px 0; min-height: 44px; width: 100%; border: 1px solid var(--pokomoko-edge); background: var(--pokomoko-paper); color: inherit; border-radius: 12px; font: inherit; }

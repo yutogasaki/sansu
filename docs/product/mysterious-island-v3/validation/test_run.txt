@@ -1,0 +1,43 @@
+test_group_non_consuming (test_reference.DiscoveryTests.test_group_non_consuming) ... ok
+test_group_three (test_reference.DiscoveryTests.test_group_three) ... ok
+test_move_and_restore_reversible (test_reference.DiscoveryTests.test_move_and_restore_reversible) ... ok
+test_offline_not_observed (test_reference.DiscoveryTests.test_offline_not_observed) ... ok
+test_presented_not_proof_of_understanding (test_reference.DiscoveryTests.test_presented_not_proof_of_understanding) ... ok
+test_preview_not_discovery (test_reference.DiscoveryTests.test_preview_not_discovery) ... ok
+test_rare_deterministic (test_reference.DiscoveryTests.test_rare_deterministic) ... ok
+test_relation_uses_walkable_path (test_reference.DiscoveryTests.test_relation_uses_walkable_path) ... ok
+test_seedling_precursor_not_mature_district (test_reference.DiscoveryTests.test_seedling_precursor_not_mature_district) ... ok
+test_short_or_incomplete_not_observed (test_reference.DiscoveryTests.test_short_or_incomplete_not_observed) ... ok
+test_six_in_line_not_field (test_reference.DiscoveryTests.test_six_in_line_not_field) ... ok
+test_three_by_two_field (test_reference.DiscoveryTests.test_three_by_two_field) ... ok
+test_two_not_three (test_reference.DiscoveryTests.test_two_not_three) ... ok
+test_basic_prices_preserved (test_reference.EconomyTests.test_basic_prices_preserved) ... ok
+test_catalog_total (test_reference.EconomyTests.test_catalog_total) ... ok
+test_daily_income (test_reference.EconomyTests.test_daily_income) ... ok
+test_duplicate_terminal (test_reference.EconomyTests.test_duplicate_terminal) ... ok
+test_finite_light_does_not_refresh (test_reference.EconomyTests.test_finite_light_does_not_refresh) ... ok
+test_invalid_or_uncommitted_no_reward (test_reference.EconomyTests.test_invalid_or_uncommitted_no_reward) ... ok
+test_legacy_light_budget (test_reference.EconomyTests.test_legacy_light_budget) ... ok
+test_no_progress_or_discovery_purchase_gate (test_reference.EconomyTests.test_no_progress_or_discovery_purchase_gate) ... ok
+test_profile_isolation_key (test_reference.EconomyTests.test_profile_isolation_key) ... ok
+test_refund_actual_price (test_reference.EconomyTests.test_refund_actual_price) ... ok
+test_support_same_reward (test_reference.EconomyTests.test_support_same_reward) ... ok
+test_weekly_thirteen_sessions (test_reference.EconomyTests.test_weekly_thirteen_sessions) ... ok
+test_boost_expiry_during_growth (test_reference.GrowthTests.test_boost_expiry_during_growth) ... ok
+test_clock_back_rejected (test_reference.GrowthTests.test_clock_back_rejected) ... ok
+test_no_extra_boost_after_six (test_reference.GrowthTests.test_no_extra_boost_after_six) ... ok
+test_six_completions (test_reference.GrowthTests.test_six_completions) ... ok
+test_storage_interval_excluded (test_reference.GrowthTests.test_storage_interval_excluded) ... ok
+test_three_completions (test_reference.GrowthTests.test_three_completions) ... ok
+test_unstudied_growth (test_reference.GrowthTests.test_unstudied_growth) ... ok
+test_complete_compute (test_reference.ScenarioTests.test_complete_compute) ... ok
+test_financed_and_ready_differ (test_reference.ScenarioTests.test_financed_and_ready_differ) ... ok
+test_invalid_layout_rejected (test_reference.ScenarioTests.test_invalid_layout_rejected) ... ok
+test_magic_not_gated_by_learning (test_reference.ScenarioTests.test_magic_not_gated_by_learning) ... ok
+test_multiple_layouts (test_reference.ScenarioTests.test_multiple_layouts) ... ok
+test_route_costs (test_reference.ScenarioTests.test_route_costs) ... ok
+
+----------------------------------------------------------------------
+Ran 38 tests in 0.421s
+
+OK

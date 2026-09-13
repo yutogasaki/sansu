@@ -1,0 +1,672 @@
+{
+  "startHash": "8b3ad346d256772de320baed00e8d48a9ff4f6d7e42489a22d4c3741d489cce5",
+  "revision": "7a159d677ffa27db2ff031b8472cb8495c049fcb",
+  "flags": "VITE_ISLAND_ENABLED=true; VITE_ISLAND_LIFE_PREVIEW=true; DEV",
+  "cache": "fresh browser context; DEV; no production SW claim",
+  "target": "http://127.0.0.1:5223",
+  "candidate": "island-life-discovery-a-relation-observation-v1",
+  "source": "explicit DEV two-item ownership and record-v2 fixture; no earned acquisition claim",
+  "humanN": 0,
+  "scenarios": [
+    {
+      "name": "phone-flower",
+      "pass": true,
+      "near": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0.2905391109692999,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R1",
+            "targetId": "qa-target",
+            "focus": [
+              -0.5,
+              0.2,
+              0
+            ],
+            "ready": true
+          },
+          "headYaw": 1.5707963267948966
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "flower",
+          "position": [
+            0.020000000000000018,
+            0.04,
+            0
+          ],
+          "hop": 0,
+          "headPitch": 0.09,
+          "headRoll": -0.009570928339315703,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "qa-target",
+          "phase": "flower",
+          "position": [
+            -0.5,
+            0.04,
+            0.52
+          ],
+          "hop": 0,
+          "headPitch": 0.09,
+          "headRoll": -0.03350012901552237,
+          "headYaw": 0
+        }
+      ],
+      "far": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            1.1229617777777778,
+            0.04,
+            0
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            0.12296177777777784,
+            0.04,
+            1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "restored": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0.2905391109692999,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R1",
+            "targetId": "qa-target",
+            "focus": [
+              -0.5,
+              0.2,
+              0
+            ],
+            "ready": true
+          },
+          "headYaw": 1.5707963267948966
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            0.23303282402931602,
+            0.04,
+            2
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            1.233032824029316,
+            0.04,
+            1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "phone-swing",
+      "pass": true,
+      "near": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": -0.046850990973550416,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R3",
+            "targetId": "qa-target",
+            "targetResidentId": "otter",
+            "focus": [
+              -0.5,
+              0.8918216616089618,
+              -0.06601042177716361
+            ],
+            "ready": true
+          },
+          "headYaw": 1.6037895608350952
+        },
+        {
+          "id": "rabbit",
+          "itemId": "roam:display:rabbit:1",
+          "phase": "walking",
+          "position": [
+            1.9117687499940004,
+            0.04,
+            1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "qa-target",
+          "phase": "swing",
+          "position": [
+            -0.5,
+            0.33754978604567654,
+            -0.1304052038604806
+          ],
+          "seatGap": 2.7755575615628914e-17,
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": -0.0281717597932592,
+          "headYaw": 0
+        }
+      ],
+      "far": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "swing",
+          "position": [
+            2.5,
+            0.30602748266294616,
+            0.9920357529682593
+          ],
+          "seatGap": 0,
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": -0.030795815982301848,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "roam:display:otter:0",
+          "phase": "walking",
+          "position": [
+            -0.09060260995370367,
+            0.04,
+            1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "restored": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0.028991874433100483,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R3",
+            "targetId": "qa-target",
+            "focus": [
+              -0.5,
+              0.74,
+              0
+            ],
+            "ready": true
+          },
+          "headYaw": 1.5707963267948966
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            1.5177474162715034,
+            0.04,
+            2
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "roam:display:otter:0",
+          "phase": "walking",
+          "position": [
+            1.0745628332073536,
+            0.04,
+            -1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "tablet-flower",
+      "pass": true,
+      "near": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0.2905391109692999,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R1",
+            "targetId": "qa-target",
+            "focus": [
+              -0.5,
+              0.2,
+              0
+            ],
+            "ready": true
+          },
+          "headYaw": 1.5707963267948966
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "flower",
+          "position": [
+            0.020000000000000018,
+            0.04,
+            0
+          ],
+          "hop": 0,
+          "headPitch": 0.09,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "qa-target",
+          "phase": "flower",
+          "position": [
+            -0.5,
+            0.04,
+            0.52
+          ],
+          "hop": 0,
+          "headPitch": 0.09,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "far": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            1.27944496484375,
+            0.04,
+            0
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            0.27944496484375003,
+            0.04,
+            1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "restored": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0.2905391109692999,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R1",
+            "targetId": "qa-target",
+            "focus": [
+              -0.5,
+              0.2,
+              0
+            ],
+            "ready": true
+          },
+          "headYaw": 1.5707963267948966
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            0.7367378720425974,
+            0.04,
+            2
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            1.7367378720425974,
+            0.04,
+            1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "tablet-swing",
+      "pass": true,
+      "near": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": -0.04496966185232773,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R3",
+            "targetId": "qa-target",
+            "targetResidentId": "otter",
+            "focus": [
+              -0.5,
+              0.8880000000000001,
+              0
+            ],
+            "ready": true
+          },
+          "headYaw": 1.5707963267948966
+        },
+        {
+          "id": "rabbit",
+          "itemId": "roam:display:rabbit:1",
+          "phase": "walking",
+          "position": [
+            1.666715003427011,
+            0.04,
+            1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "qa-target",
+          "phase": "swing",
+          "position": [
+            -0.5,
+            0.33000000000000007,
+            0
+          ],
+          "seatGap": 0,
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "far": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "swing",
+          "position": [
+            2.5,
+            0.30600000000000005,
+            1
+          ],
+          "seatGap": 0,
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "roam:display:otter:0",
+          "phase": "walking",
+          "position": [
+            0.008611219167962147,
+            0.04,
+            1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "restored": [
+        {
+          "id": "pokomoko",
+          "itemId": "qa-bench",
+          "phase": "bench",
+          "position": [
+            -2.5,
+            0.34199999999999997,
+            0
+          ],
+          "seatGap": 5.551115123125783e-17,
+          "reaction": "♪",
+          "hop": 0,
+          "headPitch": 0.028991874433100483,
+          "headRoll": 0,
+          "relation": {
+            "ruleId": "R3",
+            "targetId": "qa-target",
+            "focus": [
+              -0.5,
+              0.74,
+              0
+            ],
+            "ready": true
+          },
+          "headYaw": 1.5707963267948966
+        },
+        {
+          "id": "rabbit",
+          "itemId": "qa-target",
+          "phase": "walking",
+          "position": [
+            1.7805932977690122,
+            0.04,
+            2
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        },
+        {
+          "id": "otter",
+          "itemId": "roam:display:otter:0",
+          "phase": "walking",
+          "position": [
+            1.3776480489251794,
+            0.04,
+            -1
+          ],
+          "hop": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "headYaw": 0
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "8b3ad346d256772de320baed00e8d48a9ff4f6d7e42489a22d4c3741d489cce5"
+}

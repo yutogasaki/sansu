@@ -1,0 +1,133 @@
+# 不思議な島 v3
+
+## Goal / SSOT
+
+添付v3に沿って段階実装する。正本は[仕様50](../../product/50_mysterious_island_discovery_spec.md)。元HEADと差分はgit履歴・検証時の記録に残す。
+
+## Plan / Dependencies
+
+1. 現行確認と仕様同期。48の4品は実装済み、49/v2案のPゲートはLifeに存在しない。
+2. 保存下地：版付き購入receipt・返金保持・意図ID衝突拒否。価格変更前に必要。
+3. 純粋な現在条件判定と表示記録の分離。
+4. 4品A：G0、R1/R3、M2、現在のお試し、学習への即復帰、実画面確認。
+5. 成長・有限ひかり・土地のcheckpoint移行と互換検証。
+6. Bの8追加品・残る関係/魔法/出会い・本人保存/再演を縦断実装。
+7. 全体回帰と継続評価。実参加者の理解・意欲は自動認定しない。
+
+## Verification
+
+保存下地は購入/返金/旧イベント/二重送信/競合/abortの回帰とverify:core。画面・routing・移行追加後はverification_matrixの島行と関連本番Lifeハーネスを適用する。
+
+## Progress
+
+- 添付ZIPを安全に展開し原文をdocs/product/mysterious-island-v3へ保持。外部送信・デプロイなし。
+- 保存下地を実装。新購入は `life-48-v1` receipt、旧省略イベントは固定旧価格で再生。撤去の表示/処理は個体の実支払額を共有。同内容retryを先に処理し、別内容の意図ID再利用を拒否する。新旧4品価格は2/4/6/8のまま。
+- AのG0/GF3/GF6/GP2/GP3/R1/R3/M2の純粋な現在条件判定を追加。住人の利用可否を別関数とする。まだruntime描画へ接続していないため表示済みの発見とは扱わない。
+- 対象27テスト通過（購入5、既存repository5、simulation11、discovery6）。verify:core通過（353 files / 3676 tests、docs/lint/typecheck/build/assets）。smokeは30通過/1失敗。旧Root Tangle 768×1024の2回目誤答後案内でtimeout。コード変更なしの対象5サイズ再実行は5件全通過。初回FAILは保持し、原因は未確定（再現しないタイミング依存の可能性）。
+- 添付manifest全件の内容hash一致を確認。SOURCE_EXCERPTSのみ拡張子を `.md.txt` へ変更し元キーから対応付けた。
+- 全体移行、価格切替、成長の直近24時間積算、有限ひかり、追加土地/所有上限、表示記録、本人保存、再演、Bは未完。学習writerと旧schemaは変更していない。外部送信/公開なし。
+
+- Review By: 2026-09-20
+
+## Docs To Touch
+
+- docs/product/50_mysterious_island_discovery_spec.md
+- docs/product/01_app_spec.md
+- docs/index.md
+
+開始HEAD: `7a159d677ffa27db2ff031b8472cb8495c049fcb`。
+
+## 次の具体的接続
+
+- `landscape.ts`は現在`districts(state)`で成熟地区だけを描画。G0の低い土を追加し上位の縁と二重化しない。
+- `residentMotion.ts`は座席接触を保った利用動作。R1/R3の顔の向きを追加する際、bodyを回して座席から離さない。現在`benchRelation`は条件のみでvisit選択や報酬には作用しない。
+- `LifeWorld.tsx`は可視render後のframeと背景/context-lossの中断を管理。M2は表示時計をここへ接続し、画面外/遮蔽/メニュー/仮配置を可視事実に数えない。
+- `IslandLife.tsx`の現物tapはもちもの詳細へ進む。無料の観察面と現在対象のお試しを追加し、下部まなぶ・編集・退出を常に優先する。使用中の連打で演出の期限を延ばさない。
+- 発見保存は経済や学習と別namespace。条件判定だけで自動保存しない。最初の可視事実と直近20件、本人12件を分ける。
+
+## 保存下地の検証対象
+
+- 開始HEAD＋作業ツリー（未commit）。src全ファイルをパス順にpath/NUL/content/NULで連結したSHA-256: `8f06fca5c55dfa7785baf2fb5ca5a9440c978c96a2f217a1fc2460a4632cdcdf`。
+- ログ: `/tmp/sansu-v3-core.log`、`/tmp/sansu-v3-smoke.log`。
+- 既存のdocs期限警告、IslandMilestoneのFast Refresh警告、build chunk size警告あり。エラーなし。
+- 視覚と子どもの無説明理解/意欲は未評価。新しい判定の描画接続、島/PWA/throughput固有E2Eと実SW offlineは後続Aの統合候補で必要。今回のsmokeだけではv3全体の受入を満たさない。
+
+対象再実行: `SANSU_E2E_ROOT_TANGLE_ONLY=1 SANSU_E2E_DIAGNOSTIC_DIR=/tmp/sansu-v3-root-diagnostic node tools/e2e-smoke.mjs`。ログ `/tmp/sansu-v3-root-retry.log`、診断JSON `/tmp/sansu-v3-root-diagnostic/smoke-report.json`。フルsmokeの完全合格へ読み替えない。
+
+## 第2段階：記録下地とG0の実景
+
+- `discoveryJournal.ts` / `discoveryPresentation.ts` / `discoveryRepository.ts` を追加。LifeRecordの任意fieldに保存するため既存schema/profile削除境界は維持。経済revision/学習/報酬のreplayを変えない。UI callerは未接続。
+- `plantGatherings`をG0条件と地面で共有し、未成熟3株の土を表示。成熟面と個体の土を二重描画しない。
+- [実画面と検証](../../design/2026-09-13-island-discovery-ground/README.md)。verify:core 3688件通過、最終接続面調整後lint/typecheck/16対象tests/build。最終DEVのphone/tabletで移設/復元/再読込/学習復帰PASS。
+- 次はR1/R3・M2の表示と観察UI。新しいrecordPresentedScene呼出しはPWA critical hold、画面/プロフィール世代guard、失敗retryと一緒に接続する。未表示の条件から呼ばない。
+
+
+## 第3段階：現在の花の観察とM2
+
+- 配置した花の詳細に「みてみる」を接続。同じ個体の葉/つぼみ/開花の姿を拡大し、触ると葉/花びらが約3秒上へ動く。reduced motionは同じ期限の静的差分。植物本体・成長・支払額・報酬を変更しない。
+- 実render後の可視時間1秒を満たした現在のお試しだけJournalへ保存し、その後に任意の「のこす」を表示。critical persistence hold、unmount/背景/context lossの中断、保存失敗retryを接続。下部まなぶはいつでも退出できる。
+- 最初の実画面でleafの元scaleをアニメーションscaleが上書きして球状に拡大する欠陥を発見・修正。操作E2E合格を視覚合格に読み替えず、薄い形状の回帰を追加。
+- verify:core PASS: 355 files / 3690 tests、docs/lint/typecheck/build/assets。ログ `/tmp/sansu-v3-observation-core.log`。初回画像は `/tmp/sansu-v3-magic-runtime-1` に診断履歴として保持。
+- 残るA: R1/R3の視線/観察、G0以外の集まりの可視記録、一覧/本人保存の解除・再演。価格/成長/有限ひかり/土地のcheckpoint移行、Bは未完。Human N=0、release全体の判定は保留。
+
+- 最終phone/tablet実画面: 3問実学習→購入→観察→連打→任意保存→学習即時復帰→再読込、実WebGL context loss、DEV24h開花を検査し両幅PASS。[比較画像とreport](../../design/2026-09-13-island-discovery-observation/README.md)。描画候補 `island-life-discovery-a-observation-v1`、source開始/終了hash一致。
+
+## 第4段階：思い出一覧・M2再演・解除
+
+- 「しまの ようす」と観察後から「しまの おもいで」へ接続。本人保存と自動履歴を別タブにし、未発見の空枠や総達成率を表示しない。経済refreshを呼ばないlive queryで最新journalを読む。
+- `discoveryRecall.ts` は記録signatureを当時のsnapshotで解決する。先頭の別の花/現在の花を代用せず、開花や収納後も当時の葉を再演。元eventIdとsource replayを維持し、現在の島には書き戻さない。
+- 現在の同IDが配置中なら「いまの島でみる」へ接続。収納/撤去後は現在入口を表示せず、過去の場面は維持する。本人保存の解除は対象1件の確認を挟む。
+- 最初の両幅実UI検証PASS: `/tmp/sansu-v3-memory-runtime-1/report.json`。各3問実学習→花購入→保存→DEV24h成長→当時の葉を再演→現在の花びら→実収納→再演入口保持→解除取消/確定→学習/再読込。snapshotとlive個体、actions/credits/firstPresentedの不変を照合。Human N=0。
+- React skillの確認: journal購読は閉じる時に解除、非同期の保存結果は元画面のalive guard、操作中の一覧戻りは無効、退出/まなぶは有効。表示用WebGLは閉じる/プロフィール切替で破棄。
+- 次の本体実装: R1/R3の利用中視線と現在観察、集まりの可視事実。M2以外の再演は対応する本体描画と一緒に接続する。配置undo、24h成長/有限ひかり/土地checkpoint、Bの8品と他ルールは未完。
+
+- 最終の両幅実UIは満杯fixtureの13件目拒否/指定1件入替までPASS。[比較画像とreport](../../design/2026-09-13-island-discovery-memories/README.md)。2回目の可視記録timeoutは診断履歴を保持し、原因未確定。全体verify:core 356 files / 3693 tests PASS。最終は選択タブの色tokenだけmintへ修正し、source開始/終了hash一致。
+
+- 最終token修正後lint/build/assets PASS。docs:check PASS、git diff --check問題なし。最終ログ `/tmp/sansu-v3-memory-final-build.log`。
+
+
+## 第5段階：R1/R3の実景の視線
+
+- `relationGaze.ts` を追加。確定sceneで歩行距離/固定優先順を1回解決し、実際に座った住人の頭だけを対象へ向ける。R1は芽から、R3は利用中なら住人の頭を、空なら遊具を見る。利用終了/着座前/距離外は通常姿勢。
+- ぽこもこは既存の頭/顔/耳を中立位置のままhead軸へまとめる。関係中のEuler順をYXZにし、横を向いた顔が正しく下を向けるようにした。3住人の実方向ベクトルと座面接触を対象10testsで検査しPASS。
+- 初回DEV4ケースはPASS。最終方向修正後のハーネスで、同じ着座住人の近い→遠い→復元、残高/個体/学習store不変と学習復帰を再確認する。
+- 次はR1/R3の現在観察と可視記録・再演。`LifeWorld` の実render後のpose/カメラ/遮蔽・foregroundから可視事実を取り、同じsceneの住人利用時刻をsnapshotへ固定する。条件だけでJournalを書かない。
+
+- 最終DEV4ケースPASS、同一着座住人を照合。[比較画像とreport](../../design/2026-09-13-island-discovery-gaze/README.md)。全体verify:core 357 files / 3698 tests PASS。source開始/終了hash `0f63355040d53823b72712fc5892fa8f2e1564b74a3cc318066ddc18cf032b1d`、candidate `island-life-discovery-a-gaze-v1`。R1/R3表示記録はまだ発行しない。
+
+
+## 第6段階：ベンチの現在観察・記録・再演
+
+- `observationVisit.ts`、`observe` actionを追加。既存利用か実経路で来る待機住人を使用し、他の活動/主人公の行き先を取消さない。試験訪問は移動＋6秒、通貨/利用実績を増やさない。
+- 初回observe保存時にLifeRecord版2へ上げ、旧版decoderによる収納への誤解を既存guardで防止。旧receipt/時計/action/所有/記録を保持し、新reader/writerは版1/2対応。価格/成長等のcheckpoint移行は未完。
+- `RelationObservationView` は本体3D・住人利用を表示し、頭/対象/対象利用者のカメラ内・3D/DOM遮蔽を確認した1秒可視だけ保存。対象の直接tap/選択、距離外の通常反応、本人保存、当時の論理時計固定＋短い装飾時計による再演を接続。
+- StrictModeで再演のprepareが親のalive再設定より先行する不具合を実画面/DB診断で確認し、RAF開始へ修正。失敗を残して同じ本人DBのreplay実保存を検査。
+- [比較画像とreport](../../design/2026-09-13-island-relation-observation/README.md)。最終4ケースPASS: 早期学習退出は未記録、近い観察の保存、遠い配置の未記録、古い近い配置の再演、復元/学習。16秒refreshでも同一利用の記録/保存案内を増やさない。source `8b3ad346d256772de320baed00e8d48a9ff4f6d7e42489a22d4c3741d489cce5`。
+- 全体verify:core 358 files / 3704 tests PASS。最後のDOM遮蔽点追加後も実UI4ケースと最終docs:check/lint/typecheck/build/assets PASS。lintは既存Fast Refresh warning 1件、error 0。Human N=0、release全体の認定なし。
+- 次は通常島全体/集まりの可視事実、配置undo、24h成長/有限ひかり/土地checkpoint、B8品/残る魔法・出会い。既存GF6の幅条件とv3の条件を照合してから集合の記録を接続する。
+
+### 段階7: 配置の取り消し
+
+- 購入配置/移設/収納から同じ編集範囲内で1段階戻すUIを追加。購入の戻しは収納、返金なし。通常のmove/store追記＋undoOfで履歴を維持。
+- 最新配置ID/逆操作/同一intent再送をtransactionで照合。競合/別owner/内容差し替えを拒否。現在の配置安全判定を再実行し、旧edge家具の復元も危険なら無変更で拒否。
+- 最初の実UI検査は3操作の保存まで成功後、取り消しで閉じたメニューの「うごかす」を待つharness手順でFAIL。明示的な再開操作を追加、閾値やアプリ挙動は変更せず再検査中。初回ログ `/tmp/sansu-v3-undo-runtime-1.log` を保持。
+
+- 実UI2回目はphone/tabletの各操作がPASS。ただし実行中に安全判定の回帰テストを追加したためsrcを含む開始/終了hashが不一致となり、候補全体はFAIL扱い。アプリ入力を固定して3回目を実施。
+- 全体verify:core PASS: 359 files / 3710 tests、docs/lint/typecheck/build/assets。既存Fast Refresh warning 1件、error 0。PWA precache10.78MiB/12MiB。
+- 次は集まりの可視記録と通常島内の可視記録。GF6の幅/奥行条件は現行discovery/space両方に存在し、単体の一列除外も確認済み。以前の不一致懸念を実装欠落と扱わない。v3成長/有限ひかり/土地checkpoint、Bの8品と追加ルール、release全体は引き続き未完。
+
+- 最終DEV両幅PASS、source開始/終了hash `72acc6ce0d8a323892b8a8d575692693bbc33d4c55fe84de3a2af4f584df56e1` 一致。[比較画像とreport](../../design/2026-09-13-island-placement-undo/README.md)。新しい島flag候補 `island-life-discovery-a-placement-undo-v1`。公開/commitなし。
+
+### 段階8: 集まりのlive記録と当時/現在の実3D
+
+- 保存済みのG0/GF3/GF6/GP2/GP3を通常島で実描画後に検査。参加物・土・隣接の連結への実rayとDOM遮蔽、画角、前景可視1秒を条件にlive保存。preview/メニュー/背景/context lossを除外。上位地面の表示中は同一成分の下位を重複記録しない。
+- 同一意味の場面は通常refreshで再発行せず、崩れた配置はcollectorから外す。PWA保存hold・元owner・失敗retryを保つ専用保存hookを追加。経済refreshは呼ばない。
+- 思い出から当時の集まりを不変snapshotで実3D再生し、元IDのreplayへ記録。現在リンクは同じ個体群の実配置を表示し、崩れた集まりを元の状態に補正しない。
+- 対象6テストPASS（上位優先、実mesh/地面/DOM遮蔽/画角、表示1秒・一度のみ・非同期準備の取消）。phone-G0実UI診断PASS: 遮蔽中は未記録→live→任意保存→移設→当時の配置→現在の分離→undo→reload。全6ケースとcoreを検査中。
+- 最初の全体coreは361 files / 3716 tests PASS。実UI2はGF6のliveが未発行でFAIL。実ray診断で中央1点を花に遮られていたことを確認。セルの縁と連結面の幅内の露出点も実meshへ照射し、同じ前景1秒条件を維持。再演の集まりカメラは通常島の仰角へ合わせる。6株の実モデル/通常角度を追加テストし、対象の可視検査5件PASS。修正後のGF6/GP3を個別診断中。
+- 修正後のphone-GF6/GP3診断PASS（`/tmp/sansu-v3-gatherings-runtime-3` / `-4`）。上位を分割して下位のlive記録、元の保存/最初の記録を保持、当時と現在を別描画、undo/reloadを確認。最終phone/tabletを独立contextで検査中。
+
+- 最終DEV全6ケースPASS。[実画面・benchmark比較・report](../../design/2026-09-13-island-gatherings/README.md)。source開始/終了SHA-256 `029da236e685d6664f37a92815b088a8a87a98d405fff0908cba9f78761e8c3c` 一致。candidate `island-life-discovery-a-gatherings-v1`。Human N=0、release全体の認定はしない。
+
+- 最終reviewで短いvisibility/context-lossにも即時pauseを追加。対象18テストPASS。補強後の全6ケースを再実行しPASS、最終artifactを同じsourceで更新。最終verify:coreもPASS（361 files / 3717 tests、docs/lint/typecheck/build/assets、PWA precache10.79MiB/12MiB）。
+- 次の統合範囲: 通常島のR1/R3 live、GP3の順に巡る動作、24h成長・有限ひかり・土地/所有上限のcheckpoint、B。今回のGP3記録の中核は表示された3台以上の床で、巡回の達成を記録文で主張しない。現行arrangeVisitsは地区の重みを上げる既存方式で、順に巡るv3の動作契約の完了証拠にはしない。

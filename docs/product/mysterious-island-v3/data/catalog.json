@@ -1,0 +1,254 @@
+[
+  {
+    "id": "flower",
+    "name": "おはな",
+    "price": 2,
+    "price_version": "island-v3-price-1",
+    "family": "flower",
+    "footprint": [
+      1,
+      1
+    ],
+    "max_users": 1,
+    "mature_effective_hours": 6,
+    "phase": "A",
+    "max_owned": null,
+    "acquisition": {
+      "currency": "drops",
+      "required_progress": null,
+      "required_discovery": null
+    },
+    "status": "proposed-not-implemented"
+  },
+  {
+    "id": "bench",
+    "name": "ベンチ",
+    "price": 4,
+    "price_version": "island-v3-price-1",
+    "family": "rest",
+    "footprint": [
+      1,
+      1
+    ],
+    "max_users": 1,
+    "mature_effective_hours": 0,
+    "phase": "A",
+    "max_owned": null,
+    "acquisition": {
+      "currency": "drops",
+      "required_progress": null,
+      "required_discovery": null
+    },
+    "status": "proposed-not-implemented"
+  },
+  {
+    "id": "swing",
+    "name": "ブランコ",
+    "price": 6,
+    "price_version": "island-v3-price-1",
+    "family": "play",
+    "footprint": [
+      1,
+      1
+    ],
+    "max_users": 1,
+    "mature_effective_hours": 0,
+    "phase": "A",
+    "max_owned": null,
+    "acquisition": {
+      "currency": "drops",
+      "required_progress": null,
+      "required_discovery": null
+    },
+    "status": "proposed-not-implemented"
+  },
+  {
+    "id": "lantern",
+    "name": "ほしのあかり",
+    "price": 8,
+    "price_version": "island-v3-price-1",
+    "family": "light",
+    "footprint": [
+      1,
+      1
+    ],
+    "max_users": 0,
+    "mature_effective_hours": 0,
+    "phase": "A",
+    "max_owned": null,
+    "acquisition": {
+      "currency": "drops",
+      "required_progress": null,
+      "required_discovery": null
+    },
+    "status": "proposed-not-implemented"
+  },
+  {
+    "id": "sapling",
+    "name": "木の苗",
+    "price": 4,
+    "price_version": "island-v3-price-1",
+    "family": "tree",
+    "footprint": [
+      1,
+      1
+    ],
+    "max_users": 1,
+    "mature_effective_hours": 18,
+    "phase": "B",
+    "max_owned": null,
+    "acquisition": {
+      "currency": "drops",
+      "required_progress": null,
+      "required_discovery": null
+    },
+    "status": "proposed-not-implemented"
+  },
+  {
+    "id": "water-bowl",
+    "name": "水鉢",
+    "price": 4,
+    "price_version": "island-v3-price-1",
+    "family": "water",
+    "footprint": [
+      1,
+      1
+    ],
+    "max_users": 1,
+    "mature_effective_hours": 0,
+    "phase": "B",
+    "max_owned": null,
+    "acquisition": {
+      "currency": "drops",
+      "required_progress": null,
+      "required_discovery": null
+    },
+    "status": "proposed-not-implemented"
+  },
+  {
+    "id": "picnic-table",
+    "name": "ピクニックテーブル",
+    "price": 8,
+    "price_version": "island-v3-price-1",
+    "family": "table",
+    "footprint": [
+      1,
+      1
+    ],
+    "max_users": 2,
+    "mature_effective_hours": 0,
+    "phase": "B",
+    "max_owned": null,
+    "acquisition": {
+      "currency": "drops",
+      "required_progress": null,
+      "required_discovery": null
+    },
+    "status": "proposed-not-implemented"
+  },
+  {
+    "id": "pinwheel",
+    "name": "かざぐるま",
+    "price": 12,
+    "price_version": "island-v3-price-1",
+    "family": "wind",
+    "footprint": [
+      1,
+      1
+    ],
+    "max_users": 0,
+    "mature_effective_hours": 0,
+    "phase": "B",
+    "max_owned": null,
+    "acquisition": {
+      "currency": "drops",
+      "required_progress": null,
+      "required_discovery": null
+    },
+    "status": "proposed-not-implemented"
+  },
+  {
+    "id": "flower-arch",
+    "name": "花のアーチ",
+    "price": 12,
+    "price_version": "island-v3-price-1",
+    "family": "arch",
+    "footprint": [
+      1,
+      1
+    ],
+    "max_users": 1,
+    "mature_effective_hours": 0,
+    "phase": "B",
+    "max_owned": null,
+    "acquisition": {
+      "currency": "drops",
+      "required_progress": null,
+      "required_discovery": null
+    },
+    "status": "proposed-not-implemented"
+  },
+  {
+    "id": "sandbox",
+    "name": "砂場",
+    "price": 18,
+    "price_version": "island-v3-price-1",
+    "family": "play",
+    "footprint": [
+      1,
+      1
+    ],
+    "max_users": 2,
+    "mature_effective_hours": 0,
+    "phase": "B",
+    "max_owned": null,
+    "acquisition": {
+      "currency": "drops",
+      "required_progress": null,
+      "required_discovery": null
+    },
+    "status": "proposed-not-implemented"
+  },
+  {
+    "id": "garden-hut",
+    "name": "園芸小屋",
+    "price": 36,
+    "price_version": "island-v3-price-1",
+    "family": "facility",
+    "footprint": [
+      2,
+      2
+    ],
+    "max_users": 1,
+    "mature_effective_hours": 0,
+    "phase": "B",
+    "max_owned": 1,
+    "acquisition": {
+      "currency": "drops",
+      "required_progress": null,
+      "required_discovery": null
+    },
+    "status": "proposed-not-implemented"
+  },
+  {
+    "id": "library",
+    "name": "森の図書室",
+    "price": 72,
+    "price_version": "island-v3-price-1",
+    "family": "facility",
+    "footprint": [
+      2,
+      2
+    ],
+    "max_users": 1,
+    "mature_effective_hours": 0,
+    "phase": "B",
+    "max_owned": 1,
+    "acquisition": {
+      "currency": "drops",
+      "required_progress": null,
+      "required_discovery": null
+    },
+    "status": "proposed-not-implemented"
+  }
+]

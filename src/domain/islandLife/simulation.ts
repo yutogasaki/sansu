@@ -1,5 +1,8 @@
-import { CATALOG, HOUR, LIFE_RULES, LIFE_STEP_MS, ROAM_VISIT_PREFIX, isRoamVisit, vigor, type LifeAction, type LifeCommand, type LifeRecord, type LifeState, type LifeResident, type Cell } from './model';
+import { placementUndo } from './placementUndo';
+import { observationVisit } from './observationVisit';
+import { readableLifeVersion, CATALOG, HOUR, LIFE_RULES, LIFE_STEP_MS, ROAM_VISIT_PREFIX, isRoamVisit, vigor, type LifeAction, type LifeCommand, type LifeRecord, type LifeState, type LifeResident, type Cell } from './model';
 import { cellKey, districts, homeCell, isHouse, landCells, route, sameCell, usablePlacement, pathToActivity } from './space';
+import { commandFingerprint, paidDrops, purchaseReceipt, removalRefund } from './purchases';
 
 function initial(now: number): LifeState {
     return { now, activityVersion: 1, drops: 0, light: 0, items: [], styles: ['original'], heroStyle: 'original', days: {},
@@ -125,7 +128,7 @@ export function arrangeVisits(s: LifeState) {
     }
     arrangeRoam(s);
 }
-function advance(s: LifeState, to: number) {
+export function advanceLifeState(s: LifeState, to: number) {
     if (!Number.isFinite(to) || to < s.now) throw new Error('Invalid world time');
     arrangeVisits(s);
     while (s.now < to) {
@@ -138,7 +141,7 @@ function advance(s: LifeState, to: number) {
         for (const r of s.residents) if (r.visit && r.visit.end <= next) {
             const visit = r.visit, kind = s.items.find(i => i.id === visit.itemId)?.kind;
             r.cell = visit.path[visit.path.length - 1]; r.visit = undefined;
-            if (isRoamVisit(visit)) continue;
+            if (isRoamVisit(visit) || visit.observationTest) continue;
             if (kind) r.enjoyedBy[kind] = (r.enjoyedBy[kind] ?? 0) + 1;
             r.enjoyed++; s.light++;
         }
@@ -150,13 +153,14 @@ export function applyCommand(s: LifeState, event: LifeAction) {
     const c = event.command;
     if (c.type === 'buy') {
         if (!CATALOG[c.kind]) fail('この どうぐは まだ ないよ。');
-        if (s.drops < CATALOG[c.kind].price) fail('しずくが もうすこし いるよ。');
+        const price = paidDrops(event);
+        if (s.drops < price) fail('しずくが もうすこし いるよ。');
         if (s.items.length >= LIFE_RULES.maxItems) fail('もちものが いっぱいだよ。');
-        const item = { id: event.id, kind: c.kind, cell: undefined, growth: 0, style: 'original' as const,
+        const item = { id: event.id, kind: c.kind, cell: undefined, growth: 0, style: 'original' as const, paidDrops: price,
             access: s.activityVersion === 2 && ['bench', 'swing'].includes(c.kind) ? 'front' as const : undefined };
         s.items.push(item);
         if (!usablePlacement(s, item.id, c.cell)) { s.items.pop(); fail('そこには おけないよ。みちを あけてね。'); }
-        s.items[s.items.length - 1] = { ...item, cell: c.cell }; s.drops -= CATALOG[c.kind].price;
+        s.items[s.items.length - 1] = { ...item, cell: c.cell }; s.drops -= price;
         if (s.activityVersion === 2) for (const r of s.residents) {
             const likes = favorite(r) === c.kind;
             const close = distance(residentCell(r, s.now), c.cell) <= 3;
@@ -178,7 +182,16 @@ export function applyCommand(s: LifeState, event: LifeAction) {
     } else {
         const item = s.items.find(i => i.id === c.itemId);
         if (!item) fail('その ものが みつからないよ。');
-        if (c.type === 'visit') {
+        if (c.type === 'observe') {
+            const plan = observationVisit(s, item.id);
+            if (plan.kind === 'busy') fail('いまは、ほかのことを しているよ。');
+            if (plan.kind === 'unavailable') fail('いまは ここで ためせないよ。');
+            if (plan.kind === 'ready') {
+                const resident = s.residents.find(resident => resident.id === plan.residentId)!;
+                resident.visit = { itemId: item.id, from: { ...resident.cell }, path: plan.path,
+                    start: s.now, end: s.now + plan.duration, observationTest: true };
+            }
+        } else if (c.type === 'visit') {
             if (!item.cell || item.kind === 'lantern' || !pathToActivity(s, homeCell, item)) fail('ここでは あそべないよ。');
             const changed = s.target !== item.id;
             s.target = item.id;
@@ -197,7 +210,7 @@ export function applyCommand(s: LifeState, event: LifeAction) {
             if (c.type === 'move' && !usablePlacement(s, item.id, c.cell)) fail('そこには おけないよ。みちを あけてね。');
             // Reroute all walkers after any edit; interrupted visits never yield light.
             for (const r of s.residents) { r.cell = s.activityVersion === 2 ? residentCell(r, s.now) : { ...homeCell }; r.visit = undefined; r.discovery = undefined; }
-            if (c.type === 'remove') { s.items = s.items.filter(i => i.id !== item.id); s.drops += Math.floor(CATALOG[item.kind].price / 2); }
+            if (c.type === 'remove') { s.items = s.items.filter(i => i.id !== item.id); s.drops += removalRefund(item); }
             else item.cell = c.type === 'move' ? c.cell : undefined;
             if (c.type === 'move' && s.activityVersion === 2 && ['bench', 'swing'].includes(item.kind)) item.access = 'front';
             if (s.target === item.id) s.target = undefined;
@@ -215,6 +228,7 @@ export function applyCommand(s: LifeState, event: LifeAction) {
     arrangeVisits(s);
 }
 export function replayLife(record: LifeRecord, to = record.now): LifeState {
+    if (!readableLifeVersion(record.version)) throw new Error('この島のデータは新しい版で開いてください。');
     const s = initial(record.createdAt);
     const events = [...record.credits.map(c => ({ at: c.at, credit: c, action: undefined, switchVersion: false, rank: 0 })),
         ...record.actions.map((a, index) => ({ at: a.at, credit: undefined, action: a, switchVersion: false,
@@ -224,7 +238,7 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
     const credited = new Set<string>();
     for (const event of events) {
         if (event.at > to) break;
-        advance(s, Math.max(s.now, event.at));
+        advanceLifeState(s, Math.max(s.now, event.at));
         if (event.credit) {
             const c = event.credit; if (credited.has(c.id)) continue; credited.add(c.id);
             s.drops += LIFE_RULES.dropsPerProblem;
@@ -236,10 +250,21 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
             arrangeVisits(s);
         } else if (event.action) applyCommand(s, event.action);
     }
-    advance(s, Math.max(s.now, to)); return s;
+    advanceLifeState(s, Math.max(s.now, to)); return s;
 }
-export function commandLife(record: LifeRecord, command: LifeCommand, id: string, now: number) {
-    if (record.actions.some(a => a.id === id)) return record;
-    const event = { id, at: now, command }; applyCommand(replayLife(record, now), event);
-    return { ...record, now, revision: record.revision + 1, actions: [...record.actions, event] };
+export function commandLife(record: LifeRecord, command: LifeCommand, id: string, now: number, undoOf?: string): LifeRecord {
+    if (!readableLifeVersion(record.version)) throw new Error('この島のデータは新しい版で開いてください。');
+    const existing = record.actions.find(a => a.id === id);
+    if (existing) {
+        if (existing.undoOf !== undoOf || commandFingerprint(existing.command) !== commandFingerprint(command)) throw new Error('同じ操作の内容が変わっています。');
+        return record;
+    }
+    if (undoOf !== undefined) {
+        const inverse = placementUndo(record, undoOf);
+        if (!inverse || commandFingerprint(inverse) !== commandFingerprint(command)) throw new Error('しまが かわったよ。もういちど えらんでね。');
+    }
+    const event: LifeAction = { id, at: now, command, ...(undoOf === undefined ? {} : { undoOf }) };
+    if (command.type === 'buy') event.purchaseReceipt = purchaseReceipt(event);
+    applyCommand(replayLife(record, now), event);
+    return { ...record, version: command.type === 'observe' ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
 }
