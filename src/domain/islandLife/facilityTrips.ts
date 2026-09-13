@@ -42,16 +42,16 @@ export function departFacilityTrip(state: LifeState, resident: LifeResident) {
     if (!trip || !visit || trip.phase !== 'collect') return false;
     resident.cell = visit.path[visit.path.length - 1];
     trip.phase = 'carry';
-    resident.visit = { ...(visit.relationSelectionVersion ? { relationSelectionVersion: visit.relationSelectionVersion } : {}), itemId: trip.targetId, from: { ...resident.cell }, path: trip.path,
+    resident.visit = { ...(visit.observationSubjectId ? { observationSubjectId: visit.observationSubjectId } : {}), ...(visit.relationTargetId ? { relationTargetId: visit.relationTargetId } : {}), ...(visit.relationSelectionVersion ? { relationSelectionVersion: visit.relationSelectionVersion } : {}), itemId: trip.targetId, from: { ...resident.cell }, path: trip.path,
         start: state.now, end: trip.end, ...(visit.observationTest ? { observationTest: true } : {}) };
     return true;
 }
 
 /** A bench relation starts at the real library entrance, carrying back to this
  * same reserved bench. No book appears merely because a library is nearby. */
-export function beginBenchTrip(state: LifeState, resident: LifeResident, bench: LifeItem) {
+export function beginBenchTrip(state: LifeState, resident: LifeResident, bench: LifeItem, targetId?: string) {
     if (!state.relationSelectionVersion || bench.kind !== 'bench' || !resident.visit) return;
-    const rule = activityRelation(state, '', bench.id);
+    const rule = activityRelation(state, '', bench.id, targetId);
     if (rule?.ruleId !== 'R5') return;
     const facility = state.items.find(i => i.id !== bench.id && rule.participantIds.includes(i.id));
     if (!facility || state.residents.some(r => r !== resident && reservesItem(r, facility.id))) return;

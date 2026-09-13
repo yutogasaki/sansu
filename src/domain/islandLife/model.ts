@@ -28,6 +28,7 @@ export interface LifeItem { id: string; kind: ItemKind; cell?: Cell; growth: num
 export interface Credit { id: string; at: number; day: string }
 export type LifeCommand = { type: 'buy'; kind: ItemKind; cell: Cell }
     | { type: 'move'; itemId: string; cell: Cell } | { type: 'store' | 'remove' | 'visit' | 'observe'; itemId: string }
+    | { type: 'observe-relation'; itemId: string; residentId: ResidentId; targetId?: string }
     | { type: 'expand'; side: LandSide } | { type: 'style'; style: Style; itemId?: string };
 export interface LifePurchaseReceipt {
     priceVersion: 'life-48-v1' | 'life-v3-plants-water-v1' | 'life-v3-picnic-v1' | 'life-v3-wind-arch-v1' | 'life-v3-sandbox-v1' | 'life-v3-facilities-v1'; actualPaidDrops: number; quoteFingerprint: string;
@@ -38,7 +39,7 @@ export interface LifeLandReceipt {
 }
 export interface LifeAction { id: string; at: number; command: LifeCommand; purchaseReceipt?: LifePurchaseReceipt; landReceipt?: LifeLandReceipt; undoOf?: string }
 export interface LifeRecord {
-    profileId: string; version: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13; revision: number; createdAt: number; realAt: number; now: number;
+    profileId: string; version: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14; revision: number; createdAt: number; realAt: number; now: number;
     credits: Credit[]; actions: LifeAction[]; offsets: { at: number; offset: number }[]; clockIntents: string[];
     activitiesV2At?: number;
     activitiesV2After?: number;
@@ -49,7 +50,7 @@ export interface LifeRecord {
     facilityCutover?: FacilityCutover;
     relationCutover?: RelationCutover;
 }
-export interface Visit { relationSelectionVersion?: 1; observationTest?: boolean; itemId: string; from: Cell; path: Cell[]; start: number; end: number }
+export interface Visit { observationSubjectId?: string; relationTargetId?: string; relationSelectionVersion?: 1; observationTest?: boolean; itemId: string; from: Cell; path: Cell[]; start: number; end: number }
 /** Synthetic visits let the renderer show quiet ground walks without turning
  * them into a furniture use or a persisted command. */
 export const ROAM_VISIT_PREFIX = 'roam:';
@@ -106,4 +107,4 @@ export function newLife(profileId: string, now: number): LifeRecord {
     return { profileId, version: 1, revision: 0, createdAt: now, realAt: now, now, credits: [], actions: [], offsets: [{ at: now, offset: 0 }], clockIntents: [], activitiesV2At: now, activitiesV2After: 0 };
 }
 
-export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3 || version === 4 || version === 5 || version === 6 || version === 7 || version === 8 || version === 9 || version === 10 || version === 11 || version === 12 || version === 13; }
+export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3 || version === 4 || version === 5 || version === 6 || version === 7 || version === 8 || version === 9 || version === 10 || version === 11 || version === 12 || version === 13 || version === 14; }

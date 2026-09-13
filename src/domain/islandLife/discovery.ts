@@ -126,3 +126,9 @@ export function activityRelation(state: LifeState, profileId: string, itemId: st
         .sort((a, b) => a.distance! - b.distance! || order.indexOf(a.ruleId) - order.indexOf(b.ruleId)
             || (partner(a) < partner(b) ? -1 : partner(a) > partner(b) ? 1 : 0))[0];
 }
+
+/** A trial target belongs to its resident's visit, never to another table user. */
+export function visitRelation(state: LifeState, profileId: string, visit: import('./model').Visit) {
+    return benchRelation(state, profileId, visit.itemId, visit.relationTargetId
+        ?? (state.relationTarget?.benchId === visit.itemId ? state.relationTarget.targetId : undefined));
+}

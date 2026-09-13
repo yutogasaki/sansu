@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { evaluateDiscovery } from './discovery';
 import { createDiscoveryScene, replayDiscoveryScene } from './discoveryJournal';
-import { discoveryParticipants, discoveryTitle } from './discoveryRecall';
+import { discoveryParticipants, discoverySubject, discoveryTitle } from './discoveryRecall';
 import type { LifeState } from './model';
 
 describe('recall reads the recorded subject rather than the current world', () => {
@@ -31,4 +31,21 @@ describe('recall reads the recorded subject rather than the current world', () =
         expect(discoveryParticipants({ ...original, semanticSignature: 'not json' })).toEqual([]);
         expect(discoveryParticipants({ ...original, semanticSignature: JSON.stringify(['unknown', []]) })).toEqual([]);
     });
+});
+
+it('keeps the explicit library anchor when recalling the same bench relation', async () => {
+    const state: LifeState = { now: 10000, activityVersion: 2, facilityTripVersion: 1, relationSelectionVersion: 1,
+        drops: 0, light: 0, styles: [], heroStyle: 'original', days: {}, items: [
+            { id: 'library', kind: 'library', cell: { x: 0, z: 0 }, growth: 0, style: 'original' },
+            { id: 'bench', kind: 'bench', cell: { x: 3, z: 2 }, access: 'front', growth: 0, style: 'original' },
+        ], residents: [{ id: 'rabbit', cell: { x: 3, z: 3 }, enjoyed: 0, enjoyedBy: {}, visit: {
+            itemId: 'bench', path: [{ x: 3, z: 3 }], from: { x: 3, z: 3 }, start: 0, end: 30000,
+            observationSubjectId: 'library', relationTargetId: 'bench', observationTest: true,
+        } }] };
+    const rule = evaluateDiscovery(state, 'owner').find(r => r.ruleId === 'R5')!;
+    const event = await createDiscoveryScene('owner', state, rule, 'current-context-test', 'library-trial', 10000, ['rabbit']);
+    expect(discoverySubject(event)?.id).toBe('library');
+    expect(discoverySubject(replayDiscoveryScene(event, 'again', 11000))?.id).toBe('library');
+    const legacy = await createDiscoveryScene('owner', state, rule, 'live', 'legacy', 10000, ['rabbit']);
+    expect(discoverySubject(legacy)?.id).toBe('bench');
 });

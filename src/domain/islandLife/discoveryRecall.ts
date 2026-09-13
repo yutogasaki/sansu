@@ -24,3 +24,12 @@ export function discoveryTitle(event: DiscoveryScene) {
         GT3: 'つながった 木かげ', GT6: 'ひろがった 木かげ', GW2: 'ならんだ 水べ',
         GP2: 'ならんだ あそびば', GP3: 'ひろがった あそびば', R1: 'おはなの そばの ベンチ', R2: '木かげの テーブル', R3: 'ブランコの そばの ベンチ', R4: '水べの ベンチ', R5: 'ほんを はこんで ひとやすみ', R6: 'どうぐを はこんで おていれ' }[event.ruleId];
 }
+
+/** Explicit comparisons return to their original anchor and named observer. */
+export function discoverySubject(event: DiscoveryScene) {
+    const participants = discoveryParticipants(event), snapshot = event.snapshot.scene;
+    const anchor = snapshot.residents.find(r => r.id === snapshot.observationResidentId)?.visit?.observationSubjectId;
+    return participants.find(item => item.id === anchor) ?? participants.find(item => event.ruleId === 'M2'
+        ? item.kind === 'flower' || item.kind === 'sapling'
+        : item.kind === (event.ruleId === 'R6' ? 'garden-hut' : event.ruleId === 'R2' ? 'picnic-table' : 'bench'));
+}

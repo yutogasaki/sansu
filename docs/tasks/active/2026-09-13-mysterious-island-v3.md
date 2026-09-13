@@ -289,3 +289,9 @@ source `cee1cea9c4c41806b3ff6b0db94e036cd61d1ecffe9f40a41ffd81f6de6163bc` は変
 [最終実画面と範囲](../../design/2026-09-13-island-relation-selection/README.md)。固定source `150945e11145afb441dc5fd664dcdaa5f81aa5683525b93c35d3d0926932be1c`、core388 files /3868 testsと最終UI5の両幅4旅程PASS。ベンチ指定からの読書、近い花へのR1切替、施設指定での近/遠/復元、再演/保存/収納/再読込/学習正本保持を確認。旧visit視線の補強前core1、手順誤認とページ送り不足のUI1/2/4、途中で停止したUI3を最終証拠へ混ぜない。
 
 次は任意の現物指定からの関係観察。今回の順序は新しい利用開始に適用し、指定中の進行中の読書を購入だけで中断する契約には変えていない。全体の自然初回・全住民/混合配置・魔法M1/M3/M4・出会いX1/X2/X3・C3視覚/Human N=0・全releaseは未完。
+
+## 現物指定の関係観察（保存版14）
+
+ベンチ/テーブル/施設から配置済みの現物を選ぶ無料観察を、同じ住民の実visitと保存版14へ接続した。視線だけなら同じ席、運搬なら実経路を使い、歩行中や先客を押し出さない。旧保存・同席者・報酬を保持し、おもいで→現在も住民IDを引き継ぐ。固定source `f91b2d7bd5bd225abe7b4cdf0233aa0f9ef2b12920e4b64b86efebdd56de8dcc` でcore390 files /3882 testsと、両幅の図書室/小屋4旅程PASS。[実画面・配信ラベル・検証範囲](../../design/2026-09-13-island-explicit-observation/README.md)。本人IDのsnapshot保持・元の施設へ戻る処理・地面より上の選択目印を補強した診断3はsource不一致で終了したため、core後の固定source UI4だけを最終証拠にした。魔法/出会い・視覚C3/Human N=0・全releaseは継続。
+
+全体smoke/PWA更新/production島旅程/固定十問throughput・自然初回・全住民/混合配置は対象DEV旅程で代替していない。次は灯りと水のM4など、未接続の魔法と実提示/中断/保存を進める。

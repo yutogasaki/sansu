@@ -1,10 +1,11 @@
+import { observationVisit } from '../../../domain/islandLife/observationVisit';
 import { isFacility } from '../../../domain/islandLife/footprint';
 import WaterObservationView from './WaterObservationView';
 import { displayedGatherings } from './gatheringVisibility';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react';
 import { CATALOG, type LifeItem, type LifeRecord, type LifeState } from '../../../domain/islandLife/model';
-import { benchRelation, evaluateDiscovery } from '../../../domain/islandLife/discovery';
+import { evaluateDiscovery } from '../../../domain/islandLife/discovery';
 import { createDiscoveryScene, emptyDiscoveryJournal, type DiscoveryScene, type PresentationEvidence } from '../../../domain/islandLife/discoveryJournal';
 import { recordPresentedScene, editDiscoveryMemory } from '../../../domain/islandLife/discoveryRepository';
 import { holdPwaUpdateForCriticalPersistence } from '../../../pwa';
@@ -14,14 +15,21 @@ import type { ResidentId } from '../../../domain/islandLife/model';
 import PlantObservationView from './PlantObservationView';
 import './life-observation.css';
 
-export default function LifeObservation({ record, state, item, close, memories, tryVisit, gathering }: {
-    record: LifeRecord; state: LifeState; item: LifeItem; close: () => void; memories: () => void; tryVisit?: () => void; gathering?: { ruleId: RuleEligibility['ruleId']; participantIds: string[] };
+export default function LifeObservation({ record, state, item, initialResidentId, close, memories, tryVisit, tryRelation, selectionFailure, gathering }: {
+    record: LifeRecord; state: LifeState; item: LifeItem; initialResidentId?: ResidentId; close: () => void; memories: () => void; tryVisit?: () => void; tryRelation?: (targetId: string | undefined, residentId: ResidentId) => Promise<boolean>; selectionFailure?: string; gathering?: { ruleId: RuleEligibility['ruleId']; participantIds: string[] };
 }) {
-    const [targetId, setTargetId] = useState<string>(), [status, setStatus] = useState<'bench' | 'walking' | 'busy'>('busy');
+    const [status, setStatus] = useState<'bench' | 'walking' | 'busy'>('busy');
+    const [residentId, setResidentId] = useState<ResidentId | undefined>(() => {
+        if (initialResidentId) return initialResidentId;
+        const plan = observationVisit(state, item.id); return 'residentId' in plan ? plan.residentId : undefined;
+    });
+    const [selecting, setSelecting] = useState(false), [selectionError, setSelectionError] = useState(false);
     const isBench = item.kind === 'bench' || item.kind === 'picnic-table';
     const isRelation = isBench || isFacility(item.kind);
-    const viewState = useMemo(() => targetId ? { ...state, relationTarget: { benchId: item.id, targetId },
-        residents: state.residents.map(r => isBench && r.visit?.itemId === item.id && r.facilityTrip && r.facilityTrip.facilityId !== targetId ? { ...r, facilityTrip: undefined } : r) } : state, [state, item.id, targetId, isBench]);
+    const [targetId, setTargetId] = useState<string>();
+    useEffect(() => {
+        if (!residentId) { const plan = observationVisit(state, item.id); if ('residentId' in plan) setResidentId(plan.residentId); }
+    }, [state, item.id, residentId]);
     const panel = useRef<HTMLDivElement>(null), alive = useRef(true), working = useRef(false);
     const latest = useRef({ record, state });
     const closeLatest = useRef(close);
@@ -71,9 +79,8 @@ export default function LifeObservation({ record, state, item, close, memories, 
     };
     const prepareRelation = async (visible: LifeState, _rule: RuleEligibility, residents: ResidentId[]) => {
         if (!alive.current || pending.current) return undefined;
-        const rule = _rule.ruleId === 'R5' || _rule.ruleId === 'R6'
-            ? evaluateDiscovery(visible, record.profileId).find(rule => rule.ruleId === _rule.ruleId && rule.participantIds.length === _rule.participantIds.length && rule.participantIds.every(id => _rule.participantIds.includes(id)))
-            : benchRelation(visible, record.profileId, item.id, visible.relationTarget?.targetId);
+        const rule = evaluateDiscovery(visible, record.profileId).find(rule => rule.ruleId === _rule.ruleId
+            && rule.participantIds.length === _rule.participantIds.length && rule.participantIds.every(id => _rule.participantIds.includes(id)));
         if (!rule) return undefined;
         try { return await createDiscoveryScene(record.profileId, visible, rule, 'current-context-test', crypto.randomUUID(), Date.now(), residents); }
         catch (cause) { if (alive.current) setError(cause instanceof Error ? cause.message : 'もういちど ためしてね。'); return undefined; }
@@ -86,19 +93,27 @@ export default function LifeObservation({ record, state, item, close, memories, 
         return createDiscoveryScene(record.profileId, visible, rule, 'current-context-test', crypto.randomUUID(), Date.now());
     };
     const presented = (event: DiscoveryScene, evidence: PresentationEvidence) => { if (!pending.current) { pending.current = { event, evidence }; void persistShown(); } };
+    const selectTarget = async (id?: string) => {
+        if (!tryRelation || selecting || busy || pending.current || !residentId) return;
+        setSelecting(true); setSelectionError(false); setShown(undefined); setError('');
+        try { const ok = await tryRelation(id, residentId); if (alive.current) setSelectionError(!ok); }
+        finally { if (alive.current) setSelecting(false); }
+    };
     const saved = shown && journal.savedIds.includes(shown.eventId);
-    return <div ref={panel} tabIndex={-1} className="life-observation" role="dialog" aria-modal="false" aria-label={gathering ? 'いまの あつまり' : isFacility(item.kind) ? `${CATALOG[item.kind].label}の ようす` : isBench ? 'いまの ベンチ' : item.kind === 'sapling' ? 'いまの 木' : item.kind === 'water-bowl' ? 'いまの 水ばち' : 'いまの おはな'} data-life-observation={item.id}>
+    return <div ref={panel} tabIndex={-1} className="life-observation" role="dialog" aria-modal="false" aria-label={gathering ? 'いまの あつまり' : isFacility(item.kind) ? `${CATALOG[item.kind].label}の ようす` : isBench ? 'いまの ベンチ' : item.kind === 'sapling' ? 'いまの 木' : item.kind === 'water-bowl' ? 'いまの 水ばち' : 'いまの おはな'} data-life-observation={item.id} data-life-observation-resident={residentId}>
         <header><b>{gathering ? 'いまの あつまり' : isFacility(item.kind) ? `${CATALOG[item.kind].label}の ようす` : isBench ? 'いまの ベンチ' : item.kind === 'sapling' ? 'いまの 木' : item.kind === 'water-bowl' ? 'いまの 水ばち' : 'いまの おはな'}</b><button type="button" aria-label="みてみるを とじる" onClick={close}><X size={20} /></button></header>
         <div className="life-observation-body">
             {gathering ? <RelationObservationView state={state} gathering={gathering} prepare={prepareGathering} presented={presented} /> : isRelation ? <>
-                <RelationObservationView state={viewState} benchId={item.id} prepare={prepareRelation} presented={presented} status={setStatus} target={isBench ? id => { if (!busy && !pending.current) { setTargetId(id); setShown(undefined); setError(''); } } : undefined} />
+                <RelationObservationView state={state} benchId={item.id} residentId={residentId} selectedTarget={setTargetId} prepare={prepareRelation} presented={presented} status={setStatus} target={!selecting && !busy && !pending.current && residentId ? id => { void selectTarget(id); } : undefined} />
                 <p className="life-observation-hint" role="status">{status === 'bench' ? item.kind === 'garden-hut' ? 'ここで おていれ' : item.kind === 'library' ? 'ここで よんでいる' : 'ここで ひとやすみ' : status === 'walking' ? 'みちを とおって くるよ' : 'いまは、ほかのことを しているよ'}</p>
-                {isBench && <label className="life-observation-target">みるもの <select aria-label="ベンチから みるもの" value={targetId ?? ''} disabled={busy || Boolean(pending.current)} onChange={event => { setTargetId(event.target.value || undefined); setShown(undefined); setError(''); }}>
-                    <option value="">いまの ようす</option>{state.items.filter(i => i.cell && ['flower', 'sapling', 'swing', 'sandbox', 'water-bowl'].includes(i.kind)).map((i, index) => <option key={i.id} value={i.id}>{CATALOG[i.kind].label} {index + 1}</option>)}
+                {isRelation && <label className="life-observation-target">みるもの <select aria-label={isBench ? "ベンチから みるもの" : "たてものから みるもの"} value={targetId ?? ''} disabled={selecting || busy || Boolean(pending.current) || !residentId} onChange={event => { void selectTarget(event.target.value || undefined); }}>
+                    <option value="">いまの ようす</option>{state.items.filter(i => i.cell && i.id !== item.id).map((i, index) => <option key={i.id} value={i.id}>{CATALOG[i.kind].label} {index + 1}</option>)}
                 </select></label>}
-                {status === 'busy' && <button type="button" onClick={tryVisit}>もういちど みてみる</button>}
+                {status === 'busy' && <button type="button" onClick={() => residentId ? void selectTarget(targetId) : tryVisit?.()}>もういちど みてみる</button>}
             </> : item.kind === 'water-bowl' ? <WaterObservationView item={item} /> : <><PlantObservationView item={item} prepare={prepare} presented={presented} />
                 <p className="life-observation-hint">{item.kind === 'sapling' ? '木に ふれてみよう' : 'おはなに ふれてみよう'}</p></>}
+            {selecting && <p role="status">ようすを みているよ…</p>}
+            {selectionError && <p role="alert">{selectionFailure ?? 'いまは ためせなかったよ。もういちど えらんでね。'}</p>}
             {busy && <p role="status">きろくを のこしているよ…</p>}
             {shown && <div className="life-observation-save"><span>{saved ? 'おもいでに のこしたよ' : 'いまの、のこす？'}</span>
                 <button type="button" disabled={busy || saved} onClick={() => void saveMemory()}>{saved ? 'のこした' : 'のこす'}</button></div>}

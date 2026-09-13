@@ -13,8 +13,8 @@ async function digest(cutover: RelationCutover) {
 }
 export function assertRelationCutover(record: LifeRecord) {
     const c = record.relationCutover;
-    if (!c) { if (record.version === 13) throw new Error('関係選択の切替記録が見つかりません。'); return; }
-    if (![13].includes(record.version) || c.rules !== 'relation-selection-v1' || c.profileId !== record.profileId
+    if (!c) { if ((record.version === 13 || record.version === 14)) throw new Error('関係選択の切替記録が見つかりません。'); return; }
+    if (![13, 14].includes(record.version) || c.rules !== 'relation-selection-v1' || c.profileId !== record.profileId
         || !record.facilityCutover || !Number.isFinite(c.at) || c.at < record.facilityCutover.at || c.at > record.now
         || !Number.isInteger(c.actionCount) || c.actionCount < record.facilityCutover.actionCount || c.actionCount > record.actions.length
         || c.priorActions.length !== c.actionCount || JSON.stringify(c.priorActions) !== JSON.stringify(record.actions.slice(0, c.actionCount))
@@ -26,7 +26,7 @@ export async function verifyRelationCutover(record: LifeRecord) {
     if (record.relationCutover && record.relationCutover.validationHash !== await digest(record.relationCutover)) throw new Error('関係選択の切替記録を確認できません。');
 }
 export async function prepareRelationMigration(record: LifeRecord): Promise<LifeRecord> {
-    if (record.version === 13) { await verifyRelationCutover(record); return record; }
+    if ((record.version === 13 || record.version === 14)) { await verifyRelationCutover(record); return record; }
     if (!record.facilityCutover || record.relationCutover) throw new Error('Unknown relation migration source');
     const before = replayLife(record);
     const cutover: RelationCutover = { rules: 'relation-selection-v1', profileId: record.profileId, at: record.now,

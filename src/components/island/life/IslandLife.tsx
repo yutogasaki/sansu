@@ -6,7 +6,7 @@ import { observationVisit } from '../../../domain/islandLife/observationVisit';
 import { removalRefund } from '../../../domain/islandLife/purchases';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Sparkles, Sprout, Home, Move, Archive, Trash2, Check, X, Undo2 } from 'lucide-react';
-import { CATALOG, LIFE_CANDIDATE, LIFE_RULES, learningDay, type Cell, type ItemKind, type LifeCommand } from '../../../domain/islandLife/model';
+import { CATALOG, LIFE_CANDIDATE, LIFE_RULES, learningDay, type Cell, type ItemKind, type LifeCommand, type ResidentId } from '../../../domain/islandLife/model';
 import { cellKey, districts, isHouse, landCells } from '../../../domain/islandLife/space';
 import { replayLife } from '../../../domain/islandLife/simulation';
 import type { useIslandLife } from './useIslandLife';
@@ -52,6 +52,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
     const liveDiscovery = useLiveDiscovery(record?.profileId);
     const [menuOpen, setMenuOpen] = useState(false);
     const [observed, setObserved] = useState<string>();
+    const [observedResident, setObservedResident] = useState<ResidentId>();
     const [gathering, setGathering] = useState<{ ruleId: RuleEligibility['ruleId']; participantIds: string[] }>();
     const [memoriesOpen, setMemoriesOpen] = useState(false);
     const observationOrigin = useRef<string | undefined>(undefined);
@@ -253,10 +254,11 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         {observed && !placement && !menuOpen && !dockOpen && (() => {
             const target = state.items.find(i => i.id === observed && i.cell && (gathering || ['flower', 'sapling', 'water-bowl', 'bench', 'picnic-table', 'library', 'garden-hut'].includes(i.kind)));
             return target ? <LifeObservation key={`${record.profileId}:${target.id}:${target.cell!.x}:${target.cell!.z}:${target.style}`}
-                record={record} state={state} item={target} gathering={gathering} close={() => setObserved(undefined)} memories={openMemories} tryVisit={() => tryObservation(target.id)} /> : null;
+                record={record} state={state} item={target} initialResidentId={observedResident} gathering={gathering} close={() => setObserved(undefined)} memories={openMemories} tryVisit={() => tryObservation(target.id)} selectionFailure={error}
+                tryRelation={(targetId, residentId) => locked ? Promise.resolve(false) : refresh({ id: crypto.randomUUID(), revision: record.revision, command: { type: 'observe-relation', itemId: target.id, residentId, ...(targetId ? { targetId } : {}) } })} /> : null;
         })()}
         {memoriesOpen && <LifeMemories key={record.profileId} profileId={record.profileId} state={state} close={() => setMemoriesOpen(false)}
-            observe={id => { setGathering(undefined); setMemoriesOpen(false); setObserved(id); tryObservation(id); }}
+            observe={(id, residentId) => { setGathering(undefined); setMemoriesOpen(false); setObservedResident(residentId); setObserved(id); if (!residentId) tryObservation(id); }}
             observeGathering={group => { setGathering(group); setMemoriesOpen(false); setObserved(group.participantIds[0]); }} />}
         {placement && <div className="life-placement life-controls" data-life-placement-valid={placement.valid} data-life-placement-cell={cell && cellKey(cell)}>
             <h3>{CATALOG[placement.item.kind].label}を {moving ? 'うごかす' : 'おく'}</h3>
@@ -290,7 +292,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
                     <LifeProductPreview kind={item.kind} growth={item.growth} style={item.style} />
                     {(() => { const growth = lifeGrowthStatus(item, state); return <div className="life-item-growth-detail" data-life-growth-stage={growth.stage}><div>{(item.kind === 'flower' || item.kind === 'sapling') && <GrowthDots status={growth} />}<strong>{item.cell ? growth.label : 'しまってある'}</strong></div>
                         <small>{!['flower', 'sapling'].includes(item.kind) ? (item.cell ? 'しまに おいてあるよ' : 'また しまに おけるよ') : !item.cell ? 'おくと また そだつよ' : growth.nextLabel ? `あと 約${growth.remainingHours}じかんで ${growth.nextLabel}` : 'いちばん おおきく そだったよ'}</small>{item.cell && growth.nextLabel && <small>追加で まなばない ときの めやすだよ。</small>}</div>; })()}
-                    {['flower', 'sapling', 'water-bowl', 'bench', 'picnic-table', 'library', 'garden-hut'].includes(item.kind) && item.cell && <button hidden={removing} disabled={locked} onClick={() => { showWorld(); setObserved(item.id); if (item.kind === 'bench' || item.kind === 'picnic-table' || isFacility(item.kind)) tryObservation(item.id); }}>みてみる</button>}
+                    {['flower', 'sapling', 'water-bowl', 'bench', 'picnic-table', 'library', 'garden-hut'].includes(item.kind) && item.cell && <button hidden={removing} disabled={locked} onClick={() => { showWorld(); setObservedResident(undefined); setObserved(item.id); if (item.kind === 'bench' || item.kind === 'picnic-table' || isFacility(item.kind)) tryObservation(item.id); }}>みてみる</button>}
                     <button hidden={removing} disabled={locked || !item.cell || (item.kind === 'lantern' || item.kind === 'pinwheel')} onClick={() => void doAction({ type: 'visit', itemId: item.id }, 'ぽこもこの いきさきを きめたよ。だれか くるかな？')}>ぽこもこを よぶ</button>
                     <button hidden={removing} disabled={locked} onClick={() => { setMoving(true); setCell(undefined); setRemoving(false); setNotice(''); showWorld(); }}><Move size={16} />{item.cell ? 'うごかす' : 'おく'}</button>
                     <button hidden={removing} disabled={locked || !item.cell} onClick={() => void doAction({ type: 'store', itemId: item.id }, 'そだったまま しまったよ。')}><Archive size={16} />しまう</button>

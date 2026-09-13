@@ -1,5 +1,5 @@
 import * as T from 'three';
-import { benchRelation } from '../../../domain/islandLife/discovery';
+import { visitRelation } from '../../../domain/islandLife/discovery';
 import { growthStage, LIFE_STEP_MS, type LifeState } from '../../../domain/islandLife/model';
 import { activityPhase } from '../../../domain/islandLife/activity';
 import { smoothArrival } from './residentWalk';
@@ -15,13 +15,13 @@ export function makeLifeHeroHead(body: T.Group) {
 }
 
 export function makeRelationGaze(state: LifeState, heads: T.Group[], point: (cell: { x: number; z: number }) => T.Vector3) {
-    // Resolve structural relations once per committed scene, not once per frame.
-    const relations = new Map(state.items.filter(item => item.kind === 'bench' && item.cell).map(bench =>
-        [bench.id, benchRelation(state, '', bench.id, state.relationTarget?.benchId === bench.id ? state.relationTarget.targetId : undefined)]));
+    const relations = new Map<string, ReturnType<typeof visitRelation>>();
     return (visible: LifeState, now: number, reduced: boolean, index: number) => {
         const resident = visible.residents[index], visit = resident.visit;
         if (!visit || now >= visit.end || activityPhase(state, resident, now) !== 'bench') return;
-        const relation = relations.get(visit.itemId); if (!relation) return;
+        const key = JSON.stringify([visit.itemId, visit.start, visit.relationTargetId, visit.relationSelectionVersion]);
+        if (!relations.has(key)) relations.set(key, visitRelation(visible, '', visit));
+        const relation = relations.get(key); if (!relation) return;
         const target = state.items.find(item => relation.participantIds.includes(item.id) && item.id !== visit.itemId && item.cell);
         if (!target?.cell) return;
         const other = relation.ruleId === 'R3' ? visible.residents.findIndex(other => other.id !== resident.id

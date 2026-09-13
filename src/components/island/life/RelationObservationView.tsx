@@ -3,14 +3,14 @@ import { visibleRelationObject } from './relationVisibility';
 import { displayedGatherings, gatheringVisible } from './gatheringVisibility';
 import { useEffect, useRef, useState } from 'react';
 import * as T from 'three';
-import { benchRelation, type RuleEligibility } from '../../../domain/islandLife/discovery';
+import { benchRelation, visitRelation, type RuleEligibility } from '../../../domain/islandLife/discovery';
 import type { LifeState, ResidentId } from '../../../domain/islandLife/model';
 import type { DiscoveryScene, PresentationEvidence } from '../../../domain/islandLife/discoveryJournal';
 import { DiscoveryPresentation } from '../../../domain/islandLife/discoveryPresentation';
 import { buildLifeScene } from './scene';
 
 type Prepared = (state: LifeState, rule: RuleEligibility, residents: ResidentId[]) => Promise<DiscoveryScene | undefined>;
-type Props = { state: LifeState; benchId?: string; gathering?: { ruleId: RuleEligibility['ruleId']; participantIds: string[] }; frozen?: boolean; prepare: Prepared;
+type Props = { state: LifeState; residentId?: ResidentId; selectedTarget?: (id?: string) => void; benchId?: string; gathering?: { ruleId: RuleEligibility['ruleId']; participantIds: string[] }; frozen?: boolean; prepare: Prepared;
     presented: (event: DiscoveryScene, evidence: PresentationEvidence) => void; target?: (id: string) => void; status?: (status: 'bench' | 'walking' | 'busy') => void };
 
 /** Render committed geometry and real visits. The memory mode freezes the original
@@ -24,6 +24,8 @@ export default function RelationObservationView(props: Props) {
         let renderer: T.WebGLRenderer;
         try { renderer = new T.WebGLRenderer({ antialias: true }); } catch { setFailed(true); return; }
         const scene = new T.Scene(); scene.background = new T.Color('#dcece6');
+        const targetRing = new T.Mesh(new T.RingGeometry(.65, .70, 48), new T.MeshBasicMaterial({ color: '#ffeaa2', transparent: true, opacity: .7, side: T.DoubleSide, depthWrite: false }));
+        targetRing.rotation.x = -Math.PI / 2; targetRing.visible = false; scene.add(targetRing);
         scene.add(new T.HemisphereLight('#fff7ea', '#63806c', 1.15));
         const light = new T.DirectionalLight('#fff4e0', 2.3); light.position.set(-3, 8, 4); light.castShadow = true;
         light.shadow.mapSize.set(1024, 1024); light.shadow.camera.left = -8; light.shadow.camera.right = 8; light.shadow.camera.top = 6; light.shadow.camera.bottom = -6;
@@ -34,16 +36,19 @@ export default function RelationObservationView(props: Props) {
         renderer.domElement.setAttribute('aria-hidden', 'true'); node.append(renderer.domElement);
         const camera = new T.OrthographicCamera(-2, 2, 2, -2, .1, 100), ray = new T.Raycaster();
         let content: ReturnType<typeof buildLifeScene> | undefined, source: LifeState | undefined, benchId = '', start = performance.now();
+        let previousTarget: string | undefined;
         let key = '', epoch = 0, pending = false, event: DiscoveryScene | undefined, collector: DiscoveryPresentation | undefined;
         let alive = true, raf = 0, previousStatus = '', auditAt = 0, lastFrame = performance.now(), maxGap = 0, delivered = false, preparation = '';
         const cancel = () => { epoch++; key = ''; pending = false; event = undefined; delivered = false; preparation = ''; maxGap = 0; lastFrame = performance.now(); collector?.cancel(); collector = undefined; };
         const subjectObjects = () => {
             if (!source || !content) return [];
-            const relation = benchRelation(source, '', benchId, source.relationTarget?.targetId);
+            const selectedVisit = source.residents.find(r => r.id === latest.current.residentId)?.visit;
+            const targetId = selectedVisit?.relationTargetId ?? source.relationTarget?.targetId;
+            const relation = benchRelation(source, '', benchId, targetId);
             const trip = source.residents.find(r => r.facilityTrip && [r.facilityTrip.facilityId, r.facilityTrip.targetId].includes(benchId))?.facilityTrip;
-            const ids = new Set(latest.current.gathering?.participantIds ?? [benchId, ...(relation?.participantIds ?? []), ...(source.relationTarget ? [source.relationTarget.targetId] : []), ...(trip ? [trip.facilityId, trip.targetId] : [])]);
+            const ids = new Set(latest.current.gathering?.participantIds ?? [benchId, ...(relation?.participantIds ?? []), ...(targetId ? [targetId] : []), ...(trip ? [trip.facilityId, trip.targetId] : [])]);
             return [...ids].flatMap(id => { const object = content!.root.getObjectByName(`life-item-${id}`); return object ? [object] : []; })
-                .concat(source.residents.filter(resident => resident.visit && ids.has(resident.visit.itemId))
+                .concat(source.residents.filter(resident => resident.id === latest.current.residentId || resident.visit && ids.has(resident.visit.itemId))
                     .flatMap(resident => { const object = content!.root.getObjectByName(`life-resident-${resident.id}`); return object ? [object] : []; }));
         };
         const resize = () => {
@@ -88,22 +93,33 @@ export default function RelationObservationView(props: Props) {
             const foreground = document.visibilityState === 'visible' && !renderer.getContext().isContextLost();
             const at = source.now + (latest.current.frozen ? 0 : mono - start);
             if (foreground) {
-                content.animate(at, matchMedia('(prefers-reduced-motion: reduce)').matches, latest.current.frozen ? source.now + Math.min(3000, mono - start) : at); renderer.render(scene, camera); node.dataset.rendered = 'true';
+                content.animate(at, matchMedia('(prefers-reduced-motion: reduce)').matches, latest.current.frozen ? source.now + Math.min(3000, mono - start) : at);
                 const poses = content.audit(), stateAtFrame = content.snapshot();
+                const selectedVisit = stateAtFrame.residents.find(r => r.id === latest.current.residentId)?.visit;
+                const selectedTarget = selectedVisit?.observationSubjectId === benchId ? selectedVisit.relationTargetId : undefined;
+                if (selectedTarget !== previousTarget) { previousTarget = selectedTarget; latest.current.selectedTarget?.(selectedTarget); }
+                const selectedItem = stateAtFrame.items.find(i => i.id === selectedTarget && i.cell);
+                targetRing.visible = Boolean(selectedItem);
+                if (selectedItem?.cell) {
+                    const facility = selectedItem.kind === 'library' || selectedItem.kind === 'garden-hut';
+                    targetRing.position.copy(content.root.localToWorld(content.point({ x: selectedItem.cell.x + (facility ? .5 : 0), z: selectedItem.cell.z + (facility ? .5 : 0) }).setY(.09)));
+                    targetRing.scale.setScalar(facility ? 2 : 1);
+                }
+                renderer.render(scene, camera); node.dataset.rendered = 'true';
                 const findTransport = () => facilityRelations(stateAtFrame, '', content!, camera, ndc => {
                     const rect = node.getBoundingClientRect();
                     return node.contains(document.elementFromPoint(rect.left + (ndc.x + 1) / 2 * rect.width, rect.top + (1 - ndc.y) / 2 * rect.height));
-                }, true).find(candidate => candidate.rule.participantIds.includes(benchId));
+                }, true).find(candidate => candidate.rule.participantIds.includes(benchId) && (!latest.current.residentId || candidate.focalResidentIds?.includes(latest.current.residentId)));
                 let transport = findTransport();
                 const sitter = transport ? poses.find(pose => pose.id === transport?.focalResidentIds?.[0])
-                    : poses.find(pose => pose.itemId === benchId && (['bench', 'picnic-table', 'library', 'garden-hut'].includes(pose.phase)));
-                const collectingForBench = stateAtFrame.relationSelectionVersion && stateAtFrame.residents.some(r => r.facilityTrip?.targetId === benchId && r.facilityTrip.phase === 'collect');
-                const nextStatus = sitter ? 'bench' : collectingForBench || poses.some(pose => (pose.itemId === benchId || stateAtFrame.residents.find(r => r.id === pose.id)?.facilityTrip?.facilityId === benchId) && pose.phase === 'walking') ? 'walking' : 'busy';
+                    : poses.find(pose => (!latest.current.residentId || pose.id === latest.current.residentId) && pose.itemId === benchId && (['bench', 'picnic-table', 'library', 'garden-hut'].includes(pose.phase)));
+                const collectingForBench = stateAtFrame.relationSelectionVersion && stateAtFrame.residents.some(r => (!latest.current.residentId || r.id === latest.current.residentId) && r.facilityTrip?.targetId === benchId && r.facilityTrip.phase === 'collect');
+                const nextStatus = sitter ? 'bench' : collectingForBench || poses.some(pose => (!latest.current.residentId || pose.id === latest.current.residentId) && (pose.itemId === benchId || stateAtFrame.residents.find(r => r.id === pose.id)?.facilityTrip?.facilityId === benchId) && pose.phase === 'walking') ? 'walking' : 'busy';
                 if (nextStatus !== previousStatus) { previousStatus = nextStatus; if (transport) { resize(); renderer.render(scene, camera); transport = findTransport(); } latest.current.status?.(nextStatus); }
                 const gathering = latest.current.gathering;
                 const rule = gathering ? displayedGatherings(stateAtFrame, '').find(rule => rule.ruleId === gathering.ruleId
                     && rule.participantIds.length === gathering.participantIds.length && rule.participantIds.every(id => gathering.participantIds.includes(id)))
-                    : transport?.rule ?? (sitter?.relation?.ready ? benchRelation(stateAtFrame, '', benchId, stateAtFrame.relationTarget?.targetId) : undefined);
+                    : transport?.rule ?? (sitter?.relation?.ready ? visitRelation(stateAtFrame, '', stateAtFrame.residents.find(r => r.id === sitter.id)!.visit!) : undefined);
                 const rect = node.getBoundingClientRect();
                 const onscreen = rect.width > 0 && rect.height > 0 && rect.left >= 0 && rect.top >= 0 && rect.right <= innerWidth && rect.bottom <= innerHeight;
                 const uncovered = onscreen && [[.1, .1], [.9, .1], [.5, .5], [.1, .9], [.9, .9]].every(([x, y]) => node.contains(document.elementFromPoint(rect.left + x * rect.width, rect.top + y * rect.height)));
@@ -124,7 +140,7 @@ export default function RelationObservationView(props: Props) {
                     }
                 }
                 const focal = sitter ? [sitter.id, ...(sitter.relation?.targetResidentId ? [sitter.relation.targetResidentId] : [])] as ResidentId[] : [];
-                const nextKey = transport?.key ?? (gathering && rule ? rule.semanticSignature : rule && sitter ? JSON.stringify([rule.semanticSignature, focal, stateAtFrame.residents.find(r => r.id === sitter.id)?.visit?.start]) : '');
+                const nextKey = transport?.key ?? (gathering && rule ? rule.semanticSignature : rule && sitter ? JSON.stringify([rule.semanticSignature, focal, stateAtFrame.residents.find(r => r.id === sitter.id)?.visit?.start, stateAtFrame.residents.find(r => r.id === sitter.id)?.visit?.observationSubjectId, stateAtFrame.residents.find(r => r.id === sitter.id)?.visit?.relationTargetId]) : '');
                 if (nextKey !== key) { cancel(); key = nextKey; }
                 if (core && rule && !pending && !event) {
                     pending = true; preparation = 'pending'; const token = epoch;
@@ -136,7 +152,7 @@ export default function RelationObservationView(props: Props) {
                 }
                 const evidence = collector?.sample(mono, Date.now(), { rendered: true, foreground, onScreen: onscreen, unoccluded: uncovered, preview: false, coreShown: core });
                 if (event && evidence) { delivered = true; latest.current.presented(event, evidence); }
-                if (mono - auditAt > 200) { node.dataset.relationView = JSON.stringify({ at, core, status: nextStatus, poses, preparation, eventId: event?.eventId, delivered, maxGap, epoch }); auditAt = mono; }
+                if (mono - auditAt > 200) { node.dataset.relationView = JSON.stringify({ at, core, status: nextStatus, poses, preparation, eventId: event?.eventId, delivered, maxGap, epoch, camera: { projection: camera.projectionMatrix.elements, view: camera.matrixWorldInverse.elements } }); auditAt = mono; }
             } else cancel();
             raf = requestAnimationFrame(frame);
         };
@@ -149,13 +165,14 @@ export default function RelationObservationView(props: Props) {
             const rect = renderer.domElement.getBoundingClientRect();
             ray.setFromCamera(new T.Vector2((event.clientX - rect.left) / rect.width * 2 - 1, 1 - (event.clientY - rect.top) / rect.height * 2), camera);
             const hit = ray.intersectObject(content.root, true).find(hit => {
+                for (let object: T.Object3D | null = hit.object; object; object = object.parent) if (!object.visible) return false;
                 const material = (hit.object as T.Mesh).material;
                 return !Array.isArray(material) && material && material.visible && (!material.transparent || material.opacity >= .6);
             });
             for (let object = hit?.object; object; object = object.parent ?? undefined) {
                 if (!object.name.startsWith('life-item-')) continue;
                 const id = object.name.slice('life-item-'.length), item = source.items.find(item => item.id === id);
-                if (item?.cell && (item.kind === 'sapling' || item.kind === 'flower' || item.kind === 'swing' || item.kind === 'sandbox' || (source.relationVersion === 'water-bench-v1' && item.kind === 'water-bowl'))) latest.current.target(id);
+                if (item?.cell && item.id !== benchId) latest.current.target(id);
                 break;
             }
         };
@@ -165,7 +182,7 @@ export default function RelationObservationView(props: Props) {
         raf = requestAnimationFrame(frame);
         return () => { alive = false; cancel(); update.current = undefined; cancelAnimationFrame(raf); observer.disconnect(); content?.dispose();
             renderer.domElement.removeEventListener('click', pick); document.removeEventListener('visibilitychange', hidden); renderer.domElement.removeEventListener('webglcontextlost', lost); renderer.domElement.removeEventListener('webglcontextrestored', restored);
-            light.shadow.dispose(); renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); };
+            targetRing.geometry.dispose(); targetRing.material.dispose(); light.shadow.dispose(); renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); };
     }, []);
     return <><div ref={host} className={`life-relation-view${props.gathering ? ' life-gathering-view' : ''}`} role="img" aria-label={props.gathering ? props.frozen ? 'あのときの あつまり' : 'あつまりの いまの ようす' : props.state.items.some(i => i.id === props.benchId && (i.kind === 'library' || i.kind === 'garden-hut')) ? props.frozen ? 'あのときの ようす' : 'たてものの いまの ようす' : props.frozen ? 'あのときの ベンチ' : 'ベンチの いまの ようす'} />{failed && <p role="status">景色をひらけなかったよ。とじて、もういちど ためしてね。</p>}</>;
 }

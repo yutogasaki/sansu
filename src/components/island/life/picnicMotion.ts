@@ -1,5 +1,5 @@
 import * as T from 'three';
-import { benchRelation } from '../../../domain/islandLife/discovery';
+import { visitRelation } from '../../../domain/islandLife/discovery';
 import { activityPhase } from '../../../domain/islandLife/activity';
 import { LIFE_STEP_MS, type LifeItem, type LifeState, type Visit } from '../../../domain/islandLife/model';
 import { smoothArrival } from './residentWalk';
@@ -9,13 +9,17 @@ export const picnicRole = (item: LifeItem, visit: Visit) => visit.path[visit.pat
 /** Opposite approaches reserve separate physical seats. Only the current users'
  * plates appear; the existing resident rigs keep their own faces and clothes. */
 export function makePicnicMotion(state: LifeState, heads: T.Group[], seats: Map<string, LifeSeat>, point: (cell: { x: number; z: number }) => T.Vector3) {
-    const relations = new Map(state.items.filter(i => i.kind === 'picnic-table').map(item => [item.id,
-        benchRelation(state, '', item.id, state.relationTarget?.benchId === item.id ? state.relationTarget.targetId : undefined)]));
-    const tree = (item: LifeItem) => state.items.find(i => i.id !== item.id && relations.get(item.id)?.participantIds.includes(i.id));
+    const relations = new Map<string, ReturnType<typeof visitRelation>>();
+    const relationFor = (visit: Visit) => {
+        const key = JSON.stringify([visit.itemId, visit.start, visit.relationTargetId, visit.relationSelectionVersion]);
+        if (!relations.has(key)) relations.set(key, visitRelation(state, '', visit));
+        return relations.get(key);
+    };
+    const tree = (item: LifeItem, visit: Visit) => state.items.find(i => i.id !== item.id && relationFor(visit)?.participantIds.includes(i.id));
     return {
         clear() { seats.forEach(seat => seat.picnic?.snacks.forEach(snack => { snack.visible = false; })); },
         facing(item: LifeItem, visit: Visit) {
-            const neutral = picnicRole(item, visit) ? 0 : Math.PI, target = tree(item);
+            const neutral = picnicRole(item, visit) ? 0 : Math.PI, target = tree(item, visit);
             if (!target?.cell) return neutral;
             const p = point(item.cell!), t = point(target.cell), toward = Math.atan2(t.x - p.x, t.z - p.z);
             return neutral + T.MathUtils.clamp(Math.atan2(Math.sin(toward - neutral), Math.cos(toward - neutral)), -.35, .35);
@@ -28,7 +32,7 @@ export function makePicnicMotion(state: LifeState, heads: T.Group[], seats: Map<
             if (furniture) furniture.snacks[role].visible = true;
             const partner = visible.residents.findIndex((r, i) => i !== index && r.visit?.itemId === item.id && now < r.visit.end
                 && activityPhase(visible, r, now) === 'picnic-table');
-            const target = tree(item), relation = relations.get(item.id);
+            const target = tree(item, visit), relation = relationFor(visit);
             const focus = partner >= 0 ? heads[partner].getWorldPosition(new T.Vector3())
                 : target?.cell ? point(target.cell).add(new T.Vector3(0, .7, 0)) : point(item.cell!).add(new T.Vector3(0, .55, 0));
             const head = heads[index], local = head.parent!.worldToLocal(focus.clone()).sub(head.position);

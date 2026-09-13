@@ -1,9 +1,9 @@
 import type { RuleEligibility } from '../../../domain/islandLife/discovery';
 import { useEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react';
-import type { LifeState } from '../../../domain/islandLife/model';
+import type { LifeState, ResidentId } from '../../../domain/islandLife/model';
 import type { DiscoveryScene } from '../../../domain/islandLife/discoveryJournal';
-import { discoveryParticipants, discoveryTitle } from '../../../domain/islandLife/discoveryRecall';
+import { discoveryParticipants, discoverySubject, discoveryTitle } from '../../../domain/islandLife/discoveryRecall';
 import { editDiscoveryMemory } from '../../../domain/islandLife/discoveryRepository';
 import { holdPwaUpdateForCriticalPersistence } from '../../../pwa';
 import { useDiscoveryJournal } from './useDiscoveryJournal';
@@ -13,7 +13,7 @@ import './life-observation.css';
 import './life-memories.css';
 
 export default function LifeMemories({ profileId, state, close, observe, observeGathering }: {
-    profileId: string; state: LifeState; close: () => void; observe: (itemId: string) => void; observeGathering?: (group: { ruleId: RuleEligibility['ruleId']; participantIds: string[] }) => void;
+    profileId: string; state: LifeState; close: () => void; observe: (itemId: string, residentId?: ResidentId) => void; observeGathering?: (group: { ruleId: RuleEligibility['ruleId']; participantIds: string[] }) => void;
 }) {
     const { journal, error: readError, retry } = useDiscoveryJournal(profileId);
     const [tab, setTab] = useState<'saved' | 'history'>('saved');
@@ -41,7 +41,7 @@ export default function LifeMemories({ profileId, state, close, observe, observe
     const participants = selected ? discoveryParticipants(selected) : [];
     const gathering = selected?.ruleId.startsWith('G') ? { ruleId: selected.ruleId, participantIds: participants.map(item => item.id) } : undefined;
     const currentGathering = gathering && participants.length > 0 && participants.every(participant => state.items.some(item => item.id === participant.id && item.kind === participant.kind && item.cell));
-    const subject = selected && discoveryParticipants(selected).find(item => selected.ruleId === 'M2' ? item.kind === 'flower' || item.kind === 'sapling' : item.kind === (selected.ruleId === 'R6' ? 'garden-hut' : selected.ruleId === 'R2' ? 'picnic-table' : 'bench'));
+    const subject = selected && discoverySubject(selected);
     const current = subject && state.items.find(item => item.id === subject.id && item.kind === subject.kind && item.cell);
     const ids = journal ? tab === 'saved' ? [...journal.savedIds].reverse() : journal.historyIds : [];
     const reset = () => { setSelected(undefined); setConfirmUnpin(false); setError(''); };
@@ -54,7 +54,7 @@ export default function LifeMemories({ profileId, state, close, observe, observe
                     <h3>{discoveryTitle(selected)}</h3>
                     <LifeSceneReplay key={selected.eventId} original={selected} />
                     <div className="life-memory-actions">
-                        {gathering ? currentGathering && observeGathering ? <button type="button" onClick={() => observeGathering(gathering)}>いまの島でみる</button> : <p>いまは しまに おいていないものが あるよ</p> : current ? <button type="button" onClick={() => observe(current.id)}>いまの島でみる</button> : subject && <p>いまは しまに おいていないよ</p>}
+                        {gathering ? currentGathering && observeGathering ? <button type="button" onClick={() => observeGathering(gathering)}>いまの島でみる</button> : <p>いまは しまに おいていないものが あるよ</p> : current ? <button type="button" onClick={() => observe(current.id, selected.snapshot.scene.observationResidentId ?? selected.focalResidentIds[0])}>いまの島でみる</button> : subject && <p>いまは しまに おいていないよ</p>}
                         {!confirmUnpin && <button type="button" disabled={busy} onClick={() => saved ? setConfirmUnpin(true) : void changeMemory('save')}>{saved ? 'のこすのを やめる' : 'のこす'}</button>}
                     </div>
                     {confirmUnpin && <div className="life-memory-confirm"><p>この おもいでを、のこす ばしょから はずす？</p>

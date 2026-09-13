@@ -1,6 +1,6 @@
 import { facilityRelations } from './facilityRelations';
 import { Vector3, type Camera } from 'three';
-import { benchRelation } from '../../../domain/islandLife/discovery';
+import { visitRelation } from '../../../domain/islandLife/discovery';
 import type { LifeState, ResidentId } from '../../../domain/islandLife/model';
 import type { LiveDiscoveryCandidate } from './gatheringCollector';
 import type { buildLifeScene } from './scene';
@@ -13,8 +13,8 @@ export function liveRelations(state: LifeState, profileId: string, content: Retu
         if ((pose.phase !== 'bench' && pose.phase !== 'picnic-table') || !pose.itemId || !pose.relation?.ready) return [];
         // Two table partners describe one shared episode, not one per head.
         if (pose.phase === 'picnic-table' && pose.relation.targetResidentId && pose.id > pose.relation.targetResidentId) return [];
-        const relation = pose.relation, rule = benchRelation(state, profileId, pose.itemId,
-            state.relationTarget?.benchId === pose.itemId ? state.relationTarget.targetId : undefined);
+        const relation = pose.relation, visit = state.residents.find(r => r.id === pose.id)?.visit;
+        const rule = visit ? visitRelation(state, profileId, visit) : undefined;
         if (!rule || rule.ruleId !== relation.ruleId || !rule.participantIds.includes(relation.targetId)) return [];
         const focalResidentIds = [pose.id, ...(relation.targetResidentId ? [relation.targetResidentId] : [])] as ResidentId[];
         // A free observation visit keeps its test provenance after closing the panel.
