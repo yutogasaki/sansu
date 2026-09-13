@@ -1,0 +1,54 @@
+import { chromium } from '/Users/yutogasaki/Projects/sansu/node_modules/playwright/index.mjs';
+import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { saved, openObservation, closeMenu } from '/Users/yutogasaki/Projects/sansu/tools/island-life-ui-helpers.mjs';
+import { waitForAsync, readNative } from '/Users/yutogasaki/Projects/sansu/tools/island-e2e-helpers.mjs';
+import assert from 'node:assert/strict';
+const source=JSON.parse(await readFile('/tmp/sansu-reading-diagnostic-1/natural.json'));
+const out='/tmp/sansu-reading-natural-1';await mkdir(out,{recursive:false});
+const browser=await chromium.launch();const page=await browser.newPage({viewport:{width:390,height:844},hasTouch:true});
+page.setDefaultTimeout(45000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
+const report={fixture:'Restore the same prior QA purchase record and original realAt without changing any resident or world time. Advance only by actual wall clock.',startedAt:Date.now(),samples:[],pass:false};
+try{
+    await page.goto('http://127.0.0.1:5223');
+    await page.evaluate(async record=>{
+        const {lifeDb}=await import('/src/domain/islandLife/repository.ts');
+        const {createInitialProfile}=await import('/src/domain/user/profile.ts');
+        const {saveProfile,setActiveProfileId}=await import('/src/domain/user/repository.ts');
+        if(lifeDb.name!=='SansuIslandLifePreviewV1')throw Error('DEV only');
+        const profile=createInitialProfile('検証',2,0,1,'math');profile.id=record.profileId;profile.soundEnabled=false;
+        await saveProfile(profile);await setActiveProfileId(profile.id);await lifeDb.worlds.put(record);
+    },source.record);
+    const id=source.record.profileId;
+    await page.reload();await page.locator('.life-world[data-rendered="true"]').waitFor();
+    let key='',reader;
+    const until=Date.now()+75*60*1000;
+    while(Date.now()<until){
+        const current=await saved(page,id,true);
+        reader=await page.evaluate(async s=>{const {readingOtter}=await import('/src/domain/islandLife/readingEncounter.ts');return readingOtter({...s,readingEncounterVersion:1})},current.state);
+        const next=JSON.stringify(current.state.residents.map(r=>[r.id,r.visit?.itemId,r.visit?.start,r.facilityTrip?.phase]));
+        if(next!==key){key=next;const sample={at:Date.now(),now:current.state.now,residents:current.state.residents};report.samples.push(sample);console.log(JSON.stringify(sample));await writeFile(`${out}/progress.json`,JSON.stringify(report,null,2));}
+        if(reader)break;
+        await page.waitForTimeout(5000);
+    }
+    assert(reader,'No naturally reading otter during the observation window');
+    const before=await saved(page,id),native=await readNative(page,id);report.before=before;
+    await openObservation(page,reader.bench.id);
+    await waitForAsync(page,async id=>{const {lifeDb}=await import('/src/domain/islandLife/repository.ts');return(await lifeDb.worlds.get(id)).discoveryJournal?.entries.some(e=>e.event.ruleId==='X3');},id);
+    const original=(await saved(page,id)).record.discoveryJournal.entries.find(e=>e.event.ruleId==='X3').event;
+    report.original=original;assert.equal(original.source,'current-context-test');
+    assert.deepEqual((await saved(page,id)).record.actions,before.record.actions);
+    await page.getByRole('button',{name:'のこす',exact:true}).click();
+    await waitForAsync(page,async({id,eventId})=>{const {lifeDb}=await import('/src/domain/islandLife/repository.ts');return(await lifeDb.worlds.get(id)).discoveryJournal.savedIds.includes(eventId);},{id,eventId:original.eventId});
+    await page.screenshot({path:`${out}/natural-recorded.png`});
+    await page.keyboard.press('Escape');await closeMenu(page);
+    await page.getByRole('button',{name:'しまの ようす',exact:true}).click();await page.getByRole('button',{name:'しまの おもいで',exact:true}).click();
+    await page.getByRole('button',{name:'のこした おもいで',exact:true}).click();await page.locator(`[data-life-memory="${original.eventId}"]`).click();
+    await page.getByRole('button',{name:'いまの島でみる',exact:true}).click();
+    await waitForAsync(page,async({id,eventId})=>{const {lifeDb}=await import('/src/domain/islandLife/repository.ts');return(await lifeDb.worlds.get(id)).discoveryJournal.entries.some(e=>e.event.ruleId==='X3'&&e.event.source==='current-context-test'&&e.event.eventId!==eventId);},{id,eventId:original.eventId});
+    const after=await saved(page,id);report.after=after;
+    assert.deepEqual(after.record.actions,before.record.actions);assert.deepEqual(await readNative(page,id),native);
+    assert.equal(after.state.drops,before.state.drops);assert.equal(after.state.light,before.state.light);
+    await page.screenshot({path:`${out}/current-same-otter.png`});
+    assert.deepEqual(errors,[]);report.pass=true;
+}catch(error){report.error=error.stack;await page.screenshot({path:`${out}/failure.png`}).catch(()=>{});throw error;}
+finally{report.errors=errors;await writeFile(`${out}/report.json`,JSON.stringify(report,null,2));await browser.close();}

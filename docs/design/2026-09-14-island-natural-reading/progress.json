@@ -1,0 +1,872 @@
+{
+  "fixture": "Restore the same prior QA purchase record and original realAt without changing any resident or world time. Advance only by actual wall clock.",
+  "startedAt": 1789311818566,
+  "samples": [
+    {
+      "at": 1789311822458,
+      "now": 1789311822281,
+      "residents": [
+        {
+          "id": "pokomoko",
+          "cell": {
+            "x": 0,
+            "z": 2
+          },
+          "enjoyed": 0,
+          "enjoyedBy": {},
+          "discovery": {
+            "itemId": "qa-bench-2",
+            "at": 1789310995892,
+            "mood": "notice"
+          },
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "qa-bench-2",
+            "from": {
+              "x": 0,
+              "z": 2
+            },
+            "path": [
+              {
+                "x": 0,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 3
+              },
+              {
+                "x": 2,
+                "z": 3
+              },
+              {
+                "x": 3,
+                "z": 3
+              }
+            ],
+            "start": 1789311008692,
+            "end": 1789312795892
+          },
+          "facilityTrip": {
+            "facilityId": "qa-library",
+            "targetId": "qa-bench-2",
+            "kind": "library",
+            "phase": "carry",
+            "path": [
+              {
+                "x": 0,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 3
+              },
+              {
+                "x": 2,
+                "z": 3
+              },
+              {
+                "x": 3,
+                "z": 3
+              }
+            ],
+            "end": 1789312795892
+          }
+        },
+        {
+          "id": "rabbit",
+          "cell": {
+            "x": 3,
+            "z": 1
+          },
+          "enjoyed": 0,
+          "enjoyedBy": {},
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "qa-bench-1",
+            "path": [
+              {
+                "x": 3,
+                "z": 1
+              },
+              {
+                "x": 4,
+                "z": 1
+              },
+              {
+                "x": 4,
+                "z": 2
+              },
+              {
+                "x": 4,
+                "z": 3
+              },
+              {
+                "x": 3,
+                "z": 3
+              },
+              {
+                "x": 2,
+                "z": 3
+              }
+            ],
+            "from": {
+              "x": 3,
+              "z": 1
+            },
+            "start": 1789310995892,
+            "end": 1789312795892
+          },
+          "discovery": {
+            "itemId": "qa-bench-2",
+            "at": 1789310995892,
+            "mood": "notice"
+          }
+        },
+        {
+          "id": "otter",
+          "cell": {
+            "x": 2,
+            "z": 1
+          },
+          "enjoyed": 0,
+          "enjoyedBy": {},
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "qa-bench-0",
+            "path": [
+              {
+                "x": 2,
+                "z": 1
+              },
+              {
+                "x": 3,
+                "z": 1
+              },
+              {
+                "x": 4,
+                "z": 1
+              },
+              {
+                "x": 4,
+                "z": 2
+              },
+              {
+                "x": 4,
+                "z": 3
+              },
+              {
+                "x": 3,
+                "z": 3
+              },
+              {
+                "x": 2,
+                "z": 3
+              },
+              {
+                "x": 1,
+                "z": 3
+              },
+              {
+                "x": 1,
+                "z": 4
+              },
+              {
+                "x": 0,
+                "z": 4
+              }
+            ],
+            "from": {
+              "x": 2,
+              "z": 1
+            },
+            "start": 1789310995892,
+            "end": 1789312795892
+          },
+          "discovery": {
+            "itemId": "qa-bench-2",
+            "at": 1789310995892,
+            "mood": "notice"
+          }
+        }
+      ]
+    },
+    {
+      "at": 1789312796663,
+      "now": 1789312796500,
+      "residents": [
+        {
+          "id": "pokomoko",
+          "cell": {
+            "x": 3,
+            "z": 3
+          },
+          "enjoyed": 1,
+          "enjoyedBy": {
+            "bench": 1
+          },
+          "discovery": {
+            "itemId": "qa-bench-2",
+            "at": 1789310995892,
+            "mood": "notice"
+          },
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "qa-library",
+            "path": [
+              {
+                "x": 3,
+                "z": 3
+              },
+              {
+                "x": 2,
+                "z": 3
+              },
+              {
+                "x": 1,
+                "z": 3
+              },
+              {
+                "x": 1,
+                "z": 2
+              },
+              {
+                "x": 0,
+                "z": 2
+              }
+            ],
+            "from": {
+              "x": 3,
+              "z": 3
+            },
+            "start": 1789312795892,
+            "end": 1789312802692
+          },
+          "facilityTrip": {
+            "facilityId": "qa-library",
+            "targetId": "qa-bench-2",
+            "kind": "library",
+            "phase": "collect",
+            "path": [
+              {
+                "x": 0,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 3
+              },
+              {
+                "x": 2,
+                "z": 3
+              },
+              {
+                "x": 3,
+                "z": 3
+              }
+            ],
+            "end": 1789314595892
+          }
+        },
+        {
+          "id": "rabbit",
+          "cell": {
+            "x": 2,
+            "z": 3
+          },
+          "enjoyed": 1,
+          "enjoyedBy": {
+            "bench": 1
+          },
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "qa-bench-0",
+            "path": [
+              {
+                "x": 2,
+                "z": 3
+              },
+              {
+                "x": 1,
+                "z": 3
+              },
+              {
+                "x": 1,
+                "z": 4
+              },
+              {
+                "x": 0,
+                "z": 4
+              }
+            ],
+            "from": {
+              "x": 2,
+              "z": 3
+            },
+            "start": 1789312795892,
+            "end": 1789314595892
+          },
+          "discovery": {
+            "itemId": "qa-bench-2",
+            "at": 1789310995892,
+            "mood": "notice"
+          }
+        },
+        {
+          "id": "otter",
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "enjoyed": 1,
+          "enjoyedBy": {
+            "bench": 1
+          },
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "qa-bench-1",
+            "path": [
+              {
+                "x": 0,
+                "z": 4
+              },
+              {
+                "x": 1,
+                "z": 4
+              },
+              {
+                "x": 2,
+                "z": 4
+              },
+              {
+                "x": 2,
+                "z": 3
+              }
+            ],
+            "from": {
+              "x": 0,
+              "z": 4
+            },
+            "start": 1789312795892,
+            "end": 1789314595892
+          },
+          "discovery": {
+            "itemId": "qa-bench-2",
+            "at": 1789310995892,
+            "mood": "notice"
+          }
+        }
+      ]
+    },
+    {
+      "at": 1789312807757,
+      "now": 1789312807590,
+      "residents": [
+        {
+          "id": "pokomoko",
+          "cell": {
+            "x": 0,
+            "z": 2
+          },
+          "enjoyed": 1,
+          "enjoyedBy": {
+            "bench": 1
+          },
+          "discovery": {
+            "itemId": "qa-bench-2",
+            "at": 1789310995892,
+            "mood": "notice"
+          },
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "qa-bench-2",
+            "from": {
+              "x": 0,
+              "z": 2
+            },
+            "path": [
+              {
+                "x": 0,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 3
+              },
+              {
+                "x": 2,
+                "z": 3
+              },
+              {
+                "x": 3,
+                "z": 3
+              }
+            ],
+            "start": 1789312802692,
+            "end": 1789314595892
+          },
+          "facilityTrip": {
+            "facilityId": "qa-library",
+            "targetId": "qa-bench-2",
+            "kind": "library",
+            "phase": "carry",
+            "path": [
+              {
+                "x": 0,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 3
+              },
+              {
+                "x": 2,
+                "z": 3
+              },
+              {
+                "x": 3,
+                "z": 3
+              }
+            ],
+            "end": 1789314595892
+          }
+        },
+        {
+          "id": "rabbit",
+          "cell": {
+            "x": 2,
+            "z": 3
+          },
+          "enjoyed": 1,
+          "enjoyedBy": {
+            "bench": 1
+          },
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "qa-bench-0",
+            "path": [
+              {
+                "x": 2,
+                "z": 3
+              },
+              {
+                "x": 1,
+                "z": 3
+              },
+              {
+                "x": 1,
+                "z": 4
+              },
+              {
+                "x": 0,
+                "z": 4
+              }
+            ],
+            "from": {
+              "x": 2,
+              "z": 3
+            },
+            "start": 1789312795892,
+            "end": 1789314595892
+          },
+          "discovery": {
+            "itemId": "qa-bench-2",
+            "at": 1789310995892,
+            "mood": "notice"
+          }
+        },
+        {
+          "id": "otter",
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "enjoyed": 1,
+          "enjoyedBy": {
+            "bench": 1
+          },
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "qa-bench-1",
+            "path": [
+              {
+                "x": 0,
+                "z": 4
+              },
+              {
+                "x": 1,
+                "z": 4
+              },
+              {
+                "x": 2,
+                "z": 4
+              },
+              {
+                "x": 2,
+                "z": 3
+              }
+            ],
+            "from": {
+              "x": 0,
+              "z": 4
+            },
+            "start": 1789312795892,
+            "end": 1789314595892
+          },
+          "discovery": {
+            "itemId": "qa-bench-2",
+            "at": 1789310995892,
+            "mood": "notice"
+          }
+        }
+      ]
+    },
+    {
+      "at": 1789314600313,
+      "now": 1789314600136,
+      "residents": [
+        {
+          "id": "pokomoko",
+          "cell": {
+            "x": 3,
+            "z": 3
+          },
+          "enjoyed": 2,
+          "enjoyedBy": {
+            "bench": 2
+          },
+          "discovery": {
+            "itemId": "qa-bench-2",
+            "at": 1789310995892,
+            "mood": "notice"
+          },
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "qa-library",
+            "path": [
+              {
+                "x": 3,
+                "z": 3
+              },
+              {
+                "x": 2,
+                "z": 3
+              },
+              {
+                "x": 1,
+                "z": 3
+              },
+              {
+                "x": 1,
+                "z": 2
+              },
+              {
+                "x": 0,
+                "z": 2
+              }
+            ],
+            "from": {
+              "x": 3,
+              "z": 3
+            },
+            "start": 1789314595892,
+            "end": 1789314602692
+          },
+          "facilityTrip": {
+            "facilityId": "qa-library",
+            "targetId": "qa-bench-0",
+            "kind": "library",
+            "phase": "collect",
+            "path": [
+              {
+                "x": 0,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 3
+              },
+              {
+                "x": 1,
+                "z": 4
+              },
+              {
+                "x": 0,
+                "z": 4
+              }
+            ],
+            "end": 1789316395892
+          }
+        },
+        {
+          "id": "rabbit",
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "enjoyed": 2,
+          "enjoyedBy": {
+            "bench": 2
+          },
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "qa-bench-1",
+            "path": [
+              {
+                "x": 0,
+                "z": 4
+              },
+              {
+                "x": 1,
+                "z": 4
+              },
+              {
+                "x": 2,
+                "z": 4
+              },
+              {
+                "x": 2,
+                "z": 3
+              }
+            ],
+            "from": {
+              "x": 0,
+              "z": 4
+            },
+            "start": 1789314595892,
+            "end": 1789316395892
+          },
+          "discovery": {
+            "itemId": "qa-bench-2",
+            "at": 1789310995892,
+            "mood": "notice"
+          }
+        },
+        {
+          "id": "otter",
+          "cell": {
+            "x": 2,
+            "z": 3
+          },
+          "enjoyed": 2,
+          "enjoyedBy": {
+            "bench": 2
+          },
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "qa-bench-2",
+            "path": [
+              {
+                "x": 2,
+                "z": 3
+              },
+              {
+                "x": 3,
+                "z": 3
+              }
+            ],
+            "from": {
+              "x": 2,
+              "z": 3
+            },
+            "start": 1789314595892,
+            "end": 1789316395892
+          },
+          "discovery": {
+            "itemId": "qa-bench-2",
+            "at": 1789310995892,
+            "mood": "notice"
+          }
+        }
+      ]
+    },
+    {
+      "at": 1789314606057,
+      "now": 1789314605858,
+      "residents": [
+        {
+          "id": "pokomoko",
+          "cell": {
+            "x": 0,
+            "z": 2
+          },
+          "enjoyed": 2,
+          "enjoyedBy": {
+            "bench": 2
+          },
+          "discovery": {
+            "itemId": "qa-bench-2",
+            "at": 1789310995892,
+            "mood": "notice"
+          },
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "qa-bench-0",
+            "from": {
+              "x": 0,
+              "z": 2
+            },
+            "path": [
+              {
+                "x": 0,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 3
+              },
+              {
+                "x": 1,
+                "z": 4
+              },
+              {
+                "x": 0,
+                "z": 4
+              }
+            ],
+            "start": 1789314602692,
+            "end": 1789316395892
+          },
+          "facilityTrip": {
+            "facilityId": "qa-library",
+            "targetId": "qa-bench-0",
+            "kind": "library",
+            "phase": "carry",
+            "path": [
+              {
+                "x": 0,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 2
+              },
+              {
+                "x": 1,
+                "z": 3
+              },
+              {
+                "x": 1,
+                "z": 4
+              },
+              {
+                "x": 0,
+                "z": 4
+              }
+            ],
+            "end": 1789316395892
+          }
+        },
+        {
+          "id": "rabbit",
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "enjoyed": 2,
+          "enjoyedBy": {
+            "bench": 2
+          },
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "qa-bench-1",
+            "path": [
+              {
+                "x": 0,
+                "z": 4
+              },
+              {
+                "x": 1,
+                "z": 4
+              },
+              {
+                "x": 2,
+                "z": 4
+              },
+              {
+                "x": 2,
+                "z": 3
+              }
+            ],
+            "from": {
+              "x": 0,
+              "z": 4
+            },
+            "start": 1789314595892,
+            "end": 1789316395892
+          },
+          "discovery": {
+            "itemId": "qa-bench-2",
+            "at": 1789310995892,
+            "mood": "notice"
+          }
+        },
+        {
+          "id": "otter",
+          "cell": {
+            "x": 2,
+            "z": 3
+          },
+          "enjoyed": 2,
+          "enjoyedBy": {
+            "bench": 2
+          },
+          "visit": {
+            "relationSelectionVersion": 1,
+            "itemId": "qa-bench-2",
+            "path": [
+              {
+                "x": 2,
+                "z": 3
+              },
+              {
+                "x": 3,
+                "z": 3
+              }
+            ],
+            "from": {
+              "x": 2,
+              "z": 3
+            },
+            "start": 1789314595892,
+            "end": 1789316395892
+          },
+          "discovery": {
+            "itemId": "qa-bench-2",
+            "at": 1789310995892,
+            "mood": "notice"
+          }
+        }
+      ]
+    }
+  ],
+  "pass": false
+}
