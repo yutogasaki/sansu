@@ -1,3 +1,4 @@
+import { canopyAtmosphereStudy, createCanopyLightingStudy } from './canopyAtmosphereStudy';
 import { makeEncounterObservation } from './encounterObservation';
 import { makeReadingObservation } from './readingObservation';
 import { makeShadowObservation, shadowObservationTime, shadowRequestExpired, type ShadowRequest } from './shadowObservation';
@@ -35,10 +36,11 @@ export default function RelationObservationView(props: Props) {
         const scene = new T.Scene(); scene.background = new T.Color('#dcece6');
         const targetRing = new T.Mesh(new T.RingGeometry(.65, .70, 48), new T.MeshBasicMaterial({ color: '#ffeaa2', transparent: true, opacity: .7, side: T.DoubleSide, depthWrite: false }));
         targetRing.rotation.x = -Math.PI / 2; targetRing.visible = false; scene.add(targetRing);
-        scene.add(new T.HemisphereLight('#fff7ea', '#63806c', 1.15));
+        const hemi = new T.HemisphereLight('#fff7ea', '#63806c', 1.15); scene.add(hemi);
         const light = new T.DirectionalLight('#fff4e0', 2.3); light.position.set(-3, 8, 4); light.castShadow = true;
         light.shadow.mapSize.set(1024, 1024); light.shadow.camera.left = -8; light.shadow.camera.right = 8; light.shadow.camera.top = 6; light.shadow.camera.bottom = -6;
         light.shadow.normalBias = .025; light.shadow.bias = -.0002; scene.add(light);
+        const studyLighting = canopyAtmosphereStudy ? createCanopyLightingStudy(scene, hemi, light) : undefined;
         renderer.shadowMap.enabled = true; renderer.shadowMap.type = T.PCFSoftShadowMap;
         renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5)); renderer.outputColorSpace = T.SRGBColorSpace;
         renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = .95;
@@ -113,6 +115,8 @@ export default function RelationObservationView(props: Props) {
             if (benchId !== (latest.current.benchId ?? '')) cancel();
             source = latest.current.state; benchId = latest.current.benchId ?? ''; start = performance.now();
             if (content) { scene.remove(content.root); content.dispose(); }
+            studyLighting?.set(source.worldStyle === 'canopy-dots-c3-v1' ? canopyAtmosphereStudy : undefined);
+            if (studyLighting) node.dataset.lifeStudyLighting = JSON.stringify(studyLighting.snapshot());
             content = buildLifeScene(source); scene.add(content.root); node.dataset.lifeWorldStyle = content.root.userData.worldStyle; content.animate(source.now, matchMedia('(prefers-reduced-motion: reduce)').matches); resize();
         };
         const observer = new ResizeObserver(resize); observer.observe(node); update.current();
@@ -147,7 +151,7 @@ export default function RelationObservationView(props: Props) {
                 }
                 const canopy = content.root.getObjectByName('life-canopy-c3');
                 node.dataset.lifeSculptStatus = canopy?.userData.sculptStatus ?? 'none';
-                node.dataset.lifeVisualCandidate = canopy?.userData.sculptStatus ? canopy.userData.visualCandidate : content.root.getObjectByName('life-landscape')?.userData.visualCandidate ?? canopy?.userData.visualCandidate ?? content.root.userData.worldStyle;
+                node.dataset.lifeVisualCandidate = source?.worldStyle === 'canopy-dots-c3-v1' && canopyAtmosphereStudy ? `canopy-atmosphere-${canopyAtmosphereStudy}-study-v1` : canopy?.userData.sculptStatus ? canopy.userData.visualCandidate : content.root.getObjectByName('life-landscape')?.userData.visualCandidate ?? canopy?.userData.visualCandidate ?? content.root.userData.worldStyle;
                 renderer.render(scene, camera); node.dataset.rendered = 'true';
                 const findTransport = () => facilityRelations(stateAtFrame, '', content!, camera, ndc => {
                     const rect = node.getBoundingClientRect();
@@ -228,7 +232,7 @@ export default function RelationObservationView(props: Props) {
         // Parent persistence guards must finish mounting (including StrictMode's
         // cleanup/setup cycle) before an automatically visible scene is prepared.
         raf = requestAnimationFrame(frame);
-        return () => { alive = false; cancel(); update.current = undefined; cancelAnimationFrame(raf); observer.disconnect(); reading.dispose(); encounter.dispose(); encounterTrigger.current = undefined; shadow.dispose(); shadowTrigger.current = undefined; content?.dispose();
+        return () => { alive = false; cancel(); update.current = undefined; cancelAnimationFrame(raf); observer.disconnect(); reading.dispose(); encounter.dispose(); encounterTrigger.current = undefined; shadow.dispose(); shadowTrigger.current = undefined; studyLighting?.dispose(); content?.dispose();
             renderer.domElement.removeEventListener('click', pick); document.removeEventListener('visibilitychange', hidden); renderer.domElement.removeEventListener('webglcontextlost', lost); renderer.domElement.removeEventListener('webglcontextrestored', restored);
             targetRing.geometry.dispose(); targetRing.material.dispose(); light.shadow.dispose(); renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); };
     }, []);

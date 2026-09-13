@@ -1,0 +1,144 @@
+{
+  "startHash": "ccbea5190f46bb1a2c0cd450c35c04aeb927db4d40fc2b12f500944baafcc868",
+  "revision": "1695d901c87ce728f0c0d72f5501875bf95eee95",
+  "target": "http://127.0.0.1:5247",
+  "candidate": "canopy-atmosphere-shelter-study-v1",
+  "flags": "DEV VITE_ISLAND_LIFE_PREVIEW=true; material study true; ground variant turf; shore variant lagoon; sculpt buttress; atmosphere shelter",
+  "cache": "fresh DEV context; no production SW claim",
+  "fixture": "three connected flowers and an explicitly simulated old-world saved memory; no earned acquisition or historical user activity claim",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": true,
+      "errors": [],
+      "delivery": {
+        "builds": [
+          {
+            "buildRevision": "development-local",
+            "deliveryId": "snap-root-v1",
+            "configuredDeliveryId": "snap-root-v1",
+            "visualLineageId": "pokko-field-v1"
+          },
+          {
+            "layoutVersion": "display-v1",
+            "gameId": "mystic-island-v1",
+            "mode": "home",
+            "lifeHome": "true",
+            "homeLayout": "world-first-v2",
+            "complex": "false",
+            "visualCandidateId": "mystic-island-shore-garden-v18",
+            "deliveryId": "mystic-island-v1",
+            "learningCandidate": "mystic-island-learning-v2",
+            "islandRevision": "0",
+            "discoveryCount": "0",
+            "buildRevision": "development-local",
+            "buildVersion": "development-local:d2aa3577-47e1-45b4-8793-746b937609f5",
+            "busy": "false"
+          }
+        ],
+        "world": {
+          "placing": "false",
+          "lifeWorldStyle": "canopy-dots-c3-v1",
+          "lifeStudyLighting": "{\"sky\":\"f2f2e6\",\"ground\":\"476e70\",\"hemi\":0.92,\"sun\":\"fff0d5\",\"strength\":2.65,\"direction\":[-4,6,3],\"fill\":0.22}",
+          "lifeVisualCandidate": "canopy-atmosphere-shelter-study-v1",
+          "lifeLandscapeVersion": "groves-water-v1",
+          "lifeTourVersion": "1",
+          "lifeCamera": "{\"projection\":[0.27479661615446876,0,0,0,0,0.17743490115934235,0,0,0,0,-0.02002002002002002,0,-0.19332256705876566,-0.18630664621730944,-1.002002002002002,1],\"view\":[0.9731846127764102,-0.0961377075305716,0.20897188960717858,0,0,0.9084728930551647,0.4179437792143572,0,-0.23002545392896967,-0.4067364549370337,0.8841118406457555,0,-4.2327252813834093e-16,-0.18169457861103258,-12.525453567839506,1],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":-2.220446049250313e-16},\"manual\":false}}",
+          "lifeSculptStatus": "ready",
+          "lifeGroundMaterialStatus": "ready",
+          "worldShadowUpdateMs": "0",
+          "rendered": "true",
+          "worldShadowSampleMs": "0",
+          "lifeGatherings": "[{\"ruleId\":\"G0\",\"ids\":[\"qa-flower-0\",\"qa-flower-1\",\"qa-flower-2\"],\"core\":false,\"reason\":\"item-clipped:qa-flower-0\"}]",
+          "lifeRelations": "[]",
+          "lifePoses": "[{\"id\":\"pokomoko\",\"itemId\":\"qa-flower-1\",\"phase\":\"walking\",\"position\":[-1.452640874245711,0.04,-1],\"reaction\":\"!\",\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"rabbit\",\"itemId\":\"qa-flower-2\",\"phase\":\"walking\",\"position\":[0.5,0.04,-0.0473591257542888],\"reaction\":\"!\",\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"otter\",\"itemId\":\"qa-flower-1\",\"phase\":\"walking\",\"position\":[0.5,0.04,0.5898468427730595],\"reaction\":\"!\",\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0}]",
+          "lifeRender": "{\"calls\":208,\"triangles\":196058,\"geometries\":138,\"textures\":11}"
+        },
+        "shellBackground": "rgb(32, 134, 181)"
+      },
+      "cameraComparison": {
+        "baseline": "http://127.0.0.1:5244",
+        "overviewCamera": "{\"projection\":[0.19235763130812808,0,0,0,0,0.12420443081153965,0,0,0,0,-0.02002002002002002,0,-3.4169579398502506e-16,0.016614179102496282,-1.002002002002002,1],\"view\":[0.925546956205677,-0.207749733943065,0.3165483847771031,0,-5.551115123125784e-17,0.8360299122352686,0.5486838669469786,0,-0.3786328457205044,-0.5078326829719366,0.7737849405662518,0,2.116362640691705e-15,-0.16720598244705165,-14.325573013301563,1.0000000000000002],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":0},\"manual\":false}}",
+        "baselineOverview": "{\"projection\":[0.19235763130812808,0,0,0,0,0.12420443081153965,0,0,0,0,-0.02002002002002002,0,-3.4169579398502506e-16,0.016614179102496282,-1.002002002002002,1],\"view\":[0.925546956205677,-0.207749733943065,0.3165483847771031,0,-5.551115123125784e-17,0.8360299122352686,0.5486838669469786,0,-0.3786328457205044,-0.5078326829719366,0.7737849405662518,0,2.116362640691705e-15,-0.16720598244705165,-14.325573013301563,1.0000000000000002],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":0},\"manual\":false}}",
+        "placementCamera": "{\"projection\":[0.19235763130812808,0,0,0,0,0.12420443081153965,0,0,0,0,-0.02002002002002002,0,-3.4169579398502506e-16,0.016614179102496282,-1.002002002002002,1],\"view\":[0.925546956205677,-0.207749733943065,0.3165483847771031,0,-5.551115123125784e-17,0.8360299122352686,0.5486838669469786,0,-0.3786328457205044,-0.5078326829719366,0.7737849405662518,0,2.116362640691705e-15,-0.16720598244705165,-14.325573013301563,1.0000000000000002],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":0},\"manual\":false}}",
+        "baselinePlacement": "{\"projection\":[0.19235763130812808,0,0,0,0,0.12420443081153965,0,0,0,0,-0.02002002002002002,0,-3.4169579398502506e-16,0.016614179102496282,-1.002002002002002,1],\"view\":[0.925546956205677,-0.207749733943065,0.3165483847771031,0,-5.551115123125784e-17,0.8360299122352686,0.5486838669469786,0,-0.3786328457205044,-0.5078326829719366,0.7737849405662518,0,2.116362640691705e-15,-0.16720598244705165,-14.325573013301563,1.0000000000000002],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":0},\"manual\":false}}",
+        "previewCell": "4,4",
+        "cancelled": true
+      },
+      "originalHash": "c650ecd89c52105332a086f4cb6d725a0282fb175da77c532648d6da76531c21"
+    },
+    {
+      "device": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "pass": true,
+      "errors": [],
+      "delivery": {
+        "builds": [
+          {
+            "buildRevision": "development-local",
+            "deliveryId": "snap-root-v1",
+            "configuredDeliveryId": "snap-root-v1",
+            "visualLineageId": "pokko-field-v1"
+          },
+          {
+            "layoutVersion": "display-v1",
+            "gameId": "mystic-island-v1",
+            "mode": "home",
+            "lifeHome": "true",
+            "homeLayout": "world-first-v2",
+            "complex": "false",
+            "visualCandidateId": "mystic-island-shore-garden-v18",
+            "deliveryId": "mystic-island-v1",
+            "learningCandidate": "mystic-island-learning-v2",
+            "islandRevision": "0",
+            "discoveryCount": "0",
+            "buildRevision": "development-local",
+            "buildVersion": "development-local:d2aa3577-47e1-45b4-8793-746b937609f5",
+            "busy": "false"
+          }
+        ],
+        "world": {
+          "placing": "false",
+          "lifeWorldStyle": "canopy-dots-c3-v1",
+          "lifeStudyLighting": "{\"sky\":\"f2f2e6\",\"ground\":\"476e70\",\"hemi\":0.92,\"sun\":\"fff0d5\",\"strength\":2.65,\"direction\":[-4,6,3],\"fill\":0.22}",
+          "lifeVisualCandidate": "canopy-atmosphere-shelter-study-v1",
+          "lifeLandscapeVersion": "groves-water-v1",
+          "lifeTourVersion": "1",
+          "lifeCamera": "{\"projection\":[0.2374031007751938,0,0,0,0,0.23255813953488372,0,0,0,0,-0.02002002002002002,0,-0.16701580067409777,-0.24418604651162787,-1.002002002002002,1],\"view\":[0.9731846127764102,-0.0961377075305716,0.20897188960717858,0,0,0.9084728930551647,0.4179437792143572,0,-0.23002545392896967,-0.4067364549370337,0.8841118406457555,0,-4.2327252813834093e-16,-0.18169457861103258,-12.525453567839506,1],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":0},\"manual\":false}}",
+          "lifeSculptStatus": "ready",
+          "lifeGroundMaterialStatus": "ready",
+          "worldShadowUpdateMs": "0",
+          "rendered": "true",
+          "worldShadowSampleMs": "0",
+          "lifeGatherings": "[{\"ruleId\":\"G0\",\"ids\":[\"qa-flower-0\",\"qa-flower-1\",\"qa-flower-2\"],\"core\":true}]",
+          "lifeRelations": "[]",
+          "lifePoses": "[{\"id\":\"pokomoko\",\"itemId\":\"qa-flower-1\",\"phase\":\"walking\",\"position\":[-1.5,0.04,-0.590169799245956],\"reaction\":\"!\",\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"rabbit\",\"itemId\":\"qa-flower-2\",\"phase\":\"walking\",\"position\":[0.5,0.04,0.40983020075404397],\"reaction\":\"!\",\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0},{\"id\":\"otter\",\"itemId\":\"qa-flower-1\",\"phase\":\"walking\",\"position\":[0.5,0.04,0.9674176387123765],\"reaction\":\"!\",\"hop\":0,\"headPitch\":0,\"headRoll\":0,\"headYaw\":0}]",
+          "lifeRender": "{\"calls\":208,\"triangles\":196058,\"geometries\":138,\"textures\":11}"
+        },
+        "shellBackground": "rgb(32, 134, 181)"
+      },
+      "cameraComparison": {
+        "baseline": "http://127.0.0.1:5244",
+        "overviewCamera": "{\"projection\":[0.19235763130812808,0,0,0,0,0.18843196536306425,0,0,0,0,-0.02002002002002002,0,-3.4169579398502506e-16,0.02520556151436782,-1.002002002002002,1],\"view\":[0.925546956205677,-0.207749733943065,0.3165483847771031,0,-5.551115123125784e-17,0.8360299122352686,0.5486838669469786,0,-0.3786328457205044,-0.5078326829719366,0.7737849405662518,0,2.116362640691705e-15,-0.16720598244705165,-14.325573013301563,1.0000000000000002],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":3.608224830031759e-16},\"manual\":false}}",
+        "baselineOverview": "{\"projection\":[0.19235763130812808,0,0,0,0,0.18843196536306425,0,0,0,0,-0.02002002002002002,0,-3.4169579398502506e-16,0.02520556151436782,-1.002002002002002,1],\"view\":[0.925546956205677,-0.207749733943065,0.3165483847771031,0,-5.551115123125784e-17,0.8360299122352686,0.5486838669469786,0,-0.3786328457205044,-0.5078326829719366,0.7737849405662518,0,2.116362640691705e-15,-0.16720598244705165,-14.325573013301563,1.0000000000000002],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":3.608224830031759e-16},\"manual\":false}}",
+        "placementCamera": "{\"projection\":[0.19235763130812808,0,0,0,0,0.18843196536306425,0,0,0,0,-0.02002002002002002,0,-3.4169579398502506e-16,0.02520556151436782,-1.002002002002002,1],\"view\":[0.925546956205677,-0.207749733943065,0.3165483847771031,0,-5.551115123125784e-17,0.8360299122352686,0.5486838669469786,0,-0.3786328457205044,-0.5078326829719366,0.7737849405662518,0,2.116362640691705e-15,-0.16720598244705165,-14.325573013301563,1.0000000000000002],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":3.608224830031759e-16},\"manual\":false}}",
+        "baselinePlacement": "{\"projection\":[0.19235763130812808,0,0,0,0,0.18843196536306425,0,0,0,0,-0.02002002002002002,0,-3.4169579398502506e-16,0.02520556151436782,-1.002002002002002,1],\"view\":[0.925546956205677,-0.207749733943065,0.3165483847771031,0,-5.551115123125784e-17,0.8360299122352686,0.5486838669469786,0,-0.3786328457205044,-0.5078326829719366,0.7737849405662518,0,2.116362640691705e-15,-0.16720598244705165,-14.325573013301563,1.0000000000000002],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":3.608224830031759e-16},\"manual\":false}}",
+        "previewCell": "4,4",
+        "cancelled": true
+      },
+      "originalHash": "38c9d632ff015089449abc64d37b9f5d8ba1cb67b9b6feb2fa5dc199d0f55e78"
+    }
+  ],
+  "pass": true,
+  "groundAtlasSha256": "271c38b29e133a9a39697800371da0d494edec4830ba8277caf08577d9a1c6a3",
+  "sculptMeshSha256": "cd6deca4a25f2cf9c67352cb1d709b367b6078c051531492c5d04c55a264025f",
+  "endHash": "ccbea5190f46bb1a2c0cd450c35c04aeb927db4d40fc2b12f500944baafcc868"
+}

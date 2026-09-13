@@ -389,3 +389,7 @@ cd0c951のLife有効productionと3781179の固定production buildで、実初回
 ## 根と幹の一体mesh試作
 
 不採用の独立tube追加から、offline smooth unionの閉じた一体meshへ方式変更。3案を実画面で比較し、中程度のbuttressをDEV試作用に選択。細い枝先の孤立片と格子補間の前方ずれを検出・修正した。core409/3953、旧memory保持/現在観察/全体/学習復帰とmesh取得失敗fallbackは両幅PASS。[生成・実画面・独立3判定](../../design/2026-09-14-canopy-sculpt/README.md)。視覚35/60 HOLD・Human N=0、production既定は変更なし。次は構図と光。元の全仕様残件は継続。
+
+## 構図と局所的な光の比較
+
+既存buttress/turf/lagoonで3案を比較し、shelterをDEV試作基準にした。キャラとgeometryは保持。core410/3955と両幅UI3 PASS。近景での花列cropによる未提示と、カメラ履歴まで比較した検査誤りを記録し、全景での実提示/実行列の比較へ修正した。[比較・初回失敗・最終導線・独立3判定](../../design/2026-09-14-canopy-atmosphere/README.md)。視覚36/60 HOLD・Human N=0。次は地面から樹冠までの空間と背景の層。全仕様残件は継続。

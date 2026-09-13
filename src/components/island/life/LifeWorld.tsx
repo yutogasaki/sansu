@@ -1,3 +1,4 @@
+import { canopyAtmosphereStudy, canopyAtmospheres, createCanopyLightingStudy } from './canopyAtmosphereStudy';
 import { makeFootstepPresentation, type FootstepInput } from './footstepPresentation';
 import { makeWorldShadowPresentation } from './worldShadowPresentation';
 import { liveRelations } from './liveRelations';
@@ -44,11 +45,12 @@ export default function LifeWorld({ inspectShadow, observationOpen = false, foot
         let content: Content | undefined, currentState = stateAtMount.current, currentPlacement = placementAtMount.current;
         const presentationClock = new LifePresentationClock();
         const scene = new T.Scene(); scene.background = new T.Color('#278bac');
-        scene.add(new T.HemisphereLight('#fff7ea', '#63806c', 1.15));
+        const hemi = new T.HemisphereLight('#fff7ea', '#63806c', 1.15); scene.add(hemi);
         const sun = new T.DirectionalLight('#fff4e0', 2.3); sun.position.set(-3, 8, 4); sun.castShadow = true;
         sun.shadow.mapSize.set(1024, 1024); sun.shadow.camera.left = -8; sun.shadow.camera.right = 8;
         sun.shadow.camera.top = 6; sun.shadow.camera.bottom = -6; sun.shadow.normalBias = .025; sun.shadow.bias = -.0002;
         scene.add(sun);
+        const studyLighting = canopyAtmosphereStudy ? createCanopyLightingStudy(scene, hemi, sun) : undefined;
         const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100);
         const cameraTarget = new T.Vector3(0, .2, 0), cameraOffset = new T.Vector3(), cameraYAxis = new T.Vector3(0, 1, 0);
         const cameraBaseOffset = new T.Vector3(4.5, 7.8, 11);
@@ -81,9 +83,11 @@ export default function LifeWorld({ inspectShadow, observationOpen = false, foot
             const projectedWidth = ((content?.width ?? 6) + 2) * .926 + ((content?.depth ?? 5) + 1.7) * .379 + .45;
             // The ordinary view reads faces; placement and overview retain the full shore.
             const closeView = !currentPlacement && !overviewRef.current;
-            const halfHeight = Math.max(3.8, projectedWidth / aspect / 2) * (closeView ? .66 : 1);
+            let halfHeight = Math.max(3.8, projectedWidth / aspect / 2) * (closeView ? .66 : 1);
             const canopyView = currentState.worldStyle === 'canopy-dots-c3-v1' && closeView;
-            cameraOffset.copy(canopyView ? new T.Vector3(4.5, 6.0, 11) : cameraBaseOffset).applyAxisAngle(cameraYAxis, cameraControls.view.azimuth);
+            const atmosphere = canopyView && canopyAtmosphereStudy ? canopyAtmospheres[canopyAtmosphereStudy] : undefined;
+            if (atmosphere) halfHeight = Math.max(atmosphere.floor, projectedWidth / aspect / 2 * atmosphere.scale);
+            cameraOffset.copy(atmosphere ? new T.Vector3(...atmosphere.offset) : canopyView ? new T.Vector3(4.5, 6.0, 11) : cameraBaseOffset).applyAxisAngle(cameraYAxis, cameraControls.view.azimuth);
             camera.position.copy(cameraTarget).add(cameraOffset); camera.lookAt(cameraTarget); camera.updateMatrixWorld(true);
             camera.left = -halfHeight * aspect; camera.right = halfHeight * aspect; camera.top = halfHeight; camera.bottom = -halfHeight;
 
@@ -109,7 +113,7 @@ export default function LifeWorld({ inspectShadow, observationOpen = false, foot
                 ground: { origin, x: { x: xBasis.x - origin.x, y: xBasis.y - origin.y }, z: { x: zBasis.x - origin.x, y: zBasis.y - origin.y } },
                 // Bring the doorstep toward the center in the closer view without
                 // changing the full-island frame used for placement and overview.
-                center: closeView ? { x: project(pointFor(2.5, 1)).x * .45, y: canopyView ? .95 : 0 } : project(pointFor(center, ((content?.depth ?? 5) - 1) / 2)),
+                center: closeView ? { x: project(pointFor(2.5, 1)).x * .45 + (atmosphere?.x ?? 0), y: atmosphere?.y ?? (canopyView ? .95 : 0) } : project(pointFor(center, ((content?.depth ?? 5) - 1) / 2)),
                 height: halfHeight * 2, aspect, bounds, regions: [ground],
             };
             const frame = cameraControls.setFrame(framing);
@@ -127,8 +131,11 @@ export default function LifeWorld({ inspectShadow, observationOpen = false, foot
             if (content) { scene.remove(content.root); content.dispose(); }
             content = buildLifeScene(next, selection, point, preview); scene.add(content.root);
             node.dataset.lifeWorldStyle = content.root.userData.worldStyle;
+            const atmosphere = next.worldStyle === 'canopy-dots-c3-v1' ? canopyAtmosphereStudy : undefined;
+            studyLighting?.set(atmosphere);
+            if (studyLighting) node.dataset.lifeStudyLighting = JSON.stringify(studyLighting.snapshot());
             const canopy = content.root.getObjectByName('life-canopy-c3');
-            node.dataset.lifeVisualCandidate = canopy?.userData.sculptStatus ? canopy.userData.visualCandidate : content.root.getObjectByName('life-landscape')?.userData.visualCandidate ?? canopy?.userData.visualCandidate ?? content.root.userData.worldStyle;
+            node.dataset.lifeVisualCandidate = atmosphere ? `canopy-atmosphere-${atmosphere}-study-v1` : canopy?.userData.sculptStatus ? canopy.userData.visualCandidate : content.root.getObjectByName('life-landscape')?.userData.visualCandidate ?? canopy?.userData.visualCandidate ?? content.root.userData.worldStyle;
             node.dataset.lifeLandscapeVersion = next.landscapeVersion ?? 'original';
             node.dataset.lifeTourVersion = String(next.tourVersion ?? 0);
             resize();
@@ -249,7 +256,7 @@ export default function LifeWorld({ inspectShadow, observationOpen = false, foot
         const restored = () => setFailed(false);
         renderer.domElement.addEventListener('webglcontextlost', lost); renderer.domElement.addEventListener('webglcontextrestored', restored);
         return () => {
-            collector?.cancel(); cancelAnimationFrame(raf); observer.disconnect(); update.current = null; controlCamera.current = undefined; reframe.current = undefined; cameraControls.cancel(); shadows.dispose(); footprint.dispose(); content?.dispose();
+            collector?.cancel(); cancelAnimationFrame(raf); observer.disconnect(); update.current = null; controlCamera.current = undefined; reframe.current = undefined; cameraControls.cancel(); shadows.dispose(); footprint.dispose(); studyLighting?.dispose(); content?.dispose();
             document.removeEventListener('visibilitychange', hidden);
             renderer.domElement.removeEventListener('click', click);
             renderer.domElement.removeEventListener('pointerdown', pointerDown);

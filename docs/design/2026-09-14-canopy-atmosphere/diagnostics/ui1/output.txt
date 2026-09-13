@@ -1,0 +1,9 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+Error: Async island condition did not become true before the deadline
+    at waitForAsync (file:///private/tmp/sansu-canopy-material-worktree/tools/island-e2e-helpers.mjs:254:11)
+    at async file:///private/tmp/sansu-canopy-material-worktree/tools/e2e-island-canopy-v3.mjs:57:13
+
+Node.js v24.14.0

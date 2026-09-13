@@ -1,0 +1,25 @@
+{
+  "startHash": "ccbea5190f46bb1a2c0cd450c35c04aeb927db4d40fc2b12f500944baafcc868",
+  "revision": "1695d901c87ce728f0c0d72f5501875bf95eee95",
+  "target": "http://127.0.0.1:5247",
+  "candidate": "canopy-atmosphere-shelter-study-v1",
+  "flags": "DEV VITE_ISLAND_LIFE_PREVIEW=true; material study true; ground variant turf; shore variant lagoon; sculpt buttress; atmosphere shelter",
+  "cache": "fresh DEV context; no production SW claim",
+  "fixture": "three connected flowers and an explicitly simulated old-world saved memory; no earned acquisition or historical user activity claim",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": false,
+      "errors": [],
+      "error": "Error: Async island condition did not become true before the deadline\n    at waitForAsync (file:///private/tmp/sansu-canopy-material-worktree/tools/island-e2e-helpers.mjs:254:11)\n    at async file:///private/tmp/sansu-canopy-material-worktree/tools/e2e-island-canopy-v3.mjs:57:13"
+    }
+  ],
+  "pass": false,
+  "groundAtlasSha256": "271c38b29e133a9a39697800371da0d494edec4830ba8277caf08577d9a1c6a3",
+  "sculptMeshSha256": "cd6deca4a25f2cf9c67352cb1d709b367b6078c051531492c5d04c55a264025f"
+}

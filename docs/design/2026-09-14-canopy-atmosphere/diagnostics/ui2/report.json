@@ -1,0 +1,25 @@
+{
+  "startHash": "ccbea5190f46bb1a2c0cd450c35c04aeb927db4d40fc2b12f500944baafcc868",
+  "revision": "1695d901c87ce728f0c0d72f5501875bf95eee95",
+  "target": "http://127.0.0.1:5247",
+  "candidate": "canopy-atmosphere-shelter-study-v1",
+  "flags": "DEV VITE_ISLAND_LIFE_PREVIEW=true; material study true; ground variant turf; shore variant lagoon; sculpt buttress; atmosphere shelter",
+  "cache": "fresh DEV context; no production SW claim",
+  "fixture": "three connected flowers and an explicitly simulated old-world saved memory; no earned acquisition or historical user activity claim",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pass": false,
+      "errors": [],
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ '{\"projection\":[0.27479661615446876,0,0,0,0,0.17743490115934235,0,0,0,0,-0.02002002002002002,0,-0.19332256705876566,-0.18630664621730944,-1.002002002002002,1],\"view\":[0.9731846127764102,-0.0961377075305716,0.20897188960717858,0,0,0.9084728930551647,0.4179437792143572,0,-0.23002545392896967,-0.4067364549370337,0.8841118406457555,0,-4.2327252813834093e-16,-0.18169457861103258,-12.525453567839506,1],\"cameraView\":{\"azimuth\":0,\"zoom\":1,\"pan\":{\"x\":0,\"y\":-2.220446049250313e-16},\"manual\":true}}'\n- '{\"projection\":[0.27479661615446876,0,0,0,0,0.17743490115934235,0,0,0,0,-0.02002002002002002,0,-0.19332256705876566,-0.18630664621730944,-1.002002002002002,1],\"view\":[0.9731846127764102,-0.0961377075305716,0.20897188960717858,0,0,0.9084728930551647,0.4179437792143572,0,-0.23002545392896967,-0.4067364549370337,0.8841118406457555,0,-4.2327252813834093e-16,-0.18169457861103258,-12.525453567839506,1],\"cameraView\":{\"zoom\":1,\"azimuth\":0,\"pan\":{\"x\":0,\"y\":-2.220446049250313e-16},\"manual\":false}}'\n\n    at file:///private/tmp/sansu-canopy-material-worktree/tools/e2e-island-canopy-v3.mjs:82:24"
+    }
+  ],
+  "pass": false,
+  "groundAtlasSha256": "271c38b29e133a9a39697800371da0d494edec4830ba8277caf08577d9a1c6a3",
+  "sculptMeshSha256": "cd6deca4a25f2cf9c67352cb1d709b367b6078c051531492c5d04c55a264025f"
+}
