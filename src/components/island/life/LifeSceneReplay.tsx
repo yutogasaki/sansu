@@ -16,7 +16,7 @@ export default function LifeSceneReplay({ original }: { original: DiscoveryScene
     const participants = discoveryParticipants(original);
     const gathering = original.ruleId.startsWith('G') ? { ruleId: original.ruleId, participantIds: participants.map(item => item.id) } : undefined;
     const bench = discoveryParticipants(original).find(item => item.kind === 'bench');
-    const plant = discoveryParticipants(original).find(item => item.kind === 'flower');
+    const plant = discoveryParticipants(original).find(item => item.kind === 'flower' || item.kind === 'sapling');
     const prepare = async () => {
         if (!alive.current || pending.current) return undefined;
         setError('');

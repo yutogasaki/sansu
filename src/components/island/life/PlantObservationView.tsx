@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as T from 'three';
-import { growthStage, type LifeItem } from '../../../domain/islandLife/model';
+import { growthStage, plantThresholds, type LifeItem } from '../../../domain/islandLife/model';
 import { DiscoveryPresentation } from '../../../domain/islandLife/discoveryPresentation';
 import type { DiscoveryScene, PresentationEvidence } from '../../../domain/islandLife/discoveryJournal';
 import { disposeGeometry, IslandMaterials } from '../three/primitives';
@@ -21,12 +21,12 @@ export default function PlantObservationView({ item, prepare, presented }: {
         let renderer: T.WebGLRenderer;
         try { renderer = new T.WebGLRenderer({ antialias: true, alpha: true }); } catch { setFailed(true); return; }
         const materials = new IslandMaterials(), scene = new T.Scene();
-        const model = buildLifeItem({ ...item, growth: stage === 2 ? 6 : stage === 1 ? 2 : 0 }, materials);
+        const model = buildLifeItem({ ...item, growth: stage === 2 ? plantThresholds(item.kind)![1] : stage === 1 ? plantThresholds(item.kind)![0] : 0 }, materials);
         const magic = buildPlantMagic(item, materials); scene.add(model.root, magic.root);
         scene.add(new T.HemisphereLight('#fff7df', '#698f71', 2.4));
         const sun = new T.DirectionalLight('#fff6df', 3.1); sun.position.set(-3, 6, 5); scene.add(sun);
         const camera = new T.OrthographicCamera(-1.4, 1.4, 1.5, -.4, .1, 20);
-        camera.position.set(1.2, 1.55, 3.5); camera.lookAt(0, .65, 0);
+        camera.position.set(1.2, 1.55, 3.5); camera.lookAt(0, item.kind === 'sapling' ? .9 : .65, 0);
         renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5)); renderer.setClearColor(0, 0);
         renderer.outputColorSpace = T.SRGBColorSpace; renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.15;
         renderer.domElement.setAttribute('aria-hidden', 'true'); node.append(renderer.domElement);
@@ -35,7 +35,8 @@ export default function PlantObservationView({ item, prepare, presented }: {
         const resize = () => {
             const w = Math.max(1, node.clientWidth), h = Math.max(1, node.clientHeight);
             renderer.setSize(w, h); const aspect = w / h;
-            camera.left = -1.05 * aspect; camera.right = -camera.left; camera.top = 1.05; camera.bottom = -1.05;
+            const half = item.kind === 'sapling' ? 1.2 : 1.05;
+            camera.left = -half * aspect; camera.right = -camera.left; camera.top = half; camera.bottom = -half;
             camera.updateProjectionMatrix();
         };
         const observer = new ResizeObserver(resize); observer.observe(node); resize();
@@ -89,6 +90,6 @@ export default function PlantObservationView({ item, prepare, presented }: {
         // growth refreshes within a stage must not restart a three-second episode.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [item.id, item.style, stage]);
-    return <><button type="button" ref={host} className="life-observation-view" aria-label="おはなに ふれる" onClick={() => trigger.current?.()} />
+    return <><button type="button" ref={host} className="life-observation-view" aria-label={item.kind === 'sapling' ? '木に ふれる' : 'おはなに ふれる'} onClick={() => trigger.current?.()} />
         {failed && <p role="status">景色をひらけなかったよ。とじて、もういちど ためしてね。</p>}</>;
 }

@@ -78,13 +78,13 @@ export function evaluateDiscovery(state: LifeState, profileId: string): RuleElig
             if (distance !== undefined && distance <= 4) result.push(eligibility(profileId, target.kind === 'flower' ? 'R1' : 'R3', [bench, target], distance));
         }
     }
-    for (const flower of flowers) result.push(eligibility(profileId, 'M2', [flower]));
+    for (const flower of state.items.filter(item => item.cell && (item.kind === 'flower' || item.kind === 'sapling'))) result.push(eligibility(profileId, 'M2', [flower]));
     return result.sort((a, b) => a.semanticSignature < b.semanticSignature ? -1 : a.semanticSignature > b.semanticSignature ? 1 : 0);
 }
 
 /** Ground rendering shares the G0 grouping without evaluating every relation. */
 export function plantGatherings(state: LifeState): LifeItem[][] {
-    return components(state.items.filter(item => item.kind === 'flower' && item.cell)).filter(group => group.length >= 3);
+    return (['flower', 'sapling'] as const).flatMap(kind => components(state.items.filter(item => item.kind === kind && item.cell)).filter(group => group.length >= 3));
 }
 
 /** Select the current relation, or a touched real object, without a recipe menu. */

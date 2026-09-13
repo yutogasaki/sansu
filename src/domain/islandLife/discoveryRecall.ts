@@ -18,7 +18,7 @@ export function discoveryParticipants(event: DiscoveryScene) {
 export function discoveryTitle(event: DiscoveryScene) {
     if (event.ruleId === 'M2') {
         const plant = discoveryParticipants(event)[0];
-        return plant && growthStage(plant) === 2 ? 'はなびらが うえへ' : 'はっぱが うえへ';
+        return plant?.kind === 'flower' && growthStage(plant) === 2 ? 'はなびらが うえへ' : 'はっぱが うえへ';
     }
     return { G0: 'つながった つち', GF3: 'あつまった おはな', GF6: 'ひろがった おはな',
         GP2: 'ならんだ あそびば', GP3: 'ひろがった あそびば', R1: 'おはなの そばの ベンチ', R3: 'ブランコの そばの ベンチ' }[event.ruleId];

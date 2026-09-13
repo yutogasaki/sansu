@@ -197,3 +197,13 @@
 GP3 checkpoint `6e26fd014a5ddb083cfdfd447445fa06b0ec4479` はmain push済み。土地は既存片側権利を保ち、逆側24/南48しずくを実装。新土地receiptと保存版5で旧履歴へ新解釈を差し込まない。見取り図・実地形・配置/全景の奥行きと新セルの通路検査を接続。
 
 core PASS（371 files /3783 tests、docs/lint/typecheck/build/assets）。[実UIの両幅](../../design/2026-09-13-island-land-expansion/README.md)で3段階購入・南端両側のタッチ配置・再読込保持・学習復帰。source開始/終了 `490780a338a48ab1c11693eceb6585537db9c497b42ba60c3d590f3056a3baf0` 一致。C3視覚HOLD、Human N=0、release未完を継続。所有/配置120/60候補の実機検証、Bの商品/関係/魔法、C3品質、全体統合は次の範囲。思い出の拡張前後の実UI往復と住民の端までの歩行も追加確認対象。
+
+
+### 木の苗・水鉢の基礎（継続中）
+
+土地 checkpoint `b72180fd510d09c9052ab0575c0282c1184912f5` はmain push確認済み。木の苗/水鉢各4しずく、保存版6の新品receiptと既存4品の原価格保持、木6/18時間と収納停止、共通購入/配置モデル、通常訪問/個別観察、木のG0/M2、水の通常波紋を実装。購入UIはDEV Life preview限定。新しいキャラ設定/好みを作らず、既存のmesh/布を維持。
+
+対象の成長/価格/保存/表示テストPASS。成熟木のM2記録が花びらと呼ばれる枝を発見し、木ははっぱとして回帰追加。最終coreは373 files /3790 tests、docs/lint/typecheck/build/assets PASS。実UIで初回はDEV detailsを開かず時間送りボタンを探したharnessが失敗。2回目は両幅の操作を通過したが途中のソース変更をhash照合で検出したため最終PASSにしない。修正後の固定sourceで3回目を検証中。未commit。木立/水辺の成熟表示、木陰での休み、R2/R4等とBの残り6品、C3視覚品質、全体releaseは継続対象。
+
+
+- 固定source `725d43e354a39aa39a8cee1b09ba00bb217d9d56a759d7b3551a253cd355893b` で両幅PASS。[木の苗・水鉢の実画面](../../design/2026-09-13-island-plants-water/README.md)。苗/若木/成木、木M2の表示記録、通常波紋と報酬/記録不変、再読込保持、学習復帰。core373 files /3790 tests PASS。DEV基礎の技術checkpointとしてcommitし、視覚HOLD・Human N=0・Bの各まとまり/関係/残り6品・release未完を継続する。

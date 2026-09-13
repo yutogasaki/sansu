@@ -1,7 +1,7 @@
 import { CATALOG, type ItemKind, type LifeAction, type LifeCommand, type LifeItem, type LifePurchaseReceipt } from './model';
 
 /** Historical prices are independent of the shop. Never edit an issued version. */
-export const LEGACY_LIFE_PRICES: Readonly<Record<ItemKind, number>> = Object.freeze({
+export const LEGACY_LIFE_PRICES: Readonly<Record<Exclude<ItemKind, 'sapling' | 'water-bowl'>, number>> = Object.freeze({
     flower: 2, bench: 4, swing: 6, lantern: 8,
 });
 
@@ -15,33 +15,31 @@ export function commandFingerprint(command: LifeCommand): string {
     }
 }
 
-function quoteFingerprint(kind: ItemKind, price: number) {
-    return JSON.stringify(['life-48-v1', kind, price]);
+const PLANTS_WATER_PRICES = Object.freeze({ sapling: 4, 'water-bowl': 4 });
+export function isPlantsWater(kind: ItemKind): kind is 'sapling' | 'water-bowl' { return kind === 'sapling' || kind === 'water-bowl'; }
+function priceTerms(kind: ItemKind) {
+    return isPlantsWater(kind) ? { version: 'life-v3-plants-water-v1' as const, price: PLANTS_WATER_PRICES[kind] }
+        : { version: 'life-48-v1' as const, price: LEGACY_LIFE_PRICES[kind] };
 }
-
+function quoteFingerprint(kind: ItemKind, price: number, version: string) { return JSON.stringify([version, kind, price]); }
 export function purchaseReceipt(action: LifeAction): LifePurchaseReceipt | undefined {
     if (action.command.type !== 'buy') return undefined;
-    const kind = action.command.kind;
-    const price = CATALOG[kind]?.price;
-    // A new price requires a new explicit version before it can be issued.
-    if (price === undefined || price !== LEGACY_LIFE_PRICES[kind]) throw new Error('この価格は もういちど たしかめてね。');
-    return { priceVersion: 'life-48-v1', actualPaidDrops: price,
-        quoteFingerprint: quoteFingerprint(kind, price), itemInstanceId: action.id, committedAt: action.at };
+    const kind = action.command.kind, { version, price } = priceTerms(kind);
+    if (price === undefined || CATALOG[kind]?.price !== price) throw new Error('この価格は もういちど たしかめてね。');
+    return { priceVersion: version, actualPaidDrops: price,
+        quoteFingerprint: quoteFingerprint(kind, price, version), itemInstanceId: action.id, committedAt: action.at };
 }
-
 export function paidDrops(action: LifeAction): number {
     if (action.command.type !== 'buy') throw new Error('Purchase required');
-    const price = LEGACY_LIFE_PRICES[action.command.kind];
+    const { version, price } = priceTerms(action.command.kind);
     if (price === undefined) throw new Error('Unknown historical item');
     const receipt = action.purchaseReceipt;
-    if (receipt && (receipt.priceVersion !== 'life-48-v1' || receipt.actualPaidDrops !== price
-        || receipt.quoteFingerprint !== quoteFingerprint(action.command.kind, price)
-        || receipt.itemInstanceId !== action.id || receipt.committedAt !== action.at)) {
-        throw new Error('購入の記録を確認できません。');
-    }
+    if (isPlantsWater(action.command.kind) && !receipt) throw new Error('新しい物の購入記録が見つかりません。');
+    if (receipt && (receipt.priceVersion !== version || receipt.actualPaidDrops !== price
+        || receipt.quoteFingerprint !== quoteFingerprint(action.command.kind, price, version)
+        || receipt.itemInstanceId !== action.id || receipt.committedAt !== action.at)) throw new Error('購入の記録を確認できません。');
     return receipt?.actualPaidDrops ?? price;
 }
-
 export function removalRefund(item: Pick<LifeItem, 'kind' | 'paidDrops'>) {
-    return Math.floor((item.paidDrops ?? LEGACY_LIFE_PRICES[item.kind]) / 2);
+    return Math.floor((item.paidDrops ?? priceTerms(item.kind).price) / 2);
 }

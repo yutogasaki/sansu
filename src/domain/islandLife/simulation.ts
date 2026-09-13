@@ -5,9 +5,9 @@ import { assertCheckpointBoundary, checkpointLegacyRecord } from './economyMigra
 import { effectiveGrowthHours, issueFiniteLight, GROWTH_WINDOW_MS } from './economyRules';
 import { placementUndo } from './placementUndo';
 import { observationVisit } from './observationVisit';
-import { readableLifeVersion, CATALOG, HOUR, LIFE_RULES, LIFE_STEP_MS, ROAM_VISIT_PREFIX, isRoamVisit, vigor, type LifeAction, type LifeCommand, type LifeRecord, type LifeState, type LifeResident, type Cell } from './model';
+import { plantThresholds, readableLifeVersion, CATALOG, HOUR, LIFE_RULES, LIFE_STEP_MS, ROAM_VISIT_PREFIX, isRoamVisit, vigor, type LifeAction, type LifeCommand, type LifeRecord, type LifeState, type LifeResident, type Cell } from './model';
 import { cellKey, districts, homeCell, isHouse, landCells, route, sameCell, usablePlacement, pathToActivity } from './space';
-import { commandFingerprint, paidDrops, purchaseReceipt, removalRefund } from './purchases';
+import { isPlantsWater, commandFingerprint, paidDrops, purchaseReceipt, removalRefund } from './purchases';
 
 function initial(now: number): LifeState {
     return { now, activityVersion: 1, drops: 0, light: 0, items: [], styles: ['original'], heroStyle: 'original', days: {},
@@ -128,7 +128,7 @@ export function arrangeVisits(s: LifeState) {
             const reserved = s.activityVersion === 2 ? s.residents.filter(other => other !== r && other.visit).map(other => other.visit!.path[other.visit!.path.length - 1]) : [];
             const path = pathToActivity(s, r.cell, i, reserved); if (!path) return [];
             const crowd = s.residents.filter(other => other.visit?.itemId === i.id).length;
-            if (crowd >= (i.kind === 'swing' || s.activityVersion === 2 && i.kind === 'bench' ? 1 : 2)) return [];
+            if (crowd >= (isPlantsWater(i.kind) || i.kind === 'swing' || s.activityVersion === 2 && i.kind === 'bench' ? 1 : 2)) return [];
             const like = r.id === 'rabbit' ? i.kind === 'flower' : r.id === 'otter' ? i.kind === 'swing' : i.kind === 'bench';
             const lamp = s.items.some(l => l.kind === 'lantern' && l.cell && Math.abs(l.cell.x - i.cell!.x) + Math.abs(l.cell.z - i.cell!.z) <= 2);
             if (s.activityVersion === 1) return [{ item: i, path, weight: 2 + (like ? 5 : 0) + (i.id === s.target ? r.id === 'pokomoko' ? 100 : 3 : 0) + (lamp ? 2 : 0) - path.length * .08 }];
@@ -175,7 +175,10 @@ export function advanceLifeState(s: LifeState, to: number) {
         }
         for (const r of s.residents) if (r.playTour && r.visit) r.playTour.remainingMs -= next - s.now;
         const hours = s.economy ? effectiveGrowthHours(s.economy.completionTimes, s.now, next) : (next - s.now) / HOUR * vigor(s);
-        for (const i of s.items) if (i.kind === 'flower' && i.cell) i.growth = Math.min(LIFE_RULES.bloomHours, i.growth + hours);
+        for (const i of s.items) {
+            const thresholds = plantThresholds(i.kind);
+            if (thresholds && i.cell) i.growth = Math.min(thresholds[1], i.growth + hours);
+        }
         s.now = next;
         for (const r of s.residents) if (r.playTour && r.playTour.remainingMs <= 0) {
             awardUse(s, r, 'swing'); r.playTour.remainingMs = LIFE_RULES.activityMs;
@@ -271,7 +274,8 @@ export function replayLife(record: LifeRecord, to = record.now): LifeState {
     if (!readableLifeVersion(record.version)) throw new Error('この島のデータは新しい版で開いてください。');
     const checkpoint = record.economyCheckpoint;
     assertCheckpointBoundary(record); assertTourCutover(record);
-    if (record.actions.some(action => action.landReceipt) && record.version !== 5) throw new Error('土地の保存版を確認できません。');
+    if (record.actions.some(action => action.landReceipt) && ![5, 6].includes(record.version)) throw new Error('土地の保存版を確認できません。');
+    if (record.actions.some(action => action.command.type === 'buy' && isPlantsWater(action.command.kind)) && record.version !== 6) throw new Error('新しい物の保存版を確認できません。');
     if (checkpoint && to < checkpoint.cutoverAt) return replayLife(checkpointLegacyRecord(checkpoint), to);
     const s = checkpoint ? structuredClone(checkpoint.state) : initial(record.createdAt);
     const known = new Set(checkpoint?.projectedCreditIds ?? []);
@@ -316,9 +320,10 @@ export function commandLife(record: LifeRecord, command: LifeCommand, id: string
         if (!inverse || commandFingerprint(inverse) !== commandFingerprint(command)) throw new Error('しまが かわったよ。もういちど えらんでね。');
     }
     const event: LifeAction = { id, at: now, command, ...(undoOf === undefined ? {} : { undoOf }) };
+    if (command.type === 'buy' && isPlantsWater(command.kind) && !record.tourCutover) throw new Error('島をよみなおしてから えらんでね。');
     if (command.type === 'buy') event.purchaseReceipt = purchaseReceipt(event);
     const state = replayLife(record, now);
     if (command.type === 'expand' && record.tourCutover) event.landReceipt = landReceipt(state, event);
     applyCommand(state, event);
-    return { ...record, version: event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
+    return { ...record, version: record.version === 6 || command.type === 'buy' && isPlantsWater(command.kind) ? 6 : event.landReceipt ? 5 : command.type === 'observe' && record.version === 1 ? 2 : record.version, now, revision: record.revision + 1, actions: [...record.actions, event] };
 }

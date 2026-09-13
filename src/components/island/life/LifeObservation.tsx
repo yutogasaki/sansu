@@ -1,3 +1,4 @@
+import WaterObservationView from './WaterObservationView';
 import { displayedGatherings } from './gatheringVisibility';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { X } from 'lucide-react';
@@ -81,8 +82,8 @@ export default function LifeObservation({ record, state, item, close, memories, 
     };
     const presented = (event: DiscoveryScene, evidence: PresentationEvidence) => { if (!pending.current) { pending.current = { event, evidence }; void persistShown(); } };
     const saved = shown && journal.savedIds.includes(shown.eventId);
-    return <div ref={panel} tabIndex={-1} className="life-observation" role="dialog" aria-modal="false" aria-label={gathering ? 'いまの あつまり' : isBench ? 'いまの ベンチ' : 'いまの おはな'} data-life-observation={item.id}>
-        <header><b>{gathering ? 'いまの あつまり' : isBench ? 'いまの ベンチ' : 'いまの おはな'}</b><button type="button" aria-label="みてみるを とじる" onClick={close}><X size={20} /></button></header>
+    return <div ref={panel} tabIndex={-1} className="life-observation" role="dialog" aria-modal="false" aria-label={gathering ? 'いまの あつまり' : isBench ? 'いまの ベンチ' : item.kind === 'sapling' ? 'いまの 木' : item.kind === 'water-bowl' ? 'いまの 水ばち' : 'いまの おはな'} data-life-observation={item.id}>
+        <header><b>{gathering ? 'いまの あつまり' : isBench ? 'いまの ベンチ' : item.kind === 'sapling' ? 'いまの 木' : item.kind === 'water-bowl' ? 'いまの 水ばち' : 'いまの おはな'}</b><button type="button" aria-label="みてみるを とじる" onClick={close}><X size={20} /></button></header>
         <div className="life-observation-body">
             {gathering ? <RelationObservationView state={state} gathering={gathering} prepare={prepareGathering} presented={presented} /> : isBench ? <>
                 <RelationObservationView state={viewState} benchId={item.id} prepare={prepareRelation} presented={presented} status={setStatus} target={id => { if (!busy && !pending.current) { setTargetId(id); setShown(undefined); setError(''); } }} />
@@ -91,8 +92,8 @@ export default function LifeObservation({ record, state, item, close, memories, 
                     <option value="">いまの ようす</option>{state.items.filter(i => i.cell && (i.kind === 'flower' || i.kind === 'swing')).map((i, index) => <option key={i.id} value={i.id}>{i.kind === 'flower' ? 'おはな' : 'ブランコ'} {index + 1}</option>)}
                 </select></label>
                 {status === 'busy' && <button type="button" onClick={tryVisit}>もういちど みてみる</button>}
-            </> : <><PlantObservationView item={item} prepare={prepare} presented={presented} />
-                <p className="life-observation-hint">おはなに ふれてみよう</p></>}
+            </> : item.kind === 'water-bowl' ? <WaterObservationView item={item} /> : <><PlantObservationView item={item} prepare={prepare} presented={presented} />
+                <p className="life-observation-hint">{item.kind === 'sapling' ? '木に ふれてみよう' : 'おはなに ふれてみよう'}</p></>}
             {busy && <p role="status">きろくを のこしているよ…</p>}
             {shown && <div className="life-observation-save"><span>{saved ? 'おもいでに のこしたよ' : 'いまの、のこす？'}</span>
                 <button type="button" disabled={busy || saved} onClick={() => void saveMemory()}>{saved ? 'のこした' : 'のこす'}</button></div>}

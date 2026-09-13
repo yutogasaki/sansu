@@ -66,12 +66,15 @@ export function makeLifeMotion(content: ReturnType<typeof buildHomeJourney>, sta
                         const previous = point(visit.path[Math.max(0, visit.path.length - 2)]);
                         const heading = previous.distanceTo(position) > .01
                             ? Math.atan2(position.x - previous.x, position.z - previous.z) : 0;
-                        if (item.kind === 'flower') {
+                        if (item.kind === 'flower' || item.kind === 'water-bowl') {
                             const facing = Math.atan2(target.x - position.x, target.z - position.z);
                             actor.rotation.y = reduced ? facing : turnToward(heading, facing, (now - walkedAt) / duration);
-                            position.lerp(target, .48 * settling);
+                            position.lerp(target, (item.kind === 'water-bowl' ? .38 : .48) * settling);
                             body.rotation.x = (.18 + (reduced ? 0 : Math.sin((now - walkedAt) / 950) * .045)) * settling;
                             flowerLean = settling;
+                        } else if (item.kind === 'sapling') {
+                            const facing = Math.atan2(target.x - position.x, target.z - position.z);
+                            actor.rotation.y = reduced ? facing : turnToward(heading, facing, (now - walkedAt) / duration);
                         } else {
                             actor.rotation.y = reduced ? 0 : turnToward(heading, 0, (now - walkedAt) / duration);
                             const furniture = seats.get(item.id);

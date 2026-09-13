@@ -1,0 +1,110 @@
+{
+  "startHash": "725d43e354a39aa39a8cee1b09ba00bb217d9d56a759d7b3551a253cd355893b",
+  "revision": "b72180fd510d09c9052ab0575c0282c1184912f5",
+  "target": "http://127.0.0.1:5223",
+  "candidate": "life-v3-plants-water-v1",
+  "world": "canopy-dots-c3-v1",
+  "flags": "DEV VITE_ISLAND_LIFE_PREVIEW=true",
+  "fixture": "12 QA credits; real UI buys; explicit DEV clock advances for young/mature tree; no real-time acquisition claim",
+  "humanN": 0,
+  "cases": [
+    {
+      "device": "phone",
+      "runtimeCandidate": "island-life-economy-checkpoint-v3",
+      "runtimeWorld": "canopy-dots-c3-v1",
+      "pass": true,
+      "receipts": [
+        {
+          "id": "0045285e-a2d2-489d-aeb1-023989caf2e4",
+          "at": 1789278889214,
+          "command": {
+            "type": "buy",
+            "kind": "sapling",
+            "cell": {
+              "x": 0,
+              "z": 2
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-v3-plants-water-v1",
+            "actualPaidDrops": 4,
+            "quoteFingerprint": "[\"life-v3-plants-water-v1\",\"sapling\",4]",
+            "itemInstanceId": "0045285e-a2d2-489d-aeb1-023989caf2e4",
+            "committedAt": 1789278889214
+          }
+        },
+        {
+          "id": "a8efe6d1-92c2-4350-9201-982f92a543fd",
+          "at": 1789278898374,
+          "command": {
+            "type": "buy",
+            "kind": "water-bowl",
+            "cell": {
+              "x": 1,
+              "z": 2
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-v3-plants-water-v1",
+            "actualPaidDrops": 4,
+            "quoteFingerprint": "[\"life-v3-plants-water-v1\",\"water-bowl\",4]",
+            "itemInstanceId": "a8efe6d1-92c2-4350-9201-982f92a543fd",
+            "committedAt": 1789278898374
+          }
+        }
+      ],
+      "drops": 16,
+      "errors": []
+    },
+    {
+      "device": "tablet",
+      "runtimeCandidate": "island-life-economy-checkpoint-v3",
+      "runtimeWorld": "canopy-dots-c3-v1",
+      "pass": true,
+      "receipts": [
+        {
+          "id": "bbcbc7fa-482b-4356-a444-3085c573882a",
+          "at": 1789278947873,
+          "command": {
+            "type": "buy",
+            "kind": "sapling",
+            "cell": {
+              "x": 0,
+              "z": 2
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-v3-plants-water-v1",
+            "actualPaidDrops": 4,
+            "quoteFingerprint": "[\"life-v3-plants-water-v1\",\"sapling\",4]",
+            "itemInstanceId": "bbcbc7fa-482b-4356-a444-3085c573882a",
+            "committedAt": 1789278947873
+          }
+        },
+        {
+          "id": "6211bb2e-e106-4d33-a8ce-1e21db67657f",
+          "at": 1789278958503,
+          "command": {
+            "type": "buy",
+            "kind": "water-bowl",
+            "cell": {
+              "x": 1,
+              "z": 2
+            }
+          },
+          "purchaseReceipt": {
+            "priceVersion": "life-v3-plants-water-v1",
+            "actualPaidDrops": 4,
+            "quoteFingerprint": "[\"life-v3-plants-water-v1\",\"water-bowl\",4]",
+            "itemInstanceId": "6211bb2e-e106-4d33-a8ce-1e21db67657f",
+            "committedAt": 1789278958503
+          }
+        }
+      ],
+      "drops": 16,
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "endHash": "725d43e354a39aa39a8cee1b09ba00bb217d9d56a759d7b3551a253cd355893b"
+}

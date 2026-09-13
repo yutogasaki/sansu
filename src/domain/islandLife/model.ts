@@ -9,7 +9,7 @@ export const LIFE_STEP_MS = 1200;
 export const HOUR = 3_600_000;
 export const LIFE_RULES = { dropsPerProblem: 2, dailyGoal: 6, activityMs: HOUR / 2, expansionPrice: 12,
     maxItems: 30, budHours: 2, bloomHours: 6, stylePrice: 4 } as const;
-export type ItemKind = 'flower' | 'bench' | 'swing' | 'lantern';
+export type ItemKind = 'flower' | 'bench' | 'swing' | 'lantern' | 'sapling' | 'water-bowl';
 export type Style = 'original' | 'sunshine' | 'starlight';
 export type ResidentId = 'pokomoko' | 'rabbit' | 'otter';
 export type LandSide = 'east' | 'west' | 'south';
@@ -17,6 +17,7 @@ export type Cell = { x: number; z: number };
 export const CATALOG: Record<ItemKind, { label: string; price: number }> = {
     flower: { label: 'おはな', price: 2 }, bench: { label: 'ベンチ', price: 4 },
     swing: { label: 'ブランコ', price: 6 }, lantern: { label: 'ほしの あかり', price: 8 },
+    sapling: { label: '木の なえ', price: 4 }, 'water-bowl': { label: '水ばち', price: 4 },
 };
 export interface LifeItem { id: string; kind: ItemKind; cell?: Cell; growth: number; style: Style; access?: 'front'; paidDrops?: number }
 export interface Credit { id: string; at: number; day: string }
@@ -24,7 +25,7 @@ export type LifeCommand = { type: 'buy'; kind: ItemKind; cell: Cell }
     | { type: 'move'; itemId: string; cell: Cell } | { type: 'store' | 'remove' | 'visit' | 'observe'; itemId: string }
     | { type: 'expand'; side: LandSide } | { type: 'style'; style: Style; itemId?: string };
 export interface LifePurchaseReceipt {
-    priceVersion: 'life-48-v1'; actualPaidDrops: number; quoteFingerprint: string;
+    priceVersion: 'life-48-v1' | 'life-v3-plants-water-v1'; actualPaidDrops: number; quoteFingerprint: string;
     itemInstanceId: string; committedAt: number;
 }
 export interface LifeLandReceipt {
@@ -32,7 +33,7 @@ export interface LifeLandReceipt {
 }
 export interface LifeAction { id: string; at: number; command: LifeCommand; purchaseReceipt?: LifePurchaseReceipt; landReceipt?: LifeLandReceipt; undoOf?: string }
 export interface LifeRecord {
-    profileId: string; version: 1 | 2 | 3 | 4 | 5; revision: number; createdAt: number; realAt: number; now: number;
+    profileId: string; version: 1 | 2 | 3 | 4 | 5 | 6; revision: number; createdAt: number; realAt: number; now: number;
     credits: Credit[]; actions: LifeAction[]; offsets: { at: number; offset: number }[]; clockIntents: string[];
     activitiesV2At?: number;
     activitiesV2After?: number;
@@ -78,9 +79,15 @@ export function vigor(s: LifeState, at = s.now) {
     const elapsed = at - s.lastAchievement;
     return elapsed < 24 * HOUR ? 1 : elapsed < 72 * HOUR ? .5 : .1;
 }
-export function growthStage(item: Pick<LifeItem, 'kind' | 'growth'>) { return item.kind !== 'flower' ? 2 : item.growth >= LIFE_RULES.bloomHours ? 2 : item.growth >= LIFE_RULES.budHours ? 1 : 0; }
+export function plantThresholds(kind: ItemKind): readonly [number, number] | undefined {
+    return kind === 'flower' ? [LIFE_RULES.budHours, LIFE_RULES.bloomHours] : kind === 'sapling' ? [6, 18] : undefined;
+}
+export function growthStage(item: Pick<LifeItem, 'kind' | 'growth'>) {
+    const thresholds = plantThresholds(item.kind);
+    return !thresholds ? 2 : item.growth >= thresholds[1] ? 2 : item.growth >= thresholds[0] ? 1 : 0;
+}
 export function newLife(profileId: string, now: number): LifeRecord {
     return { profileId, version: 1, revision: 0, createdAt: now, realAt: now, now, credits: [], actions: [], offsets: [{ at: now, offset: 0 }], clockIntents: [], activitiesV2At: now, activitiesV2After: 0 };
 }
 
-export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3 || version === 4 || version === 5; }
+export function readableLifeVersion(version: number) { return version === 1 || version === 2 || version === 3 || version === 4 || version === 5 || version === 6; }

@@ -32,7 +32,7 @@ import './life-belongings.css';
 import './life-resources.css';
 import './life-world-first.css';
 
-const productStories = { flower: 'めを そだてて おはなに', bench: 'ひとやすみの ばしょ', swing: 'すわって ゆらゆら', lantern: 'あかりの そばに あつまるかな' };
+const productStories = { flower: 'めを そだてて おはなに', bench: 'ひとやすみの ばしょ', swing: 'すわって ゆらゆら', lantern: 'あかりの そばに あつまるかな', sapling: '木かげに そだつ なえ', 'water-bowl': '水を のぞく うつわ' };
 const tabOptions = [
     ['build', 'つくる', Sprout],
     ['items', 'もちもの', Archive],
@@ -219,7 +219,8 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
         if (error) { setMenuOpen(true); setDockOpen(false); return; }
         setDockOpen(true);
     };
-    const products = Object.keys(CATALOG) as ItemKind[];
+    const products = (Object.keys(CATALOG) as ItemKind[]).filter(kind => !['sapling', 'water-bowl'].includes(kind)
+        || import.meta.env.DEV && import.meta.env.VITE_ISLAND_LIFE_PREVIEW === 'true');
     const pageCount = Math.max(1, Math.ceil((tab === 'build' ? products.length : state.items.length) / 2));
     const currentPage = Math.min(page, pageCount - 1);
     const cells = landCells(state), cellPages = Math.ceil(cells.length / 6);
@@ -249,7 +250,7 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             </button>
         </LifeWorld>
         {observed && !placement && !menuOpen && !dockOpen && (() => {
-            const target = state.items.find(i => i.id === observed && i.cell && (gathering || i.kind === 'flower' || i.kind === 'bench'));
+            const target = state.items.find(i => i.id === observed && i.cell && (gathering || ['flower', 'sapling', 'water-bowl', 'bench'].includes(i.kind)));
             return target ? <LifeObservation key={`${record.profileId}:${target.id}:${target.cell!.x}:${target.cell!.z}:${target.style}`}
                 record={record} state={state} item={target} gathering={gathering} close={() => setObserved(undefined)} memories={openMemories} tryVisit={() => tryObservation(target.id)} /> : null;
         })()}
@@ -282,13 +283,13 @@ export default function IslandLife({ controls, onHome, disabled, islandName }: {
             {tab === 'items' && <>
                 <div className="life-items">{!item && state.items.slice(currentPage * 2, currentPage * 2 + 2).map((i, index) => { const growth = lifeGrowthStatus(i, state); return <button key={i.id} data-life-item={i.id} data-life-growth-stage={growth.stage}
                     data-life-growth-next-hours={growth.remainingHours} aria-pressed={selected === i.id} onClick={() => { setSelected(i.id); setMoving(false); setRemoving(false); setCell(undefined); }} disabled={locked}>
-                    <LifeProductPreview kind={i.kind} growth={i.growth} style={i.style} /><span className="life-item-name"><b>{CATALOG[i.kind].label}</b><small>{currentPage * 2 + index + 1}</small></span><span className="life-item-growth">{!i.cell ? <small>しまってある</small> : <>{i.kind === 'flower' && <GrowthDots status={growth} />}<small>{growth.label}</small>{growth.nextLabel && <small className="life-growth-next">あと 約{growth.remainingHours}じかんで {growth.nextLabel}</small>}</>}</span></button>; })}</div>
+                    <LifeProductPreview kind={i.kind} growth={i.growth} style={i.style} /><span className="life-item-name"><b>{CATALOG[i.kind].label}</b><small>{currentPage * 2 + index + 1}</small></span><span className="life-item-growth">{!i.cell ? <small>しまってある</small> : <>{(i.kind === 'flower' || i.kind === 'sapling') && <GrowthDots status={growth} />}<small>{growth.label}</small>{growth.nextLabel && <small className="life-growth-next">あと 約{growth.remainingHours}じかんで {growth.nextLabel}</small>}</>}</span></button>; })}</div>
                 {!state.items.length && <div className="life-inventory-empty"><Archive size={30} aria-hidden="true" /><b>なにを おこうかな？</b><p>つくった ものが ここに ならぶよ。</p><button className="island-primary" onClick={() => openMenuTab('build')}>つくるものを えらぶ</button></div>}
                 {item && <div className="life-item-actions"><h3><button aria-label="もちものの 一覧へ" onClick={() => { setSelected(undefined); setRemoving(false); }}>←</button> {CATALOG[item.kind].label}</h3>
                     <LifeProductPreview kind={item.kind} growth={item.growth} style={item.style} />
-                    {(() => { const growth = lifeGrowthStatus(item, state); return <div className="life-item-growth-detail" data-life-growth-stage={growth.stage}><div>{item.kind === 'flower' && <GrowthDots status={growth} />}<strong>{item.cell ? growth.label : 'しまってある'}</strong></div>
-                        <small>{item.kind !== 'flower' ? (item.cell ? 'しまに おいてあるよ' : 'また しまに おけるよ') : !item.cell ? 'おくと また そだつよ' : growth.nextLabel ? `あと 約${growth.remainingHours}じかんで ${growth.nextLabel}` : 'いちばん おおきく そだったよ'}</small>{item.cell && growth.nextLabel && <small>追加で まなばない ときの めやすだよ。</small>}</div>; })()}
-                    {(item.kind === 'flower' || item.kind === 'bench') && item.cell && <button hidden={removing} disabled={locked} onClick={() => { showWorld(); setObserved(item.id); if (item.kind === 'bench') tryObservation(item.id); }}>みてみる</button>}
+                    {(() => { const growth = lifeGrowthStatus(item, state); return <div className="life-item-growth-detail" data-life-growth-stage={growth.stage}><div>{(item.kind === 'flower' || item.kind === 'sapling') && <GrowthDots status={growth} />}<strong>{item.cell ? growth.label : 'しまってある'}</strong></div>
+                        <small>{!['flower', 'sapling'].includes(item.kind) ? (item.cell ? 'しまに おいてあるよ' : 'また しまに おけるよ') : !item.cell ? 'おくと また そだつよ' : growth.nextLabel ? `あと 約${growth.remainingHours}じかんで ${growth.nextLabel}` : 'いちばん おおきく そだったよ'}</small>{item.cell && growth.nextLabel && <small>追加で まなばない ときの めやすだよ。</small>}</div>; })()}
+                    {['flower', 'sapling', 'water-bowl', 'bench'].includes(item.kind) && item.cell && <button hidden={removing} disabled={locked} onClick={() => { showWorld(); setObserved(item.id); if (item.kind === 'bench') tryObservation(item.id); }}>みてみる</button>}
                     <button hidden={removing} disabled={locked || !item.cell || item.kind === 'lantern'} onClick={() => void doAction({ type: 'visit', itemId: item.id }, 'ぽこもこの いきさきを きめたよ。だれか くるかな？')}>ぽこもこを よぶ</button>
                     <button hidden={removing} disabled={locked} onClick={() => { setMoving(true); setCell(undefined); setRemoving(false); setNotice(''); showWorld(); }}><Move size={16} />{item.cell ? 'うごかす' : 'おく'}</button>
                     <button hidden={removing} disabled={locked || !item.cell} onClick={() => void doAction({ type: 'store', itemId: item.id }, 'そだったまま しまったよ。')}><Archive size={16} />しまう</button>

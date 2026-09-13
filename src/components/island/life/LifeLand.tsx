@@ -31,7 +31,7 @@ export default function LifeLand({ state, locked, onAction }: {
                     {isHouse(c) && <rect x={x + 5} y={y + 4} width="18" height="18" rx="3" className="life-map-house" />}
                     {c.x === 2 && c.z === 0 && <path d={`M${x + 3} ${y + 10}l11 -8 11 8`} className="life-map-roof" />}
                     {placed && <g transform={`translate(${x + 14} ${y + 13})`} className={`life-map-item life-map-item--${placed.kind}`}>
-                        {placed.kind === 'flower' ? <><path d="M0 7V-4M-5 3L0 5 5 1" /><circle cy="-4" r="4" /></> : placed.kind === 'bench' ? <><path d="M-8 -5H8V3H-8ZM-6 3V8M6 3V8" /></> : placed.kind === 'swing' ? <><path d="M-9 8L-5 -8H5L9 8M-4 -6V4H4V-6" /></> : <><path d="M0 8V-3" /><circle cy="-5" r="4" /></>}
+                        {placed.kind === 'sapling' ? <><path d="M0 8V-5" /><ellipse cy="-3" rx="7" ry="5" /></> : placed.kind === 'water-bowl' ? <><path d="M-8 0Q-6 9 0 9Q6 9 8 0" /><ellipse rx="8" ry="3" /></> : placed.kind === 'flower' ? <><path d="M0 7V-4M-5 3L0 5 5 1" /><circle cy="-4" r="4" /></> : placed.kind === 'bench' ? <><path d="M-8 -5H8V3H-8ZM-6 3V8M6 3V8" /></> : placed.kind === 'swing' ? <><path d="M-9 8L-5 -8H5L9 8M-4 -6V4H4V-6" /></> : <><path d="M0 8V-3" /><circle cy="-5" r="4" /></>}
                     </g>}
                 </g>;
             })}

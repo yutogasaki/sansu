@@ -37,6 +37,28 @@ export function buildLifeItem(item: LifeItem, materials: IslandMaterials, showSo
         }
         });
         batch(g);
+    } else if (item.kind === 'sapling') {
+        const stage = growthStage(item), height = [.20, .52, .92][stage];
+        if (showSoil) ellipsoid(g, paint('#bba178'), [0, -.005, 0], [.33, .028, .31], 12);
+        const trunk = new T.CatmullRomCurve3([new T.Vector3(0, 0, 0), new T.Vector3(.045, height * .45, 0), new T.Vector3(-.035, height, 0)]);
+        const wood = new T.Mesh(new T.TubeGeometry(trunk, 14, [.022, .039, .062][stage], 8, false), paint('#a47c4c'));
+        wood.castShadow = wood.receiveShadow = true; g.add(wood);
+        const leafColor = item.style === 'original' ? '#409b77' : item.style === 'sunshine' ? '#b9be56' : '#8980b1';
+        const size = [.16, .25, .34][stage];
+        for (const side of [-1, 1]) for (let j = 0; j < (stage === 0 ? 1 : 2); j++) {
+            const leaf = ellipsoid(g, paint(j ? '#65bda0' : leafColor), [side * size * .38, height - j * .17, (j - .5) * .09], [size * .68, size * .24, size], 18);
+            leaf.rotation.z = side * .42; leaf.rotation.y = side * .45 + j * .8;
+        }
+        // The mature canopy stays within its own cell; adjacent approaches stay clear.
+        batch(g);
+    } else if (item.kind === 'water-bowl') {
+        const profile = [[.03, .035], [.23, .035], [.32, .10], [.38, .28], [.37, .32], [.33, .32], [.29, .14], [.04, .105]];
+        const bowl = new T.Mesh(new T.LatheGeometry(profile.map(([x, y]) => new T.Vector2(x, y)), 40), materials.surface('#ead6af', .48));
+        bowl.castShadow = bowl.receiveShadow = true; g.add(bowl);
+        const water = new T.Mesh(new T.CircleGeometry(.312, 40), materials.surface('#67c9ce', .22));
+        water.rotation.x = -Math.PI / 2; water.position.y = .23; water.name = 'life-bowl-water'; g.add(water);
+        const rim = new T.Mesh(new T.TorusGeometry(.349, .028, 10, 40), materials.surface(color, .4));
+        rim.rotation.x = Math.PI / 2; rim.position.y = .31; g.add(rim);
     } else if (item.kind === 'bench') {
         const seat = box(g, '#b48258', 0, .29, 0, .7, .10, .35); result.seat = seat; box(g, color, 0, .49, -.14, .7, .33, .08);
         for (const x of [-.26, .26]) box(g, '#b48258', x, .12, 0, .07, .24, .3);
